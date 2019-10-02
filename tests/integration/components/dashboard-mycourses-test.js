@@ -57,7 +57,7 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
   test('list courses for privileged users', async function(assert) {
     assert.expect(10);
     this.owner.register('service:currentUser', currentUserMock);
-    await render(hbs`{{dashboard-mycourses}}`);
+    await render(hbs`<DashboardMycourses />`);
 
     const header = '.dashboard-block-header';
     const allLinks = `table a`;
@@ -91,7 +91,7 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
   test('list courses for un-privileged users', async function(assert) {
     assert.expect(10);
     this.owner.register('service:currentUser', currentUserMockUnprivileged);
-    await render(hbs`{{dashboard-mycourses}}`);
+    await render(hbs`<DashboardMycourses />`);
 
     const header = '.dashboard-block-header';
     const allLinks = `table a`;
@@ -124,7 +124,7 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
   test('display none when no courses', async function(assert) {
     assert.expect(2);
     this.owner.register('service:currentUser', currentUserMockNoCourses);
-    await render(hbs`{{dashboard-mycourses}}`);
+    await render(hbs`<DashboardMycourses />`);
     assert.dom('.dashboard-block-header').hasText('My Courses');
 
     assert.dom('.dashboard-block-body').hasText('None');

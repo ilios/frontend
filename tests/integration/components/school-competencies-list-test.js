@@ -20,7 +20,7 @@ module('Integration | Component | school competencies list', function(hooks) {
     let domainsList = [domain];
 
     this.set('domains', domainsList);
-    await render(hbs`{{school-competencies-list domains=domains}}`);
+    await render(hbs`<SchoolCompetenciesList @domains={{domains}} />`);
     const domains = '[data-test-domains] > li';
     const domainTitle = `${domains}:nth-of-type(1)`;
 

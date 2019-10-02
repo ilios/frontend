@@ -41,12 +41,12 @@ module('Integration | Component | dashboard myreports', function(hooks) {
     });
     this.setProperties({ selectedReport: null, selectedYear: '' });
     this.setProperties({ setReport: () => {}, setReportYear: () => {} });
-    await render(hbs`
-      {{dashboard-myreports
-        selectedReport=this.selectedReport
-        selectedYear=this.selectedYear
-        onReportSelect=(action this.setReport)
-        onReportYearSelect=(action this.setReportYear)}}`);
+    await render(hbs`<DashboardMyreports
+      @selectedReport={{this.selectedReport}}
+      @selectedYear={{this.selectedYear}}
+      @onReportSelect={{action this.setReport}}
+      @onReportYearSelect={{action this.setReportYear}}
+    />`);
     assert.equal(component.title, 'My Reports');
     assert.equal(component.reports.length, 2);
     assert.equal(component.reports[0].title, 'report 0');
@@ -55,7 +55,7 @@ module('Integration | Component | dashboard myreports', function(hooks) {
 
   test('display none when no reports', async function(assert) {
     assert.expect(3);
-    await render(hbs`{{dashboard-myreports}}`);
+    await render(hbs`<DashboardMyreports />`);
     assert.equal(component.title, 'My Reports');
     assert.equal(component.reports.length, 1);
     assert.equal(component.reports[0].title, 'None');
@@ -100,12 +100,12 @@ module('Integration | Component | dashboard myreports', function(hooks) {
       this.set('selectedYear', year);
       assert.equal(year, '2016', 'report year bubbles up for query params');
     });
-    await render(hbs`
-      {{dashboard-myreports
-        selectedReport=this.selectedReport
-        selectedYear=this.selectedYear
-        onReportSelect=(action this.setReport)
-        onReportYearSelect=(action this.setReportYear)}}`);
+    await render(hbs`<DashboardMyreports
+      @selectedReport={{this.selectedReport}}
+      @selectedYear={{this.selectedYear}}
+      @onReportSelect={{action this.setReport}}
+      @onReportYearSelect={{action this.setReportYear}}
+    />`);
     assert.equal(component.title, 'My Reports');
     assert.equal(component.reports.length, 1);
     assert.equal(component.reports[0].title, 'my report 0');
@@ -141,12 +141,12 @@ module('Integration | Component | dashboard myreports', function(hooks) {
     this.setProperties({ selectedReport: null, selectedYear: '' });
     this.set('setReport', () => this.set('selectedReport', report));
     this.set('setReportYear', (year) => this.set('selectedYear', year));
-    await render(hbs`
-      {{dashboard-myreports
-        selectedReport=this.selectedReport
-        selectedYear=this.selectedYear
-        onReportSelect=(action this.setReport)
-        onReportYearSelect=(action this.setReportYear)}}`);
+    await render(hbs`<DashboardMyreports
+      @selectedReport={{this.selectedReport}}
+      @selectedYear={{this.selectedYear}}
+      @onReportSelect={{action this.setReport}}
+      @onReportYearSelect={{action this.setReportYear}}
+    />`);
     await component.reports[0].select();
     assert.ok(component.selectedReport.yearsFilterExists);
     assert.equal(component.selectedReport.currentYear, '');

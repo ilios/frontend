@@ -30,7 +30,7 @@ module('Integration | Component | pending single user update', function(hooks) {
     updates[0].user = user;
 
     this.set('user', user);
-    await render(hbs`{{pending-single-user-update user=user}}`);
+    await render(hbs`<PendingSingleUserUpdate @user={{user}} />`);
 
     return settled().then(() => {
       assert.equal(this.element.textContent.trim().search(/The email address in the directory \(directory-email\) does not match the email in ilios \(user-email\)/), 0);

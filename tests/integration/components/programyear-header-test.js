@@ -30,7 +30,7 @@ module('Integration | Component | programyear header', function(hooks) {
     this.set('programYear', programYearModel);
     this.set('canUpdate', true);
 
-    await render(hbs`{{programyear-header programYear=programYear canUpdate=canUpdate}}`);
+    await render(hbs`<ProgramyearHeader @programYear={{programYear}} @canUpdate={{canUpdate}} />`);
     assert.dom('.backtolink').hasText('Back to Program Years');
     assert.dom('header .fa-lock').doesNotExist();
     assert.dom('header .title').hasText('Matriculation Year 2019 - 2020 Lorem Ipsum');
@@ -58,7 +58,7 @@ module('Integration | Component | programyear header', function(hooks) {
     this.set('programYear', programYearModel);
     this.set('canUpdate', true);
 
-    await render(hbs`{{programyear-header programYear=programYear canUpdate=canUpdate}}`);
+    await render(hbs`<ProgramyearHeader @programYear={{programYear}} @canUpdate={{canUpdate}} />`);
     assert.dom('header .title').hasText('Matriculation Year 2019 - 2020 Class of 2023');
     assert.dom('.programyear-publication button').exists();
   });
@@ -86,7 +86,7 @@ module('Integration | Component | programyear header', function(hooks) {
     this.set('programYear', programYearModel);
     this.set('canUpdate', false);
 
-    await render(hbs`{{programyear-header programYear=programYear canUpdate=canUpdate}}`);
+    await render(hbs`<ProgramyearHeader @programYear={{programYear}} @canUpdate={{canUpdate}} />`);
     assert.dom('.programyear-publication button').doesNotExist();
   });
 
@@ -114,7 +114,7 @@ module('Integration | Component | programyear header', function(hooks) {
     this.set('programYear', programYearModel);
     this.set('canUpdate', false);
 
-    await render(hbs`{{programyear-header programYear=programYear canUpdate=canUpdate}}`);
+    await render(hbs`<ProgramyearHeader @programYear={{programYear}} @canUpdate={{canUpdate}} />`);
     assert.dom('header .fa-lock').exists();
   });
 
@@ -140,7 +140,7 @@ module('Integration | Component | programyear header', function(hooks) {
     this.set('programYear', programYearModel);
     this.set('canUpdate', true);
 
-    await render(hbs`{{programyear-header programYear=programYear canUpdate=canUpdate}}`);
+    await render(hbs`<ProgramyearHeader @programYear={{programYear}} @canUpdate={{canUpdate}} />`);
     assert.equal(programYearModel.get('published'), false);
     assert.equal(programYearModel.get('publishedAsTbd'), true);
     await click('.programyear-publication button');

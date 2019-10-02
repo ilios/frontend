@@ -42,7 +42,7 @@ module('Integration | Component | curriculum inventory report list', function(ho
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
-    await render(hbs`{{curriculum-inventory-report-list program=program}}`);
+    await render(hbs`<CurriculumInventoryReportList @program={{program}} />`);
     assert.dom('th').exists({ count: 7 }, 'Table header has seven columns.');
     assert.dom('th').hasText('Report Name', 'First column table header is labeled correctly');
     assert.dom(findAll('th')[1]).hasText('Program', 'Second column table header is labeled correctly');
@@ -81,7 +81,7 @@ module('Integration | Component | curriculum inventory report list', function(ho
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
-    await render(hbs`{{curriculum-inventory-report-list program=program}}`);
+    await render(hbs`<CurriculumInventoryReportList @program={{program}} />`);
     assert.dom('thead tr').exists({ count: 1 }, 'Table header shows.');
     assert.dom('tbody').exists({ count: 1 }, 'Table body shows.');
     assert.dom('tbody [data-test-active-row]').doesNotExist('Table body is empty.');
@@ -109,7 +109,7 @@ module('Integration | Component | curriculum inventory report list', function(ho
     this.set('removeAction', (obj) => {
       assert.equal(report.id, obj.id, 'Report is passed to remove action.');
     });
-    await render(hbs`{{curriculum-inventory-report-list program=program remove=removeAction}}`);
+    await render(hbs`<CurriculumInventoryReportList @program={{program}} @remove={{removeAction}} />`);
     assert.dom('.confirm-removal').doesNotExist('Confirm dialog is initially not visible.');
     await click('[data-test-report="0"] .remove');
     assert.dom('.confirm-removal').exists({ count: 2 }, 'Confirm dialog shows.');
@@ -136,7 +136,7 @@ module('Integration | Component | curriculum inventory report list', function(ho
     this.set('removeAction', () => {
       assert.ok(false, 'Remove action should not have been invoked.');
     });
-    await render(hbs`{{curriculum-inventory-report-list program=program remove=removeAction}}`);
+    await render(hbs`<CurriculumInventoryReportList @program={{program}} @remove={{removeAction}} />`);
     assert.dom('.confirm-removal').doesNotExist('Confirm dialog is initially not visible.');
     await click('[data-test-report="0"] .remove');
     assert.dom('.confirm-removal').exists({ count: 2 }, 'Confirm dialog shows.');
@@ -164,7 +164,11 @@ module('Integration | Component | curriculum inventory report list', function(ho
       this.set('sortBy', what);
       count++;
     });
-    await render(hbs`{{curriculum-inventory-report-list program=program setSortBy=(action setSortBy) sortBy=sortBy}}`);
+    await render(hbs`<CurriculumInventoryReportList
+      @program={{program}}
+      @setSortBy={{action setSortBy}}
+      @sortBy={{sortBy}}
+    />`);
     await click(`th:nth-of-type(1)`);
     await click(`th:nth-of-type(1)`);
     await click(`th:nth-of-type(3)`);
@@ -185,7 +189,7 @@ module('Integration | Component | curriculum inventory report list', function(ho
     this.set('editAction', (obj) => {
       assert.equal(report.id, obj.id, 'Report is passed to edit action.');
     });
-    await render(hbs`{{curriculum-inventory-report-list program=program edit=editAction}}`);
+    await render(hbs`<CurriculumInventoryReportList @program={{program}} @edit={{editAction}} />`);
     await click(`tbody tr:nth-of-type(1) td:nth-of-type(2)`);
     await click(`tbody tr:nth-of-type(1) td:nth-of-type(3)`);
     await click(`tbody tr:nth-of-type(1) td:nth-of-type(4)`);

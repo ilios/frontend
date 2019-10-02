@@ -13,18 +13,18 @@ module('Integration | Component | school manager', function(hooks) {
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
     this.set('nothing', () => { });
     this.set('school', schoolModel);
-    await render(hbs`{{school-manager
-      school=school
-      setSchoolCompetencyDetails=(action nothing)
-      setSchoolManageCompetencies=(action nothing)
-      setSchoolVocabularyDetails=(action nothing)
-      setSchoolLeadershipDetails=(action nothing)
-      setSchoolManageLeadership=(action nothing)
-      setSchoolSessionAttributesDetails=(action nothing)
-      setSchoolManageSessionAttributes=(action nothing)
-      setSchoolSessionTypeDetails=(action nothing)
-      setSchoolManagedSessionType=(action nothing)
-    }}`);
+    await render(hbs`<SchoolManager
+      @school={{school}}
+      @setSchoolCompetencyDetails={{action nothing}}
+      @setSchoolManageCompetencies={{action nothing}}
+      @setSchoolVocabularyDetails={{action nothing}}
+      @setSchoolLeadershipDetails={{action nothing}}
+      @setSchoolManageLeadership={{action nothing}}
+      @setSchoolSessionAttributesDetails={{action nothing}}
+      @setSchoolManageSessionAttributes={{action nothing}}
+      @setSchoolSessionTypeDetails={{action nothing}}
+      @setSchoolManagedSessionType={{action nothing}}
+    />`);
 
     assert.ok(this.element.textContent.includes("Back to Schools List"));
   });

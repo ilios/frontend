@@ -24,7 +24,7 @@ module('Integration | Component | curriculum inventory sequence block dates dura
       duration: 10
     });
     this.set('sequenceBlock', block);
-    await render(hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=sequenceBlock}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockDatesDurationEditor @sequenceBlock={{sequenceBlock}} />`);
     assert.dom('.start-date label').hasText('Start:', 'Start date is labeled correctly.');
     assert.dom('.start-date input').hasValue(
       moment(block.startDate).format('M/D/YYYY'),
@@ -58,9 +58,10 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     };
     this.set('block', block);
     this.set('saveAction', saveAction);
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockDatesDurationEditor 
+      @sequenceBlock={{block}} 
+      @save={{saveAction}} 
+    />`);
     let interactor = openDatepicker(find('.start-date input'));
     interactor.selectDate(newStartDate.toDate());
     interactor = openDatepicker(find('.end-date input'));
@@ -83,9 +84,10 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     };
     this.set('block', block);
     this.set('saveAction', saveAction);
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockDatesDurationEditor
+      @sequenceBlock={{block}}
+      @save={{saveAction}}
+    />`);
     let interactor = openDatepicker(find('.start-date input'));
     interactor.selectDate(newStartDate.toDate());
     interactor = openDatepicker(find('.end-date input'));
@@ -107,9 +109,10 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     };
     this.set('block', block);
     this.set('saveAction', saveAction);
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockDatesDurationEditor
+      @sequenceBlock={{block}}
+      @save={{saveAction}}
+    />`);
     await fillIn('.duration input', newDuration);
     await triggerEvent('.duration input', 'input');
     await click('.buttons .done');
@@ -127,7 +130,10 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     };
     this.set('block', block);
     this.set('cancel', cancelAction);
-    await render(hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block cancel=cancel}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockDatesDurationEditor
+      @sequenceBlock={{block}}
+      @cancel={{cancel}}
+    />`);
     await click('.buttons .cancel');
   });
 
@@ -142,9 +148,10 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     };
     this.set('block', block);
     this.set('saveAction', saveAction);
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockDatesDurationEditor
+      @sequenceBlock={{block}}
+      @save={{saveAction}}
+    />`);
     assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     let interactor = openDatepicker(find('.start-date input'));
     interactor.selectDate(newStartDate.toDate());
@@ -168,9 +175,10 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     };
     this.set('block', block);
     this.set('saveAction', saveAction);
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockDatesDurationEditor
+      @sequenceBlock={{block}}
+      @save={{saveAction}}
+    />`);
     assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     await fillIn('.duration input', '');
     await triggerEvent('.duration input', 'input');
@@ -192,9 +200,10 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     };
     this.set('block', block);
     this.set('saveAction', saveAction);
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockDatesDurationEditor
+      @sequenceBlock={{block}}
+      @save={{saveAction}}
+    />`);
     assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     await fillIn('.duration input', '-10');
     await triggerEvent('.duration input', 'input');
@@ -212,9 +221,10 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     };
     this.set('block', block);
     this.set('saveAction', saveAction);
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockDatesDurationEditor
+      @sequenceBlock={{block}}
+      @save={{saveAction}}
+    />`);
     assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     await click('.buttons .done');
     return settled().then(() => {
@@ -230,9 +240,10 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     };
     this.set('block', block);
     this.set('saveAction', saveAction);
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-dates-duration-editor sequenceBlock=block save=saveAction}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockDatesDurationEditor
+      @sequenceBlock={{block}}
+      @save={{saveAction}}
+    />`);
     assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
     let interactor = openDatepicker(find('.start-date input'));
     interactor.selectDate(new Date());

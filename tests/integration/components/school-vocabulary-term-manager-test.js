@@ -41,16 +41,15 @@ module('Integration | Component | school vocabulary term manager', function(hook
     this.set('term', termModel);
     this.set('vocabulary', vocabularyModel);
     this.set('nothing', () => {});
-    await render(hbs`{{
-      school-vocabulary-term-manager
-      term=term
-      vocabulary=vocabulary
-      manageTerm=(action nothing)
-      manageVocabulary=(action nothing)
-      canUpdate=true
-      canDelete=true
-      canCreate=true
-    }}`);
+    await render(hbs`<SchoolVocabularyTermManager
+      @term={{term}}
+      @vocabulary={{vocabulary}}
+      @manageTerm={{action nothing}}
+      @manageVocabulary={{action nothing}}
+      @canUpdate={{true}}
+      @canDelete={{true}}
+      @canCreate={{true}}
+    />`);
 
     assert.equal(component.title, `Title: ${term.title}`);
     assert.equal(component.description, `Description: ${term.description}`);
@@ -79,16 +78,15 @@ module('Integration | Component | school vocabulary term manager', function(hook
     this.set('term', termModel);
     this.set('vocabulary', vocabularyModel);
     this.set('nothing', () => {});
-    await render(hbs`{{
-      school-vocabulary-term-manager
-      term=term
-      vocabulary=vocabulary
-      manageTerm=(action nothing)
-      manageVocabulary=(action nothing)
-      canUpdate=true
-      canDelete=true
-      canCreate=true
-    }}`);
+    await render(hbs`<SchoolVocabularyTermManager
+      @term={{term}}
+      @vocabulary={{vocabulary}}
+      @manageTerm={{action nothing}}
+      @manageVocabulary={{action nothing}}
+      @canUpdate={{true}}
+      @canDelete={{true}}
+      @canCreate={{true}}
+    />`);
     assert.notOk(component.isActive.active);
     await component.isActive.toggle();
     assert.ok(component.isActive.active);
@@ -108,16 +106,15 @@ module('Integration | Component | school vocabulary term manager', function(hook
     this.set('term', termModel);
     this.set('vocabulary', vocabularyModel);
     this.set('nothing', () => {});
-    await render(hbs`{{
-      school-vocabulary-term-manager
-      term=term
-      vocabulary=vocabulary
-      manageTerm=(action nothing)
-      manageVocabulary=(action nothing)
-      canUpdate=true
-      canDelete=true
-      canCreate=true
-    }}`);
+    await render(hbs`<SchoolVocabularyTermManager
+      @term={{term}}
+      @vocabulary={{vocabulary}}
+      @manageTerm={{action nothing}}
+      @manageVocabulary={{action nothing}}
+      @canUpdate={{true}}
+      @canDelete={{true}}
+      @canCreate={{true}}
+    />`);
     assert.ok(component.isActive.active);
     await component.isActive.toggle();
     assert.notOk(component.isActive.active);
@@ -138,16 +135,15 @@ module('Integration | Component | school vocabulary term manager', function(hook
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
     this.set('nothing', () => {});
-    await render(hbs`{{
-      school-vocabulary-term-manager
-      term=term
-      vocabulary=vocabulary
-      manageTerm=(action nothing)
-      manageVocabulary=(action nothing)
-      canUpdate=true
-      canDelete=true
-      canCreate=true
-    }}`);
+    await render(hbs`<SchoolVocabularyTermManager
+      @term={{term}}
+      @vocabulary={{vocabulary}}
+      @manageTerm={{action nothing}}
+      @manageVocabulary={{action nothing}}
+      @canUpdate={{true}}
+      @canDelete={{true}}
+      @canCreate={{true}}
+    />`);
     assert.equal(component.title, `Title: ${term.title}`);
     await component.editTitle();
     await component.changeTitle('new title');
@@ -169,16 +165,15 @@ module('Integration | Component | school vocabulary term manager', function(hook
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
     this.set('nothing', () => {});
-    await render(hbs`{{
-      school-vocabulary-term-manager
-      term=term
-      vocabulary=vocabulary
-      manageTerm=(action nothing)
-      manageVocabulary=(action nothing)
-      canUpdate=true
-      canDelete=true
-      canCreate=true
-    }}`);
+    await render(hbs`<SchoolVocabularyTermManager
+      @term={{term}}
+      @vocabulary={{vocabulary}}
+      @manageTerm={{action nothing}}
+      @manageVocabulary={{action nothing}}
+      @canUpdate={{true}}
+      @canDelete={{true}}
+      @canCreate={{true}}
+    />`);
     assert.equal(component.title, `Title: ${term.title}`);
     assert.notOk(component.hasError);
     await component.editTitle();
@@ -207,16 +202,15 @@ module('Integration | Component | school vocabulary term manager', function(hook
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
     this.set('nothing', () => {});
-    await render(hbs`{{
-      school-vocabulary-term-manager
-      term=term
-      vocabulary=vocabulary
-      manageTerm=(action nothing)
-      manageVocabulary=(action nothing)
-      canUpdate=true
-      canDelete=true
-      canCreate=true
-    }}`);
+    await render(hbs`<SchoolVocabularyTermManager
+      @term={{term}}
+      @vocabulary={{vocabulary}}
+      @manageTerm={{action nothing}}
+      @manageVocabulary={{action nothing}}
+      @canUpdate={{true}}
+      @canDelete={{true}}
+      @canCreate={{true}}
+    />`);
     assert.equal(component.title, `Title: ${term.title}`);
     assert.notOk(component.hasError);
     await component.editTitle();
@@ -240,16 +234,15 @@ module('Integration | Component | school vocabulary term manager', function(hook
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
     this.set('nothing', () => {});
-    await render(hbs`{{
-      school-vocabulary-term-manager
-      term=term
-      vocabulary=vocabulary
-      manageTerm=(action nothing)
-      manageVocabulary=(action nothing)
-      canUpdate=true
-      canDelete=true
-      canCreate=true
-    }}`);
+    await render(hbs`<SchoolVocabularyTermManager
+      @term={{term}}
+      @vocabulary={{vocabulary}}
+      @manageTerm={{action nothing}}
+      @manageVocabulary={{action nothing}}
+      @canUpdate={{true}}
+      @canDelete={{true}}
+      @canCreate={{true}}
+    />`);
     assert.equal(component.title, `Title: ${term.title}`);
     assert.equal(component.subTerms.list.length, 0);
 
@@ -274,16 +267,15 @@ module('Integration | Component | school vocabulary term manager', function(hook
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
     this.set('nothing', () => {});
-    await render(hbs`{{
-      school-vocabulary-term-manager
-      term=term
-      vocabulary=vocabulary
-      manageTerm=(action nothing)
-      manageVocabulary=(action nothing)
-      canUpdate=true
-      canDelete=true
-      canCreate=true
-    }}`);
+    await render(hbs`<SchoolVocabularyTermManager
+      @term={{term}}
+      @vocabulary={{vocabulary}}
+      @manageTerm={{action nothing}}
+      @manageVocabulary={{action nothing}}
+      @canUpdate={{true}}
+      @canDelete={{true}}
+      @canCreate={{true}}
+    />`);
     assert.equal(component.title, `Title: ${term.title}`);
     assert.equal(component.subTerms.list.length, 0);
 
@@ -315,16 +307,15 @@ module('Integration | Component | school vocabulary term manager', function(hook
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
     this.set('nothing', () => {});
-    await render(hbs`{{
-      school-vocabulary-term-manager
-      term=term
-      vocabulary=vocabulary
-      manageTerm=(action nothing)
-      manageVocabulary=(action nothing)
-      canUpdate=true
-      canDelete=true
-      canCreate=true
-    }}`);
+    await render(hbs`<SchoolVocabularyTermManager
+      @term={{term}}
+      @vocabulary={{vocabulary}}
+      @manageTerm={{action nothing}}
+      @manageVocabulary={{action nothing}}
+      @canUpdate={{true}}
+      @canDelete={{true}}
+      @canCreate={{true}}
+    />`);
     assert.equal(component.title, `Title: ${term.title}`);
     assert.equal(component.subTerms.list.length, 1);
 

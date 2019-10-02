@@ -31,11 +31,11 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
     this.set('nothing', parseInt);
     this.set('learnerGroup', learnerGroup);
 
-    await render(hbs`{{learnergroup-instructor-manager
-      learnerGroup=learnerGroup
-      save=(action nothing)
-      close=(action nothing)
-    }}`);
+    await render(hbs`<LearnergroupInstructorManager
+      @learnerGroup={{learnerGroup}}
+      @save={{action nothing}}
+      @close={{action nothing}}
+    />`);
 
     assert.dom('li').hasText('test person |');
     assert.dom(findAll('li')[1]).hasText('test group |');
@@ -76,11 +76,11 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
     });
     this.set('learnerGroup', learnerGroup);
 
-    await render(hbs`{{learnergroup-instructor-manager
-      learnerGroup=learnerGroup
-      save=(action save)
-      close=(action nothing)
-    }}`);
+    await render(hbs`<LearnergroupInstructorManager
+      @learnerGroup={{learnerGroup}}
+      @save={{action save}}
+      @close={{action nothing}}
+    />`);
 
     assert.dom(group1).hasText('test group |');
     assert.dom(group2).hasText('test group 2 |');
@@ -125,11 +125,11 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
     });
     this.set('learnerGroup', learnerGroup);
 
-    await render(hbs`{{learnergroup-instructor-manager
-      learnerGroup=learnerGroup
-      save=(action save)
-      close=(action nothing)
-    }}`);
+    await render(hbs`<LearnergroupInstructorManager
+      @learnerGroup={{learnerGroup}}
+      @save={{action save}}
+      @close={{action nothing}}
+    />`);
 
     assert.dom(user1).hasText('test person |');
     assert.dom(user2).hasText('test person 2 |');
@@ -146,10 +146,10 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
       assert.ok(true);
     });
 
-    await render(hbs`{{learnergroup-instructor-manager
-      save=(action nothing)
-      close=(action close)
-    }}`);
+    await render(hbs`<LearnergroupInstructorManager
+      @save={{action nothing}}
+      @close={{action close}}
+    />`);
 
     await click('.bigcancel');
   });

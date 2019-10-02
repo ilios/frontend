@@ -97,14 +97,13 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('sortBy', 'title');
     this.set('setSortBy', null);
 
-    await render(hbs`
-    {{curriculum-inventory-sequence-block-overview
-      report=report
-      sequenceBlock=sequenceBlock
-      canUpdate=true
-      sortBy=sortBy
-      setSortBy=setSortBy
-    }}`);
+    await render(hbs`<CurriculumInventorySequenceBlockOverview
+      @report={{report}}
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
     assert.dom('.description label').hasText('Description:', 'Description label is correct.');
     assert.dom('.description .editinplace').hasText(block.description, 'Block description is visible.');
     assert.dom('.course label').hasText('Course:', 'Course label is correct.');
@@ -209,13 +208,13 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`{{curriculum-inventory-sequence-block-overview
-        report=report
-        sequenceBlock=sequenceBlock
-        canUpdate=true
-        sortBy=sortBy
-        setSortBy=setSortBy}}
-    `);
+    await render(hbs`<CurriculumInventorySequenceBlockOverview
+      @report={{report}}
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
     assert.dom('.order-in-sequence > span').hasText('n/a');
   });
 
@@ -261,8 +260,13 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`{{curriculum-inventory-sequence-block-overview
-      report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockOverview
+      @report={{report}}
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
 
     assert.dom('.order-in-sequence > span').hasText('n/a');
   });
@@ -325,8 +329,13 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`{{curriculum-inventory-sequence-block-overview
-      report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockOverview
+      @report={{report}}
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
 
     await click('.course .editinplace .clickable');
     assert.dom('.course option').exists({ count: 4 }, 'Linkable courses dropdown contains four options.');
@@ -390,8 +399,13 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`{{curriculum-inventory-sequence-block-overview
-      report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockOverview
+      @report={{report}}
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
 
     assert.dom('.description .editinplace').hasText('Click to add a description.');
     await click('.description .editinplace .clickable');
@@ -436,8 +450,13 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`{{curriculum-inventory-sequence-block-overview
-      report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockOverview
+      @report={{report}}
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
 
     assert.dom('.required .editinplace').hasText('Optional (elective)');
     await click('.required .editinplace .clickable');
@@ -482,8 +501,13 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`{{curriculum-inventory-sequence-block-overview
-      report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockOverview
+      @report={{report}}
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
 
     assert.dom('.track input').isChecked('Track toggle is initially set to "yes"');
     await click('.track .switch-label');
@@ -524,8 +548,13 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`{{curriculum-inventory-sequence-block-overview
-      report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockOverview
+      @report={{report}}
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
     assert.dom('.child-sequence-order .editinplace').hasText('Ordered');
     await click('.child-sequence-order .editinplace .clickable');
     const newVal = 2;
@@ -585,8 +614,13 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('sortBy', 'title');
     this.set('setSortBy', null);
 
-    await render(hbs`{{curriculum-inventory-sequence-block-overview
-      report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockOverview
+      @report={{report}}
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
     assert.dom('.order-in-sequence .editinplace').hasText(sequenceBlockModel.get('orderInSequence').toString());
     await click('.order-in-sequence .editinplace .clickable');
     assert.dom('.order-in-sequence option').exists({ count: 2 }, 'There should be two options');
@@ -634,8 +668,13 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`{{curriculum-inventory-sequence-block-overview
-      report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockOverview
+      @report={{report}}
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
 
     assert.dom('.academic-level .editinplace').hasText(academicLevels[0].name);
     await click('.academic-level .editinplace .clickable');
@@ -715,8 +754,13 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('sortBy', 'title');
     this.set('setSortBy', null);
 
-    await render(hbs`{{curriculum-inventory-sequence-block-overview
-      report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockOverview
+      @report={{report}}
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
     assert.dom('.curriculum-inventory-sequence-block-session-manager').doesNotExist('Sessions-manager is initially not visible.');
     assert.dom('.sessions').exists({ count: 1 }, 'Sessions-list is initially visible.');
 
@@ -808,8 +852,13 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('sortBy', 'title');
     this.set('setSortBy', null);
 
-    await render(hbs`{{curriculum-inventory-sequence-block-overview
-      report=report sequenceBlock=sequenceBlock canUpdate=false sortBy=sortBy setSortBy=setSortBy}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockOverview
+      @report={{report}}
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{false}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
 
     assert.dom('.description > span').hasText(block.description, 'Block description is visible.');
     assert.dom('[data-test-course-title]').hasText(course.title, 'Course title is visible.');
@@ -886,8 +935,13 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`{{curriculum-inventory-sequence-block-overview
-      report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockOverview
+      @report={{report}}
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
 
     assert.dom('.minimum .editinplace').hasText('10');
     await click('.required .editinplace .clickable');
@@ -930,8 +984,13 @@ module('Integration | Component | curriculum inventory sequence block overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`{{curriculum-inventory-sequence-block-overview
-      report=report sequenceBlock=sequenceBlock canUpdate=true sortBy=sortBy setSortBy=setSortBy}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockOverview
+      @report={{report}}
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
 
     assert.dom('.is-selective').hasNoClass('hidden');
     assert.dom('.is-selective').hasText('This sequence block has been marked as a selective.');

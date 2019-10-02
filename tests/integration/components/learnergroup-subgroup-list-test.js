@@ -32,7 +32,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
 
     this.set('parentGroup', parentGroup);
-    await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup}}`);
+    await render(hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} />`);
     assert.dom('th').hasText('Learner Group Title');
     assert.dom(findAll('th')[1]).hasText('Members');
     assert.dom(findAll('th')[2]).hasText('Subgroups');
@@ -63,10 +63,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     };
 
     this.set('parentGroup', parentGroup);
-    await render(hbs`
-      {{learnergroup-subgroup-list
-        canDelete=true
-        parentGroup=parentGroup}}`);
+    await render(hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{parentGroup}} />`);
     await click('tbody td:nth-of-type(5) .remove');
     await click('tbody tr:nth-of-type(2) .remove');
   });
@@ -84,10 +81,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     const parentGroup = { children: resolve([subGroup1]) };
 
     this.set('parentGroup', parentGroup);
-    await render(hbs`
-      {{learnergroup-subgroup-list
-        canDelete=true
-        parentGroup=parentGroup}}`);
+    await render(hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{parentGroup}} />`);
     assert.dom('tbody td:nth-of-type(5) .remove').doesNotExist();
   });
 
@@ -103,10 +97,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     };
 
     this.set('parentGroup', parentGroup);
-    await render(hbs`
-      {{learnergroup-subgroup-list
-        canDelete=true
-        parentGroup=parentGroup}}`);
+    await render(hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{parentGroup}} />`);
     await click('tbody td:nth-of-type(5) .remove');
     assert.dom('tbody tr').hasClass('confirm-removal');
     assert.equal(find(findAll('tbody tr')[1]).textContent.trim().search(/Are you sure/), 0);
@@ -127,7 +118,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
 
     this.set('parentGroup', parentGroup);
-    await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canCreate=true}}`);
+    await render(hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`);
 
     assert.dom('tbody tr:nth-of-type(1) td').hasText('first');
 
@@ -171,7 +162,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     const multiGroupCount = 'input';
     const done = '.done';
 
-    await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canCreate=true}}`);
+    await render(hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`);
     assert.dom(firstGroupTitle).hasText('group 1');
     await click(expandButton);
     await click(multiGroupButton);
@@ -208,7 +199,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     const multiGroupCount = 'input';
     const done = '.done';
 
-    await render(hbs`{{learnergroup-subgroup-list parentGroup=parentGroup canCreate=true}}`);
+    await render(hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`);
     await click(expandButton);
     await click(multiGroupButton);
     await fillIn(multiGroupCount, 1);

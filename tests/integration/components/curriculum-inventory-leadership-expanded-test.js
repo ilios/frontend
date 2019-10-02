@@ -40,14 +40,14 @@ module('Integration | Component | curriculum inventory leadership expanded', fun
 
     this.set('report', report);
     this.set('nothing', parseInt);
-    await render(hbs`{{curriculum-inventory-leadership-expanded
-      report=report
-      canUpdate=true
-      collapse=(action nothing)
-      expand=(action nothing)
-      isManaging=false
-      setIsManaging=(action nothing)
-    }}`);
+    await render(hbs`<CurriculumInventoryLeadershipExpanded
+      @report={{report}}
+      @canUpdate={{true}}
+      @collapse={{action nothing}}
+      @expand={{action nothing}}
+      @isManaging={{false}}
+      @setIsManaging={{action nothing}}
+    />`);
     const title = '.title';
     const table = 'table';
     const administrators = `${table} tbody tr:nth-of-type(1) td:nth-of-type(1) li`;
@@ -80,14 +80,14 @@ module('Integration | Component | curriculum inventory leadership expanded', fun
       assert.ok(true, 'Action was fired');
     });
     this.set('nothing', parseInt);
-    await render(hbs`{{curriculum-inventory-leadership-expanded
-      report=report
-      canUpdate=true
-      collapse=(action click)
-      expand=(action nothing)
-      isManaging=false
-      setIsManaging=(action nothing)
-    }}`);
+    await render(hbs`<CurriculumInventoryLeadershipExpanded
+      @report={{report}}
+      @canUpdate={{true}}
+      @collapse={{action click}}
+      @expand={{action nothing}}
+      @isManaging={{false}}
+      @setIsManaging={{action nothing}}
+    />`);
     const title = '.title';
 
     await click(title);
@@ -113,14 +113,14 @@ module('Integration | Component | curriculum inventory leadership expanded', fun
       assert.ok(true, 'Action was fired');
     });
     this.set('nothing', parseInt);
-    await render(hbs`{{curriculum-inventory-leadership-expanded
-      report=report
-      canUpdate=true
-      collapse=(action nothing)
-      expand=(action nothing)
-      isManaging=false
-      setIsManaging=(action click)
-    }}`);
+    await render(hbs`<CurriculumInventoryLeadershipExpanded
+      @report={{report}}
+      @canUpdate={{true}}
+      @collapse={{action nothing}}
+      @expand={{action nothing}}
+      @isManaging={{false}}
+      @setIsManaging={{action click}}
+    />`);
     const manage = '.actions button';
 
     await click(manage);

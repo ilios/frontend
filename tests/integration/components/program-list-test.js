@@ -55,7 +55,7 @@ module('Integration | Component | program list', function(hooks) {
     this.owner.register('service:permissionChecker', permissionCheckerMock);
     this.set('programs', [ programModel1, programModel2 ]);
 
-    await render(hbs`{{program-list programs=programs}}`);
+    await render(hbs`<ProgramList @programs={{programs}} />`);
     await settled();
     assert.dom('thead tr:nth-of-type(1) th').hasText('Program Title');
     assert.dom(findAll('thead tr:nth-of-type(1) th')[1]).hasText('School');
@@ -81,7 +81,7 @@ module('Integration | Component | program list', function(hooks) {
     assert.expect(3);
 
     this.set('programs', []);
-    await render(hbs`{{program-list programs=programs}}`);
+    await render(hbs`<ProgramList @programs={{programs}} />`);
     await settled();
     assert.dom('tbody').exists({ count: 1 });
     assert.dom('tbody [data-test-active-row]').doesNotExist();
@@ -104,7 +104,7 @@ module('Integration | Component | program list', function(hooks) {
       assert.equal(program, programModel );
     });
 
-    await render(hbs`{{program-list programs=programs edit=editAction}}`);
+    await render(hbs`<ProgramList @programs={{programs}} @edit={{editAction}} />`);
     await settled();
     await click(findAll('tbody tr:nth-of-type(1) td')[1]);
   });
@@ -132,7 +132,7 @@ module('Integration | Component | program list', function(hooks) {
       assert.ok(false, 'This function should never be called.');
     });
 
-    await render(hbs`{{program-list programs=programs remove=removeAction}}`);
+    await render(hbs`<ProgramList @programs={{programs}} @remove={{removeAction}} />`);
     await settled();
     assert.dom('tbody tr').exists({ count: 1 });
     await click('tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
@@ -166,7 +166,7 @@ module('Integration | Component | program list', function(hooks) {
     });
     this.set('programs', [ programModel ]);
 
-    await render(hbs`{{program-list programs=programs remove=removeAction}}`);
+    await render(hbs`<ProgramList @programs={{programs}} @remove={{removeAction}} />`);
     await settled();
     assert.dom('tbody tr').exists({ count: 1 });
     await click('tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
@@ -195,7 +195,7 @@ module('Integration | Component | program list', function(hooks) {
     this.set('programs', [ programModel ]);
     this.owner.register('service:permissionChecker', permissionCheckerMock);
 
-    await render(hbs`{{program-list programs=programs}}`);
+    await render(hbs`<ProgramList @programs={{programs}} />`);
     await settled();
     assert.dom('tbody tr').exists({ count: 1 });
     assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(4) .fa-trash.disabled').exists({ count: 1 });
@@ -225,7 +225,7 @@ module('Integration | Component | program list', function(hooks) {
       assert.equal(program, programModel);
     });
 
-    await render(hbs`{{program-list programs=programs activate=activate}}`);
+    await render(hbs`<ProgramList @programs={{programs}} @activate={{activate}} />`);
     await settled();
     await click('tbody tr:nth-of-type(1) td:nth-of-type(4) button');
     await settled();

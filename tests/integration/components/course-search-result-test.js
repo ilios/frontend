@@ -25,7 +25,7 @@ module('Integration | Component | course-search-result', function(hooks) {
       }]
     });
     this.set('course', course);
-    await render(hbs`{{course-search-result course=course}}`);
+    await render(hbs`<CourseSearchResult @course={{course}} />`);
     assert.equal(component.courseTitle, 'Course 1');
     assert.equal(component.sessions.objectAt(0).text, 'Session 1');
     assert.equal(component.sessions.objectAt(1).text, 'Session 2');

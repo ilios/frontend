@@ -70,10 +70,7 @@ module('Integration | Component | school session types list', function(hooks) {
 
     this.set('sessionTypes', [sessionType1, sessionType2, sessionType3]);
     this.set('nothing', parseInt);
-    await render(hbs`{{school-session-types-list
-      sessionTypes=sessionTypes
-      manageSessionType=(action nothing)
-    }}`);
+    await render(hbs`<SchoolSessionTypesList @sessionTypes={{sessionTypes}} @manageSessionType={{action nothing}} />`);
 
     const rows = 'table tbody tr';
     const firstSessionType = `${rows}:nth-of-type(1)`;
@@ -139,10 +136,10 @@ module('Integration | Component | school session types list', function(hooks) {
     this.set('manageSessionType', sessionTypeId => {
       assert.equal(sessionTypeId, 1);
     });
-    await render(hbs`{{school-session-types-list
-      sessionTypes=sessionTypes
-      manageSessionType=(action manageSessionType)
-    }}`);
+    await render(hbs`<SchoolSessionTypesList
+      @sessionTypes={{sessionTypes}}
+      @manageSessionType={{action manageSessionType}}
+    />`);
 
     await settled();
     const rows = 'table tbody tr';
@@ -166,10 +163,10 @@ module('Integration | Component | school session types list', function(hooks) {
     this.set('manageSessionType', sessionTypeId => {
       assert.equal(sessionTypeId, 1);
     });
-    await render(hbs`{{school-session-types-list
-      sessionTypes=sessionTypes
-      manageSessionType=(action manageSessionType)
-    }}`);
+    await render(hbs`<SchoolSessionTypesList
+      @sessionTypes={{sessionTypes}}
+      @manageSessionType={{action manageSessionType}}
+    />`);
 
     await settled();
     const rows = 'table tbody tr';
@@ -211,11 +208,11 @@ module('Integration | Component | school session types list', function(hooks) {
 
     this.set('sessionTypes', [linkedSessionType, unlinkedSessionType]);
     this.set('nothing', parseInt);
-    await render(hbs`{{school-session-types-list
-      sessionTypes=sessionTypes
-      manageSessionType=(action nothing)
-      canDelete=true
-    }}`);
+    await render(hbs`<SchoolSessionTypesList
+      @sessionTypes={{sessionTypes}}
+      @manageSessionType={{action nothing}}
+      @canDelete={{true}}
+    />`);
 
     await settled();
     const rows = 'table tbody tr';
@@ -251,11 +248,11 @@ module('Integration | Component | school session types list', function(hooks) {
 
     this.set('sessionTypes', [sessionType]);
     this.set('nothing', parseInt);
-    await render(hbs`{{school-session-types-list
-      sessionTypes=sessionTypes
-      manageSessionType=(action nothing)
-      canDelete=true
-    }}`);
+    await render(hbs`<SchoolSessionTypesList
+      @sessionTypes={{sessionTypes}}
+      @manageSessionType={{action nothing}}
+      @canDelete={{true}}
+    />`);
 
     await settled();
     const rows = 'table tbody tr';

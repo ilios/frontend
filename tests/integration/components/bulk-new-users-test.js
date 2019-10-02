@@ -92,7 +92,7 @@ module('Integration | Component | bulk new users', function(hooks) {
     assert.expect(6);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     let content = this.element.textContent.trim();
     assert.notEqual(content.search(/File with user data/), -1);
@@ -110,7 +110,7 @@ module('Integration | Component | bulk new users', function(hooks) {
     assert.expect(10);
     this.set('nothing', parseInt);
 
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
     await click('.click-choice-buttons .second-button');
     let content = this.element.textContent.trim();
     assert.notEqual(content.search(/File with user data/), -1);
@@ -133,7 +133,7 @@ module('Integration | Component | bulk new users', function(hooks) {
 
   test('parses file into table', async function (assert) {
     this.set('nothing', parseInt);
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     let users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -170,7 +170,7 @@ module('Integration | Component | bulk new users', function(hooks) {
     this.server.create('user-role', { id: 4 });
 
     this.set('nothing', parseInt);
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     let users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -220,7 +220,7 @@ module('Integration | Component | bulk new users', function(hooks) {
     this.server.create('user-role', { id: 4 });
 
     this.set('nothing', parseInt);
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     run(async () => {
       await click('.click-choice-buttons .second-button');
@@ -276,13 +276,13 @@ module('Integration | Component | bulk new users', function(hooks) {
     this.set('close', ()=> {
       assert.ok(true);
     });
-    await render(hbs`{{bulk-new-users close=(action close)}}`);
+    await render(hbs`<BulkNewUsers @close={{action close}} />`);
     await click('.cancel');
   });
 
   test('validate firstName', async function(assert) {
     this.set('nothing', parseInt);
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     let users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -302,7 +302,7 @@ module('Integration | Component | bulk new users', function(hooks) {
 
   test('validate lastName', async function(assert) {
     this.set('nothing', parseInt);
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     let users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -322,7 +322,7 @@ module('Integration | Component | bulk new users', function(hooks) {
 
   test('validate middleName', async function(assert) {
     this.set('nothing', parseInt);
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     let users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -343,7 +343,7 @@ module('Integration | Component | bulk new users', function(hooks) {
 
   test('validate email address', async function(assert) {
     this.set('nothing', parseInt);
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     let users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -363,7 +363,7 @@ module('Integration | Component | bulk new users', function(hooks) {
 
   test('validate campusId', async function(assert) {
     this.set('nothing', parseInt);
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     let users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -383,7 +383,7 @@ module('Integration | Component | bulk new users', function(hooks) {
 
   test('validate otherId', async function(assert) {
     this.set('nothing', parseInt);
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     let users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -405,7 +405,7 @@ module('Integration | Component | bulk new users', function(hooks) {
     this.set('nothing', parseInt);
     const user = this.server.create('user');
     this.server.create('authentication', { user, username: 'existingName' });
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     let users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -429,7 +429,7 @@ module('Integration | Component | bulk new users', function(hooks) {
     });
     this.set('nothing', parseInt);
     const user = this.server.create('user');
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     let users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
@@ -447,7 +447,7 @@ module('Integration | Component | bulk new users', function(hooks) {
       return new Response(500);
     });
     this.set('nothing', parseInt);
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     let users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
@@ -461,7 +461,7 @@ module('Integration | Component | bulk new users', function(hooks) {
 
   test('username not required', async function(assert) {
     this.set('nothing', parseInt);
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     let users = [
       ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', '1234Test'],
@@ -476,7 +476,7 @@ module('Integration | Component | bulk new users', function(hooks) {
 
   test('password not required if username is blank', async function(assert) {
     this.set('nothing', parseInt);
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     let users = [
       ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],
@@ -494,7 +494,7 @@ module('Integration | Component | bulk new users', function(hooks) {
     this.set('nothing', parseInt);
     const proposedNewUsers = '[data-test-proposed-new-users]';
     const waitSaving = '[data-test-wait-saving]';
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     let users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', '', '123Test']
@@ -512,7 +512,7 @@ module('Integration | Component | bulk new users', function(hooks) {
 
   test('ignore header row', async function(assert) {
     this.set('nothing', parseInt);
-    await render(hbs`{{bulk-new-users close=(action nothing)}}`);
+    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
 
     let users = [
       ['First', 'Last', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],

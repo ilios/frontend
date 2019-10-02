@@ -26,7 +26,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
     const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
     this.set('report', report);
 
-    await render(hbs`{{curriculum-inventory-report-rollover report=report}}`);
+    await render(hbs`<CurriculumInventoryReportRollover @report={{report}} />`);
 
     const yearSelect = '.years select';
     const name = '.name input';
@@ -73,7 +73,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
     this.set('visit', (newReport) => {
       assert.equal(newReport.id, 14);
     });
-    await render(hbs`{{curriculum-inventory-report-rollover report=report visit=(action visit)}}`);
+    await render(hbs`<CurriculumInventoryReportRollover @report={{report}} @visit={{action visit}} />`);
     await click('.done');
   });
 
@@ -111,7 +111,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
     this.set('report', report);
     this.set('visit', () => {});
 
-    await render(hbs`{{curriculum-inventory-report-rollover report=report visit=(action visit)}}`);
+    await render(hbs`<CurriculumInventoryReportRollover @report={{report}} @visit={{action visit}} />`);
 
     const input = `.name input`;
     const textarea = `.description textarea`;
@@ -127,7 +127,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
     const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
     this.set('report', report);
 
-    await render(hbs`{{curriculum-inventory-report-rollover report=report}}`);
+    await render(hbs`<CurriculumInventoryReportRollover @report={{report}} />`);
     assert.dom('.validation-error-message').doesNotExist();
   });
 
@@ -137,7 +137,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
 
     this.set('report', report);
 
-    await render(hbs`{{curriculum-inventory-report-rollover report=report}}`);
+    await render(hbs`<CurriculumInventoryReportRollover @report={{report}} />`);
 
     const name = '.name';
     const input = `${name} input`;

@@ -86,9 +86,12 @@ module('Integration | Component | curriculum inventory sequence block session ma
     this.set('sequenceBlock', block);
     this.set('sortBy', 'title');
     this.set('setSortBy', function(){});
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      @sessions={{sessions}}
+      @sequenceBlock={{sequenceBlock}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
 
     assert.dom('.actions .bigadd').exists({ count: 1 }, 'Save button is visible.');
     assert.dom('.actions .bigcancel').exists({ count: 1 }, 'Cancel button is visible.');
@@ -143,9 +146,12 @@ module('Integration | Component | curriculum inventory sequence block session ma
     this.set('sequenceBlock', block);
     this.set('sortBy', 'title');
     this.set('setSortBy', function(){});
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      @sessions={{sessions}}
+      @sequenceBlock={{sequenceBlock}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
     assert.dom('thead tr').exists({ count: 1 }, 'Table header is visible,');
     assert.dom('tbody tr').doesNotExist('but table body is empty.');
   });
@@ -172,9 +178,12 @@ module('Integration | Component | curriculum inventory sequence block session ma
     this.set('setSortBy', function(what){
       assert.equal(what, 'title', "Sorting callback gets called for session titles.");
     });
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      @sessions={{sessions}}
+      @sequenceBlock={{sequenceBlock}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
     await click(findAll('thead th')[2]);
   });
 
@@ -200,9 +209,12 @@ module('Integration | Component | curriculum inventory sequence block session ma
     this.set('setSortBy', function(what){
       assert.equal(what, 'sessionType.title', "Sorting callback gets called for session type titles.");
     });
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      @sessions={{sessions}}
+      @sequenceBlock={{sequenceBlock}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
     await click(findAll('thead th')[3]);
   });
 
@@ -229,9 +241,12 @@ module('Integration | Component | curriculum inventory sequence block session ma
     this.set('setSortBy', function(what){
       assert.equal(what, 'offerings.length', "Sorting callback gets called for offerings length.");
     });
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      @sessions={{sessions}}
+      @sequenceBlock={{sequenceBlock}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
     await click(findAll('thead th')[5]);
   });
 
@@ -258,9 +273,12 @@ module('Integration | Component | curriculum inventory sequence block session ma
     this.set('sequenceBlock', block);
     this.set('sortBy', 'id');
     this.set('setSortBy', function(){});
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      @sessions={{sessions}}
+      @sequenceBlock={{sequenceBlock}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
     assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(maxDuration);
     await click('tbody tr:nth-of-type(1) td:nth-of-type(1) input');
     assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(totalSumDuration);
@@ -299,9 +317,10 @@ module('Integration | Component | curriculum inventory sequence block session ma
     this.set('sessions', resolve([ session1, session2 ]));
     this.set('sequenceBlock', block);
 
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock }}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      @sessions={{sessions}}
+      @sequenceBlock={{sequenceBlock}}
+    />`);
 
     assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(maxDuration);
     assert.dom(findAll('tbody tr:nth-of-type(2) td')[4]).hasText(totalSumDuration);
@@ -362,9 +381,12 @@ module('Integration | Component | curriculum inventory sequence block session ma
       assert.ok(excludedSessions.includes(session1));
       assert.ok(excludedSessions.includes(session2));
     });
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sortBy=sortBy sequenceBlock=sequenceBlock save=(action save)}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      @sessions={{sessions}}
+      @sortBy={{sortBy}}
+      @sequenceBlock={{sequenceBlock}}
+      @save={{action save}}
+    />`);
     await click('tbody tr:nth-of-type(2) td:nth-of-type(1) input');
     await click('tbody tr:nth-of-type(1) td:nth-of-type(2) input');
     await click('tbody tr:nth-of-type(3) td:nth-of-type(2) input');
@@ -395,9 +417,12 @@ module('Integration | Component | curriculum inventory sequence block session ma
     this.set('cancel', () => {
       assert.ok(true, 'Cancel action fired.');
     });
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy cancel=(action cancel)}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      @sessions={{sessions}}
+      @sequenceBlock={{sequenceBlock}}
+      @sortBy={{sortBy}}
+      @cancel={{action cancel}}
+    />`);
     await click('.actions .bigcancel');
   });
 
@@ -464,9 +489,12 @@ module('Integration | Component | curriculum inventory sequence block session ma
     this.set('sequenceBlock', block);
     this.set('sortBy', 'title');
     this.set('setSortBy', function(){});
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      @sessions={{sessions}}
+      @sequenceBlock={{sequenceBlock}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
 
     assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(1) input').isNotChecked('Count offerings as one is un-checked.');
     assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(1) input').isNotChecked('Count offerings as one is un-checked.');
@@ -552,9 +580,12 @@ module('Integration | Component | curriculum inventory sequence block session ma
     this.set('sequenceBlock', block);
     this.set('sortBy', 'title');
     this.set('setSortBy', function(){});
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-session-manager sessions=sessions sequenceBlock=sequenceBlock sortBy=sortBy setSortBy=setSortBy}}`
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      @sessions={{sessions}}
+      @sequenceBlock={{sequenceBlock}}
+      @sortBy={{sortBy}}
+      @setSortBy={{setSortBy}}
+    />`);
 
     assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(2) input').isNotChecked('Count offerings as one is un-checked.');
     assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(2) input').isNotChecked('Count offerings as one is un-checked.');
@@ -577,4 +608,3 @@ module('Integration | Component | curriculum inventory sequence block session ma
     assert.dom('tbody tr:nth-of-type(5) td:nth-of-type(2) input').isNotChecked('Count offerings as one is un-checked.');
   });
 });
-

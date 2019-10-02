@@ -38,21 +38,21 @@ module('Integration | Component | school session type form', function(hooks) {
     });
     this.set('assessmentOptionId', summative.id);
     this.set('nothing', () => {});
-    await render(hbs`{{school-session-type-form
-      canEditTitle=true
-      canEditAamcMethod=true
-      canEditCalendarColor=true
-      canEditAssessment=true
-      canEditAssessmentOption=true
-      canEditActive=true
-      title='one'
-      calendarColor='#ffffff'
-      assessment=true
-      isActive=true
-      selectedAssessmentOptionId=assessmentOptionId
-      save=(action nothing)
-      close=(action nothing)
-    }}`);
+    await render(hbs`<SchoolSessionTypeForm
+      @canEditTitle={{true}}
+      @canEditAamcMethod={{true}}
+      @canEditCalendarColor={{true}}
+      @canEditAssessment={{true}}
+      @canEditAssessmentOption={{true}}
+      @canEditActive={{true}}
+      @title="one"
+      @calendarColor="#ffffff"
+      @assessment={{true}}
+      @isActive={{true}}
+      @selectedAssessmentOptionId={{assessmentOptionId}}
+      @save={{action nothing}}
+      @close={{action nothing}}
+    />`);
 
     const title = '[data-test-title]';
     const titleInput = `${title} input`;
@@ -104,21 +104,21 @@ module('Integration | Component | school session type form', function(hooks) {
     this.set('assessmentOption', assessmentOptions[1]);
     this.set('assessmentOptions', assessmentOptions);
     this.set('nothing', () => {});
-    await render(hbs`{{school-session-type-form
-      canEditTitle=true
-      canEditAamcMethod=true
-      canEditCalendarColor=true
-      canEditAssessment=true
-      canEditAssessmentOption=true
-      canEditActive=true
-      title='one'
-      calendarColor='#ffffff'
-      assessment=true
-      assessmentOption=assessmentOption
-      assessmentOptions=assessmentOptions
-      save=(action nothing)
-      close=(action nothing)
-    }}`);
+    await render(hbs`<SchoolSessionTypeForm
+      @canEditTitle={{true}}
+      @canEditAamcMethod={{true}}
+      @canEditCalendarColor={{true}}
+      @canEditAssessment={{true}}
+      @canEditAssessmentOption={{true}}
+      @canEditActive={{true}}
+      @title="one"
+      @calendarColor="#ffffff"
+      @assessment={{true}}
+      @assessmentOption={{assessmentOption}}
+      @assessmentOptions={{assessmentOptions}}
+      @save={{action nothing}}
+      @close={{action nothing}}
+    />`);
 
     const aamcMethod = '[data-test-aamc-method]';
     const aamcMethodSelect = `${aamcMethod} select`;
@@ -144,15 +144,15 @@ module('Integration | Component | school session type form', function(hooks) {
   test('assessment option hidden when assessment is false', async function(assert) {
     this.set('assessmentOptions', []);
     this.set('nothing', () => {});
-    await render(hbs`{{school-session-type-form
-      title='one'
-      calendarColor='#ffffff'
-      assessment=false
-      assessmentOption=null
-      assessmentOptions=assessmentOptions
-      save=(action nothing)
-      close=(action nothing)
-    }}`);
+    await render(hbs`<SchoolSessionTypeForm
+      @title="one"
+      @calendarColor="#ffffff"
+      @assessment={{false}}
+      @assessmentOption={{null}}
+      @assessmentOptions={{assessmentOptions}}
+      @save={{action nothing}}
+      @close={{action nothing}}
+    />`);
 
     const title = '[data-test-title]';
     const color = '[data-test-color]';
@@ -172,16 +172,16 @@ module('Integration | Component | school session type form', function(hooks) {
     this.set('close', ()=>{
       assert.ok(true, 'action was fired');
     });
-    await render(hbs`{{school-session-type-form
-      title='one'
-      calendarColor='#ffffff'
-      assessment=false
-      assessmentOption=null
-      assessmentOptions=assessmentOptions
-      canUpdate=true
-      save=(action nothing)
-      close=(action close)
-    }}`);
+    await render(hbs`<SchoolSessionTypeForm
+      @title="one"
+      @calendarColor="#ffffff"
+      @assessment={{false}}
+      @assessmentOption={{null}}
+      @assessmentOptions={{assessmentOptions}}
+      @canUpdate={{true}}
+      @save={{action nothing}}
+      @close={{action close}}
+    />`);
 
     const button = '.cancel';
     await click(button);
@@ -194,16 +194,16 @@ module('Integration | Component | school session type form', function(hooks) {
     this.set('close', ()=>{
       assert.ok(true, 'action was fired');
     });
-    await render(hbs`{{school-session-type-form
-      title='one'
-      calendarColor='#ffffff'
-      assessment=false
-      assessmentOption=null
-      assessmentOptions=assessmentOptions
-      canUpdate=false
-      save=(action nothing)
-      close=(action close)
-    }}`);
+    await render(hbs`<SchoolSessionTypeForm
+      @title="one"
+      @calendarColor="#ffffff"
+      @assessment={{false}}
+      @assessmentOption={{null}}
+      @assessmentOptions={{assessmentOptions}}
+      @canUpdate={{false}}
+      @save={{action nothing}}
+      @close={{action close}}
+    />`);
 
     const button = '.text';
     await click(button);
@@ -232,21 +232,21 @@ module('Integration | Component | school session type form', function(hooks) {
       assert.equal(aamcMethod, aamcMethodModel, 'correct aamcMethod is sent');
       assert.equal(isActive, false, 'correct isActive value is sent');
     });
-    await render(hbs`{{school-session-type-form
-      title='one'
-      calendarColor='#ffffff'
-      assessment=true
-      canEditTitle=true
-      canEditAamcMethod=true
-      canEditCalendarColor=true
-      canEditAssessment=true
-      canEditAssessmentOption=true
-      canEditActive=true
-      isActive=true
-      canUpdate=true
-      save=(action save)
-      close=(action nothing)
-    }}`);
+    await render(hbs`<SchoolSessionTypeForm
+      @title="one"
+      @calendarColor="#ffffff"
+      @assessment={{true}}
+      @canEditTitle={{true}}
+      @canEditAamcMethod={{true}}
+      @canEditCalendarColor={{true}}
+      @canEditAssessment={{true}}
+      @canEditAssessmentOption={{true}}
+      @canEditActive={{true}}
+      @isActive={{true}}
+      @canUpdate={{true}}
+      @save={{action save}}
+      @close={{action nothing}}
+    />`);
 
     const title = '[data-test-title]';
     const titleInput = `${title} input`;
@@ -286,21 +286,21 @@ module('Integration | Component | school session type form', function(hooks) {
     });
 
     this.set('nothing', () => {});
-    await render(hbs`{{school-session-type-form
-      canEditTitle=false
-      canEditAamcMethod=false
-      canEditCalendarColor=false
-      canEditAssessment=false
-      canEditAssessmentOption=false
-      canEditActive=false
-      title='one'
-      selectedAamcMethodId='AM001'
-      calendarColor='#ffffff'
-      assessment=true
-      selectedAssessmentOptionId='1'
-      save=(action nothing)
-      close=(action nothing)
-    }}`);
+    await render(hbs`<SchoolSessionTypeForm
+      @canEditTitle={{false}}
+      @canEditAamcMethod={{false}}
+      @canEditCalendarColor={{false}}
+      @canEditAssessment={{false}}
+      @canEditAssessmentOption={{false}}
+      @canEditActive={{false}}
+      @title="one"
+      @selectedAamcMethodId="AM001"
+      @calendarColor="#ffffff"
+      @assessment={{true}}
+      @selectedAssessmentOptionId="1"
+      @save={{action nothing}}
+      @close={{action nothing}}
+    />`);
 
     const title = '[data-test-title]';
     const titleInput = `${title} input`;
@@ -351,21 +351,21 @@ module('Integration | Component | school session type form', function(hooks) {
     });
 
     this.set('nothing', () => {});
-    await render(hbs`{{school-session-type-form
-      canEditTitle=true
-      canEditAamcMethod=true
-      canEditCalendarColor=true
-      canEditAssessment=true
-      canEditAssessmentOption=true
-      canEditActive=true
-      title='one'
-      selectedAamcMethodId='AM001'
-      calendarColor='#ffffff'
-      assessment=true
-      selectedAssessmentOptionId='1'
-      save=(action nothing)
-      close=(action nothing)
-    }}`);
+    await render(hbs`<SchoolSessionTypeForm
+      @canEditTitle={{true}}
+      @canEditAamcMethod={{true}}
+      @canEditCalendarColor={{true}}
+      @canEditAssessment={{true}}
+      @canEditAssessmentOption={{true}}
+      @canEditActive={{true}}
+      @title="one"
+      @selectedAamcMethodId="AM001"
+      @calendarColor="#ffffff"
+      @assessment={{true}}
+      @selectedAssessmentOptionId="1"
+      @save={{action nothing}}
+      @close={{action nothing}}
+    />`);
 
     const aamcMethod = '[data-test-aamc-method]';
     const aamcMethodSelect = `${aamcMethod} select`;
@@ -387,21 +387,21 @@ module('Integration | Component | school session type form', function(hooks) {
     });
 
     this.set('nothing', () => {});
-    await render(hbs`{{school-session-type-form
-      canEditTitle=false
-      canEditAamcMethod=false
-      canEditCalendarColor=false
-      canEditAssessment=false
-      canEditAssessmentOption=false
-      canEditActive=true
-      title='one'
-      selectedAamcMethodId='AM001'
-      calendarColor='#ffffff'
-      assessment=true
-      selectedAssessmentOptionId='1'
-      save=(action nothing)
-      close=(action nothing)
-    }}`);
+    await render(hbs`<SchoolSessionTypeForm
+      @canEditTitle={{false}}
+      @canEditAamcMethod={{false}}
+      @canEditCalendarColor={{false}}
+      @canEditAssessment={{false}}
+      @canEditAssessmentOption={{false}}
+      @canEditActive={{true}}
+      @title="one"
+      @selectedAamcMethodId="AM001"
+      @calendarColor="#ffffff"
+      @assessment={{true}}
+      @selectedAssessmentOptionId="1"
+      @save={{action nothing}}
+      @close={{action nothing}}
+    />`);
 
     const aamcMethodValue = "[data-test-aamc-method] .value";
     assert.dom(aamcMethodValue).hasText('lorem ipsum (inactive)');

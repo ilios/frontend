@@ -7,7 +7,7 @@ module('Integration | Component | dashboard loading', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`{{dashboard-loading}}`);
+    await render(hbs`<DashboardLoading />`);
 
     assert.dom(this.element).hasText('');
   });

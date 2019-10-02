@@ -36,12 +36,12 @@ module('Integration | Component | curriculum inventory report details', function
     this.set('report', report);
     this.set('nothing', () =>{});
 
-    await render(hbs`{{curriculum-inventory-report-details
-      report=report
-      canUpdate=true
-      setLeadershipDetails=(action nothing)
-      setManageLeadership=(action nothing)
-    }}`);
+    await render(hbs`<CurriculumInventoryReportDetails
+      @report={{report}}
+      @canUpdate={{true}}
+      @setLeadershipDetails={{action nothing}}
+      @setManageLeadership={{action nothing}}
+    />`);
 
     return settled().then(() => {
       assert.dom('.curriculum-inventory-report-header .title').hasText(report.get('name'), 'Report name is visible in header.');
@@ -71,12 +71,12 @@ module('Integration | Component | curriculum inventory report details', function
     this.set('nothing', () => { });
     this.set('canUpdate', true);
 
-    await render(hbs`{{curriculum-inventory-report-details
-      report=report
-      canUpdate=canUpdate
-      setLeadershipDetails=(action nothing)
-      setManageLeadership=(action nothing)
-    }}`);
+    await render(hbs`<CurriculumInventoryReportDetails
+      @report={{report}}
+      @canUpdate={{canUpdate}}
+      @setLeadershipDetails={{action nothing}}
+      @setManageLeadership={{action nothing}}
+    />`);
 
     assert.dom('.confirm-finalize').doesNotExist('Confirmation dialog is initially not visible.');
     await click('.curriculum-inventory-report-header .finalize');
@@ -114,12 +114,12 @@ module('Integration | Component | curriculum inventory report details', function
     this.set('report', report);
     this.set('nothing', () =>{});
 
-    await render(hbs`{{curriculum-inventory-report-details
-      report=report
-      canUpdate=true
-      setLeadershipDetails=(action nothing)
-      setManageLeadership=(action nothing)
-    }}`);
+    await render(hbs`<CurriculumInventoryReportDetails
+      @report={{report}}
+      @canUpdate={{true}}
+      @setLeadershipDetails={{action nothing}}
+      @setManageLeadership={{action nothing}}
+    />`);
 
     await click('.curriculum-inventory-report-header .finalize');
     await click('.confirm-finalize .confirm-buttons .done');

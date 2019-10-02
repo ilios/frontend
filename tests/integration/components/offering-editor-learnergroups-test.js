@@ -37,12 +37,12 @@ module('Integration | Component | offering editor learnergroups', function(hooks
 
     this.setProperties({ externalActionAdd: addLearnerGroup, externalActionRemove: removeLearnerGroup });
 
-    await render(hbs`{{offering-editor-learnergroups
-      cohort=cohort
-      learnerGroups=learnerGroups
-      addLearnerGroup=(action externalActionAdd)
-      removeLearnerGroup=(action externalActionRemove)
-    }}`);
+    await render(hbs`<OfferingEditorLearnergroups
+      @cohort={{cohort}}
+      @learnerGroups={{learnerGroups}}
+      @addLearnerGroup={{action externalActionAdd}}
+      @removeLearnerGroup={{action externalActionRemove}}
+    />`);
 
     await click('.selectable li:nth-of-type(1)');
     await click('.removable li:nth-of-type(1)');

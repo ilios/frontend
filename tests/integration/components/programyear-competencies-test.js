@@ -49,14 +49,14 @@ module('Integration | Component | programyear competencies', function(hooks) {
   test('it renders', async function(assert) {
     this.set('programYear', programYear);
     this.set('nothing', parseInt);
-    await render(hbs`{{programyear-competencies
-      programYear=programYear
-      canUpdate=true
-      isManaging=false
-      collapse=(action nothing)
-      expand=(action nothing)
-      setIsManaging=(action nothing)
-    }}`);
+    await render(hbs`<ProgramyearCompetencies
+      @programYear={{programYear}}
+      @canUpdate={{true}}
+      @isManaging={{false}}
+      @collapse={{action nothing}}
+      @expand={{action nothing}}
+      @setIsManaging={{action nothing}}
+    />`);
     const title = '.title';
     const button = '.programyear-competencies-actions button';
     const list = '.programyear-competencies-content';
@@ -74,14 +74,14 @@ module('Integration | Component | programyear competencies', function(hooks) {
     this.set('setIsManaging', (b => {
       assert.ok(b === true);
     }));
-    await render(hbs`{{programyear-competencies
-      programYear=programYear
-      canUpdate=true
-      isManaging=false
-      collapse=(action nothing)
-      expand=(action nothing)
-      setIsManaging=(action setIsManaging)
-    }}`);
+    await render(hbs`<ProgramyearCompetencies
+      @programYear={{programYear}}
+      @canUpdate={{true}}
+      @isManaging={{false}}
+      @collapse={{action nothing}}
+      @expand={{action nothing}}
+      @setIsManaging={{action setIsManaging}}
+    />`);
     const button = '.programyear-competencies-actions button';
 
     await click(button);
@@ -94,13 +94,13 @@ module('Integration | Component | programyear competencies', function(hooks) {
     this.set('collapse', (() => {
       assert.ok(true);
     }));
-    await render(hbs`{{programyear-competencies
-      programYear=programYear
-      isManaging=false
-      collapse=(action collapse)
-      expand=(action nothing)
-      setIsManaging=(action nothing)
-    }}`);
+    await render(hbs`<ProgramyearCompetencies
+      @programYear={{programYear}}
+      @isManaging={{false}}
+      @collapse={{action collapse}}
+      @expand={{action nothing}}
+      @setIsManaging={{action nothing}}
+    />`);
     const title = '.title';
 
     await click(title);

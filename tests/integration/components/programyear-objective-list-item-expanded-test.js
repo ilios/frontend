@@ -36,7 +36,7 @@ module('Integration | Component | programyear-objective-list-item-expanded', fun
     this.set('objective', objective);
 
 
-    await render(hbs`{{programyear-objective-list-item-expanded objective=objective}}`);
+    await render(hbs`<ProgramyearObjectiveListItemExpanded @objective={{objective}} />`);
 
     const rows = 'tr';
     const titles = `${rows}:nth-of-type(1)`;
@@ -71,7 +71,7 @@ module('Integration | Component | programyear-objective-list-item-expanded', fun
     this.set('objective', objective);
 
 
-    await render(hbs`{{programyear-objective-list-item-expanded objective=objective}}`);
+    await render(hbs`<ProgramyearObjectiveListItemExpanded @objective={{objective}} />`);
 
     const rows = 'tr';
     const titles = `${rows}:nth-of-type(1)`;

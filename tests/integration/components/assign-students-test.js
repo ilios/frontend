@@ -56,14 +56,14 @@ module('Integration | Component | assign students', function(hooks) {
     this.set('setOffset', ()=>{});
     this.set('setLimit', ()=>{});
 
-    await render(hbs`{{assign-students
-      students=students
-      school=school
-      offset=0
-      limit=10
-      setOffset=(action setOffset)
-      setLimit=(action setLimit)
-    }}`);
+    await render(hbs`<AssignStudents
+      @students={{students}}
+      @school={{school}}
+      @offset={{0}}
+      @limit={{10}}
+      @setOffset={{action setOffset}}
+      @setLimit={{action setLimit}}
+    />`);
 
     let cohortOptions = findAll('select:nth-of-type(1) option');
     assert.equal(cohortOptions.length, 1);
@@ -93,14 +93,14 @@ module('Integration | Component | assign students', function(hooks) {
     this.set('setOffset', ()=>{});
     this.set('setLimit', ()=>{});
 
-    await render(hbs`{{assign-students
-      students=students
-      school=school
-      offset=0
-      limit=10
-      setOffset=(action setOffset)
-      setLimit=(action setLimit)
-    }}`);
+    await render(hbs`<AssignStudents
+      @students={{students}}
+      @school={{school}}
+      @offset={{0}}
+      @limit={{10}}
+      @setOffset={{action setOffset}}
+      @setLimit={{action setLimit}}
+    />`);
     const checkAll = 'thead tr:nth-of-type(1) input';
     const firstStudent = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
 
@@ -135,14 +135,14 @@ module('Integration | Component | assign students', function(hooks) {
     this.set('setOffset', ()=>{});
     this.set('setLimit', ()=>{});
 
-    await render(hbs`{{assign-students
-      students=students
-      school=school
-      offset=0
-      limit=10
-      setOffset=(action setOffset)
-      setLimit=(action setLimit)
-    }}`);
+    await render(hbs`<AssignStudents
+      @students={{students}}
+      @school={{school}}
+      @offset={{0}}
+      @limit={{10}}
+      @setOffset={{action setOffset}}
+      @setLimit={{action setLimit}}
+    />`);
     const checkAll = 'thead tr:nth-of-type(1) input';
     const firstStudent = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
     const secondStudent = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
@@ -184,14 +184,14 @@ module('Integration | Component | assign students', function(hooks) {
     this.set('setOffset', ()=>{});
     this.set('setLimit', ()=>{});
 
-    await render(hbs`{{assign-students
-      students=students
-      school=school
-      offset=0
-      limit=10
-      setOffset=(action setOffset)
-      setLimit=(action setLimit)
-    }}`);
+    await render(hbs`<AssignStudents
+      @students={{students}}
+      @school={{school}}
+      @offset={{0}}
+      @limit={{10}}
+      @setOffset={{action setOffset}}
+      @setLimit={{action setLimit}}
+    />`);
     const checkAll = 'thead tr:nth-of-type(1) input';
     const firstStudent = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
     const secondStudent = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
@@ -240,14 +240,14 @@ module('Integration | Component | assign students', function(hooks) {
     this.set('setOffset', ()=>{});
     this.set('setLimit', ()=>{});
 
-    await render(hbs`{{assign-students
-      students=students
-      school=school
-      offset=0
-      limit=10
-      setOffset=(action setOffset)
-      setLimit=(action setLimit)
-    }}`);
+    await render(hbs`<AssignStudents
+      @students={{students}}
+      @school={{school}}
+      @offset={{0}}
+      @limit={{10}}
+      @setOffset={{action setOffset}}
+      @setLimit={{action setLimit}}
+    />`);
 
     await click('thead th input');
     await click('button.done');

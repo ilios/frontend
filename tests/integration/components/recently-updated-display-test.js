@@ -11,7 +11,7 @@ module('Integration | Component | recently updated display', function(hooks) {
     const lastModified = moment().subtract(5, 'day');
 
     this.set('lastModified', lastModified);
-    await render(hbs`{{recently-updated-display lastModified=lastModified}}`);
+    await render(hbs`<RecentlyUpdatedDisplay @lastModified={{lastModified}} />`);
 
     return settled().then(()=>{
       assert.dom('.fa-exclamation-circle').exists({ count: 1 }, 'it renders');
@@ -22,7 +22,7 @@ module('Integration | Component | recently updated display', function(hooks) {
     const lastModified = moment().subtract(9, 'day');
 
     this.set('lastModified', lastModified);
-    await render(hbs`{{recently-updated-display}}`);
+    await render(hbs`<RecentlyUpdatedDisplay />`);
 
     return settled().then(()=>{
       assert.dom('.fa-exclamation-circle').doesNotExist('it does not renders');

@@ -22,7 +22,10 @@ module('Integration | Component | curriculum inventory sequence block header', f
       title: 'Block title'
     });
     this.set('sequenceBlock', block);
-    await render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock canUpdate=true}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockHeader
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+    />`);
     assert.dom('.title').hasText(block.title, 'Block title is visible');
     assert.dom('.editable').exists({ count: 1 }, 'Block title is editable.');
   });
@@ -34,7 +37,10 @@ module('Integration | Component | curriculum inventory sequence block header', f
       }
     });
     this.set('sequenceBlock', block);
-    await render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock canUpdate=false}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockHeader
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{false}}
+    />`);
     assert.dom('.editable').doesNotExist('Block title is not editable.');
   });
 
@@ -49,7 +55,10 @@ module('Integration | Component | curriculum inventory sequence block header', f
       }
     });
     this.set('sequenceBlock', block);
-    await render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock canUpdate=true}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockHeader
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+    />`);
     assert.dom('.editinplace').hasText(block.title);
     await click('.editable');
     await fillIn('.editinplace input', newTitle);
@@ -69,7 +78,10 @@ module('Integration | Component | curriculum inventory sequence block header', f
       }
     });
     this.set('sequenceBlock', block);
-    await render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock canUpdate=true}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockHeader
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+    />`);
     await click('.editable');
     assert.dom('.validation-error-message').doesNotExist('No validation error shown initially.');
     await fillIn('.editinplace input', '');
@@ -89,7 +101,10 @@ module('Integration | Component | curriculum inventory sequence block header', f
       }
     });
     this.set('sequenceBlock', block);
-    await render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock canUpdate=true}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockHeader
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+    />`);
     await click('.editable');
     assert.dom('.validation-error-message').doesNotExist('No validation error shown initially.');
     await fillIn('.editinplace input', 'ab');
@@ -109,7 +124,10 @@ module('Integration | Component | curriculum inventory sequence block header', f
       }
     });
     this.set('sequenceBlock', block);
-    await render(hbs`{{curriculum-inventory-sequence-block-header sequenceBlock=sequenceBlock canUpdate=true}}`);
+    await render(hbs`<CurriculumInventorySequenceBlockHeader
+      @sequenceBlock={{sequenceBlock}}
+      @canUpdate={{true}}
+    />`);
     await click('.editable');
     assert.dom('.validation-error-message').doesNotExist('No validation error shown initially.');
     await fillIn('.editinplace input', '0123456789'.repeat(21));

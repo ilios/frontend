@@ -80,10 +80,12 @@ module('Integration | Component | curriculum inventory sequence block details', 
     this.set('sortBy', 'title');
     this.set('setSortSessionsBy', null);
 
-    await render(
-      hbs`{{curriculum-inventory-sequence-block-details sequenceBlock=sequenceBlock canUpdate=true sortSessionsBy=sortBy setSortSessionBy=(action (mut sortSessionsBy))}}
-    `
-    );
+    await render(hbs`<CurriculumInventorySequenceBlockDetails 
+      @sequenceBlock={{sequenceBlock}} 
+      @canUpdate={{true}} 
+      @sortSessionsBy={{sortBy}} 
+      @setSortSessionBy={{action (mut sortSessionsBy)}}
+    />`);
     return settled().then(() => {
       assert.dom('.curriculum-inventory-sequence-block-header .title').hasText(block.get('title'), 'Block header is visible.');
       assert.dom('.curriculum-inventory-sequence-block-overview .description .editinplace').hasText(block.get('description'), 'Block overview is visible.');

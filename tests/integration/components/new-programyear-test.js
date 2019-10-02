@@ -12,7 +12,11 @@ module('Integration | Component | new programyear', function(hooks) {
     assert.expect(8);
     this.set('nothing', parseInt);
     this.set('years', [{ label: '2018-2019', value: 2018}, {label: '2019-2020', value: 2019}]);
-    await render(hbs`{{new-programyear save=(action nothing) cancel=(action nothing) availableAcademicYears=years}}`);
+    await render(hbs`<NewProgramyear
+      @save={{action nothing}}
+      @cancel={{action nothing}}
+      @availableAcademicYears={{years}}
+    />`);
     const label = find('[data-test-newprogramyear-startyear] label');
     const options = findAll('[data-test-newprogramyear-startyear] option');
     const saveBtn = find('.buttons .done');
@@ -35,7 +39,11 @@ module('Integration | Component | new programyear', function(hooks) {
     });
     this.set('save', () => {});
     this.set('years', [{ label: '2018-2019', value: 2018}, {label: '2019-2020', value: 2019}]);
-    await render(hbs`{{new-programyear save=(action save) cancel=(action cancel) availableAcademicYears=years}}`);
+    await render(hbs`<NewProgramyear
+      @save={{action save}}
+      @cancel={{action cancel}}
+      @availableAcademicYears={{years}}
+    />`);
     const cancelBtn = find('.buttons .cancel');
     await click(cancelBtn);
   });
@@ -47,7 +55,11 @@ module('Integration | Component | new programyear', function(hooks) {
     });
     this.set('cancel', () => {});
     this.set('years', [{ label: '2018-2019', value: 2018}, {label: '2019-2020', value: 2019}]);
-    await render(hbs`{{new-programyear save=(action save) cancel=(action cancel) availableAcademicYears=years}}`);
+    await render(hbs`<NewProgramyear
+      @save={{action save}}
+      @cancel={{action cancel}}
+      @availableAcademicYears={{years}}
+    />`);
     const saveBtn = find('.buttons .done');
     await click(saveBtn);
   });

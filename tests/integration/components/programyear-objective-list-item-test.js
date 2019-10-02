@@ -18,13 +18,13 @@ module('Integration | Component | programyear objective list item', function(hoo
     this.set('objective', objective);
     this.set('nothing', () => {});
 
-    await render(hbs`{{programyear-objective-list-item
-      objective=objective
-      manageDescriptors=(action nothing)
-      manageCompetency=(action nothing)
-      toggleExpand=(action nothing)
-      editable=true
-    }}`);
+    await render(hbs`<ProgramyearObjectiveListItem
+      @objective={{objective}}
+      @manageDescriptors={{action nothing}}
+      @manageCompetency={{action nothing}}
+      @toggleExpand={{action nothing}}
+      @editable={{true}}
+    />`);
 
     assert.dom(findAll('td')[1]).hasText('fake title');
     assert.dom('td:nth-of-type(3) button').hasText('Add New');
@@ -44,14 +44,14 @@ module('Integration | Component | programyear objective list item', function(hoo
     this.set('objective', objective);
     this.set('nothing', () => {});
 
-    await render(hbs`{{programyear-objective-list-item
-      objective=objective
-      remove=(action nothing)
-      manageDescriptors=(action nothing)
-      manageCompetency=(action nothing)
-      toggleExpand=(action nothing)
-      editable=true
-    }}`);
+    await render(hbs`<ProgramyearObjectiveListItem
+      @objective={{objective}}
+      @remove={{action nothing}}
+      @manageDescriptors={{action nothing}}
+      @manageCompetency={{action nothing}}
+      @toggleExpand={{action nothing}}
+      @editable={{true}}
+    />`);
 
     await click('td:nth-of-type(2) .editable');
     await fillInFroalaEditor('td:nth-of-type(2) .froala-editor-container', 'new title');
@@ -68,14 +68,14 @@ module('Integration | Component | programyear objective list item', function(hoo
       assert.ok(true);
     });
 
-    await render(hbs`{{programyear-objective-list-item
-      objective=objective
-      remove=(action nothing)
-      manageDescriptors=(action nothing)
-      manageCompetency=(action something)
-      toggleExpand=(action nothing)
-      editable=true
-    }}`);
+    await render(hbs`<ProgramyearObjectiveListItem
+      @objective={{objective}}
+      @remove={{action nothing}}
+      @manageDescriptors={{action nothing}}
+      @manageCompetency={{action something}}
+      @toggleExpand={{action nothing}}
+      @editable={{true}}
+    />`);
 
     await click('td:nth-of-type(3) button');
 
@@ -91,14 +91,14 @@ module('Integration | Component | programyear objective list item', function(hoo
       assert.ok(true);
     });
 
-    await render(hbs`{{programyear-objective-list-item
-      objective=objective
-      remove=(action nothing)
-      manageDescriptors=(action something)
-      manageCompetency=(action nothing)
-      toggleExpand=(action nothing)
-      editable=true
-    }}`);
+    await render(hbs`<ProgramyearObjectiveListItem
+      @objective={{objective}}
+      @remove={{action nothing}}
+      @manageDescriptors={{action something}}
+      @manageCompetency={{action nothing}}
+      @toggleExpand={{action nothing}}
+      @editable={{true}}
+    />`);
 
     await click('td:nth-of-type(4) button');
 
@@ -114,14 +114,14 @@ module('Integration | Component | programyear objective list item', function(hoo
       assert.ok(true);
     });
 
-    await render(hbs`{{programyear-objective-list-item
-      objective=objective
-      remove=(action nothing)
-      manageDescriptors=(action nothing)
-      manageCompetency=(action nothing)
-      toggleExpand=(action something)
-      editable=true
-    }}`);
+    await render(hbs`<ProgramyearObjectiveListItem
+      @objective={{objective}}
+      @remove={{action nothing}}
+      @manageDescriptors={{action nothing}}
+      @manageCompetency={{action nothing}}
+      @toggleExpand={{action something}}
+      @editable={{true}}
+    />`);
 
     await click(find('td'));
 

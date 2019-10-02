@@ -33,9 +33,11 @@ module('Integration | Component | school competencies expanded', function(hooks)
 
     this.set('school', school);
     this.set('nothing', () => { });
-    await render(
-      hbs`{{school-competencies-expanded school=school expand=(action nothing) collapse=(action nothing)}}`
-    );
+    await render(hbs`<SchoolCompetenciesExpanded
+      @school={{school}}
+      @expand={{action nothing}}
+      @collapse={{action nothing}}
+    />`);
 
     const title = '.title';
     const domains = '[data-test-domains] > li';

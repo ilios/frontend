@@ -28,9 +28,11 @@ module('Integration | Component | my profile', function(hooks) {
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    await render(
-      hbs`{{my-profile user=user toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action nothing)}}`
-    );
+    await render(hbs`<MyProfile
+      @user={{user}}
+      @toggleShowCreateNewToken={{action nothing}}
+      @toggleShowInvalidateTokens={{action nothing}}
+    />`);
 
     assert.dom('.name').hasText('test name');
     assert.dom('.is-student').hasText('Student');
@@ -56,9 +58,11 @@ module('Integration | Component | my profile', function(hooks) {
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    await render(
-      hbs`{{my-profile user=user toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action nothing)}}`
-    );
+    await render(hbs`<MyProfile
+      @user={{user}}
+      @toggleShowCreateNewToken={{action nothing}}
+      @toggleShowInvalidateTokens={{action nothing}}
+    />`);
 
     assert.dom('.name').hasText('test name');
     assert.dom('.is-student').doesNotExist();
@@ -92,9 +96,11 @@ module('Integration | Component | my profile', function(hooks) {
     this.owner.register('service:commonAjax', ajaxMock);
     this.ajax = this.owner.lookup('service:ajax');
     this.set('nothing', parseInt);
-    await render(
-      hbs`{{my-profile toggleShowCreateNewToken=(action nothing) showCreateNewToken=true toggleShowInvalidateTokens=(action nothing)}}`
-    );
+    await render(hbs`<MyProfile
+      @showCreateNewToken={{true}}
+      @toggleShowCreateNewToken={{action nothing}}
+      @toggleShowInvalidateTokens={{action nothing}}
+    />`);
 
     await click(go);
     assert.equal(find(newToken).value.trim(), 'new token');
@@ -118,7 +124,11 @@ module('Integration | Component | my profile', function(hooks) {
     this.set('toggle', () => {
       assert.ok(true);
     });
-    await render(hbs`{{my-profile toggleShowCreateNewToken=(action toggle) showCreateNewToken=true}}`);
+    await render(hbs`<MyProfile
+      @showCreateNewToken={{true}}
+      @toggleShowCreateNewToken={{action toggle}}
+    />`);
+
     await click(go);
 
     assert.equal(find(newToken).value.trim(), 'new token');
@@ -134,9 +144,10 @@ module('Integration | Component | my profile', function(hooks) {
       assert.ok(true);
     });
     this.set('nothing', parseInt);
-    await render(
-      hbs`{{my-profile toggleShowCreateNewToken=(action toggle) toggleShowInvalidateTokens=(action nothing)}}`
-    );
+    await render(hbs`<MyProfile
+      @toggleShowCreateNewToken={{action toggle}}
+      @toggleShowInvalidateTokens={{action nothing}}
+    />`);
 
     await click(newTokenButton);
   });
@@ -163,9 +174,12 @@ module('Integration | Component | my profile', function(hooks) {
     this.owner.register('service:commonAjax', ajaxMock);
     this.ajax = this.owner.lookup('service:ajax');
     this.set('nothing', parseInt);
-    await render(
-      hbs`{{my-profile toggleShowCreateNewToken=(action nothing) showCreateNewToken=true toggleShowInvalidateTokens=(action nothing)}}`
-    );
+    await render(hbs`<MyProfile
+      @showCreateNewToken={{true}}
+      @toggleShowCreateNewToken={{action nothing}}
+      @toggleShowInvalidateTokens={{action nothing}}
+    />`);
+
     let m = moment().add(41, 'days');
     let interactor = openDatepicker(find(datePicker));
     interactor.selectDate(m.toDate());
@@ -180,9 +194,10 @@ module('Integration | Component | my profile', function(hooks) {
       assert.ok(true);
     });
     this.set('nothing', parseInt);
-    await render(
-      hbs`{{my-profile toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action toggle)}}`
-    );
+    await render(hbs`<MyProfile
+      @toggleShowCreateNewToken={{action nothing}}
+      @toggleShowInvalidateTokens={{action toggle}}
+    />`);
 
     await click(invalidateTokensButton);
   });
@@ -211,9 +226,11 @@ module('Integration | Component | my profile', function(hooks) {
     this.session = this.owner.lookup('service:session');
     this.flashMessages = this.owner.lookup('service:flashMessages');
     this.set('nothing', parseInt);
-    await render(
-      hbs`{{my-profile showInvalidateTokens=true toggleShowCreateNewToken=(action nothing) toggleShowInvalidateTokens=(action nothing)}}`
-    );
+    await render(hbs`<MyProfile
+      @showInvalidateTokens={{true}}
+      @toggleShowCreateNewToken={{action nothing}}
+      @toggleShowInvalidateTokens={{action nothing}}
+    />`);
 
     await click(go);
   });

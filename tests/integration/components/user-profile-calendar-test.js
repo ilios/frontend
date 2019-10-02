@@ -46,7 +46,7 @@ module('Integration | Component | user profile calendar', function(hooks) {
       id: 13
     });
     this.set('user', user);
-    await render(hbs`{{user-profile-calendar user=user}}`);
+    await render(hbs`<UserProfileCalendar @user={{user}} />`);
     const events = '.ilios-calendar-event';
     const firstEventTitle = `${events}:nth-of-type(1) .ilios-calendar-event-name`;
     const secondEventTitle = `${events}:nth-of-type(2) .ilios-calendar-event-name`;
@@ -92,7 +92,7 @@ module('Integration | Component | user profile calendar', function(hooks) {
       id: 13
     });
     this.set('user', user);
-    await render(hbs`{{user-profile-calendar user=user}}`);
+    await render(hbs`<UserProfileCalendar @user={{user}} />`);
     const picker = '.calendar-time-picker li';
     const goForward = `${picker}:nth-of-type(3)`;
     await click(goForward);
@@ -133,7 +133,7 @@ module('Integration | Component | user profile calendar', function(hooks) {
       id: 13
     });
     this.set('user', user);
-    await render(hbs`{{user-profile-calendar user=user}}`);
+    await render(hbs`<UserProfileCalendar @user={{user}} />`);
     const picker = '.calendar-time-picker li';
     const goBack = `${picker}:nth-of-type(1)`;
     await click(goBack);

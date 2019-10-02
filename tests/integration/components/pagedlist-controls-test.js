@@ -11,7 +11,7 @@ module('Integration | Component | pagedlist controls', function(hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });" + EOL + EOL +
 
-    await render(hbs`{{pagedlist-controls limit=4 offset=11 total=33}}`);
+    await render(hbs`<PagedlistControls @limit={{4}} @offset={{11}} @total={{33}} />`);
 
     assert.equal(this.element.textContent.replace(/[\t\n\s]+/g, ""), 'Showing12-15of33102550PerPage');
   });

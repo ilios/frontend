@@ -21,14 +21,14 @@ module('Integration | Component | school leadership expanded', function(hooks) {
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
     this.set('school', schoolModel);
     this.set('nothing', parseInt);
-    await render(hbs`{{school-leadership-expanded
-      school=school
-      canUpdate=true
-      collapse=(action nothing)
-      expand=(action nothing)
-      isManaging=false
-      setIsManaging=(action nothing)
-    }}`);
+    await render(hbs`<SchoolLeadershipExpanded
+      @school={{school}}
+      @canUpdate={{true}}
+      @collapse={{action nothing}}
+      @expand={{action nothing}}
+      @isManaging={{false}}
+      @setIsManaging={{action nothing}}
+    />`);
     const title = '.title';
     const table = 'table';
     const directors = `${table} tbody tr:nth-of-type(1) td:nth-of-type(1) li`;
@@ -55,14 +55,14 @@ module('Integration | Component | school leadership expanded', function(hooks) {
       assert.ok(true, 'Action was fired');
     });
     this.set('nothing', parseInt);
-    await render(hbs`{{school-leadership-expanded
-      school=school
-      canUpdate=true
-      collapse=(action click)
-      expand=(action nothing)
-      isManaging=false
-      setIsManaging=(action nothing)
-    }}`);
+    await render(hbs`<SchoolLeadershipExpanded
+      @school={{school}}
+      @canUpdate={{true}}
+      @collapse={{action click}}
+      @expand={{action nothing}}
+      @isManaging={{false}}
+      @setIsManaging={{action nothing}}
+    />`);
     const title = '.title';
 
     await click(title);
@@ -77,14 +77,14 @@ module('Integration | Component | school leadership expanded', function(hooks) {
       assert.ok(true, 'Action was fired');
     });
     this.set('nothing', parseInt);
-    await render(hbs`{{school-leadership-expanded
-      school=school
-      canUpdate=true
-      collapse=(action nothing)
-      expand=(action nothing)
-      isManaging=false
-      setIsManaging=(action click)
-    }}`);
+    await render(hbs`<SchoolLeadershipExpanded
+      @school={{school}}
+      @canUpdate={{true}}
+      @collapse={{action nothing}}
+      @expand={{action nothing}}
+      @isManaging={{false}}
+      @setIsManaging={{action click}}
+    />`);
     const manage = '.actions button';
 
     await click(manage);

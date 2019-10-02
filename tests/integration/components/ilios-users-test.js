@@ -12,7 +12,7 @@ module('Integration | Component | ilios users', function(hooks) {
 
   test('it renders', async function(assert) {
     const title = '.users .title';
-    await render(hbs`{{ilios-users}}`);
+    await render(hbs`<IliosUsers />`);
     assert.dom(title).hasText('Users');
   });
 
@@ -22,9 +22,12 @@ module('Integration | Component | ilios users', function(hooks) {
     const query = '.user-search input';
     const value = 'nothing';
     this.set('value', value);
-    await render(
-      hbs`{{ilios-users query=value limit=25 offset=25 setQuery=(action (mut value) value="target.value")}}`
-    );
+    await render(hbs`<IliosUsers
+      @query={{value}}
+      @limit={{25}}
+      @offset={{25}}
+      @setQuery={{action (mut value) value="target.value"}}
+    />`);
 
     assert.equal(find(query).value.trim(), 'nothing');
     await fillIn(query, 'test');
@@ -57,12 +60,12 @@ module('Integration | Component | ilios users', function(hooks) {
     this.owner.register('service:currentUser', currentUserMock);
 
     this.set('nothing', parseInt);
-    await render(hbs`{{ilios-users
-      setShowNewUserForm=(action nothing)
-      transitionToUser=(action nothing)
-      setSearchTerms=(action nothing)
-      showNewUserForm=true
-    }}`);
+    await render(hbs`<IliosUsers
+      @setShowNewUserForm={{action nothing}}
+      @transitionToUser={{action nothing}}
+      @setSearchTerms={{action nothing}}
+      @showNewUserForm={{true}}
+    />`);
     const form = '.new-user-form';
     const blocks = `${form} .item`;
     const directorySearchBox = '.new-directory-user-search-tools';
@@ -99,12 +102,12 @@ module('Integration | Component | ilios users', function(hooks) {
 
     this.set('nothing', parseInt);
 
-    await render(hbs`{{ilios-users
-      setShowNewUserForm=(action nothing)
-      transitionToUser=(action nothing)
-      setSearchTerms=(action nothing)
-      showNewUserForm=true
-    }}`);
+    await render(hbs`<IliosUsers
+      @setShowNewUserForm={{action nothing}}
+      @transitionToUser={{action nothing}}
+      @setSearchTerms={{action nothing}}
+      @showNewUserForm={{true}}
+    />`);
     const form = '.new-user-form';
     const blocks = `${form} .item`;
     const directorySearchBox = '.new-directory-user-search-tools';

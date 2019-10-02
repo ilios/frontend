@@ -15,7 +15,7 @@ module('Integration | Component | error display', function(hooks) {
 
     this.set('errors', errors);
     this.set('nothing', parseInt);
-    await render(hbs`{{error-display errors=errors clearErrors=(action nothing)}}`);
+    await render(hbs`<ErrorDisplay @errors={{errors}} @clearErrors={{action nothing}} />`);
 
     assert.dom('.error-detail-action').hasText('Hide Details');
 
@@ -38,7 +38,7 @@ module('Integration | Component | error display', function(hooks) {
     this.set('clearErrors', () => {
       assert.ok(true, 'action was fired');
     });
-    await render(hbs`{{error-display errors=errors clearErrors=(action clearErrors)}}`);
+    await render(hbs`<ErrorDisplay @errors={{errors}} @clearErrors={{action clearErrors}} />`);
     await click('.clear-errors button');
   });
 });

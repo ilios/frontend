@@ -25,7 +25,7 @@ module('Integration | Component | school competencies collapsed', function(hooks
 
     this.set('school', school);
     this.set('click', () => {});
-    await render(hbs`{{school-competencies-collapsed school=school expand=(action click)}}`);
+    await render(hbs`<SchoolCompetenciesCollapsed @school={{school}} @expand={{action click}} />`);
     const title = '.title';
     const domains = 'table tbody tr';
     const domainTitle = `${domains}:nth-of-type(1) td:nth-of-type(1)`;

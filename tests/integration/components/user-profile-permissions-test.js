@@ -25,7 +25,7 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
       school: resolve(this.schools[0])
     });
     this.set('user', user);
-    await render(hbs`{{user-profile-permissions user=user}}`);
+    await render(hbs`<UserProfilePermissions @user={{user}} />`);
 
     assert.dom(this.element).hasText('');
 

@@ -13,7 +13,7 @@ module('Integration | Component | manage users summary', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    await render(hbs`{{manage-users-summary canCreate=true}}`);
+    await render(hbs`<ManageUsersSummary @canCreate={{true}} />`);
 
     assert.ok(find('h2').textContent.trim().startsWith('Ilios Users'));
     assert.ok(find('h2').textContent.includes('View All'));
@@ -27,7 +27,7 @@ module('Integration | Component | manage users summary', function(hooks) {
    * [JJ 3/2017]
    */
   skip('it renders URLs', function(assert) {
-    this.render(hbs`{{manage-users-summary}}`);
+    this.render(hbs`<ManageUsersSummary />`);
 
     assert.notEqual(find('a').href.search(/\/users$/), -1, `${find('a').href} links to /users`);
     assert.notEqual(findAll('a')[1].href.search(/\/users\?addUser=true$/), -1, `${findAll('a')[1].href} links to /users?addUser=true`);
@@ -35,7 +35,7 @@ module('Integration | Component | manage users summary', function(hooks) {
   });
 
   test('show more input prompt', async function(assert) {
-    await render(hbs`{{manage-users-summary}}`);
+    await render(hbs`<ManageUsersSummary />`);
 
     const userSearch = '.user-search input';
     const results = '.user-search .results li';

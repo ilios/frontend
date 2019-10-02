@@ -27,7 +27,7 @@ module('Integration | Component | school vocabularies collapsed', function(hooks
 
     this.set('school', school);
     this.set('click', () => {});
-    await render(hbs`{{school-vocabularies-collapsed school=school expand=(action click)}}`);
+    await render(hbs`<SchoolVocabulariesCollapsed @school={{school}} @expand={{action click}} />`);
 
     const title = '.title';
     const vocabularies = 'table tbody tr';
@@ -56,7 +56,7 @@ module('Integration | Component | school vocabularies collapsed', function(hooks
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`{{school-vocabularies-collapsed school=school expand=(action click)}}`);
+    await render(hbs`<SchoolVocabulariesCollapsed @school={{school}} @expand={{action click}} />`);
 
     await settled();
     assert.dom(title).hasText('Vocabularies (1)');

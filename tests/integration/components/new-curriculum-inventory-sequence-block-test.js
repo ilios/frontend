@@ -41,7 +41,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
 
     this.set('report', reportModel);
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     assert.dom('h2.title').hasText('New Sequence Block', 'Component title shows.');
     assert.dom('.title label').hasText('Title:', 'Title label is correct.');
     assert.dom('.title input').hasValue('', 'Title input is initially empty.');
@@ -121,7 +121,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
 
     this.set('report', reportModel);
     this.set('parentBlock', parentModel);
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report parent=parentBlock}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} @parent={{parentBlock}} />`);
 
     assert.dom(`.order-in-sequence label`).hasText('Order in Sequence:', 'Order in sequence label is correct');
     assert.dom(`.order-in-sequence option`).exists({ count: 11 }, 'Correct number of order in sequence options');
@@ -152,7 +152,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
 
     this.set('report', reportModel);
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.course select', course.id);
 
     let details = '.course .details';
@@ -185,7 +185,8 @@ module('Integration | Component | new curriculum inventory sequence block', func
       return resolve();
     });
 
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} @save={{action saveBlock}} />`);
+
     await fillIn('.title input', newTitle);
     await fillIn('.description textarea', newDescription);
     let interactor = openDatepicker(find('.start-date input'));
@@ -249,7 +250,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
       return resolve();
     });
 
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} @save={{action saveBlock}} />`);
 
     await fillIn('.title input', 'foo bar');
     await fillIn('.description textarea', 'lorem ipsum');
@@ -306,9 +307,11 @@ module('Integration | Component | new curriculum inventory sequence block', func
       return resolve();
     });
 
-    await render(
-      hbs`{{new-curriculum-inventory-sequence-block report=report parent=parentBlock save=(action saveBlock)}}`
-    );
+    await render(hbs`<NewCurriculumInventorySequenceBlock
+      @report={{report}}
+      @parent={{parentBlock}}
+      @save={{action saveBlock}}
+    />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
     await fillIn('.order-in-sequence select', '2');
@@ -336,7 +339,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     this.set('cancelAction', () => {
       assert.ok(true, 'Cancel action was invoked.');
     });
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report cancel=(action cancelAction)}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} @cancel={{action cancelAction}} />`);
     await click('.buttons .cancel');
   });
 
@@ -355,7 +358,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
 
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     let startDateInput = find('.start-date input');
     let endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
@@ -380,7 +383,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
 
     const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
 
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
@@ -408,7 +411,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
 
     const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
     let startDateInput = find('.start-date input');
@@ -435,6 +438,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
     let startDateInput = find('.start-date input');
@@ -461,6 +465,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
     let startDateInput = find('.start-date input');
@@ -490,7 +495,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     this.set('saveBlock', () => {
       return resolve();
     });
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} @save={{action saveBlock}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
     let startDateInput = find('.start-date input');
@@ -523,7 +528,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     this.set('saveBlock', () => {
       return resolve();
     });
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report save=(action saveBlock)}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} @save={{action saveBlock}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
     await fillIn('.duration input', duration);
@@ -546,7 +551,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
 
     const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
     let startDateInput = find('.start-date input');
@@ -572,7 +577,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
 
     const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
     let startDateInput = find('.start-date input');
@@ -598,7 +603,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
 
     const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
     let startDateInput = find('.start-date input');
@@ -624,7 +629,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
 
     const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
     await click('button.done');
@@ -642,7 +647,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
 
     const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
+    await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
     let startDateInput = find('.start-date input');

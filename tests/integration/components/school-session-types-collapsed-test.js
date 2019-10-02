@@ -26,7 +26,7 @@ module('Integration | Component | school session types collapsed', function(hook
 
     this.set('school', school);
     this.set('click', () => {});
-    await render(hbs`{{school-session-types-collapsed school=school expand=(action click)}}`);
+    await render(hbs`<SchoolSessionTypesCollapsed @school={{school}} @expand={{action click}} />`);
 
     await settled();
     const title = '.title';

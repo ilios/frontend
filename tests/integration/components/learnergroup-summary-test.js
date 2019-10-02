@@ -66,15 +66,15 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     this.set('nothing', parseInt);
     this.set('learnerGroup', learnerGroup);
 
-    await render(hbs`{{learnergroup-summary
-      setIsEditing=(action nothing)
-      setSortUsersBy=(action nothing)
-      setIsBulkAssigning=(action nothing)
-      sortUsersBy='firstName'
-      learnerGroup=learnerGroup
-      isEditing=false
-      isBulkAssigning=false
-    }}`);
+    await render(hbs`<LearnergroupSummary
+      @setIsEditing={{action nothing}}
+      @setSortUsersBy={{action nothing}}
+      @setIsBulkAssigning={{action nothing}}
+      @sortUsersBy="firstName"
+      @learnerGroup={{learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+    />`);
 
     const defaultLocation = '.learnergroup-overview .defaultlocation span:nth-of-type(1)';
     const instructors = '.learnergroup-overview .defaultinstructors span';
@@ -123,15 +123,15 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     this.set('nothing', parseInt);
     this.set('learnerGroup', learnerGroup);
 
-    await render(hbs`{{learnergroup-summary
-      canUpdate=true
-      setIsEditing=(action nothing)
-      setSortUsersBy=(action nothing)
-      setIsBulkAssigning=(action nothing)
-      learnerGroup=learnerGroup
-      isEditing=false
-      isBulkAssigning=false
-    }}`);
+    await render(hbs`<LearnergroupSummary
+      @canUpdate={{true}}
+      @setIsEditing={{action nothing}}
+      @setSortUsersBy={{action nothing}}
+      @setIsBulkAssigning={{action nothing}}
+      @learnerGroup={{learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+    />`);
 
     const defaultLocation = '.learnergroup-overview .defaultlocation span:nth-of-type(1)';
     const editLocation = `${defaultLocation} .editable`;

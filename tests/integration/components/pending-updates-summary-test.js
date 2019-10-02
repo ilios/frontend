@@ -33,7 +33,7 @@ module('Integration | Component | pending updates summary', function(hooks) {
 
     const schools = await this.owner.lookup('service:store').findAll('school');
     this.set('schools', schools);
-    await render(hbs`{{pending-updates-summary schools=schools}}`);
+    await render(hbs`<PendingUpdatesSummary @schools={{schools}} />`);
 
     assert.ok(this.element.textContent.includes('Updates from the Campus Directory'));
     assert.ok(this.element.textContent.includes('There are 5 users needing attention'));

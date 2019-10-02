@@ -218,7 +218,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     await click(edit);
 
     const froala = $(editor);
-    froala.froalaEditor('html.set', '<p>&nbsp</p><div></div><span>  </span>');
+    froala.froalaEditor('html.set', '<p>&nbsp;</p><div></div><span>  </span>');
     froala.froalaEditor('undo.saveStep');
     await settled();
 

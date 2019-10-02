@@ -10,7 +10,7 @@ module('Integration | Component | visualizer session type vocabularies', functio
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });
 
-    await render(hbs`{{visualizer-session-type-vocabularies}}`);
+    await render(hbs`<VisualizerSessionTypeVocabularies />`);
 
     assert.dom(this.element).hasText('');
   });

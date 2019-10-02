@@ -20,7 +20,7 @@ module('Integration | Component | learner group list', function(hooks) {
     const secondGroupModel = await this.owner.lookup('service:store').find('learner-group', secondGroup.id);
 
     this.set('learnerGroups', [firstGroupModel, secondGroupModel]);
-    await render(hbs`{{learnergroup-list learnerGroups=learnerGroups}}`);
+    await render(hbs`<LearnergroupList @learnerGroups={{learnerGroups}} />`);
 
     assert.equal(component.headings[0].text, 'Learner Group Title');
     assert.equal(component.headings[1].text, 'Members');
@@ -52,7 +52,11 @@ module('Integration | Component | learner group list', function(hooks) {
       assert.equal(id, model.id);
     });
     this.set('learnerGroups', [model]);
-    await render(hbs`{{learnergroup-list learnerGroups=learnerGroups remove=remove canDelete=true}}`);
+    await render(hbs`<LearnergroupList
+      @learnerGroups={{learnerGroups}}
+      @remove={{remove}}
+      @canDelete={{true}}
+    />`);
 
     assert.equal(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canRemove);
@@ -69,7 +73,11 @@ module('Integration | Component | learner group list', function(hooks) {
     this.server.createList('learner-group', 2, { parent });
     const model = await this.owner.lookup('service:store').find('learner-group', parent.id);
     this.set('learnerGroups', [model]);
-    await render(hbs`{{learnergroup-list learnerGroups=learnerGroups remove=remove canDelete=true}}`);
+    await render(hbs`<LearnergroupList
+      @learnerGroups={{learnerGroups}}
+      @remove={{remove}}
+      @canDelete={{true}}
+    />`);
 
     assert.equal(component.groups.length, 1);
     assert.notOk(component.groups[0].actions.canRemove);
@@ -83,7 +91,11 @@ module('Integration | Component | learner group list', function(hooks) {
     this.server.createList('learner-group', 2, { parent, users });
     const model = await this.owner.lookup('service:store').find('learner-group', parent.id);
     this.set('learnerGroups', [model]);
-    await render(hbs`{{learnergroup-list learnerGroups=learnerGroups remove=remove canDelete=true}}`);
+    await render(hbs`<LearnergroupList
+      @learnerGroups={{learnerGroups}}
+      @remove={{remove}}
+      @canDelete={{true}}
+    />`);
 
     assert.equal(component.groups.length, 1);
     assert.notOk(component.groups[0].actions.canRemove);
@@ -99,7 +111,11 @@ module('Integration | Component | learner group list', function(hooks) {
     this.server.createList('learner-group', 2, { parent });
     const model = await this.owner.lookup('service:store').find('learner-group', parent.id);
     this.set('learnerGroups', [model]);
-    await render(hbs`{{learnergroup-list learnerGroups=learnerGroups remove=remove canDelete=true}}`);
+    await render(hbs`<LearnergroupList
+      @learnerGroups={{learnerGroups}}
+      @remove={{remove}}
+      @canDelete={{true}}
+    />`);
 
     assert.equal(component.groups.length, 1);
     assert.notOk(component.groups[0].actions.canRemove);
@@ -115,7 +131,12 @@ module('Integration | Component | learner group list', function(hooks) {
       assert.equal(id, model.id);
     });
     this.set('learnerGroups', [model]);
-    await render(hbs`{{learnergroup-list learnerGroups=learnerGroups copy=copy canCreate=true canCopyWithLearners=true}}`);
+    await render(hbs`<LearnergroupList
+      @learnerGroups={{learnerGroups}}
+      @copy={{copy}}
+      @canCreate={{true}}
+      @canCopyWithLearners={{true}}
+    />`);
 
     assert.equal(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canCopy);
@@ -134,7 +155,11 @@ module('Integration | Component | learner group list', function(hooks) {
       assert.equal(id, model.id);
     });
     this.set('learnerGroups', [model]);
-    await render(hbs`{{learnergroup-list learnerGroups=learnerGroups copy=copy canCreate=true}}`);
+    await render(hbs`<LearnergroupList
+      @learnerGroups={{learnerGroups}}
+      @copy={{copy}}
+      @canCreate={{true}}
+    />`);
 
     assert.equal(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canCopy);
@@ -150,7 +175,12 @@ module('Integration | Component | learner group list', function(hooks) {
 
     this.set('copy', () => { });
     this.set('learnerGroups', [model]);
-    await render(hbs`{{learnergroup-list learnerGroups=learnerGroups copy=copy canCreate=true canCopyWithLearners=false}}`);
+    await render(hbs`<LearnergroupList
+      @learnerGroups={{learnerGroups}}
+      @copy={{copy}}
+      @canCreate={{true}}
+      @canCopyWithLearners={{false}}
+    />`);
 
     assert.equal(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canCopy);
@@ -166,7 +196,12 @@ module('Integration | Component | learner group list', function(hooks) {
 
     this.set('copy', () => { });
     this.set('learnerGroups', [model]);
-    await render(hbs`{{learnergroup-list learnerGroups=learnerGroups copy=copy canCreate=true canCopyWithLearners=false}}`);
+    await render(hbs`<LearnergroupList
+      @learnerGroups={{learnerGroups}}
+      @copy={{copy}}
+      @canCreate={{true}}
+      @canCopyWithLearners={{false}}
+    />`);
 
     assert.equal(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canCopy);
