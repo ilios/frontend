@@ -2,19 +2,22 @@
 <section class="courses-list" data-test-courses>
   <div class="filters">
     <div class="toggle-mycourses" data-test-my-courses-filter>
-      {{toggle-buttons
-        firstOptionSelected=userCoursesOnly
-        firstLabel=(t "general.myCourses")
-        secondLabel=(t "general.allCourses")
-        toggle=(toggle "userCoursesOnly" this)
-      }}
+      <ToggleButtons
+        @firstOptionSelected={{userCoursesOnly}}
+        @firstLabel={{t "general.myCourses"}}
+        @secondLabel={{t "general.allCourses"}}
+        @toggle={{toggle "userCoursesOnly" this}}
+      />
     </div>
     <div class="schoolsfilter" data-test-school-filter>
-      {{fa-icon icon="university" fixedWidth=true}}
+      <FaIcon @icon="university" @fixedWidth={{true}} />
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
           {{#each sortedSchools as |school|}}
-            <option value={{school.id}} selected={{is-equal school selectedSchool}}>
+            <option
+              value={{school.id}}
+              selected={{is-equal school selectedSchool}}
+            >
               {{school.title}}
             </option>
           {{/each}}
@@ -24,7 +27,7 @@
       {{/if}}
     </div>
     <div class="yearsfilter">
-      {{fa-icon icon="calendar" fixedWidth=true}}
+      <FaIcon @icon="calendar" @fixedWidth={{true}} />
       <select
         onchange={{action "changeSelectedYear" value="target.value"}}
         data-test-year-filter
@@ -36,7 +39,6 @@
         {{/each}}
       </select>
     </div>
-
     <div class="titlefilter">
       <input
         value={{titleFilter}}
@@ -48,48 +50,52 @@
   </div>
   <section class="courses">
     <div class="header">
-      <h2 data-test-courses-header-title class="title">{{t "general.courses"}} ({{get (await filteredCourses) "length"}})</h2>
+      <h2 data-test-courses-header-title class="title">
+        {{t "general.courses"}}
+        ({{get (await filteredCourses) "length"}})
+      </h2>
       <div class="actions">
         {{#if (await canCreateCourse)}}
-          {{expand-collapse-button
+          <ExpandCollapseButton
             data-test-toggle-new-course-form
-            value=showNewCourseForm
-            action=(action "toggleNewCourseForm")
-          }}
+            @value={{showNewCourseForm}}
+            @action={{action "toggleNewCourseForm"}}
+          />
         {{/if}}
       </div>
     </div>
     <section class="new">
       {{#liquid-if (and (is-fulfilled sessionTypes) showNewCourseForm)}}
-        {{new-course
-          currentSchool=selectedSchool
-          currentYear=selectedYear
-          save=(action "saveNewCourse")
-          cancel=(action "toggleNewCourseForm")
-        }}
+        <NewCourse
+          @currentSchool={{selectedSchool}}
+          @currentYear={{selectedYear}}
+          @save={{action "saveNewCourse"}}
+          @cancel={{action "toggleNewCourseForm"}}
+        />
       {{/liquid-if}}
-
       {{#if newCourse}}
         <div class="saved-result" data-test-new-course>
-          {{#link-to "course" newCourse}}
-            {{fa-icon icon="external-link-square-alt"}} {{newCourse.title}}
-          {{/link-to}}
+          <LinkTo @route="course" @model={{newCourse}}>
+            <FaIcon @icon="external-link-square-alt" />
+            {{newCourse.title}}
+          </LinkTo>
           {{t "general.savedSuccessfully"}}
         </div>
       {{/if}}
     </section>
     <div class="list">
       {{#if (is-fulfilled this.filteredCourses)}}
-        {{ilios-course-list
-          courses=(await this.filteredCourses)
-          query=this.titleFilter
-          sortBy=this.sortCoursesBy
-          lock=(action "lockCourse")
-          remove=(action "removeCourse")
-          setSortBy=(action (mut this.sortCoursesBy))
-          unlock=(action "unlockCourse")}}
+        <IliosCourseList
+          @courses={{await this.filteredCourses}}
+          @query={{this.titleFilter}}
+          @sortBy={{this.sortCoursesBy}}
+          @lock={{action "lockCourse"}}
+          @remove={{action "removeCourse"}}
+          @setSortBy={{action (mut this.sortCoursesBy)}}
+          @unlock={{action "unlockCourse"}}
+        />
       {{else}}
-        {{pulse-loader}}
+        <PulseLoader />
       {{/if}}
     </div>
   </section>

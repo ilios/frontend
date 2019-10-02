@@ -1,45 +1,43 @@
 <div class="header">
-  <h2>{{t "general.unassignedStudentsSummaryTitle"}}</h2>
+  <h2>
+    {{t "general.unassignedStudentsSummaryTitle"}}
+  </h2>
 </div>
-
 <div class="form">
   <label>
-    {{t "general.unassignedStudentsConfirmation"
-      count=this.selectedUserIds.length}}:
+    {{t "general.unassignedStudentsConfirmation" count=this.selectedUserIds.length}}:
   </label>
-
   {{#if this.isLoading}}
-    {{loading-spinner}}
-  {{else}}
-    {{#if (and this.bestSelectedCohort (gt this.cohorts.length 0))}}
-      <select onchange={{action (mut this.primaryCohortId) value="target.value"}}>
-        {{#each (sort-by "title" this.cohorts) as |cohort|}}
-          <option
-            selected={{eq cohort.id (get (await this.bestSelectedCohort) "id")}}
-            value={{cohort.id}}>
-            {{cohort.title}}
-          </option>
-        {{/each}}
-      </select>
-
-      <button
-        class="done text"
-        disabled={{or
-          this.isSaving
-          (is-pending this.bestSelectedCohort)
-          (lt this.cohorts.length 1)
-          (eq this.selectedUserIds.length 0)}}
-        onclick={{perform this.save}}>
-        {{#if this.isSaving}}
-          {{loading-spinner}}
-        {{else}}
-          {{t "general.save"}}
-        {{/if}}
-      </button>
-    {{/if}}
+    <LoadingSpinner />
+  {{else if (and this.bestSelectedCohort (gt this.cohorts.length 0))}}
+    <select onchange={{action (mut this.primaryCohortId) value="target.value"}}>
+      {{#each (sort-by "title" this.cohorts) as |cohort|}}
+        <option
+          selected={{eq cohort.id (get (await this.bestSelectedCohort) "id")}}
+          value={{cohort.id}}
+        >
+          {{cohort.title}}
+        </option>
+      {{/each}}
+    </select>
+    <button
+      class="done text"
+      disabled={{or
+        this.isSaving
+        (is-pending this.bestSelectedCohort)
+        (lt this.cohorts.length 1)
+        (eq this.selectedUserIds.length 0)
+      }}
+      onclick={{perform this.save}}
+    >
+      {{#if this.isSaving}}
+        <LoadingSpinner />
+      {{else}}
+        {{t "general.save"}}
+      {{/if}}
+    </button>
   {{/if}}
 </div>
-
 <div class="list">
   <table>
     <thead>
@@ -47,53 +45,72 @@
         <th
           class="text-left clickable"
           colspan="1"
-          onclick={{action "toggleCheck"}}>
+          onclick={{action "toggleCheck"}}
+        >
           <input
-            checked={{eq this.selectedUserIds.length this.filteredStudents.length}}
+            checked={{eq
+              this.selectedUserIds.length
+              this.filteredStudents.length
+            }}
             type="checkbox"
             indeterminate={{and
               (gt this.selectedUserIds.length 0)
               (lt this.selectedUserIds.length this.filteredStudents.length)
-            }}>
+            }}
+          >
           {{t "general.all"}}
         </th>
-        <th class="text-left" colspan="4">{{t "general.fullName"}}</th>
-        <th class="text-left" colspan="4">{{t "general.email"}}</th>
-        <th class="text-left" colspan="2">{{t "general.campusId"}}</th>
+        <th class="text-left" colspan="4">
+          {{t "general.fullName"}}
+        </th>
+        <th class="text-left" colspan="4">
+          {{t "general.email"}}
+        </th>
+        <th class="text-left" colspan="2">
+          {{t "general.campusId"}}
+        </th>
       </tr>
     </thead>
-
     <tbody>
       {{#each this.filteredStudents as |user|}}
         <tr class={{if (is-in this.selectedUserIds user.id) "highlighted"}}>
           <td
             class="text-left clickable"
             colspan="1"
-            {{action "toggleUserSelection" user.id}}>
+            {{action "toggleUserSelection" user.id}}
+          >
             {{#if (is-in this.selectedUserIds user.id)}}
-              <input type="checkbox" checked>
+              <input type="checkbox" checked="">
             {{else}}
               <input type="checkbox">
             {{/if}}
           </td>
           <td class="text-left" colspan="4">
-            {{#link-to "user" user}}{{user.fullName}}{{/link-to}}
+            <LinkTo @route="user" @model={{user}}>
+              {{user.fullName}}
+            </LinkTo>
           </td>
-          <td class="text-left" colspan="4">{{user.email}}</td>
-          <td class="text-left" colspan="2">{{user.campusId}}</td>
+          <td class="text-left" colspan="4">
+            {{user.email}}
+          </td>
+          <td class="text-left" colspan="2">
+            {{user.campusId}}
+          </td>
         </tr>
       {{else}}
         <tr>
-          <td colspan="11" class="text-center">{{t "general.noResultsFound"}}</td>
+          <td colspan="11" class="text-center">
+            {{t "general.noResultsFound"}}
+          </td>
         </tr>
       {{/each}}
     </tbody>
   </table>
 </div>
-
 {{#liquid-if this.isSaving class="crossFade"}}
-  {{wait-saving
-    currentProgress=this.savedUserIds.length
-    showProgress=true
-    totalProgress=this.selectedUserIds.length}}
+  <WaitSaving
+    @currentProgress={{this.savedUserIds.length}}
+    @showProgress={{true}}
+    @totalProgress={{this.selectedUserIds.length}}
+  />
 {{/liquid-if}}

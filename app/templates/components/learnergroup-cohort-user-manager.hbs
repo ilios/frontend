@@ -1,6 +1,7 @@
 <div class="learnergroup-cohort-user-manager-header">
   <div class="title">
-    {{t "general.cohortMembersNotInGroup" groupTitle=topLevelGroupTitle}} ({{users.length}})
+    {{t "general.cohortMembersNotInGroup" groupTitle=topLevelGroupTitle}}
+    ({{users.length}})
   </div>
   <div class="actions">
     <input
@@ -16,27 +17,37 @@
       <thead>
         <tr>
           <th class="text-left" colspan="1">
-            <input type="checkbox" onclick={{action "toggleUserSelectionAllOrNone"}}>
+            <input
+              type="checkbox"
+              onclick={{action "toggleUserSelectionAllOrNone"}}
+            >
           </th>
-          {{#sortable-th
-            colspan=2
-            click=(action "sortBy" "firstName")
-            sortedBy=(or (eq sortBy "firstName") (eq sortBy "firstName:desc"))
-            sortedAscending=sortedAscending
-          }}
+          <SortableTh
+            @colspan={{2}}
+            @click={{action "sortBy" "firstName"}}
+            @sortedBy={{or (eq sortBy "firstName") (eq sortBy "firstName:desc")
+            }}
+            @sortedAscending={{sortedAscending}}
+          >
             {{t "general.firstName"}}
-          {{/sortable-th}}
-          {{#sortable-th
-            colspan=2
-            click=(action "sortBy" "lastName")
-            sortedBy=(or (eq sortBy "lastName") (eq sortBy "lastName:desc"))
-            sortedAscending=sortedAscending
-          }}
+          </SortableTh>
+          <SortableTh
+            @colspan={{2}}
+            @click={{action "sortBy" "lastName"}}
+            @sortedBy={{or (eq sortBy "lastName") (eq sortBy "lastName:desc")}}
+            @sortedAscending={{sortedAscending}}
+          >
             {{t "general.lastName"}}
-          {{/sortable-th}}
-          <th class="text-left" colspan="2">{{t "general.campusId"}}</th>
-          <th class="text-left hide-from-small-screen" colspan="5">{{t "general.email"}}</th>
-          <th class="text-left" colspan="1">{{t "general.actions"}}</th>
+          </SortableTh>
+          <th class="text-left" colspan="2">
+            {{t "general.campusId"}}
+          </th>
+          <th class="text-left hide-from-small-screen" colspan="5">
+            {{t "general.email"}}
+          </th>
+          <th class="text-left" colspan="1">
+            {{t "general.actions"}}
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -53,26 +64,40 @@
                 {{/if}}
               {{/if}}
               {{#if (not user.enabled)}}
-                {{fa-icon icon="user-times" title=(t "general.disabled") class="error"}}
+                <FaIcon
+                  @icon="user-times"
+                  @title={{t "general.disabled"}}
+                  class="error"
+                />
               {{/if}}
             </td>
-            <td class="text-left" colspan="2">{{user.firstName}}</td>
-            <td class="text-left" colspan="2">{{user.lastName}}</td>
-            <td class="text-left" colspan="2">{{user.campusId}}</td>
-            <td class="text-left hide-from-small-screen" colspan="5">{{user.email}}</td>
+            <td class="text-left" colspan="2">
+              {{user.firstName}}
+            </td>
+            <td class="text-left" colspan="2">
+              {{user.lastName}}
+            </td>
+            <td class="text-left" colspan="2">
+              {{user.campusId}}
+            </td>
+            <td class="text-left hide-from-small-screen" colspan="5">
+              {{user.email}}
+            </td>
             <td class="text-left" colspan="1">
               {{#if user.enabled}}
                 {{#if (contains user usersBeingMoved)}}
-                  {{loading-spinner}}
-                {{else}}
-                  {{#if (and canUpdate (eq selectedUsers.length 0))}}
-                    {{fa-icon
-                      icon="plus"
-                      class="yes clickable"
-                      title=(t "general.moveToGroup" groupTitle=learnerGroupTitle count=1)
-                      click=(perform addSingleUser user)
+                  <LoadingSpinner />
+                {{else if (and canUpdate (eq selectedUsers.length 0))}}
+                  <FaIcon
+                    @icon="plus"
+                    class="yes clickable"
+                    @title={{t
+                      "general.moveToGroup"
+                      groupTitle=learnerGroupTitle
+                      count=1
                     }}
-                  {{/if}}
+                    @click={{perform addSingleUser user}}
+                  />
                 {{/if}}
               {{/if}}
             </td>
@@ -83,10 +108,7 @@
   </div>
 </div>
 {{#if (gt selectedUsers.length 0)}}
-  <button
-    class="done text"
-    {{action (perform addSelectedUsers)}}
-  >
+  <button class="done text" {{action (perform addSelectedUsers)}}>
     {{t
       "general.moveToGroup"
       groupTitle=learnerGroupTitle

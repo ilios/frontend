@@ -1,30 +1,36 @@
 <div class="detail-actions">
   <button class="bigadd" {{action (perform saveChanges)}}>
-    {{fa-icon
-      icon=(if saveChanges.isRunning "spinner" "check")
-      spin=(if saveChanges.isRunning true false)
-    }}
+    <FaIcon
+      @icon={{if saveChanges.isRunning "spinner" "check"}}
+      @spin={{if saveChanges.isRunning true false}}
+    />
   </button>
-  <button class="bigcancel" {{action close}}>{{fa-icon icon="undo"}}</button>
+  <button class="bigcancel" {{action close}}>
+    <FaIcon @icon="undo" />
+  </button>
 </div>
 <div class="detail-content">
   <ul class="removable-list tag-list">
     {{#each (sort-by "lastName" instructors) as |user|}}
       <li {{action "removeInstructor" user}}>
-        {{user.fullName}} | {{fa-icon icon="times"}}
+        {{user.fullName}}
+        |
+        <FaIcon @icon="times" />
       </li>
     {{/each}}
     {{#each (sort-by "title" instructorGroups) as |instructorGroup|}}
       <li {{action "removeInstructorGroup" instructorGroup}}>
-        {{instructorGroup.title}} | {{fa-icon icon="times"}}
+        {{instructorGroup.title}}
+        |
+        <FaIcon @icon="times" />
       </li>
     {{/each}}
   </ul>
-  {{user-search
-    addUser=(action "addInstructor")
-    addInstructorGroup=(action "addInstructorGroup")
-    currentlyActiveUsers=instructors
-    availableInstructorGroups=(await availableInstructorGroups)
-    currentlyActiveInstructorGroups=instructorGroups
-  }}
+  <UserSearch
+    @addUser={{action "addInstructor"}}
+    @addInstructorGroup={{action "addInstructorGroup"}}
+    @currentlyActiveUsers={{instructors}}
+    @availableInstructorGroups={{await availableInstructorGroups}}
+    @currentlyActiveInstructorGroups={{instructorGroups}}
+  />
 </div>

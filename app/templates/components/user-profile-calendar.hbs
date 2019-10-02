@@ -1,16 +1,27 @@
-<h2 class="title">{{t "general.calendar"}}</h2>
-
+<h2 class="title">
+  {{t "general.calendar"}}
+</h2>
 <ul class="calendar-time-picker">
-  <li class="clickable" {{action "goBack"}}>{{fa-icon icon="backward"}}</li>
-  <li class="clickable" {{action "gotoToday"}}>{{t "general.today"}}</li>
-  <li class="clickable" {{action "goForward"}}>{{fa-icon icon="forward"}}</li>
+  <li class="clickable" {{action "goBack"}}>
+    <FaIcon @icon="backward" />
+  </li>
+  <li class="clickable" {{action "gotoToday"}}>
+    {{t "general.today"}}
+  </li>
+  <li class="clickable" {{action "goForward"}}>
+    <FaIcon @icon="forward" />
+  </li>
 </ul>
 <div class="ilios-calendar">
-  {{ilios-calendar-week
-    calendarEvents=(await calendarEvents)
-    date=date
-    areEventsSelectable=false
-    areDaysSelectable=false
-  }}
+  <IliosCalendarWeek
+    @calendarEvents={{await calendarEvents}}
+    @date={{date}}
+    @areEventsSelectable={{false}}
+    @areDaysSelectable={{false}}
+  />
 </div>
-<span class="loding-indicator {{if (is-fulfilled calendarEvents) "loaded"}}">{{loading-spinner}} {{t "general.loadingEvents"}}...</span>
+<span class="loding-indicator {{if (is-fulfilled calendarEvents) "loaded"}}">
+  <LoadingSpinner />
+  {{t "general.loadingEvents"}}
+  ...
+</span>

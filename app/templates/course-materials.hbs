@@ -1,12 +1,13 @@
 <div class="backtolink">
-  {{#link-to "course" model}}{{t "general.backToCourse"}}{{/link-to}}
+  <LinkTo @route="course" @model={{model}}>
+    {{t "general.backToCourse"}}
+  </LinkTo>
 </div>
-
-{{course-summary-header course=model}}
-
-{{course-materials
-  course=model
-  courseSort=courseSort
-  sessionSort=sessionSort
-  onCourseSort=(action (mut courseSort))
-  onSessionSort=(action (mut sessionSort))}}
+<CourseSummaryHeader @course={{model}} />
+<CourseMaterials
+  @course={{model}}
+  @courseSort={{courseSort}}
+  @sessionSort={{sessionSort}}
+  @onCourseSort={{action (mut courseSort)}}
+  @onSessionSort={{action (mut sessionSort)}}
+/>

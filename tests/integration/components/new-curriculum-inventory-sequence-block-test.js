@@ -155,11 +155,11 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
     await fillIn('.course select', course.id);
 
-    let details = find('.course .details').textContent.trim();
-    assert.ok(details.includes('Level: ' + course.level));
-    assert.ok(details.includes('Start Date: ' + moment(course.startDate).format('YYYY-MM-DD')));
-    assert.ok(details.includes('End Date: ' + moment(course.endDate).format('YYYY-MM-DD')));
-    assert.ok(details.includes('Clerkship (' + clerkshipType.title + ')'));
+    let details = '.course .details';
+    assert.dom(details).includesText('Level: ' + course.level);
+    assert.dom(details).includesText('Start Date: ' + moment(course.startDate).format('YYYY-MM-DD'));
+    assert.dom(details).includesText('End Date: ' + moment(course.endDate).format('YYYY-MM-DD'));
+    assert.dom(details).includesText('Clerkship (' + clerkshipType.title + ')');
   });
 
   test('save with defaults', async function(assert) {

@@ -1,17 +1,18 @@
 {{title (t "general.admin")}}
-{{#link-to "admin-dashboard"}}{{t "general.backToAdminDashboard"}}{{/link-to}}
-
+<LinkTo @route="admin-dashboard">
+  {{t "general.backToAdminDashboard"}}
+</LinkTo>
 <section class="assign-students">
   <div class="filters">
     <div class="schoolsfilter">
-      {{fa-icon icon="university" fixedWidth=true}}
-
+      <FaIcon @icon="university" @fixedWidth={{true}} />
       {{#if this.hasMoreThanOneSchool}}
         <select onchange={{action (mut this.schoolId) value="target.value"}}>
           {{#each (sort-by "title" this.schools) as |school|}}
             <option
               selected={{is-equal school this.selectedSchool}}
-              value={{school.id}}>
+              value={{school.id}}
+            >
               {{school.title}}
             </option>
           {{/each}}
@@ -20,17 +21,17 @@
         {{this.selectedSchool.title}}
       {{/if}}
     </div>
-
     <div class="titlefilter">
       <input
         placeholder={{t "general.pendingUserUpdates.filterBy"}}
         type="text"
         value={{this.query}}
-        oninput={{perform this.setQuery value="target.value"}}>
+        oninput={{perform this.setQuery value="target.value"}}
+      >
     </div>
   </div>
-
-  {{assign-students
-    school=this.selectedSchool
-    students=(await this.filteredUnassignedStudents)}}
+  <AssignStudents
+    @school={{this.selectedSchool}}
+    @students={{await this.filteredUnassignedStudents}}
+  />
 </section>

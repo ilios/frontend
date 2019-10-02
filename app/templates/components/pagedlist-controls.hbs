@@ -1,7 +1,8 @@
 {{#unless firstPage}}
-  <span class="clickable link backward" {{action "goBack"}}>{{fa-icon icon="backward"}}</span>
+  <span class="clickable link backward" {{action "goBack"}}>
+    <FaIcon @icon="backward" />
+  </span>
 {{/unless}}
-
 {{#unless limitless}}
   {{t "general.pagedResultsCount" start=start end=end total=total}}
 {{else}}
@@ -14,11 +15,11 @@
   </select>
   {{t "general.perPage"}}
 {{/unless}}
-
 {{#unless lastPage}}
-  <span class="clickable link forward" {{action "goForward"}}>{{fa-icon icon="forward"}}</span>
+  <span class="clickable link forward" {{action "goForward"}}>
+    <FaIcon @icon="forward" />
+  </span>
 {{/unless}}
-
 {{#unless limitless}}
   <select onchange={{action "setLimit" value="target.value"}}>
     {{#each offsetOptions as |o|}}

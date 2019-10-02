@@ -1,15 +1,13 @@
-{{! template-lint-disable attribute-indentation }}
 <div class="title">
   {{#if canUpdate}}
-    {{#editable-field
-      tagName="h2"
-      value=blockTitle
-      save=(action "changeTitle")
-      close=(action "revertTitleChanges")
-      saveOnEnter=true
-      closeOnEscape=true
-      as |isSaving|
-    }}
+    <EditableField
+      @tagName="h2"
+      @value={{blockTitle}}
+      @save={{action "changeTitle"}}
+      @close={{action "revertTitleChanges"}}
+      @saveOnEnter={{true}}
+      @closeOnEscape={{true}} as |isSaving|
+    >
       <input
         type="text"
         value={{blockTitle}}
@@ -18,13 +16,20 @@
         onkeyup={{action "addErrorDisplayFor" "blockTitle"}}
       >
       {{#if
-        (and (v-get this "blockTitle" "isInvalid") (is-in showErrorsFor "blockTitle"))
+        (and
+          (v-get this "blockTitle" "isInvalid")
+          (is-in showErrorsFor "blockTitle")
+        )
       }}
-        <span class="validation-error-message">{{v-get this "blockTitle" "message"}}</span>
+        <span class="validation-error-message">
+          {{v-get this "blockTitle" "message"}}
+        </span>
       {{/if}}
-    {{/editable-field}}
+    </EditableField>
   {{else}}
-    <h2>{{fa-icon icon="lock"}} {{sequenceBlock.title}}</h2>
+    <h2>
+      <FaIcon @icon="lock" />
+      {{sequenceBlock.title}}
+    </h2>
   {{/if}}
 </div>
-

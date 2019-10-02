@@ -1,8 +1,8 @@
 <section class="course-visualize-term">
   <div class="backtolink">
-    {{#link-to "course-visualizations" model.course}}
+    <LinkTo @route="course-visualizations" @model={{model.course}}>
       {{t "general.otherVisualizations"}}
-    {{/link-to}}
+    </LinkTo>
   </div>
   <h2>
     {{t
@@ -11,8 +11,10 @@
     }}
   </h2>
   <h3 class="clickable">
-    {{#link-to "course" model.course}}{{model.course.title}} {{model.course.academicYear}}{{/link-to}}
+    <LinkTo @route="course" @model={{model.course}}>
+      {{model.course.title}}
+      {{model.course.academicYear}}
+    </LinkTo>
   </h3>
-
-  {{visualizer-course-term course=model.course term=model.term}}
+  <VisualizerCourseTerm @course={{model.course}} @term={{model.term}} />
 </section>

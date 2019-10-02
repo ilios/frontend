@@ -1,7 +1,11 @@
-<h4>{{t "general.newInstructorGroup"}}</h4>
+<h4>
+  {{t "general.newInstructorGroup"}}
+</h4>
 <div class="form" data-test-new-instructor-group>
   <div class="item newinstructorgroup-title">
-    <label>{{t "general.title"}}:</label>
+    <label>
+      {{t "general.title"}}:
+    </label>
     <input
       type="text"
       value={{title}}
@@ -12,17 +16,21 @@
       data-test-title
     >
     {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
-      <span class="validation-error-message">{{v-get this "title" "message"}}</span>
+      <span class="validation-error-message">
+        {{v-get this "title" "message"}}
+      </span>
     {{/if}}
   </div>
   <div class="buttons">
     <button class="done text" {{action "save"}}>
       {{#if isSaving}}
-        {{loading-spinner}}
+        <LoadingSpinner />
       {{else}}
         {{t "general.done"}}
       {{/if}}
     </button>
-    <button class="cancel text" {{action "cancel"}}>{{t "general.cancel"}}</button>
+    <button class="cancel text" {{action "cancel"}}>
+      {{t "general.cancel"}}
+    </button>
   </div>
 </div>

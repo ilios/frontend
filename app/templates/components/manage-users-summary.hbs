@@ -1,30 +1,32 @@
 <div class="header">
   <h2 class="title">
     {{t "general.manageUsersSummaryTitle"}}
-    (
-    {{#link-to
-      "users"
-      (query-params showBulkNewUserForm=false showNewUserForm=false)
-    }}
-      {{t "general.viewAll"}}
-    {{/link-to}}
-    )
+    (<LinkTo
+       @route="users"
+       @query={{hash showBulkNewUserForm=false showNewUserForm=false}}
+     >
+       {{t "general.viewAll"}}
+     </LinkTo>)
   </h2>
   <div class="actions">
     {{#if canCreate}}
-      {{#link-to
-        "users"
-        (query-params showNewUserForm=true showBulkNewUserForm=false)
-      }}
-        <button>{{t "general.create"}}</button>
-      {{/link-to}}
+      <LinkTo
+        @route="users"
+        @query={{hash showNewUserForm=true showBulkNewUserForm=false}}
+      >
+        <button>
+          {{t "general.create"}}
+        </button>
+      </LinkTo>
       {{#if (not-eq (await iliosConfig.userSearchType) "ldap")}}
-        {{#link-to
-          "users"
-          (query-params showBulkNewUserForm=true showNewUserForm=false)
-        }}
-          <button>{{t "general.createBulk"}}</button>
-        {{/link-to}}
+        <LinkTo
+          @route="users"
+          @query={{hash showBulkNewUserForm=true showNewUserForm=false}}
+        >
+          <button>
+            {{t "general.createBulk"}}
+          </button>
+        </LinkTo>
       {{/if}}
     {{/if}}
   </div>
@@ -40,37 +42,50 @@
     onkeyup={{perform searchForUsers value="target.value"}}
   >
   <ul
-    class="
-            results
-            {{unless
-              (or searchForUsers.isRunning searchForUsers.lastSuccessful.value.length)
-              "hidden"
-            }}
-            {{if clickUser.isRunning "navigating"}}
-          "
+    class="results
+      {{unless
+        (or searchForUsers.isRunning searchForUsers.lastSuccessful.value.length)
+        "hidden"
+      }}
+
+      {{if clickUser.isRunning "navigating"}}"
   >
     {{#if searchForUsers.isRunning}}
-      <li>{{t "general.currentlySearchingPrompt"}}</li>
+      <li>
+        {{t "general.currentlySearchingPrompt"}}
+      </li>
     {{else}}
       {{#each searchForUsers.lastSuccessful.value as |result|}}
         {{#if (eq result.type "text")}}
-          <li>{{result.text}}</li>
+          <li>
+            {{result.text}}
+          </li>
         {{/if}}
         {{#if (eq result.type "summary")}}
-          <li class="summary">{{result.text}}</li>
+          <li class="summary">
+            {{result.text}}
+          </li>
         {{/if}}
         {{#if (eq result.type "user")}}
-          <li class="user {{unless clickUser.isRunning "clickable"}}" {{action (perform clickUser) result.user}}>
+          <li
+            class="user {{unless clickUser.isRunning "clickable"}}"
+            {{action (perform clickUser) result.user}}
+          >
             <span class="name">
               {{result.user.fullName}}
               {{#unless result.user.enabled}}
-                {{fa-icon icon="user-times" title=(t "general.disabled") class="error"}}
+                <FaIcon
+                  @icon="user-times"
+                  @title={{t "general.disabled"}}
+                  class="error"
+                />
               {{/unless}}
             </span>
-            <span class="email">{{result.user.email}}</span>
+            <span class="email">
+              {{result.user.email}}
+            </span>
           </li>
         {{/if}}
-
       {{/each}}
     {{/if}}
   </ul>

@@ -7,11 +7,13 @@
 >
 <button class="save text" {{action (perform save)}}>
   {{#if save.isRunning}}
-    {{loading-spinner}}
+    <LoadingSpinner />
   {{else}}
     {{t "general.add"}}
   {{/if}}
 </button>
 {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
-  <span class="validation-error-message">{{v-get this "title" "message"}}</span>
+  <span class="validation-error-message">
+    {{v-get this "title" "message"}}
+  </span>
 {{/if}}

@@ -1,16 +1,17 @@
-{{! template-lint-disable attribute-indentation }}
 <div class="title">
-  <h4 class="school-title">{{instructorGroup.school.title}} &gt; </h4>
+  <h4 class="school-title">
+    {{instructorGroup.school.title}}
+    &gt;
+  </h4>
   {{#if canUpdate}}
-    {{#editable-field
+    <EditableField
       data-test-group-title
-      value=title
-      save=(action "changeTitle")
-      close=(action "revertTitleChanges")
-      saveOnEnter=true
-      closeOnEscape=true
-      as |isSaving|
-    }}
+      @value={{title}}
+      @save={{action "changeTitle"}}
+      @close={{action "revertTitleChanges"}}
+      @saveOnEnter={{true}}
+      @closeOnEscape={{true}} as |isSaving|
+    >
       <input
         type="text"
         value={{title}}
@@ -18,14 +19,20 @@
         disabled={{isSaving}}
         onkeyup={{action "addErrorDisplayFor" "title"}}
       >
-      {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
-        <span class="validation-error-message">{{v-get this "title" "message"}}</span>
+      {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
+      }}
+        <span class="validation-error-message">
+          {{v-get this "title" "message"}}
+        </span>
       {{/if}}
-    {{/editable-field}}
+    </EditableField>
   {{else}}
-    <h4 data-test-group-title>{{title}}</h4>
+    <h4 data-test-group-title>
+      {{title}}
+    </h4>
   {{/if}}
 </div>
 <span class="info">
-  {{t "general.members"}}: {{instructorGroup.users.length}}
+  {{t "general.members"}}:
+  {{instructorGroup.users.length}}
 </span>

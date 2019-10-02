@@ -1,39 +1,46 @@
 <div class="global-search" data-test-global-search>
   <GlobalSearchBox @query={{@query}} @search={{@onQuery}} />
-
-  <ul class="results {{unless (or this.isLoading this.hasResults) "hidden"}}" data-test-results>
+  <ul
+    class="results {{unless (or this.isLoading this.hasResults) "hidden"}}"
+    data-test-results
+  >
     {{#if this.isLoading}}
       <li class="searching">
-        {{fa-icon icon="spinner" class="orange" spin=true}}
+        <FaIcon @icon="spinner" class="orange" @spin={{true}} />
         {{t "general.currentlySearchingPrompt"}}
       </li>
     {{else}}
       {{#each this.paginatedResults as |course|}}
-        {{course-search-result course=course}}
+        <CourseSearchResult @course={{course}} />
       {{else}}
-        <li class="no-results">{{t "general.noSearchResultsPrompt"}}</li>
+        <li class="no-results">
+          {{t "general.noSearchResultsPrompt"}}
+        </li>
       {{/each}}
     {{/if}}
   </ul>
-
   {{#if this.hasResults}}
     <fieldset class="filters">
-      <legend>{{t "general.showResultsFor"}}</legend>
+      <legend>
+        {{t "general.showResultsFor"}}
+      </legend>
       <div class="year-filters">
         <select
           data-test-academic-year-filter
-          onchange={{action "setSelectedYear" value="target.value"}}>
+          onchange={{action "setSelectedYear" value="target.value"}}
+        >
           <option selected={{is-equal null this.selectedYear}} value="">
             {{t "general.allAcademicYears"}}
           </option>
           {{#each this.yearOptions as |year|}}
             <option selected={{is-equal year this.selectedYear}} value={{year}}>
-              {{year}} - {{inc year}}
+              {{year}}
+              -
+              {{inc year}}
             </option>
           {{/each}}
         </select>
       </div>
-
       {{#if (gt (get allSchools "length") 1)}}
         <div class="school-filters" data-test-school-filters>
           {{#each this.schoolOptions as |obj index|}}
@@ -41,11 +48,17 @@
               <input
                 id="school={{index}}"
                 type="checkbox"
-                checked={{or (eq obj.results 0) (not (contains obj.id ignoredSchoolIds))}}
+                checked={{or
+                  (eq obj.results 0)
+                  (not (contains obj.id ignoredSchoolIds))
+                }}
                 onclick={{action "toggleSchoolSelection" obj.id}}
                 disabled={{eq obj.results 0}}
               >
-              <label for="school={{index}}">{{obj.title}} ({{obj.results}})</label>
+              <label for="school={{index}}">
+                {{obj.title}}
+                ({{obj.results}})
+              </label>
             </span>
           {{/each}}
         </div>
@@ -53,10 +66,9 @@
     </fieldset>
   {{/if}}
 </div>
-
-
 <PaginationLinks
   @page={{this.page}}
   @results={{this.filteredResults}}
   @size={{this.size}}
-  @onSelectPage={{@onSelectPage}} />
+  @onSelectPage={{@onSelectPage}}
+/>

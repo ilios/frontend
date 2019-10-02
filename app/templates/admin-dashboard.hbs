@@ -1,8 +1,10 @@
 {{title (t "general.admin")}}
 <div class="admin-dashboard">
-  {{manage-users-summary canCreate=model.canCreate}}
+  <ManageUsersSummary @canCreate={{model.canCreate}} />
   {{#if (gt model.schoolsWithUpdateUserPermission.length 0)}}
-    {{pending-updates-summary schools=model.schoolsWithUpdateUserPermission}}
-    {{unassigned-students-summary schools=model.schoolsWithUpdateUserPermission}}
+    <PendingUpdatesSummary @schools={{model.schoolsWithUpdateUserPermission}} />
+    <UnassignedStudentsSummary
+      @schools={{model.schoolsWithUpdateUserPermission}}
+    />
   {{/if}}
 </div>

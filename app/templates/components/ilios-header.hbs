@@ -1,18 +1,20 @@
-{{#link-to "dashboard" classNames="logo" title=(t "general.dashboard")}}
+<LinkTo @route="dashboard" @classNames="logo" @title={{t "general.dashboard"}}>
   <h1 class="visually-hidden">
     {{t "general.ilios"}}
   </h1>
   <span class="image"></span>
-{{/link-to}}
+</LinkTo>
 {{#if @title}}
-  <h1 data-test-title>{{@title}}</h1>
+  <h1 data-test-title>
+    {{@title}}
+  </h1>
 {{/if}}
 <div class="tools">
   {{#if (await showSearch)}}
     <GlobalSearchBox @search={{action "search"}} />
   {{/if}}
-  {{locale-chooser}}
+  <LocaleChooser />
   {{#if session.isAuthenticated}}
-    {{user-menu}}
+    <UserMenu />
   {{/if}}
 </div>

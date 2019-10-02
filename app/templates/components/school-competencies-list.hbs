@@ -5,7 +5,9 @@
         {{domain.title}}
         <ul>
           {{#each (sort-by "title" (await domain.children)) as |competency|}}
-            <li>{{competency.title}}</li>
+            <li>
+              {{competency.title}}
+            </li>
           {{/each}}
         </ul>
       </li>

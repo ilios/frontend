@@ -1,36 +1,51 @@
 <table>
   <thead>
     <tr>
-      <th class="text-left" colspan="3">{{t "general.programTitle"}}</th>
+      <th class="text-left" colspan="3">
+        {{t "general.programTitle"}}
+      </th>
       <th class="text-center hide-from-small-screen" colspan="2">
         {{t "general.school"}}
       </th>
-      <th class="text-center hide-from-small-screen">{{t "general.status"}}</th>
-      <th class="text-right" colspan="2">{{t "general.actions"}}</th>
+      <th class="text-center hide-from-small-screen">
+        {{t "general.status"}}
+      </th>
+      <th class="text-right" colspan="2">
+        {{t "general.actions"}}
+      </th>
     </tr>
   </thead>
-
   <tbody>
     {{#each this.proxiedPrograms as |program|}}
       <tr
         class={{if program.showRemoveConfirmation "confirm-removal"}}
-        data-test-active-row>
+        data-test-active-row
+      >
         <td class="text-left" colspan="3">
-          {{#link-to "program" program.content}}
+          <LinkTo @route="program" @model={{program.content}}>
             {{program.title}}
-          {{/link-to}}
+          </LinkTo>
         </td>
         <td
           class="text-center hide-from-small-screen"
           colspan="2"
-          {{action "edit" program}}>
+          {{action "edit" program}}
+        >
           {{program.school.title}}
         </td>
         <td class="text-center hide-from-small-screen">
           {{#if (and program.isPublished (not program.isScheduled))}}
-            {{fa-icon icon="circle" class="yes" title=(capitalize (t "general.active"))}}
+            <FaIcon
+              @icon="circle"
+              class="yes"
+              @title={{capitalize (t "general.active")}}
+            />
           {{else}}
-            {{fa-icon icon="circle" class="warning" title=(capitalize (t "general.inactive"))}}
+            <FaIcon
+              @icon="circle"
+              class="warning"
+              @title={{capitalize (t "general.inactive")}}
+            />
           {{/if}}
         </td>
         <td class="text-right" colspan="2">
@@ -39,15 +54,15 @@
               {{t "general.activate"}}
             </button>
           {{/if}}
-          {{#link-to "program" program.content class="edit"}}
-            {{fa-icon icon="edit" class="enabled"}}
-          {{/link-to}}
+          <LinkTo @route="program" @model={{program.content}} class="edit">
+            <FaIcon @icon="edit" class="enabled" />
+          </LinkTo>
           {{#if (await program.canDelete)}}
             <span class="clickable remove" {{action "confirmRemove" program}}>
-              {{fa-icon icon="trash" class="enabled"}}
+              <FaIcon @icon="trash" class="enabled" />
             </span>
           {{else}}
-            {{fa-icon icon="trash" class="disabled"}}
+            <FaIcon @icon="trash" class="disabled" />
           {{/if}}
         </td>
       </tr>
@@ -56,48 +71,56 @@
           <td class="hide-from-small-screen" colspan="8">
             <div class="confirm-message">
               {{#if (is-fulfilled program.courses)}}
-                {{t "general.confirmRemoveProgram"
+                {{t
+                  "general.confirmRemoveProgram"
                   courseCount=(get (await program.courses) "length")
-                  programYearCount=(get (await program.programYears) "length")}}
+                  programYearCount=(get (await program.programYears) "length")
+                }}
                 <br>
                 <div class="confirm-buttons">
                   <button
                     class="remove text"
-                    onclick={{action "remove" program}}>
+                    onclick={{action "remove" program}}
+                  >
                     {{t "general.yes"}}
                   </button>
                   <button
                     class="done text"
-                    onclick={{action "cancelRemove" program}}>
+                    onclick={{action "cancelRemove" program}}
+                  >
                     {{t "general.cancel"}}
                   </button>
                 </div>
               {{else}}
-                {{loading-spinner tagName="div"}}
+                <LoadingSpinner @tagName="div" />
               {{/if}}
             </div>
           </td>
-          <td class="hide-from-large-screen" colspan="5" >
+          <td class="hide-from-large-screen" colspan="5">
             <div class="confirm-message">
               {{#if (is-fulfilled program.courses)}}
-                {{t "general.confirmRemoveProgram"
+                {{t
+                  "general.confirmRemoveProgram"
                   courseCount=(get (await program.courses) "length")
-                  programYearCount=(get (await program.programYears) "length")}}
+                  programYearCount=(get (await program.programYears) "length")
+                }}
                 <br>
                 <div class="confirm-buttons">
                   <button
                     class="remove text"
-                    onclick={{action "remove" program}}>
+                    onclick={{action "remove" program}}
+                  >
                     {{t "general.yes"}}
                   </button>
                   <button
                     class="done text"
-                    onclick={{action "cancelRemove" program}}>
+                    onclick={{action "cancelRemove" program}}
+                  >
                     {{t "general.cancel"}}
                   </button>
                 </div>
               {{else}}
-                {{loading-spinner tagName="div"}}
+                <LoadingSpinner @tagName="div" />
               {{/if}}
             </div>
           </td>

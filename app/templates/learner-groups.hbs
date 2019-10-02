@@ -2,12 +2,17 @@
 <section class="learnergroups-list">
   <div class="filters">
     <div class="schoolsfilter">
-      {{fa-icon icon="university" fixedWidth=true}}
+      <FaIcon @icon="university" @fixedWidth={{true}} />
       {{#if (get (await sortedSchools) "length")}}
         {{#if (gt (get (await sortedSchools) "length") 1)}}
-          <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+          <select
+            onchange={{action "changeSelectedSchool" value="target.value"}}
+          >
             {{#each (await sortedSchools) as |school|}}
-              <option value={{school.id}} selected={{is-equal school (await selectedSchool)}}>
+              <option
+                value={{school.id}}
+                selected={{is-equal school (await selectedSchool)}}
+              >
                 {{school.title}}
               </option>
             {{/each}}
@@ -20,10 +25,12 @@
       {{/if}}
     </div>
     <div class="programsfilter">
-      {{fa-icon icon="users" fixedWidth=true}}
+      <FaIcon @icon="users" @fixedWidth={{true}} />
       {{#if (get (await sortedPrograms) "length")}}
         {{#if (gt (get (await sortedPrograms) "length") 1)}}
-          <select onchange={{action "changeSelectedProgram" value="target.value"}}>
+          <select
+            onchange={{action "changeSelectedProgram" value="target.value"}}
+          >
             {{#each (await sortedPrograms) as |program|}}
               <option
                 value={{program.id}}
@@ -41,10 +48,12 @@
       {{/if}}
     </div>
     <div class="programyearsfilter">
-      {{fa-icon icon="calendar" fixedWidth=true}}
+      <FaIcon @icon="calendar" @fixedWidth={{true}} />
       {{#if (get (await sortedProgramYears) "length")}}
         {{#if (gt (get (await sortedProgramYears) "length") 1)}}
-          <select onchange={{action "changeSelectedProgramYear" value="target.value"}}>
+          <select
+            onchange={{action "changeSelectedProgramYear" value="target.value"}}
+          >
             {{#each (await sortedProgramYears) as |programYear|}}
               <option
                 value={{programYear.id}}
@@ -72,59 +81,60 @@
   <section class="learnergroups">
     <div class="header">
       <div class="title">
-        <h2>{{t "general.learnerGroups"}}</h2>
+        <h2>
+          {{t "general.learnerGroups"}}
+        </h2>
       </div>
       <div class="actions">
         {{#if (and (await canCreate) (await selectedProgramYear))}}
-          {{expand-collapse-button
-            value=showNewLearnerGroupForm
-            action=(action "toggleNewLearnerGroupForm")
-          }}
+          <ExpandCollapseButton
+            @value={{showNewLearnerGroupForm}}
+            @action={{action "toggleNewLearnerGroupForm"}}
+          />
         {{/if}}
       </div>
     </div>
-
     <section class="new">
       {{#liquid-if showNewLearnerGroupForm class="vertical"}}
-        {{new-learnergroup
-          save=(action "saveNewLearnerGroup")
-          cancel=(action "cancel")
-          fillModeSupported=true
-        }}
+        <NewLearnergroup
+          @save={{action "saveNewLearnerGroup"}}
+          @cancel={{action "cancel"}}
+          @fillModeSupported={{true}}
+        />
       {{/liquid-if}}
-
       {{#if this.newGroup}}
         <div class="saved-result">
-          {{#link-to "learnerGroup" this.newGroup}}
-            {{fa-icon icon="external-link-square-alt"}} {{this.newGroup.title}}
-          {{/link-to}}
+          <LinkTo @route="learnerGroup" @model={{this.newGroup}}>
+            <FaIcon @icon="external-link-square-alt" />
+            {{this.newGroup.title}}
+          </LinkTo>
           {{t "general.savedSuccessfully"}}
         </div>
       {{/if}}
     </section>
-
     <div class="list">
       {{#if (is-fulfilled learnerGroups)}}
-        {{learnergroup-list
-          canCreate=(await canCreate)
-          canDelete=(await canDelete)
-          canCopyWithLearners=true
-          learnerGroups=(await filteredLearnerGroups)
-          query=titleFilter
-          sortBy=this.sortLearnerGroupsBy
-          copy=(perform copyGroup)
-          remove=(action "removeLearnerGroup")
-          setSortBy=(action (mut this.sortLearnerGroupsBy))}}
+        <LearnergroupList
+          @canCreate={{await canCreate}}
+          @canDelete={{await canDelete}}
+          @canCopyWithLearners={{true}}
+          @learnerGroups={{await filteredLearnerGroups}}
+          @query={{titleFilter}}
+          @sortBy={{this.sortLearnerGroupsBy}}
+          @copy={{perform copyGroup}}
+          @remove={{action "removeLearnerGroup"}}
+          @setSortBy={{action (mut this.sortLearnerGroupsBy)}}
+        />
       {{else}}
-        {{pulse-loader}}
+        <PulseLoader />
       {{/if}}
     </div>
   </section>
 </section>
 {{#liquid-if copyGroup.isRunning class="crossFade"}}
-  {{wait-saving
-    showProgress=true
-    totalProgress=totalGroupsToSave
-    currentProgress=currentGroupsSaved
-  }}
+  <WaitSaving
+    @showProgress={{true}}
+    @totalProgress={{totalGroupsToSave}}
+    @currentProgress={{currentGroupsSaved}}
+  />
 {{/liquid-if}}

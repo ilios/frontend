@@ -1,18 +1,19 @@
-{{connection-status}}
-{{api-version-notice}}
-{{#new-version-notifier as |version lastVersion reload|}}
-  {{update-notification reload=(action reload)}}
-{{/new-version-notifier}}
+<ConnectionStatus />
+<ApiVersionNotice />
+<NewVersionNotifier as |version lastVersion reload|>
+  <UpdateNotification @reload={{action reload}} />
+</NewVersionNotifier>
 <div
-  class="application-wrapper {{if currentUser.performsNonLearnerFunction "show-navigation"}}"
+  class="application-wrapper
+    {{if currentUser.performsNonLearnerFunction "show-navigation"}}"
 >
-  {{ilios-header currentlyLoading=currentlyLoading}}
+  <IliosHeader @currentlyLoading={{currentlyLoading}} />
   {{#if session.isAuthenticated}}
-    {{ilios-navigation}}
+    <IliosNavigation />
   {{/if}}
   <main>
     {{#if showErrorDisplay}}
-      {{error-display errors=errors clearErrors=(action "clearErrors")}}
+      <ErrorDisplay @errors={{errors}} @clearErrors={{action "clearErrors"}} />
     {{else}}
       {{outlet}}
     {{/if}}
@@ -23,8 +24,8 @@
       {{app-version versionOnly=true}}
     </div>
   </footer>
-  {{loading-bar isLoading=currentlyLoading}}
+  <LoadingBar @isLoading={{currentlyLoading}} />
 </div>
-{{flash-messages}}
-{{head-layout}}
-{{ember-load-remover}}
+<FlashMessages />
+<HeadLayout />
+<EmberLoadRemover />

@@ -1,19 +1,18 @@
-{{! template-lint-disable attribute-indentation }}
 <div class="backtolink">
-  {{#link-to "schools"}}{{t "general.backToSchools"}}{{/link-to}}
+  <LinkTo @route="schools">
+    {{t "general.backToSchools"}}
+  </LinkTo>
 </div>
-
 <div class="school-overview">
   <h2>
     {{#if canUpdateSchool}}
-      {{#editable-field
-        value=title
-        save=(action "changeTitle")
-        close=(action "revertTitleChanges")
-        saveOnEnter=true
-        closeOnEscape=true
-        as |isSaving|
-      }}
+      <EditableField
+        @value={{title}}
+        @save={{action "changeTitle"}}
+        @close={{action "revertTitleChanges"}}
+        @saveOnEnter={{true}}
+        @closeOnEscape={{true}} as |isSaving|
+      >
         <input
           type="text"
           value={{title}}
@@ -21,107 +20,113 @@
           disabled={{isSaving}}
           onkeyup={{action "addErrorDisplayFor" "title"}}
         >
-        {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
-          <span class="validation-error-message">{{v-get this "title" "message"}}</span>
+        {{#if
+          (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
+        }}
+          <span class="validation-error-message">
+            {{v-get this "title" "message"}}
+          </span>
         {{/if}}
-      {{/editable-field}}
+      </EditableField>
     {{else}}
       {{title}}
     {{/if}}
   </h2>
 </div>
-
 <div class="school-manager-content">
   {{#if
-    (or (and (eq school.directors.length 0) (eq school.administrators.length 0)) schoolLeadershipDetails)
+    (or
+      (and (eq school.directors.length 0) (eq school.administrators.length 0))
+      schoolLeadershipDetails
+    )
   }}
-    {{school-leadership-expanded
-      school=school
-      canUpdate=canUpdateSchool
-      collapse=(action setSchoolLeadershipDetails false)
-      expand=(action setSchoolLeadershipDetails true)
-      isManaging=schoolManageLeadership
-      setIsManaging=setSchoolManageLeadership
-    }}
+    <SchoolLeadershipExpanded
+      @school={{school}}
+      @canUpdate={{canUpdateSchool}}
+      @collapse={{action setSchoolLeadershipDetails false}}
+      @expand={{action setSchoolLeadershipDetails true}}
+      @isManaging={{schoolManageLeadership}}
+      @setIsManaging={{setSchoolManageLeadership}}
+    />
   {{else}}
-    {{leadership-collapsed
-      title=(t "general.schoolLeadership")
-      directorsCount=(has-many-length school "directors")
-      administratorsCount=(has-many-length school "administrators")
-      expand=(action setSchoolLeadershipDetails true)
-    }}
+    <LeadershipCollapsed
+      @title={{t "general.schoolLeadership"}}
+      @directorsCount={{has-many-length school "directors"}}
+      @administratorsCount={{has-many-length school "administrators"}}
+      @expand={{action setSchoolLeadershipDetails true}}
+    />
   {{/if}}
   {{#if (or (eq school.competencies.length 0) schoolCompetencyDetails)}}
-    {{school-competencies-expanded
-      school=school
-      canUpdate=canUpdateCompetency
-      canDelete=canDeleteCompetency
-      canCreate=canCreateCompetency
-      collapse=(action setSchoolCompetencyDetails false)
-      expand=(action setSchoolCompetencyDetails true)
-      isManaging=schoolManageCompetencies
-      setSchoolManageCompetencies=setSchoolManageCompetencies
-    }}
+    <SchoolCompetenciesExpanded
+      @school={{school}}
+      @canUpdate={{canUpdateCompetency}}
+      @canDelete={{canDeleteCompetency}}
+      @canCreate={{canCreateCompetency}}
+      @collapse={{action setSchoolCompetencyDetails false}}
+      @expand={{action setSchoolCompetencyDetails true}}
+      @isManaging={{schoolManageCompetencies}}
+      @setSchoolManageCompetencies={{setSchoolManageCompetencies}}
+    />
   {{else}}
-    {{school-competencies-collapsed
-      school=school
-      expand=(action setSchoolCompetencyDetails true)
-    }}
+    <SchoolCompetenciesCollapsed
+      @school={{school}}
+      @expand={{action setSchoolCompetencyDetails true}}
+    />
   {{/if}}
-
   {{#if (or (eq school.vocabularies.length 0) schoolVocabularyDetails)}}
-    {{school-vocabularies-expanded
-      school=school
-      canUpdateVocabulary=canUpdateVocabulary
-      canDeleteVocabulary=canDeleteVocabulary
-      canCreateVocabulary=canCreateVocabulary
-      canUpdateTerm=canUpdateTerm
-      canDeleteTerm=canDeleteTerm
-      canCreateTerm=canCreateTerm
-      collapse=(action setSchoolVocabularyDetails false)
-      expand=(action setSchoolVocabularyDetails true)
-      managedVocabularyId=schoolManagedVocabulary
-      setSchoolManagedVocabulary=setSchoolManagedVocabulary
-      managedTermId=schoolManagedVocabularyTerm
-      setSchoolManagedVocabularyTerm=setSchoolManagedVocabularyTerm
-    }}
+    <SchoolVocabulariesExpanded
+      @school={{school}}
+      @canUpdateVocabulary={{canUpdateVocabulary}}
+      @canDeleteVocabulary={{canDeleteVocabulary}}
+      @canCreateVocabulary={{canCreateVocabulary}}
+      @canUpdateTerm={{canUpdateTerm}}
+      @canDeleteTerm={{canDeleteTerm}}
+      @canCreateTerm={{canCreateTerm}}
+      @collapse={{action setSchoolVocabularyDetails false}}
+      @expand={{action setSchoolVocabularyDetails true}}
+      @managedVocabularyId={{schoolManagedVocabulary}}
+      @setSchoolManagedVocabulary={{setSchoolManagedVocabulary}}
+      @managedTermId={{schoolManagedVocabularyTerm}}
+      @setSchoolManagedVocabularyTerm={{setSchoolManagedVocabularyTerm}}
+    />
   {{else}}
-    {{school-vocabularies-collapsed
-      school=school
-      expand=(action setSchoolVocabularyDetails true)
-    }}
+    <SchoolVocabulariesCollapsed
+      @school={{school}}
+      @expand={{action setSchoolVocabularyDetails true}}
+    />
   {{/if}}
-
   {{#if
-    (or (eq (get (await school.sessionTypes) "length") 0) schoolSessionTypeDetails)
+    (or
+      (eq (get (await school.sessionTypes) "length") 0) schoolSessionTypeDetails
+    )
   }}
-    {{school-session-types-expanded
-      school=school
-      canUpdate=canUpdateSessionType
-      canDelete=canDeleteSessionType
-      canCreate=canCreateSessionType
-      collapse=(action setSchoolSessionTypeDetails false)
-      expand=(action setSchoolSessionTypeDetails true)
-      managedSessionTypeId=schoolManagedSessionType
-      setSchoolManagedSessionType=setSchoolManagedSessionType
-      schoolNewSessionType=schoolNewSessionType
-      setSchoolNewSessionType=setSchoolNewSessionType
-    }}
+    <SchoolSessionTypesExpanded
+      @school={{school}}
+      @canUpdate={{canUpdateSessionType}}
+      @canDelete={{canDeleteSessionType}}
+      @canCreate={{canCreateSessionType}}
+      @collapse={{action setSchoolSessionTypeDetails false}}
+      @expand={{action setSchoolSessionTypeDetails true}}
+      @managedSessionTypeId={{schoolManagedSessionType}}
+      @setSchoolManagedSessionType={{setSchoolManagedSessionType}}
+      @schoolNewSessionType={{schoolNewSessionType}}
+      @setSchoolNewSessionType={{setSchoolNewSessionType}}
+    />
   {{else}}
-    {{school-session-types-collapsed
-      school=school
-      expand=(action setSchoolSessionTypeDetails true)
-    }}
+    <SchoolSessionTypesCollapsed
+      @school={{school}}
+      @expand={{action setSchoolSessionTypeDetails true}}
+    />
   {{/if}}
-  {{school-session-attributes
-    school=school
-    canUpdate=canUpdateSchoolConfig
-    collapse=(action setSchoolSessionAttributesDetails false)
-    expand=(action setSchoolSessionAttributesDetails true)
-    details=schoolSessionAttributesDetails
-    isManaging=schoolManageSessionAttributes
-    manage=setSchoolManageSessionAttributes
-  }}
+  <SchoolSessionAttributes
+    @school={{school}}
+    @canUpdate={{canUpdateSchoolConfig}}
+    @collapse={{action setSchoolSessionAttributesDetails false}}
+    @expand={{action setSchoolSessionAttributesDetails true}}
+    @details={{schoolSessionAttributesDetails}}
+    @isManaging={{schoolManageSessionAttributes}}
+    @manage={{setSchoolManageSessionAttributes}}
+  />
   {{#if schoolManageInstitution}}
     <SchoolCurriculumInventoryInstitutionManager
       @canUpdate={{canUpdateSchool}}

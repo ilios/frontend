@@ -1,22 +1,20 @@
 {{title (t "general.admin")}}
 {{#if (and isLoading (is-fulfilled canCreate))}}
-  {{user-profile-loading
-    canCreate=(await canCreate)
-  }}
+  <UserProfileLoading @canCreate={{await canCreate}} />
 {{else if (is-fulfilled canCreate)}}
-  {{user-profile
-    user=model
-    canUpdate=canUpdate
-    canCreate=(await canCreate)
-    isManagingBio=isManagingBio
-    setIsManagingBio=(action (mut isManagingBio))
-    isManagingRoles=isManagingRoles
-    setIsManagingRoles=(action (mut isManagingRoles))
-    isManagingCohorts=isManagingCohorts
-    setIsManagingCohorts=(action (mut isManagingCohorts))
-    isManagingIcs=isManagingIcs
-    setIsManagingIcs=(action (mut isManagingIcs))
-    isManagingSchools=isManagingSchools
-    setIsManagingSchools=(action (mut isManagingSchools))
-  }}
+  <UserProfile
+    @user={{model}}
+    @canUpdate={{canUpdate}}
+    @canCreate={{await canCreate}}
+    @isManagingBio={{isManagingBio}}
+    @setIsManagingBio={{action (mut isManagingBio)}}
+    @isManagingRoles={{isManagingRoles}}
+    @setIsManagingRoles={{action (mut isManagingRoles)}}
+    @isManagingCohorts={{isManagingCohorts}}
+    @setIsManagingCohorts={{action (mut isManagingCohorts)}}
+    @isManagingIcs={{isManagingIcs}}
+    @setIsManagingIcs={{action (mut isManagingIcs)}}
+    @isManagingSchools={{isManagingSchools}}
+    @setIsManagingSchools={{action (mut isManagingSchools)}}
+  />
 {{/if}}

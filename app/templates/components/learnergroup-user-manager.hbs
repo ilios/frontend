@@ -1,6 +1,7 @@
 <div class="title">
   {{#unless isEditing}}
-    {{t "general.members"}} ({{users.length}})
+    {{t "general.members"}}
+    ({{users.length}})
   {{/unless}}
 </div>
 {{#if users.length}}
@@ -18,44 +19,61 @@
           <tr>
             <th class="text-left" colspan="1">
               {{#if isEditing}}
-                <input type="checkbox" onclick={{action "toggleUserSelectionAllOrNone"}}>
+                <input
+                  type="checkbox"
+                  onclick={{action "toggleUserSelectionAllOrNone"}}
+                >
               {{/if}}
             </th>
-            {{#sortable-th
-              colspan=2
-              click=(action "sortBy" "firstName")
-              sortedBy=(or (eq sortBy "firstName") (eq sortBy "firstName:desc"))
-              sortedAscending=sortedAscending
-            }}
-              {{t "general.firstName"}}
-            {{/sortable-th}}
-            {{#sortable-th
-              colspan=2
-              click=(action "sortBy" "lastName")
-              sortedBy=(or (eq sortBy "lastName") (eq sortBy "lastName:desc"))
-              sortedAscending=sortedAscending
-            }}
-              {{t "general.lastName"}}
-            {{/sortable-th}}
-            <th class="text-left" colspan="2">{{t "general.campusId"}}</th>
-            <th class="text-left hide-from-small-screen" colspan="5">{{t "general.email"}}</th>
-            {{#if isEditing}}
-              {{#sortable-th
-                colspan=2
-                click=(action "sortBy" "lowestGroupInTreeTitle")
-                sortedBy=(or (eq sortBy "lowestGroupInTreeTitle") (eq sortBy "lowestGroupInTreeTitle:desc"))
-                sortedAscending=sortedAscending
+            <SortableTh
+              @colspan={{2}}
+              @click={{action "sortBy" "firstName"}}
+              @sortedBy={{or
+                (eq sortBy "firstName")
+                (eq sortBy "firstName:desc")
               }}
+              @sortedAscending={{sortedAscending}}
+            >
+              {{t "general.firstName"}}
+            </SortableTh>
+            <SortableTh
+              @colspan={{2}}
+              @click={{action "sortBy" "lastName"}}
+              @sortedBy={{or (eq sortBy "lastName") (eq sortBy "lastName:desc")
+              }}
+              @sortedAscending={{sortedAscending}}
+            >
+              {{t "general.lastName"}}
+            </SortableTh>
+            <th class="text-left" colspan="2">
+              {{t "general.campusId"}}
+            </th>
+            <th class="text-left hide-from-small-screen" colspan="5">
+              {{t "general.email"}}
+            </th>
+            {{#if isEditing}}
+              <SortableTh
+                @colspan={{2}}
+                @click={{action "sortBy" "lowestGroupInTreeTitle"}}
+                @sortedBy={{or
+                  (eq sortBy "lowestGroupInTreeTitle")
+                  (eq sortBy "lowestGroupInTreeTitle:desc")
+                }}
+                @sortedAscending={{sortedAscending}}
+              >
                 {{t "general.groupName"}}
-              {{/sortable-th}}
-              <th class="text-left" colspan="1">{{t "general.actions"}}</th>
+              </SortableTh>
+              <th class="text-left" colspan="1">
+                {{t "general.actions"}}
+              </th>
             {{/if}}
           </tr>
         </thead>
       </table>
       {{#if isEditing}}
         <div class="title" data-test-group-members>
-          {{t "general.groupMembers"}} ({{usersInCurrentGroup.length}})
+          {{t "general.groupMembers"}}
+          ({{usersInCurrentGroup.length}})
         </div>
       {{/if}}
       <table>
@@ -73,34 +91,50 @@
                   {{/if}}
                 {{/if}}
                 {{#if (not user.enabled)}}
-                  {{fa-icon icon="user-times" title=(t "general.disabled") class="error"}}
+                  <FaIcon
+                    @icon="user-times"
+                    @title={{t "general.disabled"}}
+                    class="error"
+                  />
                 {{/if}}
               </td>
-              <td class="text-left" colspan="2">{{user.firstName}}</td>
-              <td class="text-left" colspan="2">{{user.lastName}}</td>
-              <td class="text-left" colspan="2">{{user.campusId}}</td>
-              <td class="text-left hide-from-small-screen" colspan="5">{{user.email}}</td>
+              <td class="text-left" colspan="2">
+                {{user.firstName}}
+              </td>
+              <td class="text-left" colspan="2">
+                {{user.lastName}}
+              </td>
+              <td class="text-left" colspan="2">
+                {{user.campusId}}
+              </td>
+              <td class="text-left hide-from-small-screen" colspan="5">
+                {{user.email}}
+              </td>
               {{#if isEditing}}
                 <td class="text-left" colspan="2">
-                  {{#link-to
-                    "learnerGroup"
-                    user.lowestGroupInTree
-                    (query-params isEditing=isEditing sortUsersBy=sortBy)
-                  }}
+                  <LinkTo
+                    @route="learnerGroup"
+                    @model={{user.lowestGroupInTree}}
+                    @query={{hash isEditing=isEditing sortUsersBy=sortBy}}
+                  >
                     {{user.lowestGroupInTree.title}}
-                  {{/link-to}}
+                  </LinkTo>
                 </td>
                 <td>
                   {{#if (contains user.content usersBeingMoved)}}
-                    {{loading-spinner}}
+                    <LoadingSpinner />
                   {{else if user.enabled}}
                     {{#if (eq selectedUsers.length 0)}}
-                      {{fa-icon
-                        icon="minus"
+                      <FaIcon
+                        @icon="minus"
                         class="no clickable"
-                        title=(t "general.removeLearnerToCohort" cohort=cohortTitle count=1)
-                        click=(perform removeSingleUser user.content)
-                      }}
+                        @title={{t
+                          "general.removeLearnerToCohort"
+                          cohort=cohortTitle
+                          count=1
+                        }}
+                        @click={{perform removeSingleUser user.content}}
+                      />
                     {{/if}}
                   {{/if}}
                 </td>
@@ -109,10 +143,10 @@
           {{/each}}
         </tbody>
       </table>
-
       {{#if isEditing}}
         <div class="title" data-test-all-other-members>
-          {{t "general.allOtherMembers" topLevelGroupTitle=topLevelGroupTitle}} ({{usersNotInCurrentGroup.length}})
+          {{t "general.allOtherMembers" topLevelGroupTitle=topLevelGroupTitle}}
+          ({{usersNotInCurrentGroup.length}})
         </div>
         <table>
           <tbody>
@@ -129,34 +163,50 @@
                     {{/if}}
                   {{/if}}
                   {{#if (not user.enabled)}}
-                    {{fa-icon icon="user-times" title=(t "general.disabled") class="error"}}
+                    <FaIcon
+                      @icon="user-times"
+                      @title={{t "general.disabled"}}
+                      class="error"
+                    />
                   {{/if}}
                 </td>
-                <td class="text-left" colspan="2">{{user.firstName}}</td>
-                <td class="text-left" colspan="2">{{user.lastName}}</td>
-                <td class="text-left" colspan="2">{{user.campusId}}</td>
-                <td class="text-left hide-from-small-screen" colspan="5">{{user.email}}</td>
+                <td class="text-left" colspan="2">
+                  {{user.firstName}}
+                </td>
+                <td class="text-left" colspan="2">
+                  {{user.lastName}}
+                </td>
+                <td class="text-left" colspan="2">
+                  {{user.campusId}}
+                </td>
+                <td class="text-left hide-from-small-screen" colspan="5">
+                  {{user.email}}
+                </td>
                 {{#if isEditing}}
                   <td class="text-left" colspan="2">
-                    {{#link-to
-                      "learnerGroup"
-                      user.lowestGroupInTree
-                      (query-params isEditing=isEditing sortUsersBy=sortBy)
-                    }}
+                    <LinkTo
+                      @route="learnerGroup"
+                      @model={{user.lowestGroupInTree}}
+                      @query={{hash isEditing=isEditing sortUsersBy=sortBy}}
+                    >
                       {{user.lowestGroupInTree.title}}
-                    {{/link-to}}
+                    </LinkTo>
                   </td>
                   <td>
                     {{#if (contains user.content usersBeingMoved)}}
-                      {{loading-spinner}}
+                      <LoadingSpinner />
                     {{else if user.enabled}}
                       {{#if (eq selectedUsers.length 0)}}
-                        {{fa-icon
-                          icon="plus"
+                        <FaIcon
+                          @icon="plus"
                           class="yes clickable"
-                          title=(t "general.moveToGroup" groupTitle=learnerGroupTitle count=1)
-                          click=(perform addSingleUser user.content)
-                        }}
+                          @title={{t
+                            "general.moveToGroup"
+                            groupTitle=learnerGroupTitle
+                            count=1
+                          }}
+                          @click={{perform addSingleUser user.content}}
+                        />
                       {{/if}}
                     {{/if}}
                   </td>
@@ -170,20 +220,14 @@
   </div>
   {{#if (gt selectedUsers.length 0) class="vertical"}}
     <p class="fullwidth">
-      <button
-        class="done text"
-        {{action (perform addSelectedUsers)}}
-      >
+      <button class="done text" {{action (perform addSelectedUsers)}}>
         {{t
           "general.moveToGroup"
           groupTitle=learnerGroupTitle
           count=selectedUsers.length
         }}
       </button>
-      <button
-        class="cancel text"
-        {{action (perform removeSelectedUsers)}}
-      >
+      <button class="cancel text" {{action (perform removeSelectedUsers)}}>
         {{t
           "general.removeLearnerToCohort"
           cohort=cohortTitle

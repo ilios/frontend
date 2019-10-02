@@ -4,19 +4,35 @@
 <table>
   <thead>
     <tr>
-      <th colspan="2">{{t "general.nonClerkshipSequenceBlocks"}}</th>
-      <th>{{t "general.academicLevel"}}</th>
-      <th>{{t "general.totalWeeks"}}</th>
-      <th>{{t "general.averageHoursOfInstructionPerWeek"}}</th>
+      <th colspan="2">
+        {{t "general.nonClerkshipSequenceBlocks"}}
+      </th>
+      <th>
+        {{t "general.academicLevel"}}
+      </th>
+      <th>
+        {{t "general.totalWeeks"}}
+      </th>
+      <th>
+        {{t "general.averageHoursOfInstructionPerWeek"}}
+      </th>
     </tr>
   </thead>
   <tbody>
     {{#each @data as |row|}}
       <tr>
-        <td colspan="2">{{row.title}}</td>
-        <td>{{row.level}}</td>
-        <td>{{row.weeks}}</td>
-        <td>{{row.avg}}</td>
+        <td colspan="2">
+          {{row.title}}
+        </td>
+        <td>
+          {{row.level}}
+        </td>
+        <td>
+          {{row.weeks}}
+        </td>
+        <td>
+          {{row.avg}}
+        </td>
       </tr>
     {{/each}}
   </tbody>

@@ -1,45 +1,58 @@
 <div class="breadcrumbs" data-test-breadcrumbs>
-  <span {{action manageVocabulary null}} data-test-all>{{t "general.allVocabularies"}}</span>
-  <span data-test-vocabulary>{{vocabulary.title}}</span>
-</div><br>
-
+  <span data-test-all {{action manageVocabulary null}}>
+    {{t "general.allVocabularies"}}
+  </span>
+  <span data-test-vocabulary>
+    {{vocabulary.title}}
+  </span>
+</div>
+<br>
 <div class="school-vocabulary-manager-title" data-test-title>
-  <h4>{{t "general.title"}}: </h4>
+  <h4>
+    {{t "general.title"}}:
+  </h4>
   {{#if canUpdate}}
-    {{#editable-field
-      value=(if vocabularyTitle vocabularyTitle (t "general.clickToEdit"))
-      save=(action "changeVocabularyTitle")
-      close=(action "revertVocabularyTitleChanges")
-      isSaveDisabled=(and (v-get this "vocabularyTitle" "isInvalid") (is-in showErrorsFor "vocabularyTitle"))
-      saveOnEnter=true
-      closeOnEscape=true
-      as |isSaving|
-    }}
+    <EditableField
+      @value={{if vocabularyTitle vocabularyTitle (t "general.clickToEdit")}}
+      @save={{action "changeVocabularyTitle"}}
+      @close={{action "revertVocabularyTitleChanges"}}
+      @isSaveDisabled={{and
+        (v-get this "vocabularyTitle" "isInvalid")
+        (is-in showErrorsFor "vocabularyTitle")
+      }}
+      @saveOnEnter={{true}}
+      @closeOnEscape={{true}} as |isSaving|
+    >
       <input
         value={{vocabularyTitle}}
         oninput={{action (mut vocabularyTitle) value="target.value"}}
         disabled={{isSaving}}
         onkeyup={{action "addErrorDisplayFor" "vocabularyTitle"}}
       >
-    {{/editable-field}}
+    </EditableField>
     {{#if
-      (and (v-get this "vocabularyTitle" "isInvalid") (is-in showErrorsFor "vocabularyTitle"))
+      (and
+        (v-get this "vocabularyTitle" "isInvalid")
+        (is-in showErrorsFor "vocabularyTitle")
+      )
     }}
-      <span class="validation-error-message" data-test-title-error-message>{{v-get this "vocabularyTitle" "message"}}</span>
+      <span class="validation-error-message" data-test-title-error-message>
+        {{v-get this "vocabularyTitle" "message"}}
+      </span>
     {{/if}}
   {{else}}
     {{vocabularyTitle}}
   {{/if}}
 </div>
-
-<h5>{{t "general.terms"}}:</h5>
-
-
+<h5>
+  {{t "general.terms"}}:
+</h5>
 <div class="terms" data-test-terms>
   {{#if newTerm}}
     <div class="saved-result">
       <span class="clickable link" {{action manageTerm newTerm.id}}>
-        {{fa-icon icon="external-link-square-alt"}} {{newTerm.title}}
+        <FaIcon @icon="external-link-square-alt" />
+        {{newTerm.title}}
       </span>
       {{t "general.savedSuccessfully"}}
     </div>
@@ -54,28 +67,37 @@
       >
       <button class="save text" {{action "createTerm"}}>
         {{#if isSavingNewTerm}}
-          {{loading-spinner}}
+          <LoadingSpinner />
         {{else}}
           {{t "general.add"}}
         {{/if}}
       </button>
-
       {{#if
-        (and (v-get this "newTermTitle" "isInvalid") (is-in showErrorsFor "newTermTitle"))
+        (and
+          (v-get this "newTermTitle" "isInvalid")
+          (is-in showErrorsFor "newTermTitle")
+        )
       }}
-        <span class="validation-error-message" data-test-error-message>{{v-get this "newTermTitle" "message"}}</span>
+        <span class="validation-error-message" data-test-error-message>
+          {{v-get this "newTermTitle" "message"}}
+        </span>
       {{/if}}
     </div>
   {{/if}}
   {{#if (is-fulfilled sortedTerms)}}
     <ul data-test-term-list>
       {{#each (await sortedTerms) as |term|}}
-        <li {{action manageTerm term.id}} data-test-term>
-          {{term.title}}{{#if (not term.active)}} <em>({{t "general.inactive"}})</em>{{/if}}
+        <li data-test-term {{action manageTerm term.id}}>
+          {{term.title}}
+          {{#if (not term.active)}}
+            <em>
+              ({{t "general.inactive"}})
+            </em>
+          {{/if}}
         </li>
       {{/each}}
     </ul>
   {{else}}
-    {{loading-spinner}}
+    <LoadingSpinner />
   {{/if}}
 </div>

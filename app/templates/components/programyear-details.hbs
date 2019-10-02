@@ -1,57 +1,55 @@
 {{#liquid-if (or (eq programYear.competencies.length 0) pyCompetencyDetails)}}
-  {{programyear-competencies
-    programYear=programYear
-    canUpdate=canUpdate
-    isManaging=managePyCompetencies
-    collapse=(action setPyCompetencyDetails false)
-    expand=(action setPyCompetencyDetails true)
-    setIsManaging=(action setManagePyCompetencies)
-  }}
+  <ProgramyearCompetencies
+    @programYear={{programYear}}
+    @canUpdate={{canUpdate}}
+    @isManaging={{managePyCompetencies}}
+    @collapse={{action setPyCompetencyDetails false}}
+    @expand={{action setPyCompetencyDetails true}}
+    @setIsManaging={{action setManagePyCompetencies}}
+  />
 {{else}}
-  {{collapsed-competencies
-    subject=programYear
-    expand=(action setPyCompetencyDetails true)
-  }}
+  <CollapsedCompetencies
+    @subject={{programYear}}
+    @expand={{action setPyCompetencyDetails true}}
+  />
 {{/liquid-if}}
-
 {{#liquid-if (or (eq programYear.objectives.length 0) pyObjectiveDetails)}}
-  {{detail-objectives
-    subject=programYear
-    isProgramYear=true
-    editable=canUpdate
-    collapse=(action setPyObjectiveDetails false)
-    expand=(action setPyObjectiveDetails true)
-  }}
+  <DetailObjectives
+    @subject={{programYear}}
+    @isProgramYear={{true}}
+    @editable={{canUpdate}}
+    @collapse={{action setPyObjectiveDetails false}}
+    @expand={{action setPyObjectiveDetails true}}
+  />
 {{else}}
-  {{collapsed-objectives-program-years
-    subject=programYear
-    expand=(action setPyObjectiveDetails true)}}
+  <CollapsedObjectivesProgramYears
+    @subject={{programYear}}
+    @expand={{action setPyObjectiveDetails true}}
+  />
 {{/liquid-if}}
-
 {{#liquid-if (or (eq programYear.terms.length 0) pyTaxonomyDetails)}}
-  {{detail-taxonomies
-    subject=programYear
-    editable=canUpdate
-    collapse=(action setPyTaxonomyDetails false)
-    expand=(action setPyTaxonomyDetails true)
-  }}
+  <DetailTaxonomies
+    @subject={{programYear}}
+    @editable={{canUpdate}}
+    @collapse={{action setPyTaxonomyDetails false}}
+    @expand={{action setPyTaxonomyDetails true}}
+  />
 {{else}}
-  {{collapsed-taxonomies
-    subject=programYear
-    expand=(action setPyTaxonomyDetails true)
-  }}
+  <CollapsedTaxonomies
+    @subject={{programYear}}
+    @expand={{action setPyTaxonomyDetails true}}
+  />
 {{/liquid-if}}
-
 {{#liquid-if (or (eq programYear.stewards.length 0) pyStewardDetails)}}
-  {{detail-stewards
-    programYear=programYear
-    editable=canUpdate
-    collapse=(action setPyStewardDetails false)
-    expand=(action setPyStewardDetails true)
-  }}
+  <DetailStewards
+    @programYear={{programYear}}
+    @editable={{canUpdate}}
+    @collapse={{action setPyStewardDetails false}}
+    @expand={{action setPyStewardDetails true}}
+  />
 {{else}}
-  {{collapsed-stewards
-    programYear=programYear
-    expand=(action setPyStewardDetails true)
-  }}
+  <CollapsedStewards
+    @programYear={{programYear}}
+    @expand={{action setPyStewardDetails true}}
+  />
 {{/liquid-if}}

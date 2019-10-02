@@ -8,32 +8,39 @@
   <div class="actions">
     {{#if isManaging}}
       <button class="bigadd" onclick={{perform save}}>
-        {{fa-icon icon=(if save.isRunning "spinner" "check") spin=(if isSaving true false)}}
+        <FaIcon
+          @icon={{if save.isRunning "spinner" "check"}}
+          @spin={{if isSaving true false}}
+        />
       </button>
-      <button class="bigcancel" {{action setIsManaging false}}>{{fa-icon icon="undo"}}</button>
+      <button class="bigcancel" {{action setIsManaging false}}>
+        <FaIcon @icon="undo" />
+      </button>
     {{else if canUpdate}}
-      <button {{action setIsManaging true}}>{{t "general.manageLeadership"}}</button>
+      <button {{action setIsManaging true}}>
+        {{t "general.manageLeadership"}}
+      </button>
     {{/if}}
   </div>
 </div>
 <div class="school-leadership-expanded-content">
   {{#if (and (is-fulfilled directors) (is-fulfilled administrators))}}
     {{#if isManaging}}
-      {{leadership-manager
-        directors=(await directors)
-        administrators=(await administrators)
-        removeDirector=(action "removeDirector")
-        addDirector=(action "addDirector")
-        removeAdministrator=(action "removeAdministrator")
-        addAdministrator=(action "addAdministrator")
-      }}
+      <LeadershipManager
+        @directors={{await directors}}
+        @administrators={{await administrators}}
+        @removeDirector={{action "removeDirector"}}
+        @addDirector={{action "addDirector"}}
+        @removeAdministrator={{action "removeAdministrator"}}
+        @addAdministrator={{action "addAdministrator"}}
+      />
     {{else}}
-      {{leadership-list
-        directors=(await directors)
-        administrators=(await administrators)
-      }}
+      <LeadershipList
+        @directors={{await directors}}
+        @administrators={{await administrators}}
+      />
     {{/if}}
   {{else}}
-    {{loading-spinner tagName="h3"}}
+    <LoadingSpinner @tagName="h3" />
   {{/if}}
 </div>

@@ -1,4 +1,4 @@
-{{#click-outside onClickOutside=(action (mut isOpen) false)}}
+<ClickOutside @onClickOutside={{action (mut isOpen) false}}>
   <button
     aria-label={{t (concat "general.language." locale.id)}}
     role="menuitem"
@@ -9,7 +9,10 @@
     data-test-toggle
     {{action "toggleMenu"}}
   >
-    {{fa-icon icon="globe"}} <span>{{t (concat "general.language." locale.id)}}</span>
+    <FaIcon @icon="globe" />
+    <span>
+      {{t (concat "general.language." locale.id)}}
+    </span>
   </button>
   {{#if isOpen}}
     <div class="menu" role="menu">
@@ -28,4 +31,4 @@
       {{/each}}
     </div>
   {{/if}}
-{{/click-outside}}
+</ClickOutside>

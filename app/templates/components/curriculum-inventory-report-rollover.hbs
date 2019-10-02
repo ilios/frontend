@@ -1,29 +1,35 @@
-{{! template-lint-disable attribute-indentation }}
 <div class="rollover-form">
-  <h3 class="title">{{t "general.curriculumInventoryReportRollover"}}</h3>
-
-  <p class="rollover-summary">{{t "general.curriculumInventoryReportRolloverSummary"}}</p>
-
+  <h3 class="title">
+    {{t "general.curriculumInventoryReportRollover"}}
+  </h3>
+  <p class="rollover-summary">
+    {{t "general.curriculumInventoryReportRolloverSummary"}}
+  </p>
   <div class="item name">
-    <label>{{t "general.name"}}:</label>
+    <label>
+      {{t "general.name"}}:
+    </label>
     <input
       type="text"
       value={{name}}
       oninput={{pipe
-                (action "changeName" value="target.value")
-                (action "addErrorDisplayFor" "name")
-              }}
+        (action "changeName" value="target.value")
+        (action "addErrorDisplayFor" "name")
+      }}
       disabled={{isSaving}}
       onkeyup={{action "addErrorDisplayFor" "name"}}
       placeholder={{t "general.reportNamePlaceholder"}}
     >
     {{#if (and (v-get this "name" "isInvalid") (is-in showErrorsFor "name"))}}
-      <span class="validation-error-message">{{v-get this "name" "message"}}</span>
+      <span class="validation-error-message">
+        {{v-get this "name" "message"}}
+      </span>
     {{/if}}
   </div>
-
   <div class="item description">
-    <label>{{t "general.description"}}:</label>
+    <label>
+      {{t "general.description"}}:
+    </label>
     <textarea
       value={{description}}
       oninput={{action (mut description) value="target.value"}}
@@ -31,32 +37,35 @@
       placeholder={{t "general.reportDescriptionPlaceholder"}}
     ></textarea>
   </div>
-
   <div class="item years">
-    <label>{{t "general.academicYear"}}:</label>
-    {{one-way-select
-      value=selectedYear
-      options=years
-      optionValuePath="id"
-      optionLabelPath="title"
-      disabled=isSaving
-      update=(action (mut selectedYear))
-    }}
+    <label>
+      {{t "general.academicYear"}}:
+    </label>
+    <OneWaySelect
+      @value={{selectedYear}}
+      @options={{years}}
+      @optionValuePath="id"
+      @optionLabelPath="title"
+      @disabled={{isSaving}}
+      @update={{action (mut selectedYear)}}
+    />
   </div>
-
   <div class="buttons">
-    <button {{action (perform save)}}
+    <button
       class="done text"
       disabled={{if isSaving true}}
+      {{action (perform save)}}
     >
       {{#if isSaving}}
-        {{loading-spinner}}
+        <LoadingSpinner />
       {{else}}
         {{t "general.done"}}
       {{/if}}
     </button>
-    {{#link-to "curriculumInventoryReport" report}}
-      <button class="cancel text">{{t "general.cancel"}}</button>
-    {{/link-to}}
+    <LinkTo @route="curriculumInventoryReport" @model={{report}}>
+      <button class="cancel text">
+        {{t "general.cancel"}}
+      </button>
+    </LinkTo>
   </div>
 </div>

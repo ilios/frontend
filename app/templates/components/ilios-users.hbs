@@ -8,21 +8,32 @@
     >
   </div>
 </div>
-
 <section class="users">
   <div class="header">
-    <span class="title">{{t "general.users"}}</span>
+    <span class="title">
+      {{t "general.users"}}
+    </span>
     <div class="actions">
       {{#unless (or showNewUserForm showBulkNewUserForm)}}
-        <button {{action (toggle "showNewUserForm" this)}}>{{t "general.create"}}</button>
+        <button {{action (toggle "showNewUserForm" this)}}>
+          {{t "general.create"}}
+        </button>
         {{#if (not-eq (await iliosConfig.userSearchType) "ldap")}}
-          <button {{action (toggle "showBulkNewUserForm" this)}}>{{t "general.createBulk"}}</button>
+          <button {{action (toggle "showBulkNewUserForm" this)}}>
+            {{t "general.createBulk"}}
+          </button>
         {{/if}}
       {{else}}
         <button
-          {{action (if showNewUserForm (toggle "showNewUserForm" this) (toggle "showBulkNewUserForm" this))}}
+          {{action
+            (if
+              showNewUserForm
+              (toggle "showNewUserForm" this)
+              (toggle "showBulkNewUserForm" this)
+            )
+          }}
         >
-          {{fa-icon icon="minus"}}
+          <FaIcon @icon="minus" />
         </button>
       {{/unless}}
     </div>
@@ -38,45 +49,42 @@
           setSearchTerms=setSearchTerms
         }}
       {{else}}
-        {{loading-spinner}}
+        <LoadingSpinner />
       {{/if}}
     {{/if}}
     {{#if showBulkNewUserForm class="vertical"}}
       {{#if (is-fulfilled newBulkUserComponent)}}
-        {{bulk-new-users
-          close=(action setShowNewUserForm false)
-        }}
+        <BulkNewUsers @close={{action setShowNewUserForm false}} />
       {{else}}
-        {{loading-spinner}}
+        <LoadingSpinner />
       {{/if}}
     {{/if}}
   </section>
   {{#if searchForUsers.lastSuccessful}}
-    {{pagedlist-controls
-      offset=offset
-      limit=limit
-      limitless=true
-      setOffset=(action "setOffset")
-      setLimit=setLimit
-    }}
-
+    <PagedlistControls
+      @offset={{offset}}
+      @limit={{limit}}
+      @limitless={{true}}
+      @setOffset={{action "setOffset"}}
+      @setLimit={{setLimit}}
+    />
     <div class="list">
       {{#if (gt searchForUsers.lastSuccessful.value.length 0)}}
-        {{user-list users=searchForUsers.lastSuccessful.value}}
+        <UserList @users={{searchForUsers.lastSuccessful.value}} />
       {{else}}
-        <span class="no-results">{{t "general.noResultsFound"}}</span>
+        <span class="no-results">
+          {{t "general.noResultsFound"}}
+        </span>
       {{/if}}
     </div>
-
-    {{pagedlist-controls
-      offset=offset
-      limit=limit
-      limitless=true
-      setOffset=(action "setOffset")
-      setLimit=setLimit
-    }}
-
+    <PagedlistControls
+      @offset={{offset}}
+      @limit={{limit}}
+      @limitless={{true}}
+      @setOffset={{action "setOffset"}}
+      @setLimit={{setLimit}}
+    />
   {{else}}
-    {{pulse-loader}}
+    <PulseLoader />
   {{/if}}
 </section>

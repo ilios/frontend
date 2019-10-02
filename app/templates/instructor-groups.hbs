@@ -2,11 +2,14 @@
 <section class="instructorgroups-list" data-test-instructor-groups-list>
   <div class="filters">
     <div class="schoolsfilter" data-test-school-filter>
-      {{fa-icon icon="university" fixedWidth=true}}
+      <FaIcon @icon="university" @fixedWidth={{true}} />
       {{#if hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
           {{#each (sort-by "title" model.schools) as |school|}}
-            <option value={{school.id}} selected={{is-equal school selectedSchool}}>
+            <option
+              value={{school.id}}
+              selected={{is-equal school selectedSchool}}
+            >
               {{school.title}}
             </option>
           {{/each}}
@@ -27,44 +30,48 @@
   <section class="instructorgroups">
     <div class="header">
       <div class="title">
-        <h2>{{t "general.instructorGroups"}}</h2>
+        <h2>
+          {{t "general.instructorGroups"}}
+        </h2>
       </div>
       <div class="actions">
         {{#if (await canCreate)}}
-          {{expand-collapse-button
+          <ExpandCollapseButton
             data-test-toggle-new-instructor-group-form
-            value=showNewInstructorGroupForm
-            action=(action "toggleNewInstructorGroupForm")
-          }}
+            @value={{showNewInstructorGroupForm}}
+            @action={{action "toggleNewInstructorGroupForm"}}
+          />
         {{/if}}
       </div>
     </div>
     <section class="new">
       {{#liquid-if showNewInstructorGroupForm class="vertical"}}
-        {{new-instructorgroup
-          currentSchool=selectedSchool
-          save=(action "saveNewInstructorGroup")
-          cancel=(action "toggleNewInstructorGroupForm")
-        }}
+        <NewInstructorgroup
+          @currentSchool={{selectedSchool}}
+          @save={{action "saveNewInstructorGroup"}}
+          @cancel={{action "toggleNewInstructorGroupForm"}}
+        />
       {{/liquid-if}}
       {{#if newInstructorGroup}}
         <div class="saved-result">
-          {{#link-to "instructorGroup" newInstructorGroup}}
-            {{fa-icon icon="external-link-square-alt"}} {{newInstructorGroup.title}}
-          {{/link-to}}
+          <LinkTo @route="instructorGroup" @model={{newInstructorGroup}}>
+            <FaIcon @icon="external-link-square-alt" />
+            {{newInstructorGroup.title}}
+          </LinkTo>
           {{t "general.savedSuccessfully"}}
         </div>
       {{/if}}
     </section>
     <div class="list" data-test-instructor-groups-list>
       {{#if (is-fulfilled this.filteredInstructorGroups)}}
-        {{instructorgroup-list
-          canDelete=(await this.canDelete)
-          instructorGroups=(await this.filteredInstructorGroups)
-          query=this.titleFilter
-          remove=(action "removeInstructorGroup")}}
+        <InstructorgroupList
+          @canDelete={{await this.canDelete}}
+          @instructorGroups={{await this.filteredInstructorGroups}}
+          @query={{this.titleFilter}}
+          @remove={{action "removeInstructorGroup"}}
+        />
       {{else}}
-        {{pulse-loader}}
+        <PulseLoader />
       {{/if}}
     </div>
   </section>

@@ -1,17 +1,19 @@
 {{title (t "general.admin")}}
-{{#link-to "admin-dashboard"}}{{t "general.backToAdminDashboard"}}{{/link-to}}
-{{ilios-users
-  offset=offset
-  setOffset=(action (mut offset))
-  limit=limit
-  setLimit=(action (mut limit))
-  query=query
-  setQuery=(action (mut query) value="target.value")
-  showNewUserForm=showNewUserForm
-  setShowNewUserForm=(action (mut showNewUserForm))
-  showBulkNewUserForm=showBulkNewUserForm
-  setShowBulkNewUserForm=(action (mut showBulkNewUserForm))
-  searchTerms=searchTerms
-  setSearchTerms=(action (mut searchTerms))
-  transitionToUser=(action "transitionToUser")
-}}
+<LinkTo @route="admin-dashboard">
+  {{t "general.backToAdminDashboard"}}
+</LinkTo>
+<IliosUsers
+  @offset={{offset}}
+  @setOffset={{action (mut offset)}}
+  @limit={{limit}}
+  @setLimit={{action (mut limit)}}
+  @query={{query}}
+  @setQuery={{action (mut query) value="target.value"}}
+  @showNewUserForm={{showNewUserForm}}
+  @setShowNewUserForm={{action (mut showNewUserForm)}}
+  @showBulkNewUserForm={{showBulkNewUserForm}}
+  @setShowBulkNewUserForm={{action (mut showBulkNewUserForm)}}
+  @searchTerms={{searchTerms}}
+  @setSearchTerms={{action (mut searchTerms)}}
+  @transitionToUser={{action "transitionToUser"}}
+/>

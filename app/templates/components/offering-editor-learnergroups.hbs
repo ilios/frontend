@@ -1,6 +1,7 @@
 <section class="half-grouping">
-  <header class="title-selected-groups center">{{t "general.selected"}}</header>
-
+  <header class="title-selected-groups center">
+    {{t "general.selected"}}
+  </header>
   <ul class="tree-list removable">
     {{#each (await sortedLearnerGroups) as |learnerGroup|}}
       <li {{action "removeLearnerGroup" learnerGroup.group}}>
@@ -9,20 +10,25 @@
         </div>
       </li>
     {{else}}
-      <li>{{t "general.noUnselectedLearnerGroupsInCohort"}}</li>
+      <li>
+        {{t "general.noUnselectedLearnerGroupsInCohort"}}
+      </li>
     {{/each}}
   </ul>
 </section>
-
 <section class="half-grouping">
-  <header class="title-available-groups center">{{t "general.availableLearnerGroups"}}</header>
-
+  <header class="title-available-groups center">
+    {{t "general.availableLearnerGroups"}}
+  </header>
   <ul class="tree-list selectable">
     {{#each cohort.filteredAvailableLearnerGroups as |learnerGroup|}}
       <li {{action "addLearnerGroup" learnerGroup}}>
         {{#if (await learnerGroup.allParentTitles)}}
           <div class="available-subgroup-style">
-            {{separated-list icon="angle-right" list=(await learnerGroup.allParentTitles)}}
+            <SeparatedList
+              @icon="angle-right"
+              @list={{await learnerGroup.allParentTitles}}
+            />
             {{learnerGroup.title}}
           </div>
         {{else}}
@@ -30,7 +36,9 @@
         {{/if}}
       </li>
     {{else}}
-      <li>{{t "general.noAvailableLearnerGroups"}}</li>
+      <li>
+        {{t "general.noAvailableLearnerGroups"}}
+      </li>
     {{/each}}
   </ul>
 </section>

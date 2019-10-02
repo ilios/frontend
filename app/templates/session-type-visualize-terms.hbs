@@ -1,15 +1,20 @@
 {{title (t "general.coursesAndSessions")}}
 <section class="session-type-visualize-terms">
   <h2>
-    {{#link-to "session-type-visualize-vocabularies" model.sessionType}}
+    <LinkTo
+      @route="session-type-visualize-vocabularies"
+      @model={{model.sessionType}}
+    >
       {{model.sessionType.title}}
-    {{/link-to}}
-    > {{model.vocabulary.title}}
+    </LinkTo>
+    >
+    {{model.vocabulary.title}}
   </h2>
-  <h3>{{t "general.terms"}}</h3>
-
-  {{visualizer-session-type-terms
-    sessionType=model.sessionType
-    vocabulary=model.vocabulary
-  }}
+  <h3>
+    {{t "general.terms"}}
+  </h3>
+  <VisualizerSessionTypeTerms
+    @sessionType={{model.sessionType}}
+    @vocabulary={{model.vocabulary}}
+  />
 </section>

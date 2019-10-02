@@ -6,14 +6,32 @@
   data-test-toggle
   {{action "toggleMenu"}}
 >
-  {{fa-icon icon="user"}} <span id="user-menu-title">{{get (await currentUser.model) "fullName"}}</span>
+  <FaIcon @icon="user" />
+  <span id="user-menu-title">
+    {{get (await currentUser.model) "fullName"}}
+  </span>
 </button>
 {{#if isOpen}}
-  {{#click-outside onClickOutside=(action (mut isOpen) false)}}
+  <ClickOutside @onClickOutside={{action (mut isOpen) false}}>
     <ul class="menu">
-      <li tabindex="-1" data-test-item>{{#link-to "myprofile" invokeAction=(action (mut isOpen) false)}}{{t "general.myProfile"}}{{/link-to}}</li>
-      <li tabindex="-1" data-test-item>{{#link-to "mymaterials" invokeAction=(action (mut isOpen) false)}}{{t "general.myMaterials"}}{{/link-to}}</li>
-      <li tabindex="-1" data-test-item>{{#link-to "logout" invokeAction=(action (mut isOpen) false)}}{{t "general.logout"}}{{/link-to}}</li>
+      <li tabindex="-1" data-test-item>
+        <LinkTo @route="myprofile" @invokeAction={{action (mut isOpen) false}}>
+          {{t "general.myProfile"}}
+        </LinkTo>
+      </li>
+      <li tabindex="-1" data-test-item>
+        <LinkTo
+          @route="mymaterials"
+          @invokeAction={{action (mut isOpen) false}}
+        >
+          {{t "general.myMaterials"}}
+        </LinkTo>
+      </li>
+      <li tabindex="-1" data-test-item>
+        <LinkTo @route="logout" @invokeAction={{action (mut isOpen) false}}>
+          {{t "general.logout"}}
+        </LinkTo>
+      </li>
     </ul>
-  {{/click-outside}}
+  </ClickOutside>
 {{/if}}

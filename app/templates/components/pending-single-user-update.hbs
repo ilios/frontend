@@ -1,11 +1,13 @@
 {{#liquid-if updates.isFulfilled class="crossFade"}}
   {{#if isSaving}}
-    {{loading-spinner tagName="h2"}}
+    <LoadingSpinner @tagName="h2" />
   {{else}}
     {{#each updates as |update|}}
       <div class="update">
         <div class="explanation">
-          <h2>{{fa-icon icon="exclamation-triangle" class="no"}}</h2>
+          <h2>
+            <FaIcon @icon="exclamation-triangle" class="no" />
+          </h2>
           {{#if (eq update.type "emailMismatch")}}
             {{t
               "general.pendingUserUpdates.emailMismatch"
@@ -18,17 +20,35 @@
         </div>
         <div class="actions">
           {{#if (eq update.type "emailMismatch")}}
-            <span class="clickable link" onclick={{action "updateEmailAddress" update}}>
-              {{fa-icon icon="arrow-circle-up" class="yes" title=(t "general.update")}}
+            <span
+              class="clickable link"
+              onclick={{action "updateEmailAddress" update}}
+            >
+              <FaIcon
+                @icon="arrow-circle-up"
+                class="yes"
+                @title={{t "general.update"}}
+              />
               {{t "general.pendingUserUpdates.updateIlios"}}
             </span>
           {{/if}}
-          <span class="clickable link" onclick={{action "excludeFromSync" update}}>
-            {{fa-icon icon="ban" class="no" title=(t "general.excludeFromSync")}}
+          <span
+            class="clickable link"
+            onclick={{action "excludeFromSync" update}}
+          >
+            <FaIcon
+              @icon="ban"
+              class="no"
+              @title={{t "general.excludeFromSync"}}
+            />
             {{t "general.excludeFromSync"}}
           </span>
           <span class="clickable link" onclick={{action "disableUser" update}}>
-            {{fa-icon icon="times" class="no" title=(t "general.disableUser")}}
+            <FaIcon
+              @icon="times"
+              class="no"
+              @title={{t "general.disableUser"}}
+            />
             {{t "general.disableUser"}}
           </span>
         </div>

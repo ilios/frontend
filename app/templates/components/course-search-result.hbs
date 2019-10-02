@@ -1,27 +1,34 @@
-{{#link-to "course" @course.id class="course-title-link"}}
+<LinkTo @route="course" @model={{@course.id}} class="course-title-link">
   {{@course.title}}
-{{/link-to}}
-<span class="course-flag">{{t "general.course"}}</span>
-{{global-search-tags tags=this.courseTags}}
-
+</LinkTo>
+<span class="course-flag">
+  {{t "general.course"}}
+</span>
+<GlobalSearchTags @tags={{this.courseTags}} />
 <ul>
-  <li class="sessions">{{t "general.sessions"}}:</li>
-
+  <li class="sessions">
+    {{t "general.sessions"}}:
+  </li>
   {{#each this.sessions as |session|}}
     <li class="session-row">
-      {{#link-to "session" @course.id session.id class="session-title-link"}}
+      <LinkTo
+        @route="session"
+        @models={{array @course.id session.id}}
+        class="session-title-link"
+      >
         {{session.title}}
-      {{/link-to}}
-      {{global-search-tags tags=session.matchedIn}}
+      </LinkTo>
+      <GlobalSearchTags @tags={{session.matchedIn}} />
     </li>
   {{/each}}
-
   {{#if (and (not this.showMore) (gt @course.sessions.length 3))}}
     <span
       class="show-more clickable link"
       role="button"
-      {{action (mut this.showMore) true}}>
-      {{fa-icon icon="angle-down"}}{{t "general.showMore"}}
+      {{action (mut this.showMore) true}}
+    >
+      <FaIcon @icon="angle-down" />
+      {{t "general.showMore"}}
     </span>
   {{/if}}
 </ul>

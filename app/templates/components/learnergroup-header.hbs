@@ -1,16 +1,14 @@
-{{! template-lint-disable attribute-indentation }}
 <div class="header-bar">
   <span class="title">
     <h2>
       {{#if canUpdate}}
-        {{#editable-field
-          value=(if title title (t "general.clickToEdit"))
-          save=(perform changeTitle)
-          close=(action "revertTitleChanges")
-          saveOnEnter=true
-          closeOnEscape=true
-          as |isSaving|
-        }}
+        <EditableField
+          @value={{if title title (t "general.clickToEdit")}}
+          @save={{perform changeTitle}}
+          @close={{action "revertTitleChanges"}}
+          @saveOnEnter={{true}}
+          @closeOnEscape={{true}} as |isSaving|
+        >
           <input
             type="text"
             value={{title}}
@@ -18,10 +16,14 @@
             disabled={{isSaving}}
             onkeyup={{action "addErrorDisplayFor" "title"}}
           >
-          {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
-            <span class="validation-error-message">{{v-get this "title" "message"}}</span>
+          {{#if
+            (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
+          }}
+            <span class="validation-error-message">
+              {{v-get this "title" "message"}}
+            </span>
           {{/if}}
-        {{/editable-field}}
+        </EditableField>
       {{else}}
         {{title}}
       {{/if}}
@@ -29,39 +31,48 @@
   </span>
   <span class="info" data-test-members>
     {{#if
-      (and (is-fulfilled learnerGroup.usersOnlyAtThisLevel) (is-fulfilled learnerGroup.cohort) (is-fulfilled learnerGroup.cohort.users))
+      (and
+        (is-fulfilled learnerGroup.usersOnlyAtThisLevel)
+        (is-fulfilled learnerGroup.cohort)
+        (is-fulfilled learnerGroup.cohort.users)
+      )
     }}
-      {{t "general.members"}}:  {{get (await learnerGroup.usersOnlyAtThisLevel) "length"}} / {{learnerGroup.cohort.users.length}}
+      {{t "general.members"}}:
+      {{get (await learnerGroup.usersOnlyAtThisLevel) "length"}}
+      /
+      {{learnerGroup.cohort.users.length}}
     {{/if}}
   </span>
 </div>
 {{#if (is-fulfilled learnerGroup.allParents)}}
   <div class="breadcrumbs">
     <span>
-      {{#link-to
-        "learnerGroups"
-        (query-params
-          schoolId=(get (await learnerGroup.cohort.programYear.program.school) "id")
+      <LinkTo
+        @route="learnerGroups"
+        @query={{hash
+          schoolId=(get
+            (await learnerGroup.cohort.programYear.program.school) "id"
+          )
           programId=(get (await learnerGroup.cohort.programYear.program) "id")
           programYearId=(get (await learnerGroup.cohort.programYear) "id")
-        )
-      }}
+        }}
+      >
         {{t "general.learnerGroups"}}
-      {{/link-to}}
+      </LinkTo>
     </span>
     {{#each (reverse (await learnerGroup.allParents)) as |parent|}}
       <span>
-        {{#link-to
-          "learnerGroup"
-          parent
-          (query-params
-            sortUsersBy=sortUsersBy
-          )
-        }}
+        <LinkTo
+          @route="learnerGroup"
+          @model={{parent}}
+          @query={{hash sortUsersBy=sortUsersBy}}
+        >
           {{parent.title}}
-        {{/link-to}}
+        </LinkTo>
       </span>
     {{/each}}
-    <span>{{learnerGroup.title}}</span>
+    <span>
+      {{learnerGroup.title}}
+    </span>
   </div>
 {{/if}}

@@ -1,16 +1,20 @@
 <div class="backtolink">
   {{#if (is-fulfilled programYear.program)}}
-    {{#link-to "program" (await programYear.program)}}
+    <LinkTo @route="program" @query={{hash}}>
       {{t "general.backToProgramYears"}}
-    {{/link-to}}
+    </LinkTo>
   {{/if}}
 </div>
-
 <header>
   <div class="title">
-    {{#if programYear.locked}}{{fa-icon icon="lock"}}{{/if}}
+    {{#if programYear.locked}}
+      <FaIcon @icon="lock" />
+    {{/if}}
     {{#if programYear}}
-      <h4>{{t "general.matriculationYear"}} {{programYear.academicYear}}</h4>
+      <h4>
+        {{t "general.matriculationYear"}}
+        {{programYear.academicYear}}
+      </h4>
       <h5>
         {{#if (get (await programYear.cohort) "title")}}
           {{get (await programYear.cohort) "title"}}
@@ -20,9 +24,13 @@
       </h5>
     {{/if}}
   </div>
-  <div class ="programyear-publication">
-    {{#if (and canUpdate (or programYear.isScheduled (not programYear.isPublished)))}}
-      <button {{action "activate" programYear}}>{{t "general.activate"}}</button>
+  <div class="programyear-publication">
+    {{#if
+      (and canUpdate (or programYear.isScheduled (not programYear.isPublished)))
+    }}
+      <button {{action "activate" programYear}}>
+        {{t "general.activate"}}
+      </button>
     {{/if}}
   </div>
 </header>
