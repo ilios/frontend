@@ -16,9 +16,7 @@ export default Component.extend({
   'data-test-session-details': true,
 
   didInsertElement() {
-    const id = this.$().attr('id');
-
-    scrollTo(`#${id}`);
+    scrollTo(`#${this.element.id}`);
   },
   actions: {
     save() {

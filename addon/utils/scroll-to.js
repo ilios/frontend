@@ -1,18 +1,16 @@
-/* eslint ember/no-global-jquery: 0 */
-import $ from 'jquery';
 import { next } from '@ember/runloop';
 import { Promise as EmberPromise } from 'rsvp';
+import scrollIntoView from 'scroll-into-view';
 
-export default function scrollTo(elementQuery, time) {
-  time = typeof time !== 'undefined' ? time : 500;
-
+export default function scrollTo(elementQuery) {
+  if (elementQuery instanceof HTMLElement) {
+    throw new Error("scrollTo takes a string, not an element");
+  }
   var promise = new EmberPromise(function(resolve) {
-    next(()=>{
-      $('html, body').animate({
-        scrollTop: $(elementQuery).offset().top
-      }, time, function(){
-        resolve();
-      });
+    next(() => {
+      const element = document.querySelector(elementQuery);
+      scrollIntoView(element);
+      resolve();
     });
   });
 

@@ -49,7 +49,6 @@ module('Integration | Component | search box', function(hooks) {
     this.set('search', () => { });
     await render(hbs`<SearchBox @search={{action search}} />`);
     const searchBoxIcon = '.search-icon';
-    await this.pauseTest();
     await click(searchBoxIcon);
     assert.dom(find('input')).isFocused();
   });
