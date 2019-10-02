@@ -80,4 +80,32 @@ module('Integration | Component | editable field', function(hooks) {
     await click('[data-test-edit]');
     await triggerKeyEvent('.editinplace input', 'keyup', 27);
   });
+
+  test('focus when editor opens on input', async function(assert) {
+    assert.expect(1);
+    this.set('value', 'lorem');
+    await render(
+      hbs`<EditableField
+            @value={{value}}
+          >
+            <input />
+          </EditableField>
+      `);
+    await click('[data-test-edit]');
+    assert.dom('input', this.element).isFocused();
+  });
+
+  test('focus when editor opens on textarea', async function(assert) {
+    assert.expect(1);
+    this.set('value', 'lorem');
+    await render(
+      hbs`<EditableField
+            @value={{value}}
+          >
+            <input />
+          </EditableField>
+      `);
+    await click('[data-test-edit]');
+    assert.dom('input', this.element).isFocused();
+  });
 });

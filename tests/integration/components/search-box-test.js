@@ -4,6 +4,7 @@ import {
   render,
   click,
   fillIn,
+  find,
   triggerKeyEvent
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
@@ -42,5 +43,14 @@ module('Integration | Component | search box', function(hooks) {
     await render(hbs`<SearchBox @search={{action nothing}} @clear={{action clear}} />`);
     await fillIn('input', 'typed it');
     await triggerKeyEvent('input', 'keyup', 27);
+  });
+
+  test('clicking icon sets focus', async function(assert) {
+    this.set('search', () => { });
+    await render(hbs`<SearchBox @search={{action search}} />`);
+    const searchBoxIcon = '.search-icon';
+    await this.pauseTest();
+    await click(searchBoxIcon);
+    assert.dom(find('input')).isFocused();
   });
 });

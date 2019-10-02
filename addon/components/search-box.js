@@ -26,9 +26,9 @@ export default Component.extend({
         clear();
       }
     },
-    focus(){
+    focus() {
       //place focus into the search box when search icon is clicked
-      this.$('input[type="search"]').focus();
+      this.element.querySelector('input[type="search"]').focus();
     },
   },
   searchTask: task(function * () {
