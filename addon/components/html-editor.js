@@ -43,6 +43,7 @@ export default Component.extend({
       pluginsEnabled: ['lists', 'code_view', 'link'],
       iconsTemplate: 'font_awesome_5',
       listAdvancedTypes: false,
+      shortcutsEnabled: ['bold', 'italic', 'strikeThrough', 'undo', 'redo', 'createLink'],
     };
   }),
 
