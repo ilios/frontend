@@ -9,6 +9,16 @@
       </li>
     {{/each}}
   </ul>
+  <h5>
+    {{t "general.instructorGroupMembers"}}
+  </h5>
+  <ul data-test-instructor-group-members>
+    {{#each (await this.instructorGroupMembers) as |instructorGroupMember|}}
+      <li>
+        {{instructorGroupMember.fullName}}
+      </li>
+    {{/each}}
+  </ul>
 {{/if}}
 {{#if sortedInstructors.length}}
   <h4>

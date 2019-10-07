@@ -126,6 +126,7 @@ general:
   independentLearningActivities: "Apprentissage autonome Activités"
   instructionalNotes: "Notes Didactiques"
   instructor: Instructeur
+  instructorGroupMembers: "Membres du groupe d'instructeurs"
   instructorGroups: "Groupes des Instructeurs"
   instructors: Instructeurs
   instructorsManageTitle: "Manager Instructeurs"
