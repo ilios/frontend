@@ -1,7 +1,6 @@
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import RSVP, { filter } from 'rsvp';
-import $ from 'jquery';
 import DS from 'ember-data';
 
 const { attr, belongsTo, hasMany, Model } = DS;
@@ -77,7 +76,7 @@ export default Model.extend({
     const config = await this.getConfigByName(name);
     const value = isEmpty(config)?null:config.get('value');
 
-    return $.parseJSON(value);
+    return JSON.parse(value);
   },
 
   async setConfigValue(name, value){

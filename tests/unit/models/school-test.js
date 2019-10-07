@@ -20,4 +20,23 @@ module('Unit | Model | School', function(hooks) {
     assert.ok(programYears.includes(programYear1));
     assert.ok(programYears.includes(programYear2));
   });
+
+  test('getConfigValue booleans', async function(assert) {
+    let store = this.owner.lookup('service:store');
+    let school = store.createRecord('school');
+    store.createRecord('school-config', {
+      name: 'test-false',
+      value: 'false',
+      school,
+    });
+    const testFalse = await school.getConfigValue('test-false');
+    assert.deepEqual(testFalse, false);
+    store.createRecord('school-config', {
+      name: 'test-true',
+      value: 'true',
+      school,
+    });
+    const testTrue = await school.getConfigValue('test-true');
+    assert.deepEqual(testTrue, true);
+  });
 });
