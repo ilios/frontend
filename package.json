@@ -22,7 +22,7 @@
     "@ember/jquery": "^0.6.1",
     "@ember/optional-features": "^0.7.0",
     "@ilios/eslint-config-ember": "^2.3.0",
-    "@sentry/browser": "^5.6.3",
+    "@sentry/browser": "^5.7.0",
     "@sentry/integrations": "^5.6.1",
     "autoprefixer": "^9.6.4",
     "babel-eslint": "^10.0.3",
