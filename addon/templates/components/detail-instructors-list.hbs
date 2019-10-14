@@ -3,7 +3,7 @@
     {{t "general.instructors"}}
     ({{sortedInstructors.length}})
   </h4>
-  <ul data-test-instructors>
+  <ul class="instructors-list" data-test-instructors>
     {{#each sortedInstructors as |user|}}
       <li>
         {{user.fullName}}
@@ -17,22 +17,22 @@
     {{t "general.instructorGroups"}}
     ({{sortedInstructorGroups.length}})
   </h4>
-  <ul data-test-instructor-groups>
+  <div data-test-instructor-groups>
     {{#each sortedInstructorGroups as |instructorGroup|}}
-      <li>
-        {{instructorGroup.title}}
-      </li>
+      <div class="instructor-group">
+        <span>
+          <FaIcon @icon="users" />
+          {{instructorGroup.title}}
+        </span>
+        <br>
+        <ul class="instructorgroup-members-list" data-test-instructor-group-members>
+          {{#each (sort-by "fullname" (await instructorGroup.users)) as |instructorGroupMember|}}
+            <li>
+              {{instructorGroupMember.fullName}}
+            </li>
+          {{/each}}
+        </ul>
+      </div>
     {{/each}}
-  </ul>
-  <h5>
-    {{t "general.instructorGroupMembers"}}
-    ({{get (await this.instructorGroupMembers) "length"}})
-  </h5>
-  <ul data-test-instructor-group-members>
-    {{#each (await this.instructorGroupMembers) as |instructorGroupMember|}}
-      <li>
-        {{instructorGroupMember.fullName}}
-      </li>
-    {{/each}}
-  </ul>
+  </div>
 {{/if}}
