@@ -2,7 +2,8 @@ import {
   clickable,
   collection,
   fillable,
-  hasClass, text,
+  hasClass,
+  text,
 } from 'ember-cli-page-object';
 
 export default {
