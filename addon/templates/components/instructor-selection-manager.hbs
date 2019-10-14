@@ -1,3 +1,18 @@
+{{#if (get (await instructors) "length")}}
+  <h4>
+    {{t "general.instructors"}}
+    ({{get (await instructors) "length"}})
+  </h4>
+  <ul data-test-instructors>
+    {{#each (sort-by "fullName" (await instructors)) as |user|}}
+      <li role="button" {{action "removeInstructor" user}}>
+        {{user.fullName}}
+        <FaIcon @icon="times" class="remove" />
+      </li>
+    {{/each}}
+  </ul>
+{{/if}}
+
 {{#if (get (await instructorGroups) "length")}}
   <h4>
     {{t "general.instructorGroups"}}
@@ -24,20 +39,7 @@
     {{/each}}
   </ul>
 {{/if}}
-{{#if (get (await instructors) "length")}}
-  <h4>
-    {{t "general.instructors"}}
-    ({{get (await instructors) "length"}})
-  </h4>
-  <ul data-test-instructors>
-    {{#each (sort-by "fullName" (await instructors)) as |user|}}
-      <li role="button" {{action "removeInstructor" user}}>
-        {{user.fullName}}
-        <FaIcon @icon="times" class="remove" />
-      </li>
-    {{/each}}
-  </ul>
-{{/if}}
+
 <UserSearch
   @addUser={{action "addInstructor"}}
   @addInstructorGroup={{action "addInstructorGroup"}}

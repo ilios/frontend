@@ -1,3 +1,17 @@
+{{#if sortedInstructors.length}}
+  <h4>
+    {{t "general.instructors"}}
+    ({{sortedInstructors.length}})
+  </h4>
+  <ul data-test-instructors>
+    {{#each sortedInstructors as |user|}}
+      <li>
+        {{user.fullName}}
+      </li>
+    {{/each}}
+  </ul>
+{{/if}}
+
 {{#if sortedInstructorGroups.length}}
   <h4>
     {{t "general.instructorGroups"}}
@@ -22,17 +36,3 @@
     {{/each}}
   </ul>
 {{/if}}
-{{#if sortedInstructors.length}}
-  <h4>
-    {{t "general.instructors"}}
-    ({{sortedInstructors.length}})
-  </h4>
-  <ul data-test-instructors>
-    {{#each sortedInstructors as |user|}}
-      <li>
-        {{user.fullName}}
-      </li>
-    {{/each}}
-  </ul>
-{{/if}}
-
