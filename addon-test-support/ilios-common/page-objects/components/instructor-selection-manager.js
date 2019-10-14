@@ -19,9 +19,7 @@ export default {
   }),
   instructorGroups: collection('[data-test-instructor-group]', {
     title: text('[data-test-instructor-group-title]'),
-    members: collection('[data-test-instructor-group-members] li', {
-      text: text(),
-    }),
+    members: collection('[data-test-instructor-group-members] li'),
     remove: clickable('[data-test-instructor-group-title]')
   }),
 };
