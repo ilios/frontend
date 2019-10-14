@@ -1,6 +1,7 @@
 {{#if (get (await instructorGroups) "length")}}
   <h4>
     {{t "general.instructorGroups"}}
+    ({{get (await instructorGroups) "length"}})
   </h4>
   <ul data-test-instructor-groups>
     {{#each (sort-by "title" (await instructorGroups)) as |instructorGroup|}}
@@ -13,6 +14,7 @@
   </ul>
   <h5>
     {{t "general.instructorGroupMembers"}}
+    ({{get (await this.instructorGroupMembers) "length"}})
   </h5>
   <ul data-test-instructor-group-members>
     {{#each (await this.instructorGroupMembers) as |instructorGroupMember|}}
@@ -25,6 +27,7 @@
 {{#if (get (await instructors) "length")}}
   <h4>
     {{t "general.instructors"}}
+    ({{get (await instructors) "length"}})
   </h4>
   <ul data-test-instructors>
     {{#each (sort-by "fullName" (await instructors)) as |user|}}
