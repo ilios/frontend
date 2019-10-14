@@ -171,8 +171,11 @@ export default create({
     save: clickable('.actions button.bigadd'),
     cancel: clickable('.actions button.bigcancel'),
     title: text('.detail-instructors-header .title'),
-    currentGroups: collection('[data-test-instructor-groups] li', {
-      title: text(),
+    currentGroups: collection('[data-test-instructor-group]', {
+      title: text('[data-test-instructor-group-title]'),
+      members: collection('[data-test-instructor-group-members] li', {
+        text: text(),
+      }),
     }),
     currentInstructors: collection('[data-test-instructors] li', {
       title: text(),

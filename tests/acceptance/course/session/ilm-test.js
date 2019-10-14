@@ -19,6 +19,8 @@ module('Acceptance | Session - Independent Learning', function(hooks) {
     this.server.create('academicYear');
     const course = this.server.create('course', { school: this.school });
     this.server.createList('instructorGroup', 5, { school: this.school });
+    this.server.createList('user', 2, {instructorGroupIds: [ 1 ]});
+    this.server.createList('user', 3, {instructorGroupIds: [ 2 ]});
     this.server.create('sessionType', { school: this.school });
     this.server.create('sessionDescription');
     const ilmSession = this.server.create('ilmSession', {
@@ -34,12 +36,20 @@ module('Acceptance | Session - Independent Learning', function(hooks) {
   test('initial selected instructors', async function(assert) {
     await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
     assert.equal(currentRouteName(), 'session.index');
-    assert.equal(page.instructors.title, 'Instructors (6)');
+    assert.equal(page.instructors.title, 'Instructors and Instructor Groups (3/3)');
 
     assert.equal(page.instructors.currentGroups.length, 3);
     assert.equal(page.instructors.currentGroups[0].title, 'instructor group 0');
+    assert.equal(page.instructors.currentGroups[0].members.length, 2);
+    assert.equal(page.instructors.currentGroups[0].members[0].text, '7 guy M. Mc7son');
+    assert.equal(page.instructors.currentGroups[0].members[1].text, '8 guy M. Mc8son');
     assert.equal(page.instructors.currentGroups[1].title, 'instructor group 1');
+    assert.equal(page.instructors.currentGroups[1].members.length, 3);
+    assert.equal(page.instructors.currentGroups[1].members[0].text, '10 guy M. Mc10son');
+    assert.equal(page.instructors.currentGroups[1].members[1].text, '11 guy M. Mc11son');
+    assert.equal(page.instructors.currentGroups[1].members[2].text, '9 guy M. Mc9son');
     assert.equal(page.instructors.currentGroups[2].title, 'instructor group 2');
+    assert.equal(page.instructors.currentGroups[2].members.length, 0);
 
     assert.equal(page.instructors.currentInstructors.length, 3);
     assert.equal(page.instructors.currentInstructors[0].title, '1 guy M. Mc1son');
@@ -55,10 +65,17 @@ module('Acceptance | Session - Independent Learning', function(hooks) {
     const { manager } = page.instructors;
 
     assert.equal(manager.instructorGroups.length, 3);
-    assert.equal(manager.instructorGroups[0].text, 'instructor group 0');
-    assert.equal(manager.instructorGroups[1].text, 'instructor group 1');
+    assert.equal(manager.instructorGroups[0].title, 'instructor group 0');
+    assert.equal(manager.instructorGroups[0].members.length, 2);
+    assert.equal(manager.instructorGroups[0].members[0].text, '7 guy M. Mc7son');
+    assert.equal(manager.instructorGroups[0].members[1].text, '8 guy M. Mc8son');
+    assert.equal(manager.instructorGroups[1].title, 'instructor group 1');
+    assert.equal(manager.instructorGroups[1].members[0].text, '10 guy M. Mc10son');
+    assert.equal(manager.instructorGroups[1].members[1].text, '11 guy M. Mc11son');
+    assert.equal(manager.instructorGroups[1].members[2].text, '9 guy M. Mc9son');
+    assert.equal(manager.instructorGroups[1].members.length, 3);
     assert.equal(manager.instructorGroups[2].text, 'instructor group 2');
-
+    assert.equal(manager.instructorGroups[2].members.length, 0);
     assert.equal(manager.instructors.length, 3);
     assert.equal(manager.instructors[0].text, '1 guy M. Mc1son');
     assert.equal(manager.instructors[1].text, '2 guy M. Mc2son');
@@ -73,7 +90,7 @@ module('Acceptance | Session - Independent Learning', function(hooks) {
     const { manager } = page.instructors;
 
     await manager.search('guy');
-    assert.equal(manager.searchResults.length, 7);
+    assert.equal(manager.searchResults.length, 12);
     assert.equal(manager.searchResults[0].text, '0 guy M. Mc0son user@example.edu');
     assert.ok(manager.searchResults[0].active);
     assert.equal(manager.searchResults[1].text, '1 guy M. Mc1son user@example.edu');
@@ -88,6 +105,16 @@ module('Acceptance | Session - Independent Learning', function(hooks) {
     assert.ok(manager.searchResults[5].active);
     assert.equal(manager.searchResults[6].text, '6 guy M. Mc6son user@example.edu');
     assert.ok(manager.searchResults[6].active);
+    assert.equal(manager.searchResults[7].text, '7 guy M. Mc7son user@example.edu');
+    assert.ok(manager.searchResults[7].active);
+    assert.equal(manager.searchResults[8].text, '8 guy M. Mc8son user@example.edu');
+    assert.ok(manager.searchResults[8].active);
+    assert.equal(manager.searchResults[9].text, '9 guy M. Mc9son user@example.edu');
+    assert.ok(manager.searchResults[9].active);
+    assert.equal(manager.searchResults[10].text, '10 guy M. Mc10son user@example.edu');
+    assert.ok(manager.searchResults[10].active);
+    assert.equal(manager.searchResults[11].text, '11 guy M. Mc11son user@example.edu');
+    assert.ok(manager.searchResults[11].active);
   });
 
 
@@ -123,10 +150,10 @@ module('Acceptance | Session - Independent Learning', function(hooks) {
     await manager.searchResults[3].add();
 
     assert.equal(manager.instructorGroups.length, 4);
-    assert.equal(manager.instructorGroups[0].text, 'instructor group 0');
-    assert.equal(manager.instructorGroups[1].text, 'instructor group 1');
-    assert.equal(manager.instructorGroups[2].text, 'instructor group 2');
-    assert.equal(manager.instructorGroups[3].text, 'instructor group 3');
+    assert.equal(manager.instructorGroups[0].title, 'instructor group 0');
+    assert.equal(manager.instructorGroups[1].title, 'instructor group 1');
+    assert.equal(manager.instructorGroups[2].title, 'instructor group 2');
+    assert.equal(manager.instructorGroups[3].title, 'instructor group 3');
 
     assert.equal(manager.instructors.length, 3);
     assert.equal(manager.instructors[0].text, '1 guy M. Mc1son');
@@ -158,9 +185,9 @@ module('Acceptance | Session - Independent Learning', function(hooks) {
     await manager.searchResults[4].add();
 
     assert.equal(manager.instructorGroups.length, 3);
-    assert.equal(manager.instructorGroups[0].text, 'instructor group 0');
-    assert.equal(manager.instructorGroups[1].text, 'instructor group 1');
-    assert.equal(manager.instructorGroups[2].text, 'instructor group 2');
+    assert.equal(manager.instructorGroups[0].title, 'instructor group 0');
+    assert.equal(manager.instructorGroups[1].title, 'instructor group 1');
+    assert.equal(manager.instructorGroups[2].title, 'instructor group 2');
 
     assert.equal(manager.instructors.length, 4);
     assert.equal(manager.instructors[0].text, '1 guy M. Mc1son');
@@ -191,8 +218,8 @@ module('Acceptance | Session - Independent Learning', function(hooks) {
     await manager.instructorGroups[0].remove();
 
     assert.equal(manager.instructorGroups.length, 2);
-    assert.equal(manager.instructorGroups[0].text, 'instructor group 1');
-    assert.equal(manager.instructorGroups[1].text, 'instructor group 2');
+    assert.equal(manager.instructorGroups[0].title, 'instructor group 1');
+    assert.equal(manager.instructorGroups[1].title, 'instructor group 2');
 
     assert.equal(manager.instructors.length, 3);
     assert.equal(manager.instructors[0].text, '1 guy M. Mc1son');
@@ -220,9 +247,9 @@ module('Acceptance | Session - Independent Learning', function(hooks) {
     await manager.instructors[0].remove();
 
     assert.equal(manager.instructorGroups.length, 3);
-    assert.equal(manager.instructorGroups[0].text, 'instructor group 0');
-    assert.equal(manager.instructorGroups[1].text, 'instructor group 1');
-    assert.equal(manager.instructorGroups[2].text, 'instructor group 2');
+    assert.equal(manager.instructorGroups[0].title, 'instructor group 0');
+    assert.equal(manager.instructorGroups[1].title, 'instructor group 1');
+    assert.equal(manager.instructorGroups[2].title, 'instructor group 2');
 
     assert.equal(manager.instructors.length, 2);
     assert.equal(manager.instructors[0].text, '2 guy M. Mc2son');

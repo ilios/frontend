@@ -2,7 +2,7 @@ import {
   clickable,
   collection,
   fillable,
-  hasClass
+  hasClass, text,
 } from 'ember-cli-page-object';
 
 export default {
@@ -16,7 +16,11 @@ export default {
   instructors: collection('[data-test-instructors] li', {
     remove: clickable()
   }),
-  instructorGroups: collection('[data-test-instructor-groups] li', {
-    remove: clickable()
+  instructorGroups: collection('[data-test-instructor-group]', {
+    title: text('[data-test-instructor-group-title]'),
+    members: collection('[data-test-instructor-group-members] li', {
+      text: text(),
+    }),
+    remove: clickable('[data-test-instructor-group-title]')
   }),
 };
