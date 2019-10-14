@@ -15,11 +15,6 @@ export default Component.extend({
   instructorBuffer: null,
   'data-test-detail-instructors': true,
 
-  titleCount: computed('ilmSession.instructorGroups.length', 'ilmSession.instructors.length', function(){
-    return this.get('ilmSession.instructorGroups.length') +
-           this.get('ilmSession.instructors.length');
-  }),
-
   availableInstructorGroups: computed('currentUser.model', async function() {
     const model = await this.currentUser.model;
     const school = await model.get('school');

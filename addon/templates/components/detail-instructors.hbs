@@ -5,7 +5,8 @@
         {{t "general.instructorsManageTitle"}}
       </span>
     {{else}}
-      {{t "general.instructors"}} ({{titleCount}})
+      {{t "general.instructorsAndInstructorGroups"}}
+      ({{@ilmSession.instructors.length}}/{{@ilmSession.instructorGroups.length}})
     {{/if}}
   </div>
   <div class="actions">
