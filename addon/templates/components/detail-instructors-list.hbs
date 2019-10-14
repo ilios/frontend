@@ -19,14 +19,14 @@
   </h4>
   <div data-test-instructor-groups>
     {{#each sortedInstructorGroups as |instructorGroup|}}
-      <div class="instructor-group">
-        <span>
+      <div class="instructor-group" data-test-instructor-group>
+        <span data-test-instructor-group-title>
           <FaIcon @icon="users" />
           {{instructorGroup.title}}
         </span>
         <br>
         <ul class="instructorgroup-members-list" data-test-instructor-group-members>
-          {{#each (sort-by "fullname" (await instructorGroup.users)) as |instructorGroupMember|}}
+          {{#each (sort-by "fullName" (await instructorGroup.users)) as |instructorGroupMember|}}
             <li>
               {{instructorGroupMember.fullName}}
             </li>

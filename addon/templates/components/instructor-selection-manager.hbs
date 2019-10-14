@@ -20,15 +20,15 @@
   </h4>
   <div data-test-instructor-groups>
     {{#each (sort-by "title" (await instructorGroups)) as |instructorGroup|}}
-      <div class="instructor-group">
-        <span role="button" {{action "removeInstructorGroup" instructorGroup}}>
+      <div class="instructor-group" data-test-instructor-group>
+        <span role="button" {{action "removeInstructorGroup" instructorGroup}} data-test-instructor-group-title>
           <FaIcon @icon="users" />
           {{instructorGroup.title}}
           <FaIcon @icon="times" class="remove" />
         </span>
         <br>
         <ul class="instructorgroup-members-list" data-test-instructor-group-members>
-          {{#each (sort-by "fullname" (await instructorGroup.users)) as |instructorGroupMember|}}
+          {{#each (sort-by "fullName" (await instructorGroup.users)) as |instructorGroupMember|}}
             <li>
               {{instructorGroupMember.fullName}}
             </li>
