@@ -126,8 +126,10 @@ general:
   independentLearningActivities: "Aprendizaje Independiente Actividades"
   instructionalNotes: "Notes para la Instrucción"
   instructor: Instructor
+  instructorGroupMembers: "Miembros del grupo instructor"
   instructorGroups: "Grupos de Instructores"
   instructors: Instructores
+  instructorsAndInstructorGroups: "Instructores y Grupos de Instructores"
   instructorsManageTitle: "Administrar Instructores"
   lastUpdate: "Última actualización"
   learnerGroups: "Grupos de Aprendedores"
