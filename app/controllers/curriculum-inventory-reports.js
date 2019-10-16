@@ -37,7 +37,7 @@ export default Controller.extend({
       return await user.school;
     }
 
-    return this.model.findBy('id', this.schoolIds);
+    return this.model.findBy('id', this.schoolId);
   }),
 
   /**
