@@ -1,7 +1,6 @@
-import $ from 'jquery';
-
-const { trim } = $;
-
 export function cleanQuery(query) {
-  return trim(query).replace(/[-,?~!@#$%&*+'="]/g, ' ');
+  if (typeof query != 'string') {
+    return '';
+  }
+  return query.trim().replace(/[-,?~!@#$%&*+'="]/g, ' ');
 }

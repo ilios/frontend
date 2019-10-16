@@ -1,4 +1,3 @@
-/* eslint ember/no-global-jquery: 0 */
 import { helper } from '@ember/component/helper';
 import striptags from 'striptags';
 
