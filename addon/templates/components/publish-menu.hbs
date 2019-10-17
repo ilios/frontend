@@ -1,23 +1,23 @@
 <RlDropdownContainer>
   <RlDropdownToggle>
-    <FaIcon @icon={{icon}} />
+    <FaIcon @icon={{this.icon}} />
     <span>
-      {{title}}
+      {{this.title}}
     </span>
   </RlDropdownToggle>
   <RlDropdown @closeOnChildClick="button">
-    {{#if showAsIs}}
-      <button class="danger" {{action publish}}>
+    {{#if this.showAsIs}}
+      <button class="danger" {{action this.publish}}>
         {{t "general.publishAsIs"}}
       </button>
     {{/if}}
-    {{#if showPublish}}
-      <button class="good" {{action publish}}>
-        {{t publishTranslation}}
+    {{#if this.showPublish}}
+      <button class="good" {{action this.publish}}>
+        {{t this.publishTranslation}}
       </button>
     {{/if}}
-    {{#if (and showReview reviewRoute reviewObject)}}
-      {{#if parentObject}}
+    {{#if (and this.showReview this.reviewRoute this.reviewObject)}}
+      {{#if this.parentObject}}
         <button class="good" {{action "scrollToSessionPublication"}}>
           {{t
             "general.reviewMissingItems"
@@ -33,16 +33,15 @@
         </button>
       {{/if}}
     {{/if}}
-    {{#if showTbd}}
-      <button class="good" {{action publishAsTbd}}>
+    {{#if this.showTbd}}
+      <button class="good" {{action this.publishAsTbd}}>
         {{t "general.markAsScheduled"}}
       </button>
     {{/if}}
-    {{#if showUnPublish}}
-      <button class="danger" {{action unpublish}}>
-        {{t unPublishTranslation}}
+    {{#if this.showUnPublish}}
+      <button class="danger" {{action this.unpublish}}>
+        {{t this.unPublishTranslation}}
       </button>
     {{/if}}
   </RlDropdown>
 </RlDropdownContainer>
-

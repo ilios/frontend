@@ -87,7 +87,7 @@
       <label>
         {{t "general.instructors"}}:
       </label>
-      {{join ", " (sort-by (action "sortString") @event.instructors)}}
+      {{this.join ", " (sort-by (action "sortString") @event.instructors)}}
     </div>
   {{/if}}
   {{#if @event.sessionDescription.length}}
@@ -193,4 +193,3 @@
     {{/each}}
   </ul>
 </div>
-

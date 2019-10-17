@@ -1,9 +1,9 @@
-{{#if showIcon}}
-  <FaIcon @icon={{iconKey}} @title={{t textKey}} />
+{{#if this.showIcon}}
+  <FaIcon @icon={{this.iconKey}} @title={{t this.textKey}} />
 {{/if}}
-{{#if showText}}
+{{#if this.showText}}
   <span data-test-text>
-    {{t textKey}}
+    {{t this.textKey}}
   </span>
 {{/if}}
 

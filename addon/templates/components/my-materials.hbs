@@ -1,12 +1,12 @@
 <div class="material-list">
   <span class="course-filter">
-    <select onchange={{action @setCourseIdFilter value="target.value"}}>
+    <select onchange={{action this.setCourseIdFilter value="target.value"}}>
       <option value="">
         {{t "general.allCourses"}}
       </option>
       {{#each (await this.courses) as |courseObj|}}
         <option
-          selected={{is-equal courseObj.id @courseIdFilter}}
+          selected={{is-equal courseObj.id this.courseIdFilter}}
           value={{courseObj.id}}
         >
           {{courseObj.title}}
@@ -19,7 +19,7 @@
       data-test-filter-input
       placeholder={{t "general.filterPlaceholder"}}
       type="text"
-      value={{@filter}}
+      value={{this.filter}}
       oninput={{perform this.setQuery value="target.value"}}
     >
   </span>
@@ -30,8 +30,8 @@
           @colspan={{3}}
           @sortedAscending={{this.sortedAscending}}
           @sortedBy={{or
-            (eq @sortBy "sessionTitle")
-            (eq @sortBy "sessionTitle:desc")
+            (eq this.sortBy "sessionTitle")
+            (eq this.sortBy "sessionTitle:desc")
           }}
           @click={{action "sortBy" "sessionTitle"}}
         >
@@ -41,8 +41,8 @@
           @colspan={{3}}
           @sortedAscending={{this.sortedAscending}}
           @sortedBy={{or
-            (eq @sortBy "courseTitle")
-            (eq @sortBy "courseTitle:desc")
+            (eq this.sortBy "courseTitle")
+            (eq this.sortBy "courseTitle:desc")
           }}
           @click={{action "sortBy" "courseTitle"}}
         >
@@ -51,7 +51,7 @@
         <SortableTh
           @colspan={{3}}
           @sortedAscending={{this.sortedAscending}}
-          @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
+          @sortedBy={{or (eq this.sortBy "title") (eq this.sortBy "title:desc")}}
           @click={{action "sortBy" "title"}}
         >
           {{t "general.title"}}
@@ -63,8 +63,8 @@
           @colspan={{1}}
           @sortedAscending={{this.sortedAscending}}
           @sortedBy={{or
-            (eq @sortBy "firstOfferingDate")
-            (eq @sortBy "firstOfferingDate:desc")
+            (eq this.sortBy "firstOfferingDate")
+            (eq this.sortBy "firstOfferingDate:desc")
           }}
           @sortType="numeric"
           @click={{action "sortBy" "firstOfferingDate"}}
@@ -74,14 +74,14 @@
       </tr>
     </thead>
     <tbody>
-      {{#if (is-pending @materials)}}
+      {{#if (is-pending this.materials)}}
         <tr>
           <td class="text-center" colspan="11">
             <FaIcon @icon="spinner" class="orange" @size="2x" @spin={{true}} />
           </td>
         </tr>
       {{else}}
-        {{#each (sort-by @sortBy (await this.filteredMaterials)) as |lmObject|}}
+        {{#each (sort-by this.sortBy (await this.filteredMaterials)) as |lmObject|}}
           <tr>
             <td colspan="3" data-test-session-title>
               {{lmObject.sessionTitle}}
@@ -146,7 +146,7 @@
             <td class="hide-from-small-screen" colspan="1" data-test-instructor>
               <BigText
                 @length={{25}}
-                @text={{join
+                @text={{this.join
                   ", "
                   (sort-by (action "sortString") lmObject.instructors)
                 }}
@@ -171,4 +171,3 @@
     </tbody>
   </table>
 </div>
-

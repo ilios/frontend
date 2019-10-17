@@ -1,8 +1,8 @@
-<div class="title clickable" onclick={{action expand}} role="button">
-  {{t "general.learnerGroups"}} ({{get (await subject.learnerGroups) "length"}})
+<div class="title clickable" onclick={{action this.expand}} role="button">
+  {{t "general.learnerGroups"}} ({{get (await this.subject.learnerGroups) "length"}})
 </div>
 <div class="collapsed-learnergroups-content">
-  {{#if (is-fulfilled cohortSummaries)}}
+  {{#if (is-fulfilled this.cohortSummaries)}}
     <table>
       <thead>
         <tr>
@@ -15,7 +15,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each (sort-by "title" (await cohortSummaries)) as |obj|}}
+        {{#each (sort-by "title" (await this.cohortSummaries)) as |obj|}}
           <tr>
             <td colspan="4">
               {{obj.title}}

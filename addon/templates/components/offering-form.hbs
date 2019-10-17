@@ -1,17 +1,17 @@
-{{#if loaded}}
+{{#if this.loaded}}
   <div class="toggle-offering-calendar">
     <ToggleButtons
       @firstLabel={{t "general.hideCalendar"}}
-      @firstOptionSelected={{not showOfferingCalendar}}
+      @firstOptionSelected={{not this.showOfferingCalendar}}
       @secondLabel={{t "general.showCalendar"}}
       @toggle={{toggle "showOfferingCalendar" this}}
     />
   </div>
-  {{#if showOfferingCalendar}}
+  {{#if this.showOfferingCalendar}}
     <OfferingCalendar
-      @endDate={{endDate}}
-      @learnerGroups={{learnerGroups}}
-      @startDate={{startDate}}
+      @endDate={{this.endDate}}
+      @learnerGroups={{this.learnerGroups}}
+      @startDate={{this.startDate}}
       @session={{session}}
     />
   {{/if}}
@@ -22,7 +22,7 @@
       </label>
       <PikadayInput
         @format="M/D/YYYY"
-        @value={{startDate}}
+        @value={{this.startDate}}
         @onSelection={{action "updateStartDate"}}
       />
     </div>
@@ -33,7 +33,7 @@
           ({{browser-timezone}})
         </span>
       </label>
-      <TimePicker @date={{startDate}} @action={{action "updateStartTime"}} />
+      <TimePicker @date={{this.startDate}} @action={{action "updateStartTime"}} />
     </div>
     <div class="item offering-duration">
       <label>
@@ -46,19 +46,19 @@
               class={{if
                 (and
                   (v-get this "durationHours" "isInvalid")
-                  (is-in showErrorsFor "durationHours")
+                  (is-in this.showErrorsFor "durationHours")
                 )
                 "has-error"
               }}
               min="0"
               type="number"
-              value={{durationHours}}
+              value={{this.durationHours}}
               oninput={{perform this.updateDurationHours value="target.value"}}
             >
             {{#if
               (and
                 (v-get this "durationHours" "isInvalid")
-                (is-in showErrorsFor "durationHours")
+                (is-in this.showErrorsFor "durationHours")
               )
             }}
               <span class="validation-error-message">
@@ -76,21 +76,21 @@
               class={{if
                 (and
                   (v-get this "durationMinutes" "isInvalid")
-                  (is-in showErrorsFor "durationMinutes")
+                  (is-in this.showErrorsFor "durationMinutes")
                 )
                 "has-error"
               }}
               max="59"
               min="0"
               type="number"
-              value={{durationMinutes}}
+              value={{this.durationMinutes}}
               oninput={{perform this.updateDurationMinutes value="target.value"
               }}
             >
             {{#if
               (and
                 (v-get this "durationMinutes" "isInvalid")
-                (is-in showErrorsFor "durationMinutes")
+                (is-in this.showErrorsFor "durationMinutes")
               )
             }}
               <span class="validation-error-message">
@@ -108,35 +108,35 @@
       <label>
         {{t "general.end"}}:
       </label>
-      {{#if endDate}}
+      {{#if this.endDate}}
         <div class="text">
-          {{moment-format endDate "M/D/YYYY h:mm a"}}
+          {{moment-format this.endDate "M/D/YYYY h:mm a"}}
         </div>
       {{/if}}
     </div>
-    {{#if showMakeRecurring}}
+    {{#if this.showMakeRecurring}}
       <div class="item make-recurring">
         <label>
           {{t "general.makeRecurring"}}
         </label>
         <ToggleYesno
-          @yes={{makeRecurring}}
-          @toggle={{toggle-action "makeRecurring" this}}
+          @yes={{this.makeRecurring}}
+          @toggle={{this.toggle-action "makeRecurring" this}}
         />
-        {{#if makeRecurring}}
+        {{#if this.makeRecurring}}
           <div class="make-recurring-options">
             <div class="make-recurring-days">
-              {{#each recurringDayOptions as |obj i|}}
+              {{#each this.recurringDayOptions as |obj i|}}
                 <div>
                   <input
                     id="make-recurring-day-input-{{i}}"
                     type="checkbox"
                     checked={{or
-                      (is-in recurringDays obj.day)
-                      (eq (moment-format startDate "d") obj.day)
+                      (is-in this.recurringDays obj.day)
+                      (eq (moment-format this.startDate "d") obj.day)
                     }}
                     onclick={{action "toggleRecurringDay" obj.day}}
-                    disabled={{eq (moment-format startDate "d") obj.day}}
+                    disabled={{eq (moment-format this.startDate "d") obj.day}}
                     data-test-recurring-day-input={{i}}
                   >
                   <label
@@ -152,15 +152,15 @@
             <div class="make-recurring-input-container">
               <input
                 type="text"
-                value={{numberOfWeeks}}
-                oninput={{action (mut numberOfWeeks) value="target.value"}}
+                value={{this.numberOfWeeks}}
+                oninput={{action (mut this.numberOfWeeks) value="target.value"}}
                 onkeyup={{action "addErrorDisplayFor" "numberOfWeeks"}}
                 class={{concat
                   "make-recurring-input "
                   (if
                     (and
                       (v-get this "numberOfWeeks" "isInvalid")
-                      (is-in showErrorsFor "numberOfWeeks")
+                      (is-in this.showErrorsFor "numberOfWeeks")
                     )
                     "has-error"
                   )
@@ -172,7 +172,7 @@
               {{#if
                 (and
                   (v-get this "numberOfWeeks" "isInvalid")
-                  (is-in showErrorsFor "numberOfWeeks")
+                  (is-in this.showErrorsFor "numberOfWeeks")
                 )
               }}
                 <span class="validation-error-message">
@@ -184,7 +184,7 @@
         {{/if}}
       </div>
     {{/if}}
-    {{#if showRoom}}
+    {{#if this.showRoom}}
       <div class="item room">
         <label>
           {{t "general.location"}}:
@@ -194,18 +194,18 @@
         </label>
         <input
           type="text"
-          value={{room}}
-          oninput={{action (mut room) value="target.value"}}
+          value={{this.room}}
+          oninput={{action (mut this.room) value="target.value"}}
           onkeyup={{action "addErrorDisplayFor" "room"}}
         >
-        {{#if (and (v-get this "room" "isInvalid") (is-in showErrorsFor "room"))}}
+        {{#if (and (v-get this "room" "isInvalid") (is-in this.showErrorsFor "room"))}}
           <span class="validation-error-message">
             {{v-get this "room" "message"}}
           </span>
         {{/if}}
       </div>
     {{/if}}
-    {{#if showInstructors}}
+    {{#if this.showInstructors}}
       <div class="instructors item">
         <label>
           {{t "general.instructors"}}:
@@ -218,9 +218,9 @@
           @addInstructorGroup={{action "addInstructorGroup"}}
           @removeInstructor={{action "removeInstructor"}}
           @removeInstructorGroup={{action "removeInstructorGroup"}}
-          @availableInstructorGroups={{await availableInstructorGroups}}
-          @instructorGroups={{instructorGroups}}
-          @instructors={{instructors}}
+          @availableInstructorGroups={{await this.availableInstructorGroups}}
+          @instructorGroups={{this.instructorGroups}}
+          @instructors={{this.instructors}}
         />
       </div>
     {{/if}}
@@ -228,10 +228,10 @@
       <label>
         {{t "general.learnerGroups"}}:
       </label>
-      {{#if cohorts.length}}
+      {{#if this.cohorts.length}}
         <LearnergroupSelectionManager
-          @learnerGroups={{learnerGroups}}
-          @cohorts={{cohorts}}
+          @learnerGroups={{this.learnerGroups}}
+          @cohorts={{this.cohorts}}
           @add={{action "addLearnerGroup"}}
           @remove={{action "removeLearnerGroup"}}
         />
@@ -243,7 +243,7 @@
       {{#if
         (and
           (v-get this "learnerGroups" "isInvalid")
-          (is-in showErrorsFor "learnerGroups")
+          (is-in this.showErrorsFor "learnerGroups")
         )
       }}
         <p class="validation-error-message">
@@ -254,26 +254,25 @@
     <div class="buttons">
       <button
         class="done text"
-        disabled={{or saveOffering.isRunning}}
-        {{action (perform validateThenSaveOffering)}}
+        disabled={{or this.saveOffering.isRunning}}
+        {{action (perform this.validateThenSaveOffering)}}
       >
-        {{#if saveOffering.isRunning}}
+        {{#if this.saveOffering.isRunning}}
           <LoadingSpinner />
         {{else}}
           {{t "general.done"}}
         {{/if}}
       </button>
-      <button class="cancel text" {{action close}}>
+      <button class="cancel text" {{action this.close}}>
         {{t "general.cancel"}}
       </button>
     </div>
   </div>
 {{/if}}
-{{#if saveOffering.isRunning}}
+{{#if this.saveOffering.isRunning}}
   <WaitSaving
     @showProgress={{true}}
-    @totalProgress={{offeringsToSave}}
-    @currentProgress={{savedOfferings}}
+    @totalProgress={{this.offeringsToSave}}
+    @currentProgress={{this.savedOfferings}}
   />
 {{/if}}
-

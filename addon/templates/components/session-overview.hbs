@@ -1,9 +1,9 @@
 {{! template-lint-disable attribute-indentation }}
 <div class="session-header">
   <span class="title">
-    {{#if editable}}
+    {{#if this.editable}}
       {{#editable-field
-        value=title
+        value=this.title
         save=(action "changeTitle")
         close=(action "revertTitleChanges")
         saveOnEnter=true
@@ -12,34 +12,34 @@
       }}
         <input
           type="text"
-          value={{title}}
+          value={{this.title}}
           disabled={{isSaving}}
-          oninput={{action (mut title) value="target.value"}}
+          oninput={{action (mut this.title) value="target.value"}}
           onkeyup={{action "addErrorDisplayFor" "title"}}
         >
-        {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+        {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
           <span class="validation-error-message">{{v-get this "title" "message"}}</span>
         {{/if}}
       {{/editable-field}}
     {{else}}
-      <h3>{{session.title}}</h3>
+      <h3>{{this.session.title}}</h3>
     {{/if}}
   </span>
   <span class ="session-publication">
-    {{#if editable}}
+    {{#if this.editable}}
 
       {{publish-menu
-        title=menuTitle
-        icon=menuIcon
-        publicationStatus=publicationStatus
-        showAsIs=showAsIs
-        showPublish=showPublish
-        showReview=showReview
-        showTbd=showTbd
-        showUnPublish=showUnPublish
+        title=this.menuTitle
+        icon=this.menuIcon
+        publicationStatus=this.publicationStatus
+        showAsIs=this.showAsIs
+        showPublish=this.showPublish
+        showReview=this.showReview
+        showTbd=this.showTbd
+        showUnPublish=this.showUnPublish
         reviewRoute="session.publication_check"
-        reviewObject=session
-        parentObject=(await session.course)
+        reviewObject=this.session
+        parentObject=(await this.session.course)
         publishTranslation="general.publishSession"
         unPublishTranslation="general.unPublishSession"
         publish=(action "publish")
@@ -47,7 +47,7 @@
         unpublish=(action "unpublish")
       }}
     {{else}}
-      {{publication-status item=session}}
+      {{publication-status item=this.session}}
     {{/if}}
   </span>
 </div>
@@ -66,8 +66,8 @@
     </div>
 
     <div class="session-overview-actions">
-      {{#if (and (is-fulfilled showCopy) (await showCopy))}}
-        {{#link-to "session.copy" session class="copy"}}
+      {{#if (and (is-fulfilled this.showCopy) (await this.showCopy))}}
+        {{#link-to "session.copy" this.session class="copy"}}
           {{fa-icon icon="copy" title=(t "general.copySession") fixedWidth=true}}
         {{/link-to}}
       {{/if}}
@@ -78,39 +78,39 @@
     <div class="sessiontype block">
       <label>{{t "general.sessionType"}}:</label>
       <span>
-        {{#if editable}}
+        {{#if this.editable}}
           {{#editable-field
-            value=sessionType.title
+            value=this.sessionType.title
             save=(action "changeSessionType")
             close=(action "revertSessionTypeChanges")
           }}
             {{one-way-select
-              value=sessionType.id
-              options=sortedSessionTypes
+              value=this.sessionType.id
+              options=this.sortedSessionTypes
               optionTargetPath="id"
               optionLabelPath="title"
               update=(action "setSessionType")
             }}
           {{/editable-field}}
-          {{#unless sessionType.active}}
+          {{#unless this.sessionType.active}}
             <em>({{t "general.inactive"}})</em>
           {{/unless}}
         {{else}}
-          {{session.sessionType.title}}
-          {{#unless sessionType.active}}
+          {{this.session.sessionType.title}}
+          {{#unless this.sessionType.active}}
             <em>({{t "general.inactive"}})</em>
           {{/unless}}
         {{/if}}
       </span>
     </div>
-    {{#if (await showSupplemental)}}
+    {{#if (await this.showSupplemental)}}
       <div class="sessionsupplemental block">
         <label>{{t "general.supplementalCurriculum"}}:</label>
         <span>
-          {{#if editable}}
-            {{toggle-yesno yes=session.supplemental toggle=(action "changeSupplemental")}}
+          {{#if this.editable}}
+            {{toggle-yesno yes=this.session.supplemental toggle=(action "changeSupplemental")}}
           {{else}}
-            {{#if session.supplemental}}
+            {{#if this.session.supplemental}}
               <span class="add">{{t "general.yes"}}</span>
             {{else}}
               <span class="remove">{{t "general.no"}}</span>
@@ -119,17 +119,17 @@
         </span>
       </div>
     {{/if}}
-    {{#if (await showSpecialAttireRequired)}}
+    {{#if (await this.showSpecialAttireRequired)}}
       <div class="sessionspecialattire block">
         <label>{{t "general.specialAttireRequired"}}:</label>
         <span>
-          {{#if editable}}
+          {{#if this.editable}}
             {{toggle-yesno
-              yes=session.attireRequired
+              yes=this.session.attireRequired
               toggle=(action "changeSpecialAttire")
             }}
           {{else}}
-            {{#if session.attireRequired}}
+            {{#if this.session.attireRequired}}
               <span class="add">{{t "general.yes"}}</span>
             {{else}}
               <span class="remove">{{t "general.no"}}</span>
@@ -138,17 +138,17 @@
         </span>
       </div>
     {{/if}}
-    {{#if (await showSpecialEquipmentRequired)}}
+    {{#if (await this.showSpecialEquipmentRequired)}}
       <div class="sessionspecialequipment block">
         <label>{{t "general.specialEquipmentRequired"}}:</label>
         <span>
-          {{#if editable}}
+          {{#if this.editable}}
             {{toggle-yesno
-              yes=session.equipmentRequired
+              yes=this.session.equipmentRequired
               toggle=(action "changeSpecialEquipment")
             }}
           {{else}}
-            {{#if session.equipmentRequired}}
+            {{#if this.session.equipmentRequired}}
               <span class="add">{{t "general.yes"}}</span>
             {{else}}
               <span class="remove">{{t "general.no"}}</span>
@@ -157,17 +157,17 @@
         </span>
       </div>
     {{/if}}
-    {{#if (await showAttendanceRequired)}}
+    {{#if (await this.showAttendanceRequired)}}
       <div class="sessionattendancerequired block">
         <label>{{t "general.attendanceRequired"}}:</label>
         <span>
-          {{#if editable}}
+          {{#if this.editable}}
             {{toggle-yesno
-              yes=session.attendanceRequired
+              yes=this.session.attendanceRequired
               toggle=(action "changeAttendanceRequired")
             }}
           {{else}}
-            {{#if session.attendanceRequired}}
+            {{#if this.session.attendanceRequired}}
               <span class="add">{{t "general.yes"}}</span>
             {{else}}
               <span class="remove">{{t "general.no"}}</span>
@@ -180,13 +180,13 @@
     <div class="independentlearningcontrol block">
       <label>{{t "general.independentLearning"}}:</label>
       <span class="independentlearningcontrol-value">
-        {{#if editable}}
+        {{#if this.editable}}
           {{toggle-yesno
-            yes=session.isIndependentLearning
+            yes=this.session.isIndependentLearning
             toggle=(action "saveIndependentLearning")
           }}
         {{else}}
-          {{#if session.isIndependentLearning}}
+          {{#if this.session.isIndependentLearning}}
             <span class="add">{{t "general.yes"}}</span>
           {{else}}
             <span class="remove">{{t "general.no"}}</span>
@@ -194,13 +194,13 @@
         {{/if}}
       </span>
     </div>
-    {{#if session.isIndependentLearning}}
+    {{#if this.session.isIndependentLearning}}
       <div class="sessionilmhours block">
         <label>{{t "general.hours"}}:</label>
         <span>
-          {{#if editable}}
+          {{#if this.editable}}
             {{#editable-field
-              value=hours
+              value=this.hours
               save=(action "changeIlmHours")
               close=(action "revertIlmHoursChanges")
               saveOnEnter=true
@@ -209,68 +209,68 @@
             }}
               <input
                 type="text"
-                value={{hours}}
-                oninput={{action (mut hours) value="target.value"}}
+                value={{this.hours}}
+                oninput={{action (mut this.hours) value="target.value"}}
                 disabled={{isSaving}}
                 onkeyup={{action "addErrorDisplayFor" "hours"}}
               >
-              {{#if (and (v-get this "hours" "isInvalid") (is-in showErrorsFor "hours"))}}
+              {{#if (and (v-get this "hours" "isInvalid") (is-in this.showErrorsFor "hours"))}}
                 <span class="validation-error-message">{{v-get this "hours" "message"}}</span>
               {{/if}}
             {{/editable-field}}
           {{else}}
-            {{session.ilmSession.hours}}&nbsp;
+            {{this.session.ilmSession.hours}}&nbsp;
           {{/if}}
         </span>
       </div>
-      <div class="sessionilmduedate block {{if session.hasPostrequisite "not-applicable"}}">
+      <div class="sessionilmduedate block {{if this.session.hasPostrequisite "not-applicable"}}">
         <label>{{t "general.dueBy"}}:</label>
         <span>
-          {{#if (is-fulfilled session.ilmSession)}}
-            {{#if editable}}
+          {{#if (is-fulfilled this.session.ilmSession)}}
+            {{#if this.editable}}
               {{#editable-field
-                value=(moment-format session.ilmSession.dueDate "L")
+                value=(moment-format this.session.ilmSession.dueDate "L")
                 save=(action "changeIlmDueDate")
                 close=(action "revertIlmDueDateChanges")
               }}
                 {{pikaday-input
-                  value=dueDate
+                  value=this.dueDate
                   format="L"
-                  onSelection=(action (mut dueDate))
+                  onSelection=(action (mut this.dueDate))
                   focusOut=(action "addErrorDisplayFor" "dueDate")
                 }}
-                {{#if (and (v-get this "dueDate" "isInvalid") (is-in showErrorsFor "dueDate"))}}
+                {{#if (and (v-get this "dueDate" "isInvalid") (is-in this.showErrorsFor "dueDate"))}}
                   <span class="validation-error-message">{{v-get this "dueDate" "message"}}</span>
                 {{/if}}
               {{/editable-field}}
             {{else}}
-              {{moment-format session.ilmSession.dueDate "L"}}
+              {{moment-format this.session.ilmSession.dueDate "L"}}
             {{/if}}
           {{/if}}
         </span>
       </div>
     {{/if}}
-    {{#if features.sessionLinkingAdminUi}}
+    {{#if this.features.sessionLinkingAdminUi}}
       <div class="postrequisite block">
         <label>
-          {{#if session.hasPostrequisite}}
-            {{#link-to "session.index" (await session.postrequisite.course) (await session.postrequisite)}}
+          {{#if this.session.hasPostrequisite}}
+            {{#link-to "session.index" (await this.session.postrequisite.course) (await this.session.postrequisite)}}
               {{fa-icon  icon="external-link-square-alt"}} {{t "general.duePriorTo"}}:
             {{/link-to}}
           {{else}}
             {{t "general.duePriorTo"}}:
           {{/if}}
         </label>
-        {{#if editable}}
+        {{#if this.editable}}
           {{#editable-field
-            value=(await postRequisiteTitle)
+            value=(await this.postRequisiteTitle)
             save=(action "changePostrequisite")
             close=(action "revertPostrequisiteChanges")
           }}
             <select onchange={{action "setPostrequisite" value="target.value"}}>
-              <option value="null" selected={{is-empty (await session.postrequisite)}}>{{t "general.none"}}</option>
-              {{#each (await linkablePostrequisites) as |linkablePostrequisite|}}
-                <option value={{linkablePostrequisite.id}} selected={{is-equal linkablePostrequisite (await session.postrequisite)}}>
+              <option value="null" selected={{is-empty (await this.session.postrequisite)}}>{{t "general.none"}}</option>
+              {{#each (await this.linkablePostrequisites) as |linkablePostrequisite|}}
+                <option value={{linkablePostrequisite.id}} selected={{is-equal linkablePostrequisite (await this.session.postrequisite)}}>
                   {{linkablePostrequisite.title}}
                   {{#if (await linkablePostrequisite.firstOfferingDate)}}
                     {{#if linkablePostrequisite.ilmSession}}
@@ -284,8 +284,8 @@
             </select>
           {{/editable-field}}
         {{else}}
-          {{#if session.hasPostrequisite}}
-            {{session.postrequisite.title}}
+          {{#if this.session.hasPostrequisite}}
+            {{this.session.postrequisite.title}}
           {{else}}
             {{t "general.none"}}
           {{/if}}
@@ -293,12 +293,9 @@
       </div>
       <div class="prerequisites block">
         <label>{{t "general.prerequisites"}}:</label>
-        {{#if session.hasPrerequisites}}
+        {{#if this.session.hasPrerequisites}}
           <span>
-            {{#each (await session.prerequisites) as |prerequisite|~}}
-              {{#link-to "session.index" (await prerequisite.course) prerequisite}}{{fa-icon  icon="external-link-square-alt"}} {{prerequisite.title}}{{/link-to~}}
-              {{#unless (eq prerequisite session.prerequisites.lastObject)}}, {{/unless}}
-            {{~/each}}
+            {{#each (await this.session.prerequisites) as |prerequisite|~}}{{#link-to "session.index" (await prerequisite.course) prerequisite}}{{fa-icon  icon="external-link-square-alt"}} {{prerequisite.title}}{{/link-to~}}{{#unless (eq prerequisite this.session.prerequisites.lastObject)}}, {{/unless}}{{~/each}}
           </span>
         {{else}}
           {{t "general.none"}}
@@ -309,67 +306,67 @@
     <div class="sessiondescription">
       <label>{{t "general.description"}}:</label>
       <span>
-        {{#if editable}}
+        {{#if this.editable}}
           {{#editable-field
-            value=description
+            value=this.description
             save=(action "saveDescription")
-            close=(perform revertDescriptionChanges)
+            close=(perform this.revertDescriptionChanges)
             renderHtml=true
-            isSaveDisabled=(and (v-get this "description" "isInvalid") (is-in showErrorsFor "description"))
+            isSaveDisabled=(and (v-get this "description" "isInvalid") (is-in this.showErrorsFor "description"))
             clickPrompt=(t "general.clickToEdit")
           }}
             {{html-editor
-              content=description
+              content=this.description
               update=(action "changeDescription")
             }}
             {{#if
-              (and (v-get this "description" "isInvalid") (is-in showErrorsFor "description"))
+              (and (v-get this "description" "isInvalid") (is-in this.showErrorsFor "description"))
             }}
               <span class="validation-error-message">{{v-get this "description" "message"}}</span>
             {{/if}}
           {{/editable-field}}
         {{else}}
           {{! template-lint-disable no-triple-curlies}}
-          {{{description}}}
+          {{{this.description}}}
         {{/if}}
       </span>
     </div>
     <div class="instructional-notes" data-test-instructional-notes>
       <label>{{t "general.instructionalNotes"}}:</label>
       <span>
-        {{#if editable}}
+        {{#if this.editable}}
           {{#editable-field
-            value=session.instructionalNotes
-            save=(perform saveInstructionalNotes)
+            value=this.session.instructionalNotes
+            save=(perform this.saveInstructionalNotes)
             close=(action "revertInstructionalNotesChanges")
             renderHtml=true
-            isSaveDisabled=(and (v-get this "instructionalNotes" "isInvalid") (is-in showErrorsFor "instructionalNotes"))
+            isSaveDisabled=(and (v-get this "instructionalNotes" "isInvalid") (is-in this.showErrorsFor "instructionalNotes"))
             clickPrompt=(t "general.clickToEdit")
           }}
             {{html-editor
-              content=instructionalNotes
+              content=this.instructionalNotes
               update=(action "changeInstructionalNotes")
             }}
             {{#if
-              (and (v-get this "instructionalNotes" "isInvalid") (is-in showErrorsFor "instructionalNotes"))
+              (and (v-get this "instructionalNotes" "isInvalid") (is-in this.showErrorsFor "instructionalNotes"))
             }}
               <span class="validation-error-message">{{v-get this "instructionalNotes" "message"}}</span>
             {{/if}}
           {{/editable-field}}
         {{else}}
           {{! template-lint-disable no-triple-curlies}}
-          {{{description}}}
+          {{{this.description}}}
         {{/if}}
       </span>
     </div>
-    {{#unless session.isIndependentLearning}}
+    {{#unless this.session.isIndependentLearning}}
       <br>
       <div class="sessionassociatedgroups">
         <label>{{t "general.associatedGroups"}}:</label>
         <span>
-          {{#if (is-fulfilled session.associatedOfferingLearnerGroups)}}
+          {{#if (is-fulfilled this.session.associatedOfferingLearnerGroups)}}
             <span>
-              {{#each (await session.associatedOfferingLearnerGroups) as |group|}}
+              {{#each (await this.session.associatedOfferingLearnerGroups) as |group|}}
                 {{group.title}},
               {{else}}
                 {{t "general.none"}}

@@ -1,31 +1,31 @@
 {{! template-lint-disable attribute-indentation }}
 <div class="objectivetitle course-objective-title">
   {{! template-lint-disable no-triple-curlies }}
-  {{{courseObjective.title}}}
+  {{{this.courseObjective.title}}}
 </div>
-{{#unless loadAttr.isRunning}}
-  {{#liquid-if (get (await cohortProxies) "length") class="horizontal"}}
+{{#unless this.loadAttr.isRunning}}
+  {{#liquid-if (get (await this.cohortProxies) "length") class="horizontal"}}
     <label class="group-picker">
       <span class="choose-cohort-title">
         {{t "general.chooseCohortTitle"}}:
       </span>
-      {{#if (gt (get (await cohortProxies) "length") 1)}}
+      {{#if (gt (get (await this.cohortProxies) "length") 1)}}
         <OneWaySelect
-          @value={{get (await selectedCohort) "id"}}
-          @options={{await cohortProxies}}
+          @value={{get (await this.selectedCohort) "id"}}
+          @options={{await this.cohortProxies}}
           @optionTargetPath="id"
           @optionLabelPath="title"
           @update={{action "setSelectedCohort"}}
         />
       {{else}}
-        {{get (await currentCohort) "title"}}
+        {{get (await this.currentCohort) "title"}}
       {{/if}}
     </label>
     <ul class="parent-picker">
-      {{#if (await currentCohort)}}
+      {{#if (await this.currentCohort)}}
         {{#each
           (await
-            (get (await currentCohort) "objectivesByCompetency")
+            (get (await this.currentCohort) "objectivesByCompetency")
           ) as |competency|
         }}
           <li data-test-competency>
@@ -43,7 +43,7 @@
                     <input
                       type={{if
                         (await
-                          (get (await currentCohort) "allowMultipleParents")
+                          (get (await this.currentCohort) "allowMultipleParents")
                         )
                         "checkbox"
                         "radio"
@@ -64,17 +64,17 @@
                     <input
                       type={{if
                         (await
-                          (get (await currentCohort) "allowMultipleParents")
+                          (get (await this.currentCohort) "allowMultipleParents")
                         )
                         "checkbox"
                         "radio"
                       }}
-                      {{action (perform addParent objective)}}
+                      {{action (perform this.addParent objective)}}
                     >
                     <span
                       class="clickable"
                       role="button"
-                      {{action (perform addParent objective)}}
+                      {{action (perform this.addParent objective)}}
                     >
                       {{objective.textTitle}}
                     </span>
@@ -94,4 +94,3 @@
     </div>
   {{/liquid-if}}
 {{/unless}}
-

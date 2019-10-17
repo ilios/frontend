@@ -1,11 +1,11 @@
 <span class="title">
-  {{#if course.locked}}
+  {{#if this.course.locked}}
     <FaIcon @icon="lock" />
   {{/if}}
-  {{#if editable}}
-    {{#if course}}
+  {{#if this.editable}}
+    {{#if this.course}}
       <EditableField
-        @value={{courseTitle}}
+        @value={{this.courseTitle}}
         @save={{action "changeTitle"}}
         @close={{action "revertTitleChanges"}}
         @saveOnEnter={{true}}
@@ -13,15 +13,15 @@
       >
         <input
           type="text"
-          value={{courseTitle}}
+          value={{this.courseTitle}}
           disabled={{isSaving}}
-          oninput={{action (mut courseTitle) value="target.value"}}
+          oninput={{action (mut this.courseTitle) value="target.value"}}
           onkeyup={{action "addErrorDisplayFor" "courseTitle"}}
         >
         {{#if
           (and
             (v-get this "courseTitle" "isInvalid")
-            (is-in showErrorsFor "courseTitle")
+            (is-in this.showErrorsFor "courseTitle")
           )
         }}
           <span class="validation-error-message">
@@ -30,28 +30,28 @@
         {{/if}}
       </EditableField>
     {{/if}}
-  {{else if course}}
+  {{else if this.course}}
     <h2>
-      {{course.title}}
+      {{this.course.title}}
     </h2>
   {{/if}}
   <h4>
-    {{course.academicYear}}
+    {{this.course.academicYear}}
   </h4>
 </span>
 <span class="course-publication">
-  {{#if editable}}
+  {{#if this.editable}}
     <PublishMenu
-      @title={{menuTitle}}
-      @icon={{menuIcon}}
-      @publicationStatus={{publicationStatus}}
-      @showAsIs={{showAsIs}}
-      @showPublish={{showPublish}}
-      @showReview={{showReview}}
-      @showTbd={{showTbd}}
-      @showUnPublish={{showUnPublish}}
+      @title={{this.menuTitle}}
+      @icon={{this.menuIcon}}
+      @publicationStatus={{this.publicationStatus}}
+      @showAsIs={{this.showAsIs}}
+      @showPublish={{this.showPublish}}
+      @showReview={{this.showReview}}
+      @showTbd={{this.showTbd}}
+      @showUnPublish={{this.showUnPublish}}
       @reviewRoute="course.publication_check"
-      @reviewObject={{course}}
+      @reviewObject={{this.course}}
       @publishTranslation="general.publishCourse"
       @unPublishTranslation="general.unPublishCourse"
       @publish={{action "publish"}}
@@ -59,7 +59,6 @@
       @unpublish={{action "unpublish"}}
     />
   {{else}}
-    <PublicationStatus @item={{course}} />
+    <PublicationStatus @item={{this.course}} />
   {{/if}}
 </span>
-

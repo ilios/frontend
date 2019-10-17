@@ -1,30 +1,30 @@
 <h3
-  class="{{if collapsible "clickable collapsible"}}
+  class="{{if this.collapsible "clickable collapsible"}}
 
-    {{if collapsed "collapsed" "expanded"}}"
+    {{if this.collapsed "collapsed" "expanded"}}"
   role="button"
   data-test-week-title
-  {{action (optional toggleCollapsed) collapsed}}
+  {{action (optional @toggleCollapsed) this.collapsed}}
 >
-  {{title}}
-  {{#if showFullTitle}}
+  {{this.title}}
+  {{#if this.showFullTitle}}
     {{t "general.weekAtAGlance"}}
   {{/if}}
 </h3>
-{{#liquid-unless collapsed class="vertical"}}
-  {{#if (is-fulfilled publishedWeekEvents)}}
+{{#liquid-unless this.collapsed class="vertical"}}
+  {{#if (is-fulfilled this.publishedWeekEvents)}}
     <div class="ilm-pre-work">
-      {{#if (gt (get (await ilmPreWork) "length") 0)}}
+      {{#if (gt (get (await this.ilmPreWork) "length") 0)}}
         <h4>
           {{t "general.preWork"}}
         </h4>
-        {{#each (await ilmPreWork) as |ilmGroup|}}
+        {{#each (await this.ilmPreWork) as |ilmGroup|}}
           <WeekGlancePreWork @events={{ilmGroup}} />
         {{/each}}
       {{/if}}
     </div>
-    {{#if (gt (get (await nonIlmPreWorkEvents) "length") 0)}}
-      {{#each (await nonIlmPreWorkEvents) as |event|}}
+    {{#if (gt (get (await this.nonIlmPreWorkEvents) "length") 0)}}
+      {{#each (await this.nonIlmPreWorkEvents) as |event|}}
         <WeekGlanceEvent @event={{event}} />
       {{/each}}
     {{else}}
@@ -39,4 +39,3 @@
     </p>
   {{/if}}
 {{/liquid-unless}}
-

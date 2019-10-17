@@ -1,12 +1,12 @@
-{{#if targetItemTitle}}
+{{#if this.targetItemTitle}}
   <h2>
-    {{t "general.selectMeshFor" title=targetItemTitle}}
+    {{t "general.selectMeshFor" title=this.targetItemTitle}}
   </h2>
 {{/if}}
 <ul class="selected-terms">
-  {{#each sortedTerms as |term|}}
+  {{#each this.sortedTerms as |term|}}
     <li
-      class={{if editable "clickable"}}
+      class={{if this.editable "clickable"}}
       role="button"
       {{action "remove" term}}
     >
@@ -21,13 +21,13 @@
           - {{term.trees.lastObject.treeNumber}}
         {{/if}}
       </span>
-      {{#if editable}}
+      {{#if this.editable}}
         <FaIcon @icon="times" class="remove" />
       {{/if}}
     </li>
   {{/each}}
 </ul>
-{{#if editable}}
+{{#if this.editable}}
   <SearchBox
     placeholder={{t "general.meshSearchPlaceholder"}}
     @liveSearch={{false}}
@@ -35,15 +35,15 @@
     @clear={{action "clear"}}
   />
 {{/if}}
-{{#if searching}}
+{{#if this.searching}}
   <ul class="results">
     <li>
       {{t "general.currentlySearchingPrompt"}}
     </li>
   </ul>
-{{else if searchResults.length}}
+{{else if this.searchResults.length}}
   <ul class="mesh-search-results" data-test-search-results>
-    {{#each searchResults as |term|}}
+    {{#each this.searchResults as |term|}}
       <li
         class={{unless term.isActive "disabled" ""}}
         role="button"
@@ -75,19 +75,19 @@
       </li>
     {{/each}}
   </ul>
-  {{#if hasMoreSearchResults}}
+  {{#if this.hasMoreSearchResults}}
     <button
-      disabled={{if searchMore.isRunning true}}
-      {{action (perform searchMore)}}
+      disabled={{if this.searchMore.isRunning true}}
+      {{action (perform this.searchMore)}}
     >
       <FaIcon
-        @icon={{if searchMore.isRunning "spinner"}}
-        @spin={{if searchMore.isRunning true false}}
+        @icon={{if this.searchMore.isRunning "spinner"}}
+        @spin={{if this.searchMore.isRunning true false}}
       />
       {{t "general.showMore"}}
     </button>
   {{/if}}
-{{else if searchReturned}}
+{{else if this.searchReturned}}
   <ul class="results">
     <li>
       {{t "general.noSearchResultsPrompt"}}

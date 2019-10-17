@@ -1,14 +1,14 @@
 <div class="objectivetitle">
   {{! template-lint-disable no-triple-curlies}}
-  {{{sessionObjective.title}}}
+  {{{this.sessionObjective.title}}}
 </div>
-{{#if (await showObjectiveList) class="vertical"}}
+{{#if (await this.showObjectiveList) class="vertical"}}
   <div class="parent-picker">
     <h5>
-      {{get (await course) "title"}}
+      {{get (await this.course) "title"}}
     </h5>
     <ul>
-      {{#each (await proxiedObjectives) as |objective|}}
+      {{#each (await this.proxiedObjectives) as |objective|}}
         {{#if objective.selected}}
           <li
             class="selected clickable"

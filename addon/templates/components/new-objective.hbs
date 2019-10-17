@@ -7,8 +7,8 @@
       {{t "general.description"}}:
     </label>
     <div class="form-data form-data-text form-input-row">
-      <HtmlEditor @content={{title}} @update={{action "changeTitle"}} />
-      {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
+      <HtmlEditor @content={{this.title}} @update={{action "changeTitle"}} />
+      {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))
       }}
         <span class="validation-error-message">
           {{v-get this "title" "message"}}
@@ -19,21 +19,20 @@
   <div class="buttons">
     <button
       disabled={{or
-        isSaving
-        (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
+        this.isSaving
+        (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))
       }}
       class="done text"
       {{action "save"}}
     >
-      {{#if isSaving}}
+      {{#if this.isSaving}}
         <LoadingSpinner />
       {{else}}
         {{t "general.done"}}
       {{/if}}
     </button>
-    <button class="cancel text" {{action cancel}}>
+    <button class="cancel text" {{action this.cancel}}>
       {{t "general.cancel"}}
     </button>
   </div>
 </div>
-

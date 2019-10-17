@@ -1,13 +1,12 @@
-{{moment-format event.startDate "M/D/YY h:mma"}}
+{{moment-format this.event.startDate "M/D/YY h:mma"}}
 -
-{{moment-format event.endDate "M/D/YY h:mma"}}
+{{moment-format this.event.endDate "M/D/YY h:mma"}}
 <span
-  class={{if (and clickable isEventSelectable) "clickable"}}
+  class={{if (and this.clickable this.isEventSelectable) "clickable"}}
   role="button"
   data-test-event-name
-  {{action "selectEvent" event}}
+  {{action "selectEvent" this.event}}
 >
-  {{event.name}}
+  {{this.event.name}}
 </span>
-{{event.location}}
-
+{{this.event.location}}

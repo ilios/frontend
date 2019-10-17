@@ -1,6 +1,6 @@
 <div class="detail-cohorts-header">
   <div class="title">
-    {{#if isManaging}}
+    {{#if this.isManaging}}
       <span class="specific-title">
         {{t "general.cohortsManageTitle"}}
       </span>
@@ -9,17 +9,17 @@
     {{/if}}
   </div>
   <div class="actions">
-    {{#if isManaging}}
+    {{#if this.isManaging}}
       <button class="bigadd" {{action "save"}}>
         <FaIcon
-          @icon={{if isSaving "spinner" "check"}}
-          @spin={{if isSaving true false}}
+          @icon={{if this.isSaving "spinner" "check"}}
+          @spin={{if this.isSaving true false}}
         />
       </button>
       <button class="bigcancel" {{action "cancel"}}>
         <FaIcon @icon="undo" />
       </button>
-    {{else if editable}}
+    {{else if this.editable}}
       <button {{action "manage"}}>
         {{t "general.cohortsManageTitle"}}
       </button>
@@ -27,10 +27,10 @@
   </div>
 </div>
 <div class="detail-cohorts-content">
-  {{#if isManaging class="horizontal"}}
+  {{#if this.isManaging class="horizontal"}}
     <DetailCohortManager
       @school={{await course.school}}
-      @selectedCohorts={{bufferedCohorts}}
+      @selectedCohorts={{this.bufferedCohorts}}
       @add={{action "addCohortToBuffer"}}
       @remove={{action "removeCohortFromBuffer"}}
     />

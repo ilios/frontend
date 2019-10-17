@@ -1,16 +1,16 @@
-{{#if selectedTerms}}
+{{#if this.selectedTerms}}
   <div class="selected-terms">
-    {{#each (await listableVocabularies) as |vocab|}}
+    {{#each (await this.listableVocabularies) as |vocab|}}
       <DetailTermsList
         @vocabulary={{vocab}}
-        @terms={{selectedTerms}}
+        @terms={{this.selectedTerms}}
         @canEdit={{true}}
         @remove={{action "remove"}}
       />
     {{/each}}
   </div>
 {{/if}}
-{{#if (get (await assignableVocabularies) "length")}}
+{{#if (get (await this.assignableVocabularies) "length")}}
   <div class="vocabulary-picker">
     <div>
       <label>
@@ -19,7 +19,7 @@
       <select
         onchange={{action "changeSelectedVocabulary" value="target.value"}}
       >
-        {{#each (await assignableVocabularies) as |vocab|}}
+        {{#each (await this.assignableVocabularies) as |vocab|}}
           <option value={{vocab.id}}>
             {{vocab.title}} ({{vocab.school.title}})
           </option>
@@ -28,15 +28,15 @@
     </div>
     <input
       type="search"
-      value={{termFilter}}
+      value={{this.termFilter}}
       placeholder={{t "general.filterPlaceholder"}}
-      oninput={{perform setTermFilter value="target.value"}}
+      oninput={{perform this.setTermFilter value="target.value"}}
     >
   </div>
   <div class="terms-picker tag-tree">
     <SelectableTermsList
-      @selectedTerms={{selectedTerms}}
-      @terms={{await filteredTerms}}
+      @selectedTerms={{this.selectedTerms}}
+      @terms={{await this.filteredTerms}}
       @add={{action "add"}}
       @remove={{action "remove"}}
     />

@@ -1,22 +1,22 @@
 {{! template-lint-disable attribute-indentation }}
-{{#each sortedSessions as |obj|}}
+{{#each this.sortedSessions as |obj|}}
   <div
     class="{{if
-        (contains obj.session.id expandedSessionIds)
+        (contains obj.session.id this.expandedSessionIds)
         "is-expanded"
         "not-expanded"
       }}
        session"
-    data-test-expanded-session={{contains obj.session.id expandedSessionIds}}
+    data-test-expanded-session={{contains obj.session.id this.expandedSessionIds}}
     data-test-session
   >
     <div class="session-row">
       <span class="expand-collapse-control" data-test-expand-collapse-control>
-        {{#if (contains obj.session.id expandedSessionIds)}}
+        {{#if (contains obj.session.id this.expandedSessionIds)}}
           <FaIcon
             @icon="caret-down"
             class="link"
-            @click={{action closeSession obj.session}}
+            @click={{action this.closeSession obj.session}}
           />
         {{else}}
           <FaIcon
@@ -117,17 +117,17 @@
         {{/if}}
       </span>
     </div>
-    {{#if (contains obj.session.id confirmDeleteSessionIds)}}
+    {{#if (contains obj.session.id this.confirmDeleteSessionIds)}}
       <div class="confirm-removal" data-test-confirm-removal>
         {{t "general.confirmSessionRemoval"}}
         <div class="confirm-buttons">
           <button
             class="cancel"
             data-test-yes
-            disabled={{removeSession.isRunning}}
-            onclick={{perform removeSession obj.session}}
+            disabled={{this.removeSession.isRunning}}
+            onclick={{perform this.removeSession obj.session}}
           >
-            {{#if removeSession.isRunning}}
+            {{#if this.removeSession.isRunning}}
               <LoadingSpinner />
             {{else}}
               {{t "general.yes"}}
@@ -139,7 +139,7 @@
         </div>
       </div>
     {{/if}}
-    {{#if (contains obj.session.id expandedSessionIds)}}
+    {{#if (contains obj.session.id this.expandedSessionIds)}}
       <SessionsGridLastUpdated @session={{await obj.session}} />
       <SessionsGridOfferingTable
         @canUpdate={{obj.canUpdate}}
@@ -148,4 +148,3 @@
     {{/if}}
   </div>
 {{/each}}
-

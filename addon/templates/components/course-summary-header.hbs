@@ -1,10 +1,10 @@
 <div class="course-summary-header-top">
   <h2>
-    {{course.title}}
+    {{this.course.title}}
   </h2>
   <div class="course-summary-actions">
     {{#if this.showMaterials}}
-      <LinkTo @route="course-materials" @model={{course}} class="materials">
+      <LinkTo @route="course-materials" @model={{this.course}} class="materials">
         <FaIcon
           @icon="archive"
           @title={{t "general.learningMaterialsSummary"}}
@@ -14,7 +14,7 @@
     {{/if}}
     <LinkTo
       @route="print_course"
-      @model={{course}}
+      @model={{this.course}}
       @query={{hash unpublished=true}}
       class="print"
     >
@@ -24,8 +24,8 @@
         @fixedWidth={{true}}
       />
     </LinkTo>
-    {{#if (and (is-fulfilled showRollover) (await showRollover))}}
-      <LinkTo @route="course.rollover" @model={{course}} class="rollover">
+    {{#if (and (is-fulfilled this.showRollover) (await this.showRollover))}}
+      <LinkTo @route="course.rollover" @model={{this.course}} class="rollover">
         <FaIcon
           @icon="random"
           @title={{t "general.courseRollover"}}
@@ -41,7 +41,7 @@
       {{t "general.startDate"}}:
     </label>
     <span>
-      {{moment-format course.startDate "L"}}
+      {{moment-format this.course.startDate "L"}}
     </span>
   </div>
   <div class="block">
@@ -49,7 +49,7 @@
       {{t "general.externalId"}}:
     </label>
     <span>
-      {{course.externalId}}
+      {{this.course.externalId}}
     </span>
   </div>
   <div class="block">
@@ -57,7 +57,7 @@
       {{t "general.endDate"}}:
     </label>
     <span>
-      {{moment-format course.endDate "L"}}
+      {{moment-format this.course.endDate "L"}}
     </span>
   </div>
   <div class="block">
@@ -65,7 +65,7 @@
       {{t "general.level"}}:
     </label>
     <span>
-      {{course.level}}
+      {{this.course.level}}
     </span>
   </div>
   <div class="block">
@@ -73,8 +73,7 @@
       {{t "general.publicationStatus"}}:
     </label>
     <span>
-      <PublicationStatus @item={{course}} />
+      <PublicationStatus @item={{this.course}} />
     </span>
   </div>
 </div>
-

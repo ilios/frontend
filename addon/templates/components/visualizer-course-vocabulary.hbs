@@ -1,17 +1,16 @@
-{{#if (or isIcon (gt (get (await data) "length") 0))}}
+{{#if (or this.isIcon (gt (get (await this.data) "length") 0))}}
   <SimpleChart
     @name="horz-bar"
-    @isIcon={{isIcon}}
-    @data={{await sortedData}}
-    @hover={{perform barHover}}
-    @leave={{perform barHover}}
+    @isIcon={{this.isIcon}}
+    @data={{await this.sortedData}}
+    @hover={{perform this.barHover}}
+    @leave={{perform this.barHover}}
     @click={{action "barClick"}} as |chart|
   >
-    {{#if tooltipContent}}
-      <chart.tooltip @title={{tooltipTitle}}>
-        {{tooltipContent}}
+    {{#if this.tooltipContent}}
+      <chart.tooltip @title={{this.tooltipTitle}}>
+        {{this.tooltipContent}}
       </chart.tooltip>
     {{/if}}
   </SimpleChart>
 {{/if}}
-

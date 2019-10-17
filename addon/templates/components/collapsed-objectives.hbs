@@ -1,11 +1,11 @@
-<div class="title" role="button" {{action (action expand)}}>
-  {{t "general.objectives"}} ({{get (await objectives) "length"}})
+<div class="title" role="button" {{action (action this.expand)}}>
+  {{t "general.objectives"}} ({{get (await this.objectives) "length"}})
 </div>
 {{#if
   (and
-    (is-fulfilled objectives)
-    (is-fulfilled objectivesWithMesh)
-    (is-fulfilled objectivesWithParents)
+    (is-fulfilled this.objectives)
+    (is-fulfilled this.objectivesWithMesh)
+    (is-fulfilled this.objectivesWithParents)
   )
 }}
   <div class="content">
@@ -26,17 +26,17 @@
       <tbody>
         <tr>
           <td>
-            {{t "general.objectiveCount" count=(get (await objectives) "length")}}
+            {{t "general.objectiveCount" count=(get (await this.objectives) "length")}}
           </td>
           <td class="text-middle text-center" rowspan="3">
             {{#if
               (eq
-                (get (await objectivesWithParents) "length")
-                (get (await objectives) "length")
+                (get (await this.objectivesWithParents) "length")
+                (get (await this.objectives) "length")
               )
             }}
               <FaIcon @icon="circle" class="yes" />
-            {{else if (gte (get (await objectivesWithParents) "length") 1)}}
+            {{else if (gte (get (await this.objectivesWithParents) "length") 1)}}
               <FaIcon @icon="circle" class="maybe" />
             {{else}}
               <FaIcon @icon="ban" class="no" />
@@ -45,12 +45,12 @@
           <td class="text-middle text-center" rowspan="3">
             {{#if
               (eq
-                (get (await objectivesWithMesh) "length")
-                (get (await objectives) "length")
+                (get (await this.objectivesWithMesh) "length")
+                (get (await this.objectives) "length")
               )
             }}
               <FaIcon @icon="circle" class="yes" />
-            {{else if (gte (get (await objectivesWithMesh) "length") 1)}}
+            {{else if (gte (get (await this.objectivesWithMesh) "length") 1)}}
               <FaIcon @icon="circle" class="maybe" />
             {{else}}
               <FaIcon @icon="ban" class="no" />
@@ -62,7 +62,7 @@
             &nbsp;&nbsp;
             {{t
               "general.parentCount"
-              count=(get (await objectivesWithParents) "length")
+              count=(get (await this.objectivesWithParents) "length")
             }}
           </td>
         </tr>
@@ -71,7 +71,7 @@
             &nbsp;&nbsp;
             {{t
               "general.meshCount"
-              count=(get (await objectivesWithMesh) "length")
+              count=(get (await this.objectivesWithMesh) "length")
             }}
           </td>
         </tr>
@@ -81,4 +81,3 @@
 {{else}}
   <LoadingSpinner @tagName="h3" />
 {{/if}}
-

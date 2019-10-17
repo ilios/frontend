@@ -1,10 +1,10 @@
 <span>
-  {{objective.textTitle}}
+  {{this.objective.textTitle}}
 </span>
 <MeshManager
   @add={{action "add"}}
   @remove={{action "remove"}}
-  @terms={{objectiveDescriptors}}
-  @editable={{editable}}
+  @terms={{this.objectiveDescriptors}}
+  @editable={{this.editable}}
 />
 

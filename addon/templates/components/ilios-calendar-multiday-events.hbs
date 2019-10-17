@@ -1,13 +1,13 @@
-{{#if events.length}}
+{{#if this.events.length}}
   <div class="ilios-calendar-multiday-events">
     <h4>
       {{t "general.multidayEvents"}}
     </h4>
     <ul>
-      {{#each events as |event|}}
+      {{#each this.events as |event|}}
         <IliosCalendarMultidayEvent
-          @isEventSelectable={{areEventsSelectable}}
-          @selectEvent={{selectEvent}}
+          @isEventSelectable={{this.areEventsSelectable}}
+          @selectEvent={{this.selectEvent}}
           @event={{event}}
         />
       {{/each}}

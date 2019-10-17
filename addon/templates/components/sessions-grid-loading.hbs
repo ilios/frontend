@@ -1,5 +1,5 @@
 {{! template-lint-disable no-unused-block-params }}
-{{#each (repeat @count) as |empty|}}
+{{#each (this.repeat this.count) as |empty|}}
   <div data-test-row>
     <span class="expand-collapse-control"></span>
     <span class="session-grid-title">
@@ -29,4 +29,3 @@
     <span class="session-grid-actions"></span>
   </div>
 {{/each}}
-

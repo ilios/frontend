@@ -1,20 +1,19 @@
-{{#if (and startDate endDate endDateInTheFuture)}}
+{{#if (and this.startDate this.endDate this.endDateInTheFuture)}}
   ({{t
     "general.timedReleaseStartAndEndDate"
-    startDate=(moment-format startDate "L LT")
-    endDate=(moment-format endDate "L LT")
+    startDate=(moment-format this.startDate "L LT")
+    endDate=(moment-format this.endDate "L LT")
   }})
 {{/if}}
-{{#if (and startDate (not endDate) startDateInTheFuture)}}
+{{#if (and this.startDate (not this.endDate) this.startDateInTheFuture)}}
   ({{t
     "general.timedReleaseOnlyStartDate"
-    startDate=(moment-format startDate "L LT")
+    startDate=(moment-format this.startDate "L LT")
   }})
 {{/if}}
-{{#if (and endDate (not startDate) endDateInTheFuture)}}
-  ({{t "general.timedReleaseOnlyEndDate" endDate=(moment-format endDate "L LT")}})
+{{#if (and this.endDate (not this.startDate) this.endDateInTheFuture)}}
+  ({{t "general.timedReleaseOnlyEndDate" endDate=(moment-format this.endDate "L LT")}})
 {{/if}}
-{{#if (and (not startDate) (not endDate) showNoSchedule)}}
+{{#if (and (not this.startDate) (not this.endDate) this.showNoSchedule)}}
   {{t "general.timedReleaseNoSchedule"}}
 {{/if}}
-

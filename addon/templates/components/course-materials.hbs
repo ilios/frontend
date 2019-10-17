@@ -15,7 +15,7 @@
         <SortableTh
           @colspan={{4}}
           @sortedAscending={{this.clmSortedAscending}}
-          @sortedBy={{or (eq @courseSort "title") (eq @courseSort "title:desc")
+          @sortedBy={{or (eq this.courseSort "title") (eq this.courseSort "title:desc")
           }}
           @click={{action "courseSortBy" "title"}}
         >
@@ -23,7 +23,7 @@
         </SortableTh>
         <SortableTh
           @sortedAscending={{this.clmSortedAscending}}
-          @sortedBy={{or (eq @courseSort "type") (eq @courseSort "type:desc")}}
+          @sortedBy={{or (eq this.courseSort "type") (eq this.courseSort "type:desc")}}
           @click={{action "courseSortBy" "type"}}
         >
           {{t "general.type"}}
@@ -31,8 +31,8 @@
         <SortableTh
           @sortedAscending={{this.clmSortedAscending}}
           @sortedBy={{or
-            (eq @courseSort "author")
-            (eq @courseSort "author:desc")
+            (eq this.courseSort "author")
+            (eq this.courseSort "author:desc")
           }}
           @click={{action "courseSortBy" "author"}}
         >
@@ -50,7 +50,7 @@
       {{else}}
         {{#each
           (sort-by
-            @courseSort (await this.filteredCourseLearningMaterialObjects)
+            this.courseSort (await this.filteredCourseLearningMaterialObjects)
           ) as |lmObject|
         }}
           <tr>
@@ -107,8 +107,8 @@
           @colspan={{3}}
           @sortedAscending={{this.slmSortedAscending}}
           @sortedBy={{or
-            (eq @sessionSort "title")
-            (eq @sessionSort "title:desc")
+            (eq this.sessionSort "title")
+            (eq this.sessionSort "title:desc")
           }}
           @click={{action "sessionSortBy" "title"}}
         >
@@ -117,7 +117,7 @@
         <SortableTh
           @colspan={{1}}
           @sortedAscending={{this.slmSortedAscending}}
-          @sortedBy={{or (eq @sessionSort "type") (eq @sessionSort "type:desc")
+          @sortedBy={{or (eq this.sessionSort "type") (eq this.sessionSort "type:desc")
           }}
           @click={{action "sessionSortBy" "type"}}
         >
@@ -127,8 +127,8 @@
           @colspan={{1}}
           @sortedAscending={{this.slmSortedAscending}}
           @sortedBy={{or
-            (eq @sessionSort "author")
-            (eq @sessionSort "author:desc")
+            (eq this.sessionSort "author")
+            (eq this.sessionSort "author:desc")
           }}
           @click={{action "sessionSortBy" "author"}}
         >
@@ -138,8 +138,8 @@
           @colspan={{3}}
           @sortedAscending={{this.slmSortedAscending}}
           @sortedBy={{or
-            (eq @sessionSort "sessionTitle")
-            (eq @sessionSort "sessionTitle:desc")
+            (eq this.sessionSort "sessionTitle")
+            (eq this.sessionSort "sessionTitle:desc")
           }}
           @click={{action "sessionSortBy" "sessionTitle"}}
         >
@@ -149,8 +149,8 @@
           @colspan={{1}}
           @sortedAscending={{this.slmSortedAscending}}
           @sortedBy={{or
-            (eq @sessionSort "firstOfferingDate")
-            (eq @sessionSort "firstOfferingDate:desc")
+            (eq this.sessionSort "firstOfferingDate")
+            (eq this.sessionSort "firstOfferingDate:desc")
           }}
           @sortType="numeric"
           @click={{action "sessionSortBy" "firstOfferingDate"}}
@@ -169,7 +169,7 @@
       {{else}}
         {{#each
           (sort-by
-            @sessionSort (await this.filteredSessionLearningMaterialObjects)
+            this.sessionSort (await this.filteredSessionLearningMaterialObjects)
           ) as |lmObject|
         }}
           <tr>
@@ -218,4 +218,3 @@
     </tbody>
   </table>
 </div>
-

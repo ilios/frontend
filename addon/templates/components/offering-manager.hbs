@@ -1,20 +1,20 @@
-{{#if (and isEditing (is-fulfilled offering.session.course.cohorts))}}
+{{#if (and this.isEditing (is-fulfilled this.offering.session.course.cohorts))}}
   <OfferingForm
     @showRoom={{true}}
     @showInstructors={{true}}
-    @cohorts={{await offering.session.course.cohorts}}
-    @courseStartDate={{await offering.session.course.startDate}}
-    @courseEndDate={{await offering.session.course.startDate}}
+    @cohorts={{await this.offering.session.course.cohorts}}
+    @courseStartDate={{await this.offering.session.course.startDate}}
+    @courseEndDate={{await this.offering.session.course.startDate}}
     @close={{toggle "isEditing" this}}
     @save={{action "save"}}
     @smallGroupMode={{false}}
-    @offering={{offering}}
-    @session={{await offering.session}}
+    @offering={{this.offering}}
+    @session={{await this.offering.session}}
   />
 {{else}}
   <div class="offering-manager-learner-groups">
     <ul>
-      {{#each (await offering.learnerGroups) as |learnerGroup|}}
+      {{#each (await this.offering.learnerGroups) as |learnerGroup|}}
         <li>
           {{learnerGroup.title}}
           {{#if
@@ -24,7 +24,7 @@
             )
           }}
             {{#attach-tooltip lazyRender=true animation="shift"}}
-              {{join " > " (map-by "title" (await learnerGroup.allParents))}}
+              {{this.join " > " (map-by "title" (await learnerGroup.allParents))}}
             {{/attach-tooltip}}
           {{/if}}
         </li>
@@ -36,11 +36,11 @@
     </ul>
   </div>
   <div class="offering-manager-location">
-    {{offering.room}}
+    {{this.offering.room}}
   </div>
   <div class="offering-manager-instructors">
     <ul>
-      {{#each (await offering.allInstructors) as |instructor|}}
+      {{#each (await this.offering.allInstructors) as |instructor|}}
         <li data-test-instructor>
           {{instructor.fullName}}
         </li>
@@ -51,7 +51,7 @@
       {{/each}}
     </ul>
   </div>
-  {{#if editable}}
+  {{#if this.editable}}
     <div class="offering-manager-actions">
       <span
         class="clickable edit"
@@ -60,7 +60,7 @@
       >
         <FaIcon @icon="edit" class="enabled" />
       </span>
-      {{#if (await userCanDelete)}}
+      {{#if (await this.userCanDelete)}}
         <span class="clickable remove" role="button" {{action "confirmRemove"}}>
           <FaIcon @icon="trash" class="enabled" />
         </span>
@@ -69,12 +69,12 @@
       {{/if}}
     </div>
   {{/if}}
-  {{#if showRemoveConfirmation class="vertical"}}
+  {{#if this.showRemoveConfirmation class="vertical"}}
     <div class="confirm-removal">
       <div class="confirm-message">
         {{t
           "general.confirmRemove"
-          learnerGroupCount=offering.learnerGroups.length
+          learnerGroupCount=this.offering.learnerGroups.length
         }}
         <br>
         <div class="confirm-buttons">
@@ -89,4 +89,3 @@
     </div>
   {{/if}}
 {{/if}}
-

@@ -1,11 +1,11 @@
-{{#if term.description.length}}
+{{#if this.term.description.length}}
   {{#attach-tooltip lazyRender=true animation="shift"}}
-    {{term.description}}
+    {{this.term.description}}
   {{/attach-tooltip}}
 {{/if}}
-{{term.title}}
+{{this.term.title}}
 <span class="actions">
-  {{#if isSelected}}
+  {{#if this.isSelected}}
     <FaIcon @icon="times" />
   {{else}}
     <FaIcon @icon="plus" class="add" />

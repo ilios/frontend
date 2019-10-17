@@ -1,20 +1,20 @@
 <h3>
-  {{t "general.upcomingActivities" days=daysInAdvance}}
+  {{t "general.upcomingActivities" days=this.daysInAdvance}}
 </h3>
-{{#if (is-fulfilled weeksEvents)}}
-  {{#if (gt (get (await ilmPreWorkEvents) "length") 0)}}
+{{#if (is-fulfilled this.weeksEvents)}}
+  {{#if (gt (get (await this.ilmPreWorkEvents) "length") 0)}}
     <div class="pre-work">
       <IliosCalendarPreWorkEvents
-        @events={{await ilmPreWorkEvents}}
-        @areEventsSelectable={{areEventsSelectable}}
+        @events={{await this.ilmPreWorkEvents}}
+        @areEventsSelectable={{this.areEventsSelectable}}
       />
     </div>
   {{/if}}
   <div class="activities">
-    {{#if (gt (get (await nonIlmPreWorkEvents) "length") 0)}}
+    {{#if (gt (get (await this.nonIlmPreWorkEvents) "length") 0)}}
       <table>
         <tbody>
-          {{#each (await nonIlmPreWorkEvents) as |event|}}
+          {{#each (await this.nonIlmPreWorkEvents) as |event|}}
             {{#if event.isBlanked}}
               <tr>
                 <td colspan="4" class="event-date">
@@ -58,7 +58,7 @@
                   {{/if}}
                   {{#if
                     (is-same-or-after
-                      event.lastModified sixDaysAgo precision="day"
+                      event.lastModified this.sixDaysAgo precision="day"
                     )
                   }}
                     <FaIcon
@@ -118,7 +118,7 @@
                   {{/if}}
                   {{#if
                     (is-same-or-after
-                      event.lastModified sixDaysAgo precision="day"
+                      event.lastModified this.sixDaysAgo precision="day"
                     )
                   }}
                     <FaIcon
@@ -144,4 +144,3 @@
     {{t "general.loadingEvents"}}
   </p>
 {{/if}}
-

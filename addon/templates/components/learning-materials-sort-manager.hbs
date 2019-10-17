@@ -1,4 +1,4 @@
-{{#unless loadAttr.isRunning}}
+{{#unless this.loadAttr.isRunning}}
   <div class="actions">
     <button class="bigadd" {{action "save"}}>
       <FaIcon @icon="check" />
@@ -9,12 +9,12 @@
   </div>
   <div class="content">
     <SortableObjects
-      @sortableObjectList={{sortableObjectList}}
+      @sortableObjectList={{this.sortableObjectList}}
       @enableSort={{true}}
       @useSwap={{true}}
       @sortingScope="sortingGroup"
     >
-      {{#each sortableObjectList as |item|}}
+      {{#each this.sortableObjectList as |item|}}
         <DraggableObject
           @content={{item}}
           @isSortable={{true}}
@@ -46,4 +46,3 @@
     </SortableObjects>
   </div>
 {{/unless}}
-

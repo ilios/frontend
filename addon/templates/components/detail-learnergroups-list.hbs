@@ -1,17 +1,16 @@
-{{! template-lint-disable attribute-indentation }}
-{{#if (is-fulfilled trees)}}
+{{#if (is-fulfilled this.trees)}}
   <div class="trees">
-    {{#each (sort-by "topLevelGroup.title" (await trees)) as |tree|}}
+    {{#each (sort-by "topLevelGroup.title" (await this.trees)) as |tree|}}
       <fieldset>
         <legend>
           {{tree.topLevelGroup.title}} ({{tree.topLevelGroup.cohort.programYear.program.title}} {{tree.topLevelGroup.cohort.title}})
         </legend>
         {{#if (is-fulfilled tree.groups)}}
-          {{#if isManaging}}
+          {{#if this.isManaging}}
             <div class="remove-all-subgroups">
               <span
                 class="clickable remove"
-                onclick={{action remove tree.topLevelGroup}}
+                onclick={{action this.remove tree.topLevelGroup}}
                 data-test-remove-all
                 role="button"
               >
@@ -29,16 +28,16 @@
               {{! template-lint-disable no-invalid-interactive}}
               <li
                 class="{{if
-                    (contains learnerGroup (await lowestLeaves))
+                    (contains learnerGroup (await this.lowestLeaves))
                     "lowest-leaf"
                   }}
 
-                  {{if isManaging "clickable"}}"
-                onclick={{if isManaging (action remove learnerGroup)}}
-                role={{if isManaging "button"}}
+                  {{if this.isManaging "clickable"}}"
+                onclick={{if this.isManaging (action this.remove learnerGroup)}}
+                role={{if this.isManaging "button"}}
               >
                 {{learnerGroup.title}} ({{count-related learnerGroup "users"}})
-                {{#if isManaging}}
+                {{#if @isManaging}}
                   <FaIcon @icon="times" class="remove" />
                 {{/if}}
               </li>
@@ -51,4 +50,3 @@
 {{else}}
   <LoadingSpinner />
 {{/if}}
-

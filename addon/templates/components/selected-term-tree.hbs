@@ -1,9 +1,9 @@
-{{#each (sort-by "title" terms) as |term|}}
+{{#each (sort-by "title" this.terms) as |term|}}
   <li class="clickable">
     <input
       class="checkbox"
       type="checkbox"
-      checked={{is-in selectedTerms term}}
+      checked={{is-in this.selectedTerms term}}
       {{action toggle term on="change"}}
     >
     <span class="list-indentation" role="button" {{action toggle term}}>
@@ -12,10 +12,9 @@
     {{#if (gt (get (await term.children) "length") 0)}}
       <SelectedTermTree
         @terms={{await term.children}}
-        @selectedTerms={{selectedTerms}}
+        @selectedTerms={{this.selectedTerms}}
         @toggle={{toggle}}
       />
     {{/if}}
   </li>
 {{/each}}
-

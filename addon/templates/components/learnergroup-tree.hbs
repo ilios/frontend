@@ -1,19 +1,19 @@
 {{! template-lint-disable no-invalid-interactive}}
 <span
-  class={{if selectable "clickable"}}
-  onclick={{if selectable (action add learnerGroup)}}
-  role={{if selectable "button"}}
+  class={{if this.selectable "clickable"}}
+  onclick={{if this.selectable (action add this.learnerGroup)}}
+  role={{if this.selectable "button"}}
 >
-  {{learnerGroup.title}}
+  {{this.learnerGroup.title}}
 </span>
-{{#if learnerGroup.children.length}}
+{{#if this.learnerGroup.children.length}}
   <ul>
-    {{#if (is-fulfilled learnerGroup.children)}}
-      {{#each (sort-by "title" (await learnerGroup.children)) as |child|}}
+    {{#if (is-fulfilled this.learnerGroup.children)}}
+      {{#each (sort-by "title" (await this.learnerGroup.children)) as |child|}}
         <LearnergroupTree
           @learnerGroup={{child}}
-          @selectedGroups={{selectedGroups}}
-          @filter={{filter}}
+          @selectedGroups={{this.selectedGroups}}
+          @filter={{this.filter}}
           @add={{action add}}
         />
       {{/each}}

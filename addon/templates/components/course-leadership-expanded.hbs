@@ -1,35 +1,35 @@
 <div class="course-leadership-expanded-header">
   <h3
-    class="title {{if isCollapsible "collapsible clickable"}}"
+    class="title {{if this.isCollapsible "collapsible clickable"}}"
     role="button"
-    {{action collapse}}
+    {{action this.collapse}}
   >
     {{t "general.courseLeadership"}}
   </h3>
   <div class="actions">
-    {{#if isManaging}}
-      <button class="bigadd" onclick={{perform save}}>
+    {{#if this.isManaging}}
+      <button class="bigadd" onclick={{perform this.save}}>
         <FaIcon
-          @icon={{if save.isRunning "spinner" "check"}}
-          @spin={{if isSaving true false}}
+          @icon={{if this.save.isRunning "spinner" "check"}}
+          @spin={{if this.isSaving true false}}
         />
       </button>
-      <button class="bigcancel" {{action setIsManaging false}}>
+      <button class="bigcancel" {{action this.setIsManaging false}}>
         <FaIcon @icon="undo" />
       </button>
-    {{else if editable}}
-      <button {{action setIsManaging true}}>
+    {{else if this.editable}}
+      <button {{action this.setIsManaging true}}>
         {{t "general.manageLeadership"}}
       </button>
     {{/if}}
   </div>
 </div>
 <div class="course-leadership-expanded-content">
-  {{#if (and (is-array directors) (is-array administrators))}}
-    {{#if isManaging}}
+  {{#if (and (is-array this.directors) (is-array this.administrators))}}
+    {{#if this.isManaging}}
       <LeadershipManager
-        @directors={{directors}}
-        @administrators={{administrators}}
+        @directors={{this.directors}}
+        @administrators={{this.administrators}}
         @removeDirector={{action "removeDirector"}}
         @addDirector={{action "addDirector"}}
         @removeAdministrator={{action "removeAdministrator"}}
@@ -37,12 +37,11 @@
       />
     {{else}}
       <LeadershipList
-        @directors={{directors}}
-        @administrators={{administrators}}
+        @directors={{this.directors}}
+        @administrators={{this.administrators}}
       />
     {{/if}}
   {{else}}
     <LoadingSpinner @tagName="h3" />
   {{/if}}
 </div>
-

@@ -1,25 +1,25 @@
 <div class="detail-learningmaterials-header">
   <div class="title">
-    {{#if isManaging}}
+    {{#if this.isManaging}}
       <span class="specific-title">
         {{t "general.learningMaterialManageTitle"}}
       </span>
     {{else}}
-      {{t "general.learningMaterials"}} ({{get (await subject.learningMaterials) "length"}})
+      {{t "general.learningMaterials"}} ({{get (await this.subject.learningMaterials) "length"}})
     {{/if}}
   </div>
-  {{#if displaySearchBox}}
+  {{#if this.displaySearchBox}}
     <LearningmaterialSearch
       @add={{action "addLearningMaterial"}}
-      @currentMaterials={{parentMaterials}}
+      @currentMaterials={{this.parentMaterials}}
     />
   {{/if}}
   <div class="detail-learningmaterials-actions">
-    {{#if displayAddNewForm}}
-      <button class="collapse-button" {{action (mut displayAddNewForm) false}}>
+    {{#if this.displayAddNewForm}}
+      <button class="collapse-button" {{action (mut this.displayAddNewForm) false}}>
         <FaIcon @icon="minus" />
       </button>
-    {{else if (and editable (not isSorting) (not isManaging))}}
+    {{else if (and this.editable (not this.isSorting) (not this.isManaging))}}
       <ActionMenu
         @title={{t "general.add"}}
         @icon={{false}}
@@ -39,31 +39,31 @@
   </div>
 </div>
 <div class="detail-learningmaterials-content">
-  {{#if isManaging}}
+  {{#if this.isManaging}}
     <LearningmaterialManager
-      @learningMaterial={{managingMaterial}}
-      @isCourse={{isCourse}}
-      @editable={{editable}}
-      @closeManager={{action (mut managingMaterial) null}}
-      @learningMaterialStatuses={{await learningMaterialStatuses}}
+      @learningMaterial={{this.managingMaterial}}
+      @isCourse={{this.isCourse}}
+      @editable={{this.editable}}
+      @closeManager={{action (mut this.managingMaterial) null}}
+      @learningMaterialStatuses={{await this.learningMaterialStatuses}}
     />
-  {{else if isSorting}}
+  {{else if this.isSorting}}
     <LearningMaterialsSortManager
       @save={{action "saveSortOrder"}}
-      @cancel={{action (mut isSorting) false}}
-      @subject={{subject}}
+      @cancel={{action (mut this.isSorting) false}}
+      @subject={{this.subject}}
     />
-  {{else if displayAddNewForm}}
+  {{else if this.displayAddNewForm}}
     <NewLearningmaterial
-      @type={{type}}
-      @learningMaterialStatuses={{await learningMaterialStatuses}}
-      @learningMaterialUserRoles={{await learningMaterialUserRoles}}
+      @type={{this.type}}
+      @learningMaterialStatuses={{await this.learningMaterialStatuses}}
+      @learningMaterialUserRoles={{await this.learningMaterialUserRoles}}
       @save={{action "saveNewLearningMaterial"}}
-      @cancel={{action (mut displayAddNewForm) false}}
+      @cancel={{action (mut this.displayAddNewForm) false}}
     />
-  {{else if (get (await subject.learningMaterials) "length")}}
-    {{#if (and editable (await hasMoreThanOneLearningMaterial))}}
-      <button class="sort-materials-btn" {{action (mut isSorting) true}}>
+  {{else if (get (await this.subject.learningMaterials) "length")}}
+    {{#if (and this.editable (await this.hasMoreThanOneLearningMaterial))}}
+      <button class="sort-materials-btn" {{action (mut this.isSorting) true}}>
         {{t "general.sortMaterials"}}
       </button>
     {{/if}}
@@ -94,13 +94,13 @@
         </tr>
       </thead>
       <tbody>
-        {{#each (await proxyMaterials) as |lmProxy|}}
+        {{#each (await this.proxyMaterials) as |lmProxy|}}
           <tr class={{if lmProxy.showRemoveConfirmation "confirm-removal"}}>
             <td
               class="text-left clickable link"
               colspan="3"
               role="button"
-              {{action (mut managingMaterial) lmProxy.content}}
+              {{action (mut this.managingMaterial) lmProxy.content}}
             >
               <LmTypeIcon
                 @type={{lmProxy.learningMaterial.type}}
@@ -158,14 +158,14 @@
             <td class="text-center" colspan="2">
               {{lmProxy.learningMaterial.status.title}}
               <span data-test-status>
-                {{value}}
+                {{this.value}}
               </span>
               {{#if (or lmProxy.startDate lmProxy.endDate)}}
                 <FaIcon @icon="clock" @title={{t "general.timedRelease"}} />
               {{/if}}
             </td>
             <td class="text-left text-center" colspan="1">
-              {{#if editable}}
+              {{#if this.editable}}
                 <span
                   class="clickable remove"
                   role="button"
@@ -201,11 +201,10 @@
     </table>
   {{/if}}
 </div>
-{{#if isSaving class="crossFade"}}
+{{#if this.isSaving class="crossFade"}}
   <WaitSaving
     @showProgress={{true}}
-    @totalProgress={{totalMaterialsToSave}}
-    @currentProgress={{currentMaterialsSaved}}
+    @totalProgress={{this.totalMaterialsToSave}}
+    @currentProgress={{this.currentMaterialsSaved}}
   />
 {{/if}}
-

@@ -4,23 +4,23 @@
   @search={{action "search"}}
   @clear={{action "clear"}}
 />
-{{#if searching}}
+{{#if this.searching}}
   <ul class="lm-search-results">
     <li>
       {{t "general.currentlySearchingPrompt"}}
     </li>
   </ul>
-{{else if searchResults.length}}
+{{else if this.searchResults.length}}
   <ul class="lm-search-results">
-    {{#each searchResults as |learningMaterial|}}
+    {{#each this.searchResults as |learningMaterial|}}
       <li
         class={{if
-          (contains learningMaterial (await currentMaterials))
+          (contains learningMaterial (await this.currentMaterials))
           "disabled"
           ""
         }}
         role="button"
-        {{action (perform addLearningMaterial learningMaterial)}}
+        {{action (perform this.addLearningMaterial learningMaterial)}}
       >
         <h4 class="learning-material-title">
           <LmTypeIcon
@@ -58,22 +58,22 @@
         </ul>
       </li>
     {{/each}}
-    {{#if hasMoreSearchResults}}
+    {{#if this.hasMoreSearchResults}}
       <li>
         <button
-          disabled={{if searchMore.isRunning true}}
-          {{action (perform searchMore)}}
+          disabled={{if this.searchMore.isRunning true}}
+          {{action (perform this.searchMore)}}
         >
           <FaIcon
-            @icon={{if searchMore.isRunning "spinner"}}
-            @spin={{if searchMore.isRunning true false}}
+            @icon={{if this.searchMore.isRunning "spinner"}}
+            @spin={{if this.searchMore.isRunning true false}}
           />
           {{t "general.showMore"}}
         </button>
       </li>
     {{/if}}
   </ul>
-{{else if searchReturned}}
+{{else if this.searchReturned}}
   <ul class="lm-search-results">
     <li>
       {{t "general.noSearchResultsPrompt"}}

@@ -1,8 +1,8 @@
-<ElMonthlyCalendar @date={{date}} @events={{nonIlmPreWorkEvents}} as |weeks|>
+<ElMonthlyCalendar @date={{this.date}} @events={{this.nonIlmPreWorkEvents}} as |weeks|>
   <div class="row month-titles">
     <div class="cell"></div>
     <div class="cell title">
-      {{moment-format date "MMMM YYYY"}}
+      {{moment-format this.date "MMMM YYYY"}}
     </div>
   </div>
   <div class="row">
@@ -34,7 +34,7 @@
                 {{else}}
                   <IliosCalendarEventMonth
                     @event={{event}}
-                    @selectEvent={{action selectEvent event}}
+                    @selectEvent={{action this.selectEvent event}}
                   />
                 {{/if}}
               {{/each}}
@@ -44,7 +44,7 @@
                 {{action "changeToDayView" day.date}}
               >
                 <FaIcon @icon="ellipsis-h" />
-                {{showMore}}
+                {{this.showMore}}
                 <FaIcon @icon="angle-double-down" />
               </span>
             {{else}}
@@ -57,7 +57,7 @@
                 {{else}}
                   <IliosCalendarEventMonth
                     @event={{event}}
-                    @selectEvent={{action selectEvent event}}
+                    @selectEvent={{action this.selectEvent event}}
                   />
                 {{/if}}
               {{/each}}
@@ -69,7 +69,6 @@
   {{/each}}
 </ElMonthlyCalendar>
 <IliosCalendarPreWorkEvents
-  @events={{ilmPreWorkEvents}}
-  @areEventsSelectable={{areEventsSelectable}}
+  @events={{this.ilmPreWorkEvents}}
+  @areEventsSelectable={{this.areEventsSelectable}}
 />
-

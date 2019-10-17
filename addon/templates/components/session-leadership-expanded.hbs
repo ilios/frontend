@@ -1,38 +1,38 @@
 <div class="session-leadership-expanded-header">
-  <div class="title collapsible clickable" role="button" {{action collapse}}>
+  <div class="title collapsible clickable" role="button" {{action this.collapse}}>
     {{t "general.sessionAdministration"}}
   </div>
   <div class="actions">
-    {{#if isManaging}}
-      <button class="bigadd" onclick={{perform save}}>
+    {{#if this.isManaging}}
+      <button class="bigadd" onclick={{perform this.save}}>
         <FaIcon
-          @icon={{if save.isRunning "spinner" "check"}}
-          @spin={{if isSaving true false}}
+          @icon={{if this.save.isRunning "spinner" "check"}}
+          @spin={{if this.isSaving true false}}
         />
       </button>
-      <button class="bigcancel" {{action setIsManaging false}}>
+      <button class="bigcancel" {{action this.setIsManaging false}}>
         <FaIcon @icon="undo" />
       </button>
-    {{else if canUpdate}}
-      <button {{action setIsManaging true}}>
+    {{else if this.canUpdate}}
+      <button {{action this.setIsManaging true}}>
         {{t "general.manageLeadership"}}
       </button>
     {{/if}}
   </div>
 </div>
 <div class="session-leadership-expanded-content">
-  {{#if (is-array administrators)}}
-    {{#if isManaging}}
+  {{#if (is-array this.administrators)}}
+    {{#if this.isManaging}}
       <LeadershipManager
         @showDirectors={{false}}
-        @administrators={{administrators}}
+        @administrators={{this.administrators}}
         @removeAdministrator={{action "removeAdministrator"}}
         @addAdministrator={{action "addAdministrator"}}
       />
     {{else}}
       <LeadershipList
         @showDirectors={{false}}
-        @administrators={{administrators}}
+        @administrators={{this.administrators}}
       />
     {{/if}}
   {{else}}

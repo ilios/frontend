@@ -8,16 +8,16 @@
     </label>
     <input
       type="text"
-      value={{title}}
-      oninput={{action (mut title) value="target.value"}}
+      value={{this.title}}
+      oninput={{action (mut this.title) value="target.value"}}
       onkeyup={{action "addErrorDisplayFor" "title"}}
       class={{if
-        (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
+        (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))
         "has-error"
       }}
       data-test-title
     >
-    {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+    {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
       <span class="validation-error-message">
         {{v-get this "title" "message"}}
       </span>
@@ -27,15 +27,15 @@
     <label>
       {{t "general.sessionType"}}:
     </label>
-    {{#if (is-fulfilled activeSessionTypes)}}
+    {{#if (is-fulfilled this.activeSessionTypes)}}
       <select
-        onchange={{action (mut selectedSessionTypeId) value="target.value"}}
+        onchange={{action (mut this.selectedSessionTypeId) value="target.value"}}
         data-test-type
       >
-        {{#each (sort-by "title" (await activeSessionTypes)) as |sessionType|}}
+        {{#each (sort-by "title" (await this.activeSessionTypes)) as |sessionType|}}
           <option
             value={{sessionType.id}}
-            selected={{eq sessionType.id (get (await selectedSessionType) "id")
+            selected={{eq sessionType.id (get (await this.selectedSessionType) "id")
             }}
           >
             {{sessionType.title}}
@@ -50,17 +50,16 @@
     <button
       class="done text"
       data-test-save
-      {{action (perform saveNewSession)}}
+      {{action (perform this.saveNewSession)}}
     >
-      {{#if saveNewSession.isRunning}}
+      {{#if this.saveNewSession.isRunning}}
         <LoadingSpinner />
       {{else}}
         {{t "general.save"}}
       {{/if}}
     </button>
-    <button class="cancel text" data-test-cancel {{action cancel}}>
+    <button class="cancel text" data-test-cancel {{action this.cancel}}>
       {{t "general.cancel"}}
     </button>
   </div>
 </div>
-

@@ -1,26 +1,26 @@
 {{! template-lint-disable attribute-indentation }}
 <input
   type="search"
-  value={{searchValue}}
-  oninput={{perform searchForUsers value="target.value"}}
+  value={{this.searchValue}}
+  oninput={{perform this.searchForUsers value="target.value"}}
   placeholder={{t "general.searchForIliosUsers"}}
   incremental="true"
-  onsearch={{perform searchForUsers value="target.value"}}
-  onkeyup={{perform searchForUsers value="target.value"}}
+  onsearch={{perform this.searchForUsers value="target.value"}}
+  onkeyup={{perform this.searchForUsers value="target.value"}}
 >
 <ul
   class="results
     {{unless
-      (or searchForUsers.isRunning searchForUsers.lastSuccessful.value.length)
+      (or this.searchForUsers.isRunning this.searchForUsers.lastSuccessful.value.length)
       "hidden"
     }}"
 >
-  {{#if searchForUsers.isRunning}}
+  {{#if this.searchForUsers.isRunning}}
     <li>
       {{t "general.currentlySearchingPrompt"}}
     </li>
   {{else}}
-    {{#each searchForUsers.lastSuccessful.value as |result index|}}
+    {{#each this.searchForUsers.lastSuccessful.value as |result index|}}
       {{#if (eq result.type "text")}}
         <li>
           {{result.text}}
@@ -35,14 +35,14 @@
         <li
           class="user
             {{unless
-              (contains result.user.id existingUserIds)
+              (contains result.user.id this.existingUserIds)
               "clickable"
               "inactive"
             }}"
           role="button"
           data-test-result-index={{index}}
           data-test-result
-          {{action (perform clickUser) result.user}}
+          {{action (perform this.clickUser) result.user}}
         >
           <span class="name">
             {{result.user.fullName}}
@@ -62,4 +62,3 @@
     {{/each}}
   {{/if}}
 </ul>
-

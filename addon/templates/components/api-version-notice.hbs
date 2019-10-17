@@ -1,8 +1,8 @@
 <div
-  class="api-version-notice {{if mismatched "mismatch"}}"
-  hidden={{not mismatched}}
-  role={{if mismatched "alert" false}}
-  data-test-load-finished={{check.lastSuccessful.value}}
+  class="api-version-notice {{if this.mismatched "mismatch"}}"
+  hidden={{not this.mismatched}}
+  role={{if this.mismatched "alert" false}}
+  data-test-load-finished={{this.check.lastSuccessful.value}}
   data-test-api-version-notice
 >
   <h2>
@@ -13,20 +13,20 @@
     <p>
       {{t "general.apiVersionMismatchDetails"}}
     </p>
-    {{#if updateAvailable}}
+    {{#if this.updateAvailable}}
       <p>
-        {{t "general.autoUpdatingSeconds" count=countdownToUpdate}}
-        <button {{action (perform update)}}>
+        {{t "general.autoUpdatingSeconds" count=this.countdownToUpdate}}
+        <button {{action (perform this.update)}}>
           {{t "general.updateNow"}}
         </button>
       </p>
     {{/if}}
-    {{#if update.isRunning}}
+    {{#if this.update.isRunning}}
       <p>
         {{t "general.updatePending"}}
       </p>
     {{/if}}
-    {{#if showReloadButton}}
+    {{#if this.showReloadButton}}
       <p>
         <button {{action "reload"}}>
           {{t "general.updateNow"}}
@@ -35,4 +35,3 @@
     {{/if}}
   </div>
 </div>
-

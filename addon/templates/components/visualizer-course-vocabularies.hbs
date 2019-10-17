@@ -1,18 +1,17 @@
 {{! template-lint-disable attribute-indentation }}
-{{#if (or true isIcon (gt (get (await data) "length") 0))}}
+{{#if (or true this.isIcon (gt (get (await this.data) "length") 0))}}
   <SimpleChart
     @name="donut"
-    @isIcon={{isIcon}}
-    @data={{await data}}
-    @hover={{perform donutHover}}
+    @isIcon={{this.isIcon}}
+    @data={{await this.data}}
+    @hover={{perform this.donutHover}}
     @click={{action "donutClick"}}
-    @leave={{perform donutHover}} as |chart|
+    @leave={{perform this.donutHover}} as |chart|
   >
-    {{#if tooltipContent}}
-      <chart.tooltip @title={{tooltipTitle}}>
-        {{tooltipContent}}
+    {{#if this.tooltipContent}}
+      <chart.tooltip @title={{this.tooltipTitle}}>
+        {{this.tooltipContent}}
       </chart.tooltip>
     {{/if}}
   </SimpleChart>
 {{/if}}
-

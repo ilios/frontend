@@ -1,13 +1,13 @@
-{{#if (is-fulfilled objectives)}}
-  {{#if isSorting}}
+{{#if (is-fulfilled this.objectives)}}
+  {{#if this.isSorting}}
     <ObjectiveSortManager
-      @subject={{session}}
+      @subject={{this.session}}
       @save={{action "saveSortOrder"}}
       @cancel={{action "cancelSorting"}}
     />
-  {{else if (get (await objectives) "length")}}
-    {{#if (and editable (await hasMoreThanOneObjective))}}
-      <button class="sort-materials-btn" {{action (mut isSorting) true}}>
+  {{else if (get (await this.objectives) "length")}}
+    {{#if (and this.editable (await this.hasMoreThanOneObjective))}}
+      <button class="sort-materials-btn" {{action (mut this.isSorting) true}}>
         {{t "general.sortObjectives"}}
       </button>
     {{/if}}
@@ -29,20 +29,20 @@
         </tr>
       </thead>
       <tbody>
-        {{#each (await objectives) as |objective|}}
+        {{#each (await this.objectives) as |objective|}}
           <SessionObjectiveListItem
             @objective={{objective}}
-            @editable={{editable}}
-            @session={{session}}
+            @editable={{this.editable}}
+            @session={{this.session}}
             @showRemoveConfirmation={{is-in
-              objectivesForRemovalConfirmation
+              this.objectivesForRemovalConfirmation
               objective.id
             }}
             @remove={{action "confirmRemoval"}}
-            @manageParents={{manageParents}}
-            @manageDescriptors={{manageDescriptors}}
+            @manageParents={{this.manageParents}}
+            @manageDescriptors={{this.manageDescriptors}}
           />
-          {{#if (is-in objectivesForRemovalConfirmation objective.id)}}
+          {{#if (is-in this.objectivesForRemovalConfirmation objective.id)}}
             <tr class="confirm-removal">
               <td colspan="8">
                 <div class="confirm-message">
@@ -69,17 +69,16 @@
   {{/if}}
 {{else}}
   {{! template-lint-disable unused-block-params }}
-  {{#each (repeat session.objectives.length) as |empty|}}
+  {{#each (this.repeat this.session.objectives.length) as |empty|}}
     <div>
       <LoadingSpinner />
     </div>
   {{/each}}
 {{/if}}
-{{#liquid-if isSaving class="crossFade"}}
+{{#liquid-if this.isSaving class="crossFade"}}
   <WaitSaving
     @showProgress={{true}}
-    @totalProgress={{totalObjectivesToSave}}
-    @currentProgress={{currentObjectivesSaved}}
+    @totalProgress={{this.totalObjectivesToSave}}
+    @currentProgress={{this.currentObjectivesSaved}}
   />
 {{/liquid-if}}
-

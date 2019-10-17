@@ -1,30 +1,30 @@
-<td id="objective-{{objective.id}}" class="text-left text-top" colspan="3">
-  {{#if editable}}
+<td id="objective-{{this.objective.id}}" class="text-left text-top" colspan="3">
+  {{#if this.editable}}
     <EditableField
-      @value={{title}}
+      @value={{this.title}}
       @renderHtml={{true}}
       @isSaveDisabled={{and
         (v-get this "title" "isInvalid")
-        (is-in showErrorsFor "title")
+        (is-in this.showErrorsFor "title")
       }}
       @save={{action "saveTitleChanges"}}
       @close={{action "revertTitleChanges"}}
     >
-      <HtmlEditor @content={{title}} @update={{action "changeTitle"}} />
-      {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+      <HtmlEditor @content={{this.title}} @update={{action "changeTitle"}} />
+      {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
         <span class="validation-error-message">
           {{v-get this "title" "message"}}
         </span>
       {{/if}}
     </EditableField>
   {{else}}
-    {{! template-lint-disable no-triple-curlies }}{{{objective.title}}}
+    {{! template-lint-disable no-triple-curlies }}{{{this.objective.title}}}
   {{/if}}
 </td>
 <td class="text-left text-top" colspan="2">
-  {{#if objective.hasParents}}
-    {{#each (await objective.parents) as |parent|}}
-      {{#if course.hasMultipleCohorts}}
+  {{#if this.objective.hasParents}}
+    {{#each (await this.objective.parents) as |parent|}}
+      {{#if this.course.hasMultipleCohorts}}
         <strong>
           {{get (await parent.firstProgram) "title"}}
           {{#if (get (await parent.firstCohort) "title")}}
@@ -38,12 +38,12 @@
         </strong>
         <br>
       {{/if}}
-      {{#if editable}}
+      {{#if this.editable}}
         <span
           class="clickable link"
           data-test-parent
           role="button"
-          {{action manageParents objective}}
+          {{action this.manageParents this.objective}}
         >
           {{parent.textTitle}}
         </span>
@@ -55,8 +55,8 @@
       {{/if}}
       <br>
     {{/each}}
-  {{else if editable}}
-    <button {{action manageParents objective}}>
+  {{else if this.editable}}
+    <button {{action this.manageParents this.objective}}>
       {{t "general.addNew"}}
     </button>
   {{else}}
@@ -65,13 +65,13 @@
 </td>
 <td class="text-left text-top" colspan="2">
   <ul class="mesh-descriptor-list">
-    {{#each (sort-by "name" (await objective.meshDescriptors)) as |descriptor|}}
-      {{#if editable}}
+    {{#each (sort-by "name" (await this.objective.meshDescriptors)) as |descriptor|}}
+      {{#if this.editable}}
         <li
           class="clickable link"
           role="button"
           data-test-term
-          {{action manageDescriptors objective}}
+          {{action this.manageDescriptors this.objective}}
         >
           {{descriptor.name}}
         </li>
@@ -82,8 +82,8 @@
       {{/if}}
     {{else}}
       <li>
-        {{#if editable}}
-          <button {{action manageDescriptors objective}}>
+        {{#if this.editable}}
+          <button {{action this.manageDescriptors this.objective}}>
             {{t "general.addNew"}}
           </button>
         {{else}}
@@ -94,12 +94,11 @@
   </ul>
 </td>
 <td class="text-left text-top" colspan="1">
-  {{#if editable}}
-    <span class="clickable remove" role="button" {{action remove objective}}>
+  {{#if this.editable}}
+    <span class="clickable remove" role="button" {{action this.remove this.objective}}>
       <FaIcon @icon="trash" class="enabled" />
     </span>
   {{else}}
     <FaIcon @icon="trash" class="disabled" />
   {{/if}}
 </td>
-

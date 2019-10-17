@@ -1,30 +1,30 @@
-{{#liquid-if saving class="crossFade"}}
+{{#liquid-if this.saving class="crossFade"}}
   <WaitSaving />
 {{/liquid-if}}
 <div class="offering-section-top">
   <div class="title">
-    {{t "general.offerings"}} ({{offerings.length}})
+    {{t "general.offerings"}} ({{this.offerings.length}})
   </div>
   <div class="actions">
-    {{#if editable}}
+    {{#if this.editable}}
       <ExpandCollapseButton
-        @value={{showNewOfferingForm}}
-        @action={{toggleShowNewOfferingForm}}
+        @value={{this.showNewOfferingForm}}
+        @action={{this.toggleShowNewOfferingForm}}
       />
     {{/if}}
   </div>
 </div>
-{{#if showNewOfferingForm}}
+{{#if this.showNewOfferingForm}}
   <NewOffering
-    @session={{session}}
-    @cohorts={{await session.course.cohorts}}
-    @courseStartDate={{await session.course.startDate}}
-    @courseEndDate={{await session.course.endDate}}
-    @close={{toggleShowNewOfferingForm}}
+    @session={{this.session}}
+    @cohorts={{await this.session.course.cohorts}}
+    @courseStartDate={{await this.session.course.startDate}}
+    @courseEndDate={{await this.session.course.endDate}}
+    @close={{this.toggleShowNewOfferingForm}}
   />
 {{/if}}
 <div class="session-offerings-content">
-  {{#if offerings.length}}
+  {{#if this.offerings.length}}
     <div class="session-offerings-header">
       <div>
         {{t "general.dateTime"}}
@@ -42,7 +42,7 @@
         {{t "general.actions"}}
       </div>
     </div>
-    <SessionOfferingsList @session={{session}} @editable={{editable}} />
+    <SessionOfferingsList @session={{this.session}} @editable={{this.editable}} />
   {{else}}
     <p>
       {{t "general.noOfferings"}}

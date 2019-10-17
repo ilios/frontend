@@ -1,7 +1,7 @@
-<div class="title" role="button" {{action (action expand)}}>
-  {{t "general.terms"}} ({{subject.terms.length}})
+<div class="title" role="button" {{action (action this.expand)}}>
+  {{t "general.terms"}} ({{this.subject.terms.length}})
 </div>
-{{#if (is-pending subject.associatedVocabularies)}}
+{{#if (is-pending this.subject.associatedVocabularies)}}
   <LoadingSpinner @tagName="h3" />
 {{else}}
   <div class="content">
@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each (await subject.associatedVocabularies) as |vocab|}}
+        {{#each (await this.subject.associatedVocabularies) as |vocab|}}
           <tr>
             <td class="text-left">
               {{vocab.title}}
@@ -29,7 +29,7 @@
               {{vocab.school.title}}
             </td>
             <td class="text-center">
-              {{intersection-count subject.terms vocab.terms}}
+              {{intersection-count this.subject.terms vocab.terms}}
             </td>
           </tr>
         {{/each}}
@@ -37,4 +37,3 @@
     </table>
   </div>
 {{/if}}
-
