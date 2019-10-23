@@ -81,7 +81,7 @@
           </td>
         </tr>
       {{else}}
-        {{#each (sort-by @sortBy (await @filteredMaterials)) as |lmObject|}}
+        {{#each (sort-by @sortBy (await this.filteredMaterials)) as |lmObject|}}
           <tr>
             <td colspan="3" data-test-session-title>
               {{lmObject.sessionTitle}}
