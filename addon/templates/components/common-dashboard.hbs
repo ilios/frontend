@@ -1,32 +1,32 @@
 <DashboardViewPicker @show={{this.show}} @change={{this.setShow}} />
 {{#if (eq this.show "calendar")}}
   <DashboardCalendar
-    @selectedDate={{this.selectedDate}}
-    @selectedView={{this.selectedView}}
-    @mySchedule={{this.mySchedule}}
-    @showFilters={{this.showFilters}}
-    @changeDate={{this.changeDate}}
-    @changeView={{this.changeView}}
-    @selectEvent={{this.selectEvent}}
-    @toggleMySchedule={{this.toggleMySchedule}}
-    @toggleShowFilters={{this.toggleShowFilters}}
-    @selectedAcademicYear={{this.selectedAcademicYear}}
-    @selectedSchool={{this.selectedSchool}}
-    @changeAcademicYear={{this.changeAcademicYear}}
-    @changeSchool={{this.changeSchool}}
-    @courseFilters={{this.courseFilters}}
-    @toggleCourseFilters={{this.toggleCourseFilters}}
-    @selectedCohorts={{this.selectedCohorts}}
-    @selectedCourseLevels={{this.selectedCourseLevels}}
-    @selectedCourses={{this.selectedCourses}}
-    @selectedSessionTypes={{this.selectedSessionTypes}}
-    @selectedTerms={{this.selectedTerms}}
-    @onClearFilters={{this.onClearFilters}}
-    @onUpdateCohorts={{this.onUpdateCohorts}}
-    @onUpdateCourseLevels={{this.onUpdateCourseLevels}}
-    @onUpdateCourses={{this.onUpdateCourses}}
-    @onUpdateSessionTypes={{this.onUpdateSessionTypes}}
-    @onUpdateTerms={{this.onUpdateTerms}}
+    @selectedDate={{@selectedDate}}
+    @selectedView={{@selectedView}}
+    @mySchedule={{@mySchedule}}
+    @showFilters={{@showFilters}}
+    @changeDate={{@changeDate}}
+    @changeView={{@changeView}}
+    @selectEvent={{@selectEvent}}
+    @toggleMySchedule={{@toggleMySchedule}}
+    @toggleShowFilters={{@toggleShowFilters}}
+    @selectedAcademicYear={{@selectedAcademicYear}}
+    @selectedSchool={{@selectedSchool}}
+    @changeAcademicYear={{@changeAcademicYear}}
+    @changeSchool={{@changeSchool}}
+    @courseFilters={{@courseFilters}}
+    @toggleCourseFilters={{@toggleCourseFilters}}
+    @selectedCohorts={{@selectedCohorts}}
+    @selectedCourseLevels={{@selectedCourseLevels}}
+    @selectedCourses={{@selectedCourses}}
+    @selectedSessionTypes={{@selectedSessionTypes}}
+    @selectedTerms={{@selectedTerms}}
+    @onClearFilters={{@onClearFilters}}
+    @onUpdateCohorts={{@onUpdateCohorts}}
+    @onUpdateCourseLevels={{@onUpdateCourseLevels}}
+    @onUpdateCourses={{@onUpdateCourses}}
+    @onUpdateSessionTypes={{@onUpdateSessionTypes}}
+    @onUpdateTerms={{@onUpdateTerms}}
   />
 {{else if (eq this.show "materials")}}
   <DashboardMaterials />
