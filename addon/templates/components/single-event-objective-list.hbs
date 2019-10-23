@@ -6,9 +6,9 @@
       {{action (toggle "groupByCompetencies" this)}}
     >
       {{#if this.groupByCompetencies}}
-        <FaIcon @icon="indent" @title={{this.listByPriorityPhrase}} />
+        <FaIcon @icon="indent" @title={{@listByPriorityPhrase}} />
       {{else}}
-        <FaIcon @icon="list" @title={{this.groupByCompetenciesPhrase}} />
+        <FaIcon @icon="list" @title={{@groupByCompetenciesPhrase}} />
       {{/if}}
     </button>
   {{/if}}
@@ -37,7 +37,7 @@
   {{/if}}
 {{else}}
   <ul class="list-in-order">
-    {{#each this.objectives as |objective|}}
+    {{#each @objectives as |objective|}}
       <li>
         {{objective.title}}
         <span class="details">

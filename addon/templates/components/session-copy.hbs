@@ -1,5 +1,5 @@
-<LinkTo @route="session" @model={{this.session}}>
-  {{t "general.backToTitle" title=this.session.title}}
+<LinkTo @route="session" @model={{@session}}>
+  {{t "general.backToTitle" title=@session.title}}
 </LinkTo>
 <div class="rollover-form">
   <h3 class="title">
@@ -94,7 +94,7 @@
         {{t "general.done"}}
       {{/if}}
     </button>
-    <LinkTo @route="session" @model={{this.session}}>
+    <LinkTo @route="session" @model={{@session}}>
       <button class="cancel text">
         {{t "general.cancel"}}
       </button>

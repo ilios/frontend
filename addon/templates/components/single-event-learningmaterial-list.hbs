@@ -1,6 +1,6 @@
-{{#if this.learningMaterials.length}}
+{{#if @learningMaterials.length}}
   <ul class="static-list fa-ul">
-    {{#each this.learningMaterials as |lm|}}
+    {{#each @learningMaterials as |lm|}}
       <li class="single-event-learningmaterial-item">
         {{#if lm.isBlanked}}
           <span class="lm-type-icon">

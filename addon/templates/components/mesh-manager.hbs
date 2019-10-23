@@ -6,7 +6,7 @@
 <ul class="selected-terms">
   {{#each this.sortedTerms as |term|}}
     <li
-      class={{if this.editable "clickable"}}
+      class={{if @editable "clickable"}}
       role="button"
       {{action "remove" term}}
     >
@@ -21,13 +21,13 @@
           - {{term.trees.lastObject.treeNumber}}
         {{/if}}
       </span>
-      {{#if this.editable}}
+      {{#if @editable}}
         <FaIcon @icon="times" class="remove" />
       {{/if}}
     </li>
   {{/each}}
 </ul>
-{{#if this.editable}}
+{{#if @editable}}
   <SearchBox
     placeholder={{t "general.meshSearchPlaceholder"}}
     @liveSearch={{false}}
@@ -94,4 +94,3 @@
     </li>
   </ul>
 {{/if}}
-

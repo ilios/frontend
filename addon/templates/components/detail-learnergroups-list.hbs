@@ -6,11 +6,11 @@
           {{tree.topLevelGroup.title}} ({{tree.topLevelGroup.cohort.programYear.program.title}} {{tree.topLevelGroup.cohort.title}})
         </legend>
         {{#if (is-fulfilled tree.groups)}}
-          {{#if this.isManaging}}
+          {{#if @isManaging}}
             <div class="remove-all-subgroups">
               <span
                 class="clickable remove"
-                onclick={{action this.remove tree.topLevelGroup}}
+                onclick={{action @remove tree.topLevelGroup}}
                 data-test-remove-all
                 role="button"
               >
@@ -32,9 +32,9 @@
                     "lowest-leaf"
                   }}
 
-                  {{if this.isManaging "clickable"}}"
-                onclick={{if this.isManaging (action this.remove learnerGroup)}}
-                role={{if this.isManaging "button"}}
+                  {{if @isManaging "clickable"}}"
+                onclick={{if @isManaging (action @remove learnerGroup)}}
+                role={{if @isManaging "button"}}
               >
                 {{learnerGroup.title}} ({{count-related learnerGroup "users"}})
                 {{#if @isManaging}}

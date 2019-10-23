@@ -3,14 +3,14 @@
     {{t "general.sessions"}} ({{this.sessionsCount}})
   </div>
   <div class="actions" data-test-actions>
-    {{#if this.canCreateSession}}
+    {{#if @canCreateSession}}
       <ExpandCollapseButton
         @value={{this.showNewSessionForm}}
         @action={{toggle "showNewSessionForm" this}}
       />
     {{/if}}
-    {{#if (and this.canUpdateCourse (gt this.sessionsCount 0))}}
-      <LinkTo @route="course.publishall" @model={{this.course}}>
+    {{#if (and @canUpdateCourse (gt this.sessionsCount 0))}}
+      <LinkTo @route="course.publishall" @model={{@course}}>
         <button>
           {{t "general.publishAllSessions" sessionCount=this.sessionsCount}}
         </button>
@@ -31,7 +31,7 @@
   <div class="save-result" data-test-new-saved-session>
     <LinkTo
       @route="session.index"
-      @models={{array this.course this.saveSession.lastSuccessful.value}}
+      @models={{array @course this.saveSession.lastSuccessful.value}}
     >
       <FaIcon @icon="external-link-square-alt" />
       {{get this.saveSession.lastSuccessful.value "title"}}
@@ -41,7 +41,7 @@
 {{/if}}
 <div class="filter">
   <input
-    value={{this.filterByDebounced}}
+    value={{@filterByDebounced}}
     oninput={{action (perform this.changeFilterBy) value="target.value"}}
     placeholder={{t "general.sessionTitleFilterPlaceholder"}}
     data-test-session-filter
@@ -50,8 +50,8 @@
 <section>
   <SessionsGridHeader
     @showExpandAll={{is-fulfilled this.sessionObjects}}
-    @setSortBy={{this.setSortBy}}
-    @sortBy={{this.sortBy}}
+    @setSortBy={{@setSortBy}}
+    @sortBy={{@sortBy}}
     @allSessionsExpanded={{and
       (eq
         this.expandedSessionIds.length (get (await this.sessionsWithOfferings) "length")
@@ -63,13 +63,13 @@
   {{#if (is-fulfilled this.sessionObjects)}}
     <SessionsGrid
       @sessions={{await this.sessionObjects}}
-      @sortBy={{this.sortBy}}
-      @filterBy={{this.filterBy}}
+      @sortBy={{@sortBy}}
+      @filterBy={{@filterBy}}
       @expandedSessionIds={{this.expandedSessionIds}}
       @closeSession={{perform this.closeSession}}
       @expandSession={{perform this.expandSession}}
     />
   {{else}}
-    <SessionsGridLoading @count={{has-many-length this.course "sessions"}} />
+    <SessionsGridLoading @count={{has-many-length @course "sessions"}} />
   {{/if}}
 </section>

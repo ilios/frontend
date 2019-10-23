@@ -16,7 +16,7 @@
       <button class="bigcancel" {{action "cancel"}}>
         <FaIcon @icon="undo" />
       </button>
-    {{else if this.editable}}
+    {{else if @editable}}
       <button {{action "manage"}}>
         {{t "general.meshManageTitle"}}
       </button>
@@ -26,7 +26,7 @@
 <div class="content">
   {{#if this.isManaging}}
     <MeshManager
-      @editable={{this.editable}}
+      @editable={{@editable}}
       @terms={{this.bufferTerms}}
       @add={{action "addTermToBuffer"}}
       @remove={{action "removeTermFromBuffer"}}
@@ -54,4 +54,3 @@
     </ul>
   {{/if}}
 </div>
-

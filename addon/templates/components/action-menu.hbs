@@ -1,9 +1,9 @@
 <button class="button rl-dropdown-toggle" {{action "toggleDropdown"}}>
-  {{#if this.icon}}
-    <FaIcon @icon={{this.icon}} />
+  {{#if @icon}}
+    <FaIcon @icon={{or @icon "gear"}} />
   {{/if}}
   <span>
-    {{this.title}}
+    {{@title}}
   </span>
 </button>
 <ul class="rl-dropdown dropdown-menu" role="button" {{action "toggleDropdown"}}>
@@ -11,4 +11,3 @@
     {{yield}}
   {{/if}}
 </ul>
-

@@ -15,23 +15,23 @@
     />
   </td>
 {{else}}
-  {{#if this.firstRow}}
-    <td class="text-top offering-block-time-time" colspan="2" rowspan={{this.span}}>
+  {{#if @firstRow}}
+    <td class="text-top offering-block-time-time" colspan="2" rowspan={{@span}}>
       <span class="offering-block-time-time-starttime" data-test-starttime>
-        {{this.startTime}}
+        {{@startTime}}
       </span>
       <span class="offering-block-time-time-duration" data-test-duration>
-        {{#if (gte this.durationHours 1)}}
-          {{t "general.durationHours" count=this.durationHours}}
+        {{#if (gte @durationHours 1)}}
+          {{t "general.durationHours" count=@durationHours}}
         {{/if}}
-        {{#if (and (gt this.durationMinutes 0) (this.lt this.durationMinutes 60))}}
-          {{t "general.durationMinutes" count=this.durationMinutes}}
+        {{#if (and (gt @durationMinutes 0) (lt @durationMinutes 60))}}
+          {{t "general.durationMinutes" count=@durationMinutes}}
         {{/if}}
       </span>
     </td>
   {{/if}}
   <td>
-    {{#if this.canUpdate}}
+    {{#if @canUpdate}}
       <EditableField
         @value={{@offering.room}}
         @save={{perform this.changeRoom}}
@@ -67,7 +67,7 @@
   </td>
   <td
     colspan="2"
-    title={{this.join
+    title={{join
       ", "
       (map-by "title" (sort-by "title" (await @offering.learnerGroups)))
     }}
@@ -81,7 +81,7 @@
   </td>
   <td
     colspan="2"
-    title={{this.join
+    title={{join
       ", "
       (map-by "fullName" (sort-by "fullName" (await @offering.allInstructors)))
     }}
@@ -96,7 +96,7 @@
       30
     }}
   </td>
-  {{#if this.canUpdate}}
+  {{#if @canUpdate}}
     <td class="text-center">
       <FaIcon
         @icon="pencil-alt"

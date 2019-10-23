@@ -2,13 +2,13 @@
   {{! template-lint-disable no-invalid-interactive}}
   <div
     class="title {{if this.collapsible "collapsible clickable"}}"
-    onclick={{if this.collapsible (action this.collapse)}}
+    onclick={{if this.collapsible (action @collapse)}}
     role={{if this.collapsible "button"}}
   >
-    {{t "general.learnerGroups"}} ({{this.subject.learnerGroups.length}})
+    {{t "general.learnerGroups"}} ({{@subject.learnerGroups.length}})
   </div>
   <div class="actions">
-    {{#if this.isManaging}}
+    {{#if @isManaging}}
       <button class="bigadd" onclick={{perform this.save}}>
         <FaIcon
           @icon={{if this.save.isRunning "spinner" "check"}}
@@ -18,30 +18,29 @@
       <button class="bigcancel" {{action "cancel"}}>
         <FaIcon @icon="undo" />
       </button>
-    {{else if this.editable}}
-      <button {{action this.setIsManaging true}}>
+    {{else if @editable}}
+      <button {{action @setIsManaging true}}>
         {{t "general.learnerGroupsManageTitle"}}
       </button>
     {{/if}}
   </div>
 </div>
 <div class="detail-learnergroups-content">
-  {{#if this.isManaging}}
+  {{#if @isManaging}}
     {{#liquid-if this.loadLearnerGroups.isRunning}}
       <LoadingSpinner />
     {{else}}
       <LearnergroupSelectionManager
         @learnerGroups={{this.learnerGroups}}
-        @cohorts={{cohorts}}
+        @cohorts={{@cohorts}}
         @add={{action "addLearnerGroup"}}
         @remove={{action "removeLearnerGroup"}}
       />
     {{/liquid-if}}
   {{else}}
     <DetailLearnergroupsList
-      @learnerGroups={{await this.subject.learnerGroups}}
+      @learnerGroups={{await @subject.learnerGroups}}
       @remove={{action "removeLearnerGroup"}}
     />
   {{/if}}
 </div>
-

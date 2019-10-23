@@ -1,9 +1,9 @@
 <span class="title">
-  {{#if this.course.locked}}
+  {{#if @course.locked}}
     <FaIcon @icon="lock" />
   {{/if}}
-  {{#if this.editable}}
-    {{#if this.course}}
+  {{#if @editable}}
+    {{#if @course}}
       <EditableField
         @value={{this.courseTitle}}
         @save={{action "changeTitle"}}
@@ -30,17 +30,17 @@
         {{/if}}
       </EditableField>
     {{/if}}
-  {{else if this.course}}
+  {{else if @course}}
     <h2>
-      {{this.course.title}}
+      {{@course.title}}
     </h2>
   {{/if}}
   <h4>
-    {{this.course.academicYear}}
+    {{@course.academicYear}}
   </h4>
 </span>
 <span class="course-publication">
-  {{#if this.editable}}
+  {{#if @editable}}
     <PublishMenu
       @title={{this.menuTitle}}
       @icon={{this.menuIcon}}
@@ -51,7 +51,7 @@
       @showTbd={{this.showTbd}}
       @showUnPublish={{this.showUnPublish}}
       @reviewRoute="course.publication_check"
-      @reviewObject={{this.course}}
+      @reviewObject={{@course}}
       @publishTranslation="general.publishCourse"
       @unPublishTranslation="general.unPublishCourse"
       @publish={{action "publish"}}
@@ -59,6 +59,6 @@
       @unpublish={{action "unpublish"}}
     />
   {{else}}
-    <PublicationStatus @item={{this.course}} />
+    <PublicationStatus @item={{@course}} />
   {{/if}}
 </span>

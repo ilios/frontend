@@ -5,7 +5,7 @@
         {{t "general.learningMaterialManageTitle"}}
       </span>
     {{else}}
-      {{t "general.learningMaterials"}} ({{get (await this.subject.learningMaterials) "length"}})
+      {{t "general.learningMaterials"}} ({{get (await @subject.learningMaterials) "length"}})
     {{/if}}
   </div>
   {{#if this.displaySearchBox}}
@@ -19,7 +19,7 @@
       <button class="collapse-button" {{action (mut this.displayAddNewForm) false}}>
         <FaIcon @icon="minus" />
       </button>
-    {{else if (and this.editable (not this.isSorting) (not this.isManaging))}}
+    {{else if (and @editable (not this.isSorting) (not this.isManaging))}}
       <ActionMenu
         @title={{t "general.add"}}
         @icon={{false}}
@@ -42,8 +42,8 @@
   {{#if this.isManaging}}
     <LearningmaterialManager
       @learningMaterial={{this.managingMaterial}}
-      @isCourse={{this.isCourse}}
-      @editable={{this.editable}}
+      @isCourse={{@isCourse}}
+      @editable={{@editable}}
       @closeManager={{action (mut this.managingMaterial) null}}
       @learningMaterialStatuses={{await this.learningMaterialStatuses}}
     />
@@ -51,7 +51,7 @@
     <LearningMaterialsSortManager
       @save={{action "saveSortOrder"}}
       @cancel={{action (mut this.isSorting) false}}
-      @subject={{this.subject}}
+      @subject={{@subject}}
     />
   {{else if this.displayAddNewForm}}
     <NewLearningmaterial
@@ -61,8 +61,8 @@
       @save={{action "saveNewLearningMaterial"}}
       @cancel={{action (mut this.displayAddNewForm) false}}
     />
-  {{else if (get (await this.subject.learningMaterials) "length")}}
-    {{#if (and this.editable (await this.hasMoreThanOneLearningMaterial))}}
+  {{else if (get (await @subject.learningMaterials) "length")}}
+    {{#if (and @editable (await this.hasMoreThanOneLearningMaterial))}}
       <button class="sort-materials-btn" {{action (mut this.isSorting) true}}>
         {{t "general.sortMaterials"}}
       </button>
@@ -165,7 +165,7 @@
               {{/if}}
             </td>
             <td class="text-left text-center" colspan="1">
-              {{#if this.editable}}
+              {{#if @editable}}
                 <span
                   class="clickable remove"
                   role="button"

@@ -15,7 +15,7 @@
     <th colspan="2">
       {{t "general.instructors"}}
     </th>
-    {{#if this.canUpdate}}
+    {{#if @canUpdate}}
       <th class="text-center">
         {{t "general.actions"}}
       </th>
@@ -42,7 +42,7 @@
       {{#each offeringTimeBlock.sortedOfferings as |offering index|}}
         <SessionsGridOffering
           @offering={{offering}}
-          @canUpdate={{this.canUpdate}}
+          @canUpdate={{@canUpdate}}
           @firstRow={{eq index 0}}
           @even={{eq (mod index 2) 1}}
           @span={{offeringTimeBlock.sortedOfferings.length}}

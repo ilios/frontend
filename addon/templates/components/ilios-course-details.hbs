@@ -5,8 +5,8 @@
     </LinkTo>
   </div>
 {{/if}}
-<CourseHeader @course={{this.course}} @editable={{this.editable}} />
-<CourseOverview @course={{this.course}} @editable={{this.editable}} />
+<CourseHeader @course={{@course}} @editable={{@editable}} />
+<CourseOverview @course={{@course}} @editable={{@editable}} />
 {{#if (not this.showDetails)}}
   <div
     class="detail-collapsed-control"
@@ -20,18 +20,18 @@
   </div>
 {{else}}
   <CourseEditing
-    @course={{this.course}}
-    @editable={{this.editable}}
-    @courseLeadershipDetails={{this.courseLeadershipDetails}}
-    @courseObjectiveDetails={{this.courseObjectiveDetails}}
-    @courseTaxonomyDetails={{this.courseTaxonomyDetails}}
-    @courseCompetencyDetails={{this.courseCompetencyDetails}}
-    @courseManageLeadership={{this.courseManageLeadership}}
-    @setCourseObjectiveDetails={{action this.setCourseObjectiveDetails}}
-    @setCourseLeadershipDetails={{action this.setCourseLeadershipDetails}}
-    @setCourseTaxonomyDetails={{action this.setCourseTaxonomyDetails}}
-    @setCourseCompetencyDetails={{action this.setCourseCompetencyDetails}}
-    @setCourseManageLeadership={{action this.setCourseManageLeadership}}
+    @course={{@course}}
+    @editable={{@editable}}
+    @courseLeadershipDetails={{@courseLeadershipDetails}}
+    @courseObjectiveDetails={{@courseObjectiveDetails}}
+    @courseTaxonomyDetails={{@courseTaxonomyDetails}}
+    @courseCompetencyDetails={{@courseCompetencyDetails}}
+    @courseManageLeadership={{@courseManageLeadership}}
+    @setCourseObjectiveDetails={{action @setCourseObjectiveDetails}}
+    @setCourseLeadershipDetails={{action @setCourseLeadershipDetails}}
+    @setCourseTaxonomyDetails={{action @setCourseTaxonomyDetails}}
+    @setCourseCompetencyDetails={{action @setCourseCompetencyDetails}}
+    @setCourseManageLeadership={{action @setCourseManageLeadership}}
   />
   <div class="detail-collapsed-control" role="button" {{action "collapse"}}>
     <span class="is-expanded">

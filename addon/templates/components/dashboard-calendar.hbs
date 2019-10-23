@@ -1,27 +1,27 @@
 <section class="calendar-controls">
   <div class="calendar-options-control togglemyschedule">
     <ToggleButtons
-      @firstOptionSelected={{this.mySchedule}}
+      @firstOptionSelected={{@mySchedule}}
       @firstLabel={{t "general.mySchedule"}}
       @secondLabel={{t "general.allEvents"}}
-      @toggle={{this.toggleMySchedule}}
+      @toggle={{@toggleMySchedule}}
     />
   </div>
   <div class="calendar-options-control showfilters">
     <ToggleButtons
-      @firstOptionSelected={{not this.showFilters}}
+      @firstOptionSelected={{not @showFilters}}
       @firstLabel={{t "general.hideFilters"}}
       @secondLabel={{t "general.showFilters"}}
-      @toggle={{this.toggleShowFilters}}
+      @toggle={{@toggleShowFilters}}
     />
   </div>
-  {{#if this.showFilters}}
+  {{#if @showFilters}}
     <div class="calendar-options-control togglecoursefilters">
       <ToggleButtons
-        @firstOptionSelected={{this.courseFilters}}
+        @firstOptionSelected={{@courseFilters}}
         @firstLabel={{t "general.courseOrType"}}
         @secondLabel={{t "general.detail"}}
-        @toggle={{this.toggleCourseFilters}}
+        @toggle={{@toggleCourseFilters}}
       />
     </div>
     {{#if this.showClearFilters}}
@@ -29,17 +29,17 @@
         id="calendar-clear-filters"
         class="calendar-clear-filters"
         role="button"
-        {{action this.onClearFilters}}
+        {{action @onClearFilters}}
       >
         {{t "general.clearFilters"}}
       </span>
     {{/if}}
   {{/if}}
-  {{#unless this.mySchedule}}
+  {{#unless @mySchedule}}
     <div class="calendar-options-control calendar-school-picker">
       <FaIcon @icon="university" />
       {{#if (await this.hasMoreThanOneSchool)}}
-        <select onchange={{action this.changeSchool value="target.value"}}>
+        <select onchange={{action @changeSchool value="target.value"}}>
           {{#each (sort-by "title" (await this.allSchools)) as |school|}}
             <option
               value={{school.id}}
@@ -54,12 +54,12 @@
       {{/if}}
     </div>
   {{/unless}}
-  {{#if this.showFilters}}
+  {{#if @showFilters}}
     <div
       id="calendar-year-picker"
       class="calendar-options-control calendar-year-picker"
     >
-      <select onchange={{action this.changeAcademicYear value="target.value"}}>
+      <select onchange={{action @changeAcademicYear value="target.value"}}>
         {{#each (await this.academicYears) as |year|}}
           <option
             value={{year.title}}
@@ -72,8 +72,8 @@
     </div>
   {{/if}}
   <div class="calendar-filters">
-    {{#liquid-if this.showFilters class="vertical"}}
-      {{#liquid-if this.courseFilters class="crossFade"}}
+    {{#liquid-if @showFilters class="vertical"}}
+      {{#liquid-if @courseFilters class="crossFade"}}
         <div
           id="calendar-coursefilter"
           class="calendar-filter-list large-filter-list coursefilter"
@@ -89,13 +89,13 @@
                   <input
                     class="checkbox"
                     type="checkbox"
-                    checked={{is-in (await this.selectedCourses) course}}
-                    {{action this.onUpdateCourses course.id on="change"}}
+                    checked={{is-in (await @selectedCourses) course}}
+                    {{action @onUpdateCourses course.id on="change"}}
                   >
                   <span
                     class="list-indentation"
                     role="button"
-                    {{action this.onUpdateCourses course.id}}
+                    {{action @onUpdateCourses course.id}}
                   >
                     {{course.title}}
                     {{#if course.externalId}}
@@ -121,15 +121,15 @@
               {{#each (await this.sessionTypes) as |type|}}
                 <li class="clickable">
                   <input
-                    checked={{is-in (await this.selectedSessionTypes) type}}
+                    checked={{is-in (await @selectedSessionTypes) type}}
                     class="checkbox"
                     type="checkbox"
-                    {{action this.onUpdateSessionTypes type.id on="change"}}
+                    {{action @onUpdateSessionTypes type.id on="change"}}
                   >
                   <span
                     class="list-indentation"
                     role="button"
-                    {{action this.onUpdateSessionTypes type.id}}
+                    {{action @onUpdateSessionTypes type.id}}
                   >
                     {{type.title}}
                   </span>
@@ -151,9 +151,9 @@
                   {{vocabulary.title}}
                 </h6>
                 <SelectedTermTree
-                  @selectedTerms={{await this.selectedTerms}}
+                  @selectedTerms={{await @selectedTerms}}
                   @terms={{await vocabulary.topLevelTerms}}
-                  @toggle={{action this.onUpdateTerms}}
+                  @toggle={{action @onUpdateTerms}}
                 />
               {{/each}}
             </ul>
@@ -176,13 +176,13 @@
                   <input
                     class="checkbox"
                     type="checkbox"
-                    checked={{is-in (await this.selectedSessionTypes) type}}
-                    {{action this.onUpdateSessionTypes type.id on="change"}}
+                    checked={{is-in (await @selectedSessionTypes) type}}
+                    {{action @onUpdateSessionTypes type.id on="change"}}
                   >
                   <span
                     class="list-indentation"
                     role="button"
-                    {{action this.onUpdateSessionTypes type.id}}
+                    {{action @onUpdateSessionTypes type.id}}
                   >
                     {{type.title}}
                   </span>
@@ -206,13 +206,13 @@
                 <input
                   class="checkbox"
                   type="checkbox"
-                  checked={{contains level this.selectedCourseLevels}}
-                  {{action this.onUpdateCourseLevels level on="change"}}
+                  checked={{contains level @selectedCourseLevels}}
+                  {{action @onUpdateCourseLevels level on="change"}}
                 >
                 <span
                   class="list-indentation"
                   role="button"
-                  {{action this.onUpdateCourseLevels level}}
+                  {{action @onUpdateCourseLevels level}}
                 >
                   {{level}}
                 </span>
@@ -235,13 +235,13 @@
                   <input
                     class="checkbox"
                     type="checkbox"
-                    checked={{is-in (await this.selectedCohorts) cohort}}
-                    {{action this.onUpdateCohorts cohort.id on="change"}}
+                    checked={{is-in (await @selectedCohorts) cohort}}
+                    {{action @onUpdateCohorts cohort.id on="change"}}
                   >
                   <span
                     class="list-indentation"
                     role="button"
-                    {{action this.onUpdateCohorts cohort.id}}
+                    {{action @onUpdateCohorts cohort.id}}
                   >
                     {{#if cohort.title}}
                       {{cohort.title}}
@@ -281,7 +281,7 @@
         id="calendar-clear-filters"
         class="filters-clear-filters"
         role="button"
-        {{action this.onClearFilters}}
+        {{action @onClearFilters}}
       >
         {{t "general.clearFilters"}}
       </span>
@@ -292,10 +292,10 @@
   <IliosCalendar
     @calendarEventsPromise={{this.filteredEvents}}
     @selectedDate={{this.calendarDate}}
-    @selectedView={{this.selectedView}}
-    @changeDate={{this.changeDate}}
-    @changeView={{this.changeView}}
-    @selectEvent={{this.selectEvent}}
+    @selectedView={{@selectedView}}
+    @changeDate={{@changeDate}}
+    @changeView={{@changeView}}
+    @selectEvent={{@selectEvent}}
     @icsFeedUrl={{await this.absoluteIcsUri}}
     @icsInstructions={{this.icsInstructionsTranslation}}
   />

@@ -1,20 +1,20 @@
 <div class="session-leadership-expanded-header">
-  <div class="title collapsible clickable" role="button" {{action this.collapse}}>
+  <div class="title collapsible clickable" role="button" {{action @collapse}}>
     {{t "general.sessionAdministration"}}
   </div>
   <div class="actions">
-    {{#if this.isManaging}}
+    {{#if @isManaging}}
       <button class="bigadd" onclick={{perform this.save}}>
         <FaIcon
           @icon={{if this.save.isRunning "spinner" "check"}}
           @spin={{if this.isSaving true false}}
         />
       </button>
-      <button class="bigcancel" {{action this.setIsManaging false}}>
+      <button class="bigcancel" {{action @setIsManaging false}}>
         <FaIcon @icon="undo" />
       </button>
-    {{else if this.canUpdate}}
-      <button {{action this.setIsManaging true}}>
+    {{else if @canUpdate}}
+      <button {{action @setIsManaging true}}>
         {{t "general.manageLeadership"}}
       </button>
     {{/if}}
@@ -22,7 +22,7 @@
 </div>
 <div class="session-leadership-expanded-content">
   {{#if (is-array this.administrators)}}
-    {{#if this.isManaging}}
+    {{#if @isManaging}}
       <LeadershipManager
         @showDirectors={{false}}
         @administrators={{this.administrators}}
@@ -39,4 +39,3 @@
     <LoadingSpinner @tagName="h3" />
   {{/if}}
 </div>
-

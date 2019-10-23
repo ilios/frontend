@@ -1,8 +1,8 @@
 {{! template-lint-disable attribute-indentation }}
-{{#if (or true this.isIcon (gt (get (await this.objectiveWithMinutes) "length") 0))}}
+{{#if (or true @isIcon (gt (get (await this.objectiveWithMinutes) "length") 0))}}
   <SimpleChart
     @name="donut"
-    @isIcon={{this.isIcon}}
+    @isIcon={{@isIcon}}
     @data={{await this.objectiveWithMinutes}}
     @hover={{perform this.donutHover}}
     @leave={{perform this.donutHover}} as |chart|
@@ -23,7 +23,7 @@
     </h4>
   </div>
 {{/if}}
-{{#unless (or this.isIcon (eq (get (await this.objectiveWithoutMinutes) "length") 0))}}
+{{#unless (or @isIcon (eq (get (await this.objectiveWithoutMinutes) "length") 0))}}
   <div class="zero-hours">
     <h4>
       <FaIcon @icon="exclamation-triangle" class="warning" />

@@ -6,21 +6,21 @@
     {{t "general.offerings"}} ({{this.offerings.length}})
   </div>
   <div class="actions">
-    {{#if this.editable}}
+    {{#if @editable}}
       <ExpandCollapseButton
-        @value={{this.showNewOfferingForm}}
-        @action={{this.toggleShowNewOfferingForm}}
+        @value={{@showNewOfferingForm}}
+        @action={{@toggleShowNewOfferingForm}}
       />
     {{/if}}
   </div>
 </div>
-{{#if this.showNewOfferingForm}}
+{{#if @showNewOfferingForm}}
   <NewOffering
-    @session={{this.session}}
-    @cohorts={{await this.session.course.cohorts}}
-    @courseStartDate={{await this.session.course.startDate}}
-    @courseEndDate={{await this.session.course.endDate}}
-    @close={{this.toggleShowNewOfferingForm}}
+    @session={{@session}}
+    @cohorts={{await @session.course.cohorts}}
+    @courseStartDate={{await @session.course.startDate}}
+    @courseEndDate={{await @session.course.endDate}}
+    @close={{@toggleShowNewOfferingForm}}
   />
 {{/if}}
 <div class="session-offerings-content">
@@ -42,11 +42,10 @@
         {{t "general.actions"}}
       </div>
     </div>
-    <SessionOfferingsList @session={{this.session}} @editable={{this.editable}} />
+    <SessionOfferingsList @session={{@session}} @editable={{@editable}} />
   {{else}}
     <p>
       {{t "general.noOfferings"}}
     </p>
   {{/if}}
 </div>
-

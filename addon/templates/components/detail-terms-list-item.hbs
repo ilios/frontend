@@ -1,28 +1,28 @@
-{{#if this.term.description.length}}
+{{#if @term.description.length}}
   {{#attach-tooltip
     lazyRender=true
     animation="shift"
     }}
-    {{this.term.description}}
+    {{@term.description}}
   {{/attach-tooltip}}
 {{/if}}
-{{#if this.term.isTopLevel}}
-  {{this.term.title}}
+{{#if @term.isTopLevel}}
+  {{@term.title}}
 {{else}}
-  {{#each (await this.term.allParentTitles) as |title|}}
+  {{#each (await @term.allParentTitles) as |title|}}
     {{! template-lint-disable no-bare-strings}}
     <span class="muted">
       {{title}}
       &raquo;
     </span>
   {{/each}}
-  {{this.term.title}}
+  {{@term.title}}
 {{/if}}
-{{#if (and this.canEdit (not (await this.term.isActiveInTree)))}}
+{{#if (and @canEdit (not (await @term.isActiveInTree)))}}
   <span class="inactive">
     ({{t "general.inactive"}})
   </span>
 {{/if}}
-{{#if this.canEdit}}
+{{#if @canEdit}}
   <FaIcon @icon="times" class="remove" />
 {{/if}}

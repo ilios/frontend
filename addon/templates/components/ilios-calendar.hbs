@@ -6,13 +6,13 @@
   >
     <FaIcon @icon="rss-square" />
   </li>
-  <li class="clickable" role="button" {{action this.changeView "day"}}>
+  <li class="clickable" role="button" {{action @changeView "day"}}>
     {{t "general.day"}}
   </li>
-  <li class="clickable" role="button" {{action this.changeView "week"}}>
+  <li class="clickable" role="button" {{action @changeView "week"}}>
     {{t "general.week"}}
   </li>
-  <li class="clickable" role="button" {{action this.changeView "month"}}>
+  <li class="clickable" role="button" {{action @changeView "month"}}>
     {{t "general.month"}}
   </li>
 </ul>
@@ -30,8 +30,8 @@
 <div class="ilios-calendar-calendar">
   {{#if this.showIcsFeed}}
     <IcsFeed
-      @url={{this.icsFeedUrl}}
-      @instructions={{this.icsInstructions}}
+      @url={{@icsFeedUrl}}
+      @instructions={{@icsInstructions}}
       @refresh={{action "refreshIcsFeed"}}
     />
   {{/if}}
@@ -41,13 +41,13 @@
     ...
   </h1>
   {{component
-    (concat "ilios-calendar-" this.selectedView)
+    (concat "ilios-calendar-" @selectedView)
     calendarEvents=(sort-by
       (action "sortEvents") (await this.compiledCalendarEvents)
     )
-    date=this.selectedDate
-    selectEvent=this.selectEvent
-    changeDate=this.changeDate
-    changeView=this.changeView
+    date=@selectedDate
+    selectEvent=@selectEvent
+    changeDate=@changeDate
+    changeView=@changeView
   }}
 </div>

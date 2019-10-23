@@ -2,21 +2,21 @@
 {{#each this.sortedSessions as |obj|}}
   <div
     class="{{if
-        (contains obj.session.id this.expandedSessionIds)
+        (contains obj.session.id @expandedSessionIds)
         "is-expanded"
         "not-expanded"
       }}
        session"
-    data-test-expanded-session={{contains obj.session.id this.expandedSessionIds}}
+    data-test-expanded-session={{contains obj.session.id @expandedSessionIds}}
     data-test-session
   >
     <div class="session-row">
       <span class="expand-collapse-control" data-test-expand-collapse-control>
-        {{#if (contains obj.session.id this.expandedSessionIds)}}
+        {{#if (contains obj.session.id @expandedSessionIds)}}
           <FaIcon
             @icon="caret-down"
             class="link"
-            @click={{action this.closeSession obj.session}}
+            @click={{action @closeSession obj.session}}
           />
         {{else}}
           <FaIcon
@@ -139,7 +139,7 @@
         </div>
       </div>
     {{/if}}
-    {{#if (contains obj.session.id this.expandedSessionIds)}}
+    {{#if (contains obj.session.id @expandedSessionIds)}}
       <SessionsGridLastUpdated @session={{await obj.session}} />
       <SessionsGridOfferingTable
         @canUpdate={{obj.canUpdate}}

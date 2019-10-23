@@ -2,23 +2,23 @@
   <h3
     class="title {{if this.isCollapsible "collapsible clickable"}}"
     role="button"
-    {{action this.collapse}}
+    {{action @collapse}}
   >
     {{t "general.courseLeadership"}}
   </h3>
   <div class="actions">
-    {{#if this.isManaging}}
+    {{#if @isManaging}}
       <button class="bigadd" onclick={{perform this.save}}>
         <FaIcon
           @icon={{if this.save.isRunning "spinner" "check"}}
           @spin={{if this.isSaving true false}}
         />
       </button>
-      <button class="bigcancel" {{action this.setIsManaging false}}>
+      <button class="bigcancel" {{action @setIsManaging false}}>
         <FaIcon @icon="undo" />
       </button>
-    {{else if this.editable}}
-      <button {{action this.setIsManaging true}}>
+    {{else if @editable}}
+      <button {{action @setIsManaging true}}>
         {{t "general.manageLeadership"}}
       </button>
     {{/if}}
@@ -26,7 +26,7 @@
 </div>
 <div class="course-leadership-expanded-content">
   {{#if (and (is-array this.directors) (is-array this.administrators))}}
-    {{#if this.isManaging}}
+    {{#if @isManaging}}
       <LeadershipManager
         @directors={{this.directors}}
         @administrators={{this.administrators}}

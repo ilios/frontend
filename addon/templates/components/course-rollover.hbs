@@ -1,5 +1,5 @@
-<LinkTo @route="course" @model={{this.course}}>
-  {{t "general.backToTitle" title=this.course.title}}
+<LinkTo @route="course" @model={{@course}}>
+  {{t "general.backToTitle" title=@course.title}}
 </LinkTo>
 <div class="rollover-form">
   <h3 class="title">
@@ -15,7 +15,7 @@
     <input
       type="text"
       value={{this.title}}
-      oninput={{this.pipe
+      oninput={{pipe
         (action "changeTitle" value="target.value")
         (action "addErrorDisplayFor" "title")
       }}
@@ -76,10 +76,10 @@
       <PikadayInput
         @size={{10}}
         @value={{this.startDate}}
-        @minDate={{this.course.startDate}}
+        @minDate={{@course.startDate}}
         @format="YYYY-MM-DD"
         @onSelection={{action (mut this.startDate)}}
-        @options={{hash disableDayFn=this.disableDayFn course=this.course}}
+        @options={{hash disableDayFn=this.disableDayFn course=@course}}
       />
     </div>
     <div class="included">
@@ -104,7 +104,7 @@
       </span>
       <DetailCohortManager
         @selectedCohorts={{this.selectedCohorts}}
-        @school={{await this.course.school}}
+        @school={{await @course.school}}
         @add={{action "addCohort"}}
         @remove={{action "removeCohort"}}
       />
@@ -129,7 +129,7 @@
         {{t "general.done"}}
       {{/if}}
     </button>
-    <LinkTo @route="course" @model={{this.course}}>
+    <LinkTo @route="course" @model={{@course}}>
       <button class="cancel text">
         {{t "general.cancel"}}
       </button>

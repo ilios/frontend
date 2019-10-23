@@ -1,9 +1,9 @@
-{{#if this.selectedTerms}}
+{{#if @selectedTerms}}
   <div class="selected-terms">
     {{#each (await this.listableVocabularies) as |vocab|}}
       <DetailTermsList
         @vocabulary={{vocab}}
-        @terms={{this.selectedTerms}}
+        @terms={{@selectedTerms}}
         @canEdit={{true}}
         @remove={{action "remove"}}
       />
@@ -35,11 +35,10 @@
   </div>
   <div class="terms-picker tag-tree">
     <SelectableTermsList
-      @selectedTerms={{this.selectedTerms}}
+      @selectedTerms={{@selectedTerms}}
       @terms={{await this.filteredTerms}}
       @add={{action "add"}}
       @remove={{action "remove"}}
     />
   </div>
 {{/if}}
-

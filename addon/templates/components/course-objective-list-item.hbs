@@ -1,5 +1,5 @@
-<td id="objective-{{this.objective.id}}" class="text-left text-top" colspan="3">
-  {{#if this.editable}}
+<td id="objective-{{@objective.id}}" class="text-left text-top" colspan="3">
+  {{#if @editable}}
     <EditableField
       @value={{this.title}}
       @renderHtml={{true}}
@@ -18,13 +18,14 @@
       {{/if}}
     </EditableField>
   {{else}}
-    {{! template-lint-disable no-triple-curlies }}{{{this.objective.title}}}
+    {{! template-lint-disable no-triple-curlies }}
+    {{{@objective.title}}}
   {{/if}}
 </td>
 <td class="text-left text-top" colspan="2">
-  {{#if this.objective.hasParents}}
-    {{#each (await this.objective.parents) as |parent|}}
-      {{#if this.course.hasMultipleCohorts}}
+  {{#if @objective.hasParents}}
+    {{#each (await @objective.parents) as |parent|}}
+      {{#if @course.hasMultipleCohorts}}
         <strong>
           {{get (await parent.firstProgram) "title"}}
           {{#if (get (await parent.firstCohort) "title")}}
@@ -38,12 +39,12 @@
         </strong>
         <br>
       {{/if}}
-      {{#if this.editable}}
+      {{#if @editable}}
         <span
           class="clickable link"
           data-test-parent
           role="button"
-          {{action this.manageParents this.objective}}
+          {{action @manageParents @objective}}
         >
           {{parent.textTitle}}
         </span>
@@ -55,8 +56,8 @@
       {{/if}}
       <br>
     {{/each}}
-  {{else if this.editable}}
-    <button {{action this.manageParents this.objective}}>
+  {{else if @editable}}
+    <button {{action @manageParents @objective}}>
       {{t "general.addNew"}}
     </button>
   {{else}}
@@ -65,13 +66,13 @@
 </td>
 <td class="text-left text-top" colspan="2">
   <ul class="mesh-descriptor-list">
-    {{#each (sort-by "name" (await this.objective.meshDescriptors)) as |descriptor|}}
-      {{#if this.editable}}
+    {{#each (sort-by "name" (await @objective.meshDescriptors)) as |descriptor|}}
+      {{#if @editable}}
         <li
           class="clickable link"
           role="button"
           data-test-term
-          {{action this.manageDescriptors this.objective}}
+          {{action @manageDescriptors @objective}}
         >
           {{descriptor.name}}
         </li>
@@ -82,8 +83,8 @@
       {{/if}}
     {{else}}
       <li>
-        {{#if this.editable}}
-          <button {{action this.manageDescriptors this.objective}}>
+        {{#if @editable}}
+          <button {{action @manageDescriptors @objective}}>
             {{t "general.addNew"}}
           </button>
         {{else}}
@@ -94,8 +95,8 @@
   </ul>
 </td>
 <td class="text-left text-top" colspan="1">
-  {{#if this.editable}}
-    <span class="clickable remove" role="button" {{action this.remove this.objective}}>
+  {{#if @editable}}
+    <span class="clickable remove" role="button" {{action @remove @objective}}>
       <FaIcon @icon="trash" class="enabled" />
     </span>
   {{else}}

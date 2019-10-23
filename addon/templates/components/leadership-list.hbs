@@ -18,8 +18,8 @@
       {{#if this.showDirectors}}
         <td class="text-top" data-test-directors>
           <ul>
-            {{#if (is-array this.directors)}}
-              {{#each (sort-by "lastName" "firstName" this.directors) as |user|}}
+            {{#if (is-array @directors)}}
+              {{#each (sort-by "lastName" "firstName" @directors) as |user|}}
                 <li>
                   {{#unless user.enabled}}
                     <FaIcon
@@ -46,8 +46,8 @@
       {{#if this.showAdministrators}}
         <td class="text-top" data-test-administrators>
           <ul>
-            {{#if (is-array this.administrators)}}
-              {{#each (sort-by "lastName" "firstName" this.administrators) as |user|
+            {{#if (is-array @administrators)}}
+              {{#each (sort-by "lastName" "firstName" @administrators) as |user|
               }}
                 <li>
                   {{#unless user.enabled}}
@@ -75,4 +75,3 @@
     </tr>
   </tbody>
 </table>
-

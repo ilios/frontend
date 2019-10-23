@@ -6,7 +6,7 @@
       </span>
     {{else}}
       {{t "general.instructorsAndInstructorGroups"}}
-      ({{this.ilmSession.instructors.length}}/{{this.ilmSession.instructorGroups.length}})
+      ({{@ilmSession.instructors.length}}/{{@ilmSession.instructorGroups.length}})
     {{/if}}
   </div>
   <div class="actions">
@@ -17,7 +17,7 @@
       <button class="bigcancel" {{action "cancel"}}>
         <FaIcon @icon="undo" />
       </button>
-    {{else if this.editable}}
+    {{else if @editable}}
       <button {{action "manage"}}>
         {{t "general.instructorsManageTitle"}}
       </button>
@@ -37,9 +37,8 @@
     />
   {{else}}
     <DetailInstructorsList
-      @instructorGroups={{this.ilmSession.instructorGroups}}
-      @instructors={{this.ilmSession.instructors}}
+      @instructorGroups={{@ilmSession.instructorGroups}}
+      @instructors={{@ilmSession.instructors}}
     />
   {{/if}}
 </div>
-

@@ -1,9 +1,9 @@
 <p>
-  {{this.instructions}}
+  {{@instructions}}
 </p>
 <p>
   <span>
-    <CopyButton @clipboardText={{this.url}} @success={{perform this.textCopied}}>
+    <CopyButton @clipboardText={{@url}} @success={{perform this.textCopied}}>
       <FaIcon @icon="copy" />
       {{t "general.copyIcsFeedUrl"}}
     </CopyButton>
@@ -14,4 +14,3 @@
     {{/if}}
   </span>
 </p>
-

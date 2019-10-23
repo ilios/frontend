@@ -3,8 +3,7 @@
   <h2 class="page-title">
     {{t "general.waitSaving"}}
   </h2>
-  {{#if this.showProgress}}
+  {{#if @showProgress}}
     <ProgressBar @percentage={{this.progress}} />
   {{/if}}
 </ModalDialog>
-

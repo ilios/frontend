@@ -1,7 +1,7 @@
-{{#if (or this.isIcon (gt (get (await this.data) "length") 0))}}
+{{#if (or @isIcon (gt (get (await this.data) "length") 0))}}
   <SimpleChart
     @name="horz-bar"
-    @isIcon={{this.isIcon}}
+    @isIcon={{@isIcon}}
     @data={{await this.sortedData}}
     @hover={{perform this.barHover}}
     @leave={{perform this.barHover}}

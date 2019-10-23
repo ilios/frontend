@@ -6,9 +6,9 @@
 }}
   <CourseLeadershipExpanded
     @course={{@course}}
-    @editable={{this.editable}}
-    @collapse={{action this.setCourseLeadershipDetails false}}
-    @expand={{action this.setCourseLeadershipDetails true}}
+    @editable={{@editable}}
+    @collapse={{action @setCourseLeadershipDetails false}}
+    @expand={{action @setCourseLeadershipDetails true}}
     @isManaging={{this.courseManageLeadership}}
     @setIsManaging={{this.setCourseManageLeadership}}
   />
@@ -17,56 +17,56 @@
     @title={{t "general.courseLeadership"}}
     @directorsCount={{has-many-length course "directors"}}
     @administratorsCount={{has-many-length course "administrators"}}
-    @expand={{action this.setCourseLeadershipDetails true}}
+    @expand={{action @setCourseLeadershipDetails true}}
   />
 {{/if}}
 {{#if (or (eq course.objectives.length 0) this.courseObjectiveDetails)}}
   <DetailObjectives
     @subject={{@course}}
     @isCourse={{true}}
-    @editable={{this.editable}}
-    @collapse={{action this.setCourseObjectiveDetails false}}
-    @expand={{action this.setCourseObjectiveDetails true}}
+    @editable={{@editable}}
+    @collapse={{action @setCourseObjectiveDetails false}}
+    @expand={{action @setCourseObjectiveDetails true}}
   />
 {{else}}
   <CollapsedObjectives
     @subject={{@course}}
-    @expand={{action this.setCourseObjectiveDetails true}}
+    @expand={{action @setCourseObjectiveDetails true}}
   />
 {{/if}}
 <DetailLearningMaterials
   @subject={{@course}}
   @isCourse={{true}}
-  @editable={{this.editable}}
+  @editable={{@editable}}
 />
 {{#if
   (or (eq (get (await course.competencies) "length") 0) this.courseCompetencyDetails)
 }}
   <DetailCompetencies
     @course={{@course}}
-    @editable={{this.editable}}
-    @collapse={{action this.setCourseCompetencyDetails false}}
-    @expand={{action this.setCourseCompetencyDetails true}}
+    @editable={{@editable}}
+    @collapse={{action @setCourseCompetencyDetails false}}
+    @expand={{action @setCourseCompetencyDetails true}}
   />
 {{else}}
   <CollapsedCompetencies
     @subject={{@course}}
-    @expand={{action this.setCourseCompetencyDetails true}}
+    @expand={{action @setCourseCompetencyDetails true}}
   />
 {{/if}}
 {{#if (or (eq course.terms.length 0) this.courseTaxonomyDetails)}}
   <DetailTaxonomies
     @subject={{@course}}
     @isCourse={{true}}
-    @editable={{this.editable}}
-    @collapse={{action this.setCourseTaxonomyDetails false}}
-    @expand={{action this.setCourseTaxonomyDetails true}}
+    @editable={{@editable}}
+    @collapse={{action @setCourseTaxonomyDetails false}}
+    @expand={{action @setCourseTaxonomyDetails true}}
   />
 {{else}}
   <CollapsedTaxonomies
     @subject={{@course}}
-    @expand={{action this.setCourseTaxonomyDetails true}}
+    @expand={{action @setCourseTaxonomyDetails true}}
   />
 {{/if}}
-<DetailMesh @subject={{@course}} @isCourse={{true}} @editable={{this.editable}} />
-<DetailCohorts @course={{@course}} @editable={{this.editable}} />
+<DetailMesh @subject={{@course}} @isCourse={{true}} @editable={{@editable}} />
+<DetailCohorts @course={{@course}} @editable={{@editable}} />

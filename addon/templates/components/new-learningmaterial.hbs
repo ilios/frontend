@@ -23,7 +23,7 @@
   </label>
   <span>
     <select onchange={{action (mut this.statusId) value="target.value"}}>
-      {{#each this.learningMaterialStatuses as |lmStatus|}}
+      {{#each @learningMaterialStatuses as |lmStatus|}}
         <option
           value={{lmStatus.id}}
           selected={{is-equal lmStatus this.selectedStatus}}
@@ -72,7 +72,7 @@
   </label>
   <span>
     <select onchange={{action (mut this.userRoleId) value="target.value"}}>
-      {{#each this.learningMaterialUserRoles as |role|}}
+      {{#each @learningMaterialUserRoles as |role|}}
         <option value={{role.id}} selected={{is-equal role this.selectedUserRole}}>
           {{role.title}}
         </option>
@@ -204,7 +204,7 @@
       {{t "general.done"}}
     {{/if}}
   </button>
-  <button class="cancel text" {{action this.cancel}}>
+  <button class="cancel text" {{action @cancel}}>
     {{t "general.cancel"}}
   </button>
 </div>

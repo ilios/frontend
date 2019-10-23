@@ -1,17 +1,17 @@
 <h3
-  class="{{if this.collapsible "clickable collapsible"}}
+  class="{{if @collapsible "clickable collapsible"}}
 
-    {{if this.collapsed "collapsed" "expanded"}}"
+    {{if @collapsed "collapsed" "expanded"}}"
   role="button"
   data-test-week-title
-  {{action (optional @toggleCollapsed) this.collapsed}}
+  {{action (optional @toggleCollapsed) @collapsed}}
 >
   {{this.title}}
-  {{#if this.showFullTitle}}
+  {{#if @showFullTitle}}
     {{t "general.weekAtAGlance"}}
   {{/if}}
 </h3>
-{{#liquid-unless this.collapsed class="vertical"}}
+{{#liquid-unless @collapsed class="vertical"}}
   {{#if (is-fulfilled this.publishedWeekEvents)}}
     <div class="ilm-pre-work">
       {{#if (gt (get (await this.ilmPreWork) "length") 0)}}

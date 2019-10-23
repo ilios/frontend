@@ -1,20 +1,20 @@
-{{#if (and this.isEditing (is-fulfilled this.offering.session.course.cohorts))}}
+{{#if (and this.isEditing (is-fulfilled @offering.session.course.cohorts))}}
   <OfferingForm
     @showRoom={{true}}
     @showInstructors={{true}}
-    @cohorts={{await this.offering.session.course.cohorts}}
-    @courseStartDate={{await this.offering.session.course.startDate}}
-    @courseEndDate={{await this.offering.session.course.startDate}}
+    @cohorts={{await @offering.session.course.cohorts}}
+    @courseStartDate={{await @offering.session.course.startDate}}
+    @courseEndDate={{await @offering.session.course.startDate}}
     @close={{toggle "isEditing" this}}
     @save={{action "save"}}
     @smallGroupMode={{false}}
-    @offering={{this.offering}}
-    @session={{await this.offering.session}}
+    @offering={{@offering}}
+    @session={{await @offering.session}}
   />
 {{else}}
   <div class="offering-manager-learner-groups">
     <ul>
-      {{#each (await this.offering.learnerGroups) as |learnerGroup|}}
+      {{#each (await @offering.learnerGroups) as |learnerGroup|}}
         <li>
           {{learnerGroup.title}}
           {{#if
@@ -24,7 +24,7 @@
             )
           }}
             {{#attach-tooltip lazyRender=true animation="shift"}}
-              {{this.join " > " (map-by "title" (await learnerGroup.allParents))}}
+              {{join " > " (map-by "title" (await learnerGroup.allParents))}}
             {{/attach-tooltip}}
           {{/if}}
         </li>
@@ -36,11 +36,11 @@
     </ul>
   </div>
   <div class="offering-manager-location">
-    {{this.offering.room}}
+    {{@offering.room}}
   </div>
   <div class="offering-manager-instructors">
     <ul>
-      {{#each (await this.offering.allInstructors) as |instructor|}}
+      {{#each (await @offering.allInstructors) as |instructor|}}
         <li data-test-instructor>
           {{instructor.fullName}}
         </li>
@@ -51,7 +51,7 @@
       {{/each}}
     </ul>
   </div>
-  {{#if this.editable}}
+  {{#if @editable}}
     <div class="offering-manager-actions">
       <span
         class="clickable edit"
@@ -74,7 +74,7 @@
       <div class="confirm-message">
         {{t
           "general.confirmRemove"
-          learnerGroupCount=this.offering.learnerGroups.length
+          learnerGroupCount=@offering.learnerGroups.length
         }}
         <br>
         <div class="confirm-buttons">

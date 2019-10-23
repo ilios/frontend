@@ -11,7 +11,7 @@
       role="button"
       {{action "collapse"}}
     >
-      {{t "general.terms"}} ({{this.subject.terms.length}})
+      {{t "general.terms"}} ({{@subject.terms.length}})
     </div>
   {{/if}}
   <div class="actions">
@@ -25,7 +25,7 @@
       <button class="bigcancel" {{action "cancel"}}>
         <FaIcon @icon="undo" />
       </button>
-    {{else if this.editable}}
+    {{else if @editable}}
       <button {{action "manage"}}>
         {{t "general.termsManageTitle"}}
       </button>
@@ -35,21 +35,20 @@
 <div class="content">
   {{#if this.isManaging}}
     <TaxonomyManager
-      @subject={{this.subject}}
+      @subject={{@subject}}
       @selectedTerms={{this.bufferedTerms}}
       @add={{action "addTermToBuffer"}}
       @remove={{action "removeTermFromBuffer"}}
     />
   {{else}}
-    {{#each (await this.subject.associatedVocabularies) as |vocab|}}
+    {{#each (await @subject.associatedVocabularies) as |vocab|}}
       {{#if vocab.termCount}}
         <DetailTermsList
           @vocabulary={{vocab}}
-          @terms={{await this.subject.terms}}
+          @terms={{await @subject.terms}}
           @canEdit={{false}}
         />
       {{/if}}
     {{/each}}
   {{/if}}
 </div>
-

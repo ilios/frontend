@@ -19,7 +19,7 @@
       <button class="bigcancel" {{action "cancel"}}>
         <FaIcon @icon="undo" />
       </button>
-    {{else if this.editable}}
+    {{else if @editable}}
       <button {{action "manage"}}>
         {{t "general.cohortsManageTitle"}}
       </button>
@@ -38,4 +38,3 @@
     <DetailCohortList @cohorts={{await course.cohorts}} />
   {{/if}}
 </div>
-

@@ -15,7 +15,7 @@
     {{#each this.searchResults as |learningMaterial|}}
       <li
         class={{if
-          (contains learningMaterial (await this.currentMaterials))
+          (contains learningMaterial (await @currentMaterials))
           "disabled"
           ""
         }}
@@ -80,4 +80,3 @@
     </li>
   </ul>
 {{/if}}
-

@@ -5,7 +5,7 @@
     <label>
       {{t "general.displayName"}}:
     </label>
-    {{#if (and this.editable (await this.isLinkedOnlyOnce))}}
+    {{#if (and @editable (await this.isLinkedOnlyOnce))}}
       <input
         type="text"
         value={{this.title}}
@@ -31,10 +31,10 @@
     <label>
       {{t "general.status"}}:
     </label>
-    {{#if this.editable}}
+    {{#if @editable}}
       <OneWaySelect
         @value={{this.statusId}}
-        @options={{await this.learningMaterialStatuses}}
+        @options={{await @learningMaterialStatuses}}
         @optionTargetPath="id"
         @optionLabelPath="title"
         @update={{action (mut this.statusId)}}
@@ -47,7 +47,7 @@
     <label>
       {{t "general.required"}}:
     </label>
-    {{#if this.editable}}
+    {{#if @editable}}
       <ToggleYesno @yes={{this.required}} @toggle={{action (mut this.required)}} />
     {{else if this.required}}
       <span class="add">
@@ -63,7 +63,7 @@
     <label>
       {{t "general.instructionalNotes"}}:
     </label>
-    {{#if this.editable}}
+    {{#if @editable}}
       <HtmlEditor @content={{this.notes}} @update={{action (mut this.notes)}} />
     {{else}}
       <span>
@@ -76,7 +76,7 @@
     <label>
       {{t "general.showNotesToStudents"}}:
     </label>
-    {{#if this.editable}}
+    {{#if @editable}}
       <ToggleYesno @yes={{this.publicNotes}} @toggle={{action (mut this.publicNotes)}} />
     {{else if this.publicNotes}}
       <span class="add">
@@ -117,7 +117,7 @@
       {{t "general.description"}}:
     </label>
     <span class="description">
-      {{#if (and this.editable (await this.isLinkedOnlyOnce))}}
+      {{#if (and @editable (await this.isLinkedOnlyOnce))}}
         <HtmlEditor
           @content={{this.description}}
           @update={{action (mut this.description)}}
@@ -223,7 +223,7 @@
         <label>
           {{t "general.startDate"}}:
         </label>
-        {{#if this.editable}}
+        {{#if @editable}}
           <PikadayInput
             @value={{this.startDate}}
             @onSelection={{action "updateDate" "startDate"}}
@@ -237,7 +237,7 @@
         <label>
           {{t "general.startTime"}}:
         </label>
-        {{#if this.editable}}
+        {{#if @editable}}
           <TimePicker
             @date={{this.startDate}}
             @action={{action "updateTime" "startDate"}}
@@ -246,12 +246,12 @@
           {{moment-format this.startDate "h:mm a"}}
         {{/if}}
       </div>
-      {{#if this.editable}}
+      {{#if @editable}}
         <button class="remove-date" {{action (mut this.startDate) null}}>
           {{t "general.timedReleaseClearStartDate"}}
         </button>
       {{/if}}
-    {{else if this.editable}}
+    {{else if @editable}}
       <p>
         <button
           class="add-date"
@@ -267,7 +267,7 @@
         <label>
           {{t "general.endDate"}}:
         </label>
-        {{#if this.editable}}
+        {{#if @editable}}
           <PikadayInput
             @value={{this.endDate}}
             @onSelection={{action "updateDate" "endDate"}}
@@ -281,7 +281,7 @@
         <label>
           {{t "general.endTime"}}:
         </label>
-        {{#if this.editable}}
+        {{#if @editable}}
           <TimePicker
             @date={{this.endDate}}
             @action={{action "updateTime" "endDate"}}
@@ -300,12 +300,12 @@
           {{v-get this "endDate" "message"}}
         </span>
       {{/if}}
-      {{#if this.editable}}
+      {{#if @editable}}
         <button class="remove-date" {{action (mut this.endDate) null}}>
           {{t "general.timedReleaseClearEndDate"}}
         </button>
       {{/if}}
-    {{else if this.editable}}
+    {{else if @editable}}
       <p>
         <button
           class="add-date"
@@ -319,13 +319,13 @@
   </div>
   <MeshManager
     @terms={{this.terms}}
-    @editable={{this.editable}}
+    @editable={{@editable}}
     @add={{action "addTerm"}}
     @remove={{action "removeTerm"}}
     @targetItemTitle={{this.title}}
   />
   <div class="buttons">
-    {{#if this.editable}}
+    {{#if @editable}}
       <button
         class="done"
         disabled={{this.save.isRunning}}
@@ -337,11 +337,11 @@
           {{t "general.done"}}
         {{/if}}
       </button>
-      <button class="cancel" {{action (action this.closeManager)}}>
+      <button class="cancel" {{action @closeManager}}>
         {{t "general.cancel"}}
       </button>
     {{else}}
-      <button {{action (action this.closeManager)}}>
+      <button {{action @closeManager}}>
         {{t "general.close"}}
       </button>
     {{/if}}

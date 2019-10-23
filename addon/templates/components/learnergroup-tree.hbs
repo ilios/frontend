@@ -1,20 +1,20 @@
 {{! template-lint-disable no-invalid-interactive}}
 <span
   class={{if this.selectable "clickable"}}
-  onclick={{if this.selectable (action add this.learnerGroup)}}
+  onclick={{if this.selectable (action add @learnerGroup)}}
   role={{if this.selectable "button"}}
 >
-  {{this.learnerGroup.title}}
+  {{@learnerGroup.title}}
 </span>
-{{#if this.learnerGroup.children.length}}
+{{#if @learnerGroup.children.length}}
   <ul>
-    {{#if (is-fulfilled this.learnerGroup.children)}}
-      {{#each (sort-by "title" (await this.learnerGroup.children)) as |child|}}
+    {{#if (is-fulfilled @learnerGroup.children)}}
+      {{#each (sort-by "title" (await @learnerGroup.children)) as |child|}}
         <LearnergroupTree
           @learnerGroup={{child}}
-          @selectedGroups={{this.selectedGroups}}
-          @filter={{this.filter}}
-          @add={{action add}}
+          @selectedGroups={{@selectedGroups}}
+          @filter={{@filter}}
+          @add={{@add}}
         />
       {{/each}}
     {{else}}
@@ -24,4 +24,3 @@
     {{/if}}
   </ul>
 {{/if}}
-

@@ -1,7 +1,7 @@
 {{! template-lint-disable attribute-indentation }}
 <div class="objectivetitle course-objective-title">
   {{! template-lint-disable no-triple-curlies }}
-  {{{this.courseObjective.title}}}
+  {{{@courseObjective.title}}}
 </div>
 {{#unless this.loadAttr.isRunning}}
   {{#liquid-if (get (await this.cohortProxies) "length") class="horizontal"}}

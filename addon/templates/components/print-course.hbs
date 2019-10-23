@@ -1,11 +1,11 @@
 <div class="header" data-test-course-header>
   <h2>
-    {{this.course.title}}
+    {{@course.title}}
   </h2>
   <h4>
-    {{this.course.academicYear}}
+    {{@course.academicYear}}
   </h4>
-  <PublicationStatus @item={{this.course}} />
+  <PublicationStatus @item={{@course}} />
 </div>
 <section class="overview block" data-test-course-overview>
   <div class="title">
@@ -17,7 +17,7 @@
         {{t "general.start"}}:
       </label>
       <div>
-        {{moment-format this.course.startDate "L"}}
+        {{moment-format @course.startDate "L"}}
       </div>
     </div>
     <div class="inline-label-data-block">
@@ -25,7 +25,7 @@
         {{t "general.externalId"}}:
       </label>
       <div>
-        {{this.course.externalId}}
+        {{@course.externalId}}
       </div>
     </div>
     <div class="inline-label-data-block">
@@ -33,7 +33,7 @@
         {{t "general.level"}}:
       </label>
       <div>
-        {{this.course.level}}
+        {{@course.level}}
       </div>
     </div>
     <div class="inline-label-data-block">
@@ -41,7 +41,7 @@
         {{t "general.end"}}:
       </label>
       <div>
-        {{moment-format this.course.endDate "L"}}
+        {{moment-format @course.endDate "L"}}
       </div>
     </div>
     <br>
@@ -62,13 +62,13 @@
 </section>
 <section class="block" data-test-course-competencies>
   <div class="title">
-    {{t "general.competencies"}} ({{get (await this.course.competencies) "length"}})
+    {{t "general.competencies"}} ({{get (await @course.competencies) "length"}})
   </div>
   <div class="content">
-    {{#if (is-fulfilled this.course.competencies)}}
-      {{#if (get (await this.course.competencies) "length")}}
+    {{#if (is-fulfilled @course.competencies)}}
+      {{#if (get (await @course.competencies) "length")}}
         <ul class="static-list">
-          {{#each (await this.course.domains) as |domain|}}
+          {{#each (await @course.domains) as |domain|}}
             <li>
               {{domain.title}}
               <ul>
@@ -89,13 +89,13 @@
 </section>
 <section class="block" data-test-course-terms>
   <div class="title">
-    {{t "general.terms"}} ({{this.course.terms.length}})
+    {{t "general.terms"}} ({{@course.terms.length}})
   </div>
   <div class="content">
-    {{#each (await this.course.associatedVocabularies) as |vocab|}}
+    {{#each (await @course.associatedVocabularies) as |vocab|}}
       <DetailTermsList
         @vocabulary={{vocab}}
-        @terms={{this.course.terms}}
+        @terms={{@course.terms}}
         @canEdit={{false}}
       />
     {{/each}}
@@ -103,9 +103,9 @@
 </section>
 <section class="block" data-test-course-objectives>
   <div class="title">
-    {{t "general.objectives"}} ({{this.course.objectives.length}})
+    {{t "general.objectives"}} ({{@course.objectives.length}})
   </div>
-  {{#if (get (await this.course.objectives) "length")}}
+  {{#if (get (await @course.objectives) "length")}}
     <div class="content">
       <table>
         <thead>
@@ -122,7 +122,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each (await this.course.sortedObjectives) as |objective|}}
+          {{#each (await @course.sortedObjectives) as |objective|}}
             <tr>
               <td class="text-left text-top">
                 {{objective.textTitle}}
@@ -130,7 +130,7 @@
               <td class="text-left text-top">
                 {{#if objective.hasParents}}
                   {{#each objective.parents as |parent|}}
-                    {{#if this.course.hasMultipleCohorts}}
+                    {{#if @course.hasMultipleCohorts}}
                       <strong>
                         {{get (await parent.firstProgram) "title"}}
                         {{#if (get (await parent.firstCohort) "title")}}
@@ -245,7 +245,7 @@
 </section>
 <section class="block" data-test-course-mesh>
   <div class="title">
-    {{t "general.mesh"}} ({{this.course.meshDescriptors.length}})
+    {{t "general.mesh"}} ({{@course.meshDescriptors.length}})
   </div>
   <div class="content">
     <ul class="inline-list">
@@ -551,4 +551,3 @@
     </div>
   </section>
 {{/each}}
-

@@ -12,7 +12,7 @@
       @endDate={{this.endDate}}
       @learnerGroups={{this.learnerGroups}}
       @startDate={{this.startDate}}
-      @session={{session}}
+      @session={{@session}}
     />
   {{/if}}
   <div class="form">
@@ -184,7 +184,7 @@
         {{/if}}
       </div>
     {{/if}}
-    {{#if this.showRoom}}
+    {{#if @showRoom}}
       <div class="item room">
         <label>
           {{t "general.location"}}:
@@ -205,7 +205,7 @@
         {{/if}}
       </div>
     {{/if}}
-    {{#if this.showInstructors}}
+    {{#if @showInstructors}}
       <div class="instructors item">
         <label>
           {{t "general.instructors"}}:
@@ -228,10 +228,10 @@
       <label>
         {{t "general.learnerGroups"}}:
       </label>
-      {{#if this.cohorts.length}}
+      {{#if @cohorts.length}}
         <LearnergroupSelectionManager
           @learnerGroups={{this.learnerGroups}}
-          @cohorts={{this.cohorts}}
+          @cohorts={{@cohorts}}
           @add={{action "addLearnerGroup"}}
           @remove={{action "removeLearnerGroup"}}
         />
@@ -263,7 +263,7 @@
           {{t "general.done"}}
         {{/if}}
       </button>
-      <button class="cancel text" {{action this.close}}>
+      <button class="cancel text" {{action @close}}>
         {{t "general.cancel"}}
       </button>
     </div>

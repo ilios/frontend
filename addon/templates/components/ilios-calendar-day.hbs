@@ -1,8 +1,8 @@
-<ElDailyCalendar @date={{this.date}} @events={{this.singleDayEvents}} as |hours|>
+<ElDailyCalendar @date={{@date}} @events={{this.singleDayEvents}} as |hours|>
   <div class="row week-titles">
     <div class="cell"></div>
     <div class="cell title">
-      {{moment-format this.date "dddd, MMMM Do YYYY"}}
+      {{moment-format @date "dddd, MMMM Do YYYY"}}
     </div>
   </div>
   <div class="week">
@@ -19,7 +19,7 @@
           {{#each hour.events as |event|}}
             <IliosCalendarEvent
               @event={{event}}
-              @selectEvent={{action this.selectEvent event}}
+              @selectEvent={{action @selectEvent event}}
               @isDay={{true}}
             />
           {{/each}}
@@ -40,6 +40,5 @@
 />
 <IliosCalendarMultidayEvents
   @events={{this.multiDayEvents}}
-  @selectEvent={{action this.selectEvent event}}
+  @selectEvent={{action @selectEvent event}}
 />
-

@@ -1,4 +1,4 @@
-<div class="title" role="button" {{action (action this.expand)}}>
+<div class="title" role="button" {{action (action @expand)}}>
   {{t "general.objectives"}} ({{get (await this.objectives) "length"}})
 </div>
 {{#if

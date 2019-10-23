@@ -1,7 +1,7 @@
 {{! template-lint-disable attribute-indentation }}
 <div class="session-header">
   <span class="title">
-    {{#if this.editable}}
+    {{#if @editable}}
       {{#editable-field
         value=this.title
         save=(action "changeTitle")
@@ -22,11 +22,11 @@
         {{/if}}
       {{/editable-field}}
     {{else}}
-      <h3>{{this.session.title}}</h3>
+      <h3>{{@session.title}}</h3>
     {{/if}}
   </span>
   <span class ="session-publication">
-    {{#if this.editable}}
+    {{#if @editable}}
 
       {{publish-menu
         title=this.menuTitle
@@ -38,8 +38,8 @@
         showTbd=this.showTbd
         showUnPublish=this.showUnPublish
         reviewRoute="session.publication_check"
-        reviewObject=this.session
-        parentObject=(await this.session.course)
+        reviewObject=@session
+        parentObject=(await @session.course)
         publishTranslation="general.publishSession"
         unPublishTranslation="general.unPublishSession"
         publish=(action "publish")
@@ -47,7 +47,7 @@
         unpublish=(action "unpublish")
       }}
     {{else}}
-      {{publication-status item=this.session}}
+      {{publication-status item=@session}}
     {{/if}}
   </span>
 </div>
@@ -67,7 +67,7 @@
 
     <div class="session-overview-actions">
       {{#if (and (is-fulfilled this.showCopy) (await this.showCopy))}}
-        {{#link-to "session.copy" this.session class="copy"}}
+        {{#link-to "session.copy" @session class="copy"}}
           {{fa-icon icon="copy" title=(t "general.copySession") fixedWidth=true}}
         {{/link-to}}
       {{/if}}
@@ -78,7 +78,7 @@
     <div class="sessiontype block">
       <label>{{t "general.sessionType"}}:</label>
       <span>
-        {{#if this.editable}}
+        {{#if @editable}}
           {{#editable-field
             value=this.sessionType.title
             save=(action "changeSessionType")
@@ -96,7 +96,7 @@
             <em>({{t "general.inactive"}})</em>
           {{/unless}}
         {{else}}
-          {{this.session.sessionType.title}}
+          {{@session.sessionType.title}}
           {{#unless this.sessionType.active}}
             <em>({{t "general.inactive"}})</em>
           {{/unless}}
@@ -107,10 +107,10 @@
       <div class="sessionsupplemental block">
         <label>{{t "general.supplementalCurriculum"}}:</label>
         <span>
-          {{#if this.editable}}
-            {{toggle-yesno yes=this.session.supplemental toggle=(action "changeSupplemental")}}
+          {{#if @editable}}
+            {{toggle-yesno yes=@session.supplemental toggle=(action "changeSupplemental")}}
           {{else}}
-            {{#if this.session.supplemental}}
+            {{#if @session.supplemental}}
               <span class="add">{{t "general.yes"}}</span>
             {{else}}
               <span class="remove">{{t "general.no"}}</span>
@@ -123,13 +123,13 @@
       <div class="sessionspecialattire block">
         <label>{{t "general.specialAttireRequired"}}:</label>
         <span>
-          {{#if this.editable}}
+          {{#if @editable}}
             {{toggle-yesno
-              yes=this.session.attireRequired
+              yes=@session.attireRequired
               toggle=(action "changeSpecialAttire")
             }}
           {{else}}
-            {{#if this.session.attireRequired}}
+            {{#if @session.attireRequired}}
               <span class="add">{{t "general.yes"}}</span>
             {{else}}
               <span class="remove">{{t "general.no"}}</span>
@@ -142,13 +142,13 @@
       <div class="sessionspecialequipment block">
         <label>{{t "general.specialEquipmentRequired"}}:</label>
         <span>
-          {{#if this.editable}}
+          {{#if @editable}}
             {{toggle-yesno
-              yes=this.session.equipmentRequired
+              yes=@session.equipmentRequired
               toggle=(action "changeSpecialEquipment")
             }}
           {{else}}
-            {{#if this.session.equipmentRequired}}
+            {{#if @session.equipmentRequired}}
               <span class="add">{{t "general.yes"}}</span>
             {{else}}
               <span class="remove">{{t "general.no"}}</span>
@@ -161,13 +161,13 @@
       <div class="sessionattendancerequired block">
         <label>{{t "general.attendanceRequired"}}:</label>
         <span>
-          {{#if this.editable}}
+          {{#if @editable}}
             {{toggle-yesno
-              yes=this.session.attendanceRequired
+              yes=@session.attendanceRequired
               toggle=(action "changeAttendanceRequired")
             }}
           {{else}}
-            {{#if this.session.attendanceRequired}}
+            {{#if @session.attendanceRequired}}
               <span class="add">{{t "general.yes"}}</span>
             {{else}}
               <span class="remove">{{t "general.no"}}</span>
@@ -180,13 +180,13 @@
     <div class="independentlearningcontrol block">
       <label>{{t "general.independentLearning"}}:</label>
       <span class="independentlearningcontrol-value">
-        {{#if this.editable}}
+        {{#if @editable}}
           {{toggle-yesno
-            yes=this.session.isIndependentLearning
+            yes=@session.isIndependentLearning
             toggle=(action "saveIndependentLearning")
           }}
         {{else}}
-          {{#if this.session.isIndependentLearning}}
+          {{#if @session.isIndependentLearning}}
             <span class="add">{{t "general.yes"}}</span>
           {{else}}
             <span class="remove">{{t "general.no"}}</span>
@@ -194,11 +194,11 @@
         {{/if}}
       </span>
     </div>
-    {{#if this.session.isIndependentLearning}}
+    {{#if @session.isIndependentLearning}}
       <div class="sessionilmhours block">
         <label>{{t "general.hours"}}:</label>
         <span>
-          {{#if this.editable}}
+          {{#if @editable}}
             {{#editable-field
               value=this.hours
               save=(action "changeIlmHours")
@@ -219,17 +219,17 @@
               {{/if}}
             {{/editable-field}}
           {{else}}
-            {{this.session.ilmSession.hours}}&nbsp;
+            {{@session.ilmSession.hours}}&nbsp;
           {{/if}}
         </span>
       </div>
-      <div class="sessionilmduedate block {{if this.session.hasPostrequisite "not-applicable"}}">
+      <div class="sessionilmduedate block {{if @session.hasPostrequisite "not-applicable"}}">
         <label>{{t "general.dueBy"}}:</label>
         <span>
-          {{#if (is-fulfilled this.session.ilmSession)}}
-            {{#if this.editable}}
+          {{#if (is-fulfilled @session.ilmSession)}}
+            {{#if @editable}}
               {{#editable-field
-                value=(moment-format this.session.ilmSession.dueDate "L")
+                value=(moment-format @session.ilmSession.dueDate "L")
                 save=(action "changeIlmDueDate")
                 close=(action "revertIlmDueDateChanges")
               }}
@@ -244,7 +244,7 @@
                 {{/if}}
               {{/editable-field}}
             {{else}}
-              {{moment-format this.session.ilmSession.dueDate "L"}}
+              {{moment-format @session.ilmSession.dueDate "L"}}
             {{/if}}
           {{/if}}
         </span>
@@ -253,24 +253,24 @@
     {{#if this.features.sessionLinkingAdminUi}}
       <div class="postrequisite block">
         <label>
-          {{#if this.session.hasPostrequisite}}
-            {{#link-to "session.index" (await this.session.postrequisite.course) (await this.session.postrequisite)}}
+          {{#if @session.hasPostrequisite}}
+            {{#link-to "session.index" (await @session.postrequisite.course) (await @session.postrequisite)}}
               {{fa-icon  icon="external-link-square-alt"}} {{t "general.duePriorTo"}}:
             {{/link-to}}
           {{else}}
             {{t "general.duePriorTo"}}:
           {{/if}}
         </label>
-        {{#if this.editable}}
+        {{#if @editable}}
           {{#editable-field
             value=(await this.postRequisiteTitle)
             save=(action "changePostrequisite")
             close=(action "revertPostrequisiteChanges")
           }}
             <select onchange={{action "setPostrequisite" value="target.value"}}>
-              <option value="null" selected={{is-empty (await this.session.postrequisite)}}>{{t "general.none"}}</option>
+              <option value="null" selected={{is-empty (await @session.postrequisite)}}>{{t "general.none"}}</option>
               {{#each (await this.linkablePostrequisites) as |linkablePostrequisite|}}
-                <option value={{linkablePostrequisite.id}} selected={{is-equal linkablePostrequisite (await this.session.postrequisite)}}>
+                <option value={{linkablePostrequisite.id}} selected={{is-equal linkablePostrequisite (await @session.postrequisite)}}>
                   {{linkablePostrequisite.title}}
                   {{#if (await linkablePostrequisite.firstOfferingDate)}}
                     {{#if linkablePostrequisite.ilmSession}}
@@ -284,8 +284,8 @@
             </select>
           {{/editable-field}}
         {{else}}
-          {{#if this.session.hasPostrequisite}}
-            {{this.session.postrequisite.title}}
+          {{#if @session.hasPostrequisite}}
+            {{@session.postrequisite.title}}
           {{else}}
             {{t "general.none"}}
           {{/if}}
@@ -293,9 +293,9 @@
       </div>
       <div class="prerequisites block">
         <label>{{t "general.prerequisites"}}:</label>
-        {{#if this.session.hasPrerequisites}}
+        {{#if @session.hasPrerequisites}}
           <span>
-            {{#each (await this.session.prerequisites) as |prerequisite|~}}{{#link-to "session.index" (await prerequisite.course) prerequisite}}{{fa-icon  icon="external-link-square-alt"}} {{prerequisite.title}}{{/link-to~}}{{#unless (eq prerequisite this.session.prerequisites.lastObject)}}, {{/unless}}{{~/each}}
+            {{#each (await @session.prerequisites) as |prerequisite|~}}{{#link-to "session.index" (await prerequisite.course) prerequisite}}{{fa-icon  icon="external-link-square-alt"}} {{prerequisite.title}}{{/link-to~}}{{#unless (eq prerequisite @session.prerequisites.lastObject)}}, {{/unless}}{{~/each}}
           </span>
         {{else}}
           {{t "general.none"}}
@@ -306,7 +306,7 @@
     <div class="sessiondescription">
       <label>{{t "general.description"}}:</label>
       <span>
-        {{#if this.editable}}
+        {{#if @editable}}
           {{#editable-field
             value=this.description
             save=(action "saveDescription")
@@ -334,9 +334,9 @@
     <div class="instructional-notes" data-test-instructional-notes>
       <label>{{t "general.instructionalNotes"}}:</label>
       <span>
-        {{#if this.editable}}
+        {{#if @editable}}
           {{#editable-field
-            value=this.session.instructionalNotes
+            value=@session.instructionalNotes
             save=(perform this.saveInstructionalNotes)
             close=(action "revertInstructionalNotesChanges")
             renderHtml=true
@@ -359,14 +359,14 @@
         {{/if}}
       </span>
     </div>
-    {{#unless this.session.isIndependentLearning}}
+    {{#unless @session.isIndependentLearning}}
       <br>
       <div class="sessionassociatedgroups">
         <label>{{t "general.associatedGroups"}}:</label>
         <span>
-          {{#if (is-fulfilled this.session.associatedOfferingLearnerGroups)}}
+          {{#if (is-fulfilled @session.associatedOfferingLearnerGroups)}}
             <span>
-              {{#each (await this.session.associatedOfferingLearnerGroups) as |group|}}
+              {{#each (await @session.associatedOfferingLearnerGroups) as |group|}}
                 {{group.title}},
               {{else}}
                 {{t "general.none"}}

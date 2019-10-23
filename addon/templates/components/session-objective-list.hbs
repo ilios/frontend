@@ -6,7 +6,7 @@
       @cancel={{action "cancelSorting"}}
     />
   {{else if (get (await this.objectives) "length")}}
-    {{#if (and this.editable (await this.hasMoreThanOneObjective))}}
+    {{#if (and @editable (await this.hasMoreThanOneObjective))}}
       <button class="sort-materials-btn" {{action (mut this.isSorting) true}}>
         {{t "general.sortObjectives"}}
       </button>
@@ -32,15 +32,15 @@
         {{#each (await this.objectives) as |objective|}}
           <SessionObjectiveListItem
             @objective={{objective}}
-            @editable={{this.editable}}
+            @editable={{@editable}}
             @session={{this.session}}
             @showRemoveConfirmation={{is-in
               this.objectivesForRemovalConfirmation
               objective.id
             }}
             @remove={{action "confirmRemoval"}}
-            @manageParents={{this.manageParents}}
-            @manageDescriptors={{this.manageDescriptors}}
+            @manageParents={{@manageParents}}
+            @manageDescriptors={{@manageDescriptors}}
           />
           {{#if (is-in this.objectivesForRemovalConfirmation objective.id)}}
             <tr class="confirm-removal">
@@ -69,7 +69,7 @@
   {{/if}}
 {{else}}
   {{! template-lint-disable unused-block-params }}
-  {{#each (this.repeat this.session.objectives.length) as |empty|}}
+  {{#each (repeat this.session.objectives.length) as |empty|}}
     <div>
       <LoadingSpinner />
     </div>

@@ -4,7 +4,7 @@
     {{t "general.overview"}}
   </div>
   <div class="course-overview-actions">
-    <LinkTo @route="course-materials" @model={{this.course}} class="materials">
+    <LinkTo @route="course-materials" @model={{@course}} class="materials">
       <FaIcon
         @icon="archive"
         @title={{t "general.learningMaterialsSummary"}}
@@ -13,7 +13,7 @@
     </LinkTo>
     <LinkTo
       @route="print_course"
-      @model={{this.course}}
+      @model={{@course}}
       @query={{hash unpublished=true}}
       class="print"
     >
@@ -38,7 +38,7 @@
     {{/if}}
     <LinkTo
       @route="course-visualizations"
-      @model={{this.course}}
+      @model={{@course}}
       @title={{t "general.courseVisualizations"}}
     >
       <FaIcon @icon="chart-bar" />
@@ -49,7 +49,7 @@
   <div class="block courseexternalid">
     <label>{{t "general.externalId"}}:</label>
     <span>
-      {{#if this.editable}}
+      {{#if @editable}}
         <EditableField
           @value={{if this.externalId this.externalId (t "general.clickToEdit")}}
           @save={{action "changeExternalId"}}
@@ -83,7 +83,7 @@
   <div class="block clerkshiptype">
     <label>{{t "general.clerkshipType"}}:</label>
     <span>
-      {{#if this.editable}}
+      {{#if @editable}}
         <EditableField
           @value={{await this.clerkshipTypeTitle}}
           @save={{action "changeClerkshipType"}}
@@ -111,8 +111,8 @@
             {{/each}}
           </select>
         </EditableField>
-      {{else if this.course.clerkshipType}}
-        {{this.course.clerkshipType.title}}
+      {{else if @course.clerkshipType}}
+        {{@course.clerkshipType.title}}
       {{else}}
         {{t "general.notAClerkship"}}
       {{/if}}
@@ -121,9 +121,9 @@
   <div class="block coursestartdate">
     <label>{{t "general.start"}}:</label>
     <span>
-      {{#if this.editable}}
+      {{#if @editable}}
         <EditableField
-          @value={{moment-format this.course.startDate "L"}}
+          @value={{moment-format @course.startDate "L"}}
           @save={{action "changeStartDate"}}
           @close={{action "revertStartDateChanges"}}
         >
@@ -145,16 +145,16 @@
           {{/if}}
         </EditableField>
       {{else}}
-        {{moment-format this.course.startDate "L"}}&nbsp;
+        {{moment-format @course.startDate "L"}}&nbsp;
       {{/if}}
     </span>
   </div>
   <div class="block courseenddate">
     <label>{{t "general.end"}}:</label>
     <span>
-      {{#if this.editable}}
+      {{#if @editable}}
         <EditableField
-          @value={{moment-format this.course.endDate "L"}}
+          @value={{moment-format @course.endDate "L"}}
           @save={{action "changeEndDate"}}
           @close={{action "revertEndDateChanges"}}
         >
@@ -175,14 +175,14 @@
           {{/if}}
         </EditableField>
       {{else}}
-        {{moment-format this.course.endDate "L"}}&nbsp;
+        {{moment-format @course.endDate "L"}}&nbsp;
       {{/if}}
     </span>
   </div>
   <div class="block courselevel">
     <label>{{t "general.level"}}:</label>
     <span>
-      {{#if this.editable}}
+      {{#if @editable}}
         <EditableField
           @value={{this.level}}
           @save={{action "changeLevel"}}
@@ -205,7 +205,7 @@
     <label>{{t "general.universalLocator"}}:</label>
     <span class="universallocator">
       <strong>
-        {{concat this.universalLocator this.course.id}}
+        {{concat this.universalLocator @course.id}}
       </strong>
     </span>
   </div>

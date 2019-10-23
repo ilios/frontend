@@ -23,7 +23,7 @@
       role="button"
       {{action "collapse"}}
     >
-      {{t "general.objectives"}} ({{this.subject.objectives.length}})
+      {{t "general.objectives"}} ({{@subject.objectives.length}})
     </div>
   {{/if}}
   <div class="detail-objectives-actions">
@@ -34,11 +34,11 @@
       <button class="bigcancel" {{action "cancel"}}>
         <FaIcon @icon="undo" />
       </button>
-    {{else if this.editable}}
-      {{#if this.isCourse}}
-        <LinkTo @route="course-visualize-objectives" @model={{this.subject}}>
+    {{else if @editable}}
+      {{#if @isCourse}}
+        <LinkTo @route="course-visualize-objectives" @model={{@subject}}>
           <VisualizerCourseObjectives
-            @course={{this.subject}}
+            @course={{@subject}}
             @width={{20}}
             @height={{20}}
             @isIcon={{true}}
@@ -60,33 +60,33 @@
     />
   {{/if}}
   {{#liquid-unless this.isManaging class="horizontal"}}
-    {{#if this.isCourse}}
+    {{#if @isCourse}}
       <CourseObjectiveList
-        @subject={{this.subject}}
-        @editable={{this.editable}}
+        @subject={{@subject}}
+        @editable={{@editable}}
         @manageParents={{action "manageParents"}}
         @manageDescriptors={{action "manageDescriptors"}}
       />
     {{/if}}
     {{#if this.isSession}}
       <SessionObjectiveList
-        @subject={{this.subject}}
-        @editable={{this.editable}}
+        @subject={{@subject}}
+        @editable={{@editable}}
         @manageParents={{action "manageParents"}}
         @manageDescriptors={{action "manageDescriptors"}}
       />
     {{/if}}
     {{#if this.isProgramYear}}
       <ProgramyearObjectiveList
-        @subject={{this.subject}}
-        @editable={{this.editable}}
+        @subject={{@subject}}
+        @editable={{@editable}}
         @manageDescriptors={{action "manageDescriptors"}}
         @manageCompetency={{action "manageCompetency"}}
       />
     {{/if}}
   {{else}}
     {{#if this.isManagingParents}}
-      {{#if this.isCourse}}
+      {{#if @isCourse}}
         <CourseObjectiveManager @courseObjective={{this.mangeParentsObjective}} />
       {{/if}}
       {{#if this.isSession}}
@@ -95,7 +95,7 @@
     {{/if}}
     {{#if this.isManagingDescriptors}}
       <ObjectiveManageDescriptors
-        @editable={{this.editable}}
+        @editable={{@editable}}
         @objective={{this.manageDescriptorsObjective}}
       />
     {{/if}}
@@ -104,4 +104,3 @@
     {{/if}}
   {{/liquid-unless}}
 </div>
-

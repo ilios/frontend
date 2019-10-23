@@ -1,5 +1,5 @@
-<div class="title clickable" role="button" {{action this.expand}}>
-  {{title}}
+<div class="title clickable" role="button" {{action @expand}}>
+  {{@title}}
 </div>
 <div class="content">
   <table class="condensed">
@@ -17,7 +17,7 @@
             {{t "general.directors"}}
           </td>
           <td>
-            {{t "general.directorCount" count=this.directorsCount}}
+            {{t "general.directorCount" count=@directorsCount}}
           </td>
         </tr>
       {{/if}}
@@ -27,11 +27,10 @@
             {{t "general.administrators"}}
           </td>
           <td>
-            {{t "general.administratorCount" count=this.administratorsCount}}
+            {{t "general.administratorCount" count=@administratorsCount}}
           </td>
         </tr>
       {{/if}}
     </tbody>
   </table>
 </div>
-

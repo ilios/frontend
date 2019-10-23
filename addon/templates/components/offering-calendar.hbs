@@ -18,14 +18,14 @@
     />
     <label onclick={{toggle "showSessionEvents" this}}>
       {{! template-lint-disable no-triple-curlies }}
-      {{{t "general.showSessionEvents" sessionTitle=this.session.title}}}
+      {{{t "general.showSessionEvents" sessionTitle=@session.title}}}
     </label>
   </span>
 </p>
 <div class="ilios-calendar">
   <IliosCalendarWeek
     @calendarEvents={{await this.calendarEvents}}
-    @date={{this.startDate}}
+    @date={{@startDate}}
     @areEventsSelectable={{false}}
     @areDaysSelectable={{false}}
   />

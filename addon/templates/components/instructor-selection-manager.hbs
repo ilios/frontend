@@ -1,10 +1,10 @@
-{{#if (get (await this.instructors) "length")}}
+{{#if (get (await @instructors) "length")}}
   <h4>
     {{t "general.instructors"}}
-    ({{get (await this.instructors) "length"}})
+    ({{get (await @instructors) "length"}})
   </h4>
   <ul class="instructors-list" data-test-instructors>
-    {{#each (sort-by "fullName" (await this.instructors)) as |user|}}
+    {{#each (sort-by "fullName" (await @instructors)) as |user|}}
       <li role="button" {{action "removeInstructor" user}}>
         {{user.fullName}}
         <FaIcon @icon="times" class="remove" />
@@ -13,13 +13,13 @@
   </ul>
 {{/if}}
 
-{{#if (get (await this.instructorGroups) "length")}}
+{{#if (get (await @instructorGroups) "length")}}
   <h4>
     {{t "general.instructorGroups"}}
-    ({{get (await this.instructorGroups) "length"}})
+    ({{get (await @instructorGroups) "length"}})
   </h4>
   <div data-test-instructor-groups>
-    {{#each (sort-by "title" (await this.instructorGroups)) as |instructorGroup|}}
+    {{#each (sort-by "title" (await @instructorGroups)) as |instructorGroup|}}
       <div class="instructor-group" data-test-instructor-group>
         <span role="button" {{action "removeInstructorGroup" instructorGroup}} data-test-instructor-group-title>
           <FaIcon @icon="users" />
@@ -42,9 +42,8 @@
 <UserSearch
   @addUser={{action "addInstructor"}}
   @addInstructorGroup={{action "addInstructorGroup"}}
-  @currentlyActiveUsers={{this.instructors}}
-  placeholder={{t "general.findInstructorOrGroup"}}
-  @availableInstructorGroups={{await this.availableInstructorGroups}}
-  @currentlyActiveInstructorGroups={{this.instructorGroups}}
+  @currentlyActiveUsers={{@instructors}}
+  @placeholder={{t "general.findInstructorOrGroup"}}
+  @availableInstructorGroups={{await @availableInstructorGroups}}
+  @currentlyActiveInstructorGroups={{@instructorGroups}}
 />
-

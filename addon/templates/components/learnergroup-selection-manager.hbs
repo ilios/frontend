@@ -3,11 +3,11 @@
   <h4>
     {{t "general.selectedLearnerGroups"}}
   </h4>
-  {{#if this.learnerGroups.length}}
+  {{#if @learnerGroups.length}}
     <DetailLearnergroupsList
-      @learnerGroups={{this.learnerGroups}}
+      @learnerGroups={{@learnerGroups}}
       @isManaging={{true}}
-      @remove={{this.remove}}
+      @remove={{@remove}}
     />
   {{else}}
     <p>
@@ -18,7 +18,7 @@
 <div class="available-learner-groups">
   <h4>
     {{t "general.availableLearnerGroups"}}
-    {{#unless (and (is-fulfilled this.allLearnerGroups) (is-fulfilled this.cohorts))}}
+    {{#unless (and (is-fulfilled this.allLearnerGroups) (is-fulfilled @cohorts))}}
       <LoadingSpinner />
     {{/unless}}
   </h4>
@@ -27,7 +27,7 @@
     placeholder={{t "general.filterPlaceholder"}}
   />
   <div class="cohorts-container" data-test-cohorts>
-    {{#each (sort-by "title" (await this.cohorts)) as |cohort|}}
+    {{#each (sort-by "title" (await @cohorts)) as |cohort|}}
       <div class="cohort-learner-groups" data-test-cohort>
         {{#if
           (and
@@ -48,9 +48,9 @@
             }}
               <LearnergroupTree
                 @learnerGroup={{learnerGroup}}
-                @selectedGroups={{this.learnerGroups}}
+                @selectedGroups={{@learnerGroups}}
                 @filter={{this.filter}}
-                @add={{action add}}
+                @add={{action @add}}
               />
             {{/each}}
           </ul>

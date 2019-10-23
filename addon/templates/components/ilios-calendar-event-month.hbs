@@ -1,4 +1,4 @@
-{{#if this.event}}
+{{#if @event}}
   {{#attach-tooltip
     lazyRender=true
     placement="left"
@@ -18,21 +18,21 @@
   {{/if}}
   <span class="ilios-calendar-event-time">
     <span class="ilios-calendar-event-start">
-      {{moment-format this.event.startDate "h:mma"}}
+      {{moment-format @event.startDate "h:mma"}}
     </span>
     <span class="ilios-calendar-event-end">
       -
-      {{moment-format this.event.endDate "h:mma"}}
+      {{moment-format @event.endDate "h:mma"}}
     </span>
   </span>
-  {{#unless this.event.isMulti}}
+  {{#unless @event.isMulti}}
     <span class="ilios-calendar-event-location">
-      {{this.event.location}}:
+      {{@event.location}}:
     </span>
   {{/unless}}
   <span class="ilios-calendar-event-name">
-    {{this.event.name}}
-    {{#if this.event.isMulti}}
+    {{@event.name}}
+    {{#if @event.isMulti}}
       ,
       <em>
         {{t "general.multiple"}}
@@ -40,4 +40,3 @@
     {{/if}}
   </span>
 {{/if}}
-
