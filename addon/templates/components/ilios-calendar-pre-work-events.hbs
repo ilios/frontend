@@ -6,7 +6,7 @@
     <ul>
       {{#each @events as |event|}}
         <IliosCalendarPreWorkEvent
-          @event={{@event}}
+          @event={{event}}
           @areEventsSelectable={{or @areEventsSelectable false}}
         />
       {{/each}}
