@@ -20,6 +20,7 @@ module('Integration | Component | course objective list item', function(hooks) {
 
     await render(hbs`<CourseObjectiveListItem
       @objective={{objective}}
+      @editable={{true}}
       @remove={{action nothing}}
       @manageParents={{action nothing}}
       @manageDescriptors={{action nothing}}
@@ -40,6 +41,7 @@ module('Integration | Component | course objective list item', function(hooks) {
 
     await render(hbs`<CourseObjectiveListItem
       @objective={{objective}}
+      @editable={{true}}
       @showRemoveConfirmation={{true}}
       @remove={{action nothing}}
       @manageParents={{action nothing}}
@@ -62,6 +64,7 @@ module('Integration | Component | course objective list item', function(hooks) {
 
     await render(hbs`<CourseObjectiveListItem
       @objective={{objective}}
+      @editable={{true}}
       @remove={{action nothing}}
       @manageParents={{action nothing}}
       @manageDescriptors={{action nothing}}
@@ -84,6 +87,7 @@ module('Integration | Component | course objective list item', function(hooks) {
 
     await render(hbs`<CourseObjectiveListItem
       @objective={{objective}}
+      @editable={{true}}
       @remove={{action nothing}}
       @manageParents={{action something}}
       @manageDescriptors={{action nothing}}
@@ -105,6 +109,7 @@ module('Integration | Component | course objective list item', function(hooks) {
 
     await render(hbs`<CourseObjectiveListItem
       @objective={{objective}}
+      @editable={{true}}
       @remove={{action nothing}}
       @manageParents={{action nothing}}
       @manageDescriptors={{action something}}
@@ -126,6 +131,7 @@ module('Integration | Component | course objective list item', function(hooks) {
 
     await render(hbs`<CourseObjectiveListItem
       @objective={{objective}}
+      @editable={{true}}
       @remove={{action something}}
       @manageParents={{action nothing}}
       @manageDescriptors={{action nothing}}
