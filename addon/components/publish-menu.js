@@ -10,7 +10,6 @@ export default Component.extend({
 
   classNameBindings: ['publicationStatus', ':publish-menu'],
   publicationStatus: 'notpublished',
-  icon: 'cloud',
   title: null,
   showAsIs: false,
   showPublish: false,
