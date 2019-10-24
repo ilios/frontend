@@ -8,6 +8,7 @@ import {
 } from 'ember-cli-page-object';
 
 const definition = {
+  schoolTitle: text('[data-test-school-title]'),
   courseTitle: text('.course-title-link'),
   sessions: collection('.session-title-link'),
   showMoreIsVisible: isVisible('.show-more'),

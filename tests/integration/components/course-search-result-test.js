@@ -9,11 +9,12 @@ module('Integration | Component | course-search-result', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it display course and session info properly', async function(assert) {
-    assert.expect(8);
+    assert.expect(9);
 
     const course = EmberObject.create({
       id: 1,
       title: 'Course 1',
+      school: 'Medicine',
       sessions: [{
         id: 1, title: 'Session 1'
       }, {
@@ -27,6 +28,7 @@ module('Integration | Component | course-search-result', function(hooks) {
     this.set('course', course);
     await render(hbs`<CourseSearchResult @course={{course}} />`);
     assert.equal(component.courseTitle, 'Course 1');
+    assert.equal(component.schoolTitle, 'Medicine');
     assert.equal(component.sessions.objectAt(0).text, 'Session 1');
     assert.equal(component.sessions.objectAt(1).text, 'Session 2');
     assert.equal(component.sessions.objectAt(2).text, 'Session 3');
