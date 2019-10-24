@@ -65,6 +65,9 @@ module('Unit | Mixin | events', function(hooks) {
         if ([ 'offering', 'ilmSession' ].includes(what)) {
           return resolve(intermediary);
         }
+        if (what === 'course') {
+          return resolve(course);
+        }
         throw 'Unsupported model type requested.';
       },
     });
@@ -89,7 +92,7 @@ module('Unit | Mixin | events', function(hooks) {
   test('getCourseForEvent', async function(assert) {
     assert.expect(1);
     const subject = this.subject();
-    const event = { offering: 1 };
+    const event = { course: course.id };
     const courseForEvent = await subject.getCourseForEvent(event);
     assert.equal(courseForEvent, course);
 
@@ -117,7 +120,7 @@ module('Unit | Mixin | events', function(hooks) {
   test('getCourseLevelForEvent', async function(assert) {
     assert.expect(1);
     const subject = this.subject();
-    const event = { offering: 1 };
+    const event = { course: course.id };
     const courseLevel = await subject.getCourseLevelForEvent(event);
     assert.equal(courseLevel, 4);
   });
@@ -125,7 +128,7 @@ module('Unit | Mixin | events', function(hooks) {
   test('getCourseIdForEvent', async function(assert) {
     assert.expect(1);
     const subject = this.subject();
-    const event = { offering: 1 };
+    const event = { course: course.id };
     const courseId = await subject.getCourseIdForEvent(event);
     assert.equal(courseId, 22);
   });
