@@ -1,10 +1,10 @@
-{{#if sortedInstructors.length}}
+{{#if this.sortedInstructors.length}}
   <h4>
     {{t "general.instructors"}}
-    ({{sortedInstructors.length}})
+    ({{this.sortedInstructors.length}})
   </h4>
   <ul class="instructors-list" data-test-instructors>
-    {{#each sortedInstructors as |user|}}
+    {{#each this.sortedInstructors as |user|}}
       <li>
         {{user.fullName}}
       </li>
@@ -12,13 +12,13 @@
   </ul>
 {{/if}}
 
-{{#if sortedInstructorGroups.length}}
+{{#if this.sortedInstructorGroups.length}}
   <h4>
     {{t "general.instructorGroups"}}
-    ({{sortedInstructorGroups.length}})
+    ({{this.sortedInstructorGroups.length}})
   </h4>
   <div data-test-instructor-groups>
-    {{#each sortedInstructorGroups as |instructorGroup|}}
+    {{#each this.sortedInstructorGroups as |instructorGroup|}}
       <div class="instructor-group" data-test-instructor-group>
         <span data-test-instructor-group-title>
           <FaIcon @icon="users" />

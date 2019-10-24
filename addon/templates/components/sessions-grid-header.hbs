@@ -4,10 +4,10 @@
   class="expand-collapse-control"
   role="button"
   data-test-expand-collapse-all
-  {{action (perform expandAll)}}
+  {{action (perform this.expandAll)}}
 >
   {{#if @showExpandAll}}
-    {{#if isExpanding}}
+    {{#if this.isExpanding}}
       <LoadingSpinner />
     {{else if @allSessionsExpanded}}
       <FaIcon @icon="caret-down" class="clickable" />
@@ -18,8 +18,8 @@
 </span>
 <SortableHeading
   @click={{action "setSortBy" "title"}}
-  @sortedBy={{or (eq sortBy "title") (eq sortBy "title:desc")}}
-  @sortedAscending={{sortedAscending}}
+  @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
+  @sortedAscending={{this.sortedAscending}}
   @title={{t "general.title"}}
   class="session-grid-title"
 >
@@ -28,10 +28,10 @@
 <SortableHeading
   @click={{action "setSortBy" "sessionTypeTitle"}}
   @sortedBy={{or
-    (eq sortBy "sessionTypeTitle")
-    (eq sortBy "sessionTypeTitle:desc")
+    (eq @sortBy "sessionTypeTitle")
+    (eq @sortBy "sessionTypeTitle:desc")
   }}
-  @sortedAscending={{sortedAscending}}
+  @sortedAscending={{this.sortedAscending}}
   @title={{t "general.type"}}
   class="session-grid-type"
 >
@@ -41,10 +41,10 @@
   @sortType="numeric"
   @click={{action "setSortBy" "learnerGroupCount"}}
   @sortedBy={{or
-    (eq sortBy "learnerGroupCount")
-    (eq sortBy "learnerGroupCount:desc")
+    (eq @sortBy "learnerGroupCount")
+    (eq @sortBy "learnerGroupCount:desc")
   }}
-  @sortedAscending={{sortedAscending}}
+  @sortedAscending={{this.sortedAscending}}
   @title={{t "general.groups"}}
   class="session-grid-groups"
 >
@@ -53,9 +53,9 @@
 <SortableHeading
   @sortType="numeric"
   @click={{action "setSortBy" "objectiveCount"}}
-  @sortedBy={{or (eq sortBy "objectiveCount") (eq sortBy "objectiveCount:desc")
+  @sortedBy={{or (eq @sortBy "objectiveCount") (eq @sortBy "objectiveCount:desc")
   }}
-  @sortedAscending={{sortedAscending}}
+  @sortedAscending={{this.sortedAscending}}
   @title={{t "general.objectives"}}
   class="session-grid-objectives"
 >
@@ -64,8 +64,8 @@
 <SortableHeading
   @sortType="numeric"
   @click={{action "setSortBy" "termCount"}}
-  @sortedBy={{or (eq sortBy "termCount") (eq sortBy "termCount:desc")}}
-  @sortedAscending={{sortedAscending}}
+  @sortedBy={{or (eq @sortBy "termCount") (eq @sortBy "termCount:desc")}}
+  @sortedAscending={{this.sortedAscending}}
   @title={{t "general.terms"}}
   class="session-grid-terms"
 >
@@ -75,10 +75,10 @@
   @sortType="numeric"
   @click={{action "setSortBy" "firstOfferingDate"}}
   @sortedBy={{or
-    (eq sortBy "firstOfferingDate")
-    (eq sortBy "firstOfferingDate:desc")
+    (eq @sortBy "firstOfferingDate")
+    (eq @sortBy "firstOfferingDate:desc")
   }}
-  @sortedAscending={{sortedAscending}}
+  @sortedAscending={{this.sortedAscending}}
   @title={{t "general.firstOffering"}}
   class="session-grid-first-offering"
 >
@@ -87,8 +87,8 @@
 <SortableHeading
   @sortType="numeric"
   @click={{action "setSortBy" "offeringCount"}}
-  @sortedBy={{or (eq sortBy "offeringCount") (eq sortBy "offeringCount:desc")}}
-  @sortedAscending={{sortedAscending}}
+  @sortedBy={{or (eq @sortBy "offeringCount") (eq @sortBy "offeringCount:desc")}}
+  @sortedAscending={{this.sortedAscending}}
   @title={{t "general.offerings"}}
   class="session-grid-offerings"
 >
@@ -96,12 +96,11 @@
 </SortableHeading>
 <SortableHeading
   @click={{action "setSortBy" "status"}}
-  @sortedBy={{or (eq sortBy "status") (eq sortBy "status:desc")}}
-  @sortedAscending={{sortedAscending}}
+  @sortedBy={{or (eq @sortBy "status") (eq @sortBy "status:desc")}}
+  @sortedAscending={{this.sortedAscending}}
   @title={{t "general.status"}}
   class="session-grid-status"
 >
   {{t "general.status"}}
 </SortableHeading>
 <span class="session-grid-actions"></span>
-

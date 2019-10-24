@@ -5,20 +5,19 @@
   <ClickChoiceButtons
     @buttonContent1={{t "general.smallGroups"}}
     @buttonContent2={{t "general.offering"}}
-    @firstChoicePicked={{smallGroupMode}}
-    @toggle={{action (mut smallGroupMode)}}
+    @firstChoicePicked={{this.smallGroupMode}}
+    @toggle={{action (mut this.smallGroupMode)}}
   />
 </div>
 <OfferingForm
-  @showRoom={{not smallGroupMode}}
+  @showRoom={{not this.smallGroupMode}}
   @showMakeRecurring={{true}}
-  @showInstructors={{not smallGroupMode}}
-  @cohorts={{cohorts}}
-  @courseStartDate={{courseStartDate}}
-  @courseEndDate={{courseEndDate}}
-  @close={{close}}
+  @showInstructors={{not this.smallGroupMode}}
+  @cohorts={{@cohorts}}
+  @courseStartDate={{@courseStartDate}}
+  @courseEndDate={{@courseEndDate}}
+  @close={{@close}}
   @save={{action "save"}}
-  @smallGroupMode={{smallGroupMode}}
-  @session={{session}}
+  @smallGroupMode={{this.smallGroupMode}}
+  @session={{@session}}
 />
-

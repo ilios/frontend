@@ -1,6 +1,6 @@
 <div class="detail-instructors-header">
   <div class="title">
-    {{#if isManaging}}
+    {{#if this.isManaging}}
       <span class="detail-specific-title">
         {{t "general.instructorsManageTitle"}}
       </span>
@@ -10,14 +10,14 @@
     {{/if}}
   </div>
   <div class="actions">
-    {{#if isManaging}}
+    {{#if this.isManaging}}
       <button class="bigadd" {{action "save"}}>
         <FaIcon @icon="check" />
       </button>
       <button class="bigcancel" {{action "cancel"}}>
         <FaIcon @icon="undo" />
       </button>
-    {{else if editable}}
+    {{else if @editable}}
       <button {{action "manage"}}>
         {{t "general.instructorsManageTitle"}}
       </button>
@@ -25,21 +25,20 @@
   </div>
 </div>
 <div class="detail-instructors-content">
-  {{#if isManaging class="horizontal"}}
+  {{#if this.isManaging class="horizontal"}}
     <InstructorSelectionManager
       @addInstructor={{action "addInstructorToBuffer"}}
       @addInstructorGroup={{action "addInstructorGroupToBuffer"}}
       @removeInstructor={{action "removeInstructorFromBuffer"}}
       @removeInstructorGroup={{action "removeInstructorGroupFromBuffer"}}
-      @availableInstructorGroups={{await availableInstructorGroups}}
-      @instructorGroups={{instructorGroupBuffer}}
-      @instructors={{instructorBuffer}}
+      @availableInstructorGroups={{await this.availableInstructorGroups}}
+      @instructorGroups={{this.instructorGroupBuffer}}
+      @instructors={{this.instructorBuffer}}
     />
   {{else}}
     <DetailInstructorsList
-      @instructorGroups={{ilmSession.instructorGroups}}
-      @instructors={{ilmSession.instructors}}
+      @instructorGroups={{@ilmSession.instructorGroups}}
+      @instructors={{@ilmSession.instructors}}
     />
   {{/if}}
 </div>
-

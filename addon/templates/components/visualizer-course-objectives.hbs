@@ -1,15 +1,15 @@
 {{! template-lint-disable attribute-indentation }}
-{{#if (or true isIcon (gt (get (await objectiveWithMinutes) "length") 0))}}
+{{#if (or true @isIcon (gt (get (await this.objectiveWithMinutes) "length") 0))}}
   <SimpleChart
     @name="donut"
-    @isIcon={{isIcon}}
-    @data={{await objectiveWithMinutes}}
-    @hover={{perform donutHover}}
-    @leave={{perform donutHover}} as |chart|
+    @isIcon={{@isIcon}}
+    @data={{await this.objectiveWithMinutes}}
+    @hover={{perform this.donutHover}}
+    @leave={{perform this.donutHover}} as |chart|
   >
-    {{#if tooltipContent}}
-      <chart.tooltip @title={{tooltipTitle}}>
-        {{tooltipContent}}
+    {{#if this.tooltipContent}}
+      <chart.tooltip @title={{this.tooltipTitle}}>
+        {{this.tooltipContent}}
       </chart.tooltip>
     {{/if}}
   </SimpleChart>
@@ -23,7 +23,7 @@
     </h4>
   </div>
 {{/if}}
-{{#unless (or isIcon (eq (get (await objectiveWithoutMinutes) "length") 0))}}
+{{#unless (or @isIcon (eq (get (await this.objectiveWithoutMinutes) "length") 0))}}
   <div class="zero-hours">
     <h4>
       <FaIcon @icon="exclamation-triangle" class="warning" />
@@ -35,7 +35,7 @@
     <ul>
       {{#each
         (sort-by
-          "meta.courseObjective.title" (await objectiveWithoutMinutes)
+          "meta.courseObjective.title" (await this.objectiveWithoutMinutes)
         ) as |obj|
       }}
         {{! template-lint-disable no-triple-curlies}}
@@ -46,4 +46,3 @@
     </ul>
   </div>
 {{/unless}}
-

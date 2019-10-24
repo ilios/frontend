@@ -1,76 +1,75 @@
 <div class="course-sessions-header">
   <div class="title">
-    {{t "general.sessions"}} ({{sessionsCount}})
+    {{t "general.sessions"}} ({{this.sessionsCount}})
   </div>
   <div class="actions" data-test-actions>
-    {{#if canCreateSession}}
+    {{#if @canCreateSession}}
       <ExpandCollapseButton
-        @value={{showNewSessionForm}}
+        @value={{this.showNewSessionForm}}
         @action={{toggle "showNewSessionForm" this}}
       />
     {{/if}}
-    {{#if (and canUpdateCourse (gt sessionsCount 0))}}
-      <LinkTo @route="course.publishall" @model={{course}}>
+    {{#if (and @canUpdateCourse (gt this.sessionsCount 0))}}
+      <LinkTo @route="course.publishall" @model={{@course}}>
         <button>
-          {{t "general.publishAllSessions" sessionCount=sessionsCount}}
+          {{t "general.publishAllSessions" sessionCount=this.sessionsCount}}
         </button>
       </LinkTo>
     {{/if}}
   </div>
 </div>
-{{#if showNewSessionForm}}
+{{#if this.showNewSessionForm}}
   <div class="new-session-form">
     <NewSession
-      @sessionTypes={{sessionTypes}}
-      @save={{perform saveSession}}
+      @sessionTypes={{this.sessionTypes}}
+      @save={{perform this.saveSession}}
       @cancel={{toggle "showNewSessionForm" this}}
     />
   </div>
 {{/if}}
-{{#if saveSession.lastSuccessful.value}}
+{{#if this.saveSession.lastSuccessful.value}}
   <div class="save-result" data-test-new-saved-session>
     <LinkTo
       @route="session.index"
-      @models={{array course saveSession.lastSuccessful.value}}
+      @models={{array @course this.saveSession.lastSuccessful.value}}
     >
       <FaIcon @icon="external-link-square-alt" />
-      {{get saveSession.lastSuccessful.value "title"}}
+      {{get this.saveSession.lastSuccessful.value "title"}}
     </LinkTo>
     {{t "general.savedSuccessfully"}}
   </div>
 {{/if}}
 <div class="filter">
   <input
-    value={{filterByDebounced}}
-    oninput={{action (perform changeFilterBy) value="target.value"}}
+    value={{@filterByDebounced}}
+    oninput={{action (perform this.changeFilterBy) value="target.value"}}
     placeholder={{t "general.sessionTitleFilterPlaceholder"}}
     data-test-session-filter
   >
 </div>
 <section>
   <SessionsGridHeader
-    @showExpandAll={{is-fulfilled sessionObjects}}
-    @setSortBy={{setSortBy}}
-    @sortBy={{sortBy}}
+    @showExpandAll={{is-fulfilled this.sessionObjects}}
+    @setSortBy={{@setSortBy}}
+    @sortBy={{@sortBy}}
     @allSessionsExpanded={{and
       (eq
-        expandedSessionIds.length (get (await sessionsWithOfferings) "length")
+        this.expandedSessionIds.length (get (await this.sessionsWithOfferings) "length")
       )
-      (gt (get (await sessionsWithOfferings) "length") 0)
+      (gt (get (await this.sessionsWithOfferings) "length") 0)
     }}
-    @toggleExpandAll={{perform toggleExpandAll}}
+    @toggleExpandAll={{perform this.toggleExpandAll}}
   />
-  {{#if (is-fulfilled sessionObjects)}}
+  {{#if (is-fulfilled this.sessionObjects)}}
     <SessionsGrid
-      @sessions={{await sessionObjects}}
-      @sortBy={{sortBy}}
-      @filterBy={{filterBy}}
-      @expandedSessionIds={{expandedSessionIds}}
-      @closeSession={{perform closeSession}}
-      @expandSession={{perform expandSession}}
+      @sessions={{await this.sessionObjects}}
+      @sortBy={{@sortBy}}
+      @filterBy={{@filterBy}}
+      @expandedSessionIds={{this.expandedSessionIds}}
+      @closeSession={{perform this.closeSession}}
+      @expandSession={{perform this.expandSession}}
     />
   {{else}}
-    <SessionsGridLoading @count={{has-many-length course "sessions"}} />
+    <SessionsGridLoading @count={{has-many-length @course "sessions"}} />
   {{/if}}
 </section>
-

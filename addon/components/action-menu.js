@@ -4,7 +4,5 @@ import layout from '../templates/components/action-menu';
 
 export default Component.extend(DropdownComponentMixin, {
   layout,
-  title: '',
-  icon: 'gear',
   classNames: ['action-menu'],
 });

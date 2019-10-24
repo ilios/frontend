@@ -1,5 +1,5 @@
 <div class="detail-taxonomies-header">
-  {{#if isManaging}}
+  {{#if this.isManaging}}
     <div class="title">
       <span class="detail-specific-title">
         {{t "general.termsManageTitle"}}
@@ -7,25 +7,25 @@
     </div>
   {{else}}
     <div
-      class="title {{if showCollapsible "clickable collapsible"}}"
+      class="title {{if this.showCollapsible "clickable collapsible"}}"
       role="button"
       {{action "collapse"}}
     >
-      {{t "general.terms"}} ({{subject.terms.length}})
+      {{t "general.terms"}} ({{@subject.terms.length}})
     </div>
   {{/if}}
   <div class="actions">
-    {{#if isManaging}}
+    {{#if this.isManaging}}
       <button class="bigadd" {{action "save"}}>
         <FaIcon
-          @icon={{if isSaving "spinner" "check"}}
-          @spin={{if isSaving true false}}
+          @icon={{if this.isSaving "spinner" "check"}}
+          @spin={{if this.isSaving true false}}
         />
       </button>
       <button class="bigcancel" {{action "cancel"}}>
         <FaIcon @icon="undo" />
       </button>
-    {{else if editable}}
+    {{else if @editable}}
       <button {{action "manage"}}>
         {{t "general.termsManageTitle"}}
       </button>
@@ -33,23 +33,22 @@
   </div>
 </div>
 <div class="content">
-  {{#if isManaging}}
+  {{#if this.isManaging}}
     <TaxonomyManager
-      @subject={{subject}}
-      @selectedTerms={{bufferedTerms}}
+      @subject={{@subject}}
+      @selectedTerms={{this.bufferedTerms}}
       @add={{action "addTermToBuffer"}}
       @remove={{action "removeTermFromBuffer"}}
     />
   {{else}}
-    {{#each (await subject.associatedVocabularies) as |vocab|}}
+    {{#each (await @subject.associatedVocabularies) as |vocab|}}
       {{#if vocab.termCount}}
         <DetailTermsList
           @vocabulary={{vocab}}
-          @terms={{await subject.terms}}
+          @terms={{await @subject.terms}}
           @canEdit={{false}}
         />
       {{/if}}
     {{/each}}
   {{/if}}
 </div>
-

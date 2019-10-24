@@ -1,21 +1,21 @@
 <SessionOverview
-  @course={{await session.course}}
-  @session={{session}}
+  @course={{await @session.course}}
+  @session={{@session}}
   @showCheckLink={{false}}
-  @sessionTypes={{await session.course.school.sessionTypes}}
+  @sessionTypes={{await @session.course.school.sessionTypes}}
 />
 <div class="back-to-session">
   <LinkTo
     @route="session.index"
-    @models={{array (await session.course) session}}
+    @models={{array (await @session.course) @session}}
   >
     <FaIcon @icon="undo" />
-    {{t "general.backToTitle" title=session.title}}
+    {{t "general.backToTitle" title=@session.title}}
   </LinkTo>
 </div>
 <div class="results">
   <div class="title">
-    {{t "general.missingItems"}} ({{session.allPublicationIssuesLength}})
+    {{t "general.missingItems"}} ({{@session.allPublicationIssuesLength}})
   </div>
   <div class="session-publicationcheck-content">
     <table>
@@ -41,20 +41,20 @@
       <tbody>
         <tr>
           <td>
-            {{session.title}}
+            {{@session.title}}
           </td>
-          {{#if session.offerings.length}}
+          {{#if @session.offerings.length}}
             <td class="yes">
-              {{t "general.yes"}} ({{session.offerings.length}})
+              {{t "general.yes"}} ({{@session.offerings.length}})
             </td>
           {{else}}
             <td class="no">
               {{t "general.no"}}
             </td>
           {{/if}}
-          {{#if session.terms.length}}
+          {{#if @session.terms.length}}
             <td class="yes">
-              {{t "general.yes"}} ({{session.terms.length}})
+              {{t "general.yes"}} ({{@session.terms.length}})
             </td>
           {{else}}
             <td class="no">
@@ -77,9 +77,9 @@
               {{t "general.no"}}
             </td>
           {{/if}}
-          {{#if session.meshDescriptors.length}}
+          {{#if @session.meshDescriptors.length}}
             <td class="yes">
-              {{t "general.yes"}} ({{session.meshDescriptors.length}})
+              {{t "general.yes"}} ({{@session.meshDescriptors.length}})
             </td>
           {{else}}
             <td class="no">
@@ -91,4 +91,3 @@
     </table>
   </div>
 </div>
-

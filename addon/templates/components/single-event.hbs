@@ -1,17 +1,17 @@
-{{#if event}}
+{{#if @event}}
   <div class="single-event-summary">
     <h1 data-test-title>
-      {{#if recentlyUpdated}}
+      {{#if this.recentlyUpdated}}
         <FaIcon
           @icon="exclamation-circle"
           class="recently-updated-icon-event"
           @title={{t "general.newUpdates"}}
         />
       {{/if}}
-      {{event.courseTitle}}
+      {{@event.courseTitle}}
       -
       <em>
-        {{event.name}}
+        {{@event.name}}
       </em>
     </h1>
     <div class="single-event-offered-at" data-test-offered-at>
@@ -24,7 +24,7 @@
               (get (object-at 0 @event.postrequisites) "startDate")
               "dddd, MMMM Do YYYY, h:mm a"
             )
-            link=postrequisiteLink
+            link=this.postrequisiteLink
             htmlSafe=true
           }}
         </p>
@@ -36,24 +36,24 @@
       {{/unless}}
     </div>
     <div class="single-event-location">
-      {{event.location}}
+      {{@event.location}}
     </div>
-    {{#if taughtBy}}
+    {{#if this.taughtBy}}
       <div class="single-event-instructors">
-        {{taughtBy}}
+        {{this.taughtBy}}
       </div>
     {{/if}}
     <div class="single-event-session-is">
-      {{sessionIs}}
+      {{this.sessionIs}}
     </div>
-    {{#if event.equipmentRequired}}
+    {{#if @event.equipmentRequired}}
       <div class="single-event-equipment-required">
         {{! template-lint-disable no-triple-curlies }}
         {{{t "general.specialEquipmentIs_Required_"}}}
         <FaIcon @icon="flask" @title={{t "general.specialEquipment"}} />
       </div>
     {{/if}}
-    {{#if event.attireRequired}}
+    {{#if @event.attireRequired}}
       <div class="single-event-attire-required">
         {{! template-lint-disable no-triple-curlies }}
         {{{t "general.specialAttireIs_Required_"}}}
@@ -64,7 +64,7 @@
         />
       </div>
     {{/if}}
-    {{#if event.attendanceRequired}}
+    {{#if @event.attendanceRequired}}
       <div class="single-event-attendance-required">
         {{! template-lint-disable no-triple-curlies }}
         {{{t "general.attendanceIs_Required_"}}}
@@ -74,7 +74,7 @@
         />
       </div>
     {{/if}}
-    {{#if event.supplemental}}
+    {{#if @event.supplemental}}
       <div class="single-event-supplemental">
         <strong>
           {{t "general.supplementalCurriculum"}}
@@ -85,9 +85,9 @@
         />
       </div>
     {{/if}}
-    {{#if (gt (get event.sessionDescription "length") 0)}}
+    {{#if (gt (get @event.sessionDescription "length") 0)}}
       {{! template-lint-disable no-triple-curlies }}
-      {{{event.sessionDescription}}}
+      {{{@event.sessionDescription}}}
       <br>
     {{/if}}
     {{#if @event.prerequisites.length}}
@@ -121,14 +121,14 @@
         {{/if}}
       </h2>
       <SingleEventLearningmaterialList
-        @learningMaterials={{sessionLearningMaterials}}
+        @learningMaterials={{this.sessionLearningMaterials}}
       />
     </div>
     <div class="single-event-objective-list">
       <SingleEventObjectiveList
         @groupByCompetenciesPhrase={{t "general.groupByCompetencies"}}
         @listByPriorityPhrase={{t "general.listByPriority"}}
-        @objectives={{sessionObjectives}}
+        @objectives={{this.sessionObjectives}}
         @title={{t "general.sessionObjectives"}}
       />
     </div>
@@ -139,14 +139,14 @@
         {{t "general.courseLearningMaterials"}}
       </h2>
       <SingleEventLearningmaterialList
-        @learningMaterials={{courseLearningMaterials}}
+        @learningMaterials={{this.courseLearningMaterials}}
       />
     </div>
     <div class="single-event-objective-list" data-test-course-objectives>
       <SingleEventObjectiveList
         @groupByCompetenciesPhrase={{t "general.groupByCompetencies"}}
         @listByPriorityPhrase={{t "general.listByPriority"}}
-        @objectives={{courseObjectives}}
+        @objectives={{this.courseObjectives}}
         @title={{t "general.courseObjectives"}}
       />
     </div>
@@ -154,4 +154,3 @@
 {{else}}
   <NotFound />
 {{/if}}
-

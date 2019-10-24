@@ -1,19 +1,19 @@
 <span class="content">
-  {{#unless isEditing}}
+  {{#unless this.isEditing}}
     <span>
-      {{#if value}}
-        {{#if looksEmpty}}
+      {{#if @value}}
+        {{#if this.looksEmpty}}
           <FaIcon
             @icon="edit"
             class="enabled"
             data-test-edit
-            @click={{perform edit}}
+            @click={{perform this.edit}}
           />
         {{else}}
           <BigText
-            @renderHtml={{renderHtml}}
-            @text={{value}}
-            @onEdit={{perform edit}}
+            @renderHtml={{this.renderHtml}}
+            @text={{@value}}
+            @onEdit={{perform this.edit}}
           />
         {{/if}}
       {{else}}
@@ -21,31 +21,31 @@
           class="clickable editable"
           data-test-edit
           role="button"
-          {{action (perform edit)}}
+          {{action (perform this.edit)}}
         >
-          {{clickPrompt}}
+          {{this.clickPrompt}}
         </span>
       {{/if}}
     </span>
   {{else}}
     <span class="editor">
-      {{yield saveData.isRunning (perform saveData) (perform closeEditor)}}
+      {{yield this.saveData.isRunning (perform this.saveData) (perform this.closeEditor)}}
       <span class="actions">
         <button
-          disabled={{isSaveDisabled}}
+          disabled={{this.isSaveDisabled}}
           class="done"
           title={{t "general.save"}}
-          {{action (perform saveData)}}
+          {{action (perform this.saveData)}}
         >
           <FaIcon
-            @icon={{if saveData.isRunning "spinner" "check"}}
-            @spin={{saveData.isRunning}}
+            @icon={{if this.saveData.isRunning "spinner" "check"}}
+            @spin={{this.saveData.isRunning}}
           />
         </button>
         <button
           class="cancel"
           title={{t "general.cancel"}}
-          {{action (perform closeEditor)}}
+          {{action (perform this.closeEditor)}}
         >
           <FaIcon @icon="times" />
         </button>
@@ -53,4 +53,3 @@
     </span>
   {{/unless}}
 </span>
-

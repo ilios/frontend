@@ -1,5 +1,5 @@
 <div class="title">
-  {{t "general.missingItems"}} ({{course.allPublicationIssuesLength}})
+  {{t "general.missingItems"}} ({{@course.allPublicationIssuesLength}})
 </div>
 <div class="course-publicationcheck-content">
   <table>
@@ -25,20 +25,20 @@
     <tbody>
       <tr>
         <td>
-          {{course.title}}
+          {{@course.title}}
         </td>
-        {{#if course.cohorts.length}}
+        {{#if @course.cohorts.length}}
           <td class="yes">
-            {{t "general.yes"}} ({{course.cohorts.length}})
+            {{t "general.yes"}} ({{@course.cohorts.length}})
           </td>
         {{else}}
           <td class="no">
             {{t "general.no"}}
           </td>
         {{/if}}
-        {{#if course.terms.length}}
+        {{#if @course.terms.length}}
           <td class="yes">
-            {{t "general.yes"}} ({{course.terms.length}})
+            {{t "general.yes"}} ({{@course.terms.length}})
           </td>
         {{else}}
           <td class="no">
@@ -61,9 +61,9 @@
             {{t "general.no"}}
           </td>
         {{/if}}
-        {{#if course.meshDescriptors.length}}
+        {{#if @course.meshDescriptors.length}}
           <td class="yes">
-            {{t "general.yes"}} ({{course.meshDescriptors.length}})
+            {{t "general.yes"}} ({{@course.meshDescriptors.length}})
           </td>
         {{else}}
           <td class="no">
@@ -74,4 +74,3 @@
     </tbody>
   </table>
 </div>
-

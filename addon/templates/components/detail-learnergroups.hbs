@@ -1,47 +1,46 @@
 <div class="detail-learnergroups-header">
   {{! template-lint-disable no-invalid-interactive}}
   <div
-    class="title {{if collapsible "collapsible clickable"}}"
-    onclick={{if collapsible (action collapse)}}
-    role={{if collapsible "button"}}
+    class="title {{if this.collapsible "collapsible clickable"}}"
+    onclick={{if this.collapsible (action @collapse)}}
+    role={{if this.collapsible "button"}}
   >
-    {{t "general.learnerGroups"}} ({{subject.learnerGroups.length}})
+    {{t "general.learnerGroups"}} ({{@subject.learnerGroups.length}})
   </div>
   <div class="actions">
-    {{#if isManaging}}
-      <button class="bigadd" onclick={{perform save}}>
+    {{#if @isManaging}}
+      <button class="bigadd" onclick={{perform this.save}}>
         <FaIcon
-          @icon={{if save.isRunning "spinner" "check"}}
-          @spin={{save.isRunning}}
+          @icon={{if this.save.isRunning "spinner" "check"}}
+          @spin={{this.save.isRunning}}
         />
       </button>
       <button class="bigcancel" {{action "cancel"}}>
         <FaIcon @icon="undo" />
       </button>
-    {{else if editable}}
-      <button {{action setIsManaging true}}>
+    {{else if @editable}}
+      <button {{action @setIsManaging true}}>
         {{t "general.learnerGroupsManageTitle"}}
       </button>
     {{/if}}
   </div>
 </div>
 <div class="detail-learnergroups-content">
-  {{#if isManaging}}
-    {{#liquid-if loadLearnerGroups.isRunning}}
+  {{#if @isManaging}}
+    {{#liquid-if this.loadLearnerGroups.isRunning}}
       <LoadingSpinner />
     {{else}}
       <LearnergroupSelectionManager
-        @learnerGroups={{learnerGroups}}
-        @cohorts={{cohorts}}
+        @learnerGroups={{this.learnerGroups}}
+        @cohorts={{@cohorts}}
         @add={{action "addLearnerGroup"}}
         @remove={{action "removeLearnerGroup"}}
       />
     {{/liquid-if}}
   {{else}}
     <DetailLearnergroupsList
-      @learnerGroups={{await subject.learnerGroups}}
+      @learnerGroups={{await @subject.learnerGroups}}
       @remove={{action "removeLearnerGroup"}}
     />
   {{/if}}
 </div>
-

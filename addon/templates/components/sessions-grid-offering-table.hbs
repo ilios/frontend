@@ -23,7 +23,7 @@
   </tr>
 </thead>
 <tbody>
-  {{#each offeringBlocks as |block|}}
+  {{#each this.offeringBlocks as |block|}}
     <tr class="offering-block">
       <td
         class="text-top offering-block-date"
@@ -42,7 +42,7 @@
       {{#each offeringTimeBlock.sortedOfferings as |offering index|}}
         <SessionsGridOffering
           @offering={{offering}}
-          @canUpdate={{canUpdate}}
+          @canUpdate={{@canUpdate}}
           @firstRow={{eq index 0}}
           @even={{eq (mod index 2) 1}}
           @span={{offeringTimeBlock.sortedOfferings.length}}
@@ -54,4 +54,3 @@
     {{/each}}
   {{/each}}
 </tbody>
-

@@ -1,5 +1,5 @@
 {{! template-lint-disable attribute-indentation }}
-{{#if (and isEditing (is-fulfilled @offering.session.course.cohorts))}}
+{{#if (and this.isEditing (is-fulfilled @offering.session.course.cohorts))}}
   <td colspan="10" class="expanded-offering-manager">
     <OfferingForm
       @showRoom={{true}}
@@ -8,7 +8,7 @@
       @courseStartDate={{await @offering.session.course.startDate}}
       @courseEndDate={{await @offering.session.course.startDate}}
       @close={{action "close"}}
-      @save={{perform save}}
+      @save={{perform this.save}}
       @smallGroupMode={{false}}
       @offering={{@offering}}
       @session={{await @offering.session}}
@@ -24,7 +24,7 @@
         {{#if (gte @durationHours 1)}}
           {{t "general.durationHours" count=@durationHours}}
         {{/if}}
-        {{#if (and (gt durationMinutes 0) (lt durationMinutes 60))}}
+        {{#if (and (gt @durationMinutes 0) (lt @durationMinutes 60))}}
           {{t "general.durationMinutes" count=@durationMinutes}}
         {{/if}}
       </span>
@@ -34,24 +34,24 @@
     {{#if @canUpdate}}
       <EditableField
         @value={{@offering.room}}
-        @save={{perform changeRoom}}
+        @save={{perform this.changeRoom}}
         @close={{action "revertRoomChanges"}}
         @saveOnEnter={{true}}
         @closeOnEscape={{true}}
         @isSaveDisabled={{and
           (v-get this "room" "isInvalid")
-          (is-in showErrorsFor "room")
+          (is-in this.showErrorsFor "room")
         }} as |isSaving|
       >
         <input
           type="text"
           class="change-room"
-          value={{room}}
-          oninput={{action (mut room) value="target.value"}}
+          value={{this.room}}
+          oninput={{action (mut this.room) value="target.value"}}
           disabled={{isSaving}}
           onkeyup={{action "addErrorDisplayFor" "room"}}
         >
-        {{#if (and (v-get this "room" "isInvalid") (is-in showErrorsFor "room"))
+        {{#if (and (v-get this "room" "isInvalid") (is-in this.showErrorsFor "room"))
         }}
           <span class="validation-error-message">
             {{v-get this "room" "message"}}
@@ -108,4 +108,3 @@
     </td>
   {{/if}}
 {{/if}}
-

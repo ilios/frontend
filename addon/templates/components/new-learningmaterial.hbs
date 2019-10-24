@@ -5,12 +5,12 @@
   <span>
     <input
       type="text"
-      value={{title}}
-      oninput={{action (mut title) value="target.value"}}
-      disabled={{prepareSave.isRunning}}
+      value={{this.title}}
+      oninput={{action (mut this.title) value="target.value"}}
+      disabled={{this.prepareSave.isRunning}}
       onkeyup={{action "addErrorDisplayFor" "title"}}
     >
-    {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+    {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
       <span class="validation-error-message">
         {{v-get this "title" "message"}}
       </span>
@@ -22,11 +22,11 @@
     {{t "general.status"}}:
   </label>
   <span>
-    <select onchange={{action (mut statusId) value="target.value"}}>
-      {{#each learningMaterialStatuses as |lmStatus|}}
+    <select onchange={{action (mut this.statusId) value="target.value"}}>
+      {{#each @learningMaterialStatuses as |lmStatus|}}
         <option
           value={{lmStatus.id}}
-          selected={{is-equal lmStatus selectedStatus}}
+          selected={{is-equal lmStatus this.selectedStatus}}
         >
           {{lmStatus.title}}
         </option>
@@ -39,7 +39,7 @@
     {{t "general.owner"}}:
   </label>
   <span class="owninguser">
-    {{get (await currentUser.model) "fullName"}}
+    {{get (await this.currentUser.model) "fullName"}}
   </span>
 </div>
 <div class="item">
@@ -49,15 +49,15 @@
   <span>
     <input
       type="text"
-      value={{originalAuthor}}
-      oninput={{action (mut originalAuthor) value="target.value"}}
-      disabled={{prepareSave.isRunning}}
+      value={{this.originalAuthor}}
+      oninput={{action (mut this.originalAuthor) value="target.value"}}
+      disabled={{this.prepareSave.isRunning}}
       onkeyup={{action "addErrorDisplayFor" "originalAuthor"}}
     >
     {{#if
       (and
         (v-get this "originalAuthor" "isInvalid")
-        (is-in showErrorsFor "originalAuthor")
+        (is-in this.showErrorsFor "originalAuthor")
       )
     }}
       <span class="validation-error-message">
@@ -71,28 +71,28 @@
     {{t "general.userRole"}}:
   </label>
   <span>
-    <select onchange={{action (mut userRoleId) value="target.value"}}>
-      {{#each learningMaterialUserRoles as |role|}}
-        <option value={{role.id}} selected={{is-equal role selectedUserRole}}>
+    <select onchange={{action (mut this.userRoleId) value="target.value"}}>
+      {{#each @learningMaterialUserRoles as |role|}}
+        <option value={{role.id}} selected={{is-equal role this.selectedUserRole}}>
           {{role.title}}
         </option>
       {{/each}}
     </select>
   </span>
 </div>
-{{#if isLink}}
+{{#if this.isLink}}
   <div class="item">
     <label>
       {{t "general.url"}}:
     </label>
     <span>
       <input
-        value={{link}}
-        oninput={{action (mut link) value="target.value"}}
-        disabled={{prepareSave.isRunning}}
+        value={{this.link}}
+        oninput={{action (mut this.link) value="target.value"}}
+        disabled={{this.prepareSave.isRunning}}
         onkeyup={{action "addErrorDisplayFor" "link"}}
       >
-      {{#if (and (v-get this "link" "isInvalid") (is-in showErrorsFor "link"))}}
+      {{#if (and (v-get this "link" "isInvalid") (is-in this.showErrorsFor "link"))}}
         <span class="validation-error-message">
           {{v-get this "link" "message"}}
         </span>
@@ -100,20 +100,20 @@
     </span>
   </div>
 {{/if}}
-{{#if isCitation}}
+{{#if this.isCitation}}
   <div class="item">
     <label>
       {{t "general.citation"}}:
     </label>
     <span class="citation">
       <Textarea
-        @value={{citation}}
+        @value={{this.citation}}
         @focus-out={{action "addErrorDisplayFor" "citation"}}
         @key-press={{action "addErrorDisplayFor" "citation"}}
       />
       {{#if
         (and
-          (v-get this "citation" "isInvalid") (is-in showErrorsFor "citation")
+          (v-get this "citation" "isInvalid") (is-in this.showErrorsFor "citation")
         )
       }}
         <span class="validation-error-message">
@@ -128,10 +128,10 @@
     {{t "general.description"}}:
   </label>
   <span>
-    <HtmlEditor @content={{description}} @update={{action (mut description)}} />
+    <HtmlEditor @content={{this.description}} @update={{action (mut this.description)}} />
   </span>
 </div>
-{{#if isFile}}
+{{#if this.isFile}}
   <div class="item">
     <label>
       {{t "general.copyrightPermission"}}:
@@ -140,28 +140,28 @@
       <p id="lm-copyright-agreement-text">
         <input
           type="checkbox"
-          checked={{copyrightPermission}}
-          onclick={{action (mut copyrightPermission)}}
+          checked={{this.copyrightPermission}}
+          onclick={{action (mut this.copyrightPermission)}}
         >
         {{t "general.copyrightAgreement"}}
       </p>
     </span>
   </div>
-  {{#unless copyrightPermission}}
+  {{#unless this.copyrightPermission}}
     <div class="item">
       <label>
         {{t "general.copyrightRationale"}}:
       </label>
       <span>
         <Textarea
-          @value={{copyrightRationale}}
+          @value={{this.copyrightRationale}}
           @focus-out={{action "addErrorDisplayFor" "copyrightRationale"}}
           @key-press={{action "addErrorDisplayFor" "copyrightRationale"}}
         />
         {{#if
           (and
             (v-get this "copyrightRationale" "isInvalid")
-            (is-in showErrorsFor "copyrightRationale")
+            (is-in this.showErrorsFor "copyrightRationale")
           )
         }}
           <span class="validation-error-message">
@@ -180,32 +180,31 @@
         @finishedUploading={{action "setFile"}}
         @startUploading={{action "startUploadingFile"}}
         @setUploadPercentage={{action "setFileUploadPercentage"}}
-        @setErrorMessage={{action (mut fileUploadErrorMessage)}}
-        @url={{uploadPath}}
+        @setErrorMessage={{action (mut this.fileUploadErrorMessage)}}
+        @url={{this.uploadPath}}
       />
-      {{#if showUploadStatus}}
-        <LoadingSpinner />{{fileUploadPercentage}}%
-      {{else if fileHash}}
+      {{#if this.showUploadStatus}}
+        <LoadingSpinner />{{this.fileUploadPercentage}}%
+      {{else if this.fileHash}}
         <FaIcon @icon="check" class="add" />
       {{/if}}
-      {{#if fileUploadErrorMessage}}
+      {{#if this.fileUploadErrorMessage}}
         <span class="validation-error-message">
-          {{fileUploadErrorMessage}}
+          {{this.fileUploadErrorMessage}}
         </span>
       {{/if}}
     </span>
   </div>
 {{/if}}
 <div class="buttons">
-  <button class="done text" {{action (perform prepareSave)}}>
-    {{#if prepareSave.isRunning}}
+  <button class="done text" {{action (perform this.prepareSave)}}>
+    {{#if this.prepareSave.isRunning}}
       <LoadingSpinner />
     {{else}}
       {{t "general.done"}}
     {{/if}}
   </button>
-  <button class="cancel text" {{action cancel}}>
+  <button class="cancel text" {{action @cancel}}>
     {{t "general.cancel"}}
   </button>
 </div>
-

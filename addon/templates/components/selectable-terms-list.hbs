@@ -1,15 +1,15 @@
-{{#each (sort-by "title" terms) as |term|}}
+{{#each (sort-by "title" @terms) as |term|}}
   {{#if (await term.isActiveInTree)}}
     <li class={{if term.isTopLevel "top-level" ""}}>
       <SelectableTermsListItem
-        @selectedTerms={{selectedTerms}}
+        @selectedTerms={{@selectedTerms}}
         @term={{term}}
         @add={{action "add"}}
         @remove={{action "remove"}}
       />
       {{#if term.hasChildren}}
         <SelectableTermsList
-          @selectedTerms={{selectedTerms}}
+          @selectedTerms={{@selectedTerms}}
           @terms={{await term.children}}
           @add={{action "add"}}
           @remove={{action "remove"}}
@@ -18,4 +18,3 @@
     </li>
   {{/if}}
 {{/each}}
-

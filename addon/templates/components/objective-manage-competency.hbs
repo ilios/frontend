@@ -1,18 +1,17 @@
-{{! template-lint-disable attribute-indentation }}
 <div class="objectivetitle">
   {{! template-lint-disable no-triple-curlies }}
-  {{{objective.title}}}
+  {{{@objective.title}}}
 </div>
-{{#if (gt (get (await competencies) "length") 0)}}
+{{#if (gt (get (await this.competencies) "length") 0)}}
   <ul class="parent-picker">
-    {{#each (sort-by "title" (await domains)) as |domain|}}
-      {{#if (contains domain.id (map-by "id" (await domainsWithNoChildren)))}}
+    {{#each (sort-by "title" (await this.domains)) as |domain|}}
+      {{#if (contains domain.id (map-by "id" (await this.domainsWithNoChildren)))}}
         <li
           class="competency-title
-            {{if (eq domain.id objective.competency.id) "selected"}}"
+            {{if (eq domain.id @objective.competency.id) "selected"}}"
         >
           <h5>
-            {{#if (eq domain.id objective.competency.id)}}
+            {{#if (eq domain.id @objective.competency.id)}}
               <input
                 type="checkbox"
                 checked=""
@@ -44,7 +43,7 @@
               {{if
                 (contains
                   domain.id
-                  (map-by "id" (await competenciesWithSelectedChildren))
+                  (map-by "id" (await this.competenciesWithSelectedChildren))
                 )
                 "selected"
               }}"
@@ -53,12 +52,12 @@
           </h5>
           <ul>
             {{#each (sort-by "title" (await domain.children)) as |competency|}}
-              {{#if (contains competency.id (map-by "id" (await competencies)))}}
+              {{#if (contains competency.id (map-by "id" (await this.competencies)))}}
                 <li
                   class="competency-title
-                    {{if (eq competency.id objective.competency.id) "selected"}}"
+                    {{if (eq competency.id @objective.competency.id) "selected"}}"
                 >
-                  {{#if (eq competency.id objective.competency.id)}}
+                  {{#if (eq competency.id @objective.competency.id)}}
                     <input
                       type="checkbox"
                       checked=""
@@ -99,4 +98,3 @@
     </p>
   </div>
 {{/if}}
-

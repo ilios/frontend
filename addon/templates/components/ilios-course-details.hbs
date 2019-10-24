@@ -5,13 +5,13 @@
     </LinkTo>
   </div>
 {{/if}}
-<CourseHeader @course={{course}} @editable={{editable}} />
-<CourseOverview @course={{course}} @editable={{editable}} />
-{{#if (not showDetails)}}
+<CourseHeader @course={{@course}} @editable={{@editable}} />
+<CourseOverview @course={{@course}} @editable={{@editable}} />
+{{#if (not this.showDetails)}}
   <div
     class="detail-collapsed-control"
     role="button"
-    {{action setShowDetails true}}
+    {{action this.setShowDetails true}}
   >
     <span>
       {{t "general.expandDetail"}}
@@ -20,18 +20,18 @@
   </div>
 {{else}}
   <CourseEditing
-    @course={{course}}
-    @editable={{editable}}
-    @courseLeadershipDetails={{courseLeadershipDetails}}
-    @courseObjectiveDetails={{courseObjectiveDetails}}
-    @courseTaxonomyDetails={{courseTaxonomyDetails}}
-    @courseCompetencyDetails={{courseCompetencyDetails}}
-    @courseManageLeadership={{courseManageLeadership}}
-    @setCourseObjectiveDetails={{action setCourseObjectiveDetails}}
-    @setCourseLeadershipDetails={{action setCourseLeadershipDetails}}
-    @setCourseTaxonomyDetails={{action setCourseTaxonomyDetails}}
-    @setCourseCompetencyDetails={{action setCourseCompetencyDetails}}
-    @setCourseManageLeadership={{action setCourseManageLeadership}}
+    @course={{@course}}
+    @editable={{@editable}}
+    @courseLeadershipDetails={{@courseLeadershipDetails}}
+    @courseObjectiveDetails={{@courseObjectiveDetails}}
+    @courseTaxonomyDetails={{@courseTaxonomyDetails}}
+    @courseCompetencyDetails={{@courseCompetencyDetails}}
+    @courseManageLeadership={{@courseManageLeadership}}
+    @setCourseObjectiveDetails={{action @setCourseObjectiveDetails}}
+    @setCourseLeadershipDetails={{action @setCourseLeadershipDetails}}
+    @setCourseTaxonomyDetails={{action @setCourseTaxonomyDetails}}
+    @setCourseCompetencyDetails={{action @setCourseCompetencyDetails}}
+    @setCourseManageLeadership={{action @setCourseManageLeadership}}
   />
   <div class="detail-collapsed-control" role="button" {{action "collapse"}}>
     <span class="is-expanded">
@@ -40,4 +40,3 @@
     </span>
   </div>
 {{/if}}
-

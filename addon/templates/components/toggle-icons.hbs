@@ -1,40 +1,39 @@
 <div class="accessible">
   <input
     type="radio"
-    id={{concat "first-toggle-" elementId}}
-    name={{concat "toggle-" elementId}}
-    checked={{eq firstOptionSelected true}}
+    id={{concat "first-toggle-" this.elementId}}
+    name={{concat "toggle-" this.elementId}}
+    checked={{eq @firstOptionSelected true}}
     onclick={{action "firstChoice"}}
   >
-  <label for={{concat "first-toggle-" elementId}}>
-    {{firstLabel}}
+  <label for={{concat "first-toggle-" this.elementId}}>
+    {{@firstLabel}}
   </label>
   <input
     type="radio"
-    id={{concat "second-toggle-" elementId}}
-    name={{concat "toggle-" elementId}}
-    checked={{eq firstOptionSelected false}}
+    id={{concat "second-toggle-" this.elementId}}
+    name={{concat "toggle-" this.elementId}}
+    checked={{eq @firstOptionSelected false}}
     onclick={{action "secondChoice"}}
   >
-  <label for={{concat "second-toggle-" elementId}}>
-    {{secondLabel}}
+  <label for={{concat "second-toggle-" this.elementId}}>
+    {{@secondLabel}}
   </label>
 </div>
 <div class="icons">
-  {{#if firstOptionSelected}}
+  {{#if @firstOptionSelected}}
     <FaIcon
-      @icon={{firstIcon}}
+      @icon={{@firstIcon}}
       class="first"
-      @title={{secondLabel}}
+      @title={{@secondLabel}}
       @click={{action "secondChoice"}}
     />
   {{else}}
     <FaIcon
-      @icon={{secondIcon}}
+      @icon={{@secondIcon}}
       class="second"
-      @title={{firstLabel}}
+      @title={{@firstLabel}}
       @click={{action "firstChoice"}}
     />
   {{/if}}
 </div>
-

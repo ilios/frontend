@@ -1,22 +1,22 @@
 <h2>
   {{title}}
-  {{#if showDisplayModeToggle}}
+  {{#if this.showDisplayModeToggle}}
     <button
-      class={{if groupByCompetencies "active"}}
+      class={{if this.groupByCompetencies "active"}}
       {{action (toggle "groupByCompetencies" this)}}
     >
-      {{#if groupByCompetencies}}
-        <FaIcon @icon="indent" @title={{listByPriorityPhrase}} />
+      {{#if this.groupByCompetencies}}
+        <FaIcon @icon="indent" @title={{@listByPriorityPhrase}} />
       {{else}}
-        <FaIcon @icon="list" @title={{groupByCompetenciesPhrase}} />
+        <FaIcon @icon="list" @title={{@groupByCompetenciesPhrase}} />
       {{/if}}
     </button>
   {{/if}}
 </h2>
-{{#if groupByCompetencies}}
-  {{#if domains.length}}
+{{#if this.groupByCompetencies}}
+  {{#if this.domains.length}}
     <ul class="tree">
-      {{#each domains as |domain|}}
+      {{#each this.domains as |domain|}}
         <li>
           {{domain.title}}
           <ul>
@@ -37,7 +37,7 @@
   {{/if}}
 {{else}}
   <ul class="list-in-order">
-    {{#each objectives as |objective|}}
+    {{#each @objectives as |objective|}}
       <li>
         {{objective.title}}
         <span class="details">
@@ -51,4 +51,3 @@
     {{/each}}
   </ul>
 {{/if}}
-

@@ -1,6 +1,6 @@
 <div class="material-list">
   <h3>
-    {{t "general.courseLearningMaterials"}} ({{get (await this.course.learningMaterials) "length"}})
+    {{t "general.courseLearningMaterials"}} ({{get (await @course.learningMaterials) "length"}})
   </h3>
   <span class="filter-course-lms">
     <input
@@ -15,8 +15,7 @@
         <SortableTh
           @colspan={{4}}
           @sortedAscending={{this.clmSortedAscending}}
-          @sortedBy={{or (eq @courseSort "title") (eq @courseSort "title:desc")
-          }}
+          @sortedBy={{or (eq @courseSort "title") (eq @courseSort "title:desc")}}
           @click={{action "courseSortBy" "title"}}
         >
           {{t "general.title"}}
@@ -218,4 +217,3 @@
     </tbody>
   </table>
 </div>
-

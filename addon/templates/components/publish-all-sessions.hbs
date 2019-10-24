@@ -1,19 +1,19 @@
-{{#liquid-if isSaving class="crossFade"}}
+{{#liquid-if this.isSaving class="crossFade"}}
   <WaitSaving
     @showProgress={{true}}
-    @totalProgress={{totalSessionsToSave}}
-    @currentProgress={{currentSessionsSaved}}
+    @totalProgress={{this.totalSessionsToSave}}
+    @currentProgress={{this.currentSessionsSaved}}
   />
 {{/liquid-if}}
 <section class="publish-all-sessions-unpublishable">
   <div
-    class="title {{if unPublishableCollapsed "collapsed" "collapsible"}}"
+    class="title {{if this.unPublishableCollapsed "collapsed" "collapsible"}}"
     role="button"
     {{action "toggleUnPublishableCollapsed"}}
   >
-    {{t "general.incompleteSessions"}} ({{get (await unPublishableSessions) "length"}})
+    {{t "general.incompleteSessions"}} ({{get (await this.unPublishableSessions) "length"}})
   </div>
-  {{#unless unPublishableCollapsed}}
+  {{#unless this.unPublishableCollapsed}}
     <div class="content">
       <table>
         <thead>
@@ -36,7 +36,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each (await unPublishableSessions) as |session|}}
+          {{#each (await this.unPublishableSessions) as |session|}}
             <tr>
               <td>
                 {{session.title}}
@@ -93,13 +93,13 @@
 </section>
 <section class="publish-all-sessions-publishable">
   <div
-    class="title {{if publishableCollapsed "collapsed" "collapsible"}}"
+    class="title {{if this.publishableCollapsed "collapsed" "collapsible"}}"
     role="button"
     {{action "togglePublishableCollapsed"}}
   >
-    {{t "general.completeSessions"}} ({{get (await publishableSessions) "length"}})
+    {{t "general.completeSessions"}} ({{get (await this.publishableSessions) "length"}})
   </div>
-  {{#unless publishableCollapsed}}
+  {{#unless this.publishableCollapsed}}
     <div class="content">
       <table>
         <thead>
@@ -122,7 +122,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each (await publishableSessions) as |session|}}
+          {{#each (await this.publishableSessions) as |session|}}
             <tr>
               <td>
                 {{session.title}}
@@ -179,14 +179,14 @@
 </section>
 <section class="publish-all-sessions-overridable">
   <div class="title">
-    {{t "general.reviewSessions"}} ({{get (await overridableSessions) "length"}})
+    {{t "general.reviewSessions"}} ({{get (await this.overridableSessions) "length"}})
   </div>
   <div class="content">
-    {{#if (get (await overridableSessions) "length")}}
-      <button disabled={{await allSessionsAsIs}} {{action "publishAllAsIs"}}>
+    {{#if (get (await this.overridableSessions) "length")}}
+      <button disabled={{await this.allSessionsAsIs}} {{action "publishAllAsIs"}}>
         {{t "general.publishAsIs"}}
       </button>
-      <button disabled={{noSessionsAsIs}} {{action "publishNoneAsIs"}}>
+      <button disabled={{this.noSessionsAsIs}} {{action "publishNoneAsIs"}}>
         {{t "general.markAsScheduled"}}
       </button>
       <table>
@@ -213,14 +213,14 @@
           </tr>
         </thead>
         <tbody>
-          {{#each (await overridableSessions) as |session|}}
+          {{#each (await this.overridableSessions) as |session|}}
             <tr>
               <td>
                 <ul>
                   <li>
                     <input
                       type="checkbox"
-                      checked={{is-in sessionsToOverride session}}
+                      checked={{is-in this.sessionsToOverride session}}
                       onclick={{action "toggleSession" session}}
                     >
                     <span
@@ -234,7 +234,7 @@
                   <li>
                     <input
                       type="checkbox"
-                      checked={{not-in sessionsToOverride session}}
+                      checked={{not-in this.sessionsToOverride session}}
                       onclick={{action "toggleSession" session}}
                     >
                     <span
@@ -319,13 +319,12 @@
   <p>
     {{t
       "general.publishAllConfirmation"
-      publishCount=(await publishCount)
-      scheduleCount=(await scheduleCount)
-      ignoreCount=(await ignoreCount)
+      publishCount=(await this.publishCount)
+      scheduleCount=(await this.scheduleCount)
+      ignoreCount=(await this.ignoreCount)
     }}
   </p>
   <button {{action "save"}}>
     {{t "general.go"}}
   </button>
 </div>
-

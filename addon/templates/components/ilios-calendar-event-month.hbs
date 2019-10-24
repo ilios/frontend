@@ -1,4 +1,4 @@
-{{#if event}}
+{{#if @event}}
   {{#attach-tooltip
     lazyRender=true
     placement="left"
@@ -7,9 +7,9 @@
     class="ilios-calendar-event-tooltip"
     }}
     {{! template-lint-disable no-triple-curlies }}
-    {{{tooltipContent}}}
+    {{{this.tooltipContent}}}
   {{/attach-tooltip}}
-  {{#if recentlyUpdated}}
+  {{#if this.recentlyUpdated}}
     <FaIcon
       @icon="exclamation"
       class="recently-updated-icon"
@@ -18,21 +18,21 @@
   {{/if}}
   <span class="ilios-calendar-event-time">
     <span class="ilios-calendar-event-start">
-      {{moment-format event.startDate "h:mma"}}
+      {{moment-format @event.startDate "h:mma"}}
     </span>
     <span class="ilios-calendar-event-end">
       -
-      {{moment-format event.endDate "h:mma"}}
+      {{moment-format @event.endDate "h:mma"}}
     </span>
   </span>
-  {{#unless event.isMulti}}
+  {{#unless @event.isMulti}}
     <span class="ilios-calendar-event-location">
-      {{event.location}}:
+      {{@event.location}}:
     </span>
   {{/unless}}
   <span class="ilios-calendar-event-name">
-    {{event.name}}
-    {{#if event.isMulti}}
+    {{@event.name}}
+    {{#if @event.isMulti}}
       ,
       <em>
         {{t "general.multiple"}}
@@ -40,4 +40,3 @@
     {{/if}}
   </span>
 {{/if}}
-

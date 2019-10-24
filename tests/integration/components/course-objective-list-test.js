@@ -21,7 +21,12 @@ module('Integration | Component | course objective list', function(hooks) {
     this.set('subject', courseModel);
 
     await render(
-      hbs`{{course-objective-list subject=subject manageParents=(action nothing) manageDescriptors=(action nothing)}}`
+      hbs`<CourseObjectiveList
+        @subject={{this.subject}}
+        @editable={{true}}
+        @manageParents={{action this.nothing}}
+        @manageDescriptors={{action this.nothing}}
+      />`
     );
 
     assert.ok(findAll('.sort-materials-btn').length, 'Sort Objectives button is visible');
@@ -34,12 +39,17 @@ module('Integration | Component | course objective list', function(hooks) {
     }
   });
 
-  test('empty list', async function(assert) {
+  test('empty list', async function (assert) {
     assert.expect(2);
     const course = this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('subject', courseModel);
     await render(hbs`{{course-objective-list subject=subject}}`);
+    await render(
+      hbs`<CourseObjectiveList
+        @subject={{this.subject}}
+      />`
+    );
     let container = findAll('.course-objective-list');
     assert.equal(container.length, 1, 'Component container element exists.');
     assert.dom(container[0]).hasText('', 'No content is shown.');
@@ -57,7 +67,12 @@ module('Integration | Component | course objective list', function(hooks) {
     this.set('subject', courseModel);
 
     await render(
-      hbs`{{course-objective-list subject=subject manageParents=(action nothing) manageDescriptors=(action nothing)}}`
+      hbs`<CourseObjectiveList
+        @subject={{this.subject}}
+        @editable={{true}}
+        @manageParents={{action this.nothing}}
+        @manageDescriptors={{action this.nothing}}
+      />`
     );
     assert.notOk(findAll('.sort-materials-btn').length, 'Sort button is not visible');
     assert.dom('tbody tr:nth-of-type(1) td').hasText('objective 0', 'Objective is visible');

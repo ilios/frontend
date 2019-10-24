@@ -1,17 +1,17 @@
 <div class="detail-objectives-header">
-  {{#if isManaging}}
+  {{#if this.isManaging}}
     <div class="title">
-      {{#if isManagingParents}}
+      {{#if this.isManagingParents}}
         <span class="specific-title">
-          {{objectiveParentTitle}}
+          {{this.objectiveParentTitle}}
         </span>
       {{/if}}
-      {{#if isManagingDescriptors}}
+      {{#if this.isManagingDescriptors}}
         <span class="specific-title">
           {{t "general.objectiveDescriptorTitle"}}
         </span>
       {{/if}}
-      {{#if isManagingCompetency}}
+      {{#if this.isManagingCompetency}}
         <span class="specific-title">
           {{t "general.objectiveCompetencyManagerTitle"}}
         </span>
@@ -19,26 +19,26 @@
     </div>
   {{else}}
     <div
-      class="title {{if showCollapsible "clickable collapsible"}}"
+      class="title {{if this.showCollapsible "clickable collapsible"}}"
       role="button"
       {{action "collapse"}}
     >
-      {{t "general.objectives"}} ({{subject.objectives.length}})
+      {{t "general.objectives"}} ({{@subject.objectives.length}})
     </div>
   {{/if}}
   <div class="detail-objectives-actions">
-    {{#if isManaging class="horizontal"}}
+    {{#if this.isManaging class="horizontal"}}
       <button class="bigadd" {{action "save"}}>
         <FaIcon @icon="check" />
       </button>
       <button class="bigcancel" {{action "cancel"}}>
         <FaIcon @icon="undo" />
       </button>
-    {{else if editable}}
-      {{#if isCourse}}
-        <LinkTo @route="course-visualize-objectives" @model={{subject}}>
+    {{else if @editable}}
+      {{#if @isCourse}}
+        <LinkTo @route="course-visualize-objectives" @model={{@subject}}>
           <VisualizerCourseObjectives
-            @course={{subject}}
+            @course={{@subject}}
             @width={{20}}
             @height={{20}}
             @isIcon={{true}}
@@ -46,62 +46,61 @@
         </LinkTo>
       {{/if}}
       <ExpandCollapseButton
-        @value={{newObjectiveEditorOn}}
+        @value={{this.newObjectiveEditorOn}}
         @action={{action "toggleNewObjectiveEditor"}}
       />
     {{/if}}
   </div>
 </div>
 <div class="detail-objectives-content">
-  {{#if newObjectiveEditorOn class="vertical"}}
+  {{#if this.newObjectiveEditorOn class="vertical"}}
     <NewObjective
       @save={{action "saveNewObjective"}}
       @cancel={{action "toggleNewObjectiveEditor"}}
     />
   {{/if}}
-  {{#liquid-unless isManaging class="horizontal"}}
-    {{#if isCourse}}
+  {{#liquid-unless this.isManaging class="horizontal"}}
+    {{#if @isCourse}}
       <CourseObjectiveList
-        @subject={{subject}}
-        @editable={{editable}}
+        @subject={{@subject}}
+        @editable={{@editable}}
         @manageParents={{action "manageParents"}}
         @manageDescriptors={{action "manageDescriptors"}}
       />
     {{/if}}
-    {{#if isSession}}
+    {{#if this.isSession}}
       <SessionObjectiveList
-        @subject={{subject}}
-        @editable={{editable}}
+        @subject={{@subject}}
+        @editable={{@editable}}
         @manageParents={{action "manageParents"}}
         @manageDescriptors={{action "manageDescriptors"}}
       />
     {{/if}}
-    {{#if isProgramYear}}
+    {{#if this.isProgramYear}}
       <ProgramyearObjectiveList
-        @subject={{subject}}
-        @editable={{editable}}
+        @subject={{@subject}}
+        @editable={{@editable}}
         @manageDescriptors={{action "manageDescriptors"}}
         @manageCompetency={{action "manageCompetency"}}
       />
     {{/if}}
   {{else}}
-    {{#if isManagingParents}}
-      {{#if isCourse}}
-        <CourseObjectiveManager @courseObjective={{mangeParentsObjective}} />
+    {{#if this.isManagingParents}}
+      {{#if @isCourse}}
+        <CourseObjectiveManager @courseObjective={{this.mangeParentsObjective}} />
       {{/if}}
-      {{#if isSession}}
-        <SessionObjectiveManager @sessionObjective={{mangeParentsObjective}} />
+      {{#if this.isSession}}
+        <SessionObjectiveManager @sessionObjective={{this.mangeParentsObjective}} />
       {{/if}}
     {{/if}}
-    {{#if isManagingDescriptors}}
+    {{#if this.isManagingDescriptors}}
       <ObjectiveManageDescriptors
-        @editable={{editable}}
-        @objective={{manageDescriptorsObjective}}
+        @editable={{@editable}}
+        @objective={{this.manageDescriptorsObjective}}
       />
     {{/if}}
-    {{#if isManagingCompetency}}
-      <ObjectiveManageCompetency @objective={{manageCompetencyObjective}} />
+    {{#if this.isManagingCompetency}}
+      <ObjectiveManageCompetency @objective={{this.manageCompetencyObjective}} />
     {{/if}}
   {{/liquid-unless}}
 </div>
-

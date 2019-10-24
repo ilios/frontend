@@ -1,15 +1,15 @@
-<ElWeeklyCalendar @date={{date}} @events={{singleDayEvents}} as |days|>
+<ElWeeklyCalendar @date={{@date}} @events={{this.singleDayEvents}} as |days|>
   <div class="row">
     <div class="cell"></div>
     <div class="cell title">
-      {{t "general.weekOf" date=weekOf}}
+      {{t "general.weekOf" date=this.weekOf}}
     </div>
   </div>
   <div class="row week-titles">
     <div class="cell"></div>
     {{#each days as |day|}}
       <div
-        class="cell title {{if areDaysSelectable "clickable"}}"
+        class="cell title {{if this.areDaysSelectable "clickable"}}"
         role="button"
         {{action "changeToDayView" day.date}}
       >
@@ -33,13 +33,13 @@
               <IliosCalendarEvent
                 @event={{event}}
                 @selectEvent={{action "changeToDayView" event.startDate}}
-                @clickable={{areEventsSelectable}}
+                @clickable={{this.areEventsSelectable}}
               />
             {{else}}
               <IliosCalendarEvent
                 @event={{event}}
                 @selectEvent={{action "selectEvent" event}}
-                @clickable={{areEventsSelectable}}
+                @clickable={{this.areEventsSelectable}}
               />
             {{/if}}
           {{/each}}
@@ -55,12 +55,11 @@
   </div>
 </ElWeeklyCalendar>
 <IliosCalendarPreWorkEvents
-  @events={{ilmPreWorkEvents}}
-  @areEventsSelectable={{areEventsSelectable}}
+  @events={{this.ilmPreWorkEvents}}
+  @areEventsSelectable={{this.areEventsSelectable}}
 />
 <IliosCalendarMultidayEvents
-  @events={{multiDayEventsList}}
+  @events={{this.multiDayEventsList}}
   @selectEvent={{action "selectEvent"}}
-  @areEventsSelectable={{areDaysSelectable}}
+  @areEventsSelectable={{this.areDaysSelectable}}
 />
-

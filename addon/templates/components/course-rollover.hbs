@@ -1,5 +1,5 @@
-<LinkTo @route="course" @model={{course}}>
-  {{t "general.backToTitle" title=course.title}}
+<LinkTo @route="course" @model={{@course}}>
+  {{t "general.backToTitle" title=@course.title}}
 </LinkTo>
 <div class="rollover-form">
   <h3 class="title">
@@ -14,16 +14,16 @@
     </label>
     <input
       type="text"
-      value={{title}}
+      value={{this.title}}
       oninput={{pipe
         (action "changeTitle" value="target.value")
         (action "addErrorDisplayFor" "title")
       }}
-      disabled={{isSaving}}
+      disabled={{this.isSaving}}
       onkeyup={{action "addErrorDisplayFor" "title"}}
       placeholder={{t "general.courseTitlePlaceholder"}}
     >
-    {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+    {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
       <span class="validation-error-message">
         {{v-get this "title" "message"}}
       </span>
@@ -33,20 +33,20 @@
     <label>
       {{t "general.year"}}:
     </label>
-    {{#if loadUnavailableYears.isRunning}}
+    {{#if this.loadUnavailableYears.isRunning}}
       <LoadingSpinner />
     {{else}}
       <select
-        onchange={{action (perform changeSelectedYear) value="target.value"}}
+        onchange={{action (perform this.changeSelectedYear) value="target.value"}}
       >
-        {{#each years as |year|}}
+        {{#each this.years as |year|}}
           <option
-            disabled={{contains year loadUnavailableYears.lastSuccessful.value}}
+            disabled={{contains year this.loadUnavailableYears.lastSuccessful.value}}
             value={{year}}
-            selected={{is-equal year selectedYear}}
+            selected={{is-equal year this.selectedYear}}
           >
             {{year}} - {{inc year}}
-            {{#if (contains year loadUnavailableYears.lastSuccessful.value)}}
+            {{#if (contains year this.loadUnavailableYears.lastSuccessful.value)}}
               ({{t "general.courseRolloverYearUnavailable"}})
             {{/if}}
           </option>
@@ -56,7 +56,7 @@
     {{#if
       (and
         (v-get this "selectedYear" "isInvalid")
-        (is-in showErrorsFor "selectedYear")
+        (is-in this.showErrorsFor "selectedYear")
       )
     }}
       <span class="validation-error-message">
@@ -75,11 +75,11 @@
       </label>
       <PikadayInput
         @size={{10}}
-        @value={{startDate}}
-        @minDate={{course.startDate}}
+        @value={{this.startDate}}
+        @minDate={{@course.startDate}}
         @format="YYYY-MM-DD"
-        @onSelection={{action (mut startDate)}}
-        @options={{hash disableDayFn=disableDayFn course=course}}
+        @onSelection={{action (mut this.startDate)}}
+        @options={{hash disableDayFn=this.disableDayFn course=@course}}
       />
     </div>
     <div class="included">
@@ -89,7 +89,7 @@
       <div class="include">
         <input
           type="checkbox"
-          checked={{not skipOfferings}}
+          checked={{not this.skipOfferings}}
           onclick={{toggle "skipOfferings" this}}
           data-test-skip-offerings
         >
@@ -103,8 +103,8 @@
         {{t "general.selectCohortsToAttach"}}:
       </span>
       <DetailCohortManager
-        @selectedCohorts={{selectedCohorts}}
-        @school={{await course.school}}
+        @selectedCohorts={{this.selectedCohorts}}
+        @school={{await @course.school}}
         @add={{action "addCohort"}}
         @remove={{action "removeCohort"}}
       />
@@ -114,26 +114,25 @@
     <button
       disabled={{if
         (or
-          isSaving
-          (not selectedYear)
-          (contains selectedYear loadUnavailableYears.lastSuccessful.value)
+          this.isSaving
+          (not this.selectedYear)
+          (contains this.selectedYear this.loadUnavailableYears.lastSuccessful.value)
         )
         true
       }}
       class="done text"
-      {{action (perform save)}}
+      {{action (perform this.save)}}
     >
-      {{#if isSaving}}
+      {{#if this.isSaving}}
         <LoadingSpinner />
       {{else}}
         {{t "general.done"}}
       {{/if}}
     </button>
-    <LinkTo @route="course" @model={{course}}>
+    <LinkTo @route="course" @model={{@course}}>
       <button class="cancel text">
         {{t "general.cancel"}}
       </button>
     </LinkTo>
   </div>
 </div>
-

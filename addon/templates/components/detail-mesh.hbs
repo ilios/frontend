@@ -1,22 +1,22 @@
 <div class="detail-mesh-header">
   <div class="title">
-    {{#if isManaging}}
+    {{#if this.isManaging}}
       <span class="detail-specific-title">
         {{t "general.meshManageTitle"}}
       </span>
     {{else}}
-      {{t "general.mesh"}} ({{terms.length}})
+      {{t "general.mesh"}} ({{this.terms.length}})
     {{/if}}
   </div>
   <div class="actions">
-    {{#if isManaging}}
+    {{#if this.isManaging}}
       <button class="bigadd" {{action "save"}}>
         <FaIcon @icon="check" />
       </button>
       <button class="bigcancel" {{action "cancel"}}>
         <FaIcon @icon="undo" />
       </button>
-    {{else if editable}}
+    {{else if @editable}}
       <button {{action "manage"}}>
         {{t "general.meshManageTitle"}}
       </button>
@@ -24,16 +24,16 @@
   </div>
 </div>
 <div class="content">
-  {{#if isManaging}}
+  {{#if this.isManaging}}
     <MeshManager
-      @editable={{editable}}
-      @terms={{bufferTerms}}
+      @editable={{@editable}}
+      @terms={{this.bufferTerms}}
       @add={{action "addTermToBuffer"}}
       @remove={{action "removeTermFromBuffer"}}
     />
   {{else}}
     <ul class="selected-mesh-terms">
-      {{#each sortedTerms as |term|}}
+      {{#each this.sortedTerms as |term|}}
         <li>
           <span class="term-title">
             {{term.name}}
@@ -54,4 +54,3 @@
     </ul>
   {{/if}}
 </div>
-

@@ -1,21 +1,21 @@
-<DashboardViewPicker @show={{show}} @change={{setShow}} />
-{{#if (eq show "calendar")}}
+<DashboardViewPicker @show={{this.show}} @change={{this.setShow}} />
+{{#if (eq this.show "calendar")}}
   <DashboardCalendar
-    @selectedDate={{selectedDate}}
-    @selectedView={{selectedView}}
-    @mySchedule={{mySchedule}}
-    @showFilters={{showFilters}}
-    @changeDate={{changeDate}}
-    @changeView={{changeView}}
-    @selectEvent={{selectEvent}}
-    @toggleMySchedule={{toggleMySchedule}}
-    @toggleShowFilters={{toggleShowFilters}}
-    @selectedAcademicYear={{selectedAcademicYear}}
-    @selectedSchool={{selectedSchool}}
-    @changeAcademicYear={{changeAcademicYear}}
-    @changeSchool={{changeSchool}}
-    @courseFilters={{courseFilters}}
-    @toggleCourseFilters={{toggleCourseFilters}}
+    @selectedDate={{@selectedDate}}
+    @selectedView={{@selectedView}}
+    @mySchedule={{@mySchedule}}
+    @showFilters={{@showFilters}}
+    @changeDate={{@changeDate}}
+    @changeView={{@changeView}}
+    @selectEvent={{@selectEvent}}
+    @toggleMySchedule={{@toggleMySchedule}}
+    @toggleShowFilters={{@toggleShowFilters}}
+    @selectedAcademicYear={{@selectedAcademicYear}}
+    @selectedSchool={{@selectedSchool}}
+    @changeAcademicYear={{@changeAcademicYear}}
+    @changeSchool={{@changeSchool}}
+    @courseFilters={{@courseFilters}}
+    @toggleCourseFilters={{@toggleCourseFilters}}
     @selectedCohorts={{@selectedCohorts}}
     @selectedCourseLevels={{@selectedCourseLevels}}
     @selectedCourses={{@selectedCourses}}
@@ -28,11 +28,10 @@
     @onUpdateSessionTypes={{@onUpdateSessionTypes}}
     @onUpdateTerms={{@onUpdateTerms}}
   />
-{{else if (eq show "materials")}}
+{{else if (eq this.show "materials")}}
   <DashboardMaterials />
-{{else if (eq show "agenda")}}
+{{else if (eq this.show "agenda")}}
   <DashboardAgenda />
-{{else if (eq show "week")}}
+{{else if (eq this.show "week")}}
   <DashboardWeek />
 {{/if}}
-

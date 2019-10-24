@@ -1,48 +1,47 @@
 <RlDropdownContainer>
   <RlDropdownToggle>
-    <FaIcon @icon={{icon}} />
+    <FaIcon @icon={{if @icon @icon "cloud"}} />
     <span>
-      {{title}}
+      {{@title}}
     </span>
   </RlDropdownToggle>
   <RlDropdown @closeOnChildClick="button">
-    {{#if showAsIs}}
-      <button class="danger" {{action publish}}>
+    {{#if @showAsIs}}
+      <button class="danger" {{action @publish}}>
         {{t "general.publishAsIs"}}
       </button>
     {{/if}}
-    {{#if showPublish}}
-      <button class="good" {{action publish}}>
-        {{t publishTranslation}}
+    {{#if @showPublish}}
+      <button class="good" {{action @publish}}>
+        {{t @publishTranslation}}
       </button>
     {{/if}}
-    {{#if (and showReview reviewRoute reviewObject)}}
-      {{#if parentObject}}
+    {{#if (and @showReview @reviewRoute @reviewObject)}}
+      {{#if this.parentObject}}
         <button class="good" {{action "scrollToSessionPublication"}}>
           {{t
             "general.reviewMissingItems"
-            count=(get this.reviewObject "allPublicationIssuesLength")
+            count=(get @reviewObject "allPublicationIssuesLength")
           }}
         </button>
       {{else}}
         <button class="good" {{action "scrollToCoursePublication"}}>
           {{t
             "general.reviewMissingItems"
-            count=(get this.reviewObject "allPublicationIssuesLength")
+            count=(get @reviewObject "allPublicationIssuesLength")
           }}
         </button>
       {{/if}}
     {{/if}}
-    {{#if showTbd}}
-      <button class="good" {{action publishAsTbd}}>
+    {{#if @showTbd}}
+      <button class="good" {{action @publishAsTbd}}>
         {{t "general.markAsScheduled"}}
       </button>
     {{/if}}
-    {{#if showUnPublish}}
-      <button class="danger" {{action unpublish}}>
-        {{t unPublishTranslation}}
+    {{#if @showUnPublish}}
+      <button class="danger" {{action @unpublish}}>
+        {{t @unPublishTranslation}}
       </button>
     {{/if}}
   </RlDropdown>
 </RlDropdownContainer>
-

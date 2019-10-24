@@ -1,7 +1,7 @@
-<div class="title" role="button" {{action (action expand)}}>
-  {{t "general.competencies"}} ({{get (await subject.competencies) "length"}})
+<div class="title" role="button" {{action (action @expand)}}>
+  {{t "general.competencies"}} ({{get (await @subject.competencies) "length"}})
 </div>
-{{#unless (is-fulfilled summary)}}
+{{#unless (is-fulfilled this.summary)}}
   <LoadingSpinner @tagName="h3" />
 {{else}}
   <div class="content">
@@ -17,7 +17,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each (await summary) as |item|}}
+        {{#each (await this.summary) as |item|}}
           <tr>
             <td>
               {{item.school.title}}
@@ -31,4 +31,3 @@
     </table>
   </div>
 {{/unless}}
-

@@ -1,5 +1,5 @@
-<LinkTo @route="session" @model={{session}}>
-  {{t "general.backToTitle" title=session.title}}
+<LinkTo @route="session" @model={{@session}}>
+  {{t "general.backToTitle" title=@session.title}}
 </LinkTo>
 <div class="rollover-form">
   <h3 class="title">
@@ -12,12 +12,12 @@
     <label>
       {{t "general.year"}}:
     </label>
-    {{#if (is-fulfilled years)}}
+    {{#if (is-fulfilled this.years)}}
       <select onchange={{action "changeSelectedYear" value="target.value"}}>
-        {{#each (await years) as |year|}}
+        {{#each (await this.years) as |year|}}
           <option
             value={{year}}
-            selected={{is-equal year (await bestSelectedYear)}}
+            selected={{is-equal year (await this.bestSelectedYear)}}
           >
             {{year}}
             -
@@ -31,7 +31,7 @@
     {{#if
       (and
         (v-get this "selectedYear" "isInvalid")
-        (is-in showErrorsFor "selectedYear")
+        (is-in this.showErrorsFor "selectedYear")
       )
     }}
       <span class="validation-error-message">
@@ -43,15 +43,15 @@
     <label>
       {{t "general.targetCourse"}}:
     </label>
-    {{#if (is-fulfilled courses)}}
-      {{#if (get (await courses) "length")}}
-        <select onchange={{action (mut selectedCourseId) value="target.value"}}>
-          {{#each (sort-by "title" (await courses)) as |course|}}
+    {{#if (is-fulfilled this.courses)}}
+      {{#if (get (await this.courses) "length")}}
+        <select onchange={{action (mut this.selectedCourseId) value="target.value"}}>
+          {{#each (sort-by "title" (await this.courses)) as |course|}}
             <option
               value={{course.id}}
               selected={{is-equal
                 course.id
-                (get (await bestSelectedCourse) "id")
+                (get (await this.bestSelectedCourse) "id")
               }}
             >
               {{course.title}}
@@ -67,7 +67,7 @@
     {{#if
       (and
         (v-get this "selectedCourse" "isInvalid")
-        (is-in showErrorsFor "selectedCourse")
+        (is-in this.showErrorsFor "selectedCourse")
       )
     }}
       <span class="validation-error-message">
@@ -80,25 +80,24 @@
       class="done text"
       disabled={{if
         (or
-          save.isRunning
-          (not (await bestSelectedYear))
-          (not (await bestSelectedCourse))
+          this.save.isRunning
+          (not (await this.bestSelectedYear))
+          (not (await this.bestSelectedCourse))
         )
         true
       }}
-      {{action (perform save)}}
+      {{action (perform this.save)}}
     >
-      {{#if save.isRunning}}
+      {{#if this.save.isRunning}}
         <LoadingSpinner />
       {{else}}
         {{t "general.done"}}
       {{/if}}
     </button>
-    <LinkTo @route="session" @model={{session}}>
+    <LinkTo @route="session" @model={{@session}}>
       <button class="cancel text">
         {{t "general.cancel"}}
       </button>
     </LinkTo>
   </div>
 </div>
-

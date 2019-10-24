@@ -4,8 +4,8 @@
 <p class="offering-calendar-filter-options">
   <span class="filter">
     <ToggleYesno
-      @yes={{showLearnerGroupEvents}}
-      @toggle={{action (mut showLearnerGroupEvents)}}
+      @yes={{this.showLearnerGroupEvents}}
+      @toggle={{action (mut this.showLearnerGroupEvents)}}
     />
     <label onclick={{toggle "showLearnerGroupEvents" this}}>
       {{t "general.showLearnerGroupEvents"}}
@@ -13,26 +13,25 @@
   </span>
   <span class="filter">
     <ToggleYesno
-      @yes={{showSessionEvents}}
-      @toggle={{action (mut showSessionEvents)}}
+      @yes={{this.showSessionEvents}}
+      @toggle={{action (mut this.showSessionEvents)}}
     />
     <label onclick={{toggle "showSessionEvents" this}}>
       {{! template-lint-disable no-triple-curlies }}
-      {{{t "general.showSessionEvents" sessionTitle=session.title}}}
+      {{{t "general.showSessionEvents" sessionTitle=@session.title}}}
     </label>
   </span>
 </p>
 <div class="ilios-calendar">
   <IliosCalendarWeek
-    @calendarEvents={{await calendarEvents}}
-    @date={{startDate}}
+    @calendarEvents={{await this.calendarEvents}}
+    @date={{@startDate}}
     @areEventsSelectable={{false}}
     @areDaysSelectable={{false}}
   />
 </div>
-<span class="loding-indicator {{if (is-fulfilled calendarEvents) "loaded"}}">
+<span class="loding-indicator {{if (is-fulfilled this.calendarEvents) "loaded"}}">
   <LoadingSpinner />
   {{t "general.loadingEvents"}}
   ...
 </span>
-

@@ -1,8 +1,8 @@
 <h3>
-  {{t "general.upcomingMaterials" days=daysInAdvance}}
+  {{t "general.upcomingMaterials" days=this.daysInAdvance}}
 </h3>
-{{#if (is-fulfilled materials)}}
-  {{#if (gt (get (await materials) "length") 0)}}
+{{#if (is-fulfilled this.materials)}}
+  {{#if (gt (get (await this.materials) "length") 0)}}
     <table>
       <thead>
         <tr>
@@ -24,7 +24,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each (sort-by "firstOfferingDate" (await materials)) as |lmObject|}}
+        {{#each (sort-by "firstOfferingDate" (await this.materials)) as |lmObject|}}
           <tr>
             <td colspan="3">
               {{#if lmObject.isBlanked}}
@@ -118,4 +118,3 @@
     {{t "general.loadingMaterials"}}
   </p>
 {{/if}}
-

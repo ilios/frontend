@@ -1,20 +1,20 @@
-{{#if (is-fulfilled sortedTerms)}}
+{{#if (is-fulfilled this.sortedTerms)}}
   <div data-test-title>
     <strong>
-      {{vocabulary.title}}
-    </strong> ({{vocabulary.school.title}})
-    {{#if (and canEdit (not vocabulary.active))}}
+      {{@vocabulary.title}}
+    </strong> ({{@vocabulary.school.title}})
+    {{#if (and @canEdit (not @vocabulary.active))}}
       <span class="inactive">
         ({{t "general.inactive"}})
       </span>
     {{/if}}
   </div>
-  <ul class="{{if canEdit "removable-list" null}} selected-taxonomy-terms">
-    {{#each (await sortedTerms) as |term|}}
-      {{#if canEdit}}
+  <ul class="{{if @canEdit "removable-list" null}} selected-taxonomy-terms">
+    {{#each (await this.sortedTerms) as |term|}}
+      {{#if @canEdit}}
         <DetailTermsListItem
           @canEdit={{true}}
-          @remove={{remove}}
+          @remove={{this.remove}}
           @term={{term}}
         />
       {{else}}
@@ -23,4 +23,3 @@
     {{/each}}
   </ul>
 {{/if}}
-
