@@ -1,9 +1,6 @@
-import $ from 'jquery';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { dom } from '@fortawesome/fontawesome-svg-core';
-import { next } from '@ember/runloop';
 import layout from '../templates/components/html-editor';
 
 const defaultButtons = [
@@ -26,12 +23,12 @@ export default Component.extend({
     const language = intl.get('locale');
 
     return {
-      key   : '3A9A5C4A3gC3E3C3E3B7A4A2F4B2D2zHMDUGENKACTMXQL==',
-      theme : 'gray',
+      apiKey: 'Kb3A3pE2E2A1E4G4I4oCd2ZSb1XHi1Cb2a1KIWCWMJHXCLSwG1G1B2C1B1C7F6E1E4F4==',
+      theme: 'gray',
+      attribution: false,
       language,
       toolbarInline: false,
       placeholderText: '',
-      allowHTML: true,
       saveInterval: false,
       pastePlain: true,
       spellcheck: true,
@@ -41,29 +38,8 @@ export default Component.extend({
       toolbarButtonsXS: defaultButtons,
       quickInsertButtons: false,
       pluginsEnabled: ['lists', 'code_view', 'link'],
-      iconsTemplate: 'font_awesome_5',
       listAdvancedTypes: false,
       shortcutsEnabled: ['bold', 'italic', 'strikeThrough', 'undo', 'redo', 'createLink'],
     };
   }),
-
-  /**
-   * Disable Froala's built in beacon tracking
-   * Has to be done on the global jQuery plugin object
-   */
-  init() {
-    this._super(...arguments);
-    $.FE.DT = true;
-  },
-  /**
-   * Convert `<i>` tags from froala into SVG icons
-   * Uses: https://fontawesome.com/how-to-use/with-the-api/methods/dom-i2svg
-   */
-  didRender() {
-    next(() => {
-      if (this.element) {
-        dom.i2svg({node: this.element});
-      }
-    });
-  },
 });
