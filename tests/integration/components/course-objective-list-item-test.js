@@ -4,7 +4,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { fillInFroalaEditor } from 'ember-froala-editor/test-support';
 
 const { resolve } = RSVP;
 

@@ -1,24 +1,22 @@
-import { findElementWithAssert } from 'ember-cli-page-object/extend';
-import { settled } from '@ember/test-helpers';
-import $ from 'jquery';
-import { run } from '@ember/runloop';
+import { buildSelector } from 'ember-cli-page-object';
+import FroalaEditor from 'froala-editor';
 
+function getEditorInstance(selector) {
+  return new Promise(resolve => {
+    const editor = new FroalaEditor(selector, {}, () => {
+      resolve(editor);
+    });
+  });
+}
 export function fillInFroalaEditor(selector, options = {}) {
   return {
     isDescriptor: true,
 
     get() {
       return async function (html) {
-        const element = findElementWithAssert(this, selector, options);
-        const $editor = $(element);
-
-        // Apply html via Froala Editor method and trigger a change event
-        run(() => {
-          $editor.froalaEditor('html.set', `${html}`);
-          $editor.froalaEditor('undo.saveStep');
-        });
-
-        return settled();
+        const fullSelector = buildSelector(this, selector, options);
+        const editor = await getEditorInstance(fullSelector);
+        editor.html.set(html);
       };
     }
   };
@@ -29,9 +27,11 @@ export function froalaEditorValue(selector, options = {}) {
     isDescriptor: true,
 
     get() {
-      const element = findElementWithAssert(this, selector, options);
-      const $editor = $(element);
-      return $editor.froalaEditor('html.get');
+      return async function () {
+        const fullSelector = buildSelector(this, selector, options);
+        const editor = await getEditorInstance(fullSelector);
+        return editor.html.get();
+      };
     }
   };
 }

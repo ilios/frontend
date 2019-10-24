@@ -1,6 +1,7 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
+import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
 import layout from '../templates/components/html-editor';
 
 const defaultButtons = [
@@ -16,7 +17,8 @@ const defaultButtons = [
 export default Component.extend({
   intl: service(),
   layout,
-  content: '',
+  editor: null,
+  'data-test-html-editor': true,
 
   options: computed('intl.locale', function(){
     const intl = this.get('intl');
@@ -40,6 +42,23 @@ export default Component.extend({
       pluginsEnabled: ['lists', 'code_view', 'link'],
       listAdvancedTypes: false,
       shortcutsEnabled: ['bold', 'italic', 'strikeThrough', 'undo', 'redo', 'createLink'],
+      events: {
+        contentChanged: () => {
+          this.update(this.editor.html.get());
+        }
+      },
     };
   }),
+  didInsertElement() {
+    loadFroalaEditor().then(({ FroalaEditor }) => {
+      this.editor = new FroalaEditor(this.element, this.options, () => {
+        this.editor.html.set(this.content);
+      });
+    });
+  },
+  willDestroyElement() {
+    if (this.editor) {
+      this.editor.destroy();
+    }
+  },
 });

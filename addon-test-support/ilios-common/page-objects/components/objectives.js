@@ -18,7 +18,7 @@ export default {
   save: clickable('.detail-objectives-actions button.bigadd'),
   cancel: clickable('.detail-objectives-actions button.bigcancel'),
   newObjective: {
-    description: fillInFroalaEditor('.fr-box'),
+    description: fillInFroalaEditor('[data-test-html-editor]'),
     save: clickable('.done'),
     cancel: clickable('.cancel'),
     canSave: property('disabled', '.done'),

@@ -7,7 +7,6 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/course';
-
 module('Acceptance | Course - Objective Create', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
@@ -36,6 +35,7 @@ module('Acceptance | Course - Objective Create', function(hooks) {
     assert.equal(page.objectives.current[0].description.text, 'objective 0');
     await page.objectives.createNew();
     await page.objectives.newObjective.description(newObjectiveDescription);
+    await this.pauseTest();
     await page.objectives.newObjective.save();
 
     assert.equal(page.objectives.current.length, 2);

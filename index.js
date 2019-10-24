@@ -10,6 +10,12 @@ module.exports = {
 
   included: function() {
     this._super.included.apply(this, arguments);
+
+    // Import the froala editor styles
+    let froalaPath = path.join('node_modules', 'froala-editor');
+    this.import(path.join(froalaPath, 'css', 'froala_editor.css'));
+    this.import(path.join(froalaPath, 'css', 'froala_style.css'));
+    this.import(path.join(froalaPath, 'css', 'themes', 'gray.css'));
   },
 
   contentFor(type, config) {
@@ -62,7 +68,7 @@ module.exports = {
 
   treeForAddonTestSupport(tree) {
     // intentionally not calling _super here
-    // so that can have our `import`'s be
+    // so that we can have our `import`'s be
     // import { ... } from 'ilios-common';
 
     return this.preprocessJs(tree, '/', this.name, {
