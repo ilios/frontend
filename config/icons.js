@@ -69,6 +69,7 @@ module.exports = function() {
       'times',
       'trash',
       'undo',
+      'university',
       'unlink',
       'user',
       'user-clock',
