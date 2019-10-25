@@ -9,6 +9,8 @@ import {
   value
 } from 'ember-cli-page-object';
 
+import courseSearchResult from './course-search-result';
+
 const definition = {
   scope: '[data-test-global-search]',
   noResultsIsVisible: isVisible('.no-results'),
@@ -24,10 +26,7 @@ const definition = {
     school: text('label'),
     toggle: clickable('label'),
   }),
-  results: collection('[data-test-results] [data-test-course-search-result]', {
-    courseTitle: text('a:first-of-type'),
-    clickCourse: clickable('a:first-of-type'),
-  }),
+  searchResults: collection('[data-test-course-search-result]', courseSearchResult),
 };
 
 export default definition;
