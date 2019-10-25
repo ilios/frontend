@@ -93,23 +93,23 @@ module('Integration | Component | global-search', function(hooks) {
     />`);
     assert.equal(component.academicYear, '');
     assert.equal(component.academicYearOptions, 'All Academic Years 2021 - 2022 2020 - 2021 2019 - 2020');
-    assert.equal(component.courseTitleLinks.length, 4);
-    assert.equal(component.courseTitleLinks[0].text, 'Course 1');
-    assert.equal(component.courseTitleLinks[1].text, 'Course 2');
-    assert.equal(component.courseTitleLinks[2].text, 'Course 3');
-    assert.equal(component.courseTitleLinks[3].text, 'Course 4');
+    assert.equal(component.searchResults.length, 4);
+    assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
+    assert.equal(component.searchResults[1].courseTitle, '2020 Course 2');
+    assert.equal(component.searchResults[2].courseTitle, '2021 Course 3');
+    assert.equal(component.searchResults[3].courseTitle, '2021 Course 4');
     await component.selectAcademicYear('2021');
-    assert.equal(component.courseTitleLinks.length, 2);
-    assert.equal(component.courseTitleLinks[0].text, 'Course 3');
-    assert.equal(component.courseTitleLinks[1].text, 'Course 4');
+    assert.equal(component.searchResults.length, 2);
+    assert.equal(component.searchResults[0].courseTitle, '2021 Course 3');
+    assert.equal(component.searchResults[1].courseTitle, '2021 Course 4');
     await component.selectAcademicYear('2020');
     assert.equal(component.academicYear, '2020');
-    assert.equal(component.courseTitleLinks.length, 1);
-    assert.equal(component.courseTitleLinks[0].text, 'Course 2');
+    assert.equal(component.searchResults.length, 1);
+    assert.equal(component.searchResults[0].courseTitle, '2020 Course 2');
     await component.selectAcademicYear('2019');
     assert.equal(component.academicYear, '2019');
-    assert.equal(component.courseTitleLinks.length, 1);
-    assert.equal(component.courseTitleLinks[0].text, 'Course 1');
+    assert.equal(component.searchResults.length, 1);
+    assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
   });
 
   test('school filter works properly', async function(assert) {
@@ -155,11 +155,11 @@ module('Integration | Component | global-search', function(hooks) {
       @ignoredSchoolIds={{this.ignoredSchoolIds}}
       @setIgnoredSchoolIds={{action (mut this.ignoredSchoolIds)}}
     />`);
-    assert.equal(component.courseTitleLinks.length, 4);
-    assert.equal(component.courseTitleLinks[0].text, 'Course 1');
-    assert.equal(component.courseTitleLinks[1].text, 'Course 2');
-    assert.equal(component.courseTitleLinks[2].text, 'Course 3');
-    assert.equal(component.courseTitleLinks[3].text, 'Course 4');
+    assert.equal(component.searchResults.length, 4);
+    assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
+    assert.equal(component.searchResults[1].courseTitle, '2020 Course 2');
+    assert.equal(component.searchResults[2].courseTitle, '2021 Course 3');
+    assert.equal(component.searchResults[3].courseTitle, '2021 Course 4');
     assert.equal(component.schoolFilters.length, 3);
     assert.equal(component.schoolFilters[0].school, 'Dentistry (1)');
     assert.ok(component.schoolFilters[0].isSelected);
@@ -170,9 +170,9 @@ module('Integration | Component | global-search', function(hooks) {
 
     await component.schoolFilters[1].toggle();
 
-    assert.equal(component.courseTitleLinks.length, 2);
-    assert.equal(component.courseTitleLinks[0].text, 'Course 3');
-    assert.equal(component.courseTitleLinks[1].text, 'Course 4');
+    assert.equal(component.searchResults.length, 2);
+    assert.equal(component.searchResults[0].courseTitle, '2021 Course 3');
+    assert.equal(component.searchResults[1].courseTitle, '2021 Course 4');
     assert.equal(component.schoolFilters.length, 3);
     assert.equal(component.schoolFilters[0].school, 'Dentistry (1)');
     assert.ok(component.schoolFilters[0].isSelected);
@@ -183,8 +183,8 @@ module('Integration | Component | global-search', function(hooks) {
 
     await component.schoolFilters[0].toggle();
 
-    assert.equal(component.courseTitleLinks.length, 1);
-    assert.equal(component.courseTitleLinks[0].text, 'Course 3');
+    assert.equal(component.searchResults.length, 1);
+    assert.equal(component.searchResults[0].courseTitle, '2021 Course 3');
     assert.equal(component.schoolFilters.length, 3);
     assert.equal(component.schoolFilters[0].school, 'Dentistry (1)');
     assert.notOk(component.schoolFilters[0].isSelected);
@@ -195,7 +195,7 @@ module('Integration | Component | global-search', function(hooks) {
 
     await component.schoolFilters[2].toggle();
 
-    assert.equal(component.courseTitleLinks.length, 0);
+    assert.equal(component.searchResults.length, 0);
     assert.equal(component.schoolFilters.length, 3);
     assert.equal(component.schoolFilters[0].school, 'Dentistry (1)');
     assert.notOk(component.schoolFilters[0].isSelected);
@@ -208,11 +208,11 @@ module('Integration | Component | global-search', function(hooks) {
     await component.schoolFilters[1].toggle();
     await component.schoolFilters[2].toggle();
 
-    assert.equal(component.courseTitleLinks.length, 4);
-    assert.equal(component.courseTitleLinks[0].text, 'Course 1');
-    assert.equal(component.courseTitleLinks[1].text, 'Course 2');
-    assert.equal(component.courseTitleLinks[2].text, 'Course 3');
-    assert.equal(component.courseTitleLinks[3].text, 'Course 4');
+    assert.equal(component.searchResults.length, 4);
+    assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
+    assert.equal(component.searchResults[1].courseTitle, '2020 Course 2');
+    assert.equal(component.searchResults[2].courseTitle, '2021 Course 3');
+    assert.equal(component.searchResults[3].courseTitle, '2021 Course 4');
     assert.equal(component.schoolFilters.length, 3);
     assert.equal(component.schoolFilters[0].school, 'Dentistry (1)');
     assert.ok(component.schoolFilters[0].isSelected);
@@ -242,8 +242,8 @@ module('Integration | Component | global-search', function(hooks) {
 
     this.set('query', 'hello world');
     await render(hbs`<GlobalSearch @page="1" @query={{this.query}} />`);
-    assert.equal(component.courseTitleLinks.length, 1);
-    assert.equal(component.courseTitleLinks[0].text, 'Course 1');
+    assert.equal(component.searchResults.length, 1);
+    assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
     assert.equal(component.schoolFilters.length, 3);
     assert.equal(component.schoolFilters[0].school, 'school 0 (0)');
     assert.ok(component.schoolFilters[0].isDisabled);
@@ -273,8 +273,8 @@ module('Integration | Component | global-search', function(hooks) {
 
     this.set('query', 'hello world');
     await render(hbs`<GlobalSearch @page="1" @query={{this.query}} />`);
-    assert.equal(component.courseTitleLinks.length, 1);
-    assert.equal(component.courseTitleLinks[0].text, 'Course 1');
+    assert.equal(component.searchResults.length, 1);
+    assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
     assert.equal(component.schoolFilters.length, 0);
   });
 });

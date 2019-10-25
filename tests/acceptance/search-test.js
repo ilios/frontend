@@ -120,18 +120,18 @@ module('Acceptance | search', function(hooks) {
     await page.searchBox.input(firstInput);
     await page.searchBox.clickIcon();
     await page.paginationLinks[1].click();
-    assert.equal(page.globalSearch.results.length, 10);
-    assert.equal(page.globalSearch.results[0].courseTitle, 'course 11');
+    assert.equal(page.globalSearch.searchResults.length, 10);
+    assert.equal(page.globalSearch.searchResults[0].courseTitle, '2019 course 11');
     assert.equal(page.searchBox.inputValue, firstInput);
     assert.equal(currentURL(), `/search?page=2&q=${firstInput}`);
-    await page.globalSearch.results[0].clickCourse();
+    await page.globalSearch.searchResults[0].clickCourse();
     assert.equal(currentURL(), `/courses/11`);
     await page.visit({
       page: 2,
       q: firstInput
     });
-    assert.equal(page.globalSearch.results.length, 10);
-    assert.equal(page.globalSearch.results[0].courseTitle, 'course 11');
+    assert.equal(page.globalSearch.searchResults.length, 10);
+    assert.equal(page.globalSearch.searchResults[0].courseTitle, '2019 course 11');
   });
 
   test('clicking back on search updates results and input #4759', async function(assert) {
@@ -189,7 +189,7 @@ module('Acceptance | search', function(hooks) {
     await page.visit();
     await page.searchBox.input(input);
     await page.searchBox.clickIcon();
-    assert.equal(page.globalSearch.results.length, 0);
+    assert.equal(page.globalSearch.searchResults.length, 0);
     assert.equal(page.searchBox.autocompleteResults.length, 1);
     assert.equal(page.searchBox.autocompleteResults[0].text, 'keep typing...');
   });
@@ -201,7 +201,7 @@ module('Acceptance | search', function(hooks) {
     await page.visit({ q: input });
     assert.equal(page.searchBox.inputValue, input);
     await page.searchBox.clickIcon();
-    assert.equal(page.globalSearch.results.length, 0);
+    assert.equal(page.globalSearch.searchResults.length, 0);
   });
 
   test('school filter in query param', async function(assert) {
@@ -231,8 +231,8 @@ module('Acceptance | search', function(hooks) {
       q: 'something',
       ignoredSchools: '1-3'
     });
-    assert.equal(page.globalSearch.courseTitleLinks.length, 1);
-    assert.equal(page.globalSearch.courseTitleLinks[0].text, 'Course 1');
+    assert.equal(page.globalSearch.searchResults.length, 1);
+    assert.equal(page.globalSearch.searchResults[0].courseTitle, '2019 Course 1');
     assert.equal(page.globalSearch.schoolFilters.length, 3);
     assert.equal(page.globalSearch.schoolFilters[0].school, 'school 0 (1)');
     assert.notOk(page.globalSearch.schoolFilters[0].isSelected);
@@ -271,8 +271,8 @@ module('Acceptance | search', function(hooks) {
       q: 'something',
       year: '2020'
     });
-    assert.equal(page.globalSearch.courseTitleLinks.length, 1);
-    assert.equal(page.globalSearch.courseTitleLinks[0].text, 'course 2');
+    assert.equal(page.globalSearch.searchResults.length, 1);
+    assert.equal(page.globalSearch.searchResults[0].courseTitle, '2020 course 2');
     assert.equal(page.globalSearch.academicYear, '2020');
   });
 });

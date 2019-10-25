@@ -9,7 +9,8 @@ import {
 
 const definition = {
   schoolTitle: text('[data-test-school-title]'),
-  courseTitle: text('.course-title-link'),
+  courseTitle: text('[data-test-course-title]'),
+  clickCourse: clickable('[data-test-course-title]'),
   sessions: collection('.session-title-link'),
   showMoreIsVisible: isVisible('.show-more'),
   showMoreIsHidden: isHidden('.show-more'),

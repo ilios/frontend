@@ -1,4 +1,5 @@
-<LinkTo @route="course" @model={{@course.id}} class="course-title-link">
+<LinkTo @route="course" @model={{@course.id}} data-test-course-title>
+  <small>{{@course.year}}</small>
   {{@course.title}}
 </LinkTo>
 <span class="school-flag" data-test-school-title>
