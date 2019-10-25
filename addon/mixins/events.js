@@ -25,9 +25,8 @@ export default Mixin.create({
    * @param {Object} event
    * @return {Promise.<Object>}
    */
-  async getCourseForEvent(event){
-    const session = await this.getSessionForEvent(event);
-    return await session.get('course');
+  async getCourseForEvent(event) {
+    return await this.store.findRecord('course', event.course);
   },
 
   /**
