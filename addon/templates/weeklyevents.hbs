@@ -1,7 +1,7 @@
 <BackLink />
 <WeeklyEvents
-  @year={{year}}
-  @expandedWeeks={{expandedWeeks}}
-  @setYear={{action (mut year)}}
+  @year={{this.year}}
+  @expandedWeeks={{this.expandedWeeks}}
+  @setYear={{action (mut this.year)}}
   @toggleOpenWeek={{action "toggleOpenWeek"}}
 />

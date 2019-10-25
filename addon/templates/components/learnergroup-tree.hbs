@@ -1,7 +1,7 @@
 {{! template-lint-disable no-invalid-interactive}}
 <span
   class={{if this.selectable "clickable"}}
-  onclick={{if this.selectable (action add @learnerGroup)}}
+  onclick={{if this.selectable (action @add @learnerGroup)}}
   role={{if this.selectable "button"}}
 >
   {{@learnerGroup.title}}

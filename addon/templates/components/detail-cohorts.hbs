@@ -5,7 +5,7 @@
         {{t "general.cohortsManageTitle"}}
       </span>
     {{else}}
-      {{t "general.programCohorts"}} ({{course.cohorts.length}})
+      {{t "general.programCohorts"}} ({{@course.cohorts.length}})
     {{/if}}
   </div>
   <div class="actions">
@@ -29,12 +29,12 @@
 <div class="detail-cohorts-content">
   {{#if this.isManaging class="horizontal"}}
     <DetailCohortManager
-      @school={{await course.school}}
+      @school={{await @course.school}}
       @selectedCohorts={{this.bufferedCohorts}}
       @add={{action "addCohortToBuffer"}}
       @remove={{action "removeCohortFromBuffer"}}
     />
   {{else}}
-    <DetailCohortList @cohorts={{await course.cohorts}} />
+    <DetailCohortList @cohorts={{await @course.cohorts}} />
   {{/if}}
 </div>

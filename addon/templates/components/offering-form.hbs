@@ -188,7 +188,7 @@
       <div class="item room">
         <label>
           {{t "general.location"}}:
-          {{#unless offering}}
+          {{#unless @offering}}
             {{t "general.defaultLocationNotLoaded"}}
           {{/unless}}
         </label>
@@ -209,7 +209,7 @@
       <div class="instructors item">
         <label>
           {{t "general.instructors"}}:
-          {{#unless offering}}
+          {{#unless @offering}}
             {{t "general.defaultInstructorsNotLoaded"}}
           {{/unless}}
         </label>
