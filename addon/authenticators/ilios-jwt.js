@@ -1,10 +1,9 @@
-import { assign } from '@ember/polyfills';
 import { get } from '@ember/object';
 import { inject as service } from '@ember/service';
 import JwtTokenAuthenticator from 'ember-simple-auth-token/authenticators/jwt';
 
 export default JwtTokenAuthenticator.extend({
-  commonAjax: service(),
+  iliosConfig: service(),
   /**
     Extend the JwtTokenAuthenticator to accept a token in liu of credentials
     This allows authentication of an already existing session.
@@ -30,48 +29,21 @@ export default JwtTokenAuthenticator.extend({
       return response;
     }
 
-    try {
-      let response = await this.makeRequest(this.serverTokenEndpoint, credentials, headers);
-      const token = get(response, this.tokenPropertyName);
-      const tokenData = this.getTokenData(token);
-      const expiresAt = get(tokenData, this.tokenExpireName);
-      const tokenExpireData = {};
-      this.scheduleAccessTokenRefresh(expiresAt, token);
-      tokenExpireData[this.tokenExpireName] = expiresAt;
-      response = assign(response, tokenExpireData);
-      return response;
-    } catch (e) {
-      throw {
-        'message': e.message,
-        'keys': e.payload.errors || [],
-      };
-    }
+    return this._super(credentials, headers);
   },
 
   /**
-   * Extend the default make request in order to user our own ajax service
-   * Using our service allows us to use a custom hostname instead of just '/'
+   * Extend the default make request in order use a custom
+   * hostname instead of just '/'
    *
    * @method makeRequest
    * @param {string} url The URL to post to.
    * @param {Object} data The POST data.
-   * @param {Object} providedHeaders Request headers.
+   * @param {Object} headers Request headers.
    * @return {Promise} The result of the request.
   */
-  makeRequest(url, data, providedHeaders) {
-    const commonAjax = this.get('commonAjax');
-    let headers = this.headers;
-    if (providedHeaders) {
-      Object.keys(headers).forEach((key) => {
-        headers[key] = providedHeaders[key];
-      });
-    }
-
-    return commonAjax.post(url, {
-      data: JSON.stringify(data),
-      dataType: 'json',
-      contentType: 'application/json',
-      headers,
-    });
+  makeRequest(url, data, headers) {
+    const host = this.iliosConfig.apiHost ? this.iliosConfig.apiHost : '';
+    return this._super(`${host}${url}`, data, headers);
   },
 });
