@@ -1,17 +1,17 @@
 {{ilios-course-details
-  course=model
-  editable=editable
-  showDetails=details
-  setShowDetails=(action (mut details))
-  courseLeadershipDetails=courseLeadershipDetails
-  courseObjectiveDetails=courseObjectiveDetails
-  courseTaxonomyDetails=courseTaxonomyDetails
-  courseCompetencyDetails=courseCompetencyDetails
-  courseManageLeadership=courseManageLeadership
-  setCourseLeadershipDetails=(action (mut courseLeadershipDetails))
-  setCourseObjectiveDetails=(action (mut courseObjectiveDetails))
-  setCourseTaxonomyDetails=(action (mut courseTaxonomyDetails))
-  setCourseCompetencyDetails=(action (mut courseCompetencyDetails))
-  setCourseManageLeadership=(action (mut courseManageLeadership))
+  course=this.model
+  editable=this.editable
+  showDetails=this.details
+  setShowDetails=(action (mut this.details))
+  courseLeadershipDetails=this.courseLeadershipDetails
+  courseObjectiveDetails=this.courseObjectiveDetails
+  courseTaxonomyDetails=this.courseTaxonomyDetails
+  courseCompetencyDetails=this.courseCompetencyDetails
+  courseManageLeadership=this.courseManageLeadership
+  setCourseLeadershipDetails=(action (mut this.courseLeadershipDetails))
+  setCourseObjectiveDetails=(action (mut this.courseObjectiveDetails))
+  setCourseTaxonomyDetails=(action (mut this.courseTaxonomyDetails))
+  setCourseCompetencyDetails=(action (mut this.courseCompetencyDetails))
+  setCourseManageLeadership=(action (mut this.courseManageLeadership))
 }}
 {{outlet}}

@@ -1,6 +1,6 @@
 {{#if
   (or
-    (and (eq course.directors.length 0) (eq course.administrators.length 0))
+    (and (eq @course.directors.length 0) (eq @course.administrators.length 0))
     this.courseLeadershipDetails
   )
 }}
@@ -15,12 +15,12 @@
 {{else}}
   <LeadershipCollapsed
     @title={{t "general.courseLeadership"}}
-    @directorsCount={{has-many-length course "directors"}}
-    @administratorsCount={{has-many-length course "administrators"}}
+    @directorsCount={{has-many-length @course "directors"}}
+    @administratorsCount={{has-many-length @course "administrators"}}
     @expand={{action @setCourseLeadershipDetails true}}
   />
 {{/if}}
-{{#if (or (eq course.objectives.length 0) this.courseObjectiveDetails)}}
+{{#if (or (eq @course.objectives.length 0) this.courseObjectiveDetails)}}
   <DetailObjectives
     @subject={{@course}}
     @isCourse={{true}}
@@ -40,7 +40,7 @@
   @editable={{@editable}}
 />
 {{#if
-  (or (eq (get (await course.competencies) "length") 0) this.courseCompetencyDetails)
+  (or (eq (get (await @course.competencies) "length") 0) this.courseCompetencyDetails)
 }}
   <DetailCompetencies
     @course={{@course}}
@@ -54,7 +54,7 @@
     @expand={{action @setCourseCompetencyDetails true}}
   />
 {{/if}}
-{{#if (or (eq course.terms.length 0) this.courseTaxonomyDetails)}}
+{{#if (or (eq @course.terms.length 0) this.courseTaxonomyDetails)}}
   <DetailTaxonomies
     @subject={{@course}}
     @isCourse={{true}}

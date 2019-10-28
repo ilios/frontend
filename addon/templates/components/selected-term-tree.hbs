@@ -6,7 +6,7 @@
       checked={{is-in @selectedTerms term}}
       {{action @toggle term on="change"}}
     >
-    <span class="list-indentation" role="button" {{action toggle term}}>
+    <span class="list-indentation" role="button" {{action @toggle term}}>
       {{term.title}}
     </span>
     {{#if (gt (get (await term.children) "length") 0)}}

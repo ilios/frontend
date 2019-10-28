@@ -79,7 +79,7 @@
   {{/if}}
 {{else}}
   {{! template-lint-disable unused-block-params }}
-  {{#each (repeat course.objectives.length) as |empty|}}
+  {{#each (repeat @subject.objectives.length) as |empty|}}
     <div>
       <LoadingSpinner />
     </div>

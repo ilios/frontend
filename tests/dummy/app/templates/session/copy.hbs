@@ -1,9 +1,9 @@
 <div class="session-details">
   {{session-overview
-    session=model
-    editable=canUpdate
+    session=this.model
+    editable=this.canUpdate
     showCheckLink=false
-    sessionTypes=model.sessionTypes
+    sessionTypes=this.model.sessionTypes
   }}
-  {{session-copy session=model visit=(action "loadSession")}}
+  {{session-copy session=this.model visit=(action "loadSession")}}
 </div>
