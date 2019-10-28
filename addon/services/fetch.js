@@ -1,6 +1,7 @@
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import fetch from 'fetch';
+import queryString from 'query-string';
 
 export default class Fetch extends Service {
   @service session;
@@ -31,6 +32,21 @@ export default class Fetch extends Service {
     const url = this.apiHostUrlFromPath(relativePath);
     const response = await fetch(url, {
       headers: this.authHeaders
+    });
+    return response.json();
+  }
+
+  async postToApiHost(relativePath, data) {
+    const url = this.apiHostUrlFromPath(relativePath);
+    let headers = this.authHeaders;
+    headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    const body = queryString.stringify(data, {
+      arrayFormat: 'bracket',
+    });
+    const response = await fetch(url, {
+      method: 'POST',
+      headers,
+      body
     });
     return response.json();
   }

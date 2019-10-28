@@ -16,6 +16,7 @@ import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import queryString from 'query-string';
 
 module('Integration | Component | course rollover', function(hooks) {
   setupRenderingTest(hooks);
@@ -28,7 +29,7 @@ module('Integration | Component | course rollover', function(hooks) {
     });
     this.set('course', course);
 
-    await render(hbs`{{course-rollover course=course}}`);
+    await render(hbs`<CourseRollover @course={{this.course}} />`);
 
     const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
     const yearSelect = '.year-select select';
@@ -45,43 +46,40 @@ module('Integration | Component | course rollover', function(hooks) {
   });
 
   test('rollover course', async function(assert) {
-    assert.expect(7);
+    assert.expect(5);
     let course = EmberObject.create({
       id: 1,
       title: 'old title',
       startDate: moment().hour(0).minute(0).second(0).toDate()
     });
-
-    let ajaxMock = Service.extend({
-      request(url, {method, data}){
-        let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
-        assert.equal(url.trim(), `/api/courses/${course.get('id')}/rollover`);
-        assert.equal(method, 'POST');
-        assert.ok('year' in data);
-        assert.equal(data.year, lastYear);
-        assert.equal(data.newCourseTitle, course.get('title'));
-        assert.ok('newStartDate' in data);
-
-        return resolve({
-          courses: [
-            {
-              id: 14
-            }
-          ]
-        });
-      }
+    this.server.post(`/api/courses/${course.id}/rollover`, (schema, request) => {
+      let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
+      const data = queryString.parse(request.requestBody);
+      assert.ok('year' in data);
+      assert.equal(data.year, lastYear);
+      assert.equal(data.newCourseTitle, course.title);
+      assert.ok('newStartDate' in data);
+      return {
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      };
     });
-    this.owner.register('service:commonAjax', ajaxMock);
     this.set('course', course);
     this.set('visit', (newCourse) => {
       assert.equal(newCourse.id, 14);
     });
-    await render(hbs`{{course-rollover course=course visit=(action visit)}}`);
+    await render(hbs`<CourseRollover
+      @course={{this.course}}
+      @visit={{action this.visit}}
+    />`);
     await click('.done');
   });
 
   test('rollover course with new title', async function(assert) {
-    assert.expect(3);
+    assert.expect(1);
     let course = EmberObject.create({
       id: 1,
       title: 'old title',
@@ -90,32 +88,29 @@ module('Integration | Component | course rollover', function(hooks) {
 
     const newTitle = course.get('title') + '2';
 
-    let ajaxMock = Service.extend({
-      request(url, {method, data}){
-        assert.equal(url.trim(), `/api/courses/${course.get('id')}/rollover`);
-        assert.equal(method, 'POST');
-        assert.equal(data.newCourseTitle, newTitle, 'The new title gets passed.');
-        return resolve({
-          courses: [
-            {
-              id: 14
-            }
-          ]
-        });
-      }
+    this.server.post(`/api/courses/${course.id}/rollover`, (schema, request) => {
+      const data = queryString.parse(request.requestBody);
+      assert.equal(data.newCourseTitle, newTitle, 'The new title gets passed.');
+      return {
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      };
     });
-    this.owner.register('service:commonAjax', ajaxMock);
 
     this.set('course', course);
     this.set('visit', () => {});
 
-    await render(hbs`{{course-rollover course=course visit=(action visit)}}`);
+    await render(hbs`<CourseRollover
+      @course={{this.course}}
+      @visit={{action this.visit}}
+    />`);
     const title = '.title';
     const input = `${title} input`;
     await fillIn(input, newTitle);
-    await settled();
     await click('.done');
-    await settled();
   });
 
 
@@ -139,7 +134,10 @@ module('Integration | Component | course rollover', function(hooks) {
     });
     this.set('course', course);
     this.set('nothing', parseInt);
-    await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+    await render(hbs`<CourseRollover
+      @course={{this.course}}
+      @visit={{action this.nothing}}
+    />`);
 
     let options = findAll('select:nth-of-type(1) option');
     assert.ok(options[0].disabled);
@@ -166,29 +164,31 @@ module('Integration | Component | course rollover', function(hooks) {
       startDate: courseStartDate.toDate(),
       title: 'old course'
     });
-    let ajaxMock = Service.extend({
-      request(url, {data}){
-        assert.ok('newStartDate' in data, 'A new start date was passed.');
-        let newStartDate = moment(data.newStartDate);
-        assert.equal(
-          newStartDate.format('YYYY-MM-DD'),
-          rolloverDate.format('YYYY-MM-DD'),
-          'New start date is rollover date.'
-        );
-        return resolve({
-          courses: [
-            {
-              id: 14
-            }
-          ]
-        });
-      }
+
+    this.server.post(`/api/courses/${course.id}/rollover`, (schema, request) => {
+      const data = queryString.parse(request.requestBody);
+      assert.ok('newStartDate' in data, 'A new start date was passed.');
+      let newStartDate = moment(data.newStartDate);
+      assert.equal(
+        newStartDate.format('YYYY-MM-DD'),
+        rolloverDate.format('YYYY-MM-DD'),
+        'New start date is rollover date.'
+      );
+      return {
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      };
     });
-    this.owner.register('service:commonAjax', ajaxMock);
 
     this.set('course', course);
     this.set('nothing', parseInt);
-    await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+    await render(hbs`<CourseRollover
+      @course={{this.course}}
+      @visit={{action this.nothing}}
+    />`);
     const advancedOptions = '.advanced-options';
     const startDate = `${advancedOptions} input:nth-of-type(1)`;
 
@@ -243,29 +243,31 @@ module('Integration | Component | course rollover', function(hooks) {
       title: 'test title',
       startDate: courseStartDate.toDate()
     });
-    let ajaxMock = Service.extend({
-      request(url, {data}){
-        assert.ok('newStartDate' in data, 'A new start date was passed.');
-        let newStartDate = moment(data.newStartDate);
-        assert.equal(
-          newStartDate.format('YYYY-MM-DD'),
-          courseStartDate.format('YYYY-MM-DD'),
-          'New start date is course start date.'
-        );
-        return resolve({
-          courses: [
-            {
-              id: 14
-            }
-          ]
-        });
-      }
+
+    this.server.post(`/api/courses/${course.id}/rollover`, (schema, request) => {
+      const data = queryString.parse(request.requestBody);
+      assert.ok('newStartDate' in data, 'A new start date was passed.');
+      let newStartDate = moment(data.newStartDate);
+      assert.equal(
+        newStartDate.format('YYYY-MM-DD'),
+        courseStartDate.format('YYYY-MM-DD'),
+        'New start date is course start date.'
+      );
+      return {
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      };
     });
-    this.owner.register('service:commonAjax', ajaxMock);
 
     this.set('course', course);
     this.set('nothing', parseInt);
-    await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+    await render(hbs`<CourseRollover
+      @course={{this.course}}
+      @visit={{action this.nothing}}
+    />`);
     const advancedOptions = '.advanced-options';
     const yearSelect = '.year-select select';
     const startDate = `${advancedOptions} input:nth-of-type(1)`;
@@ -315,7 +317,10 @@ module('Integration | Component | course rollover', function(hooks) {
 
     this.set('course', course);
     this.set('nothing', parseInt);
-    await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+    await render(hbs`<CourseRollover
+      @course={{this.course}}
+      @visit={{action this.nothing}}
+    />`);
     const advancedOptions = '.advanced-options';
     const yearSelect = '.year-select select';
     const startDate = `${advancedOptions} input:nth-of-type(1)`;
@@ -351,25 +356,27 @@ module('Integration | Component | course rollover', function(hooks) {
       school
     });
     const course = await this.owner.lookup('service:store').find('course', 1);
-    let ajaxMock = Service.extend({
-      request(url, {data}){
-        assert.ok('skipOfferings' in data);
-        assert.equal(data.skipOfferings, true);
-
-        return resolve({
-          courses: [
-            {
-              id: 14
-            }
-          ]
-        });
-      }
+    this.server.post(`/api/courses/${course.id}/rollover`, (schema, request) => {
+      const data = queryString.parse(request.requestBody, {
+        parseBooleans: true
+      });
+      assert.ok('skipOfferings' in data);
+      assert.equal(data.skipOfferings, true);
+      return {
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      };
     });
-    this.owner.register('service:commonAjax', ajaxMock);
 
     this.set('course', course);
     this.set('nothing', parseInt);
-    await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+    await render(hbs`<CourseRollover
+      @course={{this.course}}
+      @visit={{action this.nothing}}
+    />`);
     const advancedOptions = '.advanced-options';
     const offerings = `${advancedOptions} [data-test-skip-offerings]`;
 
@@ -385,7 +392,7 @@ module('Integration | Component | course rollover', function(hooks) {
     });
     this.set('course', course);
 
-    await render(hbs`{{course-rollover course=course}}`);
+    await render(hbs`<CourseRollover @course={{this.course}} />`);
     assert.dom('.validation-error-message').doesNotExist();
   });
 
@@ -395,7 +402,7 @@ module('Integration | Component | course rollover', function(hooks) {
     });
     this.set('course', course);
 
-    await render(hbs`{{course-rollover course=course}}`);
+    await render(hbs`<CourseRollover @course={{this.course}} />`);
 
     const title = '.title';
     const input = `${title} input`;
@@ -427,21 +434,21 @@ module('Integration | Component | course rollover', function(hooks) {
       school,
     });
     const course = await this.owner.lookup('service:store').find('course', 1);
-    let ajaxMock = Service.extend({
-      request(url, { data }) {
-        assert.ok('newCohorts' in data);
-        assert.deepEqual(data.newCohorts, ['1']);
-
-        return resolve({
-          courses: [
-            {
-              id: 14
-            }
-          ]
-        });
-      }
+    this.server.post(`/api/courses/${course.id}/rollover`, (schema, request) => {
+      const data = queryString.parse(request.requestBody, {
+        arrayFormat: 'bracket',
+      });
+      assert.ok('newCohorts' in data);
+      assert.deepEqual(data.newCohorts, ['1']);
+      return {
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      };
     });
-    this.owner.register('service:commonAjax', ajaxMock);
+
     const mockCurrentUser = EmberObject.create({});
 
     const currentUserMock = Service.extend({
@@ -451,7 +458,10 @@ module('Integration | Component | course rollover', function(hooks) {
 
     this.set('course', course);
     this.set('nothing', parseInt);
-    await render(hbs`{{course-rollover course=course visit=(action nothing)}}`);
+    await render(hbs`<CourseRollover
+      @course={{this.course}}
+      @visit={{action this.nothing}}
+    />`);
     const advancedOptions = '.advanced-options';
     const firstCohort = `${advancedOptions} .selectable-cohorts li:nth-of-type(1)`;
 
