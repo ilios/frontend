@@ -1,32 +1,15 @@
-import RSVP from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import moment from 'moment';
-
-const { resolve } = RSVP;
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Service | school events', function(hooks) {
   setupTest(hooks);
-
-  hooks.beforeEach(function() {
-    const MockCommonAjaxService = Service.extend({
-      request() {
-        return resolve({ events: [] });
-      }
-    });
-    this.owner.register('service:commonAjax', MockCommonAjaxService);
-    this.commonAjax = this.owner.lookup('service:commonAjax');
-
-    const MockIliosConfigService = Service.extend({
-      apiNameSpace: ''
-    });
-    this.owner.register('service:iliosConfig', MockIliosConfigService);
-    this.iliosConfig = this.owner.lookup('service:iliosConfig');
-  });
+  setupMirage(hooks);
 
   test('getEvents', async function(assert){
-    assert.expect(6);
+    assert.expect(21);
     const event1 = {
       offering: 1,
       startDate: '2011-04-21',
@@ -43,34 +26,53 @@ module('Integration | Service | school events', function(hooks) {
     };
     const from = moment('20150305', 'YYYYMMDD').hour(0);
     const to = from.clone().hour(24);
-    this.commonAjax.reopen({
-      request(url) {
-        assert.equal(url, `/schoolevents/7?from=${from.unix()}&to=${to.unix()}`);
-        return resolve({ events: [ event1, event2 ] });
-      }
+
+    this.server.get(`/api/schoolevents/:id`, (scheme, { params, queryParams }) => {
+      assert.ok('id' in params);
+      assert.equal(params.id, 7);
+      assert.ok('from' in queryParams);
+      assert.ok('to' in queryParams);
+      assert.equal(queryParams.from, from.unix());
+      assert.equal(queryParams.to, to.unix());
+
+      return { events: [ event1, event2 ] };
     });
     const schoolId = 7;
     const subject = this.owner.lookup('service:school-events');
     const events = await subject.getEvents(schoolId, from.unix(), to.unix());
     assert.equal(events.length, 2);
-    assert.equal(events[0], event2);
+    assert.equal(events[0].ilmSession, event2.ilmSession);
+    assert.equal(events[0].startDate, event2.startDate);
+    assert.equal(events[0].school, event2.school);
+    assert.deepEqual(events[0].prerequisites, event2.prerequisites);
+    assert.deepEqual(events[0].postrequisites, event2.postrequisites);
     assert.equal(events[0].slug, 'S0720080902I3');
-    assert.equal(events[1], event1);
+    assert.notOk(events[0].isBlanked);
+
+    assert.equal(events[1].offering, event1.offering);
+    assert.equal(events[1].startDate, event1.startDate);
+    assert.equal(events[1].school, event1.school);
+    assert.deepEqual(events[1].prerequisites, event1.prerequisites);
+    assert.deepEqual(events[1].postrequisites, event1.postrequisites);
     assert.equal(events[1].slug, 'S0720110421O1');
+    assert.notOk(events[1].isBlanked);
   });
 
   test('getEvents - with configured namespace', async function(assert){
-    assert.expect(2);
-    this.iliosConfig.reopen({
+    assert.expect(4);
+    const iliosConfigMock = Service.extend({
       apiNameSpace: 'geflarknik'
     });
+    this.owner.register('service:iliosConfig', iliosConfigMock);
+
     const from = moment('20150305', 'YYYYMMDD').hour(0);
     const to = from.clone().hour(24);
-    this.commonAjax.reopen({
-      request(url) {
-        assert.equal(url, `/geflarknik/schoolevents/3?from=${from.unix()}&to=${to.unix()}`);
-        return resolve({ events: [] });
-      }
+    this.server.get(`/geflarknik/schoolevents/:id`, (scheme, { params, queryParams }) => {
+      assert.equal(params.id, 3);
+      assert.equal(queryParams.from, from.unix());
+      assert.equal(queryParams.to, to.unix());
+
+      return { events: [] };
     });
     const subject = this.owner.lookup('service:school-events');
     const schoolId = 3;
@@ -79,7 +81,7 @@ module('Integration | Service | school events', function(hooks) {
   });
 
   test('getEventForSlug - offering', async function(assert){
-    assert.expect(2);
+    assert.expect(10);
     const event1 = {
       offering: 1,
       startDate: '2011-04-21',
@@ -94,21 +96,30 @@ module('Integration | Service | school events', function(hooks) {
       prerequisites: [],
       postrequisites: [],
     };
-    this.commonAjax.reopen({
-      request(url) {
-        const from = moment('20110421', 'YYYYMMDD').hour(0);
-        const to = from.clone().hour(24);
-        assert.equal(url, `/schoolevents/7?from=${from.unix()}&to=${to.unix()}`);
-        return resolve({ events: [event1, event2] });
-      }
+    this.server.get(`/api/schoolevents/:id`, (scheme, { params, queryParams }) => {
+      const from = moment('20110421', 'YYYYMMDD').hour(0);
+      const to = from.clone().hour(24);
+      assert.equal(params.id, 7);
+      assert.equal(queryParams.from, from.unix());
+      assert.equal(queryParams.to, to.unix());
+
+      return { events: [event1, event2] };
     });
+
     const subject = this.owner.lookup('service:school-events');
     const event = await subject.getEventForSlug('S0720110421O1');
-    assert.equal(event, event1);
+    assert.equal(event.offering, event1.offering);
+    assert.equal(event.startDate, event1.startDate);
+    assert.equal(event.school, event1.school);
+    assert.deepEqual(event.prerequisites, event1.prerequisites);
+    assert.deepEqual(event.postrequisites, event1.postrequisites);
+    assert.equal(event.slug, 'S0720110421O1');
+    assert.notOk(event.isBlanked);
+
   });
 
   test('getEventForSlug - ILM', async function(assert){
-    assert.expect(2);
+    assert.expect(10);
     const event1 = {
       offering: 1,
       startDate: '2011-04-21',
@@ -123,16 +134,24 @@ module('Integration | Service | school events', function(hooks) {
       prerequisites: [],
       postrequisites: [],
     };
-    this.commonAjax.reopen({
-      request(url) {
-        const from = moment('20080902', 'YYYYMMDD').hour(0);
-        const to = from.clone().hour(24);
-        assert.equal(url, `/schoolevents/7?from=${from.unix()}&to=${to.unix()}`);
-        return resolve({ events: [event1, event2] });
-      }
+    this.server.get(`/api/schoolevents/:id`, (scheme, { params, queryParams }) => {
+      const from = moment('20080902', 'YYYYMMDD').hour(0);
+      const to = from.clone().hour(24);
+      assert.equal(params.id, 7);
+      assert.equal(queryParams.from, from.unix());
+      assert.equal(queryParams.to, to.unix());
+
+      return { events: [event1, event2] };
     });
+
     const subject = this.owner.lookup('service:school-events');
     const event = await subject.getEventForSlug('S0720080902I3');
-    assert.equal(event, event2);
+    assert.equal(event.ilmSession, event2.ilmSession);
+    assert.equal(event.startDate, event2.startDate);
+    assert.equal(event.school, event2.school);
+    assert.deepEqual(event.prerequisites, event2.prerequisites);
+    assert.deepEqual(event.postrequisites, event2.postrequisites);
+    assert.equal(event.slug, 'S0720080902I3');
+    assert.notOk(event.isBlanked);
   });
 });

@@ -8,7 +8,7 @@ export default Service.extend(EventMixin, {
   store: service(),
   currentUser: service(),
   session: service(),
-  commonAjax: service(),
+  fetch: service(),
   iliosConfig: service(),
   namespace: reads('iliosConfig.apiNameSpace'),
 
@@ -32,8 +32,7 @@ export default Service.extend(EventMixin, {
     }
     url += '/userevents/' + user.get('id') + '?from=' + from + '&to=' + to;
 
-    const commonAjax = this.get('commonAjax');
-    const data = await commonAjax.request(url);
+    const data = await this.fetch.getJsonFromApiHost(url);
 
     return data.userEvents.map(obj => this.createEventFromData(obj, true)).sortBy('startDate', 'name');
   },
