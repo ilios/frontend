@@ -44,7 +44,7 @@
     "ember-cli-moment-shim": "^3.1.0",
     "ember-cli-page-object": "1.15.4",
     "ember-cli-string-helpers": "^4.0.0",
-    "ember-composable-helpers": "^2.0.1",
+    "ember-composable-helpers": "^3.0.0",
     "ember-concurrency": "^1.0.0",
     "ember-cp-validations": "^4.0.0-beta.9",
     "ember-data": "3.13.1",
