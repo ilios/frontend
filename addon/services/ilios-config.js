@@ -3,14 +3,11 @@ import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
 
 export default Service.extend({
-  commonAjax: service(),
+  fetch: service(),
   serverVariables: service(),
 
   config: computed('apiHost', function(){
-    const apiHost = this.get('apiHost');
-    const url = apiHost + '/application/config';
-    const commonAjax = this.get('commonAjax');
-    return commonAjax.request(url);
+    return this.fetch.getJsonFromApiHost('/application/config');
   }),
 
   itemFromConfig(key){

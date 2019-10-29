@@ -24,7 +24,7 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  commonAjax: service(),
+  fetch: service(),
   store: service(),
   flashMessages: service(),
   iliosConfig: service(),
@@ -100,7 +100,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.set('isSaving', false);
       return;
     }
-    const commonAjax = this.get('commonAjax');
     const courseId = this.get('course.id');
     const year = this.get('selectedYear');
     const newCourseTitle = this.get('title');
@@ -118,17 +117,12 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     if (skipOfferings) {
       data.skipOfferings = true;
     }
-    if (selectedCohortIds) {
+    if (selectedCohortIds && selectedCohortIds.length) {
       data.newCohorts = selectedCohortIds;
     }
-    const host = this.get('host') ? this.get('host') : '';
-    const namespace = this.get('namespace');
 
-    let url = host + '/' + namespace + `/courses/${courseId}/rollover`;
-    const newCoursesObj = yield commonAjax.request(url, {
-      method: 'POST',
-      data
-    });
+    let url = `${this.namespace}/courses/${courseId}/rollover`;
+    const newCoursesObj = yield this.fetch.postToApiHost(url, data);
 
     const flashMessages = this.get('flashMessages');
     const store = this.get('store');

@@ -1,11 +1,11 @@
 import Service from '@ember/service';
 import EmberObject from '@ember/object';
-import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { find, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 let lm1, lm2, lm3, lm4, lm5, userMaterials;
 let today = moment();
@@ -13,6 +13,7 @@ let tomorrow = moment().add(1, 'day');
 
 module('Integration | Component | dashboard materials', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function() {
     lm1 = EmberObject.create({
@@ -70,7 +71,7 @@ module('Integration | Component | dashboard materials', function(hooks) {
 
 
   test('it renders with materials', async function(assert) {
-    assert.expect(39);
+    assert.expect(41);
     const currentUserMock = Service.extend({
       currentUserId: 11
     });
@@ -80,23 +81,21 @@ module('Integration | Component | dashboard materials', function(hooks) {
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
 
-    const ajaxMock = Service.extend({
-      request(url){
-        let exp = new RegExp(/(\/api\/usermaterials\/11)\?before=(\d+)&after=(\d+)/);
-        let matches = url.match(exp);
-        assert.equal(matches.length, 4);
-        assert.equal(matches[1], '/api/usermaterials/11');
-        let before = moment(matches[2], 'X');
-        let after = moment(matches[3], 'X');
-        assert.ok(before.isSame(today.clone().add(60, 'days'), 'day'));
-        assert.ok(after.isSame(today, 'day'));
+    this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
+      assert.ok('id' in params);
+      assert.equal(params.id, 11);
+      assert.ok('before' in queryParams);
+      assert.ok('after' in queryParams);
+      let before = moment(queryParams.before, 'X');
+      let after = moment(queryParams.after, 'X');
+      assert.ok(before.isSame(today.clone().add(60, 'days'), 'day'));
+      assert.ok(after.isSame(today, 'day'));
 
-        return resolve({
-          userMaterials
-        });
-      }
+      return {
+        userMaterials
+      };
     });
-    this.owner.register('service:commonAjax', ajaxMock);
+
     await render(hbs`<DashboardMaterials />`);
 
     const title = 'h3';
@@ -186,7 +185,7 @@ module('Integration | Component | dashboard materials', function(hooks) {
   });
 
   test('it renders blank', async function(assert) {
-    assert.expect(6);
+    assert.expect(8);
     const currentUserMock = Service.extend({
       currentUserId: 11
     });
@@ -196,23 +195,20 @@ module('Integration | Component | dashboard materials', function(hooks) {
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
 
-    const ajaxMock = Service.extend({
-      request(url){
-        let exp = new RegExp(/(\/api\/usermaterials\/11)\?before=(\d+)&after=(\d+)/);
-        let matches = url.match(exp);
-        assert.equal(matches.length, 4);
-        assert.equal(matches[1], '/api/usermaterials/11');
-        let before = moment(matches[2], 'X');
-        let after = moment(matches[3], 'X');
-        assert.ok(before.isSame(today.clone().add(60, 'days'), 'day'));
-        assert.ok(after.isSame(today, 'day'));
+    this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
+      assert.ok('id' in params);
+      assert.equal(params.id, 11);
+      assert.ok('before' in queryParams);
+      assert.ok('after' in queryParams);
+      let before = moment(queryParams.before, 'X');
+      let after = moment(queryParams.after, 'X');
+      assert.ok(before.isSame(today.clone().add(60, 'days'), 'day'));
+      assert.ok(after.isSame(today, 'day'));
 
-        return resolve({
-          userMaterials: []
-        });
-      }
+      return {
+        userMaterials: []
+      };
     });
-    this.owner.register('service:commonAjax', ajaxMock);
     const title = 'h3';
     const body = 'p';
 

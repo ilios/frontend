@@ -8,7 +8,6 @@ const { reads } = computed;
 const { map } = RSVP;
 
 export default Component.extend({
-  commonAjax: service(),
   iliosConfig: service(),
   layout,
   classNames: ['offering-calendar'],

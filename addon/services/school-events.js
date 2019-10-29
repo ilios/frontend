@@ -6,7 +6,7 @@ import moment from 'moment';
 export default Service.extend(EventMixin, {
   store: service(),
   currentUser: service(),
-  commonAjax: service(),
+  fetch: service(),
   iliosConfig:service(),
 
   namespace: reads('iliosConfig.apiNameSpace'),
@@ -28,8 +28,7 @@ export default Service.extend(EventMixin, {
     }
     url += '/schoolevents/' + schoolId + '?from=' + from + '&to=' + to;
 
-    const commonAjax = this.get('commonAjax');
-    const data = await commonAjax.request(url);
+    const data = await this.fetch.getJsonFromApiHost(url);
 
     return data.events.map(obj => this.createEventFromData(obj, false)).sortBy('startDate', 'name');
   },

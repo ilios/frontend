@@ -8,7 +8,7 @@ const { reads } = computed;
 
 export default Component.extend({
   currentUser: service(),
-  commonAjax: service(),
+  fetch: service(),
   iliosConfig: service(),
   layout,
   daysInAdvance: 60,
@@ -20,13 +20,12 @@ export default Component.extend({
   materials: computed('currentUser.currentUserId', async function() {
     const from = moment().hour(0).minute(0).unix();
     const to = moment().hour(23).minute(59).add(this.daysInAdvance, 'days').unix();
-    const commonAjax = this.get('commonAjax');
     const currentUser = this.get('currentUser');
     const namespace = this.get('namespace');
 
     const userId = currentUser.get('currentUserId');
     let url = `${namespace}/usermaterials/${userId}?before=${to}&after=${from}`;
-    const data = await commonAjax.request(url);
+    const data = await this.fetch.getJsonFromApiHost(url);
     return data.userMaterials;
   }),
   actions: {
