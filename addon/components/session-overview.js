@@ -199,29 +199,26 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     });
   },
   actions: {
-    saveIndependentLearning(value) {
-      var session = this.get('session');
-      if(!value){
-        session.get('ilmSession').then(function(ilmSession){
-          session.set('ilmSession', null);
-          ilmSession.deleteRecord();
-          session.save();
-          ilmSession.save();
-        });
+    async saveIndependentLearning(value) {
+      if (!value) {
+        let ilmSession = await this.session.ilmSession;
+        this.session.set('ilmSession', null);
+        ilmSession.deleteRecord();
+        await this.session.save();
+        await ilmSession.save();
       } else {
         const hours = 1;
         const dueDate = moment().add(6, 'weeks').toDate();
         this.set('hours', hours);
 
         var ilmSession = this.get('store').createRecord('ilm-session', {
-          session,
+          session: this.session,
           hours,
           dueDate
         });
-        ilmSession.save().then(function(savedIlmSession){
-          session.set('ilmSession', savedIlmSession);
-          session.save();
-        });
+        let savedIlmSession = await ilmSession.save();
+        this.session.set('ilmSession', savedIlmSession);
+        await this.session.save();
       }
     },
     async setPostrequisite(id) {
