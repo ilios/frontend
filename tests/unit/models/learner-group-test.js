@@ -483,7 +483,7 @@ module('Unit | Model | LearnerGroup', function(hooks) {
     const store = this.owner.lookup('service:store');
     const learnerGroup = store.createRecord('learner-group');
     assert.equal(learnerGroup.get('childrenCount'), 0);
-    const group1 = store.createRecord('learner-group',);
+    const group1 = store.createRecord('learner-group');
     const group2 = store.createRecord('learner-group');
 
     learnerGroup.get('children').pushObjects([group1, group2 ]);
