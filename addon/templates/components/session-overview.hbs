@@ -181,10 +181,10 @@
       <label>{{t "general.independentLearning"}}:</label>
       <span class="independentlearningcontrol-value">
         {{#if @editable}}
-          {{toggle-yesno
-            yes=@session.isIndependentLearning
-            toggle=(action "saveIndependentLearning")
-          }}
+          <ToggleYesno
+            @yes={{@session.isIndependentLearning}}
+            @toggle={{action "saveIndependentLearning"}}
+          />
         {{else}}
           {{#if @session.isIndependentLearning}}
             <span class="add">{{t "general.yes"}}</span>

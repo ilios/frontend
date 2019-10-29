@@ -45,7 +45,7 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
   learnerGroupCount: sum('offeringLearnerGroupsLength'),
   assignableVocabularies: alias('course.assignableVocabularies'),
 
-  isIndependentLearning: computed('ilmSession', function () {
+  isIndependentLearning: computed('ilmSession.session', function () {
     return !!this.belongsTo('ilmSession').id();
   }),
 
