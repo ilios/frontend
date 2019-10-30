@@ -150,12 +150,12 @@ export default Component.extend(NewUser, {
         throw new Error(intl.t('general.fileTypeError', {fileType: file.type}));
       }
 
-      let ProposedUser = EmberObject.extend(getOwner(this).ownerInjection(), UserValidations, {
+      let ProposedUser = EmberObject.extend(UserValidations, {
         email: null
       });
       let complete = ({data}) => {
         let proposedUsers = data.map(arr => {
-          return ProposedUser.create({
+          return ProposedUser.create(getOwner(this).ownerInjection(), {
             firstName: isPresent(arr[0])?arr[0]:null,
             lastName: isPresent(arr[1])?arr[1]:null,
             middleName: isPresent(arr[2])?arr[2]:null,
