@@ -1,7 +1,7 @@
 import Component from '@ember/component';
-import ObjectiListItem from 'ilios-common/mixins/objective-list-item';
+import ObjectiveListItem from 'ilios-common/mixins/objective-list-item';
 
-export default Component.extend(ObjectiListItem, {
+export default Component.extend(ObjectiveListItem, {
   programYear: null,
   expanded: true,
   classNames: ['objective-list-item'],
