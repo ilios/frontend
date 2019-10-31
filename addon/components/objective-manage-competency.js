@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import  {
-  Promise as RSVPPromise,
   all,
   filter
 } from 'rsvp';
@@ -9,100 +8,59 @@ import layout from '../templates/components/objective-manage-competency';
 
 export default Component.extend({
   layout,
-  objective: null,
   classNames: ['objective-manager', 'objective-manage-competency'],
 
-  schoolCompetencies: computed('programYear.program.school.competencies.[]', function(){
-    return new RSVPPromise(resolve => {
-      this.get('programYear').then(programYear => {
-        programYear.get('program').then(program => {
-          program.get('school').then(school => {
-            school.get('competencies').then(competencies => {
-              resolve(competencies);
-            });
-          });
-        });
+  schoolCompetencies: computed('programYear.program.school.competencies.[]', async function () {
+    const programYear = await this.programYear;
+    const program = await programYear.program;
+    const school = await program.school;
+    return await school.competencies;
+  }),
+
+  programYear: computed('objective.programYears.[]', async function () {
+    const programYears = await this.objective.programYears;
+    if (programYears.length) {
+      return programYears.toArray()[0];
+    }
+    return null;
+  }),
+
+  competencies: computed('programYear.competencies.[]', async function () {
+    const programYear = await this.programYear;
+    const competencies = await programYear.competencies;
+    return competencies;
+  }),
+
+  competenciesWithSelectedChildren: computed('schoolCompetencies.[]', 'objective.competency', async function () {
+    const selectedCompetency = await this.objective.competency;
+    if (selectedCompetency) {
+      const selectedCompetencyId = selectedCompetency.get('id');
+      const competencies = await this.schoolCompetencies;
+      return await filter(competencies.toArray(), async competency => {
+        const children = await competency.treeChildren;
+        const selectedChildren = children.filterBy('id', selectedCompetencyId);
+        return selectedChildren.length > 0;
       });
+    }
+    return [];
+  }),
+
+  domains: computed('competencies.[]', async function () {
+    const competencies = await this.competencies;
+    const domains = await all(competencies.mapBy('domain'));
+    return domains.uniq();
+  }),
+
+  domainsWithNoChildren: computed('domains.[]', async function () {
+    const competencies = await this.competencies;
+    const domains = await this.domains;
+    return await filter(domains.toArray(), async domain => {
+      const children = await domain.children;
+      let availableChildren = children.filter(child => competencies.includes(child));
+      return availableChildren.length === 0;
     });
   }),
 
-  programYear: computed('objective.programYears.[]', function(){
-    return new RSVPPromise(resolve => {
-      const objective = this.get('objective');
-      objective.get('programYears').then(programYears => {
-        if (programYears.length) {
-          let programYear = programYears.get('firstObject');
-          resolve(programYear);
-        } else {
-          resolve(null);
-        }
-      });
-    });
-  }),
-
-  competencies: computed('programYear.competencies.[]', function(){
-    return new RSVPPromise(resolve => {
-      this.get('programYear').then(programYear => {
-        programYear.get('competencies').then(competencies => {
-          resolve(competencies);
-        });
-      });
-    });
-  }),
-
-  competenciesWithSelectedChildren: computed('schoolCompetencies.[]', 'objective.competency', function(){
-    return new RSVPPromise(resolve => {
-      const objective = this.get('objective');
-      objective.get('competency').then(selectedCompetency => {
-        if (selectedCompetency) {
-          this.get('schoolCompetencies').then(competencies => {
-            filter(competencies.toArray(), (competency => {
-              return new RSVPPromise(resolve => {
-                competency.get('treeChildren').then(children => {
-                  const selectedCompetencyId = selectedCompetency.get('id');
-                  const selectedChildren = children.filterBy('id', selectedCompetencyId);
-                  resolve(selectedChildren.length > 0);
-                });
-              });
-            })).then(competenciesWithSelectedChildren => {
-              resolve(competenciesWithSelectedChildren);
-            });
-          });
-        } else {
-          resolve([]);
-        }
-      });
-    });
-  }),
-
-  domains: computed('competencies.[]', function(){
-    return new RSVPPromise(resolve => {
-      this.get('competencies').then(competencies => {
-        all(competencies.mapBy('domain')).then(domains => {
-          resolve(domains.uniq());
-        });
-      });
-    });
-  }),
-
-  domainsWithNoChildren: computed('domains.[]', function(){
-    return new RSVPPromise(resolve => {
-      this.get('competencies').then(competencies => {
-        this.get('domains').then(domains => {
-          filter(domains.toArray(), (domain => {
-            return new RSVPPromise(resolve => {
-              domain.get('children').then(children => {
-                let availableChildren = children.filter(child => competencies.includes(child));
-                resolve(availableChildren.length === 0);
-              });
-            });
-          })).then(domainsWithNoChildren => {
-            resolve(domainsWithNoChildren);
-          });
-        });
-      });
-    });
-  }),
   actions: {
     changeCompetency(competency) {
       this.get('objective').set('competency', competency);
