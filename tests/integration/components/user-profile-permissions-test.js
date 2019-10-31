@@ -28,7 +28,5 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     await render(hbs`<UserProfilePermissions @user={{user}} />`);
 
     assert.dom(this.element).hasText('');
-
-    await this.pauseTest();
   });
 });
