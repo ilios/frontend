@@ -45,6 +45,7 @@ module.exports = function() {
       'list',
       'list-ol',
       'list-ul',
+      'lock',
       'minus',
       'minus-square',
       'paragraph',
