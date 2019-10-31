@@ -34,6 +34,7 @@ module.exports = function (environment) {
       serverTokenEndpoint: '/auth/login',
       serverTokenRefreshEndpoint: '/auth/token',
       tokenPropertyName: 'jwt',
+      refreshTokenPropertyName: 'jwt',
       authorizationHeaderName: 'X-JWT-Authorization',
       authorizationPrefix: 'Token ',
       refreshLeeway: 300
