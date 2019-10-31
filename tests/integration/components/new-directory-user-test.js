@@ -88,7 +88,7 @@ module('Integration | Component | new directory user', function(hooks) {
   });
 
   test('create new user', async function(assert) {
-    assert.expect(32);
+    assert.expect(34);
     this.server.create('user-role', {
       id: 4,
       title: 'Student'
@@ -127,29 +127,23 @@ module('Integration | Component | new directory user', function(hooks) {
       username: user2Object.username,
     });
     this.server.create('user', user3Object.getProperties('firstName', 'lastName', 'campusId', 'email', 'telephoneNumber'));
-    let ajaxRequestCalled = 0;
-
-    const ajaxMock = Service.extend({
-      request(url){
-        ajaxRequestCalled++;
-        if (ajaxRequestCalled === 1){
-          assert.equal(url.trim(), '/application/directory/search?limit=51&searchTerms=searchterm', 'search for user request is correct');
-          return resolve({
-            results: [user1Object, user2Object, user3Object]
-          });
-        }
-        if (ajaxRequestCalled === 2){
-          assert.equal(url.trim(), '/application/config', 'config request is correct');
-          return resolve({config: {
-            locale: 'en',
-            type: 'ladp',
-            userSearchType: 'ldap',
-          }});
-        }
-
-      }
+    this.server.get('/application/config', () => {
+      return {config: {
+        locale: 'en',
+        type: 'ladp',
+        userSearchType: 'ldap',
+      }};
     });
-    this.owner.register('service:commonAjax', ajaxMock);
+
+    this.server.get('/application/directory/search', (scheme, { queryParams }) => {
+      assert.ok('limit' in queryParams);
+      assert.ok('searchTerms' in queryParams);
+      assert.equal(queryParams.limit, 51);
+      assert.equal(queryParams.searchTerms, 'searchterm');
+      return {
+        results: [user1Object, user2Object, user3Object]
+      };
+    });
 
     this.set('nothing', parseInt);
     this.set('transitionToUser', (userId)=>{
