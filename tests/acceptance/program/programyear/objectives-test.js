@@ -23,49 +23,49 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
-    this.server.create('program', {
+    const program = this.server.create('program', {
       school: this.school,
     });
-    this.server.create('programYear', {
-      programId: 1,
+    const programYear = this.server.create('programYear', {
+      program,
     });
     this.server.create('cohort', {
-      programYearId: 1
+      programYear
+    });
+    const parent = this.server.create('competency', {
+      school: this.school,
+    });
+    const competency1 = this.server.create('competency', {
+      parent,
+      school: this.school,
+      programYears: [programYear],
+    });
+    this.server.create('competency', {
+      parent,
+      school: this.school,
+      programYears: [programYear],
+    });
+    const competency4 = this.server.create('competency', {
+      school: this.school,
+      programYears: [programYear],
     });
     this.server.create('competency', {
       school: this.school,
+      programYears: [programYear],
     });
-    this.server.create('competency', {
-      parentId: 1,
-      school: this.school,
-      programYearIds: [1],
-    });
-    this.server.create('competency', {
-      parentId: 1,
-      school: this.school,
-      programYearIds: [1],
-    });
-    this.server.create('competency', {
-      school: this.school,
-      programYearIds: [1],
-    });
-    this.server.create('competency', {
-      school: this.school,
-      programYearIds: [1],
-    });
-    this.server.createList('meshDescriptor', 4);
+    const meshDescriptors = this.server.createList('meshDescriptor', 4);
 
     const objective1 = this.server.create('objective', {
-      programYearIds: [1],
-      competencyId: 2,
-      meshDescriptorIds: [1, 2]
+      programYears: [programYear],
+      competency: competency1,
+      meshDescriptors: [meshDescriptors[0], meshDescriptors[1]]
     });
     this.server.create('objective', {
-      programYearIds: [1],
-      competencyId: 4
+      programYears: [programYear],
+      competency: competency4
     });
     this.server.create('objective', {
-      programYearIds: [1]
+      programYears: [programYear]
     });
     const course = this.server.create('course');
     this.server.create('objective', {
