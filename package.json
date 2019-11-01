@@ -21,7 +21,7 @@
     "@csstools/postcss-sass": "^4.0.0",
     "@ember/jquery": "^0.6.1",
     "@ember/optional-features": "^0.7.0",
-    "autoprefixer": "^9.6.5",
+    "autoprefixer": "^9.7.1",
     "babel-eslint": "^10.0.3",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-file-creator": "^2.1.1",
