@@ -25,7 +25,7 @@ const Validations = buildValidations({
     validator('presence', true),
     validator('length', {
       min: 4,
-      max: 60
+      max: 120
     }),
   ],
 });

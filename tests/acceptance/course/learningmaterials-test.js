@@ -591,7 +591,7 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       assert.notOk(page.learningMaterials.current[0].isTimedRelease);
       await page.learningMaterials.current[0].details();
       assert.notOk(page.learningMaterials.manager.hasTitleValidationError);
-      await page.learningMaterials.manager.name.fillIn('0123456789'.repeat(10));
+      await page.learningMaterials.manager.name.fillIn('0123456789'.repeat(13));
       await page.learningMaterials.manager.save();
       assert.ok(page.learningMaterials.manager.hasTitleValidationError);
     });
