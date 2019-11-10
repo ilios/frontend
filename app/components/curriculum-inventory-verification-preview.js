@@ -5,14 +5,13 @@ import { task } from 'ember-concurrency';
 
 
 export default Component.extend({
-  commonAjax: service(),
+  fetch: service(),
   iliosConfig: service(),
   'data-test-curriculum-inventory-verification-preview': true,
   classNames: ['curriculum-inventory-verification-preview'],
   report: null,
   tables: null,
   tocId: 'verification-preview-toc',
-  host: reads('iliosConfig.apiHost'),
   namespace: reads('iliosConfig.apiNameSpace'),
 
   didInsertElement() {
@@ -21,13 +20,10 @@ export default Component.extend({
   },
 
   loadTables: task(function* () {
-    const commonAjax = this.commonAjax;
     const reportId = this.report.id;
-    const host = this.host ? this.host : '';
-    const namespace = this.namespace;
 
-    const url = host + '/' + namespace + `/curriculuminventoryreports/${reportId}/verificationpreview`;
-    const data = yield commonAjax.request(url);
+    const url = `${this.namespace}/curriculuminventoryreports/${reportId}/verificationpreview`;
+    const data = yield this.fetch.getJsonFromApiHost(url);
     this.set('tables', data.preview);
   })
 });

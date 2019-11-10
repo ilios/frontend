@@ -2,7 +2,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import Service from '@ember/service';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory-verification-preview';
@@ -12,29 +11,31 @@ module('Integration | Component | curriculum-inventory-verification-preview', fu
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(28);
-    const ajaxMock = Service.extend({
-      async request() {
-        return {
-          preview: {
-            program_expectations_mapped_to_pcrs: [],
-            primary_instructional_methods_by_non_clerkship_sequence_blocks: {methods: [], rows: []},
-            non_clerkship_sequence_block_instructional_time: [],
-            clerkship_sequence_block_instructional_time: [],
-            instructional_method_counts: [],
-            non_clerkship_sequence_block_assessment_methods: {methods: [], rows: []},
-            clerkship_sequence_block_assessment_methods: {methods: [], rows: []},
-            all_events_with_assessments_tagged_as_formative_or_summative: [],
-            all_resource_types:[],
-          }
-        };
-      },
-    });
-    this.owner.register('service:commonAjax', ajaxMock);
+    assert.expect(30);
     this.server.create('curriculum-inventory-report', {
       name: 'Foo Bar 2019'
     });
     const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
+
+    this.server.get(`/api/curriculuminventoryreports/:id/verificationpreview`, (scheme, { params }) => {
+      assert.ok('id' in params);
+      assert.equal(params.id, report.id);
+
+      return {
+        preview: {
+          program_expectations_mapped_to_pcrs: [],
+          primary_instructional_methods_by_non_clerkship_sequence_blocks: {methods: [], rows: []},
+          non_clerkship_sequence_block_instructional_time: [],
+          clerkship_sequence_block_instructional_time: [],
+          instructional_method_counts: [],
+          non_clerkship_sequence_block_assessment_methods: {methods: [], rows: []},
+          clerkship_sequence_block_assessment_methods: {methods: [], rows: []},
+          all_events_with_assessments_tagged_as_formative_or_summative: [],
+          all_resource_types:[],
+        }
+      };
+    });
+
     this.set('report', report);
     await render(hbs`<CurriculumInventoryVerificationPreview @report={{report}} />`);
     assert.equal(component.tableOfContents.items.length, 9);

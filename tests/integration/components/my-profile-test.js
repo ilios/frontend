@@ -9,9 +9,11 @@ import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 const { resolve } = RSVP;
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | my profile', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
     const user = EmberObject.create({
@@ -74,27 +76,22 @@ module('Integration | Component | my profile', function(hooks) {
   });
 
   test('generates token when asked with good expiration date', async function(assert) {
-    assert.expect(5);
+    assert.expect(6);
     const go = '.bigadd:nth-of-type(1)';
     const newToken = '.new-token-result input';
-    let ajaxMock = Service.extend({
-      request(url){
-        assert.ok(url.search(/\/auth\/token\?ttl=P14D/) === 0, `URL ${url} matches request pattern.`);
-        let hours = parseInt(url.substring(22, 24), 10);
-        let minutes = parseInt(url.substring(25, 27), 10);
-        let seconds = parseInt(url.substring(28, 30), 10);
 
-        assert.ok(hours < 24);
-        assert.ok(minutes < 60);
-        assert.ok(seconds < 60);
+    this.server.get(`/auth/token`, (scheme, { queryParams }) => {
+      assert.ok('ttl' in queryParams);
+      const duration = moment.duration(queryParams.ttl);
+      assert.equal(duration.weeks(), 2);
+      assert.ok(duration.hours() < 24);
+      assert.ok(duration.minutes() < 60);
+      assert.ok(duration.seconds() < 60);
 
-        return {
-          jwt: 'new token'
-        };
-      }
+      return {
+        jwt: 'new token'
+      };
     });
-    this.owner.register('service:commonAjax', ajaxMock);
-    this.ajax = this.owner.lookup('service:ajax');
     this.set('nothing', parseInt);
     await render(hbs`<MyProfile
       @showCreateNewToken={{true}}
@@ -112,15 +109,13 @@ module('Integration | Component | my profile', function(hooks) {
     const go = '[data-test-new-token-create]';
     const newToken = '.new-token-result input';
     const newTokenForm = '.new-token-form';
-    let ajaxMock = Service.extend({
-      request(){
-        return {
-          jwt: 'new token'
-        };
-      }
+
+    this.server.get(`/auth/token`, () => {
+      return {
+        jwt: 'new token'
+      };
     });
-    this.owner.register('service:commonAjax', ajaxMock);
-    this.ajax = this.owner.lookup('service:ajax');
+
     this.set('toggle', () => {
       assert.ok(true);
     });
@@ -153,27 +148,23 @@ module('Integration | Component | my profile', function(hooks) {
   });
 
   test('Setting date changes request length', async function(assert) {
-    assert.expect(4);
+    assert.expect(5);
     const go = '.bigadd:nth-of-type(1)';
     const datePicker = '.new-token-form input:nth-of-type(1)';
-    let ajaxMock = Service.extend({
-      request(url){
-        assert.ok(url.search(/\/auth\/token\?ttl=P41D/) === 0, `URL ${url} matches request pattern.`);
-        let hours = parseInt(url.substring(22, 24), 10);
-        let minutes = parseInt(url.substring(25, 27), 10);
-        let seconds = parseInt(url.substring(28, 30), 10);
 
-        assert.ok(hours < 24);
-        assert.ok(minutes < 60);
-        assert.ok(seconds < 60);
-        return {
-          jwt: 'new token'
-        };
-      }
+    this.server.get(`/auth/token`, (scheme, { queryParams }) => {
+      assert.ok('ttl' in queryParams);
+      const duration = moment.duration(queryParams.ttl);
+      assert.ok(duration.days() < 41);
+      assert.ok(duration.hours() < 24);
+      assert.ok(duration.minutes() < 60);
+      assert.ok(duration.seconds() < 60);
+
+      return {
+        jwt: 'new token'
+      };
     });
-    this.owner.register('service:commonAjax', ajaxMock);
-    this.ajax = this.owner.lookup('service:ajax');
-    this.set('nothing', parseInt);
+    this.set('nothing', () => {});
     await render(hbs`<MyProfile
       @showCreateNewToken={{true}}
       @toggleShowCreateNewToken={{action nothing}}
@@ -205,16 +196,13 @@ module('Integration | Component | my profile', function(hooks) {
   test('invalidate tokens when asked', async function(assert) {
     assert.expect(4);
     const go = '.done:nth-of-type(1)';
-    let ajaxMock = Service.extend({
-      request(url){
-        assert.equal(url, '/auth/invalidatetokens');
-        return {
-          jwt: 'new token'
-        };
-      }
+
+    this.server.get(`/auth/invalidatetokens`, () => {
+      assert.ok(true, 'route is hit');
+      return {
+        jwt: 'new token'
+      };
     });
-    this.owner.register('service:commonAjax', ajaxMock);
-    this.ajax = this.owner.lookup('service:ajax');
     let sessionMock = Service.extend({
       authenticate(how, obj){
         assert.equal(how, 'authenticator:ilios-jwt');

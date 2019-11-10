@@ -1,22 +1,17 @@
 import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-
-const { resolve } = RSVP;
-
-let commonAjaxMock;
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | user profile calendar', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function() {
-    commonAjaxMock = Service.extend({});
-    this.owner.register('service:commonAjax', commonAjaxMock);
     const iliosConfigMock = Service.extend({
       namespace: ''
     });
@@ -24,24 +19,30 @@ module('Integration | Component | user profile calendar', function(hooks) {
   });
 
   test('shows events for this week', async function(assert) {
-    assert.expect(4);
-    commonAjaxMock.reopen({
-      request(url){
-        const today = moment();
-        const from = moment(today).day(0).hour(0).minute(0).second(0).format('X');
-        const to = moment(today).day(6).hour(23).minute(59).second(59).format('X');
+    assert.expect(9);
 
-        assert.equal(url, `/userevents/13?from=${from}&to=${to}`);
+    this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
+      assert.ok('id' in params);
+      assert.equal(params.id, 13);
 
-        let userEvents = [
-          {name: 'first', startDate: today.format(), location: 123, lastModified: today.format(), prerequisites: [], postrequisites: []},
-          {name: 'second', startDate: today.format(), location: 456, lastModified: today.format(), prerequisites: [], postrequisites: []},
-          {name: 'third', startDate: today.format(), location: 789, lastModified: today.format(), prerequisites: [], postrequisites: []},
-        ];
+      const today = moment();
+      const from = moment(today).day(0).hour(0).minute(0).second(0).format('X');
+      const to = moment(today).day(6).hour(23).minute(59).second(59).format('X');
 
-        return resolve({ userEvents });
-      }
+      assert.ok('from' in queryParams);
+      assert.equal(queryParams.from, from);
+      assert.ok('to' in queryParams);
+      assert.equal(queryParams.to, to);
+
+      let userEvents = [
+        {name: 'first', startDate: today.format(), location: 123, lastModified: today.format(), prerequisites: [], postrequisites: []},
+        {name: 'second', startDate: today.format(), location: 456, lastModified: today.format(), prerequisites: [], postrequisites: []},
+        {name: 'third', startDate: today.format(), location: 789, lastModified: today.format(), prerequisites: [], postrequisites: []},
+      ];
+
+      return { userEvents };
     });
+
     const user = EmberObject.create({
       id: 13
     });
@@ -59,34 +60,35 @@ module('Integration | Component | user profile calendar', function(hooks) {
   });
 
   test('clicking forward goes to next week', async function(assert) {
-    assert.expect(2);
+    assert.expect(12);
+
     let called = 0;
-    commonAjaxMock.reopen({
-      request(url){
-        switch (called) {
-        case 0: {
-          const today = moment();
-          const from = moment(today).day(0).hour(0).minute(0).second(0).format('X');
-          const to = moment(today).day(6).hour(23).minute(59).second(59).format('X');
+    this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
+      assert.ok('id' in params);
+      assert.equal(params.id, 13);
+      if (called === 0) {
+        const today = moment();
+        const from = moment(today).day(0).hour(0).minute(0).second(0).format('X');
+        const to = moment(today).day(6).hour(23).minute(59).second(59).format('X');
 
-          assert.equal(url, `/userevents/13?from=${from}&to=${to}`);
-        }
-          break;
-        case 1: {
-          const nextWeek = moment().add(1, 'week');
-          const from = moment(nextWeek).day(0).hour(0).minute(0).second(0).format('X');
-          const to = moment(nextWeek).day(6).hour(23).minute(59).second(59).format('X');
-
-          assert.equal(url, `/userevents/13?from=${from}&to=${to}`);
-        }
-          break;
-        default:
-          assert.ok(false, 'Should not be called');
-        }
-        called++;
-
-        return resolve({ userEvents: [] });
+        assert.ok('from' in queryParams);
+        assert.equal(queryParams.from, from);
+        assert.ok('to' in queryParams);
+        assert.equal(queryParams.to, to);
       }
+      if (called === 1) {
+        const nextWeek = moment().add(1, 'week');
+        const from = moment(nextWeek).day(0).hour(0).minute(0).second(0).format('X');
+        const to = moment(nextWeek).day(6).hour(23).minute(59).second(59).format('X');
+
+        assert.ok('from' in queryParams);
+        assert.equal(queryParams.from, from);
+        assert.ok('to' in queryParams);
+        assert.equal(queryParams.to, to);
+      }
+
+      called++;
+      return { userEvents: [] };
     });
     const user = EmberObject.create({
       id: 13
@@ -100,35 +102,36 @@ module('Integration | Component | user profile calendar', function(hooks) {
   });
 
   test('clicking backward goes to last week', async function(assert) {
-    assert.expect(2);
+    assert.expect(12);
     let called = 0;
-    commonAjaxMock.reopen({
-      request(url){
-        switch (called) {
-        case 0: {
-          const today = moment();
-          const from = moment(today).day(0).hour(0).minute(0).second(0).format('X');
-          const to = moment(today).day(6).hour(23).minute(59).second(59).format('X');
+    this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
+      assert.ok('id' in params);
+      assert.equal(params.id, 13);
+      if (called === 0) {
+        const today = moment();
+        const from = moment(today).day(0).hour(0).minute(0).second(0).format('X');
+        const to = moment(today).day(6).hour(23).minute(59).second(59).format('X');
 
-          assert.equal(url, `/userevents/13?from=${from}&to=${to}`);
-        }
-          break;
-        case 1: {
-          const lastWeek = moment().subtract(1, 'week');
-          const from = moment(lastWeek).day(0).hour(0).minute(0).second(0).format('X');
-          const to = moment(lastWeek).day(6).hour(23).minute(59).second(59).format('X');
-
-          assert.equal(url, `/userevents/13?from=${from}&to=${to}`);
-        }
-          break;
-        default:
-          assert.ok(false, 'Should not be called');
-        }
-        called++;
-
-        return resolve({ userEvents: [] });
+        assert.ok('from' in queryParams);
+        assert.equal(queryParams.from, from);
+        assert.ok('to' in queryParams);
+        assert.equal(queryParams.to, to);
       }
+      if (called === 1) {
+        const lastWeek = moment().subtract(1, 'week');
+        const from = moment(lastWeek).day(0).hour(0).minute(0).second(0).format('X');
+        const to = moment(lastWeek).day(6).hour(23).minute(59).second(59).format('X');
+
+        assert.ok('from' in queryParams);
+        assert.equal(queryParams.from, from);
+        assert.ok('to' in queryParams);
+        assert.equal(queryParams.to, to);
+      }
+
+      called++;
+      return { userEvents: [] };
     });
+
     const user = EmberObject.create({
       id: 13
     });

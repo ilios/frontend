@@ -6,8 +6,8 @@ import EmberConfig from 'ilios/config/environment';
 import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
 
 export default Route.extend(UnauthenticatedRouteMixin, {
-  commonAjax: service(),
   currentUser: service(),
+  fetch: service(),
   iliosConfig: service(),
   session: service(),
 
@@ -41,7 +41,6 @@ export default Route.extend(UnauthenticatedRouteMixin, {
 
   async casLogin() {
     const iliosConfig = this.iliosConfig;
-    const commonAjax = this.commonAjax;
 
     let currentUrl = [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
     let loginUrl = `/auth/login?service=${currentUrl}`;
@@ -57,7 +56,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
     if (isPresent(queryParams.ticket)) {
       loginUrl += `&ticket=${queryParams.ticket}`;
     }
-    const response = await commonAjax.request(loginUrl);
+    const response = await this.fetch.getJsonFromApiHost(loginUrl);
     if (response.status === 'redirect') {
       const casLoginUrl = await iliosConfig.itemFromConfig('casLoginUrl');
       await new Promise(() => {
@@ -78,9 +77,8 @@ export default Route.extend(UnauthenticatedRouteMixin, {
 
   async shibbolethAuth(){
     const iliosConfig = this.iliosConfig;
-    const commonAjax = this.commonAjax;
     const loginUrl = '/auth/login';
-    const response = await commonAjax.request(loginUrl);
+    const response = await this.fetch.getJsonFromApiHost(loginUrl);
     const status = response.status;
     if(status === 'redirect'){
       let shibbolethLoginUrl = await iliosConfig.itemFromConfig('loginUrl');

@@ -8,7 +8,7 @@ import { task, timeout } from 'ember-concurrency';
 import { padStart } from 'ember-pad/utils/pad';
 
 export default Component.extend({
-  commonAjax: service(),
+  fetch: service(),
   flashMessages: service(),
   iliosConfig: service(),
   session: service(),
@@ -78,17 +78,15 @@ export default Component.extend({
 
     let interval = `P${days}DT${hours}H${minutes}M${seconds}S`;
 
-    const commonAjax = this.commonAjax;
     let url = '/auth/token?ttl=' + interval;
-    let data = yield commonAjax.request(url);
+    let data = yield this.fetch.getJsonFromApiHost(url);
     this.set('generatedJwt', data.jwt);
   }),
 
   invalidateTokens: task(function* () {
     yield timeout(10); //small delay to allow rendering the spinner
-    const commonAjax = this.commonAjax;
     let url = '/auth/invalidatetokens';
-    let data = yield commonAjax.request(url);
+    let data = yield this.fetch.getJsonFromApiHost(url);
 
     if (isPresent(data.jwt)) {
       const flashMessages = this.flashMessages;
