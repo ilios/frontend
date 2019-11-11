@@ -11,10 +11,10 @@ import {
 import meshManager from './mesh-manager';
 import search from './learningmaterial-search';
 import {
-  fillInFroalaEditor,
-  froalaEditorValue
+  datePicker,
+  pageObjectFillInFroalaEditor,
+  pageObjectFroalaEditorValue
 } from 'ilios-common';
-import { datePicker } from 'ilios-common';
 
 export default {
   scope: '[data-test-detail-learning-materials]',
@@ -45,7 +45,7 @@ export default {
     userName: text('.owninguser'),
     status: fillable('select', { at: 0 }),
     role: fillable('select', { at: 1 }),
-    description: fillInFroalaEditor('.fr-box'),
+    description: pageObjectFillInFroalaEditor('.fr-box'),
     save: clickable('.done'),
     cancel: clickable('.cancel'),
   },
@@ -59,8 +59,8 @@ export default {
     description: {
       scope: '.description',
       value: text(),
-      update: fillInFroalaEditor('.fr-box'),
-      editorValue: froalaEditorValue('.fr-box')
+      update: pageObjectFillInFroalaEditor('.fr-box'),
+      editorValue: pageObjectFroalaEditorValue('.fr-box')
     },
     copyrightPermission: text('.copyrightpermission'),
     copyrightRationale: text('.copyrightrationale'),
@@ -80,8 +80,8 @@ export default {
     statusValue: value('select', { at: 0 }),
     notes: {
       scope: '.notes',
-      update: fillInFroalaEditor('.fr-box'),
-      value: froalaEditorValue('.fr-box'),
+      update: pageObjectFillInFroalaEditor('.fr-box'),
+      value: pageObjectFroalaEditorValue('.fr-box'),
     },
     addStartDate: clickable('[data-test-add-start-date]'),
     addEndDate: clickable('[data-test-add-end-date]'),

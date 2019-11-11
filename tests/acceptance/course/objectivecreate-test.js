@@ -35,7 +35,6 @@ module('Acceptance | Course - Objective Create', function(hooks) {
     assert.equal(page.objectives.current[0].description.text, 'objective 0');
     await page.objectives.createNew();
     await page.objectives.newObjective.description(newObjectiveDescription);
-    await this.pauseTest();
     await page.objectives.newObjective.save();
 
     assert.equal(page.objectives.current.length, 2);
