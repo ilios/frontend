@@ -10,6 +10,7 @@ import {
   waitFor
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 let user;
 let authentication;
@@ -17,6 +18,7 @@ let school;
 
 module('Integration | Component | user profile bio', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   hooks.before(async function () {
     await import('zxcvbn');
@@ -485,15 +487,18 @@ module('Integration | Component | user profile bio', function(hooks) {
 
 
   test('sync user from directory', async function(assert) {
-    assert.expect(29);
+    assert.expect(30);
     const iliosConfigMock = Service.extend({
       userSearchType: resolve('ldap')
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
-    const ajaxMock = Service.extend({
-      request(url){
-        assert.equal(url, '/application/directory/find/13', 'ajax request url is correct');
-        return resolve({result: {
+
+    this.server.get(`application/directory/find/:id`, (scheme, { params }) => {
+      assert.ok('id' in params);
+      assert.equal(params.id, 13);
+
+      return {
+        result: {
           firstName: 'new-first-name',
           lastName: 'new-last-name',
           displayName: 'new-best-name',
@@ -501,10 +506,9 @@ module('Integration | Component | user profile bio', function(hooks) {
           phone: 'new-phone',
           campusId: 'new-campus-id',
           username: 'new-username',
-        }});
-      }
+        }
+      };
     });
-    this.owner.register('service:commonAjax', ajaxMock);
     this.set('user', user);
     this.set('nothing', parseInt);
 

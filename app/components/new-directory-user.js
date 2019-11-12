@@ -40,7 +40,7 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(NewUser, Validations, {
-  commonAjax: service(),
+  fetch: service(),
   iliosConfig: service(),
   intl: service(),
 
@@ -123,8 +123,7 @@ export default Component.extend(NewUser, Validations, {
     if (!isEmpty(searchTerms)) {
       this.set('isSearching', true);
       let url = '/application/directory/search?limit=51&searchTerms=' + searchTerms;
-      const commonAjax = this.commonAjax;
-      let data = yield commonAjax.request(url);
+      let data = yield this.fetch.getJsonFromApiHost(url);
       let mappedResults = data.results.map(result => {
         result.addable = isPresent(result.firstName) && isPresent(result.lastName) && isPresent(result.email) && isPresent(result.campusId);
         return result;

@@ -89,9 +89,9 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  commonAjax: service(),
   currentUser: service(),
   iliosConfig: service(),
+  fetch: service(),
   store: service(),
 
   classNameBindings: [':user-profile-bio', ':small-component', 'hasSavedRecently:has-saved:has-not-saved'],
@@ -270,9 +270,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('syncComplete', false);
     const userId = this.get('user.id');
     let url = `/application/directory/find/${userId}`;
-    const commonAjax = this.commonAjax;
     try {
-      let data = yield commonAjax.request(url);
+      let data = yield this.fetch.getJsonFromApiHost(url);
       let userData = data.result;
       const firstName = this.firstName;
       const lastName = this.lastName;

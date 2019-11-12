@@ -62,18 +62,19 @@ module('Integration | Component | new directory user', function(hooks) {
   });
 
   test('initial search input fires search and fills input', async function(assert) {
-    assert.expect(2);
+    assert.expect(5);
     const startingSearchTerms = 'start here';
 
-    let ajaxMock = Service.extend({
-      request(url){
-        assert.equal(url.trim(), `/application/directory/search?limit=51&searchTerms=${startingSearchTerms}`);
-        return resolve({
-          results: []
-        });
-      }
+    this.server.get(`/application/directory/search`, (scheme, { queryParams }) => {
+      assert.ok('limit' in queryParams);
+      assert.equal(queryParams.limit, 51);
+      assert.ok('searchTerms' in queryParams);
+      assert.equal(queryParams.searchTerms, startingSearchTerms);
+
+      return {
+        results: []
+      };
     });
-    this.owner.register('service:commonAjax', ajaxMock);
     this.set('nothing', parseInt);
     this.set('startingSearchTerms', startingSearchTerms);
     await render(hbs`<NewDirectoryUser

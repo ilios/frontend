@@ -18,7 +18,7 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  commonAjax: service(),
+  fetch: service(),
   flashMessages: service(),
   iliosConfig: service(),
   store: service(),
@@ -77,7 +77,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.set('isSaving', false);
       return;
     }
-    const commonAjax = this.commonAjax;
     const reportId = this.get('report.id');
     const year = this.selectedYear.get('id');
     const description = this.description;
@@ -87,14 +86,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       description,
       year,
     };
-    const host = this.host ? this.host : '';
-    const namespace = this.namespace;
 
-    let url = host + '/' + namespace + `/curriculuminventoryreports/${reportId}/rollover`;
-    const newReportObj = yield commonAjax.request(url, {
-      method: 'POST',
-      data
-    });
+    let url = `${this.namespace}/curriculuminventoryreports/${reportId}/rollover`;
+    const newReportObj = yield this.fetch.postToApiHost(url, data);
 
     const flashMessages = this.flashMessages;
     const store = this.store;

@@ -6,8 +6,8 @@ import { all } from 'rsvp';
 import * as Sentry from '@sentry/browser';
 
 export default Route.extend(ApplicationRouteMixin, {
-  commonAjax: service(),
   currentUser: service(),
+  fetch: service(),
   intl: service(),
   moment: service(),
   session: service(),
@@ -96,7 +96,7 @@ export default Route.extend(ApplicationRouteMixin, {
     Sentry.configureScope(scope => scope.clear());
     if (config.environment !== 'test') {
       let logoutUrl = '/auth/logout';
-      return this.commonAjax.request(logoutUrl).then(response => {
+      return this.fetch.getJsonFromApiHost(logoutUrl).then(response => {
         if(response.status === 'redirect'){
           window.location.replace(response.logoutUrl);
         } else {

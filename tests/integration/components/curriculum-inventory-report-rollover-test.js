@@ -1,4 +1,3 @@
-import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
@@ -9,8 +8,8 @@ import {
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import { resolve } from 'rsvp';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import queryString from 'query-string';
 
 module('Integration | Component | curriculum inventory report rollover', function(hooks) {
   setupRenderingTest(hooks);
@@ -51,24 +50,22 @@ module('Integration | Component | curriculum inventory report rollover', functio
     });
     const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
 
-    let ajaxMock = Service.extend({
-      request(url, {method, data}){
-        assert.equal(url.trim(), `/api/curriculuminventoryreports/${report.get('id')}/rollover`);
-        assert.equal(method, 'POST');
-        assert.equal(data.year, thisYear + 1);
-        assert.equal(data.name, report.get('name'));
-        assert.equal(data.description, report.get('description'));
+    this.server.post(`/api/curriculuminventoryreports/:id/rollover`, (scheme, { params, requestBody}) => {
+      assert.ok('id' in params);
+      assert.equal(params.id, report.id);
+      const data = queryString.parse(requestBody);
+      assert.equal(data.year, thisYear + 1);
+      assert.equal(data.name, report.get('name'));
+      assert.equal(data.description, report.get('description'));
 
-        return resolve({
-          curriculumInventoryReports: [
-            {
-              id: 14
-            }
-          ]
-        });
-      }
+      return {
+        curriculumInventoryReports: [
+          {
+            id: 14
+          }
+        ]
+      };
     });
-    this.owner.register('service:commonAjax', ajaxMock);
     this.set('report', report);
     this.set('visit', (newReport) => {
       assert.equal(newReport.id, 14);
@@ -90,23 +87,22 @@ module('Integration | Component | curriculum inventory report rollover', functio
     const newDescription = 'new description';
     const newYear = thisYear + 4;
 
-    let ajaxMock = Service.extend({
-      request(url, {method, data}){
-        assert.equal(url.trim(), `/api/curriculuminventoryreports/${report.get('id')}/rollover`);
-        assert.equal(method, 'POST');
-        assert.equal(data.name, newName, 'The new name gets passed.');
-        assert.equal(data.description, newDescription, 'The new description gets passed.');
-        assert.equal(data.year, newYear, 'The new year gets passed.');
-        return resolve({
-          curriculumInventoryReports: [
-            {
-              id: 14
-            }
-          ]
-        });
-      }
+    this.server.post(`/api/curriculuminventoryreports/:id/rollover`, (scheme, { params, requestBody}) => {
+      assert.ok('id' in params);
+      assert.equal(params.id, report.id);
+      const data = queryString.parse(requestBody);
+      assert.equal(data.name, newName, 'The new name gets passed.');
+      assert.equal(data.description, newDescription, 'The new description gets passed.');
+      assert.equal(data.year, newYear, 'The new year gets passed.');
+
+      return {
+        curriculumInventoryReports: [
+          {
+            id: 14
+          }
+        ]
+      };
     });
-    this.owner.register('service:commonAjax', ajaxMock);
 
     this.set('report', report);
     this.set('visit', () => {});

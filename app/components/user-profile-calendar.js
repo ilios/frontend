@@ -6,7 +6,7 @@ import EventMixin from 'ilios-common/mixins/events';
 import moment from 'moment';
 
 export default Component.extend(EventMixin, {
-  commonAjax: service(),
+  fetch: service(),
   iliosConfig: service(),
 
   classNames: ['user-profile-calendar'],
@@ -17,7 +17,6 @@ export default Component.extend(EventMixin, {
   namespace: reads('iliosConfig.apiNameSpace'),
 
   calendarEvents: computed('user.id', 'date', async function() {
-    const commonAjax = this.commonAjax;
     const user = this.user;
     const date = this.date;
     const from = moment(date).day(0).hour(0).minute(0).second(0).format('X');
@@ -29,7 +28,7 @@ export default Component.extend(EventMixin, {
       url += '/' + namespace;
     }
     url += '/userevents/' + user.get('id') + '?from=' + from + '&to=' + to;
-    const data = await commonAjax.request(url);
+    const data = await this.fetch.getJsonFromApiHost(url);
     return data.userEvents.map(obj => this.createEventFromData(obj, true)).sortBy('startDate', 'name');
   }),
 
