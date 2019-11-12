@@ -47,7 +47,7 @@
     "ember-composable-helpers": "^3.0.0",
     "ember-concurrency": "^1.0.0",
     "ember-cp-validations": "^4.0.0-beta.9",
-    "ember-data": "3.13.1",
+    "ember-data": "3.14.0",
     "ember-drag-drop": "^0.7.0",
     "ember-feature-flags": "^6.0.0",
     "ember-fetch": "^6.6.0",
