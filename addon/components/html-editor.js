@@ -3,6 +3,8 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
 import layout from '../templates/components/html-editor';
+import { task } from 'ember-concurrency';
+import { guidFor } from '@ember/object/internals';
 
 const defaultButtons = [
   'bold',
@@ -18,8 +20,8 @@ export default Component.extend({
   intl: service(),
   layout,
   editor: null,
-  'data-test-html-editor': true,
-
+  loadFinished: false,
+  editorId: null,
   options: computed('intl.locale', function(){
     const intl = this.get('intl');
     const language = intl.get('locale');
@@ -44,21 +46,42 @@ export default Component.extend({
       shortcutsEnabled: ['bold', 'italic', 'strikeThrough', 'undo', 'redo', 'createLink'],
       events: {
         contentChanged: () => {
-          this.update(this.editor.html.get());
+          if (!this.isDestroyed && !this.isDestroying) {
+            this.update(this.editor.html.get());
+          }
         }
       },
     };
   }),
   didInsertElement() {
-    loadFroalaEditor().then(({ FroalaEditor }) => {
-      this.editor = new FroalaEditor(this.element, this.options, () => {
-        this.editor.html.set(this.content);
+    this._super(...arguments);
+    const uid = guidFor(this.element.querySelector('div'));
+    this.set('editorId', uid);
+    this.loadEditor.perform();
+  },
+  willDestroyElement() {
+    this._super(...arguments);
+    if (this.editor) {
+      this.editor.destroy();
+      this.editor = null;
+    }
+  },
+  createEditor(element, options) {
+    return new Promise(resolve => {
+      loadFroalaEditor().then(({ FroalaEditor }) => {
+        new FroalaEditor(element, options, function() {
+          resolve(this);
+        });
       });
     });
   },
-  willDestroyElement() {
-    if (this.editor) {
-      this.editor.destroy();
+  loadEditor: task(function* () {
+    if (!this.editor) {
+      this.editor = yield this.createEditor(this.element.querySelector('div'), this.options);
+      this.editor.html.set(this.content);
+      this.set('loadFinished', true);
     }
-  },
+
+    return true;
+  }).drop(),
 });
