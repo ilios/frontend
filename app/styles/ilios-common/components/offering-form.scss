@@ -10,7 +10,12 @@
     margin-top: 1em;
 
     @include for-laptop-and-up {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+
+      .end-date-time {
+        grid-column-start: 2;
+        grid-column-end: 4;
+      }
     }
 
     .start-date {
@@ -21,6 +26,13 @@
     }
 
     .start-time {
+      select {
+        min-width: initial;
+        width: 5rem;
+      }
+    }
+
+    .timezone {
       select {
         min-width: initial;
         width: 5rem;
@@ -113,9 +125,3 @@
   }
 }
 
-
-.timezone {
-  color: $darker-grey;
-  font-size: .8rem;
-  margin-left: 1rem;
-}

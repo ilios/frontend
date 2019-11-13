@@ -29,11 +29,16 @@
     <div class="item start-time">
       <label>
         {{t "general.startTime"}}:
-        <span class="timezone">
-          ({{browser-timezone}})
-        </span>
       </label>
       <TimePicker @date={{this.startDate}} @action={{action "updateStartTime"}} />
+    </div>
+    <div class="item timezone">
+      <label>
+        {{t "general.timezone"}}:
+      </label>
+      <div class="current-timezone">
+        {{browser-timezone}}
+      </div>
     </div>
     <div class="item offering-duration">
       <label>
