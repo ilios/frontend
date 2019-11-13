@@ -45,7 +45,7 @@ function getEditorInstance(element) {
         const { INSTANCES } = FroalaEditor;
         const ourInstance = INSTANCES.find(instance => {
           const instanceElement = instance['$oel'][0];
-          return instanceElement.id = element.id;
+          return instanceElement.id === element.id;
         });
         resolve(ourInstance);
       });
