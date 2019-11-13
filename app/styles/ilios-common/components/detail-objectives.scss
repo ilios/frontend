@@ -24,12 +24,6 @@
     padding: 1rem;
 
     .new-objective-form {
-      @include ilios-form;
-
-      .items {
-        @include ilios-form-item;
-      }
-
       .buttons {
         @include ilios-form-buttons;
       }

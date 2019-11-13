@@ -6,16 +6,24 @@ import layout from '../templates/components/html-editor';
 import { task } from 'ember-concurrency';
 import { guidFor } from '@ember/object/internals';
 
-const defaultButtons = [
-  'bold',
-  'italic',
-  'subscript',
-  'superscript',
-  'formatOL',
-  'formatUL',
-  'insertLink',
-  'html'
-];
+const defaultButtons = {
+  moreText: {
+    buttons: [
+      'bold',
+      'italic',
+      'subscript',
+      'superscript',
+      'formatOL',
+      'formatUL',
+      'insertLink',
+    ],
+    'buttonsVisible': 7
+  },
+  moreMisc: {
+    buttons: ['undo', 'redo', 'html'],
+    align: 'right',
+  }
+};
 export default Component.extend({
   intl: service(),
   layout,
@@ -51,6 +59,14 @@ export default Component.extend({
           }
         }
       },
+      linkList: [
+        {
+          displayText: 'PubMed',
+          href: 'https://www.ncbi.nlm.nih.gov/pubmed/',
+          target: '_blank'
+        },
+      ],
+      linkEditButtons: ['linkEdit', 'linkRemove'],
     };
   }),
   didInsertElement() {

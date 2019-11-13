@@ -25,6 +25,12 @@
       z-index: 100;
     }
 
+    .html-editor {
+      #{$form-input-text-types} {
+        z-index: 2;
+      }
+    }
+
     .actions {
       display: flex;
       justify-content: flex-start;

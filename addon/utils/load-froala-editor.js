@@ -3,6 +3,7 @@ import 'froala-editor/js/languages/es.js';
 import 'froala-editor/js/languages/fr.js';
 import 'froala-editor/js/plugins/link.min.js';
 import 'froala-editor/js/plugins/lists.min.js';
+import 'froala-editor/js/plugins/code_view.min.js';
 
 export async function loadFroalaEditor() {
   /**
@@ -16,6 +17,7 @@ export async function loadFroalaEditor() {
   //   import('froala-editor/js/languages/fr.js'),
   //   import('froala-editor/js/plugins/link.min.js'),
   //   import('froala-editor/js/plugins/lists.min.js'),
+  //   import('froala-editor/js/plugins/code_view.min.js'),
   // ]);
 
   return {
