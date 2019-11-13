@@ -27,7 +27,7 @@ export default Component.extend({
     const language = intl.get('locale');
 
     return {
-      apiKey: 'Kb3A3pE2E2A1E4G4I4oCd2ZSb1XHi1Cb2a1KIWCWMJHXCLSwG1G1B2C1B1C7F6E1E4F4==',
+      key: 'Kb3A3pE2E2A1E4G4I4oCd2ZSb1XHi1Cb2a1KIWCWMJHXCLSwG1G1B2C1B1C7F6E1E4F4==',
       theme: 'gray',
       attribution: false,
       language,
