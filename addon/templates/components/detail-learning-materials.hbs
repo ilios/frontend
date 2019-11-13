@@ -20,21 +20,10 @@
         <FaIcon @icon="minus" />
       </button>
     {{else if (and @editable (not this.isSorting) (not this.isManaging))}}
-      <ActionMenu
-        @title={{t "general.add"}}
-        @icon={{false}}
-        @classNames="blend-button right-edge"
-      >
-        <li role="button" {{action "addNewLearningMaterial" "file"}}>
-          {{t "general.file"}}
-        </li>
-        <li role="button" {{action "addNewLearningMaterial" "link"}}>
-          {{t "general.link"}}
-        </li>
-        <li role="button" {{action "addNewLearningMaterial" "citation"}}>
-          {{t "general.citation"}}
-        </li>
-      </ActionMenu>
+      <ChooseMaterialType
+        @choose={{action "addNewLearningMaterial"}}
+        @types={{array "file" "link" "citation"}}
+      />
     {{/if}}
   </div>
 </div>
