@@ -1,11 +1,14 @@
-import loadFroalaEditor from 'dummy/utils/load-froala-editor';
+import { loadFroalaEditor } from 'dummy/utils/load-froala-editor';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | load-froala-editor', function() {
 
-  // Replace this with your real tests.
-  test('it works', function(assert) {
+  test('it works', function (assert) {
+    assert.expect(2);
     let result = loadFroalaEditor();
     assert.ok(result);
+    result.then(() => {
+      assert.ok(true, 'result is a promise');
+    });
   });
 });
