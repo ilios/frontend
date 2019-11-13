@@ -19,11 +19,11 @@ import { datePicker } from 'ilios-common';
 export default {
   scope: '[data-test-detail-learning-materials]',
   search,
-  createNew: clickable('.detail-learningmaterials-actions button'),
-  pickNew: clickOnText('.detail-learningmaterials-actions ul li'),
+  createNew: clickable('.detail-learningmaterials-actions [data-test-choose-material-type] [data-test-toggle]'),
+  pickNew: clickOnText('.detail-learningmaterials-actions [data-test-choose-material-type] [data-test-item]'),
   save: clickable('.actions button.bigadd'),
   cancel: clickable('.actions button.bigcancel'),
-  canCreateNew: isVisible('.detail-learningmaterials-actions .action-menu'),
+  canCreateNew: isVisible('.detail-learningmaterials-actions [data-test-choose-material-type]'),
   canCollapse: isVisible('.detail-learningmaterials-actions .collapse-button'),
   current: collection('.detail-learningmaterials-content table tbody tr', {
     title: text('td [data-test-title]', { at: 0 }),

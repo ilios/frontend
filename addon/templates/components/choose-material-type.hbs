@@ -1,0 +1,29 @@
+<ClickOutside @onClickOutside={{action (mut this.isOpen) false}}>
+  <button
+    aria-label={{t "general.add"}}
+    role="menuitem"
+    class="toggle new-material-type"
+    aria-haspopup="true"
+    aria-expanded={{if this.isOpen "true" "false"}}
+    data-level="toggle"
+    data-test-toggle
+    {{action (toggle "isOpen" this)}}
+  >
+    {{t "general.add"}}
+  </button>
+  {{#if this.isOpen}}
+    <div class="menu" role="menu">
+      {{#each @types as |type|}}
+        <button
+          role="menuitemradio"
+          tabindex="-1"
+          data-level="item"
+          data-test-item
+          {{action @choose type}}
+        >
+          {{t (concat "general." type)}}
+        </button>
+      {{/each}}
+    </div>
+  {{/if}}
+</ClickOutside>
