@@ -289,6 +289,7 @@ general:
   timedReleaseOnlyEndDate: "Available until {endDate}"
   timedReleaseOnlyStartDate: "Available: {startDate}"
   timedReleaseStartAndEndDate: "Available: {startDate} and available until {endDate}"
+  timezone: Timezone
   title: Title
   today: Today
   token: Token
