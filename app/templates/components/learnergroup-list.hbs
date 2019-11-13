@@ -96,7 +96,7 @@
       </tr>
       {{#if (contains learnerGroup this.learnerGroupsForRemovalConfirmation)}}
         <tr class="confirm-removal" data-test-confirm-removal>
-          <td colspan="5">
+          <td colspan={{if (media "isLaptopAndUp") "6" "3"}}>
             <div class="confirm-message" data-test-confirmation>
               {{t
                 "general.confirmRemoveLearnerGroup"
@@ -124,7 +124,7 @@
       {{/if}}
       {{#if (contains learnerGroup this.learnerGroupsForCopy)}}
         <tr class="confirm-copy" data-test-confirm-copy>
-          <td colspan="5">
+          <td colspan={{if (media "isLaptopAndUp") "6" "3"}}>
             <div class="confirm-buttons">
               {{#if @canCopyWithLearners}}
                 <button
