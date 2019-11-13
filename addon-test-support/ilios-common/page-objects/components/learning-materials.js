@@ -45,7 +45,7 @@ export default {
     userName: text('.owninguser'),
     status: fillable('select', { at: 0 }),
     role: fillable('select', { at: 1 }),
-    description: pageObjectFillInFroalaEditor('.fr-box'),
+    description: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
     save: clickable('.done'),
     cancel: clickable('.cancel'),
   },
@@ -59,8 +59,8 @@ export default {
     description: {
       scope: '.description',
       value: text(),
-      update: pageObjectFillInFroalaEditor('.fr-box'),
-      editorValue: pageObjectFroalaEditorValue('.fr-box')
+      update: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
+      editorValue: pageObjectFroalaEditorValue('[data-test-html-editor]')
     },
     copyrightPermission: text('.copyrightpermission'),
     copyrightRationale: text('.copyrightrationale'),
@@ -80,8 +80,8 @@ export default {
     statusValue: value('select', { at: 0 }),
     notes: {
       scope: '.notes',
-      update: pageObjectFillInFroalaEditor('.fr-box'),
-      value: pageObjectFroalaEditorValue('.fr-box'),
+      update: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
+      value: pageObjectFroalaEditorValue('[data-test-html-editor]'),
     },
     addStartDate: clickable('[data-test-add-start-date]'),
     addEndDate: clickable('[data-test-add-end-date]'),

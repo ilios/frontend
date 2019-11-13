@@ -29,8 +29,8 @@ export default {
     description: {
       scope: 'td:eq(0)',
       openEditor: clickable('[data-test-edit]'),
-      editorContents: pageObjectFroalaEditorValue('.fr-box'),
-      edit: pageObjectFillInFroalaEditor('.fr-box'),
+      editorContents: pageObjectFroalaEditorValue('[data-test-html-editor]'),
+      edit: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
       save: clickable('.done'),
       validationError: text('.validation-error-message'),
       hasValidationError: isVisible('.validation-error-message'),

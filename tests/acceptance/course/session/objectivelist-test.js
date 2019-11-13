@@ -92,7 +92,7 @@ module('Acceptance | Session - Objective List', function(hooks) {
     assert.equal(page.objectives.current.length, 1);
     assert.equal(page.objectives.current[0].description.text, longTitle.substring(0, 200));
     await page.objectives.current[0].description.openEditor();
-    assert.equal(page.objectives.current[0].description.editorContents, `<p>${longTitle}</p>`);
+    assert.equal(await page.objectives.current[0].description.editorContents(), `<p>${longTitle}</p>`);
   });
 
   test('edit objective title', async function(assert) {

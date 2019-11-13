@@ -57,7 +57,7 @@ export default create({
       scope: '.sessiondescription',
       value: text('span', { at: 0}),
       edit: clickable('[data-test-edit]'),
-      set: pageObjectFillInFroalaEditor('.fr-box'),
+      set: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
       save: clickable('.done'),
       cancel: clickable('.cancel'),
       hasError: isVisible('.validation-error-message')
@@ -66,7 +66,7 @@ export default create({
       scope: '[data-test-instructional-notes]',
       value: text('span', { at: 0}),
       edit: clickable('[data-test-edit]'),
-      set: pageObjectFillInFroalaEditor('.fr-box'),
+      set: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
       save: clickable('.done'),
       cancel: clickable('.cancel'),
       hasError: isVisible('.validation-error-message')

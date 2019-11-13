@@ -338,8 +338,8 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.current[0].status, 'status 2');
 
       await page.learningMaterials.current[0].details();
-      assert.equal(page.learningMaterials.manager.notes.value, `<p>${newNote}</p>`);
-      assert.equal(page.learningMaterials.manager.description.editorValue, `<p>${newDescription}</p>`);
+      assert.equal(await page.learningMaterials.manager.notes.value(), `<p>${newNote}</p>`);
+      assert.equal(await page.learningMaterials.manager.description.editorValue(), `<p>${newDescription}</p>`);
 
       assert.equal(page.learningMaterials.manager.statusValue, 3);
     });
@@ -369,9 +369,9 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.current[0].status, 'status 0');
 
       await page.learningMaterials.current[0].details();
-      assert.equal(page.learningMaterials.manager.notes.value, '');
+      assert.equal(await page.learningMaterials.manager.notes.value(), '');
       assert.equal(page.learningMaterials.manager.statusValue, 1);
-      assert.equal(page.learningMaterials.manager.description.editorValue, '<p>0 lm description</p>');
+      assert.equal(await page.learningMaterials.manager.description.editorValue(), '<p>0 lm description</p>');
     });
 
     test('manage terms', async function (assert) {
