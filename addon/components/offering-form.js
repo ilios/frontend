@@ -71,6 +71,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   classNames: ['offering-form'],
 
+  currentTimezone: null,
   startDate: null,
   endDate: null,
   room: 'TBD',
@@ -192,6 +193,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   }),
   init(){
     this._super(...arguments);
+    this.set('currentTimezone', moment.tz.guess());
     this.set('recurringDayOptions', [
       {day: '0', t: 'general.sunday'},
       {day: '1', t: 'general.monday'},
