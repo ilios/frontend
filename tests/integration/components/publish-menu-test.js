@@ -28,9 +28,9 @@ module('Integration | Component | publish menu', function(hooks) {
       @publishAsTbd={{action nothing}}
       @unpublish={{action nothing}}
     />`);
-    const toggle = '.rl-dropdown-toggle';
+    const toggle = '[data-test-toggle]';
     const icon = `${toggle} svg`;
-    const dropDownItems = '.rl-dropdown button';
+    const dropDownItems = '[data-test-menu] button';
     const asIs = `${dropDownItems}:nth-of-type(1)`;
     const publish = `${dropDownItems}:nth-of-type(2)`;
     const review = `${dropDownItems}:nth-of-type(3)`;
@@ -61,8 +61,8 @@ module('Integration | Component | publish menu', function(hooks) {
       @publishAsTbd={{action nothing}}
       @unpublish={{action nothing}}
     />`);
-    const toggle = '.rl-dropdown-toggle';
-    const dropDownItems = '.rl-dropdown button';
+    const toggle = '[data-test-toggle]';
+    const dropDownItems = '[data-test-menu] button';
     const item = `${dropDownItems}:nth-of-type(1)`;
 
     await click(toggle);
@@ -83,8 +83,8 @@ module('Integration | Component | publish menu', function(hooks) {
       @publishAsTbd={{action nothing}}
       @unpublish={{action nothing}}
     />`);
-    const toggle = '.rl-dropdown-toggle';
-    const dropDownItems = '.rl-dropdown button';
+    const toggle = '[data-test-toggle]';
+    const dropDownItems = '[data-test-menu] button';
     const item = `${dropDownItems}:nth-of-type(1)`;
 
     await click(toggle);
@@ -104,8 +104,8 @@ module('Integration | Component | publish menu', function(hooks) {
       @publishAsTbd={{action click}}
       @unpublish={{action nothing}}
     />`);
-    const toggle = '.rl-dropdown-toggle';
-    const dropDownItems = '.rl-dropdown button';
+    const toggle = '[data-test-toggle]';
+    const dropDownItems = '[data-test-menu] button';
     const item = `${dropDownItems}:nth-of-type(1)`;
 
     await click(toggle);
@@ -126,8 +126,8 @@ module('Integration | Component | publish menu', function(hooks) {
       @publishAsTbd={{action nothing}}
       @unpublish={{action click}}
     />`);
-    const toggle = '.rl-dropdown-toggle';
-    const dropDownItems = '.rl-dropdown button';
+    const toggle = '[data-test-toggle]';
+    const dropDownItems = '[data-test-menu] button';
     const item = `${dropDownItems}:nth-of-type(1)`;
 
     await click(toggle);
@@ -161,9 +161,9 @@ module('Integration | Component | publish menu', function(hooks) {
       @publishAsTbd={{action nothing}}
       @unpublish={{action nothing}}
     />`);
-    const toggle = '.rl-dropdown-toggle';
+    const toggle = '[data-test-toggle]';
     const icon = `${toggle} svg`;
-    const dropDownItems = '.rl-dropdown button';
+    const dropDownItems = '[data-test-menu] button';
     const asIs = `${dropDownItems}:nth-of-type(1)`;
     const publish = `${dropDownItems}:nth-of-type(2)`;
     const review = `${dropDownItems}:nth-of-type(3)`;

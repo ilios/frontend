@@ -62,7 +62,6 @@
     "ember-page-title": "^5.0.1",
     "ember-pikaday": "^2.2.6",
     "ember-promise-helpers": "1.0.9",
-    "ember-rl-dropdown": "^0.10.2",
     "ember-simple-auth-token": "^4.0.4",
     "ember-simple-charts": "^1.0.0",
     "ember-test-selectors": "^2.0.0",

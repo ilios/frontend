@@ -1,100 +1,39 @@
-$dropdown-background: $base-background-color;
-$dropdown-background-hover: darken($dropdown-background, 3);
-$dropdown-padding: 1rem;
-$dropdown-distance-from-menu: $dropdown-padding * 2;
-
 .publish-menu {
-  display: inline-block;
+  margin: 0 .5rem;
   position: relative;
+  text-align: right;
 
-  .rl-dropdown-toggle {
+  button {
+    background-color: transparent;
+    border-radius: .2rem;
+    font-weight: normal;
+    padding: .25rem .5rem;
+  }
+
+  .menu {
     background-color: $white;
-    border: 1px solid transparent;
-    color: $base-font-color;
-    cursor: pointer;
-    font-size: .7rem;
-    line-height: 1.1rem;
-    padding: $dropdown-padding / 3 ($dropdown-padding * 1.5) $dropdown-padding / 3 ($dropdown-padding / 2);
-    position: relative;
-
-    @include for-laptop-and-up {
-      font-size: 1rem;
-    }
-
-    &:hover {
-      background-color: $dropdown-background-hover;
-    }
-
-    &::after {
-      content: '\25BE';
-      display: block;
-      position: absolute;
-      right: $dropdown-padding / 2;
-      top: $dropdown-padding / 3;
-    }
-  }
-
-  &.published .rl-dropdown-toggle {
-    border: 1px solid $ilios-green;
-    color: $ilios-green;
-  }
-
-  &.notpublished .rl-dropdown-toggle {
-    border: 1px solid $ilios-yellow;
-    color: $ilios-yellow;
-  }
-
-  &.scheduled .rl-dropdown-toggle {
-    border: 1px solid $scheduled-brown;
-    color: $scheduled-brown;
-  }
-
-  .rl-dropdown {
-    background-color: $white;
-    border-radius: $base-border-radius;
-    box-shadow: 0 2px 2px transparentize($black, .8);
-    cursor: pointer;
-    left: 0;
-    margin: 5px 0 0;
-    overflow: visible;
-    padding: 4px 0;
+    border-style: solid;
+    border-width: 0 1px 1px 1px;
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    margin: 2px 0 0 0;
+    padding: 0;
     position: absolute;
-    text-align: left;
-    top: 100%;
-    transition: all .2s ease-in-out;
-    white-space: nowrap;
+    top: 1.6rem;
+    right: 0;
     z-index: 100;
 
-    @include for-laptop-and-up {
-      left: auto;
-      right: 0;
-    }
-
     button {
-      background: 0;
       border: 0;
-      border-radius: 0;
-      color: $base-font-color;
+      background-color: $white;
+      color: $text-grey;
       display: block;
-      height: 100%;
-      padding: $dropdown-padding / 2 $dropdown-padding;
-      text-align: left;
-      width: 100%;
-
-      &:hover {
-        background: $dropdown-background-hover;
-      }
-
-      &:first-child {
-        border-top-left-radius: $base-border-radius;
-        border-top-right-radius: $base-border-radius;
-      }
-
-      &:last-child {
-        border: 0;
-        border-bottom-left-radius: $base-border-radius;
-        border-bottom-right-radius: $base-border-radius;
-      }
+      outline: none;
+      padding: .5rem 1rem;
+      text-align: right;
+      text-decoration: none;
+      white-space: nowrap;
 
       &.danger:hover {
         background-color: $ilios-red;
@@ -105,6 +44,43 @@ $dropdown-distance-from-menu: $dropdown-padding * 2;
         background-color: $ilios-green;
         color: $white;
       }
+    }
+  }
+
+  .toggle {
+    background-color: $white;
+    border-style: solid;
+    border-width: 1px;
+    color: $white;
+    &::after {
+      content: '\25BE';
+    }
+
+    &[aria-expanded='true'] {
+      border-width: 1px 1px 0 1px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius:  0;
+    }
+  }
+
+  &.published {
+    .toggle, .menu {
+      border-color: $ilios-green;
+      color: $ilios-green;
+    }
+  }
+
+  &.notpublished {
+    .toggle, .menu {
+      border-color: $ilios-yellow;
+      color: $ilios-yellow;
+    }
+  }
+
+  &.scheduled {
+    .toggle, .menu {
+      border-color: $scheduled-brown;
+      color: $scheduled-brown;
     }
   }
 }
