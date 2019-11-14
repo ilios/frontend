@@ -8,6 +8,12 @@ const WriteFile = require('broccoli-file-creator');
 module.exports = {
   name: require('./package').name,
 
+  options: {
+    babel: {
+      plugins: [ require.resolve('ember-auto-import/babel-plugin') ]
+    }
+  },
+
   included: function() {
     this._super.included.apply(this, arguments);
 

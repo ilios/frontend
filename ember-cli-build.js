@@ -16,9 +16,6 @@ module.exports = function(defaults) {
         }
       }
     },
-    babel: {
-      plugins: [ require.resolve('ember-auto-import/babel-plugin') ]
-    }
   });
 
   /*

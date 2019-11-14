@@ -3,12 +3,9 @@ import { module, test } from 'qunit';
 
 module('Unit | Utility | load-froala-editor', function() {
 
-  test('it works', function (assert) {
-    assert.expect(2);
-    let result = loadFroalaEditor();
-    assert.ok(result);
-    result.then(() => {
-      assert.ok(true, 'result is a promise');
-    });
+  test('it works', async function (assert) {
+    assert.expect(1);
+    let { FroalaEditor } = await loadFroalaEditor();
+    assert.ok(FroalaEditor);
   });
 });
