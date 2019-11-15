@@ -1,13 +1,21 @@
 <div class="session-postrequisite-editor">
-  <strong>{{t "general.duePriorTo"}}:</strong>
-  {{#if this.selectedPostrequisite}}
-    {{this.selectedPostrequisite.title}}
-    <button {{on "click" (action "setPostrequisite" null)}} class="remove">
-      <FaIcon @icon="times" title={{t "general.remove"}} />
-    </button>
-  {{else}}
-    {{t "general.none"}}
-  {{/if}}
+  <div class="info">
+    <span>
+      <strong>{{t "general.duePriorTo"}}:</strong>
+      {{#if this.selectedPostrequisite}}
+        {{this.selectedPostrequisite.title}}
+        <button {{on "click" (action "setPostrequisite" null)}} class="remove">
+          <FaIcon @icon="times" title={{t "general.remove"}} />
+        </button>
+      {{else}}
+        {{t "general.none"}}
+      {{/if}}
+    </span>
+    <Input
+      placeholder={{t "general.filterPlaceholder"}}
+      @value={{this.filter}}
+    />
+  </div>
   <div class="table-wrapper">
     <table>
       <thead>
@@ -18,7 +26,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each (await this.linkablePostrequisites) as |postrequisite|}}
+        {{#each (await this.filteredPostrequisites) as |postrequisite|}}
           <tr>
             <td>
               {{#if (eq postrequisite.id this.selectedPostrequisite.id)}}

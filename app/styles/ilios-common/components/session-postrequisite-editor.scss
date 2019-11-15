@@ -19,6 +19,15 @@
     color: $ilios-remove-color;
     padding: 0;
   }
+  .info {
+    display: flex;
+    flex-direction: column;
+
+    @include for-tablet-and-up {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
   .buttons {
     @include ilios-form-buttons;
   }
