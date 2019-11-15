@@ -11,8 +11,8 @@ module('Integration | Component | html editor', function(hooks) {
     await render(hbs`<HtmlEditor />`);
 
     await later(() => {
-      assert.dom(this.element).hasText('BoldItalicSubscriptSuperscriptOrdered ListUnordered ListInsert Link');
-      assert.dom('svg').exists({ count: 7 });
+      assert.dom(this.element).hasText('BoldItalicSubscriptSuperscriptOrdered ListUnordered ListInsert LinkUndoRedo');
+      assert.dom('svg').exists({ count: 9 });
     }, 500);
   });
 });

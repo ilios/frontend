@@ -20,7 +20,7 @@ import learnerGroupManager from './components/learner-group-manager';
 import instructorSelectionManager from './components/instructor-selection-manager';
 import offeringForm from './components/offering-form';
 import { datePicker } from 'ilios-common';
-import { fillInFroalaEditor } from 'ilios-common';
+import { pageObjectFillInFroalaEditor } from 'ilios-common';
 import leadershipCollapsed from './components/leadership-collapsed';
 import leadershipList from './components/leadership-list';
 import leadershipManager from './components/leadership-manager';
@@ -57,7 +57,7 @@ export default create({
       scope: '.sessiondescription',
       value: text('span', { at: 0}),
       edit: clickable('[data-test-edit]'),
-      set: fillInFroalaEditor('.fr-box'),
+      set: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
       save: clickable('.done'),
       cancel: clickable('.cancel'),
       hasError: isVisible('.validation-error-message')
@@ -66,7 +66,7 @@ export default create({
       scope: '[data-test-instructional-notes]',
       value: text('span', { at: 0}),
       edit: clickable('[data-test-edit]'),
-      set: fillInFroalaEditor('.fr-box'),
+      set: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
       save: clickable('.done'),
       cancel: clickable('.cancel'),
       hasError: isVisible('.validation-error-message')

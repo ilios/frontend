@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | new objective', function(hooks) {
@@ -29,7 +29,7 @@ module('Integration | Component | new objective', function(hooks) {
     });
     await render(hbs`<NewObjective @cancel={{action cancel}} />`);
     await click('.done');
-    let boxes = findAll('.form-data');
-    assert.ok(boxes[0].textContent.includes('blank'));
+    assert.dom('.validation-error-message').exists();
+    assert.dom('.validation-error-message').includesText('blank');
   });
 });

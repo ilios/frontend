@@ -2,10 +2,9 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll } from '@ember/test-helpers';
+import { render, click, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { fillInFroalaEditor } from 'ember-froala-editor/test-support';
-
+import { fillInFroalaEditor } from 'ilios-common';
 const { resolve } = RSVP;
 
 module('Integration | Component | course objective list item', function(hooks) {
@@ -71,7 +70,7 @@ module('Integration | Component | course objective list item', function(hooks) {
     />`);
 
     await click('td:nth-of-type(1) [data-test-edit]');
-    await fillInFroalaEditor('td:nth-of-type(1) .froala-editor-container', 'new title');
+    await fillInFroalaEditor(find('td:nth-of-type(1) [data-test-html-editor]'), 'new title');
     await click('td:nth-of-type(1) .done');
   });
 

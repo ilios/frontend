@@ -1,37 +1,46 @@
-import $ from 'jquery';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { dom } from '@fortawesome/fontawesome-svg-core';
-import { next } from '@ember/runloop';
+import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
 import layout from '../templates/components/html-editor';
+import { task } from 'ember-concurrency';
+import { guidFor } from '@ember/object/internals';
 
-const defaultButtons = [
-  'bold',
-  'italic',
-  'subscript',
-  'superscript',
-  'formatOL',
-  'formatUL',
-  'insertLink',
-  'html'
-];
+const defaultButtons = {
+  moreText: {
+    buttons: [
+      'bold',
+      'italic',
+      'subscript',
+      'superscript',
+      'formatOL',
+      'formatUL',
+      'insertLink',
+    ],
+    'buttonsVisible': 7
+  },
+  moreMisc: {
+    buttons: ['undo', 'redo', 'html'],
+    align: 'right',
+  }
+};
 export default Component.extend({
   intl: service(),
   layout,
-  content: '',
-
+  editor: null,
+  loadFinished: false,
+  editorId: null,
   options: computed('intl.locale', function(){
     const intl = this.get('intl');
     const language = intl.get('locale');
 
     return {
-      key   : '3A9A5C4A3gC3E3C3E3B7A4A2F4B2D2zHMDUGENKACTMXQL==',
-      theme : 'gray',
+      key: 'Kb3A3pE2E2A1E4G4I4oCd2ZSb1XHi1Cb2a1KIWCWMJHXCLSwG1G1B2C1B1C7F6E1E4F4==',
+      theme: 'gray',
+      attribution: false,
       language,
       toolbarInline: false,
       placeholderText: '',
-      allowHTML: true,
       saveInterval: false,
       pastePlain: true,
       spellcheck: true,
@@ -41,29 +50,54 @@ export default Component.extend({
       toolbarButtonsXS: defaultButtons,
       quickInsertButtons: false,
       pluginsEnabled: ['lists', 'code_view', 'link'],
-      iconsTemplate: 'font_awesome_5',
       listAdvancedTypes: false,
       shortcutsEnabled: ['bold', 'italic', 'strikeThrough', 'undo', 'redo', 'createLink'],
+      events: {
+        contentChanged: () => {
+          if (!this.isDestroyed && !this.isDestroying) {
+            this.update(this.editor.html.get());
+          }
+        }
+      },
+      linkList: [
+        {
+          displayText: 'PubMed',
+          href: 'https://www.ncbi.nlm.nih.gov/pubmed/',
+          target: '_blank'
+        },
+      ],
+      linkEditButtons: ['linkEdit', 'linkRemove'],
     };
   }),
-
-  /**
-   * Disable Froala's built in beacon tracking
-   * Has to be done on the global jQuery plugin object
-   */
-  init() {
+  didInsertElement() {
     this._super(...arguments);
-    $.FE.DT = true;
+    const uid = guidFor(this.element.querySelector('div'));
+    this.set('editorId', uid);
+    this.loadEditor.perform();
   },
-  /**
-   * Convert `<i>` tags from froala into SVG icons
-   * Uses: https://fontawesome.com/how-to-use/with-the-api/methods/dom-i2svg
-   */
-  didRender() {
-    next(() => {
-      if (this.element) {
-        dom.i2svg({node: this.element});
-      }
+  willDestroyElement() {
+    this._super(...arguments);
+    if (this.editor) {
+      this.editor.destroy();
+      this.editor = null;
+    }
+  },
+  createEditor(element, options) {
+    return new Promise(resolve => {
+      loadFroalaEditor().then(({ FroalaEditor }) => {
+        new FroalaEditor(element, options, function() {
+          resolve(this);
+        });
+      });
     });
   },
+  loadEditor: task(function* () {
+    if (!this.editor) {
+      this.editor = yield this.createEditor(this.element.querySelector('div'), this.options);
+      this.editor.html.set(this.content);
+      this.set('loadFinished', true);
+    }
+
+    return true;
+  }).drop(),
 });

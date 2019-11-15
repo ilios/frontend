@@ -1,37 +1,54 @@
 import { findElementWithAssert } from 'ember-cli-page-object/extend';
-import { settled } from '@ember/test-helpers';
-import $ from 'jquery';
-import { run } from '@ember/runloop';
+import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
+import { later } from '@ember/runloop';
 
-export function fillInFroalaEditor(selector, options = {}) {
+export async function fillInFroalaEditor(element, html) {
+  const editor = await getEditorInstance(element);
+  editor.html.set(html);
+  editor.undo.saveStep();
+}
+export async function froalaEditorValue(element) {
+  const editor = await getEditorInstance(element);
+  return editor.html.get();
+}
+
+export function pageObjectFillInFroalaEditor(selector, options = {}) {
   return {
     isDescriptor: true,
 
     get() {
       return async function (html) {
-        const element = findElementWithAssert(this, selector, options);
-        const $editor = $(element);
-
-        // Apply html via Froala Editor method and trigger a change event
-        run(() => {
-          $editor.froalaEditor('html.set', `${html}`);
-          $editor.froalaEditor('undo.saveStep');
-        });
-
-        return settled();
+        const elements = findElementWithAssert(this, selector, options);
+        return fillInFroalaEditor(elements[0], html);
       };
     }
   };
 }
 
-export function froalaEditorValue(selector, options = {}) {
+export function pageObjectFroalaEditorValue(selector, options = {}) {
   return {
     isDescriptor: true,
 
     get() {
-      const element = findElementWithAssert(this, selector, options);
-      const $editor = $(element);
-      return $editor.froalaEditor('html.get');
+      return async function () {
+        const elements = findElementWithAssert(this, selector, options);
+        return froalaEditorValue(elements[0]);
+      };
     }
   };
+}
+
+function getEditorInstance(element) {
+  return new Promise(resolve => {
+    loadFroalaEditor().then(({ FroalaEditor }) => {
+      later(() => {
+        const { INSTANCES } = FroalaEditor;
+        const ourInstance = INSTANCES.find(instance => {
+          const instanceElement = instance['$oel'][0];
+          return instanceElement.id === element.id;
+        });
+        resolve(ourInstance);
+      });
+    });
+  });
 }

@@ -2,20 +2,15 @@
   {{t "general.newObjective"}}
 </h4>
 <div class="new-objective-form">
-  <div class="item">
-    <label class="form-label">
-      {{t "general.description"}}:
-    </label>
-    <div class="form-data form-data-text form-input-row">
-      <HtmlEditor @content={{this.title}} @update={{action "changeTitle"}} />
-      {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))
-      }}
-        <span class="validation-error-message">
-          {{v-get this "title" "message"}}
-        </span>
-      {{/if}}
-    </div>
-  </div>
+  <label class="form-label">
+    {{t "general.description"}}:
+  </label>
+  <HtmlEditor @content={{this.title}} @update={{action "changeTitle"}} />
+  {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
+    <span class="validation-error-message">
+      {{v-get this "title" "message"}}
+    </span>
+  {{/if}}
   <div class="buttons">
     <button
       disabled={{or

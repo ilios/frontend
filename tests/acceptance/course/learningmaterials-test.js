@@ -235,7 +235,7 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
 
       assert.equal(page.learningMaterials.manager.name.value, 'learning material 0');
       assert.equal(page.learningMaterials.manager.author, 'Jennifer Johnson');
-      assert.equal(page.learningMaterials.manager.description.editorValue, '<p>0 lm description</p>');
+      assert.equal(await page.learningMaterials.manager.description.editorValue(), '<p>0 lm description</p>');
       assert.ok(page.learningMaterials.manager.hasFile);
       assert.ok(page.learningMaterials.manager.hasCopyrightPermission);
       assert.equal(page.learningMaterials.manager.copyrightPermission, 'Yes');
@@ -252,7 +252,7 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
 
       assert.equal(page.learningMaterials.manager.name.value, 'learning material 1');
       assert.equal(page.learningMaterials.manager.author, 'Jennifer Johnson');
-      assert.equal(page.learningMaterials.manager.description.editorValue, '<p>1 lm description</p>');
+      assert.equal(await page.learningMaterials.manager.description.editorValue(), '<p>1 lm description</p>');
       assert.ok(page.learningMaterials.manager.hasFile);
       assert.notOk(page.learningMaterials.manager.hasCopyrightPermission);
       assert.ok(page.learningMaterials.manager.hasCopyrightRationale);
@@ -269,7 +269,7 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
 
       assert.equal(page.learningMaterials.manager.name.value, 'learning material 1');
       assert.equal(page.learningMaterials.manager.author, 'Jennifer Johnson');
-      assert.equal(page.learningMaterials.manager.description.editorValue, '<p>1 lm description</p>');
+      assert.equal(await page.learningMaterials.manager.description.editorValue(), '<p>1 lm description</p>');
       assert.equal(page.learningMaterials.manager.uploadDate, moment('2011-03-14').format('M-D-YYYY'));
       assert.ok(page.learningMaterials.manager.hasFile);
       assert.equal(page.learningMaterials.manager.downloadText, 'filename');
@@ -286,7 +286,7 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
 
       assert.equal(page.learningMaterials.manager.name.value, 'learning material 2');
       assert.equal(page.learningMaterials.manager.author, 'Hunter Pence');
-      assert.equal(page.learningMaterials.manager.description.editorValue, '<p>2 lm description</p>');
+      assert.equal(await page.learningMaterials.manager.description.editorValue(), '<p>2 lm description</p>');
       assert.equal(page.learningMaterials.manager.uploadDate, today.format('M-D-YYYY'));
       assert.ok(page.learningMaterials.manager.hasLink);
       assert.equal(page.learningMaterials.manager.link, 'www.example.com');
@@ -305,7 +305,7 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
 
       assert.equal(page.learningMaterials.manager.name.value, 'learning material 3');
       assert.equal(page.learningMaterials.manager.author, 'Willie Mays');
-      assert.equal(page.learningMaterials.manager.description.editorValue, '<p>3 lm description</p>');
+      assert.equal(await page.learningMaterials.manager.description.editorValue(), '<p>3 lm description</p>');
       assert.equal(page.learningMaterials.manager.uploadDate, moment('2016-12-12').format('M-D-YYYY'));
       assert.ok(page.learningMaterials.manager.hasCitation);
       assert.equal(page.learningMaterials.manager.citation, 'a citation');
@@ -340,8 +340,8 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.current[0].status, 'status 2');
 
       await page.learningMaterials.current[0].details();
-      assert.equal(page.learningMaterials.manager.notes.value, `<p>${newNote}</p>`);
-      assert.equal(page.learningMaterials.manager.description.editorValue, `<p>${newDescription}</p>`);
+      assert.equal(await page.learningMaterials.manager.notes.value(), `<p>${newNote}</p>`);
+      assert.equal(await page.learningMaterials.manager.description.editorValue(), `<p>${newDescription}</p>`);
       assert.equal(page.learningMaterials.manager.statusValue, 3);
     });
 
@@ -370,8 +370,8 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.current[0].status, 'status 0');
 
       await page.learningMaterials.current[0].details();
-      assert.equal(page.learningMaterials.manager.notes.value, '');
-      assert.equal(page.learningMaterials.manager.description.editorValue, '<p>0 lm description</p>');
+      assert.equal(await page.learningMaterials.manager.notes.value(), '');
+      assert.equal(await page.learningMaterials.manager.description.editorValue(), '<p>0 lm description</p>');
       assert.equal(page.learningMaterials.manager.statusValue, 1);
     });
 
