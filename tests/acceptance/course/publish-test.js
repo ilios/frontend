@@ -47,8 +47,8 @@ module('Acceptance | Course - Publish', function(hooks) {
 
     assert.equal(currentRouteName(), 'course.index');
     const menu = '[data-test-course-header] .publish-menu';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
+    const selector = `${menu} [data-test-toggle]`;
+    const choices = `${menu} [data-test-menu] button`;
     assert.equal(await getElementText(selector), getText('Published'));
     //we have to click the button to create the options
     await click(selector);
@@ -73,8 +73,8 @@ module('Acceptance | Course - Publish', function(hooks) {
 
     assert.equal(currentRouteName(), 'course.index');
     const menu = '[data-test-course-header] .publish-menu';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
+    const selector = `${menu} [data-test-toggle]`;
+    const choices = `${menu} [data-test-menu] button`;
     assert.equal(await getElementText(selector), getText('Scheduled'));
     //we have to click the button to create the options
     await click(selector);
@@ -97,8 +97,8 @@ module('Acceptance | Course - Publish', function(hooks) {
 
     assert.equal(currentRouteName(), 'course.index');
     const menu = '[data-test-course-header] .publish-menu';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
+    const selector = `${menu} [data-test-toggle]`;
+    const choices = `${menu} [data-test-menu] button`;
     assert.equal(await getElementText(selector), getText('Not Published'));
     //we have to click the button to create the options
     await click(selector);
@@ -120,8 +120,8 @@ module('Acceptance | Course - Publish', function(hooks) {
     await visit('/courses/1');
 
     const menu = '[data-test-course-header] .publish-menu';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
+    const selector = `${menu} [data-test-toggle]`;
+    const choices = `${menu} [data-test-menu] button`;
     await click(selector);
     await click(findAll(choices)[0]);
 
@@ -137,8 +137,8 @@ module('Acceptance | Course - Publish', function(hooks) {
     });
     await visit('/courses/1');
     const menu = '[data-test-course-header] .publish-menu';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
+    const selector = `${menu} [data-test-toggle]`;
+    const choices = `${menu} [data-test-menu] button`;
     await click(selector);
     await click(findAll(choices)[2]);
 
@@ -156,8 +156,8 @@ module('Acceptance | Course - Publish', function(hooks) {
     });
     await visit('/courses/1');
     const menu = '[data-test-course-header] .publish-menu';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
+    const selector = `${menu} [data-test-toggle]`;
+    const choices = `${menu} [data-test-menu] button`;
     await click(selector);
     await click(findAll(choices)[0]);
 
@@ -175,8 +175,8 @@ module('Acceptance | Course - Publish', function(hooks) {
     });
     await visit('/courses/1');
     const menu = '[data-test-course-header] .publish-menu';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
+    const selector = `${menu} [data-test-toggle]`;
+    const choices = `${menu} [data-test-menu] button`;
     await click(selector);
     await click(findAll(choices)[2]);
 
@@ -193,8 +193,8 @@ module('Acceptance | Course - Publish', function(hooks) {
     });
     await visit('/courses/1');
     const menu = '[data-test-course-header] .publish-menu';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
+    const selector = `${menu} [data-test-toggle]`;
+    const choices = `${menu} [data-test-menu] button`;
     await click(selector);
     await click(findAll(choices)[1]);
 
@@ -211,8 +211,8 @@ module('Acceptance | Course - Publish', function(hooks) {
     });
     await visit('/courses/1');
     const menu = '[data-test-course-header] .publish-menu';
-    const selector = `${menu} .rl-dropdown-toggle`;
-    const choices = `${menu} .rl-dropdown button`;
+    const selector = `${menu} [data-test-toggle]`;
+    const choices = `${menu} [data-test-menu] button`;
     await click(selector);
     await click(findAll(choices)[2]);
 

@@ -24,9 +24,7 @@ export default Component.extend({
         if (originalEvent.target.nextElementSibling) {
           originalEvent.target.nextElementSibling.focus();
         } else {
-          schedule('afterRender', () => {
-            this.element.querySelector('.menu button:nth-of-type(1)').focus();
-          });
+          this.element.querySelector('.menu button:nth-of-type(1)').focus();
         }
       }
       break;
