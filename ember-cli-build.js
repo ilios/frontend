@@ -45,11 +45,6 @@ module.exports = function(defaults) {
     'ember-cli-qunit': {
       useLintTree: false
     },
-    'ember-froala-editor': {
-      languages: ['fr','es'],
-      plugins: ['lists', 'code_view', 'link'],
-      themes: 'gray'
-    },
     'ember-service-worker': {
       immediateClaim: true,
       versionStrategy: 'every-build',

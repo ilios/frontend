@@ -4,7 +4,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, find, click, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { fillInFroalaEditor } from 'ember-froala-editor/test-support';
+import { fillInFroalaEditor } from 'ilios-common';
 
 const { resolve } = RSVP;
 
@@ -54,7 +54,7 @@ module('Integration | Component | programyear objective list item', function(hoo
     />`);
 
     await click('td:nth-of-type(2) .editable');
-    await fillInFroalaEditor('td:nth-of-type(2) .froala-editor-container', 'new title');
+    await fillInFroalaEditor(find('td:nth-of-type(2) [data-test-html-editor]'), 'new title');
     await click('td:nth-of-type(2) .done');
   });
 
