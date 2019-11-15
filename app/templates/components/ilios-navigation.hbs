@@ -22,7 +22,11 @@
     </li>
     {{#if currentUser.performsNonLearnerFunction}}
       <li>
-        <LinkTo @route="courses" @title={{t "general.coursesAndSessions"}}>
+        <LinkTo
+          @route="courses"
+          @title={{t "general.coursesAndSessions"}}
+          @current-when="courses course"
+        >
           <FaIcon @icon="book" @fixedWidth={{true}} />
           <span class="text">
             {{t "general.coursesAndSessions"}}
@@ -30,7 +34,11 @@
         </LinkTo>
       </li>
       <li>
-        <LinkTo @route="learnerGroups" @title={{t "general.learnerGroups"}}>
+        <LinkTo
+          @route="learnerGroups"
+          @title={{t "general.learnerGroups"}}
+          @current-when="learnerGroups learnerGroup"
+        >
           <FaIcon @icon="graduation-cap" @fixedWidth={{true}} />
           <span class="text">
             {{t "general.learnerGroups"}}
@@ -41,6 +49,7 @@
         <LinkTo
           @route="instructorGroups"
           @title={{t "general.instructorGroups"}}
+          @current-when="instructorGroups instructorGroup"
         >
           <FaIcon @icon="user-md" @fixedWidth={{true}} />
           <span class="text">
@@ -49,7 +58,11 @@
         </LinkTo>
       </li>
       <li>
-        <LinkTo @route="schools" @title={{t "general.schools"}}>
+        <LinkTo
+          @route="schools"
+          @title={{t "general.schools"}}
+          @current-when="schools school"
+      >
           <FaIcon @icon="university" @fixedWidth={{true}} />
           <span class="text">
             {{t "general.schools"}}
@@ -57,7 +70,11 @@
         </LinkTo>
       </li>
       <li>
-        <LinkTo @route="programs" @title={{t "general.programs"}}>
+        <LinkTo
+          @route="programs"
+          @title={{t "general.programs"}}
+          @current-when="programs program"
+        >
           <FaIcon @icon="list-alt" @fixedWidth={{true}} />
           <span class="text">
             {{t "general.programs"}}
@@ -67,7 +84,11 @@
     {{/if}}
     {{#if currentUser.canCreateOrUpdateUserInAnySchool}}
       <li>
-        <LinkTo @route="admin-dashboard" @title={{t "general.admin"}}>
+        <LinkTo
+          @route="admin-dashboard"
+          @title={{t "general.admin"}}
+          @current-when="admin-dashboard users user"
+        >
           <FaIcon @icon="cogs" @fixedWidth={{true}} />
           <span class="text">
             {{t "general.admin"}}
@@ -80,6 +101,7 @@
         <LinkTo
           @route="curriculumInventoryReports"
           @title={{t "general.curriculumInventory"}}
+          @current-when="curriculumInventoryReports curriculumInventoryReport curriculumInventorySequenceBlock"
         >
           <FaIcon @icon="chart-bar" @fixedWidth={{true}} />
           <span class="text">
