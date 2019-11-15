@@ -252,38 +252,40 @@
     {{/if}}
     {{#if this.features.sessionLinkingAdminUi}}
       <div class="postrequisite block">
-        <label>
-          {{#if @session.hasPostrequisite}}
-            {{#link-to "session.index" (await @session.postrequisite.course) (await @session.postrequisite)}}
-              {{fa-icon  icon="external-link-square-alt"}} {{t "general.duePriorTo"}}:
-            {{/link-to}}
-          {{else}}
-            {{t "general.duePriorTo"}}:
-          {{/if}}
-        </label>
         {{#if @editable}}
-          {{#editable-field
-            value=(await this.postRequisiteTitle)
-            save=(action "changePostrequisite")
-            close=(action "revertPostrequisiteChanges")
-          }}
-            <select {{on "change" (action "setPostrequisite" value="target.value")}}>
-              <option value="null" selected={{is-empty (await @session.postrequisite)}}>{{t "general.none"}}</option>
-              {{#each (await this.linkablePostrequisites) as |linkablePostrequisite|}}
-                <option value={{linkablePostrequisite.id}} selected={{is-equal linkablePostrequisite (await @session.postrequisite)}}>
-                  {{linkablePostrequisite.title}}
-                  {{#if (await linkablePostrequisite.firstOfferingDate)}}
-                    {{#if linkablePostrequisite.ilmSession}}
-                      <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{moment-format (await linkablePostrequisite.firstOfferingDate) "L"}}
-                    {{else}}
-                      {{moment-format (await linkablePostrequisite.firstOfferingDate) "L LT"}}
-                    {{/if}}
-                  {{/if}}
-                </option>
-              {{/each}}
-            </select>
-          {{/editable-field}}
+          {{#if this.isEditingPostRequisite}}
+            <SessionPostrequisiteEditor
+              @session={{@session}}
+              @close={{toggle "isEditingPostRequisite" this}}
+            />
+          {{else}}
+            <label>
+              {{#if @session.hasPostrequisite}}
+                {{#link-to "session.index" (await @session.postrequisite.course) (await @session.postrequisite)}}
+                  {{fa-icon  icon="external-link-square-alt"}} {{t "general.duePriorTo"}}:
+                {{/link-to}}
+              {{else}}
+                {{t "general.duePriorTo"}}:
+              {{/if}}
+            </label>
+            <button class="post-requisite-edit" {{on "click" (toggle "isEditingPostRequisite" this)}}>
+              {{#if @session.hasPostrequisite}}
+                {{@session.postrequisite.title}}
+              {{else}}
+                {{t "general.none"}}
+              {{/if}}
+            </button>
+          {{/if}}
         {{else}}
+          <label>
+            {{#if @session.hasPostrequisite}}
+              {{#link-to "session.index" (await @session.postrequisite.course) (await @session.postrequisite)}}
+                {{fa-icon  icon="external-link-square-alt"}} {{t "general.duePriorTo"}}:
+              {{/link-to}}
+            {{else}}
+              {{t "general.duePriorTo"}}:
+            {{/if}}
+          </label>
           {{#if @session.hasPostrequisite}}
             {{@session.postrequisite.title}}
           {{else}}

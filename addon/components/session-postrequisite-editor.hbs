@@ -1,0 +1,60 @@
+<div class="session-postrequisite-editor">
+  <strong>{{t "general.duePriorTo"}}:</strong>
+  {{#if this.selectedPostrequisite}}
+    {{this.selectedPostrequisite.title}}
+    <button {{on "click" (action "setPostrequisite" null)}} class="remove">
+      <FaIcon @icon="times" title={{t "general.remove"}} />
+    </button>
+  {{else}}
+    {{t "general.none"}}
+  {{/if}}
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th colspan="6">{{t "general.session"}}</th>
+          <th colspan="3">{{t "general.firstOffering"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each (await this.linkablePostrequisites) as |postrequisite|}}
+          <tr>
+            <td>
+              {{#if (eq postrequisite.id this.selectedPostrequisite.id)}}
+                <input type="radio" {{on "click" (action "setPostrequisite" null)}} checked={{true}}>
+              {{else}}
+                <input type="radio" {{action "setPostrequisite" postrequisite}}>
+              {{/if}}
+            </td>
+            <td colspan="6">{{postrequisite.title}}</td>
+            <td colspan="3">
+              {{#if (await postrequisite.firstOfferingDate)}}
+                {{#if postrequisite.ilmSession}}
+                  <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{moment-format (await postrequisite.firstOfferingDate) "L"}}
+                {{else}}
+                  {{moment-format (await postrequisite.firstOfferingDate) "L LT"}}
+                {{/if}}
+              {{/if}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  <div class="buttons">
+    <button
+      class="done"
+      {{on "click" (perform this.save)}}
+    >
+      {{#if this.save.isRunning}}
+        <LoadingSpinner />
+      {{else}}
+        {{t "general.done"}}
+      {{/if}}
+    </button>
+    <button class="cancel" {{action @close}}>
+      {{t "general.cancel"}}
+    </button>
+  </div>
+</div>
