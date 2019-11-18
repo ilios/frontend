@@ -10,9 +10,9 @@
             <div class="remove-all-subgroups">
               <span
                 class="clickable remove"
-                onclick={{action @remove tree.topLevelGroup}}
                 data-test-remove-all
                 role="button"
+                {{on "click" (fn @remove tree.topLevelGroup)}}
               >
                 {{t "general.removeAll"}} (<FaIcon @icon="times" />)
               </span>
@@ -31,10 +31,9 @@
                     (contains learnerGroup (await this.lowestLeaves))
                     "lowest-leaf"
                   }}
-
                   {{if @isManaging "clickable"}}"
-                onclick={{if @isManaging (action @remove learnerGroup)}}
                 role={{if @isManaging "button"}}
+                {{on "click" (fn this.remove learnerGroup)}}
               >
                 {{learnerGroup.title}} ({{count-related learnerGroup "users"}})
                 {{#if @isManaging}}

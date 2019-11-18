@@ -56,16 +56,10 @@
                   {{/if}}
                   <br>
                   <div class="confirm-buttons">
-                    <button
-                      class="remove text"
-                      onclick={{action "remove" objective}}
-                    >
+                    <button class="remove text" {{on "click" (fn (action "remove") objective)}}>
                       {{t "general.yes"}}
                     </button>
-                    <button
-                      class="done text"
-                      onclick={{action "cancelRemove" objective}}
-                    >
+                    <button class="done text" {{on "click" (fn (action "cancelRemove") objective)}}>
                       {{t "general.cancel"}}
                     </button>
                   </div>

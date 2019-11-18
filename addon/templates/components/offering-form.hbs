@@ -53,7 +53,7 @@
               min="0"
               type="number"
               value={{this.durationHours}}
-              oninput={{perform this.updateDurationHours value="target.value"}}
+              {{on "input" (perform this.updateDurationHours value="target.value")}}
             >
             {{#if
               (and
@@ -72,8 +72,7 @@
         </div>
         <div class="minutes">
           <div class="minutes-container">
-            <input
-              class={{if
+            <input class={{if
                 (and
                   (v-get this "durationMinutes" "isInvalid")
                   (is-in this.showErrorsFor "durationMinutes")
@@ -84,8 +83,7 @@
               min="0"
               type="number"
               value={{this.durationMinutes}}
-              oninput={{perform this.updateDurationMinutes value="target.value"
-              }}
+              {{on "input" (perform this.updateDurationMinutes value="target.value")}}
             >
             {{#if
               (and
@@ -128,16 +126,15 @@
             <div class="make-recurring-days">
               {{#each this.recurringDayOptions as |obj i|}}
                 <div>
-                  <input
-                    id="make-recurring-day-input-{{i}}"
+                  <input id="make-recurring-day-input-{{i}}"
                     type="checkbox"
                     checked={{or
                       (is-in this.recurringDays obj.day)
                       (eq (moment-format this.startDate "d") obj.day)
                     }}
-                    onclick={{action "toggleRecurringDay" obj.day}}
                     disabled={{eq (moment-format this.startDate "d") obj.day}}
                     data-test-recurring-day-input={{i}}
+                    {{on "click" (fn (action "toggleRecurringDay") obj.day)}}
                   >
                   <label
                     class="day-of-week clickable"
@@ -150,11 +147,8 @@
               {{/each}}
             </div>
             <div class="make-recurring-input-container">
-              <input
-                type="text"
+              <input type="text"
                 value={{this.numberOfWeeks}}
-                oninput={{action (mut this.numberOfWeeks) value="target.value"}}
-                onkeyup={{action "addErrorDisplayFor" "numberOfWeeks"}}
                 class={{concat
                   "make-recurring-input "
                   (if
@@ -165,6 +159,8 @@
                     "has-error"
                   )
                 }}
+                {{on "input" (action (mut this.numberOfWeeks) value="target.value")}}
+                {{on "keyup" (fn (action "addErrorDisplayFor") "numberOfWeeks")}}
               >
               <label class="make-recurring-input-label">
                 {{t "general.weeks"}}
@@ -195,8 +191,8 @@
         <input
           type="text"
           value={{this.room}}
-          oninput={{action (mut this.room) value="target.value"}}
-          onkeyup={{action "addErrorDisplayFor" "room"}}
+          {{on "input" (action (mut this.room) value="target.value")}}
+          {{on "keyup" (fn (action "addErrorDisplayFor") "room")}}
         >
         {{#if (and (v-get this "room" "isInvalid") (is-in this.showErrorsFor "room"))}}
           <span class="validation-error-message">

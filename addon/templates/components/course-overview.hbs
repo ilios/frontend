@@ -60,9 +60,9 @@
           <input
             type="text"
             value={{this.externalId}}
-            oninput={{action (mut this.externalId) value="target.value"}}
             disabled={{isSaving}}
-            onkeyup={{action "addErrorDisplayFor" "externalId"}}
+            {{on "input" (action (mut this.externalId) value="target.value")}}
+            {{on "keyup" (fn (action "addErrorDisplayFor") "externalId")}}
           >
           {{#if
             (and
@@ -89,9 +89,7 @@
           @save={{action "changeClerkshipType"}}
           @close={{action "revertClerkshipTypeChanges"}}
         >
-          <select
-            onchange={{action "setCourseClerkshipType" value="target.value"}}
-          >
+          <select {{on "change" (action "setCourseClerkshipType" value="target.value")}}>
             <option
               value="null"
               selected={{is-empty (await this.selectedClerkshipType)}}

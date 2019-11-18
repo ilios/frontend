@@ -1,6 +1,6 @@
 <div class="material-list">
   <span class="course-filter">
-    <select onchange={{action @setCourseIdFilter value="target.value"}}>
+    <select {{on "change" (action @setCourseIdFilter value="target.value")}}>
       <option value="">
         {{t "general.allCourses"}}
       </option>
@@ -20,7 +20,7 @@
       placeholder={{t "general.filterPlaceholder"}}
       type="text"
       value={{@filter}}
-      oninput={{perform this.setQuery value="target.value"}}
+      {{on "input" (perform this.setQuery value="target.value")}}
     >
   </span>
   <table>

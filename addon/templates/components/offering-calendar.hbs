@@ -7,7 +7,7 @@
       @yes={{this.showLearnerGroupEvents}}
       @toggle={{action (mut this.showLearnerGroupEvents)}}
     />
-    <label onclick={{toggle "showLearnerGroupEvents" this}}>
+    <label {{on "click" (toggle "showLearnerGroupEvents" this)}}>
       {{t "general.showLearnerGroupEvents"}}
     </label>
   </span>
@@ -16,7 +16,7 @@
       @yes={{this.showSessionEvents}}
       @toggle={{action (mut this.showSessionEvents)}}
     />
-    <label onclick={{toggle "showSessionEvents" this}}>
+    <label {{on "click" (toggle "showSessionEvents" this)}}>
       {{! template-lint-disable no-triple-curlies }}
       {{{t "general.showSessionEvents" sessionTitle=@session.title}}}
     </label>

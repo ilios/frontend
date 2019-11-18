@@ -9,9 +9,9 @@
       <input
         type="text"
         value={{this.title}}
-        oninput={{action (mut this.title) value="target.value"}}
         disabled={{this.save.isRunning}}
-        onkeyup={{action "addErrorDisplayFor" "title"}}
+        {{on "input" (action (mut this.title) value="target.value")}}
+        {{on "keyup" (fn (action "addErrorDisplayFor") "title")}}
       >
       {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
         <span

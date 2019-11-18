@@ -1,9 +1,9 @@
 {{#if @value}}
-  <button class="collapse-button" onclick={{@action}}>
+  <button class="collapse-button" {{on "click" @action}}>
     <FaIcon @icon="minus" />
   </button>
 {{else}}
-  <button class="expand-button" onclick={{@action}}>
+  <button class="expand-button" {{on "click" @action}}>
     <FaIcon @icon="plus" />
   </button>
 {{/if}}

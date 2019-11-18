@@ -14,8 +14,8 @@
           type="text"
           value={{this.title}}
           disabled={{isSaving}}
-          oninput={{action (mut this.title) value="target.value"}}
-          onkeyup={{action "addErrorDisplayFor" "title"}}
+          {{on "input" (action (mut this.title) value="target.value")}}
+          {{on "keyup" (fn (action "addErrorDisplayFor") "title")}}
         >
         {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
           <span class="validation-error-message">{{v-get this "title" "message"}}</span>
@@ -210,9 +210,9 @@
               <input
                 type="text"
                 value={{this.hours}}
-                oninput={{action (mut this.hours) value="target.value"}}
                 disabled={{isSaving}}
-                onkeyup={{action "addErrorDisplayFor" "hours"}}
+                {{on "input" (action (mut this.hours) value="target.value")}}
+                {{on "keyup" (fn (action "addErrorDisplayFor") "hours")}}
               >
               {{#if (and (v-get this "hours" "isInvalid") (is-in this.showErrorsFor "hours"))}}
                 <span class="validation-error-message">{{v-get this "hours" "message"}}</span>
@@ -267,7 +267,7 @@
             save=(action "changePostrequisite")
             close=(action "revertPostrequisiteChanges")
           }}
-            <select onchange={{action "setPostrequisite" value="target.value"}}>
+            <select {{on "change" (action "setPostrequisite" value="target.value")}}>
               <option value="null" selected={{is-empty (await @session.postrequisite)}}>{{t "general.none"}}</option>
               {{#each (await this.linkablePostrequisites) as |linkablePostrequisite|}}
                 <option value={{linkablePostrequisite.id}} selected={{is-equal linkablePostrequisite (await @session.postrequisite)}}>

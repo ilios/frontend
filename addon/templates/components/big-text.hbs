@@ -2,7 +2,7 @@
   class="clickable {{if this.renderHtml "list-reset"}} editable"
   data-test-edit
   role="button"
-  onclick={{action this.onEdit}}
+  {{on "click" this.onEdit}}
 >
   {{this.displayText}}
 </span>

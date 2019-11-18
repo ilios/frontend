@@ -6,7 +6,7 @@
     <input
       placeholder={{t "general.filterPlaceholder"}}
       value={{this.courseQuery}}
-      oninput={{perform this.setCourseQuery value="target.value"}}
+      {{on "input" (perform this.setCourseQuery value="target.value")}}
     >
   </span>
   <table data-test-course-table>
@@ -96,7 +96,7 @@
     <input
       placeholder={{t "general.filterPlaceholder"}}
       value={{this.sessionQuery}}
-      oninput={{perform this.setSessionQuery value="target.value"}}
+      {{on "input" (perform this.setSessionQuery value="target.value")}}
     >
   </span>
   <table data-test-session-table>

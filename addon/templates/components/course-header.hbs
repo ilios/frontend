@@ -15,8 +15,8 @@
           type="text"
           value={{this.courseTitle}}
           disabled={{isSaving}}
-          oninput={{action (mut this.courseTitle) value="target.value"}}
-          onkeyup={{action "addErrorDisplayFor" "courseTitle"}}
+          {{on "input" (action (mut this.courseTitle) value="target.value")}}
+          {{on "keyup" (fn (action "addErrorDisplayFor") "courseTitle")}}
         >
         {{#if
           (and

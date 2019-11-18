@@ -8,7 +8,7 @@
   </h3>
   <div class="actions">
     {{#if @isManaging}}
-      <button class="bigadd" onclick={{perform this.save}}>
+      <button class="bigadd" {{on "click" (perform this.save)}}>
         <FaIcon
           @icon={{if this.save.isRunning "spinner" "check"}}
           @spin={{if this.isSaving true false}}

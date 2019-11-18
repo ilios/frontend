@@ -60,5 +60,10 @@ export default Component.extend({
       const selectedChildren = children.filter((child) => ids.includes(child.id));
       return selectedChildren.length === 0;
     });
-  })
+  }),
+  remove(learnerGroup) {
+    if (this.isManaging) {
+      this.remove(learnerGroup);
+    }
+  },
 });

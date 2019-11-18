@@ -42,9 +42,9 @@
 <div class="filter">
   <input
     value={{@filterByDebounced}}
-    oninput={{action (perform this.changeFilterBy) value="target.value"}}
     placeholder={{t "general.sessionTitleFilterPlaceholder"}}
     data-test-session-filter
+    {{on "input" (action (perform this.changeFilterBy) value="target.value")}}
   >
 </div>
 <section>

@@ -221,7 +221,7 @@
                     <input
                       type="checkbox"
                       checked={{is-in this.sessionsToOverride session}}
-                      onclick={{action "toggleSession" session}}
+                      {{on "click" (fn (action "toggleSession") session)}}
                     >
                     <span
                       class="clickable"
@@ -235,7 +235,7 @@
                     <input
                       type="checkbox"
                       checked={{not-in this.sessionsToOverride session}}
-                      onclick={{action "toggleSession" session}}
+                      {{on "click" (fn (action "toggleSession") session)}}
                     >
                     <span
                       class="clickable"

@@ -9,13 +9,13 @@
     <input
       type="text"
       value={{this.title}}
-      oninput={{action (mut this.title) value="target.value"}}
-      onkeyup={{action "addErrorDisplayFor" "title"}}
       class={{if
         (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))
         "has-error"
       }}
       data-test-title
+      {{on "input" (action (mut this.title) value="target.value")}}
+      {{on "keyup" (fn (action "addErrorDisplayFor") "title")}}
     >
     {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
       <span class="validation-error-message">
@@ -28,10 +28,7 @@
       {{t "general.sessionType"}}:
     </label>
     {{#if (is-fulfilled this.activeSessionTypes)}}
-      <select
-        onchange={{action (mut this.selectedSessionTypeId) value="target.value"}}
-        data-test-type
-      >
+      <select data-test-type {{on "change" (action (mut this.selectedSessionTypeId) value="target.value")}}>
         {{#each (sort-by "title" (await this.activeSessionTypes)) as |sessionType|}}
           <option
             value={{sessionType.id}}

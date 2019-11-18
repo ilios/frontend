@@ -125,7 +125,7 @@
             class="cancel"
             data-test-yes
             disabled={{this.removeSession.isRunning}}
-            onclick={{perform this.removeSession obj.session}}
+            {{on "click" (perform this.removeSession obj.session)}}
           >
             {{#if this.removeSession.isRunning}}
               <LoadingSpinner />
@@ -133,7 +133,7 @@
               {{t "general.yes"}}
             {{/if}}
           </button>
-          <button class="done" onclick={{action "cancelDelete" obj.session.id}}>
+          <button class="done" {{on "click" (fn (action "cancelDelete") obj.session.id)}}>
             {{t "general.cancel"}}
           </button>
         </div>
