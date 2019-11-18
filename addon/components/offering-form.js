@@ -199,8 +199,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('currentTimezone', currentTimezone);
 
     let timezoneNames = moment.tz.names().filter(tz => {
-      // filter out any non-canonical timezone names, and all of those pesky Etc/* timezone.
-      return (tz.indexOf('/') !== -1 && !tz.startsWith('Etc/'));
+      // filter out any non-canonical timezone names, and all of those pesky Etc/* as well as deprecated US/* timezones.
+      return (tz.indexOf('/') !== -1 && !tz.startsWith('Etc/') && !tz.startsWith('US/'));
     });
     // ensure that the current timezone is always part of the list
     timezoneNames.push(currentTimezone);
