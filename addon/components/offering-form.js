@@ -195,8 +195,18 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   }),
   init(){
     this._super(...arguments);
-    this.set('currentTimezone', moment.tz.guess());
-    this.set('timezoneNames', moment.tz.names());
+    const currentTimezone = moment.tz.guess();
+    this.set('currentTimezone', currentTimezone);
+
+    let timezoneNames = moment.tz.names().filter(tz => {
+      // filter out any non-canonical timezone names, and all of those pesky Etc/* timezone.
+      return (tz.indexOf('/') !== -1 && !tz.startsWith('Etc/'));
+    });
+    // ensure that the current timezone is always part of the list
+    timezoneNames.push(currentTimezone);
+    timezoneNames = timezoneNames.uniq().sort();
+    this.set('timezoneNames', timezoneNames);
+
     this.set('recurringDayOptions', [
       {day: '0', t: 'general.sunday'},
       {day: '1', t: 'general.monday'},
