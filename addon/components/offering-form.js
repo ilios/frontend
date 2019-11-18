@@ -72,6 +72,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   classNames: ['offering-form'],
 
   currentTimezone: null,
+  isEditingTimezone: false,
+  timezoneNames: null,
   startDate: null,
   endDate: null,
   room: 'TBD',
@@ -194,6 +196,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   init(){
     this._super(...arguments);
     this.set('currentTimezone', moment.tz.guess());
+    this.set('timezoneNames', moment.tz.names());
     this.set('recurringDayOptions', [
       {day: '0', t: 'general.sunday'},
       {day: '1', t: 'general.monday'},
@@ -287,6 +290,11 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       let endDate = moment(startDate).add(hours, 'hours').add(minutes, 'minutes').toDate();
 
       this.setProperties({startDate, endDate});
+    },
+
+    changeTimezone(value) {
+      this.set('currentTimezone', value);
+      this.set('isEditingTimezone', false);
     },
   },
   makeRecurringOfferingObjects: task(function * () {
@@ -466,5 +474,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       .add(minutes, 'minutes')
       .toDate();
     this.set('endDate', endDate);
-  }).restartable()
+  }).restartable(),
+
 });

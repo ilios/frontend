@@ -32,10 +32,26 @@
       }
     }
 
-    .timezone {
-      select {
-        min-width: initial;
-        width: 5rem;
+    .current-timezone {
+      .editor {
+        display: flex;
+
+        .actions {
+          display: flex;
+          justify-content: flex-start;
+
+          button.cancel {
+            background: transparent;
+            color: $ilios-red;
+            margin: 0;
+            padding: 0 .2rem;
+
+            &:enabled:hover {
+              color: $white;
+              background-color: $ilios-red;
+            }
+          }
+        }
       }
     }
 

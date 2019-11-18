@@ -37,7 +37,30 @@
         {{t "general.timezone"}}:
       </label>
       <div class="current-timezone">
-        {{this.currentTimezone}}
+        {{#if this.isEditingTimezone}}
+          <span class="editor">
+            <select onchange={{action "changeTimezone" value="target.value"}}>
+              {{#each this.timezoneNames as |timezone|}}
+                <option value={{timezone}} selected={{is-equal timezone this.currentTimezone}}>
+                  {{timezone}}
+                </option>
+              {{/each}}
+            </select>
+            <span class="actions">
+              <button
+                  class="cancel"
+                  title={{t "general.cancel"}}
+                {{action (mut this.isEditingTimezone) false}}
+              >
+                <FaIcon @icon="times" />
+              </button>
+            </span>
+          </span>
+        {{else}}
+          <span class="editable clickable" role="button" onclick={{action (mut this.isEditingTimezone) true}}>
+            {{this.currentTimezone}}
+          </span>
+        {{/if}}
       </div>
     </div>
     <div class="item offering-duration">
