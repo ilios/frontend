@@ -179,6 +179,20 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
     return diff;
   }),
+
+  timezones: computed('timezoneNames.[]', function() {
+    return this.timezoneNames.map(name => {
+      return {
+        value: name,
+        label: this.formatTimezone(name)
+      };
+    }).sortBy('label');
+  }),
+
+  formattedCurrentTimezone: computed('currentTimezone', function() {
+    return this.formatTimezone(this.currentTimezone);
+  }),
+
   lowestLearnerGroupLeaves: computed('learnerGroups.[]', function(){
     const learnerGroups = this.get('learnerGroups');
     const ids = learnerGroups.mapBy('id');
@@ -226,6 +240,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.loadDefaultAttrs();
     }
   },
+
   actions: {
     addLearnerGroup(learnerGroup) {
       let learnerGroups = this.get('learnerGroups').toArray();
@@ -307,6 +322,11 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.set('isEditingTimezone', false);
     },
   },
+
+  formatTimezone(tz) {
+    return '(' + moment.tz(tz).format('Z') + ') ' + tz.replace(/\//g, ' - ').replace(/_/g, ' ');
+  },
+
   makeRecurringOfferingObjects: task(function * () {
     const {
       startDate,

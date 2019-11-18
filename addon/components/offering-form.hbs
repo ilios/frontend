@@ -40,9 +40,9 @@
         {{#if this.isEditingTimezone}}
           <span class="editor">
             <select onchange={{action "changeTimezone" value="target.value"}}>
-              {{#each this.timezoneNames as |timezone|}}
-                <option value={{timezone}} selected={{is-equal timezone this.currentTimezone}}>
-                  {{timezone}}
+              {{#each this.timezones as |timezone|}}
+                <option value={{timezone.value}} selected={{is-equal timezone.value this.currentTimezone}}>
+                  {{timezone.label}}
                 </option>
               {{/each}}
             </select>
@@ -58,7 +58,7 @@
           </span>
         {{else}}
           <span class="editable clickable" role="button" onclick={{action (mut this.isEditingTimezone) true}}>
-            {{this.currentTimezone}}
+            {{this.formattedCurrentTimezone}}
           </span>
         {{/if}}
       </div>
