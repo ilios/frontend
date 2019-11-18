@@ -2,25 +2,22 @@ import { inject as service } from '@ember/service';
 import EmberRouter from '@ember/routing/router';
 import config from './config/environment';
 
+export default class Router extends EmberRouter {
+  @service iliosMetrics;
+  @service router;
+  location = config.locationType;
+  rootURL = config.rootURL;
 
-const Router = EmberRouter.extend({
-  iliosMetrics: service(),
-  router: service(),
-
-  location: config.locationType,
-  rootURL: config.rootURL,
-
-  init() {
-    this._super(...arguments);
-
+  constructor() {
+    super(...arguments);
     this.on('routeDidChange', () => {
       const page = this.router.currentURL;
       const title = this.router.currentRouteName || 'unknown';
 
       this.iliosMetrics.track(page, title);
     });
-  },
-});
+  }
+}
 
 Router.map(function() {
   this.route('dashboard', {
@@ -134,5 +131,3 @@ Router.map(function() {
   });
   this.route('search');
 });
-
-export default Router;

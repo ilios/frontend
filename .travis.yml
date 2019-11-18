@@ -24,6 +24,10 @@ env:
 before_install:
   - npm config set spin false
 
+branches:
+  only:
+    - master
+
 script:
   - npm run lint:style
   - npm run lint:hbs
