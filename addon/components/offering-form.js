@@ -467,6 +467,14 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     let offerings = yield this.get('makeRecurringOfferingObjects').perform();
     offerings = yield this.get('makeSmallGroupOfferingObjects').perform(offerings);
 
+    // adjust timezone
+    offerings.forEach(offering => {
+      offering.startDate = moment.tz(
+        moment(offering.startDate).format('Y-MM-DD HH:mm:ss'), this.currentTimezone).toDate();
+      offering.endDate = moment.tz(
+        moment(offering.endDate).format('Y-MM-DD HH:mm:ss'), this.currentTimezone).toDate();
+    });
+
     this.set('offeringsToSave', offerings.length);
     //save offerings in sets of 5
     let parts;
