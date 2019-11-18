@@ -213,8 +213,18 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('currentTimezone', currentTimezone);
 
     let timezoneNames = moment.tz.names().filter(tz => {
-      // filter out any non-canonical timezone names, and all of those pesky Etc/* as well as deprecated US/* timezones.
-      return (tz.indexOf('/') !== -1 && !tz.startsWith('Etc/') && !tz.startsWith('US/'));
+      // filter out any non-canonical and deprecated timezone names, and all of those pesky Etc/* aliases.
+      return tz.indexOf('/') !== -1
+        && !tz.startsWith('Etc/')
+        && !tz.startsWith('Mexico/')
+        && !tz.startsWith('Brazil/')
+        && !tz.startsWith('Canada/')
+        && !tz.startsWith('Chile/')
+        && !tz.startsWith('US/')
+        && ![
+          'Australia/ACT', 'Australia/LHI', 'Australia/North', 'Australia/NSW', 'Australia/Queensland',
+          'Australia/South', 'Australia/Tasmania', 'Australia/Victoria', 'Australia/West'
+        ].includes(tz);
     });
     // ensure that the current timezone is always part of the list
     timezoneNames.push(currentTimezone);
