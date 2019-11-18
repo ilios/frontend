@@ -11,7 +11,7 @@
       <div
         class="cell title {{if this.areDaysSelectable "clickable"}}"
         role="button"
-        {{action "changeToDayView" day.date}}
+        {{on "click" (fn (action "changeToDayView") day.date)}}
       >
         {{moment-format day.date "ddd M/D"}}
       </div>

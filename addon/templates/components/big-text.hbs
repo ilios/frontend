@@ -11,10 +11,9 @@
     class="clickable"
     data-test-edit
     role="button"
-    {{action (mut this.expanded) true}}
+    {{on "click" (fn (mut this.expanded) true)}}
   >
     <FaIcon @icon={{this.ellipsis}} @classNames="text-bottom" />
     <FaIcon @icon={{this.expandIcon}} />
   </span>
 {{/if}}
-

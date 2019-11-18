@@ -8,7 +8,7 @@
     <li
       class={{if @editable "clickable"}}
       role="button"
-      {{action "remove" term}}
+      {{on "click" (fn (action "remove") term)}}
     >
       <span class="term-title">
         {{term.name}}
@@ -48,7 +48,7 @@
         class={{unless term.isActive "disabled" ""}}
         role="button"
         data-test-search-result
-        {{action "add" term}}
+        {{on "click" (fn (action "add") term)}}
       >
         <span class="descriptor-name" data-test-name>
           {{term.name}}
@@ -78,7 +78,7 @@
   {{#if this.hasMoreSearchResults}}
     <button
       disabled={{if this.searchMore.isRunning true}}
-      {{action (perform this.searchMore)}}
+      {{on "click" (perform this.searchMore)}}
     >
       <FaIcon
         @icon={{if this.searchMore.isRunning "spinner"}}

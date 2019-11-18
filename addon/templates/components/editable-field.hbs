@@ -21,7 +21,7 @@
           class="clickable editable"
           data-test-edit
           role="button"
-          {{action (perform this.edit)}}
+          {{on "click" (perform this.edit)}}
         >
           {{this.clickPrompt}}
         </span>
@@ -35,7 +35,7 @@
           disabled={{this.isSaveDisabled}}
           class="done"
           title={{t "general.save"}}
-          {{action (perform this.saveData)}}
+          {{on "click" (perform this.saveData)}}
         >
           <FaIcon
             @icon={{if this.saveData.isRunning "spinner" "check"}}
@@ -45,7 +45,7 @@
         <button
           class="cancel"
           title={{t "general.cancel"}}
-          {{action (perform this.closeEditor)}}
+          {{on "click" (perform this.closeEditor)}}
         >
           <FaIcon @icon="times" />
         </button>

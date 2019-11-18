@@ -29,7 +29,7 @@
         id="calendar-clear-filters"
         class="calendar-clear-filters"
         role="button"
-        {{action @onClearFilters}}
+        {{on "click" @onClearFilters}}
       >
         {{t "general.clearFilters"}}
       </span>
@@ -90,12 +90,12 @@
                     class="checkbox"
                     type="checkbox"
                     checked={{is-in (await @selectedCourses) course}}
-                    {{action @onUpdateCourses course.id on="change"}}
+                    {{on "change" (fn @onUpdateCourses course.id)}}
                   >
                   <span
                     class="list-indentation"
                     role="button"
-                    {{action @onUpdateCourses course.id}}
+                    {{on "click" (fn @onUpdateCourses course.id)}}
                   >
                     {{course.title}}
                     {{#if course.externalId}}
@@ -124,12 +124,12 @@
                     checked={{is-in (await @selectedSessionTypes) type}}
                     class="checkbox"
                     type="checkbox"
-                    {{action @onUpdateSessionTypes type.id on="change"}}
+                    {{on "change" (fn @onUpdateSessionTypes type.id)}}
                   >
                   <span
                     class="list-indentation"
                     role="button"
-                    {{action @onUpdateSessionTypes type.id}}
+                    {{on "click" (fn @onUpdateSessionTypes type.id)}}
                   >
                     {{type.title}}
                   </span>
@@ -177,12 +177,12 @@
                     class="checkbox"
                     type="checkbox"
                     checked={{is-in (await @selectedSessionTypes) type}}
-                    {{action @onUpdateSessionTypes type.id on="change"}}
+                    {{on "change" (fn @onUpdateSessionTypes type.id)}}
                   >
                   <span
                     class="list-indentation"
                     role="button"
-                    {{action @onUpdateSessionTypes type.id}}
+                    {{on "click" (fn @onUpdateSessionTypes type.id)}}
                   >
                     {{type.title}}
                   </span>
@@ -207,12 +207,12 @@
                   class="checkbox"
                   type="checkbox"
                   checked={{contains level @selectedCourseLevels}}
-                  {{action @onUpdateCourseLevels level on="change"}}
+                  {{on "change" (fn @onUpdateCourseLevels level)}}
                 >
                 <span
                   class="list-indentation"
                   role="button"
-                  {{action @onUpdateCourseLevels level}}
+                  {{on "click" (fn @onUpdateCourseLevels level)}}
                 >
                   {{level}}
                 </span>
@@ -236,12 +236,12 @@
                     class="checkbox"
                     type="checkbox"
                     checked={{is-in (await @selectedCohorts) cohort}}
-                    {{action @onUpdateCohorts cohort.id on="change"}}
+                    {{on "change" (fn @onUpdateCohorts cohort.id)}}
                   >
                   <span
                     class="list-indentation"
                     role="button"
-                    {{action @onUpdateCohorts cohort.id}}
+                    {{on "click" (fn @onUpdateCohorts cohort.id)}}
                   >
                     {{#if cohort.title}}
                       {{cohort.title}}
@@ -271,7 +271,7 @@
         <span
           class="filter-tag {{tag.class}}"
           role="button"
-          {{action "removeFilter" tag.filter}}
+          {{on "click" (fn (action "removeFilter") tag.filter)}}
         >
           {{tag.name}}
           <FaIcon @icon="times" />
@@ -281,7 +281,7 @@
         id="calendar-clear-filters"
         class="filters-clear-filters"
         role="button"
-        {{action @onClearFilters}}
+        {{on "click" @onClearFilters}}
       >
         {{t "general.clearFilters"}}
       </span>

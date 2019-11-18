@@ -16,7 +16,7 @@
     {{#if this.updateAvailable}}
       <p>
         {{t "general.autoUpdatingSeconds" count=this.countdownToUpdate}}
-        <button {{action (perform this.update)}}>
+        <button {{on "click" (perform this.update)}}>
           {{t "general.updateNow"}}
         </button>
       </p>
@@ -28,7 +28,7 @@
     {{/if}}
     {{#if this.showReloadButton}}
       <p>
-        <button {{action "reload"}}>
+        <button {{on "click" (action "reload")}}>
           {{t "general.updateNow"}}
         </button>
       </p>

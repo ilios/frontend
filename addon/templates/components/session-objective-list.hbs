@@ -7,7 +7,7 @@
     />
   {{else if (get (await this.objectives) "length")}}
     {{#if (and @editable (await this.hasMoreThanOneObjective))}}
-      <button class="sort-materials-btn" {{action (mut this.isSorting) true}}>
+      <button class="sort-materials-btn" {{on "click" (fn (mut this.isSorting) true)}}>
         {{t "general.sortObjectives"}}
       </button>
     {{/if}}
@@ -49,12 +49,12 @@
                   {{t "general.confirmObjectiveRemoval"}}
                   <br>
                   <div class="confirm-buttons">
-                    <button class="remove text" {{action "remove" objective}}>
+                    <button class="remove text" {{on "click" (fn (action "remove") objective)}}>
                       {{t "general.yes"}}
                     </button>
                     <button
                       class="done text"
-                      {{action "cancelRemove" objective}}
+                      {{on "click" (fn (action "cancelRemove") objective)}}
                     >
                       {{t "general.cancel"}}
                     </button>

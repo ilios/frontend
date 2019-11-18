@@ -7,7 +7,7 @@
     />
   {{else if (get (await @subject.objectives) "length")}}
     {{#if (and @editable (await this.hasMoreThanOneObjective))}}
-      <button class="sort-materials-btn" {{action (mut this.isSorting) true}}>
+      <button class="sort-materials-btn" {{on "click" (fn (mut this.isSorting) true)}}>
         {{t "general.sortObjectives"}}
       </button>
     {{/if}}

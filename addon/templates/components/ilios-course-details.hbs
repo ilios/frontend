@@ -11,7 +11,7 @@
   <div
     class="detail-collapsed-control"
     role="button"
-    {{action this.setShowDetails true}}
+    {{on "click" (fn this.setShowDetails true)}}
   >
     <span>
       {{t "general.expandDetail"}}
@@ -33,7 +33,7 @@
     @setCourseCompetencyDetails={{action @setCourseCompetencyDetails}}
     @setCourseManageLeadership={{action @setCourseManageLeadership}}
   />
-  <div class="detail-collapsed-control" role="button" {{action "collapse"}}>
+  <div class="detail-collapsed-control" role="button" {{on "click" (action "collapse")}}>
     <span class="is-expanded">
       {{t "general.collapseDetail"}}
       <FaIcon @icon="minus-square" class="expand-collapse-icon" />

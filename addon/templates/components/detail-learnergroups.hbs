@@ -15,11 +15,11 @@
           @spin={{this.save.isRunning}}
         />
       </button>
-      <button class="bigcancel" {{action "cancel"}}>
+      <button class="bigcancel" {{on "click" (action "cancel")}}>
         <FaIcon @icon="undo" />
       </button>
     {{else if @editable}}
-      <button {{action @setIsManaging true}}>
+      <button {{on "click" (fn @setIsManaging true)}}>
         {{t "general.learnerGroupsManageTitle"}}
       </button>
     {{/if}}

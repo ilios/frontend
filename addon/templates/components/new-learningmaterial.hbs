@@ -197,14 +197,14 @@
   </div>
 {{/if}}
 <div class="buttons">
-  <button class="done text" {{action (perform this.prepareSave)}}>
+  <button class="done text" {{on "click" (perform this.prepareSave)}}>
     {{#if this.prepareSave.isRunning}}
       <LoadingSpinner />
     {{else}}
       {{t "general.done"}}
     {{/if}}
   </button>
-  <button class="cancel text" {{action @cancel}}>
+  <button class="cancel text" {{on "click" @cancel}}>
     {{t "general.cancel"}}
   </button>
 </div>

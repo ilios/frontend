@@ -1,5 +1,5 @@
 <div class="session-leadership-expanded-header">
-  <div class="title collapsible clickable" role="button" {{action @collapse}}>
+  <div class="title collapsible clickable" role="button" {{on "click" @collapse}}>
     {{t "general.sessionAdministration"}}
   </div>
   <div class="actions">
@@ -10,11 +10,11 @@
           @spin={{if this.isSaving true false}}
         />
       </button>
-      <button class="bigcancel" {{action @setIsManaging false}}>
+      <button class="bigcancel" {{on "click" (fn @setIsManaging false)}}>
         <FaIcon @icon="undo" />
       </button>
     {{else if @canUpdate}}
-      <button {{action @setIsManaging true}}>
+      <button {{on "click" (fn @setIsManaging true)}}>
         {{t "general.manageLeadership"}}
       </button>
     {{/if}}

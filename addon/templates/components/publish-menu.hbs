@@ -7,7 +7,7 @@
     aria-expanded={{if this.isOpen "true" "false"}}
     data-level="toggle"
     data-test-toggle
-    {{action (toggle "isOpen" this)}}
+    {{on "click" (toggle "isOpen" this)}}
   >
     <FaIcon @icon={{if @icon @icon "cloud"}} />
     <span>
@@ -17,25 +17,25 @@
   {{#if this.isOpen}}
     <div class="menu" role="menu" data-test-menu>
       {{#if @showAsIs}}
-        <button class="danger" {{action "publish"}}>
+        <button class="danger" {{on "click" (action "publish")}}>
           {{t "general.publishAsIs"}}
         </button>
       {{/if}}
       {{#if @showPublish}}
-        <button class="good" {{action "publish"}}>
+        <button class="good" {{on "click" (action "publish")}}>
           {{t @publishTranslation}}
         </button>
       {{/if}}
       {{#if (and @showReview @reviewRoute @reviewObject)}}
         {{#if this.parentObject}}
-          <button class="good" {{action "scrollToSessionPublication"}}>
+          <button class="good" {{on "click" (action "scrollToSessionPublication")}}>
             {{t
               "general.reviewMissingItems"
               count=(get @reviewObject "allPublicationIssuesLength")
             }}
           </button>
         {{else}}
-          <button class="good" {{action "scrollToCoursePublication"}}>
+          <button class="good" {{on "click" (action "scrollToCoursePublication")}}>
             {{t
               "general.reviewMissingItems"
               count=(get @reviewObject "allPublicationIssuesLength")
@@ -44,12 +44,12 @@
         {{/if}}
       {{/if}}
       {{#if @showTbd}}
-        <button class="good" {{action "publishAsTbd"}}>
+        <button class="good" {{on "click" (action "publishAsTbd")}}>
           {{t "general.markAsScheduled"}}
         </button>
       {{/if}}
       {{#if @showUnPublish}}
-        <button class="danger" {{action "unpublish"}}>
+        <button class="danger" {{on "click" (action "unpublish")}}>
           {{t @unPublishTranslation}}
         </button>
       {{/if}}

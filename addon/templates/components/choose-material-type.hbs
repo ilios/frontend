@@ -7,7 +7,7 @@
     aria-expanded={{if this.isOpen "true" "false"}}
     data-level="toggle"
     data-test-toggle
-    {{action (toggle "isOpen" this)}}
+    {{on "click" (toggle "isOpen" this)}}
   >
     {{t "general.add"}}
   </button>
@@ -19,7 +19,7 @@
           tabindex="-1"
           data-level="item"
           data-test-item
-          {{action @choose type}}
+          {{on "click" (fn @choose type)}}
         >
           {{t (concat "general." type)}}
         </button>

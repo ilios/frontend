@@ -50,7 +50,7 @@
     <button
       class="done text"
       data-test-save
-      {{action (perform this.saveNewSession)}}
+      {{on "click" (perform this.saveNewSession)}}
     >
       {{#if this.saveNewSession.isRunning}}
         <LoadingSpinner />
@@ -58,7 +58,7 @@
         {{t "general.save"}}
       {{/if}}
     </button>
-    <button class="cancel text" data-test-cancel {{action this.cancel}}>
+    <button class="cancel text" data-test-cancel {{on "click" this.cancel}}>
       {{t "general.cancel"}}
     </button>
   </div>

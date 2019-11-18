@@ -21,17 +21,17 @@
     <div
       class="title {{if this.showCollapsible "clickable collapsible"}}"
       role="button"
-      {{action "collapse"}}
+      {{on "click" (action "collapse")}}
     >
       {{t "general.objectives"}} ({{@subject.objectives.length}})
     </div>
   {{/if}}
   <div class="detail-objectives-actions">
     {{#if this.isManaging class="horizontal"}}
-      <button class="bigadd" {{action "save"}}>
+      <button class="bigadd" {{on "click" (action "save")}}>
         <FaIcon @icon="check" />
       </button>
-      <button class="bigcancel" {{action "cancel"}}>
+      <button class="bigcancel" {{on "click" (action "cancel")}}>
         <FaIcon @icon="undo" />
       </button>
     {{else if @editable}}

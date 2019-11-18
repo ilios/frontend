@@ -2,7 +2,7 @@
   <h3
     class="title {{if this.isCollapsible "collapsible clickable"}}"
     role="button"
-    {{action @collapse}}
+    {{on "click" @collapse}}
   >
     {{t "general.courseLeadership"}}
   </h3>
@@ -14,11 +14,11 @@
           @spin={{if this.isSaving true false}}
         />
       </button>
-      <button class="bigcancel" {{action @setIsManaging false}}>
+      <button class="bigcancel" {{on "click" (fn @setIsManaging false)}}>
         <FaIcon @icon="undo" />
       </button>
     {{else if @editable}}
-      <button {{action @setIsManaging true}}>
+      <button {{on "click" (fn @setIsManaging true)}}>
         {{t "general.manageLeadership"}}
       </button>
     {{/if}}

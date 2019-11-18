@@ -27,7 +27,7 @@
       <span
         class="clickable rollover"
         role="button"
-        {{action "transitionToRollover"}}
+        {{on "click" (action "transitionToRollover")}}
       >
         <FaIcon
           @icon="random"

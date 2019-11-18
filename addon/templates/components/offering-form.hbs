@@ -255,7 +255,7 @@
       <button
         class="done text"
         disabled={{or this.saveOffering.isRunning}}
-        {{action (perform this.validateThenSaveOffering)}}
+        {{on "click" (perform this.validateThenSaveOffering)}}
       >
         {{#if this.saveOffering.isRunning}}
           <LoadingSpinner />
@@ -263,7 +263,7 @@
           {{t "general.done"}}
         {{/if}}
       </button>
-      <button class="cancel text" {{action @close}}>
+      <button class="cancel text" {{on "click" @close}}>
         {{t "general.cancel"}}
       </button>
     </div>

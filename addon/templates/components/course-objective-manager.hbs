@@ -49,12 +49,12 @@
                         "radio"
                       }}
                       checked="checked"
-                      {{action "removeParent" objective}}
+                      {{on "click" (fn (action "removeParent") objective)}}
                     >
                     <span
                       class="clickable"
                       role="button"
-                      {{action "removeParent" objective}}
+                      {{on "click" (fn (action "removeParent") objective)}}
                     >
                       {{objective.textTitle}}
                     </span>
@@ -69,12 +69,12 @@
                         "checkbox"
                         "radio"
                       }}
-                      {{action (perform this.addParent objective)}}
+                      {{on "click" (perform this.addParent objective)}}
                     >
                     <span
                       class="clickable"
                       role="button"
-                      {{action (perform this.addParent objective)}}
+                      {{on "click" (perform this.addParent objective)}}
                     >
                       {{objective.textTitle}}
                     </span>

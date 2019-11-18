@@ -86,7 +86,7 @@
         )
         true
       }}
-      {{action (perform this.save)}}
+      {{on "click" (perform this.save)}}
     >
       {{#if this.save.isRunning}}
         <LoadingSpinner />

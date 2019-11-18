@@ -1,4 +1,4 @@
-<div class="title" role="button" {{action (action @expand)}}>
+<div class="title" role="button" {{on "click" @expand}}>
   {{t "general.competencies"}} ({{get (await @subject.competencies) "length"}})
 </div>
 {{#unless (is-fulfilled this.summary)}}

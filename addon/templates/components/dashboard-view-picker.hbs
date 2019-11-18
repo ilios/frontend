@@ -3,7 +3,7 @@
     <button
       class={{if (eq @show "week") "active"}}
       data-test-glance
-      {{action @change "week"}}
+      {{on "click" (fn @change "week")}}
     >
       {{t "general.weekAtAGlance"}}
     </button>
@@ -12,7 +12,7 @@
     <button
       class={{if (eq @show "agenda") "active"}}
       data-test-activities
-      {{action @change "agenda"}}
+      {{on "click" (fn @change "agenda")}}
     >
       {{t "general.activities"}}
     </button>
@@ -21,7 +21,7 @@
     <button
       class={{if (eq @show "materials") "active"}}
       data-test-materials
-      {{action @change "materials"}}
+      {{on "click" (fn @change "materials")}}
     >
       {{t "general.materials"}}
     </button>
@@ -30,7 +30,7 @@
     <button
       class={{if (eq @show "calendar") "active"}}
       data-test-calendar
-      {{action @change "calendar"}}
+      {{on "click" (fn @change "calendar")}}
     >
       {{t "general.calendar"}}
     </button>

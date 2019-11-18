@@ -9,24 +9,24 @@
     <div
       class="title {{if this.showCollapsible "clickable collapsible"}}"
       role="button"
-      {{action "collapse"}}
+      {{on "click" (action "collapse")}}
     >
       {{t "general.terms"}} ({{@subject.terms.length}})
     </div>
   {{/if}}
   <div class="actions">
     {{#if this.isManaging}}
-      <button class="bigadd" {{action "save"}}>
+      <button class="bigadd" {{on "click" (action "save")}}>
         <FaIcon
           @icon={{if this.isSaving "spinner" "check"}}
           @spin={{if this.isSaving true false}}
         />
       </button>
-      <button class="bigcancel" {{action "cancel"}}>
+      <button class="bigcancel" {{on "click" (action "cancel")}}>
         <FaIcon @icon="undo" />
       </button>
     {{else if @editable}}
-      <button {{action "manage"}}>
+      <button {{on "click" (action "manage")}}>
         {{t "general.termsManageTitle"}}
       </button>
     {{/if}}

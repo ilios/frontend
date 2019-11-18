@@ -19,7 +19,7 @@
           <span
             class="clickable"
             role="button"
-            {{action "changeToDayView" day.date}}
+            {{on "click" (fn (action "changeToDayView") day.date)}}
           >
             {{moment-format day.date "D"}}
           </span>
@@ -41,7 +41,7 @@
               <span
                 class="clickable link month-more-events"
                 role="button"
-                {{action "changeToDayView" day.date}}
+                {{on "click" (fn (action "changeToDayView") day.date)}}
               >
                 <FaIcon @icon="ellipsis-h" />
                 {{this.showMore}}
