@@ -1,9 +1,7 @@
+import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import RSVP from 'rsvp';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
-import DS from 'ember-data';
-
-const { attr, belongsTo, hasMany, Model } = DS;
 const { map, all } = RSVP;
 
 export default Model.extend({

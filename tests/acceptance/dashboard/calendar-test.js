@@ -14,10 +14,9 @@ import {
   module,
   test
 } from 'qunit';
-import { setupAuthentication } from 'ilios-common';
+import { setupAuthentication, getElementText, getText } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { getElementText, getText } from 'ilios-common';
 import { map } from 'rsvp';
 import { isVisible } from 'ember-attacher';
 

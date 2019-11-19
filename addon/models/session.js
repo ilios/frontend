@@ -1,15 +1,14 @@
+import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { isPresent, isEmpty } from '@ember/utils';
 import RSVP from 'rsvp';
 import moment from 'moment';
-import DS from 'ember-data';
 import PublishableModel from 'ilios-common/mixins/publishable-model';
 import CategorizableModel from 'ilios-common/mixins/categorizable-model';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
 
 const { alias, mapBy, sum } = computed;
-const { attr, belongsTo, hasMany, Model } = DS;
 const { all } = RSVP;
 
 export default Model.extend(PublishableModel, CategorizableModel, SortableByPosition, {

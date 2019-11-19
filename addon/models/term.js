@@ -1,9 +1,8 @@
+import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
-import DS from 'ember-data';
 import { map } from 'rsvp';
 const { collect, sum, gte } = computed;
-const { attr, belongsTo, hasMany, Model } = DS;
 
 export default Model.extend({
   title: attr('string'),

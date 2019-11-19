@@ -1,7 +1,5 @@
+import RESTSerializer from '@ember-data/serializer/rest';
 import { isEmpty } from '@ember/utils';
-import DS from 'ember-data';
-
-const { RESTSerializer } = DS;
 
 export default RESTSerializer.extend({
   isNewSerializerAPI: true,

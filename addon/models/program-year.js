@@ -1,10 +1,9 @@
+import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
-import DS from 'ember-data';
 import PublishableModel from 'ilios-common/mixins/publishable-model';
 import CategorizableModel from 'ilios-common/mixins/categorizable-model';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 
-const { attr, belongsTo, hasMany, Model } = DS;
 const { alias } = computed;
 
 export default Model.extend(PublishableModel, CategorizableModel, SortableByPosition, {

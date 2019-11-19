@@ -1,12 +1,11 @@
+import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import RSVP from 'rsvp';
-import DS from 'ember-data';
 import Inflector from 'ember-inflector';
 
 const { not } = computed;
 const { all } = RSVP;
-const { Model, attr, belongsTo, hasMany } = DS;
 
 Inflector.inflector.uncountable('aamc-pcrs');
 

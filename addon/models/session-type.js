@@ -1,8 +1,6 @@
+import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
-import DS from 'ember-data';
-
-const { Model, attr, belongsTo, hasMany } = DS;
 
 export default Model.extend({
   title: attr('string'),
