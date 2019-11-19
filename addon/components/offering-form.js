@@ -186,7 +186,36 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         value: name,
         label: this.formatTimezone(name)
       };
-    }).sortBy('label');
+    }).sort((a, b) => {
+      const pattern = /^\(([+-])([0-9:]*)\) (.*)$/;
+      const matchesA = a.label.match(pattern);
+      const matchesB = b.label.match(pattern);
+
+      if (matchesA[1] === '-' && matchesB[1] === '+') {
+        return -1;
+      } else if (matchesA[1] === '+' && matchesB[1] === '-') {
+        return 1;
+      }
+
+      let offsetDiff = 0;
+      if (matchesA[2] < matchesB[2]) {
+        offsetDiff = -1;
+      } else if (matchesA[2] > matchesB[2]) {
+        offsetDiff = 1;
+      }
+
+      if (offsetDiff) {
+        return matchesA[1] === '+' ? offsetDiff : (-1 * offsetDiff);
+      }
+
+      if (matchesA[3] < matchesB[3]) {
+        return -1;
+      } else if (matchesA[3] > matchesB[3]) {
+        return 1;
+      }
+
+      return 0;
+    });
   }),
 
   formattedCurrentTimezone: computed('currentTimezone', function() {
