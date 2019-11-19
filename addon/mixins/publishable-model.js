@@ -1,10 +1,9 @@
+import { attr } from '@ember-data/model';
 import { collect, sum } from '@ember/object/computed';
 import Mixin from '@ember/object/mixin';
 import { computed } from '@ember/object';
-import DS from 'ember-data';
 
 const { alias, oneWay, not } = computed;
-const { attr } = DS;
 
 export default Mixin.create({
   publishedAsTbd: attr('boolean'),

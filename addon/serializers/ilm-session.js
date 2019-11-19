@@ -1,7 +1,5 @@
-import DS from 'ember-data';
+import RESTSerializer from '@ember-data/serializer/rest';
 import moment from 'moment';
-
-const { RESTSerializer } = DS;
 
 export default RESTSerializer.extend({
   isNewSerializerAPI: true,

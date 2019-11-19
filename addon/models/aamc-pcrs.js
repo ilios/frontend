@@ -1,7 +1,5 @@
-import DS from 'ember-data';
+import Model, { hasMany, attr } from '@ember-data/model';
 import Inflector from 'ember-inflector';
-
-const { Model, attr, hasMany } = DS;
 
 Inflector.inflector.uncountable('aamc-pcrs');
 

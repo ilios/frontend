@@ -1,6 +1,4 @@
-import DS from 'ember-data';
-
-const { attr, hasMany, Model } = DS;
+import Model, { hasMany, attr } from '@ember-data/model';
 
 export default Model.extend({
   meshTermUid: attr('string'),

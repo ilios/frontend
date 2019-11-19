@@ -1,9 +1,8 @@
+import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
-import DS from 'ember-data';
 import PublishableModel from 'ilios-common/mixins/publishable-model';
 
-const { attr, belongsTo, hasMany, Model } = DS;
 const { all } = RSVP;
 
 export default Model.extend(PublishableModel,{

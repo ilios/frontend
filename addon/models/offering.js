@@ -1,13 +1,11 @@
+import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
-import DS from 'ember-data';
 import momentFormat from 'ember-moment/computeds/format';
 import moment from 'moment';
 
 const { not } = computed;
 const { all } = RSVP;
-
-const { attr, belongsTo, hasMany, Model } = DS;
 
 export default Model.extend({
   room: attr('string'),

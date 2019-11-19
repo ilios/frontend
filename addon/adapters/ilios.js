@@ -1,10 +1,8 @@
+import RESTAdapter from '@ember-data/adapter/rest';
 import { inject as service } from '@ember/service';
 import { reads } from '@ember/object/computed';
-import DS from 'ember-data';
 import TokenAuthorizerMixin from 'ember-simple-auth-token/mixins/token-authorizer';
 import { pluralize } from 'ember-inflector';
-
-const { RESTAdapter } = DS;
 
 export default RESTAdapter.extend(TokenAuthorizerMixin, {
   iliosConfig: service(),

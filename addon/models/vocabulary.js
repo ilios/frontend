@@ -1,9 +1,7 @@
+import Model, { belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
-import DS from 'ember-data';
 import Inflector from 'ember-inflector';
 import CategorizableModel from 'ilios-common/mixins/categorizable-model';
-
-const { attr, belongsTo, Model } = DS;
 
 Inflector.inflector.irregular('vocabulary', 'vocabularies');
 

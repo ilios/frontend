@@ -1,10 +1,9 @@
+import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { isNone, isEmpty } from '@ember/utils';
 import RSVP from 'rsvp';
-import DS from 'ember-data';
 import escapeRegExp from '../utils/escape-reg-exp';
 
-const { attr, belongsTo, hasMany, Model } = DS;
 const { map, all } = RSVP;
 
 export default Model.extend({
