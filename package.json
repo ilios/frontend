@@ -121,5 +121,8 @@
     "lint:style",
     "lint:js"
   ],
-  "private": true
+  "private": true,
+  "dependencies": {
+    "@ember/edition-utils": "^1.1.1"
+  }
 }
