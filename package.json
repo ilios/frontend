@@ -64,7 +64,7 @@
     "ember-pikaday": "^2.2.6",
     "ember-promise-helpers": "1.0.9",
     "ember-simple-auth-token": "^4.0.4",
-    "ember-simple-charts": "^1.0.0",
+    "ember-simple-charts": "^2.0.2",
     "ember-test-selectors": "^2.0.0",
     "ember-truth-helpers": "^2.0.0",
     "froala-editor": "^3.0.6",
