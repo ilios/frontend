@@ -30,9 +30,8 @@
     }
   }
   button.remove {
-    background: transparent;
+    @include ilios-link-button;
     color: $ilios-remove-color;
-    padding: 0;
   }
   .info {
     display: flex;

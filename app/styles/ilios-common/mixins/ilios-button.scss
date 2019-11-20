@@ -12,3 +12,12 @@
   vertical-align: middle;
   white-space: nowrap;
 }
+
+@mixin ilios-link-button () {
+  background: transparent;
+  border: 0;
+  color: $base-link-color;
+  cursor: pointer;
+  line-height: $base-line-height;
+  padding: 0;
+}
