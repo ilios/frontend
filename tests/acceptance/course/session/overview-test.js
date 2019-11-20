@@ -603,11 +603,11 @@ module('Acceptance | Session - Overview', function(hooks) {
     this.server.createList('session', 3, {
       course: this.course
     });
-    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(page.overview.postrequisite.value, 'None');
     await page.overview.postrequisite.edit();
-    await page.overview.postrequisite.set(2);
-    await page.overview.postrequisite.save();
-    assert.equal(page.overview.postrequisite.value, 'session 1');
+    await page.overview.postrequisite.editor.postRequisites[1].click();
+    await page.overview.postrequisite.editor.save();
+    assert.equal(page.overview.postrequisite.value, 'session 2');
   });
 });

@@ -23,6 +23,7 @@ import { datePicker, pageObjectFillInFroalaEditor } from 'ilios-common';
 import leadershipCollapsed from './components/leadership-collapsed';
 import leadershipList from './components/leadership-list';
 import leadershipManager from './components/leadership-manager';
+import postrequisiteEditor from './components/session/postrequisite-editor';
 
 export default create({
   scope: '[data-test-session-details]',
@@ -111,12 +112,10 @@ export default create({
       scope: '.prerequisites',
     },
     postrequisite: {
-      scope: '.postrequisite',
-      value: text('span', { at: 0}),
+      scope: '[data-test-postrequisite]',
+      value: text('[data-test-edit]'),
       edit: clickable('[data-test-edit]'),
-      set: fillable('select'),
-      save: clickable('.done'),
-      hasError: isVisible('.validation-error-message')
+      editor: postrequisiteEditor
     },
     lastUpdated: text('.last-update'),
   },

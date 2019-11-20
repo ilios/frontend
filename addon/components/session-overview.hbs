@@ -251,7 +251,7 @@
       </div>
     {{/if}}
     {{#if this.features.sessionLinkingAdminUi}}
-      <div class="postrequisite block">
+      <div class="postrequisite block" data-test-postrequisite>
         {{#if @editable}}
           {{#if this.isEditingPostRequisite}}
             <Session::PostrequisiteEditor
@@ -268,7 +268,7 @@
                 {{t "general.duePriorTo"}}:
               {{/if}}
             </label>
-            <button class="post-requisite-edit" {{on "click" (toggle "isEditingPostRequisite" this)}}>
+            <button class="post-requisite-edit" {{on "click" (toggle "isEditingPostRequisite" this)}} data-test-edit>
               {{#if @session.hasPostrequisite}}
                 {{@session.postrequisite.title}}
               {{else}}

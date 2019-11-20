@@ -2,13 +2,14 @@
   class="session-postrequisite-editor"
   {{did-insert (perform this.setup) @session}}
   {{did-update (perform this.setup) @session}}
+  data-test-session-postrequisite-editor
 >
   <div class="info">
-    <span>
+    <span data-test-selected-postrequisite>
       <strong>{{t "general.duePriorTo"}}:</strong>
       {{#if this.selectedPostrequisite}}
         {{this.selectedPostrequisite.title}}
-        <button {{on "click" (set this.selectedPostrequisite null)}} class="remove">
+        <button {{on "click" (set this.selectedPostrequisite null)}} class="remove" data-test-remove>
           <FaIcon @icon="times" title={{t "general.remove"}} />
         </button>
       {{else}}
@@ -18,10 +19,11 @@
     <Input
       placeholder={{t "general.filterPlaceholder"}}
       @value={{this.filter}}
+      data-test-filter
     />
   </div>
   <div class="table-wrapper">
-    <table>
+    <table data-test-postrequisites>
       <thead>
         <tr>
           <th></th>
@@ -35,6 +37,7 @@
             role="button"
             class={{if (eq postrequisite.id this.selectedPostrequisite.id) "active"}}
             {{on "click" (set this.selectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
+            data-test-postrequisite
           >
             <td>
               {{#if (eq postrequisite.id this.selectedPostrequisite.id)}}
@@ -67,6 +70,7 @@
     <button
       class="done"
       {{on "click" (perform this.save)}}
+       data-test-save
     >
       {{#if this.save.isRunning}}
         <LoadingSpinner />
@@ -74,7 +78,7 @@
         {{t "general.done"}}
       {{/if}}
     </button>
-    <button class="cancel" {{action @close}}>
+    <button class="cancel" {{on "click" @close}} data-test-cancel>
       {{t "general.cancel"}}
     </button>
   </div>
