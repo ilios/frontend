@@ -254,7 +254,7 @@
       <div class="postrequisite block">
         {{#if @editable}}
           {{#if this.isEditingPostRequisite}}
-            <SessionPostrequisiteEditor
+            <Session::PostrequisiteEditor
               @session={{@session}}
               @close={{toggle "isEditingPostRequisite" this}}
             />
