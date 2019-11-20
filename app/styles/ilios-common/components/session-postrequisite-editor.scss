@@ -5,11 +5,20 @@
     table {
       @include ilios-table-structure;
       @include ilios-zebra-table;
+      margin: 0;
       position: relative;
       th {
+        background-color: $text-blue;
+        color: $white;
         position: sticky;
         top: 0;
-        background-color: $text-blue;
+      }
+      th,td {
+        padding: .25rem;
+      }
+
+      tbody tr.active {
+        background-color: $ilios-green;
         color: $white;
       }
     }
@@ -22,11 +31,21 @@
   .info {
     display: flex;
     flex-direction: column;
+    margin-bottom: .5rem;
 
     @include for-tablet-and-up {
       flex-direction: row;
       justify-content: space-between;
+
+      span {
+        width: $golden-ratio-large;
+      }
+      input {
+        width: $golden-ratio-small;
+      }
     }
+
+
   }
   .buttons {
     @include ilios-form-buttons;

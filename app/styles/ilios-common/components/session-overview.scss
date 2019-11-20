@@ -102,8 +102,9 @@
   .post-requisite-edit {
     background: transparent;
     border: 0;
-    padding: 0;
     color: $base-link-color;
     cursor: pointer;
+    line-height: $base-line-height;
+    padding: 0;
   }
 }

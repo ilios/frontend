@@ -25,13 +25,13 @@
       <thead>
         <tr>
           <th></th>
-          <th colspan="6">{{t "general.session"}}</th>
+          <th colspan="10">{{t "general.session"}}</th>
           <th colspan="3">{{t "general.firstOffering"}}</th>
         </tr>
       </thead>
       <tbody>
         {{#each this.filteredPostrequisites as |postrequisite|}}
-          <tr>
+          <tr class={{if (eq postrequisite.id this.selectedPostrequisite.id) "active"}}>
             <td>
               {{#if (eq postrequisite.id this.selectedPostrequisite.id)}}
                 <input type="radio" {{on "click" (set this.selectedPostrequisite null)}} checked={{true}}>
@@ -39,7 +39,7 @@
                 <input type="radio" {{on "click" (set this.selectedPostrequisite postrequisite)}}>
               {{/if}}
             </td>
-            <td colspan="6">{{postrequisite.title}}</td>
+            <td colspan="10">{{postrequisite.title}}</td>
             <td colspan="3">
               {{#if (await postrequisite.firstOfferingDate)}}
                 {{#if postrequisite.ilmSession}}
