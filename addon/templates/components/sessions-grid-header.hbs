@@ -4,7 +4,7 @@
   class="expand-collapse-control"
   role="button"
   data-test-expand-collapse-all
-  {{action (perform this.expandAll)}}
+  {{on "click" (perform this.expandAll)}}
 >
   {{#if @showExpandAll}}
     {{#if this.isExpanding}}

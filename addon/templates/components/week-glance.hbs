@@ -4,7 +4,7 @@
     {{if @collapsed "collapsed" "expanded"}}"
   role="button"
   data-test-week-title
-  {{action (optional @toggleCollapsed) @collapsed}}
+  {{on "click" (fn (optional @toggleCollapsed) @collapsed)}}
 >
   {{this.title}}
   {{#if @showFullTitle}}

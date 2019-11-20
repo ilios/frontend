@@ -9,7 +9,7 @@
   <div
     class="title {{if this.unPublishableCollapsed "collapsed" "collapsible"}}"
     role="button"
-    {{action "toggleUnPublishableCollapsed"}}
+    {{on "click" (action "toggleUnPublishableCollapsed")}}
   >
     {{t "general.incompleteSessions"}} ({{get (await this.unPublishableSessions) "length"}})
   </div>
@@ -95,7 +95,7 @@
   <div
     class="title {{if this.publishableCollapsed "collapsed" "collapsible"}}"
     role="button"
-    {{action "togglePublishableCollapsed"}}
+    {{on "click" (action "togglePublishableCollapsed")}}
   >
     {{t "general.completeSessions"}} ({{get (await this.publishableSessions) "length"}})
   </div>
@@ -183,10 +183,10 @@
   </div>
   <div class="content">
     {{#if (get (await this.overridableSessions) "length")}}
-      <button disabled={{await this.allSessionsAsIs}} {{action "publishAllAsIs"}}>
+      <button disabled={{await this.allSessionsAsIs}} {{on "click" (action "publishAllAsIs")}}>
         {{t "general.publishAsIs"}}
       </button>
-      <button disabled={{this.noSessionsAsIs}} {{action "publishNoneAsIs"}}>
+      <button disabled={{this.noSessionsAsIs}} {{on "click" (action "publishNoneAsIs")}}>
         {{t "general.markAsScheduled"}}
       </button>
       <table>
@@ -221,12 +221,12 @@
                     <input
                       type="checkbox"
                       checked={{is-in this.sessionsToOverride session}}
-                      onclick={{action "toggleSession" session}}
+                      {{on "click" (fn (action "toggleSession") session)}}
                     >
                     <span
                       class="clickable"
                       role="button"
-                      {{action "toggleSession" session}}
+                      {{on "click" (fn (action "toggleSession") session)}}
                     >
                       {{t "general.publishAsIs"}}
                     </span>
@@ -235,12 +235,12 @@
                     <input
                       type="checkbox"
                       checked={{not-in this.sessionsToOverride session}}
-                      onclick={{action "toggleSession" session}}
+                      {{on "click" (fn (action "toggleSession") session)}}
                     >
                     <span
                       class="clickable"
                       role="button"
-                      {{action "toggleSession" session}}
+                      {{on "click" (fn (action "toggleSession") session)}}
                     >
                       {{t "general.markAsScheduled"}}
                     </span>
@@ -324,7 +324,7 @@
       ignoreCount=(await this.ignoreCount)
     }}
   </p>
-  <button {{action "save"}}>
+  <button {{on "click" (action "save")}}>
     {{t "general.go"}}
   </button>
 </div>

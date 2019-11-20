@@ -2,24 +2,24 @@
   {{! template-lint-disable no-invalid-interactive}}
   <div
     class="title {{if this.collapsible "collapsible clickable"}}"
-    onclick={{if this.collapsible (action @collapse)}}
     role={{if this.collapsible "button"}}
+    {{on "click" (fn this.collapse)}}
   >
     {{t "general.learnerGroups"}} ({{@subject.learnerGroups.length}})
   </div>
   <div class="actions">
     {{#if @isManaging}}
-      <button class="bigadd" onclick={{perform this.save}}>
+      <button class="bigadd" {{on "click" (perform this.save)}}>
         <FaIcon
           @icon={{if this.save.isRunning "spinner" "check"}}
           @spin={{this.save.isRunning}}
         />
       </button>
-      <button class="bigcancel" {{action "cancel"}}>
+      <button class="bigcancel" {{on "click" (action "cancel")}}>
         <FaIcon @icon="undo" />
       </button>
     {{else if @editable}}
-      <button {{action @setIsManaging true}}>
+      <button {{on "click" (fn @setIsManaging true)}}>
         {{t "general.learnerGroupsManageTitle"}}
       </button>
     {{/if}}

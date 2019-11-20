@@ -30,7 +30,7 @@
             class="active"
             role="button"
             data-test-result
-            {{action "addUser" proxy.content}}
+            {{on "click" (fn (action "addUser") proxy.content)}}
           >
             <div class="name">
               {{proxy.fullName}}
@@ -56,7 +56,7 @@
             class="active"
             role="button"
             data-test-result
-            {{action "addInstructorGroup" proxy.content}}
+            {{on "click" (fn (action "addInstructorGroup") proxy.content)}}
           >
             {{proxy.title}}
           </li>

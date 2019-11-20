@@ -18,7 +18,7 @@
         (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))
       }}
       class="done text"
-      {{action "save"}}
+      {{on "click" (action "save")}}
     >
       {{#if this.isSaving}}
         <LoadingSpinner />
@@ -26,7 +26,7 @@
         {{t "general.done"}}
       {{/if}}
     </button>
-    <button class="cancel text" {{action @cancel}}>
+    <button class="cancel text" {{on "click" @cancel}}>
       {{t "general.cancel"}}
     </button>
   </div>

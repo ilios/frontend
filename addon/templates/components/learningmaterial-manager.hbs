@@ -9,9 +9,9 @@
       <input
         type="text"
         value={{this.title}}
-        oninput={{action (mut this.title) value="target.value"}}
         disabled={{this.save.isRunning}}
-        onkeyup={{action "addErrorDisplayFor" "title"}}
+        {{on "input" (action (mut this.title) value="target.value")}}
+        {{on "keyup" (fn (action "addErrorDisplayFor") "title")}}
       >
       {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
         <span
@@ -247,7 +247,7 @@
         {{/if}}
       </div>
       {{#if @editable}}
-        <button class="remove-date" {{action (mut this.startDate) null}}>
+        <button class="remove-date" {{on "click" (fn (mut this.startDate) null)}}>
           {{t "general.timedReleaseClearStartDate"}}
         </button>
       {{/if}}
@@ -256,7 +256,7 @@
         <button
           class="add-date"
           data-test-add-start-date
-          {{action "addDate" "startDate"}}
+          {{on "click" (fn (action "addDate") "startDate")}}
         >
           {{t "general.timedReleaseAddStartDate"}}
         </button>
@@ -301,7 +301,7 @@
         </span>
       {{/if}}
       {{#if @editable}}
-        <button class="remove-date" {{action (mut this.endDate) null}}>
+        <button class="remove-date" {{on "click" (fn (mut this.endDate) null)}}>
           {{t "general.timedReleaseClearEndDate"}}
         </button>
       {{/if}}
@@ -310,7 +310,7 @@
         <button
           class="add-date"
           data-test-add-end-date
-          {{action "addDate" "endDate"}}
+          {{on "click" (fn (action "addDate") "endDate")}}
         >
           {{t "general.timedReleaseAddEndDate"}}
         </button>
@@ -329,7 +329,7 @@
       <button
         class="done"
         disabled={{this.save.isRunning}}
-        {{action (perform this.save)}}
+        {{on "click" (perform this.save)}}
       >
         {{#if this.save.isRunning}}
           <LoadingSpinner />
@@ -337,11 +337,11 @@
           {{t "general.done"}}
         {{/if}}
       </button>
-      <button class="cancel" {{action @closeManager}}>
+      <button class="cancel" {{on "click" @closeManager}}>
         {{t "general.cancel"}}
       </button>
     {{else}}
-      <button {{action @closeManager}}>
+      <button {{on "click" @closeManager}}>
         {{t "general.close"}}
       </button>
     {{/if}}

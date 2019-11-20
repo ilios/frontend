@@ -15,13 +15,10 @@
     <input
       type="text"
       value={{this.title}}
-      oninput={{pipe
-        (action "changeTitle" value="target.value")
-        (action "addErrorDisplayFor" "title")
-      }}
       disabled={{this.isSaving}}
-      onkeyup={{action "addErrorDisplayFor" "title"}}
       placeholder={{t "general.courseTitlePlaceholder"}}
+      {{on "input" (pipe (action "changeTitle" value="target.value") (fn (action "addErrorDisplayFor") "title"))}}
+      {{on "keyup" (fn (action "addErrorDisplayFor") "title")}}
     >
     {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
       <span class="validation-error-message">
@@ -36,9 +33,7 @@
     {{#if this.loadUnavailableYears.isRunning}}
       <LoadingSpinner />
     {{else}}
-      <select
-        onchange={{action (perform this.changeSelectedYear) value="target.value"}}
-      >
+      <select {{on "change" (action (perform this.changeSelectedYear) value="target.value")}}>
         {{#each this.years as |year|}}
           <option
             disabled={{contains year this.loadUnavailableYears.lastSuccessful.value}}
@@ -90,8 +85,8 @@
         <input
           type="checkbox"
           checked={{not this.skipOfferings}}
-          onclick={{toggle "skipOfferings" this}}
           data-test-skip-offerings
+          {{on "click" (toggle "skipOfferings" this)}}
         >
         <span>
           {{t "general.offerings"}}
@@ -121,7 +116,7 @@
         true
       }}
       class="done text"
-      {{action (perform this.save)}}
+      {{on "click" (perform this.save)}}
     >
       {{#if this.isSaving}}
         <LoadingSpinner />

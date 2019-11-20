@@ -5,7 +5,7 @@
   class={{if (and this.clickable @isEventSelectable) "clickable"}}
   role="button"
   data-test-event-name
-  {{action "selectEvent" @event}}
+  {{on "click" (fn (action "selectEvent") @event)}}
 >
   {{@event.name}}
 </span>

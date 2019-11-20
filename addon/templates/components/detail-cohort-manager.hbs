@@ -1,6 +1,6 @@
 <ul class="selected-cohorts">
   {{#each (sort-by "title" @selectedCohorts) as |cohort|}}
-    <li role="button" {{action "remove" cohort}}>
+    <li role="button" {{on "click" (fn (action "remove") cohort)}}>
       {{cohort.programYear.program.school.title}}
       |
       {{cohort.programYear.program.title}}
@@ -14,7 +14,7 @@
 <ul class="selectable-cohorts">
   {{#if (is-fulfilled this.sortedAvailableCohorts)}}
     {{#each (await this.sortedAvailableCohorts) as |cohort|}}
-      <li role="button" {{action "add" cohort}}>
+      <li role="button" {{on "click" (fn (action "add") cohort)}}>
         {{cohort.programYear.program.school.title}}
         |
         {{cohort.programYear.program.title}}

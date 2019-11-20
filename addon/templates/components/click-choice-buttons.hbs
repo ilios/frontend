@@ -1,15 +1,14 @@
 <button
   class="first-button {{if this.firstChoicePicked "active"}}"
   data-test-first-button
-  {{action "clickFirstButton"}}
+  {{on "click" (action "clickFirstButton")}}
 >
   {{this.buttonContent1}}
 </button>
 <button
   class="second-button {{unless this.firstChoicePicked "active"}}"
   data-test-second-button
-  {{action "clickSecondButton"}}
+  {{on "click" (action "clickSecondButton")}}
 >
   {{this.buttonContent2}}
 </button>
-

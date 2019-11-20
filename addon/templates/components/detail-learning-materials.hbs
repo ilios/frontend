@@ -16,7 +16,7 @@
   {{/if}}
   <div class="detail-learningmaterials-actions">
     {{#if this.displayAddNewForm}}
-      <button class="collapse-button" {{action (mut this.displayAddNewForm) false}}>
+      <button class="collapse-button" {{on "click" (fn (mut this.displayAddNewForm) false)}}>
         <FaIcon @icon="minus" />
       </button>
     {{else if (and @editable (not this.isSorting) (not this.isManaging))}}
@@ -52,7 +52,7 @@
     />
   {{else if (get (await @subject.learningMaterials) "length")}}
     {{#if (and @editable (await this.hasMoreThanOneLearningMaterial))}}
-      <button class="sort-materials-btn" {{action (mut this.isSorting) true}}>
+      <button class="sort-materials-btn" {{on "click" (fn (mut this.isSorting) true)}}>
         {{t "general.sortMaterials"}}
       </button>
     {{/if}}
@@ -89,7 +89,7 @@
               class="text-left clickable link"
               colspan="3"
               role="button"
-              {{action (mut this.managingMaterial) lmProxy.content}}
+              {{on "click" (fn (mut this.managingMaterial) lmProxy.content)}}
             >
               <LmTypeIcon
                 @type={{lmProxy.learningMaterial.type}}
@@ -158,7 +158,7 @@
                 <span
                   class="clickable remove"
                   role="button"
-                  {{action "confirmRemoval" lmProxy}}
+                  {{on "click" (fn (action "confirmRemoval") lmProxy)}}
                 >
                   <FaIcon @icon="trash" class="enabled" />
                 </span>
@@ -174,10 +174,10 @@
                   {{t "general.confirmRemoval"}}
                   <br>
                   <div class="confirm-buttons">
-                    <button class="remove text" {{action "remove" lmProxy}}>
+                    <button class="remove text" {{on "click" (fn (action "remove") lmProxy)}}>
                       {{t "general.yes"}}
                     </button>
-                    <button class="done text" {{action "cancelRemove" lmProxy}}>
+                    <button class="done text" {{on "click" (fn (action "cancelRemove") lmProxy)}}>
                       {{t "general.cancel"}}
                     </button>
                   </div>

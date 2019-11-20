@@ -20,7 +20,7 @@
           ""
         }}
         role="button"
-        {{action (perform this.addLearningMaterial learningMaterial)}}
+        {{on "click" (perform this.addLearningMaterial learningMaterial)}}
       >
         <h4 class="learning-material-title">
           <LmTypeIcon
@@ -62,7 +62,7 @@
       <li>
         <button
           disabled={{if this.searchMore.isRunning true}}
-          {{action (perform this.searchMore)}}
+          {{on "click" (perform this.searchMore)}}
         >
           <FaIcon
             @icon={{if this.searchMore.isRunning "spinner"}}

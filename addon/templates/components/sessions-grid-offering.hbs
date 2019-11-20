@@ -47,9 +47,9 @@
           type="text"
           class="change-room"
           value={{this.room}}
-          oninput={{action (mut this.room) value="target.value"}}
           disabled={{isSaving}}
-          onkeyup={{action "addErrorDisplayFor" "room"}}
+          {{on "input" (action (mut this.room) value="target.value")}}
+          {{on "keyup" (fn (action "addErrorDisplayFor") "room")}}
         >
         {{#if (and (v-get this "room" "isInvalid") (is-in this.showErrorsFor "room"))
         }}

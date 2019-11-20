@@ -9,7 +9,8 @@ module('Integration | Component | expand collapse button', function(hooks) {
 
   test('renders with default value false', async function(assert) {
     assert.expect(1);
-    await render(hbs`<ExpandCollapseButton />`);
+    this.set('action', () => { });
+    await render(hbs`<ExpandCollapseButton @action={{this.action}} />`);
     assert.dom('svg').hasClass('fa-plus');
   });
 

@@ -51,6 +51,11 @@ export default Component.extend({
       this.set('learnerGroups', learnerGroups);
     }
   },
+  collapse() {
+    if (this.collapsible) {
+      this.collapse();
+    }
+  },
   loadLearnerGroups: task(function * (){
     const subject = this.get('subject');
     if (subject){

@@ -102,10 +102,11 @@ module('Integration | Component | editable field', function(hooks) {
       hbs`<EditableField
             @value={{value}}
           >
-            <input />
+            <textarea></textarea>
           </EditableField>
       `);
     await click('[data-test-edit]');
-    assert.dom('input', this.element).isFocused();
+
+    assert.dom('textarea', this.element).isFocused();
   });
 });

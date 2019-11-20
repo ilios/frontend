@@ -30,7 +30,7 @@
           class="clickable link"
           data-test-parent
           role="button"
-          {{action @manageParents @objective}}
+          {{on "click" (fn @manageParents @objective)}}
         >
           {{parent.textTitle}}
         </span>
@@ -42,7 +42,7 @@
       {{/if}}
     {{/each}}
   {{else if @editable}}
-    <button role="button" {{action @manageParents @objective}}>
+    <button role="button" {{on "click" (fn @manageParents @objective)}}>
       {{t "general.addNew"}}
     </button>
   {{else}}
@@ -57,7 +57,7 @@
           class="clickable link"
           role="button"
           data-test-term
-          {{action @manageDescriptors @objective}}
+          {{on "click" (fn @manageDescriptors @objective)}}
         >
           {{descriptor.name}}
         </li>
@@ -69,7 +69,7 @@
     {{else}}
       <li>
         {{#if @editable}}
-          <button {{action @manageDescriptors @objective}}>
+          <button {{on "click" (fn @manageDescriptors @objective)}}>
             {{t "general.addNew"}}
           </button>
         {{else}}
@@ -81,7 +81,7 @@
 </td>
 <td class="text-left text-top" colspan="1">
   {{#if @editable}}
-    <span class="clickable remove" role="button" {{action @remove @objective}}>
+    <span class="clickable remove" role="button" {{on "click" (fn @remove @objective)}}>
       <FaIcon @icon="trash" class="enabled" />
     </span>
   {{else}}

@@ -16,9 +16,7 @@
       <label>
         {{t "general.selectVocabulary"}}:
       </label>
-      <select
-        onchange={{action "changeSelectedVocabulary" value="target.value"}}
-      >
+      <select {{on "change" (action "changeSelectedVocabulary" value="target.value")}}>
         {{#each (await this.assignableVocabularies) as |vocab|}}
           <option value={{vocab.id}}>
             {{vocab.title}} ({{vocab.school.title}})
@@ -30,7 +28,7 @@
       type="search"
       value={{this.termFilter}}
       placeholder={{t "general.filterPlaceholder"}}
-      oninput={{perform this.setTermFilter value="target.value"}}
+      {{on "input" (perform this.setTermFilter value="target.value")}}
     >
   </div>
   <div class="terms-picker tag-tree">

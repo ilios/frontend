@@ -62,4 +62,9 @@ export default Component.extend({
     this.set('isVisible', filterMatch && available);
     this.set('selectable', available);
   }).restartable(),
+  add(learnerGroup) {
+    if (this.selectable) {
+      this.add(learnerGroup);
+    }
+  }
 });

@@ -6,9 +6,9 @@
     <input
       type="text"
       value={{this.title}}
-      oninput={{action (mut this.title) value="target.value"}}
       disabled={{this.prepareSave.isRunning}}
-      onkeyup={{action "addErrorDisplayFor" "title"}}
+      {{on "input" (action (mut this.title) value="target.value")}}
+      {{on "keyup" (fn (action "addErrorDisplayFor") "title")}}
     >
     {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
       <span class="validation-error-message">
@@ -22,7 +22,7 @@
     {{t "general.status"}}:
   </label>
   <span>
-    <select onchange={{action (mut this.statusId) value="target.value"}}>
+    <select {{on "change" (action (mut this.statusId) value="target.value")}}>
       {{#each @learningMaterialStatuses as |lmStatus|}}
         <option
           value={{lmStatus.id}}
@@ -50,9 +50,9 @@
     <input
       type="text"
       value={{this.originalAuthor}}
-      oninput={{action (mut this.originalAuthor) value="target.value"}}
       disabled={{this.prepareSave.isRunning}}
-      onkeyup={{action "addErrorDisplayFor" "originalAuthor"}}
+      {{on "input" (action (mut this.originalAuthor) value="target.value")}}
+      {{on "keyup" (fn (action "addErrorDisplayFor") "originalAuthor")}}
     >
     {{#if
       (and
@@ -71,7 +71,7 @@
     {{t "general.userRole"}}:
   </label>
   <span>
-    <select onchange={{action (mut this.userRoleId) value="target.value"}}>
+    <select {{on "change" (action (mut this.userRoleId) value="target.value")}}>
       {{#each @learningMaterialUserRoles as |role|}}
         <option value={{role.id}} selected={{is-equal role this.selectedUserRole}}>
           {{role.title}}
@@ -88,9 +88,9 @@
     <span>
       <input
         value={{this.link}}
-        oninput={{action (mut this.link) value="target.value"}}
         disabled={{this.prepareSave.isRunning}}
-        onkeyup={{action "addErrorDisplayFor" "link"}}
+        {{on "input" (action (mut this.link) value="target.value")}}
+        {{on "keyup" (fn (action "addErrorDisplayFor") "link")}}
       >
       {{#if (and (v-get this "link" "isInvalid") (is-in this.showErrorsFor "link"))}}
         <span class="validation-error-message">
@@ -141,7 +141,7 @@
         <input
           type="checkbox"
           checked={{this.copyrightPermission}}
-          onclick={{action (mut this.copyrightPermission)}}
+          {{on "click" (fn (mut this.copyrightPermission) (not this.copyrightPermission))}}
         >
         {{t "general.copyrightAgreement"}}
       </p>
@@ -197,14 +197,14 @@
   </div>
 {{/if}}
 <div class="buttons">
-  <button class="done text" {{action (perform this.prepareSave)}}>
+  <button class="done text" {{on "click" (perform this.prepareSave)}}>
     {{#if this.prepareSave.isRunning}}
       <LoadingSpinner />
     {{else}}
       {{t "general.done"}}
     {{/if}}
   </button>
-  <button class="cancel text" {{action @cancel}}>
+  <button class="cancel text" {{on "click" @cancel}}>
     {{t "general.cancel"}}
   </button>
 </div>

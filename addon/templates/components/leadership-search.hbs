@@ -2,11 +2,11 @@
 <input
   type="search"
   value={{this.searchValue}}
-  oninput={{perform this.searchForUsers value="target.value"}}
   placeholder={{t "general.searchForIliosUsers"}}
   incremental="true"
-  onsearch={{perform this.searchForUsers value="target.value"}}
-  onkeyup={{perform this.searchForUsers value="target.value"}}
+  {{on "input" (perform this.searchForUsers value="target.value")}}
+  {{on "search" (perform this.searchForUsers value="target.value")}}
+  {{on "keyup" (perform this.searchForUsers value="target.value")}}
 >
 <ul
   class="results
@@ -42,7 +42,7 @@
           role="button"
           data-test-result-index={{index}}
           data-test-result
-          {{action (perform this.clickUser) result.user}}
+          {{on "click" (fn (perform this.clickUser) result.user)}}
         >
           <span class="name">
             {{result.user.fullName}}

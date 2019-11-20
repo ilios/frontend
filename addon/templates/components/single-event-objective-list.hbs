@@ -3,7 +3,7 @@
   {{#if this.showDisplayModeToggle}}
     <button
       class={{if this.groupByCompetencies "active"}}
-      {{action (toggle "groupByCompetencies" this)}}
+      {{on "click" (toggle "groupByCompetencies" this)}}
     >
       {{#if this.groupByCompetencies}}
         <FaIcon @icon="indent" @title={{@listByPriorityPhrase}} />
