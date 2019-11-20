@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { next } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import DomMixin from 'ember-lifeline/mixins/dom';
@@ -81,10 +80,8 @@ export default Component.extend(DomMixin, ReportTitleMixin, {
     }
 
     if (element) {
-      next(() => {
-        this.addEventListener('.dashboard-block-body', 'scroll', () => {
-          this.preserveScroll.set(this.scrollKey, element.scrollTop);
-        });
+      this.addEventListener(element, 'scroll', () => {
+        this.preserveScroll.set(this.scrollKey, element.scrollTop);
       });
     }
   },
