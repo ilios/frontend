@@ -17,9 +17,15 @@
         padding: .25rem;
       }
 
-      tbody tr.active {
-        background-color: $ilios-green;
-        color: $white;
+      tbody tr {
+        cursor: pointer;
+        &.active {
+          background-color: $ilios-green;
+          color: $white;
+        }
+        &:hover {
+          outline: 1px solid $ilios-green;
+        }
       }
     }
   }

@@ -31,12 +31,21 @@
       </thead>
       <tbody>
         {{#each this.filteredPostrequisites as |postrequisite|}}
-          <tr class={{if (eq postrequisite.id this.selectedPostrequisite.id) "active"}}>
+          <tr
+            role="button"
+            class={{if (eq postrequisite.id this.selectedPostrequisite.id) "active"}}
+            {{on "click" (set this.selectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
+          >
             <td>
               {{#if (eq postrequisite.id this.selectedPostrequisite.id)}}
-                <input type="radio" {{on "click" (set this.selectedPostrequisite null)}} checked={{true}}>
+                <FaIcon
+                  @icon="minus"
+                />
               {{else}}
-                <input type="radio" {{on "click" (set this.selectedPostrequisite postrequisite)}}>
+                <FaIcon
+                  @icon="plus"
+                  class="add"
+                />
               {{/if}}
             </td>
             <td colspan="10">{{postrequisite.title}}</td>
