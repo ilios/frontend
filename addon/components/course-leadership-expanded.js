@@ -1,10 +1,8 @@
 import Component from '@ember/component';
-import layout from '../templates/components/course-leadership-expanded';
 import { computed } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
-  layout,
   course: null,
   editable: false,
   classNames: ['course-leadership-expanded'],

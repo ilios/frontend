@@ -1,5 +1,4 @@
 import { inject as service } from '@ember/service';
-import layout from '../templates/components/detail-learning-materials';
 import { isEmpty } from '@ember/utils';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
@@ -13,7 +12,6 @@ export default Component.extend(SortableByPosition, {
   currentUser: service(),
   store: service(),
   intl: service(),
-  layout,
   tagName: 'section',
   classNameBindings: [':detail-learningmaterials', 'displaySearchBox'],
   subject: null,

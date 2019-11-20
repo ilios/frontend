@@ -5,11 +5,9 @@ import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import layout from '../templates/components/visualizer-course-session-type';
 
 export default Component.extend({
   intl: service(),
-  layout,
   course: null,
   sessionType: null,
   isIcon: false,

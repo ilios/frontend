@@ -1,9 +1,7 @@
 import Component from '@ember/component';
-import layout from '../templates/components/choose-material-type';
 import { schedule } from '@ember/runloop';
 
 export default Component.extend({
-  layout,
   classNameBindings: [':choose-material-type', 'isOpen'],
   isOpen: false,
   ariaRole: 'menubar',

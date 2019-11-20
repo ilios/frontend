@@ -1,10 +1,8 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import layout from '../templates/components/dashboard-week';
 import moment from 'moment';
 
 export default Component.extend({
-  layout,
   classNames: ['dashboard-week'],
   'data-test-dashboard-week': true,
   expanded: computed(function(){

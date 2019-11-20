@@ -1,5 +1,4 @@
 import { inject as service } from '@ember/service';
-import layout from '../templates/components/detail-objectives';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
@@ -11,7 +10,6 @@ export default Component.extend({
   store: service(),
   intl: service(),
   flashMessages: service(),
-  layout,
   subject: null,
   tagName: 'section',
   classNameBindings: [':detail-objectives', 'showCollapsible:collapsible'],

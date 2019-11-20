@@ -1,10 +1,8 @@
 import Component from '@ember/component';
 import { map } from 'rsvp';
 import { computed } from '@ember/object';
-import layout from '../templates/components/collapsed-learnergroups';
 
 export default Component.extend({
-  layout,
   subject: null,
   tagName: 'section',
   classNames: ['collapsed-learnergroups'],

@@ -2,10 +2,8 @@ import { A } from '@ember/array';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
-import layout from '../templates/components/single-event-objective-list';
 
 export default Component.extend({
-  layout,
   classNames: ['single-event-objective-list'],
   objectives: null,
   groupByCompetencies: true,

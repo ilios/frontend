@@ -1,8 +1,6 @@
 import Component from '@ember/component';
-import layout from '../templates/components/click-choice-buttons';
 
 export default Component.extend({
-  layout,
   classNames: ['click-choice-buttons'],
   firstChoicePicked: true,
 

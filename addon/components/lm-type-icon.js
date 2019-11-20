@@ -1,9 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import layout from '../templates/components/lm-type-icon';
 
 export default Component.extend({
-  layout,
   listItem: false,
   type: null,
   mimetype: null,

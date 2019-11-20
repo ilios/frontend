@@ -1,10 +1,8 @@
 import Component from '@ember/component';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
 import { task } from 'ember-concurrency';
-import layout from '../templates/components/objective-sort-manager';
 
 export default Component.extend(SortableByPosition, {
-  layout,
   classNames: ['objective-sort-manager'],
   sortableObjectList: null,
   subject: null,

@@ -1,9 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import layout from '../templates/components/sortable-heading';
 
 export default Component.extend({
-  layout,
   sortedBy: false,
   sortedAscending: true,
   align: 'left',

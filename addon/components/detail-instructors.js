@@ -2,11 +2,9 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { all } from 'rsvp';
-import layout from '../templates/components/detail-instructors';
 
 export default Component.extend({
   currentUser: service(),
-  layout,
   tagName: 'section',
   classNames: ['detail-instructors'],
   ilmSession: null,

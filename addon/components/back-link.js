@@ -1,11 +1,9 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import layout from '../templates/components/back-link';
 
 export default Component.extend({
   intl: service(),
-  layout,
   tagName: 'a',
   classNames: ['back-link'],
   attributeBindings: ['title'],

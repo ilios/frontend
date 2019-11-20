@@ -1,9 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import layout from '../templates/components/selectable-terms-list-item';
 
 export default Component.extend({
-  layout,
   selectedTerms: null,
   term: null,
   tagName: 'div',

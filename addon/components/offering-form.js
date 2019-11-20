@@ -13,7 +13,6 @@ import moment from 'moment';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
-import layout from '../templates/components/offering-form';
 
 const DEBOUNCE_DELAY = 600;
 
@@ -69,8 +68,6 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   currentUser: service(),
-
-  layout,
 
   classNames: ['offering-form'],
 

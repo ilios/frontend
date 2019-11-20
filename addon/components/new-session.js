@@ -5,7 +5,6 @@ import { isPresent, isEmpty } from '@ember/utils';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
-import layout from '../templates/components/new-session';
 
 const Validations = buildValidations({
   title: [
@@ -20,7 +19,6 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
-  layout,
   classNames: ['new-session'],
 
   sessionTypes: null,

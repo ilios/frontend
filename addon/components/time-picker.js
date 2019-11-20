@@ -1,10 +1,8 @@
 import Component from '@ember/component';
 import moment from 'moment';
 import momentFormat from 'ember-moment/computeds/format';
-import layout from '../templates/components/time-picker';
 
 export default Component.extend({
-  layout,
   classNames: ['time-picker'],
   date: null,
 

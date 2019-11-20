@@ -4,7 +4,6 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';
-import layout from '../templates/components/user-search';
 const { oneWay } = computed;
 
 let userProxy = ObjectProxy.extend({
@@ -31,7 +30,6 @@ let instructorGroupProxy = ObjectProxy.extend({
 export default Component.extend({
   store: service(),
   intl: service(),
-  layout,
   classNames: ['user-search'],
   'data-test-user-search': true,
   showMoreInputPrompt: false,

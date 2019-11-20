@@ -1,5 +1,4 @@
 import { inject as service } from '@ember/service';
-import layout from '../templates/components/detail-taxonomies';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 
@@ -7,7 +6,6 @@ export default Component.extend({
   store: service(),
   intl: service(),
   flashMessages: service(),
-  layout,
   subject: null,
   bufferedTerms: null,
   tagName: 'section',

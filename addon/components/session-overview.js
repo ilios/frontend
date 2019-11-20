@@ -8,7 +8,6 @@ import Publishable from 'ilios-common/mixins/publishable';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
-import layout from '../templates/components/session-overview';
 
 const { oneWay, sort } = computed;
 
@@ -50,7 +49,6 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   routing: service('-routing'),
   permissionChecker: service(),
   intl: service(),
-  layout,
   session: null,
   title: null,
   instructionalNotes: null,

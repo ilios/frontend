@@ -6,7 +6,6 @@ import { task, timeout } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { computed } from '@ember/object';
-import layout from '../templates/components/session-copy';
 
 const Validations = buildValidations({
   bestSelectedCourse: [
@@ -21,7 +20,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
   flashMessages: service(),
   permissionChecker: service(),
-  layout,
   classNames: ['session-copy'],
   selectedYear: null,
   session: null,

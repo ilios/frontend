@@ -1,6 +1,5 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import layout from '../templates/components/leadership-search';
 import { computed } from '@ember/object';
 import { isBlank } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
@@ -14,7 +13,6 @@ const MIN_INPUT = 3;
 export default Component.extend({
   store: service(),
   intl: service(),
-  layout,
   classNames: ['leadership-search'],
   existingUsers: null,
   searchValue: null,

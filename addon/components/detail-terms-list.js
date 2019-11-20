@@ -2,13 +2,11 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { all }  from 'rsvp';
-import layout from '../templates/components/detail-terms-list';
 
 /**
  * Displays all given terms that belong to a given vocabulary as a list of tags.
  */
 export default Component.extend({
-  layout,
   classNames: ['detail-terms-list'],
 
   /**

@@ -1,15 +1,12 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
-import layout from '../templates/components/my-materials';
 import SortableTable from 'ilios-common/mixins/sortable-table';
 import { task, timeout } from 'ember-concurrency';
 
 const DEBOUNCE_DELAY = 250;
 
 export default Component.extend(SortableTable, {
-  layout,
-
   classNames: ['my-materials'],
 
   courseIdFilter: null,

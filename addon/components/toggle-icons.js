@@ -1,8 +1,6 @@
 import Component from '@ember/component';
-import layout from '../templates/components/toggle-icons';
 
 export default Component.extend({
-  layout,
   classNames: ['toggle-icons'],
   firstOptionSelected: true,
 

@@ -2,14 +2,12 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import RSVP from 'rsvp';
 import { inject as service } from '@ember/service';
-import layout from '../templates/components/offering-calendar';
 
 const { reads } = computed;
 const { map } = RSVP;
 
 export default Component.extend({
   iliosConfig: service(),
-  layout,
   classNames: ['offering-calendar'],
 
   session: null,

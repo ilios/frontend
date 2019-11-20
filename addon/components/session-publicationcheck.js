@@ -2,12 +2,9 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
-import layout from '../templates/components/session-publicationcheck';
 
 export default Component.extend({
   router: service(),
-
-  layout,
 
   classNames: ['session-publicationcheck'],
 

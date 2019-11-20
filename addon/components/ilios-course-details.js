@@ -1,9 +1,7 @@
 import Component from '@ember/component';
-import layout from '../templates/components/ilios-course-details';
 import scrollTo from '../utils/scroll-to';
 
 export default Component.extend({
-  layout,
   tagName: 'section',
   classNames: ['course-details'],
   course: null,

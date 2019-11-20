@@ -1,11 +1,9 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import layout from '../templates/components/publication-status';
 
 const { alias } = computed;
 
 export default Component.extend({
-  layout,
   publishedLangKey: 'general.published',
   scheduledLangKey: 'general.scheduled',
   notPublishedLangKey: 'general.notPublished',

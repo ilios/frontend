@@ -1,11 +1,9 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import layout from '../templates/components/detail-instructors-list';
 
 const { sort } = computed;
 
 export default Component.extend({
-  layout,
   classNames: ['detail-instructors-list'],
   instructors: null,
   sortInstructorsBy: null,

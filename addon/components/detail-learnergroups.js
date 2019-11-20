@@ -1,10 +1,8 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
-import layout from '../templates/components/detail-learnergroups';
 
 export default Component.extend({
-  layout,
   classNames: ['detail-learnergroups'],
   tagName: 'div',
   subject: null,

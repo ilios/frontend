@@ -1,11 +1,9 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
-import layout from '../templates/components/editable-field';
 import { timeout, task } from 'ember-concurrency';
 
 export default Component.extend({
-  layout,
   value: null,
   isEditing: false,
   isSaving: false,

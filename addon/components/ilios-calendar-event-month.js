@@ -2,7 +2,6 @@ import Ember from 'ember';
 import { computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
 import { default as CalendarEvent } from 'elemental-calendar/components/calendar-event';
-import layout from '../templates/components/ilios-calendar-event-month';
 import moment from 'moment';
 import TooltipContent from '../mixins/tooltip-content';
 import colorChange from '../utils/color-change';
@@ -13,7 +12,6 @@ const { Utils } = Handlebars;
 const { escapeExpression } = Utils;
 
 export default CalendarEvent.extend(TooltipContent, {
-  layout,
   event: null,
   timeFormat: 'h:mma',
   classNameBindings: [':event', ':event-pos', ':ilios-calendar-event', ':month-event', 'clickable:clickable'],

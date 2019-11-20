@@ -4,7 +4,6 @@ import { computed } from '@ember/object';
 import { isArray } from '@ember/array';
 import { htmlSafe } from '@ember/string';
 import { default as CalendarEvent } from 'elemental-calendar/components/calendar-event';
-import layout from '../templates/components/ilios-calendar-event';
 import moment from 'moment';
 import TooltipContent from '../mixins/tooltip-content';
 import colorChange from '../utils/color-change';
@@ -16,7 +15,6 @@ const { escapeExpression } = Utils;
 
 export default CalendarEvent.extend(TooltipContent, {
   intl: service(),
-  layout,
   event: null,
   timeFormat: 'h:mma',
   isDay: false,

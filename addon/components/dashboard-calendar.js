@@ -3,7 +3,6 @@ import Component from '@ember/component';
 import RSVP from 'rsvp';
 import EmberObject, { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
-import layout from '../templates/components/dashboard-calendar';
 import moment from 'moment';
 import momentFormat from 'ember-moment/computeds/format';
 
@@ -17,7 +16,6 @@ export default Component.extend({
   intl: service(),
   iliosConfig: service(),
 
-  layout,
   classNames: ['dashboard-calendar'],
 
   selectedSchool: null,

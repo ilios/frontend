@@ -2,7 +2,6 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
-import layout from '../templates/components/session-offerings-list';
 
 import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
 
@@ -10,7 +9,6 @@ const { oneWay } = computed;
 
 export default Component.extend({
   store: service(),
-  layout,
   classNames: ['session-offerings-list'],
   session: null,
   editable: true,

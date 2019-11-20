@@ -2,7 +2,6 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
-import layout from '../templates/components/html-editor';
 import { task } from 'ember-concurrency';
 import { guidFor } from '@ember/object/internals';
 
@@ -26,7 +25,6 @@ const defaultButtons = {
 };
 export default Component.extend({
   intl: service(),
-  layout,
   editor: null,
   loadFinished: false,
   editorId: null,

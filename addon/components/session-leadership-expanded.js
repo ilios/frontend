@@ -1,9 +1,7 @@
 import Component from '@ember/component';
 import { task, timeout } from 'ember-concurrency';
-import layout from '../templates/components/session-leadership-expanded';
 
 export default Component.extend({
-  layout,
   session: null,
   classNames: ['session-leadership-expanded'],
   administrators: null,

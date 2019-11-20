@@ -1,10 +1,8 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { all } from 'rsvp';
-import layout from '../templates/components/collapsed-competencies';
 
 export default Component.extend({
-  layout,
   tagName: 'section',
   classNames: ['collapsed-competencies'],
   /**

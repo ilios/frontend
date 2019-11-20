@@ -1,12 +1,10 @@
 import Component from '@ember/component';
-import layout from '../templates/components/api-version-notice';
 import { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
 import { set } from '@ember/object';
 
 export default Component.extend({
   apiVersion: service(),
-  layout,
   tagName: '',
 
   mismatched: false,

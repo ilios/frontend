@@ -2,12 +2,10 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { typeOf } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
-import layout from '../templates/components/big-text';
 
 const { collect, sum } = computed;
 
 export default Component.extend({
-  layout,
   expanded: false,
   classNames: ['big-text'],
   tagName: 'span',

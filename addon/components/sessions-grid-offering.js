@@ -3,7 +3,6 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
 import scrollIntoView from 'scroll-into-view';
-import layout from '../templates/components/sessions-grid-offering';
 
 const Validations = buildValidations({
   room: [
@@ -17,7 +16,6 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
-  layout,
   tagName: 'tr',
   classNameBindings: [':sessions-grid-offering', 'firstRow', 'even', 'wasUpdated'],
   canUpdate: false,

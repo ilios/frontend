@@ -1,14 +1,12 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import layout from '../templates/components/course-summary-header';
 
 export default Component.extend({
   currentUser: service(),
   permissionChecker: service(),
   router: service(),
 
-  layout,
   classNames: ['course-summary-header'],
   course: null,
 
