@@ -1,12 +1,10 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { task } from 'ember-concurrency';
-import layout from '../templates/components/learningmaterial-search';
 
 export default Component.extend({
   store: service(),
   intl: service(),
-  layout,
   classNames: ['learningmaterial-search'],
   currentMaterials: null,
   query: '',

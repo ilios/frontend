@@ -1,9 +1,7 @@
 import Component from '@ember/component';
-import layout from '../templates/components/detail-cohorts';
 import RSVP from 'rsvp';
 
 export default Component.extend({
-  layout,
   tagName: 'section',
   classNames: ['detail-cohorts'],
   subject: null,

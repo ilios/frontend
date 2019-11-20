@@ -3,12 +3,10 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { map } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
-import layout from '../templates/components/course-sessions';
 
 export default Component.extend({
   intl: service(),
   permissionChecker: service(),
-  layout,
   tagName: 'section',
   classNames: ['course-sessions'],
   'data-test-course-sessions': true,

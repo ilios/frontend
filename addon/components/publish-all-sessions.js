@@ -4,13 +4,11 @@ import { equal } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { all, Promise as RSVPPromise } from 'rsvp';
-import layout from '../templates/components/publish-all-sessions';
 
 export default Component.extend({
   router: service(),
   store: service(),
 
-  layout,
   isSaving: false,
   classNames: ['publish-all-sessions'],
   sessions: null,

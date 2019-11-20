@@ -4,7 +4,6 @@ import { computed } from '@ember/object';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task, timeout } from 'ember-concurrency';
-import layout from '../templates/components/learningmaterial-manager';
 import moment from 'moment';
 
 const { equal, not, reads } = computed;
@@ -32,7 +31,6 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
-  layout: layout,
   classNames: ['learningmaterial-manager'],
 
   statusId: null,

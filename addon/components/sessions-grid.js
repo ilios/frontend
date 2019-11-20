@@ -5,14 +5,11 @@ import { isEmpty } from '@ember/utils';
 import { inject as service } from '@ember/service';
 import escapeRegExp from '../utils/escape-reg-exp';
 import { task } from 'ember-concurrency';
-import layout from '../templates/components/sessions-grid';
 import { addEventListener, runDisposables } from 'ember-lifeline';
 
 export default Component.extend({
   preserveScroll: service(),
   router: service(),
-
-  layout,
 
   classNames: ['sessions-grid'],
 

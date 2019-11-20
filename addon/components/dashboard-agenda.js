@@ -1,13 +1,11 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import layout from '../templates/components/dashboard-agenda';
 import moment from 'moment';
 
 export default Component.extend({
   userEvents: service(),
 
-  layout,
   areEventsSelectable: true,
   /**
    * Days in advance of the current date.

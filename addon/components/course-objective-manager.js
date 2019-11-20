@@ -5,7 +5,6 @@ import { inject as service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
 import { all, map } from 'rsvp';
 import { task } from 'ember-concurrency';
-import layout from '../templates/components/course-objective-manager';
 
 const { filterBy, gt, none, oneWay, sort, uniq } = computed;
 
@@ -81,7 +80,6 @@ const cohortProxy = EmberObject.extend({
 
 export default Component.extend({
   intl: service(),
-  layout,
   classNames: ['objective-manager', 'course-objective-manager'],
   courseObjective: null,
   selectedCohort: null,

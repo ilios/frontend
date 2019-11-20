@@ -1,10 +1,8 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import layout from '../templates/components/instructor-selection-manager';
 
 export default Component.extend({
   intl: service(),
-  layout,
   instructors: null,
   availableInstructorGroups: null,
   classNames: ['instructor-selection-manager'],

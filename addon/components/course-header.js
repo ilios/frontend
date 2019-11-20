@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import layout from '../templates/components/course-header';
 import { computed } from '@ember/object';
 import { reject } from 'rsvp';
 import Publishable from 'ilios-common/mixins/publishable';
@@ -19,7 +18,6 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, Publishable, ValidationErrorDisplay, {
-  layout,
   classNames: ['course-header'],
   course: null,
   courseTitle: null,

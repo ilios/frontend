@@ -1,9 +1,7 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import layout from '../templates/components/objective-manage-descriptors';
 
 export default Component.extend({
-  layout: layout,
   objective: null,
   objectiveDescriptors: computed('objective', 'objective.meshDescriptors.[]', function(){
     var objective = this.get('objective');

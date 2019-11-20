@@ -2,14 +2,11 @@ import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
 import { isEmpty, isPresent } from '@ember/utils';
 import { all, task, timeout } from 'ember-concurrency';
-import layout from '../templates/components/course-materials';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 
 const DEBOUNCE_DELAY = 250;
 
 export default Component.extend({
-  layout,
-
   classNames: ['course-materials'],
 
   course: null,

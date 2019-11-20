@@ -5,7 +5,6 @@ import { isEmpty, isPresent } from '@ember/utils';
 import { filter } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
-import layout from '../templates/components/taxonomy-manager';
 
 const { sort } = computed;
 
@@ -13,7 +12,6 @@ export default Component.extend({
   store: service(),
   intl: service(),
   flashMessages: service(),
-  layout,
   subject: null,
   classNames: ['taxonomy-manager'],
   tagName: 'section',

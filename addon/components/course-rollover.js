@@ -6,7 +6,6 @@ import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import layout from '../templates/components/course-rollover';
 
 const { reads } = computed;
 
@@ -28,7 +27,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
   flashMessages: service(),
   iliosConfig: service(),
-  layout,
   classNames: ['course-rollover'],
   years: null,
   selectedYear: null,

@@ -1,8 +1,6 @@
 import Component from '@ember/component';
-import layout from '../templates/components/toggle-buttons';
 
 export default Component.extend({
-  layout,
   classNames: ['toggle-buttons'],
   tagName: 'span',
   firstOptionSelected: true,

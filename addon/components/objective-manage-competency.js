@@ -4,10 +4,8 @@ import  {
   filter
 } from 'rsvp';
 import { computed } from '@ember/object';
-import layout from '../templates/components/objective-manage-competency';
 
 export default Component.extend({
-  layout,
   classNames: ['objective-manager', 'objective-manage-competency'],
 
   schoolCompetencies: computed('programYear.program.school.competencies.[]', async function () {

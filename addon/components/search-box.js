@@ -1,12 +1,10 @@
 import Component from '@ember/component';
 import { isPresent } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
-import layout from '../templates/components/search-box';
 
 const DEBOUNCE_TIMEOUT = 250;
 
 export default Component.extend({
-  layout,
   classNames: ['search-box'],
   value: '',
   liveSearch: true,

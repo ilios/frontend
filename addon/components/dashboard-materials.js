@@ -1,7 +1,6 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import layout from '../templates/components/dashboard-materials';
 import moment from 'moment';
 
 const { reads } = computed;
@@ -10,7 +9,6 @@ export default Component.extend({
   currentUser: service(),
   fetch: service(),
   iliosConfig: service(),
-  layout,
   daysInAdvance: 60,
 
   classNames: ['dashboard-materials'],

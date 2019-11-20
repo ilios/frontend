@@ -5,11 +5,9 @@ import { computed } from '@ember/object';
 import { Promise as RSVPPromise } from 'rsvp';
 import ObjectProxy from '@ember/object/proxy';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
-import layout from '../templates/components/print-course';
 
 export default Component.extend(SortableByPosition, {
   store: service(),
-  layout,
   course: null,
   includeUnpublishedSessions: false,
   tagName: 'section',

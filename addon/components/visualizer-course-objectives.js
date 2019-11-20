@@ -5,13 +5,11 @@ import { isPresent, isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { task, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import layout from '../templates/components/visualizer-course-objectives';
 
 const { map, filter } = RSVP;
 
 export default Component.extend({
   intl: service(),
-  layout,
   course: null,
   isIcon: false,
   classNameBindings: ['isIcon::not-icon', ':visualizer-course-objectives'],

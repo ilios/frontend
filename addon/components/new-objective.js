@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import layout from '../templates/components/new-objective';
 
 const Validations = buildValidations({
   title: [
@@ -14,7 +13,6 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  layout,
   tagName: 'section',
   classNames: ['new-objective'],
 

@@ -1,13 +1,10 @@
 import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import scrollTo from 'ilios-common/utils/scroll-to';
-import layout from '../templates/components/publish-menu';
 import { schedule } from '@ember/runloop';
 
 export default Component.extend({
   router: service(),
-
-  layout,
 
   classNameBindings: ['publicationStatus', ':publish-menu', 'isOpen'],
   ariaRole: 'menubar',

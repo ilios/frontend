@@ -2,10 +2,8 @@ import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { all, filter, map } from 'rsvp';
-import layout from '../templates/components/detail-learnergroups-list';
 
 export default Component.extend({
-  layout,
   classNames: ['detail-learnergroups-list'],
   learnerGroups: null,
   isManaging: false,

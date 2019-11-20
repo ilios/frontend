@@ -4,7 +4,6 @@ import { set, computed } from '@ember/object';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
-import layout from '../templates/components/new-learningmaterial';
 
 const { equal, reads } = computed;
 
@@ -78,7 +77,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
   currentUser: service(),
   iliosConfig: service(),
-  layout,
   classNames: ['new-learningmaterial'],
 
   learningMaterialStatuses: null,

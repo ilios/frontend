@@ -4,7 +4,6 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';
-import layout from '../templates/components/mesh-manager';
 
 const ProxiedDescriptors = ObjectProxy.extend({
   terms: null,
@@ -20,7 +19,6 @@ const ProxiedDescriptors = ObjectProxy.extend({
 export default Component.extend({
   store: service(),
   intl: service(),
-  layout,
   'data-test-mesh-manager': true,
   classNames: ['mesh-manager'],
   terms: null,

@@ -1,7 +1,6 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
-import layout from '../templates/components/session-objective-manager';
 
 const objectiveProxy = ObjectProxy.extend({
   sessionObjective: null,
@@ -11,7 +10,6 @@ const objectiveProxy = ObjectProxy.extend({
 });
 
 export default Component.extend({
-  layout,
   classNames: ['objective-manager'],
   sessionObjective: null,
   'data-test-session-objective-manager': true,

@@ -3,12 +3,10 @@ import { computed } from '@ember/object';
 import { filter } from 'rsvp';
 import { task } from 'ember-concurrency';
 import { isEmpty } from '@ember/utils';
-import layout from '../templates/components/learnergroup-tree';
 
 const { gt } = computed;
 
 export default Component.extend({
-  layout,
   learnerGroup: null,
   selectedGroups: null,
   filter: '',

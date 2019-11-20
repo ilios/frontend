@@ -3,7 +3,6 @@ import EmberObject, { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { reject } from 'rsvp';
-import layout from '../templates/components/course-overview';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
@@ -40,8 +39,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   router: service(),
   routing: service('-routing'),
   store: service(),
-
-  layout,
 
   editable: false,
   universalLocator: 'ILIOS',

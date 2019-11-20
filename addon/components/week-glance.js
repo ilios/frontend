@@ -2,13 +2,11 @@ import { inject as service } from '@ember/service';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import moment from 'moment';
-import layout from '../templates/components/week-glance';
 
 export default Component.extend({
   userEvents: service(),
   intl: service(),
 
-  layout,
   classNames: ['week-glance'],
 
   startOfWeek: 0,

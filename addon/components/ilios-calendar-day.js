@@ -3,10 +3,8 @@ import { run } from '@ember/runloop';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import moment from 'moment';
-import layout from '../templates/components/ilios-calendar-day';
 
 export default Component.extend({
-  layout,
   classNames: ['ilios-calendar-day'],
   date: null,
   calendarEvents: null,

@@ -3,7 +3,6 @@ import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isBlank, isEmpty } from '@ember/utils';
-import layout from '../templates/components/single-event';
 import EventMixin from 'ilios-common/mixins/events';
 import moment from 'moment';
 
@@ -12,8 +11,6 @@ export default Component.extend(EventMixin, {
   intl: service(),
   router: service(),
   store: service(),
-
-  layout,
 
   classNames: ['single-event'],
 

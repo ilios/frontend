@@ -2,10 +2,8 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 import { next } from '@ember/runloop';
-import layout from '../templates/components/sessions-grid-header';
 
 export default Component.extend({
-  layout,
   classNames: ['sessions-grid-header'],
   isExpanding: false,
   'data-test-sessions-grid-header': true,

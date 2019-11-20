@@ -1,5 +1,4 @@
 import { inject as service } from '@ember/service';
-import layout from '../templates/components/detail-cohort-manager';
 
 import Component from '@ember/component';
 import { map, filter } from 'rsvp';
@@ -9,7 +8,6 @@ export default Component.extend({
   intl: service(),
   store: service(),
   permissionChecker: service(),
-  layout,
   tagName: 'section',
   classNames: ['detail-cohort-manager'],
   filter: '',

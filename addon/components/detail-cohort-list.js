@@ -1,5 +1,4 @@
 import { inject as service } from '@ember/service';
-import layout from '../templates/components/detail-cohort-list';
 import Component from '@ember/component';
 import EmberObject, { computed } from '@ember/object';
 import RSVP from 'rsvp';
@@ -8,7 +7,6 @@ const { map } = RSVP;
 
 export default Component.extend({
   intl: service(),
-  layout,
   classNames: ['detail-cohort-list'],
   cohorts: null,
   /**

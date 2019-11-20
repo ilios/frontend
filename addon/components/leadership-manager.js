@@ -1,8 +1,6 @@
 import Component from '@ember/component';
-import layout from '../templates/components/leadership-manager';
 
 export default Component.extend({
-  layout,
   classNames: ['leadership-manager'],
   directors: null,
   administrators: null,

@@ -1,9 +1,5 @@
 import Component from '@ember/component';
-import layout from '../templates/components/common-dashboard';
-
 export default Component.extend({
-  layout,
-
   classNames: ['common-dashboard'],
   tagName: 'section',
 

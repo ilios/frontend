@@ -1,5 +1,4 @@
 import { oneWay, sort } from '@ember/object/computed';
-import layout from '../templates/components/detail-mesh';
 import { all } from 'rsvp';
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
@@ -7,7 +6,6 @@ import Component from '@ember/component';
 export default Component.extend({
   store: service(),
   intl: service(),
-  layout,
   classNames: ['detail-mesh'],
   tagName: 'section',
   subject: null,

@@ -3,10 +3,8 @@ import { computed } from '@ember/object';
 import { run } from '@ember/runloop';
 import { isEmpty } from '@ember/utils';
 import moment from 'moment';
-import layout from '../templates/components/ilios-calendar-week';
 
 export default Component.extend({
-  layout,
   classNames: ['ilios-calendar-week'],
   date: null,
   calendarEvents: null,
