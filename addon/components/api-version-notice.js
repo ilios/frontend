@@ -1,18 +1,23 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import { task, timeout } from 'ember-concurrency';
-import { set } from '@ember/object';
+import { dropTask } from 'ember-concurrency-decorators';
+import { timeout } from 'ember-concurrency';
 
-export default Component.extend({
-  apiVersion: service(),
-  tagName: '',
+export default class ApiVersionNoticeComponent extends Component {
+  @service apiVersion;
 
-  mismatched: false,
-  updateAvailable: false,
-  countdownToUpdate: null,
-  showReloadButton: false,
+  @tracked mismatched = false;
+  @tracked updateAvailable = false;
+  @tracked countdownToUpdate = null;
+  @tracked showReloadButton = false;
 
-  check: task(function* () {
+  reload() {
+    window.location.reload();
+  }
+
+  @dropTask
+  *check() {
     const mismatched = yield this.apiVersion.isMismatched;
     if (mismatched && 'serviceWorker' in navigator) {
       yield (2000); //wait to let the new service worker get fetched if it is available
@@ -26,28 +31,24 @@ export default Component.extend({
           };
         }
       } else {
-        set(this, 'showReloadButton', true);
+        this.showReloadButton = true;
       }
     }
-    this.set('mismatched', mismatched);
+    this.mismatched = mismatched;
     return true; //always return true to update data-test-load-finished property
-  }).drop().on('didInsertElement'),
+  }
 
-  actions: {
-    reload() {
-      window.location.reload();
-    }
-  },
-
-  countdown: task(function* () {
-    this.set('updateAvailable', true);
+  @dropTask
+  *countdown() {
+    this.updateAvailable = true;
     for (let i = 5; i > 0; i--) {
-      this.set('countdownToUpdate', i);
+      this.countdownToUpdate = i;
       yield timeout(1000);
     }
     yield this.update.perform();
-  }).drop(),
-  update: task(function* () {
+  }
+  @dropTask
+  *update() {
     if ('serviceWorker' in navigator) {
       const reg = yield navigator.serviceWorker.getRegistration();
       if (reg && reg.waiting) {
@@ -55,5 +56,5 @@ export default Component.extend({
       }
     }
     yield timeout(3000);
-  }).drop(),
-});
+  }
+}
