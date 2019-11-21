@@ -2,6 +2,7 @@
   class="api-version-notice {{if this.mismatched "mismatch"}}"
   hidden={{not this.mismatched}}
   role={{if this.mismatched "alert" false}}
+  {{did-insert (perform this.check)}}
   data-test-load-finished={{this.check.lastSuccessful.value}}
   data-test-api-version-notice
 >
@@ -28,7 +29,7 @@
     {{/if}}
     {{#if this.showReloadButton}}
       <p>
-        <button {{on "click" (action "reload")}}>
+        <button {{on "click" (fn this.reload)}}>
           {{t "general.updateNow"}}
         </button>
       </p>
