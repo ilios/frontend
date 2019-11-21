@@ -68,12 +68,13 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   currentUser: service(),
+  timezone: service(),
 
   classNames: ['offering-form'],
 
   currentTimezone: null,
   isEditingTimezone: false,
-  timezoneNames: null,
+  timezones: null,
   startDate: null,
   endDate: null,
   room: 'TBD',
@@ -180,46 +181,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return diff;
   }),
 
-  timezones: computed('timezoneNames.[]', function() {
-    return this.timezoneNames.map(name => {
-      return {
-        value: name,
-        label: this.formatTimezone(name)
-      };
-    }).sort((a, b) => {
-      const pattern = /^\(([+-])([0-9:]*)\) (.*)$/;
-      const matchesA = a.label.match(pattern);
-      const matchesB = b.label.match(pattern);
-
-      if (matchesA[1] === '-' && matchesB[1] === '+') {
-        return -1;
-      } else if (matchesA[1] === '+' && matchesB[1] === '-') {
-        return 1;
-      }
-
-      let offsetDiff = 0;
-      if (matchesA[2] < matchesB[2]) {
-        offsetDiff = -1;
-      } else if (matchesA[2] > matchesB[2]) {
-        offsetDiff = 1;
-      }
-
-      if (offsetDiff) {
-        return matchesA[1] === '+' ? offsetDiff : (-1 * offsetDiff);
-      }
-
-      if (matchesA[3] < matchesB[3]) {
-        return -1;
-      } else if (matchesA[3] > matchesB[3]) {
-        return 1;
-      }
-
-      return 0;
-    });
-  }),
-
   formattedCurrentTimezone: computed('currentTimezone', function() {
-    return this.formatTimezone(this.currentTimezone);
+    return this.timezone.formatTimezone(this.currentTimezone);
   }),
 
   lowestLearnerGroupLeaves: computed('learnerGroups.[]', function(){
@@ -238,27 +201,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   }),
   init(){
     this._super(...arguments);
-    const currentTimezone = moment.tz.guess();
-    this.set('currentTimezone', currentTimezone);
 
-    let timezoneNames = moment.tz.names().filter(tz => {
-      // filter out any non-canonical and deprecated timezone names, and all of those pesky Etc/* aliases.
-      return tz.indexOf('/') !== -1
-        && !tz.startsWith('Etc/')
-        && !tz.startsWith('Mexico/')
-        && !tz.startsWith('Brazil/')
-        && !tz.startsWith('Canada/')
-        && !tz.startsWith('Chile/')
-        && !tz.startsWith('US/')
-        && ![
-          'Australia/ACT', 'Australia/LHI', 'Australia/North', 'Australia/NSW', 'Australia/Queensland',
-          'Australia/South', 'Australia/Tasmania', 'Australia/Victoria', 'Australia/West'
-        ].includes(tz);
-    });
-    // ensure that the current timezone is always part of the list
-    timezoneNames.push(currentTimezone);
-    timezoneNames = timezoneNames.uniq().sort();
-    this.set('timezoneNames', timezoneNames);
+    this.set('currentTimezone', this.timezone.getCurrentTimezone());
+    this.set('timezones', this.timezone.getTimezones());
 
     this.set('recurringDayOptions', [
       {day: '0', t: 'general.sunday'},
@@ -360,10 +305,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.set('currentTimezone', value);
       this.set('isEditingTimezone', false);
     },
-  },
-
-  formatTimezone(tz) {
-    return '(' + moment.tz(tz).format('Z') + ') ' + tz.replace(/\//g, ' - ').replace(/_/g, ' ');
   },
 
   makeRecurringOfferingObjects: task(function * () {
