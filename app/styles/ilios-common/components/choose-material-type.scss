@@ -36,7 +36,8 @@
       text-decoration: none;
       white-space: nowrap;
 
-      &:hover {
+      &:hover,
+      &:focus {
         background-color: $dark-blue;
         color: $white;
       }

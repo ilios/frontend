@@ -1,46 +1,56 @@
-import Component from '@ember/component';
-import { schedule } from '@ember/runloop';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  classNameBindings: [':choose-material-type', 'isOpen'],
-  isOpen: false,
-  ariaRole: 'menubar',
-  'data-test-choose-material-type': true,
-  openMenuAndSelectTheCurrentFirstOption() {
-    this.set('isOpen', true);
-    schedule('afterRender', () => {
-      this.element.querySelector(`.menu button:first-of-type`).focus();
-    });
-  },
+export default class ChooseMaterialTypeComponent extends Component {
+  @tracked isOpen = false;
 
-  keyDown({ originalEvent }) {
-    switch (originalEvent.key) {
+  focusOnFirstItem(menuElement) {
+    menuElement.querySelector('button:first-of-type').focus();
+  }
+
+  @action
+  moveFocus({ key, target }) {
+    switch (key) {
     case 'ArrowDown':
-      if (originalEvent.target.dataset.level === 'toggle') {
-        this.openMenuAndSelectTheCurrentFirstOption();
+      if (target.nextElementSibling) {
+        target.nextElementSibling.focus();
       } else {
-        if (originalEvent.target.nextElementSibling) {
-          originalEvent.target.nextElementSibling.focus();
-        } else {
-          this.element.querySelector('.menu button:nth-of-type(1)').focus();
-        }
+        this.menuElement.querySelector('button:nth-of-type(1)').focus();
       }
       break;
     case 'ArrowUp':
-      if (originalEvent.target.previousElementSibling) {
-        originalEvent.target.previousElementSibling.focus();
+      if (target.previousElementSibling) {
+        target.previousElementSibling.focus();
       } else {
-        this.element.querySelector('.menu button:last-of-type').focus();
+        this.menuElement.querySelector('button:last-of-type').focus();
       }
       break;
     case 'Escape':
     case 'Tab':
     case 'ArrowRight':
     case 'ArrowLeft':
-      this.set('isOpen', false);
+      this.isOpen = false;
       break;
     }
-
-    return true;
   }
-});
+  @action
+  clearFocus() {
+    const buttons = this.menuElement.querySelectorAll('button');
+    buttons.forEach(el => el.blur());
+  }
+  @action
+  toggleMenu({ key }) {
+    switch (key) {
+    case 'ArrowDown':
+      this.isOpen = true;
+      break;
+    case 'Escape':
+    case 'Tab':
+    case 'ArrowRight':
+    case 'ArrowLeft':
+      this.isOpen = false;
+      break;
+    }
+  }
+}

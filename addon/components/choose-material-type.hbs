@@ -1,29 +1,40 @@
-<ClickOutside @onClickOutside={{action (mut this.isOpen) false}}>
+<div
+  role="menubar"
+  class="choose-material-type"
+  data-test-choose-material-type
+  {{handle-click-outside (set this.isOpen false)}}
+>
   <button
     aria-label={{t "general.add"}}
     role="menuitem"
     class="toggle new-material-type"
     aria-haspopup="true"
     aria-expanded={{if this.isOpen "true" "false"}}
-    data-level="toggle"
     data-test-toggle
     {{on "click" (toggle "isOpen" this)}}
+    {{on "keydown" (fn this.toggleMenu)}}
   >
     {{t "general.add"}}
   </button>
   {{#if this.isOpen}}
-    <div class="menu" role="menu">
+    <div
+      class="menu"
+      role="menu"
+      {{ref this "menuElement"}}
+      {{did-insert this.focusOnFirstItem}}
+    >
       {{#each @types as |type|}}
         <button
           role="menuitemradio"
           tabindex="-1"
-          data-level="item"
           data-test-item
           {{on "click" (fn @choose type)}}
+          {{on "keydown" (fn this.moveFocus)}}
+          {{on "mouseenter" (fn this.clearFocus)}}
         >
           {{t (concat "general." type)}}
         </button>
       {{/each}}
     </div>
   {{/if}}
-</ClickOutside>
+</div>
