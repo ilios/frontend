@@ -1,17 +1,9 @@
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  intl: service(),
-  tagName: 'a',
-  classNames: ['back-link'],
-  attributeBindings: ['title'],
-  title: computed('intl.service', function(){
-    const intl = this.get('intl');
-    return intl.t('general.returnToPreviousPage');
-  }),
-  click(){
+export default class BackLink extends Component {
+  @service intl;
+  back() {
     window.history.back();
   }
-});
+}

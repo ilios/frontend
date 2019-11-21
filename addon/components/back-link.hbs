@@ -1,2 +1,8 @@
-<FaIcon @icon="angle-double-left" />{{t "general.back"}}
-
+<a
+  title={{t "general.returnToPreviousPage"}}
+  class="back-link"
+  href="#"
+  {{on "click" (prevent-default (fn this.back))}}
+>
+  <FaIcon @icon="angle-double-left" />{{t "general.back"}}
+</a>
