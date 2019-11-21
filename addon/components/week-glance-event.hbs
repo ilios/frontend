@@ -92,7 +92,7 @@
   {{/if}}
   {{#if @event.sessionDescription.length}}
     <p class="description" data-test-description>
-      <BigText @text={{@event.sessionDescription}} @length={{50}} />
+      <TruncateText @text={{@event.sessionDescription}} @length={{50}} />
     </p>
   {{/if}}
   <ul class="learning-materials" data-test-learning-materials>
@@ -178,7 +178,7 @@
           {{/if}}
           {{#if lm.publicNotes}}
             <p class="public-notes" data-test-public-notes>
-              <BigText @text={{lm.publicNotes}} @length={{50}} />
+              <TruncateText @text={{lm.publicNotes}} @length={{50}} />
             </p>
           {{/if}}
         {{/if}}

@@ -1,0 +1,18 @@
+{{#if (has-block)}}
+  {{yield this.displayText this.expand this.isTruncated}}
+{{else}}
+  <span class="truncate-text" ...attributes>
+    {{this.displayText}}
+    {{#if this.isTruncated}}
+      <FaIcon @icon="ellipsis-h" @transform="down-6" />
+      <button
+        class="expand-buttons"
+        aria-label={{t "general.expand"}}
+        data-test-expand
+        {{on "click" this.expand}}
+      >
+        <FaIcon @icon="info-circle" />
+      </button>
+    {{/if}}
+  </span>
+{{/if}}
