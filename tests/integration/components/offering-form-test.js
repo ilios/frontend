@@ -532,12 +532,4 @@ module('Integration | Component | offering form', function(hooks) {
       );
     });
   });
-
-  test('shows timezone next to start date', async function(assert) {
-    this.set('nothing', () => {});
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
-
-    const timezone = '.start-time .timezone';
-    assert.dom(timezone).containsText(Intl.DateTimeFormat().resolvedOptions().timeZone);
-  });
 });
