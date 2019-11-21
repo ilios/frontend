@@ -6,9 +6,16 @@ import hbs from 'htmlbars-inline-precompile';
 module('Integration | Component | boolean-check', function(hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-    await render(hbs`<BooleanCheck />`);
+  test('it renders', async function (assert) {
+    this.set('value', false);
+    await render(hbs`<BooleanCheck @value={{this.value}} />`);
 
-    assert.dom(this.element).hasText('');
+    assert.dom('span').hasText('');
+    assert.dom('span').hasClass('checkbox');
+    assert.dom('input').exists();
+    assert.dom('input').isNotChecked();
+
+    this.set('value', true);
+    assert.dom('input').isChecked();
   });
 });
