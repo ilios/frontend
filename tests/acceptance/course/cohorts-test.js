@@ -58,7 +58,7 @@ module('Acceptance | Course - Cohorts', function(hooks) {
     await page.visit({ courseId: 1, details: true });
     await page.cohorts.manage();
     assert.equal(page.cohorts.selected.length, 1);
-    assert.equal(page.cohorts.selected[0].name, 'school 0 | program 0 | cohort 0 |');
+    assert.equal(page.cohorts.selected[0].name, 'school 0 | program 0 | cohort 0');
     assert.equal(page.cohorts.selectable.length, 1);
     assert.equal(page.cohorts.selectable[0].name, 'school 0 | program 0 | cohort 1');
 
