@@ -10,15 +10,38 @@
             @click={{perform this.edit}}
           />
         {{else}}
-          <BigText
+          <TruncateText
             @renderHtml={{this.renderHtml}}
             @text={{@value}}
             @onEdit={{perform this.edit}}
-          />
+            as |displayText expand isTruncated|
+          >
+            <span
+              class="clickable editable"
+              aria-label={{t "general.edit"}}
+              data-test-edit
+              role="button"
+              {{on "click" (perform this.edit)}}
+            >
+              {{displayText}}
+            </span>
+            {{#if isTruncated}}
+              <FaIcon @icon="ellipsis-h" @transform="down-6" />
+              <button
+                class="expand-text-button"
+                aria-label={{t "general.expand"}}
+                data-test-expand
+                {{on "click" expand}}
+              >
+                <FaIcon @icon="info-circle" />
+              </button>
+            {{/if}}
+          </TruncateText>
         {{/if}}
       {{else}}
         <span
           class="clickable editable"
+          aria-label={{t "general.edit"}}
           data-test-edit
           role="button"
           {{on "click" (perform this.edit)}}

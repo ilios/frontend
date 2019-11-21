@@ -66,4 +66,9 @@
   .fa-edit {
     @include icon;
   }
+
+  .expand-text-button {
+    @include ilios-link-button;
+    display: inline;
+  }
 }

@@ -121,13 +121,12 @@ module('Integration | Component | truncate-text', function(hooks) {
   });
 
   test('it preserves HTML when expanded', async function (assert) {
-    this.set('longText', 't'.repeat(400));
+    this.set('longText', '<h1>Text</h1>' + 't'.repeat(400));
     await render(hbs`<TruncateText @renderHtml={{true}} @text={{this.longText}} />`);
     await click('[data-test-expand]');
     assert.dom('h1').exists();
     assert.dom('h1').hasText('Text');
-    assert.dom(this.element).hasText('t'.repeat(400));
-    assert.equal(this.element.textContent.trim(), '<h1>Text</h1>');
+    assert.dom(this.element).includesText('t'.repeat(400));
     await render(hbs`
       <TruncateText @renderHtml={{true}} @text={{this.longText}} as |displayText expand|>
         {{displayText}}
@@ -137,6 +136,30 @@ module('Integration | Component | truncate-text', function(hooks) {
     await click('button');
     assert.dom('h1').exists();
     assert.dom('h1').hasText('Text');
-    assert.dom(this.element).hasText('t'.repeat(400));
+    assert.dom(this.element).includesText('t'.repeat(400));
+  });
+
+  test('it yields isTruncated when not truncated', async function (assert) {
+    this.set('text', 'abc');
+    await render(hbs`
+      <TruncateText @text={{this.text}} as |displayText expand isTruncated|>
+        {{isTruncated}}
+        <button {{on "click" expand}}>Expand</button>
+      </TruncateText>
+    `);
+    assert.dom(this.element).includesText('false');
+  });
+
+  test('it yields isTruncated when truncated', async function (assert) {
+    this.set('longText', 't'.repeat(400));
+    await render(hbs`
+      <TruncateText @text={{this.longText}} as |displayText expand isTruncated|>
+        {{isTruncated}}
+        <button {{on "click" expand}}>Expand</button>
+      </TruncateText>
+    `);
+    assert.dom(this.element).includesText('true');
+    await click('button');
+    assert.dom(this.element).includesText('false');
   });
 });

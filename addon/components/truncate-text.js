@@ -40,7 +40,7 @@ export default class TruncateTextComponent extends Component {
     const truncatedText = this.cleanText.substring(0, this.length);
     return new htmlSafe(truncatedText);
   }
-  get showIcons() {
+  get isTruncated() {
     if(this.args.renderHtml){
       return this.displayText.toString() !== this.text;
     } else {
