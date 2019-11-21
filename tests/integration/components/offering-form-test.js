@@ -532,4 +532,18 @@ module('Integration | Component | offering form', function(hooks) {
       );
     });
   });
+
+  test('shows current timezone', async function(assert) {
+    this.set('nothing', () => {});
+    await render(hbs`<OfferingForm @close={{action nothing}} />`);
+
+    const timezoneService = this.owner.lookup('service:timezone');
+
+    const timezone = '.timezone';
+    const timezoneLabel = `${timezone} label`;
+    const timezoneValue  = `${timezone} .current-timezone`;
+    const currentTimezone = moment.tz.guess();
+    assert.dom(timezoneLabel).containsText('Timezone:');
+    assert.dom(timezoneValue).containsText(timezoneService.formatTimezone(currentTimezone));
+  });
 });
