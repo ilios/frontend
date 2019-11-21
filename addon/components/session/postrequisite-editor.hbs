@@ -1,0 +1,85 @@
+<div
+  class="session-postrequisite-editor"
+  {{did-insert (perform this.setup) @session}}
+  {{did-update (perform this.setup) @session}}
+  data-test-session-postrequisite-editor
+>
+  <div class="info">
+    <span data-test-selected-postrequisite>
+      <strong>{{t "general.duePriorTo"}}:</strong>
+      {{#if this.selectedPostrequisite}}
+        {{this.selectedPostrequisite.title}}
+        <button {{on "click" (set this.selectedPostrequisite null)}} class="remove" data-test-remove>
+          <FaIcon @icon="times" title={{t "general.remove"}} />
+        </button>
+      {{else}}
+        {{t "general.none"}}
+      {{/if}}
+    </span>
+    <Input
+      placeholder={{t "general.filterPlaceholder"}}
+      @value={{this.filter}}
+      data-test-filter
+    />
+  </div>
+  <div class="table-wrapper">
+    <table data-test-postrequisites>
+      <thead>
+        <tr>
+          <th></th>
+          <th colspan="10">{{t "general.session"}}</th>
+          <th colspan="3">{{t "general.firstOffering"}}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each this.filteredPostrequisites as |postrequisite|}}
+          <tr
+            role="button"
+            class={{if (eq postrequisite.id this.selectedPostrequisite.id) "active"}}
+            {{on "click" (set this.selectedPostrequisite (if (eq postrequisite.id this.selectedPostrequisite.id) null postrequisite))}}
+            data-test-postrequisite
+          >
+            <td>
+              {{#if (eq postrequisite.id this.selectedPostrequisite.id)}}
+                <FaIcon
+                  @icon="minus"
+                />
+              {{else}}
+                <FaIcon
+                  @icon="plus"
+                  class="add"
+                />
+              {{/if}}
+            </td>
+            <td colspan="10">{{postrequisite.title}}</td>
+            <td colspan="3">
+              {{#if (await postrequisite.firstOfferingDate)}}
+                {{#if postrequisite.ilmSession}}
+                  <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{moment-format (await postrequisite.firstOfferingDate) "L"}}
+                {{else}}
+                  {{moment-format (await postrequisite.firstOfferingDate) "L LT"}}
+                {{/if}}
+              {{/if}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+  <div class="buttons">
+    <button
+      class="done"
+      {{on "click" (perform this.save)}}
+       data-test-save
+    >
+      {{#if this.save.isRunning}}
+        <LoadingSpinner />
+      {{else}}
+        {{t "general.done"}}
+      {{/if}}
+    </button>
+    <button class="cancel" {{on "click" @close}} data-test-cancel>
+      {{t "general.cancel"}}
+    </button>
+  </div>
+</div>

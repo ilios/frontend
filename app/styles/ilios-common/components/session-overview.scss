@@ -98,4 +98,8 @@
   .fa-copy {
     color: $ilios-green;
   }
+
+  .post-requisite-edit {
+    @include ilios-link-button;
+  }
 }
