@@ -29,11 +29,42 @@
     <div class="item start-time">
       <label>
         {{t "general.startTime"}}:
-        <span class="timezone">
-          ({{browser-timezone}})
-        </span>
       </label>
+      {{#if (not this.isEditingTimezone)}}
+        <span
+          data-test-current-timezone
+          class="editable clickable"
+          role="button" onclick={{action (mut this.isEditingTimezone) true}}
+        >
+          {{this.formattedCurrentTimezone}}
+        </span>
+      {{/if}}
       <TimePicker @date={{this.startDate}} @action={{action "updateStartTime"}} />
+    </div>
+    <div class="item timezone" data-test-timezone-picker>
+      {{#if this.isEditingTimezone}}
+        <label>
+          {{t "general.timezone"}}:
+        </label>
+        <span class="picker">
+          <select onchange={{action "changeTimezone" value="target.value"}}>
+            {{#each this.timezones as |timezone|}}
+              <option value={{timezone.value}} selected={{is-equal timezone.value this.currentTimezone}}>
+                {{timezone.label}}
+              </option>
+            {{/each}}
+          </select>
+          <span class="actions">
+            <button
+                class="cancel"
+                title={{t "general.cancel"}}
+              {{action (mut this.isEditingTimezone) false}}
+            >
+              <FaIcon @icon="times" />
+            </button>
+          </span>
+        </span>
+      {{/if}}
     </div>
     <div class="item offering-duration">
       <label>

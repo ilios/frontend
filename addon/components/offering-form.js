@@ -68,9 +68,13 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   currentUser: service(),
+  timezone: service(),
 
   classNames: ['offering-form'],
 
+  currentTimezone: null,
+  isEditingTimezone: false,
+  timezones: null,
   startDate: null,
   endDate: null,
   room: 'TBD',
@@ -176,6 +180,11 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
     return diff;
   }),
+
+  formattedCurrentTimezone: computed('currentTimezone', function() {
+    return this.timezone.formatTimezone(this.currentTimezone);
+  }),
+
   lowestLearnerGroupLeaves: computed('learnerGroups.[]', function(){
     const learnerGroups = this.get('learnerGroups');
     const ids = learnerGroups.mapBy('id');
@@ -192,6 +201,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   }),
   init(){
     this._super(...arguments);
+
+    this.set('currentTimezone', this.timezone.getCurrentTimezone());
+    this.set('timezones', this.timezone.getTimezones());
+
     this.set('recurringDayOptions', [
       {day: '0', t: 'general.sunday'},
       {day: '1', t: 'general.monday'},
@@ -211,6 +224,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.loadDefaultAttrs();
     }
   },
+
   actions: {
     addLearnerGroup(learnerGroup) {
       let learnerGroups = this.get('learnerGroups').toArray();
@@ -286,7 +300,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
       this.setProperties({startDate, endDate});
     },
+
+    changeTimezone(value) {
+      this.set('currentTimezone', value);
+      this.set('isEditingTimezone', false);
+    },
   },
+
   makeRecurringOfferingObjects: task(function * () {
     const {
       startDate,
@@ -417,6 +437,14 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     let offerings = yield this.get('makeRecurringOfferingObjects').perform();
     offerings = yield this.get('makeSmallGroupOfferingObjects').perform(offerings);
 
+    // adjust timezone
+    offerings.forEach(offering => {
+      offering.startDate = moment.tz(
+        moment(offering.startDate).format('Y-MM-DD HH:mm:ss'), this.currentTimezone).toDate();
+      offering.endDate = moment.tz(
+        moment(offering.endDate).format('Y-MM-DD HH:mm:ss'), this.currentTimezone).toDate();
+    });
+
     this.set('offeringsToSave', offerings.length);
     //save offerings in sets of 5
     let parts;
@@ -464,5 +492,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       .add(minutes, 'minutes')
       .toDate();
     this.set('endDate', endDate);
-  }).restartable()
+  }).restartable(),
+
 });

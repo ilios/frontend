@@ -10,7 +10,12 @@
     margin-top: 1em;
 
     @include for-laptop-and-up {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 2fr 1fr 1fr;
+
+      .end-date-time {
+        grid-column-start: 2;
+        grid-column-end: 4;
+      }
     }
 
     .start-date {
@@ -21,9 +26,36 @@
     }
 
     .start-time {
+      label {
+        padding-right: .5rem;
+      }
       select {
         min-width: initial;
         width: 5rem;
+      }
+    }
+
+    .timezone {
+
+      .picker {
+        display: flex;
+
+        .actions {
+          display: flex;
+          justify-content: flex-start;
+
+          button.cancel {
+            background: transparent;
+            color: $ilios-red;
+            margin: 0;
+            padding: 0 .2rem;
+
+            &:enabled:hover {
+              color: $white;
+              background-color: $ilios-red;
+            }
+          }
+        }
       }
     }
 
@@ -113,9 +145,3 @@
   }
 }
 
-
-.timezone {
-  color: $darker-grey;
-  font-size: .8rem;
-  margin-left: 1rem;
-}

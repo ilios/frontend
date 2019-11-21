@@ -289,6 +289,7 @@ general:
   timedReleaseOnlyEndDate: "Disponible avant {endDate}"
   timedReleaseOnlyStartDate: "Disponible après {startDate}"
   timedReleaseStartAndEndDate: "Disponible de {startDate} jusqu'à {endDate}"
+  timezone: "Fuseau horaire"
   title: "Tître"
   today: "Aujourd'hui"
   token: Token

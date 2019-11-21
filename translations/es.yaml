@@ -287,8 +287,9 @@ general:
   timedReleaseClearStartDate: "Quitar Fecha de Inicio de Lanzamiento "
   timedReleaseNoSchedule: "Disponible inmediatamente cuando publicado "
   timedReleaseOnlyEndDate: "Disponible antes de {endDate}"
-  timedReleaseOnlyStartDate: " Disponible después de {startDate}"
-  timedReleaseStartAndEndDate: " Disponible a partir de {startDate} hasta {endDate}"
+  timedReleaseOnlyStartDate: "Disponible después de {startDate}"
+  timedReleaseStartAndEndDate: "Disponible a partir de {startDate} hasta {endDate}"
+  timezone: "Zona horaria"
   title: Titulo
   today: Hoy
   token: Token

@@ -533,11 +533,13 @@ module('Integration | Component | offering form', function(hooks) {
     });
   });
 
-  test('shows timezone next to start date', async function(assert) {
+  test('shows current timezone', async function(assert) {
     this.set('nothing', () => {});
     await render(hbs`<OfferingForm @close={{action nothing}} />`);
 
-    const timezone = '.start-time .timezone';
-    assert.dom(timezone).containsText(Intl.DateTimeFormat().resolvedOptions().timeZone);
+    const timezoneService = this.owner.lookup('service:timezone');
+    const timezoneValue  = '[data-test-current-timezone]';
+    const currentTimezone = moment.tz.guess();
+    assert.dom(timezoneValue).containsText(timezoneService.formatTimezone(currentTimezone));
   });
 });
