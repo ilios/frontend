@@ -1,33 +1,40 @@
-<div class="title" role="button" {{on "click" @expand}}>
-  {{t "general.competencies"}} ({{get (await @subject.competencies) "length"}})
-</div>
-{{#unless (is-fulfilled this.summary)}}
-  <LoadingSpinner @tagName="h3" />
-{{else}}
-  <div class="content">
-    <table>
-      <thead>
-        <tr>
-          <th class="text-left">
-            {{t "general.school"}}
-          </th>
-          <th class="text-center">
-            {{t "general.competencies"}}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each (await this.summary) as |item|}}
-          <tr>
-            <td>
-              {{item.school.title}}
-            </td>
-            <td class="text-center">
-              {{item.competencies.length}}
-            </td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
+<section
+  class="collapsed-competencies"
+  {{did-insert (perform this.load) (await @subject.competencies)}}
+  {{did-update (perform this.load) (await @subject.competencies)}}
+  data-test-collapsed-competencies
+>
+  <div class="title" role="button" {{on "click" @expand}} data-test-title>
+    {{t "general.competencies"}} ({{get (await @subject.competencies) "length"}})
   </div>
-{{/unless}}
+  {{#unless this.summary}}
+    <LoadingSpinner @tagName="h3" />
+  {{else}}
+    <div class="content">
+      <table>
+        <thead>
+          <tr>
+            <th class="text-left">
+              {{t "general.school"}}
+            </th>
+            <th class="text-center">
+              {{t "general.competencies"}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each this.summary as |item|}}
+            <tr>
+              <td>
+                {{item.school.title}}
+              </td>
+              <td class="text-center">
+                {{item.competencies.length}}
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/unless}}
+</section>

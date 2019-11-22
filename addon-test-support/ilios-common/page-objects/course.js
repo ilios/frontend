@@ -21,6 +21,7 @@ import collapsedTaxonomies from './components/collapsed-taxonomies';
 import leadershipCollapsed from './components/leadership-collapsed';
 import leadershipList from './components/leadership-list';
 import leadershipManager from './components/leadership-manager';
+import collapsedCompetencies from './components/collapsed-competencies';
 
 export default create({
   scope: '[data-test-ilios-course-details]',
@@ -143,4 +144,5 @@ export default create({
       add: clickable(),
     }),
   },
+  collapsedCompetencies,
 });
