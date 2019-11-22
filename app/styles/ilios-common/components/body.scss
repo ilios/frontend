@@ -1,6 +1,7 @@
 html {
   box-sizing: border-box;
   font-size: 16px;
+  line-height: $base-line-height;
   @include for-desktop-and-up {
     font-size: 20px;
   }
