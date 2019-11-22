@@ -30,7 +30,7 @@ general:
   calendar: Calendrier
   cancel: Annul
   chooseCohortTitle: "Choisi objectif mère pour"
-  chooseFile: "Choisi Fichier"
+  chooseFile: "Choisir un Fichier"
   citation: Citation
   classOf: "Classe de {year}"
   clearFilters: "Effacerez les Filtres"
