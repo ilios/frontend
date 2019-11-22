@@ -88,7 +88,7 @@
     "@ilios/eslint-config-ember-addon": "^2.0.1",
     "broccoli-asset-rev": "^3.0.0",
     "dotenv": "^8.0.0",
-    "ember-a11y-testing": "^1.1.0",
+    "ember-a11y-testing": "^2.0.0",
     "ember-cli": "~3.14.0",
     "ember-cli-bundle-analyzer": "^0.1.0",
     "ember-cli-dependency-checker": "^3.1.0",
