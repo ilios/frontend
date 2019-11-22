@@ -30,6 +30,7 @@ general:
   calendar: Calendario
   cancel: Cancelar
   chooseCohortTitle: "Seleccione Matriz Para"
+  chooseFile: "Seleccione Archivo"
   citation: "Citación"
   classOf: "Clase de {year}"
   clearFilters: "Borrar Filtros"
@@ -106,6 +107,7 @@ general:
   externalId: "Identificación del Curso"
   file: Archivo
   filterPlaceholder: "Empieza marcando para aplicar un filtro"
+  fileSizeError: "Este archivo es demasiado grande.  El tamaño máximo es {maxSize}."
   findInstructorOrGroup: "Buscar Instructor o Grupo"
   firstOffering: "Ofrecimiento Primero"
   friday: Viernes

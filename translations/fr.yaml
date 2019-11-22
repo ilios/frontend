@@ -30,6 +30,7 @@ general:
   calendar: Calendrier
   cancel: Annul
   chooseCohortTitle: "Choisi objectif mère pour"
+  chooseFile: "Choisi Fichier"
   citation: Citation
   classOf: "Classe de {year}"
   clearFilters: "Effacerez les Filtres"
@@ -106,6 +107,7 @@ general:
   externalId: "ID de Cours"
   file: Fichier
   filterPlaceholder: "Commencez à taper pour filtre la liste"
+  fileSizeError: "Ce dossier est trop grand. Taille maximale est {maxSize})."
   findInstructorOrGroup: "Trouver Instructeur ou Groupe"
   firstOffering: "Premier Offre"
   friday: Vendredi

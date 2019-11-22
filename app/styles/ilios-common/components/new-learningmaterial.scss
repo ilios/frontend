@@ -15,4 +15,29 @@
   .description {
     @include ilios-browser-defaults;
   }
+
+  .file-upload {
+    flex-direction: row;
+    justify-content: start;
+    label:last-of-type {
+      margin-left: 1rem;
+    }
+    .upload-button {
+      background: $background-grey;
+      border: 1px solid $black;
+      border-radius: $base-border-radius;
+      color: $text-grey;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: .1em 1em;
+      &:hover {
+        background-color: $dark-grey;
+        color: $white;
+      }
+    }
+
+    .upload-result {
+      margin-left: 1rem;
+    }
+  }
 }

@@ -1,0 +1,25 @@
+<span class="learning-material-uploader" data-test-learning-material-uploader>
+  {{#file-upload
+    for=@for
+    disabled=this.upload.isRunning
+    name=this.uploadQueueName
+    onfileadd=(perform this.upload) as |queue|}}
+    <span class="upload-button" role="button">
+      {{#if (and (not this.fileUploadErrorMessage) queue.files.length)}}
+        <LoadingSpinner />{{queue.progress}}%
+      {{else}}
+        {{t "general.chooseFile"}}
+      {{/if}}
+    </span>
+    {{#if this.upload.lastSuccessful.value}}
+      <span class="upload-result">
+        {{this.upload.lastSuccessful.value}} <FaIcon @icon="check" class="add" />
+      </span>
+    {{/if}}
+    {{#if this.fileUploadErrorMessage}}
+      <span class="upload-result validation-error-message">
+        <FaIcon @icon="exclamation-circle" class="warning" /> {{this.fileUploadErrorMessage}}
+      </span>
+    {{/if}}
+  {{/file-upload}}
+</span>

@@ -171,29 +171,15 @@
       </span>
     </div>
   {{/unless}}
-  <div class="item">
-    <label>
+  <div class="item file-upload">
+    <label for={{concat this.element.id "file-upload"}}>
       {{t "general.file"}}:
     </label>
-    <span>
-      <FileUpload
-        @finishedUploading={{action "setFile"}}
-        @startUploading={{action "startUploadingFile"}}
-        @setUploadPercentage={{action "setFileUploadPercentage"}}
-        @setErrorMessage={{action (mut this.fileUploadErrorMessage)}}
-        @url={{this.uploadPath}}
-      />
-      {{#if this.showUploadStatus}}
-        <LoadingSpinner />{{this.fileUploadPercentage}}%
-      {{else if this.fileHash}}
-        <FaIcon @icon="check" class="add" />
-      {{/if}}
-      {{#if this.fileUploadErrorMessage}}
-        <span class="validation-error-message">
-          {{this.fileUploadErrorMessage}}
-        </span>
-      {{/if}}
-    </span>
+    <LearningMaterialUploader
+      @for={{concat this.element.id "file-upload"}}
+      @setFilename={{set this.filename}}
+      @setFileHash={{set this.fileHash}}
+    />
   </div>
 {{/if}}
 <div class="buttons">

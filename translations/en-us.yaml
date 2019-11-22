@@ -30,6 +30,7 @@ general:
   calendar: Calendar
   cancel: Cancel
   chooseCohortTitle: "Select Parent For"
+  chooseFile: "Choose File"
   citation: Citation
   classOf: "Class of {year}"
   clearFilters: "Clear Filters"
@@ -106,6 +107,7 @@ general:
   externalId: "Course ID"
   file: File
   filterPlaceholder: "Start typing to filter list"
+  fileSizeError: "This file is too large.  Maximum size is {maxSize}."
   findInstructorOrGroup: "Find Instructor or Group"
   firstOffering: "First Offering"
   friday: Friday
