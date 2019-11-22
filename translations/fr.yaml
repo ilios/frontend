@@ -102,6 +102,7 @@ general:
   ends: "Terminé"
   endTime: "Heure Terminé"
   etAl: "et al."
+  expand: "étendre"
   expandDetail: "Afficher Détails"
   externalId: "ID de Cours"
   file: Fichier
