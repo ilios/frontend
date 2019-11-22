@@ -1,10 +1,10 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  tagName: '',
-  actions: {
-    sortString(a, b){
-      return a.localeCompare(b);
-    }
+export default class WeekGlanceEvent extends Component {
+
+  @action
+  sortString(a, b){
+    return a.localeCompare(b);
   }
-});
+}
