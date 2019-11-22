@@ -1,11 +1,11 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { set, computed } from '@ember/object';
+import { computed } from '@ember/object';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
 
-const { equal, reads } = computed;
+const { equal } = computed;
 
 const Validations = buildValidations({
   title: [
@@ -96,14 +96,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   citation: null,
   fileUploadErrorMessage: false,
 
-  host: reads('iliosConfig.apiHost'),
   isFile: equal('type', 'file'),
   isCitation: equal('type', 'citation'),
   isLink: equal('type', 'link'),
-
-  uploadPath: computed('host', function () {
-    return this.get('host') + '/upload';
-  }),
 
   selectedStatus: computed('learningMaterialStatuses.[]', 'statusId', function () {
     const learningMaterialStatuses = this.get('learningMaterialStatuses');
@@ -133,28 +128,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return learningMaterialUserRoles.get('firstObject');
   }),
 
-  actions: {
-    setFile(e) {
-      this.setProperties({
-        filename: e.filename,
-        fileHash: e.fileHash,
-        showUploadStatus: false,
-        fileUploadPercentage: 100,
-        fileUploadErrorMessage: null,
-      });
-    },
-
-    startUploadingFile() {
-      set(this, 'fileHash', null);
-      set(this, 'showUploadStatus', true);
-      set(this, 'fileUploadPercentage', 0);
-      set(this, 'fileUploadErrorMessage', 0);
-    },
-
-    setFileUploadPercentage(percent) {
-      set(this, 'fileUploadPercentage', Math.floor(percent));
-    },
-  },
   prepareSave: task(function *() {
     this.send('addErrorDisplaysFor', ['title', 'originalAuthor', 'fileHash', 'url', 'citation']);
     let {validations} = yield this.validate();
