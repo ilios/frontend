@@ -20,6 +20,9 @@ module.exports = {
   included: function() {
     this._super.included.apply(this, arguments);
 
+    // Import normalize.css style
+    this.import(path.join('node_modules', 'normalize.css', 'normalize.css'));
+
     // Import the froala editor styles
     let froalaPath = path.join('node_modules', 'froala-editor');
     this.import(path.join(froalaPath, 'css', 'froala_editor.css'));
