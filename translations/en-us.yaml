@@ -102,6 +102,7 @@ general:
   ends: Ends
   endTime: "End Time"
   etAl: "et al."
+  expand: "expand"
   expandDetail: "Show Details"
   externalId: "Course ID"
   file: File
