@@ -1,30 +1,25 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import moment from 'moment';
 
-export default Component.extend({
-  classNames: ['weekly-events'],
-  year: null,
-  expandedWeeks: null,
+export default class WeeklyEvents extends Component {
 
-  weeksInYear: computed('year', function(){
-    const year = this.get('year');
-    const weeksInTheYear = moment().year(year).isoWeeksInYear();
+  get weeksInYear() {
+    const weeksInTheYear = moment().year(this.args.year).isoWeeksInYear();
     let weeks = [];
     for (let i = 1; i <= weeksInTheYear; i++) {
       weeks.push(`${i}`);
     }
-
     return weeks;
-  }),
-  actions: {
-    incrementYear(){
-      const year = this.get('year');
-      this.get('setYear')(parseInt(year, 10) + 1);
-    },
-    decrementYear(){
-      const year = this.get('year');
-      this.get('setYear')(parseInt(year, 10) - 1);
-    }
   }
-});
+
+  @action
+  incrementYear(){
+    this.args.setYear(parseInt(this.args.year, 10) + 1);
+  }
+
+  @action
+  decrementYear(){
+    this.args.setYear(parseInt(this.args.year, 10) - 1);
+  }
+}
