@@ -1,19 +1,18 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { map } from 'rsvp';
-import { computed } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  subject: null,
-  tagName: 'section',
-  classNames: ['collapsed-learnergroups'],
-  'data-test-collapsed-learnergroups': true,
-  cohortSummaries: computed('subject.learnerGroups.[]', async function () {
-    const subject = this.get('subject');
-    if (!subject) {
-      return [];
+export default class CollapsedLearnergroupsComponent extends Component {
+  @tracked
+  cohortSummaries;
+
+  @restartableTask
+  *load(element, [learnerGroups]) {
+    if (!learnerGroups) {
+      return;
     }
-    const learnerGroups = await subject.get('learnerGroups');
-    const cohorts = await map(learnerGroups.toArray(), (group => group.get('cohort')));
+    const cohorts = yield map(learnerGroups.toArray(), (group => group.get('cohort')));
     const summaryBlocks =  cohorts.reduce((set, cohort) => {
       const key = 'cohort' + cohort.get('id');
       if (!Object.keys(set).includes(key)) {
@@ -28,7 +27,7 @@ export default Component.extend({
       return set;
     }, {});
 
-    return await map(Object.keys(summaryBlocks), async key => {
+    this.cohortSummaries =  yield map(Object.keys(summaryBlocks), async key => {
       const cohort = summaryBlocks[key].cohort;
       const count = summaryBlocks[key].count;
       const program = await cohort.get('program');
@@ -39,5 +38,5 @@ export default Component.extend({
         count
       };
     });
-  }),
-});
+  }
+}
