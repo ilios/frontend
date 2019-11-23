@@ -16,6 +16,10 @@
         grid-column-start: 2;
         grid-column-end: 4;
       }
+
+      .current-timezone {
+        display: inline;
+      }
     }
 
     .start-date {
@@ -33,6 +37,10 @@
         min-width: initial;
         width: 5rem;
       }
+    }
+
+    .current-timezone {
+      font-size: small;
     }
 
     .timezone {

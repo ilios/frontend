@@ -31,13 +31,13 @@
         {{t "general.startTime"}}:
       </label>
       {{#if (not this.isEditingTimezone)}}
-        <span
+        <div
           data-test-current-timezone
-          class="editable clickable"
+          class="editable clickable current-timezone"
           role="button" onclick={{action (mut this.isEditingTimezone) true}}
         >
           {{this.formattedCurrentTimezone}}
-        </span>
+        </div>
       {{/if}}
       <TimePicker @date={{this.startDate}} @action={{action "updateStartTime"}} />
     </div>
