@@ -1,11 +1,14 @@
 import {
   collection,
+  clickable,
+  create,
   text
 } from 'ember-cli-page-object';
 
-export default {
+const definition = {
   scope: '[data-test-collapsed-taxonomies]',
-  title: text('.title'),
+  title: text('[data-test-title]'),
+  expand: clickable('[data-test-title]'),
   headers: collection('thead th', {
     title: text(),
   }),
@@ -15,3 +18,6 @@ export default {
     terms: text('td', { at: 2 }),
   }),
 };
+
+export default definition;
+export const component = create(definition);
