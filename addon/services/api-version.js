@@ -15,4 +15,9 @@ export default Service.extend({
     const serverApiVersion = await this.iliosConfig.apiVersion;
     return serverApiVersion !== this.version;
   }),
+
+  async getIsMismatched() {
+    const serverApiVersion = await this.iliosConfig.apiVersion;
+    return serverApiVersion !== this.version;
+  }
 });
