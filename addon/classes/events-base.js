@@ -1,8 +1,7 @@
-import Mixin from '@ember/object/mixin';
+import Service from '@ember/service';
 import moment from 'moment';
 
-export default Mixin.create({
-
+export default class EventsBase extends Service {
   /**
    * Returns the session for a given event.
    * @method getSessionForEvent
@@ -17,7 +16,7 @@ export default Mixin.create({
       intermediary = await this.get('store').findRecord('ilmSession', event.ilmSession);
     }
     return await intermediary.get('session');
-  },
+  }
 
   /**
    * Returns the course for a given event.
@@ -27,7 +26,7 @@ export default Mixin.create({
    */
   async getCourseForEvent(event) {
     return await this.store.findRecord('course', event.course);
-  },
+  }
 
   /**
    * Returns a list of vocabulary term ids for a given event.
@@ -44,7 +43,7 @@ export default Mixin.create({
     terms.pushObjects(sessionTerms.toArray());
     terms.pushObjects(courseTerms.toArray());
     return terms.mapBy('id').uniq();
-  },
+  }
 
   /**
    * Returns the session-type id for a given event.
@@ -56,7 +55,7 @@ export default Mixin.create({
     const session = await this.getSessionForEvent(event);
     const sessionType = await session.get('sessionType');
     return sessionType.get('id');
-  },
+  }
 
   /**
    * Returns the course level for a given event.
@@ -67,7 +66,7 @@ export default Mixin.create({
   async getCourseLevelForEvent(event){
     const course = await this.getCourseForEvent(event);
     return course.get('level');
-  },
+  }
 
   /**
    * Returns the course id for a given event.
@@ -78,7 +77,7 @@ export default Mixin.create({
   async getCourseIdForEvent(event){
     const course = await this.getCourseForEvent(event);
     return course.get('id');
-  },
+  }
 
   /**
    * Returns the cohort id for a given event.
@@ -90,7 +89,7 @@ export default Mixin.create({
     const course = await this.getCourseForEvent(event);
     const cohorts = await course.get('cohorts');
     return cohorts.toArray().mapBy('id');
-  },
+  }
 
   /**
    * Parses event and does some transformation
@@ -113,7 +112,7 @@ export default Mixin.create({
     obj.postrequisites = obj.postrequisites.map(postreq => this.createEventFromData(postreq, isUserEvent)).sortBy('startDate', 'name');
 
     return obj;
-  },
+  }
 
   /**
    * Generates a slug for a given user event.
@@ -131,7 +130,7 @@ export default Mixin.create({
       slug += 'I' + event.ilmSession;
     }
     return slug;
-  },
+  }
 
   /**
    * Generates a slug for a given school event.
@@ -155,5 +154,5 @@ export default Mixin.create({
       slug += 'I' + event.ilmSession;
     }
     return slug;
-  },
-});
+  }
+}

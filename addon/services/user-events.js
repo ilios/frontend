@@ -1,16 +1,13 @@
-import Service, { inject as service } from '@ember/service';
-import { reads } from '@ember/object/computed';
-import EventMixin from 'ilios-common/mixins/events';
+import EventsBase from '../classes/events-base';
+import { inject as service } from '@ember/service';
 import moment from 'moment';
 
-
-export default Service.extend(EventMixin, {
-  store: service(),
-  currentUser: service(),
-  session: service(),
-  fetch: service(),
-  iliosConfig: service(),
-  namespace: reads('iliosConfig.apiNameSpace'),
+export default class UserEvents extends EventsBase {
+  @service store;
+  @service currentUser;
+  @service session;
+  @service fetch;
+  @service iliosConfig;
 
   /**
    * Retrieves a list of user-events for the current user that occur in a given date range, sorted by start dates.
@@ -26,7 +23,7 @@ export default Service.extend(EventMixin, {
     }
 
     let url = '';
-    const namespace = this.get('namespace');
+    const namespace = this.iliosConfig.apiNameSpace;
     if (namespace) {
       url += '/' + namespace;
     }
@@ -35,7 +32,7 @@ export default Service.extend(EventMixin, {
     const data = await this.fetch.getJsonFromApiHost(url);
 
     return data.userEvents.map(obj => this.createEventFromData(obj, true)).sortBy('startDate', 'name');
-  },
+  }
 
   /**
    * Retrieves and event by it's given slug.
@@ -59,7 +56,7 @@ export default Service.extend(EventMixin, {
         return parseInt(event.ilmSession, 10) === id;
       }
     });
-  },
+  }
 
   /**
    * Generates a slug for a given event.
@@ -77,5 +74,5 @@ export default Service.extend(EventMixin, {
       slug += 'I' + event.ilmSession;
     }
     return slug;
-  },
-});
+  }
+}
