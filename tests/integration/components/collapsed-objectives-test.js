@@ -2,12 +2,9 @@ import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  settled,
-  click
-} from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { component } from 'ilios-common/page-objects/components/collapsed-objectives';
 
 let hasMesh, hasParents, plain;
 
@@ -57,8 +54,6 @@ module('Integration | Component | collapsed objectives', function(hooks) {
   });
 
   test('displays summary data', async function(assert) {
-    assert.expect(9);
-
     const course = EmberObject.create({
       objectives: resolve([hasMesh, hasParents, plain])
     });
@@ -67,22 +62,20 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     this.set('click', () => {});
     await render(hbs`<CollapsedObjectives @subject={{subject}} @expand={{action click}} />`);
 
-    assert.dom('.title').hasText('Objectives (3)');
-    assert.dom('table tr').exists({ count: 4 });
-    assert.dom('tr td').hasText('There are 3 objectives');
-    assert.dom('tr:nth-of-type(2) td').includesText("1 has a parent");
-    assert.dom('tr:nth-of-type(3) td').includesText("1 has MeSH");
-
-    assert.dom('tr td:nth-of-type(2) svg').hasClass('fa-circle', 'correct icon for parent objectives');
-    assert.dom('tr td:nth-of-type(2) svg').hasClass('maybe', 'correct class for parent objectives');
-    assert.dom('tr td:nth-of-type(3) svg').hasClass('fa-circle', 'correct icon for mesh links');
-    assert.dom('tr td:nth-of-type(3) svg').hasClass('maybe', 'correct class for mesh links');
+    assert.equal(component.title, 'Objectives (3)');
+    assert.equal(component.objectiveCount, 'There are 3 objectives');
+    assert.equal(component.parentCount, '1 has a parent');
+    assert.equal(component.meshCount, '1 has MeSH');
+    assert.ok(component.parentStatus.partial);
+    assert.ok(component.meshStatus.partial);
   });
 
   test('clicking expand icon opens full view', async function(assert) {
     assert.expect(2);
 
-    const course = EmberObject.create();
+    const course = EmberObject.create({
+      objectives: resolve([])
+    });
 
     this.set('subject', course);
     this.set('click', () => {
@@ -90,14 +83,12 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     });
 
     await render(hbs`<CollapsedObjectives @subject={{subject}} @expand={{action click}} />`);
-    await settled();
 
-    assert.dom('.title').hasText('Objectives ()');
-    await click('.title');
+    assert.equal(component.title, 'Objectives (0)');
+    await component.expand();
   });
 
   test('icons all parents correctly', async function(assert) {
-    assert.expect(4);
 
     const course = EmberObject.create({
       objectives: resolve([hasParents])
@@ -106,17 +97,11 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     this.set('subject', course);
     this.set('click', () => {});
     await render(hbs`<CollapsedObjectives @subject={{subject}} @expand={{action click}} />`);
-    await settled();
-
-    assert.dom('.title').hasText('Objectives (1)');
-    assert.dom('table tr').exists({ count: 4 });
-
-    assert.dom('tr td:nth-of-type(2) svg').hasClass('fa-circle', 'has the correct icon');
-    assert.dom('tr td:nth-of-type(2) svg').hasClass('yes', 'icon has the right class');
+    assert.equal(component.title, 'Objectives (1)');
+    assert.ok(component.parentStatus.complete);
   });
 
   test('icons no parents correctly', async function(assert) {
-    assert.expect(4);
     const course = EmberObject.create({
       objectives: resolve([plain])
     });
@@ -124,17 +109,11 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     this.set('subject', course);
     this.set('click', () => {});
     await render(hbs`<CollapsedObjectives @subject={{subject}} @expand={{action click}} />`);
-    await settled();
-
-    assert.dom('.title').hasText('Objectives (1)');
-    assert.dom('table tr').exists({ count: 4 });
-
-    assert.dom('tr td:nth-of-type(2) svg').hasClass('fa-ban', 'has the correct icon');
-    assert.dom('tr td:nth-of-type(2) svg').hasClass('no', 'icon has the right class');
+    assert.equal(component.title, 'Objectives (1)');
+    assert.ok(component.parentStatus.none);
   });
 
   test('icons all mesh correctly', async function(assert) {
-    assert.expect(4);
     const course = EmberObject.create({
       objectives: resolve([hasMesh])
     });
@@ -142,17 +121,11 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     this.set('subject', course);
     this.set('click', () => {});
     await render(hbs`<CollapsedObjectives @subject={{subject}} @expand={{action click}} />`);
-    await settled();
-
-    assert.dom('.title').hasText('Objectives (1)');
-    assert.dom('table tr').exists({ count: 4 });
-
-    assert.dom('tr td:nth-of-type(3) svg').hasClass('fa-circle', 'has the correct icon');
-    assert.dom('tr td:nth-of-type(3) svg').hasClass('yes', 'icon has the right class');
+    assert.equal(component.title, 'Objectives (1)');
+    assert.ok(component.meshStatus.complete);
   });
 
   test('icons no mesh correctly', async function(assert) {
-    assert.expect(4);
     const course = EmberObject.create({
       objectives: resolve([plain])
     });
@@ -160,12 +133,7 @@ module('Integration | Component | collapsed objectives', function(hooks) {
     this.set('subject', course);
     this.set('click', () => {});
     await render(hbs`<CollapsedObjectives @subject={{subject}} @expand={{action click}} />`);
-    await settled();
-
-    assert.dom('.title').hasText('Objectives (1)');
-    assert.dom('table tr').exists({ count: 4 });
-
-    assert.dom('tr td:nth-of-type(3) svg').hasClass('fa-ban', 'has the correct icon');
-    assert.dom('tr td:nth-of-type(3) svg').hasClass('no', 'icon has the right class');
+    assert.equal(component.title, 'Objectives (1)');
+    assert.ok(component.meshStatus.none);
   });
 });
