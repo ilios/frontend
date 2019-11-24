@@ -2,6 +2,7 @@ import RESTAdapter from '@ember-data/adapter/rest';
 import { inject as service } from '@ember/service';
 import { reads } from '@ember/object/computed';
 import { pluralize } from 'ember-inflector';
+import { camelize } from '@ember/string';
 
 export default RESTAdapter.extend({
   iliosConfig: service(),
@@ -45,7 +46,7 @@ export default RESTAdapter.extend({
   },
 
   pathForType(type) {
-    return pluralize(type.camelize().toLowerCase());
+    return pluralize(camelize(type).toLowerCase());
   },
 
   sortQueryParams: false,
