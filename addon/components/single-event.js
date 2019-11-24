@@ -3,10 +3,9 @@ import { computed } from '@ember/object';
 import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isBlank, isEmpty } from '@ember/utils';
-import EventMixin from 'ilios-common/mixins/events';
 import moment from 'moment';
 
-export default Component.extend(EventMixin, {
+export default Component.extend({
   currentUser: service(),
   intl: service(),
   router: service(),
