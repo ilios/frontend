@@ -7,6 +7,7 @@ const WriteFile = require('broccoli-file-creator');
 
 module.exports = {
   name: require('./package').name,
+  _env: null,
 
   options: {
     babel: {
@@ -19,6 +20,9 @@ module.exports = {
 
   included: function() {
     this._super.included.apply(this, arguments);
+
+    // _findHost is private API but it's been stable in ember-cli for two years.
+    this._env = this._findHost().env;
 
     // Import normalize.css style
     this.import(path.join('node_modules', 'normalize.css', 'normalize.css'));
@@ -66,7 +70,7 @@ module.exports = {
 
   treeForApp(appTree) {
     const trees = [appTree];
-    if (this.app.env && ['test', 'development'].includes(this.app.env)) {
+    if (['test', 'development'].includes(this._env)) {
       const mirageDir = path.join(__dirname, 'addon-mirage-support');
       const mirageTree = new Funnel(mirageDir, { destDir: 'mirage' });
       trees.push(mirageTree);
