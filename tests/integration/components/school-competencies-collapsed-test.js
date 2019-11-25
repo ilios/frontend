@@ -12,11 +12,11 @@ module('Integration | Component | school competencies collapsed', function(hooks
 
   test('it renders', async function(assert) {
     assert.expect(3);
-    let domain = EmberObject.create({title: 'domain 0', isDomain: true, childCount: 1});
-    let competency = EmberObject.create({isNotDomain: true, parent: resolve(domain)});
+    const domain = EmberObject.create({title: 'domain 0', isDomain: true, childCount: 1});
+    const competency = EmberObject.create({isNotDomain: true, parent: resolve(domain)});
     domain.set('children', resolve([competency]));
 
-    let competencies = [domain, competency];
+    const competencies = [domain, competency];
 
     const school = EmberObject.create({
       competencies: resolve(competencies)

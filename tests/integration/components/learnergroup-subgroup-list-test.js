@@ -49,7 +49,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
   });
 
   test('can remove group', async function(assert) {
-    let subGroup1 = {
+    const subGroup1 = {
       title: 'first',
       courses: resolve([]),
       users: [1,2],
@@ -58,7 +58,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
         assert.ok(true);
       }
     };
-    let parentGroup = {
+    const parentGroup = {
       children: resolve([subGroup1])
     };
 
@@ -86,13 +86,13 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
   });
 
   test('removal confirmation', async function(assert) {
-    let subGroup1 = {
+    const subGroup1 = {
       title: 'first',
       courses: resolve([]),
       users: [1,2],
       children: [],
     };
-    let parentGroup = {
+    const parentGroup = {
       children: resolve([subGroup1])
     };
 
@@ -124,7 +124,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
 
     await click('.expand-button');
 
-    let newTitle = 'new group';
+    const newTitle = 'new group';
     await fillIn('input', newTitle);
     await triggerEvent('input', 'input');
     await click('.done');

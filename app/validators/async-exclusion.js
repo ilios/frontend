@@ -6,7 +6,7 @@ const { Promise } = RSVP;
 
 export default BaseValidator.extend({
   validate(value, options) {
-    let promise = options['in'];
+    const promise = options['in'];
     if (isEmpty(promise)) {
       return true;
     }

@@ -37,11 +37,11 @@ export default Component.extend({
     const managedTermId = this.managedTermId;
     if(isPresent(managedVocabularyId)){
       this.get('school.vocabularies').then(vocabularies => {
-        let managedVocabulary = vocabularies.findBy('id', managedVocabularyId);
+        const managedVocabulary = vocabularies.findBy('id', managedVocabularyId);
         this.set('managedVocabulary', managedVocabulary);
         if(isPresent(managedTermId)){
           managedVocabulary.get('terms').then(terms => {
-            let managedTerm = terms.findBy('id', managedTermId);
+            const managedTerm = terms.findBy('id', managedTermId);
             this.set('managedTerm', managedTerm);
           });
         } else {

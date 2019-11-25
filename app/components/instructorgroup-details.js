@@ -8,14 +8,14 @@ export default Component.extend({
 
   actions: {
     addUser(user) {
-      let instructorGroup = this.instructorGroup;
+      const instructorGroup = this.instructorGroup;
       instructorGroup.get('users').addObject(user);
       user.get('instructorGroups').addObject(instructorGroup);
       instructorGroup.save();
     },
 
     removeUser(user) {
-      let instructorGroup = this.instructorGroup;
+      const instructorGroup = this.instructorGroup;
       instructorGroup.get('users').removeObject(user);
       user.get('instructorGroups').removeObject(instructorGroup);
       instructorGroup.save();

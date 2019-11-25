@@ -15,13 +15,13 @@ module('Integration | Component | pending single user update', function(hooks) {
     // Set any properties with this.set('myProperty', 'value');
     // Handle any actions with this.on('myAction', function(val) { ... });"
 
-    let updates = [
+    const updates = [
       {
         type: 'emailMismatch',
         value: 'directory-email',
       }
     ];
-    let user = EmberObject.create({
+    const user = EmberObject.create({
       pendingUserUpdates: PromiseArray.create({
         promise: resolve(updates)
       }),

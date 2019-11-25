@@ -113,7 +113,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         'addressZipCode',
         'addressCountryCode',
       ]);
-      let {validations} = await this.validate();
+      const {validations} = await this.validate();
       if (validations.get('isInvalid')) {
         this.set('isSaving', false);
         return;

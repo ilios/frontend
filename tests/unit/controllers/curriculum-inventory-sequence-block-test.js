@@ -6,7 +6,7 @@ module('Unit | Controller | curriculum inventory sequence block', function(hooks
 
   // Replace this with your real tests.
   test('it exists', function(assert) {
-    let controller = this.owner.lookup('controller:curriculum-inventory-sequence-block');
+    const controller = this.owner.lookup('controller:curriculum-inventory-sequence-block');
     assert.ok(controller);
   });
 });

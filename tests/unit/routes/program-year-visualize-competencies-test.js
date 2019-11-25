@@ -5,7 +5,7 @@ module('Unit | Route | program-year-visualize-competencies', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let route = this.owner.lookup('route:program-year-visualize-competencies');
+    const route = this.owner.lookup('route:program-year-visualize-competencies');
     assert.ok(route);
   });
 });

@@ -109,7 +109,7 @@ export default Component.extend({
 
   actions: {
     changeSession(session) {
-      let sessions = this.linkedSessionsBuffer;
+      const sessions = this.linkedSessionsBuffer;
       if (sessions.includes(session)) {
         sessions.removeObject(session);
       } else {
@@ -118,7 +118,7 @@ export default Component.extend({
     },
 
     excludeSession(session) {
-      let sessions = this.excludedSessionsBuffer;
+      const sessions = this.excludedSessionsBuffer;
       if (sessions.includes(session)) {
         sessions.removeObject(session);
       } else {
@@ -164,7 +164,7 @@ export default Component.extend({
     linkedSessionsBuffer = linkedSessionsBuffer.toArray();
     let excludedSessionsBuffer = yield sequenceBlock.get('excludedSessions');
     excludedSessionsBuffer = excludedSessionsBuffer.toArray();
-    let sessionsBuffer = yield sessions;
+    const sessionsBuffer = yield sessions;
     this.setProperties({
       linkedSessionsBuffer,
       excludedSessionsBuffer,
@@ -173,8 +173,8 @@ export default Component.extend({
   }),
 
   saveChanges: task(function* () {
-    let sessions = this.linkedSessionsBuffer;
-    let excludedSessions = this.excludedSessionsBuffer;
+    const sessions = this.linkedSessionsBuffer;
+    const excludedSessions = this.excludedSessionsBuffer;
     yield this.save(sessions, excludedSessions);
   })
 });

@@ -24,7 +24,7 @@ export default Component.extend({
       return [];
     }
     const directors = await this.school.directors;
-    let arr = directors.toArray();
+    const arr = directors.toArray();
     arr.pushObjects(this.directorsToAdd);
     return arr.filter(user => !this.directorsToRemove.includes(user)).uniq();
   }),
@@ -33,7 +33,7 @@ export default Component.extend({
       return [];
     }
     const administrators = await this.school.administrators;
-    let arr = administrators.toArray();
+    const arr = administrators.toArray();
     arr.pushObjects(this.administratorsToAdd);
     return arr.filter(user => !this.administratorsToRemove.includes(user)).uniq();
   }),
@@ -67,7 +67,7 @@ export default Component.extend({
     const directors = yield this.directors;
     const administrators = yield this.administrators;
 
-    let school = this.school;
+    const school = this.school;
     school.setProperties({directors, administrators});
     this.expand();
     yield school.save();

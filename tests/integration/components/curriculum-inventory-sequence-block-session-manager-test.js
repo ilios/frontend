@@ -14,29 +14,29 @@ module('Integration | Component | curriculum inventory sequence block session ma
   test('it renders', async function(assert) {
     assert.expect(33);
 
-    let offering1 = EmberObject.create({id: 1});
-    let offering2 = EmberObject.create({id: 2});
-    let offering3 = EmberObject.create({id: 3});
+    const offering1 = EmberObject.create({id: 1});
+    const offering2 = EmberObject.create({id: 2});
+    const offering3 = EmberObject.create({id: 3});
 
-    let offerings1 = [ offering1, offering2 ];
-    let offerings2 = [ offering3 ];
-    let offerings3 = [];
-    let offerings4 = [];
-
-
-    let sessionType1 = EmberObject.create({ title: 'Lecture'});
-    let sessionType2 = EmberObject.create({ title: 'Ceremony'});
-    let sessionType3 = EmberObject.create({ title: 'Small Group'});
-    let sessionType4 = EmberObject.create({ title: 'Rocket Surgery'});
+    const offerings1 = [ offering1, offering2 ];
+    const offerings2 = [ offering3 ];
+    const offerings3 = [];
+    const offerings4 = [];
 
 
-    let totalTime1 = (30).toFixed(2);
-    let totalTime2 = (15).toFixed(2);
-    let totalTime3 = (0).toFixed(2);
-    let totalTime4 = (0).toFixed(2);
+    const sessionType1 = EmberObject.create({ title: 'Lecture'});
+    const sessionType2 = EmberObject.create({ title: 'Ceremony'});
+    const sessionType3 = EmberObject.create({ title: 'Small Group'});
+    const sessionType4 = EmberObject.create({ title: 'Rocket Surgery'});
 
 
-    let session1 = EmberObject.create({
+    const totalTime1 = (30).toFixed(2);
+    const totalTime2 = (15).toFixed(2);
+    const totalTime3 = (0).toFixed(2);
+    const totalTime4 = (0).toFixed(2);
+
+
+    const session1 = EmberObject.create({
       id: 1,
       title: 'Aardvark',
       offerings: resolve(offerings1),
@@ -45,7 +45,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       maxDuration: resolve(totalTime1)
     });
 
-    let session2 = EmberObject.create({
+    const session2 = EmberObject.create({
       id: 2,
       title: 'Bluebird',
       offerings: resolve(offerings2),
@@ -54,7 +54,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(totalTime2)
     });
 
-    let session3 = EmberObject.create({
+    const session3 = EmberObject.create({
       id: 3,
       title: 'Zeppelin',
       offerings: resolve(offerings3),
@@ -63,7 +63,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       maxDuration: resolve(totalTime3)
     });
 
-    let session4 = EmberObject.create({
+    const session4 = EmberObject.create({
       id: 4,
       title: 'Zwickzange',
       offerings: resolve(offerings4),
@@ -72,11 +72,11 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(totalTime4)
     });
 
-    let linkedSessions = [session1, session3];
-    let excludedSessions = [session4];
-    let sessions = [session1, session2, session3, session4];
+    const linkedSessions = [session1, session3];
+    const excludedSessions = [session4];
+    const sessions = [session1, session2, session3, session4];
 
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       id: 1,
       sessions: resolve(linkedSessions),
       excludedSessions: resolve(excludedSessions),
@@ -136,7 +136,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
   test('empty list', async function(assert) {
     assert.expect(2);
 
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       id: 1,
       sessions: resolve([]),
       excludedSessions: resolve([]),
@@ -158,7 +158,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
 
   test('sort by title', async function(assert) {
     assert.expect(1);
-    let session = EmberObject.create({
+    const session = EmberObject.create({
       id: 1,
       title: 'Zeppelin',
       offerings: resolve([]),
@@ -166,7 +166,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       maxDuration: resolve(0)
     });
 
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       id: 1,
       sessions: resolve([ session ]),
       excludedSessions: resolve([]),
@@ -189,7 +189,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
 
   test('sort by session type', async function(assert) {
     assert.expect(1);
-    let session = EmberObject.create({
+    const session = EmberObject.create({
       id: 1,
       title: 'Zeppelin',
       offerings: resolve([]),
@@ -197,7 +197,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       maxDuration: resolve(0)
     });
 
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       id: 1,
       sessions: resolve([ session ]),
       excludedSessions: resolve([]),
@@ -220,7 +220,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
 
   test('sort by offerings total', async function(assert) {
     assert.expect(1);
-    let session = EmberObject.create({
+    const session = EmberObject.create({
       id: 1,
       title: 'Zeppelin',
       offerings: resolve([]),
@@ -228,7 +228,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       maxDuration: resolve(0)
     });
 
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       id: 1,
       sessions: resolve([ session ]),
       excludedSessions: resolve([]),
@@ -252,9 +252,9 @@ module('Integration | Component | curriculum inventory sequence block session ma
 
   test('change count as one offering', async function(assert) {
     assert.expect(3);
-    let maxDuration = (20).toFixed(2);
-    let totalSumDuration = (15).toFixed(2);
-    let session = EmberObject.create({
+    const maxDuration = (20).toFixed(2);
+    const totalSumDuration = (15).toFixed(2);
+    const session = EmberObject.create({
       id: 1,
       title: 'Zeppelin',
       offerings: resolve([]),
@@ -263,7 +263,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(totalSumDuration)
     });
 
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       id: 1,
       sessions: resolve([ session ]),
       excludedSessions: resolve([]),
@@ -288,9 +288,9 @@ module('Integration | Component | curriculum inventory sequence block session ma
 
   test('change count as one offering for all sessions', async function(assert) {
     assert.expect(6);
-    let maxDuration = (20).toFixed(2);
-    let totalSumDuration = (15).toFixed(2);
-    let session1 = EmberObject.create({
+    const maxDuration = (20).toFixed(2);
+    const totalSumDuration = (15).toFixed(2);
+    const session1 = EmberObject.create({
       id: 1,
       title: 'Alpha',
       offerings: resolve([]),
@@ -299,7 +299,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(totalSumDuration)
     });
 
-    let session2 = EmberObject.create({
+    const session2 = EmberObject.create({
       id: 2,
       title: 'Omega',
       offerings: resolve([]),
@@ -308,7 +308,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(totalSumDuration)
     });
 
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       id: 1,
       sessions: resolve([ session1 ]),
       excludedSessions: resolve([]),
@@ -337,7 +337,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
   test('save', async function(assert) {
     assert.expect(6);
 
-    let session1 = EmberObject.create({
+    const session1 = EmberObject.create({
       id: 1,
       title: 'Alpha',
       offerings: resolve([]),
@@ -346,7 +346,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(0)
     });
 
-    let session2 = EmberObject.create({
+    const session2 = EmberObject.create({
       id: 2,
       title: 'Omega',
       offerings: resolve([]),
@@ -355,7 +355,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(0)
     });
 
-    let session3 = EmberObject.create({
+    const session3 = EmberObject.create({
       id: 3,
       title: 'Zeppelin',
       offerings: resolve([]),
@@ -364,7 +364,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(0)
     });
 
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       id: 1,
       sessions: resolve([ session1 ]),
       excludedSessions: resolve([ session2, session3 ])
@@ -396,7 +396,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
   test('cancel', async function(assert) {
     assert.expect(1);
 
-    let session = EmberObject.create({
+    const session = EmberObject.create({
       id: 1,
       title: 'Alpha',
       offerings: resolve([]),
@@ -405,7 +405,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(0)
     });
 
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       id: 1,
       sessions: resolve([ session ]),
       excludedSessions: resolve([])
@@ -430,9 +430,9 @@ module('Integration | Component | curriculum inventory sequence block session ma
   test('check all/uncheck all count-as-one', async function(assert) {
     assert.expect(15);
 
-    let sessionType = EmberObject.create({ title: 'Lecture'});
+    const sessionType = EmberObject.create({ title: 'Lecture'});
 
-    let session1 = EmberObject.create({
+    const session1 = EmberObject.create({
       id: 1,
       title: 'Aardvark',
       offerings: resolve([]),
@@ -441,7 +441,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(0)
     });
 
-    let session2 = EmberObject.create({
+    const session2 = EmberObject.create({
       id: 2,
       title: 'Bluebird',
       offerings: resolve([]),
@@ -450,7 +450,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(0)
     });
 
-    let session3 = EmberObject.create({
+    const session3 = EmberObject.create({
       id: 3,
       title: 'Zeppelin',
       offerings: resolve([]),
@@ -459,7 +459,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(0)
     });
 
-    let session4 = EmberObject.create({
+    const session4 = EmberObject.create({
       id: 4,
       title: 'Zwickzange',
       offerings: resolve([]),
@@ -468,7 +468,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(0)
     });
 
-    let session5 = EmberObject.create({
+    const session5 = EmberObject.create({
       id: 4,
       title: 'Zylinder',
       offerings: resolve([]),
@@ -477,9 +477,9 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(0)
     });
 
-    let sessions = [session1, session2, session3, session4, session5];
+    const sessions = [session1, session2, session3, session4, session5];
 
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       id: 1,
       sessions: resolve([session5]),
       excludedSessions: resolve([]),
@@ -521,9 +521,9 @@ module('Integration | Component | curriculum inventory sequence block session ma
   test('check all/uncheck all excluded', async function(assert) {
     assert.expect(15);
 
-    let sessionType = EmberObject.create({ title: 'Lecture'});
+    const sessionType = EmberObject.create({ title: 'Lecture'});
 
-    let session1 = EmberObject.create({
+    const session1 = EmberObject.create({
       id: 1,
       title: 'Aardvark',
       offerings: resolve([]),
@@ -532,7 +532,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(0)
     });
 
-    let session2 = EmberObject.create({
+    const session2 = EmberObject.create({
       id: 2,
       title: 'Bluebird',
       offerings: resolve([]),
@@ -541,7 +541,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(0)
     });
 
-    let session3 = EmberObject.create({
+    const session3 = EmberObject.create({
       id: 3,
       title: 'Zeppelin',
       offerings: resolve([]),
@@ -550,7 +550,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(0)
     });
 
-    let session4 = EmberObject.create({
+    const session4 = EmberObject.create({
       id: 4,
       title: 'Zwickzange',
       offerings: resolve([]),
@@ -559,7 +559,7 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(0)
     });
 
-    let session5 = EmberObject.create({
+    const session5 = EmberObject.create({
       id: 4,
       title: 'Zylinder',
       offerings: resolve([]),
@@ -568,9 +568,9 @@ module('Integration | Component | curriculum inventory sequence block session ma
       totalSumDuration: resolve(0)
     });
 
-    let sessions = [session1, session2, session3, session4, session5];
+    const sessions = [session1, session2, session3, session4, session5];
 
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       id: 1,
       sessions: resolve([]),
       excludedSessions: resolve([session5]),

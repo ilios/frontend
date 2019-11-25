@@ -107,9 +107,9 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   addUserToGroup: task(function* (user) {
     const learnerGroup = this.learnerGroup;
     const topLevelGroup = yield learnerGroup.get('topLevelGroup');
-    let removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
-    let addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
-    let groups = [].concat(removeGroups).concat(addGroups);
+    const removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
+    const addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
+    const groups = [].concat(removeGroups).concat(addGroups);
     yield all(groups.invoke('save'));
     yield this.createUsersToPassToManager.perform();
     yield this.createUsersToPassToCohortManager.perform();
@@ -117,7 +117,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   removeUserToCohort: task(function* (user) {
     const topLevelGroup = yield this.learnerGroup.get('topLevelGroup');
-    let groups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
+    const groups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
     yield all(groups.invoke('save'));
     yield this.createUsersToPassToManager.perform();
     yield this.createUsersToPassToCohortManager.perform();
@@ -126,11 +126,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   addUsersToGroup: task(function* (users) {
     const learnerGroup = this.learnerGroup;
     const topLevelGroup = yield learnerGroup.get('topLevelGroup');
-    let groupsToSave = [];
+    const groupsToSave = [];
     for (let i = 0; i < users.length; i++) {
-      let user = users[i];
-      let removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
-      let addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
+      const user = users[i];
+      const removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
+      const addGroups = yield learnerGroup.addUserToGroupAndAllParents(user);
       groupsToSave.pushObjects(removeGroups);
       groupsToSave.pushObjects(addGroups);
     }
@@ -141,10 +141,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   removeUsersToCohort: task(function* (users) {
     const topLevelGroup = yield this.learnerGroup.get('topLevelGroup');
-    let groupsToSave = [];
+    const groupsToSave = [];
     for (let i = 0; i < users.length; i++) {
-      let user = users[i];
-      let removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
+      const user = users[i];
+      const removeGroups = yield topLevelGroup.removeUserFromGroupAndAllDescendants(user);
       groupsToSave.pushObjects(removeGroups);
     }
     yield all(groupsToSave.uniq().invoke('save'));
@@ -157,14 +157,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const learnerGroup = this.learnerGroup;
     let users;
     if (isEditing) {
-      let topLevelGroup = yield learnerGroup.get('topLevelGroup');
+      const topLevelGroup = yield learnerGroup.get('topLevelGroup');
       users = yield topLevelGroup.get('allDescendantUsers');
     } else {
       users = yield learnerGroup.get('usersOnlyAtThisLevel');
     }
     const treeGroups = yield this.treeGroups;
     return yield map(users.toArray(), async user => {
-      let lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
+      const lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(treeGroups);
       return ObjectProxy.create({
         content: user,
         lowestGroupInTree,
@@ -180,7 +180,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const topLevelGroup = yield learnerGroup.get('topLevelGroup');
     const currentUsers = yield topLevelGroup.get('allDescendantUsers');
     const users = yield cohort.get('users');
-    let filteredUsers = users.filter(
+    const filteredUsers = users.filter(
       user => !currentUsers.includes(user)
     );
     return filteredUsers;

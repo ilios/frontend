@@ -18,7 +18,7 @@ module('Acceptance | User', function(hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    let userObject = {
+    const userObject = {
       id: 100,
       campusId: '123',
       email: 'user@example.edu',

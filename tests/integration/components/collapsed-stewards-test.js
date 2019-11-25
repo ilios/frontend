@@ -10,38 +10,38 @@ module('Integration | Component | collapsed stewards', function(hooks) {
 
   test('it renders', async function(assert) {
     assert.expect(5);
-    let school1 = EmberObject.create({
+    const school1 = EmberObject.create({
       id: 1,
       title: 'school1'
     });
-    let school2 = EmberObject.create({
+    const school2 = EmberObject.create({
       id: 2,
       title: 'school2'
     });
-    let department1 = EmberObject.create({
+    const department1 = EmberObject.create({
       id: 1,
       school: resolve(school1)
     });
-    let department2 = EmberObject.create({
+    const department2 = EmberObject.create({
       id: 2,
       school: resolve(school1)
     });
     school1.set('departments', resolve([department1, department2]));
-    let department3 = EmberObject.create({
+    const department3 = EmberObject.create({
       id: 3,
       school: resolve(school2)
     });
     school2.set('departments', resolve([department3]));
 
-    let programYear = EmberObject.create();
-    let steward1 = EmberObject.create({
+    const programYear = EmberObject.create();
+    const steward1 = EmberObject.create({
       programYear: resolve(programYear),
       school: resolve(school1),
       department: resolve(department1)
     });
     department1.set('stewards', resolve([steward1]));
 
-    let steward2 = EmberObject.create({
+    const steward2 = EmberObject.create({
       programYear: resolve(programYear),
       school: resolve(school1),
       department: resolve(department2)
@@ -49,7 +49,7 @@ module('Integration | Component | collapsed stewards', function(hooks) {
     department2.set('stewards', resolve([steward2]));
     school1.set('stewards', resolve([steward1, steward2]));
 
-    let steward3 = EmberObject.create({
+    const steward3 = EmberObject.create({
       programYear: resolve(programYear),
       school: resolve(school2),
       department: resolve(department3)
@@ -82,7 +82,7 @@ module('Integration | Component | collapsed stewards', function(hooks) {
 
   test('clicking the header expands the list', async function(assert) {
     assert.expect(1);
-    let programYear = EmberObject.create({
+    const programYear = EmberObject.create({
       stewards: resolve([])
     });
     this.set('programYear', programYear);

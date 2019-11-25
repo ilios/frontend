@@ -192,7 +192,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       'preferredEmail',
       'phone'
     ));
-    let auth = yield user.get('authentication');
+    const auth = yield user.get('authentication');
     if (auth) {
       this.set('username', auth.get('username'));
       this.set('password', '');
@@ -220,7 +220,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       'username',
       'password'
     ]);
-    let {validations} = yield this.validate();
+    const {validations} = yield this.validate();
     if (validations.get('isValid')) {
       const user = this.user;
 
@@ -269,10 +269,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('showSyncErrorMessage', false);
     this.set('syncComplete', false);
     const userId = this.get('user.id');
-    let url = `/application/directory/find/${userId}`;
+    const url = `/application/directory/find/${userId}`;
     try {
-      let data = yield this.fetch.getJsonFromApiHost(url);
-      let userData = data.result;
+      const data = yield this.fetch.getJsonFromApiHost(url);
+      const userData = data.result;
       const firstName = this.firstName;
       const lastName = this.lastName;
       const displayName = this.displayName;

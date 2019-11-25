@@ -8,7 +8,7 @@ import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
 
-let mockCourses = [
+const mockCourses = [
   EmberObject.create({
     title: 'first',
     level: 4,
@@ -36,17 +36,17 @@ let mockCourses = [
   }),
 ];
 
-let currentUserMock = Service.extend({
+const currentUserMock = Service.extend({
   performsNonLearnerFunction: true,
   activeRelatedCoursesInThisYearAndLastYear: resolve(mockCourses),
 });
 
-let currentUserMockNoCourses = Service.extend({
+const currentUserMockNoCourses = Service.extend({
   performsNonLearnerFunction: true,
   activeRelatedCoursesInThisYearAndLastYear: resolve([]),
 });
 
-let currentUserMockUnprivileged = Service.extend({
+const currentUserMockUnprivileged = Service.extend({
   performsNonLearnerFunction: false,
   activeRelatedCoursesInThisYearAndLastYear: resolve(mockCourses),
 });

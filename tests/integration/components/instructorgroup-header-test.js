@@ -19,7 +19,7 @@ module('Integration | Component | instructorgroup header', function(hooks) {
 
   test('it renders', async function(assert) {
     assert.expect(3);
-    let instructorGroup = EmberObject.create({
+    const instructorGroup = EmberObject.create({
       title: 'lorem ipsum',
       school: {title: 'medicine'},
       users: [{}, {}, {}],
@@ -35,7 +35,7 @@ module('Integration | Component | instructorgroup header', function(hooks) {
 
   test('can change title', async function(assert) {
     assert.expect(3);
-    let instructorGroup = EmberObject.create({
+    const instructorGroup = EmberObject.create({
       title: 'lorem ipsum',
       save(){
         assert.equal(this.get('title'), 'new title');

@@ -13,7 +13,7 @@ export default Component.extend({
   actions: {
     updateEmailAddress(update) {
       this.set('isSaving', true);
-      let user = this.user;
+      const user = this.user;
       user.set('email', update.get('value'));
       user.save().then(() => {
         update.deleteRecord();
@@ -26,7 +26,7 @@ export default Component.extend({
 
     disableUser() {
       this.set('isSaving', true);
-      let user = this.user;
+      const user = this.user;
       user.set('enabled', false);
       user.save().then(() => {
         user.get('pendingUserUpdates').then(updates => {
@@ -41,7 +41,7 @@ export default Component.extend({
 
     excludeFromSync() {
       this.set('isSaving', true);
-      let user = this.user;
+      const user = this.user;
       user.set('userSyncIgnore', true);
       user.save().then(() => {
         user.get('pendingUserUpdates').then(updates => {

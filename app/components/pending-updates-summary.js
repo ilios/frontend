@@ -48,7 +48,7 @@ export default Component.extend({
    * @private
    */
   _updatesProxy: computed('updates', function() {
-    let ArrayPromiseProxy = ArrayProxy.extend(PromiseProxyMixin);
+    const ArrayPromiseProxy = ArrayProxy.extend(PromiseProxyMixin);
     return ArrayPromiseProxy.create({
       promise: this.updates
     });

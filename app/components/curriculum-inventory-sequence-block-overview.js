@@ -146,7 +146,7 @@ export default Component.extend({
 
   actions: {
     changeRequired() {
-      let block = this.sequenceBlock;
+      const block = this.sequenceBlock;
       block.set('required', parseInt(this.required, 10));
       if ('2' === this.required) {
         block.set('minimum', 0);
@@ -165,41 +165,41 @@ export default Component.extend({
     },
 
     revertRequiredChanges() {
-      let block = this.sequenceBlock;
+      const block = this.sequenceBlock;
       this.set('required', '' + block.get('required'));
       this.set('minimum', block.get('minimum'));
     },
 
     changeCourse() {
-      let course = this.course;
+      const course = this.course;
       this.saveCourseChange.perform(course);
     },
 
     revertCourseChanges() {
-      let block = this.sequenceBlock;
+      const block = this.sequenceBlock;
       this.set('course', block.get('course'));
     },
 
     changeTrack(value) {
-      let block = this.sequenceBlock;
+      const block = this.sequenceBlock;
       block.set('track', value);
       block.save();
     },
 
     changeDescription() {
-      let block = this.sequenceBlock;
+      const block = this.sequenceBlock;
       const description = this.description;
       block.set('description', description);
       return block.save();
     },
 
     revertDescriptionChanges() {
-      let block = this.sequenceBlock;
+      const block = this.sequenceBlock;
       this.set('description', block.get('description'));
     },
 
     changeChildSequenceOrder() {
-      let block = this.sequenceBlock;
+      const block = this.sequenceBlock;
       block.set('childSequenceOrder', parseInt(this.childSequenceOrder, 10));
       block.save().then(savedBlock => {
         savedBlock.get('children').then(children => {
@@ -209,29 +209,29 @@ export default Component.extend({
     },
 
     revertChildSequenceOrderChanges() {
-      let block = this.sequenceBlock;
+      const block = this.sequenceBlock;
       this.set('childSequenceOrder', '' + block.get('childSequenceOrder'));
     },
 
     changeAcademicLevel() {
-      let block = this.sequenceBlock;
+      const block = this.sequenceBlock;
       block.set('academicLevel', this.academicLevel);
       block.save();
     },
 
     setAcademicLevel(id) {
-      let levels = this.academicLevels;
-      let level = levels.findBy('id', id);
+      const levels = this.academicLevels;
+      const level = levels.findBy('id', id);
       this.set('academicLevel', level);
     },
 
     revertAcademicLevelChanges() {
-      let block = this.sequenceBlock;
+      const block = this.sequenceBlock;
       this.set('academicLevel', block.get('academicLevel'));
     },
 
     changeOrderInSequence() {
-      let block = this.sequenceBlock;
+      const block = this.sequenceBlock;
       block.set('orderInSequence', this.orderInSequence);
       block.save().then(savedBlock => {
         savedBlock.get('parent').then(parent => {
@@ -243,12 +243,12 @@ export default Component.extend({
     },
 
     revertOrderInSequenceChanges() {
-      let block = this.sequenceBlock;
+      const block = this.sequenceBlock;
       this.set('orderInSequence', block.get('orderInSequence'));
     },
 
     changeDatesAndDuration(start, end, duration) {
-      let block = this.sequenceBlock;
+      const block = this.sequenceBlock;
       block.set('startDate', start);
       block.set('endDate', end);
       block.set('duration', duration);
@@ -266,7 +266,7 @@ export default Component.extend({
     },
 
     changeMinMax(minimum, maximum) {
-      let block = this.sequenceBlock;
+      const block = this.sequenceBlock;
       block.set('minimum', minimum);
       block.set('maximum', maximum);
       block.save().finally(() => {
@@ -279,7 +279,7 @@ export default Component.extend({
     },
 
     cancelMinMaxEditing() {
-      let block = this.sequenceBlock;
+      const block = this.sequenceBlock;
       this.set('isEditingMinMax', false);
       this.set('minimum', block.get('minimum'));
       this.set('maximum', block.get('maximum'));
@@ -294,7 +294,7 @@ export default Component.extend({
     },
 
     changeSessions(sessions, excludedSessions) {
-      let block = this.sequenceBlock;
+      const block = this.sequenceBlock;
       block.set('sessions', sessions);
       block.set('excludedSessions', excludedSessions);
       return block.save().then(() => {
@@ -309,12 +309,12 @@ export default Component.extend({
     let academicLevels = yield report.get('academicLevels');
     academicLevels = academicLevels.toArray();
     let isInOrderedSequence = false;
-    let orderInSequenceOptions = [];
+    const orderInSequenceOptions = [];
     if (isPresent(parent) && parent.get('isOrdered')) {
       isInOrderedSequence = true;
       const siblings = yield parent.get('children');
       for (let i = 0, n = (siblings.toArray().length); i < n; i++) {
-        let num = i + 1;
+        const num = i + 1;
         orderInSequenceOptions.push(num);
       }
     }
@@ -352,7 +352,7 @@ export default Component.extend({
   }),
 
   saveCourseChange: task(function* (course) {
-    let block = this.sequenceBlock;
+    const block = this.sequenceBlock;
     const oldCourse = block.get('course');
     if (oldCourse !== course) {
       block.set('sessions', []);

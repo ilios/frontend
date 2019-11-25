@@ -50,8 +50,8 @@ export default Component.extend({
 
   availableAcademicYears: computed('existingStartYears.[]', {
     get() {
-      let firstYear = parseInt(moment().subtract(5, 'years').format('YYYY'), 10);
-      let years = [];
+      const firstYear = parseInt(moment().subtract(5, 'years').format('YYYY'), 10);
+      const years = [];
 
       for (let i = 0; i < 10; i++) {
         years.pushObject(firstYear + i);
@@ -147,7 +147,7 @@ export default Component.extend({
     let itemsToSave = 0;
     this.resetSaveItems();
 
-    let newProgramYear = store.createRecord('program-year', {
+    const newProgramYear = store.createRecord('program-year', {
       program,
       startYear,
       published: true,
@@ -174,7 +174,7 @@ export default Component.extend({
       newProgramYear.get('terms').pushObjects(terms.toArray());
       newProgramYear.get('stewards').pushObjects(stewards.toArray());
     }
-    let savedProgramYear = yield newProgramYear.save();
+    const savedProgramYear = yield newProgramYear.save();
     itemsToSave++;
     this.incrementSavedItems();
 
@@ -185,13 +185,13 @@ export default Component.extend({
       this.set('itemsToSave', itemsToSave);
 
       for (let i = 0; i < objectives.length; i++) {
-        let objectiveToCopy = objectives[i];
+        const objectiveToCopy = objectives[i];
         let ancestor = yield objectiveToCopy.get('ancestor');
         if (isEmpty(ancestor)) {
           ancestor = objectiveToCopy;
         }
-        let newObjective = store.createRecord('objective', objectiveToCopy.getProperties(['title', 'position']));
-        let props = yield hash(objectiveToCopy.getProperties('meshDescriptors', 'competency'));
+        const newObjective = store.createRecord('objective', objectiveToCopy.getProperties(['title', 'position']));
+        const props = yield hash(objectiveToCopy.getProperties('meshDescriptors', 'competency'));
         newObjective.setProperties(props);
         newObjective.set('programYears', [savedProgramYear]);
         newObjective.set('ancestor', ancestor);

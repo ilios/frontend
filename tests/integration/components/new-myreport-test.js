@@ -76,7 +76,7 @@ module('Integration | Component | new myreport', function(hooks) {
     assert.equal(subjectSelect.options[subjectSelect.selectedIndex].value, 'course', 'courses is selected');
   });
 
-  let checkObjects = async function(context, assert, subjectNum, subjectVal, expectedObjects){
+  const checkObjects = async function(context, assert, subjectNum, subjectVal, expectedObjects){
     assert.expect(expectedObjects.length + 2);
     const school = context.server.create('school', { title: 'first' });
     const mockUser = EmberObject.create({

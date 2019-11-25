@@ -124,7 +124,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(14);
     await visit(url);
-    let tds = findAll('.programyear-objective-list tbody tr:nth-of-type(1) td');
+    const tds = findAll('.programyear-objective-list tbody tr:nth-of-type(1) td');
     assert.equal(tds.length, 4);
     await click(find('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3) .link'));
     assert.equal(await getElementText(find('.specific-title')), 'SelectParentCompetencyforObjective');
@@ -151,7 +151,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.expect(1);
     await visit(url);
     await click('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3) .link');
-    let objectiveManager = find('.objective-manage-competency')[0];
+    const objectiveManager = find('.objective-manage-competency')[0];
     await click(findAll('.parent-picker .clickable')[1], objectiveManager);
     await click('.detail-objectives button.bigadd');
     assert.equal(await getElementText(find(findAll('.programyear-objective-list tbody tr td')[2])), getText('competency 2 (competency 0)'));
@@ -162,7 +162,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.expect(1);
     await visit(url);
     await click('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3) .link');
-    let objectiveManager = find('.objective-manage-competency')[0];
+    const objectiveManager = find('.objective-manage-competency')[0];
     await click(find('.parent-picker .clickable'), objectiveManager);
     await click('.detail-objectives button.bigadd');
     assert.equal(await getElementText(find(findAll('.programyear-objective-list tbody tr td')[2])), getText('Add New'));
@@ -173,7 +173,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.expect(1);
     await visit(url);
     await click('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3) .link');
-    let objectiveManager = find('.objective-manage-competency')[0];
+    const objectiveManager = find('.objective-manage-competency')[0];
     await click(findAll('.parent-picker li')[1], objectiveManager);
     await click('.detail-objectives button.bigcancel');
     assert.equal(await getElementText(find(findAll('.programyear-objective-list tbody tr td')[2])), getText('competency 1 (competency 0)'));
@@ -184,7 +184,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.expect(1);
     await visit(url);
     await click('.programyear-objective-list tbody tr:nth-of-type(1) td:nth-of-type(3) .link');
-    let objectiveManager = find('.objective-manage-competency')[0];
+    const objectiveManager = find('.objective-manage-competency')[0];
     await click(find('.parent-picker li'), objectiveManager);
     await click('.detail-objectives button.bigcancel');
     assert.equal(await getElementText(find(findAll('.programyear-objective-list tbody tr td')[2])), getText('competency 1 (competency 0)'));
@@ -195,7 +195,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.expect(1);
     await visit(url);
     await click('.programyear-objective-list tbody tr:nth-of-type(3) td:nth-of-type(3) button');
-    let objectiveManager = find('.objective-manage-competency')[0];
+    const objectiveManager = find('.objective-manage-competency')[0];
     await click(findAll('.parent-picker .clickable')[1], objectiveManager);
     await click('.detail-objectives button.bigadd');
     assert.equal(await getElementText(find(findAll('.programyear-objective-list tbody tr:nth-of-type(3) td')[2])), getText('competency 2 (competency 0)'));

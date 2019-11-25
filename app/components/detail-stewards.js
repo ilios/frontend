@@ -73,14 +73,14 @@ export default Component.extend({
 
     addStewardToBuffer(steward) {
       //copy the array to didReceiveAttrs gets called on detail-steward-manager
-      let bufferStewards = this.bufferStewards.toArray();
+      const bufferStewards = this.bufferStewards.toArray();
       bufferStewards.pushObject(steward);
       this.set('bufferStewards', bufferStewards);
     },
 
     removeStewardFromBuffer(steward) {
       //copy the array to didReceiveAttrs gets called on detail-steward-manager
-      let bufferStewards = this.bufferStewards.toArray();
+      const bufferStewards = this.bufferStewards.toArray();
       bufferStewards.removeObject(steward);
       this.set('bufferStewards', bufferStewards);
     }
@@ -90,9 +90,9 @@ export default Component.extend({
     yield timeout(10);
     const programYear = this.programYear;
     const bufferStewards = this.bufferStewards;
-    let stewards = yield programYear.get('stewards');
-    let stewardsToRemove = stewards.filter(steward => !bufferStewards.includes(steward));
-    let stewardsToAdd = bufferStewards.filter(steward => !stewards.includes(steward));
+    const stewards = yield programYear.get('stewards');
+    const stewardsToRemove = stewards.filter(steward => !bufferStewards.includes(steward));
+    const stewardsToAdd = bufferStewards.filter(steward => !stewards.includes(steward));
     stewardsToAdd.setEach('programYear', programYear);
     yield all(stewardsToAdd.invoke('save'));
     yield all(stewardsToRemove.invoke('destroyRecord'));

@@ -14,7 +14,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
     const cohort = await model.get('cohort');
     const courses = cohort.hasMany('courses').ids();
 
-    let promises = [
+    const promises = [
       model.get('program'),
       model.get('competencies'),
       model.get('objectives'),

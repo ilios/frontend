@@ -41,8 +41,8 @@ export default Controller.extend({
       return [];
     }
 
-    let schoolId = selectedSchool.get('id');
-    let yearTitle = selectedYear.get('title');
+    const schoolId = selectedSchool.get('id');
+    const yearTitle = selectedYear.get('title');
     return await this.store.query('course', {
       filters: {
         school: schoolId,
@@ -66,7 +66,7 @@ export default Controller.extend({
     async function() {
       const titleFilter = this.titleFilter;
       const title = isBlank(titleFilter) ? '' : titleFilter ;
-      let filterMyCourses = this.userCoursesOnly;
+      const filterMyCourses = this.userCoursesOnly;
       const courses = await this.courses;
       let filteredCourses;
       if (isEmpty(title)) {
@@ -92,7 +92,7 @@ export default Controller.extend({
     const primarySchool = this.get('model.primarySchool');
     const schoolId = this.schoolId;
     if(isPresent(schoolId)){
-      let school = schools.findBy('id', schoolId);
+      const school = schools.findBy('id', schoolId);
       if(school){
         return school;
       }
@@ -102,7 +102,7 @@ export default Controller.extend({
   }),
 
   selectedYear: computed('model.years.[]', 'yearTitle', function() {
-    let years = this.get('model.years');
+    const years = this.get('model.years');
     if(isPresent(this.yearTitle)){
       return years.find(year => year.get('title') === parseInt(this.yearTitle, 10));
     }
@@ -132,7 +132,7 @@ export default Controller.extend({
       courses.removeObject(course);
       await course.destroyRecord();
       this.set('deletedCourse', course);
-      let newCourse = this.newCourse;
+      const newCourse = this.newCourse;
       if (newCourse === course) {
         this.set('newCourse', null);
       }

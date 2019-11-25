@@ -47,7 +47,7 @@ module('Integration | Component | school session attributes manager', function(h
     assert.dom(specialEquipmentCheckbox).isNotChecked();
   });
 
-  let selectTest = async function(context, assert, name, position){
+  const selectTest = async function(context, assert, name, position){
     assert.expect(3);
 
     context.set('showSessionAttendanceRequired', false);
@@ -91,7 +91,7 @@ module('Integration | Component | school session attributes manager', function(h
     await selectTest(this, assert, 'showSessionSpecialEquipmentRequired', 3);
   });
 
-  let unSelectTest = async function(context, assert, name, position){
+  const unSelectTest = async function(context, assert, name, position){
     assert.expect(3);
 
     context.set('showSessionAttendanceRequired', true);

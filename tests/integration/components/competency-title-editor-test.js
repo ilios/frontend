@@ -15,7 +15,7 @@ module('Integration | Component | competency title editor', function(hooks) {
 
   test('validation errors do not show up initially', async function(assert) {
     assert.expect(1);
-    let competency = EmberObject.create({
+    const competency = EmberObject.create({
       title: 'test'
     });
     this.set('competency', competency);
@@ -27,7 +27,7 @@ module('Integration | Component | competency title editor', function(hooks) {
 
   test('validation errors show up when saving', async function(assert) {
     assert.expect(1);
-    let competency = EmberObject.create({
+    const competency = EmberObject.create({
       title: 'test'
     });
     this.set('competency', competency);

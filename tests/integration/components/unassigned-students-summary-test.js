@@ -59,7 +59,7 @@ module('Integration | Component | unassigned students summary', function(hooks) 
     assert.equal(this.element.textContent.trim().search(/Students Requiring Cohort Assignment/), 0);
     assert.notEqual(this.element.textContent.trim().search(/There are 5 students needing assignment to a cohort/), -1);
 
-    let options = findAll('option');
+    const options = findAll('option');
     assert.equal(options.length, 2);
     assert.dom(options[0]).hasText('school 0');
     assert.dom(options[1]).hasText('school 1');
@@ -69,14 +69,14 @@ module('Integration | Component | unassigned students summary', function(hooks) 
   });
 
   test('it renders empty', async function(assert) {
-    let primarySchool = EmberObject.create({
+    const primarySchool = EmberObject.create({
       id: 1,
       title: 'school 0',
     });
-    let user = EmberObject.create({
+    const user = EmberObject.create({
       school: resolve(primarySchool)
     });
-    let currentUserMock = Service.extend({
+    const currentUserMock = Service.extend({
       model: resolve(user)
     });
 

@@ -12,12 +12,12 @@ module('Integration | Component | school competencies expanded', function(hooks)
 
   test('it renders', async function(assert) {
     assert.expect(6);
-    let domain = EmberObject.create({title: 'domain 0', isDomain: true, childCount: 1});
-    let competency1 = EmberObject.create({title: 'competency 0', isNotDomain: true, parent: resolve(domain)});
-    let competency2 = EmberObject.create({title: 'competency 1', isNotDomain: true, parent: resolve(domain)});
+    const domain = EmberObject.create({title: 'domain 0', isDomain: true, childCount: 1});
+    const competency1 = EmberObject.create({title: 'competency 0', isNotDomain: true, parent: resolve(domain)});
+    const competency2 = EmberObject.create({title: 'competency 1', isNotDomain: true, parent: resolve(domain)});
     domain.set('children', resolve([competency1, competency2]));
 
-    let competencies = [domain, competency1, competency2];
+    const competencies = [domain, competency1, competency2];
 
     const school = EmberObject.create({
       competencies: resolve(competencies),

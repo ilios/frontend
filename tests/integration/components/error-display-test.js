@@ -19,7 +19,7 @@ module('Integration | Component | error display', function(hooks) {
 
     assert.dom('.error-detail-action').hasText('Hide Details');
 
-    let iso8601 = new RegExp(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})[+-](\d{2}):(\d{2})/);
+    const iso8601 = new RegExp(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})[+-](\d{2}):(\d{2})/);
     assert.ok(find('.timestamp').textContent.trim().match(iso8601), 'Current datetime is visible');
 
     await click('.error-detail-action');

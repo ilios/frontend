@@ -18,7 +18,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    let learnerGroup = EmberObject.create({
+    const learnerGroup = EmberObject.create({
       title: 'our group',
       allParents: resolve([{title: 'parent group'}])
     });
@@ -31,7 +31,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
   });
 
   test('can change title', async function(assert) {
-    let learnerGroup = EmberObject.create({
+    const learnerGroup = EmberObject.create({
       title: 'our group',
       save(){
         assert.equal(this.get('title'), 'new title');
@@ -50,16 +50,16 @@ module('Integration | Component | learnergroup header', function(hooks) {
   });
 
   test('counts members correctly', async function(assert) {
-    let cohort = EmberObject.create({
+    const cohort = EmberObject.create({
       title: 'test group',
       users: [1, 2]
     });
-    let subGroup = EmberObject.create({
+    const subGroup = EmberObject.create({
       title: 'test sub-group',
       users: [],
       children: [],
     });
-    let learnerGroup = EmberObject.create({
+    const learnerGroup = EmberObject.create({
       title: 'test group',
       usersOnlyAtThisLevel: [1],
       cohort,
@@ -80,7 +80,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
     const done = `${title} .done`;
     const errors = `${title} .validation-error-message`;
 
-    let learnerGroup = EmberObject.create({
+    const learnerGroup = EmberObject.create({
       title: 'our group',
       save(){
         assert.ok(false, 'should not be called');

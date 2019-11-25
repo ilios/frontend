@@ -34,19 +34,19 @@ module('Acceptance | Programs', function(hooks) {
 
     test('filters by title', async function(assert) {
       assert.expect(19);
-      let firstProgram = this.server.create('program', {
+      const firstProgram = this.server.create('program', {
         title: 'specialfirstprogram',
         school: this.school,
       });
-      let secondProgram = this.server.create('program', {
+      const secondProgram = this.server.create('program', {
         title: 'specialsecondprogram',
         school: this.school
       });
-      let regularProgram = this.server.create('program', {
+      const regularProgram = this.server.create('program', {
         title: 'regularprogram',
         school: this.school
       });
-      let regexProgram = this.server.create('program', {
+      const regexProgram = this.server.create('program', {
         title: '\\yoo hoo',
         school: this.school
       });
@@ -181,7 +181,7 @@ module('Acceptance | Programs', function(hooks) {
     const schoolSelect = '.schoolsfilter select';
 
     await visit('/programs');
-    let schoolOptions = findAll(`${schoolSelect} option`);
+    const schoolOptions = findAll(`${schoolSelect} option`);
     assert.equal(schoolOptions.length, 2);
     assert.equal(await getElementText(schoolOptions[0]), 'school0');
     assert.equal(await getElementText(schoolOptions[1]), 'school1');

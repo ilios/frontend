@@ -101,10 +101,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         await this.validate();
         if (this.validations.attrs.newTermTitle.isValid) {
           this.send('removeErrorDisplayFor', 'newTermTitle');
-          let title = this.newTermTitle;
+          const title = this.newTermTitle;
           const vocabulary = this.vocabulary;
           const store = this.store;
-          let term = store.createRecord('term', { title, vocabulary, active: true });
+          const term = store.createRecord('term', { title, vocabulary, active: true });
           const newTerm = await term.save();
           this.set('newTermTitle', null);
           this.set('newTerm', newTerm);

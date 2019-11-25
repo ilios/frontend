@@ -94,7 +94,7 @@ module('Integration | Component | user profile roles', function(hooks) {
     this.set('nothing', parseInt);
 
     await render(hbs`<UserProfileRoles @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
-    let inputs = findAll('input');
+    const inputs = findAll('input');
     const formerStudent = '[data-test-former-student] input';
     const enabled = '[data-test-enabled] input';
     const syncIgnored = '[data-test-exclude-from-sync] input';

@@ -24,7 +24,7 @@ export default Component.extend({
   }),
 
   filteredUsers: computed('filter', 'users.[]', function() {
-    let users = this.users?this.users:[];
+    const users = this.users?this.users:[];
     const filter = this.filter.toLowerCase();
 
     if (isEmpty(filter)){
@@ -100,7 +100,7 @@ export default Component.extend({
   setCheckAllState() {
     const selectedUsers = this.selectedUsers.get('length');
     const filteredUsers = this.filteredUsers.get('length');
-    let el = this.$('th:eq(0) input');
+    const el = this.$('th:eq(0) input');
     if (selectedUsers === 0) {
       el.prop('indeterminate', false);
       el.prop('checked', false);

@@ -18,7 +18,7 @@ module('Integration | Component | curriculum inventory sequence block header', f
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       title: 'Block title'
     });
     this.set('sequenceBlock', block);
@@ -31,7 +31,7 @@ module('Integration | Component | curriculum inventory sequence block header', f
   });
 
   test('read-only mode for block in when it can not be updated', async function(assert) {
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       title: 'Block title',
       report: {
       }
@@ -47,7 +47,7 @@ module('Integration | Component | curriculum inventory sequence block header', f
   test('change title', async function(assert) {
     assert.expect(3);
     const newTitle = 'new title';
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       title: 'block title',
       save(){
         assert.equal(this.get('title'), newTitle);
@@ -71,7 +71,7 @@ module('Integration | Component | curriculum inventory sequence block header', f
 
   test('change title fails on empty value', async function(assert) {
     assert.expect(2);
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       title: 'block title',
       save(){
         assert.ok(false, 'Save action should not have been invoked.');
@@ -94,7 +94,7 @@ module('Integration | Component | curriculum inventory sequence block header', f
 
   test('change title fails on too-short value', async function(assert) {
     assert.expect(2);
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       title: 'block title',
       save(){
         assert.ok(false, 'Save action should not have been invoked.');
@@ -117,7 +117,7 @@ module('Integration | Component | curriculum inventory sequence block header', f
 
   test('change title fails on overlong value', async function(assert) {
     assert.expect(2);
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       title: 'block title',
       save(){
         assert.ok(false, 'Save action should not have been invoked.');

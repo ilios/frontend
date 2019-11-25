@@ -24,18 +24,18 @@ module('Integration | Component | curriculum inventory report overview', functio
   test('it renders', async function(assert) {
     assert.expect(13);
 
-    let school = EmberObject.create({
+    const school = EmberObject.create({
       id() {
         return 1;
       }
     });
 
-    let academicLevels = [];
+    const academicLevels = [];
     for (let i = 0; i < 10; i++) {
       academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
     }
 
-    let program = EmberObject.create({
+    const program = EmberObject.create({
       belongsTo() {
         return school;
       },
@@ -43,7 +43,7 @@ module('Integration | Component | curriculum inventory report overview', functio
       shortTitle: 'DRS'
     });
 
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       academicLevels,
       year: '2016',
       program,
@@ -92,18 +92,18 @@ module('Integration | Component | curriculum inventory report overview', functio
   test('read-only', async function(assert) {
     assert.expect(5);
 
-    let school = EmberObject.create({
+    const school = EmberObject.create({
       id() {
         return 1;
       }
     });
 
-    let academicLevels = [];
+    const academicLevels = [];
     for (let i = 0; i < 10; i++) {
       academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
     }
 
-    let program = EmberObject.create({
+    const program = EmberObject.create({
       belongsTo() {
         return school;
       },
@@ -111,7 +111,7 @@ module('Integration | Component | curriculum inventory report overview', functio
       shortTitle: 'DRS'
     });
 
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       academicLevels,
       year: '2016',
       program,
@@ -145,18 +145,18 @@ module('Integration | Component | curriculum inventory report overview', functio
   test('rollover button not visible for unprivileged user', async function(assert) {
     assert.expect(1);
 
-    let school = EmberObject.create({
+    const school = EmberObject.create({
       id() {
         return 1;
       }
     });
 
-    let academicLevels = [];
+    const academicLevels = [];
     for (let i = 0; i < 10; i++) {
       academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
     }
 
-    let program = EmberObject.create({
+    const program = EmberObject.create({
       belongsTo() {
         return school;
       },
@@ -164,7 +164,7 @@ module('Integration | Component | curriculum inventory report overview', functio
       shortTitle: 'DRS'
     });
 
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       academicLevels,
       year: '2016',
       program,
@@ -195,18 +195,18 @@ module('Integration | Component | curriculum inventory report overview', functio
   test('change start date', async function(assert) {
     assert.expect(3);
 
-    let school = EmberObject.create({
+    const school = EmberObject.create({
       id() {
         return 1;
       }
     });
 
-    let academicLevels = [];
+    const academicLevels = [];
     for (let i = 0; i < 10; i++) {
       academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
     }
 
-    let program = EmberObject.create({
+    const program = EmberObject.create({
       belongsTo() {
         return school;
       },
@@ -214,7 +214,7 @@ module('Integration | Component | curriculum inventory report overview', functio
       shortTitle: 'DRS'
     });
 
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       academicLevels,
       year: '2016',
       program,
@@ -237,12 +237,12 @@ module('Integration | Component | curriculum inventory report overview', functio
     return settled().then(async () => {
       await click('.start-date .editinplace .editable');
       return settled().then(async () => {
-        let interactor = openDatepicker(find('.start-date input'));
+        const interactor = openDatepicker(find('.start-date input'));
         assert.dom('.start-date input').hasValue(
           moment(report.get('startDate')).format('L'),
           "The report's current start date is pre-selected in date picker."
         );
-        let newVal = moment('2015-04-01');
+        const newVal = moment('2015-04-01');
         interactor.selectDate(newVal.toDate());
         await click('.start-date .actions .done');
         return settled().then(() => {
@@ -258,18 +258,18 @@ module('Integration | Component | curriculum inventory report overview', functio
   test('validation fails if given start date follows end date', async function(assert) {
     assert.expect(2);
 
-    let school = EmberObject.create({
+    const school = EmberObject.create({
       id() {
         return 1;
       }
     });
 
-    let academicLevels = [];
+    const academicLevels = [];
     for (let i = 0; i < 10; i++) {
       academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
     }
 
-    let program = EmberObject.create({
+    const program = EmberObject.create({
       belongsTo() {
         return school;
       },
@@ -277,7 +277,7 @@ module('Integration | Component | curriculum inventory report overview', functio
       shortTitle: 'DRS'
     });
 
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       academicLevels,
       year: '2016',
       program,
@@ -297,8 +297,8 @@ module('Integration | Component | curriculum inventory report overview', functio
     return settled().then(async () => {
       await click('.start-date .editinplace .editable');
       return settled().then(async () => {
-        let interactor = openDatepicker(find('.start-date input'));
-        let newVal = moment(report.get('endDate')).add(1, 'day');
+        const interactor = openDatepicker(find('.start-date input'));
+        const newVal = moment(report.get('endDate')).add(1, 'day');
         interactor.selectDate(newVal.toDate());
         assert.dom('.start-date .validation-error-message').doesNotExist('Initially, no validation error is visible.');
         await click('.start-date .actions .done');
@@ -312,18 +312,18 @@ module('Integration | Component | curriculum inventory report overview', functio
   test('change end date', async function(assert) {
     assert.expect(3);
 
-    let school = EmberObject.create({
+    const school = EmberObject.create({
       id() {
         return 1;
       }
     });
 
-    let academicLevels = [];
+    const academicLevels = [];
     for (let i = 0; i < 10; i++) {
       academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
     }
 
-    let program = EmberObject.create({
+    const program = EmberObject.create({
       belongsTo() {
         return school;
       },
@@ -331,7 +331,7 @@ module('Integration | Component | curriculum inventory report overview', functio
       shortTitle: 'DRS'
     });
 
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       academicLevels,
       year: '2016',
       program,
@@ -354,12 +354,12 @@ module('Integration | Component | curriculum inventory report overview', functio
     return settled().then(async () => {
       await click('.end-date .editinplace .editable');
       return settled().then(async () => {
-        let interactor = openDatepicker(find('.end-date input'));
+        const interactor = openDatepicker(find('.end-date input'));
         assert.dom('.end-date input').hasValue(
           moment(report.get('endDate')).format('L'),
           "The report's current end date is pre-selected in date picker."
         );
-        let newVal = moment('2016-05-01');
+        const newVal = moment('2016-05-01');
         interactor.selectDate(newVal.toDate());
         await click('.end-date .actions .done');
         return settled().then(() => {
@@ -375,18 +375,18 @@ module('Integration | Component | curriculum inventory report overview', functio
   test('validation fails if given end date precedes end date', async function(assert) {
     assert.expect(2);
 
-    let school = EmberObject.create({
+    const school = EmberObject.create({
       id() {
         return 1;
       }
     });
 
-    let academicLevels = [];
+    const academicLevels = [];
     for (let i = 0; i < 10; i++) {
       academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
     }
 
-    let program = EmberObject.create({
+    const program = EmberObject.create({
       belongsTo() {
         return school;
       },
@@ -394,7 +394,7 @@ module('Integration | Component | curriculum inventory report overview', functio
       shortTitle: 'DRS'
     });
 
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       academicLevels,
       year: '2016',
       program,
@@ -414,8 +414,8 @@ module('Integration | Component | curriculum inventory report overview', functio
     return settled().then(async () => {
       await click('.end-date .editinplace .editable');
       return settled().then(async () => {
-        let interactor = openDatepicker(find('.end-date input'));
-        let newVal = moment(report.get('startDate')).subtract(1, 'day');
+        const interactor = openDatepicker(find('.end-date input'));
+        const newVal = moment(report.get('startDate')).subtract(1, 'day');
         interactor.selectDate(newVal.toDate());
         assert.dom('.end-date .validation-error-message').doesNotExist('Initially, no validation error is visible.');
         await click('.end-date .actions .done');
@@ -429,18 +429,18 @@ module('Integration | Component | curriculum inventory report overview', functio
   test('change academic year', async function(assert) {
     assert.expect(4);
 
-    let school = EmberObject.create({
+    const school = EmberObject.create({
       id() {
         return 1;
       }
     });
 
-    let academicLevels = [];
+    const academicLevels = [];
     for (let i = 0; i < 10; i++) {
       academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
     }
 
-    let program = EmberObject.create({
+    const program = EmberObject.create({
       belongsTo() {
         return school;
       },
@@ -448,7 +448,7 @@ module('Integration | Component | curriculum inventory report overview', functio
       shortTitle: 'DRS'
     });
 
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       academicLevels,
       year: parseInt(moment().format('YYYY'), 10),
       program,
@@ -486,18 +486,18 @@ module('Integration | Component | curriculum inventory report overview', functio
   test('academic year unchangeable if course has been linked', async function(assert) {
     assert.expect(2);
 
-    let school = EmberObject.create({
+    const school = EmberObject.create({
       id() {
         return 1;
       }
     });
 
-    let academicLevels = [];
+    const academicLevels = [];
     for (let i = 0; i < 10; i++) {
       academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
     }
 
-    let program = EmberObject.create({
+    const program = EmberObject.create({
       belongsTo() {
         return school;
       },
@@ -505,7 +505,7 @@ module('Integration | Component | curriculum inventory report overview', functio
       shortTitle: 'DRS'
     });
 
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       academicLevels,
       year: '2016',
       program,
@@ -534,18 +534,18 @@ module('Integration | Component | curriculum inventory report overview', functio
   test('change description', async function(assert) {
     assert.expect(3);
 
-    let school = EmberObject.create({
+    const school = EmberObject.create({
       id() {
         return 1;
       }
     });
 
-    let academicLevels = [];
+    const academicLevels = [];
     for (let i = 0; i < 10; i++) {
       academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
     }
 
-    let program = EmberObject.create({
+    const program = EmberObject.create({
       belongsTo() {
         return school;
       },
@@ -553,7 +553,7 @@ module('Integration | Component | curriculum inventory report overview', functio
       shortTitle: 'DRS'
     });
 
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       academicLevels,
       year: '2016',
       program,
@@ -590,18 +590,18 @@ module('Integration | Component | curriculum inventory report overview', functio
   test('description validation fails if text is too long', async function(assert) {
     assert.expect(3);
 
-    let school = EmberObject.create({
+    const school = EmberObject.create({
       id() {
         return 1;
       }
     });
 
-    let academicLevels = [];
+    const academicLevels = [];
     for (let i = 0; i < 10; i++) {
       academicLevels.pushObject(EmberObject.create({id: i, name: `Year ${i + 1}`}));
     }
 
-    let program = EmberObject.create({
+    const program = EmberObject.create({
       belongsTo() {
         return school;
       },
@@ -609,7 +609,7 @@ module('Integration | Component | curriculum inventory report overview', functio
       shortTitle: 'DRS'
     });
 
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       academicLevels,
       year: '2016',
       program,

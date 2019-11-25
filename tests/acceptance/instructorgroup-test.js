@@ -12,7 +12,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from '../pages/instructor-group';
 
-let url = '/instructorgroups/1';
+const url = '/instructorgroups/1';
 
 module('Acceptance | Instructor Group Details', function(hooks) {
   setupApplicationTest(hooks);

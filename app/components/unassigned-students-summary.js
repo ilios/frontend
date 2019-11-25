@@ -49,7 +49,7 @@ export default Component.extend({
 
   //temporary solution until the classNameBindings can be promise aware
   unassignedStudentsProxy: computed('unassignedStudents', function() {
-    let ap = ArrayProxy.extend(PromiseProxyMixin);
+    const ap = ArrayProxy.extend(PromiseProxyMixin);
     return ap.create({
       promise: this.unassignedStudents
     });

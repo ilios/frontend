@@ -38,7 +38,7 @@ export default Component.extend({
         'showSessionSpecialAttireRequired',
         'showSessionSpecialEquipmentRequired',
       ];
-      let toSave = [];
+      const toSave = [];
       for (let i = 0; i < names.length; i++) {
         const name = names[i];
         const config = await school.setConfigValue(name, newValues.get(name));

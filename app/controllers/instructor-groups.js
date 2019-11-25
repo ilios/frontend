@@ -25,7 +25,7 @@ export default Controller.extend({
   hasMoreThanOneSchool: gt('model.schools.length', 1),
 
   instructorGroups: computed('selectedSchool', 'deletedInstructorGroup', 'newInstructorGroup', async function() {
-    let schoolId = this.selectedSchool.get('id');
+    const schoolId = this.selectedSchool.get('id');
     if(isEmpty(schoolId)) {
       resolve([]);
     }
@@ -57,7 +57,7 @@ export default Controller.extend({
     const primarySchool = this.get('model.primarySchool');
     const schoolId = this.schoolId;
     if(isPresent(schoolId)){
-      let school =  schools.findBy('id', schoolId);
+      const school =  schools.findBy('id', schoolId);
       if(school){
         return school;
       }

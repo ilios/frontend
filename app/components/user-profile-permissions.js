@@ -38,7 +38,7 @@ export default Component.extend({
   }),
 
   selectedYear: computed('academicYears.[]', 'selectedYearId', async function(){
-    let years = await this.academicYears;
+    const years = await this.academicYears;
     const selectedYearId = this.selectedYearId;
     if(isPresent(selectedYearId)){
       return years.find(year => parseInt(year.get('id'), 10) === parseInt(selectedYearId, 10));

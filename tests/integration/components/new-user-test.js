@@ -39,7 +39,7 @@ module('Integration | Component | new user', function(hooks) {
 
     await render(hbs`<NewUser @close={{action close}} />`);
 
-    let content = this.element.textContent.trim();
+    const content = this.element.textContent.trim();
     assert.ok(content.includes('New User'));
     assert.ok(content.includes('First Name'));
     assert.ok(content.includes('Last Name'));
@@ -53,7 +53,7 @@ module('Integration | Component | new user', function(hooks) {
     assert.ok(content.includes('Primary School'));
 
     const schools = 'select:nth-of-type(1) option';
-    let options = findAll(schools);
+    const options = findAll(schools);
     assert.equal(options.length, 3);
     assert.dom(options[0]).hasText('school 0');
     assert.dom(options[1]).hasText('school 1');
@@ -76,7 +76,7 @@ module('Integration | Component | new user', function(hooks) {
 
     await click('.done');
     assert.dom('.message').exists({ count: 5 });
-    let boxes = findAll('.item');
+    const boxes = findAll('.item');
     assert.ok(boxes[0].textContent.includes('blank'));
     assert.ok(boxes[2].textContent.includes('blank'));
     assert.ok(boxes[5].textContent.includes('blank'));
@@ -86,7 +86,7 @@ module('Integration | Component | new user', function(hooks) {
 
   test('create new user', async function(assert) {
     assert.expect(11);
-    let studentRole = this.server.create('user-role', {
+    const studentRole = this.server.create('user-role', {
       id: 4,
       title: 'Student'
     });
@@ -135,7 +135,7 @@ module('Integration | Component | new user', function(hooks) {
 
   test('create new student user', async function(assert) {
     assert.expect(12);
-    let studentRole = this.server.create('user-role', {
+    const studentRole = this.server.create('user-role', {
       id: 4,
       title: 'Student'
     });

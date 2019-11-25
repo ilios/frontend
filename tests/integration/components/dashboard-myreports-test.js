@@ -15,7 +15,7 @@ module('Integration | Component | dashboard myreports', function(hooks) {
     const jwtObject = {
       'user_id': this.user.id
     };
-    let encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
+    const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
     await authenticateSession({
       jwt: encodedData
     });

@@ -12,7 +12,7 @@ module('Integration | Component | user-menu', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function () {
-    let currentUserMock = Service.extend({
+    const currentUserMock = Service.extend({
       model: resolve(EmberObject.create({
         fullName: 'Test Person'
       }))

@@ -16,7 +16,7 @@ export default Route.extend(ApplicationRouteMixin, {
   init() {
     this._super(...arguments);
     this.on('routeWillChange', () => {
-      let controller = this.controllerFor('application');
+      const controller = this.controllerFor('application');
       controller.set('errors', []);
       controller.set('showErrorDisplay', false);
     });
@@ -81,7 +81,7 @@ export default Route.extend(ApplicationRouteMixin, {
 
   actions: {
     loading(transition) {
-      let controller = this.controllerFor('application');
+      const controller = this.controllerFor('application');
       controller.set('currentlyLoading', true);
       transition.promise.finally(() => {
         controller.set('currentlyLoading', false);
@@ -95,7 +95,7 @@ export default Route.extend(ApplicationRouteMixin, {
   sessionInvalidated() {
     Sentry.configureScope(scope => scope.clear());
     if (config.environment !== 'test') {
-      let logoutUrl = '/auth/logout';
+      const logoutUrl = '/auth/logout';
       return this.fetch.getJsonFromApiHost(logoutUrl).then(response => {
         if(response.status === 'redirect'){
           window.location.replace(response.logoutUrl);

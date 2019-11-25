@@ -62,7 +62,7 @@ export default Component.extend({
         };
       }).sortBy('title');
       const options = this.results.reduce((set, course) => {
-        let schoolOption = set.findBy('title', course.school);
+        const schoolOption = set.findBy('title', course.school);
         schoolOption.results++;
 
         return set;
@@ -96,7 +96,7 @@ export default Component.extend({
       this.onSelectPage(1);
     },
     toggleSchoolSelection(id) {
-      let ignoredSchoolIds = this.ignoredSchoolIds ? [...this.ignoredSchoolIds] : [];
+      const ignoredSchoolIds = this.ignoredSchoolIds ? [...this.ignoredSchoolIds] : [];
 
       if (ignoredSchoolIds.includes(id)) {
         ignoredSchoolIds.removeObject(id);

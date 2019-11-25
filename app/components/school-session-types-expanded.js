@@ -54,8 +54,8 @@ export default Component.extend({
     },
 
     toggleSchoolNewSessionType() {
-      let schoolNewSessionType = this.schoolNewSessionType;
-      let setSchoolNewSessionType = this.setSchoolNewSessionType;
+      const schoolNewSessionType = this.schoolNewSessionType;
+      const setSchoolNewSessionType = this.setSchoolNewSessionType;
       setSchoolNewSessionType(!schoolNewSessionType);
     }
   },
@@ -65,7 +65,7 @@ export default Component.extend({
     const sessionType = store.createRecord('sessionType');
     const closeComponent = this.setSchoolNewSessionType;
     const school = this.school;
-    let aamcMethods = [];
+    const aamcMethods = [];
     if (aamcMethod) {
       aamcMethods.pushObject(aamcMethod);
     }

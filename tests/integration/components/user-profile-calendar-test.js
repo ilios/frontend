@@ -34,7 +34,7 @@ module('Integration | Component | user profile calendar', function(hooks) {
       assert.ok('to' in queryParams);
       assert.equal(queryParams.to, to);
 
-      let userEvents = [
+      const userEvents = [
         {name: 'first', startDate: today.format(), location: 123, lastModified: today.format(), prerequisites: [], postrequisites: []},
         {name: 'second', startDate: today.format(), location: 456, lastModified: today.format(), prerequisites: [], postrequisites: []},
         {name: 'third', startDate: today.format(), location: 789, lastModified: today.format(), prerequisites: [], postrequisites: []},

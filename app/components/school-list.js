@@ -67,7 +67,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         if (validations.get('isValid')) {
           const title = this.title;
           const iliosAdministratorEmail = this.iliosAdministratorEmail;
-          let newSchool = this.store.createRecord('school', {title, iliosAdministratorEmail});
+          const newSchool = this.store.createRecord('school', {title, iliosAdministratorEmail});
           newSchool.save().then(school => {
             this.set('newSchool', school);
           }).finally(() => {

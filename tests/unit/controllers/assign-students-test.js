@@ -6,7 +6,7 @@ module('Unit | Controller | assign students', function(hooks) {
 
   // Replace this with your real tests.
   test('it exists', function(assert) {
-    let controller = this.owner.lookup('controller:assign-students');
+    const controller = this.owner.lookup('controller:assign-students');
     assert.ok(controller);
   });
 });

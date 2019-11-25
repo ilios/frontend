@@ -9,7 +9,7 @@ import {
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-let Competency = EmberObject.extend({
+const Competency = EmberObject.extend({
   id: null,
   title: null,
   parent: null,
@@ -17,10 +17,10 @@ let Competency = EmberObject.extend({
   isDomain: false,
   objectives: null,
   belongsTo(){
-    let self = this;
+    const self = this;
     return {
       id(){
-        let parentCompetency = self.parent;
+        const parentCompetency = self.parent;
         if (parentCompetency) {
           return parentCompetency.id;
         }
@@ -35,21 +35,21 @@ module('Integration | Component | school competencies manager', function(hooks) 
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    let domain1 = Competency.create({
+    const domain1 = Competency.create({
       id: 1,
       title: 'domain1',
       isDomain: true,
       objectives: [],
       children: [],
     });
-    let competency1 = Competency.create({
+    const competency1 = Competency.create({
       id: 2,
       title: 'competency1',
       parent: domain1,
       objectives: [1, 2, 3],
       children: [],
     });
-    let competency2 = Competency.create({
+    const competency2 = Competency.create({
       id: 3,
       title: 'competency2',
       parent: domain1,
@@ -58,7 +58,7 @@ module('Integration | Component | school competencies manager', function(hooks) 
     });
     domain1.set('children', [competency1, competency2]);
 
-    let competencies = [domain1, competency1, competency2];
+    const competencies = [domain1, competency1, competency2];
     this.set('competencies', competencies);
     this.set('nothing', parseInt);
     await render(hbs`<SchoolCompetenciesManager
@@ -91,13 +91,13 @@ module('Integration | Component | school competencies manager', function(hooks) 
   });
 
   test('delete fires delete', async function(assert) {
-    let domain1 = Competency.create({
+    const domain1 = Competency.create({
       id: 1,
       title: 'domain1',
       isDomain: true,
     });
 
-    let competencies = [domain1];
+    const competencies = [domain1];
     this.set('competencies', competencies);
     this.set('nothing', parseInt);
     this.set('remove', (what) => {
@@ -119,13 +119,13 @@ module('Integration | Component | school competencies manager', function(hooks) 
   });
 
   test('add fires add', async function(assert) {
-    let domain1 = Competency.create({
+    const domain1 = Competency.create({
       id: 1,
       title: 'domain1',
       isDomain: true,
     });
 
-    let competencies = [domain1];
+    const competencies = [domain1];
     this.set('competencies', competencies);
     this.set('nothing', parseInt);
     this.set('add', (what, title) => {

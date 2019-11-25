@@ -55,7 +55,7 @@ export default Controller.extend({
   }),
 
   programs: computed('selectedSchool', 'deletedProgram', 'newProgram', async function() {
-    let schoolId = this.selectedSchool.get('id');
+    const schoolId = this.selectedSchool.get('id');
     if(isEmpty(schoolId)) {
       return resolve([]);
     }

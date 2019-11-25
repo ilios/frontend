@@ -27,19 +27,19 @@ export default Component.extend({
   save: task(function * (){
     yield timeout(10);
     const administrators = this.administrators;
-    let report = this.report;
+    const report = this.report;
     report.setProperties({administrators});
     this.expand();
     yield report.save();
     this.setIsManaging(false);
   }),
   add(where, user){
-    let arr = this.get(where).toArray();
+    const arr = this.get(where).toArray();
     arr.pushObject(user);
     this.set(where, arr);
   },
   remove(where, user){
-    let arr = this.get(where).toArray();
+    const arr = this.get(where).toArray();
     arr.removeObject(user);
     this.set(where, arr);
   },

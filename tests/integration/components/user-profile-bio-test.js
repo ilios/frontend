@@ -357,7 +357,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     await click('.bigadd');
   });
 
-  let setupConfigAndAuth = function(context){
+  const setupConfigAndAuth = function(context){
     const iliosConfigMock = Service.extend({
       userSearchType: resolve('local')
     });

@@ -18,7 +18,7 @@ export default Component.extend({
         title: row.title,
         level: row.level,
         methods: methods.map(method => {
-          let minutes = row.instructional_methods[method.title];
+          const minutes = row.instructional_methods[method.title];
           if (minutes) {
             return (minutes / 60).toFixed(2);
           }

@@ -40,18 +40,18 @@ export default Component.extend(EventMixin, {
   actions: {
     goForward() {
       const date = this.date;
-      let newDate = moment(date).add(1, 'week').toDate();
+      const newDate = moment(date).add(1, 'week').toDate();
       this.set('date', newDate);
     },
 
     goBack() {
       const date = this.date;
-      let newDate = moment(date).subtract(1, 'week').toDate();
+      const newDate = moment(date).subtract(1, 'week').toDate();
       this.set('date', newDate);
     },
 
     gotoToday() {
-      let newDate = moment().toDate();
+      const newDate = moment().toDate();
       this.set('date', newDate);
     }
   }

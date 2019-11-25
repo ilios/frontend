@@ -13,7 +13,7 @@ const CourseProxy = ObjectProxy.extend({
 
   status: computed('content.{isPublished,isScheduled}', function() {
     const intl = this.intl;
-    let course = this.content;
+    const course = this.content;
     let translation = 'general.';
     if (course.get('isScheduled')) {
       translation += 'scheduled';
@@ -94,7 +94,7 @@ export default Component.extend({
       if (-1 !== sortBy.indexOf(':')) {
         sortBy = sortBy.split(':', 1)[0];
       }
-      let sortedAscending = this.sortedAscending;
+      const sortedAscending = this.sortedAscending;
       const courses = this.proxiedCourses;
       let sortedCourses = courses.sortBy(sortBy);
       if (!sortedAscending) {

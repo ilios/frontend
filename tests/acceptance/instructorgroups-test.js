@@ -36,11 +36,11 @@ module('Acceptance | Instructor Groups', function(hooks) {
       this.server.create('session', {
         courseId: 2,
       });
-      let firstInstructorgroup = this.server.create('instructorGroup', {
+      const firstInstructorgroup = this.server.create('instructorGroup', {
         school: this.school,
         userIds: [2, 3, 4, 5, 6]
       });
-      let secondInstructorgroup = this.server.create('instructorGroup', {
+      const secondInstructorgroup = this.server.create('instructorGroup', {
         school: this.school
       });
       this.server.create('offering', {
@@ -65,19 +65,19 @@ module('Acceptance | Instructor Groups', function(hooks) {
 
     test('filters by title', async function(assert) {
       this.server.create('school');
-      let firstInstructorgroup = this.server.create('instructorGroup', {
+      const firstInstructorgroup = this.server.create('instructorGroup', {
         title: 'specialfirstinstructorgroup',
         school: this.school,
       });
-      let secondInstructorgroup = this.server.create('instructorGroup', {
+      const secondInstructorgroup = this.server.create('instructorGroup', {
         title: 'specialsecondinstructorgroup',
         school: this.school
       });
-      let regularInstructorgroup = this.server.create('instructorGroup', {
+      const regularInstructorgroup = this.server.create('instructorGroup', {
         title: 'regularinstructorgroup',
         school: this.school
       });
-      let regexInstructorgroup = this.server.create('instructorGroup', {
+      const regexInstructorgroup = this.server.create('instructorGroup', {
         title: '\\yoo hoo',
         school: this.school
       });
@@ -118,7 +118,7 @@ module('Acceptance | Instructor Groups', function(hooks) {
       this.user.update({ administeredSchools: [this.school] });
       assert.expect(5);
       await page.visit();
-      let newTitle = 'new test title';
+      const newTitle = 'new test title';
       await page.toggleNewInstructorGroupForm();
       await page.newInstructorGroupForm.title(newTitle);
       await page.newInstructorGroupForm.save();
