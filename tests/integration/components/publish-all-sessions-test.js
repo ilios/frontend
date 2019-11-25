@@ -53,7 +53,7 @@ module('Integration | Component | publish all sessions', function(hooks) {
   test('it renders', async function(assert) {
     assert.expect(4);
 
-    let sessions = [unpublishableSession, completeSession, publishableSession];
+    const sessions = [unpublishableSession, completeSession, publishableSession];
     this.set('sessions', resolve(sessions));
 
     await render(hbs`<PublishAllSessions @sessions={{sessions}} />`);
@@ -67,7 +67,7 @@ module('Integration | Component | publish all sessions', function(hooks) {
 
   test('it renders empty', async function(assert) {
     assert.expect(5);
-    let sessions = [];
+    const sessions = [];
     this.set('sessions', resolve(sessions));
 
     const reviewButtons = '.publish-all-sessions-overridable button';

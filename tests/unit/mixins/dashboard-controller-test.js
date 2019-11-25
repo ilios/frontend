@@ -5,8 +5,8 @@ import { module, test } from 'qunit';
 module('Unit | Mixin | dashboard controller', function() {
   // Replace this with your real tests.
   test('it works', function(assert) {
-    let DashboardControllerObject = EmberObject.extend(DashboardControllerMixin);
-    let subject = DashboardControllerObject.create();
+    const DashboardControllerObject = EmberObject.extend(DashboardControllerMixin);
+    const subject = DashboardControllerObject.create();
     assert.ok(subject);
   });
 });

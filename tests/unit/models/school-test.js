@@ -5,8 +5,8 @@ module('Unit | Model | School', function(hooks) {
   setupTest(hooks);
 
   test('getProgramYearsForYear', async function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('school');
-    let store = this.owner.lookup('service:store');
+    const model = this.owner.lookup('service:store').createRecord('school');
+    const store = this.owner.lookup('service:store');
     const program1 = store.createRecord('program');
     const program2 = store.createRecord('program');
     store.createRecord('programYear', { program: program1, startYear: 2014 });
@@ -22,8 +22,8 @@ module('Unit | Model | School', function(hooks) {
   });
 
   test('getConfigValue booleans', async function(assert) {
-    let store = this.owner.lookup('service:store');
-    let school = store.createRecord('school');
+    const store = this.owner.lookup('service:store');
+    const school = store.createRecord('school');
     store.createRecord('school-config', {
       name: 'test-false',
       value: 'false',

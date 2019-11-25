@@ -5,13 +5,13 @@ module('Unit | Model | Course', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('course');
+    const model = this.owner.lookup('service:store').createRecord('course');
     assert.ok(!!model);
   });
 
   test('check required publication items', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('course');
-    let store = this.owner.lookup('service:store');
+    const model = this.owner.lookup('service:store').createRecord('course');
+    const store = this.owner.lookup('service:store');
     assert.equal(model.get('requiredPublicationIssues').length, 3);
     var cohort = store.createRecord('cohort');
     model.get('cohorts').addObject(cohort);
@@ -23,8 +23,8 @@ module('Unit | Model | Course', function(hooks) {
   });
 
   test('check optional publication items', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('course');
-    let store = this.owner.lookup('service:store');
+    const model = this.owner.lookup('service:store').createRecord('course');
+    const store = this.owner.lookup('service:store');
     assert.equal(model.get('optionalPublicationIssues').length, 3);
     model.get('terms').addObject(store.createRecord('term'));
     assert.equal(model.get('optionalPublicationIssues').length, 2);
@@ -36,7 +36,7 @@ module('Unit | Model | Course', function(hooks) {
 
   test('check empty competencies', async function(assert) {
     assert.expect(1);
-    let course = this.owner.lookup('service:store').createRecord('course');
+    const course = this.owner.lookup('service:store').createRecord('course');
 
     const competencies = await course.get('competencies');
     assert.equal(competencies.length, 0);
@@ -44,17 +44,17 @@ module('Unit | Model | Course', function(hooks) {
 
   test('check competencies', async function(assert) {
     assert.expect(4);
-    let course = this.owner.lookup('service:store').createRecord('course');
-    let store = this.owner.lookup('service:store');
+    const course = this.owner.lookup('service:store').createRecord('course');
+    const store = this.owner.lookup('service:store');
 
-    let competency1 = store.createRecord('competency');
-    let competency2 = store.createRecord('competency');
-    let competency3 = store.createRecord('competency');
+    const competency1 = store.createRecord('competency');
+    const competency2 = store.createRecord('competency');
+    const competency3 = store.createRecord('competency');
 
-    let objective1 = store.createRecord('objective', {competency: competency1});
-    let objective2 = store.createRecord('objective', {competency: competency2});
-    let objective3 = store.createRecord('objective', {competency: competency3, courses: [course], parents: [objective1]});
-    let objective4 = store.createRecord('objective', {courses: [course], parents: [objective2]});
+    const objective1 = store.createRecord('objective', {competency: competency1});
+    const objective2 = store.createRecord('objective', {competency: competency2});
+    const objective3 = store.createRecord('objective', {competency: competency3, courses: [course], parents: [objective1]});
+    const objective4 = store.createRecord('objective', {courses: [course], parents: [objective2]});
     objective1.get('children').pushObject(objective3);
     objective2.get('children').pushObject(objective4);
     course.get('objectives').pushObjects([objective3, objective4]);
@@ -70,22 +70,22 @@ module('Unit | Model | Course', function(hooks) {
 
   test('check publishedSessionOfferingCounts count', function(assert) {
     assert.expect(2);
-    let course = this.owner.lookup('service:store').createRecord('course');
-    let store = this.owner.lookup('service:store');
+    const course = this.owner.lookup('service:store').createRecord('course');
+    const store = this.owner.lookup('service:store');
 
-    let offering1 = store.createRecord('offering');
-    let offering2 = store.createRecord('offering');
-    let offering3 = store.createRecord('offering');
-    let offering4 = store.createRecord('offering');
+    const offering1 = store.createRecord('offering');
+    const offering2 = store.createRecord('offering');
+    const offering3 = store.createRecord('offering');
+    const offering4 = store.createRecord('offering');
 
-    let session1 = store.createRecord('session', {offerings: [offering1, offering2], published: true});
-    let session2 = store.createRecord('session', {offerings: [offering3], published: true});
-    let session3 = store.createRecord('session', {offerings: [offering4], published: false});
+    const session1 = store.createRecord('session', {offerings: [offering1, offering2], published: true});
+    const session2 = store.createRecord('session', {offerings: [offering3], published: true});
+    const session3 = store.createRecord('session', {offerings: [offering4], published: false});
 
     course.get('sessions').pushObjects([session1, session2, session3]);
 
     assert.equal(course.get('publishedOfferingCount'), 3);
-    let offering5 = store.createRecord('offering');
+    const offering5 = store.createRecord('offering');
     session1.get('offerings').pushObject(offering5);
     session3.set('published', true);
 
@@ -94,8 +94,8 @@ module('Unit | Model | Course', function(hooks) {
 
   test("domains", async function(assert) {
     assert.expect(10);
-    let course = this.owner.lookup('service:store').createRecord('course');
-    let store = this.owner.lookup('service:store');
+    const course = this.owner.lookup('service:store').createRecord('course');
+    const store = this.owner.lookup('service:store');
     const domain1 = store.createRecord('competency', { id: 1, title: 'Zylinder' });
     const domain2 = store.createRecord('competency', { id: 2, title: 'Anton' });
     const domain3 = store.createRecord('competency', { id: 3, title: 'Lexicon' });
@@ -108,10 +108,10 @@ module('Unit | Model | Course', function(hooks) {
     store.createRecord('competency', { id: 8, parent: domain2 });
     store.createRecord('competency', { id: 9, parent: domain3 });
 
-    let objective1 = store.createRecord('objective', { competency: competency1 });
-    let objective2 = store.createRecord('objective', { competency: competency2 });
-    let objective3 = store.createRecord('objective', { competency: competency3 });
-    let objective4 = store.createRecord('objective', { competency: domain3 });
+    const objective1 = store.createRecord('objective', { competency: competency1 });
+    const objective2 = store.createRecord('objective', { competency: competency2 });
+    const objective3 = store.createRecord('objective', { competency: competency3 });
+    const objective4 = store.createRecord('objective', { competency: domain3 });
 
     course.get('objectives').pushObjects([ objective1, objective2, objective3, objective4 ]);
 
@@ -137,8 +137,8 @@ module('Unit | Model | Course', function(hooks) {
 
   test('schools', async function(assert) {
     assert.expect(4);
-    let course = this.owner.lookup('service:store').createRecord('course');
-    let store = this.owner.lookup('service:store');
+    const course = this.owner.lookup('service:store').createRecord('course');
+    const store = this.owner.lookup('service:store');
     const school1 = store.createRecord('school');
     const school2 = store.createRecord('school');
     const school3 = store.createRecord('school');
@@ -165,8 +165,8 @@ module('Unit | Model | Course', function(hooks) {
 
   test('assignableVocabularies', async function(assert){
     assert.expect(5);
-    let course = this.owner.lookup('service:store').createRecord('course');
-    let store = this.owner.lookup('service:store');
+    const course = this.owner.lookup('service:store').createRecord('course');
+    const store = this.owner.lookup('service:store');
     const school1 = store.createRecord('school', { title: 'Zylinder' });
     const school2 = store.createRecord('school', { title: 'Anton' });
     const vocabulary1 = store.createRecord('vocabulary', { title: 'Sowjetunion',  school: school1 });
@@ -189,8 +189,8 @@ module('Unit | Model | Course', function(hooks) {
 
   test('assignableVocabularies', async function(assert){
     assert.expect(5);
-    let course = this.owner.lookup('service:store').createRecord('course');
-    let store = this.owner.lookup('service:store');
+    const course = this.owner.lookup('service:store').createRecord('course');
+    const store = this.owner.lookup('service:store');
     const school1 = store.createRecord('school', { title: 'Zeppelin' });
     const school2 = store.createRecord('school', { title: 'Anton' });
     const vocabulary1 = store.createRecord('vocabulary', { title: 'Sowjetunion',  school: school1 });
@@ -213,8 +213,8 @@ module('Unit | Model | Course', function(hooks) {
 
   test('sortedObjectives', async function(assert) {
     assert.expect(4);
-    let course = this.owner.lookup('service:store').createRecord('course');
-    let store = this.owner.lookup('service:store');
+    const course = this.owner.lookup('service:store').createRecord('course');
+    const store = this.owner.lookup('service:store');
     const objective1 = store.createRecord('objective', { id: 1, position: 3, title: 'Aardvark'});
     const objective2 = store.createRecord('objective', { id: 2, position: 2, title: 'Bar' });
     const objective3 = store.createRecord('objective', { id: 3, position: 2, title: 'Foo' });

@@ -34,7 +34,7 @@ const filterResults = function (all, modelName, request) {
  */
 const extractQueryParams = function(request){
   const params = Object.keys(request.queryParams);
-  let rhett = {
+  const rhett = {
     filterParams: [],
     queryTerms: [],
     limit: 100000
@@ -85,16 +85,16 @@ const filterByFilterParams = function(all, filterParams){
   const results = all.filter(function (obj) {
     let match = true;
     filterParams.forEach(filter => {
-      let value = filter.value;
-      let param = filter.param;
+      const value = filter.value;
+      const param = filter.param;
       //for things like filters[id] = [1,11,56]
       if(value instanceof Array){
-        let arr = value;
+        const arr = value;
         if(obj[param] === undefined){
           match = false;
         }
         if (obj[param] instanceof Collection) {
-          let result = obj[param].filter(model => {
+          const result = obj[param].filter(model => {
             return (arr.indexOf(model.id.toString()) !== -1);
           });
           match = result.length > 0;
@@ -119,7 +119,7 @@ const filterByFilterParams = function(all, filterParams){
           if (value === '' && obj[param].length === 0) {
             match = true;
           } else {
-            let result = obj[param].filter(model => {
+            const result = obj[param].filter(model => {
               return model.id.toString() === value.toString();
             });
             match = result.length > 0;

@@ -141,7 +141,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     sessionLm = this.element.querySelector('.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(2)');
     assert.equal(this.element.querySelectorAll('.lm-type-icon .fa-clock', sessionLm).length, 1, 'Timed release icon is visible');
     assert.ok(this.element.querySelector('.single-event-learningmaterial-item-title', sessionLm).textContent.includes(learningMaterials[0].title));
-    let sessionObjectivesSelector = '.single-event-objective-list > .single-event-objective-list:nth-of-type(1)';
+    const sessionObjectivesSelector = '.single-event-objective-list > .single-event-objective-list:nth-of-type(1)';
     assert.ok(this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1)`).textContent.trim().startsWith('Competency A (Domain A)'));
     assert.dom(
       this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(1)`)
@@ -154,7 +154,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       this.element.querySelector(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(2) li:nth-of-type(1)`)
     ).hasText('Session Objective C');
 
-    let courseObjectivesSelector = '[data-test-course-objectives]';
+    const courseObjectivesSelector = '[data-test-course-objectives]';
     assert.ok(this.element.querySelector(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1)`).textContent.trim().startsWith('Domain A (Domain A)'));
     assert.dom(
       this.element.querySelector(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(1)`)

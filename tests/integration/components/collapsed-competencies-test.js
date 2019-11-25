@@ -12,13 +12,13 @@ module('Integration | Component | collapsed competencies', function(hooks) {
 
   test('it renders', async function(assert) {
     assert.expect(4);
-    let schoolA = this.server.create('school', {title: 'Medicine'});
-    let schoolB = this.server.create('school', {title: 'Pharmacy'});
-    let competencyA = EmberObject.create(this.server.create('competency', { schoolId: 1 }));
+    const schoolA = this.server.create('school', {title: 'Medicine'});
+    const schoolB = this.server.create('school', {title: 'Pharmacy'});
+    const competencyA = EmberObject.create(this.server.create('competency', { schoolId: 1 }));
     competencyA.school = RSVP.resolve(schoolA);
-    let competencyB = EmberObject.create(this.server.create('competency', { schoolId: 2 }));
+    const competencyB = EmberObject.create(this.server.create('competency', { schoolId: 2 }));
     competencyB.school = RSVP.resolve(schoolB);
-    let competencies = [competencyA, competencyB];
+    const competencies = [competencyA, competencyB];
 
     const course = EmberObject.create({
       competencies: RSVP.resolve(competencies)
@@ -27,7 +27,7 @@ module('Integration | Component | collapsed competencies', function(hooks) {
     this.set('course', course);
     this.set('click', () => {});
     await render(hbs`<CollapsedCompetencies @subject={{course}} @expand={{action click}} />`);
-    let content = this.element.textContent.trim();
+    const content = this.element.textContent.trim();
     assert.equal(content.search(/Competencies \(2\)/), 0);
     assert.notEqual(content.search(/School(\s+)Competencies/), -1);
     assert.notEqual(content.search(/Medicine(\s+)1/), -1);
@@ -36,13 +36,13 @@ module('Integration | Component | collapsed competencies', function(hooks) {
 
   test('clicking the header expands the list', async function(assert) {
     assert.expect(2);
-    let schoolA = this.server.create('school', {title: 'Medicine'});
-    let schoolB = this.server.create('school', {title: 'Pharmacy'});
-    let competencyA = EmberObject.create(this.server.create('competency', { schoolId: 1 }));
+    const schoolA = this.server.create('school', {title: 'Medicine'});
+    const schoolB = this.server.create('school', {title: 'Pharmacy'});
+    const competencyA = EmberObject.create(this.server.create('competency', { schoolId: 1 }));
     competencyA.school = RSVP.resolve(schoolA);
-    let competencyB = EmberObject.create(this.server.create('competency', { schoolId: 2 }));
+    const competencyB = EmberObject.create(this.server.create('competency', { schoolId: 2 }));
     competencyB.school = RSVP.resolve(schoolB);
-    let competencies = [competencyA, competencyB];
+    const competencies = [competencyA, competencyB];
 
     const course = EmberObject.create({
       competencies: RSVP.resolve(competencies)

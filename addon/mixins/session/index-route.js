@@ -24,7 +24,7 @@ export default Mixin.create({
     const existingSessionIds = existingSessionsInStore.mapBy('id');
     const unloadedSessions = sessions.filter(id => !existingSessionIds.includes(id));
 
-    let promises = [
+    const promises = [
       session.description,
       session.administrators,
       session.objectives,

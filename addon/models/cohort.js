@@ -26,7 +26,7 @@ export default Model.extend({
    * @public
    */
   rootLevelLearnerGroups: computed('learnerGroups.[]', async function() {
-    let learnerGroups = await this.get('learnerGroups');
+    const learnerGroups = await this.get('learnerGroups');
     return learnerGroups.filter(learnerGroup => learnerGroup.belongsTo('parent').value() === null);
   }),
 

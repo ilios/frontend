@@ -5,8 +5,8 @@ import { module, test } from 'qunit';
 module('Unit | Mixin | course-visualize-instructors-controller', function() {
   // Replace this with your real tests.
   test('it works', function (assert) {
-    let CourseVisualizeInstructorsControllerObject = EmberObject.extend(CourseVisualizeInstructorsControllerMixin);
-    let subject = CourseVisualizeInstructorsControllerObject.create();
+    const CourseVisualizeInstructorsControllerObject = EmberObject.extend(CourseVisualizeInstructorsControllerMixin);
+    const subject = CourseVisualizeInstructorsControllerObject.create();
     assert.ok(subject);
   });
 });

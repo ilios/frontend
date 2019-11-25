@@ -117,7 +117,7 @@ export default Component.extend({
     const cohortProxies = await map(cohorts.toArray(), async cohort => {
       const programYear = await cohort.get('programYear');
       const objectives = await programYear.get('objectives');
-      let objectiveProxies = objectives.map(objective => {
+      const objectiveProxies = objectives.map(objective => {
         return objectiveProxy.create({
           content: objective,
           courseObjective,
@@ -168,20 +168,20 @@ export default Component.extend({
   actions: {
     setSelectedCohort(cohortId){
       this.get('cohorts').then(cohorts => {
-        let selectedCohort = cohorts.findBy('id', cohortId);
+        const selectedCohort = cohorts.findBy('id', cohortId);
         this.set('selectedCohort', selectedCohort);
       });
     },
     removeParent(parentProxy){
-      let removingParent = parentProxy.get('content');
-      let courseObjective = this.get('courseObjective');
+      const removingParent = parentProxy.get('content');
+      const courseObjective = this.get('courseObjective');
       courseObjective.get('parents').removeObject(removingParent);
       removingParent.get('children').removeObject(courseObjective);
     },
   },
   loadAttr: task(function * () {
-    let cohorts = yield this.get('cohorts');
-    let firstCohort = cohorts.get('firstObject');
+    const cohorts = yield this.get('cohorts');
+    const firstCohort = cohorts.get('firstObject');
     if(firstCohort != null){
       this.set('selectedCohort', firstCohort);
     }
@@ -197,9 +197,9 @@ export default Component.extend({
     const school = yield program.get('school');
     const allowMultipleCourseObjectiveParents = yield school.getConfigValue('allowMultipleCourseObjectiveParents');
 
-    let parents = yield courseObjective.get('parents');
+    const parents = yield courseObjective.get('parents');
     parents.addObject(newParent);
-    let children = yield newParent.get('children');
+    const children = yield newParent.get('children');
     children.addObject(courseObjective);
 
     if (!allowMultipleCourseObjectiveParents) {

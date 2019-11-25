@@ -22,7 +22,7 @@ export default JwtTokenAuthenticator.extend({
 
       this.scheduleAccessTokenRefresh(expiresAt, token);
 
-      let response  = {};
+      const response  = {};
       response[this.tokenPropertyName] = token;
       response[this.tokenExpireName] = expiresAt;
 

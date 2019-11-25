@@ -21,13 +21,13 @@ export default Component.extend({
    * @public
    */
   offeringBlocks: computed('offerings.@each.{startDate,endDate,room,learnerGroups,instructorGroups}', async function() {
-    let offerings = await this.get('offerings');
+    const offerings = await this.get('offerings');
     if (isEmpty(offerings)) {
       return [];
     }
-    let dateBlocks = {};
+    const dateBlocks = {};
     offerings.forEach(offering => {
-      let key = offering.get('dateKey');
+      const key = offering.get('dateKey');
       if (!(key in dateBlocks)) {
         dateBlocks[key] = OfferingDateBlock.create({
           dateKey: key
@@ -36,7 +36,7 @@ export default Component.extend({
       dateBlocks[key].addOffering(offering);
     });
     //convert indexed object to array
-    let dateBlockArray = [];
+    const dateBlockArray = [];
     let key;
     for (key in dateBlocks) {
       dateBlockArray.pushObject(dateBlocks[key]);
@@ -46,7 +46,7 @@ export default Component.extend({
 
   actions: {
     removeOffering(offering) {
-      let session = this.get('session');
+      const session = this.get('session');
       session.get('offerings').then(offerings => {
         offerings.removeObject(offering);
         offering.deleteRecord();

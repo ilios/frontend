@@ -119,7 +119,7 @@ module('Integration | Component | dashboard agenda', function (hooks) {
       assert.dom(this.element.querySelector(title)).hasText('My Activities for the next 60 days');
       assert.equal(this.element.querySelectorAll('table tr').length, 3);
       for (let i = 0; i < 3; i++) {
-        let tds = this.element.querySelectorAll(`table tr:nth-of-type(${i + 1}) td`);
+        const tds = this.element.querySelectorAll(`table tr:nth-of-type(${i + 1}) td`);
         assert.dom(tds[0]).hasText(moment(mockEvents[i].startDate).format('dddd, MMMM Do, YYYY h:mma'));
         assert.dom(tds[1]).hasText(mockEvents[i].name);
       }

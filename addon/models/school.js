@@ -33,12 +33,12 @@ export default Model.extend({
   }).readOnly(),
 
   async getCohortsForYear(year){
-    let cohorts = await this.get('cohorts');
-    let cohortsForYear = await filter(cohorts.toArray(), async cohort => {
+    const cohorts = await this.get('cohorts');
+    const cohortsForYear = await filter(cohorts.toArray(), async cohort => {
       const programYear = await cohort.get('programYear');
       const classOfYear = await programYear.get('classOfYear');
-      let start = parseInt(programYear.get('startYear'), 10);
-      let end = parseInt(classOfYear, 10);
+      const start = parseInt(programYear.get('startYear'), 10);
+      const end = parseInt(classOfYear, 10);
       return (parseInt(year, 10) >= start && parseInt(year, 10) <= end);
     });
     return cohortsForYear;
@@ -98,7 +98,7 @@ export default Model.extend({
       school: this,
       name
     });
-    let configurations = await this.get('configurations');
+    const configurations = await this.get('configurations');
     configurations.pushObject(config);
 
     return config;

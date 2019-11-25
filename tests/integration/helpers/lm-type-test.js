@@ -8,7 +8,7 @@ module('Integration | Helper | lm-type', function(hooks) {
 
   test('link', async function(assert) {
     assert.expect(1);
-    let lm = { link: 'whatever' };
+    const lm = { link: 'whatever' };
     this.set('lm', lm);
     await render(hbs`{{lm-type lm}}`);
     assert.dom(this.element).hasText('link');
@@ -16,7 +16,7 @@ module('Integration | Helper | lm-type', function(hooks) {
 
   test('citation', async function(assert) {
     assert.expect(1);
-    let lm = { citation: 'whatever' };
+    const lm = { citation: 'whatever' };
     this.set('lm', lm);
     await render(hbs`{{lm-type lm}}`);
     assert.dom(this.element).hasText('citation');
@@ -24,7 +24,7 @@ module('Integration | Helper | lm-type', function(hooks) {
 
   test('file', async function(assert) {
     assert.expect(1);
-    let lm = { filename: 'whatever' };
+    const lm = { filename: 'whatever' };
     this.set('lm', lm);
     await render(hbs`{{lm-type lm}}`);
     assert.dom(this.element).hasText('file');

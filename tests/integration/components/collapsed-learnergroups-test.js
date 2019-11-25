@@ -17,7 +17,7 @@ module('Integration | Component | collapsed learnergroups', function(hooks) {
 
   test('displays summary data', async function(assert) {
     assert.expect(6);
-    let cohorts = [];
+    const cohorts = [];
     for (let i = 1; i <= 2; i++) {
       const program = this.server.create('program');
       const programYear = this.server.create('program-year', { program });

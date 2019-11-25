@@ -31,7 +31,7 @@ export default Component.extend({
       this.get('setIsManaging')(false);
     },
     addLearnerGroup(learnerGroup) {
-      let learnerGroups = this.get('learnerGroups').toArray();
+      const learnerGroups = this.get('learnerGroups').toArray();
       learnerGroups.addObject(learnerGroup);
       learnerGroup.get('allDescendants').then(function(descendants){
         learnerGroups.addObjects(descendants);
@@ -40,7 +40,7 @@ export default Component.extend({
       this.set('learnerGroups', learnerGroups);
     },
     removeLearnerGroup(learnerGroup) {
-      let learnerGroups = this.get('learnerGroups').toArray();
+      const learnerGroups = this.get('learnerGroups').toArray();
       learnerGroups.removeObject(learnerGroup);
       learnerGroup.get('allDescendants').then(function(descendants){
         learnerGroups.removeObjects(descendants);
@@ -57,7 +57,7 @@ export default Component.extend({
   loadLearnerGroups: task(function * (){
     const subject = this.get('subject');
     if (subject){
-      let learnerGroups = yield subject.get('learnerGroups');
+      const learnerGroups = yield subject.get('learnerGroups');
       this.set('learnerGroups', learnerGroups.toArray());
     } else {
       yield timeout(1000);
@@ -65,8 +65,8 @@ export default Component.extend({
   }).restartable(),
   save: task(function * (){
     yield timeout(10);
-    let subject = this.get('subject');
-    let learnerGroups = this.get('learnerGroups');
+    const subject = this.get('subject');
+    const learnerGroups = this.get('learnerGroups');
     subject.set('learnerGroups', learnerGroups);
     try {
       yield subject.save();

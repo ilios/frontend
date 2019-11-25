@@ -69,22 +69,22 @@ module('Integration | Component | detail learning materials', function(hooks) {
   test('sort button visible when lm list has 2+ items and editing is allowed', async function(assert) {
     assert.expect(1);
 
-    let clm1 = EmberObject.create({
+    const clm1 = EmberObject.create({
       id: 1,
       learningMaterial: resolve(EmberObject.create({
         id: 1,
       }))
     });
 
-    let clm2 = EmberObject.create({
+    const clm2 = EmberObject.create({
       id: 2,
       learningMaterial: resolve(EmberObject.create({
         id: 2,
       }))
     });
-    let clms = [ clm1, clm2 ];
+    const clms = [ clm1, clm2 ];
 
-    let subject = EmberObject.create({
+    const subject = EmberObject.create({
       id: 1,
       learningMaterials: resolve(clms)
     });
@@ -105,16 +105,16 @@ module('Integration | Component | detail learning materials', function(hooks) {
   test('sort button not visible when in read-only mode', async function(assert) {
     assert.expect(1);
 
-    let lm1 = EmberObject.create({
+    const lm1 = EmberObject.create({
       id: 1,
     });
 
-    let lm2 = EmberObject.create({
+    const lm2 = EmberObject.create({
       id: 2,
     });
-    let lms = [ lm1, lm2 ];
+    const lms = [ lm1, lm2 ];
 
-    let subject = EmberObject.create({
+    const subject = EmberObject.create({
       id: 1,
       learningMaterials: resolve(lms)
     });
@@ -135,7 +135,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
   test('sort button not visible when lm list is empty', async function(assert) {
     assert.expect(1);
 
-    let subject = EmberObject.create({
+    const subject = EmberObject.create({
       id: 1,
       learningMaterials: resolve([])
     });
@@ -154,16 +154,16 @@ module('Integration | Component | detail learning materials', function(hooks) {
   });
 
   test('sort button not visible when lm list only contains one item', async function(assert) {
-    let clm1 = EmberObject.create({
+    const clm1 = EmberObject.create({
       id: 1,
       learningMaterial: resolve(EmberObject.create({
         id: 1,
       }))
     });
 
-    let clms = [ clm1 ];
+    const clms = [ clm1 ];
 
-    let subject = EmberObject.create({
+    const subject = EmberObject.create({
       id: 1,
       learningMaterials: resolve(clms)
     });
@@ -184,22 +184,22 @@ module('Integration | Component | detail learning materials', function(hooks) {
   test('click sort button, then cancel', async function(assert) {
     assert.expect(6);
 
-    let clm1 = EmberObject.create({
+    const clm1 = EmberObject.create({
       id: 1,
       learningMaterial: resolve(EmberObject.create({
         id: 1,
       }))
     });
 
-    let clm2 = EmberObject.create({
+    const clm2 = EmberObject.create({
       id: 2,
       learningMaterial: resolve(EmberObject.create({
         id: 2,
       }))
     });
-    let clms = [ clm1, clm2 ];
+    const clms = [ clm1, clm2 ];
 
-    let subject = EmberObject.create({
+    const subject = EmberObject.create({
       id: 1,
       learningMaterials: resolve(clms)
     });
@@ -232,7 +232,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
   test('click sort button, then save', async function(assert) {
     assert.expect(2);
 
-    let clm1 = EmberObject.create({
+    const clm1 = EmberObject.create({
       id: 1,
       learningMaterial: resolve(EmberObject.create({
         id: 1,
@@ -243,7 +243,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
       }
     });
 
-    let clm2 = EmberObject.create({
+    const clm2 = EmberObject.create({
       id: 2,
       learningMaterial: resolve(EmberObject.create({
         id: 2,
@@ -253,9 +253,9 @@ module('Integration | Component | detail learning materials', function(hooks) {
         resolve(this);
       }
     });
-    let clms = [ clm1, clm2 ];
+    const clms = [ clm1, clm2 ];
 
-    let subject = EmberObject.create({
+    const subject = EmberObject.create({
       id: 1,
       learningMaterials: resolve(clms)
     });

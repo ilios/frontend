@@ -5,8 +5,8 @@ import { module, test } from 'qunit';
 module('Unit | Mixin | course-visualize-vocabularies-route', function() {
   // Replace this with your real tests.
   test('it works', function (assert) {
-    let CourseVisualizeVocabulariesRouteObject = EmberObject.extend(CourseVisualizeVocabulariesRouteMixin);
-    let subject = CourseVisualizeVocabulariesRouteObject.create();
+    const CourseVisualizeVocabulariesRouteObject = EmberObject.extend(CourseVisualizeVocabulariesRouteMixin);
+    const subject = CourseVisualizeVocabulariesRouteObject.create();
     assert.ok(subject);
   });
 });

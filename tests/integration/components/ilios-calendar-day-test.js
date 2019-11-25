@@ -8,7 +8,7 @@ module('Integration | Component | ilios calendar day', function(hooks) {
 
   test('it renders', async function(assert) {
     assert.expect(2);
-    let date = new Date('2015-09-30T12:00:00');
+    const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
     this.set('nothing', parseInt);
     await render(hbs`<IliosCalendarDay @date={{date}} @selectEvent={{action nothing}} />`);

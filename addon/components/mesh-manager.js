@@ -56,7 +56,7 @@ export default Component.extend({
         q: query,
         limit: this.get('searchResultsPerPage') + 1
       }).then(descriptors => {
-        let results = descriptors.map(function(descriptor){
+        const results = descriptors.map(function(descriptor){
           return ProxiedDescriptors.create({
             content: descriptor,
             terms: terms
@@ -102,7 +102,7 @@ export default Component.extend({
       limit: this.get('searchResultsPerPage') + 1,
       offset: this.get('searchPage') * this.get('searchResultsPerPage')
     });
-    let results = descriptors.map(function(descriptor){
+    const results = descriptors.map(function(descriptor){
       return ProxiedDescriptors.create({
         content: descriptor,
         terms: terms

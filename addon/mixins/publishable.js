@@ -69,7 +69,7 @@ export default Mixin.create({
   }),
   actions: {
     unpublish() {
-      let publishTarget = this.get('publishTarget');
+      const publishTarget = this.get('publishTarget');
       publishTarget.set('publishedAsTbd', false);
       publishTarget.set('published', false);
       publishTarget.save().then(()=>{
@@ -77,7 +77,7 @@ export default Mixin.create({
       });
     },
     publishAsTbd() {
-      let publishTarget = this.get('publishTarget');
+      const publishTarget = this.get('publishTarget');
       publishTarget.set('publishedAsTbd', true);
       publishTarget.set('published', true);
       publishTarget.save().then(()=>{
@@ -85,7 +85,7 @@ export default Mixin.create({
       });
     },
     publish() {
-      let publishTarget = this.get('publishTarget');
+      const publishTarget = this.get('publishTarget');
       publishTarget.set('publishedAsTbd', false);
       publishTarget.set('published', true);
       publishTarget.save().then(()=>{

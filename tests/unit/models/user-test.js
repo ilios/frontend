@@ -5,12 +5,12 @@ module('Unit | Model | User', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('user');
+    const model = this.owner.lookup('service:store').createRecord('user');
     assert.ok(!!model);
   });
 
   test('full name', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('user');
+    const model = this.owner.lookup('service:store').createRecord('user');
     model.set('firstName', 'first');
     model.set('lastName', 'last');
     model.set('middleName', 'middle');
@@ -18,14 +18,14 @@ module('Unit | Model | User', function(hooks) {
   });
 
   test('full name no middle name', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('user');
+    const model = this.owner.lookup('service:store').createRecord('user');
     model.set('firstName', 'first');
     model.set('lastName', 'last');
     assert.equal(model.get('fullName'), 'first last');
   });
 
   test('full name with displayName', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('user');
+    const model = this.owner.lookup('service:store').createRecord('user');
     model.set('displayName', 'something else');
     model.set('firstName', 'first');
     model.set('lastName', 'last');
@@ -33,9 +33,9 @@ module('Unit | Model | User', function(hooks) {
   });
 
   test('gets all directed courses', async function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('user');
-    let store = this.owner.lookup('service:store');
-    let courses = [];
+    const model = this.owner.lookup('service:store').createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const courses = [];
     courses.pushObject(store.createRecord('course', {
       directors: [model],
       id: 1,
@@ -52,9 +52,9 @@ module('Unit | Model | User', function(hooks) {
   });
 
   test('gets all administered courses', async function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('user');
-    let store = this.owner.lookup('service:store');
-    let courses = [];
+    const model = this.owner.lookup('service:store').createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const courses = [];
     courses.pushObject(store.createRecord('course', {
       administrators: [model],
       id: 1,
@@ -71,27 +71,27 @@ module('Unit | Model | User', function(hooks) {
   });
 
   test('gets all learner group courses', async function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
-    let course1 = store.createRecord('course');
-    let session1 = store.createRecord('session', {
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
+    const course1 = store.createRecord('course');
+    const session1 = store.createRecord('session', {
       course: course1
     });
-    let offering1 = store.createRecord('offering', {
+    const offering1 = store.createRecord('offering', {
       session: session1
     });
-    let offering2 = store.createRecord('offering', {
+    const offering2 = store.createRecord('offering', {
       session: session1
     });
     store.createRecord('learnerGroup', {
       offerings: [offering1, offering2],
       users: [model]
     });
-    let course2 = store.createRecord('course');
-    let session2 = store.createRecord('session', {
+    const course2 = store.createRecord('course');
+    const session2 = store.createRecord('session', {
       course: course2
     });
-    let offering3 = store.createRecord('offering', {
+    const offering3 = store.createRecord('offering', {
       session: session2
     });
     store.createRecord('learnerGroup', {
@@ -99,7 +99,7 @@ module('Unit | Model | User', function(hooks) {
       users: [model]
     });
 
-    let courses = [course1, course2];
+    const courses = [course1, course2];
     const allRelatedCourses = await model.get('allRelatedCourses');
     assert.equal(allRelatedCourses.length, courses.length);
     courses.forEach(course => {
@@ -108,27 +108,27 @@ module('Unit | Model | User', function(hooks) {
   });
 
   test('gets all instructor group courses', async function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
-    let course1 = store.createRecord('course');
-    let session1 = store.createRecord('session', {
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
+    const course1 = store.createRecord('course');
+    const session1 = store.createRecord('session', {
       course: course1
     });
-    let offering1 = store.createRecord('offering', {
+    const offering1 = store.createRecord('offering', {
       session: session1
     });
-    let offering2 = store.createRecord('offering', {
+    const offering2 = store.createRecord('offering', {
       session: session1
     });
     store.createRecord('instructorGroup', {
       offerings: [offering1, offering2],
       users: [model]
     });
-    let course2 = store.createRecord('course');
-    let session2 = store.createRecord('session', {
+    const course2 = store.createRecord('course');
+    const session2 = store.createRecord('session', {
       course: course2
     });
-    let offering3 = store.createRecord('offering', {
+    const offering3 = store.createRecord('offering', {
       session: session2
     });
     store.createRecord('instructorGroup', {
@@ -136,7 +136,7 @@ module('Unit | Model | User', function(hooks) {
       users: [model]
     });
 
-    let courses = [course1, course2];
+    const courses = [course1, course2];
     const allRelatedCourses = await model.get('allRelatedCourses');
     assert.equal(allRelatedCourses.length, courses.length);
     courses.forEach(course => {
@@ -145,10 +145,10 @@ module('Unit | Model | User', function(hooks) {
   });
 
   test('gets all instructed offering courses', async function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
-    let course1 = store.createRecord('course');
-    let session1 = store.createRecord('session', {
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
+    const course1 = store.createRecord('course');
+    const session1 = store.createRecord('session', {
       course: course1
     });
     store.createRecord('offering', {
@@ -159,8 +159,8 @@ module('Unit | Model | User', function(hooks) {
       session: session1,
       instructors: [model]
     });
-    let course2 = store.createRecord('course');
-    let session2 = store.createRecord('session', {
+    const course2 = store.createRecord('course');
+    const session2 = store.createRecord('session', {
       course: course2
     });
     store.createRecord('offering', {
@@ -168,7 +168,7 @@ module('Unit | Model | User', function(hooks) {
       instructors: [model]
     });
 
-    let courses = [course1, course2];
+    const courses = [course1, course2];
     const allRelatedCourses = await model.get('allRelatedCourses');
     assert.equal(allRelatedCourses.length, courses.length);
     courses.forEach(course => {
@@ -177,10 +177,10 @@ module('Unit | Model | User', function(hooks) {
   });
 
   test('gets all learner offering courses', async function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
-    let course1 = store.createRecord('course');
-    let session1 = store.createRecord('session', {
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
+    const course1 = store.createRecord('course');
+    const session1 = store.createRecord('session', {
       course: course1
     });
     store.createRecord('offering', {
@@ -191,8 +191,8 @@ module('Unit | Model | User', function(hooks) {
       session: session1,
       learners: [model]
     });
-    let course2 = store.createRecord('course');
-    let session2 = store.createRecord('session', {
+    const course2 = store.createRecord('course');
+    const session2 = store.createRecord('session', {
       course: course2
     });
     store.createRecord('offering', {
@@ -200,7 +200,7 @@ module('Unit | Model | User', function(hooks) {
       learners: [model]
     });
 
-    let courses = [course1, course2];
+    const courses = [course1, course2];
     const allRelatedCourses = await model.get('allRelatedCourses');
     assert.equal(allRelatedCourses.length, courses.length);
     courses.forEach(course => {
@@ -209,27 +209,27 @@ module('Unit | Model | User', function(hooks) {
   });
 
   test('gets all learner group ILMSession courses', async function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
-    let course1 = store.createRecord('course');
-    let session1 = store.createRecord('session', {
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
+    const course1 = store.createRecord('course');
+    const session1 = store.createRecord('session', {
       course: course1,
     });
-    let ilm1 = store.createRecord('ilmSession', {
+    const ilm1 = store.createRecord('ilmSession', {
       session: session1
     });
-    let ilm2 = store.createRecord('ilmSession', {
+    const ilm2 = store.createRecord('ilmSession', {
       session: session1
     });
     store.createRecord('learnerGroup', {
       ilmSessions: [ilm1, ilm2],
       users: [model]
     });
-    let course2 = store.createRecord('course');
-    let session2 = store.createRecord('session', {
+    const course2 = store.createRecord('course');
+    const session2 = store.createRecord('session', {
       course: course2
     });
-    let ilm3 = store.createRecord('ilmSession', {
+    const ilm3 = store.createRecord('ilmSession', {
       session: session2
     });
     store.createRecord('learnerGroup', {
@@ -237,7 +237,7 @@ module('Unit | Model | User', function(hooks) {
       users: [model]
     });
 
-    let courses = [course1, course2];
+    const courses = [course1, course2];
     const allRelatedCourses = await model.get('allRelatedCourses');
     assert.equal(allRelatedCourses.length, courses.length);
     courses.forEach(course => {
@@ -246,20 +246,20 @@ module('Unit | Model | User', function(hooks) {
   });
 
   test('gets all instructor group ILMSession courses', async function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
-    let course1 = store.createRecord('course');
-    let session1 = store.createRecord('session', {
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
+    const course1 = store.createRecord('course');
+    const session1 = store.createRecord('session', {
       course: course1,
     });
-    let session2 = store.createRecord('session', {
+    const session2 = store.createRecord('session', {
       course: course1,
     });
-    let ilm1 = store.createRecord('ilmSession', {
+    const ilm1 = store.createRecord('ilmSession', {
       id: 1,
       session: session1
     });
-    let ilm2 = store.createRecord('ilmSession', {
+    const ilm2 = store.createRecord('ilmSession', {
       id: 2,
       session: session2
     });
@@ -267,11 +267,11 @@ module('Unit | Model | User', function(hooks) {
       ilmSessions: [ilm1, ilm2],
       users: [model]
     });
-    let course2 = store.createRecord('course');
-    let session3 = store.createRecord('session', {
+    const course2 = store.createRecord('course');
+    const session3 = store.createRecord('session', {
       course: course2
     });
-    let ilm3 = store.createRecord('ilmSession', {
+    const ilm3 = store.createRecord('ilmSession', {
       id: 3,
       session: session3
     });
@@ -280,7 +280,7 @@ module('Unit | Model | User', function(hooks) {
       users: [model]
     });
 
-    let courses = [course1, course2];
+    const courses = [course1, course2];
     const allRelatedCourses = await model.get('allRelatedCourses');
     assert.equal(allRelatedCourses.length, courses.length);
     courses.forEach(course => {
@@ -289,18 +289,18 @@ module('Unit | Model | User', function(hooks) {
   });
 
   test('gets all learner ilm courses', async function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('user');
-    let store = this.owner.lookup('service:store');
-    let course1 = store.createRecord('course');
-    let session1 = store.createRecord('session', {
+    const model = this.owner.lookup('service:store').createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const course1 = store.createRecord('course');
+    const session1 = store.createRecord('session', {
       course: course1
     });
     store.createRecord('ilmSession', {
       session: session1,
       learners: [model]
     });
-    let course2 = store.createRecord('course');
-    let session2 = store.createRecord('session', {
+    const course2 = store.createRecord('course');
+    const session2 = store.createRecord('session', {
       course: course2
     });
     store.createRecord('ilmSession', {
@@ -308,7 +308,7 @@ module('Unit | Model | User', function(hooks) {
       learners: [model]
     });
 
-    let courses = [course1, course2];
+    const courses = [course1, course2];
     const allRelatedCourses = await model.get('allRelatedCourses');
     assert.equal(allRelatedCourses.length, courses.length);
     courses.forEach(course => {
@@ -318,15 +318,15 @@ module('Unit | Model | User', function(hooks) {
 
   test('isStudent - no roles', async function(assert){
     assert.expect(1);
-    let model = this.owner.lookup('service:store').createRecord('user');
-    let isStudent = await model.get('isStudent');
+    const model = this.owner.lookup('service:store').createRecord('user');
+    const isStudent = await model.get('isStudent');
     assert.notOk(isStudent);
   });
 
   test('isStudent - roles, but no student role', async function(assert){
     assert.expect(1);
-    let model = this.owner.lookup('service:store').createRecord('user');
-    let store = this.owner.lookup('service:store');
+    const model = this.owner.lookup('service:store').createRecord('user');
+    const store = this.owner.lookup('service:store');
     const notAStudentRole = store.createRecord('user-role', { title: 'East-German Pie Eating Champion of 1997' });
     const notAStudentRoleEither = store.createRecord('user-role', { title: 'Alien Overlord' });
     model.get('roles').pushObjects([ notAStudentRole, notAStudentRoleEither ]);
@@ -336,8 +336,8 @@ module('Unit | Model | User', function(hooks) {
 
   test('isStudent - has student role', async function(assert){
     assert.expect(1);
-    let model = this.owner.lookup('service:store').createRecord('user');
-    let store = this.owner.lookup('service:store');
+    const model = this.owner.lookup('service:store').createRecord('user');
+    const store = this.owner.lookup('service:store');
     const notAStudentRole = store.createRecord('user-role', { title: 'Non-student' });
     const studentRole = store.createRecord('user-role', { title: 'Student' });
     model.get('roles').pushObjects([ notAStudentRole, studentRole ]);
@@ -347,143 +347,143 @@ module('Unit | Model | User', function(hooks) {
 
   test('performsNonLearnerFunction - directedCourses', async function(assert){
     assert.expect(1);
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
     store.createRecord('course', { directors: [model] });
-    let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - administeredCourses', async function(assert){
     assert.expect(1);
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
     store.createRecord('course', { administrators: [model] });
-    let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - administeredSessions', async function(assert){
     assert.expect(1);
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
     store.createRecord('session', { administrators: [model] });
-    let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - instructedLearnerGroups', async function(assert){
     assert.expect(1);
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
     store.createRecord('learner-group', { instructors: [model] });
-    let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - instructorGroups', async function(assert){
     assert.expect(1);
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
     store.createRecord('instructor-group', { users: [model] });
-    let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - instructedOfferings', async function(assert){
     assert.expect(1);
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
     store.createRecord('offering', { instructors: [model] });
-    let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - directedPrograms', async function(assert){
     assert.expect(1);
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
     store.createRecord('program', { directors: [model] });
-    let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - programYears', async function(assert){
     assert.expect(1);
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
     store.createRecord('program-year', { directors: [model] });
-    let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - administeredCurriculumInventoryReports', async function(assert){
     assert.expect(1);
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
     store.createRecord('curriculum-inventory-report', { administrators: [model] });
-    let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - directedSchools', async function(assert){
     assert.expect(1);
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
     store.createRecord('school', { directors: [model] });
-    let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('performsNonLearnerFunction - administeredSchools', async function(assert){
     assert.expect(1);
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
     store.createRecord('school', { administrators: [model] });
-    let performsNonLearnerFunction = model.get('performsNonLearnerFunction');
+    const performsNonLearnerFunction = model.get('performsNonLearnerFunction');
     assert.ok(performsNonLearnerFunction);
   });
 
   test('isLearner - cohorts', async function(assert){
     assert.expect(1);
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
     store.createRecord('cohort', { users: [model] });
-    let isLearner = model.get('isLearner');
+    const isLearner = model.get('isLearner');
     assert.ok(isLearner);
   });
 
   test('isLearner - offerings', async function(assert){
     assert.expect(1);
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
     store.createRecord('offering', { learners: [model] });
-    let isLearner = model.get('isLearner');
+    const isLearner = model.get('isLearner');
     assert.ok(isLearner);
   });
 
   test('isLearner - learnerIlmSessions', async function(assert){
     assert.expect(1);
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('user');
     store.createRecord('ilm-session', { learners: [model] });
-    let isLearner = model.get('isLearner');
+    const isLearner = model.get('isLearner');
     assert.ok(isLearner);
   });
 
   test('gets all instructor ilm courses', async function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('user');
-    let store = this.owner.lookup('service:store');
-    let course1 = store.createRecord('course');
-    let session1 = store.createRecord('session', {
+    const model = this.owner.lookup('service:store').createRecord('user');
+    const store = this.owner.lookup('service:store');
+    const course1 = store.createRecord('course');
+    const session1 = store.createRecord('session', {
       course: course1
     });
     store.createRecord('ilmSession', {
       session: session1,
       instructors: [model]
     });
-    let course2 = store.createRecord('course');
-    let session2 = store.createRecord('session', {
+    const course2 = store.createRecord('course');
+    const session2 = store.createRecord('session', {
       course: course2
     });
     store.createRecord('ilmSession', {
@@ -491,7 +491,7 @@ module('Unit | Model | User', function(hooks) {
       instructors: [model]
     });
 
-    let courses = [course1, course2];
+    const courses = [course1, course2];
     const allRelatedCourses = await model.get('allRelatedCourses');
     assert.equal(allRelatedCourses.length, courses.length);
     courses.forEach(course => {

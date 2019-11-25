@@ -6,7 +6,7 @@ module('Unit | Service | ilios config', function(hooks) {
 
   // Replace this with your real tests.
   test('it exists', function(assert) {
-    let service = this.owner.lookup('service:ilios-config');
+    const service = this.owner.lookup('service:ilios-config');
     assert.ok(service);
   });
 });

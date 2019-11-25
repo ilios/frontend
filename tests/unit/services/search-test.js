@@ -7,7 +7,7 @@ module('Unit | Service | search', function(hooks) {
   setupMirage(hooks);
 
   test('it exists', function(assert) {
-    let service = this.owner.lookup('service:search');
+    const service = this.owner.lookup('service:search');
     assert.ok(service);
   });
 
@@ -27,7 +27,7 @@ module('Unit | Service | search', function(hooks) {
         }
       };
     });
-    let service = this.owner.lookup('service:search');
+    const service = this.owner.lookup('service:search');
     const results = await service.forCurriculum('codejam');
     assert.deepEqual(results, { courses, autocomplete });
   });
@@ -48,7 +48,7 @@ module('Unit | Service | search', function(hooks) {
         }
       };
     });
-    let service = this.owner.lookup('service:search');
+    const service = this.owner.lookup('service:search');
     const results = await service.forUsers('codejam');
     assert.ok('users' in results);
     assert.ok('autocomplete' in results);
@@ -72,7 +72,7 @@ module('Unit | Service | search', function(hooks) {
         }
       };
     });
-    let service = this.owner.lookup('service:search');
+    const service = this.owner.lookup('service:search');
     await service.forUsers('codejam', 9);
   });
 
@@ -89,7 +89,7 @@ module('Unit | Service | search', function(hooks) {
         }
       };
     });
-    let service = this.owner.lookup('service:search');
+    const service = this.owner.lookup('service:search');
     await service.forUsers('codejam', 19, true);
   });
 
@@ -106,7 +106,7 @@ module('Unit | Service | search', function(hooks) {
         }
       };
     });
-    let service = this.owner.lookup('service:search');
+    const service = this.owner.lookup('service:search');
     await service.forCurriculum('codejam', true);
   });
 });

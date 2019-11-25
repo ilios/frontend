@@ -8,7 +8,7 @@ module('Integration | Component | lm type icon', function(hooks) {
 
   test('link', async function(assert) {
     assert.expect(1);
-    let lm = { type: 'link' };
+    const lm = { type: 'link' };
     this.set('lm', lm);
     await render(hbs`{{lm-type-icon type=lm.type}}`);
     assert.equal(this.element.querySelectorAll('.fa-link').length, 1, 'Correct type icon is used.');
@@ -16,7 +16,7 @@ module('Integration | Component | lm type icon', function(hooks) {
 
   test('citation', async function(assert) {
     assert.expect(1);
-    let lm = { type: 'citation' };
+    const lm = { type: 'citation' };
     this.set('lm', lm);
     await render(hbs`{{lm-type-icon type=lm.type}}`);
     assert.equal(this.element.querySelectorAll('.fa-paragraph').length, 1, 'Correct type icon is used.');
@@ -24,7 +24,7 @@ module('Integration | Component | lm type icon', function(hooks) {
 
   test('file', async function(assert) {
     assert.expect(16);
-    let fixtures = [
+    const fixtures = [
       { lm: { type: 'file', mimetype: 'application/pdf' }, icon: 'fa-file-pdf' },
       { lm: { type: 'file', mimetype: 'ppt' }, icon: 'fa-file-powerpoint' },
       { lm: { type: 'file', mimetype: 'keynote' }, icon: 'fa-file-powerpoint' },
@@ -44,8 +44,8 @@ module('Integration | Component | lm type icon', function(hooks) {
     ];
 
     for (let i = 0; i < fixtures.length; i++) {
-      let lm = fixtures[i].lm;
-      let icon = fixtures[i].icon;
+      const lm = fixtures[i].lm;
+      const icon = fixtures[i].icon;
       this.set('lm', lm);
       await render(hbs`{{lm-type-icon type=lm.type mimetype=lm.mimetype}}`);
       assert.equal(this.element.querySelectorAll(`.${icon}`).length, 1, `Correct type icon is used for ${lm.mimetype}`);
@@ -54,7 +54,7 @@ module('Integration | Component | lm type icon', function(hooks) {
 
   test('listItem', async function(assert) {
     assert.expect(1);
-    let lm = { type: 'link' };
+    const lm = { type: 'link' };
     this.set('lm', lm);
     await render(hbs`{{lm-type-icon type=lm.type listItem=true}}`);
     assert.equal(this.element.querySelectorAll('.fa-li').length, 1, 'List icon is applied.');
@@ -62,7 +62,7 @@ module('Integration | Component | lm type icon', function(hooks) {
 
   test('no listItem', async function(assert) {
     assert.expect(2);
-    let lm = { type: 'link' };
+    const lm = { type: 'link' };
     this.set('lm', lm);
 
     await render(hbs`{{lm-type-icon type=lm.type}}`);

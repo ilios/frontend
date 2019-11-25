@@ -26,7 +26,7 @@ export default Component.extend({
       return sessions;
     }
 
-    let filterExpressions = filterBy.split(' ').map(function (string) {
+    const filterExpressions = filterBy.split(' ').map(function (string) {
       const clean = escapeRegExp(string);
       return new RegExp(clean, 'gi');
     });

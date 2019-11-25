@@ -20,7 +20,7 @@ module('Unit | Model | Cohort', function(hooks) {
 
     model.get('learnerGroups').pushObjects([ group1, group2, group3, group4, topGroup1, topGroup2]);
 
-    let topLevelGroups = await model.get('rootLevelLearnerGroups');
+    const topLevelGroups = await model.get('rootLevelLearnerGroups');
 
     assert.equal(topLevelGroups.length, 2);
     assert.equal(topLevelGroups.objectAt(0).get('title'), 'Top Group 1');

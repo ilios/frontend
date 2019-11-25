@@ -5,7 +5,7 @@ module('Unit | Model | mesh term', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('mesh-term');
+    const model = this.owner.lookup('service:store').createRecord('mesh-term');
     assert.ok(!!model);
   });
 });

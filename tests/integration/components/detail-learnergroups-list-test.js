@@ -20,7 +20,7 @@ module('Integration | Component | detail learnergroups list', function(hooks) {
     const set2Group1 = set2 + ' li:nth-of-type(1)';
     const set2Group2 = set2 + ' li:nth-of-type(2)';
 
-    let tlg1 = EmberObject.create({
+    const tlg1 = EmberObject.create({
       allParentTitles: [],
       title: 'tlg1',
       hasMany(){
@@ -32,7 +32,7 @@ module('Integration | Component | detail learnergroups list', function(hooks) {
       }
     });
     tlg1.set('topLevelGroup', resolve(tlg1));
-    let subGroup1 = EmberObject.create({
+    const subGroup1 = EmberObject.create({
       allParentTitles: ['tlg1'],
       topLevelGroup: resolve(tlg1),
       title: 'sub group 1',
@@ -44,7 +44,7 @@ module('Integration | Component | detail learnergroups list', function(hooks) {
         };
       }
     });
-    let subSubGroup1 = EmberObject.create({
+    const subSubGroup1 = EmberObject.create({
       allParentTitles: ['tlg1', 'sub group 1'],
       topLevelGroup: resolve(tlg1),
       title: 'sub sub group 1',
@@ -56,7 +56,7 @@ module('Integration | Component | detail learnergroups list', function(hooks) {
         };
       }
     });
-    let tlg2 = EmberObject.create({
+    const tlg2 = EmberObject.create({
       allParentTitles: [],
       title: 'tlg2',
       hasMany(){
@@ -68,7 +68,7 @@ module('Integration | Component | detail learnergroups list', function(hooks) {
       }
     });
     tlg2.set('topLevelGroup', resolve(tlg2));
-    let subGroup2 = EmberObject.create({
+    const subGroup2 = EmberObject.create({
       topLevelGroup: resolve(tlg2),
       allParentTitles: ['tlg2'],
       title: 'sub group 2',

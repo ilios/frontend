@@ -7,8 +7,8 @@ module('Unit | Model | Offering', function(hooks) {
 
   test('check allInstructors', async function(assert) {
     assert.expect(8);
-    let offering = this.owner.lookup('service:store').createRecord('offering');
-    let store = this.owner.lookup('service:store');
+    const offering = this.owner.lookup('service:store').createRecord('offering');
+    const store = this.owner.lookup('service:store');
 
     let allInstructors = await offering.get('allInstructors');
     assert.equal(allInstructors.length, 0);
@@ -42,8 +42,8 @@ module('Unit | Model | Offering', function(hooks) {
   });
 
   test('duration', function(assert) {
-    let store = this.owner.lookup('service:store');
-    let model = store.createRecord('offering', {});
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('offering', {});
     assert.equal(model.get('durationHours'), 0);
     assert.equal(model.get('durationMinutes'), 0);
     model.set('startDate', moment().toDate());
@@ -67,8 +67,8 @@ module('Unit | Model | Offering', function(hooks) {
 
   test('check allLearners', async function(assert) {
     assert.expect(8);
-    let offering = this.owner.lookup('service:store').createRecord('offering');
-    let store = this.owner.lookup('service:store');
+    const offering = this.owner.lookup('service:store').createRecord('offering');
+    const store = this.owner.lookup('service:store');
 
     let allLearners = await offering.get('allLearners');
     assert.equal(allLearners.length, 0);

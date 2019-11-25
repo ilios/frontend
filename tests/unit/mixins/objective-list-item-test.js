@@ -5,8 +5,8 @@ import { module, test } from 'qunit';
 module('Unit | Mixin | objective list item', function() {
   // Replace this with your real tests.
   test('it works', function(assert) {
-    let ObjectiveListItemObject = EmberObject.extend(ObjectiveListItemMixin);
-    let subject = ObjectiveListItemObject.create();
+    const ObjectiveListItemObject = EmberObject.extend(ObjectiveListItemMixin);
+    const subject = ObjectiveListItemObject.create();
     assert.ok(subject);
   });
 });

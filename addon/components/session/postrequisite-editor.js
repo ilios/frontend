@@ -16,9 +16,9 @@ export default class SessionPostrequisiteEditorComponent extends Component {
   }
   @task
   *setup() {
-    let { session } = this.args;
-    let course = yield session.course;
-    let sessions = yield course.sessions;
+    const { session } = this.args;
+    const course = yield session.course;
+    const sessions = yield course.sessions;
     this.linkablePostrequisites = sessions.sortBy("title").filter(sessionInCourse => sessionInCourse.id !== session.id);
   }
   @task
@@ -31,7 +31,7 @@ export default class SessionPostrequisiteEditorComponent extends Component {
     if (!this.filter) {
       return this.linkablePostrequisites;
     }
-    let exp = new RegExp(escapeRegExp(this.filter), 'gi');
+    const exp = new RegExp(escapeRegExp(this.filter), 'gi');
     return this.linkablePostrequisites.filter(session => session.title.match(exp));
   }
 }

@@ -133,7 +133,7 @@ module('Integration | Component | offering form', function(hooks) {
     const toggle = '.make-recurring .toggle-yesno';
 
     await click(toggle);
-    let checkbox = findAll(inputs)[dayToday];
+    const checkbox = findAll(inputs)[dayToday];
     assert.ok(checkbox.checked);
     assert.ok(checkbox.disabled);
   });
@@ -154,8 +154,8 @@ module('Integration | Component | offering form', function(hooks) {
 
   test('before course startDate default initial startDate falls on course start date', async function(assert) {
     this.set('nothing', nothing);
-    let courseStartDate = moment().add(2, 'days');
-    let courseEndDate = moment().add(4, 'days');
+    const courseStartDate = moment().add(2, 'days');
+    const courseEndDate = moment().add(4, 'days');
     this.set('courseStartDate', courseStartDate);
     this.set('courseEndDate', courseEndDate);
     this.set('nothing', nothing);
@@ -167,7 +167,7 @@ module('Integration | Component | offering form', function(hooks) {
     />`);
 
     const startDate = '.start-date input';
-    let interactor = openDatepicker(find(startDate));
+    const interactor = openDatepicker(find(startDate));
     assert.equal(
       interactor.selectedYear(),
       courseStartDate.year(),
@@ -188,8 +188,8 @@ module('Integration | Component | offering form', function(hooks) {
 
   test('after course endDate default initial startDate falls on course end date', async function(assert) {
     this.set('nothing', nothing);
-    let courseStartDate = moment().subtract(4, 'days');
-    let courseEndDate = moment().subtract(2, 'days');
+    const courseStartDate = moment().subtract(4, 'days');
+    const courseEndDate = moment().subtract(2, 'days');
     this.set('courseStartDate', courseStartDate);
     this.set('courseEndDate', courseEndDate);
     this.set('nothing', nothing);
@@ -201,7 +201,7 @@ module('Integration | Component | offering form', function(hooks) {
     />`);
 
     const startDate = '.start-date input';
-    let interactor = openDatepicker(find(startDate));
+    const interactor = openDatepicker(find(startDate));
     assert.equal(
       interactor.selectedYear(),
       courseEndDate.year(),
@@ -222,9 +222,9 @@ module('Integration | Component | offering form', function(hooks) {
 
   test('between course startDate and endDate default initial startDate falls on today', async function(assert) {
     this.set('nothing', nothing);
-    let courseStartDate = moment().subtract(4, 'days');
-    let courseEndDate = moment().add(4, 'days');
-    let today = moment();
+    const courseStartDate = moment().subtract(4, 'days');
+    const courseEndDate = moment().add(4, 'days');
+    const today = moment();
     this.set('courseStartDate', courseStartDate);
     this.set('courseEndDate', courseEndDate);
     this.set('nothing', nothing);
@@ -236,7 +236,7 @@ module('Integration | Component | offering form', function(hooks) {
     />`);
 
     const startDate = '.start-date input';
-    let interactor = openDatepicker(find(startDate));
+    const interactor = openDatepicker(find(startDate));
     assert.equal(
       interactor.selectedYear(),
       today.year(),
@@ -321,7 +321,7 @@ module('Integration | Component | offering form', function(hooks) {
     />`);
 
     await click(toggle);
-    let interactor = openDatepicker(find(startDateInput));
+    const interactor = openDatepicker(find(startDateInput));
     interactor.selectDate(newStartDate);
 
     await click(`[data-test-recurring-day-input="${thursday}"]`);
@@ -381,7 +381,7 @@ module('Integration | Component | offering form', function(hooks) {
 
     await click(toggle);
     await fillIn(weeks, 3);
-    let interactor = openDatepicker(find(startDateInput));
+    const interactor = openDatepicker(find(startDateInput));
     interactor.selectDate(newStartDate);
     await click(`[data-test-recurring-day-input="${thursday}"]`);
     await click(`[data-test-recurring-day-input="${tuesday}"]`);
@@ -397,7 +397,7 @@ module('Integration | Component | offering form', function(hooks) {
     const endDate = '.end-date-time .text';
     const format = 'M/D/YYYY h:mm a';
     const newStartDate = moment().add(1, 'day').toDate();
-    let interactor = openDatepicker(find(startDate));
+    const interactor = openDatepicker(find(startDate));
     assert.equal(moment().hour(9).minute(0).format(format), find(endDate).textContent.trim());
     interactor.selectDate(newStartDate);
     await settled();
@@ -486,7 +486,7 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('renders when an offering is provided', async function(assert) {
-    let offering = EmberObject.create({
+    const offering = EmberObject.create({
       room: 'emerald bay',
       startDate: moment('2005-06-24').hour(18).minute(24).toDate(),
       endDate: moment('2005-06-24').hour(19).minute(24).toDate(),
@@ -513,7 +513,7 @@ module('Integration | Component | offering form', function(hooks) {
     assert.dom(durationHours).hasValue('1');
     assert.dom(durationMinutes).hasValue('0');
 
-    let interactor = openDatepicker(find(startDate));
+    const interactor = openDatepicker(find(startDate));
     return settled().then(()=> {
       assert.equal(
         interactor.selectedYear(),

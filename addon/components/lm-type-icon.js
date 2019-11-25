@@ -9,8 +9,8 @@ export default Component.extend({
   classNames: ['lm-type-icon'],
   'data-test-lm-type-icon': true,
   icon: computed('type', 'mimetype', function() {
-    let type = this.get('type');
-    let mimetype = this.get('mimetype') || '';
+    const type = this.get('type');
+    const mimetype = this.get('mimetype') || '';
     if(type === 'link'){
       return 'link';
     } else if(type === 'citation'){

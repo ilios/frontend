@@ -9,7 +9,7 @@ export default Service.extend({
   authHeaders: computed('session.isAuthenticated', function(){
     const session = this.session;
     const { jwt } = session.data.authenticated;
-    let headers = {};
+    const headers = {};
     if (jwt) {
       headers['X-JWT-Authorization'] = `Token ${jwt}`;
     }

@@ -5,8 +5,8 @@ import { module, test } from 'qunit';
 module('Unit | Mixin | session/copy-route', function() {
   // Replace this with your real tests.
   test('it works', function (assert) {
-    let SessionCopyRouteObject = EmberObject.extend(SessionCopyRouteMixin);
-    let subject = SessionCopyRouteObject.create();
+    const SessionCopyRouteObject = EmberObject.extend(SessionCopyRouteMixin);
+    const subject = SessionCopyRouteObject.create();
     assert.ok(subject);
   });
 });

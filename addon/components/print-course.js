@@ -32,12 +32,12 @@ export default Component.extend(SortableByPosition, {
         return;
       }
 
-      let SessionProxy = ObjectProxy.extend({
+      const SessionProxy = ObjectProxy.extend({
         sortTitle: null,
         sortedMeshDescriptors: sort('content.meshDescriptors', 'sortTitle'),
         sessionLearningMaterials: computed('content', function(){
           return new RSVPPromise(resolve => {
-            let session = this.get('content').get('id');
+            const session = this.get('content').get('id');
             this.get('store').query('sessionLearningMaterial', {
               filters: {
                 session
@@ -56,7 +56,7 @@ export default Component.extend(SortableByPosition, {
         if (!this.get('includeUnpublishedSessions')) {
           sessions = sessions.filterBy('isPublishedOrScheduled');
         }
-        let proxiedSessions = sessions.map(function(session){
+        const proxiedSessions = sessions.map(function(session){
           return SessionProxy.create({
             content: session
           });
@@ -69,7 +69,7 @@ export default Component.extend(SortableByPosition, {
 
   courseLearningMaterials: computed('course', function(){
     return new RSVPPromise(resolve => {
-      let course = this.get('course').get('id');
+      const course = this.get('course').get('id');
       this.get('store').query('courseLearningMaterial', {
         filters: {
           course

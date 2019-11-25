@@ -5,8 +5,8 @@ import { module, test } from 'qunit';
 module('Unit | Mixin | categorizable model', function() {
   // Replace this with your real tests.
   test('it works', function(assert) {
-    let CategorizableModelObject = EmberObject.extend(CategorizableModelMixin);
-    let subject = CategorizableModelObject.create();
+    const CategorizableModelObject = EmberObject.extend(CategorizableModelMixin);
+    const subject = CategorizableModelObject.create();
     assert.ok(subject);
   });
 });

@@ -5,8 +5,8 @@ export function countRelated(params) {
   if (typeOf(params) !== 'array' || params.length < 2) {
     return false;
   }
-  let object = params[0];
-  let what = params[1];
+  const object = params[0];
+  const what = params[1];
 
   if (isEmpty(what) || isEmpty(object)) {
     return false;

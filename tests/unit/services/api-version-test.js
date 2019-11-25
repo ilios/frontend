@@ -8,7 +8,7 @@ module('Unit | Service | api-version', function(hooks) {
 
   // Replace this with your real tests.
   test('it exists', function(assert) {
-    let service = this.owner.lookup('service:api-version');
+    const service = this.owner.lookup('service:api-version');
     assert.ok(service);
   });
 

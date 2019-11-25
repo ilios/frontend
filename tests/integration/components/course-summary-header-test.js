@@ -11,22 +11,22 @@ module('Integration | Component | course summary header', function(hooks) {
   setupRenderingTest(hooks);
 
   hooks.beforeEach(function() {
-    let currentUserMock = Service.extend({
+    const currentUserMock = Service.extend({
       userIsCourseDirector: true,
     });
     this.owner.register('service:currentUser', currentUserMock);
   });
 
   test('it renders', async function(assert) {
-    let school = EmberObject.create({});
-    let permissionCheckerMock = Service.extend({
+    const school = EmberObject.create({});
+    const permissionCheckerMock = Service.extend({
       canCreateCourse(inSchool) {
         assert.equal(school, inSchool);
         return resolve(true);
       }
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       title: 'title',
       school: resolve(school),
       startDate: new Date(2020, 4, 6, 12),
@@ -62,21 +62,21 @@ module('Integration | Component | course summary header', function(hooks) {
   });
 
   test('no link to materials when that is the current route', async function(assert) {
-    let school = EmberObject.create({});
-    let permissionCheckerMock = Service.extend({
+    const school = EmberObject.create({});
+    const permissionCheckerMock = Service.extend({
       canCreateCourse(inSchool) {
         assert.equal(school, inSchool);
         return resolve(true);
       }
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    let routerMock = Service.extend({
+    const routerMock = Service.extend({
       currentRouteName: 'course-materials',
       generateURL(){},
     });
     this.owner.register('service:router', routerMock);
 
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       title: 'title',
       school: resolve(school),
       startDate: new Date(2020, 4, 6, 12),
@@ -94,13 +94,13 @@ module('Integration | Component | course summary header', function(hooks) {
   });
 
   test('no link to rollover when that is the current route', async function(assert) {
-    let routerMock = Service.extend({
+    const routerMock = Service.extend({
       currentRouteName: 'course.rollover',
       generateURL(){},
     });
     this.owner.register('service:router', routerMock);
 
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       title: 'title',
       startDate: new Date(2020, 4, 6, 12),
       endDate: new Date(2020, 11, 11, 12),
@@ -117,13 +117,13 @@ module('Integration | Component | course summary header', function(hooks) {
   });
 
   test('no link to rollover when user cannot edit the course', async function(assert) {
-    let school = EmberObject.create({});
-    let routerMock = Service.extend({
+    const school = EmberObject.create({});
+    const routerMock = Service.extend({
       currentRouteName: 'course.rollover',
       generateURL(){},
     });
     this.owner.register('service:router', routerMock);
-    let permissionCheckerMock = Service.extend({
+    const permissionCheckerMock = Service.extend({
       canCreateCourse(inSchool) {
         assert.equal(school, inSchool);
         return resolve(false);
@@ -131,7 +131,7 @@ module('Integration | Component | course summary header', function(hooks) {
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
 
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       title: 'title',
       school: resolve(school),
       startDate: new Date(2020, 4, 6, 12),

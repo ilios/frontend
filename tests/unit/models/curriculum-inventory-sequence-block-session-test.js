@@ -5,7 +5,7 @@ module('Unit | Model | CurriculumInventorySequenceBlockSession ', function(hooks
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('curriculum-inventory-sequence-block-session');
+    const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-sequence-block-session');
     assert.ok(!!model);
   });
 });

@@ -45,7 +45,7 @@ export default Component.extend({
     },
     save(){
       this.set('isSaving', true);
-      let subject = this.get('subject');
+      const subject = this.get('subject');
       subject.get('terms').then(termsList => {
         termsList.clear();
         this.get('bufferedTerms').forEach(term=>{

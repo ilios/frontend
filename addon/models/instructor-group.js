@@ -50,7 +50,7 @@ export default Model.extend({
     const ilms = await this.get('ilmSessions');
     const arr = [].concat(offerings.toArray(), ilms.toArray());
 
-    let sessions = await all(arr.mapBy('session'));
+    const sessions = await all(arr.mapBy('session'));
 
     return sessions.filter(session => {
       return !isEmpty(session);

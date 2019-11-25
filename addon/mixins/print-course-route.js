@@ -9,7 +9,7 @@ export default Mixin.create({
   // only allow privileged users to view unpublished courses
   async afterModel(course, transition) {
     const currentUser = this.get('currentUser');
-    let canViewUnpublished = currentUser.get('performsNonLearnerFunction');
+    const canViewUnpublished = currentUser.get('performsNonLearnerFunction');
     this.set('canViewUnpublished', canViewUnpublished);
     if (canViewUnpublished || course.get('isPublishedOrScheduled')) {
       return all([

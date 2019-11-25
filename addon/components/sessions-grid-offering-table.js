@@ -7,13 +7,13 @@ export default Component.extend({
   classNames: ['sessions-grid-offering-table'],
   'data-test-sessions-grid-offering-table': true,
   offeringBlocks: computed('offerings.@each.{startDate,endDate,room,learnerGroups,instructorGroups}', function() {
-    let offerings = this.get('offerings');
+    const offerings = this.get('offerings');
     if (!offerings) {
       return [];
     }
-    let dateBlocks = {};
+    const dateBlocks = {};
     offerings.forEach(offering => {
-      let key = offering.get('dateKey');
+      const key = offering.get('dateKey');
       if (!(key in dateBlocks)) {
         dateBlocks[key] = OfferingDateBlock.create({
           dateKey: key
@@ -22,7 +22,7 @@ export default Component.extend({
       dateBlocks[key].addOffering(offering);
     });
     //convert indexed object to array
-    let dateBlockArray = [];
+    const dateBlockArray = [];
     let key;
     for (key in dateBlocks) {
       dateBlockArray.pushObject(dateBlocks[key]);

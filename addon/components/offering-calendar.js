@@ -22,12 +22,12 @@ export default Component.extend({
     if (!learnerGroups) {
       return [];
     }
-    let data = await map(learnerGroups, async learnerGroup => {
-      let offerings = await learnerGroup.get('offerings');
-      let events = await map(offerings.toArray(), async offering => {
-        let session = await offering.get('session');
-        let course = await session.get('course');
-        let event = {
+    const data = await map(learnerGroups, async learnerGroup => {
+      const offerings = await learnerGroup.get('offerings');
+      const events = await map(offerings.toArray(), async offering => {
+        const session = await offering.get('session');
+        const course = await session.get('course');
+        const event = {
           startDate: offering.get('startDate'),
           endDate: offering.get('endDate'),
           courseTitle: course.get('title'),
@@ -45,7 +45,7 @@ export default Component.extend({
       return events;
     });
 
-    let flat = data.reduce((flattened, obj) => {
+    const flat = data.reduce((flattened, obj) => {
       return flattened.pushObjects(obj.toArray());
     }, []);
 
@@ -58,9 +58,9 @@ export default Component.extend({
       return [];
     }
     const offerings = await session.get('offerings');
-    let events = await map(offerings.toArray(), async offering => {
-      let course = await session.get('course');
-      let event = {
+    const events = await map(offerings.toArray(), async offering => {
+      const course = await session.get('course');
+      const event = {
         startDate: offering.get('startDate'),
         endDate: offering.get('endDate'),
         courseTitle: course.get('title'),
@@ -115,7 +115,7 @@ export default Component.extend({
       if(!currentEvent) {
         return [];
       }
-      let events = [];
+      const events = [];
       if (showLearnerGroupEvents) {
         const learnerGroupEvents = await this.get('learnerGroupEvents');
         events.pushObjects(learnerGroupEvents);
@@ -125,7 +125,7 @@ export default Component.extend({
         events.pushObjects(sessionEvents);
       }
       const currentEventIdentifier = currentEvent.name + currentEvent.startDate + currentEvent.endDate;
-      let filteredEvents = events.filter(event => {
+      const filteredEvents = events.filter(event => {
         if(!event) {
           return false;
         }

@@ -8,7 +8,7 @@ module('Integration | Component | publish menu', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    let testObj = EmberObject.create({
+    const testObj = EmberObject.create({
       allPublicationIssuesLength: 3
     });
     this.set('testObj', testObj);
@@ -136,10 +136,10 @@ module('Integration | Component | publish menu', function(hooks) {
   });
 
   test('it renders with parent review object', async function(assert) {
-    let testObj = EmberObject.create({
+    const testObj = EmberObject.create({
       allPublicationIssuesLength: 3
     });
-    let parentTestObject = EmberObject.create({
+    const parentTestObject = EmberObject.create({
       allPublicationIssuesLength: 8
     });
     this.set('testObj', testObj);

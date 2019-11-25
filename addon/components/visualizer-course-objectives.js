@@ -31,7 +31,7 @@ export default Component.extend({
         const parents = await sessionObjective.get('parents');
         return parents.mapBy('id');
       });
-      let flatObjectives = courseSessionObjectives.reduce((flattened, obj) => {
+      const flatObjectives = courseSessionObjectives.reduce((flattened, obj) => {
         return flattened.pushObjects(obj.toArray());
       }, []);
 
@@ -51,7 +51,7 @@ export default Component.extend({
     const course = this.get('course');
     const sessionCourseObjectiveMap  = await this.get('objectiveData');
     const courseObjectives = await course.get('objectives');
-    let mappedObjectives = courseObjectives.map(courseObjective => {
+    const mappedObjectives = courseObjectives.map(courseObjective => {
       const minutes = sessionCourseObjectiveMap.map(obj => {
         if (obj.objectives.includes(courseObjective.get('id'))) {
           return obj.minutes;
@@ -105,7 +105,7 @@ export default Component.extend({
     const { data, meta } = obj;
 
     let objectiveTitle = meta.courseObjective.get('title');
-    let competency = await meta.courseObjective.get('competency');
+    const competency = await meta.courseObjective.get('competency');
     if (competency) {
       objectiveTitle += `(${competency})`;
     }

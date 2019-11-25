@@ -9,7 +9,7 @@ if (fs.existsSync(dotEnvPath)) {
 }
 
 module.exports = function(environment) {
-  let ENV = {
+  const ENV = {
     modulePrefix: 'dummy',
     environment,
     rootURL: '/',

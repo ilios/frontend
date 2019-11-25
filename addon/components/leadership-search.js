@@ -24,7 +24,7 @@ export default Component.extend({
     const store = this.get('store');
     this.set('searchValue', query);
 
-    let q = cleanQuery(query);
+    const q = cleanQuery(query);
     if (isBlank(q)) {
       yield timeout(1);
       return [];
@@ -38,7 +38,7 @@ export default Component.extend({
     }
     yield timeout(DEBOUNCE_MS);
 
-    let searchResults = yield store.query('user', {
+    const searchResults = yield store.query('user', {
       q,
       'order_by[lastName]': 'ASC',
       'order_by[firstName]': 'ASC',
@@ -50,13 +50,13 @@ export default Component.extend({
         text: intl.t('general.noSearchResultsPrompt')
       }];
     }
-    let mappedResults = searchResults.map(user => {
+    const mappedResults = searchResults.map(user => {
       return {
         type: 'user',
         user
       };
     });
-    let results = [
+    const results = [
       {
         type: 'summary',
         text: intl.t('general.resultsCount', {count: mappedResults.length})

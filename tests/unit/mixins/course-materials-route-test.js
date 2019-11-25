@@ -5,8 +5,8 @@ import { module, test } from 'qunit';
 module('Unit | Mixin | course-materials-route', function() {
   // Replace this with your real tests.
   test('it works', function (assert) {
-    let CourseMaterialsRouteObject = EmberObject.extend(CourseMaterialsRouteMixin);
-    let subject = CourseMaterialsRouteObject.create();
+    const CourseMaterialsRouteObject = EmberObject.extend(CourseMaterialsRouteMixin);
+    const subject = CourseMaterialsRouteObject.create();
     assert.ok(subject);
   });
 });

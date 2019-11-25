@@ -73,7 +73,7 @@ export default Component.extend({
       return data;
     }
 
-    let exp = new RegExp(filter, 'gi');
+    const exp = new RegExp(filter, 'gi');
     return data.filter(({ label }) => label.match(exp));
   }),
   sortedData: computed('filteredData.[]', async function () {

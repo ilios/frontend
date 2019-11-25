@@ -6,12 +6,12 @@ module('Unit | Service | timezone', function(hooks) {
   setupTest(hooks);
 
   test('getCurrentTimezone', function(assert) {
-    let service = this.owner.lookup('service:timezone');
+    const service = this.owner.lookup('service:timezone');
     assert.equal(moment.tz.guess(), service.getCurrentTimezone());
   });
 
   test('getTimezoneNames', function(assert) {
-    let service = this.owner.lookup('service:timezone');
+    const service = this.owner.lookup('service:timezone');
     const names = service.getTimezoneNames();
     const currentTimezone = moment.tz.guess();
     assert.ok(names.includes(currentTimezone));
@@ -25,14 +25,14 @@ module('Unit | Service | timezone', function(hooks) {
 
 
   test('formatTimezone', function(assert) {
-    let service = this.owner.lookup('service:timezone');
+    const service = this.owner.lookup('service:timezone');
     const timezone = 'America/Los_Angeles';
     const offset = moment.tz(timezone).format('Z');
     assert.equal(`(${offset}) America - Los Angeles`, service.formatTimezone(timezone));
   });
 
   test('getTimezones', function(assert) {
-    let service = this.owner.lookup('service:timezone');
+    const service = this.owner.lookup('service:timezone');
     const timezones = service.getTimezones();
     // fortunately, those are not expected to change, and they don't observe DST.
     // so it's safe to hardwire them into the test.

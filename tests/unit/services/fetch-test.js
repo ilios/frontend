@@ -22,7 +22,7 @@ module('Unit | Service | fetch', function(hooks) {
         a: 11
       };
     });
-    let service = this.owner.lookup('service:fetch');
+    const service = this.owner.lookup('service:fetch');
     const data = await service.getJsonFromApiHost('ourPath');
     assert.deepEqual(data, { a: 11 });
   });
@@ -38,7 +38,7 @@ module('Unit | Service | fetch', function(hooks) {
         a: 11
       };
     });
-    let service = this.owner.lookup('service:fetch');
+    const service = this.owner.lookup('service:fetch');
     const data = await service.getJsonFromApiHost('ourPath');
     assert.deepEqual(data, { a: 11 });
   });
@@ -50,7 +50,7 @@ module('Unit | Service | fetch', function(hooks) {
         a: 11
       };
     });
-    let service = this.owner.lookup('service:fetch');
+    const service = this.owner.lookup('service:fetch');
     const data = await service.getJsonFromApiHost('/ourPath');
     assert.deepEqual(data, { a: 11 });
   });

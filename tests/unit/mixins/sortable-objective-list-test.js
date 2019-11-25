@@ -4,8 +4,8 @@ import { module, test } from 'qunit';
 
 module('Unit | Mixin | sortable objective list', function() {
   test('it works', function(assert) {
-    let SortableObjectiveListObject = EmberObject.extend(SortableObjectiveListMixin);
-    let subject = SortableObjectiveListObject.create();
+    const SortableObjectiveListObject = EmberObject.extend(SortableObjectiveListMixin);
+    const subject = SortableObjectiveListObject.create();
     assert.ok(subject);
   });
 });

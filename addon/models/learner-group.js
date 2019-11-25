@@ -37,7 +37,7 @@ export default Model.extend({
     const ilms = await this.get('ilmSessions');
     const arr = [].concat(offerings.toArray(), ilms.toArray());
 
-    let sessions = await all(arr.mapBy('session'));
+    const sessions = await all(arr.mapBy('session'));
 
     return sessions.filter(session => {
       return !isEmpty(session);
@@ -55,11 +55,11 @@ export default Model.extend({
     const ilms = await this.get('ilmSessions');
     const arr = [].concat(offerings.toArray(), ilms.toArray());
 
-    let sessions = await map(arr.mapBy('session'), session => {
+    const sessions = await map(arr.mapBy('session'), session => {
       return session;
     });
 
-    let filteredSessions = sessions.filter(session => {
+    const filteredSessions = sessions.filter(session => {
       return !isEmpty(session);
     }).uniq();
 
@@ -88,7 +88,7 @@ export default Model.extend({
     const groups = await this.get('children');
     let offset = groups.reduce((previousValue, item) => {
       let rhett = previousValue;
-      let matches = regex.exec(item.get('title'));
+      const matches = regex.exec(item.get('title'));
       if (! isEmpty(matches)) {
         rhett = Math.max(rhett, parseInt(matches[1], 10));
       }
@@ -104,10 +104,10 @@ export default Model.extend({
    * @public
    */
   allDescendantUsers: computed('users.[]', 'allDescendants.@each.users', async function () {
-    let users = await this.get('users');
-    let allDescendants = await this.get('allDescendants');
-    let usersInSubgroups = await all(allDescendants.mapBy('users'));
-    let allUsers = usersInSubgroups.reduce((array, subGroupUsers) => {
+    const users = await this.get('users');
+    const allDescendants = await this.get('allDescendants');
+    const usersInSubgroups = await all(allDescendants.mapBy('users'));
+    const allUsers = usersInSubgroups.reduce((array, subGroupUsers) => {
       array.pushObjects(subGroupUsers.toArray());
       return array;
     }, []);

@@ -4,8 +4,8 @@ import { module, skip } from 'qunit';
 
 module('Unit | Mixin | tooltip content', function() {
   skip('it works', function(assert) {
-    let TooltipContentObject = EmberObject.extend(TooltipContentMixin);
-    let subject = TooltipContentObject.create();
+    const TooltipContentObject = EmberObject.extend(TooltipContentMixin);
+    const subject = TooltipContentObject.create();
     assert.ok(subject);
   });
 });

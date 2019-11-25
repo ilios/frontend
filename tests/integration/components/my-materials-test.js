@@ -8,8 +8,8 @@ import { next } from '@ember/runloop';
 module('Integration | Component | my-materials', function(hooks) {
   setupRenderingTest(hooks);
 
-  let createMaterials = function() {
-    let lm1 = EmberObject.create({
+  const createMaterials = function() {
+    const lm1 = EmberObject.create({
       title: 'title1',
       absoluteFileUri: 'http://myhost.com/url1',
       filename: 'url1',
@@ -20,7 +20,7 @@ module('Integration | Component | my-materials', function(hooks) {
       firstOfferingDate: new Date(2003, 1, 2, 12),
       mimetype: 'application/pdf'
     });
-    let lm2 = EmberObject.create({
+    const lm2 = EmberObject.create({
       title: 'title2',
       link: 'http://myhost.com/url2',
       sessionTitle: 'session2title',
@@ -29,7 +29,7 @@ module('Integration | Component | my-materials', function(hooks) {
       instructors: ['Instructor1name', 'Instructor2name'],
       firstOfferingDate: new Date(2016, 1, 2, 12),
     });
-    let lm3 = EmberObject.create({
+    const lm3 = EmberObject.create({
       title: 'title3',
       citation: 'citationtext',
       sessionTitle: 'session3title',
@@ -37,7 +37,7 @@ module('Integration | Component | my-materials', function(hooks) {
       courseTitle: 'course3title',
       firstOfferingDate: new Date(2020, 1, 2, 12),
     });
-    let lm4 = EmberObject.create({
+    const lm4 = EmberObject.create({
       title: 'title4',
       absoluteFileUri: 'http://myhost.com/document.txt',
       filename: 'document.txt',
@@ -48,7 +48,7 @@ module('Integration | Component | my-materials', function(hooks) {
       firstOfferingDate: new Date(2030, 1, 2, 12),
       mimetype: 'plain/text'
     });
-    let lm5 = EmberObject.create({
+    const lm5 = EmberObject.create({
       title: 'title5',
       sessionTitle: 'session5title',
       absoluteFileUri: 'http://myhost.com/someothertextdocument.txt',
@@ -318,7 +318,7 @@ module('Integration | Component | my-materials', function(hooks) {
     this.set('materials', createMaterials());
     this.set('nothing', parseInt);
     let count = 0;
-    let sortBys = ['title', 'title:desc', 'courseTitle', 'courseTitle:desc', 'sessionTitle', 'sessionTitle:desc', 'firstOfferingDate', 'firstOfferingDate:desc'];
+    const sortBys = ['title', 'title:desc', 'courseTitle', 'courseTitle:desc', 'sessionTitle', 'sessionTitle:desc', 'firstOfferingDate', 'firstOfferingDate:desc'];
     this.set('setSortBy', (what) => {
       assert.equal(what, sortBys[count]);
       this.set('sortBy', what);
@@ -356,7 +356,7 @@ module('Integration | Component | my-materials', function(hooks) {
     this.set('materials', createMaterials());
     this.set('nothing', parseInt);
     let count = 0;
-    let courses = ['1', '3', ''];
+    const courses = ['1', '3', ''];
     this.set('setCourseIdFilter', (what) => {
       assert.equal(what, courses[count]);
       this.set('courseIdFilter', what);

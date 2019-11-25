@@ -9,7 +9,7 @@ module('Unit | Model | CurriculumInventorySequenceBlock ', function(hooks) {
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-sequence-block');
     const store = this.owner.lookup('service:store');
     const parentBlock = store.createRecord('curriculumInventorySequenceBlock', { 'children': [ model ] });
-    let grandParent = store.createRecord('curriculumInventorySequenceBlock', { 'children': [ parentBlock ] });
+    const grandParent = store.createRecord('curriculumInventorySequenceBlock', { 'children': [ parentBlock ] });
     parentBlock.set('parent', grandParent);
     model.set('parent', parentBlock);
     const ancestors = await model.get('allParents');

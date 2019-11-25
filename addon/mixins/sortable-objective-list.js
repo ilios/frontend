@@ -21,7 +21,7 @@ export default Mixin.create(SortableByPosition, {
   }),
 
   saveSomeObjectives(arr){
-    let chunk = arr.splice(0, 5);
+    const chunk = arr.splice(0, 5);
     return all(chunk.invoke('save')).then(() => {
       if (arr.length){
         this.set('currentObjectivesSaved', this.get('currentObjectivesSaved') + chunk.length);
@@ -34,7 +34,7 @@ export default Mixin.create(SortableByPosition, {
     saveSortOrder(objectives){
       this.set('isSaving', true);
       for (let i = 0, n = objectives.length; i < n; i++) {
-        let lm = objectives[i];
+        const lm = objectives[i];
         lm.set('position', i + 1);
       }
       this.set('totalObjectivesToSave', objectives.length);

@@ -13,19 +13,19 @@ module('Integration | Component | session leadership expanded', function(hooks) 
   test('it renders', async function(assert) {
     assert.expect(4);
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       firstName: 'a',
       lastName: 'person',
       fullName: 'a b person',
       enabled: true,
     });
-    let user2 = EmberObject.create({
+    const user2 = EmberObject.create({
       firstName: 'b',
       lastName: 'person',
       fullName: 'b a person',
       enabled: true,
     });
-    let session = EmberObject.create({
+    const session = EmberObject.create({
       administrators: resolve([user1, user2]),
       hasMany(what){
         if (what === 'administrators') {
@@ -63,7 +63,7 @@ module('Integration | Component | session leadership expanded', function(hooks) 
 
   test('clicking the header collapses', async function(assert) {
     assert.expect(1);
-    let session = EmberObject.create({
+    const session = EmberObject.create({
       administrators: resolve([]),
       hasMany(what){
         if (what === 'administrators') {
@@ -96,7 +96,7 @@ module('Integration | Component | session leadership expanded', function(hooks) 
 
   test('clicking manage fires action', async function(assert) {
     assert.expect(1);
-    let session = EmberObject.create({
+    const session = EmberObject.create({
       administrators: resolve([]),
       hasMany(what){
         if (what === 'administrators') {

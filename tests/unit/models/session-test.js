@@ -6,8 +6,8 @@ module('Unit | Model | Session', function(hooks) {
   setupTest(hooks);
 
   test('check required publication items', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('session');
-    let store = this.owner.lookup('service:store');
+    const model = this.owner.lookup('service:store').createRecord('session');
+    const store = this.owner.lookup('service:store');
     assert.equal(model.get('requiredPublicationIssues').length, 2);
     model.set('title', 'nothing');
     assert.equal(model.get('requiredPublicationIssues').length, 1);
@@ -16,18 +16,18 @@ module('Unit | Model | Session', function(hooks) {
   });
 
   test('check required ILM publication items', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('session');
-    let store = this.owner.lookup('service:store');
+    const model = this.owner.lookup('service:store').createRecord('session');
+    const store = this.owner.lookup('service:store');
     model.set('title', 'nothing');
     assert.equal(model.get('requiredPublicationIssues').length, 1);
-    let ilmSession = store.createRecord('ilmSession');
+    const ilmSession = store.createRecord('ilmSession');
     model.set('ilmSession', ilmSession);
     assert.equal(model.get('requiredPublicationIssues').length, 1);
   });
 
   test('check optional publication items', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('session');
-    let store = this.owner.lookup('service:store');
+    const model = this.owner.lookup('service:store').createRecord('session');
+    const store = this.owner.lookup('service:store');
     assert.equal(model.get('optionalPublicationIssues').length, 3);
     model.get('terms').addObject(store.createRecord('term'));
     assert.equal(model.get('optionalPublicationIssues').length, 2);
@@ -39,26 +39,26 @@ module('Unit | Model | Session', function(hooks) {
 
   test('check empty associatedOfferingLearnerGroups', async function(assert) {
     assert.expect(1);
-    let session = this.owner.lookup('service:store').createRecord('session');
-    let groups = await session.get('associatedOfferingLearnerGroups');
+    const session = this.owner.lookup('service:store').createRecord('session');
+    const groups = await session.get('associatedOfferingLearnerGroups');
     assert.equal(groups.length, 0);
 
   });
 
   test('check first level associatedOfferingLearnerGroups', async function(assert) {
     assert.expect(4);
-    let session = this.owner.lookup('service:store').createRecord('session');
-    let store = this.owner.lookup('service:store');
+    const session = this.owner.lookup('service:store').createRecord('session');
+    const store = this.owner.lookup('service:store');
 
-    let learnerGroup1 = store.createRecord('learner-group');
-    let learnerGroup2 = store.createRecord('learner-group');
-    let learnerGroup3 = store.createRecord('learner-group');
-    let offering1 = store.createRecord('offering', {learnerGroups: [learnerGroup1, learnerGroup2]});
-    let offering2 = store.createRecord('offering', {learnerGroups: [learnerGroup3]});
+    const learnerGroup1 = store.createRecord('learner-group');
+    const learnerGroup2 = store.createRecord('learner-group');
+    const learnerGroup3 = store.createRecord('learner-group');
+    const offering1 = store.createRecord('offering', {learnerGroups: [learnerGroup1, learnerGroup2]});
+    const offering2 = store.createRecord('offering', {learnerGroups: [learnerGroup3]});
 
     session.get('offerings').pushObjects([offering1, offering2]);
 
-    let groups = await session.get('associatedOfferingLearnerGroups');
+    const groups = await session.get('associatedOfferingLearnerGroups');
     assert.equal(groups.length, 3);
     assert.ok(groups.includes(learnerGroup1));
     assert.ok(groups.includes(learnerGroup2));
@@ -67,20 +67,20 @@ module('Unit | Model | Session', function(hooks) {
 
   test('check multi level associatedOfferingLearnerGroups', async function(assert) {
     assert.expect(6);
-    let session = this.owner.lookup('service:store').createRecord('session');
-    let store = this.owner.lookup('service:store');
+    const session = this.owner.lookup('service:store').createRecord('session');
+    const store = this.owner.lookup('service:store');
 
-    let learnerGroup1 = store.createRecord('learner-group');
-    let learnerGroup2 = store.createRecord('learner-group');
-    let learnerGroup3 = store.createRecord('learner-group');
-    let learnerGroup4 = store.createRecord('learner-group');
-    let learnerGroup5 = store.createRecord('learner-group');
-    let offering1 = store.createRecord('offering', {learnerGroups: [learnerGroup1, learnerGroup2, learnerGroup5]});
-    let offering2 = store.createRecord('offering', {learnerGroups: [learnerGroup3]});
-    let offering3 = store.createRecord('offering', {learnerGroups: [learnerGroup4]});
+    const learnerGroup1 = store.createRecord('learner-group');
+    const learnerGroup2 = store.createRecord('learner-group');
+    const learnerGroup3 = store.createRecord('learner-group');
+    const learnerGroup4 = store.createRecord('learner-group');
+    const learnerGroup5 = store.createRecord('learner-group');
+    const offering1 = store.createRecord('offering', {learnerGroups: [learnerGroup1, learnerGroup2, learnerGroup5]});
+    const offering2 = store.createRecord('offering', {learnerGroups: [learnerGroup3]});
+    const offering3 = store.createRecord('offering', {learnerGroups: [learnerGroup4]});
     session.get('offerings').pushObjects([offering1, offering2, offering3]);
 
-    let groups = await session.get('associatedOfferingLearnerGroups');
+    const groups = await session.get('associatedOfferingLearnerGroups');
     assert.equal(groups.length, 5);
     assert.ok(groups.includes(learnerGroup1));
     assert.ok(groups.includes(learnerGroup2));
@@ -91,25 +91,25 @@ module('Unit | Model | Session', function(hooks) {
 
   test('check empty associatedIlmLearnerGroups', async function(assert) {
     assert.expect(1);
-    let session = this.owner.lookup('service:store').createRecord('session');
+    const session = this.owner.lookup('service:store').createRecord('session');
 
-    let groups = await session.get('associatedIlmLearnerGroups');
+    const groups = await session.get('associatedIlmLearnerGroups');
     assert.equal(groups.length, 0);
   });
 
   test('check associatedIlmLearnerGroups', async function(assert) {
     assert.expect(4);
-    let session = this.owner.lookup('service:store').createRecord('session');
-    let store = this.owner.lookup('service:store');
+    const session = this.owner.lookup('service:store').createRecord('session');
+    const store = this.owner.lookup('service:store');
 
-    let learnerGroup1 = store.createRecord('learner-group');
-    let learnerGroup2 = store.createRecord('learner-group');
-    let learnerGroup3 = store.createRecord('learner-group');
-    let ilm = store.createRecord('ilm-session', { learnerGroups: [ learnerGroup1, learnerGroup2, learnerGroup3 ] });
+    const learnerGroup1 = store.createRecord('learner-group');
+    const learnerGroup2 = store.createRecord('learner-group');
+    const learnerGroup3 = store.createRecord('learner-group');
+    const ilm = store.createRecord('ilm-session', { learnerGroups: [ learnerGroup1, learnerGroup2, learnerGroup3 ] });
 
     session.set('ilmSession', ilm);
 
-    let groups = await session.get('associatedIlmLearnerGroups');
+    const groups = await session.get('associatedIlmLearnerGroups');
     assert.equal(groups.length, 3);
     assert.ok(groups.includes(learnerGroup1));
     assert.ok(groups.includes(learnerGroup2));
@@ -118,25 +118,25 @@ module('Unit | Model | Session', function(hooks) {
 
   test('check empty associatedLearnerGroups', async function(assert) {
     assert.expect(1);
-    let session = this.owner.lookup('service:store').createRecord('session');
+    const session = this.owner.lookup('service:store').createRecord('session');
     const groups = await session.get('associatedLearnerGroups');
     assert.equal(groups.length, 0);
   });
 
   test('check associatedLearnerGroups', async function(assert) {
     assert.expect(6);
-    let session = this.owner.lookup('service:store').createRecord('session');
-    let store = this.owner.lookup('service:store');
+    const session = this.owner.lookup('service:store').createRecord('session');
+    const store = this.owner.lookup('service:store');
 
-    let learnerGroup1 = store.createRecord('learner-group');
-    let learnerGroup2 = store.createRecord('learner-group');
-    let learnerGroup3 = store.createRecord('learner-group');
-    let learnerGroup4 = store.createRecord('learner-group');
-    let learnerGroup5 = store.createRecord('learner-group');
+    const learnerGroup1 = store.createRecord('learner-group');
+    const learnerGroup2 = store.createRecord('learner-group');
+    const learnerGroup3 = store.createRecord('learner-group');
+    const learnerGroup4 = store.createRecord('learner-group');
+    const learnerGroup5 = store.createRecord('learner-group');
 
-    let ilm = store.createRecord('ilm-session', { learnerGroups: [ learnerGroup1, learnerGroup2, learnerGroup3, learnerGroup4 ] });
-    let offering1 = store.createRecord('offering', {learnerGroups: [learnerGroup1, learnerGroup2, learnerGroup5]});
-    let offering2 = store.createRecord('offering', {learnerGroups: [learnerGroup3]});
+    const ilm = store.createRecord('ilm-session', { learnerGroups: [ learnerGroup1, learnerGroup2, learnerGroup3, learnerGroup4 ] });
+    const offering1 = store.createRecord('offering', {learnerGroups: [learnerGroup1, learnerGroup2, learnerGroup5]});
+    const offering2 = store.createRecord('offering', {learnerGroups: [learnerGroup3]});
 
     session.set('ilmSession', ilm);
     session.get('offerings').pushObjects([offering1, offering2]);
@@ -152,23 +152,23 @@ module('Unit | Model | Session', function(hooks) {
 
   test('check learner groups count', function(assert) {
     assert.expect(2);
-    let session = this.owner.lookup('service:store').createRecord('session');
-    let store = this.owner.lookup('service:store');
+    const session = this.owner.lookup('service:store').createRecord('session');
+    const store = this.owner.lookup('service:store');
 
-    let learnerGroup1 = store.createRecord('learner-group');
-    let learnerGroup2 = store.createRecord('learner-group');
-    let learnerGroup3 = store.createRecord('learner-group');
-    let offering1 = store.createRecord('offering', {learnerGroups: [learnerGroup1, learnerGroup2]});
-    let offering2 = store.createRecord('offering', {learnerGroups: [learnerGroup3]});
+    const learnerGroup1 = store.createRecord('learner-group');
+    const learnerGroup2 = store.createRecord('learner-group');
+    const learnerGroup3 = store.createRecord('learner-group');
+    const offering1 = store.createRecord('offering', {learnerGroups: [learnerGroup1, learnerGroup2]});
+    const offering2 = store.createRecord('offering', {learnerGroups: [learnerGroup3]});
 
     session.get('offerings').pushObjects([offering1, offering2]);
 
     assert.equal(session.get('learnerGroupCount'), 3);
 
-    let learnerGroup4 = store.createRecord('learner-group');
-    let offering3 = store.createRecord('offering', {learnerGroups: [learnerGroup4]});
+    const learnerGroup4 = store.createRecord('learner-group');
+    const offering3 = store.createRecord('offering', {learnerGroups: [learnerGroup4]});
     session.get('offerings').pushObject(offering3);
-    let learnerGroup5 = store.createRecord('learner-group');
+    const learnerGroup5 = store.createRecord('learner-group');
     offering1.get('learnerGroups').pushObject(learnerGroup5);
 
     assert.equal(session.get('learnerGroupCount'), 5);
@@ -330,7 +330,7 @@ module('Unit | Model | Session', function(hooks) {
     const allDayOffering = store.createRecord('offering', { startDate: moment('2017-01-01'), endDate: moment('2017-01-02').add(30, 'minutes') });
     const halfAnHourOffering = store.createRecord('offering', {startDate: moment('2017-01-01 09:30:00'), endDate: moment('2017-01-01 10:00:00') });
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
-    let ilmSession = store.createRecord('ilmSession', { hours: 2.1});
+    const ilmSession = store.createRecord('ilmSession', { hours: 2.1});
     subject.set('ilmSession', ilmSession);
 
     const max = await subject.get('maxDuration');
@@ -355,7 +355,7 @@ module('Unit | Model | Session', function(hooks) {
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
-    let ilmSession = store.createRecord('ilmSession', { hours: 2});
+    const ilmSession = store.createRecord('ilmSession', { hours: 2});
     subject.set('ilmSession', ilmSession);
 
     const max = await subject.get('maxDuration');
@@ -371,7 +371,7 @@ module('Unit | Model | Session', function(hooks) {
     const allDayOffering = store.createRecord('offering', { startDate: moment('2017-01-01'), endDate: moment('2017-01-02').add(30, 'minutes') });
     const halfAnHourOffering = store.createRecord('offering', {startDate: moment('2017-01-01 09:30:00'), endDate: moment('2017-01-01 10:00:00') });
     subject.get('offerings').pushObjects([allDayOffering, halfAnHourOffering]);
-    let ilmSession = store.createRecord('ilmSession', { hours: 2.1});
+    const ilmSession = store.createRecord('ilmSession', { hours: 2.1});
     subject.set('ilmSession', ilmSession);
 
     const max = await subject.get('totalSumDuration');
@@ -396,7 +396,7 @@ module('Unit | Model | Session', function(hooks) {
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
-    let ilmSession = store.createRecord('ilmSession', { hours: 2});
+    const ilmSession = store.createRecord('ilmSession', { hours: 2});
     subject.set('ilmSession', ilmSession);
 
     const max = await subject.get('totalSumDuration');
@@ -408,10 +408,10 @@ module('Unit | Model | Session', function(hooks) {
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
-    let offering = store.createRecord('offering');
-    let instructorGroup = store.createRecord('instructorGroup', { offerings: [offering]});
-    let user1 = store.createRecord('user', { instructedOfferings: [offering]});
-    let user2 = store.createRecord('user', { instructorGroups: [instructorGroup]});
+    const offering = store.createRecord('offering');
+    const instructorGroup = store.createRecord('instructorGroup', { offerings: [offering]});
+    const user1 = store.createRecord('user', { instructedOfferings: [offering]});
+    const user2 = store.createRecord('user', { instructorGroups: [instructorGroup]});
     subject.set('offerings', [offering]);
 
     const allInstructors = await subject.get('allInstructors');
@@ -425,10 +425,10 @@ module('Unit | Model | Session', function(hooks) {
     const subject = this.owner.lookup('service:store').createRecord('session');
     const store = this.owner.lookup('service:store');
 
-    let ilmSession = store.createRecord('ilmSession');
-    let instructorGroup = store.createRecord('instructorGroup', { ilmSessions: [ilmSession]});
-    let user1 = store.createRecord('user', { instructorIlmSessions: [ilmSession]});
-    let user2 = store.createRecord('user', { instructorGroups: [instructorGroup]});
+    const ilmSession = store.createRecord('ilmSession');
+    const instructorGroup = store.createRecord('instructorGroup', { ilmSessions: [ilmSession]});
+    const user1 = store.createRecord('user', { instructorIlmSessions: [ilmSession]});
+    const user2 = store.createRecord('user', { instructorGroups: [instructorGroup]});
     subject.set('ilmSession', ilmSession);
 
     const allInstructors = await subject.get('allInstructors');

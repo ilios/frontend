@@ -93,7 +93,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   init(){
     this._super(...arguments);
 
-    let levelOptions = [];
+    const levelOptions = [];
     for(let i=1;i<=5; i++){
       levelOptions.pushObject(EmberObject.create({
         id: i,
@@ -235,7 +235,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   directorsToPassToManager: task(function * () {
     const course = this.get('course');
 
-    let users = yield course.get('directors');
+    const users = yield course.get('directors');
 
     this.set('showDirectorManagerLoader', false);
     return users;

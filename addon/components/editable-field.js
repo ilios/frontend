@@ -14,10 +14,10 @@ export default Component.extend({
   closeOnEscape: false,
   clickPrompt: null,
   looksEmpty: computed('value', function(){
-    let value = this.get('value') || '';
-    let text = value.toString();
-    let noTagsText = text.replace(/(<([^>]+)>)/ig,"");
-    let strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
+    const value = this.get('value') || '';
+    const text = value.toString();
+    const noTagsText = text.replace(/(<([^>]+)>)/ig,"");
+    const strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
 
     return isEmpty(strippedText);
   }),

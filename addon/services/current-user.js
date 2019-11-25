@@ -17,7 +17,7 @@ export default Service.extend({
   }),
 
   model: computed('currentUserId', async function(){
-    let currentUserId = this.get('currentUserId');
+    const currentUserId = this.get('currentUserId');
     if (!currentUserId) {
       return null;
     }
@@ -233,7 +233,7 @@ export default Service.extend({
     return ids.includes(report.get('id'));
   },
   async getRolesInSchool(school, rolesToCheck = []) {
-    let roles = [];
+    const roles = [];
     if (rolesToCheck.includes('SCHOOL_DIRECTOR') && await this.isDirectingSchool(school)) {
       roles.pushObject('SCHOOL_DIRECTOR');
     }
@@ -262,7 +262,7 @@ export default Service.extend({
     return roles;
   },
   async getRolesInCourse(course, rolesToCheck = []) {
-    let roles = [];
+    const roles = [];
     if (rolesToCheck.includes('COURSE_DIRECTOR') && await this.isDirectingCourse(course)) {
       roles.pushObject('COURSE_DIRECTOR');
     }
@@ -279,7 +279,7 @@ export default Service.extend({
     return roles;
   },
   async getRolesInSession(session, rolesToCheck = []) {
-    let roles = [];
+    const roles = [];
     if (rolesToCheck.includes('SESSION_ADMINISTRATOR') && await this.isAdministeringSession(session)) {
       roles.pushObject('SESSION_ADMINISTRATOR');
     }
@@ -290,7 +290,7 @@ export default Service.extend({
     return roles;
   },
   async getRolesInProgram(program, rolesToCheck = []) {
-    let roles = [];
+    const roles = [];
     if (rolesToCheck.includes('PROGRAM_DIRECTOR') && await this.isDirectingProgram(program)) {
       roles.pushObject('PROGRAM_DIRECTOR');
     }
@@ -301,7 +301,7 @@ export default Service.extend({
     return roles;
   },
   async getRolesInProgramYear(programYear, rolesToCheck = []) {
-    let roles = [];
+    const roles = [];
     if (rolesToCheck.includes('PROGRAM_YEAR_DIRECTOR') && await this.isDirectingProgramYear(programYear)) {
       roles.pushObject('PROGRAM_YEAR_DIRECTOR');
     }
@@ -309,7 +309,7 @@ export default Service.extend({
     return roles;
   },
   async getRolesInCurriculumInventoryReport(report, rolesToCheck = []) {
-    let roles = [];
+    const roles = [];
     if (rolesToCheck.includes('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR') && await this.isAdministeringCurriculumInventoryReport(report)) {
       roles.pushObject('CURRICULUM_INVENTORY_REPORT_ADMINISTRATOR');
     }

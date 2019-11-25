@@ -254,7 +254,7 @@ module('Integration | Component | week glance', function(hooks) {
     this.userEvents = this.owner.lookup('service:user-events');
 
 
-    let year = testDate.format('YYYY');
+    const year = testDate.format('YYYY');
     this.set('year', year);
     this.set('today', testDate);
     await render(hbs`<WeekGlance

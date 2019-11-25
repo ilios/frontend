@@ -32,12 +32,12 @@ export default Model.extend({
   }),
 
   treeChildren: computed('children.[]', async function(){
-    let rhett = [];
+    const rhett = [];
     const children = await this.get('children');
     rhett.pushObjects(children.toArray());
 
     const trees = await all(children.mapBy('treeChildren'));
-    let competencies = trees.reduce((array, set) => {
+    const competencies = trees.reduce((array, set) => {
       return array.pushObjects(set.toArray());
     }, []);
     rhett.pushObjects(competencies);

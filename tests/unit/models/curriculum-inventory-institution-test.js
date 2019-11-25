@@ -5,7 +5,7 @@ module('Unit | Model | CurriculumInventoryInstitution', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('curriculum-inventory-institution');
+    const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-institution');
     assert.ok(!!model);
   });
 });

@@ -316,9 +316,9 @@ export default Model.extend({
   async getLowestMemberGroupInALearnerGroupTree(learnerGroupTree){
     const learnerGroups = await this.get('learnerGroups');
     //all the groups a user is in that are in our current learner groups tree
-    let relevantGroups = learnerGroups.toArray().filter(group => learnerGroupTree.includes(group));
-    let relevantGroupIds = relevantGroups.mapBy('id');
-    let lowestGroup = relevantGroups.find(group => {
+    const relevantGroups = learnerGroups.toArray().filter(group => learnerGroupTree.includes(group));
+    const relevantGroupIds = relevantGroups.mapBy('id');
+    const lowestGroup = relevantGroups.find(group => {
       const childIds = group.hasMany('children').ids();
       const childGroupsWhoAreUserGroupMembers = childIds.filter(id => relevantGroupIds.includes(id));
       return (childGroupsWhoAreUserGroupMembers.length === 0);

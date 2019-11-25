@@ -5,8 +5,8 @@ import { module, test } from 'qunit';
 module('Unit | Mixin | course-visualize-session-types-route', function() {
   // Replace this with your real tests.
   test('it works', function (assert) {
-    let CourseVisualizeSessionTypesRouteObject = EmberObject.extend(CourseVisualizeSessionTypesRouteMixin);
-    let subject = CourseVisualizeSessionTypesRouteObject.create();
+    const CourseVisualizeSessionTypesRouteObject = EmberObject.extend(CourseVisualizeSessionTypesRouteMixin);
+    const subject = CourseVisualizeSessionTypesRouteObject.create();
     assert.ok(subject);
   });
 });

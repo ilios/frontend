@@ -12,8 +12,8 @@ export default Mixin.create({
    * @return {Number}
    */
   positionSortingCallback(obj1, obj2) {
-    let pos1 = obj1.get('position');
-    let pos2 = obj2.get('position');
+    const pos1 = obj1.get('position');
+    const pos2 = obj2.get('position');
     // 1. position, asc
     if (pos1 > pos2) {
       return 1;
@@ -22,8 +22,8 @@ export default Mixin.create({
     }
 
     // 2. id, desc
-    let id1 = obj1.get('id');
-    let id2 = obj2.get('id');
+    const id1 = obj1.get('id');
+    const id2 = obj2.get('id');
     if (id1 > id2) {
       return -1;
     } else if (id1 < id2) {
