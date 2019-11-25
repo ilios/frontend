@@ -1,23 +1,25 @@
-<div class="year">
-  <h2>
-    <FaIcon @icon="backward" @click={{action "decrementYear"}} />
-    {{@year}}
-    <FaIcon @icon="forward" @click={{action "incrementYear"}} />
-  </h2>
-</div>
-{{#each this.weeksInYear as |week|}}
-  <WeekGlance
-    @collapsible={{true}}
-    @collapsed={{not (contains week @expandedWeeks)}}
-    @year={{@year}}
-    @week={{week}}
-    @toggleCollapsed={{action @toggleOpenWeek week}}
-  />
-{{/each}}
-<div class="year">
-  <h2>
-    <FaIcon @icon="backward" @click={{action "decrementYear"}} />
-    {{@year}}
-    <FaIcon @icon="forward" @click={{action "incrementYear"}} />
-  </h2>
+<div class="weekly-events">
+  <div class="year">
+    <h2>
+      <FaIcon @icon="backward" {{on "click" this.decrementYear}}/>
+      {{@year}}
+      <FaIcon @icon="forward" {{on "click" this.incrementYear}}/>
+    </h2>
+  </div>
+  {{#each this.weeksInYear as |week|}}
+    <WeekGlance
+      @collapsible={{true}}
+      @collapsed={{not (contains week @expandedWeeks)}}
+      @year={{@year}}
+      @week={{week}}
+      @toggleCollapsed={{action @toggleOpenWeek week}}
+    />
+  {{/each}}
+  <div class="year">
+    <h2>
+      <FaIcon @icon="backward" {{on "click" this.decrementYear}}/>
+      {{@year}}
+      <FaIcon @icon="forward" {{on "click" this.incrementYear}}/>
+    </h2>
+  </div>
 </div>
