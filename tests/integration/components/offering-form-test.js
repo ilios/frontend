@@ -8,7 +8,7 @@ import {
   click,
   find,
   findAll,
-  fillIn
+  fillIn,
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { padStart } from 'ember-pad/utils/pad';
@@ -541,5 +541,54 @@ module('Integration | Component | offering form', function(hooks) {
     const timezoneValue  = '[data-test-current-timezone]';
     const currentTimezone = moment.tz.guess();
     assert.dom(timezoneValue).containsText(timezoneService.formatTimezone(currentTimezone));
+  });
+
+  test('save date with new timezone', async function(assert) {
+    assert.expect(11);
+    const newTimezone = 'Pacific/Midway';
+    const utc = 'Etc/UTC';
+    const currentTimezone = moment.tz.guess();
+
+    const offering = EmberObject.create({
+      room: 'emerald bay',
+      startDate: moment('2005-06-24').hour(18).minute(24).toDate(),
+      endDate: moment('2005-06-24').hour(19).minute(24).toDate(),
+      learnerGroups: resolve([]),
+      instructors: resolve([]),
+      instructorGroups: resolve([]),
+    });
+    this.set('nothing', nothing);
+    this.set('offering', offering);
+    this.set('save', (startDate, endDate)=>{
+      assert.equal('2005-06-25 05:24', moment(startDate).tz(utc).format('Y-MM-DD HH:mm'));
+      assert.equal('2005-06-25 06:24', moment(endDate).tz(utc).format('Y-MM-DD HH:mm'));
+    });
+    const save = '.buttons .done';
+    await render(hbs`<OfferingForm @offering={{offering}} @close={{action nothing}} @save={{action save}} />`);
+
+    const timezoneService = this.owner.lookup('service:timezone');
+
+    const currentTimezoneDisplay = '[data-test-current-timezone]';
+    const timezonePicker = '[data-test-timezone-picker] select';
+    const timezonePickerLabel = '[data-test-timezone-picker] label';
+
+    assert.notEqual(newTimezone, currentTimezone);
+
+    assert.dom(timezonePicker).isNotVisible();
+    assert.dom(timezonePickerLabel).isNotVisible();
+
+    await click(currentTimezoneDisplay);
+
+    assert.dom(timezonePicker).isVisible();
+    assert.dom(timezonePickerLabel).isVisible();
+    assert.dom(timezonePicker).hasValue(currentTimezone);
+
+    await fillIn(timezonePicker, newTimezone);
+
+    assert.dom(timezonePicker).isNotVisible();
+    assert.dom(timezonePickerLabel).isNotVisible();
+    assert.dom(currentTimezoneDisplay).containsText(timezoneService.formatTimezone(newTimezone));
+
+    await click(save);
   });
 });
