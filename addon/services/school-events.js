@@ -1,15 +1,12 @@
-import Service, { inject as service } from '@ember/service';
-import { reads } from '@ember/object/computed';
-import EventMixin from 'ilios-common/mixins/events';
+import EventsBase from '../classes/events-base';
+import { inject as service } from '@ember/service';
 import moment from 'moment';
 
-export default Service.extend(EventMixin, {
-  store: service(),
-  currentUser: service(),
-  fetch: service(),
-  iliosConfig:service(),
-
-  namespace: reads('iliosConfig.apiNameSpace'),
+export default class SchoolEvents extends EventsBase {
+  @service store;
+  @service currentUser;
+  @service fetch;
+  @service iliosConfig;
 
   /**
    * Retrieves a list of school-events for a given school that occur in a given date range,
@@ -22,7 +19,7 @@ export default Service.extend(EventMixin, {
    */
   async getEvents(schoolId, from, to){
     let url = '';
-    const namespace = this.get('namespace');
+    const namespace = this.iliosConfig.apiNameSpace;
     if (namespace) {
       url += '/' + namespace;
     }
@@ -31,7 +28,7 @@ export default Service.extend(EventMixin, {
     const data = await this.fetch.getJsonFromApiHost(url);
 
     return data.events.map(obj => this.createEventFromData(obj, false)).sortBy('startDate', 'name');
-  },
+  }
 
   /**
    * Retrieves and event by it's given slug.
@@ -56,5 +53,5 @@ export default Service.extend(EventMixin, {
         return parseInt(event.ilmSession, 10) === id;
       }
     });
-  },
-});
+  }
+}
