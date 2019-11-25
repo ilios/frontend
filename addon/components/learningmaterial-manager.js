@@ -101,7 +101,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   actions: {
     updateDate(which, value) {
       const oldDate = moment(this.get(which));
-      let newDate = moment(value);
+      const newDate = moment(value);
       const hour = oldDate.get('hour');
       const minute = oldDate.get('minute');
       newDate.set({hour, minute});
@@ -121,12 +121,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         minute = value;
       }
 
-      let newDate = moment();
+      const newDate = moment();
       newDate.set({year, month, date, hour, minute});
       this.set(which, newDate.toDate());
     },
     addDate(which) {
-      let now = moment().hour(8).minute(0).second(0).toDate();
+      const now = moment().hour(8).minute(0).second(0).toDate();
       this.set(which, now);
     },
     addTerm(term) {
@@ -181,7 +181,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   }).restartable(),
   save: task(function* () {
     this.send('addErrorDisplaysFor', ['endDate', 'title']);
-    let {validations} = yield this.validate();
+    const {validations} = yield this.validate();
 
     if (validations.get('isInvalid')) {
       return;
@@ -207,7 +207,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     learningMaterial.set('endDate', endDate);
 
     const statues = yield this.get('learningMaterialStatuses');
-    let status = statues.findBy('id', statusId);
+    const status = statues.findBy('id', statusId);
 
     const parent = yield learningMaterial.get('learningMaterial');
     parent.set('status', status);

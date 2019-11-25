@@ -150,10 +150,10 @@ export default function (server) {
 
 
   server.get('api/userevents/:userid', function ({ db }, request) {
-    let from = moment.unix(request.queryParams.from);
-    let to = moment.unix(request.queryParams.to);
-    let userid = parseInt(request.params.userid, 10);
-    let userEvents = db.userevents.filter(event => {
+    const from = moment.unix(request.queryParams.from);
+    const to = moment.unix(request.queryParams.to);
+    const userid = parseInt(request.params.userid, 10);
+    const userEvents = db.userevents.filter(event => {
       return (
         event.user === userid &&
         (from.isSame(event.startDate) || from.isBefore(event.startDate)) &&
@@ -166,10 +166,10 @@ export default function (server) {
   });
 
   server.get('api/schoolevents/:schoolid', function({ db }, request) {
-    let from = moment.unix(request.queryParams.from);
-    let to = moment.unix(request.queryParams.to);
-    let schoolId = parseInt(request.params.schoolid, 10);
-    let schoolEvents = db.schoolevents.filter(event => {
+    const from = moment.unix(request.queryParams.from);
+    const to = moment.unix(request.queryParams.to);
+    const schoolId = parseInt(request.params.schoolid, 10);
+    const schoolEvents = db.schoolevents.filter(event => {
       return (
         event.school === schoolId &&
         (from.isSame(event.startDate) || from.isBefore(event.startDate)) &&
@@ -183,7 +183,7 @@ export default function (server) {
 
   server.post('upload', function() {
     let hash = "";
-    let allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
     for( var i=0; i < 32; i++ ) {
       hash += allowedChars.charAt(Math.floor(Math.random() * allowedChars.length));

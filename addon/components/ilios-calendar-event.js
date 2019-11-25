@@ -36,7 +36,7 @@ export default CalendarEvent.extend(TooltipContent, {
 
   formattedInstructors: computed('event.instructors.[]', function() {
     const intl = this.get('intl');
-    let instructors = this.get('event.instructors');
+    const instructors = this.get('event.instructors');
     if (! isArray(instructors) || ! instructors.length) {
       return '';
     }

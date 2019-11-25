@@ -45,8 +45,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   },
   didReceiveAttrs(){
     this._super(...arguments);
-    let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
-    let years = [];
+    const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
+    const years = [];
     for (let i = 0; i < 6; i++) {
       years.push(lastYear + i);
     }
@@ -65,12 +65,12 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.get('loadUnavailableYears').perform();
     },
     addCohort(cohort) {
-      let selectedCohorts = this.get('selectedCohorts');
+      const selectedCohorts = this.get('selectedCohorts');
       selectedCohorts.pushObject(cohort);
       this.set('selectedCohorts', selectedCohorts);
     },
     removeCohort(cohort){
-      let selectedCohorts = this.get('selectedCohorts');
+      const selectedCohorts = this.get('selectedCohorts');
       selectedCohorts.removeObject(cohort);
       this.set('selectedCohorts', selectedCohorts);
     },
@@ -92,7 +92,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('isSaving', true);
     yield timeout(10);
     this.send('addErrorDisplaysFor', ['title', 'selectedYear']);
-    let {validations} = yield this.validate();
+    const {validations} = yield this.validate();
 
     if (validations.get('isInvalid')) {
       this.set('isSaving', false);
@@ -102,10 +102,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const year = this.get('selectedYear');
     const newCourseTitle = this.get('title');
     const selectedCohortIds = this.get('selectedCohorts').mapBy('id');
-    let newStartDate = moment(this.get('startDate')).format('YYYY-MM-DD');
-    let skipOfferings = this.get('skipOfferings');
+    const newStartDate = moment(this.get('startDate')).format('YYYY-MM-DD');
+    const skipOfferings = this.get('skipOfferings');
 
-    let data = {
+    const data = {
       year,
       newCourseTitle
     };
@@ -119,14 +119,14 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       data.newCohorts = selectedCohortIds;
     }
 
-    let url = `${this.namespace}/courses/${courseId}/rollover`;
+    const url = `${this.namespace}/courses/${courseId}/rollover`;
     const newCoursesObj = yield this.fetch.postToApiHost(url, data);
 
     const flashMessages = this.get('flashMessages');
     const store = this.get('store');
     flashMessages.success('general.courseRolloverSuccess');
     store.pushPayload(newCoursesObj);
-    let newCourse = store.peekRecord('course', newCoursesObj.courses[0].id);
+    const newCourse = store.peekRecord('course', newCoursesObj.courses[0].id);
 
     return this.get('visit')(newCourse);
   }).drop(),
@@ -135,7 +135,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     yield timeout(250); //debounce title changes
     const title = this.get('title');
     const store = this.get('store');
-    let existingCoursesWithTitle = yield store.query('course', {
+    const existingCoursesWithTitle = yield store.query('course', {
       filters: {title}
     });
 
@@ -150,7 +150,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const day = date.isoWeekday();
     const week = date.isoWeek();
 
-    let startDate = moment().year(selectedYear).isoWeek(week).isoWeekday(day).toDate();
+    const startDate = moment().year(selectedYear).isoWeek(week).isoWeekday(day).toDate();
     this.setProperties({startDate});
   }).restartable(),
 

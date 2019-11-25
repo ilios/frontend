@@ -164,7 +164,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
   actions: {
     async saveIndependentLearning(value) {
       if (!value) {
-        let ilmSession = await this.session.ilmSession;
+        const ilmSession = await this.session.ilmSession;
         this.session.set('ilmSession', null);
         ilmSession.deleteRecord();
         await this.session.save();
@@ -179,7 +179,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
           hours,
           dueDate
         });
-        let savedIlmSession = await ilmSession.save();
+        const savedIlmSession = await ilmSession.save();
         this.session.set('ilmSession', savedIlmSession);
         await this.session.save();
       }
@@ -210,13 +210,13 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     },
 
     setSessionType(id){
-      let type = this.get('sessionTypes').findBy('id', id);
+      const type = this.get('sessionTypes').findBy('id', id);
       this.set('sessionType', type);
     },
 
     changeSessionType() {
-      let session = this.get('session');
-      let type = this.get('sessionType');
+      const session = this.get('session');
+      const type = this.get('sessionType');
       session.set('sessionType', type);
       session.save();
     },
@@ -332,8 +332,8 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
 
     changeDescription(html){
       this.send('addErrorDisplayFor', 'description');
-      let noTagsText = html.replace(/(<([^>]+)>)/ig,"");
-      let strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
+      const noTagsText = html.replace(/(<([^>]+)>)/ig,"");
+      const strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
 
       //if all we have is empty html then save null
       if(strippedText.length === 0){
@@ -344,8 +344,8 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     },
     changeInstructionalNotes(html){
       this.send('addErrorDisplayFor', 'instructionalNotes');
-      let noTagsText = html.replace(/(<([^>]+)>)/ig,"");
-      let strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
+      const noTagsText = html.replace(/(<([^>]+)>)/ig,"");
+      const strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
 
       //if all we have is empty html then save null
       if(strippedText.length === 0){
@@ -367,7 +367,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
 
   saveInstructionalNotes: task(function* () {
     this.send('addErrorDisplayFor', 'instructionalNotes');
-    let { validations } = yield this.validate({ on: ['instructionalNotes'] });
+    const { validations } = yield this.validate({ on: ['instructionalNotes'] });
     if (validations.get('isInvalid')) {
       return false;
     }

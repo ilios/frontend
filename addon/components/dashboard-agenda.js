@@ -28,7 +28,7 @@ export default Component.extend({
 
   ilmPreWorkEvents: computed('weeksEvents.[]', async function () {
     const events = await this.get('weeksEvents');
-    let preWork =  events.reduce((arr, eventObject) => {
+    const preWork =  events.reduce((arr, eventObject) => {
       return arr.pushObjects(eventObject.prerequisites);
     }, []);
 
@@ -37,7 +37,7 @@ export default Component.extend({
     const hashes = [];
     const uniques = [];
     preWork.forEach(event => {
-      let hash = moment(event.startDate).format() +
+      const hash = moment(event.startDate).format() +
         moment(event.endDate).format() +
         event.name;
       if (! hashes.includes(hash)) {
@@ -49,7 +49,7 @@ export default Component.extend({
   }),
 
   nonIlmPreWorkEvents: computed('weeksEvents.[]', async function () {
-    let events = await this.get('weeksEvents');
+    const events = await this.get('weeksEvents');
     return events.filter(ev => {
       return ev.postrequisites.length === 0 || !ev.ilmSession;
     });

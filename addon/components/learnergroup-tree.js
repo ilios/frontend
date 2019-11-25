@@ -48,14 +48,14 @@ export default Component.extend({
     const filterString = this.get('filter');
     const exp = new RegExp(filterString, 'gi');
 
-    let children = yield learnerGroup.get('children');
-    let hasUnSelectedChildren = yield this.hasUnSelectedChildren(children);
+    const children = yield learnerGroup.get('children');
+    const hasUnSelectedChildren = yield this.hasUnSelectedChildren(children);
     let filterMatch = true;
     if (filterString && filterString.length > 0) {
-      let filterTitle = yield learnerGroup.get('filterTitle');
+      const filterTitle = yield learnerGroup.get('filterTitle');
       filterMatch = filterTitle.match(exp) != null;
     }
-    let available = hasUnSelectedChildren || isEmpty(selectedGroups) || !selectedGroups.includes(learnerGroup);
+    const available = hasUnSelectedChildren || isEmpty(selectedGroups) || !selectedGroups.includes(learnerGroup);
 
     this.set('isVisible', filterMatch && available);
     this.set('selectable', available);

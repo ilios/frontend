@@ -11,11 +11,11 @@ export default RESTSerializer.extend({
     return json;
   },
   normalize(modelClass, resourceHash, prop) {
-    let startDate = moment.utc(resourceHash.startDate).format('YYYY-MM-DD');
-    let localStartDate = moment(startDate, 'YYYY-MM-DD');
+    const startDate = moment.utc(resourceHash.startDate).format('YYYY-MM-DD');
+    const localStartDate = moment(startDate, 'YYYY-MM-DD');
     resourceHash.startDate = localStartDate.format();
-    let endDate = moment.utc(resourceHash.endDate).format('YYYY-MM-DD');
-    let localEndDate = moment(endDate, 'YYYY-MM-DD');
+    const endDate = moment.utc(resourceHash.endDate).format('YYYY-MM-DD');
+    const localEndDate = moment(endDate, 'YYYY-MM-DD');
     resourceHash.endDate = localEndDate.format();
     return this._super(modelClass, resourceHash, prop);
   }

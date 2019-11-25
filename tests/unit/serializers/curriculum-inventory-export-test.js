@@ -5,8 +5,8 @@ module('Unit | Serializer | curriculum inventory export', function(hooks) {
   setupTest(hooks);
 
   test('it serializes records', function(assert) {
-    let record = this.owner.lookup('service:store').createRecord('curriculum-inventory-export');
-    let serializedRecord = record.serialize();
+    const record = this.owner.lookup('service:store').createRecord('curriculum-inventory-export');
+    const serializedRecord = record.serialize();
     assert.ok(serializedRecord);
   });
 

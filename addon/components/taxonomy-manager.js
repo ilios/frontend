@@ -106,7 +106,7 @@ export default Component.extend({
   selectedVocabulary: computed('assignableVocabularies.[]', 'vocabId', async function(){
     const vocabs = await this.get('assignableVocabularies');
     if(isPresent(this.get('vocabId'))){
-      let vocab = vocabs.find(v => {
+      const vocab = vocabs.find(v => {
         return v.get('id') === this.get('vocabId');
       });
       if(vocab){
@@ -137,7 +137,7 @@ export default Component.extend({
     if (isEmpty(termFilter)) {
       return topLevelTerms;
     }
-    let exp = new RegExp(termFilter, 'gi');
+    const exp = new RegExp(termFilter, 'gi');
     return filter(topLevelTerms.toArray(), async term => {
       const searchString = await term.get('titleWithDescendantTitles');
       return searchString.match(exp);

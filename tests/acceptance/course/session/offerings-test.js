@@ -112,7 +112,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
     assert.ok(blocks[2].hasMultiDay);
     assert.equal(blocks[2].dayOfWeek, moment(this.offering3.startDate).format('dddd'));
     assert.equal(blocks[2].dayOfMonth, moment(this.offering3.startDate).format('MMMM Do'));
-    let expectedText = 'Multiday ' +
+    const expectedText = 'Multiday ' +
         'Starts ' + moment(this.offering3.startDate).format('dddd MMMM Do [@] LT') +
       ' Ends ' + moment(this.offering3.endDate).format('dddd MMMM Do [@] LT');
     assert.equal(blocks[2].offerings.length, 1);
@@ -251,7 +251,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
     assert.ok(block.hasMultiDay);
     assert.equal(block.dayOfWeek, 'Sunday');
     assert.equal(block.dayOfMonth, 'September 11th');
-    let expectedText = 'Multiday ' +
+    const expectedText = 'Multiday ' +
         'Starts Sunday September 11th @ 2:15 AM' +
       ' Ends Monday September 12th @ 5:30 PM';
     assert.equal(block.multiDay, expectedText);

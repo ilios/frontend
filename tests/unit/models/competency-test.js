@@ -52,8 +52,8 @@ module('Unit | Model | Competency', function(hooks) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('competency');
     assert.equal(model.get('childCount'), 0);
-    let child1 = store.createRecord('competency');
-    let child2 = store.createRecord('competency');
+    const child1 = store.createRecord('competency');
+    const child2 = store.createRecord('competency');
     model.set('children', [ child1, child2 ]);
     assert.equal(model.get('childCount'), 2);
   });

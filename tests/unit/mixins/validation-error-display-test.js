@@ -4,14 +4,14 @@ import { module, test } from 'qunit';
 
 module('Unit | Mixin | validation error display', function() {
   test('it works', function(assert) {
-    let ValidationErrorDisplayObject = EmberObject.extend(ValidationErrorDisplayMixin);
-    let subject = ValidationErrorDisplayObject.create();
+    const ValidationErrorDisplayObject = EmberObject.extend(ValidationErrorDisplayMixin);
+    const subject = ValidationErrorDisplayObject.create();
     assert.ok(subject);
   });
 
   test('starts off empty', function(assert) {
-    let ValidationErrorDisplayObject = EmberObject.extend(ValidationErrorDisplayMixin);
-    let subject = ValidationErrorDisplayObject.create();
+    const ValidationErrorDisplayObject = EmberObject.extend(ValidationErrorDisplayMixin);
+    const subject = ValidationErrorDisplayObject.create();
     assert.equal(subject.get('showErrorsFor').length, 0);
   });
 });

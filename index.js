@@ -24,7 +24,7 @@ module.exports = {
     this.import(path.join('node_modules', 'normalize.css', 'normalize.css'));
 
     // Import the froala editor styles
-    let froalaPath = path.join('node_modules', 'froala-editor');
+    const froalaPath = path.join('node_modules', 'froala-editor');
     this.import(path.join(froalaPath, 'css', 'froala_editor.css'));
     this.import(path.join(froalaPath, 'css', 'froala_style.css'));
     this.import(path.join(froalaPath, 'css', 'themes', 'gray.css'));
@@ -32,7 +32,7 @@ module.exports = {
   },
 
   contentFor(type, config) {
-    let emberGoogleFonts = this.addons.find((a) => a.name === 'ember-cli-google-fonts');
+    const emberGoogleFonts = this.addons.find((a) => a.name === 'ember-cli-google-fonts');
     return emberGoogleFonts.contentFor(type, config);
   },
 

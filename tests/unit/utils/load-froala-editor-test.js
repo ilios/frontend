@@ -5,7 +5,7 @@ module('Unit | Utility | load-froala-editor', function() {
 
   test('it works', async function (assert) {
     assert.expect(1);
-    let { FroalaEditor } = await loadFroalaEditor();
+    const { FroalaEditor } = await loadFroalaEditor();
     assert.ok(FroalaEditor);
   });
 });

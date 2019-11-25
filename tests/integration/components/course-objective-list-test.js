@@ -50,7 +50,7 @@ module('Integration | Component | course objective list', function(hooks) {
         @subject={{this.subject}}
       />`
     );
-    let container = findAll('.course-objective-list');
+    const container = findAll('.course-objective-list');
     assert.equal(container.length, 1, 'Component container element exists.');
     assert.dom(container[0]).hasText('', 'No content is shown.');
   });

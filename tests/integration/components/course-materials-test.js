@@ -21,18 +21,18 @@ module('Integration | Component | course materials', function(hooks) {
   test('course lms render', async function(assert) {
     assert.expect(3);
 
-    let lm1 = EmberObject.create({
+    const lm1 = EmberObject.create({
       title: 'title1',
       description: 'description1',
       originalAuthor: 'author1',
       link: 'url1',
       type: 'link',
     });
-    let courseLm1 = EmberObject.create({
+    const courseLm1 = EmberObject.create({
       learningMaterial: resolve(lm1),
     });
 
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       sessions: resolve([]),
       learningMaterials: resolve([courseLm1])
     });
@@ -60,22 +60,22 @@ module('Integration | Component | course materials', function(hooks) {
     return settled();
   });
 
-  let setupPage = function(){
-    let lm1 = EmberObject.create({
+  const setupPage = function(){
+    const lm1 = EmberObject.create({
       title: 'title1',
       description: 'description1',
       originalAuthor: 'author1',
       url: 'http://myhost.com/url1',
       type: 'link',
     });
-    let lm2 = EmberObject.create({
+    const lm2 = EmberObject.create({
       title: 'title2',
       description: 'description2',
       originalAuthor: 'author2',
       url: 'http://myhost.com/url2',
       type: 'file',
     });
-    let lm3 = EmberObject.create({
+    const lm3 = EmberObject.create({
       title: 'title3',
       description: 'description3',
       originalAuthor: 'author3',
@@ -83,19 +83,19 @@ module('Integration | Component | course materials', function(hooks) {
       type: 'citation',
       citation: 'citationtext',
     });
-    let course1 = EmberObject.create({
+    const course1 = EmberObject.create({
       learningMaterial: resolve(lm1),
     });
-    let sessionLm1 = EmberObject.create({
+    const sessionLm1 = EmberObject.create({
       learningMaterial: resolve(lm1),
     });
-    let sessionLm2 = EmberObject.create({
+    const sessionLm2 = EmberObject.create({
       learningMaterial: resolve(lm2),
     });
-    let sessionLm3 = EmberObject.create({
+    const sessionLm3 = EmberObject.create({
       learningMaterial: resolve(lm3),
     });
-    let session1 = EmberObject.create({
+    const session1 = EmberObject.create({
       title: 'session1title',
       learningMaterials: resolve([sessionLm1, sessionLm2, sessionLm3]),
       firstOfferingDate: resolve(new Date(2020, 1, 2, 12)),
@@ -104,7 +104,7 @@ module('Integration | Component | course materials', function(hooks) {
     sessionLm2.set('session', resolve(session1));
     sessionLm3.set('session', resolve(session1));
 
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       learningMaterials: resolve([course1]),
       sessions: resolve([session1])
     });
@@ -114,7 +114,7 @@ module('Integration | Component | course materials', function(hooks) {
   test('course & session lms render', async function(assert) {
     assert.expect(22);
 
-    let course = setupPage();
+    const course = setupPage();
     this.set('nothing', parseInt);
     this.setProperties({
       course,
@@ -187,7 +187,7 @@ module('Integration | Component | course materials', function(hooks) {
   test('clicking sort fires action', async function(assert) {
     assert.expect(16);
 
-    let course = setupPage();
+    const course = setupPage();
     let cCount = 0, sCount = 0;
     const cSortList = [
       'title:desc', 'title', 'type', 'type:desc', 'author', 'author:desc'
@@ -254,7 +254,7 @@ module('Integration | Component | course materials', function(hooks) {
   test('filter by title', async function(assert) {
     assert.expect(3);
 
-    let course = setupPage();
+    const course = setupPage();
     this.setProperties({
       course,
       courseSort: 'title',
@@ -282,7 +282,7 @@ module('Integration | Component | course materials', function(hooks) {
   test('filter by type', async function(assert) {
     assert.expect(3);
 
-    let course = setupPage();
+    const course = setupPage();
     this.setProperties({
       course,
       courseSort: 'title',
@@ -310,7 +310,7 @@ module('Integration | Component | course materials', function(hooks) {
   test('filter by author', async function(assert) {
     assert.expect(3);
 
-    let course = setupPage();
+    const course = setupPage();
     this.setProperties({
       course,
       courseSort: 'title',
@@ -338,7 +338,7 @@ module('Integration | Component | course materials', function(hooks) {
   test('filter by citation', async function(assert) {
     assert.expect(3);
 
-    let course = setupPage();
+    const course = setupPage();
     this.setProperties({
       course,
       courseSort: 'title',

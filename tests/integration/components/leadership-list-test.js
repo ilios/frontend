@@ -11,12 +11,12 @@ module('Integration | Component | leadership list', function(hooks) {
 
   test('it renders with data', async function(assert) {
     assert.expect(5);
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       firstName: 'a',
       lastName: 'person',
       fullName: 'a b person',
     });
-    let user2 = EmberObject.create({
+    const user2 = EmberObject.create({
       firstName: 'b',
       lastName: 'person',
       fullName: 'b a person',
@@ -37,7 +37,7 @@ module('Integration | Component | leadership list', function(hooks) {
 
   test('it renders without directors', async function(assert) {
     assert.expect(2);
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       firstName: 'a',
       lastName: 'person',
       fullName: 'a b person',
@@ -53,7 +53,7 @@ module('Integration | Component | leadership list', function(hooks) {
 
   test('it renders without administrators', async function(assert) {
     assert.expect(2);
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       firstName: 'a',
       lastName: 'person',
       fullName: 'a b person',
@@ -84,13 +84,13 @@ module('Integration | Component | leadership list', function(hooks) {
 
   test('disabled users are indicated with an icon', async function(assert) {
     assert.expect(7);
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: true,
       firstName: 'a',
       lastName: 'person',
       fullName: 'a b person',
     });
-    let user2 = EmberObject.create({
+    const user2 = EmberObject.create({
       enabled: false,
       firstName: 'b',
       lastName: 'person',

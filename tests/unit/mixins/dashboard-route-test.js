@@ -5,8 +5,8 @@ import { module, test } from 'qunit';
 module('Unit | Mixin | dashboard route', function() {
   // Replace this with your real tests.
   test('it works', function(assert) {
-    let DashboardRouteObject = EmberObject.extend(DashboardRouteMixin);
-    let subject = DashboardRouteObject.create();
+    const DashboardRouteObject = EmberObject.extend(DashboardRouteMixin);
+    const subject = DashboardRouteObject.create();
     assert.ok(subject);
   });
 });

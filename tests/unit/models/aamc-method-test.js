@@ -5,7 +5,7 @@ module('Unit | Model | aamc method', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('aamc-method');
+    const model = this.owner.lookup('service:store').createRecord('aamc-method');
     assert.ok(!!model);
   });
 });

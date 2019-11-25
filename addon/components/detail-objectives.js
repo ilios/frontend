@@ -75,9 +75,9 @@ export default Component.extend({
     },
     save() {
       if(this.get('isManagingParents')){
-        let objective = this.get('mangeParentsObjective');
+        const objective = this.get('mangeParentsObjective');
         objective.get('parents').then(newParents => {
-          let oldParents = this.get('initialStateForManageParentsObjective').filter(parent => {
+          const oldParents = this.get('initialStateForManageParentsObjective').filter(parent => {
             return !newParents.includes(parent);
           });
           oldParents.forEach(parent => {
@@ -90,9 +90,9 @@ export default Component.extend({
         });
       }
       if(this.get('isManagingDescriptors')){
-        let objective = this.get('manageDescriptorsObjective');
+        const objective = this.get('manageDescriptorsObjective');
         objective.get('meshDescriptors').then(newDescriptors => {
-          let oldDescriptors = this.get('initialStateForManageMeshObjective').filter(descriptor => {
+          const oldDescriptors = this.get('initialStateForManageMeshObjective').filter(descriptor => {
             return !newDescriptors.includes(descriptor);
           });
           oldDescriptors.forEach(descriptor => {
@@ -108,9 +108,9 @@ export default Component.extend({
         });
       }
       if(this.get('isManagingCompetency')){
-        let objective = this.get('manageCompetencyObjective');
+        const objective = this.get('manageCompetencyObjective');
         objective.get('competency').then(newCompetency => {
-          let oldCompetency = this.get('initialStateForManageCompetencyObjective');
+          const oldCompetency = this.get('initialStateForManageCompetencyObjective');
           if(oldCompetency){
             oldCompetency.get('objectives').removeObject(objective);
           }
@@ -127,16 +127,16 @@ export default Component.extend({
     cancel() {
       var self = this;
       if(this.get('isManagingParents')){
-        let objective = this.get('mangeParentsObjective');
-        let parents = objective.get('parents');
+        const objective = this.get('mangeParentsObjective');
+        const parents = objective.get('parents');
         parents.clear();
         parents.addObjects(this.get('initialStateForManageParentsObjective'));
         self.set('mangeParentsObjective', null);
       }
 
       if(this.get('isManagingDescriptors')){
-        let objective = this.get('manageDescriptorsObjective');
-        let descriptors = objective.get('meshDescriptors');
+        const objective = this.get('manageDescriptorsObjective');
+        const descriptors = objective.get('meshDescriptors');
         descriptors.clear();
         descriptors.addObjects(this.get('initialStateForManageMeshObjective'));
         self.set('manageDescriptorsObjective', null);
@@ -144,7 +144,7 @@ export default Component.extend({
       }
 
       if(this.get('isManagingCompetency')){
-        let objective = this.get('manageCompetencyObjective');
+        const objective = this.get('manageCompetencyObjective');
         objective.set('competency', this.get('initialStateForManageCompetencyObjective'));
         self.set('manageCompetencyObjective', null);
         scrollTo("#objective-" + objective.get('id'));

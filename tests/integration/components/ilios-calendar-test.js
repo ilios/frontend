@@ -11,9 +11,9 @@ module('Integration | Component | ilios calendar', function(hooks) {
 
   test('it renders', async function(assert) {
     assert.expect(1);
-    let events = resolve([]);
+    const events = resolve([]);
     this.set('events', events);
-    let date = new Date('2015-09-30T12:00:00');
+    const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
     this.set('nothing', parseInt);
 

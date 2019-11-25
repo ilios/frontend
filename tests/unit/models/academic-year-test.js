@@ -5,7 +5,7 @@ module('Unit | Model | AcademicYear', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('academic-year');
+    const model = this.owner.lookup('service:store').createRecord('academic-year');
     assert.ok(!!model);
   });
 });

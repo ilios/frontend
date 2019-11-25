@@ -69,9 +69,9 @@ module('Acceptance | Session - Publish', function(hooks) {
     //we have to click the button to create the options
     await click(selector);
 
-    let items = findAll(choices);
+    const items = findAll(choices);
     assert.equal(items.length, 3);
-    let expectedItems = ['Review 3 Missing Items', 'Mark as Scheduled', 'UnPublish Session'];
+    const expectedItems = ['Review 3 Missing Items', 'Mark as Scheduled', 'UnPublish Session'];
     for(let i = 0; i < items.length; i++){
       assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
     }
@@ -87,9 +87,9 @@ module('Acceptance | Session - Publish', function(hooks) {
     assert.equal(await getElementText(selector), getText('Scheduled'));
     //we have to click the button to create the options
     await click(selector);
-    let items = findAll(choices);
+    const items = findAll(choices);
     assert.equal(items.length, 3);
-    let expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'UnPublish Session'];
+    const expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'UnPublish Session'];
     for(let i = 0; i < items.length; i++){
       assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
     }
@@ -105,9 +105,9 @@ module('Acceptance | Session - Publish', function(hooks) {
     assert.equal(await getElementText(selector), getText('Not Published'));
     //we have to click the button to create the options
     await click(selector);
-    let items = findAll(choices);
+    const items = findAll(choices);
     assert.equal(items.length, 3);
-    let expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'Mark as Scheduled'];
+    const expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'Mark as Scheduled'];
     for(let i = 0; i < items.length; i++){
       assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
     }

@@ -7,8 +7,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
   userEvents: service(),
   schoolEvents: service(),
   model(params){
-    let slug = params.slug;
-    let container = slug.substring(0, 1);
+    const slug = params.slug;
+    const container = slug.substring(0, 1);
     let eventService;
     if(container === 'S'){
       eventService = this.get('schoolEvents');

@@ -6,7 +6,7 @@ export default class WeeklyEvents extends Component {
 
   get weeksInYear() {
     const weeksInTheYear = moment().year(this.args.year).isoWeeksInYear();
-    let weeks = [];
+    const weeks = [];
     for (let i = 1; i <= weeksInTheYear; i++) {
       weeks.push(`${i}`);
     }

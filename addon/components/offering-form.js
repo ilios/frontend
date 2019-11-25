@@ -107,7 +107,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         map(cohorts.toArray(), cohort => {
           return cohort.get('school');
         }).then(cohortSchools => {
-          let schools = [];
+          const schools = [];
           schools.pushObjects(cohortSchools);
           resolve(schools.uniq().toArray());
         });
@@ -120,7 +120,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         map(associatedSchools, school => {
           return school.get('instructorGroups');
         }).then(allInstructorGropus => {
-          let flat = allInstructorGropus.reduce((flattened, obj) => {
+          const flat = allInstructorGropus.reduce((flattened, obj) => {
             return flattened.pushObjects(obj.toArray());
           }, []);
 
@@ -150,9 +150,9 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     if (isEmpty(startDate) || isEmpty(endDate)) {
       return 1;
     }
-    let mStart = moment(startDate);
-    let mEnd = moment(endDate);
-    let diffInHours = mEnd.diff(mStart, 'hours');
+    const mStart = moment(startDate);
+    const mEnd = moment(endDate);
+    const diffInHours = mEnd.diff(mStart, 'hours');
 
     return diffInHours;
   }),
@@ -163,8 +163,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     if (isEmpty(startDate) || isEmpty(endDate)) {
       return 0;
     }
-    let mStart = moment(startDate);
-    let mEnd = moment(endDate);
+    const mStart = moment(startDate);
+    const mEnd = moment(endDate);
 
     const endHour = mEnd.hour();
     const endMinute = mEnd.minute();
@@ -192,7 +192,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       filter(learnerGroups, group => {
         return new RSVPPromise(resolve => {
           group.get('allDescendants').then(children => {
-            let selectedChildren = children.filter(child => ids.includes(child.get('id')));
+            const selectedChildren = children.filter(child => ids.includes(child.get('id')));
             resolve(selectedChildren.length === 0);
           });
         });
@@ -227,7 +227,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   actions: {
     addLearnerGroup(learnerGroup) {
-      let learnerGroups = this.get('learnerGroups').toArray();
+      const learnerGroups = this.get('learnerGroups').toArray();
       learnerGroups.addObject(learnerGroup);
       learnerGroup.get('allDescendants').then(function(descendants){
         learnerGroups.addObjects(descendants);
@@ -236,7 +236,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.set('learnerGroups', learnerGroups);
     },
     removeLearnerGroup(learnerGroup) {
-      let learnerGroups = this.get('learnerGroups').toArray();
+      const learnerGroups = this.get('learnerGroups').toArray();
       learnerGroups.removeObject(learnerGroup);
       learnerGroup.get('allDescendants').then(function(descendants){
         learnerGroups.removeObjects(descendants);
@@ -245,7 +245,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.set('learnerGroups', learnerGroups);
     },
     toggleRecurringDay(day){
-      let recurringDays = this.get('recurringDays');
+      const recurringDays = this.get('recurringDays');
       if (recurringDays.includes(day)) {
         recurringDays.removeObject(day);
       } else {
@@ -253,31 +253,31 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       }
     },
     addInstructor(user){
-      let instructors = this.get('instructors').toArray();
+      const instructors = this.get('instructors').toArray();
       instructors.addObject(user);
       //re-create the object so we trigger downstream didReceiveAttrs
       this.set('instructors', instructors);
     },
     addInstructorGroup(group){
-      let instructorGroups = this.get('instructorGroups').toArray();
+      const instructorGroups = this.get('instructorGroups').toArray();
       instructorGroups.addObject(group);
       //re-create the object so we trigger downstream didReceiveAttrs
       this.set('instructorGroups', instructorGroups);
     },
     removeInstructor(user){
-      let instructors = this.get('instructors').toArray();
+      const instructors = this.get('instructors').toArray();
       instructors.removeObject(user);
       //re-create the object so we trigger downstream didReceiveAttrs
       this.set('instructors', instructors);
     },
     removeInstructorGroup(group){
-      let instructorGroups = this.get('instructorGroups').toArray();
+      const instructorGroups = this.get('instructorGroups').toArray();
       instructorGroups.removeObject(group);
       //re-create the object so we trigger downstream didReceiveAttrs
       this.set('instructorGroups', instructorGroups);
     },
     updateStartTime(value, type) {
-      let startDate = moment(this.get('startDate'));
+      const startDate = moment(this.get('startDate'));
 
       if (type === 'hour') {
         startDate.hour(value);
@@ -286,7 +286,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       }
       const minutes = this.get('durationMinutes');
       const hours = this.get('durationHours');
-      let endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes');
+      const endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes');
 
       this.set('startDate', startDate.toDate());
       this.set('endDate', endDate.toDate());
@@ -295,8 +295,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       const minutes = this.get('durationMinutes');
       const hours = this.get('durationHours');
       const currentStartDate = moment(this.get('startDate'));
-      let startDate = moment(date).hour(currentStartDate.hour()).minute(currentStartDate.minute()).toDate();
-      let endDate = moment(startDate).add(hours, 'hours').add(minutes, 'minutes').toDate();
+      const startDate = moment(date).hour(currentStartDate.hour()).minute(currentStartDate.minute()).toDate();
+      const endDate = moment(startDate).add(hours, 'hours').add(minutes, 'minutes').toDate();
 
       this.setProperties({startDate, endDate});
     },
@@ -319,7 +319,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     } = this.getProperties('startDate', 'endDate', 'room', 'instructorGroups', 'instructors', 'numberOfWeeks', 'recurringDays');
     const makeRecurring = this.get('makeRecurring');
     const learnerGroups = yield this.get('lowestLearnerGroupLeaves');
-    let offerings = [];
+    const offerings = [];
     offerings.push({startDate, endDate, room, learnerGroups, instructorGroups, instructors});
     if (!makeRecurring) {
       return offerings;
@@ -334,7 +334,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     //only days AFTER the initial day are considered
     recurringDayInts.forEach(day => {
       if (day > userPickedDay) {
-        let obj = {room, learnerGroups, instructorGroups, instructors};
+        const obj = {room, learnerGroups, instructorGroups, instructors};
         obj.startDate = moment(startDate).day(day).toDate();
         obj.endDate = moment(endDate).day(day).toDate();
 
@@ -346,7 +346,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     for (let i = 1; i < numberOfWeeks; i++) {
       recurringDayInts.forEach(day => {
-        let obj = {room, learnerGroups, instructorGroups, instructors};
+        const obj = {room, learnerGroups, instructorGroups, instructors};
         obj.startDate = moment(startDate).day(day).add(i, 'weeks').toDate();
         obj.endDate = moment(endDate).day(day).add(i, 'weeks').toDate();
 
@@ -362,19 +362,20 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       return offerings;
     }
 
-    let smallGroupOfferings = [];
+    const smallGroupOfferings = [];
 
     for (let i = 0; i < offerings.length; i++) {
-      let {startDate, endDate, room, learnerGroups} = offerings[i];
+      const { startDate, endDate, learnerGroups } = offerings[i];
+      let { room } = offerings[i];
       for (let j = 0; j < learnerGroups.length; j++) {
-        let learnerGroup = learnerGroups[j];
-        let defaultLocation = learnerGroup.get('location');
+        const learnerGroup = learnerGroups[j];
+        const defaultLocation = learnerGroup.get('location');
         if (isPresent(defaultLocation)) {
           room = defaultLocation;
         }
-        let instructors = yield learnerGroup.get('instructors');
-        let instructorGroups = yield learnerGroup.get('instructorGroups');
-        let offering = {startDate, endDate, room, instructorGroups, instructors};
+        const instructors = yield learnerGroup.get('instructors');
+        const instructorGroups = yield learnerGroup.get('instructorGroups');
+        const offering = {startDate, endDate, room, instructorGroups, instructors};
         offering.learnerGroups = [learnerGroup];
 
         smallGroupOfferings.pushObject(offering);
@@ -390,8 +391,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     if (loaded) {
       return;
     }
-    let startDate = moment(this.get('defaultStartDate')).hour(8).minute(0).second(0).toDate();
-    let endDate = moment(this.get('defaultStartDate')).hour(9).minute(0).second(0).toDate();
+    const startDate = moment(this.get('defaultStartDate')).hour(8).minute(0).second(0).toDate();
+    const endDate = moment(this.get('defaultStartDate')).hour(9).minute(0).second(0).toDate();
     const room = 'TBD';
     const learnerGroups = [];
     const recurringDays = [];
@@ -411,7 +412,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const endDate = offering.get('endDate');
     const room = offering.get('room');
     const recurringDays = [];
-    let obj = yield hash({
+    const obj = yield hash({
       learnerGroups : offering.get('learnerGroups'),
       instructors : offering.get('instructors'),
       instructorGroups : offering.get('instructorGroups'),
@@ -429,7 +430,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('savedOfferings', 0);
     this.send('addErrorDisplaysFor', ['room', 'numberOfWeeks', 'durationHours', 'durationMinutes', 'learnerGroups']);
     yield timeout(10);
-    let {validations} = yield this.validate();
+    const {validations} = yield this.validate();
 
     if (validations.get('isInvalid')) {
       return;
@@ -461,7 +462,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   validateThenSaveOffering: task(function * () {
     this.send('addErrorDisplaysFor', ['room', 'numberOfWeeks', 'durationHours', 'durationMinutes', 'learnerGroups']);
-    let {validations} = yield this.validate();
+    const {validations} = yield this.validate();
 
     if (validations.get('isInvalid')) {
       return;

@@ -13,19 +13,19 @@ module('Integration | Component | course leadership expanded', function(hooks) {
   test('it renders', async function(assert) {
     assert.expect(6);
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       firstName: 'a',
       lastName: 'person',
       fullName: 'a b person',
       enabled: true,
     });
-    let user2 = EmberObject.create({
+    const user2 = EmberObject.create({
       firstName: 'b',
       lastName: 'person',
       fullName: 'b a person',
       enabled: true,
     });
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       directors: resolve([user1]),
       administrators: resolve([user1, user2]),
       hasMany(what){
@@ -74,7 +74,7 @@ module('Integration | Component | course leadership expanded', function(hooks) {
 
   test('clicking the header collapses', async function(assert) {
     assert.expect(1);
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       directors: resolve([]),
       administrators: resolve([]),
       hasMany(what){
@@ -115,7 +115,7 @@ module('Integration | Component | course leadership expanded', function(hooks) {
 
   test('clicking manage fires action', async function(assert) {
     assert.expect(1);
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       directors: resolve([]),
       administrators: resolve([]),
       hasMany(what){

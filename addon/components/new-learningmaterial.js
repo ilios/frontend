@@ -130,7 +130,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   prepareSave: task(function *() {
     this.send('addErrorDisplaysFor', ['title', 'originalAuthor', 'fileHash', 'url', 'citation']);
-    let {validations} = yield this.validate();
+    const {validations} = yield this.validate();
 
     if (validations.get('isInvalid')) {
       return;
@@ -146,7 +146,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const originalAuthor = this.get('originalAuthor');
     const owningUser = yield currentUser.get('model');
 
-    let learningMaterial = store.createRecord('learningMaterial', {
+    const learningMaterial = store.createRecord('learningMaterial', {
       title,
       status,
       userRole,

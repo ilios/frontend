@@ -20,27 +20,27 @@ module('Integration | Component | learning materials sort manager', function(hoo
   test('it renders', async function(assert) {
     assert.expect(9);
 
-    let owner1 = EmberObject.create({
+    const owner1 = EmberObject.create({
       id: 1,
       fullName: 'Hans Wurst'
     });
 
-    let owner2 = EmberObject.create({
+    const owner2 = EmberObject.create({
       id: 2,
       fullName: 'Hans Dampf'
     });
 
-    let status1 = EmberObject.create({
+    const status1 = EmberObject.create({
       id: 1,
       title: 'Done and done'
     });
 
-    let status2 = EmberObject.create({
+    const status2 = EmberObject.create({
       id: 2,
       title: 'Draft'
     });
 
-    let lm1 = EmberObject.create({
+    const lm1 = EmberObject.create({
       title: 'Lorem Ipsum',
       status: status1,
       owningUser: owner1,
@@ -48,28 +48,28 @@ module('Integration | Component | learning materials sort manager', function(hoo
       mimetype: 'application/pdf'
     });
 
-    let lm2 = EmberObject.create({
+    const lm2 = EmberObject.create({
       title: 'Foo Bar',
       status: status2,
       owningUser: owner2,
       type: 'citation'
     });
 
-    let clm1 = EmberObject.create({
+    const clm1 = EmberObject.create({
       id: 1,
       learningMaterial: lm1,
       position: 1,
     });
 
-    let clm2 = EmberObject.create({
+    const clm2 = EmberObject.create({
       id: 2,
       learningMaterial: lm2,
       position: 0,
     });
 
-    let clms = [ clm1, clm2 ];
+    const clms = [ clm1, clm2 ];
 
-    let subject = EmberObject.create({
+    const subject = EmberObject.create({
       learningMaterials: resolve(clms)
     });
 
@@ -101,7 +101,7 @@ module('Integration | Component | learning materials sort manager', function(hoo
 
   test('cancel', async function(assert) {
     assert.expect(1);
-    let subject = EmberObject.create({
+    const subject = EmberObject.create({
       learningMaterials: resolve([
         EmberObject.create({
           id: 1,
@@ -134,7 +134,7 @@ module('Integration | Component | learning materials sort manager', function(hoo
   test('save', async function(assert) {
     assert.expect(3);
 
-    let clm1 = EmberObject.create({
+    const clm1 = EmberObject.create({
       id: 1,
       position: 1,
       learningMaterial: resolve(EmberObject.create({
@@ -142,7 +142,7 @@ module('Integration | Component | learning materials sort manager', function(hoo
       }))
     });
 
-    let clm2 = EmberObject.create({
+    const clm2 = EmberObject.create({
       id: 2,
       position: 2,
       learningMaterial: resolve(EmberObject.create({
@@ -150,9 +150,9 @@ module('Integration | Component | learning materials sort manager', function(hoo
       }))
     });
 
-    let clms = [ clm1, clm2 ];
+    const clms = [ clm1, clm2 ];
 
-    let subject = EmberObject.create({
+    const subject = EmberObject.create({
       learningMaterials: resolve(clms),
     });
     this.set('subject', subject);

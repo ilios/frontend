@@ -12,7 +12,7 @@ export default function parseJsonData(json){
 
   if (json.data.relationships) {
     Object.keys(json.data.relationships).forEach((key) => {
-      let relationship = json.data.relationships[key];
+      const relationship = json.data.relationships[key];
 
       if (Array.isArray(relationship.data)) {
         attrs[`${camelize(singularize(key))}Ids`] = relationship.data.map(rel => rel.id);

@@ -57,8 +57,8 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
     const offerings = await this.get('offerings');
     const filteredOfferings = offerings.filter(offering => isPresent(offering.get('startDate')));
     return filteredOfferings.sort((a, b) => {
-      let aDate = moment(a.get('startDate'));
-      let bDate = moment(b.get('startDate'));
+      const aDate = moment(a.get('startDate'));
+      const bDate = moment(b.get('startDate'));
       if (aDate === bDate) {
         return 0;
       }

@@ -5,8 +5,8 @@ import { module, test } from 'qunit';
 module('Unit | Mixin | course/publish-all-controller', function() {
   // Replace this with your real tests.
   test('it works', function (assert) {
-    let CoursePublishAllControllerObject = EmberObject.extend(CoursePublishAllControllerMixin);
-    let subject = CoursePublishAllControllerObject.create();
+    const CoursePublishAllControllerObject = EmberObject.extend(CoursePublishAllControllerMixin);
+    const subject = CoursePublishAllControllerObject.create();
     assert.ok(subject);
   });
 });

@@ -18,7 +18,7 @@ module('Integration | Component | course overview', function(hooks) {
   const { resolve } = RSVP;
 
   test('renders with no course id', async function(assert) {
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       clerkshipType: resolve(EmberObject.create())
     });
     this.set('course', course);
@@ -29,7 +29,7 @@ module('Integration | Component | course overview', function(hooks) {
   });
 
   test('course external id validation fails if value is too short', async function(assert) {
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       clerkshipType: resolve(EmberObject.create()),
     });
     this.set('course', course);
@@ -48,7 +48,7 @@ module('Integration | Component | course overview', function(hooks) {
   });
 
   test('course external id validation fails if value is too long', async function(assert) {
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       clerkshipType: resolve(EmberObject.create()),
     });
     this.set('course', course);
@@ -67,11 +67,11 @@ module('Integration | Component | course overview', function(hooks) {
   });
 
   test('course external id validation passes on changed value within boundaries', async function(assert) {
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       clerkshipType: resolve(EmberObject.create()),
       externalid: 'abcde',
       save() {
-        let that = this;
+        const that = this;
         assert.ok(true, 'Validation passed, course object is being saved.');
         return new RSVP.Promise(function(resolve) {
           resolve(that);
@@ -97,11 +97,11 @@ module('Integration | Component | course overview', function(hooks) {
   });
 
   test('course external id validation passes on empty value', async function(assert) {
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       clerkshipType: resolve(EmberObject.create()),
       externalid: 'abcde',
       save() {
-        let that = this;
+        const that = this;
         assert.ok(true, 'Validation passed, course object is being saved.');
         return new RSVP.Promise(function(resolve) {
           resolve(that);

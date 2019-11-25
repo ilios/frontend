@@ -7,7 +7,7 @@ export default Service.extend({
     const store = this.get('store');
     const schools = await store.findAll('school');
     const schoolIds = schools.mapBy('id');
-    let matrix = {};
+    const matrix = {};
     schoolIds.forEach(id => {
       matrix[id] = {
         'CAN_UPDATE_SCHOOLS': [

@@ -12,7 +12,7 @@ module('Integration | Component | session objective list item', function(hooks) 
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    let objective = EmberObject.create({
+    const objective = EmberObject.create({
       title: 'fake title',
     });
     this.set('objective', objective);
@@ -33,7 +33,7 @@ module('Integration | Component | session objective list item', function(hooks) 
   });
 
   test('renders removable', async function(assert) {
-    let objective = EmberObject.create({
+    const objective = EmberObject.create({
       title: 'fake title',
     });
     this.set('objective', objective);
@@ -52,7 +52,7 @@ module('Integration | Component | session objective list item', function(hooks) 
   });
 
   test('can change title', async function(assert) {
-    let objective = EmberObject.create({
+    const objective = EmberObject.create({
       title: 'fake title',
       save(){
         assert.equal(this.get('title'), '<p>new title</p>');
@@ -76,7 +76,7 @@ module('Integration | Component | session objective list item', function(hooks) 
   });
 
   test('can manage parents', async function(assert) {
-    let objective = EmberObject.create({
+    const objective = EmberObject.create({
       title: 'fake title',
     });
     this.set('objective', objective);
@@ -98,7 +98,7 @@ module('Integration | Component | session objective list item', function(hooks) 
   });
 
   test('can manage descriptors', async function(assert) {
-    let objective = EmberObject.create({
+    const objective = EmberObject.create({
       title: 'fake title',
     });
     this.set('objective', objective);
@@ -120,7 +120,7 @@ module('Integration | Component | session objective list item', function(hooks) 
   });
 
   test('can trigger removal', async function(assert) {
-    let objective = EmberObject.create({
+    const objective = EmberObject.create({
       title: 'fake title',
     });
     this.set('objective', objective);

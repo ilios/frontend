@@ -5,8 +5,8 @@ import { module, test } from 'qunit';
 module('Unit | Mixin | session/index-controller', function() {
   // Replace this with your real tests.
   test('it works', function (assert) {
-    let SessionIndexControllerObject = EmberObject.extend(SessionIndexControllerMixin);
-    let subject = SessionIndexControllerObject.create();
+    const SessionIndexControllerObject = EmberObject.extend(SessionIndexControllerMixin);
+    const subject = SessionIndexControllerObject.create();
     assert.ok(subject);
   });
 });

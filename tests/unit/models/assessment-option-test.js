@@ -5,7 +5,7 @@ module('Unit | Model | assessment option ', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('assessment-option');
+    const model = this.owner.lookup('service:store').createRecord('assessment-option');
     assert.ok(!!model);
   });
 });

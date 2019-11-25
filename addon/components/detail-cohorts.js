@@ -25,8 +25,8 @@ export default Component.extend({
       this.set('isSaving', true);
       const course = this.get('course');
       course.get('cohorts').then(cohortList => {
-        let bufferedCohorts = this.get('bufferedCohorts');
-        let removedCohorts = cohortList.filter(cohort => {
+        const bufferedCohorts = this.get('bufferedCohorts');
+        const removedCohorts = cohortList.filter(cohort => {
           return !bufferedCohorts.includes(cohort);
         });
         cohortList.clear();

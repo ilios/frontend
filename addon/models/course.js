@@ -170,10 +170,10 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
   },
 
   setDatesBasedOnYear: function(){
-    let today = moment();
-    let firstDayOfYear = moment(this.get('year') + '-7-1', "YYYY-MM-DD");
-    let startDate = today < firstDayOfYear?firstDayOfYear:today;
-    let endDate = moment(startDate).add('8', 'weeks');
+    const today = moment();
+    const firstDayOfYear = moment(this.get('year') + '-7-1', "YYYY-MM-DD");
+    const startDate = today < firstDayOfYear?firstDayOfYear:today;
+    const endDate = moment(startDate).add('8', 'weeks');
     this.set('startDate', startDate.toDate());
     this.set('endDate', endDate.toDate());
   },

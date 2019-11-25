@@ -5,25 +5,25 @@ module('Unit | Serializer | curriculum inventory report', function(hooks) {
   setupTest(hooks);
 
   test('it serializes records', function(assert) {
-    let record = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
-    let serializedRecord = record.serialize();
+    const record = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
+    const serializedRecord = record.serialize();
     assert.ok(serializedRecord);
   });
 
   test('it removes all non postable fields', function(assert) {
-    let record = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
-    let uri = "/abandon/all/hope/ye/who/enter/here";
+    const record = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
+    const uri = "/abandon/all/hope/ye/who/enter/here";
     record.set('absoluteFileUri', uri);
     assert.equal(record.get('absoluteFileUri'), uri);
-    let serializedRecord = record.serialize();
+    const serializedRecord = record.serialize();
     assert.ok(!('absoluteFileUri' in serializedRecord));
   });
 
   test('start and end date are formatted during serialization', function(assert) {
-    let record = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
+    const record = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     record.set('startDate', new Date());
     record.set('endDate', new Date());
-    let serializedRecord = record.serialize();
+    const serializedRecord = record.serialize();
     const pattern = /\d{4}-\d{2}-\d{2}/;
     assert.ok(serializedRecord.startDate.match(pattern));
     assert.ok(serializedRecord.endDate.match(pattern));

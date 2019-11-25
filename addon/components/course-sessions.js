@@ -43,7 +43,7 @@ export default Component.extend({
       const canDelete = await permissionChecker.canDeleteSession(session);
       const canUpdate = await permissionChecker.canUpdateSession(session);
       const postrequisite = await session.postrequisite;
-      let sessionObject = {
+      const sessionObject = {
         session,
         course,
         canDelete,
@@ -72,7 +72,7 @@ export default Component.extend({
       sessionObject.objectiveCount = session.hasMany('objectives').ids().length;
       sessionObject.termCount = session.hasMany('terms').ids().length;
       const offeringLearerGroupCount = offerings.reduce((total, offering) => {
-        let count = offering.hasMany('learnerGroups').ids().length;
+        const count = offering.hasMany('learnerGroups').ids().length;
 
         return total + count;
       }, 0);

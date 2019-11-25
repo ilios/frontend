@@ -23,7 +23,7 @@ module('Integration | Component | course rollover', function(hooks) {
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       id: 1,
       title: 'old course'
     });
@@ -47,13 +47,13 @@ module('Integration | Component | course rollover', function(hooks) {
 
   test('rollover course', async function(assert) {
     assert.expect(5);
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       id: 1,
       title: 'old title',
       startDate: moment().hour(0).minute(0).second(0).toDate()
     });
     this.server.post(`/api/courses/${course.id}/rollover`, (schema, request) => {
-      let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
+      const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
       const data = queryString.parse(request.requestBody);
       assert.ok('year' in data);
       assert.equal(data.year, lastYear);
@@ -80,7 +80,7 @@ module('Integration | Component | course rollover', function(hooks) {
 
   test('rollover course with new title', async function(assert) {
     assert.expect(1);
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       id: 1,
       title: 'old title',
       startDate: moment().hour(0).minute(0).second(0).toDate()
@@ -128,7 +128,7 @@ module('Integration | Component | course rollover', function(hooks) {
       year: lastYear+2
     });
 
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       id: 1,
       title: 'to be rolled',
     });
@@ -139,7 +139,7 @@ module('Integration | Component | course rollover', function(hooks) {
       @visit={{action this.nothing}}
     />`);
 
-    let options = findAll('select:nth-of-type(1) option');
+    const options = findAll('select:nth-of-type(1) option');
     assert.ok(options[0].disabled);
     assert.notOk(options[1].disabled);
     assert.ok(options[2].disabled);
@@ -159,7 +159,7 @@ module('Integration | Component | course rollover', function(hooks) {
 
     const rolloverDate = moment(courseStartDate).add(1, 'week');
 
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       id: 1,
       startDate: courseStartDate.toDate(),
       title: 'old course'
@@ -168,7 +168,7 @@ module('Integration | Component | course rollover', function(hooks) {
     this.server.post(`/api/courses/${course.id}/rollover`, (schema, request) => {
       const data = queryString.parse(request.requestBody);
       assert.ok('newStartDate' in data, 'A new start date was passed.');
-      let newStartDate = moment(data.newStartDate);
+      const newStartDate = moment(data.newStartDate);
       assert.equal(
         newStartDate.format('YYYY-MM-DD'),
         rolloverDate.format('YYYY-MM-DD'),
@@ -192,7 +192,7 @@ module('Integration | Component | course rollover', function(hooks) {
     const advancedOptions = '.advanced-options';
     const startDate = `${advancedOptions} input:nth-of-type(1)`;
 
-    let interactor = openDatepicker(find(startDate));
+    const interactor = openDatepicker(find(startDate));
     assert.equal(
       interactor.selectedYear(),
       courseStartDate.year(),
@@ -238,7 +238,7 @@ module('Integration | Component | course rollover', function(hooks) {
     }
     const rolloverDate = moment(courseStartDate).add(1, 'week').day(3);
 
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       id: 1,
       title: 'test title',
       startDate: courseStartDate.toDate()
@@ -247,7 +247,7 @@ module('Integration | Component | course rollover', function(hooks) {
     this.server.post(`/api/courses/${course.id}/rollover`, (schema, request) => {
       const data = queryString.parse(request.requestBody);
       assert.ok('newStartDate' in data, 'A new start date was passed.');
-      let newStartDate = moment(data.newStartDate);
+      const newStartDate = moment(data.newStartDate);
       assert.equal(
         newStartDate.format('YYYY-MM-DD'),
         courseStartDate.format('YYYY-MM-DD'),
@@ -275,7 +275,7 @@ module('Integration | Component | course rollover', function(hooks) {
     await fillIn(yearSelect, courseStartDate.format('YYYY'));
     await emberBlur(yearSelect);
 
-    let interactor = openDatepicker(find(startDate));
+    const interactor = openDatepicker(find(startDate));
     assert.equal(
       interactor.selectedYear(),
       courseStartDate.year(),
@@ -309,7 +309,7 @@ module('Integration | Component | course rollover', function(hooks) {
       .isoWeek(courseStartDate.isoWeek())
       .isoWeekday(courseStartDate.isoWeekday());
 
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       id: 1,
       startDate: courseStartDate.toDate(),
       title: 'old course'
@@ -328,7 +328,7 @@ module('Integration | Component | course rollover', function(hooks) {
     await fillIn(yearSelect, rolloverDate.format('YYYY'));
     await emberBlur(yearSelect);
 
-    let interactor = openDatepicker(find(startDate));
+    const interactor = openDatepicker(find(startDate));
     assert.equal(
       interactor.selectedYear(),
       rolloverDate.year(),
@@ -387,7 +387,7 @@ module('Integration | Component | course rollover', function(hooks) {
   });
 
   test('errors do not show up initially', async function(assert) {
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       id: 1
     });
     this.set('course', course);
@@ -397,7 +397,7 @@ module('Integration | Component | course rollover', function(hooks) {
   });
 
   test('errors show up', async function(assert) {
-    let course = EmberObject.create({
+    const course = EmberObject.create({
       id: 1
     });
     this.set('course', course);

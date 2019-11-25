@@ -42,7 +42,7 @@ module('Integration | Component | learning-material-uploader', function(hooks) {
       @setFilename={{this.setFilename}}
       @setFileHash={{this.setFileHash}}
     />`);
-    let file = new Blob(['test'], { type: 'text/plain' });
+    const file = new Blob(['test'], { type: 'text/plain' });
     await uploadAction('[data-test-learning-material-uploader] input', file, 'test.file');
     assert.equal(filename, 'test.file');
     assert.equal(fileHash, '1234');
@@ -63,7 +63,7 @@ module('Integration | Component | learning-material-uploader', function(hooks) {
       @setFilename={{this.nothing}}
       @setFileHash={{this.nothing}}
     />`);
-    let file = new Blob(['test'], { type: 'text/plain' });
+    const file = new Blob(['test'], { type: 'text/plain' });
     await uploadAction('[data-test-learning-material-uploader] input', file, 'test.file');
     assert.dom('[data-test-learning-material-uploader]').includesText('This file is too large.');
   });

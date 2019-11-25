@@ -1,7 +1,7 @@
 /**
  * Stolen from https://github.com/auth0/jwt-decode/blob/master/lib/base64_url_decode.js
  */
-let b64DecodeUnicode = function (str) {
+const b64DecodeUnicode = function (str) {
   return decodeURIComponent(atob(str).replace(/(.)/g, function (m, p) {
     let code = p.charCodeAt(0).toString(16).toUpperCase();
     if (code.length < 2) {
@@ -12,7 +12,7 @@ let b64DecodeUnicode = function (str) {
 };
 
 export default function jwtDecode(token) {
-  let parts = token.split('.');
-  let body = parts[1];
+  const parts = token.split('.');
+  const body = parts[1];
   return JSON.parse(b64DecodeUnicode(body));
 }

@@ -4,7 +4,7 @@ import { render, click } from '@ember/test-helpers';
 import moment from 'moment';
 import hbs from 'htmlbars-inline-precompile';
 
-let getEvent = function(){
+const getEvent = function(){
   return {
     startDate: moment('1984-11-11').toDate(),
     endDate: moment('1984-11-12').toDate(),
@@ -23,7 +23,7 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
 
   test('event displays correctly', async function(assert) {
     assert.expect(4);
-    let event = getEvent();
+    const event = getEvent();
     this.set('event', event);
     this.set('nothing', parseInt);
     await render(hbs`<IliosCalendarMultidayEvent @event={{event}} @selectEvent={{action nothing}} />`);
@@ -37,7 +37,7 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
 
   test('action fires on click', async function(assert) {
     assert.expect(2);
-    let event = getEvent();
+    const event = getEvent();
     event.offering = 1;
 
     this.set('event', event);
@@ -51,7 +51,7 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
   });
 
   test('action does not fire for scheduled events', async function(assert) {
-    let event = getEvent();
+    const event = getEvent();
 
     this.set('event', event);
     assert.expect(1);
@@ -69,7 +69,7 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
   });
 
   test('action does not fire for unslecatbleEvents events', async function(assert) {
-    let event = getEvent();
+    const event = getEvent();
     event.offering = 1;
 
     this.set('event', event);

@@ -26,7 +26,7 @@ export default Component.extend({
   },
   actions: {
     manage() {
-      let promises = [];
+      const promises = [];
       promises.pushObject(this.get('ilmSession.instructorGroups').then(instructorGroups => {
         this.set('instructorGroupBuffer', instructorGroups.toArray());
       }));
@@ -42,8 +42,8 @@ export default Component.extend({
     save() {
       var ilmSession = this.get('ilmSession');
 
-      let instructorGroups = ilmSession.get('instructorGroups');
-      let removableInstructorGroups = instructorGroups.filter(group => !this.get('instructorGroupBuffer').includes(group));
+      const instructorGroups = ilmSession.get('instructorGroups');
+      const removableInstructorGroups = instructorGroups.filter(group => !this.get('instructorGroupBuffer').includes(group));
       instructorGroups.clear();
       removableInstructorGroups.forEach(group => {
         group.get('ilmSessions').then(ilmSessions => {
@@ -58,8 +58,8 @@ export default Component.extend({
         });
       });
 
-      let instructors = ilmSession.get('instructors');
-      let removableInstructors = instructors.filter(user => !this.get('instructorBuffer').includes(user));
+      const instructors = ilmSession.get('instructors');
+      const removableInstructors = instructors.filter(user => !this.get('instructorBuffer').includes(user));
       instructors.clear();
       removableInstructors.forEach(user => {
         user.get('instructorIlmSessions').then(ilmSessions => {

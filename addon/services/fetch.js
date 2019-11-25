@@ -8,7 +8,7 @@ export default class Fetch extends Service {
   @service iliosConfig;
 
   get authHeaders() {
-    let headers = {};
+    const headers = {};
     if (this.session && this.session.isAuthenticated) {
       const { jwt } = this.session.data.authenticated;
       if (jwt) {
@@ -38,7 +38,7 @@ export default class Fetch extends Service {
 
   async postToApiHost(relativePath, data) {
     const url = this.apiHostUrlFromPath(relativePath);
-    let headers = this.authHeaders;
+    const headers = this.authHeaders;
     headers['Content-Type'] = 'application/x-www-form-urlencoded';
     const body = queryString.stringify(data, {
       arrayFormat: 'bracket',

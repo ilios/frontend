@@ -6,19 +6,19 @@ import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';
 const { oneWay } = computed;
 
-let userProxy = ObjectProxy.extend({
+const userProxy = ObjectProxy.extend({
   isUser: true,
   currentlyActiveUsers: null,
   sortTerm: oneWay('content.fullName'),
   isActive: computed('content', 'currentlyActiveUsers.[]', function(){
-    let user = this.get('content');
+    const user = this.get('content');
     if(!user.get('enabled')){
       return false;
     }
     return !this.get('currentlyActiveUsers').includes(user);
   }),
 });
-let instructorGroupProxy = ObjectProxy.extend({
+const instructorGroupProxy = ObjectProxy.extend({
   isInstructorGroup: true,
   currentlyActiveInstructorGroups: null,
   sortTerm: oneWay('content.title'),
@@ -62,14 +62,14 @@ export default Component.extend({
   search: task(function * (searchTerms = '') {
     this.set('showMoreInputPrompt', false);
     this.set('searchReturned', false);
-    let noWhiteSpaceTerm = searchTerms.replace(/ /g,'');
+    const noWhiteSpaceTerm = searchTerms.replace(/ /g,'');
     if(noWhiteSpaceTerm.length === 0){
       return [];
     } else if(noWhiteSpaceTerm.length < 3){
       this.set('showMoreInputPrompt', true);
       return [];
     }
-    let query = {
+    const query = {
       q: searchTerms,
       limit: 100
     };
@@ -78,24 +78,24 @@ export default Component.extend({
         roles: this.get('roles').split(',')
       };
     }
-    let users = yield this.get('store').query('user', query);
+    const users = yield this.get('store').query('user', query);
     const currentlyActiveUsers = this.get('currentlyActiveUsers') === null?[]:this.get('currentlyActiveUsers');
-    let results = users.map(user => {
+    const results = users.map(user => {
       return userProxy.create({
         content: user,
         currentlyActiveUsers,
       });
     });
 
-    let availableInstructorGroups = yield this.get('availableInstructorGroups');
+    const availableInstructorGroups = yield this.get('availableInstructorGroups');
     if(! isEmpty(availableInstructorGroups)){
-      let fragment = searchTerms.toLowerCase().trim();
+      const fragment = searchTerms.toLowerCase().trim();
 
-      let filteredGroups = availableInstructorGroups.filter(group => {
+      const filteredGroups = availableInstructorGroups.filter(group => {
         return group.get('title') && group.get('title').toLowerCase().includes(fragment);
       });
       const currentlyActiveInstructorGroups = isEmpty(this.get('currentlyActiveInstructorGroups'))?[]:this.get('currentlyActiveInstructorGroups');
-      let instructorGroupProxies = filteredGroups.map(group => {
+      const instructorGroupProxies = filteredGroups.map(group => {
         return instructorGroupProxy.create({
           content: group,
           currentlyActiveInstructorGroups,

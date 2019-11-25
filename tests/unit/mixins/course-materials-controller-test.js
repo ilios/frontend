@@ -5,8 +5,8 @@ import { module, test } from 'qunit';
 module('Unit | Mixin | course-materials', function() {
   // Replace this with your real tests.
   test('it works', function (assert) {
-    let CourseMaterialsObject = EmberObject.extend(CourseMaterialsControllerMixin);
-    let subject = CourseMaterialsObject.create();
+    const CourseMaterialsObject = EmberObject.extend(CourseMaterialsControllerMixin);
+    const subject = CourseMaterialsObject.create();
     assert.ok(subject);
   });
 });

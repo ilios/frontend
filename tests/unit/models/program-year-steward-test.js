@@ -5,7 +5,7 @@ module('Unit | Model | program-year-steward', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('program-year-steward');
+    const model = this.owner.lookup('service:store').createRecord('program-year-steward');
     assert.ok(!!model);
   });
 });

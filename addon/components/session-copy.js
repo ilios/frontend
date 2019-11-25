@@ -30,8 +30,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const thisYear = now.year();
     const store = this.get('store');
 
-    let years = await store.findAll('academicYear');
-    let academicYears = years.map(year => parseInt(year.get('id'), 10)).filter(year => year >= thisYear - 1).sort();
+    const years = await store.findAll('academicYear');
+    const academicYears = years.map(year => parseInt(year.get('id'), 10)).filter(year => year >= thisYear - 1).sort();
 
     return academicYears;
   }),
@@ -92,7 +92,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   save: task(function * (){
     yield timeout(10);
     this.send('addErrorDisplaysFor', ['selectedCourse', 'selectedYear']);
-    let {validations} = yield this.validate();
+    const {validations} = yield this.validate();
 
     if (validations.get('isInvalid')) {
       return;
@@ -100,37 +100,37 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const flashMessages = this.get('flashMessages');
     const store = this.get('store');
 
-    let sessionToCopy = this.get('session');
-    let newCourse = yield this.get('bestSelectedCourse');
-    let toSave = [];
+    const sessionToCopy = this.get('session');
+    const newCourse = yield this.get('bestSelectedCourse');
+    const toSave = [];
 
-    let session = store.createRecord(
+    const session = store.createRecord(
       'session',
       sessionToCopy.getProperties('title', 'attireRequired', 'equipmentRequired', 'supplemental', 'instructionalNotes')
     );
     session.set('course', newCourse);
-    let props = yield hash(sessionToCopy.getProperties('meshDescriptors', 'terms', 'sessionType'));
+    const props = yield hash(sessionToCopy.getProperties('meshDescriptors', 'terms', 'sessionType'));
     session.setProperties(props);
 
-    let ilmToCopy = yield sessionToCopy.get('ilmSession');
+    const ilmToCopy = yield sessionToCopy.get('ilmSession');
     if (ilmToCopy) {
-      let ilm = store.createRecord('ilmSession', ilmToCopy.getProperties('hours', 'dueDate'));
+      const ilm = store.createRecord('ilmSession', ilmToCopy.getProperties('hours', 'dueDate'));
       ilm.set('session', session);
       toSave.pushObject(ilm);
     }
 
-    let sessionDescriptionToCopy = yield sessionToCopy.get('sessionDescription');
+    const sessionDescriptionToCopy = yield sessionToCopy.get('sessionDescription');
     if (sessionDescriptionToCopy) {
-      let sessionDescription = store.createRecord('sessionDescription', sessionDescriptionToCopy.getProperties('description'));
+      const sessionDescription = store.createRecord('sessionDescription', sessionDescriptionToCopy.getProperties('description'));
       sessionDescription.set('session', session);
       toSave.pushObject(sessionDescription);
     }
 
-    let learningMaterialsToCopy = yield sessionToCopy.get('learningMaterials');
+    const learningMaterialsToCopy = yield sessionToCopy.get('learningMaterials');
     for (let i = 0; i < learningMaterialsToCopy.length; i++){
-      let learningMaterialToCopy = learningMaterialsToCopy.toArray()[i];
-      let lm = yield learningMaterialToCopy.get('learningMaterial');
-      let learningMaterial = store.createRecord(
+      const learningMaterialToCopy = learningMaterialsToCopy.toArray()[i];
+      const lm = yield learningMaterialToCopy.get('learningMaterial');
+      const learningMaterial = store.createRecord(
         'sessionLearningMaterial',
         learningMaterialToCopy.getProperties('notes', 'required', 'publicNotes', 'position')
       );
@@ -154,12 +154,12 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     //parse objectives last because it is a many2many relationship
     //and ember data tries to save it too soon
-    let relatedObjectives = yield sessionToCopy.get('objectives');
-    let objectivesToCopy = relatedObjectives.sortBy('id');
+    const relatedObjectives = yield sessionToCopy.get('objectives');
+    const objectivesToCopy = relatedObjectives.sortBy('id');
     for (let i = 0; i < objectivesToCopy.length; i++){
-      let objectiveToCopy = objectivesToCopy.toArray()[i];
-      let meshDescriptors = yield objectiveToCopy.get('meshDescriptors');
-      let objective = store.createRecord(
+      const objectiveToCopy = objectivesToCopy.toArray()[i];
+      const meshDescriptors = yield objectiveToCopy.get('meshDescriptors');
+      const objective = store.createRecord(
         'objective',
         objectiveToCopy.getProperties('title', 'position')
       );

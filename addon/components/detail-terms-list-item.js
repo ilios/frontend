@@ -7,7 +7,7 @@ export default Component.extend({
   classNames: ['detail-terms-list-item'],
   click() {
     if (this.get('canEdit')) {
-      let term = this.get('term');
+      const term = this.get('term');
       this.remove(term);
     }
   },

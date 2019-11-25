@@ -61,7 +61,7 @@ export default Component.extend({
   overridableSessions: computed('sessions.@each.{requiredPublicationIssues,optionalPublicationIssues}', function(){
     return new RSVPPromise(resolve => {
       this.get('sessions').then(sessions=>{
-        let filteredSessions = sessions.filter(session => {
+        const filteredSessions = sessions.filter(session => {
           return (
             session.get('requiredPublicationIssues').get('length') === 0 &&
             session.get('optionalPublicationIssues').get('length') > 0
@@ -153,9 +153,9 @@ export default Component.extend({
     },
     save(){
       this.set('isSaving', true);
-      let asIsSessions = this.get('sessionsToOverride');
-      let sessionsToSave = [];
-      let promises = [];
+      const asIsSessions = this.get('sessionsToOverride');
+      const sessionsToSave = [];
+      const promises = [];
 
       promises.pushObject(
         new RSVPPromise(resolve => {
@@ -186,8 +186,8 @@ export default Component.extend({
         this.set('totalSessionsToSave', sessionsToSave.length);
         this.set('currentSessionsSaved', 0);
 
-        let saveSomeSessions = (sessions) => {
-          let chunk = sessions.splice(0, 6);
+        const saveSomeSessions = (sessions) => {
+          const chunk = sessions.splice(0, 6);
 
           all(chunk.invoke('save')).then(() => {
             if (sessions.length){

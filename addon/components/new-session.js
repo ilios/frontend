@@ -63,7 +63,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const { validations } = yield this.validate();
     if (validations.get('isValid')) {
       const sessionType = yield this.get('selectedSessionType');
-      let session = this.get('store').createRecord('session', {
+      const session = this.get('store').createRecord('session', {
         title: this.get('title'),
         sessionType
       });

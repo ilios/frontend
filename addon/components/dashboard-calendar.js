@@ -168,13 +168,13 @@ export default Component.extend({
     const activeFilters = this.get('activeFilters');
 
     return map(activeFilters, async (filter) => {
-      let hash = { filter };
+      const hash = { filter };
 
       if (typeof filter === 'number') {
         hash.class = 'tag-course-level';
         hash.name = `Course Level ${filter}`;
       } else {
-        let model = filter.get('constructor.modelName');
+        const model = filter.get('constructor.modelName');
         switch (model) {
         case 'session-type':
           hash.class = 'tag-session-type';

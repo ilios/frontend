@@ -14,7 +14,7 @@ export default Component.extend({
    * @type {Ember.computed}
    */
   showDisplayModeToggle: computed('objectives.[]', function(){
-    let objectives = this.get('objectives');
+    const objectives = this.get('objectives');
     if (isEmpty(objectives)) {
       return false;
     }
@@ -35,12 +35,12 @@ export default Component.extend({
 
     domainTitles = A(domainTitles).uniq();
 
-    let domains = domainTitles.map(title => {
-      let domain = {
+    const domains = domainTitles.map(title => {
+      const domain = {
         title,
         objectives: []
       };
-      let filteredObjectives = objectives.filter(obj => {
+      const filteredObjectives = objectives.filter(obj => {
         return obj.domain.toString() === title;
       }).map(obj => {
         return obj.title;

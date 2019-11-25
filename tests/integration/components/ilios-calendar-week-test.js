@@ -13,7 +13,7 @@ module('Integration | Component | ilios calendar week', function(hooks) {
 
   test('it renders', async function(assert) {
     assert.expect(2);
-    let date = new Date('2015-09-30T12:00:00');
+    const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
 
     await render(hbs`<IliosCalendarWeek @date={{date}} />`);
@@ -23,7 +23,7 @@ module('Integration | Component | ilios calendar week', function(hooks) {
 
   test('clicking on a day header fires the correct events', async function(assert) {
     assert.expect(4);
-    let date = new Date('2015-09-30T12:00:00');
+    const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
     this.actions.changeDate = newDate => {
       assert.ok(newDate instanceof Date);
@@ -49,7 +49,7 @@ module('Integration | Component | ilios calendar week', function(hooks) {
 
   test('clicking on a day header does nothing when areDaysSelectable is false', async function(assert) {
     assert.expect(1);
-    let date = new Date('2015-09-30T12:00:00');
+    const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
     this.set('nothing', () => {
       assert.ok(false, 'this should never be called');

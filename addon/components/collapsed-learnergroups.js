@@ -12,10 +12,10 @@ export default Component.extend({
     if (!subject) {
       return [];
     }
-    let learnerGroups = await subject.get('learnerGroups');
-    let cohorts = await map(learnerGroups.toArray(), (group => group.get('cohort')));
-    let summaryBlocks =  cohorts.reduce((set, cohort) => {
-      let key = 'cohort' + cohort.get('id');
+    const learnerGroups = await subject.get('learnerGroups');
+    const cohorts = await map(learnerGroups.toArray(), (group => group.get('cohort')));
+    const summaryBlocks =  cohorts.reduce((set, cohort) => {
+      const key = 'cohort' + cohort.get('id');
       if (!Object.keys(set).includes(key)) {
         set[key] = {
           cohort,

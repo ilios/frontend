@@ -315,7 +315,7 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
 
     test('edit learning material', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      let newNote = 'text text. Woo hoo!';
+      const newNote = 'text text. Woo hoo!';
       const newDescription = 'high altitude training';
 
       await page.visit({ courseId: 1, sessionId: 1 });
@@ -346,7 +346,7 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
 
     test('cancel editing learning material', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      let newNote = 'text text. Woo hoo!';
+      const newNote = 'text text. Woo hoo!';
       const newDescription = 'the sun is shining.';
 
       await page.visit({ courseId: 1, sessionId: 1 });
@@ -557,7 +557,7 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
 
     test('edit learning material with no other links #3617', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      let newTitle = 'text text. Woo hoo!';
+      const newTitle = 'text text. Woo hoo!';
 
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.equal(page.learningMaterials.current.length, 4);

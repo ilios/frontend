@@ -39,7 +39,7 @@ export default Component.extend({
         limit: this.get('searchResultsPerPage') + 1,
         'order_by[title]': 'ASC',
       }).then(results => {
-        let lms = results.map(lm => {
+        const lms = results.map(lm => {
           return lm;
         });
         this.set('searchReturned', true);
@@ -69,7 +69,7 @@ export default Component.extend({
       offset: this.get('searchPage') * this.get('searchResultsPerPage'),
       'order_by[title]': 'ASC',
     });
-    let lms = results.map(lm => {
+    const lms = results.map(lm => {
       return lm;
     });
     this.set('searchPage', this.get('searchPage') + 1);

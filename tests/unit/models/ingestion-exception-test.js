@@ -5,7 +5,7 @@ module('Unit | Model | ingestion exception ', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('ingestion-exception');
+    const model = this.owner.lookup('service:store').createRecord('ingestion-exception');
     assert.ok(!!model);
   });
 });

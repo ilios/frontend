@@ -92,7 +92,7 @@ export default Mixin.create({
   }),
   selectedView: computed('view', function(){
     let view = this.get('view');
-    let viewOptions = ['month', 'week', 'day'];
+    const viewOptions = ['month', 'week', 'day'];
 
     if (viewOptions.indexOf(view) === -1) {
       view = 'week';

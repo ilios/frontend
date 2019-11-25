@@ -117,7 +117,7 @@ module('Acceptance | Course - Overview', function(hooks) {
 
   test('change start date', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    let course = this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
       startDate: new Date('2013-04-23'),
       endDate: new Date('2015-05-22'),
@@ -137,7 +137,7 @@ module('Acceptance | Course - Overview', function(hooks) {
   test('start date validation', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(3);
-    let course = this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
       startDate: new Date('2013-04-23'),
       endDate: new Date('2013-05-22'),
@@ -157,7 +157,7 @@ module('Acceptance | Course - Overview', function(hooks) {
 
   test('change end date', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    let course = this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
       startDate: new Date('2013-04-23'),
       endDate: new Date('2015-05-22'),
@@ -177,7 +177,7 @@ module('Acceptance | Course - Overview', function(hooks) {
   test('end date validation', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(3);
-    let course = this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
       startDate: new Date('2013-04-23'),
       endDate: new Date('2013-05-22'),
@@ -197,7 +197,7 @@ module('Acceptance | Course - Overview', function(hooks) {
 
   test('change externalId', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    let course = this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
       externalId: 'abc123'
@@ -214,7 +214,7 @@ module('Acceptance | Course - Overview', function(hooks) {
 
   test('change level', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    let course = this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
       level: 3

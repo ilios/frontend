@@ -318,8 +318,8 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
 
     test('edit learning material', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      let newNote = 'text text. Woo hoo!';
-      let newDescription = "i'll sleep when i'm dead.";
+      const newNote = 'text text. Woo hoo!';
+      const newDescription = "i'll sleep when i'm dead.";
 
       await page.visit({ courseId: 1, details: true });
       assert.equal(page.learningMaterials.current.length, 4);
@@ -347,7 +347,7 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
 
     test('cancel editing learning material', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      let newNote = 'text text. Woo hoo!';
+      const newNote = 'text text. Woo hoo!';
       const newDescription = "counting sheep";
 
       await page.visit({ courseId: 1, details: true });
@@ -558,7 +558,7 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
 
     test('edit learning material with no other links #3617', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      let newTitle = 'text text. Woo hoo!';
+      const newTitle = 'text text. Woo hoo!';
 
       await page.visit({ courseId: 1, details: true });
       assert.equal(page.learningMaterials.current.length, 4);

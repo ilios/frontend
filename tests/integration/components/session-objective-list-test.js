@@ -13,7 +13,7 @@ module('Integration | Component | session objective list', function(hooks) {
   test('it renders', async function(assert) {
     assert.expect(7);
 
-    let objective1 = EmberObject.create({
+    const objective1 = EmberObject.create({
       title: 'Objective A',
       position: 0,
       hasMany() {
@@ -25,7 +25,7 @@ module('Integration | Component | session objective list', function(hooks) {
       }
     });
 
-    let objective2 = EmberObject.create({
+    const objective2 = EmberObject.create({
       title: 'Objective B',
       position: 0,
       hasMany() {
@@ -37,9 +37,9 @@ module('Integration | Component | session objective list', function(hooks) {
       }
     });
 
-    let objectives = [ objective1, objective2 ];
+    const objectives = [ objective1, objective2 ];
 
-    let session = EmberObject.create({
+    const session = EmberObject.create({
       sortedObjectives: resolve(objectives),
     });
 
@@ -55,26 +55,26 @@ module('Integration | Component | session objective list', function(hooks) {
     assert.dom(findAll('thead th')[2]).hasText('MeSH Terms');
     assert.dom(findAll('thead th')[3]).hasText('Actions');
     for (let i = 0, n = objectives.length; i < n; i++) {
-      let objective = objectives[i];
+      const objective = objectives[i];
       assert.dom(`tbody tr:nth-of-type(${i + 1}) td:nth-of-type(1)`).hasText(objective.get('title'));
     }
   });
 
   test('empty list', async function(assert) {
     assert.expect(2);
-    let session = EmberObject.create({
+    const session = EmberObject.create({
       objectives: resolve([]),
     });
     this.set('subject', session);
     await render(hbs`{{session-objective-list subject=subject}}`);
-    let container = findAll('.session-objective-list');
+    const container = findAll('.session-objective-list');
     assert.equal(container.length, 1, 'Component container element exists.');
     assert.dom(container[0]).hasText('', 'No content is shown.');
   });
 
   test('no "sort objectives" button in list with one item', async function(assert) {
     assert.expect(2);
-    let objective = EmberObject.create({
+    const objective = EmberObject.create({
       title: 'Objective A',
       hasMany() {
         return {
@@ -84,7 +84,7 @@ module('Integration | Component | session objective list', function(hooks) {
         };
       }
     });
-    let session = EmberObject.create({
+    const session = EmberObject.create({
       sortedObjectives: resolve([ objective ]),
     });
 

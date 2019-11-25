@@ -19,17 +19,17 @@ module('Integration | Component | objective sort manager', function(hooks) {
   test('it renders', async function(assert) {
     assert.expect(5);
 
-    let objective1 = EmberObject.create({
+    const objective1 = EmberObject.create({
       title: 'Objective 1',
       position: 1,
     });
 
-    let objective2 = EmberObject.create({
+    const objective2 = EmberObject.create({
       title: 'Objective 2',
       position: 0
     });
 
-    let subject = EmberObject.create({
+    const subject = EmberObject.create({
       objectives: resolve([ objective1, objective2 ])
     });
 
@@ -48,7 +48,7 @@ module('Integration | Component | objective sort manager', function(hooks) {
 
   test('cancel', async function(assert) {
     assert.expect(1);
-    let subject = EmberObject.create({
+    const subject = EmberObject.create({
       objectives: resolve([
         EmberObject.create({
           title: 'Objective A',
@@ -75,19 +75,19 @@ module('Integration | Component | objective sort manager', function(hooks) {
   test('save', async function(assert) {
     assert.expect(3);
 
-    let objective1 = EmberObject.create({
+    const objective1 = EmberObject.create({
       title: 'Objective1',
       position: 0
     });
 
-    let objective2 = EmberObject.create({
+    const objective2 = EmberObject.create({
       title: 'Objective2',
       position: 0
     });
 
-    let objectives = [ objective1, objective2 ];
+    const objectives = [ objective1, objective2 ];
 
-    let subject = EmberObject.create({
+    const subject = EmberObject.create({
       objectives: resolve(objectives),
     });
     this.set('subject', subject);

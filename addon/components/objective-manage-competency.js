@@ -54,7 +54,7 @@ export default Component.extend({
     const domains = await this.domains;
     return await filter(domains.toArray(), async domain => {
       const children = await domain.children;
-      let availableChildren = children.filter(child => competencies.includes(child));
+      const availableChildren = children.filter(child => competencies.includes(child));
       return availableChildren.length === 0;
     });
   }),

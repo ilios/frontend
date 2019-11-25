@@ -10,7 +10,7 @@ module('Integration | Component | new objective', function(hooks) {
     this.set('cancel', () => {});
 
     await render(hbs`<NewObjective @cancel={{action cancel}} />`);
-    let content = this.element.textContent.trim();
+    const content = this.element.textContent.trim();
     assert.ok(content.includes('New Objective'));
     assert.ok(content.includes('Description'));
   });

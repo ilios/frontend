@@ -14,21 +14,21 @@ module('Integration | Component | ilios calendar month', function(hooks) {
 
   test('month displays with three events', async function(assert) {
     assert.expect(4);
-    let date = moment(new Date('2015-09-30T12:00:00'));
+    const date = moment(new Date('2015-09-30T12:00:00'));
 
     this.set('date', date.toDate());
 
-    let firstEvent = createUserEventObject();
+    const firstEvent = createUserEventObject();
     firstEvent.name = 'Some new thing';
     firstEvent.startDate = date.clone();
     firstEvent.endDate = date.clone().add(1, 'hour');
 
-    let secondEvent = createUserEventObject();
+    const secondEvent = createUserEventObject();
     secondEvent.name = 'Second new thing';
     secondEvent.startDate = date.clone().add(1, 'hour');
     secondEvent.endDate = date.clone().add(3, 'hour');
 
-    let thirdEvent = createUserEventObject();
+    const thirdEvent = createUserEventObject();
     thirdEvent.name = 'Third new thing';
     thirdEvent.startDate = date.clone().add(3, 'hour');
     thirdEvent.endDate = date.clone().add(4, 'hour');
@@ -53,17 +53,17 @@ module('Integration | Component | ilios calendar month', function(hooks) {
 
   test('month displays with two events', async function(assert) {
     assert.expect(3);
-    let date = moment(new Date('2015-09-30T12:00:00'));
+    const date = moment(new Date('2015-09-30T12:00:00'));
 
     this.set('date', date.toDate());
     this.set('nothing', parseInt);
 
-    let firstEvent = createUserEventObject();
+    const firstEvent = createUserEventObject();
     firstEvent.name = 'Some new thing';
     firstEvent.startDate = date.clone();
     firstEvent.endDate = date.clone().add(1, 'hour');
 
-    let secondEvent = createUserEventObject();
+    const secondEvent = createUserEventObject();
     secondEvent.name = 'Second new thing';
     secondEvent.startDate = date.clone().add(1, 'hour');
     secondEvent.endDate = date.clone().add(3, 'hour');
@@ -86,7 +86,7 @@ module('Integration | Component | ilios calendar month', function(hooks) {
 
   test('clicking on a day fires the correct event', async function(assert) {
     assert.expect(3);
-    let date = new Date('2015-09-30T12:00:00');
+    const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
 
     this.actions.changeDate = newDate => {
@@ -107,7 +107,7 @@ module('Integration | Component | ilios calendar month', function(hooks) {
     click('.day:nth-of-type(1) .clickable');
   });
 
-  let createUserEventObject = function () {
+  const createUserEventObject = function () {
 
     return {
       user: 1,

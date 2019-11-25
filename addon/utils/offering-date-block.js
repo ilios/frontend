@@ -19,18 +19,18 @@ const OfferingDateBlock = OfferingBlock.extend({
   dateKey: null,
   //convert our day of the year key into a date at midnight
   date: computed('dateKey', function(){
-    let year = this.get('dateKey').substring(0,4);
-    let dayOfYear = this.get('dateKey').substring(4);
-    let date = new Date(year, 0);
+    const year = this.get('dateKey').substring(0,4);
+    const dayOfYear = this.get('dateKey').substring(4);
+    const date = new Date(year, 0);
     return new Date(date.setDate(dayOfYear));
   }),
   dateStamp: format('date', 'X'),
   dayOfWeek: format('date', 'dddd'),
   dayOfMonth: format('date', 'MMMM Do'),
   offeringTimeBlocks: computed('offerings.@each.{startDate,endDate}', function(){
-    let offeringGroups = {};
+    const offeringGroups = {};
     this.get('offerings').forEach(function(offering){
-      let key = offering.get('timeKey');
+      const key = offering.get('timeKey');
       if(!(key in offeringGroups)){
         offeringGroups[key] = OfferingTimeBlock.create({
           timeKey: key
@@ -39,7 +39,7 @@ const OfferingDateBlock = OfferingBlock.extend({
       offeringGroups[key].addOffering(offering);
     });
     //convert indexed object to array
-    let offeringGroupArray = [];
+    const offeringGroupArray = [];
     let key;
     for(key in offeringGroups){
       offeringGroupArray.pushObject(offeringGroups[key]);
@@ -60,11 +60,11 @@ const OfferingTimeBlock = OfferingBlock.extend({
   }),
   //pull our times out of the key
   startDate: computed('timeKey', function(){
-    let key = this.get('timeKey').substring(0,11);
+    const key = this.get('timeKey').substring(0,11);
     return moment(key, 'YYYYDDDHHmm');
   }),
   endDate: computed('timeKey', function(){
-    let key = this.get('timeKey').substring(11);
+    const key = this.get('timeKey').substring(11);
     return moment(key, 'YYYYDDDHHmm');
   }),
   startTime: format('startDate', 'LT'),

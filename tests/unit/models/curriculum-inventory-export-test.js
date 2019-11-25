@@ -5,7 +5,7 @@ module('Unit | Model | CurriculumInventoryExport', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('curriculum-inventory-export');
+    const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-export');
     assert.ok(!!model);
   });
 });

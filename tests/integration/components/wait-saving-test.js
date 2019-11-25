@@ -10,7 +10,7 @@ module('Integration | Component | wait saving', function(hooks) {
 
   test('it renders', async function(assert) {
     assert.expect(1);
-    let modalDialogService = this.owner.lookup('service:modal-dialog');
+    const modalDialogService = this.owner.lookup('service:modal-dialog');
     modalDialogService.set('destinationElementId', 'modal-testing-div');
     await render(hbs`<div id="modal-testing-div"></div><WaitSaving />`);
 

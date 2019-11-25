@@ -38,7 +38,7 @@ export default Component.extend({
       });
     });
 
-    let flat = terms.reduce((flattened, obj) => {
+    const flat = terms.reduce((flattened, obj) => {
       return flattened.pushObjects(obj.toArray());
     }, []);
 

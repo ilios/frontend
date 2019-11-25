@@ -48,7 +48,7 @@ export default Model.extend({
     'endYear',
     'endTime',
     function(){
-      let properties = [
+      const properties = [
         'startYear',
         'startDayOfYear',
         'startTime',
@@ -105,9 +105,9 @@ export default Model.extend({
     if (!startDate || !endDate) {
       return 0;
     }
-    let mStart = moment(startDate);
-    let mEnd = moment(endDate);
-    let diffInHours = mEnd.diff(mStart, 'hours');
+    const mStart = moment(startDate);
+    const mEnd = moment(endDate);
+    const diffInHours = mEnd.diff(mStart, 'hours');
 
     return diffInHours;
   }),
@@ -118,8 +118,8 @@ export default Model.extend({
     if (!startDate || !endDate) {
       return 0;
     }
-    let mStart = moment(startDate);
-    let mEnd = moment(endDate);
+    const mStart = moment(startDate);
+    const mEnd = moment(endDate);
 
     const endHour = mEnd.hour();
     const endMinute = mEnd.minute();

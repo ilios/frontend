@@ -5,53 +5,53 @@ module('Unit | Model | Objective', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('objective');
+    const model = this.owner.lookup('service:store').createRecord('objective');
     assert.ok(!!model);
   });
 
   test('top parent with no parents should be self', async function(assert) {
     assert.expect(2);
 
-    let model = this.owner.lookup('service:store').createRecord('objective');
-    let topParents = await model.get('topParents');
+    const model = this.owner.lookup('service:store').createRecord('objective');
+    const topParents = await model.get('topParents');
     assert.ok(topParents.length === 1);
     assert.equal(topParents.get('firstObject'), model);
   });
 
   test('current top parents with single parent tree', async function(assert) {
     assert.expect(2);
-    let store = this.owner.lookup('service:store');
-    let model = this.owner.lookup('service:store').createRecord('objective');
-    let parent1 = store.createRecord('objective', {
+    const store = this.owner.lookup('service:store');
+    const model = this.owner.lookup('service:store').createRecord('objective');
+    const parent1 = store.createRecord('objective', {
       children: [model]
     });
-    let parent2 = store.createRecord('objective', {
+    const parent2 = store.createRecord('objective', {
       children: [parent1]
     });
 
-    let topParents = await model.get('topParents');
+    const topParents = await model.get('topParents');
     assert.ok(topParents.length === 1);
     assert.equal(topParents.get('firstObject'), parent2);
   });
 
   test('current top parents with multi parent tree', async function(assert) {
     assert.expect(3);
-    let store = this.owner.lookup('service:store');
-    let model = this.owner.lookup('service:store').createRecord('objective');
-    let parent1 = store.createRecord('objective', {
+    const store = this.owner.lookup('service:store');
+    const model = this.owner.lookup('service:store').createRecord('objective');
+    const parent1 = store.createRecord('objective', {
       children: [model]
     });
-    let parent2 = store.createRecord('objective', {
+    const parent2 = store.createRecord('objective', {
       children: [model]
     });
-    let parent3 = store.createRecord('objective', {
+    const parent3 = store.createRecord('objective', {
       children: [parent1]
     });
-    let parent4 = store.createRecord('objective', {
+    const parent4 = store.createRecord('objective', {
       children: [parent2]
     });
 
-    let topParents = await model.get('topParents');
+    const topParents = await model.get('topParents');
     assert.ok(topParents.length === 2);
     assert.ok(topParents.includes(parent3));
     assert.ok(topParents.includes(parent4));
@@ -59,18 +59,18 @@ module('Unit | Model | Objective', function(hooks) {
 
   test('tree competencies', async function(assert) {
     assert.expect(3);
-    let store = this.owner.lookup('service:store');
-    let model = this.owner.lookup('service:store').createRecord('objective');
-    let competency1 = store.createRecord('competency');
-    let competency2 = store.createRecord('competency');
+    const store = this.owner.lookup('service:store');
+    const model = this.owner.lookup('service:store').createRecord('objective');
+    const competency1 = store.createRecord('competency');
+    const competency2 = store.createRecord('competency');
 
-    let parent1 = store.createRecord('objective', {
+    const parent1 = store.createRecord('objective', {
       children: [model]
     });
-    let parent2 = store.createRecord('objective', {
+    const parent2 = store.createRecord('objective', {
       children: [model]
     });
-    let parent3 = store.createRecord('objective', {
+    const parent3 = store.createRecord('objective', {
       children: [model]
     });
     store.createRecord('objective', {
@@ -96,7 +96,7 @@ module('Unit | Model | Objective', function(hooks) {
       competency: competency1
     });
 
-    let treeCompetencies = await model.get('treeCompetencies');
+    const treeCompetencies = await model.get('treeCompetencies');
     assert.equal(2, treeCompetencies.length);
     assert.ok(treeCompetencies.includes(competency1));
     assert.ok(treeCompetencies.includes(competency2));
@@ -105,8 +105,8 @@ module('Unit | Model | Objective', function(hooks) {
 
   test('removeParentWithProgramYears', async function(assert) {
     assert.expect(3);
-    let store = this.owner.lookup('service:store');
-    let model = this.owner.lookup('service:store').createRecord('objective');
+    const store = this.owner.lookup('service:store');
+    const model = this.owner.lookup('service:store').createRecord('objective');
     model.reopen({
       async save() {
         assert.ok(true, 'save() was called.');

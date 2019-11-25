@@ -49,19 +49,19 @@ export default Component.extend({
     yield timeout(10);
     const directors = this.get('directors');
     const administrators = this.get('administrators');
-    let course = this.get('course');
+    const course = this.get('course');
     course.setProperties({directors, administrators});
     this.get('expand')();
     yield course.save();
     this.get('setIsManaging')(false);
   }),
   add(where, user){
-    let arr = this.get(where).toArray();
+    const arr = this.get(where).toArray();
     arr.pushObject(user);
     this.set(where, arr);
   },
   remove(where, user){
-    let arr = this.get(where).toArray();
+    const arr = this.get(where).toArray();
     arr.removeObject(user);
     this.set(where, arr);
   },

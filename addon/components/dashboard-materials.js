@@ -22,7 +22,7 @@ export default Component.extend({
     const namespace = this.get('namespace');
 
     const userId = currentUser.get('currentUserId');
-    let url = `${namespace}/usermaterials/${userId}?before=${to}&after=${from}`;
+    const url = `${namespace}/usermaterials/${userId}?before=${to}&after=${from}`;
     const data = await this.fetch.getJsonFromApiHost(url);
     return data.userMaterials;
   }),

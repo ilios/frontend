@@ -5,8 +5,8 @@ import { module, test } from 'qunit';
 module('Unit | Mixin | publishable model', function() {
   // Replace this with your real tests.
   test('it works', function(assert) {
-    let PublishableModelObject = EmberObject.extend(PublishableModelMixin);
-    let subject = PublishableModelObject.create();
+    const PublishableModelObject = EmberObject.extend(PublishableModelMixin);
+    const subject = PublishableModelObject.create();
     assert.ok(subject);
   });
 });

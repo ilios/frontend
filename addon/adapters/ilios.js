@@ -19,7 +19,7 @@ export default RESTAdapter.extend({
   init() {
     this._super(...arguments);
 
-    let headers = {};
+    const headers = {};
     if (this.session && this.session.isAuthenticated) {
       const { jwt } = this.session.data.authenticated;
       if (jwt) {
@@ -35,7 +35,7 @@ export default RESTAdapter.extend({
   shouldReloadAll() { return true; },
 
   findMany(store, type, ids, snapshots) {
-    let url = this.urlForFindMany(ids, type.modelName, snapshots);
+    const url = this.urlForFindMany(ids, type.modelName, snapshots);
 
     return this.ajax(url, 'GET', {
       data: {

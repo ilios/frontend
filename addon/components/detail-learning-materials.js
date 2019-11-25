@@ -108,7 +108,7 @@ export default Component.extend(SortableByPosition, {
     saveSortOrder(learningMaterials) {
       this.set('isSaving', true);
       for (let i = 0, n = learningMaterials.length; i < n; i++) {
-        let lm = learningMaterials[i];
+        const lm = learningMaterials[i];
         lm.set('position', i + 1);
       }
       this.set('totalMaterialsToSave', learningMaterials.length);
@@ -124,7 +124,7 @@ export default Component.extend(SortableByPosition, {
       const store = this.get('store');
       let newLearningMaterial;
       let lmCollectionType;
-      let subject = this.get('subject');
+      const subject = this.get('subject');
 
       if (this.get('isCourse')) {
         newLearningMaterial = store.createRecord('course-learning-material', {
@@ -163,7 +163,7 @@ export default Component.extend(SortableByPosition, {
     },
   },
   saveSomeMaterials(arr){
-    let chunk = arr.splice(0, 5);
+    const chunk = arr.splice(0, 5);
     return all(chunk.invoke('save')).then(() => {
       if (arr.length){
         this.set('currentMaterialsSaved', this.get('currentMaterialsSaved') + chunk.length);

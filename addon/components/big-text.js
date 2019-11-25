@@ -40,7 +40,7 @@ export default Component.extend({
     return text.replace(/(<([^>]+)>)/ig,"");
   }),
   displayText: computed('cleanText', 'totalLength', 'length', 'expanded', function(){
-    let cleanText = this.get('cleanText');
+    const cleanText = this.get('cleanText');
     let text;
     if(this.get('expanded') || cleanText.length < this.get('totalLength')){
       if(this.get('renderHtml')){

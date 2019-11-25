@@ -66,12 +66,12 @@ export default Component.extend({
    * @protected
    */
   filteredTerms: computed('terms.[]', 'vocabulary', function () {
-    let terms = this.get('terms');
+    const terms = this.get('terms');
     if (isEmpty(terms)) {
       return [];
     }
-    let vocab = this.get('vocabulary');
-    let filteredTerms = [];
+    const vocab = this.get('vocabulary');
+    const filteredTerms = [];
     terms.forEach((term) => {
       if (term.get('vocabulary.id') === vocab.get('id')) {
         filteredTerms.push(term);

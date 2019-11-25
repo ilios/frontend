@@ -6,7 +6,7 @@ module('Unit | Model | vocabulary', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let model = this.owner.lookup('service:store').createRecord('vocabulary');
+    const model = this.owner.lookup('service:store').createRecord('vocabulary');
     assert.ok(!!model);
   });
 

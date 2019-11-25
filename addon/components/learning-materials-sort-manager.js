@@ -9,7 +9,7 @@ export default Component.extend(SortableByPosition, {
 
   didReceiveAttrs() {
     this._super(...arguments);
-    let subject = this.get('subject');
+    const subject = this.get('subject');
     this.get('loadAttr').perform(subject);
 
   },
@@ -23,7 +23,7 @@ export default Component.extend(SortableByPosition, {
     }
   },
   loadAttr: task(function * (subject) {
-    let learningMaterials = yield subject.get('learningMaterials');
+    const learningMaterials = yield subject.get('learningMaterials');
     this.set('sortableObjectList', learningMaterials.toArray().sort(this.get('positionSortingCallback')));
   }),
 

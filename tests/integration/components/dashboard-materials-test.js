@@ -8,8 +8,8 @@ import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 let lm1, lm2, lm3, lm4, lm5, userMaterials;
-let today = moment();
-let tomorrow = moment().add(1, 'day');
+const today = moment();
+const tomorrow = moment().add(1, 'day');
 
 module('Integration | Component | dashboard materials', function(hooks) {
   setupRenderingTest(hooks);
@@ -86,8 +86,8 @@ module('Integration | Component | dashboard materials', function(hooks) {
       assert.equal(params.id, 11);
       assert.ok('before' in queryParams);
       assert.ok('after' in queryParams);
-      let before = moment(queryParams.before, 'X');
-      let after = moment(queryParams.after, 'X');
+      const before = moment(queryParams.before, 'X');
+      const after = moment(queryParams.after, 'X');
       assert.ok(before.isSame(today.clone().add(60, 'days'), 'day'));
       assert.ok(after.isSame(today, 'day'));
 
@@ -200,8 +200,8 @@ module('Integration | Component | dashboard materials', function(hooks) {
       assert.equal(params.id, 11);
       assert.ok('before' in queryParams);
       assert.ok('after' in queryParams);
-      let before = moment(queryParams.before, 'X');
-      let after = moment(queryParams.after, 'X');
+      const before = moment(queryParams.before, 'X');
+      const after = moment(queryParams.after, 'X');
       assert.ok(before.isSame(today.clone().add(60, 'days'), 'day'));
       assert.ok(after.isSame(today, 'day'));
 

@@ -32,9 +32,9 @@ export default Component.extend({
       });
     },
     save() {
-      let subject = this.get('subject');
-      let terms = subject.get('meshDescriptors');
-      let promises = [];
+      const subject = this.get('subject');
+      const terms = subject.get('meshDescriptors');
+      const promises = [];
       terms.clear();
       terms.addObjects(this.get('bufferTerms'));
       this.get('bufferTerms').forEach((term)=>{

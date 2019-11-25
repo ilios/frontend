@@ -23,7 +23,7 @@ export default Mixin.create({
       return;
     }
 
-    let promises = [
+    const promises = [
       store.query('session', { filters: { course } }),
       store.query('offering', { filters: { courses } }),
       store.query('ilm-session', { filters: { courses } }),
@@ -36,7 +36,7 @@ export default Mixin.create({
       promises.pushObject(store.query('term', { filters: { sessions } }));
     } else {
       for (let i = 0; i < sessions.length; i += maximumSessionLoad) {
-        let slice = sessions.slice(i, i + maximumSessionLoad);
+        const slice = sessions.slice(i, i + maximumSessionLoad);
         promises.pushObject(store.query('objective', { filters: { sessions: slice } }));
         promises.pushObject(store.query('session-type', { filters: { sessions: slice } }));
         promises.pushObject(store.query('term', { filters: { sessions: slice } }));

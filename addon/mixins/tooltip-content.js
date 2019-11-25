@@ -12,14 +12,14 @@ export default Mixin.create({
       return '';
     }
 
-    let addLocationToContents = function(contents, eventLocation) {
+    const addLocationToContents = function(contents, eventLocation) {
       if (! isBlank(eventLocation)) {
         contents = contents + `${eventLocation}<br />`;
       }
       return contents;
     };
 
-    let addInstructorsToContents = function(contents, instructors, etAlPhrase) {
+    const addInstructorsToContents = function(contents, instructors, etAlPhrase) {
       if (! instructors.length) {
         return contents;
       }
@@ -32,7 +32,7 @@ export default Mixin.create({
       return contents;
     };
 
-    let addCourseTitleToContents = function(contents, courseTitle, courseTitlePhrase) {
+    const addCourseTitleToContents = function(contents, courseTitle, courseTitlePhrase) {
       if (courseTitle) {
         contents = contents + `<br />${courseTitlePhrase}: ${courseTitle}`;
       }

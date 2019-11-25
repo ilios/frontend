@@ -8,7 +8,7 @@ module('Integration | Component | learnergroup tree', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    let learnerGroup = EmberObject.create({
+    const learnerGroup = EmberObject.create({
       children: []
     });
     this.set('learnerGroup', learnerGroup);

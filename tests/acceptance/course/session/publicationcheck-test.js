@@ -49,7 +49,7 @@ module('Acceptance | Session - Publication Check', function(hooks) {
     });
     await visit(url);
     assert.equal(currentRouteName(), 'session.publication_check');
-    let items = findAll('.session-publicationcheck table tbody td');
+    const items = findAll('.session-publicationcheck table tbody td');
     assert.equal(await getElementText(items[0]), getText('session 0'));
     assert.equal(await getElementText(items[1]), getText('Yes (1)'));
     assert.equal(await getElementText(items[2]), getText('Yes (1)'));
@@ -65,7 +65,7 @@ module('Acceptance | Session - Publication Check', function(hooks) {
     this.server.db.courses.update(1, {sessionIds: [1, 2]});
     await visit('/courses/1/sessions/2/publicationcheck');
     assert.equal(currentRouteName(), 'session.publication_check');
-    let items = findAll('.session-publicationcheck table tbody td');
+    const items = findAll('.session-publicationcheck table tbody td');
     assert.equal(await getElementText(items[0]), getText('session 1'));
     assert.equal(await getElementText(items[1]), getText('No'));
     assert.equal(await getElementText(items[2]), getText('No'));

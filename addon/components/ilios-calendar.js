@@ -15,9 +15,9 @@ export default Component.extend({
     if(this.get('selectedView') === 'day'){
       return events;
     } else {
-      let hashedEvents = {};
+      const hashedEvents = {};
       events.forEach(event => {
-        let hash = moment(event.startDate).format() +
+        const hash = moment(event.startDate).format() +
           moment(event.endDate).format() +
           event.name;
         if (!(hash in hashedEvents)) {
@@ -26,11 +26,11 @@ export default Component.extend({
         //clone our event so we don't trample on the original when we change location
         hashedEvents[hash].pushObject(copy(event));
       });
-      let compiledEvents = [];
+      const compiledEvents = [];
       let hash;
       for (hash in hashedEvents) {
-        let arr = hashedEvents[hash];
-        let event = arr[0];
+        const arr = hashedEvents[hash];
+        const event = arr[0];
         if (arr.length > 1) {
           event.isMulti = true;
         }
@@ -44,15 +44,15 @@ export default Component.extend({
       this.get('changeDate')(newDate);
     },
     goForward(){
-      let newDate = moment(this.get('selectedDate')).add(1, this.get('selectedView')).toDate();
+      const newDate = moment(this.get('selectedDate')).add(1, this.get('selectedView')).toDate();
       this.get('changeDate')(newDate);
     },
     goBack(){
-      let newDate = moment(this.get('selectedDate')).subtract(1, this.get('selectedView')).toDate();
+      const newDate = moment(this.get('selectedDate')).subtract(1, this.get('selectedView')).toDate();
       this.get('changeDate')(newDate);
     },
     gotoToday(){
-      let newDate = moment().toDate();
+      const newDate = moment().toDate();
       this.get('changeDate')(newDate);
     },
     selectEvent(event){
@@ -63,15 +63,15 @@ export default Component.extend({
       this.get('refreshIcsFeed')();
     },
     sortEvents(a, b){
-      let startDiff = moment(a.startDate).diff(moment(b.startDate));
+      const startDiff = moment(a.startDate).diff(moment(b.startDate));
       if (startDiff !== 0) {
         return startDiff;
       }
 
-      let durationA = moment(a.startDate).diff(moment(a.endDate));
-      let durationB = moment(b.startDate).diff(moment(b.endDate));
+      const durationA = moment(a.startDate).diff(moment(a.endDate));
+      const durationB = moment(b.startDate).diff(moment(b.endDate));
 
-      let durationDiff = durationA - durationB;
+      const durationDiff = durationA - durationB;
 
       if (durationDiff !== 0) {
         return durationDiff;

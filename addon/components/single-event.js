@@ -87,8 +87,8 @@ export default Component.extend(EventMixin, {
   courseLearningMaterials: computed('intl.locale', 'typedLearningMaterials', function() {
     const eventLms = this.get('typedLearningMaterials') || [];
     return eventLms.filterBy('courseLearningMaterial').sort((lm1, lm2) => {
-      let pos1 = parseInt(lm1.position, 10) || 0;
-      let pos2 = parseInt(lm2.position, 10) || 0;
+      const pos1 = parseInt(lm1.position, 10) || 0;
+      const pos2 = parseInt(lm2.position, 10) || 0;
 
       // 1. position, asc
       if (pos1 > pos2) {
@@ -98,8 +98,8 @@ export default Component.extend(EventMixin, {
       }
 
       // 2. course learning material id, desc
-      let id1 = lm1.courseLearningMaterial;
-      let id2 = lm2.courseLearningMaterial;
+      const id1 = lm1.courseLearningMaterial;
+      const id2 = lm2.courseLearningMaterial;
       if (id1 > id2) {
         return -1;
       } else if (id1 < id2) {
@@ -145,8 +145,8 @@ export default Component.extend(EventMixin, {
   sessionLearningMaterials: computed('intl.locale', 'typedLearningMaterials', function() {
     const eventLms = this.get('typedLearningMaterials') || [];
     return eventLms.filterBy('sessionLearningMaterial').sort((lm1, lm2) => {
-      let pos1 = parseInt(lm1.position, 10) || 0;
-      let pos2 = parseInt(lm2.position, 10) || 0;
+      const pos1 = parseInt(lm1.position, 10) || 0;
+      const pos2 = parseInt(lm2.position, 10) || 0;
 
       // 1. position, asc
       if (pos1 > pos2) {
@@ -156,8 +156,8 @@ export default Component.extend(EventMixin, {
       }
 
       // 2. session learning material id, desc
-      let id1 = lm1.sessionLearningMaterial;
-      let id2 = lm2.sessionLearningMaterial;
+      const id1 = lm1.sessionLearningMaterial;
+      const id2 = lm2.sessionLearningMaterial;
       if (id1 > id2) {
         return -1;
       } else if (id1 < id2) {
@@ -200,8 +200,8 @@ export default Component.extend(EventMixin, {
    * @return {Number}
    */
   positionSortingCallback(obj1, obj2) {
-    let pos1 = obj1.position;
-    let pos2 = obj2.position;
+    const pos1 = obj1.position;
+    const pos2 = obj2.position;
     // 1. position, asc
     if (pos1 > pos2) {
       return 1;
@@ -210,8 +210,8 @@ export default Component.extend(EventMixin, {
     }
 
     // 2. id, desc
-    let id1 = obj1.id;
-    let id2 = obj2.id;
+    const id1 = obj1.id;
+    const id2 = obj2.id;
     if (id1 > id2) {
       return -1;
     } else if (id1 < id2) {
