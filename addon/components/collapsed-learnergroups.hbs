@@ -1,33 +1,40 @@
-<div class="title clickable" role="button" {{on "click" @expand}}>
-  {{t "general.learnerGroups"}} ({{get (await @subject.learnerGroups) "length"}})
-</div>
-<div class="collapsed-learnergroups-content">
-  {{#if (is-fulfilled this.cohortSummaries)}}
-    <table>
-      <thead>
-        <tr>
-          <th colspan="4">
-            {{t "general.cohort"}}
-          </th>
-          <th>
-            {{t "general.learnerGroups"}}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each (sort-by "title" (await this.cohortSummaries)) as |obj|}}
+<section
+  class="collapsed-learnergroups"
+  {{did-insert (perform this.load) (await @subject.learnerGroups)}}
+  {{did-update (perform this.load) (await @subject.learnerGroups)}}
+  data-test-collapsed-learnergroups
+>
+  <div class="title clickable" role="button" {{on "click" @expand}} data-test-title>
+    {{t "general.learnerGroups"}} ({{get (await @subject.learnerGroups) "length"}})
+  </div>
+  <div class="collapsed-learnergroups-content">
+    {{#if this.cohortSummaries}}
+      <table>
+        <thead>
           <tr>
-            <td colspan="4">
-              {{obj.title}}
-            </td>
-            <td>
-              {{obj.count}}
-            </td>
+            <th colspan="4">
+              {{t "general.cohort"}}
+            </th>
+            <th>
+              {{t "general.learnerGroups"}}
+            </th>
           </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  {{else}}
-    <LoadingSpinner />
-  {{/if}}
-</div>
+        </thead>
+        <tbody>
+          {{#each (sort-by "title" this.cohortSummaries) as |obj|}}
+            <tr>
+              <td colspan="4">
+                {{obj.title}}
+              </td>
+              <td>
+                {{obj.count}}
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{else}}
+      <LoadingSpinner />
+    {{/if}}
+  </div>
+</section>

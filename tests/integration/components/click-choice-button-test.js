@@ -1,38 +1,29 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { component } from 'ilios-common/page-objects/components/click-choice-buttons';
 
 module('Integration | Component | click choice buttons', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
     assert.expect(4);
-
-    const firstButton = '.first-button';
-    const secondButton = '.second-button';
-    const activeClass = 'active';
-
     this.set('nothing', parseInt);
     await render(hbs`<ClickChoiceButtons
-      @action={{action nothing}}
+      @toggle={{action this.nothing}}
       @firstChoicePicked={{true}}
       @buttonContent1="Left Button"
       @buttonContent2="Right Button"
     />`);
-    assert.dom(firstButton).hasText('Left Button', 'first button has correct text');
-    assert.dom(secondButton).hasText('Right Button', 'second button has correct text');
-    assert.dom(firstButton).hasClass(activeClass, 'first button has active class');
-    assert.dom(secondButton).hasNoClass(activeClass, 'second button does not have active class');
+    assert.equal(component.firstButton.text, 'Left Button', 'first button has correct text');
+    assert.equal(component.secondButton.text, 'Right Button', 'second button has correct text');
+    assert.ok(component.firstButton.isActive);
+    assert.notOk(component.secondButton.isActive);
   });
 
   test('click fires toggle action', async function(assert) {
     assert.expect(8);
-
-    const firstButton = '.first-button';
-    const secondButton = '.second-button';
-    const activeClass = 'active';
-
     this.set('firstChoicePicked', true);
     let called = 0;
     this.set('toggle', (newValue) => {
@@ -45,49 +36,43 @@ module('Integration | Component | click choice buttons', function(hooks) {
       called ++;
     });
     await render(hbs`<ClickChoiceButtons
-      @toggle={{action toggle}}
-      @firstChoicePicked={{firstChoicePicked}}
+      @toggle={{action this.toggle}}
+      @firstChoicePicked={{this.firstChoicePicked}}
       @buttonContent1="Left Button"
       @buttonContent2="Right Button"
     />`);
+    assert.ok(component.firstButton.isActive);
+    assert.notOk(component.secondButton.isActive);
 
-    assert.dom(firstButton).hasClass(activeClass, 'first button has active class');
-    assert.dom(secondButton).hasNoClass(activeClass, 'second button does not have active class');
+    await component.secondButton.click();
 
-    await click(secondButton);
+    assert.notOk(component.firstButton.isActive);
+    assert.ok(component.secondButton.isActive);
 
-    assert.dom(firstButton).hasNoClass(activeClass, 'first button does not have active class');
-    assert.dom(secondButton).hasClass(activeClass, 'second button has active class');
+    await component.firstButton.click();
 
-    await click(firstButton);
-
-    assert.dom(firstButton).hasClass(activeClass, 'first button has active class');
-    assert.dom(secondButton).hasNoClass(activeClass, 'second button does not have active class');
+    assert.ok(component.firstButton.isActive);
+    assert.notOk(component.secondButton.isActive);
   });
 
-  test('clicking selected futton does not fire toggle action', async function(assert) {
+  test('clicking selected button does not fire toggle action', async function(assert) {
     assert.expect(4);
-
-    const firstButton = '.first-button';
-    const secondButton = '.second-button';
-    const activeClass = 'active';
-
     this.set('toggle', () => {
       assert.ok(false, 'this should not be fired');
     });
     await render(hbs`<ClickChoiceButtons
-      @toggle={{action toggle}}
+      @toggle={{action this.toggle}}
       @firstChoicePicked={{true}}
       @buttonContent1="Left Button"
       @buttonContent2="Right Button"
     />`);
 
-    assert.dom(firstButton).hasClass(activeClass, 'first button has active class');
-    assert.dom(secondButton).hasNoClass(activeClass, 'second button does not have active class');
+    assert.ok(component.firstButton.isActive);
+    assert.notOk(component.secondButton.isActive);
 
-    await click(firstButton);
+    await component.firstButton.click();
 
-    assert.dom(firstButton).hasClass(activeClass, 'first button has active class');
-    assert.dom(secondButton).hasNoClass(activeClass, 'second button does not have active class');
+    assert.ok(component.firstButton.isActive);
+    assert.notOk(component.secondButton.isActive);
   });
 });

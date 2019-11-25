@@ -1,35 +1,30 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  tagName: 'section',
-  classNames: ['collapsed-objectives'],
-  subject: null,
+export default class CollapsedObjectivesComponent extends Component {
+  @tracked objectives;
+  @tracked objectivesWithParents;
+  @tracked objectivesWithMesh;
 
-  objectives: computed('subject.objectives.[]', async function(){
-    const subject = this.get('subject');
-    const objectives = await subject.get('objectives');
+  @restartableTask
+  *load(element, [objectivePromise]) {
+    if (!objectivePromise) {
+      return false;
+    }
+    this.objectives = yield objectivePromise;
 
-    return objectives;
-  }),
-  objectivesWithParents: computed('objectives.[]', async function(){
-    const objectives = await this.get('objectives');
-    const objectivesWithParents = objectives.filter(objective => {
+    this.objectivesWithParents = this.objectives.filter(objective => {
       const parentIds = objective.hasMany('parents').ids();
 
       return parentIds.length > 0;
     });
-
-    return objectivesWithParents;
-  }),
-  objectivesWithMesh: computed('objectives.[]', async function(){
-    const objectives = await this.get('objectives');
-    const objectivesWithMesh = objectives.filter(objective => {
+    this.objectivesWithMesh = this.objectives.filter(objective => {
       const meshDescriptorIds = objective.hasMany('meshDescriptors').ids();
 
       return meshDescriptorIds.length > 0;
     });
 
-    return objectivesWithMesh;
-  }),
-});
+    return true;
+  }
+}

@@ -1,61 +1,58 @@
-import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/collapsed-competencies';
 
 module('Integration | Component | collapsed competencies', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(4);
+    assert.expect(5);
     const schoolA = this.server.create('school', {title: 'Medicine'});
-    const schoolB = this.server.create('school', {title: 'Pharmacy'});
-    const competencyA = EmberObject.create(this.server.create('competency', { schoolId: 1 }));
-    competencyA.school = RSVP.resolve(schoolA);
-    const competencyB = EmberObject.create(this.server.create('competency', { schoolId: 2 }));
-    competencyB.school = RSVP.resolve(schoolB);
-    const competencies = [competencyA, competencyB];
+    const schoolB = this.server.create('school', { title: 'Pharmacy' });
+    const competencyA = this.server.create('competency', { school: schoolA });
+    const competencyB = this.server.create('competency', { school: schoolB });
+    const objectiveA = this.server.create('objective', { competency: competencyA });
+    const objectiveB = this.server.create('objective', { competency: competencyB });
 
-    const course = EmberObject.create({
-      competencies: RSVP.resolve(competencies)
+    const course = this.server.create('course', {
+      objectives: [objectiveA, objectiveB]
     });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
-    this.set('course', course);
+    this.set('course', courseModel);
     this.set('click', () => {});
-    await render(hbs`<CollapsedCompetencies @subject={{course}} @expand={{action click}} />`);
-    const content = this.element.textContent.trim();
-    assert.equal(content.search(/Competencies \(2\)/), 0);
-    assert.notEqual(content.search(/School(\s+)Competencies/), -1);
-    assert.notEqual(content.search(/Medicine(\s+)1/), -1);
-    assert.notEqual(content.search(/Pharmacy(\s+)1/), -1);
+    await render(hbs`<CollapsedCompetencies @subject={{this.course}} @expand={{this.click}} />`);
+    assert.equal(component.title, 'Competencies (2)');
+    assert.equal(component.headers[0].text, 'School');
+    assert.equal(component.headers[1].text, 'Competencies');
+    assert.equal(component.competencies[0].school, 'Medicine');
+    assert.equal(component.competencies[1].count, '1');
   });
 
   test('clicking the header expands the list', async function(assert) {
     assert.expect(2);
     const schoolA = this.server.create('school', {title: 'Medicine'});
-    const schoolB = this.server.create('school', {title: 'Pharmacy'});
-    const competencyA = EmberObject.create(this.server.create('competency', { schoolId: 1 }));
-    competencyA.school = RSVP.resolve(schoolA);
-    const competencyB = EmberObject.create(this.server.create('competency', { schoolId: 2 }));
-    competencyB.school = RSVP.resolve(schoolB);
-    const competencies = [competencyA, competencyB];
+    const schoolB = this.server.create('school', { title: 'Pharmacy' });
+    const competencyA = this.server.create('competency', { school: schoolA });
+    const competencyB = this.server.create('competency', { school: schoolB });
+    const objectiveA = this.server.create('objective', { competency: competencyA });
+    const objectiveB = this.server.create('objective', { competency: competencyB });
 
-    const course = EmberObject.create({
-      competencies: RSVP.resolve(competencies)
+    const course = this.server.create('course', {
+      objectives: [objectiveA, objectiveB]
     });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
-    this.set('course', course);
+    this.set('course', courseModel);
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`<CollapsedCompetencies @subject={{course}} @expand={{action click}} />`);
-    return settled().then(async () => {
-      assert.equal(this.element.textContent.trim().search(/Competencies \(2\)/), 0);
-      await click('.title');
-    });
+    await render(hbs`<CollapsedCompetencies @subject={{this.course}} @expand={{this.click}} />`);
+    assert.equal(component.title, 'Competencies (2)');
+    await component.expand();
   });
 });
