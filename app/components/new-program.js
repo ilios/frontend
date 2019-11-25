@@ -28,7 +28,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.send('addErrorDisplayFor', 'title');
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
-          let program = this.store.createRecord('program', {
+          const program = this.store.createRecord('program', {
             title: this.title,
             published: true,
             publishedAsTbd: false,

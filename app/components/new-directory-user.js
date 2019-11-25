@@ -122,9 +122,9 @@ export default Component.extend(NewUser, Validations, {
     this.set('tooManyResults', false);
     if (!isEmpty(searchTerms)) {
       this.set('isSearching', true);
-      let url = '/application/directory/search?limit=51&searchTerms=' + searchTerms;
-      let data = yield this.fetch.getJsonFromApiHost(url);
-      let mappedResults = data.results.map(result => {
+      const url = '/application/directory/search?limit=51&searchTerms=' + searchTerms;
+      const data = yield this.fetch.getJsonFromApiHost(url);
+      const mappedResults = data.results.map(result => {
         result.addable = isPresent(result.firstName) && isPresent(result.lastName) && isPresent(result.email) && isPresent(result.campusId);
         return result;
       });

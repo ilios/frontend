@@ -49,7 +49,7 @@ module('Acceptance | Program - Overview', function(hooks) {
     await visit(url);
     assert.equal(await getElementText(title), getText('program 0'));
     await click(edit);
-    let field = await find(input);
+    const field = await find(input);
     assert.equal(getText(field.value), getText('program 0'));
     await fillIn(field, 'test new title');
     await click(done);
@@ -58,7 +58,7 @@ module('Acceptance | Program - Overview', function(hooks) {
 
   test('change short title', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
-    let program = this.server.create('program', {
+    const program = this.server.create('program', {
       schoolId: 1,
     });
     const container = '.program-details';
@@ -71,7 +71,7 @@ module('Acceptance | Program - Overview', function(hooks) {
     await visit(url);
     assert.equal(await getElementText(shortTitle), getText(program.shortTitle));
     await click(edit);
-    let field = await find(input);
+    const field = await find(input);
     assert.equal(getText(field.value), getText(program.shortTitle));
     await fillIn(field, 'test title');
     await click(done);
@@ -80,7 +80,7 @@ module('Acceptance | Program - Overview', function(hooks) {
 
   test('change duration', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
-    let program = this.server.create('program', {
+    const program = this.server.create('program', {
       schoolId: 1,
     });
     const container = '.program-details';
@@ -95,7 +95,7 @@ module('Acceptance | Program - Overview', function(hooks) {
     assert.equal(await getElementText(duration), program.duration);
     await click(edit);
 
-    let durations = findAll(options);
+    const durations = findAll(options);
     assert.equal(durations.length, 10);
     for(let i = 0; i < 10; i++){
       assert.equal(await getElementText(durations[i]), i+1);
@@ -108,7 +108,7 @@ module('Acceptance | Program - Overview', function(hooks) {
 
   test('leave duration at 1', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
-    let program = this.server.create('program', {
+    const program = this.server.create('program', {
       schoolId: 1,
       duration: 1,
     });

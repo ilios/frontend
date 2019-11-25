@@ -5,7 +5,7 @@ module('Unit | Route | pending user updates', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let route = this.owner.lookup('route:pending-user-updates');
+    const route = this.owner.lookup('route:pending-user-updates');
     assert.ok(route);
   });
 });

@@ -11,16 +11,16 @@ export default async function(userObject = {id: defaultUserId}, performsNonLearn
   if (performsNonLearnerFunction) {
     jwtObject['performs_non_learner_function'] = true;
   }
-  let encodedData =  window.btoa('') + '.' +  window.btoa(JSON.stringify(jwtObject)) + '.';
-  let token = {
+  const encodedData =  window.btoa('') + '.' +  window.btoa(JSON.stringify(jwtObject)) + '.';
+  const token = {
     jwt: encodedData
   };
-  let { server } = getContext();
+  const { server } = getContext();
   await authenticateSession(token);
 
   if (userObject) {
     const properties = Object.assign({id: userId}, userObject);
-    let user = server.create('user', properties);
+    const user = server.create('user', properties);
     server.create('authentication', {id: user.id, user});
     return user;
   }

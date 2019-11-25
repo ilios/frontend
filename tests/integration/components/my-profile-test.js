@@ -171,8 +171,8 @@ module('Integration | Component | my profile', function(hooks) {
       @toggleShowInvalidateTokens={{action nothing}}
     />`);
 
-    let m = moment().add(41, 'days');
-    let interactor = openDatepicker(find(datePicker));
+    const m = moment().add(41, 'days');
+    const interactor = openDatepicker(find(datePicker));
     interactor.selectDate(m.toDate());
     await click(go);
   });
@@ -203,7 +203,7 @@ module('Integration | Component | my profile', function(hooks) {
         jwt: 'new token'
       };
     });
-    let sessionMock = Service.extend({
+    const sessionMock = Service.extend({
       authenticate(how, obj){
         assert.equal(how, 'authenticator:ilios-jwt');
         assert.ok(obj.jwt);

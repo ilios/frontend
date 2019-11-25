@@ -27,14 +27,14 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     const user2CampusId = 'tbody tr:nth-of-type(2) td:nth-of-type(4)';
     const user2Email = 'tbody tr:nth-of-type(2) td:nth-of-type(5)';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       firstName: 'Jasper',
       lastName: 'Dog',
       campusId: '1234',
       email: 'testemail',
       enabled: true,
     });
-    let user2 = EmberObject.create({
+    const user2 = EmberObject.create({
       firstName: 'Jackson',
       lastName: 'Doggy',
       campusId: '123',
@@ -77,10 +77,10 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     const user1FirstName = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
     const user2FirstName = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       firstName: 'Jasper',
     });
-    let user2 = EmberObject.create({
+    const user2 = EmberObject.create({
       firstName: 'Jackson',
     });
 
@@ -108,7 +108,7 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     const user1CheckBox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
     const button = 'button.done';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: true,
     });
 
@@ -141,7 +141,7 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     assert.expect(1);
     const action = 'tbody tr:nth-of-type(1) td:nth-of-type(6) .clickable';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: true,
     });
 
@@ -170,7 +170,7 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     const user1CheckBox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
     const action = 'tbody tr:nth-of-type(1) td:nth-of-type(6) .clickable';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: true,
     });
 
@@ -200,10 +200,10 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     const user2CheckBox = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input[type=checkbox]';
     const button = 'button.done';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: true,
     });
-    let user2 = EmberObject.create({
+    const user2 = EmberObject.create({
       enabled: true,
     });
 
@@ -239,10 +239,10 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     const user1CheckBox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
     const user2CheckBox = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input[type=checkbox]';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: true,
     });
-    let user2 = EmberObject.create({
+    const user2 = EmberObject.create({
       enabled: true,
     });
 
@@ -280,7 +280,7 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     const userDisabledIcon = 'tbody tr:nth-of-type(1) td:nth-of-type(1) .fa-user-times';
 
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: false,
     });
 
@@ -313,7 +313,7 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     const userDisabledIcon = 'tbody tr:nth-of-type(1) td:nth-of-type(1) .fa-user-times';
 
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: false,
     });
 

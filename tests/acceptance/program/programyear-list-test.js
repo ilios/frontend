@@ -140,7 +140,7 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     this.server.create('cohort', { programYearId: 1});
     await visit(url);
     for(let i =2; i< 6; i++){
-      let icon = find(`.programyear-list tbody tr:nth-of-type(1) td:nth-of-type(${i+1}) svg`);
+      const icon = find(`.programyear-list tbody tr:nth-of-type(1) td:nth-of-type(${i+1}) svg`);
       assert.ok(icon);
       assert.dom(icon).hasClass('fa-exclamation-triangle');
     }

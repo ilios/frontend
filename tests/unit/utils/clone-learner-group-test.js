@@ -26,7 +26,7 @@ module('Unit | Utility | clone learner group', function() {
     const cohort = EmberObject.create({
 
     });
-    let groups = await cloneLearnerGroup(store, group, cohort, false);
+    const groups = await cloneLearnerGroup(store, group, cohort, false);
     assert.equal(groups.length, 1);
     const result = groups[0];
     assert.ok(result);

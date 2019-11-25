@@ -78,7 +78,7 @@ export default Mixin.create(ValidationErrorDisplay, {
 
   cohorts: oneWay('loadCohorts.lastSuccessful.value'),
   loadCohorts: task(function * () {
-    let school = yield this.bestSelectedSchool;
+    const school = yield this.bestSelectedSchool;
     let cohorts = yield this.store.query('cohort', {
       filters: {
         schools: [school.get('id')],
@@ -86,19 +86,19 @@ export default Mixin.create(ValidationErrorDisplay, {
     });
 
     //prefetch programYears and programs so that ember data will coalesce these requests.
-    let programYears = yield RSVP.all(cohorts.getEach('programYear'));
+    const programYears = yield RSVP.all(cohorts.getEach('programYear'));
     yield RSVP.all(programYears.getEach('program'));
 
     cohorts = cohorts.toArray();
-    let all = [];
+    const all = [];
 
     for(let i = 0; i < cohorts.length; i++){
-      let cohort = cohorts[i];
-      let obj = {
+      const cohort = cohorts[i];
+      const obj = {
         id: cohort.get('id')
       };
-      let programYear = yield cohort.get('programYear');
-      let program = yield programYear.get('program');
+      const programYear = yield cohort.get('programYear');
+      const program = yield programYear.get('program');
       obj.title = program.get('title') + ' ' + cohort.get('title');
       obj.startYear = programYear.get('startYear');
       obj.duration = program.get('duration');
@@ -106,9 +106,9 @@ export default Mixin.create(ValidationErrorDisplay, {
       all.pushObject(obj);
     }
 
-    let lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
+    const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
     return all.filter(obj=> {
-      let finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
+      const finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
       return finalYear > lastYear;
     });
 
@@ -116,7 +116,7 @@ export default Mixin.create(ValidationErrorDisplay, {
 
   save: task(function * (){
     this.send('addErrorDisplaysFor', ['firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password']);
-    let {validations} = yield this.validate();
+    const {validations} = yield this.validate();
     if (validations.get('isInvalid')) {
       return;
     }
@@ -150,11 +150,11 @@ export default Mixin.create(ValidationErrorDisplay, {
     });
     if (!nonStudentMode) {
       user.set('primaryCohort', primaryCohort);
-      let studentRole = roles.findBy('title', 'Student');
+      const studentRole = roles.findBy('title', 'Student');
       user.set('roles', [studentRole]);
     }
     user = yield user.save();
-    let authentication = this.store.createRecord('authentication', {
+    const authentication = this.store.createRecord('authentication', {
       user,
       username,
       password

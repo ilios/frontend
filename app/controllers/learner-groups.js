@@ -97,7 +97,7 @@ export default Controller.extend({
   }),
 
   selectedSchool: computed('model.schools.[]', 'schoolId', async function() {
-    let schools = await this.get('model.schools');
+    const schools = await this.get('model.schools');
     const schoolId = this.schoolId;
     if(isPresent(schoolId)){
       const school = schools.findBy('id', schoolId);

@@ -12,19 +12,19 @@ module('Integration | Component | curriculum inventory leadership expanded', fun
   test('it renders', async function(assert) {
     assert.expect(4);
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       firstName: 'a',
       lastName: 'person',
       fullName: 'a b person',
       enabled: true,
     });
-    let user2 = EmberObject.create({
+    const user2 = EmberObject.create({
       firstName: 'b',
       lastName: 'person',
       fullName: 'b a person',
       enabled: true,
     });
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       administrators: resolve([user1, user2]),
       hasMany(what){
         if (what === 'administrators') {
@@ -62,7 +62,7 @@ module('Integration | Component | curriculum inventory leadership expanded', fun
 
   test('clicking the header collapses', async function(assert) {
     assert.expect(1);
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       administrators: resolve([]),
       hasMany(what){
         if (what === 'administrators') {
@@ -95,7 +95,7 @@ module('Integration | Component | curriculum inventory leadership expanded', fun
 
   test('clicking manage fires action', async function(assert) {
     assert.expect(1);
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       administrators: resolve([]),
       hasMany(what){
         if (what === 'administrators') {

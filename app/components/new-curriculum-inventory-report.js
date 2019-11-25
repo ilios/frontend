@@ -27,11 +27,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   didReceiveAttrs() {
     this._super(...arguments);
-    let years = [];
+    const years = [];
     const currentYear = new Date().getFullYear();
     for (let i = currentYear - 5, n = currentYear + 5; i <= n; i++) {
-      let title = i + ' - ' + (i + 1);
-      let year = EmberObject.create({ 'id': i, 'title': title });
+      const title = i + ' - ' + (i + 1);
+      const year = EmberObject.create({ 'id': i, 'title': title });
       years.pushObject(year);
     }
     const selectedYear = years.findBy('id', currentYear);
@@ -48,8 +48,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.send('addErrorDisplayFor', 'name');
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
-          let year = parseInt(this.selectedYear.get('id'), 10);
-          let report = this.store.createRecord('curriculumInventoryReport', {
+          const year = parseInt(this.selectedYear.get('id'), 10);
+          const report = this.store.createRecord('curriculumInventoryReport', {
             name: this.name,
             program: this.currentProgram,
             year: year,

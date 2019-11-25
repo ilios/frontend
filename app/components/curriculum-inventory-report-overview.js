@@ -136,8 +136,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
 
     changeYear() {
-      let report = this.report;
-      let year = this.year;
+      const report = this.report;
+      const year = this.year;
       report.set('year', year);
       report.save();
     },

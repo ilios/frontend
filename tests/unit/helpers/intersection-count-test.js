@@ -14,7 +14,7 @@ module('Unit | Helper | intersection count ', function() {
     result = intersectionCount(['not an array', [1, 2]]);
     assert.equal(result, 0);
 
-    let objA = {}, objB = {}, objC = 'a', objD = [];
+    const objA = {}, objB = {}, objC = 'a', objD = [];
     result = intersectionCount([[objA], [objA]]);
     assert.equal(result, 1);
     result = intersectionCount([[objA], [objB]]);

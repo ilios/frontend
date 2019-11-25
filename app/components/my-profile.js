@@ -25,9 +25,9 @@ export default Component.extend({
   namespace: reads('iliosConfig.apiNameSpace'),
 
   apiDocsUrl: computed('host', 'namespace', function() {
-    let apiPath = '/' + this.namespace;
-    let host = this.host?this.host:window.location.protocol + '//' + window.location.host;
-    let docPath = host + apiPath.replace('v1', 'doc');
+    const apiPath = '/' + this.namespace;
+    const host = this.host?this.host:window.location.protocol + '//' + window.location.host;
+    const docPath = host + apiPath.replace('v1', 'doc');
     return docPath;
   }),
 
@@ -56,9 +56,9 @@ export default Component.extend({
   },
 
   reset() {
-    let midnightToday = moment().hour(23).minute(59).second(59);
-    let twoWeeksFromNow = midnightToday.clone().add(2, 'weeks');
-    let oneYearFromNow = midnightToday.clone().add(1, 'year');
+    const midnightToday = moment().hour(23).minute(59).second(59);
+    const twoWeeksFromNow = midnightToday.clone().add(2, 'weeks');
+    const oneYearFromNow = midnightToday.clone().add(1, 'year');
     this.set('minDate', midnightToday.toDate());
     this.set('maxDate', oneYearFromNow.toDate());
     this.set('expiresAt', twoWeeksFromNow.toDate());
@@ -67,8 +67,8 @@ export default Component.extend({
 
   createNewToken: task(function* () {
     yield timeout(10); //small delay to allow rendering the spinner
-    let selection = this.expiresAt;
-    let expiresAt = moment(selection).hour(23).minute(59).second(59);
+    const selection = this.expiresAt;
+    const expiresAt = moment(selection).hour(23).minute(59).second(59);
     const now = moment();
     const days = padStart(expiresAt.diff(now, 'days'), 2, '0');
 
@@ -76,22 +76,22 @@ export default Component.extend({
     const minutes = padStart(moment().minutes(59).diff(now, 'minutes'), 2, '0');
     const seconds = padStart(moment().seconds(59).diff(now, 'seconds'), 2, '0');
 
-    let interval = `P${days}DT${hours}H${minutes}M${seconds}S`;
+    const interval = `P${days}DT${hours}H${minutes}M${seconds}S`;
 
-    let url = '/auth/token?ttl=' + interval;
-    let data = yield this.fetch.getJsonFromApiHost(url);
+    const url = '/auth/token?ttl=' + interval;
+    const data = yield this.fetch.getJsonFromApiHost(url);
     this.set('generatedJwt', data.jwt);
   }),
 
   invalidateTokens: task(function* () {
     yield timeout(10); //small delay to allow rendering the spinner
-    let url = '/auth/invalidatetokens';
-    let data = yield this.fetch.getJsonFromApiHost(url);
+    const url = '/auth/invalidatetokens';
+    const data = yield this.fetch.getJsonFromApiHost(url);
 
     if (isPresent(data.jwt)) {
       const flashMessages = this.flashMessages;
       const session = this.session;
-      let authenticator = 'authenticator:ilios-jwt';
+      const authenticator = 'authenticator:ilios-jwt';
       session.authenticate(authenticator, {jwt: data.jwt});
       flashMessages.success('general.successfullyInvalidatedTokens');
       this.toggleShowInvalidateTokens();

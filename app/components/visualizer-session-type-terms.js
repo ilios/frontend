@@ -50,11 +50,11 @@ export default Component.extend({
       return [].concat(sessionTermsObjects.toArray()).concat(courseTermsObjects.toArray());
     });
 
-    let flat = terms.reduce((flattened, obj) => {
+    const flat = terms.reduce((flattened, obj) => {
       return flattened.pushObjects(obj.toArray());
     }, []);
 
-    let termObjects = {};
+    const termObjects = {};
     for (let i = 0; i < flat.length; i++) {
       const { term, session, course } = flat[i];
       const id = term.get('id');

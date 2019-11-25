@@ -63,7 +63,7 @@ export default Component.extend({
     },
 
     async addCompetencyToBuffer(domain, title) {
-      let competency = this.store.createRecord('competency', {title, active: true});
+      const competency = this.store.createRecord('competency', {title, active: true});
       if (isPresent(domain)) {
         competency.set('parent', domain);
         const children = await domain.get('children');
@@ -75,7 +75,7 @@ export default Component.extend({
     },
 
     removeCompetencyFromBuffer(competency) {
-      let buffer = this.bufferedCompetencies;
+      const buffer = this.bufferedCompetencies;
       if (buffer.includes(competency)) {
         buffer.removeObject(competency);
       }

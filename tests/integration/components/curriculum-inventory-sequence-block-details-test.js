@@ -16,20 +16,20 @@ module('Integration | Component | curriculum inventory sequence block details', 
   test('it renders', async function(assert) {
     assert.expect(7);
 
-    let school = EmberObject.create({ id() { return 1; }});
+    const school = EmberObject.create({ id() { return 1; }});
 
-    let academicLevels = [];
+    const academicLevels = [];
     for (let i = 0; i < 10; i++) {
       academicLevels.pushObject(EmberObject.create({ id: i, name: `Year ${i + 1}` }));
     }
 
-    let program = EmberObject.create({
+    const program = EmberObject.create({
       belongsTo() {
         return school;
       }
     });
 
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       academicLevels,
       year: '2016',
       program: resolve(program),
@@ -37,12 +37,12 @@ module('Integration | Component | curriculum inventory sequence block details', 
       isFinalized: resolve(false)
     });
 
-    let grandParentBlock = EmberObject.create({
+    const grandParentBlock = EmberObject.create({
       id: 1,
       title: 'Okely Dokely',
     });
 
-    let parentBlock = EmberObject.create({
+    const parentBlock = EmberObject.create({
       id: 2,
       title: 'Foo',
       parent: resolve(grandParentBlock)
@@ -50,9 +50,9 @@ module('Integration | Component | curriculum inventory sequence block details', 
 
     grandParentBlock.set('children', resolve([ parentBlock ]));
 
-    let academicLevel = academicLevels[0];
+    const academicLevel = academicLevels[0];
 
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       id: 3,
       description: 'lorem ipsum',
       report: resolve(report),

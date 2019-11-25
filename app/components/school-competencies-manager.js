@@ -11,19 +11,19 @@ export default Component.extend({
   competencies: null,
 
   domains: computed('competencies.[]', function() {
-    let competencies = this.competencies;
+    const competencies = this.competencies;
     if(isEmpty(competencies)){
       return [];
     }
-    let domains = competencies.filterBy('isDomain');
-    let objs = domains.uniq().map(domain => {
+    const domains = competencies.filterBy('isDomain');
+    const objs = domains.uniq().map(domain => {
       if (! domain.get('id')) {
         return {
           domain,
           competencies: []
         };
       }
-      let domainCompetencies = competencies.filter(
+      const domainCompetencies = competencies.filter(
         competency => competency.belongsTo('parent').id() === domain.get('id')
       );
       return {

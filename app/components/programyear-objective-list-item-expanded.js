@@ -11,7 +11,7 @@ export default Component.extend({
     const children = await objective.children;
     const objectiveObjects = await map(children.toArray(), async courseObjective => {
       const courses = await courseObjective.courses;
-      let obj = {
+      const obj = {
         title: courseObjective.title,
         courseId: null,
         courseTitle: null,

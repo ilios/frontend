@@ -18,21 +18,21 @@ module('Integration | Component | school session types list', function(hooks) {
 
   test('it renders', async function(assert) {
     assert.expect(22);
-    let assessmentOption = EmberObject.create({
+    const assessmentOption = EmberObject.create({
       id: 1,
       name: 'formative'
     });
-    let aamcMethod1 = EmberObject.create({
+    const aamcMethod1 = EmberObject.create({
       id: 'AM001',
       description: 'Lorem Ipsum',
       active: true,
     });
-    let aamcMethod2 = EmberObject.create({
+    const aamcMethod2 = EmberObject.create({
       id: 'AM002',
       description: 'Dolor Et',
       active: false,
     });
-    let sessionType1 = EmberObject.create({
+    const sessionType1 = EmberObject.create({
       id: 1,
       school: 1,
       title: 'not needed anymore',
@@ -44,7 +44,7 @@ module('Integration | Component | school session types list', function(hooks) {
       active: false,
     });
 
-    let sessionType2 = EmberObject.create({
+    const sessionType2 = EmberObject.create({
       id: 2,
       school: 1,
       title: 'second',
@@ -55,7 +55,7 @@ module('Integration | Component | school session types list', function(hooks) {
       sessionCount: 0,
       active: true,
     });
-    let sessionType3 = EmberObject.create({
+    const sessionType3 = EmberObject.create({
       id: 2,
       school: 1,
       title: 'first',
@@ -123,7 +123,7 @@ module('Integration | Component | school session types list', function(hooks) {
 
   test('clicking edit fires action', async function(assert) {
     assert.expect(1);
-    let  sessionType = EmberObject.create({
+    const  sessionType = EmberObject.create({
       id: 1,
       school: 1,
       title: 'first',
@@ -150,7 +150,7 @@ module('Integration | Component | school session types list', function(hooks) {
 
   test('clicking title fires action', async function(assert) {
     assert.expect(1);
-    let  sessionType = EmberObject.create({
+    const  sessionType = EmberObject.create({
       id: 1,
       school: 1,
       title: 'first',
@@ -177,7 +177,7 @@ module('Integration | Component | school session types list', function(hooks) {
 
   test('session types without sessions can be deleted', async function(assert) {
     assert.expect(4);
-    let  unlinkedSessionType = EmberObject.create({
+    const  unlinkedSessionType = EmberObject.create({
       id: 1,
       school: 1,
       title: 'unlinked',
@@ -191,7 +191,7 @@ module('Integration | Component | school session types list', function(hooks) {
         return resolve();
       }
     });
-    let  linkedSessionType = EmberObject.create({
+    const  linkedSessionType = EmberObject.create({
       id: 1,
       school: 1,
       title: 'linked',
@@ -229,7 +229,7 @@ module('Integration | Component | school session types list', function(hooks) {
 
   test('clicking delete deletes the record', async function(assert) {
     assert.expect(2);
-    let  sessionType = EmberObject.create({
+    const  sessionType = EmberObject.create({
       id: 1,
       school: 1,
       title: 'first',

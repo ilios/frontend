@@ -143,7 +143,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.send('addErrorDisplaysFor', ['title', 'duration', 'startDate', 'endDate', 'minimum', 'maximum']);
       this.validate().then(({validations}) => {
         if (validations.get('isValid')) {
-          let block = this.store.createRecord('curriculumInventorySequenceBlock', {
+          const block = this.store.createRecord('curriculumInventorySequenceBlock', {
             title: this.title,
             description: this.description,
             parent: this.parent,
@@ -226,7 +226,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     academicLevels = academicLevels.toArray();
     let isInOrderedSequence = false;
     let orderInSequence = 0;
-    let orderInSequenceOptions = [];
+    const orderInSequenceOptions = [];
     if (isPresent(parent) && parent.get('isOrdered')) {
       isInOrderedSequence = true;
       const siblings = yield parent.get('children');

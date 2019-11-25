@@ -16,13 +16,13 @@ export default Component.extend({
     if (!learnerGroup) {
       return [];
     }
-    let learnerGroups = [learnerGroup];
+    const learnerGroups = [learnerGroup];
     if (showSubgroupEvents) {
       const allDescendants = await learnerGroup.get('allDescendants');
       learnerGroups.pushObjects(allDescendants);
     }
     const offerings = await all(learnerGroups.mapBy('offerings'));
-    let flat = offerings.reduce((flattened, obj) => {
+    const flat = offerings.reduce((flattened, obj) => {
       return flattened.pushObjects(obj.toArray());
     }, []);
 
@@ -59,16 +59,16 @@ export default Component.extend({
   actions: {
     goForward(){
       const selectedDate = this.selectedDate;
-      let newDate = moment(selectedDate).add(1, 'week').toDate();
+      const newDate = moment(selectedDate).add(1, 'week').toDate();
       this.set('selectedDate', newDate);
     },
     goBack(){
       const selectedDate = this.selectedDate;
-      let newDate = moment(selectedDate).subtract(1, 'week').toDate();
+      const newDate = moment(selectedDate).subtract(1, 'week').toDate();
       this.set('selectedDate', newDate);
     },
     gotoToday(){
-      let newDate = moment().toDate();
+      const newDate = moment().toDate();
       this.set('selectedDate', newDate);
     },
   }

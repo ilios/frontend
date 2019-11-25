@@ -95,7 +95,7 @@ module('Acceptance | search', function(hooks) {
 
     const school = this.server.create('school');
     this.server.createList('course', 25, { school });
-    let courses = [];
+    const courses = [];
     for (let i = 1; i < 25; i++) {
       courses.push({
         id: i,
@@ -208,7 +208,7 @@ module('Acceptance | search', function(hooks) {
     assert.expect(9);
 
     const schools = this.server.createList('school', 3);
-    let courses = [];
+    const courses = [];
     for (let i = 0; i < 3; i++) {
       courses.push({
         title: `Course ${i}`,

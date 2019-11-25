@@ -39,12 +39,12 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       title: 'this cohort',
       users: resolve([user1, user2, user3, user4]),
     });
-    let subGroup = EmberObject.create({
+    const subGroup = EmberObject.create({
       title: 'test sub-group',
       users: resolve([]),
       children: resolve([]),
     });
-    let learnerGroup = EmberObject.create({
+    const learnerGroup = EmberObject.create({
       title: 'test group',
       location: 'test location',
       children: resolve([subGroup]),
@@ -94,12 +94,12 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       title: 'this cohort',
       users: resolve([]),
     });
-    let subGroup = EmberObject.create({
+    const subGroup = EmberObject.create({
       title: 'test sub-group',
       users: resolve([]),
       children: resolve([]),
     });
-    let learnerGroup = EmberObject.create({
+    const learnerGroup = EmberObject.create({
       title: 'test group',
       location: 'test location',
       children: resolve([subGroup]),

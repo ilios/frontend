@@ -79,7 +79,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     assert.dom(`.academic-level label`).hasText('Academic Level:', 'Academic level label is correct.');
     assert.equal(findAll(`.academic-level option`).length, academicLevels.length, 'Academic level dropdown has the correct number of options.');
     for (let i = 0; i < academicLevels.length; i++) {
-      let level = academicLevels[i];
+      const level = academicLevels[i];
       assert.dom(`.academic-level option:nth-of-type(${i + 1})`).hasText(level.name, 'Academic level option label is correct.');
       assert.dom(`.academic-level option:nth-of-type(${i + 1})`).hasValue(level.id, 'Academic level option value is correct.');
     }
@@ -155,7 +155,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.course select', course.id);
 
-    let details = '.course .details';
+    const details = '.course .details';
     assert.dom(details).includesText('Level: ' + course.level);
     assert.dom(details).includesText('Start Date: ' + moment(course.startDate).format('YYYY-MM-DD'));
     assert.dom(details).includesText('End Date: ' + moment(course.endDate).format('YYYY-MM-DD'));
@@ -173,10 +173,10 @@ module('Integration | Component | new curriculum inventory sequence block', func
       program,
     });
 
-    let newTitle = 'new sequence block';
-    let newDescription = 'lorem ipsum';
-    let newStartDate = moment('2016-01-05');
-    let newEndDate = moment('2016-02-12');
+    const newTitle = 'new sequence block';
+    const newDescription = 'lorem ipsum';
+    const newStartDate = moment('2016-01-05');
+    const newEndDate = moment('2016-02-12');
     const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
 
     this.set('report', reportModel);
@@ -240,9 +240,9 @@ module('Integration | Component | new curriculum inventory sequence block', func
     });
 
     const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
-    let minimum = 10;
-    let maximum = 12;
-    let duration = 6;
+    const minimum = 10;
+    const maximum = 12;
+    const duration = 6;
 
     this.set('report', reportModel);
     this.set('saveBlock', (block) => {
@@ -359,8 +359,8 @@ module('Integration | Component | new curriculum inventory sequence block', func
     this.set('report', reportModel);
 
     await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
-    let startDateInput = find('.start-date input');
-    let endDateInput = find('.end-date input');
+    const startDateInput = find('.start-date input');
+    const endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(newStartDate.toDate());
     interactor = openDatepicker(endDateInput);
@@ -387,8 +387,8 @@ module('Integration | Component | new curriculum inventory sequence block', func
 
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
-    let startDateInput = find('.start-date input');
-    let endDateInput = find('.end-date input');
+    const startDateInput = find('.start-date input');
+    const endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
@@ -414,8 +414,8 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
-    let startDateInput = find('.start-date input');
-    let endDateInput = find('.end-date input');
+    const startDateInput = find('.start-date input');
+    const endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
@@ -441,8 +441,8 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
-    let startDateInput = find('.start-date input');
-    let endDateInput = find('.end-date input');
+    const startDateInput = find('.start-date input');
+    const endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
@@ -468,8 +468,8 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
-    let startDateInput = find('.start-date input');
-    let endDateInput = find('.end-date input');
+    const startDateInput = find('.start-date input');
+    const endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
@@ -498,8 +498,8 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} @save={{action saveBlock}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
-    let startDateInput = find('.start-date input');
-    let endDateInput = find('.end-date input');
+    const startDateInput = find('.start-date input');
+    const endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
@@ -554,8 +554,8 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
-    let startDateInput = find('.start-date input');
-    let endDateInput = find('.end-date input');
+    const startDateInput = find('.start-date input');
+    const endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
@@ -580,8 +580,8 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
-    let startDateInput = find('.start-date input');
-    let endDateInput = find('.end-date input');
+    const startDateInput = find('.start-date input');
+    const endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
@@ -606,8 +606,8 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
-    let startDateInput = find('.start-date input');
-    let endDateInput = find('.end-date input');
+    const startDateInput = find('.start-date input');
+    const endDateInput = find('.end-date input');
     let interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     interactor = openDatepicker(endDateInput);
@@ -650,8 +650,8 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
-    let startDateInput = find('.start-date input');
-    let interactor = openDatepicker(startDateInput);
+    const startDateInput = find('.start-date input');
+    const interactor = openDatepicker(startDateInput);
     interactor.selectDate(moment('2016-11-12').toDate());
     await click('button.done');
     assert.dom('.validation-error-message').exists({ count: 1 }, 'Validation errors show.');

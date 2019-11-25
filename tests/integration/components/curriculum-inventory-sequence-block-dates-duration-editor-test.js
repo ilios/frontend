@@ -18,7 +18,7 @@ module('Integration | Component | curriculum inventory sequence block dates dura
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       startDate: moment('2016-04-23').toDate(),
       endDate: moment('2016-06-02').toDate(),
       duration: 10
@@ -46,12 +46,12 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     const newStartDate = moment('2016-10-30');
     const newEndDate = moment('2016-11-02');
     const newDuration = '5';
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       startDate: moment('2016-04-23').toDate(),
       endDate: moment('2016-06-02').toDate(),
       duration: 5
     });
-    let saveAction = function(startDate, endDate, duration) {
+    const saveAction = function(startDate, endDate, duration) {
       assert.equal(moment(startDate).format('YYYY-MM-DD'), newStartDate.format('YYYY-MM-DD'), 'New start date on save.');
       assert.equal(moment(endDate).format('YYYY-MM-DD'), newEndDate.format('YYYY-MM-DD'), 'New end date on save.');
       assert.equal(duration, newDuration, 'New duration on save');
@@ -76,8 +76,8 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     const newStartDate = moment('2016-10-30');
     const newEndDate = moment('2016-11-02');
     const newDuration = '0';
-    let block = EmberObject.create();
-    let saveAction = function(startDate, endDate, duration) {
+    const block = EmberObject.create();
+    const saveAction = function(startDate, endDate, duration) {
       assert.equal(moment(startDate).format('YYYY-MM-DD'), newStartDate.format('YYYY-MM-DD'), 'New start date on save.');
       assert.equal(moment(endDate).format('YYYY-MM-DD'), newEndDate.format('YYYY-MM-DD'), 'New end date on save.');
       assert.equal(duration, newDuration, 'New duration on save');
@@ -100,9 +100,9 @@ module('Integration | Component | curriculum inventory sequence block dates dura
   test('save with non-zero duration and no date range', async function(assert) {
     assert.expect(3);
     const newDuration = '5';
-    let block = EmberObject.create();
+    const block = EmberObject.create();
 
-    let saveAction = function(startDate, endDate, duration) {
+    const saveAction = function(startDate, endDate, duration) {
       assert.equal(startDate, null, 'NULL for start date on save.');
       assert.equal(endDate, null, 'NULL for end date on save.');
       assert.equal(duration, newDuration, 'New duration on save.');
@@ -120,12 +120,12 @@ module('Integration | Component | curriculum inventory sequence block dates dura
 
   test('cancel', async function(assert) {
     assert.expect(1);
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       startDate: moment('2016-04-23').toDate(),
       endDate: moment('2016-06-02').toDate(),
       duration: 10
     });
-    let cancelAction = function() {
+    const cancelAction = function() {
       assert.ok(true, 'Cancel action got invoked.');
     };
     this.set('block', block);
@@ -142,8 +142,8 @@ module('Integration | Component | curriculum inventory sequence block dates dura
     assert.expect(2);
     const newStartDate = moment('2016-10-30');
     const newEndDate = moment('2013-11-02');
-    let block = EmberObject.create({ duration: 0 });
-    let saveAction = function() {
+    const block = EmberObject.create({ duration: 0 });
+    const saveAction = function() {
       assert.ok(false, 'Save action should have not been invoked.');
     };
     this.set('block', block);
@@ -165,12 +165,12 @@ module('Integration | Component | curriculum inventory sequence block dates dura
 
   test('save fails on missing duration', async function(assert) {
     assert.expect(2);
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       startDate: moment('2016-04-23').toDate(),
       endDate: moment('2016-06-02').toDate(),
       duration: 10
     });
-    let saveAction = function() {
+    const saveAction = function() {
       assert.ok(false, 'Save action should have not been invoked.');
     };
     this.set('block', block);
@@ -190,12 +190,12 @@ module('Integration | Component | curriculum inventory sequence block dates dura
 
   test('save fails on invalid duration', async function(assert) {
     assert.expect(2);
-    let block = EmberObject.create({
+    const block = EmberObject.create({
       startDate: moment('2016-04-23').toDate(),
       endDate: moment('2016-06-02').toDate(),
       duration: 10
     });
-    let saveAction = function() {
+    const saveAction = function() {
       assert.ok(false, 'Save action should have not been invoked.');
     };
     this.set('block', block);
@@ -215,8 +215,8 @@ module('Integration | Component | curriculum inventory sequence block dates dura
 
   test('save fails if neither date range nor duration is provided', async function(assert) {
     assert.expect(2);
-    let block = EmberObject.create({ duration: 0 });
-    let saveAction = function() {
+    const block = EmberObject.create({ duration: 0 });
+    const saveAction = function() {
       assert.ok(false, 'Save action should have not been invoked.');
     };
     this.set('block', block);
@@ -234,8 +234,8 @@ module('Integration | Component | curriculum inventory sequence block dates dura
 
   test('save fails if start-date is given but no end-date is provided', async function(assert) {
     assert.expect(2);
-    let block = EmberObject.create({ duration: 0 });
-    let saveAction = function() {
+    const block = EmberObject.create({ duration: 0 });
+    const saveAction = function() {
       assert.ok(false, 'Save action should have not been invoked.');
     };
     this.set('block', block);
@@ -245,7 +245,7 @@ module('Integration | Component | curriculum inventory sequence block dates dura
       @save={{saveAction}}
     />`);
     assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
-    let interactor = openDatepicker(find('.start-date input'));
+    const interactor = openDatepicker(find('.start-date input'));
     interactor.selectDate(new Date());
     await click('.buttons .done');
     return settled().then(() => {

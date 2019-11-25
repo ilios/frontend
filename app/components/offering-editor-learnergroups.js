@@ -8,12 +8,12 @@ export default Component.extend({
 
   revisedLearnerGroups: computed('cohort.filteredAvailableLearnerGroups.[]', async function() {
     const cohortId = this.get('cohort.id');
-    let learnerGroups = this.learnerGroups[cohortId];
+    const learnerGroups = this.learnerGroups[cohortId];
 
     if (isPresent(learnerGroups)) {
       return await map(learnerGroups, async group => {
-        let groupObject = {};
-        let parentTitle = await group.get('allParentTitles');
+        const groupObject = {};
+        const parentTitle = await group.get('allParentTitles');
         groupObject.group = group;
 
         if (isEmpty(parentTitle)) {

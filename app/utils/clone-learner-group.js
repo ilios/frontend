@@ -16,7 +16,7 @@ const { map } = RSVP;
  * @return {Promise.<Array>}
  */
 export default async function cloneLearnerGroup(store, group, cohort, withLearners, parent = null) {
-  let newGroup = store.createRecord('learner-group', group.getProperties(
+  const newGroup = store.createRecord('learner-group', group.getProperties(
     'title',
     'location'
   ));
@@ -33,10 +33,10 @@ export default async function cloneLearnerGroup(store, group, cohort, withLearne
   const instructors = await group.get('instructors');
   newGroup.set('instructors', instructors);
   const children = await group.get('children');
-  let newChildren = await map(children.toArray(), async child => {
+  const newChildren = await map(children.toArray(), async child => {
     return await cloneLearnerGroup(store, child, cohort, withLearners, newGroup);
   });
-  let flat = newChildren.reduce((flattened, obj) => {
+  const flat = newChildren.reduce((flattened, obj) => {
     return flattened.pushObjects(obj.toArray());
   }, []);
 

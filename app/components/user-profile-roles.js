@@ -83,7 +83,7 @@ export default Component.extend({
     const isEnabled = yield this.isEnabled;
     const isUserSyncIgnored = yield this.isUserSyncIgnored;
 
-    let roles = yield store.findAll('user-role');
+    const roles = yield store.findAll('user-role');
     const studentRole = roles.findBy('title', 'Student');
     const formerStudentRole = roles.findBy('title', 'Former Student');
 
@@ -94,7 +94,7 @@ export default Component.extend({
     this.set('isUserSyncIgnoredFlipped', false);
     user.set('enabled', isEnabled);
     user.set('userSyncIgnore', isUserSyncIgnored);
-    let userRoles = yield user.get('roles');
+    const userRoles = yield user.get('roles');
     userRoles.clear();
     if (isStudent) {
       userRoles.pushObject(studentRole);

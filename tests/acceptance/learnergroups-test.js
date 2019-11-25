@@ -149,11 +149,11 @@ module('Acceptance | Learner Groups', function(hooks) {
     this.server.create('cohort', {
       programYearId: 1,
     });
-    let firstLearnergroup = this.server.create('learnerGroup', {
+    const firstLearnergroup = this.server.create('learnerGroup', {
       cohortId: 1,
       userIds: [2, 3, 4, 5, 6],
     });
-    let secondLearnergroup = this.server.create('learnerGroup', {
+    const secondLearnergroup = this.server.create('learnerGroup', {
       cohortId: 1,
     });
     this.server.create('learnerGroup', {
@@ -255,7 +255,7 @@ module('Acceptance | Learner Groups', function(hooks) {
     const input = '.new-learnergroup input';
     const done = '.new-learnergroup .done';
 
-    let newTitle = 'A New Test Title';
+    const newTitle = 'A New Test Title';
     await visit(url);
     await click(expandButton);
     await fillIn(input, newTitle);

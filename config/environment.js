@@ -9,7 +9,7 @@ if (existsSync(dotEnvPath)) {
 
 module.exports = function (environment) {
 
-  let ENV = {
+  const ENV = {
     modulePrefix: 'ilios',
     environment,
     rootURL: '/',

@@ -28,12 +28,12 @@ export default Component.extend({
       return [].concat(sessionTerms.toArray()).concat(courseTerms.toArray());
     });
 
-    let flat = terms.reduce((flattened, obj) => {
+    const flat = terms.reduce((flattened, obj) => {
       return flattened.pushObjects(obj.toArray());
     }, []);
     await terms.mapBy('vocabulary');
 
-    let vocabularyObjects = {};
+    const vocabularyObjects = {};
     for (let i = 0; i < flat.length; i++) {
       const term = flat[i];
       const vocabulary = await term.get('vocabulary');
@@ -89,7 +89,7 @@ export default Component.extend({
     }
     const { meta } = obj;
 
-    let vocabularyTitle = meta.vocabulary.get('title');
+    const vocabularyTitle = meta.vocabulary.get('title');
     const title = htmlSafe(vocabularyTitle);
 
     return {

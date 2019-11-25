@@ -120,7 +120,7 @@ export default Component.extend(NewUser, {
     },
 
     toggleUserSelection(obj){
-      let selectedUsers = this.selectedUsers;
+      const selectedUsers = this.selectedUsers;
       if (selectedUsers.includes(obj)) {
         selectedUsers.removeObject(obj);
       } else {
@@ -143,18 +143,18 @@ export default Component.extend(NewUser, {
   getFileContents(file){
     this.set('fileUploadError', false);
     return new Promise(resolve => {
-      let allowedFileTypes = ['text/plain', 'text/csv', 'text/tab-separated-values'];
+      const allowedFileTypes = ['text/plain', 'text/csv', 'text/tab-separated-values'];
       if (!allowedFileTypes.includes(file.type)) {
         const intl = this.intl;
         this.set('fileUploadError', true);
         throw new Error(intl.t('general.fileTypeError', {fileType: file.type}));
       }
 
-      let ProposedUser = EmberObject.extend(UserValidations, {
+      const ProposedUser = EmberObject.extend(UserValidations, {
         email: null
       });
-      let complete = ({data}) => {
-        let proposedUsers = data.map(arr => {
+      const complete = ({data}) => {
+        const proposedUsers = data.map(arr => {
           return ProposedUser.create(getOwner(this).ownerInjection(), {
             firstName: isPresent(arr[0])?arr[0]:null,
             lastName: isPresent(arr[1])?arr[1]:null,
@@ -167,7 +167,7 @@ export default Component.extend(NewUser, {
             password: isPresent(arr[8])?arr[8]:null
           });
         });
-        let notHeaderRow = proposedUsers.filter(obj => String(obj.firstName).toLowerCase() !== 'first' || String(obj.lastName).toLowerCase() !== 'last');
+        const notHeaderRow = proposedUsers.filter(obj => String(obj.firstName).toLowerCase() !== 'first' || String(obj.lastName).toLowerCase() !== 'last');
 
 
         resolve(notHeaderRow);
@@ -180,16 +180,16 @@ export default Component.extend(NewUser, {
   },
 
   parseFile: task(function * (file) {
-    let proposedUsers = yield this.getFileContents(file);
-    let existingUsernames = yield this.existingUsernames();
-    let filledOutUsers = proposedUsers.map(obj => {
+    const proposedUsers = yield this.getFileContents(file);
+    const existingUsernames = yield this.existingUsernames();
+    const filledOutUsers = proposedUsers.map(obj => {
       obj.addedViaIlios = true;
       obj.enabled = true;
       obj.existingUsernames = existingUsernames;
 
       return obj;
     });
-    let validUsers = yield filter(filledOutUsers, obj => {
+    const validUsers = yield filter(filledOutUsers, obj => {
       return obj.validate().then(({validations}) => {
         return validations.get('isValid');
       });
@@ -208,15 +208,15 @@ export default Component.extend(NewUser, {
     const roles = yield store.findAll('user-role');
     const studentRole = roles.findBy('id', '4');
 
-    let proposedUsers = this.selectedUsers;
+    const proposedUsers = this.selectedUsers;
 
-    let validUsers = yield filter(proposedUsers, obj => {
+    const validUsers = yield filter(proposedUsers, obj => {
       return obj.validate().then(({validations}) => {
         return validations.get('isValid');
       });
     });
-    let records = validUsers.map(userInput => {
-      let user = store.createRecord('user', userInput.getProperties(
+    const records = validUsers.map(userInput => {
+      const user = store.createRecord('user', userInput.getProperties(
         'firstName',
         'lastName',
         'middleName',
@@ -243,7 +243,7 @@ export default Component.extend(NewUser, {
         authentication.set('user', user);
       }
 
-      let rhett =  {user, userInput};
+      const rhett =  {user, userInput};
       if (authentication) {
         rhett.authentication = authentication;
       }
@@ -254,13 +254,13 @@ export default Component.extend(NewUser, {
     while (records.get('length') > 0){
       try {
         parts = records.splice(0, 10);
-        let users = parts.mapBy('user');
+        const users = parts.mapBy('user');
         yield all(users.invoke('save'));
-        let authentications = parts.mapBy('authentication');
+        const authentications = parts.mapBy('authentication');
         yield all(authentications.invoke('save'));
       } catch (e) {
-        let userErrors = parts.filter(obj => obj.user.get('isError'));
-        let authenticationErrors = parts.filter(obj => !userErrors.includes(obj) && isPresent(obj.authentication) && obj.authentication.get('isError'));
+        const userErrors = parts.filter(obj => obj.user.get('isError'));
+        const authenticationErrors = parts.filter(obj => !userErrors.includes(obj) && isPresent(obj.authentication) && obj.authentication.get('isError'));
         this.savingUserErrors.pushObjects(userErrors);
         this.savingAuthenticationErrors.pushObjects(authenticationErrors);
       } finally {

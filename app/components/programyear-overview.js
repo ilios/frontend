@@ -22,7 +22,7 @@ export default Component.extend({
 
   actions: {
     addDirector(user) {
-      let programYear = this.programYear;
+      const programYear = this.programYear;
       programYear.get('directors').then(directors => {
         directors.addObject(user);
         user.get('programYears').addObject(programYear);
@@ -31,7 +31,7 @@ export default Component.extend({
     },
 
     removeDirector(user) {
-      let programYear = this.programYear;
+      const programYear = this.programYear;
       programYear.get('directors').then(directors => {
         directors.removeObject(user);
         user.get('programYears').removeObject(programYear);

@@ -9,11 +9,11 @@ module('Integration | Component | school list', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    let school1 = EmberObject.create({
+    const school1 = EmberObject.create({
       id: 1,
       title: 'school 0'
     });
-    let school2 = EmberObject.create({
+    const school2 = EmberObject.create({
       id: 2,
       title: 'school 1'
     });

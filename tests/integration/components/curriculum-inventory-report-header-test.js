@@ -17,7 +17,7 @@ module('Integration | Component | curriculum inventory report header', function(
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       absoluteFileUri: 'foo/bar',
       name: 'Report name'
     });
@@ -30,7 +30,7 @@ module('Integration | Component | curriculum inventory report header', function(
   });
 
   test('non updatable reports render in read-only mode.', async function(assert) {
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       absoluteFileUri: 'foo/bar',
       name: 'Report name'
     });
@@ -45,7 +45,7 @@ module('Integration | Component | curriculum inventory report header', function(
   test('change name', async function(assert) {
     assert.expect(3);
     const newName = 'new name';
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       isFinalized: false,
       absoluteFileUri: 'foo/bar',
       name: 'old name',
@@ -66,7 +66,7 @@ module('Integration | Component | curriculum inventory report header', function(
 
   test('change name fails on empty value', async function(assert) {
     assert.expect(2);
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       isFinalized: false,
       absoluteFileUri: 'foo/bar',
       name: 'old name',
@@ -86,11 +86,11 @@ module('Integration | Component | curriculum inventory report header', function(
 
   test('clicking on finalize button fires action', async function(assert) {
     assert.expect(1);
-    let report = EmberObject.create({
+    const report = EmberObject.create({
       absoluteFileUri: 'foo/bar',
       name: 'Report name'
     });
-    let finalizeAction = function() {
+    const finalizeAction = function() {
       assert.ok(true, 'Finalize action was invoked.');
     };
     this.set('report', report);

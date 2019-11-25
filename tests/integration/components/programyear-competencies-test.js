@@ -7,21 +7,21 @@ import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
 
-let school = EmberObject.create({
+const school = EmberObject.create({
 });
-let program = EmberObject.create({
+const program = EmberObject.create({
   school: resolve(school)
 });
-let programYear = EmberObject.create({
+const programYear = EmberObject.create({
   program: resolve(program)
 });
-let domain1 = EmberObject.create({
+const domain1 = EmberObject.create({
   id: 1,
   title: 'domain1',
   programYears: resolve([programYear]),
 });
 domain1.set('domain', resolve(domain1));
-let competency1 = EmberObject.create({
+const competency1 = EmberObject.create({
   id: 2,
   domain: resolve(domain1),
   title: 'competency1',
@@ -29,7 +29,7 @@ let competency1 = EmberObject.create({
   programYears: resolve([programYear]),
   treeChildren: resolve([]),
 });
-let competency2 = EmberObject.create({
+const competency2 = EmberObject.create({
   id: 2,
   domain: resolve(domain1),
   title: 'competency2',

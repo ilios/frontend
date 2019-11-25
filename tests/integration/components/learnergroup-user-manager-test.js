@@ -27,14 +27,14 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     const user2CampusId = 'tbody tr:nth-of-type(2) td:nth-of-type(4)';
     const user2Email = 'tbody tr:nth-of-type(2) td:nth-of-type(5)';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       firstName: 'Jasper',
       lastName: 'Dog',
       campusId: '1234',
       email: 'testemail',
       enabled: true,
     });
-    let user2 = EmberObject.create({
+    const user2 = EmberObject.create({
       firstName: 'Jackson',
       lastName: 'Doggy',
       campusId: '123',
@@ -87,7 +87,7 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     const user2CampusId = 'tbody tr:nth-of-type(2) td:nth-of-type(4)';
     const user2Email = 'tbody tr:nth-of-type(2) td:nth-of-type(5)';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       firstName: 'Jasper',
       lastName: 'Dog',
       campusId: '1234',
@@ -97,7 +97,7 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
         id: 1
       }),
     });
-    let user2 = EmberObject.create({
+    const user2 = EmberObject.create({
       firstName: 'Jackson',
       lastName: 'Doggy',
       campusId: '123',
@@ -148,13 +148,13 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     const user1FirstName = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
     const user2FirstName = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       firstName: 'Jasper',
       lowestGroupInTree: EmberObject.create({
         id: 1
       }),
     });
-    let user2 = EmberObject.create({
+    const user2 = EmberObject.create({
       firstName: 'Jackson',
       lowestGroupInTree: EmberObject.create({
         id: 1
@@ -189,7 +189,7 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     const user1CheckBox = 'table:nth-of-type(2) tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
     const button = 'button.done';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: true,
       lowestGroupInTree: EmberObject.create({
         id: 1
@@ -232,7 +232,7 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     const user1CheckBox = 'table:nth-of-type(2) tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
     const button = 'button.cancel';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: true,
       lowestGroupInTree: EmberObject.create({
         id: 1
@@ -273,7 +273,7 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     assert.expect(1);
     const action = 'table:nth-of-type(2) tbody tr:nth-of-type(1) td:nth-of-type(7) .clickable';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: true,
       lowestGroupInTree: EmberObject.create({
         id: 1
@@ -309,7 +309,7 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     assert.expect(1);
     const action = 'table:nth-of-type(3) tbody tr:nth-of-type(1) td:nth-of-type(7) .clickable';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: true,
       lowestGroupInTree: EmberObject.create({
         id: 2
@@ -347,14 +347,14 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     const action1 = 'table:nth-of-type(2) tbody tr:nth-of-type(1) td:nth-of-type(7) .clickable';
     const action2 = 'table:nth-of-type(3) tbody tr:nth-of-type(1) td:nth-of-type(7) .clickable';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: true,
       lowestGroupInTree: EmberObject.create({
         id: 1
       }),
     });
 
-    let user2 = EmberObject.create({
+    const user2 = EmberObject.create({
       enabled: true,
       lowestGroupInTree: EmberObject.create({
         id: 2
@@ -392,13 +392,13 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     const user2CheckBox = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input[type=checkbox]';
     const button = 'button.done';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: true,
       lowestGroupInTree: EmberObject.create({
         id: 1
       }),
     });
-    let user2 = EmberObject.create({
+    const user2 = EmberObject.create({
       enabled: true,
       lowestGroupInTree: EmberObject.create({
         id: 1
@@ -441,13 +441,13 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     const user1CheckBox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
     const user2CheckBox = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input[type=checkbox]';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: true,
       lowestGroupInTree: EmberObject.create({
         id: 1
       }),
     });
-    let user2 = EmberObject.create({
+    const user2 = EmberObject.create({
       enabled: true,
       lowestGroupInTree: EmberObject.create({
         id: 1
@@ -491,7 +491,7 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     const userCheckbox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
     const userDisabledIcon = 'tbody tr:nth-of-type(1) td:nth-of-type(1) .fa-user-times';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: false,
       lowestGroupInTree: EmberObject.create({
         id: 1
@@ -530,7 +530,7 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     const userCheckbox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
     const userDisabledIcon = 'tbody tr:nth-of-type(1) td:nth-of-type(1) .fa-user-times';
 
-    let user1 = EmberObject.create({
+    const user1 = EmberObject.create({
       enabled: false,
       lowestGroupInTree: EmberObject.create({
         id: 1

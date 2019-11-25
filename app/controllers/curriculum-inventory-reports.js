@@ -90,7 +90,7 @@ export default Controller.extend({
   actions: {
     changeSelectedProgram(programId) {
       this.programs.then(programs => {
-        let program = programs.findBy('id', programId);
+        const program = programs.findBy('id', programId);
         program.get('school').then(school => {
           this.set('schoolId', school.get('id'));
           this.set('programId', programId);

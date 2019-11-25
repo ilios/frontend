@@ -40,22 +40,21 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     });
   });
 
-  let createFile = function(users){
-    let file;
-    let lines = users.map(arr => {
+  const createFile = function(users){
+    const lines = users.map(arr => {
       return arr.join("\t");
     });
 
-    let contents = lines.join("\n");
-    file = new Blob([contents], { type: 'text/plain' });
+    const contents = lines.join("\n");
+    const file = new Blob([contents], { type: 'text/plain' });
 
     file.mime = 'text/plain';
     file.name = 'test.txt';
     return file;
   };
 
-  let triggerUpload = async function(users, selector){
-    let file = createFile(users);
+  const triggerUpload = async function(users, selector){
+    const file = createFile(users);
     await triggerEvent(
       selector,
       'change',
@@ -79,7 +78,7 @@ module('Acceptance | learner group bulk assign', function(hooks) {
       campusId: '12345',
       cohortIds: [1],
     });
-    let users = [
+    const users = [
       ['jasper', 'johnson', '1234567890', '123Test'],
       ['jackson', 'johnson', '12345'],
     ];
@@ -115,7 +114,7 @@ module('Acceptance | learner group bulk assign', function(hooks) {
       campusId: '12345',
       cohortIds: [1],
     });
-    let users = [
+    const users = [
       ['jasper J', 'johnson', '1234567890', '123Test'],
       ['jackson', 'johnson the seconds', '12345'],
     ];
@@ -175,7 +174,7 @@ module('Acceptance | learner group bulk assign', function(hooks) {
       cohortIds: [1],
       learnerGroupIds: [1]
     });
-    let users = [
+    const users = [
       ['j', 'johnson', '1234567890', '123Test'],
       ['jackson', 'j', '12345'],
       ['', 'johnson', '666666', '123Test'],
@@ -212,7 +211,7 @@ module('Acceptance | learner group bulk assign', function(hooks) {
       campusId: '12345',
       cohortIds: [1],
     });
-    let users = [
+    const users = [
       ['jasper', 'johnson', '1234567890', '123Test'],
       ['jackson', 'johnson', '12345', '123Test'],
     ];
@@ -237,7 +236,7 @@ module('Acceptance | learner group bulk assign', function(hooks) {
       campusId: '12345',
       cohortIds: [1],
     });
-    let users = [
+    const users = [
       ['jasper', 'johnson', '1234567890'],
       ['jackson', 'johnson', '12345', '123Test'],
     ];
@@ -276,7 +275,7 @@ module('Acceptance | learner group bulk assign', function(hooks) {
       campusId: '12345',
       cohortIds: [1],
     });
-    let users = [
+    const users = [
       ['jackson', 'johnson', '12345', '123Test'],
     ];
     await page.visit({ learnerGroupId: 1 });
@@ -336,7 +335,7 @@ module('Acceptance | learner group bulk assign', function(hooks) {
       campusId: '1234567890',
       cohortIds: [1],
     });
-    let users = [
+    const users = [
       ['jasper', 'johnson', '1234567890', '123Test'],
       [' ', '   ', '', '  '],
       [' ', '  ', '', ' '],

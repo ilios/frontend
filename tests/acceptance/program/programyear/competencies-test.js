@@ -45,7 +45,7 @@ module('Acceptance | Program Year - Competencies', function(hooks) {
   test('list', async function(assert) {
     await visit(url);
     assert.equal(await getElementText(find('.programyear-competencies .title')), getText('Competencies (2)'));
-    let competencies = 'competency 0 competency 1 competency 2';
+    const competencies = 'competency 0 competency 1 competency 2';
     assert.equal(await getElementText(find('.programyear-competencies .programyear-competencies-content')), getText(competencies));
   });
 
@@ -53,7 +53,7 @@ module('Acceptance | Program Year - Competencies', function(hooks) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
     await click('.programyear-competencies .programyear-competencies-actions button');
-    let checkboxes = findAll('.programyear-competencies input[type=checkbox]');
+    const checkboxes = findAll('.programyear-competencies input[type=checkbox]');
     assert.equal(checkboxes.length, 6);
     assert.ok(checkboxes[0].indeterminate);
     assert.ok(!checkboxes[0].checked);
@@ -67,7 +67,7 @@ module('Acceptance | Program Year - Competencies', function(hooks) {
     await click(findAll('.programyear-competencies input[type=checkbox]')[4]);
     await click('.programyear-competencies .bigadd');
 
-    let competencies = 'competency 0 competency 2 competency 3 competency 4';
+    const competencies = 'competency 0 competency 2 competency 3 competency 4';
     assert.equal(await getElementText('.programyear-competencies .programyear-competencies-content'), getText(competencies));
   });
 });

@@ -26,7 +26,7 @@ export default Component.extend({
    * @param {string} q
    */
   async apiSearch(q) {
-    let params = {
+    const params = {
       q,
       limit: 100,
       'order_by[lastName]': 'ASC',
@@ -49,7 +49,7 @@ export default Component.extend({
   searchForUsers: task(function * (query) {
     const intl = this.intl;
 
-    let q = cleanQuery(query);
+    const q = cleanQuery(query);
     if (isBlank(q)) {
       yield timeout(1);
       return [];
@@ -71,13 +71,13 @@ export default Component.extend({
         text: intl.t('general.noSearchResultsPrompt')
       }];
     }
-    let mappedResults = searchResults.map(user => {
+    const mappedResults = searchResults.map(user => {
       return {
         type: 'user',
         user
       };
     });
-    let results = [
+    const results = [
       {
         type: 'summary',
         text: intl.t('general.resultsCount', {count: mappedResults.length})

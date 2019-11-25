@@ -12,7 +12,7 @@ module('Integration | Component | programyear objective list item', function(hoo
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    let objective = EmberObject.create({
+    const objective = EmberObject.create({
       title: 'fake title'
     });
     this.set('objective', objective);
@@ -34,7 +34,7 @@ module('Integration | Component | programyear objective list item', function(hoo
 
   test('can change title', async function (assert) {
     assert.expect(1);
-    let objective = EmberObject.create({
+    const objective = EmberObject.create({
       title: 'fake title',
       save(){
         assert.equal(this.get('title'), '<p>new title</p>');
@@ -59,7 +59,7 @@ module('Integration | Component | programyear objective list item', function(hoo
   });
 
   test('can manage competency', async function(assert) {
-    let objective = EmberObject.create({
+    const objective = EmberObject.create({
       title: 'fake title'
     });
     this.set('objective', objective);
@@ -82,7 +82,7 @@ module('Integration | Component | programyear objective list item', function(hoo
   });
 
   test('can manage descriptors', async function(assert) {
-    let objective = EmberObject.create({
+    const objective = EmberObject.create({
       title: 'fake title'
     });
     this.set('objective', objective);
@@ -105,7 +105,7 @@ module('Integration | Component | programyear objective list item', function(hoo
   });
 
   test('can expand', async function(assert) {
-    let objective = EmberObject.create({
+    const objective = EmberObject.create({
       title: 'fake title'
     });
     this.set('objective', objective);

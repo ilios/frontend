@@ -8,7 +8,7 @@ import { task, timeout } from 'ember-concurrency';
 
 const MAXIMUM_UPLOAD_ATTEMPTS = 3;
 
-let IliosUploader = Uploader.extend({
+const IliosUploader = Uploader.extend({
   iliosHeaders: null,
 
   ajaxSettings: computed('iliosHeaders.[]', function() {
@@ -28,7 +28,7 @@ export default FileField.extend({
   headers: computed('session.isAuthenticated', function() {
     const session = this.session;
     const { jwt } = session.data.authenticated;
-    let headers = {};
+    const headers = {};
     if (jwt) {
       headers['X-JWT-Authorization'] = `Token ${jwt}`;
     }
@@ -70,7 +70,7 @@ export default FileField.extend({
 
   upload: task(function* (uploader, file, attempt) {
     try {
-      let data = yield uploader.upload(file);
+      const data = yield uploader.upload(file);
       return data;
     } catch (error) {
       this.setUploadPercentage(0);

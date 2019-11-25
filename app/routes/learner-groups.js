@@ -13,8 +13,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
 
   model() {
-    let rsvpDefer = defer();
-    let model = {};
+    const rsvpDefer = defer();
+    const model = {};
     this.store.findAll('school').then(schools => {
       model.schools = schools;
       rsvpDefer.resolve(model);

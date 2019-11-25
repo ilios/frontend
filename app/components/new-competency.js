@@ -38,7 +38,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   save: task(function* () {
     this.send('addErrorDisplayFor', 'title');
-    let {validations} = yield this.validate();
+    const {validations} = yield this.validate();
     if (validations.get('isInvalid')) {
       return;
     }

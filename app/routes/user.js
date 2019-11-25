@@ -37,7 +37,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
   actions: {
     loading(transition) {
-      let controller = this.controllerFor('user');
+      const controller = this.controllerFor('user');
       controller.set('isLoading', true);
       transition.promise.finally(() => {
         controller.set('isLoading', false);

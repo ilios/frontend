@@ -73,7 +73,7 @@ module('Integration | Component | new program', function(hooks) {
     await render(hbs`<NewProgram @save={{action save}} @cancel={{action cancel}} />`);
     const saveBtn = find('.buttons .done');
     const titleInput = find('[data-test-newprogram-title] input');
-    let validationError = '[data-test-newprogram-title] .validation-error-message';
+    const validationError = '[data-test-newprogram-title] .validation-error-message';
     assert.dom(validationError).doesNotExist();
     fillIn(titleInput, '0123456789'.repeat(21));
     await click(saveBtn);
@@ -92,7 +92,7 @@ module('Integration | Component | new program', function(hooks) {
     await render(hbs`<NewProgram @save={{action save}} @cancel={{action cancel}} />`);
     const saveBtn = find('.buttons .done');
     const titleInput = find('[data-test-newprogram-title] input');
-    let validationError = '[data-test-newprogram-title] .validation-error-message';
+    const validationError = '[data-test-newprogram-title] .validation-error-message';
     assert.dom(validationError).doesNotExist();
     fillIn(titleInput, 'foobar');
     await click(saveBtn);

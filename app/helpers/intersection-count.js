@@ -10,7 +10,7 @@ export function intersectionCount([a, b]/*, hash*/) {
   }
 
   if (a.length > b.length) {
-    let tmp = a;
+    const tmp = a;
     a = b;
     b = tmp;
   }

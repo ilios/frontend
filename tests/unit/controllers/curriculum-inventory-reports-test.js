@@ -28,7 +28,7 @@ module('Unit | Controller | curriculum-inventory-reports', function(hooks) {
     });
 
     this.owner.register('service:currentUser', currentUserMock);
-    let controller = this.owner.lookup('controller:curriculum-inventory-reports');
+    const controller = this.owner.lookup('controller:curriculum-inventory-reports');
 
     controller.set('model', modelMock);
     let selectedSchool = await controller.get('selectedSchool');

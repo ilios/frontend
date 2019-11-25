@@ -118,8 +118,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         await this.validate();
         if (this.validations.attrs.newTermTitle.isValid) {
           this.send('removeErrorDisplayFor', 'newTermTitle');
-          let title = this.newTermTitle;
-          let term = this.store.createRecord('term', {
+          const title = this.newTermTitle;
+          const term = this.store.createRecord('term', {
             title,
             parent: this.term,
             vocabulary: this.vocabulary,
@@ -137,7 +137,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     },
     async deleteTerm() {
       const parent = await this.term.parent;
-      let goTo = isEmpty(parent)?null:parent.id;
+      const goTo = isEmpty(parent)?null:parent.id;
       this.manageTerm(goTo);
       this.term.deleteRecord();
       await this.term.save();

@@ -14,8 +14,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
 
   model() {
-    let defer = RSVP.defer();
-    let model = {};
+    const defer = RSVP.defer();
+    const model = {};
     this.get('currentUser.model').then(currentUser=>{
       this.store.findAll('school').then(schools => {
         model.schools = schools;

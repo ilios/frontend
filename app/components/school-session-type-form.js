@@ -140,7 +140,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
   saveSessionType: task(function* () {
     this.send('addErrorDisplaysFor', ['title', 'calendarColor', 'selectedAamcMethodId']);
-    let {validations} = yield this.validate();
+    const {validations} = yield this.validate();
     if (validations.get('isInvalid')) {
       return;
     }

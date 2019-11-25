@@ -13,7 +13,7 @@ export default function () {
   setupMirage(this);
 
   this.post('auth/login', function(schema, request) {
-    let errors = [];
+    const errors = [];
     var attrs = JSON.parse(request.requestBody);
     if(!('username' in attrs) || !attrs.username){
       errors.push('missingUsername');
@@ -21,15 +21,15 @@ export default function () {
     if(!('password' in attrs) || !attrs.password){
       errors.push('missingPassword');
     }
-    let username = attrs.username.toLowerCase();
+    const username = attrs.username.toLowerCase();
     if(errors.length === 0){
       if(username === 'demo' && attrs.password === 'demo'){
-        let now = moment();
-        let nextWeek = now.clone().add(1, 'week');
-        let header = '{"alg":"none"}';
-        let body = `{"iss": "ilios","aud": "ilios","iat": "${now.format('X')}","exp": "${nextWeek.format('X')}","user_id": 4136}`;
+        const now = moment();
+        const nextWeek = now.clone().add(1, 'week');
+        const header = '{"alg":"none"}';
+        const body = `{"iss": "ilios","aud": "ilios","iat": "${now.format('X')}","exp": "${nextWeek.format('X')}","user_id": 4136}`;
 
-        let encodedData =  window.btoa(header) + '.' +  window.btoa(body) + '.';
+        const encodedData =  window.btoa(header) + '.' +  window.btoa(body) + '.';
         return {
           jwt: encodedData
         };
@@ -66,12 +66,12 @@ export default function () {
     // return {
     //   jwt: null
     // };
-    let now = moment();
-    let nextWeek = now.clone().add(1, 'week');
-    let header = '{"alg":"none"}';
-    let body = `{"iss": "ilios","aud": "ilios","iat": "${now.format('X')}","exp": "${nextWeek.format('X')}","user_id": 4136}`;
+    const now = moment();
+    const nextWeek = now.clone().add(1, 'week');
+    const header = '{"alg":"none"}';
+    const body = `{"iss": "ilios","aud": "ilios","iat": "${now.format('X')}","exp": "${nextWeek.format('X')}","user_id": 4136}`;
 
-    let encodedData =  window.btoa(header) + '.' +  window.btoa(body) + '.';
+    const encodedData =  window.btoa(header) + '.' +  window.btoa(body) + '.';
     return {
       jwt: encodedData
     };

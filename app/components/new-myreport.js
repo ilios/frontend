@@ -52,7 +52,7 @@ const PrepositionObject = EmberObject.extend({
       return parseInt(model.get('year'), 10);
     }
     if (type === 'session') {
-      let course = await model.get('course');
+      const course = await model.get('course');
       return parseInt(course.get('year'), 10);
     }
 
@@ -81,7 +81,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isSession: equal('currentPrepositionalObject', 'session'),
 
   subjectList: computed('intl.locale', function() {
-    let list = [
+    const list = [
       {value: 'course', label: this.intl.t('general.courses')},
       {value: 'session', label: this.intl.t('general.sessions')},
       {value: 'program', label: this.intl.t('general.programs')},
@@ -99,7 +99,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   }),
 
   prepositionalObjectList: computed('intl.locale', 'currentSubject', function() {
-    let list = [
+    const list = [
       {value: 'course', label: this.intl.t('general.course'), subjects: ['session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'session type', 'term']},
       {value: 'session', label: this.intl.t('general.session'), subjects: ['course', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'term']},
       {value: 'program year', label: this.intl.t('general.programYear'), subjects: ['term']},
@@ -130,14 +130,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       return [];
     }
 
-    let model = type.dasherize();
+    const model = type.dasherize();
     const store = this.store;
     const school = await this.currentSchool;
-    let query = {
+    const query = {
       filters: {}
     };
     if (isPresent(school)) {
-      let schoolScopedModels = [
+      const schoolScopedModels = [
         'session',
         'course',
         'program',
@@ -155,7 +155,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       }
     }
     const objects = await store.query(model, query);
-    let values = objects.map(object => {
+    const values = objects.map(object => {
       return PrepositionObject.create({
         type,
         model: object,
@@ -202,7 +202,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   currentSubjectLabel: computed('currentSubject', 'subjectList.[]', function() {
     const currentSubjectValue = this.currentSubject;
-    let currentSubject = this.subjectList.find(subject => {
+    const currentSubject = this.subjectList.find(subject => {
       return subject.value === currentSubjectValue;
     });
 
@@ -358,7 +358,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       return;
     }
 
-    let report = store.createRecord('report', {
+    const report = store.createRecord('report', {
       title,
       user,
       subject,

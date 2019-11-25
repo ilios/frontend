@@ -5,7 +5,7 @@ module('Unit | Route | curriculum-inventory-reports', function(hooks) {
   setupTest(hooks);
 
   test('it exists', function(assert) {
-    let route = this.owner.lookup('route:curriculum-inventory-reports');
+    const route = this.owner.lookup('route:curriculum-inventory-reports');
     assert.ok(route);
   });
 });

@@ -114,7 +114,7 @@ export default Component.extend({
 
     user.set('primaryCohort', primaryCohort);
 
-    let userCohorts = yield user.get('cohorts');
+    const userCohorts = yield user.get('cohorts');
     userCohorts.clear();
     userCohorts.pushObjects(selectedCohorts);
 

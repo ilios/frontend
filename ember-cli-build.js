@@ -9,7 +9,7 @@ module.exports = function(defaults) {
   const isProductionLikeBuild = ['production', 'staging', 'preview'].indexOf(env) > -1;
   const isTestBuild = env === 'test';
 
-  let app = new EmberApp(defaults, {
+  const app = new EmberApp(defaults, {
     fingerprint: {
       extensions: broccoliAssetRevDefaults.extensions.concat(['webmanifest', 'svg']),
       enabled: isProductionLikeBuild,

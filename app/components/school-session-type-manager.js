@@ -35,7 +35,7 @@ export default Component.extend({
   save: task(function* (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) {
     const sessionType = this.sessionType;
     const closeComponent = this.close;
-    let aamcMethods = [];
+    const aamcMethods = [];
     if (aamcMethod) {
       aamcMethods.pushObject(aamcMethod);
     }

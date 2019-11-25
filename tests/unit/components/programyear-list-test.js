@@ -44,8 +44,8 @@ module('Unit | Component | programyear list', function(hooks) {
 
     for (let i = 0; i < 10; i++) {
       if (i !== 5) {
-        let start = (currentYear - 5 + i).toString();
-        let end = (currentYear - 4 + i).toString();
+        const start = (currentYear - 5 + i).toString();
+        const end = (currentYear - 4 + i).toString();
 
         programYears.pushObject({ academicYears: `${start} - ${end}`, startYear: start });
       }

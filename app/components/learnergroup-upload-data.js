@@ -172,16 +172,16 @@ export default Component.extend({
   getFileContents(file){
     return new RSVPPromise(resolve => {
       this.set('fileUploadError', false);
-      let allowedFileTypes = ['text/plain', 'text/csv', 'text/tab-separated-values'];
+      const allowedFileTypes = ['text/plain', 'text/csv', 'text/tab-separated-values'];
       if (!allowedFileTypes.includes(file.type)) {
         this.set('fileUploadError', true);
         throw new Error(`Unable to accept files of type ${file.type}`);
       }
 
-      let ProposedUser = EmberObject.extend({
+      const ProposedUser = EmberObject.extend({
       });
-      let complete = ({data}) => {
-        let proposedUsers = data.map(arr => {
+      const complete = ({data}) => {
+        const proposedUsers = data.map(arr => {
           return ProposedUser.create({
             firstName: isPresent(arr[0])?arr[0]:null,
             lastName: isPresent(arr[1])?arr[1]:null,

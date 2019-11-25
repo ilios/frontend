@@ -21,7 +21,7 @@ export default Component.extend({
     finalize() {
       this.set('isFinalizing', true);
       const report = this.report;
-      let repExport = this.store.createRecord('curriculumInventoryExport', {
+      const repExport = this.store.createRecord('curriculumInventoryExport', {
         report: report,
       });
       repExport.save().then((savedExport) => {

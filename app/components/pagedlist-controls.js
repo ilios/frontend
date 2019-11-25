@@ -30,7 +30,7 @@ export default Component.extend({
   offsetOptions: computed('total', function() {
     const total = this.limitless?1000:this.total;
     const available = [10, 25, 50, 100, 200, 400, 1000];
-    let options = available.filter(option => {
+    const options = available.filter(option => {
       return option < total;
     });
     options.pushObject(available[options.length]);

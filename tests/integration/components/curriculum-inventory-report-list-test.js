@@ -155,7 +155,7 @@ module('Integration | Component | curriculum inventory report list', function(ho
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     let count = 0;
-    let sortBys = ['name', 'name:desc', 'year', 'year:desc'];
+    const sortBys = ['name', 'name:desc', 'year', 'year:desc'];
 
     this.set('program', programModel);
     this.set('sortBy', 'id');

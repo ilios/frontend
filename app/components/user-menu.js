@@ -33,7 +33,7 @@ export default Component.extend({
   },
 
   keyDown({ originalEvent }) {
-    let button = originalEvent.target.tagName.toLowerCase() === 'button' ? originalEvent.target : null;
+    const button = originalEvent.target.tagName.toLowerCase() === 'button' ? originalEvent.target : null;
     let item;
     if (!button) {
       item = originalEvent.target.tagName.toLowerCase() === 'li' ? originalEvent.target : originalEvent.target.parentElement;

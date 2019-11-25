@@ -42,13 +42,13 @@ export default Route.extend(UnauthenticatedRouteMixin, {
   async casLogin() {
     const iliosConfig = this.iliosConfig;
 
-    let currentUrl = [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
+    const currentUrl = [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
     let loginUrl = `/auth/login?service=${currentUrl}`;
 
-    let queryParams = {};
+    const queryParams = {};
     if (window.location.search.length > 1) {
       window.location.search.substr(1).split('&').forEach(str => {
-        let arr = str.split('=');
+        const arr = str.split('=');
         queryParams[arr[0]] = arr[1];
       });
     }
@@ -70,7 +70,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
       return;
     }
     if(response.status === 'success'){
-      let authenticator = 'authenticator:ilios-jwt';
+      const authenticator = 'authenticator:ilios-jwt';
       this.session.authenticate(authenticator, {jwt: response.jwt});
     }
   },
@@ -83,7 +83,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
     if(status === 'redirect'){
       let shibbolethLoginUrl = await iliosConfig.itemFromConfig('loginUrl');
       if(EmberConfig.redirectAfterShibLogin){
-        let attemptedRoute = encodeURIComponent(window.location.href);
+        const attemptedRoute = encodeURIComponent(window.location.href);
         shibbolethLoginUrl += '?target=' + attemptedRoute;
       }
       await new Promise(() => {
@@ -97,7 +97,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
       return;
     }
     if(status === 'success'){
-      let authenticator = 'authenticator:ilios-jwt';
+      const authenticator = 'authenticator:ilios-jwt';
       this.session.authenticate(authenticator, {jwt: response.jwt});
     }
   }

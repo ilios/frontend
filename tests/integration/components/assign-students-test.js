@@ -65,7 +65,7 @@ module('Integration | Component | assign students', function(hooks) {
       @setLimit={{action setLimit}}
     />`);
 
-    let cohortOptions = findAll('select:nth-of-type(1) option');
+    const cohortOptions = findAll('select:nth-of-type(1) option');
     assert.equal(cohortOptions.length, 1);
     assert.dom(cohortOptions[0]).hasText('program title test cohort');
 
@@ -75,11 +75,11 @@ module('Integration | Component | assign students', function(hooks) {
   });
 
   test('check all checks all', async function(assert) {
-    let school = EmberObject.create({
+    const school = EmberObject.create({
       id: 1,
       cohorts: resolve([])
     });
-    let students = [
+    const students = [
       EmberObject.create({
         id: 1,
         fullName: 'test person',
@@ -111,11 +111,11 @@ module('Integration | Component | assign students', function(hooks) {
   });
 
   test('check some sets indeterminate state', async function(assert) {
-    let school = EmberObject.create({
+    const school = EmberObject.create({
       id: 1,
       cohorts: resolve([])
     });
-    let students = [
+    const students = [
       EmberObject.create({
         id: 1,
         fullName: 'test person',
@@ -160,11 +160,11 @@ module('Integration | Component | assign students', function(hooks) {
   });
 
   test('when some are selected check all checks all', async function(assert) {
-    let school = EmberObject.create({
+    const school = EmberObject.create({
       id: 1,
       cohorts: resolve([])
     });
-    let students = [
+    const students = [
       EmberObject.create({
         id: 1,
         fullName: 'test person',

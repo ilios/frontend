@@ -52,7 +52,7 @@ export default Component.extend({
     },
 
     addCompetencyToBuffer(competency) {
-      let selectedCompetencies = this.selectedCompetencies.toArray();
+      const selectedCompetencies = this.selectedCompetencies.toArray();
       selectedCompetencies.addObject(competency);
       competency.get('children').then(children => {
         selectedCompetencies.addObjects(children.toArray());
@@ -61,7 +61,7 @@ export default Component.extend({
     },
 
     removeCompetencyFromBuffer(competency) {
-      let selectedCompetencies = this.selectedCompetencies.toArray();
+      const selectedCompetencies = this.selectedCompetencies.toArray();
       selectedCompetencies.removeObject(competency);
       competency.get('children').then(children => {
         selectedCompetencies.removeObjects(children.toArray());
@@ -81,7 +81,7 @@ export default Component.extend({
   loadSelectedCompetencies: task(function* () {
     const programYear = this.programYear;
     if (programYear){
-      let selectedCompetencies = yield programYear.get('competencies');
+      const selectedCompetencies = yield programYear.get('competencies');
       this.set('selectedCompetencies', selectedCompetencies.toArray());
     } else {
       yield timeout(1000);
@@ -90,8 +90,8 @@ export default Component.extend({
 
   save: task(function* () {
     yield timeout(10);
-    let programYear = this.programYear;
-    let selectedCompetencies = this.selectedCompetencies;
+    const programYear = this.programYear;
+    const selectedCompetencies = this.selectedCompetencies;
     programYear.set('competencies', selectedCompetencies);
     try {
       yield programYear.save();

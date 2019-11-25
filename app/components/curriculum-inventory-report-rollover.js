@@ -42,13 +42,13 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const reportYear = parseInt(report.get('year'), 10);
     const startYear = Math.min(thisYear, reportYear);
     const endYear = Math.max(thisYear, reportYear) + 5;
-    let years = [];
+    const years = [];
     for (let i = startYear; i < endYear; i++) {
       if (i === reportYear) {
         continue;
       }
-      let title = i + ' - ' + (i + 1);
-      let year = EmberObject.create({ 'id': i, 'title': title });
+      const title = i + ' - ' + (i + 1);
+      const year = EmberObject.create({ 'id': i, 'title': title });
       years.pushObject(year);
     }
     let selectedYear = years.findBy('id', startYear + 1);
@@ -71,7 +71,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('isSaving', true);
     yield timeout(10);
     this.send('addErrorDisplaysFor', ['name']);
-    let {validations} = yield this.validate();
+    const {validations} = yield this.validate();
 
     if (validations.get('isInvalid')) {
       this.set('isSaving', false);
@@ -81,20 +81,20 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const year = this.selectedYear.get('id');
     const description = this.description;
     const name = this.name;
-    let data = {
+    const data = {
       name,
       description,
       year,
     };
 
-    let url = `${this.namespace}/curriculuminventoryreports/${reportId}/rollover`;
+    const url = `${this.namespace}/curriculuminventoryreports/${reportId}/rollover`;
     const newReportObj = yield this.fetch.postToApiHost(url, data);
 
     const flashMessages = this.flashMessages;
     const store = this.store;
     flashMessages.success('general.curriculumInventoryReportRolloverSuccess');
     store.pushPayload(newReportObj);
-    let newReport = store.peekRecord('curriculum-inventory-report', newReportObj.curriculumInventoryReports[0].id);
+    const newReport = store.peekRecord('curriculum-inventory-report', newReportObj.curriculumInventoryReports[0].id);
 
     return this.visit(newReport);
   }).drop(),
