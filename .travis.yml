@@ -27,6 +27,8 @@ before_install:
 branches:
   only:
     - master
+    # npm version tags
+    - /^v\d+\.\d+\.\d+/
 
 script:
   - npm run lint:style
