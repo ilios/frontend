@@ -4,8 +4,7 @@ import { all } from 'rsvp';
 import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class CollapsedCompetenciesComponent extends Component {
-  @tracked
-  summary;
+  @tracked summary;
 
   @restartableTask
   *load(element, [competencies]) {
