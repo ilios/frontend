@@ -9,36 +9,31 @@ export default Component.extend({
 
   classNames: ['week-glance'],
 
-  startOfWeek: 0,
-  endOfWeek: 6,
-
   year: null,
   week: null,
   collapsible: true,
   collapsed: true,
   showFullTitle: false,
   'data-test-week-glance': true,
-  midnightAtTheStartOfThisWeek: computed('intl.locale', 'year', 'week', 'startOfWeek', function(){
+
+  thursdayOfTheWeek: computed('intl.locale', 'year', 'week', function() {
     this.get('intl'); //we need to use the service so the CP will re-fire
     const year = this.get('year');
     const week = this.get('week');
-    const startOfWeek = this.get('startOfWeek');
     const targetDate = moment();
     targetDate.year(year);
+    targetDate.day(4);
     targetDate.isoWeek(week);
-    targetDate.day(startOfWeek);
     return targetDate.hour(0).minute(0);
   }),
-  midnightAtTheEndOfThisWeek: computed('intl.locale', 'year', 'week', 'endOfWeek', function(){
-    this.get('intl'); //we need to use the service so the CP will re-fire
-    const year = this.get('year');
-    const week = this.get('week');
-    const endOfWeek = this.get('endOfWeek');
-    const targetDate = moment();
-    targetDate.year(year);
-    targetDate.isoWeek(week);
-    targetDate.day(endOfWeek);
-    return targetDate.hour(23).minute(59).second(59);
+
+  midnightAtTheStartOfThisWeek: computed('thursdayOfTheWeek', function(){
+    const thursday = this.get('thursdayOfTheWeek');
+    return thursday.clone().subtract(4, 'days');
+  }),
+  midnightAtTheEndOfThisWeek: computed('thursdayOfTheWeek', function(){
+    const thursday = this.get('thursdayOfTheWeek');
+    return thursday.clone().add(2, 'days').hour(23).minute(59);
   }),
   title: computed('midnightAtTheStartOfThisWeek', 'midnightAtTheEndOfThisWeek', function(){
     const midnightAtTheStartOfThisWeek = this.get('midnightAtTheStartOfThisWeek');
