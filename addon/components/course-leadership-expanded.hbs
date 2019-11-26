@@ -1,47 +1,53 @@
-<div class="course-leadership-expanded-header">
-  <h3
-    class="title {{if this.isCollapsible "collapsible clickable"}}"
-    role="button"
-    {{on "click" @collapse}}
-  >
-    {{t "general.courseLeadership"}}
-  </h3>
-  <div class="actions">
-    {{#if @isManaging}}
-      <button class="bigadd" {{on "click" (perform this.save)}}>
-        <FaIcon
-          @icon={{if this.save.isRunning "spinner" "check"}}
-          @spin={{if this.isSaving true false}}
+<div
+  class="course-leadership-expanded"
+  data-test-course-leadership-expanded
+>
+  <div class="course-leadership-expanded-header">
+    <h3
+      class="title {{if this.isCollapsible "collapsible clickable"}}"
+      role="button"
+      {{on "click" (if this.isCollapsible @collapse (noop))}}
+      data-test-title
+    >
+      {{t "general.courseLeadership"}}
+    </h3>
+    <div class="actions">
+      {{#if @isManaging}}
+        <button class="bigadd" {{on "click" (perform this.save)}} data-test-save>
+          <FaIcon
+            @icon={{if this.save.isRunning "spinner" "check"}}
+            @spin={{this.save.isRunning}}
+          />
+        </button>
+        <button class="bigcancel" {{on "click" (fn @setIsManaging false)}} data-test-cancel>
+          <FaIcon @icon="undo" />
+        </button>
+      {{else if @editable}}
+        <button {{on "click" (perform this.manage)}} data-test-manage>
+          {{t "general.manageLeadership"}}
+        </button>
+      {{/if}}
+    </div>
+  </div>
+  <div class="course-leadership-expanded-content">
+    {{#if (and (is-fulfilled @course.directors) (is-fulfilled @course.administrators))}}
+      {{#if @isManaging}}
+        <LeadershipManager
+          @directors={{this.directors}}
+          @administrators={{this.administrators}}
+          @removeDirector={{fn this.removeDirector}}
+          @addDirector={{fn this.addDirector}}
+          @removeAdministrator={{fn this.removeAdministrator}}
+          @addAdministrator={{fn this.addAdministrator}}
         />
-      </button>
-      <button class="bigcancel" {{on "click" (fn @setIsManaging false)}}>
-        <FaIcon @icon="undo" />
-      </button>
-    {{else if @editable}}
-      <button {{on "click" (fn @setIsManaging true)}}>
-        {{t "general.manageLeadership"}}
-      </button>
+      {{else}}
+        <LeadershipList
+          @directors={{await @course.directors}}
+          @administrators={{await @course.administrators}}
+        />
+      {{/if}}
+    {{else}}
+      <LoadingSpinner @tagName="h3" />
     {{/if}}
   </div>
-</div>
-<div class="course-leadership-expanded-content">
-  {{#if (and (is-array this.directors) (is-array this.administrators))}}
-    {{#if @isManaging}}
-      <LeadershipManager
-        @directors={{this.directors}}
-        @administrators={{this.administrators}}
-        @removeDirector={{action "removeDirector"}}
-        @addDirector={{action "addDirector"}}
-        @removeAdministrator={{action "removeAdministrator"}}
-        @addAdministrator={{action "addAdministrator"}}
-      />
-    {{else}}
-      <LeadershipList
-        @directors={{this.directors}}
-        @administrators={{this.administrators}}
-      />
-    {{/if}}
-  {{else}}
-    <LoadingSpinner @tagName="h3" />
-  {{/if}}
 </div>
