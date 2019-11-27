@@ -1,24 +1,27 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { isEmpty } from '@ember/utils';
+import { tracked } from '@glimmer/tracking';
+import { action, computed } from '@ember/object';
 
-export default Component.extend({
-  router: service(),
+export default class CoursePublicationCheck extends Component {
+  @service router;
+  @tracked objectives = [];
 
-  classNames: ['course-publicationcheck'],
+  @computed('objectives.@each.parents')
+  get showUnlinkIcon() {
+    const objectivesWithoutParents = this.objectives.filter(objective => {
+      const parentIds = objective.hasMany('parents').ids();
+      return parentIds.length === 0;
+    });
 
-  course: null,
-
-  showUnlinkIcon: computed('course.objectives.[]', function() {
-    const objectives = this.course.objectives;
-    return objectives.any((objective) => isEmpty(objective.parents));
-  }),
-
-  actions: {
-    transitionToCourse() {
-      const queryParams = { courseObjectiveDetails: true, details: true };
-      this.router.transitionTo('course', this.course, { queryParams });
-    }
+    return objectivesWithoutParents.length > 0;
   }
-});
+  @action
+  load(event, [objectives]) {
+    if (!objectives) {
+      this.objectives = [];
+      return;
+    }
+    this.objectives = objectives.toArray();
+  }
+}

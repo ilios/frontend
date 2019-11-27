@@ -1,11 +1,12 @@
-{{#if (has-route "courses")}}
-  <div class="back-to-courses-list">
-    <LinkTo @route="courses">
-      {{t "general.backToCourses"}}
-    </LinkTo>
+<div class="course-loading">
+  {{#if (has-route "courses")}}
+    <div class="back-to-courses-list">
+      <LinkTo @route="courses">
+        {{t "general.backToCourses"}}
+      </LinkTo>
+    </div>
+  {{/if}}
+  <div class="box">
+    <div></div>
   </div>
-{{/if}}
-<div class="box">
-  <div></div>
 </div>
-

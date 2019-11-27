@@ -65,6 +65,6 @@ module('Acceptance | Course - Publication Check', function(hooks) {
   test('unlink icon transitions properly', async function(assert) {
     await visit('/courses/' + this.fullCourse.id + '/publicationcheck');
     await click('.fa-unlink');
-    assert.equal(currentURL(), '/courses/1?courseCompetencyDetails=false&courseLeadershipDetails=false&courseManageLeadership=false&courseObjectiveDetails=true&courseTaxonomyDetails=false&details=true&filterBy=&sortBy=title');
+    assert.equal(currentURL(), '/courses/1?courseObjectiveDetails=true&details=true');
   });
 });

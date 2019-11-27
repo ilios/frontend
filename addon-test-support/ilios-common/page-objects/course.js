@@ -19,8 +19,7 @@ import meshTerms from './components/mesh-terms';
 import taxonomies from './components/taxonomies';
 import collapsedTaxonomies from './components/collapsed-taxonomies';
 import leadershipCollapsed from './components/leadership-collapsed';
-import leadershipList from './components/leadership-list';
-import leadershipManager from './components/leadership-manager';
+import leadershipExpanded from './components/course-leadership-expanded';
 import collapsedCompetencies from './components/collapsed-competencies';
 
 export default create({
@@ -87,15 +86,7 @@ export default create({
   },
 
   leadershipCollapsed,
-  leadershipExpanded: {
-    scope: '[data-test-course-leadership-expanded]',
-    title: text('.title'),
-    manage: clickable('.actions button'),
-    save: clickable('.actions button.bigadd'),
-    cancel: clickable('.actions button.bigcancel'),
-    leadershipList,
-    leadershipManager,
-  },
+  leadershipExpanded,
   objectives,
   learningMaterials,
   meshTerms,
