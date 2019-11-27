@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "@csstools/postcss-sass": "^4.0.0",
+    "@ember/edition-utils": "^1.1.1",
     "@ember/jquery": "^1.1.0",
     "@ember/optional-features": "^1.0.0",
     "@ilios/eslint-config-ember": "^2.4.0",
@@ -77,8 +78,5 @@
     "lint:style",
     "lint:js"
   ],
-  "private": true,
-  "dependencies": {
-    "@ember/edition-utils": "^1.1.1"
-  }
+  "private": true
 }
