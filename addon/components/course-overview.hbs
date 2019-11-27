@@ -67,7 +67,13 @@
               value={{this.externalId}}
               disabled={{isSaving}}
               {{on "keyup" (action (set this.externalId) value="target.value")}}
+              {{on "keyup" (fn this.addErrorDisplayFor "externalId")}}
             >
+            {{#each (await (compute (fn this.getErrorsFor) "externalId")) as |message|}}
+              <span class="validation-error-message">
+                {{message}}
+              </span>
+            {{/each}}
           </EditableField>
         {{else}}
           {{this.externalId}}&nbsp;
@@ -123,7 +129,13 @@
               @value={{this.startDate}}
               @format="L"
               @onSelection={{fn (set this.startDate)}}
+              @focusOut={{fn this.addErrorDisplayFor "startDate"}}
             />
+            {{#each (await (compute (fn this.getErrorsFor) "startDate")) as |message|}}
+              <span class="validation-error-message">
+                {{message}}
+              </span>
+            {{/each}}
           </EditableField>
         {{else}}
           {{moment-format @course.startDate "L"}}&nbsp;
