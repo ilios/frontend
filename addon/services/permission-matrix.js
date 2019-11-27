@@ -4,6 +4,9 @@ import { computed } from '@ember/object';
 export default Service.extend({
   store: service(),
   permissionMatrix: computed(async function(){
+    return this.getPermissionMatrix();
+  }),
+  async getPermissionMatrix() {
     const store = this.get('store');
     const schools = await store.findAll('school');
     const schoolIds = schools.mapBy('id');
@@ -245,9 +248,9 @@ export default Service.extend({
     });
 
     return matrix;
-  }),
+  },
   async hasPermission(school, capability, userRoles) {
-    const matrix = await this.get('permissionMatrix');
+    const matrix = await this.getPermissionMatrix();
     const schoolId = school.get('id');
     if (!Object.prototype.hasOwnProperty.call(matrix, schoolId)) {
       return false;
@@ -262,7 +265,7 @@ export default Service.extend({
     return matchedRoles.length > 0;
   },
   async getPermittedRoles(school, capability) {
-    const matrix = await this.get('permissionMatrix');
+    const matrix = await this.getPermissionMatrix();
     const schoolId = school.get('id');
     if (!Object.prototype.hasOwnProperty.call(matrix, schoolId)) {
       return [];

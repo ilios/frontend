@@ -17,29 +17,44 @@ export default Service.extend({
   }),
 
   model: computed('currentUserId', async function(){
+    return this.getModel();
+  }),
+  async getModel() {
     const currentUserId = this.get('currentUserId');
     if (!currentUserId) {
       return null;
     }
-    return await this.get('store').find('user', currentUserId);
-  }),
+    return await this.store.find('user', currentUserId);
+  },
 
   userRoleTitles: computed('model.roles.[]', async function(){
-    const user = await this.get('model');
+    return this.getUserRoleTitles();
+  }),
+  async getUserRoleTitles() {
+    const user = await this.getModel();
     if(!user) {
       return [];
     }
     const roles = await user.get('roles');
     return roles.map(role => role.get('title').toLowerCase());
-  }),
+  },
+
   userIsStudent: computed('useRoleTitles.[]', async function(){
-    const roleTitles = await this.get('userRoleTitles');
+    return this.getIsStudent();
+  }),
+  async getIsStudent() {
+    const roleTitles = await this.getUserRoleTitles();
     return roleTitles.includes('student');
-  }),
+  },
+
   userIsFormerStudent: computed('useRoleTitles.[]', async function(){
-    const roleTitles = await this.get('userRoleTitles');
-    return roleTitles.includes('former student');
+    return this.isFormerStudent();
   }),
+  async isFormerStudent() {
+    const roleTitles = await this.getUserRoleTitles();
+    return roleTitles.includes('former student');
+  },
+
   activeRelatedCoursesInThisYearAndLastYear: computed(
     'model',
     'model.instructedOfferings.[]',
@@ -49,27 +64,31 @@ export default Service.extend({
     'model.administeredCourses.[]',
     'model.instructorIlmSessions.[]',
     async function(){
-      const user = await this.get('model');
-      if(isEmpty(user)){
-        return [];
-      }
-      let currentYear = moment().format('YYYY');
-      const currentMonth = parseInt(moment().format('M'), 10);
-      if(currentMonth < 6){
-        currentYear--;
-      }
-      const previousYear = currentYear -1;
-      const nextYear = currentYear +1;
-      return await this.get('store').query('course', {
-        my: true,
-        filters: {
-          year: [previousYear, currentYear, nextYear],
-          locked: false,
-          archived: false
-        }
-      });
+      return this.getActiveRelatedCoursesInThisYearAndLastYear();
     }
   ),
+  async getActiveRelatedCoursesInThisYearAndLastYear() {
+    const user = await this.getModel();
+    if(isEmpty(user)){
+      return [];
+    }
+    let currentYear = moment().format('YYYY');
+    const currentMonth = parseInt(moment().format('M'), 10);
+    if(currentMonth < 6){
+      currentYear--;
+    }
+    const previousYear = currentYear -1;
+    const nextYear = currentYear +1;
+    return await this.store.query('course', {
+      my: true,
+      filters: {
+        year: [previousYear, currentYear, nextYear],
+        locked: false,
+        archived: false
+      }
+    });
+  },
+
   getBooleanAttributeFromToken(attribute) {
     const session = this.get('session');
     if(isEmpty(session)){
@@ -95,17 +114,17 @@ export default Service.extend({
     return this.getBooleanAttributeFromToken('can_create_or_update_user_in_any_school');
   }),
   async isDirectingSchool(school) {
-    const user = await this.get('model');
+    const user = await this.getModel();
     const ids = user.hasMany('directedSchools').ids();
     return ids.includes(school.get('id'));
   },
   async isAdministeringSchool(school) {
-    const user = await this.get('model');
+    const user = await this.getModel();
     const ids = user.hasMany('administeredSchools').ids();
     return ids.includes(school.get('id'));
   },
   async isDirectingProgramInSchool(school) {
-    const user = await this.get('model');
+    const user = await this.getModel();
     const schoolProgramIds = school.hasMany('programs').ids();
 
     const ids = user.hasMany('directedPrograms').ids();
@@ -114,7 +133,7 @@ export default Service.extend({
     return matches.length > 0;
   },
   async isDirectingCourseInSchool(school) {
-    const user = await this.get('model');
+    const user = await this.getModel();
     const schoolCourseIds = school.hasMany('courses').ids();
 
     const ids = user.hasMany('directedCourses').ids();
@@ -123,7 +142,7 @@ export default Service.extend({
     return matches.length > 0;
   },
   async isAdministeringCourseInSchool(school) {
-    const user = await this.get('model');
+    const user = await this.getModel();
     const schoolCourseIds = school.hasMany('courses').ids();
 
     const ids = user.hasMany('administeredCourses').ids();
@@ -132,7 +151,7 @@ export default Service.extend({
     return matches.length > 0;
   },
   async isAdministeringSessionInSchool(school) {
-    const user = await this.get('model');
+    const user = await this.getModel();
     const schoolCourseIds = school.hasMany('courses').ids();
 
     const sessions = await user.get('administeredSessions');
@@ -141,7 +160,7 @@ export default Service.extend({
     return matches.length > 0;
   },
   async isTeachingCourseInSchool(school) {
-    const user = await this.get('model');
+    const user = await this.getModel();
     const schoolCourseIds = school.hasMany('courses').ids();
 
     const courses = await user.get('allInstructedCourses');
@@ -150,7 +169,7 @@ export default Service.extend({
     return matches.length > 0;
   },
   async isAdministeringCurriculumInventoryReportInSchool(school) {
-    const user = await this.get('model');
+    const user = await this.getModel();
     const schoolProgramIds = school.hasMany('programs').ids();
 
     const reports = await user.get('administeredCurriculumInventoryReports');
@@ -159,21 +178,21 @@ export default Service.extend({
     return matches.length > 0;
   },
   async isDirectingCourse(course) {
-    const user = await this.get('model');
+    const user = await this.getModel();
 
     const ids = user.hasMany('directedCourses').ids();
 
     return ids.includes(course.get('id'));
   },
   async isAdministeringCourse(course) {
-    const user = await this.get('model');
+    const user = await this.getModel();
 
     const ids = user.hasMany('administeredCourses').ids();
 
     return ids.includes(course.get('id'));
   },
   async isAdministeringSessionInCourse(course) {
-    const user = await this.get('model');
+    const user = await this.getModel();
 
     const sessions = await user.get('administeredSessions');
     const matches = sessions.filter(session => course.get('id') === session.belongsTo('course').id());
@@ -181,7 +200,7 @@ export default Service.extend({
     return matches.length > 0;
   },
   async isTeachingCourse(course) {
-    const user = await this.get('model');
+    const user = await this.getModel();
 
     const courses = await user.get('allInstructedCourses');
     const matches = courses.filterBy('id', course.get('id'));
@@ -189,14 +208,14 @@ export default Service.extend({
     return matches.length > 0;
   },
   async isAdministeringSession(session) {
-    const user = await this.get('model');
+    const user = await this.getModel();
 
     const ids = user.hasMany('administeredSessions').ids();
 
     return ids.includes(session.get('id'));
   },
   async isTeachingSession(session) {
-    const user = await this.get('model');
+    const user = await this.getModel();
 
     const sessions = await user.get('allInstructedSessions');
     const matches = sessions.filterBy('id', session.get('id'));
@@ -204,14 +223,14 @@ export default Service.extend({
     return matches.length > 0;
   },
   async isDirectingProgram(program) {
-    const user = await this.get('model');
+    const user = await this.getModel();
 
     const ids = user.hasMany('directedPrograms').ids();
 
     return ids.includes(program.get('id'));
   },
   async isDirectingProgramYearInProgram(program) {
-    const user = await this.get('model');
+    const user = await this.getModel();
 
     const programYears = await user.get('programYears');
     const matches = programYears.filter(programYear => program.get('id') === programYear.belongsTo('program').id());
@@ -219,14 +238,14 @@ export default Service.extend({
     return matches.length > 0;
   },
   async isDirectingProgramYear(programYear) {
-    const user = await this.get('model');
+    const user = await this.getModel();
 
     const ids = user.hasMany('programYears').ids();
 
     return ids.includes(programYear.get('id'));
   },
   async isAdministeringCurriculumInventoryReport(report) {
-    const user = await this.get('model');
+    const user = await this.getModel();
 
     const ids = user.hasMany('administeredCurriculumInventoryReports').ids();
 
