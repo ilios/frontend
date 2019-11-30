@@ -2,7 +2,7 @@ import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -52,7 +52,6 @@ module('Integration | Component | user profile calendar', function(hooks) {
     const firstEventTitle = `${events}:nth-of-type(1) .ilios-calendar-event-name`;
     const secondEventTitle = `${events}:nth-of-type(2) .ilios-calendar-event-name`;
     const thirdEventTitle = `${events}:nth-of-type(3) .ilios-calendar-event-name`;
-    await settled();
 
     assert.dom(firstEventTitle).hasText('first');
     assert.dom(secondEventTitle).hasText('second');
@@ -95,10 +94,7 @@ module('Integration | Component | user profile calendar', function(hooks) {
     });
     this.set('user', user);
     await render(hbs`<UserProfileCalendar @user={{user}} />`);
-    const picker = '.calendar-time-picker li';
-    const goForward = `${picker}:nth-of-type(3)`;
-    await click(goForward);
-    await settled();
+    await click('[data-test-go-forward]');
   });
 
   test('clicking backward goes to last week', async function(assert) {
@@ -137,9 +133,6 @@ module('Integration | Component | user profile calendar', function(hooks) {
     });
     this.set('user', user);
     await render(hbs`<UserProfileCalendar @user={{user}} />`);
-    const picker = '.calendar-time-picker li';
-    const goBack = `${picker}:nth-of-type(1)`;
-    await click(goBack);
-    await settled();
+    await click('[data-test-go-back]');
   });
 });
