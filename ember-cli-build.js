@@ -4,10 +4,11 @@ const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const broccoliAssetRevDefaults = require( 'broccoli-asset-rev/lib/default-options' );
 
 module.exports = function(defaults) {
-  let env = EmberApp.env() || 'development';
-  let isProductionLikeBuild = ['production', 'staging', 'preview'].indexOf(env) > -1;
+  const env = EmberApp.env() || 'development';
+  const isProductionLikeBuild = ['production', 'staging', 'preview'].indexOf(env) > -1;
+  const isTestBuild = env === 'test';
 
-  let app = new EmberApp(defaults, {
+  const app = new EmberApp(defaults, {
     fingerprint: {
       extensions: broccoliAssetRevDefaults.extensions.concat(['webmanifest', 'svg']),
       enabled: isProductionLikeBuild,
@@ -19,6 +20,8 @@ module.exports = function(defaults) {
     minifyCSS: { enabled: isProductionLikeBuild },
     minifyJS: { enabled: isProductionLikeBuild },
 
+    tests: env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
+    hinting: isTestBuild,
     babel: {
       plugins: [ require('ember-auto-import/babel-plugin') ],
     },
