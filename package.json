@@ -25,7 +25,7 @@
     "@ilios/eslint-config-ember": "^2.3.0",
     "@sentry/browser": "^5.9.0",
     "@sentry/integrations": "^5.8.0",
-    "autoprefixer": "^9.7.2",
+    "autoprefixer": "^9.7.3",
     "babel-eslint": "^10.0.3",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-file-creator": "^2.1.1",
