@@ -5,16 +5,17 @@ import { isPresent } from '@ember/utils';
 export default Service.extend({
   fetch: service(),
   serverVariables: service(),
-  _config: null,
+  _configPromise: null,
 
   config: computed('apiHost', function () {
     return this.getConfig();
   }),
   async getConfig() {
-    if (!this._config) {
-      this._config = await this.fetch.getJsonFromApiHost('/application/config');
+    if (!this._configPromise) {
+      this._configPromise = this.fetch.getJsonFromApiHost('/application/config');
     }
-    return this._config;
+    const config = await this._configPromise;
+    return config;
   },
 
   async itemFromConfig(key) {
