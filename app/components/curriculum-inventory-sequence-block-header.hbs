@@ -18,7 +18,7 @@
       {{#if
         (and
           (v-get this "blockTitle" "isInvalid")
-          (is-in showErrorsFor "blockTitle")
+          (contains "blockTitle" showErrorsFor)
         )
       }}
         <span class="validation-error-message">

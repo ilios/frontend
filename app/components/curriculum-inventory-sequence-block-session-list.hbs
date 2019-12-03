@@ -50,14 +50,14 @@
           <tr>
             <td class="text-center" colspan="2">
               {{if
-                (is-in linkedSessions session)
+                (contains session linkedSessions)
                 (t "general.yes")
                 (t "general.no")
               }}
             </td>
             <td class="text-center" colspan="2">
               {{if
-                (is-in excludedSessions session)
+                (contains session excludedSessions)
                 (t "general.yes")
                 (t "general.no")
               }}
@@ -74,7 +74,7 @@
               {{get (await session.sessionType) "title"}}
             </td>
             <td class="text-center" colspan="1">
-              {{#if (is-in linkedSessions session)}}
+              {{#if (contains session linkedSessions)}}
                 {{#unless (is-fulfilled session.maxDuration)}}
                   <LoadingSpinner />
                 {{else}}

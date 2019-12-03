@@ -11,7 +11,7 @@
         oninput={{action (mut title) value="target.value"}}
         onkeyup={{action "addErrorDisplayFor" "title"}}
       >
-      {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
+      {{#if (and (v-get this "title" "isInvalid") (contains "title" showErrorsFor))
       }}
         <span class="message error">
           {{v-get this "title" "message"}}
@@ -50,7 +50,7 @@
         {{#if
           (and
             (v-get this "selectedAamcMethodId" "isInvalid")
-            (is-in showErrorsFor "selectedAamcMethodId")
+            (contains "selectedAamcMethodId" showErrorsFor)
           )
         }}
           <span class="message error">
@@ -83,7 +83,7 @@
       {{#if
         (and
           (v-get this "calendarColor" "isInvalid")
-          (is-in showErrorsFor "calendarColor")
+          (contains "calendarColor" showErrorsFor)
         )
       }}
         <span class="message error">

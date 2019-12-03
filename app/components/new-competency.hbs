@@ -12,7 +12,7 @@
     {{t "general.add"}}
   {{/if}}
 </button>
-{{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+{{#if (and (v-get this "title" "isInvalid") (contains "title" showErrorsFor))}}
   <span class="validation-error-message">
     {{v-get this "title" "message"}}
   </span>

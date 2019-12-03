@@ -69,7 +69,7 @@
                 </td>
                 <td></td>
                 <td class="text-left" colspan="2">
-                  {{#if (is-in updatesBeingSaved update)}}
+                  {{#if (contains update updatesBeingSaved)}}
                     <LoadingSpinner />
                   {{else}}
                     {{#if (eq update.type "emailMismatch")}}

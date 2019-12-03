@@ -68,7 +68,7 @@
         onkeyup={{action "addErrorDisplayFor" "otherId"}}
       >
       {{#if
-        (and (v-get this "otherId" "isInvalid") (is-in showErrorsFor "otherId"))
+        (and (v-get this "otherId" "isInvalid") (contains "otherId" showErrorsFor))
       }}
         <span class="validation-error-message">
           {{v-get this "otherId" "message"}}
@@ -88,7 +88,7 @@
         >
         {{#if
           (and
-            (v-get this "username" "isInvalid") (is-in showErrorsFor "username")
+            (v-get this "username" "isInvalid") (contains "username" showErrorsFor)
           )
         }}
           <span class="validation-error-message">
@@ -114,7 +114,7 @@
         >
         {{#if
           (and
-            (v-get this "password" "isInvalid") (is-in showErrorsFor "password")
+            (v-get this "password" "isInvalid") (contains "password" showErrorsFor)
           )
         }}
           <span class="validation-error-message">

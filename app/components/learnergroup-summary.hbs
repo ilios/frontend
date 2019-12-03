@@ -72,7 +72,7 @@
           {{#if
             (and
               (v-get this "location" "isInvalid")
-              (is-in showErrorsFor "location")
+              (contains "location" showErrorsFor)
             )
           }}
             <span class="validation-error-message">

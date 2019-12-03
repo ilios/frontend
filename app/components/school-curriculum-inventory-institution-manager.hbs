@@ -34,7 +34,7 @@
         oninput={{action (mut this.name) value="target.value"}}
         onkeyup={{action "addErrorDisplayFor" "name"}}
       >
-      {{#if (and (v-get this "name" "isInvalid") (is-in showErrorsFor "name"))}}
+      {{#if (and (v-get this "name" "isInvalid") (contains "name" showErrorsFor))}}
         <span class="validation-error-message">
           {{v-get this "name" "message"}}
         </span>
@@ -53,7 +53,7 @@
       >
       {{#if
         (and
-          (v-get this "aamcCode" "isInvalid") (is-in showErrorsFor "aamcCode")
+          (v-get this "aamcCode" "isInvalid") (contains "aamcCode" showErrorsFor)
         )
       }}
         <span class="validation-error-message">
@@ -74,7 +74,7 @@
       {{#if
         (and
           (v-get this "addressStreet" "isInvalid")
-          (is-in showErrorsFor "addressStreet")
+          (contains "addressStreet" showErrorsFor)
         )
       }}
         <span class="validation-error-message">
@@ -95,7 +95,7 @@
       {{#if
         (and
           (v-get this "addressCity" "isInvalid")
-          (is-in showErrorsFor "addressCity")
+          (contains "addressCity" showErrorsFor)
         )
       }}
         <span class="validation-error-message">
@@ -117,7 +117,7 @@
       {{#if
         (and
           (v-get this "addressStateOrProvince" "isInvalid")
-          (is-in showErrorsFor "addressStateOrProvince")
+          (contains "addressStateOrProvince" showErrorsFor)
         )
       }}
         <span class="validation-error-message">
@@ -138,7 +138,7 @@
       {{#if
         (and
           (v-get this "addressZipCode" "isInvalid")
-          (is-in showErrorsFor "addressZipCode")
+          (contains "addressZipCode" showErrorsFor)
         )
       }}
         <span class="validation-error-message">
@@ -160,7 +160,7 @@
       {{#if
         (and
           (v-get this "addressCountryCode" "isInvalid")
-          (is-in showErrorsFor "addressCountryCode")
+          (contains "addressCountryCode" showErrorsFor)
         )
       }}
         <span class="validation-error-message">

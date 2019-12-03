@@ -31,13 +31,13 @@
             onkeyup={{action "addErrorDisplayFor" "title"}}
             class={{if
               (and
-                (v-get this "title" "isInvalid") (is-in showErrorsFor "title")
+                (v-get this "title" "isInvalid") (contains "title" showErrorsFor)
               )
               "has-error"
             }}
           >
           {{#if
-            (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
+            (and (v-get this "title" "isInvalid") (contains "title" showErrorsFor))
           }}
             <span class="validation-error-message">
               {{v-get this "title" "message"}}
@@ -57,7 +57,7 @@
             class={{if
               (and
                 (v-get this "iliosAdministratorEmail" "isInvalid")
-                (is-in showErrorsFor "iliosAdministratorEmail")
+                (contains "iliosAdministratorEmail" showErrorsFor)
               )
               "has-error"
             }}
@@ -65,7 +65,7 @@
           {{#if
             (and
               (v-get this "iliosAdministratorEmail" "isInvalid")
-              (is-in showErrorsFor "iliosAdministratorEmail")
+              (contains "iliosAdministratorEmail" showErrorsFor)
             )
           }}
             <span class="validation-error-message">

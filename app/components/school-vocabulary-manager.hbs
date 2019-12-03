@@ -18,7 +18,7 @@
       @close={{action "revertVocabularyTitleChanges"}}
       @isSaveDisabled={{and
         (v-get this "vocabularyTitle" "isInvalid")
-        (is-in showErrorsFor "vocabularyTitle")
+        (contains "vocabularyTitle" showErrorsFor)
       }}
       @saveOnEnter={{true}}
       @closeOnEscape={{true}} as |isSaving|
@@ -33,7 +33,7 @@
     {{#if
       (and
         (v-get this "vocabularyTitle" "isInvalid")
-        (is-in showErrorsFor "vocabularyTitle")
+        (contains "vocabularyTitle" showErrorsFor)
       )
     }}
       <span class="validation-error-message" data-test-title-error-message>
@@ -75,7 +75,7 @@
       {{#if
         (and
           (v-get this "newTermTitle" "isInvalid")
-          (is-in showErrorsFor "newTermTitle")
+          (contains "newTermTitle" showErrorsFor)
         )
       }}
         <span class="validation-error-message" data-test-error-message>

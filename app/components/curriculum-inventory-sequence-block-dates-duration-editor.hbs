@@ -8,7 +8,7 @@
     @format="M/D/YYYY"
   />
   {{#if
-    (and (v-get this "startDate" "isInvalid") (is-in showErrorsFor "startDate"))
+    (and (v-get this "startDate" "isInvalid") (contains "startDate" showErrorsFor))
   }}
     <span class="validation-error-message">
       {{v-get this "startDate" "message"}}
@@ -24,7 +24,7 @@
     @onSelection={{action "changeEndDate"}}
     @format="M/D/YYYY"
   />
-  {{#if (and (v-get this "endDate" "isInvalid") (is-in showErrorsFor "endDate"))}}
+  {{#if (and (v-get this "endDate" "isInvalid") (contains "endDate" showErrorsFor))}}
     <span class="validation-error-message">
       {{v-get this "endDate" "message"}}
     </span>
@@ -42,7 +42,7 @@
     onkeyup={{action "addErrorDisplayFor" "duration"}}
   >
   {{#if
-    (and (v-get this "duration" "isInvalid") (is-in showErrorsFor "duration"))
+    (and (v-get this "duration" "isInvalid") (contains "duration" showErrorsFor))
   }}
     <span class="validation-error-message">
       {{v-get this "duration" "message"}}
