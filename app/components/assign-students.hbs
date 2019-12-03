@@ -73,13 +73,13 @@
     </thead>
     <tbody>
       {{#each this.filteredStudents as |user|}}
-        <tr class={{if (is-in this.selectedUserIds user.id) "highlighted"}}>
+        <tr class={{if (contains user.id this.selectedUserIds) "highlighted"}}>
           <td
             class="text-left clickable"
             colspan="1"
             {{action "toggleUserSelection" user.id}}
           >
-            {{#if (is-in this.selectedUserIds user.id)}}
+            {{#if (contains user.id this.selectedUserIds)}}
               <input type="checkbox" checked="">
             {{else}}
               <input type="checkbox">

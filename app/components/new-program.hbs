@@ -14,7 +14,7 @@
       onkeyup={{action "addErrorDisplayFor" "title"}}
       placeholder={{t "general.programTitlePlaceholder"}}
     >
-    {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+    {{#if (and (v-get this "title" "isInvalid") (contains "title" showErrorsFor))}}
       <span class="validation-error-message">
         {{v-get this "title" "message"}}
       </span>

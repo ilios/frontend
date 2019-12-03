@@ -41,7 +41,7 @@
       {{/if}}
       {{#if
         (and
-          (v-get this "termTitle" "isInvalid") (is-in showErrorsFor "termTitle")
+          (v-get this "termTitle" "isInvalid") (contains "termTitle" showErrorsFor)
         )
       }}
         <span class="validation-error-message" data-test-title-error-message>
@@ -134,7 +134,7 @@
       {{#if
         (and
           (v-get this "newTermTitle" "isInvalid")
-          (is-in showErrorsFor "newTermTitle")
+          (contains "newTermTitle" showErrorsFor)
         )
       }}
         <span class="validation-error-message" data-test-error-message>

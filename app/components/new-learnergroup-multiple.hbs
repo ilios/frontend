@@ -18,7 +18,7 @@
     {{#if
       (and
         (v-get this "numSubGroups" "isInvalid")
-        (is-in showErrorsFor "numSubGroups")
+        (contains "numSubGroups" showErrorsFor)
       )
     }}
       <span class="validation-error-message">

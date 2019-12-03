@@ -16,7 +16,7 @@
         onkeyup={{action "addErrorDisplayFor" "name"}}
         placeholder={{t "general.reportNamePlaceholder"}}
       >
-      {{#if (and (v-get this "name" "isInvalid") (is-in showErrorsFor "name"))}}
+      {{#if (and (v-get this "name" "isInvalid") (contains "name" showErrorsFor))}}
         <span class="validation-error-message">
           {{v-get this "name" "message"}}
         </span>

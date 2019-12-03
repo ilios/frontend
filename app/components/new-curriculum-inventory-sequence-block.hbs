@@ -15,7 +15,7 @@
         onkeyup={{action "addErrorDisplayFor" "title"}}
         placeholder={{t "general.sequenceBlockTitlePlaceholder"}}
       >
-      {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))
+      {{#if (and (v-get this "title" "isInvalid") (contains "title" showErrorsFor))
       }}
         <span class="validation-error-message">
           {{v-get this "title" "message"}}
@@ -89,7 +89,7 @@
       />
       {{#if
         (and
-          (v-get this "startDate" "isInvalid") (is-in showErrorsFor "startDate")
+          (v-get this "startDate" "isInvalid") (contains "startDate" showErrorsFor)
         )
       }}
         <span class="validation-error-message">
@@ -107,7 +107,7 @@
         @format="M/D/YYYY"
       />
       {{#if
-        (and (v-get this "endDate" "isInvalid") (is-in showErrorsFor "endDate"))
+        (and (v-get this "endDate" "isInvalid") (contains "endDate" showErrorsFor))
       }}
         <span class="validation-error-message">
           {{v-get this "endDate" "message"}}
@@ -127,7 +127,7 @@
       >
       {{#if
         (and
-          (v-get this "duration" "isInvalid") (is-in showErrorsFor "duration")
+          (v-get this "duration" "isInvalid") (contains "duration" showErrorsFor)
         )
       }}
         <span class="validation-error-message">
@@ -158,7 +158,7 @@
         onkeyup={{action "addErrorDisplayFor" "minimum"}}
       >
       {{#if
-        (and (v-get this "minimum" "isInvalid") (is-in showErrorsFor "minimum"))
+        (and (v-get this "minimum" "isInvalid") (contains "minimum" showErrorsFor))
       }}
         <span class="validation-error-message">
           {{v-get this "minimum" "message"}}
@@ -177,7 +177,7 @@
         onkeyup={{action "addErrorDisplayFor" "maximum"}}
       >
       {{#if
-        (and (v-get this "maximum" "isInvalid") (is-in showErrorsFor "maximum"))
+        (and (v-get this "maximum" "isInvalid") (contains "maximum" showErrorsFor))
       }}
         <span class="validation-error-message">
           {{v-get this "maximum" "message"}}

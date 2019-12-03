@@ -53,7 +53,7 @@
       >
       {{#if
         (and
-          (v-get this "firstName" "isInvalid") (is-in showErrorsFor "firstName")
+          (v-get this "firstName" "isInvalid") (contains "firstName" showErrorsFor)
         )
       }}
         <span class="message error">
@@ -81,7 +81,7 @@
       {{#if
         (and
           (v-get this "middleName" "isInvalid")
-          (is-in showErrorsFor "middleName")
+          (contains "middleName" showErrorsFor)
         )
       }}
         <span class="message error">
@@ -112,7 +112,7 @@
       >
       {{#if
         (and
-          (v-get this "lastName" "isInvalid") (is-in showErrorsFor "lastName")
+          (v-get this "lastName" "isInvalid") (contains "lastName" showErrorsFor)
         )
       }}
         <span class="message error">
@@ -162,7 +162,7 @@
         </button>
         {{#if
           (and
-            (v-get this "campusId" "isInvalid") (is-in showErrorsFor "campusId")
+            (v-get this "campusId" "isInvalid") (contains "campusId" showErrorsFor)
           )
         }}
           <span class="message error">
@@ -194,7 +194,7 @@
         data-test-other-id-input
       >
       {{#if
-        (and (v-get this "otherId" "isInvalid") (is-in showErrorsFor "otherId"))
+        (and (v-get this "otherId" "isInvalid") (contains "otherId" showErrorsFor))
       }}
         <span class="message error">
           {{v-get this "otherId" "message"}}
@@ -221,7 +221,7 @@
         onkeyup={{action "addErrorDisplayFor" "email"}}
         data-test-email-input
       >
-      {{#if (and (v-get this "email" "isInvalid") (is-in showErrorsFor "email"))
+      {{#if (and (v-get this "email" "isInvalid") (contains "email" showErrorsFor))
       }}
         <span class="message error">
           {{v-get this "email" "message"}}
@@ -254,7 +254,7 @@
       {{#if
         (and
           (v-get this "displayName" "isInvalid")
-          (is-in showErrorsFor "displayName")
+          (contains "displayName" showErrorsFor)
         )
       }}
         <span class="message error">
@@ -288,7 +288,7 @@
       {{#if
         (and
           (v-get this "preferredEmail" "isInvalid")
-          (is-in showErrorsFor "preferredEmail")
+          (contains "preferredEmail" showErrorsFor)
         )
       }}
         <span class="message error">
@@ -316,7 +316,7 @@
         onkeyup={{action "addErrorDisplayFor" "phone"}}
         data-test-phone-input
       >
-      {{#if (and (v-get this "phone" "isInvalid") (is-in showErrorsFor "phone"))
+      {{#if (and (v-get this "phone" "isInvalid") (contains "phone" showErrorsFor))
       }}
         <span class="message error">
           {{v-get this "phone" "message"}}
@@ -347,7 +347,7 @@
       >
       {{#if
         (and
-          (v-get this "username" "isInvalid") (is-in showErrorsFor "username")
+          (v-get this "username" "isInvalid") (contains "username" showErrorsFor)
         )
       }}
         <span class="message error">
@@ -375,7 +375,7 @@
           onkeyup={{action "addErrorDisplayFor" "password"}}
           data-test-password-input
         >
-        {{#if (and (v-get this "password" "isInvalid") (is-in showErrorsFor "password"))}}
+        {{#if (and (v-get this "password" "isInvalid") (contains "password" showErrorsFor))}}
           <span class="message error">
             {{v-get this "password" "message"}}
           </span>

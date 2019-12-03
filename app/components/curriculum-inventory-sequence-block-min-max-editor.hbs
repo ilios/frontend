@@ -9,7 +9,7 @@
     disabled={{or isSaving isElective}}
     onkeyup={{action "addErrorDisplayFor" "minimum"}}
   >
-  {{#if (and (v-get this "minimum" "isInvalid") (is-in showErrorsFor "minimum"))
+  {{#if (and (v-get this "minimum" "isInvalid") (contains "minimum" showErrorsFor))
   }}
     <span class="validation-error-message">
       {{v-get this "minimum" "message"}}
@@ -27,7 +27,7 @@
     disabled={{isSaving}}
     onkeyup={{action "addErrorDisplayFor" "maximum"}}
   >
-  {{#if (and (v-get this "maximum" "isInvalid") (is-in showErrorsFor "maximum"))
+  {{#if (and (v-get this "maximum" "isInvalid") (contains "maximum" showErrorsFor))
   }}
     <span class="validation-error-message">
       {{v-get this "maximum" "message"}}

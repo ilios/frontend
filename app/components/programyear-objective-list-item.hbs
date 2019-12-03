@@ -12,13 +12,13 @@
       @renderHtml={{true}}
       @isSaveDisabled={{and
         (v-get this "title" "isInvalid")
-        (is-in showErrorsFor "title")
+        (contains "title" showErrorsFor)
       }}
       @save={{action "saveTitleChanges"}}
       @close={{action "revertTitleChanges"}}
     >
       <HtmlEditor @content={{title}} @update={{action "changeTitle"}} />
-      {{#if (and (v-get this "title" "isInvalid") (is-in showErrorsFor "title"))}}
+      {{#if (and (v-get this "title" "isInvalid") (contains "title" showErrorsFor))}}
         <span class="validation-error-message">
           {{v-get this "title" "message"}}
         </span>
