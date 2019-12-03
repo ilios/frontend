@@ -220,7 +220,7 @@
                   <li>
                     <input
                       type="checkbox"
-                      checked={{is-in this.sessionsToOverride session}}
+                      checked={{contains session this.sessionsToOverride}}
                       {{on "click" (fn (action "toggleSession") session)}}
                     >
                     <span

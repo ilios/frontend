@@ -10,14 +10,14 @@
       type="text"
       value={{this.title}}
       class={{if
-        (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))
+        (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))
         "has-error"
       }}
       data-test-title
       {{on "input" (action (mut this.title) value="target.value")}}
       {{on "keyup" (fn (action "addErrorDisplayFor") "title")}}
     >
-    {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
+    {{#if (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))}}
       <span class="validation-error-message">
         {{v-get this "title" "message"}}
       </span>

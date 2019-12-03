@@ -9,7 +9,7 @@ module('helper:is-in', function(hooks) {
   test('it calculates array membership correctly and updates live', async function(assert) {
     this.set('value', '42');
     this.set('array', ['42']);
-    await render(hbs`{{if (is-in array value) 'true' 'false'}}`);
+    await render(hbs`{{if (contains value array) 'true' 'false'}}`);
 
     assert.dom(this.element).hasText('true');
 

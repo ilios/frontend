@@ -31,7 +31,7 @@
     {{#if
       (and
         (v-get this "selectedYear" "isInvalid")
-        (is-in this.showErrorsFor "selectedYear")
+        (contains "selectedYear" this.showErrorsFor)
       )
     }}
       <span class="validation-error-message">
@@ -67,7 +67,7 @@
     {{#if
       (and
         (v-get this "selectedCourse" "isInvalid")
-        (is-in this.showErrorsFor "selectedCourse")
+        (contains "selectedCourse" this.showErrorsFor)
       )
     }}
       <span class="validation-error-message">

@@ -13,7 +13,7 @@
         {{on "input" (action (mut this.title) value="target.value")}}
         {{on "keyup" (fn (action "addErrorDisplayFor") "title")}}
       >
-      {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
+      {{#if (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))}}
         <span
           class="validation-error-message"
           data-test-title-validation-error-message
@@ -291,7 +291,7 @@
         {{/if}}
       </div>
       {{#if
-        (and (v-get this "endDate" "isInvalid") (is-in this.showErrorsFor "endDate"))
+        (and (v-get this "endDate" "isInvalid") (contains "endDate" this.showErrorsFor))
       }}
         <span
           class="validation-error-message"

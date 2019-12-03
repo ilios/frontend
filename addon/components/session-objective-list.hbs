@@ -42,7 +42,7 @@
             @manageParents={{@manageParents}}
             @manageDescriptors={{@manageDescriptors}}
           />
-          {{#if (is-in this.objectivesForRemovalConfirmation objective.id)}}
+          {{#if (contains objective.id this.objectivesForRemovalConfirmation)}}
             <tr class="confirm-removal">
               <td colspan="8">
                 <div class="confirm-message">

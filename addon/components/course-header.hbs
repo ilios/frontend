@@ -21,7 +21,7 @@
         {{#if
           (and
             (v-get this "courseTitle" "isInvalid")
-            (is-in this.showErrorsFor "courseTitle")
+            (contains "courseTitle" this.showErrorsFor)
           )
         }}
           <span class="validation-error-message">

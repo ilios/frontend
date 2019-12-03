@@ -6,7 +6,7 @@
     {{t "general.description"}}:
   </label>
   <HtmlEditor @content={{this.title}} @update={{action "changeTitle"}} />
-  {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
+  {{#if (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))}}
     <span class="validation-error-message">
       {{v-get this "title" "message"}}
     </span>
@@ -15,7 +15,7 @@
     <button
       disabled={{or
         this.isSaving
-        (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))
+        (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))
       }}
       class="done text"
       {{on "click" (action "save")}}

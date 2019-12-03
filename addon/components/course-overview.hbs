@@ -67,7 +67,7 @@
           {{#if
             (and
               (v-get this "externalId" "isInvalid")
-              (is-in this.showErrorsFor "externalId")
+              (contains "externalId" this.showErrorsFor)
             )
           }}
             <span class="validation-error-message">
@@ -134,7 +134,7 @@
           {{#if
             (and
               (v-get this "startDate" "isInvalid")
-              (is-in this.showErrorsFor "startDate")
+              (contains "startDate" this.showErrorsFor)
             )
           }}
             <span class="validation-error-message">
@@ -164,7 +164,7 @@
           />
           {{#if
             (and
-              (v-get this "endDate" "isInvalid") (is-in this.showErrorsFor "endDate")
+              (v-get this "endDate" "isInvalid") (contains "endDate" this.showErrorsFor)
             )
           }}
             <span class="validation-error-message">
