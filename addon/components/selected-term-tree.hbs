@@ -3,7 +3,7 @@
     <input
       class="checkbox"
       type="checkbox"
-      checked={{is-in @selectedTerms term}}
+      checked={{contains term @selectedTerms}}
       {{on "change" (fn @toggle term)}}
     >
     <span class="list-indentation" role="button" {{on "click" (fn @toggle term)}}>
