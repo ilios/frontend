@@ -33,7 +33,7 @@
                 {{vocab.school.title}}
               </td>
               <td class="text-center">
-                {{intersection-count @subject.terms vocab.terms}}
+                {{get (intersect (map-by "id" @subject.terms) (map-by "id" vocab.terms)) "length"}}
               </td>
             </tr>
           {{/each}}
