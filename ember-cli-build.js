@@ -57,7 +57,5 @@ module.exports = function(defaults) {
     },
   });
 
-  app.import('node_modules/normalize.css/normalize.css');
-
   return app.toTree();
 };
