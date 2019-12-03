@@ -10,7 +10,7 @@
       {{on "input" (action (mut this.title) value="target.value")}}
       {{on "keyup" (fn (action "addErrorDisplayFor") "title")}}
     >
-    {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
+    {{#if (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))}}
       <span class="validation-error-message">
         {{v-get this "title" "message"}}
       </span>
@@ -57,7 +57,7 @@
     {{#if
       (and
         (v-get this "originalAuthor" "isInvalid")
-        (is-in this.showErrorsFor "originalAuthor")
+        (contains "originalAuthor" this.showErrorsFor)
       )
     }}
       <span class="validation-error-message">
@@ -92,7 +92,7 @@
         {{on "input" (action (mut this.link) value="target.value")}}
         {{on "keyup" (fn (action "addErrorDisplayFor") "link")}}
       >
-      {{#if (and (v-get this "link" "isInvalid") (is-in this.showErrorsFor "link"))}}
+      {{#if (and (v-get this "link" "isInvalid") (contains "link" this.showErrorsFor))}}
         <span class="validation-error-message">
           {{v-get this "link" "message"}}
         </span>
@@ -113,7 +113,7 @@
       />
       {{#if
         (and
-          (v-get this "citation" "isInvalid") (is-in this.showErrorsFor "citation")
+          (v-get this "citation" "isInvalid") (contains "citation" this.showErrorsFor)
         )
       }}
         <span class="validation-error-message">
@@ -161,7 +161,7 @@
         {{#if
           (and
             (v-get this "copyrightRationale" "isInvalid")
-            (is-in this.showErrorsFor "copyrightRationale")
+            (contains "copyrightRationale" this.showErrorsFor)
           )
         }}
           <span class="validation-error-message">

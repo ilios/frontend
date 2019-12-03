@@ -20,7 +20,7 @@
       {{on "input" (pipe (action "changeTitle" value="target.value") (fn (action "addErrorDisplayFor") "title"))}}
       {{on "keyup" (fn (action "addErrorDisplayFor") "title")}}
     >
-    {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
+    {{#if (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))}}
       <span class="validation-error-message">
         {{v-get this "title" "message"}}
       </span>
@@ -51,7 +51,7 @@
     {{#if
       (and
         (v-get this "selectedYear" "isInvalid")
-        (is-in this.showErrorsFor "selectedYear")
+        (contains "selectedYear" this.showErrorsFor)
       )
     }}
       <span class="validation-error-message">

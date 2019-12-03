@@ -17,7 +17,7 @@
           {{on "input" (action (mut this.title) value="target.value")}}
           {{on "keyup" (fn (action "addErrorDisplayFor") "title")}}
         >
-        {{#if (and (v-get this "title" "isInvalid") (is-in this.showErrorsFor "title"))}}
+        {{#if (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))}}
           <span class="validation-error-message">{{v-get this "title" "message"}}</span>
         {{/if}}
       {{/editable-field}}
@@ -214,7 +214,7 @@
                 {{on "input" (action (mut this.hours) value="target.value")}}
                 {{on "keyup" (fn (action "addErrorDisplayFor") "hours")}}
               >
-              {{#if (and (v-get this "hours" "isInvalid") (is-in this.showErrorsFor "hours"))}}
+              {{#if (and (v-get this "hours" "isInvalid") (contains "hours" this.showErrorsFor))}}
                 <span class="validation-error-message">{{v-get this "hours" "message"}}</span>
               {{/if}}
             {{/editable-field}}
@@ -239,7 +239,7 @@
                   onSelection=(action (mut this.dueDate))
                   focusOut=(action "addErrorDisplayFor" "dueDate")
                 }}
-                {{#if (and (v-get this "dueDate" "isInvalid") (is-in this.showErrorsFor "dueDate"))}}
+                {{#if (and (v-get this "dueDate" "isInvalid") (contains "dueDate" this.showErrorsFor))}}
                   <span class="validation-error-message">{{v-get this "dueDate" "message"}}</span>
                 {{/if}}
               {{/editable-field}}
@@ -314,7 +314,7 @@
             save=(action "saveDescription")
             close=(perform this.revertDescriptionChanges)
             renderHtml=true
-            isSaveDisabled=(and (v-get this "description" "isInvalid") (is-in this.showErrorsFor "description"))
+            isSaveDisabled=(and (v-get this "description" "isInvalid") (contains "description" this.showErrorsFor))
             clickPrompt=(t "general.clickToEdit")
           }}
             {{html-editor
@@ -322,7 +322,7 @@
               update=(action "changeDescription")
             }}
             {{#if
-              (and (v-get this "description" "isInvalid") (is-in this.showErrorsFor "description"))
+              (and (v-get this "description" "isInvalid") (contains "description" this.showErrorsFor))
             }}
               <span class="validation-error-message">{{v-get this "description" "message"}}</span>
             {{/if}}
@@ -342,7 +342,7 @@
             save=(perform this.saveInstructionalNotes)
             close=(action "revertInstructionalNotesChanges")
             renderHtml=true
-            isSaveDisabled=(and (v-get this "instructionalNotes" "isInvalid") (is-in this.showErrorsFor "instructionalNotes"))
+            isSaveDisabled=(and (v-get this "instructionalNotes" "isInvalid") (contains "instructionalNotes" this.showErrorsFor))
             clickPrompt=(t "general.clickToEdit")
           }}
             {{html-editor
@@ -350,7 +350,7 @@
               update=(action "changeInstructionalNotes")
             }}
             {{#if
-              (and (v-get this "instructionalNotes" "isInvalid") (is-in this.showErrorsFor "instructionalNotes"))
+              (and (v-get this "instructionalNotes" "isInvalid") (contains "instructionalNotes" this.showErrorsFor))
             }}
               <span class="validation-error-message">{{v-get this "instructionalNotes" "message"}}</span>
             {{/if}}

@@ -40,7 +40,7 @@
         @closeOnEscape={{true}}
         @isSaveDisabled={{and
           (v-get this "room" "isInvalid")
-          (is-in this.showErrorsFor "room")
+          (contains "room" this.showErrorsFor)
         }} as |isSaving|
       >
         <input
@@ -51,7 +51,7 @@
           {{on "input" (action (mut this.room) value="target.value")}}
           {{on "keyup" (fn (action "addErrorDisplayFor") "room")}}
         >
-        {{#if (and (v-get this "room" "isInvalid") (is-in this.showErrorsFor "room"))
+        {{#if (and (v-get this "room" "isInvalid") (contains "room" this.showErrorsFor))
         }}
           <span class="validation-error-message">
             {{v-get this "room" "message"}}
