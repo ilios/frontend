@@ -89,7 +89,7 @@
                   <input
                     class="checkbox"
                     type="checkbox"
-                    checked={{is-in (await @selectedCourses) course}}
+                    checked={{contains course (await @selectedCourses)}}
                     {{on "change" (fn @onUpdateCourses course.id)}}
                   >
                   <span
@@ -121,7 +121,7 @@
               {{#each (await this.sessionTypes) as |type|}}
                 <li class="clickable">
                   <input
-                    checked={{is-in (await @selectedSessionTypes) type}}
+                    checked={{contains type (await @selectedSessionTypes)}}
                     class="checkbox"
                     type="checkbox"
                     {{on "change" (fn @onUpdateSessionTypes type.id)}}
@@ -176,7 +176,7 @@
                   <input
                     class="checkbox"
                     type="checkbox"
-                    checked={{is-in (await @selectedSessionTypes) type}}
+                    checked={{contains type (await @selectedSessionTypes)}}
                     {{on "change" (fn @onUpdateSessionTypes type.id)}}
                   >
                   <span
@@ -235,7 +235,7 @@
                   <input
                     class="checkbox"
                     type="checkbox"
-                    checked={{is-in (await @selectedCohorts) cohort}}
+                    checked={{contains cohort (await @selectedCohorts)}}
                     {{on "change" (fn @onUpdateCohorts cohort.id)}}
                   >
                   <span

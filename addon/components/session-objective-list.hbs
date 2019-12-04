@@ -34,9 +34,9 @@
             @objective={{objective}}
             @editable={{@editable}}
             @session={{this.session}}
-            @showRemoveConfirmation={{is-in
-              this.objectivesForRemovalConfirmation
+            @showRemoveConfirmation={{contains
               objective.id
+              this.objectivesForRemovalConfirmation
             }}
             @remove={{action "confirmRemoval"}}
             @manageParents={{@manageParents}}
