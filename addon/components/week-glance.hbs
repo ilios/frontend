@@ -1,41 +1,47 @@
-<h3
-  class="{{if @collapsible "clickable collapsible"}}
-
-    {{if @collapsed "collapsed" "expanded"}}"
-  role="button"
-  data-test-week-title
-  {{on "click" (fn (optional @toggleCollapsed) @collapsed)}}
+<div
+  class="week-glance"
+  data-test-week-glance
+  {{did-insert (perform this.load) @week @year}}
+  {{did-update (perform this.load) @week @year}}
 >
-  {{this.title}}
-  {{#if @showFullTitle}}
-    {{t "general.weekAtAGlance"}}
-  {{/if}}
-</h3>
-{{#liquid-unless @collapsed class="vertical"}}
-  {{#if (is-fulfilled this.publishedWeekEvents)}}
-    <div class="ilm-pre-work">
-      {{#if (gt (get (await this.ilmPreWork) "length") 0)}}
-        <h4>
-          {{t "general.preWork"}}
-        </h4>
-        {{#each (await this.ilmPreWork) as |ilmGroup|}}
-          <WeekGlancePreWork @events={{ilmGroup}} />
+  <h3
+    class="{{if @collapsible "clickable collapsible"}}
+    {{if @collapsed "collapsed" "expanded"}}"
+    role="button"
+    data-test-week-title
+    {{on "click" (fn (optional @toggleCollapsed) @collapsed)}}
+  >
+    {{this.title}}
+    {{#if @showFullTitle}}
+      {{t "general.weekAtAGlance"}}
+    {{/if}}
+  </h3>
+  {{#liquid-unless @collapsed class="vertical"}}
+    {{#unless this.load.isRunning}}
+      <div class="ilm-pre-work">
+        {{#if (gt this.ilmPreWork.length 0)}}
+          <h4>
+            {{t "general.preWork"}}
+          </h4>
+          {{#each this.ilmPreWork as |ilmGroup|}}
+            <WeekGlancePreWork @events={{ilmGroup}} />
+          {{/each}}
+        {{/if}}
+      </div>
+      {{#if (gt this.nonIlmPreWorkEvents.length 0)}}
+        {{#each this.nonIlmPreWorkEvents as |event|}}
+          <WeekGlanceEvent @event={{event}} />
         {{/each}}
+      {{else}}
+        <p>
+          {{t "general.none"}}
+        </p>
       {{/if}}
-    </div>
-    {{#if (gt (get (await this.nonIlmPreWorkEvents) "length") 0)}}
-      {{#each (await this.nonIlmPreWorkEvents) as |event|}}
-        <WeekGlanceEvent @event={{event}} />
-      {{/each}}
     {{else}}
       <p>
-        {{t "general.none"}}
+        <FaIcon @icon="spinner" @spin={{true}} />
+        {{t "general.loadingEvents"}}
       </p>
-    {{/if}}
-  {{else}}
-    <p>
-      <FaIcon @icon="spinner" @spin={{true}} />
-      {{t "general.loadingEvents"}}
-    </p>
-  {{/if}}
-{{/liquid-unless}}
+    {{/unless}}
+  {{/liquid-unless}}
+</div>

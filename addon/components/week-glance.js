@@ -1,77 +1,62 @@
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import moment from 'moment';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  userEvents: service(),
-  intl: service(),
+export default class WeeklyGlance extends Component {
+  @service userEvents;
+  @service intl;
 
-  classNames: ['week-glance'],
+  @tracked publishedWeekEvents;
+  @tracked midnightAtTheStartOfThisWeek;
+  @tracked midnightAtTheEndOfThisWeek;
 
-  year: null,
-  week: null,
-  collapsible: true,
-  collapsed: true,
-  showFullTitle: false,
-  'data-test-week-glance': true,
+  @restartableTask
+  *load(element, [week, year]) {
+    // @todo does this still hold true? verify. [ST 2019/12/04]
+    this.intl; //we need to use the service so the CP will re-fire
+    const thursdayOfTheWeek = moment();
+    thursdayOfTheWeek.year(year);
+    thursdayOfTheWeek.day(4);
+    thursdayOfTheWeek.isoWeek(week);
+    thursdayOfTheWeek.hour(0).minute(0);
 
-  thursdayOfTheWeek: computed('intl.locale', 'year', 'week', function() {
-    this.get('intl'); //we need to use the service so the CP will re-fire
-    const year = this.get('year');
-    const week = this.get('week');
-    const targetDate = moment();
-    targetDate.year(year);
-    targetDate.day(4);
-    targetDate.isoWeek(week);
-    return targetDate.hour(0).minute(0);
-  }),
+    this.midnightAtTheStartOfThisWeek = thursdayOfTheWeek.clone().subtract(4, 'days');
+    this.midnightAtTheEndOfThisWeek = thursdayOfTheWeek.clone().add(2, 'days').hour(23).minute(59);
 
-  midnightAtTheStartOfThisWeek: computed('thursdayOfTheWeek', function(){
-    const thursday = this.get('thursdayOfTheWeek');
-    return thursday.clone().subtract(4, 'days');
-  }),
-  midnightAtTheEndOfThisWeek: computed('thursdayOfTheWeek', function(){
-    const thursday = this.get('thursdayOfTheWeek');
-    return thursday.clone().add(2, 'days').hour(23).minute(59);
-  }),
-  title: computed('midnightAtTheStartOfThisWeek', 'midnightAtTheEndOfThisWeek', function(){
-    const midnightAtTheStartOfThisWeek = this.get('midnightAtTheStartOfThisWeek');
-    const midnightAtTheEndOfThisWeek = this.get('midnightAtTheEndOfThisWeek');
-    const from = midnightAtTheStartOfThisWeek.format('MMMM D');
-
-    let to;
-    if (midnightAtTheStartOfThisWeek.month() != midnightAtTheEndOfThisWeek.month()) {
-      to = midnightAtTheEndOfThisWeek.format('MMMM D');
-
-      return `${from} - ${to}`;
-    } else {
-      to = midnightAtTheEndOfThisWeek.format('D');
-
-      return `${from}-${to}`;
-    }
-  }),
-
-  weekEvents: computed('midnightAtTheStartOfThisWeek', 'midnightAtTheEndOfThisWeek', async function() {
-    const midnightAtTheStartOfThisWeek = this.get('midnightAtTheStartOfThisWeek');
-    const midnightAtTheEndOfThisWeek = this.get('midnightAtTheEndOfThisWeek');
-
-    const from = midnightAtTheStartOfThisWeek.unix();
-    const to = midnightAtTheEndOfThisWeek.unix();
-
-    return await this.get('userEvents').getEvents(from, to);
-  }),
-
-  publishedWeekEvents: computed('weekEvents.[]', async function() {
-    const weekEvents = await this.get('weekEvents');
-    return weekEvents.filter(ev => {
+    const weekEvents =  yield this.userEvents.getEvents(
+      this.midnightAtTheStartOfThisWeek.unix(),
+      this.midnightAtTheEndOfThisWeek.unix()
+    );
+    this.publishedWeekEvents = weekEvents.filter(ev => {
       return !ev.isBlanked && ev.isPublished && !ev.isScheduled;
     });
-  }),
+  }
 
-  ilmPreWork: computed('publishedWeekEvents.[]', async function () {
-    const publishedWeekEvents = await this.get('publishedWeekEvents');
-    const preWork =  publishedWeekEvents.reduce((arr, eventObject) => {
+  get title() {
+    if (!this.midnightAtTheStartOfThisWeek || !this.midnightAtTheStartOfThisWeek) {
+      return '';
+    }
+
+    const from = this.midnightAtTheStartOfThisWeek.format('MMMM D');
+    let to;
+    if (this.midnightAtTheStartOfThisWeek.month() !== this.midnightAtTheEndOfThisWeek.month()) {
+      to = this.midnightAtTheEndOfThisWeek.format('MMMM D');
+      return `${from} - ${to}`;
+    }
+    to = this.midnightAtTheEndOfThisWeek.format('D');
+    return `${from}-${to}`;
+  }
+
+  get ilmPreWork() {
+    const rhett = [];
+
+    if (!this.publishedWeekEvents) {
+      return rhett;
+    }
+
+    const preWork =  this.publishedWeekEvents.reduce((arr, eventObject) => {
       return arr.pushObjects(eventObject.prerequisites);
     }, []);
 
@@ -86,7 +71,6 @@ export default Component.extend({
 
     // return an array of arrays of ILMs.
     const sessions = Object.getOwnPropertyNames(groups);
-    const rhett = [];
     sessions.forEach(session => {
       rhett.push(groups[session]);
     });
@@ -115,12 +99,14 @@ export default Component.extend({
         return -1;
       }
     });
-  }),
+  }
 
-  nonIlmPreWorkEvents: computed('publishedWeekEvents.[]', async function () {
-    const publishedWeekEvents = await this.get('publishedWeekEvents');
-    return publishedWeekEvents.filter(ev => {
+  get nonIlmPreWorkEvents() {
+    if (!this.publishedWeekEvents) {
+      return [];
+    }
+    return this.publishedWeekEvents.filter(ev => {
       return ev.postrequisites.length === 0 || !ev.ilmSession;
     });
-  }),
-});
+  }
+}
