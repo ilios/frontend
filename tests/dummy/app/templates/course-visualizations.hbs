@@ -1,1 +1,58 @@
-{{outlet}}
+<section class="course-visualizations">
+  <div class="backtolink">
+    <LinkTo @route="course" @model={{this.model}}>
+      {{t "general.backToCourse"}}
+    </LinkTo>
+  </div>
+  <h2>
+    {{t "general.courseVisualizations"}}
+  </h2>
+  <h3 class="clickable">
+    <LinkTo @route="course" @model={{this.model}}>
+      {{this.model.title}}
+      {{this.model.academicYear}}
+    </LinkTo>
+  </h3>
+  <div class="visualizations">
+    <div>
+      <LinkTo @route="course-visualize-objectives" @model={{this.model}}>
+        <h4>
+          {{t "general.objectives"}}
+        </h4>
+        <VisualizerCourseObjectives @isIcon={{true}} @course={{this.model}} />
+      </LinkTo>
+    </div>
+    <div>
+      <LinkTo @route="course-visualize-session-types" @model={{this.model}}>
+        <h4>
+          {{t "general.sessionTypes"}}
+        </h4>
+        <VisualizerCourseSessionTypes
+          @isIcon={{true}}
+          @course={{this.model}}
+          @chartType="donut"
+        />
+      </LinkTo>
+    </div>
+    <div>
+      <LinkTo @route="course-visualize-vocabularies" @model={{this.model}}>
+        <h4>
+          {{t "general.vocabularies"}}
+        </h4>
+        <VisualizerCourseVocabularies @isIcon={{true}} @course={{this.model}} />
+      </LinkTo>
+    </div>
+    <div>
+      <LinkTo @route="course-visualize-instructors" @model={{this.model}}>
+        <h4>
+          {{t "general.instructors"}}
+        </h4>
+        <VisualizerCourseInstructors
+          @isIcon={{true}}
+          @course={{this.model}}
+          @chartType="donut"
+        />
+      </LinkTo>
+    </div>
+  </div>
+</section>
