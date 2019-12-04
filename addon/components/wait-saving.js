@@ -1,15 +1,9 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  showProgress: false,
-  totalProgress: null,
-  currentProgress: null,
-  'data-test-wait-saving': true,
-  progress: computed('totalProgress', 'currentProgress', function(){
-    const total = this.get('totalProgress') || 1;
-    const current = this.get('currentProgress') || 0;
-
+export default class WaitSaving extends Component {
+  get progress(){
+    const total = this.args.totalProgress || 1;
+    const current = this.args.currentProgress || 0;
     return Math.floor(current / total * 100);
-  })
-});
+  }
+}

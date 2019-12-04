@@ -1,9 +1,11 @@
-<ModalDialog @translucentOverlay={{true}} @animatable={{false}}>
-  <PulseLoader />
-  <h2 class="page-title">
-    {{t "general.waitSaving"}}
-  </h2>
-  {{#if @showProgress}}
-    <ProgressBar @percentage={{this.progress}} />
-  {{/if}}
-</ModalDialog>
+<div data-test-wait-saving>
+  <ModalDialog @translucentOverlay={{true}} @animatable={{false}}>
+    <PulseLoader />
+    <h2 class="page-title">
+      {{t "general.waitSaving"}}
+    </h2>
+    {{#if @showProgress}}
+      <ProgressBar @percentage={{this.progress}} />
+    {{/if}}
+  </ModalDialog>
+</div>
