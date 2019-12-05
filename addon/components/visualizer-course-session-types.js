@@ -1,24 +1,25 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { map } from 'rsvp';
-import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import {tracked} from '@glimmer/tracking';
+import { action } from '@ember/object';
+import {restartableTask} from "ember-concurrency-decorators";
 
-export default Component.extend({
-  intl: service(),
-  router: service(),
-  course: null,
-  isIcon: false,
-  chartType: 'horz-bar',
-  classNameBindings: ['isIcon::not-icon', ':visualizer-course-session-types'],
-  tooltipContent: null,
-  tooltipTitle: null,
-  data: computed('course.sessions.[]', async function () {
-    const course = this.get('course');
-    const sessions = await course.get('sessions');
-    const dataMap = await map(sessions.toArray(), async session => {
+export default class VisualizeCourseSessionTypes extends Component {
+  @service router;
+  @service intl;
+  @tracked data;
+  @tracked tooltipContent = null;
+  @tracked tooltipTitle = null;
+  chartType = 'horz-bar';
+
+  @restartableTask
+  *load(element, [course]) {
+    const sessions = yield course.get('sessions');
+    const dataMap = yield map(sessions.toArray(), async session => {
       const sessionType = await session.get('sessionType');
       const hours = await session.get('totalSumDuration');
       const minutes = Math.round(hours * 60);
@@ -52,51 +53,39 @@ export default Component.extend({
 
 
     const totalMinutes = mappedSessionTypes.mapBy('data').reduce((total, minutes) => total + minutes, 0);
-    const mappedSessionTypesWithLabel = mappedSessionTypes.map(obj => {
+    this.data = mappedSessionTypes.map(obj => {
       const percent = (obj.data / totalMinutes * 100).toFixed(1);
       obj.label = `${obj.meta.sessionType} ${percent}%`;
       obj.meta.totalMinutes = totalMinutes;
       obj.meta.percent = percent;
       return obj;
-    });
-
-    return mappedSessionTypesWithLabel;
-  }),
-  sortedData: computed('data.[]', async function () {
-    const data = await this.get('data');
-    data.sort((first, second) => {
+    }).sort((first, second) => {
       return first.data - second.data;
     });
+  }
 
-    return data;
-  }),
-  actions: {
-    barClick(obj) {
-      const course = this.get('course');
-      const isIcon = this.get('isIcon');
-      const router = this.get('router');
-      if (isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
-        return;
-      }
-
-      router.transitionTo('course-visualize-session-type', course.get('id'), obj.meta.sessionTypeId);
-    }
-  },
-  barHover: task(function* (obj) {
-    yield timeout(100);
-    const isIcon = this.get('isIcon');
-    if (isIcon || isEmpty(obj) || obj.empty) {
-      this.set('tooltipTitle', null);
-      this.set('tooltipContent', null);
+  @action
+  barClick(obj) {
+    if (this.args.isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
       return;
     }
-    const intl = this.get('intl');
+    this.router.transitionTo('course-visualize-session-type', this.args.course.get('id'), obj.meta.sessionTypeId);
+  }
+
+  @restartableTask
+  *barHover(obj) {
+    yield timeout(100);
+    if (this.args.isIcon || isEmpty(obj) || obj.empty) {
+      this.tooltipTitle = null;
+      this.tooltipContent = null;
+      return;
+    }
     const { label, data, meta } = obj;
 
-    const title = htmlSafe(`${label} ${data} ${intl.t('general.minutes')}`);
+    const title = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
     const sessions = meta.sessions.uniq().sort().join();
 
-    this.set('tooltipTitle', title);
-    this.set('tooltipContent', sessions);
-  }).restartable()
-});
+    this.tooltipTitle = title;
+    this.tooltipContent = sessions;
+  }
+}
