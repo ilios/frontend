@@ -1,25 +1,24 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { filter, map } from 'rsvp';
-import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import {tracked} from '@glimmer/tracking';
+import { action } from '@ember/object';
+import {restartableTask} from "ember-concurrency-decorators";
 
-export default Component.extend({
-  intl: service(),
-  router: service(),
-  course: null,
-  vocabulary: null,
-  isIcon: false,
-  classNameBindings: ['isIcon::not-icon', ':visualizer-course-vocabulary'],
-  tooltipContent: null,
-  tooltipTitle: null,
-  data: computed('course.sessions.[]', 'vocabulary', async function(){
-    const course = this.get('course');
-    const vocabulary = this.get('vocabulary');
-    const sessions = await course.get('sessions');
-    const terms = await map(sessions.toArray(), async session => {
+export default class VisualizeCourseVocabulary extends Component {
+  @service router;
+  @service intl;
+  @tracked data;
+  @tracked tooltipContent = null;
+  @tracked tooltipTitle = null;
+
+  @restartableTask
+  *load(element, [course, vocabulary]) {
+    const sessions = yield course.get('sessions');
+    const terms = yield map(sessions.toArray(), async session => {
       const sessionTerms = await session.get('terms');
       const hours = await session.get('totalSumDuration');
       const minutes = Math.round(hours * 60);
@@ -72,43 +71,31 @@ export default Component.extend({
       return obj;
     });
 
-    return mappedTermsWithLabel;
-  }),
-  sortedData: computed('data.[]', async function () {
-    const data = await this.get('data');
-    data.sort((first, second) => {
+
+    this.data = mappedTermsWithLabel.sort((first, second) => {
       return first.data - second.data;
     });
+  }
 
-    return data;
-  }),
-  actions: {
-    barClick(obj) {
-      const course = this.get('course');
-      const isIcon = this.get('isIcon');
-      const router = this.get('router');
-      if (isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
-        return;
-      }
-
-      router.transitionTo('course-visualize-term', course.get('id'), obj.meta.termId);
-    }
-  },
-  barHover: task(function* (obj) {
+  @restartableTask
+  *barHover(obj) {
     yield timeout(100);
-    const isIcon = this.get('isIcon');
-    if (isIcon || isEmpty(obj) || obj.empty) {
-      this.set('tooltipTitle', null);
-      this.set('tooltipContent', null);
+    if (this.args.isIcon || isEmpty(obj) || obj.empty) {
+      this.tooltipTitle = null;
+      this.tooltipContent = null;
       return;
     }
-    const intl = this.get('intl');
     const { label, data, meta } = obj;
 
-    const title = htmlSafe(`${label} ${data} ${intl.t('general.minutes')}`);
-    const sessions = meta.sessions.uniq().sort().join();
+    this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
+    this.tooltipContent = meta.sessions.uniq().sort().join();
+  }
 
-    this.set('tooltipTitle', title);
-    this.set('tooltipContent', sessions);
-  }).restartable()
-});
+  @action
+  barClick(obj) {
+    if (this.args.isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
+      return;
+    }
+    this.router.transitionTo('course-visualize-term', this.args.course.get('id'), obj.meta.termId);
+  }
+}
