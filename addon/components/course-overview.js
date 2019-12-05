@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import scrollTo from 'ilios-common/utils/scroll-to';
 import { restartableTask } from 'ember-concurrency-decorators';
-import { validatable, Length, BeforeDate } from 'ilios-common/decorators/validation';
+import { validatable, Length, BeforeDate, AfterDate } from 'ilios-common/decorators/validation';
 
 @validatable
 export default class CourseOverview extends Component {
@@ -19,6 +19,7 @@ export default class CourseOverview extends Component {
 
   @Length(2, 255) @tracked externalId = null;
   @BeforeDate('endDate') @tracked startDate = null;
+  @AfterDate('startDate') @tracked endDate = null;
   @tracked level = null;
   @tracked levelOptions = null;
   @tracked clerkshipTypeId = null;

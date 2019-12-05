@@ -153,18 +153,14 @@
             <PikadayInput
               @value={{this.endDate}}
               @format="L"
-              @onSelection={{action (mut this.endDate)}}
-              @focusOut={{action "addErrorDisplayFor" "endDate"}}
+              @onSelection={{fn (set this.endDate)}}
+              @focusOut={{fn this.addErrorDisplayFor "endDate"}}
             />
-            {{#if
-              (and
-                (v-get this "endDate" "isInvalid") (contains "endDate" this.showErrorsFor)
-              )
-            }}
+            {{#each (await (compute (fn this.getErrorsFor) "endDate")) as |message|}}
               <span class="validation-error-message">
-                {{v-get this "endDate" "message"}}
+                {{message}}
               </span>
-            {{/if}}
+            {{/each}}
           </EditableField>
         {{else}}
           {{moment-format @course.endDate "L"}}&nbsp;
