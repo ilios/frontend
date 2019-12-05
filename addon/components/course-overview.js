@@ -4,11 +4,10 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import scrollTo from 'ilios-common/utils/scroll-to';
 import { restartableTask } from 'ember-concurrency-decorators';
-import { Validate, Length } from "class-validator";
-import { validatable, beforeDate } from 'ilios-common/decorators/validation';
+import { validatable, Length, BeforeDate } from 'ilios-common/decorators/validation';
 
 @validatable
-export default class BackLink extends Component {
+export default class CourseOverview extends Component {
   @service currentUser;
   @service intl;
   @service permissionChecker;
@@ -19,7 +18,7 @@ export default class BackLink extends Component {
   universalLocator = 'ILIOS';
 
   @Length(2, 255) @tracked externalId = null;
-  @Validate(beforeDate, ['endDate']) @tracked startDate = null;
+  @BeforeDate('endDate') @tracked startDate = null;
   @tracked level = null;
   @tracked levelOptions = null;
   @tracked clerkshipTypeId = null;

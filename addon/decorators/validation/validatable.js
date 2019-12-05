@@ -26,9 +26,11 @@ export function validatable(target) {
     }
     @action
     async getErrorsFor(field) {
-      const errors = await this.validate();
-      if (field in errors) {
-        return errors[field];
+      if (this._evdShowAllErrors || this._evdVisibleErrors.includes(field)) {
+        const errors = await this.validate();
+        if (field in errors) {
+          return errors[field];
+        }
       }
 
       return [];

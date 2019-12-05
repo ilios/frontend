@@ -62,13 +62,12 @@
             @saveOnEnter={{true}}
             @closeOnEscape={{true}} as |isSaving|
           >
-            <input
+            <Input
               type="text"
-              value={{this.externalId}}
+              @value={{this.externalId}}
+              @key-press={{fn this.addErrorDisplayFor "externalId"}}
               disabled={{isSaving}}
-              {{on "keyup" (action (set this.externalId) value="target.value")}}
-              {{on "keyup" (fn this.addErrorDisplayFor "externalId")}}
-            >
+            />
             {{#each (await (compute (fn this.getErrorsFor) "externalId")) as |message|}}
               <span class="validation-error-message">
                 {{message}}
