@@ -1,23 +1,24 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { all, map } from 'rsvp';
-import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import {tracked} from '@glimmer/tracking';
+import { action } from '@ember/object';
+import {restartableTask} from "ember-concurrency-decorators";
 
-export default Component.extend({
-  router: service(),
-  intl: service(),
-  course: null,
-  isIcon: false,
-  classNameBindings: ['isIcon::not-icon', ':visualizer-course-vocabularies'],
-  tooltipContent: null,
-  tooltipTitle: null,
-  data: computed('course.sessions.[]', async function () {
-    const course = this.get('course');
-    const sessions = await course.get('sessions');
-    const dataMap = await map(sessions.toArray(), async session => {
+export default class VisualizeCourseVocabularies extends Component {
+  @service router;
+  @service intl;
+  @tracked data;
+  @tracked tooltipContent = null;
+  @tracked tooltipTitle = null;
+
+  @restartableTask
+  *load(element, [course]) {
+    const sessions = yield course.get('sessions');
+    const dataMap = yield map(sessions.toArray(), async session => {
       const terms = await session.get('terms');
       const vocabularies = await all(terms.mapBy('vocabulary'));
       const hours = await session.get('totalSumDuration');
@@ -30,7 +31,7 @@ export default Component.extend({
       };
     });
 
-    const data = dataMap.reduce((set, obj) => {
+    this.data = dataMap.reduce((set, obj) => {
       obj.vocabularies.forEach(vocabulary => {
         const vocabularyTitle = vocabulary.get('title');
         let existing = set.findBy('label', vocabularyTitle);
@@ -51,34 +52,27 @@ export default Component.extend({
 
       return set;
     }, []);
+  }
 
-    return data;
-  }),
-  actions: {
-    donutClick(obj) {
-      const course = this.get('course');
-      const isIcon = this.get('isIcon');
-      const router = this.get('router');
-      if (isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
-        return;
-      }
-
-      router.transitionTo('course-visualize-vocabulary', course.get('id'), obj.meta.vocabulary.get('id'));
-    }
-  },
-  donutHover: task(function* (obj) {
+  @restartableTask
+  *donutHover(obj) {
     yield timeout(100);
-    const intl = this.get('intl');
-    const isIcon = this.get('isIcon');
-    if (isIcon || isEmpty(obj) || obj.empty) {
-      this.set('tooltipTitle', null);
-      this.set('tooltipContent', null);
+    if (this.args.isIcon || isEmpty(obj) || obj.empty) {
+      this.tooltipTitle = null;
+      this.tooltipContent = null;
       return;
     }
     const { meta } = obj;
 
-    const title = htmlSafe(meta.vocabulary.get('title'));
-    this.set('tooltipTitle', title);
-    this.set('tooltipContent', intl.t('general.clickForMore'));
-  }).restartable(),
-});
+    this.tooltipTitle = htmlSafe(meta.vocabulary.get('title'));
+    this.tooltipContent = this.intl.t('general.clickForMore');
+  }
+
+  @action
+  donutClick(obj) {
+    if (this.args.isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
+      return;
+    }
+    this.router.transitionTo('course-visualize-vocabulary', this.args.course.get('id'), obj.meta.vocabulary.get('id'));
+  }
+}
