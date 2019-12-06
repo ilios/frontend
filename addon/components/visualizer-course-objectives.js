@@ -1,25 +1,24 @@
-import Component from '@ember/component';
-import RSVP from 'rsvp';
-import { computed } from '@ember/object';
-import { isPresent, isEmpty } from '@ember/utils';
+import Component from '@glimmer/component';
+import { filter, map } from 'rsvp';
+import { isEmpty, isPresent } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import {tracked} from '@glimmer/tracking';
+import {restartableTask} from "ember-concurrency-decorators";
 
-const { map, filter } = RSVP;
+export default class VisualizeCourseObjectives extends Component {
+  @service router;
+  @service intl;
+  @tracked objectiveWithoutMinutes;
+  @tracked objectiveWithMinutes;
+  @tracked tooltipContent = null;
+  @tracked tooltipTitle = null;
 
-export default Component.extend({
-  intl: service(),
-  course: null,
-  isIcon: false,
-  classNameBindings: ['isIcon::not-icon', ':visualizer-course-objectives'],
-  tagName: 'div',
-  tooltipContent: null,
-  tooltipTitle: null,
-  objectiveData: computed('course.sessions.[]', 'course.objectives.[]', async function(){
-    const course = this.get('course');
-    const sessions = await course.get('sessions');
-    const sessionCourseObjectiveMap = await map(sessions.toArray(), async session => {
+  @restartableTask
+  *load(element, [course]) {
+    const sessions = yield course.get('sessions');
+    const sessionCourseObjectiveMap = yield map(sessions.toArray(), async session => {
       const hours = await session.get('totalSumDuration');
       const minutes = Math.round(hours * 60);
       const sessionObjectives = await session.get('objectives');
@@ -43,14 +42,8 @@ export default Component.extend({
 
     });
 
-
-    return sessionCourseObjectiveMap;
-  }),
-
-  condensedObjectiveData: computed('objectiveData.[]', async function (){
-    const course = this.get('course');
-    const sessionCourseObjectiveMap  = await this.get('objectiveData');
-    const courseObjectives = await course.get('objectives');
+    // condensed objectives map
+    const courseObjectives = yield course.get('objectives');
     const mappedObjectives = courseObjectives.map(courseObjective => {
       const minutes = sessionCourseObjectiveMap.map(obj => {
         if (obj.objectives.includes(courseObjective.get('id'))) {
@@ -73,58 +66,37 @@ export default Component.extend({
     });
 
     const totalMinutes = mappedObjectives.mapBy('data').reduce((total, minutes) => total + minutes, 0);
-    const mappedObjectivesWithLabel = mappedObjectives.map(obj => {
+    const condensedObjectiveData = mappedObjectives.map(obj => {
       const percent = (obj.data / totalMinutes * 100).toFixed(1);
       obj.label = `${percent}%`;
       return obj;
     });
 
-    return mappedObjectivesWithLabel;
-  }),
+    this.objectiveWithMinutes = condensedObjectiveData.filter(obj => obj.data !== 0);
+    this.objectiveWithoutMinutes = condensedObjectiveData.filterBy('data', 0);
+  }
 
-  objectiveWithMinutes: computed('condensedObjectiveData.[]', async function(){
-    const condensedObjectiveData = await this.get('condensedObjectiveData');
-    const objectiveWithMinutes = condensedObjectiveData.filter(obj => obj.data !== 0);
 
-    return objectiveWithMinutes;
-  }),
-
-  objectiveWithoutMinutes: computed('condensedObjectiveData.[]', async function(){
-    const condensedObjectiveData = await this.get('condensedObjectiveData');
-    const objectiveWithoutMinutes = condensedObjectiveData.filterBy('data', 0);
-
-    return objectiveWithoutMinutes;
-  }),
-
-  async getTooltipData(obj){
-    const intl = this.get('intl');
-    const isIcon = this.get('isIcon');
-    if (isIcon || isEmpty(obj) || obj.empty) {
-      return '';
+  @restartableTask
+  *donutHover(obj) {
+    yield timeout(100);
+    if (this.args.isIcon || isEmpty(obj) || obj.empty) {
+      this.tooltipTitle = null;
+      this.tooltipContent = null;
     }
     const { data, meta } = obj;
 
     let objectiveTitle = meta.courseObjective.get('title');
-    const competency = await meta.courseObjective.get('competency');
+    const competency = yield meta.courseObjective.get('competency');
     if (competency) {
       objectiveTitle += `(${competency})`;
     }
 
-    const title = htmlSafe(`${objectiveTitle} &bull; ${data} ${intl.t('general.minutes')}`);
+    const title = htmlSafe(`${objectiveTitle} &bull; ${data} ${this.intl.t('general.minutes')}`);
     const sessionTitles = meta.sessionObjectives.mapBy('sessionTitle');
     const content = sessionTitles.join(', ');
 
-    return {
-      content,
-      title
-    };
-  },
-  donutHover: task(function* (obj) {
-    yield timeout(100);
-    const data = yield this.getTooltipData(obj);
-    if (isPresent(data)) {
-      this.set('tooltipTitle', data.title);
-      this.set('tooltipContent', data.content);
-    }
-  }).restartable(),
-});
+    this.tooltipTitle = title;
+    this.tooltipContent = content;
+  }
+}
