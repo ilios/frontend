@@ -14,7 +14,10 @@ export default class VisualizeCourseSessionTypes extends Component {
   @tracked data;
   @tracked tooltipContent = null;
   @tracked tooltipTitle = null;
-  chartType = 'horz-bar';
+
+  get chartType() {
+    return this.args.chartType || 'horz-bar';
+  }
 
   @restartableTask
   *load(element, [course]) {
@@ -64,14 +67,6 @@ export default class VisualizeCourseSessionTypes extends Component {
     });
   }
 
-  @action
-  barClick(obj) {
-    if (this.args.isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
-      return;
-    }
-    this.router.transitionTo('course-visualize-session-type', this.args.course.get('id'), obj.meta.sessionTypeId);
-  }
-
   @restartableTask
   *barHover(obj) {
     yield timeout(100);
@@ -87,5 +82,13 @@ export default class VisualizeCourseSessionTypes extends Component {
 
     this.tooltipTitle = title;
     this.tooltipContent = sessions;
+  }
+
+  @action
+  barClick(obj) {
+    if (this.args.isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
+      return;
+    }
+    this.router.transitionTo('course-visualize-session-type', this.args.course.get('id'), obj.meta.sessionTypeId);
   }
 }
