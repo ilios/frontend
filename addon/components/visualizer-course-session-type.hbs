@@ -4,7 +4,7 @@
   {{did-update (perform this.load) @course @sessionType}}
 >
   {{#unless this.load.isRunning}}
-    {{#if (or true @isIcon this.data.length)}}
+    {{#if (or @isIcon this.data.length)}}
       <SimpleChart
         @name="horz-bar"
         @isIcon={{@isIcon}}

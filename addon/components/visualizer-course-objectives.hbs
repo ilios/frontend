@@ -4,7 +4,7 @@
   {{did-update (perform this.load) @course}}
 >
   {{#unless this.load.isRunning}}
-    {{#if (or true @isIcon this.objectiveWithMinutes.length)}}
+    {{#if (or @isIcon this.objectiveWithMinutes.length)}}
       <SimpleChart
         @name="donut"
         @isIcon={{@isIcon}}
