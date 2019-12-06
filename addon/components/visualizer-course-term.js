@@ -7,7 +7,7 @@ import { inject as service } from '@ember/service';
 import {tracked} from '@glimmer/tracking';
 import {restartableTask} from "ember-concurrency-decorators";
 
-export default class VisualizeCourseTerm extends Component {
+export default class VisualizerCourseTerm extends Component {
   @service router;
   @service intl;
   @tracked data;
