@@ -28,11 +28,11 @@
           @fixedWidth={{true}}
         />
       </LinkTo>
-      {{#if (and (is-fulfilled this.showRollover) (await this.showRollover))}}
+      {{#if this.showRollover}}
         <span
           class="clickable rollover"
           role="button"
-          {{on "click" (action "transitionToRollover")}}
+          {{on "click" this.transitionToRollover}}
         >
           <FaIcon
             @icon="random"

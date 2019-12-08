@@ -12,7 +12,6 @@ export default class CourseOverview extends Component {
   @service intl;
   @service permissionChecker;
   @service router;
-  @service('-routing') routing;
   @service store;
 
   universalLocator = 'ILIOS';
@@ -29,7 +28,7 @@ export default class CourseOverview extends Component {
 
   @tracked clerkshipTypeOptions;
 
-  @tracked showRollover = false;
+  @tracked canCreateCourseInSchool = false;
   @tracked school = null;
 
   constructor() {
@@ -46,6 +45,7 @@ export default class CourseOverview extends Component {
     this.level = this.args.course.level;
     this.school = yield this.args.course.school;
     this.clerkshipTypeId = this.args.course.belongsTo('clerkshipType').id();
+    this.canCreateCourseInSchool = yield this.permissionChecker.canCreateCourse(this.school);
     yield this.directorsToPassToManager.perform();
   }
 
@@ -64,12 +64,12 @@ export default class CourseOverview extends Component {
     return this.clerkshipTypeOptions.findBy('id', this.clerkshipTypeId);
   }
 
-  get showRollover(){
-    if (this.routing.currentRouteName === 'course.rollover') {
+  get showRollover() {
+    if (this.router.currentRouteName === 'course.rollover') {
       return false;
     }
 
-    return this.permissionChecker.canCreateCourse(this.school);
+    return this.canCreateCourseInSchool;
   }
 
   get clerkshipTypeTitle() {
@@ -184,7 +184,7 @@ export default class CourseOverview extends Component {
 
   @action
   transitionToRollover() {
-    this.router.transitionTo('course.rollover', this.course);
+    this.router.transitionTo('course.rollover', this.args.course);
     scrollTo('.rollover-form');
   }
 }
