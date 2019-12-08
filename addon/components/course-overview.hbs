@@ -173,16 +173,20 @@
         {{#if @editable}}
           <EditableField
             @value={{this.level}}
-            @save={{perform this.changeLevel}}
-            @close={{fn this.revertLevelChanges}}
+            @save={{this.changeLevel}}
+            @close={{this.revertLevelChanges}}
           >
-            {{one-way-select
-              this.level
-              options=this.levelOptions
-              optionTargetPath="id"
-              optionLabelPath="title"
-              update=(action (mut this.level))
-            }}
+            <select {{on "change" (action this.setLevel value="target.value")}}>
+              {{#each this.levelOptions as |levelOption|}}
+                <option
+                  value={{levelOption}}
+                  selected={{eq levelOption this.level
+                  }}
+                >
+                  {{levelOption}}
+                </option>
+              {{/each}}
+            </select>
           </EditableField>
         {{else}}
           {{this.level}}&nbsp;

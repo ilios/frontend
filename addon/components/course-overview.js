@@ -34,14 +34,7 @@ export default class CourseOverview extends Component {
 
   constructor() {
     super(...arguments);
-    const levelOptions = [];
-    for(let i=1;i<=5; i++){
-      levelOptions.pushObject({
-        id: i,
-        title: i
-      });
-    }
-    this.levelOptions = levelOptions;
+    this.levelOptions = [1, 2, 3, 4, 5];
   }
 
   @restartableTask
@@ -177,7 +170,12 @@ export default class CourseOverview extends Component {
     this.externalId = this.args.course.externalId;
   }
 
-  @restartableTask
+  @action
+  setLevel(level){
+    this.level = parseInt(level, 10);
+  }
+
+  @action
   async changeLevel() {
     this.args.course.set('level', this.level);
     return this.args.course.save();
