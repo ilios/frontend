@@ -1,8 +1,8 @@
 <section
   class="course-overview"
   data-test-course-overview
-  {{did-insert (perform this.load) (await @course.clerkshipType)}}
-  {{did-update (perform this.load) (await @course.clerkshipType)}}
+  {{did-insert (perform this.load) @course}}
+  {{did-update (perform this.load) @course}}
 >
   <div class="course-overview-header">
     <div class="title">
@@ -88,7 +88,7 @@
             @save={{fn this.changeClerkshipType}}
             @close={{perform this.revertClerkshipTypeChanges}}
           >
-            <select {{on "change" (fn this.setCourseClerkshipType value="target.value")}}>
+            <select {{on "change" (action this.setCourseClerkshipType value="target.value")}}>
               <option
                 value="null"
                 selected={{is-empty this.selectedClerkshipType}}
@@ -100,7 +100,7 @@
               }}
                 <option
                   value={{clerkshipType.id}}
-                  selected={{is-equal clerkshipType this.selectedClerkshipType
+                  selected={{eq clerkshipType this.selectedClerkshipType
                   }}
                 >
                   {{clerkshipType.title}}

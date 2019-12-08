@@ -38,19 +38,15 @@ export default class CourseOverview extends Component {
   }
 
   @restartableTask
-  *load(element, [clerkshipType]) {
+  *load() {
     this.clerkshipTypeOptions = yield this.store.findAll('course-clerkship-type');
     this.externalId = this.args.course.externalId;
     this.startDate = this.args.course.startDate;
     this.endDate = this.args.course.endDate;
     this.level = this.args.course.level;
     this.school = yield this.args.course.school;
+    this.clerkshipTypeId = this.args.course.belongsTo('clerkshipType').id();
     yield this.directorsToPassToManager.perform();
-    if (clerkshipType) {
-      this.clerkshipTypeId = clerkshipType.id;
-    } else {
-      this.clerkshipTypeId = null;
-    }
   }
 
   @restartableTask
