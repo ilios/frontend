@@ -1,128 +1,93 @@
-import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
+import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  click,
-  render,
-  find,
-  fillIn
-} from '@ember/test-helpers';
+import {  render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/course-overview';
+import moment from 'moment';
 
 module('Integration | Component | course overview', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  const { resolve } = RSVP;
-
-  test('renders with no course id', async function(assert) {
-    const course = EmberObject.create({
-      clerkshipType: resolve(EmberObject.create())
+  hooks.beforeEach(function () {
+    const permissionCheckerMock = Service.extend({
+      async canCreateCourse() {
+        return true;
+      }
     });
-    this.set('course', course);
-    await render(hbs`<CourseOverview @course={{course}} @editable={{true}} />`);
-
-    assert.notEqual(find('.courseexternalid').textContent.search(/Course ID:/), -1);
-    assert.notEqual(find('.courseexternalid').textContent.search(/Click to edit/), -1);
+    this.owner.register('service:permissionChecker', permissionCheckerMock);
+    this.store = this.owner.lookup('service:store');
   });
 
   test('course external id validation fails if value is too short', async function(assert) {
-    const course = EmberObject.create({
-      clerkshipType: resolve(EmberObject.create()),
+    const course = this.server.create('course');
+    this.server.create('course-clerkship-type', {
+      courses: [course]
     });
-    this.set('course', course);
+    const courseModel = await this.store.find('course', course.id);
+    this.set('course', courseModel);
     await render(hbs`<CourseOverview @course={{course}} @editable={{true}} />`);
 
-    const item = '.courseexternalid';
-    const error = `${item} .validation-error-message`;
-    const button = `${item} [data-test-edit]`;
-    const save = `${item} .actions .done`;
-    const input = `${item} input`;
-    await click(button);
-    assert.dom(error).doesNotExist('No validation errors shown initially.');
-    await fillIn(input, 'a');
-    await click(save);
-    assert.dom(error).exists({ count: 1 }, 'Validation failed, error message shows.');
+    assert.ok(component.externalId.isVisible);
+    assert.equal(component.externalId.value, 'Click to edit');
+    await component.externalId.edit();
+    assert.notOk(component.externalId.hasError);
+    await component.externalId.set('a');
+    await component.externalId.save();
+    assert.ok(component.externalId.hasError);
   });
 
-  test('course external id validation fails if value is too long', async function(assert) {
-    const course = EmberObject.create({
-      clerkshipType: resolve(EmberObject.create()),
+  test('course external id validation fails if value is too long', async function (assert) {
+    const course = this.server.create('course');
+    this.server.create('course-clerkship-type', {
+      courses: [course]
     });
-    this.set('course', course);
+    const courseModel = await this.store.find('course', course.id);
+    this.set('course', courseModel);
     await render(hbs`<CourseOverview @course={{course}} @editable={{true}} />`);
 
-    const item = '.courseexternalid';
-    const error = `${item} .validation-error-message`;
-    const button = `${item} [data-test-edit]`;
-    const save = `${item} .actions .done`;
-    const input = `${item} input`;
-    await click(button);
-    assert.dom(error).doesNotExist('No validation errors shown initially.');
-    await fillIn(input, 'tooLong'.repeat(50));
-    await click(save);
-    assert.dom(error).exists({ count: 1 }, 'Validation failed, error message shows.');
+    assert.ok(component.externalId.isVisible);
+    assert.equal(component.externalId.value, 'Click to edit');
+    await component.externalId.edit();
+    assert.notOk(component.externalId.hasError);
+    await component.externalId.set('tooLong'.repeat(50));
+    await component.externalId.save();
+    assert.ok(component.externalId.hasError);
   });
 
-  test('course external id validation passes on changed value within boundaries', async function(assert) {
-    const course = EmberObject.create({
-      clerkshipType: resolve(EmberObject.create()),
-      externalid: 'abcde',
-      save() {
-        const that = this;
-        assert.ok(true, 'Validation passed, course object is being saved.');
-        return new RSVP.Promise(function(resolve) {
-          resolve(that);
-        });
-      },
-      get(value) {
-        return this[value];
-      }
+  test('start date validation fails when after end date', async function (assert) {
+    const course = this.server.create('course', {
+      startDate: moment().hour(8).format(),
+      endDate: moment().hour(9).format(),
     });
-    this.set('course', course);
+    const courseModel = await this.store.find('course', course.id);
+    this.set('course', courseModel);
     await render(hbs`<CourseOverview @course={{course}} @editable={{true}} />`);
 
-    const item = '.courseexternalid';
-    const error = `${item} .validation-error-message`;
-    const button = `${item} [data-test-edit]`;
-    const save = `${item} .actions .done`;
-    const input = `${item} input`;
-    await click(button);
-    assert.dom(error).doesNotExist('No validation errors shown initially.');
-    await fillIn(input, 'legit');
-    await click(save);
-    assert.dom(error).doesNotExist('No validation errors, no messages shown.');
+    assert.ok(component.startDate.isVisible);
+    await component.startDate.edit();
+    assert.notOk(component.startDate.hasError);
+    await component.startDate.set(moment().hour(10).toDate());
+    await component.startDate.save();
+    assert.ok(component.startDate.hasError);
   });
 
-  test('course external id validation passes on empty value', async function(assert) {
-    const course = EmberObject.create({
-      clerkshipType: resolve(EmberObject.create()),
-      externalid: 'abcde',
-      save() {
-        const that = this;
-        assert.ok(true, 'Validation passed, course object is being saved.');
-        return new RSVP.Promise(function(resolve) {
-          resolve(that);
-        });
-      },
-      get(value) {
-        return this[value];
-      }
+  test('end date validation fails when before start date', async function (assert) {
+    const course = this.server.create('course', {
+      startDate: moment().hour(8).format(),
+      endDate: moment().hour(9).format(),
     });
-    this.set('course', course);
+    const courseModel = await this.store.find('course', course.id);
+    this.set('course', courseModel);
     await render(hbs`<CourseOverview @course={{course}} @editable={{true}} />`);
 
-    const item = '.courseexternalid';
-    const error = `${item} .validation-error-message`;
-    const button = `${item} [data-test-edit]`;
-    const save = `${item} .actions .done`;
-    const input = `${item} input`;
-    await click(button);
-    assert.dom(error).doesNotExist('No validation errors shown initially.');
-    await fillIn(input, '');
-    await click(save);
-    assert.dom(error).doesNotExist('No validation errors, no messages shown.');
+    assert.ok(component.endDate.isVisible);
+    await component.endDate.edit();
+    assert.notOk(component.endDate.hasError);
+    await component.endDate.set(moment().hour(7).toDate());
+    await component.endDate.save();
+    assert.ok(component.endDate.hasError);
   });
 });

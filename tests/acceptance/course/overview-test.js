@@ -212,6 +212,32 @@ module('Acceptance | Course - Overview', function(hooks) {
     assert.equal(page.overview.externalId.value, newValue);
   });
 
+  test('change to empty externalId', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    const course = this.server.create('course', {
+      year: 2013,
+      schoolId: 1,
+      externalId: 'abc123'
+    });
+    await page.visit({ courseId: 1, details: true });
+    assert.equal(page.overview.externalId.value, course.externalId);
+
+    await page.overview.externalId.edit();
+    await page.overview.externalId.set('');
+    await page.overview.externalId.save();
+    assert.equal(page.overview.externalId.value, 'Click to edit');
+  });
+
+  test('renders with empty externalId', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    this.server.create('course', {
+      year: 2013,
+      schoolId: 1
+    });
+    await page.visit({ courseId: 1, details: true });
+    assert.equal(page.overview.externalId.value, 'Click to edit');
+  });
+
   test('change level', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {

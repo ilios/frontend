@@ -5,14 +5,12 @@ import {
   collection,
   fillable,
   hasClass,
-  isVisible,
   notHasClass,
   text,
   value,
   visitable
 } from 'ember-cli-page-object';
 
-import { datePicker } from 'ilios-common';
 import objectives from './components/objectives';
 import learningMaterials from './components/learning-materials';
 import meshTerms from './components/mesh-terms';
@@ -21,6 +19,7 @@ import collapsedTaxonomies from './components/collapsed-taxonomies';
 import leadershipCollapsed from './components/leadership-collapsed';
 import leadershipExpanded from './components/course-leadership-expanded';
 import collapsedCompetencies from './components/collapsed-competencies';
+import courseOverview from './components/course-overview';
 
 export default create({
   scope: '[data-test-ilios-course-details]',
@@ -36,54 +35,7 @@ export default create({
     save: clickable('.done')
   },
 
-  overview: {
-    scope: '[data-test-course-overview]',
-    rollover: {
-      scope: 'span.rollover',
-      visit: clickable(),
-      visible: isVisible()
-    },
-    externalId: {
-      scope: '.courseexternalid',
-      value: text('span', { at: 0}),
-      edit: clickable('[data-test-edit]'),
-      set: fillable('input'),
-      save: clickable('.done'),
-      hasError: isVisible('.validation-error-message')
-    },
-    startDate: {
-      scope: '.coursestartdate',
-      value: text('span', { at: 0}),
-      edit: clickable('[data-test-edit]'),
-      set: datePicker('input'),
-      save: clickable('.done'),
-      hasError: isVisible('.validation-error-message')
-    },
-    endDate: {
-      scope: '.courseenddate',
-      value: text('span', { at: 0}),
-      edit: clickable('[data-test-edit]'),
-      set: datePicker('input'),
-      save: clickable('.done'),
-      hasError: isVisible('.validation-error-message')
-    },
-    level: {
-      scope: '.courselevel',
-      value: text('span', { at: 0}),
-      edit: clickable('[data-test-edit]'),
-      set: fillable('select'),
-      save: clickable('.done'),
-      hasError: isVisible('.validation-error-message')
-    },
-    universalLocator: text('.universallocator'),
-    clerkshipType: {
-      scope: '.clerkshiptype',
-      value: text('span', { at: 0}),
-      edit: clickable('[data-test-edit]'),
-      set: fillable('select'),
-      save: clickable('.done')
-    },
-  },
+  overview: courseOverview,
 
   leadershipCollapsed,
   leadershipExpanded,
