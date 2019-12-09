@@ -1,219 +1,228 @@
-<div class="material-list">
-  <h3>
-    {{t "general.courseLearningMaterials"}} ({{get (await @course.learningMaterials) "length"}})
-  </h3>
-  <span class="filter-course-lms">
-    <input
-      placeholder={{t "general.filterPlaceholder"}}
-      value={{this.courseQuery}}
-      {{on "input" (perform this.setCourseQuery value="target.value")}}
-    >
-  </span>
-  <table data-test-course-table>
-    <thead>
-      <tr>
-        <SortableTh
-          @colspan={{4}}
-          @sortedAscending={{this.clmSortedAscending}}
-          @sortedBy={{or (eq @courseSort "title") (eq @courseSort "title:desc")}}
-          @click={{action "courseSortBy" "title"}}
-        >
-          {{t "general.title"}}
-        </SortableTh>
-        <SortableTh
-          @sortedAscending={{this.clmSortedAscending}}
-          @sortedBy={{or (eq @courseSort "type") (eq @courseSort "type:desc")}}
-          @click={{action "courseSortBy" "type"}}
-        >
-          {{t "general.type"}}
-        </SortableTh>
-        <SortableTh
-          @sortedAscending={{this.clmSortedAscending}}
-          @sortedBy={{or
-            (eq @courseSort "author")
-            (eq @courseSort "author:desc")
-          }}
-          @click={{action "courseSortBy" "author"}}
-        >
-          {{t "general.author"}}
-        </SortableTh>
-      </tr>
-    </thead>
-    <tbody>
-      {{#if (is-pending this.courseLearningMaterialObjects)}}
+<div
+  class="course-materials"
+  data-test-course-materials
+  {{did-insert (perform this.load) (await @course.learningMaterials) (await @course.sessions)}}
+  {{did-update (perform this.load) (await @course.learningMaterials) (await @course.sessions)}}
+>
+  <div class="material-list">
+    <h3>
+      {{t "general.courseLearningMaterials"}} ({{get (await @course.learningMaterials) "length"}})
+    </h3>
+    <span class="filter-course-lms">
+      <input
+        placeholder={{t "general.filterPlaceholder"}}
+        value={{this.courseQuery}}
+        {{on "input" (perform this.setCourseQuery value="target.value")}}
+        data-test-course-filter
+      >
+    </span>
+    <table data-test-course-table>
+      <thead>
         <tr>
-          <td colspan="6" align="center">
-            <FaIcon @icon="spinner" class="orange" @size="2x" @spin={{true}} />
-          </td>
+          <SortableTh
+            @colspan={{4}}
+            @sortedAscending={{this.clmSortedAscending}}
+            @sortedBy={{or (eq @courseSort "title") (eq @courseSort "title:desc")}}
+            @click={{action "courseSortBy" "title"}}
+          >
+            {{t "general.title"}}
+          </SortableTh>
+          <SortableTh
+            @sortedAscending={{this.clmSortedAscending}}
+            @sortedBy={{or (eq @courseSort "type") (eq @courseSort "type:desc")}}
+            @click={{action "courseSortBy" "type"}}
+          >
+            {{t "general.type"}}
+          </SortableTh>
+          <SortableTh
+            @sortedAscending={{this.clmSortedAscending}}
+            @sortedBy={{or
+              (eq @courseSort "author")
+              (eq @courseSort "author:desc")
+            }}
+            @click={{action "courseSortBy" "author"}}
+          >
+            {{t "general.author"}}
+          </SortableTh>
         </tr>
-      {{else}}
-        {{#each
-          (sort-by
-            @courseSort (await this.filteredCourseLearningMaterialObjects)
-          ) as |lmObject|
-        }}
-          <tr>
-            <td colspan="4">
-              {{#if (contains lmObject.type this.typesWithUrl)}}
-                <a href={{lmObject.url}} rel="noopener" target="_blank">
-                  {{lmObject.title}}
-                </a>
-              {{else}}
-                {{lmObject.title}}
-                <br>
-                <small>
-                  {{lmObject.citation}}
-                </small>
-              {{/if}}
-            </td>
-            <td>
-              {{capitalize lmObject.type}}
-            </td>
-            <td>
-              {{lmObject.author}}
-            </td>
-          </tr>
-        {{else}}
+      </thead>
+      <tbody>
+        {{#if (not this.courseLearningMaterialObjects)}}
           <tr>
             <td colspan="6" align="center">
-              {{if
-                this.courseQuery
-                (t "general.noResultsFound")
-                (t "general.noCourseLearningMaterialsAvailable")
-              }}
-            </td>
-          </tr>
-        {{/each}}
-      {{/if}}
-    </tbody>
-  </table>
-</div>
-<div class="material-list">
-  <h3 class="session-material-title">
-    {{t "general.sessionLearningMaterials"}} ({{get (await this.sessionLearningMaterialObjects) "length"}})
-  </h3>
-  <span class="filter-session-lms">
-    <input
-      placeholder={{t "general.filterPlaceholder"}}
-      value={{this.sessionQuery}}
-      {{on "input" (perform this.setSessionQuery value="target.value")}}
-    >
-  </span>
-  <table data-test-session-table>
-    <thead>
-      <tr>
-        <SortableTh
-          @colspan={{3}}
-          @sortedAscending={{this.slmSortedAscending}}
-          @sortedBy={{or
-            (eq @sessionSort "title")
-            (eq @sessionSort "title:desc")
-          }}
-          @click={{action "sessionSortBy" "title"}}
-        >
-          {{t "general.title"}}
-        </SortableTh>
-        <SortableTh
-          @colspan={{1}}
-          @sortedAscending={{this.slmSortedAscending}}
-          @sortedBy={{or (eq @sessionSort "type") (eq @sessionSort "type:desc")
-          }}
-          @click={{action "sessionSortBy" "type"}}
-        >
-          {{t "general.type"}}
-        </SortableTh>
-        <SortableTh
-          @colspan={{1}}
-          @sortedAscending={{this.slmSortedAscending}}
-          @sortedBy={{or
-            (eq @sessionSort "author")
-            (eq @sessionSort "author:desc")
-          }}
-          @click={{action "sessionSortBy" "author"}}
-        >
-          {{t "general.author"}}
-        </SortableTh>
-        <SortableTh
-          @colspan={{3}}
-          @sortedAscending={{this.slmSortedAscending}}
-          @sortedBy={{or
-            (eq @sessionSort "sessionTitle")
-            (eq @sessionSort "sessionTitle:desc")
-          }}
-          @click={{action "sessionSortBy" "sessionTitle"}}
-        >
-          {{t "general.session"}}
-        </SortableTh>
-        <SortableTh
-          @colspan={{1}}
-          @sortedAscending={{this.slmSortedAscending}}
-          @sortedBy={{or
-            (eq @sessionSort "firstOfferingDate")
-            (eq @sessionSort "firstOfferingDate:desc")
-          }}
-          @sortType="numeric"
-          @click={{action "sessionSortBy" "firstOfferingDate"}}
-        >
-          {{t "general.firstOffering"}}
-        </SortableTh>
-      </tr>
-    </thead>
-    <tbody>
-      {{#if (is-pending this.sessionLearningMaterialObjects)}}
-        <tr>
-          <td colspan="9" align="center">
-            <FaIcon @icon="spinner" class="orange" @size="2x" @spin={{true}} />
-          </td>
-        </tr>
-      {{else}}
-        {{#each
-          (sort-by
-            @sessionSort (await this.filteredSessionLearningMaterialObjects)
-          ) as |lmObject|
-        }}
-          <tr>
-            <td colspan="3">
-              {{#if (contains lmObject.type this.typesWithUrl)}}
-                <a href={{lmObject.url}} rel="noopener" target="_blank">
-                  {{lmObject.title}}
-                </a>
-              {{else}}
-                {{lmObject.title}}
-                <br>
-                <small>
-                  {{lmObject.citation}}
-                </small>
-              {{/if}}
-            </td>
-            <td>
-              {{capitalize lmObject.type}}
-            </td>
-            <td>
-              {{lmObject.author}}
-            </td>
-            <td colspan="3">
-              {{lmObject.sessionTitle}}
-            </td>
-            <td>
-              {{#if lmObject.firstOfferingDate}}
-                {{moment-format lmObject.firstOfferingDate "L"}}
-              {{else}}
-                {{t "general.none"}}
-              {{/if}}
+              <FaIcon @icon="spinner" class="orange" @size="2x" @spin={{true}} />
             </td>
           </tr>
         {{else}}
+          {{#each
+            (sort-by
+              @courseSort this.filteredCourseLearningMaterialObjects
+            ) as |lmObject|
+          }}
+            <tr>
+              <td colspan="4">
+                {{#if (contains lmObject.type this.typesWithUrl)}}
+                  <a href={{lmObject.url}} rel="noopener" target="_blank">
+                    {{lmObject.title}}
+                  </a>
+                {{else}}
+                  {{lmObject.title}}
+                  <br>
+                  <small>
+                    {{lmObject.citation}}
+                  </small>
+                {{/if}}
+              </td>
+              <td>
+                {{capitalize lmObject.type}}
+              </td>
+              <td>
+                {{lmObject.author}}
+              </td>
+            </tr>
+          {{else}}
+            <tr>
+              <td colspan="6" align="center">
+                {{if
+                  this.courseQuery
+                  (t "general.noResultsFound")
+                  (t "general.noCourseLearningMaterialsAvailable")
+                }}
+              </td>
+            </tr>
+          {{/each}}
+        {{/if}}
+      </tbody>
+    </table>
+  </div>
+  <div class="material-list">
+    <h3 class="session-material-title">
+      {{t "general.sessionLearningMaterials"}} ({{get this.sessionLearningMaterialObjects "length"}})
+    </h3>
+    <span class="filter-session-lms">
+      <input
+        placeholder={{t "general.filterPlaceholder"}}
+        value={{this.sessionQuery}}
+        {{on "input" (perform this.setSessionQuery value="target.value")}}
+        data-test-session-filter
+      >
+    </span>
+    <table data-test-session-table>
+      <thead>
+        <tr>
+          <SortableTh
+            @colspan={{3}}
+            @sortedAscending={{this.slmSortedAscending}}
+            @sortedBy={{or
+              (eq @sessionSort "title")
+              (eq @sessionSort "title:desc")
+            }}
+            @click={{action "sessionSortBy" "title"}}
+          >
+            {{t "general.title"}}
+          </SortableTh>
+          <SortableTh
+            @colspan={{1}}
+            @sortedAscending={{this.slmSortedAscending}}
+            @sortedBy={{or (eq @sessionSort "type") (eq @sessionSort "type:desc")
+            }}
+            @click={{action "sessionSortBy" "type"}}
+          >
+            {{t "general.type"}}
+          </SortableTh>
+          <SortableTh
+            @colspan={{1}}
+            @sortedAscending={{this.slmSortedAscending}}
+            @sortedBy={{or
+              (eq @sessionSort "author")
+              (eq @sessionSort "author:desc")
+            }}
+            @click={{action "sessionSortBy" "author"}}
+          >
+            {{t "general.author"}}
+          </SortableTh>
+          <SortableTh
+            @colspan={{3}}
+            @sortedAscending={{this.slmSortedAscending}}
+            @sortedBy={{or
+              (eq @sessionSort "sessionTitle")
+              (eq @sessionSort "sessionTitle:desc")
+            }}
+            @click={{action "sessionSortBy" "sessionTitle"}}
+          >
+            {{t "general.session"}}
+          </SortableTh>
+          <SortableTh
+            @colspan={{1}}
+            @sortedAscending={{this.slmSortedAscending}}
+            @sortedBy={{or
+              (eq @sessionSort "firstOfferingDate")
+              (eq @sessionSort "firstOfferingDate:desc")
+            }}
+            @sortType="numeric"
+            @click={{action "sessionSortBy" "firstOfferingDate"}}
+          >
+            {{t "general.firstOffering"}}
+          </SortableTh>
+        </tr>
+      </thead>
+      <tbody>
+        {{#if (not this.sessionLearningMaterialObjects)}}
           <tr>
             <td colspan="9" align="center">
-              {{if
-                this.sessionQuery
-                (t "general.noResultsFound")
-                (t "general.noSessionLearningMaterialsAvailable")
-              }}
+              <FaIcon @icon="spinner" class="orange" @size="2x" @spin={{true}} />
             </td>
           </tr>
-        {{/each}}
-      {{/if}}
-    </tbody>
-  </table>
+        {{else}}
+          {{#each
+            (sort-by
+              @sessionSort this.filteredSessionLearningMaterialObjects
+            ) as |lmObject|
+          }}
+            <tr>
+              <td colspan="3">
+                {{#if (contains lmObject.type this.typesWithUrl)}}
+                  <a href={{lmObject.url}} rel="noopener" target="_blank">
+                    {{lmObject.title}}
+                  </a>
+                {{else}}
+                  {{lmObject.title}}
+                  <br>
+                  <small>
+                    {{lmObject.citation}}
+                  </small>
+                {{/if}}
+              </td>
+              <td>
+                {{capitalize lmObject.type}}
+              </td>
+              <td>
+                {{lmObject.author}}
+              </td>
+              <td colspan="3">
+                {{lmObject.sessionTitle}}
+              </td>
+              <td>
+                {{#if lmObject.firstOfferingDate}}
+                  {{moment-format lmObject.firstOfferingDate "L"}}
+                {{else}}
+                  {{t "general.none"}}
+                {{/if}}
+              </td>
+            </tr>
+          {{else}}
+            <tr>
+              <td colspan="9" align="center">
+                {{if
+                  this.sessionQuery
+                  (t "general.noResultsFound")
+                  (t "general.noSessionLearningMaterialsAvailable")
+                }}
+              </td>
+            </tr>
+          {{/each}}
+        {{/if}}
+      </tbody>
+    </table>
+  </div>
 </div>

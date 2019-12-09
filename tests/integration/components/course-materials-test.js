@@ -1,120 +1,113 @@
 import { module, test } from 'qunit';
-import { setupRenderingTest } from 'ember-qunit';
-import {
-  click,
-  fillIn,
-  find,
-  render,
-  settled,
-  triggerEvent
-} from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import EmberObject from '@ember/object';
-import { resolve } from 'rsvp';
+import { setupRenderingTest } from 'ember-qunit';
+import { render } from '@ember/test-helpers';
+import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/course-materials';
 
 module('Integration | Component | course materials', function(hooks) {
   setupRenderingTest(hooks);
-
-  const COURSE_TABLE = '[data-test-course-table]';
-  const SESSION_TABLE = '[data-test-session-table]';
+  setupMirage(hooks);
 
   test('course lms render', async function(assert) {
-    assert.expect(3);
+    assert.expect(4);
 
-    const lm1 = EmberObject.create({
+    const lm1 = this.server.create('learning-material', {
       title: 'title1',
       description: 'description1',
       originalAuthor: 'author1',
       link: 'url1',
       type: 'link',
     });
-    const courseLm1 = EmberObject.create({
-      learningMaterial: resolve(lm1),
+    const courseLm1 = this.server.create('course-learning-material', {
+      learningMaterial: lm1,
     });
 
-    const course = EmberObject.create({
-      sessions: resolve([]),
-      learningMaterials: resolve([courseLm1])
+    const course = this.server.create('course', {
+      learningMaterials: [courseLm1]
     });
-    courseLm1.set('course', resolve(course));
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.setProperties({
-      course,
+      course: courseModel,
       courseSort: 'title',
       sessionSort: 'firstOfferingDate'
     });
     await render(hbs`<CourseMaterials
-      @course={{course}}
-      @courseSort={{courseSort}}
-      @sessionSort={{sessionSort}}
+      @course={{this.course}}
+      @courseSort={{this.courseSort}}
+      @sessionSort={{this.sessionSort}}
     />`);
 
-    const courseMaterials = `${COURSE_TABLE} tbody tr`;
-    const firstCourseLmTitle = `${courseMaterials}:nth-of-type(1) td:nth-of-type(1)`;
-    const firstCourseLmType = `${courseMaterials}:nth-of-type(1) td:nth-of-type(2)`;
-    const firstCourseLmAuthor = `${courseMaterials}:nth-of-type(1) td:nth-of-type(3)`;
-
-    assert.dom(firstCourseLmTitle).hasText('title1');
-    assert.dom(firstCourseLmType).hasText('Link');
-    assert.dom(firstCourseLmAuthor).hasText('author1');
-    return settled();
+    assert.equal(component.courses.length, 1);
+    assert.equal(component.courses[0].title, 'title1');
+    assert.equal(component.courses[0].type, 'Link');
+    assert.equal(component.courses[0].author, 'author1');
   });
 
-  const setupPage = function(){
-    const lm1 = EmberObject.create({
+  const setupPage = async function (context) {
+    const lm1 = context.server.create('learning-material', {
       title: 'title1',
       description: 'description1',
       originalAuthor: 'author1',
-      url: 'http://myhost.com/url1',
-      type: 'link',
+      link: 'http://myhost.com/url1',
     });
-    const lm2 = EmberObject.create({
+    const lm2 = context.server.create('learning-material', {
       title: 'title2',
       description: 'description2',
       originalAuthor: 'author2',
-      url: 'http://myhost.com/url2',
-      type: 'file',
+      filename: 'testfile.txt',
+      absoluteFileUri: 'http://myhost.com/url2',
     });
-    const lm3 = EmberObject.create({
+    const lm3 = context.server.create('learning-material', {
       title: 'title3',
       description: 'description3',
       originalAuthor: 'author3',
-      url: null,
-      type: 'citation',
       citation: 'citationtext',
     });
-    const course1 = EmberObject.create({
-      learningMaterial: resolve(lm1),
-    });
-    const sessionLm1 = EmberObject.create({
-      learningMaterial: resolve(lm1),
-    });
-    const sessionLm2 = EmberObject.create({
-      learningMaterial: resolve(lm2),
-    });
-    const sessionLm3 = EmberObject.create({
-      learningMaterial: resolve(lm3),
-    });
-    const session1 = EmberObject.create({
-      title: 'session1title',
-      learningMaterials: resolve([sessionLm1, sessionLm2, sessionLm3]),
-      firstOfferingDate: resolve(new Date(2020, 1, 2, 12)),
-    });
-    sessionLm1.set('session', resolve(session1));
-    sessionLm2.set('session', resolve(session1));
-    sessionLm3.set('session', resolve(session1));
 
-    const course = EmberObject.create({
-      learningMaterials: resolve([course1]),
-      sessions: resolve([session1])
+    const courseLm1 = context.server.create('course-learning-material', {
+      learningMaterial: lm1,
     });
-    return course;
+    const courseLm2 = context.server.create('course-learning-material', {
+      learningMaterial: lm2,
+    });
+    const courseLm3 = context.server.create('course-learning-material', {
+      learningMaterial: lm3,
+    });
+    const session = context.server.create('session', {
+      title: 'session1title',
+    });
+    context.server.create('session-learning-material', {
+      session,
+      learningMaterial: lm1,
+    });
+    context.server.create('session-learning-material', {
+      session,
+      learningMaterial: lm2,
+    });
+    context.server.create('session-learning-material', {
+      session,
+      learningMaterial: lm3,
+    });
+    context.server.create('offering', {
+      session,
+      startDate: new Date(2020, 1, 2, 12).toISOString(),
+      endDate: new Date(2020, 1, 2, 14).toISOString(),
+    });
+
+    const course = context.server.create('course', {
+      sessions: [session],
+      learningMaterials: [courseLm1, courseLm2, courseLm3]
+    });
+
+    return context.owner.lookup('service:store').find('course', course.id);
   };
 
   test('course & session lms render', async function(assert) {
-    assert.expect(22);
+    assert.expect(29);
 
-    const course = setupPage();
+    const course = await setupPage(this);
     this.set('nothing', parseInt);
     this.setProperties({
       course,
@@ -128,66 +121,44 @@ module('Integration | Component | course materials', function(hooks) {
       @onSessionSort={{action nothing}}
     />`);
 
-    const courseMaterials = `${COURSE_TABLE} tbody tr`;
-    const firstCourseLmTitle = `${courseMaterials}:nth-of-type(1) td:nth-of-type(1)`;
-    const firstCourseLmLink = `${firstCourseLmTitle} a`;
-    const firstCourseLmType = `${courseMaterials}:nth-of-type(1) td:nth-of-type(2)`;
-    const firstCourseLmAuthor = `${courseMaterials}:nth-of-type(1) td:nth-of-type(3)`;
+    assert.equal(component.courses.length, 3);
+    assert.equal(component.courses[0].title, 'title1');
+    assert.ok(component.courses[0].hasLink);
+    assert.equal(component.courses[0].link, 'http://myhost.com/url1');
+    assert.equal(component.courses[0].type, 'Link');
+    assert.equal(component.courses[0].author, 'author1');
 
-    const sessionMaterials = `${SESSION_TABLE} tbody tr`;
-    const firstSessionLmTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(1)`;
-    const firstSessionLmLink = `${firstSessionLmTitle} a`;
-    const firstSessionLmType = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(2)`;
-    const firstSessionLmAuthor = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(3)`;
-    const firstSessionLmSessionTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(4)`;
-    const firstSessionLmFirstOffering = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(5)`;
+    assert.equal(component.sessions.length, 3);
+    assert.equal(component.sessions[0].title, 'title1');
+    assert.ok(component.sessions[0].hasLink);
+    assert.equal(component.sessions[0].link, 'http://myhost.com/url1');
+    assert.equal(component.sessions[0].type, 'Link');
+    assert.equal(component.sessions[0].author, 'author1');
+    assert.equal(component.sessions[0].sessionTitle, 'session1title');
+    assert.equal(component.sessions[0].firstOffering, '02/02/2020');
 
-    const secondSessionLmTitle = `${sessionMaterials}:nth-of-type(2) td:nth-of-type(1)`;
-    const secondSessionLmLink = `${secondSessionLmTitle} a`;
-    const secondSessionLmType = `${sessionMaterials}:nth-of-type(2) td:nth-of-type(2)`;
-    const secondSessionLmAuthor = `${sessionMaterials}:nth-of-type(2) td:nth-of-type(3)`;
-    const secondSessionLmSessionTitle = `${sessionMaterials}:nth-of-type(2) td:nth-of-type(4)`;
-    const secondSessionLmsecondOffering = `${sessionMaterials}:nth-of-type(2) td:nth-of-type(5)`;
+    assert.equal(component.sessions.length, 3);
+    assert.equal(component.sessions[1].title, 'title2');
+    assert.ok(component.sessions[1].hasLink);
+    assert.equal(component.sessions[1].link, 'http://myhost.com/url2');
+    assert.equal(component.sessions[1].type, 'File');
+    assert.equal(component.sessions[1].author, 'author2');
+    assert.equal(component.sessions[1].sessionTitle, 'session1title');
+    assert.equal(component.sessions[1].firstOffering, '02/02/2020');
 
-    const thirdSessionLmTitle = `${sessionMaterials}:nth-of-type(3) td:nth-of-type(1)`;
-    const thirdSessionLmLink = `${thirdSessionLmTitle} a`;
-    const thirdSessionLmType = `${sessionMaterials}:nth-of-type(3) td:nth-of-type(2)`;
-    const thirdSessionLmAuthor = `${sessionMaterials}:nth-of-type(3) td:nth-of-type(3)`;
-    const thirdSessionLmSessionTitle = `${sessionMaterials}:nth-of-type(3) td:nth-of-type(4)`;
-    const thirdSessionLmsecondOffering = `${sessionMaterials}:nth-of-type(3) td:nth-of-type(5)`;
-
-    assert.dom(firstCourseLmTitle).hasText('title1');
-    assert.equal(find(firstCourseLmLink).getAttribute('href').trim(), 'http://myhost.com/url1');
-    assert.dom(firstCourseLmType).hasText('Link');
-    assert.dom(firstCourseLmAuthor).hasText('author1');
-
-    assert.dom(firstSessionLmTitle).hasText('title1');
-    assert.equal(find(firstSessionLmLink).getAttribute('href').trim(), 'http://myhost.com/url1');
-    assert.dom(firstSessionLmType).hasText('Link');
-    assert.dom(firstSessionLmAuthor).hasText('author1');
-    assert.dom(firstSessionLmSessionTitle).hasText('session1title');
-    assert.dom(firstSessionLmFirstOffering).hasText('02/02/2020');
-
-    assert.dom(secondSessionLmTitle).hasText('title2');
-    assert.equal(find(secondSessionLmLink).getAttribute('href').trim(), 'http://myhost.com/url2');
-    assert.dom(secondSessionLmType).hasText('File');
-    assert.dom(secondSessionLmAuthor).hasText('author2');
-    assert.dom(secondSessionLmSessionTitle).hasText('session1title');
-    assert.dom(secondSessionLmsecondOffering).hasText('02/02/2020');
-
-    assert.equal(find(thirdSessionLmTitle).textContent.replace(/[\t\n\s]+/g, ""), 'title3citationtext');
-    assert.dom(thirdSessionLmLink).doesNotExist();
-    assert.dom(thirdSessionLmType).hasText('Citation');
-    assert.dom(thirdSessionLmAuthor).hasText('author3');
-    assert.dom(thirdSessionLmSessionTitle).hasText('session1title');
-    assert.dom(thirdSessionLmsecondOffering).hasText('02/02/2020');
-    return settled();
+    assert.equal(component.sessions.length, 3);
+    assert.equal(component.sessions[2].title, 'title3 citationtext');
+    assert.notOk(component.sessions[2].hasLink);
+    assert.equal(component.sessions[2].type, 'Citation');
+    assert.equal(component.sessions[2].author, 'author3');
+    assert.equal(component.sessions[2].sessionTitle, 'session1title');
+    assert.equal(component.sessions[2].firstOffering, '02/02/2020');
   });
 
   test('clicking sort fires action', async function(assert) {
     assert.expect(16);
 
-    const course = setupPage();
+    const course = await setupPage(this);
     let cCount = 0, sCount = 0;
     const cSortList = [
       'title:desc', 'title', 'type', 'type:desc', 'author', 'author:desc'
@@ -220,41 +191,29 @@ module('Integration | Component | course materials', function(hooks) {
       @onCourseSort={{action cSortBy}}
       @onSessionSort={{action sSortBy}}
     />`);
+    await component.sortCoursesBy.title();
+    await component.sortCoursesBy.title();
+    await component.sortCoursesBy.type();
+    await component.sortCoursesBy.type();
+    await component.sortCoursesBy.author();
+    await component.sortCoursesBy.author();
 
-    const cHeaders = `${COURSE_TABLE} thead th`;
-    const cTitle = `${cHeaders}:nth-of-type(1)`;
-    const cType = `${cHeaders}:nth-of-type(2)`;
-    const cAuthor = `${cHeaders}:nth-of-type(3)`;
-    const sHeaders = `${SESSION_TABLE} thead th`;
-    const sTitle = `${sHeaders}:nth-of-type(1)`;
-    const sType = `${sHeaders}:nth-of-type(2)`;
-    const sAuthor = `${sHeaders}:nth-of-type(3)`;
-    const sSessionTitle = `${sHeaders}:nth-of-type(4)`;
-    const sFirstOffering = `${sHeaders}:nth-of-type(5)`;
-
-    await click(cTitle);
-    await click(cTitle);
-    await click(cType);
-    await click(cType);
-    await click(cAuthor);
-    await click(cAuthor);
-    await click(sTitle);
-    await click(sTitle);
-    await click(sType);
-    await click(sType);
-    await click(sAuthor);
-    await click(sAuthor);
-    await click(sSessionTitle);
-    await click(sSessionTitle);
-    await click(sFirstOffering);
-    await click(sFirstOffering);
-    return settled();
+    await component.sortSessionsBy.title();
+    await component.sortSessionsBy.title();
+    await component.sortSessionsBy.type();
+    await component.sortSessionsBy.type();
+    await component.sortSessionsBy.author();
+    await component.sortSessionsBy.author();
+    await component.sortSessionsBy.sessionTitle();
+    await component.sortSessionsBy.sessionTitle();
+    await component.sortSessionsBy.firstOffering();
+    await component.sortSessionsBy.firstOffering();
   });
 
-  test('filter by title', async function(assert) {
+  test('filter course lms by title', async function(assert) {
     assert.expect(3);
 
-    const course = setupPage();
+    const course = await setupPage(this);
     this.setProperties({
       course,
       courseSort: 'title',
@@ -267,22 +226,16 @@ module('Integration | Component | course materials', function(hooks) {
       @sessionSort={{sessionSort}}
     />`);
 
-    const sessionMaterials = `${SESSION_TABLE} tbody tr`;
-    const firstSessionLmTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(1)`;
-    const filter = '.filter-session-lms input';
-
-    assert.dom(sessionMaterials).exists({ count: 3 });
-    await fillIn(filter, 'title1');
-    await triggerEvent(filter, 'input');
-    assert.dom(sessionMaterials).exists({ count: 1 });
-    assert.dom(firstSessionLmTitle).hasText('title1');
-    return settled();
+    assert.equal(component.courses.length, 3);
+    await component.courseFilter('title1');
+    assert.equal(component.courses.length, 1);
+    assert.equal(component.courses[0].title, 'title1');
   });
 
-  test('filter by type', async function(assert) {
+  test('filter course lms by type', async function(assert) {
     assert.expect(3);
 
-    const course = setupPage();
+    const course = await setupPage(this);
     this.setProperties({
       course,
       courseSort: 'title',
@@ -295,22 +248,16 @@ module('Integration | Component | course materials', function(hooks) {
       @sessionSort={{sessionSort}}
     />`);
 
-    const sessionMaterials = `${SESSION_TABLE} tbody tr`;
-    const firstSessionLmTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(1)`;
-    const filter = '.filter-session-lms input';
-
-    assert.dom(sessionMaterials).exists({ count: 3 });
-    await fillIn(filter, 'file');
-    await triggerEvent(filter, 'input');
-    assert.dom(sessionMaterials).exists({ count: 1 });
-    assert.dom(firstSessionLmTitle).hasText('title2');
-    return settled();
+    assert.equal(component.courses.length, 3);
+    await component.courseFilter('file');
+    assert.equal(component.courses.length, 1);
+    assert.equal(component.courses[0].title, 'title2');
   });
 
-  test('filter by author', async function(assert) {
+  test('filter course lms by author', async function(assert) {
     assert.expect(3);
 
-    const course = setupPage();
+    const course = await setupPage(this);
     this.setProperties({
       course,
       courseSort: 'title',
@@ -323,22 +270,16 @@ module('Integration | Component | course materials', function(hooks) {
       @sessionSort={{sessionSort}}
     />`);
 
-    const sessionMaterials = `${SESSION_TABLE} tbody tr`;
-    const firstSessionLmTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(1)`;
-    const filter = '.filter-session-lms input';
-
-    assert.dom(sessionMaterials).exists({ count: 3 });
-    await fillIn(filter, 'author2');
-    await triggerEvent(filter, 'input');
-    assert.dom(sessionMaterials).exists({ count: 1 });
-    assert.dom(firstSessionLmTitle).hasText('title2');
-    return settled();
+    assert.equal(component.courses.length, 3);
+    await component.courseFilter('author2');
+    assert.equal(component.courses.length, 1);
+    assert.equal(component.courses[0].title, 'title2');
   });
 
-  test('filter by citation', async function(assert) {
+  test('filter course lms by citation', async function(assert) {
     assert.expect(3);
 
-    const course = setupPage();
+    const course = await setupPage(this);
     this.setProperties({
       course,
       courseSort: 'title',
@@ -351,16 +292,97 @@ module('Integration | Component | course materials', function(hooks) {
       @sessionSort={{sessionSort}}
     />`);
 
-    const sessionTable = SESSION_TABLE;
-    const sessionMaterials = `${sessionTable} tbody tr`;
-    const firstSessionLmTitle = `${sessionMaterials}:nth-of-type(1) td:nth-of-type(1)`;
-    const filter = '.filter-session-lms input';
+    assert.equal(component.courses.length, 3);
+    await component.courseFilter('citationtext');
+    assert.equal(component.courses.length, 1);
+    assert.equal(component.courses[0].title, 'title3 citationtext');
+  });
 
-    assert.dom(sessionMaterials).exists({ count: 3 });
-    await fillIn(filter, 'citationtext');
-    await triggerEvent(filter, 'input');
-    assert.dom(sessionMaterials).exists({ count: 1 });
-    assert.equal(find(firstSessionLmTitle).textContent.replace(/[\t\n\s]+/g, ""), 'title3citationtext');
-    return settled();
+  test('filter session lms by title', async function(assert) {
+    assert.expect(3);
+
+    const course = await setupPage(this);
+    this.setProperties({
+      course,
+      courseSort: 'title',
+      sessionSort: 'firstOfferingDate'
+    });
+
+    await render(hbs`<CourseMaterials
+      @course={{course}}
+      @courseSort={{courseSort}}
+      @sessionSort={{sessionSort}}
+    />`);
+
+    assert.equal(component.sessions.length, 3);
+    await component.sessionFilter('title1');
+    assert.equal(component.sessions.length, 1);
+    assert.equal(component.sessions[0].title, 'title1');
+  });
+
+  test('filter session lms by type', async function(assert) {
+    assert.expect(3);
+
+    const course = await setupPage(this);
+    this.setProperties({
+      course,
+      courseSort: 'title',
+      sessionSort: 'firstOfferingDate'
+    });
+
+    await render(hbs`<CourseMaterials
+      @course={{course}}
+      @courseSort={{courseSort}}
+      @sessionSort={{sessionSort}}
+    />`);
+
+    assert.equal(component.sessions.length, 3);
+    await component.sessionFilter('file');
+    assert.equal(component.sessions.length, 1);
+    assert.equal(component.sessions[0].title, 'title2');
+  });
+
+  test('filter session lms by author', async function(assert) {
+    assert.expect(3);
+
+    const course = await setupPage(this);
+    this.setProperties({
+      course,
+      courseSort: 'title',
+      sessionSort: 'firstOfferingDate'
+    });
+
+    await render(hbs`<CourseMaterials
+      @course={{course}}
+      @courseSort={{courseSort}}
+      @sessionSort={{sessionSort}}
+    />`);
+
+    assert.equal(component.sessions.length, 3);
+    await component.sessionFilter('author2');
+    assert.equal(component.sessions.length, 1);
+    assert.equal(component.sessions[0].title, 'title2');
+  });
+
+  test('filter session lms by citation', async function(assert) {
+    assert.expect(3);
+
+    const course = await setupPage(this);
+    this.setProperties({
+      course,
+      courseSort: 'title',
+      sessionSort: 'firstOfferingDate'
+    });
+
+    await render(hbs`<CourseMaterials
+      @course={{course}}
+      @courseSort={{courseSort}}
+      @sessionSort={{sessionSort}}
+    />`);
+
+    assert.equal(component.sessions.length, 3);
+    await component.sessionFilter('citationtext');
+    assert.equal(component.sessions.length, 1);
+    assert.equal(component.sessions[0].title, 'title3 citationtext');
   });
 });
