@@ -1,48 +1,55 @@
-{{! template-lint-disable attribute-indentation }}
-{{#if (or true @isIcon (gt (get (await this.objectiveWithMinutes) "length") 0))}}
-  <SimpleChart
-    @name="donut"
-    @isIcon={{@isIcon}}
-    @data={{await this.objectiveWithMinutes}}
-    @hover={{perform this.donutHover}}
-    @leave={{perform this.donutHover}} as |chart|
-  >
-    {{#if this.tooltipContent}}
-      <chart.tooltip @title={{this.tooltipTitle}}>
-        {{this.tooltipContent}}
-      </chart.tooltip>
+<div
+  class="visualizer-course-objectives {{if (not @isIcon) "not-icon"}}"
+  {{did-insert (perform this.load) @course}}
+  {{did-update (perform this.load) @course}}
+>
+  {{#unless this.load.isRunning}}
+    {{#if (or @isIcon this.objectiveWithMinutes.length)}}
+      <SimpleChart
+        @name="donut"
+        @isIcon={{@isIcon}}
+        @data={{this.objectiveWithMinutes}}
+        @hover={{perform this.donutHover}}
+        @leave={{perform this.donutHover}} as |chart|
+      >
+        {{#if this.tooltipContent}}
+          <chart.tooltip @title={{this.tooltipTitle}}>
+            {{this.tooltipContent}}
+          </chart.tooltip>
+        {{/if}}
+      </SimpleChart>
+    {{else}}
+      <div class="with-hours">
+        <p>
+          {{t "general.objectivesWithNoLink"}}
+        </p>
+        <h4>
+          <FaIcon @icon="meh" class="meh-o" />
+        </h4>
+      </div>
     {{/if}}
-  </SimpleChart>
-{{else}}
-  <div class="with-hours">
-    <p>
-      {{t "general.objectivesWithNoLink"}}
-    </p>
-    <h4>
-      <FaIcon @icon="meh" class="meh-o" />
-    </h4>
-  </div>
-{{/if}}
-{{#unless (or @isIcon (eq (get (await this.objectiveWithoutMinutes) "length") 0))}}
-  <div class="zero-hours">
-    <h4>
-      <FaIcon @icon="exclamation-triangle" class="warning" />
-      {{t "general.unusedObjectives"}}:
-    </h4>
-    <p>
-      {{t "general.objectivesWithNoHours"}}
-    </p>
-    <ul>
-      {{#each
-        (sort-by
-          "meta.courseObjective.title" (await this.objectiveWithoutMinutes)
-        ) as |obj|
-      }}
-        {{! template-lint-disable no-triple-curlies}}
-        <li>
-          {{{obj.meta.courseObjective.title}}}
-        </li>
-      {{/each}}
-    </ul>
-  </div>
-{{/unless}}
+    {{#unless (or @isIcon (not this.objectiveWithoutMinutes.length))}}
+      <div class="zero-hours">
+        <h4>
+          <FaIcon @icon="exclamation-triangle" class="warning" />
+          {{t "general.unusedObjectives"}}:
+        </h4>
+        <p>
+          {{t "general.objectivesWithNoHours"}}
+        </p>
+        <ul>
+          {{#each
+            (sort-by
+              "meta.courseObjective.title" this.objectiveWithoutMinutes
+            ) as |obj|
+          }}
+            {{! template-lint-disable no-triple-curlies}}
+            <li>
+              {{{obj.meta.courseObjective.title}}}
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+    {{/unless}}
+  {{/unless}}
+</div>

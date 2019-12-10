@@ -1,25 +1,44 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { map } from 'rsvp';
-import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import {tracked} from '@glimmer/tracking';
+import { action } from '@ember/object';
+import {restartableTask} from "ember-concurrency-decorators";
 
-export default Component.extend({
-  intl: service(),
-  router: service(),
-  course: null,
-  isIcon: false,
-  chartType: 'horz-bar',
-  classNameBindings: ['isIcon::not-icon', ':visualizer-course-instructors'],
-  tooltipContent: null,
-  tooltipTitle: null,
-  filter: '',
-  data: computed('course.sessions.@each.{offerings,instructors,instructorGroups,ilmSessions}', async function () {
-    const course = this.get('course');
-    const sessions = await course.get('sessions');
-    const dataMap = await map(sessions.toArray(), async session => {
+export default class VisualizerCourseInstructors extends Component {
+  @service router;
+  @service intl;
+  @tracked data;
+  @tracked tooltipContent = null;
+  @tracked tooltipTitle = null;
+
+  get chartType() {
+    return this.args.chartType || 'horz-bar';
+  }
+
+  get filteredData() {
+    if (!this.data) {
+      return [];
+    }
+
+    let data = this.data;
+    if (this.args.filter) {
+      const exp = new RegExp(this.args.filter, 'gi');
+      data = this.data.filter(({ label }) => label.match(exp));
+    }
+
+    return data.sort((first, second) => {
+      return first.data - second.data;
+    });
+  }
+
+  @restartableTask
+  *load(element, [course]) {
+    const sessions = yield course.get('sessions');
+    const dataMap = yield map(sessions.toArray(), async session => {
       const instructors = await session.get('allInstructors');
 
       const hours = await session.get('maxSingleOfferingDuration');
@@ -56,60 +75,36 @@ export default Component.extend({
     }, []);
 
     const totalMinutes = instructorData.mapBy('data').reduce((total, minutes) => total + minutes, 0);
-    const mappedInstructorsWithLabel = instructorData.map(obj => {
+    this.data = instructorData.map(obj => {
       const percent = (obj.data / totalMinutes * 100).toFixed(1);
       obj.label = `${obj.label} ${percent}%`;
       obj.meta.totalMinutes = totalMinutes;
       obj.meta.percent = percent;
       return obj;
     });
+  }
 
-    return mappedInstructorsWithLabel;
-  }),
-  filteredData: computed('data.[]', 'filter', async function(){
-    const data = await this.get('data');
-    const filter = this.get('filter');
-    if (!filter) {
-      return data;
-    }
-
-    const exp = new RegExp(filter, 'gi');
-    return data.filter(({ label }) => label.match(exp));
-  }),
-  sortedData: computed('filteredData.[]', async function () {
-    const data = await this.get('filteredData');
-    data.sort((first, second) => {
-      return first.data - second.data;
-    });
-
-    return data;
-  }),
-  actions: {
-    barClick(obj) {
-      const course = this.get('course');
-      const isIcon = this.get('isIcon');
-      const router = this.get('router');
-      if (isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
-        return;
-      }
-
-      router.transitionTo('course-visualize-instructor', course.get('id'), obj.meta.userId);
-    }
-  },
-  barHover: task(function* (obj) {
+  @restartableTask
+  *barHover (obj) {
     yield timeout(100);
-    const intl = this.get('intl');
-    const isIcon = this.get('isIcon');
-    if (isIcon || isEmpty(obj) || obj.empty) {
-      this.set('tooltipTitle', null);
-      this.set('tooltipContent', null);
+    if (this.args.isIcon || isEmpty(obj) || obj.empty) {
+      this.tooltipTitle = null;
+      this.tooltipContent = null;
       return;
     }
     const { label, data, meta } = obj;
-
-    const title = htmlSafe(`${label} ${data} ${intl.t('general.minutes')}`);
     const sessions = meta.sessions.uniq().sort().join();
-    this.set('tooltipTitle', title);
-    this.set('tooltipContent', htmlSafe(sessions + '<br /><br />' + intl.t('general.clickForMore')));
-  }).restartable(),
-});
+
+    this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
+    this.tooltipContent = htmlSafe(sessions + '<br /><br />' + this.intl.t('general.clickForMore'));
+  }
+
+  @action
+  barClick(obj) {
+    if (this.args.isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
+      return;
+    }
+
+    this.router.transitionTo('course-visualize-instructor', this.args.course.get('id'), obj.meta.userId);
+  }
+}

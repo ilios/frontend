@@ -1,16 +1,23 @@
-{{! template-lint-disable attribute-indentation }}
-{{#if (or true @isIcon (gt (get (await this.data) "length") 0))}}
-  <SimpleChart
-    @name="horz-bar"
-    @isIcon={{@isIcon}}
-    @data={{await this.sortedData}}
-    @hover={{perform this.barHover}}
-    @leave={{perform this.barHover}} as |chart|
-  >
-    {{#if this.tooltipContent}}
-      <chart.tooltip @title={{this.tooltipTitle}}>
-        {{this.tooltipContent}}
-      </chart.tooltip>
+<div
+  class="visualizer-course-session-type {{if (not @isIcon) "not-icon"}}"
+  {{did-insert (perform this.load) @course @sessionType}}
+  {{did-update (perform this.load) @course @sessionType}}
+>
+  {{#unless this.load.isRunning}}
+    {{#if (or @isIcon this.data.length)}}
+      <SimpleChart
+        @name="horz-bar"
+        @isIcon={{@isIcon}}
+        @data={{await this.data}}
+        @hover={{perform this.barHover}}
+        @leave={{perform this.barHover}} as |chart|
+      >
+        {{#if this.tooltipContent}}
+          <chart.tooltip @title={{this.tooltipTitle}}>
+            {{this.tooltipContent}}
+          </chart.tooltip>
+        {{/if}}
+      </SimpleChart>
     {{/if}}
-  </SimpleChart>
-{{/if}}
+  {{/unless}}
+</div>

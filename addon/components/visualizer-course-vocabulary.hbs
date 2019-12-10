@@ -1,16 +1,24 @@
-{{#if (or @isIcon (gt (get (await this.data) "length") 0))}}
-  <SimpleChart
-    @name="horz-bar"
-    @isIcon={{@isIcon}}
-    @data={{await this.sortedData}}
-    @hover={{perform this.barHover}}
-    @leave={{perform this.barHover}}
-    @click={{action "barClick"}} as |chart|
-  >
-    {{#if this.tooltipContent}}
-      <chart.tooltip @title={{this.tooltipTitle}}>
-        {{this.tooltipContent}}
-      </chart.tooltip>
+<div
+  class="visualizer-course-vocabulary {{if (not @isIcon) "not-icon"}}"
+  {{did-insert (perform this.load) @course @vocabulary}}
+  {{did-update (perform this.load) @course @vocabulary}}
+>
+  {{#unless this.load.isRunning}}
+    {{#if (or @isIcon this.data.length)}}
+      <SimpleChart
+        @name="horz-bar"
+        @isIcon={{@isIcon}}
+        @data={{this.data}}
+        @click={{action "barClick"}}
+        @hover={{perform this.barHover}}
+        @leave={{perform this.barHover}} as |chart|
+      >
+        {{#if this.tooltipContent}}
+          <chart.tooltip @title={{this.tooltipTitle}}>
+            {{this.tooltipContent}}
+          </chart.tooltip>
+        {{/if}}
+      </SimpleChart>
     {{/if}}
-  </SimpleChart>
-{{/if}}
+  {{/unless}}
+</div>

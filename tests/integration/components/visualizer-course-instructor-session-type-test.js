@@ -2,16 +2,61 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | visualizer-course-instructor-session-type', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+    assert.expect(3);
+    const instructor = this.server.create('user');
+    const sessionType1 = this.server.create('session-type', { title: 'Standalone' });
+    const sessionType2 = this.server.create('session-type', { title: 'Campaign' });
+    const course = this.server.create('course');
+    const session1 = this.server.create('session', {
+      title: 'Berkeley Investigations',
+      course,
+      sessionType: sessionType1
+    });
+    const session2 = this.server.create('session', {
+      title: 'The San Leandro Horror',
+      course,
+      sessionType: sessionType2
+    });
+    this.server.create('offering', {
+      session:session1,
+      startDate: new Date('2019-12-08T12:00:00'),
+      endDate: new Date('2019-12-08T17:00:00'),
+      instructors: [ instructor ]
+    });
+    this.server.create('offering', {
+      session:session1,
+      startDate: new Date('2019-12-21T12:00:00'),
+      endDate: new Date('2019-12-21T17:30:00'),
+      instructors: [ instructor ]
+    });
+    this.server.create('offering', {
+      session:session2,
+      startDate: new Date('2019-12-05T18:00:00'),
+      endDate: new Date('2019-12-05T21:00:00'),
+      instructors: [ instructor ]
+    });
 
-    await render(hbs`<VisualizerCourseInstructorSessionType />`);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const instructorModel = await this.owner.lookup('service:store').find('user', instructor.id);
 
-    assert.dom(this.element).hasText('');
+    this.set('course', courseModel);
+    this.set('instructor', instructorModel);
+
+    await render(
+      hbs`<VisualizerCourseInstructorSessionType @course={{course}} @user={{instructor}} @isIcon={{false}} />`
+    );
+
+    const chart = 'svg';
+    const chartLabels = `${chart} .slice text`;
+    assert.dom(chartLabels).exists({ count: 2 });
+    assert.dom(chart).containsText('Standalone 77.8%');
+    assert.dom(chart).containsText('Campaign 22.2%');
   });
 });

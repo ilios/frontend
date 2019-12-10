@@ -1,17 +1,24 @@
-{{! template-lint-disable attribute-indentation }}
-{{#if (or true @isIcon (gt (get (await this.data) "length") 0))}}
-  <SimpleChart
-    @name="donut"
-    @isIcon={{@isIcon}}
-    @data={{await this.data}}
-    @hover={{perform this.donutHover}}
-    @click={{action "donutClick"}}
-    @leave={{perform this.donutHover}} as |chart|
-  >
-    {{#if this.tooltipContent}}
-      <chart.tooltip @title={{this.tooltipTitle}}>
-        {{this.tooltipContent}}
-      </chart.tooltip>
+<div
+  class="visualizer-course-vocabularies {{if (not @isIcon) "not-icon"}}"
+  {{did-insert (perform this.load) @course}}
+  {{did-update (perform this.load) @course}}
+>
+  {{#unless this.load.isRunning}}
+    {{#if (or @isIcon this.data.length)}}
+      <SimpleChart
+        @name="donut"
+        @isIcon={{@isIcon}}
+        @data={{this.data}}
+        @click={{action "donutClick"}}
+        @hover={{perform this.donutHover}}
+        @leave={{perform this.donutHover}} as |chart|
+      >
+        {{#if this.tooltipContent}}
+          <chart.tooltip @title={{this.tooltipTitle}}>
+            {{this.tooltipContent}}
+          </chart.tooltip>
+        {{/if}}
+      </SimpleChart>
     {{/if}}
-  </SimpleChart>
-{{/if}}
+  {{/unless}}
+</div>

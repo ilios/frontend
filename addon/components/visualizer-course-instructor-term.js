@@ -1,30 +1,28 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { filter, map } from 'rsvp';
-import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
+import {tracked} from '@glimmer/tracking';
+import {restartableTask} from "ember-concurrency-decorators";
 
-export default Component.extend({
-  intl: service(),
-  router: service(),
-  course: null,
-  user: null,
-  isIcon: false,
-  classNameBindings: ['isIcon::not-icon', ':visualizer-course-instructor-session-type'],
-  tooltipContent: null,
-  tooltipTitle: null,
-  data: computed('course.sessions.[]', 'vocabulary', async function(){
-    const course = this.get('course');
-    const user = this.get('user');
-    const sessions = await course.get('sessions');
-    const sessionsWithUser = await filter(sessions.toArray(), async session => {
+export default class VisualizerCourseInstructorTerm extends Component {
+  @service router;
+  @service intl;
+  @tracked data;
+  @tracked tooltipContent = null;
+  @tracked tooltipTitle = null;
+
+  @restartableTask
+  * load(element, [course, user]) {
+    const sessions = yield course.get('sessions');
+    const sessionsWithUser = yield filter(sessions.toArray(), async session => {
       const instructors = await session.get('allInstructors');
       return instructors.mapBy('id').includes(user.get('id'));
     });
 
-    const dataMap = await map(sessionsWithUser, async session => {
+    const dataMap = yield map(sessionsWithUser, async session => {
       const terms = await session.get('terms');
 
       const hours = await session.get('totalSumDuration');
@@ -66,40 +64,28 @@ export default Component.extend({
     }, []);
 
     const totalMinutes = sessionTypeData.mapBy('data').reduce((total, minutes) => total + minutes, 0);
-    const mappedWithLabel = sessionTypeData.map(obj => {
+    this.data = sessionTypeData.map(obj => {
       const percent = (obj.data / totalMinutes * 100).toFixed(1);
       obj.label = `${obj.label} ${percent}%`;
       obj.meta.totalMinutes = totalMinutes;
       obj.meta.percent = percent;
       return obj;
-    });
-
-    return mappedWithLabel;
-
-  }),
-  sortedData: computed('data.[]', async function () {
-    const data = await this.get('data');
-    data.sort((first, second) => {
+    }).sort((first, second) => {
       return first.meta.vocabularyTitle.localeCompare(second.meta.vocabularyTitle) || second.data - first.data;
     });
+  }
 
-    return data;
-  }),
-  donutHover: task(function* (obj) {
+  @restartableTask
+  * donutHover(obj) {
     yield timeout(100);
-    const isIcon = this.get('isIcon');
-    if (isIcon || isEmpty(obj) || obj.empty) {
-      this.set('tooltipTitle', null);
-      this.set('tooltipContent', null);
+    if (this.args.isIcon || isEmpty(obj) || obj.empty) {
+      this.tooltipTitle = null;
+      this.tooltipContent = null;
       return;
     }
-    const intl = this.get('intl');
-    const { label, data, meta } = obj;
+    const {label, data, meta} = obj;
 
-    const title = htmlSafe(`${label} ${data} ${intl.t('general.minutes')}`);
-    const sessions = meta.sessions.uniq().sort().join();
-
-    this.set('tooltipTitle', title);
-    this.set('tooltipContent', sessions);
-  }).restartable()
-});
+    this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
+    this.tooltipContent = meta.sessions.uniq().sort().join();
+  }
+}
