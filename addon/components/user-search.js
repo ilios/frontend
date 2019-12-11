@@ -1,10 +1,12 @@
 import { inject as service } from '@ember/service';
 import ObjectProxy from '@ember/object/proxy';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
-import { task } from 'ember-concurrency';
 const { oneWay } = computed;
+import {tracked} from '@glimmer/tracking';
+import { action } from '@ember/object';
+import {restartableTask} from "ember-concurrency-decorators";
 
 const userProxy = ObjectProxy.extend({
   isUser: true,
@@ -27,92 +29,99 @@ const instructorGroupProxy = ObjectProxy.extend({
   }),
 });
 
-export default Component.extend({
-  store: service(),
-  intl: service(),
-  classNames: ['user-search'],
-  'data-test-user-search': true,
-  showMoreInputPrompt: false,
-  searchReturned: false,
-  currentlyActiveUsers: null,
-  placeholder: null,
-  roles: '',
-  availableInstructorGroups: null,
-  currentlyActiveInstructorGroups: null,
-  actions: {
-    addUser(user) {
-      //don't send actions to the calling component if the user is already in the list
-      //prevents a complicated if/else on the template.
-      const currentlyActiveUsers = isEmpty(this.get('currentlyActiveUsers'))?[]:this.get('currentlyActiveUsers');
-      if(!currentlyActiveUsers.includes(user)){
-        this.addUser(user);
-      }
-    },
-    addInstructorGroup(group) {
-      //don't send actions to the calling component if the user is already in the list
-      //prevents a complicated if/else on the template.
-      const currentlyActiveInstructorGroups = isEmpty(this.get('currentlyActiveInstructorGroups'))?[]:this.get('currentlyActiveInstructorGroups');
-      if(!currentlyActiveInstructorGroups.includes(group)){
-        if (this.addInstructorGroup) {
-          this.addInstructorGroup(group);
-        }
+export default class UserSearch extends Component {
+  @service store;
+  @service intl;
+  @tracked showMoreInputPrompt = false;
+  @tracked searchReturned = false;
+
+  get currentlyActiveUsers() {
+    return this.args.currentlyActiveUsers || [];
+  }
+
+  get currentlyActiveInstructorGroups() {
+    return this.args.currentlyActiveInstructorGroups || [];
+  }
+
+  get roles() {
+    return this.args.roles || '';
+  }
+
+  @action
+  addUser(user) {
+    //don't send actions to the calling component if the user is already in the list
+    //prevents a complicated if/else on the template.
+    if(! this.currentlyActiveUsers.includes(user)){
+      if (this.args.addUser) {
+        this.args.addUser(user);
       }
     }
-  },
-  search: task(function * (searchTerms = '') {
-    this.set('showMoreInputPrompt', false);
-    this.set('searchReturned', false);
+  }
+
+  @action
+  addInstructorGroup(group) {
+    //don't send actions to the calling component if the user is already in the list
+    //prevents a complicated if/else on the template.
+    if(! this.currentlyActiveInstructorGroups.includes(group)){
+      if (this.args.addInstructorGroup) {
+        this.args.addInstructorGroup(group);
+      }
+    }
+  }
+
+  @restartableTask
+  *search(searchTerms) {
+    this.showMoreInputPrompt = false;
+    this.searchReturned = false;
     const noWhiteSpaceTerm = searchTerms.replace(/ /g,'');
     if(noWhiteSpaceTerm.length === 0){
       return [];
     } else if(noWhiteSpaceTerm.length < 3){
-      this.set('showMoreInputPrompt', true);
+      this.showMoreInputPrompt = true;
       return [];
     }
     const query = {
       q: searchTerms,
       limit: 100
     };
-    if (this.get('roles')) {
+    if (this.roles) {
       query.filters = {
-        roles: this.get('roles').split(',')
+        roles: this.roles.split(',')
       };
     }
-    const users = yield this.get('store').query('user', query);
-    const currentlyActiveUsers = this.get('currentlyActiveUsers') === null?[]:this.get('currentlyActiveUsers');
+    const users = yield this.store.query('user', query);
     const results = users.map(user => {
       return userProxy.create({
         content: user,
-        currentlyActiveUsers,
+        currentlyActiveUsers: this.currentlyActiveUsers,
       });
     });
 
-    const availableInstructorGroups = yield this.get('availableInstructorGroups');
-    if(! isEmpty(availableInstructorGroups)){
+    const availableInstructorGroups = yield this.args.availableInstructorGroups;
+    if (! isEmpty(availableInstructorGroups)){
       const fragment = searchTerms.toLowerCase().trim();
 
       const filteredGroups = availableInstructorGroups.filter(group => {
         return group.get('title') && group.get('title').toLowerCase().includes(fragment);
       });
-      const currentlyActiveInstructorGroups = isEmpty(this.get('currentlyActiveInstructorGroups'))?[]:this.get('currentlyActiveInstructorGroups');
+
       const instructorGroupProxies = filteredGroups.map(group => {
         return instructorGroupProxy.create({
           content: group,
-          currentlyActiveInstructorGroups,
+          currentlyActiveInstructorGroups: this.currentlyActiveInstructorGroups,
         });
       });
 
       results.pushObjects(instructorGroupProxies);
     }
-    const intl = this.get('intl');
-    const locale = intl.get('locale');
+    const locale = this.intl.get('locale');
     results.sort((a, b) => {
       const sortTermA = a.get('sortTerm');
       const sortTermB = b.get('sortTerm');
 
       return sortTermA.localeCompare(sortTermB, locale, { numeric: true });
     });
-    this.set('searchReturned', true);
+    this.searchReturned = true;
     return results;
-  }).restartable(),
-});
+  }
+}
