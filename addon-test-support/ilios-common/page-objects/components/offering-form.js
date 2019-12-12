@@ -20,7 +20,7 @@ export default {
   hours: fillable('.offering-duration .hours input'),
   minutes: fillable('.offering-duration .minutes input'),
   location: fillable('.room input'),
-  toggleRecurring: clickable('.make-recurring .toggle-yesno'),
+  toggleRecurring: clickable('.make-recurring .toggle-yesno .switch-handle'),
   recurringWeeks: fillable('.make-recurring-input'),
   learnerGroupManager,
   instructorSelectionManager,
