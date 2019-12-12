@@ -1,12 +1,16 @@
-<input
-  checked={{@yes}}
-  type="checkbox"
-  class="switch-input"
-  disabled="disabled"
->
-<span
-  class="switch-label"
-  data-on={{t "general.yes"}}
-  data-off={{t "general.no"}}
-></span>
-<span class="switch-handle"></span>
+<span class="toggle-yesno" data-test-toggle-yesno>
+  <input
+    checked={{this.yes}}
+    type="checkbox"
+    class="switch-input"
+    disabled="disabled"
+  >
+  <span
+    class="switch-label"
+    role="button"
+    data-on={{t "general.yes"}}
+    data-off={{t "general.no"}}
+    {{on "click" (action "click")}}
+  ></span>
+  <span class="switch-handle" role="button" {{on "click" (action "click")}}></span>
+</span>

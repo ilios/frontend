@@ -1,28 +1,24 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
 
-export default Component.extend({
-  classNames: ['toggle-icons'],
-  firstOptionSelected: true,
+export default class ToggleIcons extends Component {
 
-  firstLabel: null,
-  secondLabel: null,
-  firstIcon: null,
-  secondIcon: null,
+  get uniqueId() {
+    return guidFor(this);
+  }
 
-  actions: {
-    firstChoice(){
-      const firstOptionSelected = this.get('firstOptionSelected');
-      const toggle = this.get('toggle');
-      if (!firstOptionSelected) {
-        toggle(true);
-      }
-    },
-    secondChoice(){
-      const firstOptionSelected = this.get('firstOptionSelected');
-      const toggle = this.get('toggle');
-      if (firstOptionSelected) {
-        toggle(false);
-      }
+  @action
+  firstChoice(){
+    if (! this.args.firstOptionSelected) {
+      this.args.toggle(true);
     }
   }
-});
+
+  @action
+  secondChoice(){
+    if (this.args.firstOptionSelected) {
+      this.args.toggle(false);
+    }
+  }
+}

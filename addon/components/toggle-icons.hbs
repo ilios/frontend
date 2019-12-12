@@ -1,39 +1,41 @@
-<div class="accessible">
-  <input
-    type="radio"
-    id={{concat "first-toggle-" this.elementId}}
-    name={{concat "toggle-" this.elementId}}
-    checked={{eq @firstOptionSelected true}}
-    {{on "click" (prevent-default (action "firstChoice"))}}
-  >
-  <label for={{concat "first-toggle-" this.elementId}}>
-    {{@firstLabel}}
-  </label>
-  <input
-    type="radio"
-    id={{concat "second-toggle-" this.elementId}}
-    name={{concat "toggle-" this.elementId}}
-    checked={{eq @firstOptionSelected false}}
-    {{on "click" (prevent-default (action "secondChoice"))}}
-  >
-  <label for={{concat "second-toggle-" this.elementId}}>
-    {{@secondLabel}}
-  </label>
-</div>
-<div class="icons">
-  {{#if @firstOptionSelected}}
-    <FaIcon
-      @icon={{@firstIcon}}
-      class="first"
-      @title={{@secondLabel}}
-      @click={{action "secondChoice"}}
-    />
-  {{else}}
-    <FaIcon
-      @icon={{@secondIcon}}
-      class="second"
-      @title={{@firstLabel}}
-      @click={{action "firstChoice"}}
-    />
-  {{/if}}
+<div class="toggle-icons">
+  <div class="accessible">
+    <input
+      type="radio"
+      id={{concat "first-toggle-" this.uniqueId}}
+      name={{concat "toggle-" this.uniqueId}}
+      checked={{eq @firstOptionSelected true}}
+      {{on "click" (prevent-default (action "firstChoice"))}}
+    >
+    <label for={{concat "first-toggle-" this.uniqueId}}>
+      {{@firstLabel}}
+    </label>
+    <input
+      type="radio"
+      id={{concat "second-toggle-" this.uniqueId}}
+      name={{concat "toggle-" this.uniqueId}}
+      checked={{eq @firstOptionSelected false}}
+      {{on "click" (prevent-default (action "secondChoice"))}}
+    >
+    <label for={{concat "second-toggle-" this.uniqueId}}>
+      {{@secondLabel}}
+    </label>
+  </div>
+  <div class="icons">
+    {{#if @firstOptionSelected}}
+      <FaIcon
+        @icon={{@firstIcon}}
+        class="first"
+        @title={{@secondLabel}}
+        @click={{action "secondChoice"}}
+      />
+    {{else}}
+      <FaIcon
+        @icon={{@secondIcon}}
+        class="second"
+        @title={{@firstLabel}}
+        @click={{action "firstChoice"}}
+      />
+    {{/if}}
+  </div>
 </div>

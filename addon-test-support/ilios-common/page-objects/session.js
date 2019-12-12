@@ -90,24 +90,24 @@ export default create({
     supplemental: {
       scope: '.sessionsupplemental',
       isActive: is(':checked', 'input'),
-      click: clickable('.toggle-yesno'),
+      click: clickable('.toggle-yesno .switch-handle'),
     },
     specialAttire: {
       scope: '.sessionspecialattire',
       isActive: is(':checked', 'input'),
-      click: clickable('.toggle-yesno'),
+      click: clickable('.toggle-yesno .switch-handle'),
     },
     specialEquipment: {
       scope: '.sessionspecialequipment',
       isActive: is(':checked', 'input'),
-      click: clickable('.toggle-yesno'),
+      click: clickable('.toggle-yesno .switch-handle'),
     },
     attendanceRequired: {
       scope: '.sessionattendancerequired',
       isActive: is(':checked', 'input'),
-      click: clickable('.toggle-yesno'),
+      click: clickable('.toggle-yesno .switch-handle'),
     },
-    toggleIlm: clickable('.toggle-yesno', { scope: '.independentlearningcontrol' }),
+    toggleIlm: clickable('.toggle-yesno .switch-handle', { scope: '.independentlearningcontrol' }),
     prerequisites: {
       scope: '.prerequisites',
     },
