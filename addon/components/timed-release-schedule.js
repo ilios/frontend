@@ -1,33 +1,31 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import moment from 'moment';
 
-export default Component.extend({
-  tagName: 'span',
-  classNames: ['timed-release-schedule'],
-  startDate: null,
-  endDate: null,
-  now: null,
-  showNoSchedule: true,
-  startDateInTheFuture: computed('startDate', 'now', function () {
-    const startDate = this.get('startDate');
-    const now = this.get('now');
-    if (!startDate || !now) {
-      return false;
-    }
-    return moment(startDate).isAfter(now);
-  }),
-  endDateInTheFuture: computed('endDate', 'now', function () {
-    const endDate = this.get('endDate');
-    const now = this.get('now');
-    if (!endDate || !now) {
-      return false;
-    }
-    return moment(endDate).isAfter(now);
-  }),
-  init() {
-    this._super();
-    const now = new Date();
-    this.set('now', now);
+export default class TimedReleaseSchedule extends Component {
+
+  constructor() {
+    super(...arguments);
+    this.now = new Date();
   }
-});
+
+  get showNoSchedule() {
+    if (undefined === this.args.showNoSchedule) {
+      return true;
+    }
+    return this.args.showNoSchedule;
+  }
+
+  get startDateInTheFuture() {
+    if (! this.args.startDate) {
+      return false;
+    }
+    return moment(this.args.startDate).isAfter(this.now);
+  }
+
+  get endDateInTheFuture() {
+    if (! this.args.endDate) {
+      return false;
+    }
+    return moment(this.args.endDate).isAfter(this.now);
+  }
+}
