@@ -1,57 +1,26 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { reject } from 'rsvp';
-import Publishable from 'ilios-common/mixins/publishable';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { restartableTask } from 'ember-concurrency-decorators';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 
-const { alias } = computed;
+@validatable
+export default class CourseHeaderComponent extends Component {
+  @Length(3, 200) @NotBlank() @tracked courseTitle;
 
-const Validations = buildValidations({
-  courseTitle: [
-    validator('presence', true),
-    validator('length', {
-      min: 3,
-      max: 200
-    }),
-  ],
-});
-
-export default Component.extend(Validations, Publishable, ValidationErrorDisplay, {
-  classNames: ['course-header'],
-  course: null,
-  courseTitle: null,
-  editable: false,
-  'data-test-course-header': true,
-
-  publishTarget: alias('course'),
-
-  didReceiveAttrs(){
-    this._super(...arguments);
-    this.set('courseTitle', this.get('course.title'));
-  },
-
-  actions: {
-    async changeTitle() {
-      const course = this.course;
-      const newTitle = this.courseTitle;
-      this.send('addErrorDisplayFor', 'courseTitle');
-      const { validations } = await this.validate();
-
-      if (validations.isValid) {
-        this.send('removeErrorDisplayFor', 'courseTitle');
-        course.set('title', newTitle);
-        const newCourse = await course.save();
-        this.set('courseTitle', newCourse.title);
-        this.set('course', newCourse);
-      } else {
-        await reject();
-      }
-    },
-
-    revertTitleChanges(){
-      const course = this.get('course');
-      this.set('courseTitle', course.get('title'));
-    },
+  @restartableTask
+  *changeTitle() {
+    this.addErrorDisplayFor('courseTitle');
+    const isValid = yield this.isValid('courseTitle');
+    if (!isValid) {
+      return false;
+    }
+    this.removeErrorDisplayFor('courseTitle');
+    this.args.course.set('title', this.courseTitle);
+    yield this.args.course.save();
   }
-});
+  @action
+  revertTitleChanges(){
+    this.courseTitle = this.args.course.title;
+  }
+}

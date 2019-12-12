@@ -18,7 +18,8 @@
     }
 
     .editable,
-    h4 {
+    h2,
+    h3 {
       display: block;
       font-size: 1.5rem;
 
@@ -28,8 +29,8 @@
     }
 
     @include for-tablet-and-up {
-      h4 {
-        margin-left: 1rem;
+      h3 {
+        margin-left: .5rem;
       }
     }
   }
