@@ -1,27 +1,19 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  classNames: ['toggle-buttons'],
-  tagName: 'span',
-  firstOptionSelected: true,
+export default class ToggleButtons extends Component {
 
-  firstLabel: null,
-  secondLabel: null,
-
-  actions: {
-    firstChoice(){
-      const firstOptionSelected = this.get('firstOptionSelected');
-      const toggle = this.get('toggle');
-      if (!firstOptionSelected) {
-        toggle(true);
-      }
-    },
-    secondChoice(){
-      const firstOptionSelected = this.get('firstOptionSelected');
-      const toggle = this.get('toggle');
-      if (firstOptionSelected) {
-        toggle(false);
-      }
+  @action
+  firstChoice(){
+    if (! this.args.firstOptionSelected) {
+      this.args.toggle(true);
     }
   }
-});
+
+  @action
+  secondChoice(){
+    if (this.args.firstOptionSelected) {
+      this.args.toggle(false);
+    }
+  }
+}
