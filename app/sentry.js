@@ -13,16 +13,16 @@ function startSentry(config) {
     beforeSend(event, hint) {
       const error = hint.originalException;
 
+      // ignore aborted route transitions from the Ember.js router
+      if (error && error.name === 'TransitionAborted') {
+        return null;
+      }
+
       //print everything to the console when not in production
       if (isDevelopmentEnvironment && error) {
         console.error(error);
       }
       if (!captureErrors) {
-        return null;
-      }
-
-      // ignore aborted route transitions from the Ember.js router
-      if (error && error.name === 'TransitionAborted') {
         return null;
       }
 
