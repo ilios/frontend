@@ -126,7 +126,7 @@ module('Integration | Component | school session type form', function(hooks) {
     const firstAamcMethodOption = `${aamcMethodOptions}:nth-of-type(1)`;
     const secondAamcMethodOption = `${aamcMethodOptions}:nth-of-type(2)`;
     const assessment = '[data-test-assessment]';
-    const assessmentInput = `${assessment} .toggle-yesno`;
+    const assessmentInput = `${assessment} .toggle-yesno .switch-handle`;
 
     assert.dom(aamcMethodSelect).hasValue('');
     assert.dom(aamcMethodOptions).exists({ count: 2 });
@@ -258,7 +258,7 @@ module('Integration | Component | school session type form', function(hooks) {
     const assessmentOptionSelect = `${assessmentOption} select`;
     const isActive = '[data-test-active]';
     const isActiveInput = `${isActive} input`;
-    const isActiveControl = `${isActive} .toggle-yesno`;
+    const isActiveControl = `${isActive} .toggle-yesno .switch-handle`;
     const button = '.done';
 
     assert.dom(isActiveInput).isChecked('active is selected');
