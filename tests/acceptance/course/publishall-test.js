@@ -85,6 +85,9 @@ module('Acceptance | Course - Publish All Sessions', function(hooks) {
       meshDescriptors,
       terms,
     });
+    this.server.create('sessionType', {
+      sessions: [session]
+    });
     this.server.create('offering', { session });
     await visit('/courses/1/publishall');
 

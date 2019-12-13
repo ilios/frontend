@@ -1,77 +1,78 @@
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { map } from 'rsvp';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import { task, restartableTask } from 'ember-concurrency-decorators';
+const DEBOUNCE_DELAY = 250;
 
-export default Component.extend({
-  intl: service(),
-  permissionChecker: service(),
-  tagName: 'section',
-  classNames: ['course-sessions'],
-  'data-test-course-sessions': true,
+export default class CourseSessionsComponent extends Component {
+  @service intl;
+  @service permissionChecker;
 
-  course: null,
-  canCreateSession: false,
-  canUpdateCourse: false,
-  sortBy: null,
-  filterBy: null,
-  expandedSessionIds: null,
-  sessionsCount: computed('course.sessions.[]', function(){
-    const course = this.get('course');
-    const sessionIds = course.hasMany('sessions').ids();
+  @tracked sessions = [];
+  @tracked expandedSessionIds = [];
+  @tracked sessionObjects = false;
+  @tracked sessionTypes = [];
+  @tracked filterByLocalCache = [];
+  @tracked showNewSessionForm = false;
 
+  @restartableTask
+  *load(event, [sessions, school]) {
+    if (!sessions) {
+      return;
+    }
+    this.sessions = sessions.toArray();
+    this.sessionObjects = yield this.buildSessionObjects();
+    this.sessionTypes = yield school.sessionTypes;
+  }
+
+  get sessionsCount(){
+    const sessionIds = this.args.course.hasMany('sessions').ids();
     return sessionIds.length;
-  }),
-  sessions: computed('course.sessions.[]', async function () {
-    const course = this.get('course');
-    return await course.get('sessions');
-  }),
-  sessionsWithOfferings: computed('sessions.[]', async function () {
-    const sessions = await this.get('sessions');
-    return sessions.filter(session => {
+  }
+
+  get sessionsWithOfferings() {
+    return this.sessions.filter(session => {
       const ids = session.hasMany('offerings').ids();
       return ids.length > 0;
     });
-  }),
-  sessionObjects: computed('course', 'sessions.[]', async function(){
-    const intl = this.get('intl');
-    const permissionChecker = this.get('permissionChecker');
-    const course = this.get('course');
-    const sessions = await this.get('sessions');
-    const sessionObjects = await map(sessions.toArray(), async session => {
-      const canDelete = await permissionChecker.canDeleteSession(session);
-      const canUpdate = await permissionChecker.canUpdateSession(session);
+  }
+
+  async buildSessionObjects(){
+    const sessionObjects = await map(this.sessions, async session => {
+      const canDelete = await this.permissionChecker.canDeleteSession(session);
+      const canUpdate = await this.permissionChecker.canUpdateSession(session);
       const postrequisite = await session.postrequisite;
       const sessionObject = {
         session,
-        course,
+        course: this.args.course,
         canDelete,
         canUpdate,
         postrequisite,
-        id: session.get('id'),
-        title: session.get('title'),
-        instructionalNotes: session.get('instructionalNotes'),
-        isPublished: session.get('isPublished'),
-        isNotPublished: session.get('isNotPublished'),
-        isScheduled: session.get('isScheduled')
+        id: session.id,
+        title: session.title,
+        instructionalNotes: session.instructionalNotes,
+        isPublished: session.isPublished,
+        isNotPublished: session.isNotPublished,
+        isScheduled: session.isScheduled
       };
-      const sessionType = await session.get('sessionType');
-      sessionObject.sessionTypeTitle = sessionType.get('title');
-      const ilmSession = await session.get('ilmSession');
+      const sessionType = await session.sessionType;
+      sessionObject.sessionTypeTitle = sessionType.title;
+      const ilmSession = await session.ilmSession;
       if (ilmSession) {
         sessionObject.isIlm = true;
-        sessionObject.firstOfferingDate = ilmSession.get('dueDate');
+        sessionObject.firstOfferingDate = ilmSession.dueDate;
       } else {
         sessionObject.isIlm = false;
-        const firstOfferingDate = await session.get('firstOfferingDate');
-        sessionObject.firstOfferingDate = firstOfferingDate;
+        sessionObject.firstOfferingDate = await session.firstOfferingDate;
       }
-      const offerings = await session.get('offerings');
+      const offerings = await session.offerings;
       sessionObject.offeringCount = offerings.length;
       sessionObject.objectiveCount = session.hasMany('objectives').ids().length;
       sessionObject.termCount = session.hasMany('terms').ids().length;
-      const offeringLearerGroupCount = offerings.reduce((total, offering) => {
+      const offeringLearnerGroupCount = offerings.reduce((total, offering) => {
         const count = offering.hasMany('learnerGroups').ids().length;
 
         return total + count;
@@ -81,16 +82,16 @@ export default Component.extend({
         const learnerGroupIds = ilmSession.hasMany('learnerGroups').ids();
         ilmLearnerGroupCount = learnerGroupIds.length;
       }
-      const learnerGroupCount = offeringLearerGroupCount + ilmLearnerGroupCount;
+      const learnerGroupCount = offeringLearnerGroupCount + ilmLearnerGroupCount;
       sessionObject.learnerGroupCount = learnerGroupCount;
-      let status = intl.t('general.notPublished');
-      if(session.get('isPublished')){
+      let status = this.intl.t('general.notPublished');
+      if(session.published){
         sessionObject.isPublished = true;
-        status = intl.t('general.published');
+        status = this.intl.t('general.published');
       }
-      if(session.get('publishedAsTbd')){
+      if(session.publishedAsTbd){
         sessionObject.publishedAsTbd = true;
-        status = intl.t('general.scheduled');
+        status = this.intl.t('general.scheduled');
       }
       sessionObject.status = status.toString();
       sessionObject.searchString = sessionObject.title + sessionObject.sessionTypeTitle + sessionObject.status;
@@ -99,64 +100,48 @@ export default Component.extend({
     });
 
     return sessionObjects;
-  }),
+  }
 
-  sessionTypes: computed('course.school.sessionTypes.[]', async function(){
-    const course = this.get('course');
-    const school = await course.get('school');
-    const sessionTypes = await school.get('sessionTypes');
-
-    return sessionTypes;
-  }),
-
-  filterByDebounced: computed('filterByLocalCache', 'filterBy', function(){
-    const filterBy = this.get('filterBy');
-    const filterByLocalCache = this.get('filterByLocalCache');
-    const changeFilterBy = this.get('changeFilterBy');
-
-    if (changeFilterBy.get('isIdle')) {
-      return filterBy;
+  get filterByDebounced(){
+    if (this.changeFilterBy.isIdle) {
+      return this.args.filterBy;
     }
 
-    return filterByLocalCache;
-  }),
+    return this.filterByLocalCache;
+  }
 
-  init() {
-    this._super(...arguments);
-    this.set('expandedSessionIds', []);
-  },
-
-  saveSession: task(function * (session) {
-    const course = this.get('course');
-    session.set('course', course);
+  @task
+  *saveSession(session) {
+    session.set('course', this.args.course);
 
     return yield session.save();
-  }),
+  }
 
-  expandSession: task(function * (session) {
+  @task
+  *expandSession(session) {
     yield timeout(1);
-    this.expandedSessionIds.pushObject(session.id);
-  }),
+    this.expandedSessionIds = [...this.expandedSessionIds, session.id];
+  }
 
-  closeSession: task(function * (session) {
+  @task
+  *closeSession(session) {
     yield timeout(1);
-    this.expandedSessionIds.removeObject(session.id);
-  }),
+    this.expandedSessionIds = this.expandedSessionIds.filter(id => id !== session.id);
+  }
 
-  toggleExpandAll: task(function * () {
-    const sessionsWithOfferings = yield this.get('sessionsWithOfferings');
-    if (this.expandedSessionIds.length === sessionsWithOfferings.length) {
-      this.set('expandedSessionIds', []);
+  @restartableTask
+  *changeFilterBy(value){
+    this.filterByLocalCache = value;
+    yield timeout(DEBOUNCE_DELAY);
+    this.args.setFilterBy(value);
+  }
+
+  @action
+  toggleExpandAll() {
+    if (this.expandedSessionIds.length === this.sessionsWithOfferings.length) {
+      this.expandedSessionIds = [];
     } else {
-      const ids = sessionsWithOfferings.mapBy('id');
-      this.set('expandedSessionIds', ids);
+      this.expandedSessionIds = this.sessionsWithOfferings.mapBy('id');
     }
-  }).drop(),
-
-  changeFilterBy: task(function * (value){
-    const setFilterBy = this.get('setFilterBy');
-    this.set('filterByLocalCache', value);
-    yield timeout(250);
-    setFilterBy(value);
-  }).restartable(),
-});
+  }
+}
