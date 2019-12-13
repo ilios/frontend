@@ -20,7 +20,7 @@
   {{/if}}
   {{#if (and this.search.isIdle (gt this.search.lastSuccessful.value.length 0))}}
     <ul class="results">
-      <li class="results-count">
+      <li class="results-count" data-test-results-count>
         {{this.search.lastSuccessful.value.length}}
         {{t "general.results"}}
       </li>
