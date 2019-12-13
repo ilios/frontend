@@ -1,42 +1,43 @@
 import Service from '@ember/service';
-import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import { resolve } from 'rsvp';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | course summary header', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   hooks.beforeEach(function() {
     const currentUserMock = Service.extend({
       userIsCourseDirector: true,
     });
     this.owner.register('service:currentUser', currentUserMock);
+
+    this.permissionCheckerMock = Service.extend({
+      async canCreateCourse() {
+        return true;
+      }
+    });
+    this.owner.register('service:permissionChecker', this.permissionCheckerMock);
   });
 
   test('it renders', async function(assert) {
-    const school = EmberObject.create({});
-    const permissionCheckerMock = Service.extend({
-      canCreateCourse(inSchool) {
-        assert.equal(school, inSchool);
-        return resolve(true);
-      }
-    });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const course = EmberObject.create({
-      title: 'title',
-      school: resolve(school),
-      startDate: new Date(2020, 4, 6, 12),
-      endDate: new Date(2020, 11, 11, 12),
+    const school = this.server.create('school');
+    this.permissionCheckerMock.canCreateCourse = async (inSchool) => {
+      assert.equal(school.id, inSchool.id);
+      return true;
+    };
+    const course = this.server.create('course', {
+      school: school,
       externalId: 'abc',
       level: 3,
-      isPublished: true,
-      isSchedule: false,
+      published: true,
     });
-    this.set('course', course);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
     await render(hbs`<CourseSummaryHeader @course={{course}} />`);
     const title = 'h2';
     const actions = '.course-summary-actions';
@@ -50,7 +51,7 @@ module('Integration | Component | course summary header', function(hooks) {
     const level = `${blocks}:nth-of-type(4) span`;
     const status = `${blocks}:nth-of-type(5) span:nth-of-type(1) [data-test-text]`;
 
-    assert.dom(title).hasText('title');
+    assert.dom(title).hasText('course 0');
     assert.dom(materialsIcon).hasClass('fa-archive');
     assert.dom(printIcon).hasClass('fa-print');
     assert.dom(rolloverIcon).hasClass('fa-random');
@@ -62,27 +63,18 @@ module('Integration | Component | course summary header', function(hooks) {
   });
 
   test('no link to materials when that is the current route', async function(assert) {
-    const school = EmberObject.create({});
-    const permissionCheckerMock = Service.extend({
-      canCreateCourse(inSchool) {
-        assert.equal(school, inSchool);
-        return resolve(true);
-      }
-    });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
+    const school = this.server.create('school');
     const routerMock = Service.extend({
       currentRouteName: 'course-materials',
       generateURL(){},
     });
     this.owner.register('service:router', routerMock);
 
-    const course = EmberObject.create({
-      title: 'title',
-      school: resolve(school),
-      startDate: new Date(2020, 4, 6, 12),
-      endDate: new Date(2020, 11, 11, 12),
+    const course = this.server.create('course', {
+      school,
     });
-    this.set('course', course);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
     await render(hbs`<CourseSummaryHeader @course={{course}} />`);
     const actions = '.course-summary-actions a';
     const printIcon = `${actions}:nth-of-type(1) svg`;
@@ -93,19 +85,16 @@ module('Integration | Component | course summary header', function(hooks) {
     assert.dom(rolloverIcon).hasClass('fa-random');
   });
 
-  test('no link to rollover when that is the current route', async function(assert) {
+  test('no link to rollover when that is the current route', async function (assert) {
     const routerMock = Service.extend({
       currentRouteName: 'course.rollover',
       generateURL(){},
     });
     this.owner.register('service:router', routerMock);
 
-    const course = EmberObject.create({
-      title: 'title',
-      startDate: new Date(2020, 4, 6, 12),
-      endDate: new Date(2020, 11, 11, 12),
-    });
-    this.set('course', course);
+    const course = this.server.create('course');
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
     await render(hbs`<CourseSummaryHeader @course={{course}} />`);
     const actions = '.course-summary-actions a';
     const materialsIcon = `${actions}:nth-of-type(1) svg`;
@@ -117,27 +106,18 @@ module('Integration | Component | course summary header', function(hooks) {
   });
 
   test('no link to rollover when user cannot edit the course', async function(assert) {
-    const school = EmberObject.create({});
+    const school = this.server.create('school', {});
     const routerMock = Service.extend({
       currentRouteName: 'course.rollover',
       generateURL(){},
     });
     this.owner.register('service:router', routerMock);
-    const permissionCheckerMock = Service.extend({
-      canCreateCourse(inSchool) {
-        assert.equal(school, inSchool);
-        return resolve(false);
-      }
-    });
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
 
-    const course = EmberObject.create({
-      title: 'title',
-      school: resolve(school),
-      startDate: new Date(2020, 4, 6, 12),
-      endDate: new Date(2020, 11, 11, 12),
+    const course = this.server.create('course', {
+      school,
     });
-    this.set('course', course);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
     await render(hbs`<CourseSummaryHeader @course={{course}} />`);
     const actions = '.course-summary-actions a';
     const materialsIcon = `${actions}:nth-of-type(1) svg`;

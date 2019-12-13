@@ -1,27 +1,30 @@
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  currentUser: service(),
-  permissionChecker: service(),
-  router: service(),
+export default class CourseSummaryHeaderComponent extends Component {
+  @service currentUser;
+  @service permissionChecker;
+  @service router;
 
-  classNames: ['course-summary-header'],
-  course: null,
+  @tracked canRollover;
 
-  showRollover: computed('course', 'currentUser', 'router.currentRouteName', async function () {
+  @restartableTask
+  *load() {
+    const school = yield this.args.course.school;
+    this.canRollover = yield this.permissionChecker.canCreateCourse(school);
+  }
+
+  get showRollover() {
     if (this.router.currentRouteName === 'course.rollover') {
       return false;
     }
 
-    const permissionChecker = this.get('permissionChecker');
-    const course = this.get('course');
-    const school = await course.get('school');
-    return permissionChecker.canCreateCourse(school);
-  }),
+    return this.canRollover;
+  }
 
-  showMaterials: computed('router.currentRouteName', function() {
+  get showMaterials() {
     return this.router.currentRouteName !== 'course-materials';
-  })
-});
+  }
+}
