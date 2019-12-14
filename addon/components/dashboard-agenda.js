@@ -1,34 +1,27 @@
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 import moment from 'moment';
 
-export default Component.extend({
-  userEvents: service(),
+export default class DashboardAgendaComponent extends Component {
+  @service userEvents;
 
-  areEventsSelectable: true,
-  /**
-   * Days in advance of the current date.
-   * @property daysInAdvance
-   * @type int
-   * @public
-   */
-  daysInAdvance: 60,
+  @tracked areEventsSelectable = true;
+  @tracked daysInAdvance = 60;
+  @tracked sixDaysAgo = moment().hour(0).minute(0).subtract(6, 'days');
+  @tracked weeksEvents = null;
 
-  classNames: ['dashboard-agenda'],
-
-  sixDaysAgo: moment().hour(0).minute(0).subtract(6, 'days'),
-  weeksEvents: computed('daysInAdvance', async function() {
-    const daysInAdvance = this.get('daysInAdvance');
+  @restartableTask
+  *load() {
     const from = moment().hour(0).minute(0).unix();
-    const to = moment().hour(23).minute(59).add(daysInAdvance, 'days').unix();
+    const to = moment().hour(23).minute(59).add(this.daysInAdvance, 'days').unix();
 
-    return await this.get('userEvents').getEvents(from, to);
-  }),
+    this.weeksEvents = yield this.userEvents.getEvents(from, to);
+  }
 
-  ilmPreWorkEvents: computed('weeksEvents.[]', async function () {
-    const events = await this.get('weeksEvents');
-    const preWork =  events.reduce((arr, eventObject) => {
+  get ilmPreWorkEvents() {
+    const preWork = this.weeksEvents.reduce((arr, eventObject) => {
       return arr.pushObjects(eventObject.prerequisites);
     }, []);
 
@@ -46,12 +39,11 @@ export default Component.extend({
       }
     });
     return uniques;
-  }),
+  }
 
-  nonIlmPreWorkEvents: computed('weeksEvents.[]', async function () {
-    const events = await this.get('weeksEvents');
-    return events.filter(ev => {
+  get nonIlmPreWorkEvents() {
+    return this.weeksEvents.filter(ev => {
       return ev.postrequisites.length === 0 || !ev.ilmSession;
     });
-  }),
-});
+  }
+}

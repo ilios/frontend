@@ -1,146 +1,152 @@
-<h3>
-  {{t "general.upcomingActivities" days=this.daysInAdvance}}
-</h3>
-{{#if (is-fulfilled this.weeksEvents)}}
-  {{#if (gt (get (await this.ilmPreWorkEvents) "length") 0)}}
-    <div class="pre-work">
-      <IliosCalendarPreWorkEvents
-        @events={{await this.ilmPreWorkEvents}}
-        @areEventsSelectable={{this.areEventsSelectable}}
-      />
-    </div>
-  {{/if}}
-  <div class="activities">
-    {{#if (gt (get (await this.nonIlmPreWorkEvents) "length") 0)}}
-      <table>
-        <tbody>
-          {{#each (await this.nonIlmPreWorkEvents) as |event|}}
-            {{#if event.isBlanked}}
-              <tr>
-                <td colspan="4" class="event-date">
-                  {{#if event.ilmSession}}
-                    <span class="ilm-due">
-                      {{t "general.dueBy"}}
-                    </span>
-                  {{/if}}
-                  {{moment-format event.startDate "dddd, MMMM Do, YYYY h:mma"}}
-                </td>
-                <td colspan="4">
-                  {{#if event.ilmSession}}
-                    <strong>
-                      {{t "general.ilm"}}:
-                    </strong>
-                  {{/if}}
-                  {{event.name}}
-                </td>
-                <td colspan="2">
-                  {{event.location}}
-                </td>
-                <td colspan="1">
-                  {{#if event.attireRequired}}
-                    <FaIcon
-                      @icon="black-tie"
-                      @prefix="fab"
-                      @title={{t "general.whitecoatsSlashSpecialAttire"}}
-                    />
-                  {{/if}}
-                  {{#if event.equipmentRequired}}
-                    <FaIcon
-                      @icon="flask"
-                      @title={{t "general.specialEquipment"}}
-                    />
-                  {{/if}}
-                  {{#if event.attendanceRequired}}
-                    <FaIcon
-                      @icon="calendar-check"
-                      @title={{t "general.attendanceIsRequired"}}
-                    />
-                  {{/if}}
-                  {{#if
-                    (is-same-or-after
-                      event.lastModified this.sixDaysAgo precision="day"
-                    )
-                  }}
-                    <FaIcon
-                      @icon="exclamation-circle"
-                      @title={{t "general.newUpdates"}}
-                    />
-                  {{/if}}
-                </td>
-              </tr>
-            {{/if}}
-            {{#unless event.isBlanked}}
-              <tr>
-                <td colspan="4" class="event-date">
-                  <LinkTo @route="events" @model={{event.slug}}>
-                    <FaIcon @icon="external-link-square-alt" />
+<div
+  class="dashboard-agenda"
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load)}}
+>
+  <h3>
+    {{t "general.upcomingActivities" days=this.daysInAdvance}}
+  </h3>
+  {{#if (is-array this.weeksEvents)}}
+    {{#if (gt (get this.ilmPreWorkEvents "length") 0)}}
+      <div class="pre-work">
+        <IliosCalendarPreWorkEvents
+          @events={{this.ilmPreWorkEvents}}
+          @areEventsSelectable={{this.areEventsSelectable}}
+        />
+      </div>
+    {{/if}}
+    <div class="activities">
+      {{#if (gt (get this.nonIlmPreWorkEvents "length") 0)}}
+        <table>
+          <tbody>
+            {{#each this.nonIlmPreWorkEvents as |event|}}
+              {{#if event.isBlanked}}
+                <tr>
+                  <td colspan="4" class="event-date">
                     {{#if event.ilmSession}}
                       <span class="ilm-due">
-                        {{t "general.dueBy"}}:
+                        {{t "general.dueBy"}}
                       </span>
                     {{/if}}
-                    {{moment-format event.startDate "dddd, MMMM Do, YYYY h:mma"
-                    }}
-                  </LinkTo>
-                </td>
-                <td colspan="4">
-                  {{#if event.ilmSession}}
-                    <strong>
-                      {{t "general.ilm"}}:
-                    </strong>
-                  {{/if}}
-                  {{event.name}}
-                </td>
-                <td colspan="2">
-                  <LinkTo @route="events" @model={{event.slug}}>
+                    {{moment-format event.startDate "dddd, MMMM Do, YYYY h:mma"}}
+                  </td>
+                  <td colspan="4">
+                    {{#if event.ilmSession}}
+                      <strong>
+                        {{t "general.ilm"}}:
+                      </strong>
+                    {{/if}}
+                    {{event.name}}
+                  </td>
+                  <td colspan="2">
                     {{event.location}}
-                  </LinkTo>
-                </td>
-                <td colspan="1">
-                  {{#if event.attireRequired}}
-                    <FaIcon
-                      @icon="black-tie"
-                      @prefix="fab"
-                      @title={{t "general.whitecoatsSlashSpecialAttire"}}
-                    />
-                  {{/if}}
-                  {{#if event.equipmentRequired}}
-                    <FaIcon
-                      @icon="flask"
-                      @title={{t "general.specialEquipment"}}
-                    />
-                  {{/if}}
-                  {{#if event.attendanceRequired}}
-                    <FaIcon
-                      @icon="calendar-check"
-                      @title={{t "general.attendanceIsRequired"}}
-                    />
-                  {{/if}}
-                  {{#if
-                    (is-same-or-after
-                      event.lastModified this.sixDaysAgo precision="day"
-                    )
-                  }}
-                    <FaIcon
-                      @icon="exclamation-circle"
-                      @title={{t "general.newUpdates"}}
-                    />
-                  {{/if}}
-                </td>
-              </tr>
-            {{/unless}}
-          {{/each}}
-        </tbody>
-      </table>
-    {{else}}
-      <p>
-        {{t "general.none"}}
-      </p>
-    {{/if}}
-  </div>
-{{else}}
-  <p>
-    <FaIcon @icon="spinner" @spin={{true}} />
-    {{t "general.loadingEvents"}}
-  </p>
-{{/if}}
+                  </td>
+                  <td colspan="1">
+                    {{#if event.attireRequired}}
+                      <FaIcon
+                        @icon="black-tie"
+                        @prefix="fab"
+                        @title={{t "general.whitecoatsSlashSpecialAttire"}}
+                      />
+                    {{/if}}
+                    {{#if event.equipmentRequired}}
+                      <FaIcon
+                        @icon="flask"
+                        @title={{t "general.specialEquipment"}}
+                      />
+                    {{/if}}
+                    {{#if event.attendanceRequired}}
+                      <FaIcon
+                        @icon="calendar-check"
+                        @title={{t "general.attendanceIsRequired"}}
+                      />
+                    {{/if}}
+                    {{#if
+                      (is-same-or-after
+                        event.lastModified this.sixDaysAgo precision="day"
+                      )
+                    }}
+                      <FaIcon
+                        @icon="exclamation-circle"
+                        @title={{t "general.newUpdates"}}
+                      />
+                    {{/if}}
+                  </td>
+                </tr>
+              {{/if}}
+              {{#unless event.isBlanked}}
+                <tr>
+                  <td colspan="4" class="event-date">
+                    <LinkTo @route="events" @model={{event.slug}}>
+                      <FaIcon @icon="external-link-square-alt" />
+                      {{#if event.ilmSession}}
+                        <span class="ilm-due">
+                          {{t "general.dueBy"}}:
+                        </span>
+                      {{/if}}
+                      {{moment-format event.startDate "dddd, MMMM Do, YYYY h:mma"
+                      }}
+                    </LinkTo>
+                  </td>
+                  <td colspan="4">
+                    {{#if event.ilmSession}}
+                      <strong>
+                        {{t "general.ilm"}}:
+                      </strong>
+                    {{/if}}
+                    {{event.name}}
+                  </td>
+                  <td colspan="2">
+                    <LinkTo @route="events" @model={{event.slug}}>
+                      {{event.location}}
+                    </LinkTo>
+                  </td>
+                  <td colspan="1">
+                    {{#if event.attireRequired}}
+                      <FaIcon
+                        @icon="black-tie"
+                        @prefix="fab"
+                        @title={{t "general.whitecoatsSlashSpecialAttire"}}
+                      />
+                    {{/if}}
+                    {{#if event.equipmentRequired}}
+                      <FaIcon
+                        @icon="flask"
+                        @title={{t "general.specialEquipment"}}
+                      />
+                    {{/if}}
+                    {{#if event.attendanceRequired}}
+                      <FaIcon
+                        @icon="calendar-check"
+                        @title={{t "general.attendanceIsRequired"}}
+                      />
+                    {{/if}}
+                    {{#if
+                      (is-same-or-after
+                        event.lastModified this.sixDaysAgo precision="day"
+                      )
+                    }}
+                      <FaIcon
+                        @icon="exclamation-circle"
+                        @title={{t "general.newUpdates"}}
+                      />
+                    {{/if}}
+                  </td>
+                </tr>
+              {{/unless}}
+            {{/each}}
+          </tbody>
+        </table>
+      {{else}}
+        <p>
+          {{t "general.none"}}
+        </p>
+      {{/if}}
+    </div>
+  {{else}}
+    <p>
+      <FaIcon @icon="spinner" @spin={{true}} />
+      {{t "general.loadingEvents"}}
+    </p>
+  {{/if}}
+</div>
