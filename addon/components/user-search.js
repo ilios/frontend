@@ -34,14 +34,9 @@ export default class UserSearch extends Component {
   @service intl;
   @tracked showMoreInputPrompt = false;
   @tracked searchReturned = false;
-
-  get currentlyActiveUsers() {
-    return this.args.currentlyActiveUsers || [];
-  }
-
-  get currentlyActiveInstructorGroups() {
-    return this.args.currentlyActiveInstructorGroups || [];
-  }
+  @tracked currentlyActiveUsers;
+  @tracked currentlyActiveInstructorGroups;
+  @tracked loaded = false;
 
   get roles() {
     return this.args.roles || '';
@@ -56,6 +51,23 @@ export default class UserSearch extends Component {
         this.args.addUser(user);
       }
     }
+  }
+
+  @restartableTask
+  *load(element, [currentlyActiveUsers, currentlyActiveInstructorGroups]) {
+    this.loaded = false;
+    if (!isEmpty(currentlyActiveUsers)) {
+      this.currentlyActiveUsers = yield currentlyActiveUsers;
+    } else {
+      this.currentlyActiveUsers = [];
+    }
+
+    if (!isEmpty(currentlyActiveInstructorGroups)) {
+      this.currentlyActiveInstructorGroups = yield currentlyActiveInstructorGroups;
+    } else {
+      this.currentlyActiveInstructorGroups = [];
+    }
+    this.loaded = true;
   }
 
   @action
