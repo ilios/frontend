@@ -1,53 +1,56 @@
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-
-import Component from '@ember/component';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 import { map, filter } from 'rsvp';
-import { computed } from '@ember/object';
 
-export default Component.extend({
-  intl: service(),
-  store: service(),
-  permissionChecker: service(),
-  tagName: 'section',
-  classNames: ['detail-cohort-manager'],
-  filter: '',
-  school: null,
-  selectedCohorts: null,
+export default class DetailCohortManagerComponent extends Component {
+  @service intl;
+  @service store;
+  @service permissionChecker;
 
-  allCohorts: computed('school', async function () {
-    const store = this.get('store');
-    const permissionChecker = this.get('permissionChecker');
-    const allCohorts = await store.findAll('cohort');
-    const courseSchool = this.get('school');
+  @tracked filter = '';
+  @tracked availableCohortProxies = null;
 
-    return filter(allCohorts.toArray(), async cohort => {
-      const cohortSchool = await cohort.get('school');
-      if (cohortSchool === courseSchool) {
+  @restartableTask
+  *load(event, [school]) {
+    if (!school) {
+      return false;
+    }
+    const allCohorts = yield this.store.findAll('cohort');
+    const cohortProxies = yield map(allCohorts.toArray(), async cohort => {
+      const school = await cohort.school;
+      const program = await cohort.program;
+      const programYear = await cohort.programYear;
+
+      return { school, program, programYear, cohort };
+    });
+
+    this.availableCohortProxies = yield filter(cohortProxies, async obj => {
+      if (obj.school === school) {
         return true;
       }
-      if (await permissionChecker.canUpdateAllCoursesInSchool(cohortSchool)) {
+      if (await this.permissionChecker.canUpdateAllCoursesInSchool(obj.school)) {
         return true;
       }
-      const programYear = await cohort.get('programYear');
-      if (await permissionChecker.canUpdateProgramYear(programYear)) {
+      if (await this.permissionChecker.canUpdateProgramYear(obj.programYear)) {
         return true;
       }
 
       return false;
     });
-  }),
 
-  /**
-   * @property availableCohorts
-   * @type {Ember.computed}
-   * @protected
-   */
-  availableCohorts: computed('allCohorts.[]', 'selectedCohorts.[]', async function(){
-    const cohorts = await this.get('allCohorts');
-    const selectedCohorts = this.get('selectedCohorts') || [];
+    return true;
+  }
 
-    return cohorts.filter(cohort => !selectedCohorts.includes(cohort));
-  }),
+  get unselectedAvailableCohortProxies() {
+    if (!this.availableCohortProxies) {
+      return [];
+    }
+    const selectedCohorts = this.args.selectedCohorts || [];
+
+    return this.availableCohortProxies.filter(obj => !selectedCohorts.includes(obj.cohort));
+  }
 
   /**
    * All available cohorts, sorted by:
@@ -55,24 +58,15 @@ export default Component.extend({
    * 1. owning school's title, ascending
    * 2. owning program's title, ascending
    * 3. cohort title, descending
-   *
-   * @property sortedAvailableCohorts
-   * @type {Ember.computed}
-   * @public
    */
-  sortedAvailableCohorts: computed('availableCohorts.[]', async function () {
-    const availableCohorts = await this.get('availableCohorts');
-    const objects = await map(availableCohorts, async cohort => {
-      const programYear = await cohort.get('programYear');
-      const program = await programYear.get('program');
-      const school = await program.get('school');
-
-      const sortTitle = school.get('title') + program.get('title');
+  get sortedAvailableCohorts() {
+    const objects = this.unselectedAvailableCohortProxies.map(obj => {
+      const sortTitle = obj.school.get('title') + obj.program.get('title');
 
       return {
-        cohort,
+        cohort: obj.cohort,
         sortTitle,
-        cohortTitle: cohort.get('title')
+        cohortTitle: obj.cohort.title
       };
     });
 
@@ -88,14 +82,5 @@ export default Component.extend({
     });
 
     return objects.mapBy('cohort');
-  }),
-
-  actions: {
-    add(cohort) {
-      this.add(cohort);
-    },
-    remove(cohort) {
-      this.remove(cohort);
-    }
   }
-});
+}

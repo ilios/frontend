@@ -1,29 +1,35 @@
-<ul class="selected-cohorts">
-  {{#each (sort-by "title" @selectedCohorts) as |cohort|}}
-    <li role="button" {{on "click" (fn (action "remove") cohort)}}>
-      {{cohort.programYear.program.school.title}}
-      |
-      {{cohort.programYear.program.title}}
-      |
-      {{cohort.title}}
-      <FaIcon @icon="times" class="remove" />
-    </li>
-  {{/each}}
-</ul>
-<ul class="selectable-cohorts">
-  {{#if (is-fulfilled this.sortedAvailableCohorts)}}
-    {{#each (await this.sortedAvailableCohorts) as |cohort|}}
-      <li role="button" {{on "click" (fn (action "add") cohort)}}>
+<section
+  class="detail-cohort-manager"
+  {{did-insert (perform this.load) @school}}
+  {{did-update (perform this.load) @school}}
+>
+  <ul class="selected-cohorts">
+    {{#each (sort-by "title" @selectedCohorts) as |cohort|}}
+      <li role="button" {{on "click" (fn this.args.remove cohort)}}>
         {{cohort.programYear.program.school.title}}
         |
         {{cohort.programYear.program.title}}
         |
         {{cohort.title}}
+        <FaIcon @icon="times" class="remove" />
       </li>
     {{/each}}
-  {{else}}
-    <li>
-      <LoadingSpinner />
-    </li>
-  {{/if}}
-</ul>
+  </ul>
+  <ul class="selectable-cohorts">
+    {{#if this.load.lastSuccessful.value}}
+      {{#each this.sortedAvailableCohorts as |cohort|}}
+        <li role="button" {{on "click" (fn this.args.add cohort)}}>
+          {{cohort.programYear.program.school.title}}
+          |
+          {{cohort.programYear.program.title}}
+          |
+          {{cohort.title}}
+        </li>
+      {{/each}}
+    {{else}}
+      <li>
+        <LoadingSpinner />
+      </li>
+    {{/if}}
+  </ul>
+</section>
