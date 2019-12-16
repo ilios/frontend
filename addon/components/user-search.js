@@ -53,21 +53,20 @@ export default class UserSearch extends Component {
     }
   }
 
-  @restartableTask
-  *load(element, [currentlyActiveUsers, currentlyActiveInstructorGroups]) {
+  @action
+  load(element, [currentlyActiveUsers, currentlyActiveInstructorGroups]) {
     this.loaded = false;
-    if (!isEmpty(currentlyActiveUsers)) {
-      this.currentlyActiveUsers = yield currentlyActiveUsers;
+    if (currentlyActiveUsers) {
+      this.currentlyActiveUsers = currentlyActiveUsers;
     } else {
       this.currentlyActiveUsers = [];
     }
 
-    if (!isEmpty(currentlyActiveInstructorGroups)) {
-      this.currentlyActiveInstructorGroups = yield currentlyActiveInstructorGroups;
+    if (currentlyActiveInstructorGroups) {
+      this.currentlyActiveInstructorGroups = currentlyActiveInstructorGroups;
     } else {
       this.currentlyActiveInstructorGroups = [];
     }
-    this.loaded = true;
   }
 
   @action

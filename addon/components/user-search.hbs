@@ -1,85 +1,83 @@
 <div class="user-search"
-  {{did-insert (perform this.load) (await @currentlyActiveUsers) (await @currentlyActiveInstructorGroups)}}
-  {{did-update (perform this.load) (await @currentlyActiveUsers) (await @currentlyActiveInstructorGroups)}}
+  {{did-insert (fn this.load) @currentlyActiveUsers @currentlyActiveInstructorGroups}}
+  {{did-update (fn this.load) @currentlyActiveUsers @currentlyActiveInstructorGroups}}
   data-test-user-search
 >
-  {{#if this.loaded}}
-    <SearchBox
-      placeholder={{@placeholder}}
-      @search={{perform this.search}}
-      @clear={{perform this.search}}
-    />
-    {{#if this.search.isRunning}}
-      <ul class="results">
-        <li>
-          {{t "general.currentlySearchingPrompt"}}
-        </li>
-      </ul>
-    {{/if}}
-    {{#if (and this.search.isIdle this.showMoreInputPrompt)}}
-      <ul class="results">
-        <li>
-          {{t "general.moreInputRequiredPrompt"}}
-        </li>
-      </ul>
-    {{/if}}
-    {{#if (and this.search.isIdle (gt this.search.lastSuccessful.value.length 0))}}
-      <ul class="results">
-        <li class="results-count" data-test-results-count>
-          {{this.search.lastSuccessful.value.length}}
-          {{t "general.results"}}
-        </li>
-        {{#each this.search.lastSuccessful.value as |proxy|}}
-          {{#if proxy.isUser}}
-            {{#if proxy.isActive}}
-              <li
-                class="active"
-                role="button"
-                data-test-result
-                {{on "click" (fn (action "addUser") proxy.content)}}
-              >
-                <div class="name">
-                  {{proxy.fullName}}
-                </div>
-                <div class="email">
-                  {{proxy.email}}
-                </div>
-              </li>
-            {{else}}
-              <li class="inactive" data-test-result>
-                <div class="name">
-                  {{proxy.fullName}}
-                </div>
-                <div class="email">
-                  {{proxy.email}}
-                </div>
-              </li>
-            {{/if}}
+  <SearchBox
+    placeholder={{@placeholder}}
+    @search={{perform this.search}}
+    @clear={{perform this.search}}
+  />
+  {{#if this.search.isRunning}}
+    <ul class="results">
+      <li>
+        {{t "general.currentlySearchingPrompt"}}
+      </li>
+    </ul>
+  {{/if}}
+  {{#if (and this.search.isIdle this.showMoreInputPrompt)}}
+    <ul class="results">
+      <li>
+        {{t "general.moreInputRequiredPrompt"}}
+      </li>
+    </ul>
+  {{/if}}
+  {{#if (and this.search.isIdle (gt this.search.lastSuccessful.value.length 0))}}
+    <ul class="results">
+      <li class="results-count" data-test-results-count>
+        {{this.search.lastSuccessful.value.length}}
+        {{t "general.results"}}
+      </li>
+      {{#each this.search.lastSuccessful.value as |proxy|}}
+        {{#if proxy.isUser}}
+          {{#if proxy.isActive}}
+            <li
+              class="active"
+              role="button"
+              data-test-result
+              {{on "click" (fn (action "addUser") proxy.content)}}
+            >
+              <div class="name">
+                {{proxy.fullName}}
+              </div>
+              <div class="email">
+                {{proxy.email}}
+              </div>
+            </li>
+          {{else}}
+            <li class="inactive" data-test-result>
+              <div class="name">
+                {{proxy.fullName}}
+              </div>
+              <div class="email">
+                {{proxy.email}}
+              </div>
+            </li>
           {{/if}}
-          {{#if proxy.isInstructorGroup}}
-            {{#if proxy.isActive}}
-              <li
-                class="active"
-                role="button"
-                data-test-result
-                {{on "click" (fn (action "addInstructorGroup") proxy.content)}}
-              >
-                {{proxy.title}}
-              </li>
-            {{else}}
-              <li class="inactive" data-test-result>
-                {{proxy.title}}
-              </li>
-            {{/if}}
+        {{/if}}
+        {{#if proxy.isInstructorGroup}}
+          {{#if proxy.isActive}}
+            <li
+              class="active"
+              role="button"
+              data-test-result
+              {{on "click" (fn (action "addInstructorGroup") proxy.content)}}
+            >
+              {{proxy.title}}
+            </li>
+          {{else}}
+            <li class="inactive" data-test-result>
+              {{proxy.title}}
+            </li>
           {{/if}}
-        {{/each}}
-      </ul>
-    {{else if this.searchReturned}}
-      <ul class="results">
-        <li>
-          {{t "general.noSearchResultsPrompt"}}
-        </li>
-      </ul>
-    {{/if}}
+        {{/if}}
+      {{/each}}
+    </ul>
+  {{else if this.searchReturned}}
+    <ul class="results">
+      <li>
+        {{t "general.noSearchResultsPrompt"}}
+      </li>
+    </ul>
   {{/if}}
 </div>
