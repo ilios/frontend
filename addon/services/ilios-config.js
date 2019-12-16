@@ -32,7 +32,7 @@ export default Service.extend({
   },
 
   authenticationType: computed('config.type', function(){
-    return this.getUserSearchType();
+    return this.getAuthenticationType();
   }),
   async getAuthenticationType() {
     return this.itemFromConfig('type');
