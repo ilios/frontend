@@ -25,8 +25,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
   },
 
   async attemptSSOAuth(){
-    const iliosConfig = this.iliosConfig;
-    const type = await iliosConfig.get('authenticationType');
+    const type = await this.iliosConfig.getAuthenticationType();
     if(type === 'form' || type === 'ldap'){
       return;
     }
@@ -40,8 +39,6 @@ export default Route.extend(UnauthenticatedRouteMixin, {
   },
 
   async casLogin() {
-    const iliosConfig = this.iliosConfig;
-
     const currentUrl = [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
     let loginUrl = `/auth/login?service=${currentUrl}`;
 
@@ -58,7 +55,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
     }
     const response = await this.fetch.getJsonFromApiHost(loginUrl);
     if (response.status === 'redirect') {
-      const casLoginUrl = await iliosConfig.itemFromConfig('casLoginUrl');
+      const casLoginUrl = await this.iliosConfig.itemFromConfig('casLoginUrl');
       await new Promise(() => {
         //this promise never resolves so we don't render anything before the redirect
         window.location.replace(`${casLoginUrl}?service=${currentUrl}`);
@@ -76,12 +73,11 @@ export default Route.extend(UnauthenticatedRouteMixin, {
   },
 
   async shibbolethAuth(){
-    const iliosConfig = this.iliosConfig;
     const loginUrl = '/auth/login';
     const response = await this.fetch.getJsonFromApiHost(loginUrl);
     const status = response.status;
     if(status === 'redirect'){
-      let shibbolethLoginUrl = await iliosConfig.itemFromConfig('loginUrl');
+      let shibbolethLoginUrl = await this.iliosConfig.itemFromConfig('loginUrl');
       if(EmberConfig.redirectAfterShibLogin){
         const attemptedRoute = encodeURIComponent(window.location.href);
         shibbolethLoginUrl += '?target=' + attemptedRoute;
