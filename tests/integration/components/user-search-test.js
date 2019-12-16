@@ -151,7 +151,7 @@ module('Integration | Component | user search', function(hooks) {
     this.server.get('api/users', (schema) => {
       return schema.users.all();
     });
-    const userPromise = this.owner.lookup('service:store').find('user', user.id);
+    const userPromise = this.owner.lookup('service:store').query('user', { id : user.id });
     this.set('currentlyActiveUsersPromise', userPromise);
     await render(hbs`<UserSearch
       @currentlyActiveUsers={{await this.currentlyActiveUsersPromise}}
