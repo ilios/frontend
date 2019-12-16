@@ -1,21 +1,19 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import moment from 'moment';
 
-export default Component.extend({
-  classNames: ['dashboard-week'],
-  'data-test-dashboard-week': true,
-  expanded: computed(function(){
+export default class DashboardWeekComponent extends Component {
+  get expanded(){
     const lastSunday = moment().day(1).subtract(1, 'week').format('W');
     const thisSunday = moment().day(1).format('W');
     const nextSunday = moment().day(1).add(1, 'week').format('W');
 
     return `${lastSunday}-${thisSunday}-${nextSunday}`;
-  }),
-  year: computed(function(){
+  }
+  get year(){
     return moment().year();
-  }),
-  week: computed(function(){
-    return moment().isoWeek();
-  })
-});
+  }
+  get week(){
+    //set day to Thursday to correctly calculate isoWeek
+    return moment().day(4).isoWeek();
+  }
+}
