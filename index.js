@@ -103,4 +103,21 @@ module.exports = {
 
     return MergeTrees(trees);
   },
+
+  contentFor: function (type, env) {
+    if (type === 'head') {
+      const rootUrl = env.rootUrl ? env.rootUrl : '';
+      const fonts = [
+        'nunito/nunito-latin-400.woff2',
+        'nunito/nunito-latin-700.woff2',
+        'nunito-sans/nunito-sans-latin-400.woff2',
+        'nunito-sans/nunito-sans-latin-600.woff2',
+        'nunito-sans/nunito-sans-latin-700.woff2',
+      ];
+      const links = fonts.map(font => {
+        return `<link rel="preload" href="${rootUrl}/assets/fonts/${font}" as="font" type="font/woff2" crossorigin="anonymous">`;
+      });
+      return links.join("\n");
+    }
+  },
 };
