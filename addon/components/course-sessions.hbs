@@ -59,10 +59,8 @@
       @setSortBy={{@setSortBy}}
       @sortBy={{@sortBy}}
       @allSessionsExpanded={{and
-        (eq
-          this.expandedSessionIds.length (get this.sessionsWithOfferings "length")
-        )
-        (gt (get this.sessionsWithOfferings "length") 0)
+        (eq this.expandedSessionIds.length this.sessionsWithOfferings.length)
+        (gt this.sessionsWithOfferings.length 0)
       }}
       @toggleExpandAll={{this.toggleExpandAll}}
     />
