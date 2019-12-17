@@ -36,7 +36,6 @@ export default class UserSearch extends Component {
   @tracked searchReturned = false;
   @tracked currentlyActiveUsers;
   @tracked currentlyActiveInstructorGroups;
-  @tracked loaded = false;
 
   get roles() {
     return this.args.roles || '';
@@ -55,7 +54,6 @@ export default class UserSearch extends Component {
 
   @action
   load(element, [currentlyActiveUsers, currentlyActiveInstructorGroups]) {
-    this.loaded = false;
     if (currentlyActiveUsers) {
       this.currentlyActiveUsers = currentlyActiveUsers;
     } else {
