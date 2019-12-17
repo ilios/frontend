@@ -4,10 +4,6 @@ const API_VERSION = require('./api-version.js');
 
 module.exports = function(environment /*, appConfig */) {
   var ENV = {
-    googleFonts: [
-      'Nunito:400,700',
-      'Nunito Sans:400,600,700'
-    ],
     moment: {
       includeLocales: ['es', 'fr'],
       // Options:

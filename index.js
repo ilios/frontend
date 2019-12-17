@@ -35,11 +35,6 @@ module.exports = {
     this.import(path.join(froalaPath, 'css', 'plugins', 'code_view.css'));
   },
 
-  contentFor(type, config) {
-    const emberGoogleFonts = this.addons.find((a) => a.name === 'ember-cli-google-fonts');
-    return emberGoogleFonts.contentFor(type, config);
-  },
-
   setupPreprocessorRegistry: function(type, registry) {
     // ACHTUNG!
     // check if v-get helper is already registered. if it's not, then add it.
@@ -91,5 +86,21 @@ module.exports = {
     return this.preprocessJs(tree, '/', this.name, {
       registry: this.registry,
     });
+  },
+
+  treeForPublic(publicTree) {
+    const trees = [];
+    if (publicTree) {
+      trees.push(publicTree);
+    }
+    const nunitoDir = path.join(path.dirname(require.resolve('typeface-nunito')), 'files');
+    const nunitoTree = new Funnel(nunitoDir, { destDir: 'assets/fonts/nunito' });
+    trees.push(nunitoTree);
+
+    const nunitoSansDir = path.join(path.dirname(require.resolve('typeface-nunito-sans')), 'files');
+    const nunitoSansTree = new Funnel(nunitoSansDir, { destDir: 'assets/fonts/nunito-sans' });
+    trees.push(nunitoSansTree);
+
+    return MergeTrees(trees);
   },
 };
