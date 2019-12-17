@@ -10,6 +10,7 @@ export default class CourseHeaderComponent extends Component {
 
   @restartableTask
   *changeTitle() {
+    this.courseTitle = this.courseTitle.trim();
     this.addErrorDisplayFor('courseTitle');
     const isValid = yield this.isValid('courseTitle');
     if (!isValid) {
