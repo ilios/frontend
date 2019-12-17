@@ -4,7 +4,7 @@
   {{did-update (perform this.load) @cohorts}}
 >
   {{#if (is-array this.sortedCohorts)}}
-    {{#if (get this.sortedCohorts "length")}}
+    {{#if this.sortedCohorts.length}}
       <table>
         <thead>
           <tr>

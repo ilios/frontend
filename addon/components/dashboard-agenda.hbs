@@ -7,7 +7,7 @@
     {{t "general.upcomingActivities" days=this.daysInAdvance}}
   </h3>
   {{#if (is-array this.weeksEvents)}}
-    {{#if (gt (get this.ilmPreWorkEvents "length") 0)}}
+    {{#if (gt this.ilmPreWorkEvents.length 0)}}
       <div class="pre-work">
         <IliosCalendarPreWorkEvents
           @events={{this.ilmPreWorkEvents}}
@@ -16,7 +16,7 @@
       </div>
     {{/if}}
     <div class="activities">
-      {{#if (gt (get this.nonIlmPreWorkEvents "length") 0)}}
+      {{#if (gt this.nonIlmPreWorkEvents.length 0)}}
         <table>
           <tbody>
             {{#each this.nonIlmPreWorkEvents as |event|}}

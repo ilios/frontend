@@ -7,7 +7,7 @@
     {{t "general.upcomingMaterials" days=this.daysInAdvance}}
   </h3>
   {{#if (is-array this.materials)}}
-    {{#if (gt (get this.materials "length") 0)}}
+    {{#if (gt this.materials.length 0)}}
       <table>
         <thead>
           <tr>
