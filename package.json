@@ -89,7 +89,6 @@
     "ember-source": "~3.14.1",
     "ember-template-lint": "^1.12.1",
     "ember-truth-helpers": "^2.0.0",
-    "ember-uploader": "2.0.0",
     "ember-web-app": "^3.0.0",
     "eslint": "^6.7.2",
     "file-saver": "^2.0.2",
