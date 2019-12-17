@@ -1,75 +1,80 @@
-<div class="course-sessions-header">
-  <div class="title">
-    {{t "general.sessions"}} ({{this.sessionsCount}})
+<section
+  class="course-sessions"
+  data-test-course-sessions
+  {{did-insert (perform this.load) (await @course.sessions) (await @course.school)}}
+  {{did-update (perform this.load) (await @course.sessions) (await @course.school)}}
+>
+  <div class="course-sessions-header">
+    <div class="title">
+      {{t "general.sessions"}} ({{this.sessionsCount}})
+    </div>
+    <div class="actions" data-test-actions>
+      {{#if @canCreateSession}}
+        <ExpandCollapseButton
+          @value={{this.showNewSessionForm}}
+          @action={{toggle "showNewSessionForm" this}}
+        />
+      {{/if}}
+      {{#if (and @canUpdateCourse (gt this.sessionsCount 0))}}
+        <LinkTo @route="course.publishall" @model={{@course}}>
+          <button>
+            {{t "general.publishAllSessions" sessionCount=this.sessionsCount}}
+          </button>
+        </LinkTo>
+      {{/if}}
+    </div>
   </div>
-  <div class="actions" data-test-actions>
-    {{#if @canCreateSession}}
-      <ExpandCollapseButton
-        @value={{this.showNewSessionForm}}
-        @action={{toggle "showNewSessionForm" this}}
+  {{#if this.showNewSessionForm}}
+    <div class="new-session-form">
+      <NewSession
+        @sessionTypes={{this.sessionTypes}}
+        @save={{perform this.saveSession}}
+        @cancel={{set this.showNewSessionForm false}}
       />
-    {{/if}}
-    {{#if (and @canUpdateCourse (gt this.sessionsCount 0))}}
-      <LinkTo @route="course.publishall" @model={{@course}}>
-        <button>
-          {{t "general.publishAllSessions" sessionCount=this.sessionsCount}}
-        </button>
-      </LinkTo>
-    {{/if}}
-  </div>
-</div>
-{{#if this.showNewSessionForm}}
-  <div class="new-session-form">
-    <NewSession
-      @sessionTypes={{this.sessionTypes}}
-      @save={{perform this.saveSession}}
-      @cancel={{toggle "showNewSessionForm" this}}
-    />
-  </div>
-{{/if}}
-{{#if this.saveSession.lastSuccessful.value}}
-  <div class="save-result" data-test-new-saved-session>
-    <LinkTo
-      @route="session.index"
-      @models={{array @course this.saveSession.lastSuccessful.value}}
-    >
-      <FaIcon @icon="external-link-square-alt" />
-      {{get this.saveSession.lastSuccessful.value "title"}}
-    </LinkTo>
-    {{t "general.savedSuccessfully"}}
-  </div>
-{{/if}}
-<div class="filter">
-  <input
-    value={{@filterByDebounced}}
-    placeholder={{t "general.sessionTitleFilterPlaceholder"}}
-    data-test-session-filter
-    {{on "input" (action (perform this.changeFilterBy) value="target.value")}}
-  >
-</div>
-<section>
-  <SessionsGridHeader
-    @showExpandAll={{is-fulfilled this.sessionObjects}}
-    @setSortBy={{@setSortBy}}
-    @sortBy={{@sortBy}}
-    @allSessionsExpanded={{and
-      (eq
-        this.expandedSessionIds.length (get (await this.sessionsWithOfferings) "length")
-      )
-      (gt (get (await this.sessionsWithOfferings) "length") 0)
-    }}
-    @toggleExpandAll={{perform this.toggleExpandAll}}
-  />
-  {{#if (is-fulfilled this.sessionObjects)}}
-    <SessionsGrid
-      @sessions={{await this.sessionObjects}}
-      @sortBy={{@sortBy}}
-      @filterBy={{@filterBy}}
-      @expandedSessionIds={{this.expandedSessionIds}}
-      @closeSession={{perform this.closeSession}}
-      @expandSession={{perform this.expandSession}}
-    />
-  {{else}}
-    <SessionsGridLoading @count={{has-many-length @course "sessions"}} />
+    </div>
   {{/if}}
+  {{#if this.saveSession.lastSuccessful.value}}
+    <div class="save-result" data-test-new-saved-session>
+      <LinkTo
+        @route="session.index"
+        @models={{array @course this.saveSession.lastSuccessful.value}}
+      >
+        <FaIcon @icon="external-link-square-alt" />
+        {{get this.saveSession.lastSuccessful.value "title"}}
+      </LinkTo>
+      {{t "general.savedSuccessfully"}}
+    </div>
+  {{/if}}
+  <div class="filter">
+    <input
+      value={{this.filterByDebounced}}
+      placeholder={{t "general.sessionTitleFilterPlaceholder"}}
+      data-test-session-filter
+      {{on "input" (action (perform this.changeFilterBy) value="target.value")}}
+    >
+  </div>
+  <section>
+    <SessionsGridHeader
+      @showExpandAll={{this.sessionObjects}}
+      @setSortBy={{@setSortBy}}
+      @sortBy={{@sortBy}}
+      @allSessionsExpanded={{and
+        (eq this.expandedSessionIds.length this.sessionsWithOfferings.length)
+        (gt this.sessionsWithOfferings.length 0)
+      }}
+      @toggleExpandAll={{this.toggleExpandAll}}
+    />
+    {{#if this.sessionObjects}}
+      <SessionsGrid
+        @sessions={{this.sessionObjects}}
+        @sortBy={{@sortBy}}
+        @filterBy={{@filterBy}}
+        @expandedSessionIds={{this.expandedSessionIds}}
+        @closeSession={{perform this.closeSession}}
+        @expandSession={{perform this.expandSession}}
+      />
+    {{else}}
+      <SessionsGridLoading @count={{has-many-length @course "sessions"}} />
+    {{/if}}
+  </section>
 </section>
