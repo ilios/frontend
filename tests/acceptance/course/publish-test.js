@@ -1,6 +1,5 @@
 import {
   click,
-  currentRouteName,
   visit,
   findAll
 } from '@ember/test-helpers';
@@ -20,93 +19,6 @@ module('Acceptance | Course - Publish', function(hooks) {
     this.user = await setupAuthentication();
     this.school = this.server.create('school');
     this.server.create('cohort');
-  });
-
-  test('check published course', async function(assert) {
-    this.user.update({ administeredSchools: [this.school] });
-    this.server.create('course', {
-      year: 2013,
-      schoolId: 1,
-      published: true,
-      cohortIds: [1],
-    });
-    this.server.create('course', {
-      year: 2013,
-      schoolId: 1,
-      published: true,
-      publishedAsTbd: true,
-      cohortIds: [1],
-    });
-    this.server.create('course', {
-      year: 2013,
-      schoolId: 1,
-      cohortIds: [1],
-    });
-    await visit('/courses/1');
-
-    assert.equal(currentRouteName(), 'course.index');
-    const menu = '[data-test-course-header] .publish-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    assert.equal(await getElementText(selector), getText('Published'));
-    //we have to click the button to create the options
-    await click(selector);
-    const items = findAll(choices);
-    assert.equal(items.length, 3);
-    const expectedItems = ['Review 3 Missing Items', 'Mark as Scheduled', 'UnPublish Course'];
-    for(let i = 0; i < items.length; i++){
-      assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
-    }
-  });
-
-  test('check scheduled course', async function(assert) {
-    this.user.update({ administeredSchools: [this.school] });
-    this.server.create('course', {
-      year: 2013,
-      schoolId: 1,
-      published: true,
-      publishedAsTbd: true,
-      cohortIds: [1],
-    });
-    await visit('/courses/1');
-
-    assert.equal(currentRouteName(), 'course.index');
-    const menu = '[data-test-course-header] .publish-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    assert.equal(await getElementText(selector), getText('Scheduled'));
-    //we have to click the button to create the options
-    await click(selector);
-    const items = findAll(choices);
-    assert.equal(items.length, 3);
-    const expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'UnPublish Course'];
-    for(let i = 0; i < items.length; i++){
-      assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
-    }
-  });
-
-  test('check draft course', async function(assert) {
-    this.user.update({ administeredSchools: [this.school] });
-    this.server.create('course', {
-      year: 2013,
-      schoolId: 1,
-      cohortIds: [1],
-    });
-    await visit('/courses/1');
-
-    assert.equal(currentRouteName(), 'course.index');
-    const menu = '[data-test-course-header] .publish-menu';
-    const selector = `${menu} [data-test-toggle]`;
-    const choices = `${menu} [data-test-menu] button`;
-    assert.equal(await getElementText(selector), getText('Not Published'));
-    //we have to click the button to create the options
-    await click(selector);
-    const items = findAll(choices);
-    assert.equal(items.length, 3);
-    const expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'Mark as Scheduled'];
-    for(let i = 0; i < items.length; i++){
-      assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
-    }
   });
 
   test('check publish draft course', async function(assert) {

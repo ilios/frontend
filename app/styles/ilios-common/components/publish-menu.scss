@@ -35,14 +35,20 @@
       text-decoration: none;
       white-space: nowrap;
 
-      &.danger:hover {
-        background-color: $ilios-red;
-        color: $white;
+      &.danger {
+        &:hover,
+        &:focus {
+          background-color: $ilios-red;
+          color: $white;
+        }
       }
 
-      &.good:hover {
-        background-color: $ilios-green;
-        color: $white;
+      &.good {
+        &:hover,
+        &:focus {
+          background-color: $ilios-green;
+          color: $white;
+        }
       }
     }
   }

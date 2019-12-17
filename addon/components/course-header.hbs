@@ -1,64 +1,47 @@
-<span class="title">
-  {{#if @course.locked}}
-    <FaIcon @icon="lock" />
-  {{/if}}
-  {{#if @editable}}
-    {{#if @course}}
+<div
+  class="course-header"
+  data-test-course-header
+  {{did-insert this.revertTitleChanges}}
+  {{did-update this.revertTitleChanges}}
+>
+  <span class="title" data-test-title>
+    {{#if @editable}}
       <EditableField
         @value={{this.courseTitle}}
-        @save={{action "changeTitle"}}
-        @close={{action "revertTitleChanges"}}
+        @save={{perform this.changeTitle}}
+        @close={{this.revertTitleChanges}}
         @saveOnEnter={{true}}
         @closeOnEscape={{true}} as |isSaving|
       >
-        <input
+        <Input
           type="text"
-          value={{this.courseTitle}}
+          @value={{this.courseTitle}}
+          @key-press={{fn this.addErrorDisplayFor "courseTitle"}}
           disabled={{isSaving}}
-          {{on "input" (action (mut this.courseTitle) value="target.value")}}
-          {{on "keyup" (fn (action "addErrorDisplayFor") "courseTitle")}}
-        >
-        {{#if
-          (and
-            (v-get this "courseTitle" "isInvalid")
-            (contains "courseTitle" this.showErrorsFor)
-          )
-        }}
+        />
+        {{#each (await (compute (fn this.getErrorsFor) "courseTitle")) as |message|}}
           <span class="validation-error-message">
-            {{v-get this "courseTitle" "message"}}
+            {{message}}
           </span>
-        {{/if}}
+        {{/each}}
       </EditableField>
+    {{else}}
+      <h2>
+        {{#if @course.locked}}
+          <FaIcon @icon="lock" />
+        {{/if}}
+        {{@course.title}}
+      </h2>
     {{/if}}
-  {{else if @course}}
-    <h2>
-      {{@course.title}}
-    </h2>
-  {{/if}}
-  <h4>
-    {{@course.academicYear}}
-  </h4>
-</span>
-<span class="course-publication">
-  {{#if @editable}}
-    <PublishMenu
-      @title={{this.menuTitle}}
-      @icon={{this.menuIcon}}
-      @publicationStatus={{this.publicationStatus}}
-      @showAsIs={{this.showAsIs}}
-      @showPublish={{this.showPublish}}
-      @showReview={{this.showReview}}
-      @showTbd={{this.showTbd}}
-      @showUnPublish={{this.showUnPublish}}
-      @reviewRoute="course.publication_check"
-      @reviewObject={{@course}}
-      @publishTranslation="general.publishCourse"
-      @unPublishTranslation="general.unPublishCourse"
-      @publish={{action "publish"}}
-      @publishAsTbd={{action "publishAsTbd"}}
-      @unpublish={{action "unpublish"}}
-    />
-  {{else}}
-    <PublicationStatus @item={{@course}} />
-  {{/if}}
-</span>
+    <h3>
+      {{@course.academicYear}}
+    </h3>
+  </span>
+  <span class="course-publication">
+    {{#if @editable}}
+      <Course::PublicationMenu @course={{@course}} />
+    {{else}}
+      <PublicationStatus @item={{@course}} />
+    {{/if}}
+  </span>
+</div>
