@@ -21,37 +21,40 @@ module('Acceptance | Instructor Group Details', function(hooks) {
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
-    this.server.createList('user', 4);
-    this.server.createList('course', 2, {
+    const users = this.server.createList('user', 4);
+    const courses = this.server.createList('course', 2, {
       school: this.school
     });
-    this.server.create('session', {
-      courseId: 1,
+    const sessionType = this.server.create('session-type');
+    const session1 = this.server.create('session', {
+      course: courses[0],
+      sessionType,
     });
-    this.server.create('session', {
-      courseId: 2,
+    const session2 = this.server.create('session', {
+      course: courses[1],
+      sessionType,
     });
-    this.server.create('instructorGroup', {
+    const instructorGroup1 = this.server.create('instructorGroup', {
       school: this.school,
-      userIds: [2,3],
+      users: [users[0], users[1]],
     });
-    this.server.create('instructorGroup', {
+    const instructorGroup2 = this.server.create('instructorGroup', {
       school: this.school,
     });
     this.server.create('instructorGroup', {
       school: this.school
     });
     this.server.create('offering', {
-      sessionId: 1,
-      instructorGroupIds: [1]
+      session: session1,
+      instructorGroups: [instructorGroup1]
     });
     this.server.create('offering', {
-      sessionId: 2,
-      instructorGroupIds: [2]
+      session: session2,
+      instructorGroups: [instructorGroup2]
     });
     this.server.create('offering', {
-      sessionId: 2,
-      instructorGroupIds: [1]
+      session: session2,
+      instructorGroups: [instructorGroup1]
     });
   });
 
