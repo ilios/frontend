@@ -1,55 +1,51 @@
-import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, findAll } from '@ember/test-helpers';
+import { render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | detail cohort list', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
     assert.expect(10);
-    const school1 = EmberObject.create({
+    const school1 = this.server.create('school', {
       title: 'School of Life'
     });
-    const school2 = EmberObject.create({
+    const school2 = this.server.create('school', {
       title: 'Starfleet Academy'
     });
 
-    const program1 = EmberObject.create({
+    const program1 = this.server.create('program', {
       title: 'Professional Pie Eating',
-      school: school1
+      school: school1,
     });
-    const program2 = EmberObject.create({
+    const program2 = this.server.create('program', {
       title: 'Doctor of Rocket Surgery',
-      school: school2
+      school: school2,
+      duration: 5
     });
-    const programYear1 = EmberObject.create({
+    const programYear1 = this.server.create('program-year', {
       program: program1,
-      classOfYear: 2015,
     }) ;
-    const programYear2 = EmberObject.create({
+    const programYear2 = this.server.create('program-year', {
+      startYear: 2006,
       program: program2,
-      classOfYear: 2011,
     });
-    const cohort1 = EmberObject.create({
+    this.server.create('cohort', {
       title: 'Aardvark',
-      classOfYear: programYear1.get('classOfYear'),
       programYear: programYear1,
-      school: school1
     });
-    const cohort2 = EmberObject.create({
-      classOfYear: programYear2.get('classOfYear'),
+    this.server.create('cohort', {
+      title: null,
       programYear: programYear2,
-      school: school2
-
     });
 
-    const cohorts = [ cohort1, cohort2 ];
+    const cohorts = await this.owner.lookup('service:store').findAll('cohort');
 
     this.set('cohorts', cohorts);
-    await render(hbs`<DetailCohortList @cohorts={{cohorts}} />`);
-    await settled();
+    await render(hbs`<DetailCohortList @cohorts={{this.cohorts}} />`);
     assert.dom('th').hasText('School');
     assert.dom(findAll('th')[1]).hasText('Program');
     assert.dom(findAll('th')[2]).hasText('Cohort');

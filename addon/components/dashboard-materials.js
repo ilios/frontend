@@ -1,34 +1,28 @@
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 import moment from 'moment';
 
-const { reads } = computed;
+export default class DashboardMaterialsComponent extends Component {
+  @service currentUser;
+  @service fetch;
+  @service iliosConfig;
 
-export default Component.extend({
-  currentUser: service(),
-  fetch: service(),
-  iliosConfig: service(),
-  daysInAdvance: 60,
+  @tracked daysInAdvance = 60;
+  @tracked materials = null;
 
-  classNames: ['dashboard-materials'],
-
-  namespace: reads('iliosConfig.apiNameSpace'),
-
-  materials: computed('currentUser.currentUserId', async function() {
+  @restartableTask
+  *load() {
     const from = moment().hour(0).minute(0).unix();
     const to = moment().hour(23).minute(59).add(this.daysInAdvance, 'days').unix();
-    const currentUser = this.get('currentUser');
-    const namespace = this.get('namespace');
+    const namespace = this.iliosConfig.apiNameSpace;
 
-    const userId = currentUser.get('currentUserId');
-    const url = `${namespace}/usermaterials/${userId}?before=${to}&after=${from}`;
-    const data = await this.fetch.getJsonFromApiHost(url);
-    return data.userMaterials;
-  }),
-  actions: {
-    sortString(a, b){
-      return a.localeCompare(b);
-    }
+    const url = `${namespace}/usermaterials/${this.currentUser.currentUserId}?before=${to}&after=${from}`;
+    const data = yield this.fetch.getJsonFromApiHost(url);
+    this.materials = data.userMaterials;
   }
-});
+  sortString(a, b){
+    return a.localeCompare(b);
+  }
+}

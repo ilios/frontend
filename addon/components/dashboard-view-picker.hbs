@@ -1,38 +1,40 @@
-<ul>
-  <li>
-    <button
-      class={{if (eq @show "week") "active"}}
-      data-test-glance
-      {{on "click" (fn @change "week")}}
-    >
-      {{t "general.weekAtAGlance"}}
-    </button>
-  </li>
-  <li>
-    <button
-      class={{if (eq @show "agenda") "active"}}
-      data-test-activities
-      {{on "click" (fn @change "agenda")}}
-    >
-      {{t "general.activities"}}
-    </button>
-  </li>
-  <li>
-    <button
-      class={{if (eq @show "materials") "active"}}
-      data-test-materials
-      {{on "click" (fn @change "materials")}}
-    >
-      {{t "general.materials"}}
-    </button>
-  </li>
-  <li>
-    <button
-      class={{if (eq @show "calendar") "active"}}
-      data-test-calendar
-      {{on "click" (fn @change "calendar")}}
-    >
-      {{t "general.calendar"}}
-    </button>
-  </li>
-</ul>
+<div class="dashboard-view-picker">
+  <ul>
+    <li>
+      <button
+        class={{if (eq @show "week") "active"}}
+        data-test-glance
+        {{on "click" (fn @change "week")}}
+      >
+        {{t "general.weekAtAGlance"}}
+      </button>
+    </li>
+    <li>
+      <button
+        class={{if (eq @show "agenda") "active"}}
+        data-test-activities
+        {{on "click" (fn @change "agenda")}}
+      >
+        {{t "general.activities"}}
+      </button>
+    </li>
+    <li>
+      <button
+        class={{if (eq @show "materials") "active"}}
+        data-test-materials
+        {{on "click" (fn @change "materials")}}
+      >
+        {{t "general.materials"}}
+      </button>
+    </li>
+    <li>
+      <button
+        class={{if (eq @show "calendar") "active"}}
+        data-test-calendar
+        {{on "click" (fn @change "calendar")}}
+      >
+        {{t "general.calendar"}}
+      </button>
+    </li>
+  </ul>
+</div>

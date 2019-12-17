@@ -1,42 +1,35 @@
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import EmberObject, { computed } from '@ember/object';
-import RSVP from 'rsvp';
-import { isEmpty } from '@ember/utils';
-const { map } = RSVP;
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
+import { map } from 'rsvp';
 
-export default Component.extend({
-  intl: service(),
-  classNames: ['detail-cohort-list'],
-  cohorts: null,
-  /**
-   * A list of cohorts, sorted by school and display title.
-   * @property sortedCohorts
-   * @type {Ember.computed}
-   * @public
-   */
-  sortedCohorts: computed('cohorts.[]', async function(){
-    const cohorts = this.get('cohorts');
-    if (isEmpty(cohorts)) {
-      return [];
+export default class DetailCohortListComponent extends Component {
+  @service intl;
+  @tracked sortedCohorts = null;
+
+  @restartableTask
+  *load(event, [cohorts]) {
+    if (!cohorts) {
+      return false;
     }
-    const sortProxies = await map(cohorts.toArray(), async cohort => {
-      const school = await cohort.get('school');
-      const schoolTitle = school.get('title');
-      let displayTitle = cohort.get('title');
-      if (isEmpty(displayTitle)) {
-        const intl = this.get('intl');
-        const classOfYear = await cohort.get('classOfYear');
-        displayTitle = intl.t('general.classOf', {year: classOfYear});
+
+    const sortProxies = yield map(cohorts.toArray(), async cohort => {
+      const school = await cohort.school;
+      const schoolTitle = school.title;
+      let displayTitle = cohort.title;
+      if (!displayTitle) {
+        const classOfYear = await cohort.classOfYear;
+        displayTitle = this.intl.t('general.classOf', {year: classOfYear});
       }
 
-      return EmberObject.create({
+      return {
         cohort,
         schoolTitle,
         displayTitle,
-      });
+      };
     });
 
-    return sortProxies.sortBy('schoolTitle', 'displayTitle').mapBy('cohort');
-  }),
-});
+    this.sortedCohorts = sortProxies.sortBy('schoolTitle', 'displayTitle').mapBy('cohort');
+  }
+}

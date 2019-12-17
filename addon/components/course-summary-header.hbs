@@ -1,79 +1,85 @@
-<div class="course-summary-header-top">
-  <h2>
-    {{this.course.title}}
-  </h2>
-  <div class="course-summary-actions">
-    {{#if this.showMaterials}}
-      <LinkTo @route="course-materials" @model={{this.course}} class="materials">
+<div
+  class="course-summary-header"
+  {{did-insert (perform this.load) @course}}
+  {{did-update (perform this.load) @course}}
+>
+  <div class="course-summary-header-top">
+    <h2>
+      {{@course.title}}
+    </h2>
+    <div class="course-summary-actions">
+      {{#if this.showMaterials}}
+        <LinkTo @route="course-materials" @model={{@course}} class="materials">
+          <FaIcon
+            @icon="archive"
+            @title={{t "general.learningMaterialsSummary"}}
+            @fixedWidth={{true}}
+          />
+        </LinkTo>
+      {{/if}}
+      <LinkTo
+        @route="print_course"
+        @model={{@course}}
+        @query={{hash unpublished=true}}
+        class="print"
+      >
         <FaIcon
-          @icon="archive"
-          @title={{t "general.learningMaterialsSummary"}}
+          @icon="print"
+          @title={{t "general.printSummary"}}
           @fixedWidth={{true}}
         />
       </LinkTo>
-    {{/if}}
-    <LinkTo
-      @route="print_course"
-      @model={{this.course}}
-      @query={{hash unpublished=true}}
-      class="print"
-    >
-      <FaIcon
-        @icon="print"
-        @title={{t "general.printSummary"}}
-        @fixedWidth={{true}}
-      />
-    </LinkTo>
-    {{#if (and (is-fulfilled this.showRollover) (await this.showRollover))}}
-      <LinkTo @route="course.rollover" @model={{this.course}} class="rollover">
-        <FaIcon
-          @icon="random"
-          @title={{t "general.courseRollover"}}
-          @fixedWidth={{true}}
-        />
-      </LinkTo>
-    {{/if}}
+      {{#if this.showRollover}}
+        <LinkTo @route="course.rollover" @model={{@course}} class="rollover">
+          <FaIcon
+            @icon="random"
+            @title={{t "general.courseRollover"}}
+            @fixedWidth={{true}}
+          />
+        </LinkTo>
+      {{/if}}
+    </div>
   </div>
-</div>
-<div class="course-summary-content">
-  <div class="block">
-    <label>
-      {{t "general.startDate"}}:
-    </label>
-    <span>
-      {{moment-format this.course.startDate "L"}}
-    </span>
-  </div>
-  <div class="block">
-    <label>
-      {{t "general.externalId"}}:
-    </label>
-    <span>
-      {{this.course.externalId}}
-    </span>
-  </div>
-  <div class="block">
-    <label>
-      {{t "general.endDate"}}:
-    </label>
-    <span>
-      {{moment-format this.course.endDate "L"}}
-    </span>
-  </div>
-  <div class="block">
-    <label>
-      {{t "general.level"}}:
-    </label>
-    <span>
-      {{this.course.level}}
-    </span>
-  </div>
-  <div class="block">
-    <label>
-      {{t "general.publicationStatus"}}:
-    </label>
-    <span>
-      <PublicationStatus @item={{this.course}} />
-    </span>
+  <div class="course-summary-content">
+    <div class="block">
+      <label>
+        {{t "general.startDate"}}:
+      </label>
+      <span>
+        {{moment-format @course.startDate "L"}}
+      </span>
+    </div>
+    <div class="block">
+      <label>
+        {{t "general.externalId"}}:
+      </label>
+      <span>
+        {{@course.externalId}}
+      </span>
+    </div>
+    <div class="block">
+      <label>
+        {{t "general.endDate"}}:
+      </label>
+      <span>
+        {{moment-format @course.endDate "L"}}
+      </span>
+    </div>
+    <div class="block">
+      <label>
+        {{t "general.level"}}:
+      </label>
+      <span>
+        {{@course.level}}
+      </span>
+    </div>
+    <div class="block">
+      <label>
+        {{t "general.publicationStatus"}}:
+      </label>
+      <span>
+        <PublicationStatus @item={{@course}} />
+      </span>
+    </div>
   </div>
 </div>

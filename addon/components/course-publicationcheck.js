@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action, computed } from '@ember/object';
 
-export default class CoursePublicationCheck extends Component {
+export default class CoursePublicationCheckComponent extends Component {
   @service router;
   @tracked objectives = [];
 

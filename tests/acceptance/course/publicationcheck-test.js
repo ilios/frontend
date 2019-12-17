@@ -18,21 +18,31 @@ module('Acceptance | Course - Publication Check', function(hooks) {
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     await setupAuthentication();
-    this.server.create('school');
-    this.server.create('vocabulary');
-    this.server.create('cohort');
-    this.server.create('objective');
-    this.server.create('term', {
-      vocabularyId: 1,
+    const school = this.server.create('school');
+    const vocabulary = this.server.create('vocabulary', {
+      school
     });
-    this.server.create('meshDescriptor');
+    const program = this.server.create('program', {
+      school
+    });
+    const programYear = this.server.create('programYear', {
+      program,
+    });
+    const cohort = this.server.create('cohort', {
+      programYear
+    });
+    const objective = this.server.create('objective');
+    const term = this.server.create('term', {
+      vocabulary,
+    });
+    const meshDescriptor = this.server.create('meshDescriptor');
     this.fullCourse = this.server.create('course', {
       year: 2013,
-      schoolId: 1,
-      cohortIds: [1],
-      objectiveIds: [1],
-      termIds: [1],
-      meshDescriptorIds: [1],
+      school,
+      cohorts: [cohort],
+      objectives: [objective],
+      terms: [term],
+      meshDescriptors: [meshDescriptor],
     });
     this.emptyCourse = this.server.create('course', {
       year: 2013,

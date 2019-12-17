@@ -2,7 +2,7 @@ import { resolve } from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
@@ -115,25 +115,23 @@ module('Integration | Component | dashboard agenda', function (hooks) {
     await render(hbs`{{dashboard-agenda}}`);
     const title = 'h3';
 
-    return settled().then(() => {
-      assert.dom(this.element.querySelector(title)).hasText('My Activities for the next 60 days');
-      assert.equal(this.element.querySelectorAll('table tr').length, 3);
-      for (let i = 0; i < 3; i++) {
-        const tds = this.element.querySelectorAll(`table tr:nth-of-type(${i + 1}) td`);
-        assert.dom(tds[0]).hasText(moment(mockEvents[i].startDate).format('dddd, MMMM Do, YYYY h:mma'));
-        assert.dom(tds[1]).hasText(mockEvents[i].name);
-      }
-      const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
-      assert.equal(this.element.querySelectorAll(preworkSelector).length, 2);
-      assert.dom(this.element.querySelector(`${preworkSelector}:nth-of-type(1)`))
-        .hasText(
-          'prework 2 Due Before first (' + moment(mockEvents[0].startDate).format('M/D/YYYY') + ')'
-        );
-      assert.dom(this.element.querySelector(`${preworkSelector}:nth-of-type(2)`))
-        .hasText(
-          'prework 1 Due Before third (' + moment(mockEvents[2].startDate).format('M/D/YYYY') + ')'
-        );
-    });
+    assert.dom(this.element.querySelector(title)).hasText('My Activities for the next 60 days');
+    assert.equal(this.element.querySelectorAll('table tr').length, 3);
+    for (let i = 0; i < 3; i++) {
+      const tds = this.element.querySelectorAll(`table tr:nth-of-type(${i + 1}) td`);
+      assert.dom(tds[0]).hasText(moment(mockEvents[i].startDate).format('dddd, MMMM Do, YYYY h:mma'));
+      assert.dom(tds[1]).hasText(mockEvents[i].name);
+    }
+    const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
+    assert.equal(this.element.querySelectorAll(preworkSelector).length, 2);
+    assert.dom(this.element.querySelector(`${preworkSelector}:nth-of-type(1)`))
+      .hasText(
+        'prework 2 Due Before first (' + moment(mockEvents[0].startDate).format('M/D/YYYY') + ')'
+      );
+    assert.dom(this.element.querySelector(`${preworkSelector}:nth-of-type(2)`))
+      .hasText(
+        'prework 1 Due Before third (' + moment(mockEvents[2].startDate).format('M/D/YYYY') + ')'
+      );
   });
 
   test('session attribute icons', async function (assert) {
@@ -142,14 +140,12 @@ module('Integration | Component | dashboard agenda', function (hooks) {
     this.userEvents = this.owner.lookup('service:user-events');
 
     await render(hbs`{{dashboard-agenda}}`);
-    return settled().then(() => {
-      assert.equal(this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-black-tie').length, 1);
-      assert.equal(this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-flask').length, 1);
-      assert.equal(this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-calendar-check').length, 1);
-      assert.equal(this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-black-tie').length, 0);
-      assert.equal(this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-flask').length, 0);
-      assert.equal(this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-calendar-check').length, 0);
-    });
+    assert.equal(this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-black-tie').length, 1);
+    assert.equal(this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-flask').length, 1);
+    assert.equal(this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-calendar-check').length, 1);
+    assert.equal(this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-black-tie').length, 0);
+    assert.equal(this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-flask').length, 0);
+    assert.equal(this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-calendar-check').length, 0);
   });
 
   test('it renders blank', async function (assert) {
@@ -161,9 +157,7 @@ module('Integration | Component | dashboard agenda', function (hooks) {
     const title = 'h3';
     const body = 'p';
 
-    return settled().then(() => {
-      assert.dom(this.element.querySelector(title)).hasText('My Activities for the next 60 days');
-      assert.dom(this.element.querySelector(body)).hasText('None');
-    });
+    assert.dom(this.element.querySelector(title)).hasText('My Activities for the next 60 days');
+    assert.dom(this.element.querySelector(body)).hasText('None');
   });
 });
