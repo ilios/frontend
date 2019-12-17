@@ -6,7 +6,7 @@ import { isEmpty } from '@ember/utils';
 const { oneWay } = computed;
 import {tracked} from '@glimmer/tracking';
 import { action } from '@ember/object';
-import {restartableTask} from "ember-concurrency-decorators";
+import { restartableTask } from "ember-concurrency-decorators";
 
 const userProxy = ObjectProxy.extend({
   isUser: true,
@@ -34,14 +34,8 @@ export default class UserSearch extends Component {
   @service intl;
   @tracked showMoreInputPrompt = false;
   @tracked searchReturned = false;
-
-  get currentlyActiveUsers() {
-    return this.args.currentlyActiveUsers || [];
-  }
-
-  get currentlyActiveInstructorGroups() {
-    return this.args.currentlyActiveInstructorGroups || [];
-  }
+  @tracked currentlyActiveUsers;
+  @tracked currentlyActiveInstructorGroups;
 
   get roles() {
     return this.args.roles || '';
@@ -55,6 +49,21 @@ export default class UserSearch extends Component {
       if (this.args.addUser) {
         this.args.addUser(user);
       }
+    }
+  }
+
+  @action
+  load(element, [currentlyActiveUsers, currentlyActiveInstructorGroups]) {
+    if (currentlyActiveUsers) {
+      this.currentlyActiveUsers = currentlyActiveUsers;
+    } else {
+      this.currentlyActiveUsers = [];
+    }
+
+    if (currentlyActiveInstructorGroups) {
+      this.currentlyActiveInstructorGroups = currentlyActiveInstructorGroups;
+    } else {
+      this.currentlyActiveInstructorGroups = [];
     }
   }
 

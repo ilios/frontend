@@ -26,7 +26,7 @@ module('Integration | Component | user search', function(hooks) {
     assert.dom('input').exists({ count: 1 });
   });
 
-  test('less than 3 charecters triggers warning', async function(assert) {
+  test('less than 3 characters triggers warning', async function(assert) {
     await render(hbs`<UserSearch />`);
 
     await fillIn('input', 'ab');
@@ -129,5 +129,69 @@ module('Integration | Component | user search', function(hooks) {
     assert.dom(third).includesText('3');
     assert.dom(fourth).includesText('10');
     assert.dom(fifth).includesText('20');
+  });
+
+  test('reads currentlyActiveUsers', async function(assert) {
+    const user = this.server.create('user');
+    this.server.get('api/users', (schema) => {
+      return schema.users.all();
+    });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    this.set('currentlyActiveUsers', [userModel]);
+    await render(hbs`<UserSearch @currentlyActiveUsers={{this.currentlyActiveUsers}} />`);
+    await fillIn('input', 'foo');
+
+    assert.dom('[data-test-results-count]').hasText('1 Results');
+    assert.dom('[data-test-result]').includesText('0 guy');
+    assert.dom('[data-test-result]').hasClass('inactive');
+  });
+
+  test('reads currentlyActiveUsers from a promise', async function(assert) {
+    const user = this.server.create('user');
+    this.server.get('api/users', (schema) => {
+      return schema.users.all();
+    });
+    const userPromise = this.owner.lookup('service:store').query('user', { id : user.id });
+    this.set('currentlyActiveUsersPromise', userPromise);
+    await render(hbs`<UserSearch
+      @currentlyActiveUsers={{await this.currentlyActiveUsersPromise}}
+    />`);
+    await fillIn('input', 'foo');
+
+    assert.dom('[data-test-results-count]').hasText('1 Results');
+    assert.dom('[data-test-result]').includesText('0 guy');
+    assert.dom('[data-test-result]').hasClass('inactive');
+  });
+
+  test('reads currentlyActiveInstructorGroups', async function(assert) {
+    this.server.create('instructor-group');
+    const instructorGroups = await this.owner.lookup('service:store').findAll('instructor-group');
+    this.set('availableInstructorGroups', instructorGroups);
+    this.set('currentlyActiveInstructorGroups', instructorGroups);
+    await render(hbs`<UserSearch
+      @availableInstructorGroups={{this.availableInstructorGroups}}
+      @currentlyActiveInstructorGroups={{this.currentlyActiveInstructorGroups}}
+    />`);
+    await fillIn('input', 'group');
+
+    assert.dom('[data-test-results-count]').hasText('1 Results');
+    assert.dom('[data-test-result]').includesText('instructor group 0');
+    assert.dom('[data-test-result]').hasClass('inactive');
+  });
+
+  test('reads currentlyActiveInstructorGroups from a promise', async function(assert) {
+    this.server.create('instructor-group');
+    const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
+    this.set('availableInstructorGroups', instructorGroups);
+    this.set('currentlyActiveInstructorGroups', instructorGroups);
+    await render(hbs`<UserSearch
+      @availableInstructorGroups={{this.availableInstructorGroups}}
+      @currentlyActiveInstructorGroups={{await this.currentlyActiveInstructorGroups}}
+    />`);
+    await fillIn('input', 'group');
+
+    assert.dom('[data-test-results-count]').hasText('1 Results');
+    assert.dom('[data-test-result]').includesText('instructor group 0');
+    assert.dom('[data-test-result]').hasClass('inactive');
   });
 });
