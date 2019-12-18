@@ -1,24 +1,20 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  selectedTerms: null,
-  term: null,
-  tagName: 'div',
-  classNameBindings: [':selectable-terms-list-item', 'isSelected:selected'],
+export default class SelectableTermsListItem extends Component {
 
-  isSelected: computed('term', 'selectedTerms.[]', function() {
-    const term = this.get('term');
-    const selectedTerms = this.get('selectedTerms');
+  get isSelected() {
+    const term = this.args.term;
+    const selectedTerms = this.args.selectedTerms;
     return selectedTerms.includes(term);
-  }),
+  }
 
+  @action
   click() {
-    const term = this.get('term');
-    if (this.get('isSelected')) {
-      this.remove(term);
+    if (this.isSelected) {
+      this.args.remove(this.args.term);
     } else {
-      this.add(term);
+      this.args.add(this.args.term);
     }
-  },
-});
+  }
+}

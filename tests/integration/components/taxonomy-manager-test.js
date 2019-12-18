@@ -103,10 +103,10 @@ module('Integration | Component | taxonomy manager', function(hooks) {
     this.set('nothing', () => {});
 
     await render(hbs`<TaxonomyManager
-      @subject={{subject}}
-      @selectedTerms={{selectedTerms}}
-      @add={{action nothing}}
-      @remove={{action nothing}}
+      @vocabularies={{this.subject.assignableVocabularies}}
+      @selectedTerms={{this.selectedTerms}}
+      @add={{action this.nothing}}
+      @remove={{action this.nothing}}
     />`);
     assert.dom('.detail-terms-list').exists({ count: 2 });
     assert.dom('.detail-terms-list:nth-of-type(1)').includesText('Foo (Medicine)');

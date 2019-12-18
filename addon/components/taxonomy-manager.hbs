@@ -1,42 +1,46 @@
-{{#if @selectedTerms}}
-  <div class="selected-terms">
-    {{#each (await this.listableVocabularies) as |vocab|}}
-      <DetailTermsList
-        @vocabulary={{vocab}}
-        @terms={{@selectedTerms}}
-        @canEdit={{true}}
-        @remove={{action "remove"}}
-      />
-    {{/each}}
-  </div>
-{{/if}}
-{{#if (get (await this.assignableVocabularies) "length")}}
-  <div class="vocabulary-picker">
-    <div>
-      <label>
-        {{t "general.selectVocabulary"}}:
-      </label>
-      <select {{on "change" (action "changeSelectedVocabulary" value="target.value")}}>
-        {{#each (await this.assignableVocabularies) as |vocab|}}
-          <option value={{vocab.id}}>
-            {{vocab.title}} ({{vocab.school.title}})
-          </option>
-        {{/each}}
-      </select>
+<section class="taxonomy-manager">
+
+  {{#if @selectedTerms}}
+    <div class="selected-terms">
+      {{#each this.listableVocabularies as |vocab|}}
+        <DetailTermsList
+          @vocabulary={{vocab}}
+          @terms={{@selectedTerms}}
+          @canEdit={{true}}
+          @remove={{action @remove}}
+        />
+      {{/each}}
     </div>
-    <input
-      type="search"
-      value={{this.termFilter}}
-      placeholder={{t "general.filterPlaceholder"}}
-      {{on "input" (perform this.setTermFilter value="target.value")}}
-    >
-  </div>
-  <div class="terms-picker tag-tree">
-    <SelectableTermsList
-      @selectedTerms={{@selectedTerms}}
-      @terms={{await this.filteredTerms}}
-      @add={{action "add"}}
-      @remove={{action "remove"}}
-    />
-  </div>
-{{/if}}
+  {{/if}}
+  {{#if this.assignableVocabularies.length}}
+    <div class="vocabulary-picker">
+      <div>
+        <label>
+          {{t "general.selectVocabulary"}}:
+        </label>
+        <select {{on "change" (action "changeSelectedVocabulary" value="target.value")}}>
+          {{#each this.assignableVocabularies as |vocab|}}
+            <option value={{vocab.id}}>
+              {{vocab.title}} ({{vocab.school.title}})
+            </option>
+          {{/each}}
+        </select>
+      </div>
+      <input
+        type="search"
+        value={{this.termFilter}}
+        placeholder={{t "general.filterPlaceholder"}}
+        {{on "input" (perform this.setTermFilter value="target.value")}}
+      >
+    </div>
+    <div class="terms-picker tag-tree">
+      <SelectableTermsList
+        @selectedTerms={{@selectedTerms}}
+        @vocabulary={{this.selectedVocabulary}}
+        @termFilter={{this.termFilter}}
+        @add={{action @add}}
+        @remove={{action @remove}}
+      />
+    </div>
+  {{/if}}
+</section>

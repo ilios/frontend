@@ -21,9 +21,9 @@ module('Integration | Component | selectable terms list item', function(hooks) {
     });
 
     await render(hbs`<SelectableTermsListItem
-      @selectedTerms={{selectedTerms}}
-      @term={{term}}
-      @remove={{action remove}}
+      @selectedTerms={{this.selectedTerms}}
+      @term={{this.term}}
+      @remove={{action this.remove}}
     />`);
 
     assert.dom('.selected').exists({ count: 1 });
@@ -45,9 +45,9 @@ module('Integration | Component | selectable terms list item', function(hooks) {
     });
 
     await render(hbs`<SelectableTermsListItem
-      @selectedTerms={{selectedTerms}}
-      @term={{term}}
-      @add={{action add}}
+      @selectedTerms={{this.selectedTerms}}
+      @term={{this.term}}
+      @add={{action this.add}}
     />`);
 
     assert.dom('.selected').doesNotExist();
