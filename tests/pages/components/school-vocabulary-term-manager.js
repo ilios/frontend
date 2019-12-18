@@ -28,7 +28,7 @@ const definition = {
   isActive: {
     scope: '[data-test-is-active]',
     active: is(':checked', 'input'),
-    toggle: clickable('[data-test-toggle-yesno]'),
+    toggle: clickable('[data-test-toggle-yesno] .switch-handle'),
   },
   subTerms: {
     scope: '[data-test-sub-terms]',

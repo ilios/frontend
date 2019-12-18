@@ -64,7 +64,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     assert.dom(`.required option:nth-of-type(3)`).hasValue('3', 'Required option value is correct.');
     assert.dom(`.required option:nth-of-type(3)`).hasText('Required In Track', 'Required option label is correct.');
     assert.dom(`.track label`).hasText('Is Track?', 'Track label is correct');
-    assert.dom(`.track .toggle-yesno`).exists({ count: 1 }, 'Track switcher is visible.');
+    assert.dom(`.track .toggle-yesno .switch-handle`).exists({ count: 1 }, 'Track switcher is visible.');
     assert.dom(`.start-date label`).hasText('Start Date:', 'Start date label is correct.');
     assert.dom(`.start-date input`).hasValue('', 'Start date input is initially empty.');
     assert.dom(`.end-date label`).hasText('End Date:', 'End date label is correct.');
@@ -261,7 +261,7 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await fillIn('.child-sequence-order select', 2);
     await fillIn('.required select', 3);
     await fillIn('.academic-level select', 2);
-    await click('.track .toggle-yesno');
+    await click('.track .toggle-yesno .switch-handle');
     await click('button.done');
 
     const blocks = await this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block');
