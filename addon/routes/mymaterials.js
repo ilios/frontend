@@ -12,7 +12,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
 
   async fetchModelData() {
-    const user = await this.currentUser.model;
+    const user = await this.currentUser.getModel();
     const url = `${this.iliosConfig.apiNameSpace}/usermaterials/${user.id}`;
     const data = await this.fetch.getJsonFromApiHost(url);
     return data.userMaterials;

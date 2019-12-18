@@ -137,14 +137,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
     const store = this.get('store');
     const save = this.get('save');
-    const currentUser = this.get('currentUser');
     const title = this.get('title');
     const type = this.get('type');
     const status = this.get('selectedStatus');
     const userRole = this.get('selectedUserRole');
     const description = this.get('description');
     const originalAuthor = this.get('originalAuthor');
-    const owningUser = yield currentUser.get('model');
+    const owningUser = yield this.currentUser.getModel();
 
     const learningMaterial = store.createRecord('learningMaterial', {
       title,
