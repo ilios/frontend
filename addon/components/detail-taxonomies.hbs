@@ -35,7 +35,7 @@
 <div class="content">
   {{#if this.isManaging}}
     <TaxonomyManager
-      @subject={{@subject}}
+      @vocabularies={{await @subject.assignableVocabularies}}
       @selectedTerms={{this.bufferedTerms}}
       @add={{action "addTermToBuffer"}}
       @remove={{action "removeTermFromBuffer"}}

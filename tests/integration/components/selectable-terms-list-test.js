@@ -58,10 +58,10 @@ module('Integration | Component | selectable terms list', function(hooks) {
     this.set('topLevelTerms', topLevelTerms);
     this.set('nothing', () => {});
     await render(hbs`<SelectableTermsList
-      @selectedTerms={{selectedTerms}}
-      @terms={{topLevelTerms}}
-      @add="nothing"
-      @remove="nothing"
+      @selectedTerms={{this.selectedTerms}}
+      @terms={{this.topLevelTerms}}
+      @add={{action this.nothing}}
+      @remove={{action this.nothing}}
     />`);
 
     const items = findAll('li');
@@ -128,10 +128,10 @@ module('Integration | Component | selectable terms list', function(hooks) {
     this.set('topLevelTerms', topLevelTerms);
     this.set('nothing', () => {});
     await render(hbs`<SelectableTermsList
-      @selectedTerms={{selectedTerms}}
-      @terms={{topLevelTerms}}
-      @add="nothing"
-      @remove="nothing"
+      @selectedTerms={{this.selectedTerms}}
+      @terms={{this.topLevelTerms}}
+      @add={{action this.nothing}}
+      @remove={{action this.nothing}}
     />`);
 
     const items = findAll('li');
