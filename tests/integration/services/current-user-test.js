@@ -1,26 +1,17 @@
-/*eslint ember/avoid-leaking-state-in-ember-objects: 0*/
-import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
-import RSVP from 'rsvp';
+import { setupMirage } from 'ember-cli-mirage/test-support';
+import { authenticateSession, invalidateSession } from 'ember-simple-auth/test-support';
 
-const { resolve } = RSVP;
-
-module('CurrentUserService', function(hooks) {
+module('Integration | Service | Current User', function(hooks) {
   setupTest(hooks);
+  setupMirage(hooks);
 
-  hooks.beforeEach(function() {
-    const session = this.owner.lookup('service:session');
-    session.reopen({
-      data: {
-        authenticated: {
-          // this token de-serializes to object with "user_id:100" property/value
-          jwt: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MTA5Njg4NDEsImV4cCI6MTUxMDk3MjQ3NiwidXNlcl9pZCI6MTAwLCJqdGkiOiI5YzYxZDdjZS1jZjliLTQxZDgtYjQ5YS0zMWFmNWQ4Y2MzY2UifQ.P1QY8zDSi8IAVaJ0YHX_KzYsIfZP_bvBdocZ9V9JUb0"
-        }
-      }
+  hooks.beforeEach(async function() {
+    await authenticateSession({
+      // this token de-serializes to object with "user_id:100" property/value
+      jwt: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MTA5Njg4NDEsImV4cCI6MTUxMDk3MjQ3NiwidXNlcl9pZCI6MTAwLCJqdGkiOiI5YzYxZDdjZS1jZjliLTQxZDgtYjQ5YS0zMWFmNWQ4Y2MzY2UifQ.P1QY8zDSi8IAVaJ0YHX_KzYsIfZP_bvBdocZ9V9JUb0"
     });
-    this.session = this.owner.lookup('service:session');
-    this.store = this.owner.lookup('service:store');
   });
 
   test('currentUserId', function(assert) {
@@ -29,15 +20,9 @@ module('CurrentUserService', function(hooks) {
     assert.equal(userId, 100);
   });
 
-  test('no token - no currentUserId', function(assert) {
+  test('no token - no currentUserId', async function(assert) {
     assert.expect(1);
-    this.session.reopen({
-      data: {
-        authenticated: {
-          jwt: null
-        }
-      }
-    });
+    await invalidateSession();
     const subject = this.owner.lookup('service:current-user');
     const userId = subject.get('currentUserId');
     assert.equal(userId, null);
@@ -45,61 +30,57 @@ module('CurrentUserService', function(hooks) {
 
 
   test('model', async function(assert) {
-    assert.expect(3);
-    const user = {};
-    this.store.reopen({
-      async find(what, id) {
-        assert.equal(what, 'user');
-        assert.equal(id, 100);
-        return user;
-      }
-    });
+    assert.expect(1);
+    this.server.create('user', { id: 100 });
     const subject = this.owner.lookup('service:current-user');
     const model = await subject.get('model');
-    assert.equal(model, user);
+    assert.equal(model.id, 100);
   });
 
   test('no token - no model', async function(assert) {
     assert.expect(1);
+    await invalidateSession();
     const subject = this.owner.lookup('service:current-user');
-    this.session.reopen({
-      data: {
-        authenticated: {
-          jwt: null
-        }
-      }
-    });
     const model = await subject.get('model');
     assert.equal(model, null);
   });
 
+  test('model only loaded once', async function(assert) {
+    assert.expect(2);
+    this.server.create('user', { id: 100 });
+    let calledAlready = false;
+
+    this.server.get('api/users/:id', (schema, request) => {
+      const id = request.params.id;
+      assert.equal(id, 100);
+      assert.notOk(calledAlready);
+      calledAlready = true;
+      return schema.users.find(id);
+    });
+    const subject = this.owner.lookup('service:current-user');
+    await subject.getModel();
+    await subject.getModel();
+    await subject.getModel();
+    await subject.getModel();
+    await subject.getModel();
+  });
+
   test('userRoleTitles', async function(assert){
     assert.expect(3);
-    const user = EmberObject.create({
-      roles: resolve([ EmberObject.create({ title: 'foo' }), EmberObject.create({ title: 'BAR' })])
-    });
-    this.store.reopen({
-      async find() {
-        return user;
-      }
-    });
+    const roles = this.server.createList('user-role', 2);
+    this.server.create('user', { id: 100, roles });
+
     const subject = this.owner.lookup('service:current-user');
     const titles = await subject.get('userRoleTitles');
     assert.equal(titles.length, 2);
-    assert.ok(titles.includes('foo'));
-    assert.ok(titles.includes('bar'));
+    assert.ok(titles.includes('user role 0'));
+    assert.ok(titles.includes('user role 1'));
   });
 
   test('userIsStudent', async function(assert) {
     assert.expect(1);
-    const user = EmberObject.create({
-      roles: resolve([ EmberObject.create({ title: 'student' }) ])
-    });
-    this.store.reopen({
-      async find() {
-        return user;
-      }
-    });
+    const role = this.server.create('user-role', { title: 'student' });
+    this.server.create('user', { id: 100, roles: [role] });
     const subject = this.owner.lookup('service:current-user');
     const isStudent = await subject.get('userIsStudent');
     assert.ok(isStudent);
@@ -107,14 +88,7 @@ module('CurrentUserService', function(hooks) {
 
   test('not userIsStudent', async function(assert) {
     assert.expect(1);
-    const user = EmberObject.create({
-      roles: resolve([])
-    });
-    this.store.reopen({
-      async find() {
-        return user;
-      }
-    });
+    this.server.create('user', { id: 100 });
     const subject = this.owner.lookup('service:current-user');
     const isStudent = await subject.get('userIsStudent');
     assert.notOk(isStudent);
@@ -122,14 +96,8 @@ module('CurrentUserService', function(hooks) {
 
   test('userIsFormerStudent', async function(assert) {
     assert.expect(1);
-    const user = EmberObject.create({
-      roles: resolve([ EmberObject.create({ title: 'FORMeR Student' }) ])
-    });
-    this.store.reopen({
-      async find() {
-        return user;
-      }
-    });
+    const role = this.server.create('user-role', { title: 'FORMeR Student' });
+    this.server.create('user', { id: 100, roles: [role] });
     const subject = this.owner.lookup('service:current-user');
     const isFormerStudent = await subject.get('userIsFormerStudent');
     assert.ok(isFormerStudent);
@@ -137,41 +105,37 @@ module('CurrentUserService', function(hooks) {
 
   test('not userIsFormerStudent', async function(assert) {
     assert.expect(1);
-    const user = EmberObject.create({
-      roles: resolve([])
-    });
-    this.store.reopen({
-      async find() {
-        return user;
-      }
-    });
+    this.server.create('user', { id: 100 });
     const subject = this.owner.lookup('service:current-user');
     const isFormerStudent = await subject.get('userIsFormerStudent');
     assert.notOk(isFormerStudent);
   });
 
   test('activeRelatedCoursesInThisYearAndLastYear', async function(assert){
-    assert.expect(8);
-    const user = EmberObject.create();
-    const courses = [ EmberObject.create(), EmberObject.create() ];
-    this.store.reopen({
-      async find() {
-        return user;
-      },
-      query(what, params) {
-        assert.equal(what, 'course');
-        assert.equal(params.my, true);
-        const filters = params.filters;
-        assert.equal(filters.year.length, 3);
-        assert.equal(filters.locked, false);
-        assert.equal(filters.archived, false);
-        assert.equal(filters.year[0] + 1, filters.year[1]);
-        assert.equal(filters.year[1] + 1, filters.year[2]);
-        return resolve(courses);
-      }
+    assert.expect(10);
+    const courses = this.server.createList('course', 2);
+    this.server.create('user', {
+      id: 100,
+      directedCourses: [courses[0]],
+      administeredCourses: [courses[1]],
     });
+
+    this.server.get('/api/courses', (schema, { queryParams }) => {
+      assert.ok('my' in queryParams);
+      assert.equal(queryParams.my, "true");
+      assert.ok('filters[year]' in queryParams);
+      assert.ok('filters[locked]' in queryParams);
+      assert.ok('filters[archived]' in queryParams);
+      assert.equal(queryParams['filters[locked]'], "false");
+      assert.equal(queryParams['filters[archived]'], "false");
+      assert.ok(queryParams['filters[year]'].length, 3);
+
+      return schema.courses.all();
+    });
+    this.server.logging = true;
     const subject = this.owner.lookup('service:current-user');
     const activeRelatedCourses = await subject.get('activeRelatedCoursesInThisYearAndLastYear');
-    assert.equal(activeRelatedCourses, courses);
+    assert.ok(activeRelatedCourses.mapBy('id').includes(courses[0].id));
+    assert.ok(activeRelatedCourses.mapBy('id').includes(courses[1].id));
   });
 });
