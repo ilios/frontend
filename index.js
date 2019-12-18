@@ -35,11 +35,6 @@ module.exports = {
     this.import(path.join(froalaPath, 'css', 'plugins', 'code_view.css'));
   },
 
-  contentFor(type, config) {
-    const emberGoogleFonts = this.addons.find((a) => a.name === 'ember-cli-google-fonts');
-    return emberGoogleFonts.contentFor(type, config);
-  },
-
   setupPreprocessorRegistry: function(type, registry) {
     // ACHTUNG!
     // check if v-get helper is already registered. if it's not, then add it.
@@ -91,5 +86,38 @@ module.exports = {
     return this.preprocessJs(tree, '/', this.name, {
       registry: this.registry,
     });
+  },
+
+  treeForPublic(publicTree) {
+    const trees = [];
+    if (publicTree) {
+      trees.push(publicTree);
+    }
+    const nunitoDir = path.join(path.dirname(require.resolve('typeface-nunito')), 'files');
+    const nunitoTree = new Funnel(nunitoDir, { destDir: 'assets/fonts/nunito' });
+    trees.push(nunitoTree);
+
+    const nunitoSansDir = path.join(path.dirname(require.resolve('typeface-nunito-sans')), 'files');
+    const nunitoSansTree = new Funnel(nunitoSansDir, { destDir: 'assets/fonts/nunito-sans' });
+    trees.push(nunitoSansTree);
+
+    return MergeTrees(trees);
+  },
+
+  contentFor: function (type, env) {
+    if (type === 'head') {
+      const rootUrl = env.rootUrl ? env.rootUrl : '';
+      const fonts = [
+        'nunito/nunito-latin-400.woff2',
+        'nunito/nunito-latin-700.woff2',
+        'nunito-sans/nunito-sans-latin-400.woff2',
+        'nunito-sans/nunito-sans-latin-600.woff2',
+        'nunito-sans/nunito-sans-latin-700.woff2',
+      ];
+      const links = fonts.map(font => {
+        return `<link rel="preload" href="${rootUrl}/assets/fonts/${font}" as="font" type="font/woff2" crossorigin="anonymous">`;
+      });
+      return links.join("\n");
+    }
   },
 };
