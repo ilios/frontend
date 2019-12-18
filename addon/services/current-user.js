@@ -7,6 +7,7 @@ import jwtDecode from '../utils/jwt-decode';
 export default Service.extend({
   store: service(),
   session: service(),
+  _userPromise: null,
   currentUserId: computed('session.data.authenticated.jwt', function(){
     if (!this.session || !this.session.data || !this.session.data.authenticated || !this.session.data.authenticated.jwt) {
       return null;
@@ -24,7 +25,15 @@ export default Service.extend({
     if (!currentUserId) {
       return null;
     }
-    return await this.store.find('user', currentUserId);
+    const user = this.store.peekRecord('user', currentUserId);
+    if (user) {
+      return user;
+    }
+
+    if (!this._userPromise) {
+      this._userPromise = this.store.find('user', currentUserId);
+    }
+    return await this._userPromise;
   },
 
   userRoleTitles: computed('model.roles.[]', async function(){
