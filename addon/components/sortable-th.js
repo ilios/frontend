@@ -1,33 +1,55 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  tagName: 'th',
-  sortedBy: false,
-  sortedAscending: true,
-  align: 'left',
-  sortType: 'alpha',
-  classNameBindings: ['textDirection', ':sortable', ':clickable', 'hideFromSmallScreen'],
-  hideFromSmallScreen: false,
-  attributeBindings: ['colspan', 'title'],
-  colspan: 1,
-  title: '',
-  sortIcon: computed('sortedBy', 'sortedAscending', 'sortType', function(){
-    const sortedBy = this.get('sortedBy');
-    const sortedAscending = this.get('sortedAscending');
-    const sortType = this.get('sortType');
+export default class SortableTh extends Component {
+  get align() {
+    return this.args.align || 'left';
+  }
 
-    if(sortedBy){
-      if(sortedAscending){
-        return sortType === 'numeric'?'sort-numeric-down':'sort-alpha-down';
+  get sortType() {
+    return this.args.sortType || 'alpha';
+  }
+
+  get sortedAscending() {
+    return this.args.sortedAscending || true;
+  }
+
+  get sortedBy() {
+    return this.args.sortedBy || false;
+  }
+
+  get textDirection(){
+    return 'text-' + this.align;
+  }
+
+  get colspan() {
+    return this.args.colspan || '1';
+  }
+
+  get title() {
+    return this.args.title || '';
+  }
+
+  get hideFromSmallScreen() {
+    return this.args.hideFromSmallScreen || false;
+  }
+
+  get sortIcon() {
+    if (this.sortedBy) {
+      if (this.sortedAscending) {
+        return this.sortType === 'numeric' ? 'sort-numeric-down' : 'sort-alpha-down';
       } else {
-        return sortType === 'numeric'?'sort-numeric-down-alt':'sort-alpha-down-alt';
+        return this.sortType === 'numeric' ? 'sort-numeric-down-alt' : 'sort-alpha-down-alt';
       }
     } else {
       return 'sort';
     }
-  }),
-  textDirection: computed('align', function(){
-    return 'text-' + this.get('align');
-  }),
-});
+  }
+
+  @action
+  click() {
+    if (this.args.click) {
+      this.args.click();
+    }
+  }
+}
