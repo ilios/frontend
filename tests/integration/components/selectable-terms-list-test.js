@@ -1,146 +1,74 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | selectable terms list', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(9);
+    assert.expect(7);
 
-    const term1 = EmberObject.create({
-      id: 3,
-      title: 'Alpha',
-      isActiveInTree: resolve(true),
-      isTopLevel: false,
+    const term1 = this.server.create('term', { title: 'Alpha', active: true });
+    const term2 = this.server.create('term', { title: 'Beta', active: true });
+    const term3 = this.server.create('term', { title: 'Gamma', active: true });
+    const term4 = this.server.create('term', { title: 'First', active: true, children: [ term1, term2 ] });
+    const term5 = this.server.create('term', { title: 'Second', active: true, children: [ term3 ] });
 
-    });
+    const termModel4 = await this.owner.lookup('service:store').find('term', term4.id);
+    const termModel5 = await this.owner.lookup('service:store').find('term', term5.id);
 
-    const term2 = EmberObject.create({
-      id: 4,
-      title: 'Beta',
-      isActiveInTree: resolve(true),
-      isTopLevel: false,
-
-    });
-
-    const term3 = EmberObject.create({
-      id: 4,
-      title: 'Gamma',
-      isActiveInTree: resolve(true),
-      isTopLevel: false,
-
-    });
-
-    const term4 = EmberObject.create({
-      id: 1,
-      title: 'First',
-      hasChildren: true,
-      children: resolve([ term1, term2 ]),
-      isActiveInTree: resolve(true),
-      isTopLevel: true,
-    });
-
-    const term5 = EmberObject.create({
-      id: 2,
-      title: 'Second',
-      hasChildren: true,
-      children: resolve([ term3 ]),
-      isActiveInTree: resolve(true),
-      isTopLevel: true,
-    });
-
-    const topLevelTerms = [ term4, term5 ];
     this.set('selectedTerms', []);
-    this.set('topLevelTerms', topLevelTerms);
+    this.set('terms', resolve([ termModel4, termModel5 ]));
     this.set('nothing', () => {});
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
-      @terms={{this.topLevelTerms}}
+      @terms={{await this.terms}}
       @add={{action this.nothing}}
       @remove={{action this.nothing}}
     />`);
 
-    const items = findAll('li');
-    assert.equal(items.length, 5);
-    assert.equal(items[0].textContent.replace(/[\t\n\s]+/g, ""), 'FirstAlphaBeta');
-    assert.equal(items[1].textContent.replace(/[\t\n\s]+/g, ""), 'Alpha');
-    assert.equal(items[2].textContent.replace(/[\t\n\s]+/g, ""), 'Beta');
-    assert.equal(items[3].textContent.replace(/[\t\n\s]+/g, ""), 'SecondGamma');
-    assert.equal(items[4].textContent.replace(/[\t\n\s]+/g, ""), 'Gamma');
-
-    const topLevelItems = findAll('li.top-level');
-    assert.equal(topLevelItems.length, 2);
-    assert.equal(topLevelItems[0].textContent.replace(/[\t\n\s]+/g, ""), 'FirstAlphaBeta');
-    assert.equal(topLevelItems[1].textContent.replace(/[\t\n\s]+/g, ""), 'SecondGamma');
+    assert.dom('li').exists({ count: 5});
+    assert.dom('li.top-level').exists({ count: 2});
+    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('First');
+    assert.dom('li.top-level:nth-of-type(2) .selectable-terms-list-item').hasText('Second');
+    assert.dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
+      .hasText('Alpha');
+    assert.dom('li.top-level:nth-of-type(1) li:nth-of-type(2) .selectable-terms-list-item')
+      .hasText('Beta');
+    assert.dom('li.top-level:nth-of-type(2) li:nth-of-type(1) .selectable-terms-list-item')
+      .hasText('Gamma');
   });
 
   test('inactive terms are not rendered', async function(assert) {
-    assert.expect(5);
+    assert.expect(4);
 
-    const term1 = EmberObject.create({
-      id: 3,
-      title: 'Alpha',
-      isActiveInTree: resolve(true),
-      isTopLevel: false,
+    const term1 = this.server.create('term', { title: 'Alpha', active: true });
+    const term2 = this.server.create('term', { title: 'Beta', active: false });
+    const term3 = this.server.create('term', { title: 'Gamma', active: false });
+    const term4 = this.server.create('term', { title: 'First', active: true, children: [ term1, term2 ] });
+    const term5 = this.server.create('term', { title: 'Second', active: false, children: [ term3 ] });
 
-    });
+    const termModel4 = await this.owner.lookup('service:store').find('term', term4.id);
+    const termModel5 = await this.owner.lookup('service:store').find('term', term5.id);
 
-    const term2 = EmberObject.create({
-      id: 4,
-      title: 'Beta',
-      isActiveInTree: resolve(false),
-      isTopLevel: false,
-
-    });
-
-    const term3 = EmberObject.create({
-      id: 4,
-      title: 'Gamma',
-      isActiveInTree: resolve(false),
-      isTopLevel: false,
-
-    });
-
-    const term4 = EmberObject.create({
-      id: 1,
-      title: 'First',
-      hasChildren: true,
-      children: resolve([ term1, term2 ]),
-      isActiveInTree: resolve(true),
-      isTopLevel: true,
-    });
-
-    const term5 = EmberObject.create({
-      id: 2,
-      title: 'Second',
-      hasChildren: true,
-      children: resolve([ term3 ]),
-      isActiveInTree: resolve(false),
-      isTopLevel: true,
-    });
-
-    const topLevelTerms = [ term4, term5 ];
     this.set('selectedTerms', []);
-    this.set('topLevelTerms', topLevelTerms);
+    this.set('terms', resolve([ termModel4, termModel5 ]));
     this.set('nothing', () => {});
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
-      @terms={{this.topLevelTerms}}
+      @terms={{await this.terms}}
       @add={{action this.nothing}}
       @remove={{action this.nothing}}
     />`);
 
-    const items = findAll('li');
-    assert.equal(items.length, 2);
-    assert.equal(items[0].textContent.replace(/[\t\n\s]+/g, ""), 'FirstAlpha');
-    assert.equal(items[1].textContent.replace(/[\t\n\s]+/g, ""), 'Alpha');
-
-    const topLevelItems = findAll('li.top-level');
-    assert.equal(topLevelItems.length, 1);
-    assert.equal(topLevelItems[0].textContent.replace(/[\t\n\s]+/g, ""), 'FirstAlpha');
+    assert.dom('li').exists({ count: 2});
+    assert.dom('li.top-level').exists({ count: 1});
+    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('First');
+    assert.dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
+      .hasText('Alpha');
   });
 });

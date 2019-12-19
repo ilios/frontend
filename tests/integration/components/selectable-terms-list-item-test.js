@@ -2,22 +2,22 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import EmberObject from '@ember/object';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | selectable terms list item', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('selected term', async function(assert) {
     assert.expect(3);
-    const term1 = EmberObject.create({
-      title: 'term1',
-    });
 
-    const selectedTerms = [ term1 ];
-    this.set('selectedTerms', selectedTerms);
-    this.set('term', term1);
+    const term = this.server.create('term', { 'title': 'term1' });
+    const termModel = await this.owner.lookup('service:store').find('term', term.id);
+
+    this.set('selectedTerms', [ termModel ]);
+    this.set('term', termModel);
     this.set('remove', term => {
-      assert.equal(term, term1);
+      assert.equal(term, termModel);
     });
 
     await render(hbs`<SelectableTermsListItem
@@ -33,15 +33,14 @@ module('Integration | Component | selectable terms list item', function(hooks) {
 
   test('unselected term', async function(assert) {
     assert.expect(3);
-    const term1 = EmberObject.create({
-      title: 'term1',
-    });
 
-    const selectedTerms = [];
-    this.set('selectedTerms', selectedTerms);
-    this.set('term', term1);
+    const term = this.server.create('term', { 'title': 'term1' });
+    const termModel = await this.owner.lookup('service:store').find('term', term.id);
+
+    this.set('selectedTerms', []);
+    this.set('term', termModel);
     this.set('add', term => {
-      assert.equal(term, term1);
+      assert.equal(term, termModel);
     });
 
     await render(hbs`<SelectableTermsListItem
