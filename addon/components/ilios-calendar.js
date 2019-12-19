@@ -7,11 +7,11 @@ export default Component.extend({
   classNames: ['ilios-calendar'],
   selectedView: null,
   selectedDate: null,
-  calendarEventsPromise: null,
+  calendarEvents: null,
   icsFeedUrl: null,
   showIcsFeed: false,
-  compiledCalendarEvents: computed('calendarEventsPromise.[]', 'selectedView', async function(){
-    const events = await this.get('calendarEventsPromise');
+  compiledCalendarEvents: computed('calendarEvents.[]', 'selectedView', function(){
+    const events = this.get('calendarEvents');
     if(this.get('selectedView') === 'day'){
       return events;
     } else {

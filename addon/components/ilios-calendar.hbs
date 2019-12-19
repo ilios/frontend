@@ -35,7 +35,7 @@
       @refresh={{action "refreshIcsFeed"}}
     />
   {{/if}}
-  <h1 class={{if (is-fulfilled this.compiledCalendarEvents) "loaded"}}>
+  <h1 class={{if (or (gt this.compiledCalendarEvents.length 0) (not @isLoadingEvents)) "loaded"}}>
     <FaIcon @icon="spinner" @spin={{true}} />
     {{t "general.loadingEvents"}}
     ...
@@ -43,7 +43,7 @@
   {{component
     (concat "ilios-calendar-" @selectedView)
     calendarEvents=(sort-by
-      (action "sortEvents") (await this.compiledCalendarEvents)
+      (action "sortEvents") this.compiledCalendarEvents
     )
     date=@selectedDate
     selectEvent=@selectEvent
