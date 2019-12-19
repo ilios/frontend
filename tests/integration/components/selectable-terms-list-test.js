@@ -1,146 +1,174 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll } from '@ember/test-helpers';
+import { click, find, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | selectable terms list', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-  test('it renders', async function(assert) {
-    assert.expect(9);
+  hooks.beforeEach(async function() {
+    const vocabulary = this.server.create('vocabulary');
+    const term1 = this.server.create('term', { title: 'Alpha', active: true, vocabulary });
+    const term2 = this.server.create('term', { title: 'Beta', active: true, vocabulary });
+    const term3 = this.server.create('term', { title: 'Gamma', active: true, vocabulary });
+    const term4 = this.server.create('term', { title: 'First', active: true, vocabulary, children: [ term1, term2 ] });
+    const term5 = this.server.create('term', { title: 'Second', active: true, vocabulary, children: [ term3 ] });
 
-    const term1 = EmberObject.create({
-      id: 3,
-      title: 'Alpha',
-      isActiveInTree: resolve(true),
-      isTopLevel: false,
+    this.vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    this.termModel1 = await this.owner.lookup('service:store').find('term', term1.id);
+    this.termModel2 = await this.owner.lookup('service:store').find('term', term2.id);
+    this.termModel3 = await this.owner.lookup('service:store').find('term', term3.id);
+    this.termModel4 = await this.owner.lookup('service:store').find('term', term4.id);
+    this.termModel5 = await this.owner.lookup('service:store').find('term', term5.id);
+  });
 
-    });
+  test('it renders when given a vocabulary as input ', async function(assert) {
+    assert.expect(7);
 
-    const term2 = EmberObject.create({
-      id: 4,
-      title: 'Beta',
-      isActiveInTree: resolve(true),
-      isTopLevel: false,
-
-    });
-
-    const term3 = EmberObject.create({
-      id: 4,
-      title: 'Gamma',
-      isActiveInTree: resolve(true),
-      isTopLevel: false,
-
-    });
-
-    const term4 = EmberObject.create({
-      id: 1,
-      title: 'First',
-      hasChildren: true,
-      children: resolve([ term1, term2 ]),
-      isActiveInTree: resolve(true),
-      isTopLevel: true,
-    });
-
-    const term5 = EmberObject.create({
-      id: 2,
-      title: 'Second',
-      hasChildren: true,
-      children: resolve([ term3 ]),
-      isActiveInTree: resolve(true),
-      isTopLevel: true,
-    });
-
-    const topLevelTerms = [ term4, term5 ];
     this.set('selectedTerms', []);
-    this.set('topLevelTerms', topLevelTerms);
+    this.set('vocabulary', this.vocabularyModel);
     this.set('nothing', () => {});
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
-      @terms={{this.topLevelTerms}}
+      @vocabulary={{this.vocabulary}}
       @add={{action this.nothing}}
       @remove={{action this.nothing}}
     />`);
 
-    const items = findAll('li');
-    assert.equal(items.length, 5);
-    assert.equal(items[0].textContent.replace(/[\t\n\s]+/g, ""), 'FirstAlphaBeta');
-    assert.equal(items[1].textContent.replace(/[\t\n\s]+/g, ""), 'Alpha');
-    assert.equal(items[2].textContent.replace(/[\t\n\s]+/g, ""), 'Beta');
-    assert.equal(items[3].textContent.replace(/[\t\n\s]+/g, ""), 'SecondGamma');
-    assert.equal(items[4].textContent.replace(/[\t\n\s]+/g, ""), 'Gamma');
+    assert.dom('li').exists({ count: 5});
+    assert.dom('li.top-level').exists({ count: 2});
+    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('First');
+    assert.dom('li.top-level:nth-of-type(2) .selectable-terms-list-item').hasText('Second');
+    assert.dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
+      .hasText('Alpha');
+    assert.dom('li.top-level:nth-of-type(1) li:nth-of-type(2) .selectable-terms-list-item')
+      .hasText('Beta');
+    assert.dom('li.top-level:nth-of-type(2) li:nth-of-type(1) .selectable-terms-list-item')
+      .hasText('Gamma');
+  });
 
-    const topLevelItems = findAll('li.top-level');
-    assert.equal(topLevelItems.length, 2);
-    assert.equal(topLevelItems[0].textContent.replace(/[\t\n\s]+/g, ""), 'FirstAlphaBeta');
-    assert.equal(topLevelItems[1].textContent.replace(/[\t\n\s]+/g, ""), 'SecondGamma');
+  test('it renders when given a list of terms as input ', async function(assert) {
+    assert.expect(7);
+
+    this.set('selectedTerms', []);
+    this.set('terms', resolve([ this.termModel4, this.termModel5 ]));
+    this.set('nothing', () => {});
+    await render(hbs`<SelectableTermsList
+      @selectedTerms={{this.selectedTerms}}
+      @terms={{await this.terms}}
+      @add={{action this.nothing}}
+      @remove={{action this.nothing}}
+    />`);
+
+    assert.dom('li').exists({ count: 5});
+    assert.dom('li.top-level').exists({ count: 2});
+    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('First');
+    assert.dom('li.top-level:nth-of-type(2) .selectable-terms-list-item').hasText('Second');
+    assert.dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
+      .hasText('Alpha');
+    assert.dom('li.top-level:nth-of-type(1) li:nth-of-type(2) .selectable-terms-list-item')
+      .hasText('Beta');
+    assert.dom('li.top-level:nth-of-type(2) li:nth-of-type(1) .selectable-terms-list-item')
+      .hasText('Gamma');
   });
 
   test('inactive terms are not rendered', async function(assert) {
-    assert.expect(5);
+    assert.expect(4);
 
-    const term1 = EmberObject.create({
-      id: 3,
-      title: 'Alpha',
-      isActiveInTree: resolve(true),
-      isTopLevel: false,
+    this.termModel2.set('active', false);
+    this.termModel3.set('active', false);
+    this.termModel5.set('active', false);
 
-    });
-
-    const term2 = EmberObject.create({
-      id: 4,
-      title: 'Beta',
-      isActiveInTree: resolve(false),
-      isTopLevel: false,
-
-    });
-
-    const term3 = EmberObject.create({
-      id: 4,
-      title: 'Gamma',
-      isActiveInTree: resolve(false),
-      isTopLevel: false,
-
-    });
-
-    const term4 = EmberObject.create({
-      id: 1,
-      title: 'First',
-      hasChildren: true,
-      children: resolve([ term1, term2 ]),
-      isActiveInTree: resolve(true),
-      isTopLevel: true,
-    });
-
-    const term5 = EmberObject.create({
-      id: 2,
-      title: 'Second',
-      hasChildren: true,
-      children: resolve([ term3 ]),
-      isActiveInTree: resolve(false),
-      isTopLevel: true,
-    });
-
-    const topLevelTerms = [ term4, term5 ];
     this.set('selectedTerms', []);
-    this.set('topLevelTerms', topLevelTerms);
+    this.set('terms', resolve([ this.termModel4, this.termModel5 ]));
     this.set('nothing', () => {});
     await render(hbs`<SelectableTermsList
       @selectedTerms={{this.selectedTerms}}
-      @terms={{this.topLevelTerms}}
+      @terms={{await this.terms}}
       @add={{action this.nothing}}
       @remove={{action this.nothing}}
     />`);
 
-    const items = findAll('li');
-    assert.equal(items.length, 2);
-    assert.equal(items[0].textContent.replace(/[\t\n\s]+/g, ""), 'FirstAlpha');
-    assert.equal(items[1].textContent.replace(/[\t\n\s]+/g, ""), 'Alpha');
-
-    const topLevelItems = findAll('li.top-level');
-    assert.equal(topLevelItems.length, 1);
-    assert.equal(topLevelItems[0].textContent.replace(/[\t\n\s]+/g, ""), 'FirstAlpha');
+    assert.dom('li').exists({ count: 2});
+    assert.dom('li.top-level').exists({ count: 1});
+    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('First');
+    assert.dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
+      .hasText('Alpha');
   });
+
+  test('select/deselect term', async function(assert) {
+    assert.expect(5);
+
+    this.set('selectedTerms', []);
+    this.set('terms', resolve([ this.termModel4, this.termModel5 ]));
+    this.set('add', (term) => {
+      assert.equal(term, this.termModel4);
+      this.selectedTerms.pushObject(term);
+    });
+    this.set('remove', (term) => {
+      assert.equal(term, this.termModel4);
+      this.selectedTerms.removeObject(term);
+    });
+    await render(hbs`<SelectableTermsList
+      @selectedTerms={{this.selectedTerms}}
+      @terms={{await this.terms}}
+      @add={{action this.add}}
+      @remove={{action this.remove}}
+    />`);
+
+    const term = 'li.top-level:nth-of-type(1) .selectable-terms-list-item';
+    assert.dom(term).hasNoClass('selected');
+    await click(find(term));
+    assert.dom(term).hasClass('selected');
+    await click(find(term));
+    assert.dom(term).hasNoClass('selected');
+  });
+
+  test('filter terms', async function(assert) {
+    assert.expect(4);
+
+    this.set('selectedTerms', []);
+    this.set('vocabulary', this.vocabularyModel);
+    this.set('nothing', () => {});
+    this.set('termFilter', 'Gamma');
+    await render(hbs`<SelectableTermsList
+      @selectedTerms={{this.selectedTerms}}
+      @vocabulary={{this.vocabulary}}
+      @add={{action this.nothing}}
+      @remove={{action this.nothing}}
+      @termFilter={{this.termFilter}}
+    />`);
+
+    assert.dom('li').exists({ count: 2});
+    assert.dom('li.top-level').exists({ count: 1});
+    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('Second');
+    assert.dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
+      .hasText('Gamma');
+  });
+
+  test('filter terms - partial match', async function(assert) {
+    assert.expect(4);
+
+    this.set('selectedTerms', []);
+    this.set('vocabulary', this.vocabularyModel);
+    this.set('nothing', () => {});
+    this.set('termFilter', 'amma');
+    await render(hbs`<SelectableTermsList
+      @selectedTerms={{this.selectedTerms}}
+      @vocabulary={{this.vocabulary}}
+      @add={{action this.nothing}}
+      @remove={{action this.nothing}}
+      @termFilter={{this.termFilter}}
+    />`);
+
+    assert.dom('li').exists({ count: 2});
+    assert.dom('li.top-level').exists({ count: 1});
+    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('Second');
+    assert.dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
+      .hasText('Gamma');
+  });
+
 });
