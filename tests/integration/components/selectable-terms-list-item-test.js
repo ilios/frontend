@@ -8,16 +8,33 @@ module('Integration | Component | selectable terms list item', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(async function() {
+    const term = this.server.create('term', { title: 'Term1' });
+    this.termModel = await this.owner.lookup('service:store').find('term', term.id);
+  });
+
+  test('it renders', async function(assert) {
+    assert.expect(1);
+
+    this.set('selectedTerms', [ this.termModel ]);
+    this.set('term', this.termModel);
+
+    await render(hbs`<SelectableTermsListItem
+      @selectedTerms={{this.selectedTerms}}
+      @term={{this.term}}
+    />`);
+
+    assert.dom(this.element).hasText(this.termModel.get('title'));
+  });
+
   test('selected term', async function(assert) {
-    assert.expect(3);
+    assert.expect(4);
 
-    const term = this.server.create('term', { 'title': 'term1' });
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
-
-    this.set('selectedTerms', [ termModel ]);
-    this.set('term', termModel);
+    this.set('selectedTerms', [ this.termModel ]);
+    this.set('term', this.termModel);
     this.set('remove', term => {
-      assert.equal(term, termModel);
+      assert.equal(term, this.termModel);
+      this.selectedTerms.removeObject(term);
     });
 
     await render(hbs`<SelectableTermsListItem
@@ -29,18 +46,17 @@ module('Integration | Component | selectable terms list item', function(hooks) {
     assert.dom('.selected').exists({ count: 1 });
     assert.dom('.actions .fa-times').exists({ count: 1 });
     await click('.fa-times');
+    assert.dom('.selected').exists({ count: 0 });
   });
 
   test('unselected term', async function(assert) {
-    assert.expect(3);
-
-    const term = this.server.create('term', { 'title': 'term1' });
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
+    assert.expect(4);
 
     this.set('selectedTerms', []);
-    this.set('term', termModel);
+    this.set('term', this.termModel);
     this.set('add', term => {
-      assert.equal(term, termModel);
+      assert.equal(term, this.termModel);
+      this.selectedTerms.pushObject(term);
     });
 
     await render(hbs`<SelectableTermsListItem
@@ -52,5 +68,6 @@ module('Integration | Component | selectable terms list item', function(hooks) {
     assert.dom('.selected').doesNotExist();
     assert.dom('.actions .fa-plus').exists({ count: 1 });
     await click('.fa-plus');
+    assert.dom('.selected').exists({ count: 1 });
   });
 });
