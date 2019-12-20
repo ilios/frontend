@@ -7,7 +7,7 @@ module('Integration | Component | ilios calendar single event objective list', f
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(18);
+    assert.expect(20);
 
     const objectives = [
       {domain: 'great things', title: 'cheese', position: 1},
@@ -24,31 +24,32 @@ module('Integration | Component | ilios calendar single event objective list', f
     this.set('groupByCompetenciesPhrase', groupByCompetenciesPhrase);
     this.set('listByPriorityPhrase', listByPriorityPhrase);
     this.set('objectives', objectives);
-    await render(hbs`{{single-event-objective-list
-      objectives=objectives
-      groupByCompetenciesPhrase=groupByCompetenciesPhrase
-      listByPriorityPhrase=listByPriorityPhrase
-      title=courseObjectivesPhrase
-    }}`);
+    await render(hbs`<SingleEventObjectiveList
+      @objectives={{this.objectives}}
+      @groupByCompetenciesPhrase={{this.groupByCompetenciesPhrase}}
+      @listByPriorityPhrase={{this.listByPriorityPhrase}}
+      @title={{this.courseObjectivesPhrase}}
+    />`);
 
-
-    assert.ok(this.element.querySelector('h2').textContent.includes(courseObjectivesPhrase), 'Title is visible');
-    assert.ok(this.element.querySelectorAll('ul.tree').length, 'Domains/Objectives tree is visible');
-    assert.notOk(this.element.querySelectorAll('ul.list-in-order').length, 'Objectives list is not visible');
-    assert.equal(this.element.querySelector('ul.tree>li').textContent.trim().search(/^annoying things/), 0);
-    assert.equal(this.element.querySelector('ul.tree>li:nth-of-type(1)>ul>li:nth-of-type(2)').textContent.trim().search(/^traffic/), 0);
-    assert.equal(this.element.querySelector('ul.tree>li:nth-of-type(2)').textContent.trim().search(/^great things/), 0);
-    assert.equal(this.element.querySelector('ul.tree>li:nth-of-type(2)>ul>li').textContent.trim().search(/^cheese/), 0);
-    assert.dom(this.element.querySelector('h2 button')).hasClass('active', 'Display-mode button is visible and is "active"');
+    assert.dom('h2').containsText(courseObjectivesPhrase, 'Title is visible');
+    assert.dom('ul.tree').exists('Domains/Objectives tree is visible');
+    assert.dom('ul.list-in-order').doesNotExist('Objectives list is not visible');
+    assert.dom('ul.tree>li').hasText('annoying things buying gas traffic');
+    assert.dom('ul.tree>li:nth-of-type(1)>ul>li:nth-of-type(1)').hasText('buying gas');
+    assert.dom('ul.tree>li:nth-of-type(1)>ul>li:nth-of-type(2)').hasText('traffic');
+    assert.dom('ul.tree>li:nth-of-type(2)').hasText('great things cheese ice cream');
+    assert.dom('ul.tree>li:nth-of-type(2)>ul>li:nth-of-type(1)').hasText('cheese');
+    assert.dom('ul.tree>li:nth-of-type(2)>ul>li:nth-of-type(2)').hasText('ice cream');
+    assert.dom('h2 button').hasClass('active', 'Display-mode button is visible and is "active"');
     await click('h2 button');
 
-    assert.notOk(this.element.querySelectorAll('ul.tree').length, 'Domains/Objectives tree is not visible');
-    assert.ok(this.element.querySelectorAll('ul.list-in-order').length, 'Objectives list is visible');
+    assert.dom('ul.tree').doesNotExist('Domains/Objectives tree is not visible');
+    assert.dom('ul.list-in-order').exists('Objectives list is visible');
     for(let i = 0, n = objectives.length; i < n; i++) {
-      assert.equal(0, this.element.querySelector(`.list-in-order li:nth-of-type(${i + 1})`).textContent.trim().indexOf(objectives[i].title), 'Objective title is visible');
-      assert.dom(
-        this.element.querySelector(`.list-in-order li:nth-of-type(${i + 1}) .details`)
-      ).hasText(objectives[i].domain, 'Domain is visible.');
+      assert.dom(`.list-in-order li:nth-of-type(${i + 1})`)
+        .hasText(`${objectives[i].title} ${objectives[i].domain}`, 'Objective title is visible');
+      assert.dom(`.list-in-order li:nth-of-type(${i + 1}) .details`)
+        .hasText(objectives[i].domain, 'Domain is visible.');
     }
   });
 
@@ -56,11 +57,9 @@ module('Integration | Component | ilios calendar single event objective list', f
     assert.expect(1);
 
     this.set('objectives', []);
-    await render(hbs`{{single-event-objective-list
-      objectives=objectives
-    }}`);
+    await render(hbs`<SingleEventObjectiveList @objectives={{this.objectives}} />`);
 
-    assert.dom(this.element.querySelector('.no-content')).hasText('None');
+    assert.dom('.no-content').hasText('None');
   });
 
   test('no display mode toggle if none of the objectives are prioritized', async function(assert) {
@@ -76,15 +75,14 @@ module('Integration | Component | ilios calendar single event objective list', f
     const courseObjectivesPhrase = 'Course Objectives';
     this.set('courseObjectivesPhrase', courseObjectivesPhrase);
     this.set('objectives', objectives);
-    await render(hbs`{{single-event-objective-list
-      objectives=objectives
-      title=courseObjectivesPhrase
-    }}`);
+    await render(hbs`<SingleEventObjectiveList
+      @objectives={{this.objectives}}
+      @title={{this.courseObjectivesPhrase}}
+    />`);
 
-    const h2 = this.element.querySelector('h2');
-    assert.equal(h2.querySelectorAll('button').length, 0, 'Display-mode button is not visible');
+    assert.dom('h2 button').doesNotExist('Display-mode button is not visible');
     // briefly check if the component renders fine otherwise.
-    assert.dom(h2).hasText(courseObjectivesPhrase, 'Title is visible');
-    assert.ok(this.element.querySelectorAll('ul.tree').length, 'Domains/Objectives tree');
+    assert.dom('h2').hasText(courseObjectivesPhrase, 'Title is visible');
+    assert.dom('ul.tree').exists('Domains/Objectives tree is visible');
   });
 });
