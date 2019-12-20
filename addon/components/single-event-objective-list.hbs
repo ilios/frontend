@@ -1,53 +1,55 @@
-<h2>
-  {{@title}}
-  {{#if this.showDisplayModeToggle}}
-    <button
-      class={{if this.groupByCompetencies "active"}}
-      {{on "click" (toggle "groupByCompetencies" this)}}
-    >
-      {{#if this.groupByCompetencies}}
-        <FaIcon @icon="indent" @title={{@listByPriorityPhrase}} />
-      {{else}}
-        <FaIcon @icon="list" @title={{@groupByCompetenciesPhrase}} />
-      {{/if}}
-    </button>
-  {{/if}}
-</h2>
-{{#if this.groupByCompetencies}}
-  {{#if this.domains.length}}
-    <ul class="tree">
-      {{#each this.domains as |domain|}}
-        <li>
-          {{domain.title}}
-          <ul>
-            {{#each domain.objectives as |title|}}
-              {{! template-lint-disable no-triple-curlies }}
-              <li>
-                {{{title}}}
-              </li>
-            {{/each}}
-          </ul>
-        </li>
-      {{/each}}
-    </ul>
-  {{else}}
-    <li class="no-content">
-      {{t "general.none"}}
-    </li>
-  {{/if}}
-{{else}}
-  <ul class="list-in-order">
-    {{#each @objectives as |objective|}}
-      <li>
-        {{objective.title}}
-        <span class="details">
-          {{objective.domain}}
-        </span>
-      </li>
+<div class="single-event-objective-list">
+  <h2>
+    {{@title}}
+    {{#if this.showDisplayModeToggle}}
+      <button
+        class={{if this.groupByCompetencies "active"}}
+        {{on "click" (set this.groupByCompetencies (not this.groupByCompetencies))}}
+      >
+        {{#if this.groupByCompetencies}}
+          <FaIcon @icon="indent" @title={{@listByPriorityPhrase}} />
+        {{else}}
+          <FaIcon @icon="list" @title={{@groupByCompetenciesPhrase}} />
+        {{/if}}
+      </button>
+    {{/if}}
+  </h2>
+  {{#if this.groupByCompetencies}}
+    {{#if this.domains.length}}
+      <ul class="tree">
+        {{#each this.domains as |domain|}}
+          <li>
+            {{domain.title}}
+            <ul>
+              {{#each domain.objectives as |title|}}
+                {{! template-lint-disable no-triple-curlies }}
+                <li>
+                  {{{title}}}
+                </li>
+              {{/each}}
+            </ul>
+          </li>
+        {{/each}}
+      </ul>
     {{else}}
       <li class="no-content">
         {{t "general.none"}}
       </li>
-    {{/each}}
-  </ul>
-{{/if}}
+    {{/if}}
+  {{else}}
+    <ul class="list-in-order">
+      {{#each @objectives as |objective|}}
+        <li>
+          {{objective.title}}
+          <span class="details">
+            {{objective.domain}}
+          </span>
+        </li>
+      {{else}}
+        <li class="no-content">
+          {{t "general.none"}}
+        </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+</div>
