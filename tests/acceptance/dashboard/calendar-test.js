@@ -44,48 +44,50 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     const cohort2 = this.server.create('cohort', {
       programYear: programYear2,
     });
-    const sessionType1 = this.server.create('sessionType', {
+    const sessionType1 = this.server.create('session-type', {
       school: this.school,
     });
-    const sessionType2 = this.server.create('sessionType', {
+    const sessionType2 = this.server.create('session-type', {
       school: this.school,
     });
-    this.server.create('sessionType', {
+    this.server.create('session-type', {
       school: this.school,
     });
-    this.course1 = this.server.create('course', {
+    const course1 = this.server.create('course', {
       school: this.school,
       year: 2015,
+      level: 1,
       cohorts: [cohort1],
     });
-    this.course2 = this.server.create('course', {
+    const course2 = this.server.create('course', {
       year: 2015,
       school: this.school,
+      level: 2,
       cohorts: [cohort2],
     });
     const session1 = this.server.create('session', {
-      course: this.course1,
+      course: course1,
       sessionType: sessionType1,
     });
     const session2 = this.server.create('session', {
-      course: this.course1,
+      course: course1,
       sessionType: sessionType2,
     });
     const session3 = this.server.create('session', {
-      course: this.course2,
+      course: course2,
       sessionType: sessionType2
     });
     this.server.create('academicYear', {
       id: 2015,
       title: 2015
     });
-    this.offering1 = this.server.create('offering', {
+    this.server.create('offering', {
       session: session1
     });
-    this.offering2 = this.server.create('offering', {
+    this.server.create('offering', {
       session: session2
     });
-    this.offering3 = this.server.create('offering', {
+    this.server.create('offering', {
       session: session3
     });
   });
@@ -293,13 +295,13 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      offering: this.offering1.id,
+      offering: 1,
     });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      offering: this.offering2.id,
+      offering: 2,
     });
     await visit('/dashboard?show=calendar');
     const events = findAll('div.event');
@@ -315,13 +317,13 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       school: 1,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      offering: this.offering1.id,
+      offering: 1,
     });
     this.server.create('schoolevent', {
       school: 1,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      offering: this.offering2.id,
+      offering: 2,
     });
     await visit('/dashboard?show=calendar');
     await chooseSchoolEvents();
@@ -343,13 +345,13 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      offering: this.offering1.id,
+      sessionTypeId: 1,
     });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      offering: this.offering2.id,
+      sessionTypeId: 2,
     });
     await visit('/dashboard?show=calendar');
     await showFilters();
@@ -383,15 +385,13 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      offering: this.offering1.id,
-      course: this.course1.id,
+      courseLevel: 1,
     });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      offering: this.offering2.id,
-      course: this.course1.id,
+      courseLevel: 1,
     });
     await visit('/dashboard?show=calendar');
     await showFilters();
@@ -417,15 +417,13 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      course: this.course1.id,
-      offering: this.offering1.id,
+      cohorts: [{ id: 1 }],
     });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      course: this.course1.id,
-      offering: this.offering2.id,
+      cohorts: [{ id: 1 }],
     });
     await visit('/dashboard?show=calendar');
     await showFilters();
@@ -460,22 +458,19 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      course: this.course1.id,
-      offering: this.offering1.id,
+      course: 1,
     });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      course: this.course2.id,
-      offering: this.offering3.id,
+      course: 2,
     });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      course: this.course1.id,
-      offering: this.offering2.id,
+      course: 1,
     });
     await visit('/dashboard?show=calendar');
     await showFilters();
@@ -496,22 +491,22 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      course: this.course1.id,
-      offering: this.offering1.id,
+      course: 1,
+      sessionTypeId: 1,
     });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      course: this.course2.id,
-      offering: this.offering3.id,
+      course: 2,
+      sessionTypeId: 2,
     });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      course: this.course1.id,
-      offering: this.offering2.id,
+      course: 1,
+      sessionTypeId: 2,
     });
     await visit('/dashboard?show=calendar');
     await showFilters();
@@ -534,7 +529,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      offering: this.offering1.id,
+      offering: 1,
       lastModified: today.clone().subtract(1, 'year'),
     });
     const endOfTheWeek = moment().add(6, 'days');
@@ -542,7 +537,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       startDate: endOfTheWeek.format(),
       endDate: endOfTheWeek.clone().add(1, 'hour').format(),
-      offering: this.offering2.id,
+      offering: 2,
       lastModified: today.clone().subtract(1, 'year'),
     });
     const yesterday = moment().subtract(25, 'hours');
@@ -550,7 +545,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       startDate: yesterday.format(),
       endDate: yesterday.clone().add(1, 'hour').format(),
-      offering: this.offering3.id,
+      offering: 3,
       lastModified: today.clone().subtract(1, 'year'),
     });
     await visit('/dashboard?show=agenda');
@@ -790,7 +785,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       startDate: startOfTheWeek.format(),
       endDate: startOfTheWeek.clone().add(1, 'hour').format(),
-      offering: this.offering1.id,
+      offering: 1,
       isPublished: true,
     });
     const endOfTheWeek = moment().day(6).hour(22).minute(5);
@@ -798,7 +793,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       startDate: endOfTheWeek.format(),
       endDate: endOfTheWeek.clone().add(1, 'hour').format(),
-      offering: this.offering2.id,
+      offering: 2,
       isPublished: true,
     });
     const dashboard = '.dashboard-week';
@@ -832,13 +827,13 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      offering: this.offering1.id,
+      sessionTerms: [{id: 1}],
     });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      offering: this.offering2.id,
+      sessionTerms: [{id: 1}],
     });
     await visit('/dashboard?show=calendar');
     await showFilters();
@@ -867,13 +862,13 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      offering: this.offering1.id,
+      sessionTerms: [{id: 1}],
     });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      offering: this.offering2.id,
+      sessionTerms: [],
     });
     const filters = '.filter-tags .filter-tag';
     const filter = `${filters}:nth-of-type(1)`;
@@ -896,7 +891,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      offering: this.offering1.id,
+      offering: 1,
     });
     await visit('/dashboard?show=calendar');
     await triggerEvent('[data-test-ilios-calendar-event]>div', 'mouseenter');

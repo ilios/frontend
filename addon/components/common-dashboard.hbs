@@ -2,6 +2,8 @@
   <DashboardViewPicker @show={{@show}} @change={{@setShow}} />
   {{#if (eq @show "calendar")}}
     <DashboardCalendar
+      @allSchools={{@allSchools}}
+      @allAcademicYears={{@allAcademicYears}}
       @selectedDate={{@selectedDate}}
       @selectedView={{@selectedView}}
       @mySchedule={{@mySchedule}}
@@ -22,12 +24,12 @@
       @selectedCourses={{@selectedCourses}}
       @selectedSessionTypes={{@selectedSessionTypes}}
       @selectedTerms={{@selectedTerms}}
-      @onClearFilters={{@onClearFilters}}
-      @onUpdateCohorts={{@onUpdateCohorts}}
-      @onUpdateCourseLevels={{@onUpdateCourseLevels}}
-      @onUpdateCourses={{@onUpdateCourses}}
-      @onUpdateSessionTypes={{@onUpdateSessionTypes}}
-      @onUpdateTerms={{@onUpdateTerms}}
+      @clearFilters={{@clearFilters}}
+      @updateCohorts={{@updateCohorts}}
+      @updateCourseLevels={{@updateCourseLevels}}
+      @updateCourses={{@updateCourses}}
+      @updateSessionTypes={{@updateSessionTypes}}
+      @updateTerms={{@updateTerms}}
     />
   {{else if (eq @show "materials")}}
     <DashboardMaterials />
