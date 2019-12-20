@@ -2,7 +2,7 @@
 <MyMaterials
   @courseIdFilter={{this.course}}
   @filter={{this.filter}}
-  @materials={{this.materials}}
+  @materials={{await this.materials}}
   @sortBy={{this.sortBy}}
   @setCourseIdFilter={{action (mut this.course)}}
   @setFilter={{action (mut this.filter)}}

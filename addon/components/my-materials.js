@@ -1,30 +1,27 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { isPresent } from '@ember/utils';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
+import {restartableTask} from "ember-concurrency-decorators";
 
 const DEBOUNCE_DELAY = 250;
 
-export default Component.extend({
-  classNames: ['my-materials'],
-  courseIdFilter: null,
-  filter: null,
-  materials: null,
-  sortBy: null,
-  setCourseIdFilter() {},
-  setFilter() {},
-  setSortBy() {},
+export default class MyMaterials extends Component {
+  @tracked materials =  [];
+  @tracked loading = true;
 
-  filteredMaterials: computed('courseIdFilter', 'filter', 'materials.[]', async function() {
-    const courseIdFilter = this.courseIdFilter;
-    const filter = this.filter;
-    let materials = await this.materials;
-
-    if (isPresent(courseIdFilter)) {
-      materials = materials.filterBy('course', courseIdFilter);
+  get filteredMaterials() {
+    let materials = this.materials;
+    if (! this.materials) {
+      return [];
     }
 
-    if (isPresent(filter)) {
+    if (isPresent(this.args.courseIdFilter)) {
+      materials = this.materials.filterBy('course', this.args.courseIdFilter);
+    }
+
+    if (isPresent(this.args.filter)) {
       materials = materials.filter(({ courseTitle, instructors, sessionTitle, title }) => {
         let searchString = `${title} ${courseTitle} ${sessionTitle} `;
 
@@ -32,40 +29,48 @@ export default Component.extend({
           searchString += instructors.join(' ');
         }
 
-        return searchString.toLowerCase().includes(filter.toLowerCase());
+        return searchString.toLowerCase().includes(this.args.filter.toLowerCase());
       });
     }
-
     return materials;
-  }),
+  }
 
-  courses: computed('materials.[]', async function() {
-    const materials = await this.materials;
-    return materials.map((material) => {
+  get courses() {
+    if (! this.materials) {
+      return [];
+    }
+    return this.materials.map((material) => {
       return { id: material.course, title: material.courseTitle };
     }).uniqBy('id').sortBy('title');
-  }),
+  }
 
-  sortedAscending: computed('sortBy', function(){
-    const sortBy = this.get('sortBy');
-    return sortBy.search(/desc/) === -1;
-  }),
+  get sortedAscending() {
+    return this.args.sortBy.search(/desc/) === -1;
+  }
 
-  actions: {
-    sortString(a, b){
-      return a.localeCompare(b);
-    },
-    sortBy(what){
-      const sortBy = this.get('sortBy');
-      if (sortBy === what){
-        what += ':desc';
-      }
-      this.get('setSortBy')(what);
-    },
-  },
+  @action
+  sortString(a, b){
+    return a.localeCompare(b);
+  }
 
-  setQuery: task(function* (query) {
+  @action
+  sortBy(what){
+    if (this.args.sortBy === what){
+      what += ':desc';
+    }
+    this.args.setSortBy(what);
+  }
+
+  @restartableTask
+  *load(element, [materials]) {
+    this.loading = true;
+    this.materials = yield materials;
+    this.loading = false;
+  }
+
+  @restartableTask
+  *setQuery(query) {
     yield timeout(DEBOUNCE_DELAY);
-    this.setFilter(query);
-  }).restartable()
-});
+    this.args.setFilter(query);
+  }
+}
