@@ -1,83 +1,85 @@
-{{#if @learningMaterials.length}}
-  <ul class="static-list fa-ul">
-    {{#each @learningMaterials as |lm|}}
-      <li class="single-event-learningmaterial-item">
-        {{#if lm.isBlanked}}
-          <span class="lm-type-icon">
-            <FaIcon @icon="clock" @title={{t "general.timedRelease"}} />
-          </span>
-          <div class="single-event-learningmaterial-item-title">
-            {{lm.title}}
-          </div>
-        {{else}}
-          <LmTypeIcon
-            @type={{lm.type}}
-            @mimetype={{lm.mimetype}}
-            @listItem={{true}}
-          />
-          <div class="single-event-learningmaterial-item-title">
-            {{#if lm.required}}
-              <FaIcon @icon="star" @title={{t "general.required"}} />
-            {{/if}}
-            {{#if lm.absoluteFileUri}}
-              {{#if (eq lm.mimetype "application/pdf")}}
-                <a href="{{lm.absoluteFileUri}}?inline">
+<div class="single-event-learningmaterial-list">
+  {{#if @learningMaterials.length}}
+    <ul class="static-list fa-ul">
+      {{#each @learningMaterials as |lm|}}
+        <li class="single-event-learningmaterial-item">
+          {{#if lm.isBlanked}}
+            <span class="lm-type-icon">
+              <FaIcon @icon="clock" @title={{t "general.timedRelease"}} />
+            </span>
+            <div class="single-event-learningmaterial-item-title">
+              {{lm.title}}
+            </div>
+          {{else}}
+            <LmTypeIcon
+              @type={{lm.type}}
+              @mimetype={{lm.mimetype}}
+              @listItem={{true}}
+            />
+            <div class="single-event-learningmaterial-item-title">
+              {{#if lm.required}}
+                <FaIcon @icon="star" @title={{t "general.required"}} />
+              {{/if}}
+              {{#if lm.absoluteFileUri}}
+                {{#if (eq lm.mimetype "application/pdf")}}
+                  <a href="{{lm.absoluteFileUri}}?inline">
+                    {{lm.title}}
+                  </a>
+                  <a target="_blank" href={{lm.absoluteFileUri}} rel="noopener">
+                    <FaIcon @icon="download" @title={{t "general.download"}} />
+                  </a>
+                {{else}}
+                  <a target="_blank" href={{lm.absoluteFileUri}} rel="noopener">
+                    {{lm.title}}
+                  </a>
+                {{/if}}
+                <span class="single-event-learningmaterial-filesize">
+                  {{#if lm.filesize}}
+                    ({{filesize lm.filesize}})
+                  {{/if}}
+                </span>
+              {{else if lm.link}}
+                <a target="_blank" href={{lm.link}} rel="noopener">
                   {{lm.title}}
-                </a>
-                <a target="_blank" href={{lm.absoluteFileUri}} rel="noopener">
-                  <FaIcon @icon="download" @title={{t "general.download"}} />
                 </a>
               {{else}}
-                <a target="_blank" href={{lm.absoluteFileUri}} rel="noopener">
-                  {{lm.title}}
-                </a>
-              {{/if}}
-              <span class="single-event-learningmaterial-filesize">
-                {{#if lm.filesize}}
-                  ({{filesize lm.filesize}})
-                {{/if}}
-              </span>
-            {{else if lm.link}}
-              <a target="_blank" href={{lm.link}} rel="noopener">
                 {{lm.title}}
-              </a>
-            {{else}}
-              {{lm.title}}
+              {{/if}}
+            </div>
+            {{#if lm.citation}}
+              <div class="single-event-learningmaterial-item-citation">
+                {{lm.citation}}
+              </div>
             {{/if}}
-          </div>
-          {{#if lm.citation}}
-            <div class="single-event-learningmaterial-item-citation">
-              {{lm.citation}}
+            <div class="single-event-learningmaterial-item-timing-info">
+              <TimedReleaseSchedule
+                @startDate={{lm.startDate}}
+                @endDate={{lm.endDate}}
+                @showNoSchedule={{false}}
+              />
             </div>
+            {{#if lm.description}}
+              <div class="single-event-learningmaterial-item-description">
+                {{! template-lint-disable no-triple-curlies }}
+                {{{lm.description}}}
+              </div>
+            {{/if}}
+            {{#if lm.publicNotes}}
+              <div class="single-event-learningmaterial-item-notes">
+                {{! template-lint-disable no-triple-curlies }}
+                <FaIcon @icon="pen-square" />
+                <p>
+                  {{{lm.publicNotes}}}
+                </p>
+              </div>
+            {{/if}}
           {{/if}}
-          <div class="single-event-learningmaterial-item-timing-info">
-            <TimedReleaseSchedule
-              @startDate={{lm.startDate}}
-              @endDate={{lm.endDate}}
-              @showNoSchedule={{false}}
-            />
-          </div>
-          {{#if lm.description}}
-            <div class="single-event-learningmaterial-item-description">
-              {{! template-lint-disable no-triple-curlies }}
-              {{{lm.description}}}
-            </div>
-          {{/if}}
-          {{#if lm.publicNotes}}
-            <div class="single-event-learningmaterial-item-notes">
-              {{! template-lint-disable no-triple-curlies }}
-              <FaIcon @icon="pen-square" />
-              <p>
-                {{{lm.publicNotes}}}
-              </p>
-            </div>
-          {{/if}}
-        {{/if}}
-      </li>
-    {{/each}}
-  </ul>
-{{else}}
-  <p class="no-content">
-    {{t "general.none"}}
-  </p>
-{{/if}}
+        </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p class="no-content">
+      {{t "general.none"}}
+    </p>
+  {{/if}}
+</div>
