@@ -1,14 +1,12 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
-import SortableTable from 'ilios-common/mixins/sortable-table';
 import { task, timeout } from 'ember-concurrency';
 
 const DEBOUNCE_DELAY = 250;
 
-export default Component.extend(SortableTable, {
+export default Component.extend({
   classNames: ['my-materials'],
-
   courseIdFilter: null,
   filter: null,
   materials: null,
@@ -48,10 +46,22 @@ export default Component.extend(SortableTable, {
     }).uniqBy('id').sortBy('title');
   }),
 
+  sortedAscending: computed('sortBy', function(){
+    const sortBy = this.get('sortBy');
+    return sortBy.search(/desc/) === -1;
+  }),
+
   actions: {
     sortString(a, b){
       return a.localeCompare(b);
-    }
+    },
+    sortBy(what){
+      const sortBy = this.get('sortBy');
+      if (sortBy === what){
+        what += ':desc';
+      }
+      this.get('setSortBy')(what);
+    },
   },
 
   setQuery: task(function* (query) {
