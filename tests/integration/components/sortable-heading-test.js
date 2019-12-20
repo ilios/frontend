@@ -47,7 +47,7 @@ module('Integration | Component | sortable heading', function(hooks) {
     assert.dom('svg').hasClass('fa-sort-numeric-down');
   });
 
-  test('it renders', async function(assert) {
+  test('click event fires', async function(assert) {
     assert.expect(1);
     this.set('click', () => {
       assert.ok(true);
