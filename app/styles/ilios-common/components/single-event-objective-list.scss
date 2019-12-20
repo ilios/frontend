@@ -4,10 +4,6 @@
     &.active {
       background-color: $ilios-green;
     }
-
-    &:focus {
-      outline: 0;
-    }
   }
 
   .list-in-order {
