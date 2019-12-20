@@ -16,7 +16,9 @@ module('Acceptance | Dashboard Reports', function(hooks) {
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
     const user = await setupAuthentication( { school } );
-    const vocabulary = this.server.create('vocabulary');
+    const vocabulary = this.server.create('vocabulary', {
+      school
+    });
     const term = this.server.create('term', { vocabulary });
     this.server.create('academic-year', {
       id: 2015
