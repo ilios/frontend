@@ -1,59 +1,31 @@
-import Component from '@ember/component';
-import { isPresent } from '@ember/utils';
-import { reject } from 'rsvp';
-import { task } from 'ember-concurrency';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { dropTask } from 'ember-concurrency-decorators';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 
-const Validations = buildValidations({
-  title: [
-    validator('presence', true),
-    validator('length', {
-      max: 200
-    })
-  ]
-});
+@validatable
+export default class CompetencyTitleEditorComponent extends Component {
+  @Length(1, 200) @NotBlank() @tracked title;
 
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  classNames: ['competency-title-editor'],
-  tagName: 'span',
+  constructor() {
+    super(...arguments);
+    this.title = this.args.competency.title;
+  }
 
-  canUpdate: false,
-  competency: null,
-  title: null,
+  @action
+  revert() {
+    this.title = this.args.competency.title;
+  }
 
-  didReceiveAttrs() {
-    this._super(...arguments);
-    const competency = this.competency;
-    if (isPresent(competency)) {
-      this.set('title', competency.get('title'));
+  @dropTask
+  *save() {
+    this.addErrorDisplayFor('title');
+    const isValid = yield this.isValid('title');
+    if (!isValid) {
+      return false;
     }
-  },
-
-  actions: {
-    revert() {
-      this.set('title', null);
-      const competency = this.competency;
-      if (isPresent(competency)) {
-        this.set('title', competency.get('title'));
-      }
-    }
-  },
-
-  save: task(function* () {
-    this.send('addErrorDisplayFor', 'title');
-    const { validations } = yield this.validate();
-
-    if (validations.isValid) {
-      const { competency, title } = this.getProperties('competency', 'title');
-
-      if (isPresent(competency)) {
-        competency.set('title', title);
-      }
-
-      this.send('clearErrorDisplay');
-    } else {
-      return reject();
-    }
-  })
-});
+    this.args.competency.set('title', this.title);
+    this.removeErrorDisplayFor('title');
+  }
+}

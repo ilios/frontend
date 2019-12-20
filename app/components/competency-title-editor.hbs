@@ -1,24 +1,27 @@
-{{#if canUpdate}}
-  <EditableField
-    @value={{title}}
-    @save={{perform this.save}}
-    @close={{action "revert"}}
-    @saveOnEnter={{true}}
-    @closeOnEscape={{true}} as |isSaving|
-  >
-    <input
-      type="text"
-      value={{title}}
-      oninput={{action (mut title) value="target.value"}}
-      disabled={{isSaving}}
-      onkeyup={{action "addErrorDisplayFor" "title"}}
+<span
+  class="competency-title-editor"
+>
+  {{#if @canUpdate}}
+    <EditableField
+      @value={{this.title}}
+      @save={{perform this.save}}
+      @close={{fn this.revert}}
+      @saveOnEnter={{true}}
+      @closeOnEscape={{true}} as |isSaving|
     >
-  </EditableField>
-  {{#if (and (v-get this "title" "isInvalid") (contains "title" showErrorsFor))}}
-    <span class="validation-error-message">
-      {{v-get this "title" "message"}}
-    </span>
+      <Input
+        type="text"
+        @value={{this.title}}
+        @key-press={{fn this.addErrorDisplayFor "title"}}
+        disabled={{isSaving}}
+      />
+    </EditableField>
+    {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+      <span class="validation-error-message">
+        {{message}}
+      </span>
+    {{/each}}
+  {{else}}
+    {{title}}
   {{/if}}
-{{else}}
-  {{title}}
-{{/if}}
+</span>
