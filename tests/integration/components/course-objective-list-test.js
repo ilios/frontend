@@ -18,11 +18,11 @@ module('Integration | Component | course objective list', function(hooks) {
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('nothing', () => {});
-    this.set('subject', courseModel);
+    this.set('course', courseModel);
 
     await render(
       hbs`<CourseObjectiveList
-        @subject={{this.subject}}
+        @course={{this.course}}
         @editable={{true}}
         @manageParents={{action this.nothing}}
         @manageDescriptors={{action this.nothing}}
@@ -43,11 +43,10 @@ module('Integration | Component | course objective list', function(hooks) {
     assert.expect(2);
     const course = this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    this.set('subject', courseModel);
-    await render(hbs`{{course-objective-list subject=subject}}`);
+    this.set('course', courseModel);
     await render(
       hbs`<CourseObjectiveList
-        @subject={{this.subject}}
+        @course={{this.course}}
       />`
     );
     const container = findAll('.course-objective-list');
@@ -64,11 +63,11 @@ module('Integration | Component | course objective list', function(hooks) {
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('nothing', () => {});
-    this.set('subject', courseModel);
+    this.set('course', courseModel);
 
     await render(
       hbs`<CourseObjectiveList
-        @subject={{this.subject}}
+        @course={{this.course}}
         @editable={{true}}
         @manageParents={{action this.nothing}}
         @manageDescriptors={{action this.nothing}}
