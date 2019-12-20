@@ -1,1 +1,9 @@
-{{yield}}<FaIcon @icon={{this.sortIcon}} />
+<span
+  class="sortable-heading sortable clickable text-{{this.align}} {{if this.hideFromSmallScreen "hide-from-small-screen"}}"
+  colspan={{this.colspan}}
+  role="button"
+  title={{this.title}}
+  {{on "click" this.click}}
+>
+  {{yield}}<FaIcon @icon={{this.sortIcon}} />
+</span>
