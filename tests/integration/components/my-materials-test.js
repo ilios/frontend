@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { click, fillIn, find, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import EmberObject from '@ember/object';
-import { next } from '@ember/runloop';
 
 module('Integration | Component | my-materials', function(hooks) {
   setupRenderingTest(hooks);
@@ -307,10 +306,8 @@ module('Integration | Component | my-materials', function(hooks) {
     assert.dom(materials).exists({ count: 5 });
     assert.dom(firstLmTitle).hasText('title1');
     this.set('course', '2');
-    next(() => {
-      assert.dom(materials).exists({ count: 1 });
-      assert.dom(firstLmTitle).hasText('title2');
-    });
+    assert.dom(materials).exists({ count: 1 });
+    assert.dom(firstLmTitle).hasText('title2');
   });
 
   test('clicking sort fires action', async function(assert) {
