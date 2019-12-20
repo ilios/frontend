@@ -16,19 +16,16 @@ module('Integration | Component | ilios calendar single event learningmaterial l
     ]);
     await render(hbs`<SingleEventLearningmaterialList @learningMaterials={{learningMaterials}} />`);
 
-
-    assert.ok(this.element.querySelector('li:nth-of-type(1)').textContent.includes('first one'));
-    assert.equal(this.element.querySelectorAll('li:nth-of-type(1) .fa-file-pdf').length, 1, 'LM type icon is present.');
-    assert.equal(this.element.querySelector('li:nth-of-type(1) a').getAttribute('href').trim(), 'http://firstlink?inline');
-    assert.equal(this.element.querySelector('li:nth-of-type(1) a:nth-of-type(1)').getAttribute('href').trim(), 'http://firstlink?inline');
-    assert.equal(this.element.querySelectorAll('li:nth-of-type(1) a:nth-of-type(2) .fa-download').length, 1);
-
-    assert.ok(this.element.querySelector('li:nth-of-type(2)').textContent.includes('second one'));
-    assert.equal(this.element.querySelectorAll('li:nth-of-type(2) .fa-file-audio').length, 1, 'LM type icon is present.');
-    assert.equal(this.element.querySelector('li:nth-of-type(2) a').getAttribute('href').trim(), 'http://secondlink');
-
-    assert.ok(this.element.querySelector('li:nth-of-type(3)').textContent.includes('third one'));
-    assert.equal(this.element.querySelectorAll('li:nth-of-type(3) .fa-clock').length, 1, 'LM type icon is present.');
+    assert.dom('li:nth-of-type(1) .single-event-learningmaterial-item-title').hasText('first one Download');
+    assert.dom('li:nth-of-type(1) .fa-file-pdf').exists('LM type icon is present.');
+    assert.dom('li:nth-of-type(1) a').hasAttribute('href', 'http://firstlink?inline');
+    assert.dom('li:nth-of-type(1) a:nth-of-type(1)').hasAttribute('href', 'http://firstlink?inline');
+    assert.dom('li:nth-of-type(1) a:nth-of-type(2) .fa-download').exists();
+    assert.dom('li:nth-of-type(2) .single-event-learningmaterial-item-title').hasText('second one');
+    assert.dom('li:nth-of-type(2) .fa-file-audio').exists('LM type icon is present.');
+    assert.dom('li:nth-of-type(2) a').hasAttribute('href','http://secondlink');
+    assert.dom('li:nth-of-type(3) .single-event-learningmaterial-item-title').hasText('third one');
+    assert.dom('li:nth-of-type(3) .fa-clock').exists('LM type icon is present.');
   });
 
   test('displays `None` when provided no content', async function(assert) {
@@ -37,6 +34,6 @@ module('Integration | Component | ilios calendar single event learningmaterial l
     this.set('learningMaterials', []);
     await render(hbs`<SingleEventLearningmaterialList @learningMaterials={{learningMaterials}} />`);
 
-    assert.dom(this.element.querySelector('.no-content')).hasText('None');
+    assert.dom('.no-content').hasText('None');
   });
 });
