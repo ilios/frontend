@@ -1,64 +1,49 @@
-import Component from '@ember/component';
-import RSVP from 'rsvp';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { dropTask } from 'ember-concurrency-decorators';
+import { map, all } from 'rsvp';
 
-export default Component.extend({
-  tagName: 'section',
-  classNames: ['detail-cohorts'],
-  subject: null,
-  isManaging: false,
-  isSaving: false,
-  editable: true,
-  bufferedCohorts: null,
-  'data-test-detail-cohorts': true,
-  init() {
-    this._super(...arguments);
-    this.set('bufferedCohorts', []);
-  },
-  actions: {
-    manage(){
-      this.get('course.cohorts').then(cohorts => {
-        this.set('bufferedCohorts', cohorts.toArray());
-        this.set('isManaging', true);
-      });
-    },
-    save(){
-      this.set('isSaving', true);
-      const course = this.get('course');
-      course.get('cohorts').then(cohortList => {
-        const bufferedCohorts = this.get('bufferedCohorts');
-        const removedCohorts = cohortList.filter(cohort => {
-          return !bufferedCohorts.includes(cohort);
-        });
-        cohortList.clear();
-        bufferedCohorts.forEach(cohort=>{
-          cohortList.pushObject(cohort);
-        });
-        RSVP.all(removedCohorts.mapBy('programYear')).then(programYearsToRemove => {
-          course.get('objectives').then(objectives => {
-            RSVP.all(objectives.invoke('removeParentWithProgramYears', programYearsToRemove)).then(()=> {
-              course.save().then(()=>{
-                this.set('isManaging', false);
-                this.set('bufferedCohorts', []);
-                this.set('isSaving', false);
-              });
-            });
-          });
+export default class DetailCohortsComponent extends Component {
+  @tracked isManaging = false;
+  @tracked bufferedCohorts = [];
 
-
-        });
-
-      });
-
-    },
-    cancel(){
-      this.set('bufferedCohorts', []);
-      this.set('isManaging', false);
-    },
-    addCohortToBuffer(cohort){
-      this.get('bufferedCohorts').pushObject(cohort);
-    },
-    removeCohortFromBuffer(cohort){
-      this.get('bufferedCohorts').removeObject(cohort);
-    },
+  @dropTask
+  *manage() {
+    const cohorts = yield this.args.course.cohorts;
+    this.bufferedCohorts = [...cohorts.toArray()];
+    this.isManaging = true;
   }
-});
+
+  @dropTask
+  *save() {
+    const { course } = this.args;
+    const cohortList = yield course.cohorts;
+    const removedCohorts = cohortList.filter(cohort => {
+      return !this.bufferedCohorts.includes(cohort);
+    });
+    if (removedCohorts.length) {
+      const programYearsToRemove = yield map(removedCohorts, async cohort => cohort.programYear);
+      const objectives = yield course.objectives;
+      yield all(objectives.invoke('removeParentWithProgramYears', programYearsToRemove));
+    }
+    course.set('cohorts', this.bufferedCohorts);
+    yield course.save();
+    this.isManaging = false;
+    this.bufferedCohorts = [];
+  }
+
+  @action
+  cancel(){
+    this.bufferedCohorts = [];
+    this.isManaging = false;
+  }
+  @action
+  addCohortToBuffer(cohort) {
+    this.bufferedCohorts = [...this.bufferedCohorts, cohort];
+  }
+  @action
+  removeCohortFromBuffer(cohort) {
+    this.bufferedCohorts = this.bufferedCohorts.filter(obj => obj.id !== cohort.id);
+  }
+}
