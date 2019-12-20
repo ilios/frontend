@@ -1,100 +1,80 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { all } from 'rsvp';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { hash } from 'rsvp';
 
-export default Component.extend({
-  currentUser: service(),
-  tagName: 'section',
-  classNames: ['detail-instructors'],
-  ilmSession: null,
-  isManaging: false,
-  instructorGroupBuffer: null,
-  instructorBuffer: null,
-  'data-test-detail-instructors': true,
+export default class DetailInstructorsComponent extends Component {
+  @service currentUser;
+  @tracked isManaging = false;
+  @tracked instructorGroupBuffer = [];
+  @tracked instructorBuffer = [];
+  @tracked availableInstructorGroups;
 
-  availableInstructorGroups: computed('currentUser.model', async function() {
-    const model = await this.currentUser.getModel();
-    const school = await model.get('school');
-    return await school.instructorGroups;
-  }),
-
-  init() {
-    this._super(...arguments);
-    this.set('instructorGroupBuffer', []);
-    this.set('instructorBuffer', []);
-  },
-  actions: {
-    manage() {
-      const promises = [];
-      promises.pushObject(this.get('ilmSession.instructorGroups').then(instructorGroups => {
-        this.set('instructorGroupBuffer', instructorGroups.toArray());
-      }));
-
-      promises.pushObject(this.get('ilmSession.instructors').then(instructors => {
-        this.set('instructorBuffer', instructors.toArray());
-      }));
-
-      all(promises).then(()=>{
-        this.set('isManaging', true);
-      });
-    },
-    save() {
-      var ilmSession = this.get('ilmSession');
-
-      const instructorGroups = ilmSession.get('instructorGroups');
-      const removableInstructorGroups = instructorGroups.filter(group => !this.get('instructorGroupBuffer').includes(group));
-      instructorGroups.clear();
-      removableInstructorGroups.forEach(group => {
-        group.get('ilmSessions').then(ilmSessions => {
-          ilmSessions.removeObject(ilmSession);
-        });
-      });
-      this.get('instructorGroupBuffer').forEach(function(group){
-        instructorGroups.pushObject(group);
-        group.get('ilmSessions').then(ilmSessions => {
-          ilmSessions.pushObject(ilmSession);
-
-        });
-      });
-
-      const instructors = ilmSession.get('instructors');
-      const removableInstructors = instructors.filter(user => !this.get('instructorBuffer').includes(user));
-      instructors.clear();
-      removableInstructors.forEach(user => {
-        user.get('instructorIlmSessions').then(ilmSessions => {
-          ilmSessions.removeObject(ilmSession);
-        });
-      });
-      this.get('instructorBuffer').forEach(function(user){
-        instructors.pushObject(user);
-        user.get('instructorIlmSessions').then(ilmSessions => {
-          ilmSessions.pushObject(ilmSession);
-
-        });
-      });
-
-      ilmSession.save().then(() => {
-        this.set('isManaging', false);
-      });
-
-    },
-    cancel(){
-      this.set('instructorGroupBuffer', []);
-      this.set('instructorBuffer', []);
-      this.set('isManaging', false);
-    },
-    addInstructorGroupToBuffer(instructorGroup){
-      this.get('instructorGroupBuffer').pushObject(instructorGroup);
-    },
-    addInstructorToBuffer(instructor){
-      this.get('instructorBuffer').pushObject(instructor);
-    },
-    removeInstructorGroupFromBuffer(instructorGroup){
-      this.get('instructorGroupBuffer').removeObject(instructorGroup);
-    },
-    removeInstructorFromBuffer(instructor){
-      this.get('instructorBuffer').removeObject(instructor);
-    },
+  @restartableTask
+  *load() {
+    const user = yield this.currentUser.getModel();
+    const school = yield user.school;
+    this.availableInstructorGroups = yield school.instructorGroups;
   }
-});
+
+  @dropTask
+  *manage() {
+    const { ilmSession } = this.args;
+    const {
+      instructorGroups,
+      instructors
+    } = yield hash({
+      instructorGroups: ilmSession.instructorGroups,
+      instructors: ilmSession.instructors
+    });
+
+    this.instructorGroupBuffer = instructorGroups.toArray();
+    this.instructorBuffer = instructors.toArray();
+    this.isManaging = true;
+  }
+  @dropTask
+  *save() {
+    const { ilmSession } = this.args;
+    ilmSession.set('instructorGroups', this.instructorGroupBuffer);
+    ilmSession.set('instructors', this.instructorBuffer);
+    yield ilmSession.save();
+    this.isManaging = false;
+  }
+
+  get instructorCount() {
+    if (!this.args.ilmSession) {
+      return null;
+    }
+    return this.args.ilmSession.hasMany('instructors').ids().length;
+  }
+  get instructorGroupCount() {
+    if (!this.args.ilmSession) {
+      return null;
+    }
+    return this.args.ilmSession.hasMany('instructorGroups').ids().length;
+  }
+  @action
+  cancel(){
+    this.instructorGroupBuffer = [];
+    this.instructorBuffer = [];
+    this.isManaging = false;
+  }
+  @action
+  addInstructorGroupToBuffer(instructorGroup) {
+    this.instructorGroupBuffer = [...this.instructorGroupBuffer, instructorGroup];
+  }
+  @action
+  removeInstructorGroupFromBuffer(instructorGroup) {
+    this.instructorGroupBuffer = this.instructorGroupBuffer.filter(obj => obj.id !== instructorGroup.id);
+  }
+  @action
+  addInstructorToBuffer(instructor) {
+    this.instructorBuffer = [...this.instructorBuffer, instructor];
+  }
+  @action
+  removeInstructorFromBuffer(instructor) {
+    this.instructorBuffer = this.instructorBuffer.filter(obj => obj.id !== instructor.id);
+  }
+}

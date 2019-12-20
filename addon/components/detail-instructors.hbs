@@ -1,44 +1,51 @@
-<div class="detail-instructors-header">
-  <div class="title">
+<section
+  class="detail-instructors"
+  data-test-detail-instructors
+  {{did-insert (perform this.load) @ilmSession}}
+  {{did-update (perform this.load) @ilmSession}}
+>
+  <div class="detail-instructors-header">
+    <div class="title">
+      {{#if this.isManaging}}
+        <span class="detail-specific-title">
+          {{t "general.instructorsManageTitle"}}
+        </span>
+      {{else}}
+        {{t "general.instructorsAndInstructorGroups"}}
+        ({{this.instructorCount}}/{{this.instructorGroupCount}})
+      {{/if}}
+    </div>
+    <div class="actions">
+      {{#if this.isManaging}}
+        <button class="bigadd" {{on "click" (perform this.save)}}>
+          <FaIcon @icon="check" />
+        </button>
+        <button class="bigcancel" {{on "click" this.cancel}}>
+          <FaIcon @icon="undo" />
+        </button>
+      {{else if @editable}}
+        <button {{on "click" (perform this.manage)}}>
+          {{t "general.instructorsManageTitle"}}
+        </button>
+      {{/if}}
+    </div>
+  </div>
+  <div class="detail-instructors-content">
     {{#if this.isManaging}}
-      <span class="detail-specific-title">
-        {{t "general.instructorsManageTitle"}}
-      </span>
+      <InstructorSelectionManager
+        @addInstructor={{this.addInstructorToBuffer}}
+        @addInstructorGroup={{this.addInstructorGroupToBuffer}}
+        @removeInstructor={{this.removeInstructorFromBuffer}}
+        @removeInstructorGroup={{this.removeInstructorGroupFromBuffer}}
+        @availableInstructorGroups={{this.availableInstructorGroups}}
+        @instructorGroups={{this.instructorGroupBuffer}}
+        @instructors={{this.instructorBuffer}}
+      />
     {{else}}
-      {{t "general.instructorsAndInstructorGroups"}}
-      ({{@ilmSession.instructors.length}}/{{@ilmSession.instructorGroups.length}})
+      <DetailInstructorsList
+        @instructorGroups={{await @ilmSession.instructorGroups}}
+        @instructors={{await @ilmSession.instructors}}
+      />
     {{/if}}
   </div>
-  <div class="actions">
-    {{#if this.isManaging}}
-      <button class="bigadd" {{on "click" (action "save")}}>
-        <FaIcon @icon="check" />
-      </button>
-      <button class="bigcancel" {{on "click" (action "cancel")}}>
-        <FaIcon @icon="undo" />
-      </button>
-    {{else if @editable}}
-      <button {{on "click" (action "manage")}}>
-        {{t "general.instructorsManageTitle"}}
-      </button>
-    {{/if}}
-  </div>
-</div>
-<div class="detail-instructors-content">
-  {{#if this.isManaging class="horizontal"}}
-    <InstructorSelectionManager
-      @addInstructor={{action "addInstructorToBuffer"}}
-      @addInstructorGroup={{action "addInstructorGroupToBuffer"}}
-      @removeInstructor={{action "removeInstructorFromBuffer"}}
-      @removeInstructorGroup={{action "removeInstructorGroupFromBuffer"}}
-      @availableInstructorGroups={{await this.availableInstructorGroups}}
-      @instructorGroups={{this.instructorGroupBuffer}}
-      @instructors={{this.instructorBuffer}}
-    />
-  {{else}}
-    <DetailInstructorsList
-      @instructorGroups={{@ilmSession.instructorGroups}}
-      @instructors={{@ilmSession.instructors}}
-    />
-  {{/if}}
-</div>
+</section>
