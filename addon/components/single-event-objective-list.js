@@ -1,55 +1,44 @@
-import { A } from '@ember/array';
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 
-export default Component.extend({
-  classNames: ['single-event-objective-list'],
-  objectives: null,
-  groupByCompetencies: true,
+export default class SingleEventObjectiveList extends Component {
+  @tracked groupByCompetencies = true;
 
-  /**
-   * TRUE if the at least one of the given objectives has its sort priority set, otherwise FALSE.
-   * @property showDisplayModeToggle
-   * @type {Ember.computed}
-   */
-  showDisplayModeToggle: computed('objectives.[]', function(){
-    const objectives = this.get('objectives');
-    if (isEmpty(objectives)) {
+  get showDisplayModeToggle() {
+    if (! this.args.objectives) {
       return false;
     }
-    return !! objectives.reduce((prevValue, objective) => {
+    return !! this.args.objectives.reduce((prevValue, objective) => {
       return Math.max(prevValue, objective.position);
     }, 0);
-  }),
+  }
 
-  domains: computed('objectives.[]', function(){
-    const objectives = this.get('objectives');
-    if (isEmpty(objectives)) {
-      return A();
+  get domains() {
+    if (! this.args.objectives) {
+      return [];
     }
 
-    let domainTitles = objectives.map(obj => {
+    let domainTitles = this.args.objectives.map(obj => {
       return obj.domain.toString();
     });
 
-    domainTitles = A(domainTitles).uniq();
+    domainTitles = domainTitles.uniq();
 
     const domains = domainTitles.map(title => {
       const domain = {
         title,
         objectives: []
       };
-      const filteredObjectives = objectives.filter(obj => {
+      const filteredObjectives = this.args.objectives.filter(obj => {
         return obj.domain.toString() === title;
       }).map(obj => {
         return obj.title;
       });
-      domain.objectives = A(filteredObjectives).sortBy('title');
+      domain.objectives = filteredObjectives.sortBy('title');
 
       return domain;
     });
 
-    return A(domains).sortBy('title');
-  })
-});
+    return domains.sortBy('title');
+  }
+}
