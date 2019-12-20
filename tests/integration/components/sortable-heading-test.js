@@ -1,24 +1,58 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { click, find, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | sortable-heading', function(hooks) {
+module('Integration | Component | sortable heading', function(hooks) {
   setupRenderingTest(hooks);
 
+  test('it renders with default options', async function(assert) {
+    assert.expect(5);
+    await render(hbs`<SortableHeading>Foo</SortableHeading>`);
+    assert.dom('span').hasText('Foo');
+    assert.dom('span').hasClass('text-left');
+    assert.dom('span').hasNoClass('hide-from-small-screen');
+    assert.dom('span').hasAttribute('title', '');
+    assert.dom('svg').hasClass('fa-sort');
+  });
+
   test('it renders', async function(assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+    assert.expect(5);
+    const title = 'Bar';
+    const align = 'right';
+    this.set('title', title);
+    this.set('hideFromSmallScreen', true);
+    this.set('align', 'right');
+    this.set('sortedBy', true);
+    this.set('sortedAscending', false);
+    this.set('sortType', 'numeric');
+    await render(
+      hbs`<SortableHeading
+            @colspan={{this.colspan}}
+            @align={{this.align}}
+            @title={{this.title}}
+            @click={{this.click}}
+            @hideFromSmallScreen={{this.hideFromSmallScreen}}
+            @sortedBy={{this.sortedBy}}
+            @sortedAscending={{this.sortedAscending}}
+            @sortType={{this.sortType}}
+          >
+            Foo
+          </SortableHeading>`
+    );
+    assert.dom('span').hasText('Foo');
+    assert.dom('span').hasClass(`text-${align}`);
+    assert.dom('span').hasClass('hide-from-small-screen');
+    assert.dom('span').hasAttribute('title', title);
+    assert.dom('svg').hasClass('fa-sort-numeric-down');
+  });
 
-    await render(hbs`<SortableHeading />`);
-
-    assert.dom(this.element).hasText('');
-
-    // Template block usage:
-    await render(hbs`<SortableHeading>
-      template block text
-    </SortableHeading>`);
-
-    assert.dom(this.element).hasText('template block text');
+  test('click event fires', async function(assert) {
+    assert.expect(1);
+    this.set('click', () => {
+      assert.ok(true);
+    });
+    await render(hbs`<SortableHeading @click={{this.click}}>Foo</SortableHeading>`);
+    await click(find('span'));
   });
 });
