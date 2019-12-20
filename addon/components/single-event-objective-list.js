@@ -1,4 +1,3 @@
-import { A } from '@ember/array';
 import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
@@ -26,14 +25,14 @@ export default Component.extend({
   domains: computed('objectives.[]', function(){
     const objectives = this.get('objectives');
     if (isEmpty(objectives)) {
-      return A();
+      return [];
     }
 
     let domainTitles = objectives.map(obj => {
       return obj.domain.toString();
     });
 
-    domainTitles = A(domainTitles).uniq();
+    domainTitles = domainTitles.uniq();
 
     const domains = domainTitles.map(title => {
       const domain = {
@@ -45,11 +44,11 @@ export default Component.extend({
       }).map(obj => {
         return obj.title;
       });
-      domain.objectives = A(filteredObjectives).sortBy('title');
+      domain.objectives = filteredObjectives.sortBy('title');
 
       return domain;
     });
 
-    return A(domains).sortBy('title');
+    return domains.sortBy('title');
   })
 });
