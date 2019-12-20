@@ -1,5 +1,4 @@
 import Service from '@ember/service';
-import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
@@ -16,7 +15,9 @@ module('Unit | Service | api-version', function(hooks) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     assert.ok(apiVersion);
     const iliosConfigMock = Service.extend({
-      apiVersion: resolve(apiVersion)
+      async getApiVersion() {
+        return apiVersion;
+      }
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
     const service = this.owner.lookup('service:api-version');
@@ -26,7 +27,9 @@ module('Unit | Service | api-version', function(hooks) {
 
   test('returns true on version mismatch', async function(assert) {
     const iliosConfigMock = Service.extend({
-      apiVersion: resolve('1.0.0')
+      async getApiVersion() {
+        return '1.0.0';
+      }
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
     const service = this.owner.lookup('service:api-version');

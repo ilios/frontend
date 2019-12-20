@@ -17,7 +17,7 @@ export default class UserEvents extends EventsBase {
    * @return {Promise.<Array>}
    */
   async getEvents(from, to){
-    const user = await this.get('currentUser.model');
+    const user = await this.currentUser.getModel();
     if (! user) {
       return [];
     }

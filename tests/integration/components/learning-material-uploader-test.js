@@ -15,7 +15,9 @@ module('Integration | Component | learning-material-uploader', function(hooks) {
   test('upload file', async function (assert) {
     assert.expect(4);
     const iliosConfigMock = Service.extend({
-      maxUploadSize: 1000
+      async getMaxUploadSize() {
+        return 1000;
+      }
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
 
@@ -52,7 +54,9 @@ module('Integration | Component | learning-material-uploader', function(hooks) {
   test('shows error when file is too big', async function (assert) {
     assert.expect(1);
     const iliosConfigMock = Service.extend({
-      maxUploadSize: 1
+      async getMaxUploadSize() {
+        return 1;
+      }
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
 

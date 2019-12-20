@@ -1,5 +1,4 @@
 import EmberObject from '@ember/object';
-import { resolve } from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
@@ -12,9 +11,11 @@ module('Integration | Service | user events', function(hooks) {
 
   hooks.beforeEach(function() {
     const MockCurrentUserService = Service.extend({
-      model: resolve(EmberObject.create({
-        id: 1
-      }))
+      async getModel() {
+        return EmberObject.create({
+          id: 1
+        });
+      }
     });
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
@@ -70,7 +71,11 @@ module('Integration | Service | user events', function(hooks) {
   test('getEvents - no user', async function(assert){
     assert.expect(1);
     this.currentUser.reopen({
-      model: resolve(null)
+      async getModel() {
+        return EmberObject.create({
+          id: 1
+        });
+      }
     });
     const subject = this.owner.lookup('service:user-events');
     const from = moment('20150305', 'YYYYMMDD').hour(0);

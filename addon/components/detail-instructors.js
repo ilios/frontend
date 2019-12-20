@@ -14,7 +14,7 @@ export default Component.extend({
   'data-test-detail-instructors': true,
 
   availableInstructorGroups: computed('currentUser.model', async function() {
-    const model = await this.currentUser.model;
+    const model = await this.currentUser.getModel();
     const school = await model.get('school');
     return await school.instructorGroups;
   }),

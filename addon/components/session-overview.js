@@ -80,7 +80,6 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
    * end we do need to check every course in the school.
    */
   showCopy: computed('currentUser', 'routing.currentRouteName', async function () {
-    const currentUser = this.get('currentUser');
     const permissionChecker = this.get('permissionChecker');
     const routing = this.get('routing');
     if (routing.get('currentRouteName') === 'session.copy') {
@@ -92,7 +91,7 @@ export default Component.extend(Publishable, Validations, ValidationErrorDisplay
     if (await permissionChecker.canCreateSession(course)) {
       return true;
     }
-    const user = await currentUser.get('model');
+    const user = await this.currentUser.getModel();
     const allRelatedCourses = await user.get('allRelatedCourses');
     let relatedCourse;
     for (relatedCourse of allRelatedCourses) {

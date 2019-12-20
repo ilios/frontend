@@ -12,12 +12,12 @@ export default Service.extend({
   }),
 
   isMismatched: computed('iliosConfig.apiVersion', 'version', async function () {
-    const serverApiVersion = await this.iliosConfig.apiVersion;
+    const serverApiVersion = await this.iliosConfig.getApiVersion();
     return serverApiVersion !== this.version;
   }),
 
   async getIsMismatched() {
-    const serverApiVersion = await this.iliosConfig.apiVersion;
+    const serverApiVersion = await this.iliosConfig.getApiVersion();
     return serverApiVersion !== this.version;
   }
 });

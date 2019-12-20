@@ -17,7 +17,7 @@ export default class LearningMaterialUploaderComponent extends Component {
     this.args.setFilename(null);
     this.args.setFileHash(null);
     this.fileUploadErrorMessage = false;
-    const maxUploadSize = yield this.iliosConfig.maxUploadSize;
+    const maxUploadSize = yield this.iliosConfig.getMaxUploadSize();
     if (file.size > maxUploadSize) {
       const maxSize = readableFileSize(maxUploadSize);
       this.fileUploadErrorMessage = this.intl.t('general.fileSizeError', { maxSize });
