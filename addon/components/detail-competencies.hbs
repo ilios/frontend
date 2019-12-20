@@ -1,25 +1,31 @@
-<div
-  class="title {{if (await this.showCollapsible) "clickable collapsible"}}"
-  role="button"
-  {{on "click" (action "collapse")}}
+<section
+ class="detail-competencies {{if this.hasCompetencies "collapsible"}}"
+  {{did-insert (fn this.load) (await @course.competencies)}}
+  {{did-update (fn this.load) (await @course.competencies)}}
 >
-  {{t "general.competencies"}} ({{get (await @course.competencies) "length"}})
-</div>
-{{#if (get (await @course.competencies) "length")}}
-  <div class="detail-competencies-content">
-    <ul class="static-list">
-      {{#each (await @course.domains) as |domain|}}
-        <li>
-          {{domain.title}}
-          <ul>
-            {{#each (await domain.subCompetencies) as |competency|}}
-              <li>
-                {{competency.title}}
-              </li>
-            {{/each}}
-          </ul>
-        </li>
-      {{/each}}
-    </ul>
+  <div
+    class="title {{if this.hasCompetencies "clickable collapsible"}}"
+    role="button"
+    {{on "click" (if this.hasCompetencies this.collapse (noop))}}
+  >
+    {{t "general.competencies"}} ({{this.competencyCount}})
   </div>
-{{/if}}
+  {{#if this.hasCompetencies}}
+    <div class="detail-competencies-content">
+      <ul class="static-list">
+        {{#each (await @course.domains) as |domain|}}
+          <li>
+            {{domain.title}}
+            <ul>
+              {{#each (await domain.subCompetencies) as |competency|}}
+                <li>
+                  {{competency.title}}
+                </li>
+              {{/each}}
+            </ul>
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
+</section>
