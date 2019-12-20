@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 import { component } from 'ilios-common/page-objects/components/week-glance-event';
 
@@ -89,6 +90,8 @@ module('Integration | Component | week-glance-event', function(hooks) {
     assert.ok(component.sessionAttributes[1].equipment);
     assert.ok(component.sessionAttributes[2].attendance);
     assert.ok(component.sessionAttributes[3].supplemental);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders with other stuff', async function (assert) {
@@ -139,6 +142,8 @@ module('Integration | Component | week-glance-event', function(hooks) {
     assert.ok(component.hasInstructors);
     assert.equal(component.instructors, 'Instructors: First Person, Second Person');
     assert.equal(component.sessionAttributes.length, 0);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
   test('it renders schedule materials', async function (assert) {
     this.set('event', {
@@ -203,6 +208,8 @@ module('Integration | Component | week-glance-event', function(hooks) {
 
     assert.notOk(component.hasInstructors);
     assert.equal(component.sessionAttributes.length, 4);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders prework', async function (assert) {
@@ -229,6 +236,8 @@ module('Integration | Component | week-glance-event', function(hooks) {
     assert.ok(component.preWork[0].hasLink);
     assert.equal(component.preWork[1].title, 'prework 2');
     assert.ok(component.preWork[1].hasLink);
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it skips course learning materials', async function (assert) {
