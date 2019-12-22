@@ -10,7 +10,10 @@ export function NotBlank(validationOptions) {
       options: validationOptions,
       validator: {
         validate(value) {
-          return value !== null && value !== undefined && value.trim() !== '';
+          if (typeof value === 'string') {
+            return value.trim() !== '';
+          }
+          return value !== null || value !== undefined;
         },
         defaultMessage({ object: target }) {
           const owner = getOwner(target);
