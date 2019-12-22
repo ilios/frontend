@@ -14,13 +14,14 @@ export function validatable(target) {
         acc[property] = Object.values(constraints);
         return acc;
       }, {});
+      errorsByField._hasErrors = errors.length > 0;
       return errorsByField;
     }
     @action
     async isValid(field = null) {
       const errors = await this.validate();
       if (field === null) {
-        return errors.length > 0;
+        return !errors._hasErrors;
       }
       return !(field in errors);
     }
