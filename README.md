@@ -5,7 +5,6 @@
 - [Ilios Frontend](https://github.com/ilios/common)
 - [Ilios LTI App](https://github.com/ilios/lti-app)
 
-
 ## Usage
 
 `ember install ilios-common`
