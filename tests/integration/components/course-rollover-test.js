@@ -113,6 +113,40 @@ module('Integration | Component | course rollover', function(hooks) {
     await click('.done');
   });
 
+  test('rollover course to selected year', async function(assert) {
+    assert.expect(5);
+    const course = EmberObject.create({
+      id: 1,
+      title: 'old title',
+      startDate: moment().hour(0).minute(0).second(0).toDate()
+    });
+    const selectedYear = parseInt(moment().add(2, 'years').format('YYYY'), 10);
+    this.server.post(`/api/courses/${course.id}/rollover`, (schema, request) => {
+      const data = queryString.parse(request.requestBody);
+      assert.ok('year' in data);
+      assert.equal(data.year, selectedYear);
+      assert.equal(data.newCourseTitle, course.title);
+      assert.ok('newStartDate' in data);
+      return {
+        courses: [
+          {
+            id: 14
+          }
+        ]
+      };
+    });
+    this.set('course', course);
+    this.set('visit', (newCourse) => {
+      assert.equal(newCourse.id, 14);
+    });
+    await render(hbs`<CourseRollover
+      @course={{this.course}}
+      @visit={{action this.visit}}
+    />`);
+    await fillIn('[data-test-year]', selectedYear);
+
+    await click('.done');
+  });
 
   test('disable years when title already exists', async function(assert) {
     assert.expect(5);

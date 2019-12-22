@@ -1,158 +1,135 @@
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { isPresent } from '@ember/utils';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { timeout } from 'ember-concurrency';
 import moment from 'moment';
-import { task, timeout } from 'ember-concurrency';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 
-const { reads } = computed;
+@validatable
+export default class CourseRolloverComponent extends Component {
+  @service fetch;
+  @service store;
+  @service flashMessages;
+  @service iliosConfig;
+  @Length(3, 200) @NotBlank() @tracked title;
+  @NotBlank() @tracked selectedYear;
 
-const Validations = buildValidations({
-  title: [
-    validator('presence', true),
-    validator('length', {
-      min: 3,
-      max: 200
-    }),
-  ],
-  selectedYear: [
-    validator('presence', true)
-  ],
-});
+  @tracked years;
+  @tracked selectedYear;
+  @tracked course;
+  @tracked startDate;
+  @tracked skipOfferings = false;
+  @tracked title;
+  @tracked selectedCohorts = [];
+  @tracked unavailableYears = [];
 
-export default Component.extend(ValidationErrorDisplay, Validations, {
-  fetch: service(),
-  store: service(),
-  flashMessages: service(),
-  iliosConfig: service(),
-  classNames: ['course-rollover'],
-  years: null,
-  selectedYear: null,
-  course: null,
-  startDate: null,
-  skipOfferings: false,
-  title: null,
-  isSaving: false,
-  selectedCohorts: null,
 
-  host: reads('iliosConfig.apiHost'),
-  namespace: reads('iliosConfig.apiNameSpace'),
-  init() {
-    this._super(...arguments);
-    this.set('selectedCohorts', []);
-  },
-  didReceiveAttrs(){
-    this._super(...arguments);
+  constructor(){
+    super(...arguments);
     const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
-    const years = [];
+    this.years = [];
     for (let i = 0; i < 6; i++) {
-      years.push(lastYear + i);
+      this.years.push(lastYear + i);
     }
-    this.set('years', years);
-    const course = this.get('course');
-    if (isPresent(course)) {
-      this.set('title', course.get('title'));
-    }
+  }
 
-    this.get('loadUnavailableYears').perform();
-    this.get('changeSelectedYear').perform(lastYear);
-  },
-  actions: {
-    changeTitle(newTitle){
-      this.set('title', newTitle);
-      this.get('loadUnavailableYears').perform();
-    },
-    addCohort(cohort) {
-      const selectedCohorts = this.get('selectedCohorts');
-      selectedCohorts.pushObject(cohort);
-      this.set('selectedCohorts', selectedCohorts);
-    },
-    removeCohort(cohort){
-      const selectedCohorts = this.get('selectedCohorts');
-      selectedCohorts.removeObject(cohort);
-      this.set('selectedCohorts', selectedCohorts);
-    },
-  },
-  keyUp(event) {
-    const keyCode = event.keyCode;
-    const target = event.target;
-
-    if ('text' !== target.type) {
+  @restartableTask
+  *load(event, [course]) {
+    if (!course) {
       return;
     }
+    this.title = course.title;
+    yield this.loadUnavailableYears.perform();
+    yield this.changeSelectedYear.perform(this.years.firstObject);
+  }
 
-    if (13 === keyCode) {
-      this.get('save').perform();
+  @action
+  changeTitle(newTitle){
+    this.title = newTitle;
+    this.loadUnavailableYears.perform();
+  }
+  @action
+  addCohort(cohort) {
+    this.selectedCohorts = [...this.selectedCohorts, cohort];
+  }
+  @action
+  removeCohort(cohort){
+    this.selectedCohorts = this.selectedCohorts.filter(obj => obj !== cohort);
+  }
+
+  // keyUp(event) {
+  //   const keyCode = event.keyCode;
+  //   const target = event.target;
+
+  //   if ('text' !== target.type) {
+  //     return;
+  //   }
+
+  //   if (13 === keyCode) {
+  //     this.get('save').perform();
+  //   }
+  // },
+
+  @dropTask
+  *save(){
+    yield timeout(1);
+    this.addErrorDisplayForAllFields();
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
     }
-  },
+    const courseId = this.args.course.id;
 
-  save: task(function * (){
-    this.set('isSaving', true);
-    yield timeout(10);
-    this.send('addErrorDisplaysFor', ['title', 'selectedYear']);
-    const {validations} = yield this.validate();
-
-    if (validations.get('isInvalid')) {
-      this.set('isSaving', false);
-      return;
-    }
-    const courseId = this.get('course.id');
-    const year = this.get('selectedYear');
-    const newCourseTitle = this.get('title');
-    const selectedCohortIds = this.get('selectedCohorts').mapBy('id');
-    const newStartDate = moment(this.get('startDate')).format('YYYY-MM-DD');
-    const skipOfferings = this.get('skipOfferings');
+    const selectedCohortIds = this.selectedCohorts.mapBy('id');
 
     const data = {
-      year,
-      newCourseTitle
+      year: this.selectedYear,
+      newCourseTitle: this.title
     };
-    if (newStartDate) {
-      data.newStartDate = newStartDate;
+    if (this.startDate) {
+      data.newStartDate = moment(this.startDate).format('YYYY-MM-DD');
     }
-    if (skipOfferings) {
+    if (this.skipOfferings) {
       data.skipOfferings = true;
     }
     if (selectedCohortIds && selectedCohortIds.length) {
       data.newCohorts = selectedCohortIds;
     }
 
-    const url = `${this.namespace}/courses/${courseId}/rollover`;
-    const newCoursesObj = yield this.fetch.postToApiHost(url, data);
+    const newCoursesObj = yield this.fetch.postToApi(`courses/${courseId}/rollover`, data);
 
-    const flashMessages = this.get('flashMessages');
-    const store = this.get('store');
-    flashMessages.success('general.courseRolloverSuccess');
-    store.pushPayload(newCoursesObj);
-    const newCourse = store.peekRecord('course', newCoursesObj.courses[0].id);
+    this.flashMessages.success('general.courseRolloverSuccess');
+    this.store.pushPayload(newCoursesObj);
+    const newCourse = this.store.peekRecord('course', newCoursesObj.courses[0].id);
 
-    return this.get('visit')(newCourse);
-  }).drop(),
+    return this.args.visit(newCourse);
+  }
 
-  loadUnavailableYears: task(function * (){
+  @restartableTask
+  *loadUnavailableYears(){
     yield timeout(250); //debounce title changes
-    const title = this.get('title');
-    const store = this.get('store');
-    const existingCoursesWithTitle = yield store.query('course', {
-      filters: {title}
+    const existingCoursesWithTitle = yield this.store.query('course', {
+      filters: {
+        title: this.title
+      }
     });
 
-    return existingCoursesWithTitle.mapBy('year');
-  }).restartable(),
+    this.unavailableYears = existingCoursesWithTitle.mapBy('year');
+  }
 
-  changeSelectedYear: task(function * (selectedYear){
-    this.setProperties({selectedYear});
-    yield timeout(100); //let max/min cp's recalculate
+  @restartableTask
+  *changeSelectedYear(selectedYear){
+    this.selectedYear = Number(selectedYear);
+    yield timeout(1); //let max/min cp's recalculate
 
-    const date = moment(this.get('course.startDate'));
+    const date = moment(this.args.course.startDate);
     const day = date.isoWeekday();
     const week = date.isoWeek();
 
-    const startDate = moment().year(selectedYear).isoWeek(week).isoWeekday(day).toDate();
-    this.setProperties({startDate});
-  }).restartable(),
+    this.startDate = moment().year(selectedYear).isoWeek(week).isoWeekday(day).toDate();
+  }
 
   /**
    * "disableDayFn" callback function pikaday.
@@ -160,17 +137,17 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
    * @param {Date} date
    * @returns {boolean}
    */
+  @action
   disableDayFn(date) {
     // KLUDGE!
     // We're sneaking the course into pikaday via the options hash.
     // See https://github.com/edgycircle/ember-pikaday#using-pikaday-specific-options
     // If ember-pikaday ever locks down this backdoor, then we're hosed.
     // @todo Find a better way. [ST 2016/06/30]
-    if (this.course) {
+    if (this.args.course) {
       // ensure that only dates that fall on the same weekday as the course's start date can be selected.
-      return this.course.get('startDate').getUTCDay() !== date.getUTCDay();
+      return this.args.course.get('startDate').getUTCDay() !== date.getUTCDay();
     }
     return false; // don't disable anything if we don't have a course to compare to.
-  },
-
-});
+  }
+}

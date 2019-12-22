@@ -50,4 +50,9 @@ export default class Fetch extends Service {
     });
     return response.json();
   }
+
+  async postToApi(path, data) {
+    const apiPath = `/${this.iliosConfig.apiNameSpace}/${path}`;
+    return this.postToApiHost(apiPath, data);
+  }
 }
