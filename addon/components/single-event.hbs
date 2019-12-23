@@ -1,156 +1,158 @@
-{{#if @event}}
-  <div class="single-event-summary">
-    <h1 data-test-title>
-      {{#if this.recentlyUpdated}}
-        <FaIcon
-          @icon="exclamation-circle"
-          class="recently-updated-icon-event"
-          @title={{t "general.newUpdates"}}
-        />
-      {{/if}}
-      {{@event.courseTitle}}
-      -
-      <em>
-        {{@event.name}}
-      </em>
-    </h1>
-    <div class="single-event-offered-at" data-test-offered-at>
-      {{#if (gt @event.postrequisites.length 0)}}
-        <p>
-          {{t
-            "general.dueBeforeLink"
-            name=(get (object-at 0 @event.postrequisites) "name")
-            date=(moment-format
-              (get (object-at 0 @event.postrequisites) "startDate")
-              "dddd, MMMM Do YYYY, h:mm a"
-            )
-            link=this.postrequisiteLink
-            htmlSafe=true
-          }}
-        </p>
-      {{/if}}
-      {{#unless @event.ilmSession}}
-        <p>
-          {{moment-format @event.startDate "dddd, MMMM Do YYYY, h:mm a"}}
-        </p>
-      {{/unless}}
-    </div>
-    <div class="single-event-location">
-      {{@event.location}}
-    </div>
-    {{#if this.taughtBy}}
-      <div class="single-event-instructors">
-        {{this.taughtBy}}
-      </div>
-    {{/if}}
-    <div class="single-event-session-is">
-      {{this.sessionIs}}
-    </div>
-    {{#if @event.equipmentRequired}}
-      <div class="single-event-equipment-required">
-        {{! template-lint-disable no-triple-curlies }}
-        {{{t "general.specialEquipmentIs_Required_"}}}
-        <FaIcon @icon="flask" @title={{t "general.specialEquipment"}} />
-      </div>
-    {{/if}}
-    {{#if @event.attireRequired}}
-      <div class="single-event-attire-required">
-        {{! template-lint-disable no-triple-curlies }}
-        {{{t "general.specialAttireIs_Required_"}}}
-        <FaIcon
-          @icon="black-tie"
-          @prefix="fab"
-          @title={{t "general.whitecoatsSlashSpecialAttire"}}
-        />
-      </div>
-    {{/if}}
-    {{#if @event.attendanceRequired}}
-      <div class="single-event-attendance-required">
-        {{! template-lint-disable no-triple-curlies }}
-        {{{t "general.attendanceIs_Required_"}}}
-        <FaIcon
-          @icon="calendar-check"
-          @title={{t "general.attendanceIsRequired"}}
-        />
-      </div>
-    {{/if}}
-    {{#if @event.supplemental}}
-      <div class="single-event-supplemental">
-        <strong>
-          {{t "general.supplementalCurriculum"}}
-        </strong>
-        <FaIcon
-          @icon="calendar-minus"
-          @title={{t "general.supplementalCurriculum"}}
-        />
-      </div>
-    {{/if}}
-    {{#if (gt (get @event.sessionDescription "length") 0)}}
-      {{! template-lint-disable no-triple-curlies }}
-      {{{@event.sessionDescription}}}
-      <br>
-    {{/if}}
-    {{#if @event.prerequisites.length}}
-      <p class="pre-work" data-test-pre-work>
-        <h5>
-          {{t "general.preWork"}}
-        </h5>
-        <ul>
-          {{#each @event.prerequisites as |event|}}
-            <li>
-              <LinkTo @route="events" @model={{event.slug}}>
-                {{event.name}}
-              </LinkTo>
-            </li>
-          {{/each}}
-        </ul>
-      </p>
-    {{/if}}
-  </div>
-  <fieldset>
-    <div class="single-event-learningmaterial-list">
-      <h2>
-        {{t "general.sessionLearningMaterials"}}
-        {{#if (await this.currentUser.userIsStudent)}}
+<div class="single-event" data-test-single-event>
+  {{#if @event}}
+    <div class="single-event-summary">
+      <h1 data-test-title>
+        {{#if this.recentlyUpdated}}
           <FaIcon
-            @icon="archive"
-            class="link"
-            @title={{t "general.accessAllMaterialsForThisCourse"}}
-            @click={{action "transitionToMyMaterials"}}
+            @icon="exclamation-circle"
+            class="recently-updated-icon-event"
+            @title={{t "general.newUpdates"}}
           />
         {{/if}}
-      </h2>
-      <SingleEventLearningmaterialList
-        @learningMaterials={{this.sessionLearningMaterials}}
-      />
+        {{@event.courseTitle}}
+        -
+        <em>
+          {{@event.name}}
+        </em>
+      </h1>
+      <div class="single-event-offered-at" data-test-offered-at>
+        {{#if (gt @event.postrequisites.length 0)}}
+          <p>
+            {{t
+              "general.dueBeforeLink"
+              name=(get (object-at 0 @event.postrequisites) "name")
+              date=(moment-format
+                (get (object-at 0 @event.postrequisites) "startDate")
+                "dddd, MMMM Do YYYY, h:mm a"
+              )
+              link=this.postrequisiteLink
+              htmlSafe=true
+            }}
+          </p>
+        {{/if}}
+        {{#unless @event.ilmSession}}
+          <p>
+            {{moment-format @event.startDate "dddd, MMMM Do YYYY, h:mm a"}}
+          </p>
+        {{/unless}}
+      </div>
+      <div class="single-event-location">
+        {{@event.location}}
+      </div>
+      {{#if this.taughtBy}}
+        <div class="single-event-instructors">
+          {{this.taughtBy}}
+        </div>
+      {{/if}}
+      <div class="single-event-session-is">
+        {{this.sessionIs}}
+      </div>
+      {{#if @event.equipmentRequired}}
+        <div class="single-event-equipment-required">
+          {{! template-lint-disable no-triple-curlies }}
+          {{{t "general.specialEquipmentIs_Required_"}}}
+          <FaIcon @icon="flask" @title={{t "general.specialEquipment"}} />
+        </div>
+      {{/if}}
+      {{#if @event.attireRequired}}
+        <div class="single-event-attire-required">
+          {{! template-lint-disable no-triple-curlies }}
+          {{{t "general.specialAttireIs_Required_"}}}
+          <FaIcon
+            @icon="black-tie"
+            @prefix="fab"
+            @title={{t "general.whitecoatsSlashSpecialAttire"}}
+          />
+        </div>
+      {{/if}}
+      {{#if @event.attendanceRequired}}
+        <div class="single-event-attendance-required">
+          {{! template-lint-disable no-triple-curlies }}
+          {{{t "general.attendanceIs_Required_"}}}
+          <FaIcon
+            @icon="calendar-check"
+            @title={{t "general.attendanceIsRequired"}}
+          />
+        </div>
+      {{/if}}
+      {{#if @event.supplemental}}
+        <div class="single-event-supplemental">
+          <strong>
+            {{t "general.supplementalCurriculum"}}
+          </strong>
+          <FaIcon
+            @icon="calendar-minus"
+            @title={{t "general.supplementalCurriculum"}}
+          />
+        </div>
+      {{/if}}
+      {{#if (gt (get @event.sessionDescription "length") 0)}}
+        {{! template-lint-disable no-triple-curlies }}
+        {{{@event.sessionDescription}}}
+        <br>
+      {{/if}}
+      {{#if @event.prerequisites.length}}
+        <p class="pre-work" data-test-pre-work>
+          <h5>
+            {{t "general.preWork"}}
+          </h5>
+          <ul>
+            {{#each @event.prerequisites as |event|}}
+              <li>
+                <LinkTo @route="events" @model={{event.slug}}>
+                  {{event.name}}
+                </LinkTo>
+              </li>
+            {{/each}}
+          </ul>
+        </p>
+      {{/if}}
     </div>
-    <div class="single-event-objective-list">
-      <SingleEventObjectiveList
-        @groupByCompetenciesPhrase={{t "general.groupByCompetencies"}}
-        @listByPriorityPhrase={{t "general.listByPriority"}}
-        @objectives={{this.sessionObjectives}}
-        @title={{t "general.sessionObjectives"}}
-      />
-    </div>
-  </fieldset>
-  <fieldset>
-    <div class="single-event-learningmaterial-list">
-      <h2>
-        {{t "general.courseLearningMaterials"}}
-      </h2>
-      <SingleEventLearningmaterialList
-        @learningMaterials={{this.courseLearningMaterials}}
-      />
-    </div>
-    <div class="single-event-objective-list" data-test-course-objectives>
-      <SingleEventObjectiveList
-        @groupByCompetenciesPhrase={{t "general.groupByCompetencies"}}
-        @listByPriorityPhrase={{t "general.listByPriority"}}
-        @objectives={{this.courseObjectives}}
-        @title={{t "general.courseObjectives"}}
-      />
-    </div>
-  </fieldset>
-{{else}}
-  <NotFound />
-{{/if}}
+    <fieldset>
+      <div class="single-event-learningmaterial-list">
+        <h2>
+          {{t "general.sessionLearningMaterials"}}
+          {{#if (await this.currentUser.userIsStudent)}}
+            <FaIcon
+              @icon="archive"
+              class="link"
+              @title={{t "general.accessAllMaterialsForThisCourse"}}
+              @click={{action "transitionToMyMaterials"}}
+            />
+          {{/if}}
+        </h2>
+        <SingleEventLearningmaterialList
+          @learningMaterials={{this.sessionLearningMaterials}}
+        />
+      </div>
+      <div class="single-event-objective-list">
+        <SingleEventObjectiveList
+          @groupByCompetenciesPhrase={{t "general.groupByCompetencies"}}
+          @listByPriorityPhrase={{t "general.listByPriority"}}
+          @objectives={{this.sessionObjectives}}
+          @title={{t "general.sessionObjectives"}}
+        />
+      </div>
+    </fieldset>
+    <fieldset>
+      <div class="single-event-learningmaterial-list">
+        <h2>
+          {{t "general.courseLearningMaterials"}}
+        </h2>
+        <SingleEventLearningmaterialList
+          @learningMaterials={{this.courseLearningMaterials}}
+        />
+      </div>
+      <div class="single-event-objective-list" data-test-course-objectives>
+        <SingleEventObjectiveList
+          @groupByCompetenciesPhrase={{t "general.groupByCompetencies"}}
+          @listByPriorityPhrase={{t "general.listByPriority"}}
+          @objectives={{this.courseObjectives}}
+          @title={{t "general.courseObjectives"}}
+        />
+      </div>
+    </fieldset>
+  {{else}}
+    <NotFound />
+  {{/if}}
+</div>
