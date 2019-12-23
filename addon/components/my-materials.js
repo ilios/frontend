@@ -1,32 +1,24 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { isPresent } from '@ember/utils';
-import SortableTable from 'ilios-common/mixins/sortable-table';
-import { task, timeout } from 'ember-concurrency';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { isNone, isPresent } from '@ember/utils';
+import { timeout } from 'ember-concurrency';
+import {restartableTask} from "ember-concurrency-decorators";
 
 const DEBOUNCE_DELAY = 250;
 
-export default Component.extend(SortableTable, {
-  classNames: ['my-materials'],
+export default class MyMaterials extends Component {
 
-  courseIdFilter: null,
-  filter: null,
-  materials: null,
-  sortBy: null,
-  setCourseIdFilter() {},
-  setFilter() {},
-  setSortBy() {},
-
-  filteredMaterials: computed('courseIdFilter', 'filter', 'materials.[]', async function() {
-    const courseIdFilter = this.courseIdFilter;
-    const filter = this.filter;
-    let materials = await this.materials;
-
-    if (isPresent(courseIdFilter)) {
-      materials = materials.filterBy('course', courseIdFilter);
+  get filteredMaterials() {
+    let materials = this.args.materials;
+    if (! this.args.materials) {
+      return [];
     }
 
-    if (isPresent(filter)) {
+    if (isPresent(this.args.courseIdFilter)) {
+      materials = this.args.materials.filterBy('course', this.args.courseIdFilter);
+    }
+
+    if (isPresent(this.args.filter)) {
       materials = materials.filter(({ courseTitle, instructors, sessionTitle, title }) => {
         let searchString = `${title} ${courseTitle} ${sessionTitle} `;
 
@@ -34,28 +26,45 @@ export default Component.extend(SortableTable, {
           searchString += instructors.join(' ');
         }
 
-        return searchString.toLowerCase().includes(filter.toLowerCase());
+        return searchString.toLowerCase().includes(this.args.filter.toLowerCase());
       });
     }
-
     return materials;
-  }),
+  }
 
-  courses: computed('materials.[]', async function() {
-    const materials = await this.materials;
-    return materials.map((material) => {
+  get courses() {
+    if (! this.args.materials) {
+      return [];
+    }
+    return this.args.materials.map((material) => {
       return { id: material.course, title: material.courseTitle };
     }).uniqBy('id').sortBy('title');
-  }),
+  }
 
-  actions: {
-    sortString(a, b){
-      return a.localeCompare(b);
+  get sortedAscending() {
+    return this.args.sortBy.search(/desc/) === -1;
+  }
+
+  get materialsAreLoading() {
+    return isNone(this.args.materials);
+  }
+
+  @action
+  sortString(a, b){
+    return a.localeCompare(b);
+  }
+
+  @action
+  sortBy(what){
+    if (this.args.sortBy === what){
+      what += ':desc';
     }
-  },
+    this.args.setSortBy(what);
+  }
 
-  setQuery: task(function* (query) {
+  @restartableTask
+  *setQuery(query) {
     yield timeout(DEBOUNCE_DELAY);
-    this.setFilter(query);
-  }).restartable()
-});
+    this.args.setFilter(query);
+  }
+}

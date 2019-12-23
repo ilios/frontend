@@ -3,12 +3,11 @@ import { setupRenderingTest } from 'ember-qunit';
 import { click, fillIn, find, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import EmberObject from '@ember/object';
-import { next } from '@ember/runloop';
 
 module('Integration | Component | my-materials', function(hooks) {
   setupRenderingTest(hooks);
 
-  const createMaterials = function() {
+  hooks.beforeEach(function() {
     const lm1 = EmberObject.create({
       title: 'title1',
       absoluteFileUri: 'http://myhost.com/url1',
@@ -59,8 +58,9 @@ module('Integration | Component | my-materials', function(hooks) {
       isBlanked: true,
       endDate: new Date('2013-03-01T01:10:00')
     });
-    return [lm1, lm2, lm3, lm4, lm5];
-  };
+
+    this.materials = [lm1, lm2, lm3, lm4, lm5];
+  });
 
   test('it renders empty', async function(assert) {
     assert.expect(1);
@@ -78,7 +78,7 @@ module('Integration | Component | my-materials', function(hooks) {
   test('it renders with materials', async function(assert) {
     assert.expect(42);
 
-    this.set('materials', createMaterials());
+    this.set('materials', this.materials);
     this.set('nothing', parseInt);
     await render(hbs`<MyMaterials
       @materials={{this.materials}}
@@ -191,7 +191,7 @@ module('Integration | Component | my-materials', function(hooks) {
   test('filter by title', async function(assert) {
     assert.expect(4);
 
-    this.set('materials', createMaterials());
+    this.set('materials', this.materials);
     this.setProperties({ nothing: parseInt, filter: null });
     await render(hbs`<MyMaterials
       @filter={{this.filter}}
@@ -215,7 +215,7 @@ module('Integration | Component | my-materials', function(hooks) {
   test('filter by instructor', async function(assert) {
     assert.expect(5);
 
-    this.set('materials', createMaterials());
+    this.set('materials', this.materials);
     this.setProperties({ nothing: parseInt, filter: null });
     await render(hbs`<MyMaterials
       @filter={{this.filter}}
@@ -241,7 +241,7 @@ module('Integration | Component | my-materials', function(hooks) {
   test('filter by session title', async function(assert) {
     assert.expect(4);
 
-    this.set('materials', createMaterials());
+    this.set('materials', this.materials);
     this.setProperties({ nothing: parseInt, filter: null });
     await render(hbs`<MyMaterials
       @filter={{this.filter}}
@@ -265,7 +265,7 @@ module('Integration | Component | my-materials', function(hooks) {
   test('filter by course title', async function(assert) {
     assert.expect(4);
 
-    this.set('materials', createMaterials());
+    this.set('materials', this.materials);
     this.setProperties({ nothing: parseInt, filter: null });
     await render(hbs`<MyMaterials
       @filter={{this.filter}}
@@ -289,7 +289,7 @@ module('Integration | Component | my-materials', function(hooks) {
   test('filter by course', async function(assert) {
     assert.expect(4);
 
-    this.set('materials', createMaterials());
+    this.set('materials', this.materials);
     this.setProperties({ course: '', filter: null });
     await render(hbs`<MyMaterials
       @courseIdFilter={{this.course}}
@@ -306,16 +306,14 @@ module('Integration | Component | my-materials', function(hooks) {
     assert.dom(materials).exists({ count: 5 });
     assert.dom(firstLmTitle).hasText('title1');
     this.set('course', '2');
-    next(() => {
-      assert.dom(materials).exists({ count: 1 });
-      assert.dom(firstLmTitle).hasText('title2');
-    });
+    assert.dom(materials).exists({ count: 1 });
+    assert.dom(firstLmTitle).hasText('title2');
   });
 
   test('clicking sort fires action', async function(assert) {
     assert.expect(8);
 
-    this.set('materials', createMaterials());
+    this.set('materials', this.materials);
     this.set('nothing', parseInt);
     let count = 0;
     const sortBys = ['title', 'title:desc', 'courseTitle', 'courseTitle:desc', 'sessionTitle', 'sessionTitle:desc', 'firstOfferingDate', 'firstOfferingDate:desc'];
@@ -353,7 +351,7 @@ module('Integration | Component | my-materials', function(hooks) {
   test('choosing course fires action', async function(assert) {
     assert.expect(3);
 
-    this.set('materials', createMaterials());
+    this.set('materials', this.materials);
     this.set('nothing', parseInt);
     let count = 0;
     const courses = ['1', '3', ''];
@@ -381,7 +379,7 @@ module('Integration | Component | my-materials', function(hooks) {
   test('find with slash does not blow up on regex error', async function(assert) {
     assert.expect(3);
 
-    this.set('materials', createMaterials());
+    this.set('materials', this.materials);
     this.setProperties({ filter: null, nothing: parseInt });
     await render(hbs`<MyMaterials
       @filter={{this.filter}}
