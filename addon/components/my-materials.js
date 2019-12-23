@@ -1,24 +1,21 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { isPresent } from '@ember/utils';
+import { isNone, isPresent } from '@ember/utils';
 import { timeout } from 'ember-concurrency';
 import {restartableTask} from "ember-concurrency-decorators";
 
 const DEBOUNCE_DELAY = 250;
 
 export default class MyMaterials extends Component {
-  @tracked materials =  [];
-  @tracked loading = true;
 
   get filteredMaterials() {
-    let materials = this.materials;
-    if (! this.materials) {
+    let materials = this.args.materials;
+    if (! this.args.materials) {
       return [];
     }
 
     if (isPresent(this.args.courseIdFilter)) {
-      materials = this.materials.filterBy('course', this.args.courseIdFilter);
+      materials = this.args.materials.filterBy('course', this.args.courseIdFilter);
     }
 
     if (isPresent(this.args.filter)) {
@@ -36,16 +33,20 @@ export default class MyMaterials extends Component {
   }
 
   get courses() {
-    if (! this.materials) {
+    if (! this.args.materials) {
       return [];
     }
-    return this.materials.map((material) => {
+    return this.args.materials.map((material) => {
       return { id: material.course, title: material.courseTitle };
     }).uniqBy('id').sortBy('title');
   }
 
   get sortedAscending() {
     return this.args.sortBy.search(/desc/) === -1;
+  }
+
+  get materialsAreLoading() {
+    return isNone(this.args.materials);
   }
 
   @action
@@ -59,13 +60,6 @@ export default class MyMaterials extends Component {
       what += ':desc';
     }
     this.args.setSortBy(what);
-  }
-
-  @restartableTask
-  *load(element, [materials]) {
-    this.loading = true;
-    this.materials = yield materials;
-    this.loading = false;
   }
 
   @restartableTask
