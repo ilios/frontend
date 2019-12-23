@@ -1,4 +1,8 @@
-<div class="global-search" data-test-global-search>
+<div
+  class="global-search"
+  {{did-update (perform this.search) @query}}
+  data-test-global-search
+>
   <GlobalSearchBox @query={{@query}} @search={{@onQuery}} />
   <ul
     class="results {{unless (or this.isLoading this.hasResults) "hidden"}}"

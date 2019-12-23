@@ -73,14 +73,6 @@ export default Component.extend({
     }
   }),
 
-  search: task(function* () {
-    this.onQuery(this.query);
-    const { courses } = yield this.iliosSearch.forCurriculum(this.query);
-    this.setUpYearFilter(courses.mapBy('year'));
-
-    return courses;
-  }).observes('query').restartable(),
-
   init() {
     this._super(...arguments);
     this.loadSchools.perform();
@@ -108,6 +100,14 @@ export default Component.extend({
       this.setIgnoredSchoolIds(ignoredSchoolIds);
     }
   },
+
+  search: task(function* () {
+    this.onQuery(this.query);
+    const { courses } = yield this.iliosSearch.forCurriculum(this.query);
+    this.setUpYearFilter(courses.mapBy('year'));
+
+    return courses;
+  }).restartable(),
 
   loadSchools: task(function* () {
     const schools = yield this.store.findAll('school');
