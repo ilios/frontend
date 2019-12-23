@@ -1,78 +1,57 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { task, timeout } from 'ember-concurrency';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { dropTask, enqueueTask, restartableTask } from 'ember-concurrency-decorators';
+import { timeout } from 'ember-concurrency';
 
-export default Component.extend({
-  classNames: ['detail-learnergroups'],
-  tagName: 'div',
-  subject: null,
-  isIlmSession: false,
-  editable: true,
-  isManaging: false,
-  learnerGroups: null,
-  'data-test-detail-learner-groups': true,
-  collapsible: computed('isManaging', 'learnerGroups.length', function(){
-    const isManaging = this.get('isManaging');
-    const learnerGroups = this.get('learnerGroups');
-    return learnerGroups.get('length') && ! isManaging;
-  }),
-  init(){
-    this._super(...arguments);
-    this.set('learnerGroups', []);
-    this.get('loadLearnerGroups').perform();
-  },
-  didUpdateAttrs(){
-    this._super(...arguments);
-    this.get('loadLearnerGroups').perform();
-  },
-  actions: {
-    cancel(){
-      this.get('loadLearnerGroups').perform();
-      this.get('setIsManaging')(false);
-    },
-    addLearnerGroup(learnerGroup) {
-      const learnerGroups = this.get('learnerGroups').toArray();
-      learnerGroups.addObject(learnerGroup);
-      learnerGroup.get('allDescendants').then(function(descendants){
-        learnerGroups.addObjects(descendants);
-      });
-      //re-create the object so we trigger downstream didReceiveAttrs
-      this.set('learnerGroups', learnerGroups);
-    },
-    removeLearnerGroup(learnerGroup) {
-      const learnerGroups = this.get('learnerGroups').toArray();
-      learnerGroups.removeObject(learnerGroup);
-      learnerGroup.get('allDescendants').then(function(descendants){
-        learnerGroups.removeObjects(descendants);
-      });
-      //re-create the object so we trigger downstream didReceiveAttrs
-      this.set('learnerGroups', learnerGroups);
+export default class DetailLearnerGroupsComponent extends Component {
+  @tracked learnerGroups;
+
+  @restartableTask
+  *load() {
+    if (!this.args.ilmSession) {
+      return;
     }
-  },
+    this.learnerGroups = yield (this.args.ilmSession.learnerGroups).toArray();
+  }
+  get collapsible(){
+    return this.learnerGroups && this.learnerGroups.length && !this.args.isManaging;
+  }
+
+  @action
+  cancel(){
+    this.load.perform();
+    this.args.setIsManaging(false);
+  }
+  @enqueueTask
+  *addLearnerGroup(learnerGroup) {
+    const descendants = yield learnerGroup.allDescendants;
+    this.learnerGroups = [...this.learnerGroups, learnerGroup, ...descendants];
+  }
+  @enqueueTask
+  *removeLearnerGroup(learnerGroup) {
+    const descendants = yield learnerGroup.allDescendants;
+    const descendantIds = descendants.mapBy('id');
+    this.learnerGroups = this.learnerGroups.filter(({ id }) => {
+      return !descendantIds.includes(id) && id !== learnerGroup.id;
+    });
+  }
+
+  @action
   collapse() {
     if (this.collapsible) {
-      this.collapse();
+      this.args.collapse();
     }
-  },
-  loadLearnerGroups: task(function * (){
-    const subject = this.get('subject');
-    if (subject){
-      const learnerGroups = yield subject.get('learnerGroups');
-      this.set('learnerGroups', learnerGroups.toArray());
-    } else {
-      yield timeout(1000);
-    }
-  }).restartable(),
-  save: task(function * (){
+  }
+  @dropTask
+  *save(){
     yield timeout(10);
-    const subject = this.get('subject');
-    const learnerGroups = this.get('learnerGroups');
-    subject.set('learnerGroups', learnerGroups);
+    this.args.ilmSession.set('learnerGroups', this.learnerGroups);
     try {
-      yield subject.save();
+      yield this.args.ilmSession.save();
     } finally {
-      this.get('setIsManaging')(false);
-      this.get('expand')();
+      this.args.setIsManaging(false);
+      this.args.expand();
     }
-  }),
-});
+  }
+}

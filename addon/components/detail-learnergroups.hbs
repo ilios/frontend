@@ -1,46 +1,53 @@
-<div class="detail-learnergroups-header">
-  {{! template-lint-disable no-invalid-interactive}}
-  <div
-    class="title {{if this.collapsible "collapsible clickable"}}"
-    role={{if this.collapsible "button"}}
-    {{on "click" (fn this.collapse)}}
-  >
-    {{t "general.learnerGroups"}} ({{@subject.learnerGroups.length}})
+<div
+  class="detail-learnergroups"
+  {{did-insert (perform this.load) @ilmSession}}
+  {{did-update (perform this.load) @ilmSession}}
+  data-test-detail-learner-groups
+>
+  <div class="detail-learnergroups-header">
+    {{! template-lint-disable no-invalid-interactive}}
+    <div
+      class="title {{if this.collapsible "collapsible clickable"}}"
+      role={{if this.collapsible "button"}}
+      {{on "click" (fn this.collapse)}}
+    >
+      {{t "general.learnerGroups"}} ({{count-related @ilmSession "learnerGroups"}})
+    </div>
+    <div class="actions">
+      {{#if @isManaging}}
+        <button class="bigadd" {{on "click" (perform this.save)}}>
+          <FaIcon
+            @icon={{if this.save.isRunning "spinner" "check"}}
+            @spin={{this.save.isRunning}}
+          />
+        </button>
+        <button class="bigcancel" {{on "click" this.cancel}}>
+          <FaIcon @icon="undo" />
+        </button>
+      {{else if @editable}}
+        <button {{on "click" (fn @setIsManaging true)}}>
+          {{t "general.learnerGroupsManageTitle"}}
+        </button>
+      {{/if}}
+    </div>
   </div>
-  <div class="actions">
+  <div class="detail-learnergroups-content">
     {{#if @isManaging}}
-      <button class="bigadd" {{on "click" (perform this.save)}}>
-        <FaIcon
-          @icon={{if this.save.isRunning "spinner" "check"}}
-          @spin={{this.save.isRunning}}
+      {{#if (is-array this.learnerGroups)}}
+        <LearnergroupSelectionManager
+          @learnerGroups={{this.learnerGroups}}
+          @cohorts={{@cohorts}}
+          @add={{perform this.addLearnerGroup}}
+          @remove={{perform this.removeLearnerGroup}}
         />
-      </button>
-      <button class="bigcancel" {{on "click" (action "cancel")}}>
-        <FaIcon @icon="undo" />
-      </button>
-    {{else if @editable}}
-      <button {{on "click" (fn @setIsManaging true)}}>
-        {{t "general.learnerGroupsManageTitle"}}
-      </button>
+      {{else}}
+        <LoadingSpinner />
+      {{/if}}
+    {{else}}
+      <DetailLearnergroupsList
+        @learnerGroups={{await @ilmSession.learnerGroups}}
+        @remove={{perform this.removeLearnerGroup}}
+      />
     {{/if}}
   </div>
-</div>
-<div class="detail-learnergroups-content">
-  {{#if @isManaging}}
-    {{#liquid-if this.loadLearnerGroups.isRunning}}
-      <LoadingSpinner />
-    {{else}}
-      <LearnergroupSelectionManager
-        @learnerGroups={{this.learnerGroups}}
-        @cohorts={{@cohorts}}
-        @add={{action "addLearnerGroup"}}
-        @remove={{action "removeLearnerGroup"}}
-      />
-    {{/liquid-if}}
-  {{else}}
-    <DetailLearnergroupsList
-      @learnerGroups={{await @subject.learnerGroups}}
-      @remove={{action "removeLearnerGroup"}}
-    />
-  {{/if}}
 </div>

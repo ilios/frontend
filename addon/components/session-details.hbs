@@ -28,7 +28,7 @@
     )
   }}
     <DetailLearnergroups
-      @subject={{await @session.ilmSession}}
+      @ilmSession={{await @session.ilmSession}}
       @cohorts={{await @session.course.cohorts}}
       @isIlmSession={{true}}
       @editable={{@editable}}
