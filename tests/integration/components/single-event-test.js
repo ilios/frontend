@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { find, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -15,7 +15,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
   });
 
   test('it renders', async function(assert) {
-    assert.expect(21);
+    assert.expect(22);
 
     const now = moment().hour(8).minute(0).second(0);
     const course = this.server.create('course', {
@@ -131,6 +131,8 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     assert.dom('.single-event-summary').containsText('test description', 'session description is displayed');
 
     const firstSessionLm = '.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(1)';
+    console.log(find(firstSessionLm));
+    assert.dom(`${firstSessionLm} .lm-type-icon .fa-file-pdf`).exists('PDF file type icon is visible');
     assert.dom(`${firstSessionLm} .single-event-learningmaterial-item-notes`).hasText(learningMaterials[0].publicNotes);
     assert.dom(`${firstSessionLm} .single-event-learningmaterial-item-description`).hasText(learningMaterials[0].description);
     assert.dom(`${firstSessionLm} .single-event-learningmaterial-item-title`).containsText(learningMaterials[0].title);
