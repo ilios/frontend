@@ -126,16 +126,16 @@
               <a
                 id={{concat "event" @event.slug "lmdownload" index}}
                 href={{lm.absoluteFileUri}}
-                aria-labelledby="{{concat "event" @event.slug "lmdownload" index
-                  }}
-
+                aria-label={{t "general.download"}}
+                aria-labelledby="
+                  {{concat "event" @event.slug "lmdownload" index}}
                   {{concat "event" @event.slug "lm" index}}
-
-                  {{concat "event" @event.slug "title"}}"
+                  {{concat "event" @event.slug "title"}}
+                "
                 target="_blank"
                 rel="noopener"
               >
-                <FaIcon @icon="download" @title={{t "general.download"}} />
+                <FaIcon @icon="download" />
               </a>
             {{else}}
               <a
