@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
 
-export default class SingleEventObjectiveList extends Component {
+export default class SessionsGridOfferingTable extends Component {
 
   get offeringBlocks() {
     if (! this.args.offerings) {
