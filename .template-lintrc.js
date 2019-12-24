@@ -9,5 +9,9 @@ module.exports = {
     'no-curly-component-invocation': false,
     'require-button-type': false,
     'no-invalid-interactive': false,
+    'no-triple-curlies': false,
+    'link-href-attributes': false,
+    'simple-unless': false,
+    'link-rel-noopener': false,
   }
 };

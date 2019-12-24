@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "ember build",
-    "lint:hbs": "ember-template-lint app/templates",
+    "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "ember test",
