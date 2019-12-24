@@ -8,7 +8,6 @@ module.exports = {
     'no-action': false,
     'no-curly-component-invocation': false,
     'require-button-type': false,
-    'eol-last': false,
     'no-invalid-interactive': false,
   }
 };
