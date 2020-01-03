@@ -16,6 +16,7 @@
     <div class="actions">
       {{#if (or showNewUserForm showBulkNewUserForm)}}
         <button
+          type="button"
           {{action
             (if
               showNewUserForm
@@ -27,11 +28,11 @@
           <FaIcon @icon="minus" />
         </button>
       {{else}}
-        <button {{action (toggle "showNewUserForm" this)}}>
+        <button type="button" {{action (toggle "showNewUserForm" this)}}>
           {{t "general.create"}}
         </button>
         {{#if (not-eq (await iliosConfig.userSearchType) "ldap")}}
-          <button {{action (toggle "showBulkNewUserForm" this)}}>
+          <button type="button" {{action (toggle "showBulkNewUserForm" this)}}>
             {{t "general.createBulk"}}
           </button>
         {{/if}}

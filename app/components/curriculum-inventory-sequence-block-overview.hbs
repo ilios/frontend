@@ -261,7 +261,7 @@
             <label>{{t "general.sessions"}} ({{get (await sessions) "length"}})</label>
             {{#if (and (not isManagingSessions) canUpdate)}}
               <div class="actions">
-                <button {{action "toggleManagingSessions"}}>{{t "general.manage"}}</button>
+                <button type="button" {{action "toggleManagingSessions"}}>{{t "general.manage"}}</button>
               </div>
             {{/if}}
           </div>

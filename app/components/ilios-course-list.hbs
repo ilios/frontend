@@ -137,10 +137,11 @@
               }}
               <br>
               <div class="confirm-buttons">
-                <button class="remove text" onclick={{action "remove" course}}>
+                <button type="button" class="remove text" onclick={{action "remove" course}}>
                   {{t "general.yes"}}
                 </button>
                 <button
+                  type="button"
                   class="done text"
                   onclick={{action "cancelRemove" course}}
                 >

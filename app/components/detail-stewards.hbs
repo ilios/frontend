@@ -16,17 +16,17 @@
   {{/if}}
   <div class="actions">
     {{#if isManaging}}
-      <button class="bigadd" onclick={{perform save}}>
+      <button type="button" class="bigadd" onclick={{perform save}}>
         <FaIcon
           @icon={{if save.isRunning "spinner" "check"}}
           @spin={{save.isRunning}}
         />
       </button>
-      <button class="bigcancel" {{action "cancel"}}>
+      <button type="button" class="bigcancel" {{action "cancel"}}>
         <FaIcon @icon="undo" />
       </button>
     {{else if editable}}
-      <button class="manage" onclick={{perform manage}}>
+      <button type="button" class="manage" onclick={{perform manage}}>
         {{t "general.stewardsManageTitle"}}
         {{#if manage.isRunning}}
           <LoadingSpinner />

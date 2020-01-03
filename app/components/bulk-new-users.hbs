@@ -207,6 +207,7 @@
   {{/if}}
   <div class="buttons">
     <button
+      type="button"
       class="done text"
       disabled={{or
         (lt selectedUsers.length 1)
@@ -222,7 +223,7 @@
         {{t "general.done"}}
       {{/if}}
     </button>
-    <button class="cancel text" {{action (action close)}}>
+    <button type="button" class="cancel text" {{action (action close)}}>
       {{t "general.cancel"}}
     </button>
   </div>

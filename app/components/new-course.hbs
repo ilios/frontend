@@ -43,6 +43,7 @@
   </div>
   <div class="buttons">
     <button
+      type="button"
       class="done text"
       disabled={{not this.selectedYear}}
       onclick={{perform this.saveCourse}}
@@ -53,7 +54,7 @@
         {{t "general.done"}}
       {{/if}}
     </button>
-    <button class="cancel text" onclick={{action @cancel}}>
+    <button type="button" class="cancel text" onclick={{action @cancel}}>
       {{t "general.cancel"}}
     </button>
   </div>

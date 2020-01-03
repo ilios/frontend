@@ -79,6 +79,7 @@
             <FaIcon @icon="copy" />
           </CopyButton>
           <button
+            type="button"
             class="bigcancel"
             data-test-result-reset
             {{action (pipe toggleShowCreateNewToken (action "reset"))}}
@@ -100,6 +101,7 @@
             @onSelection={{action "selectExpiresAtDate"}}
           />
           <button
+            type="button"
             class="bigadd"
             data-test-new-token-create
             {{action (perform createNewToken)}}
@@ -111,6 +113,7 @@
             {{/if}}
           </button>
           <button
+            type="button"
             class="bigcancel"
             {{action (pipe toggleShowCreateNewToken (action "reset"))}}
           >
@@ -127,20 +130,21 @@
         <p>
           {{t "general.invalidateTokensConfirmation"}}
         </p>
-        <button class="done text" {{action (perform invalidateTokens)}}>
+        <button type="button" class="done text" {{action (perform invalidateTokens)}}>
           {{#if invalidateTokens.isRunning}}
             <LoadingSpinner />
           {{else}}
             {{t "general.yes"}}
           {{/if}}
         </button>
-        <button class="cancel text" {{action toggleShowInvalidateTokens}}>
+        <button type="button" class="cancel text" {{action toggleShowInvalidateTokens}}>
           {{t "general.cancel"}}
         </button>
       </div>
     {{/if}}
   {{else}}
     <button
+      type="button"
       class="new-token done text"
       onclick={{action toggleShowCreateNewToken}}
       data-test-show-create-new-token
@@ -148,6 +152,7 @@
       {{t "general.createNew"}}
     </button>
     <button
+      type="button"
       class="invalidate-tokens cancel text"
       onclick={{action toggleShowInvalidateTokens}}
     >

@@ -105,6 +105,7 @@
               <br>
               <div class="confirm-buttons">
                 <button
+                  type="button"
                   class="remove text"
                   onclick={{action @remove learnerGroup}}
                   data-test-confirm
@@ -112,6 +113,7 @@
                   {{t "general.yes"}}
                 </button>
                 <button
+                  type="button"
                   class="done text"
                   onclick={{action "cancelRemove" learnerGroup}}
                 >
@@ -128,6 +130,7 @@
             <div class="confirm-buttons">
               {{#if @canCopyWithLearners}}
                 <button
+                  type="button"
                   class="done text"
                   onclick={{action "copy" true learnerGroup}}
                   data-test-confirm-with-learners
@@ -135,6 +138,7 @@
                   {{t "general.copyWithLearners"}}
                 </button>
                 <button
+                  type="button"
                   class="done text"
                   onclick={{action "copy" false learnerGroup}}
                   data-test-confirm-without-learners
@@ -143,6 +147,7 @@
                 </button>
               {{else}}
                 <button
+                  type="button"
                   class="done text"
                   onclick={{action "copy" false learnerGroup}}
                   data-test-confirm-without-learners
@@ -151,6 +156,7 @@
                 </button>
               {{/if}}
               <button
+                type="button"
                 class="cancel text"
                 onclick={{action "cancelCopy" learnerGroup}}
               >

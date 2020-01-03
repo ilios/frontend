@@ -14,7 +14,7 @@
         @route="users"
         @query={{hash showNewUserForm=true showBulkNewUserForm=false}}
       >
-        <button>
+        <button type="button">
           {{t "general.create"}}
         </button>
       </LinkTo>
@@ -23,7 +23,7 @@
           @route="users"
           @query={{hash showBulkNewUserForm=true showNewUserForm=false}}
         >
-          <button>
+          <button type="button">
             {{t "general.createBulk"}}
           </button>
         </LinkTo>

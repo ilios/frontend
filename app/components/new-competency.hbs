@@ -5,7 +5,7 @@
   onkeyup={{action "addErrorDisplayFor" "title"}}
   placeholder={{t "general.title"}}
 >
-<button class="save text" {{action (perform save)}}>
+<button type="button" class="save text" {{action (perform save)}}>
   {{#if save.isRunning}}
     <LoadingSpinner />
   {{else}}

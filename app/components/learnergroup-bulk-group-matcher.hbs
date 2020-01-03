@@ -3,7 +3,7 @@
     {{groupName}}
   </span>
   {{#if noGroupWithThisName}}
-    <button data-test-create-group {{action createGroup groupName}}>
+    <button type="button" data-test-create-group {{action createGroup groupName}}>
       {{t "general.createNewGroup" title=groupName}}
     </button>
   {{/if}}

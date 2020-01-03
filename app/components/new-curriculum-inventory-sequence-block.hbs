@@ -136,7 +136,7 @@
       {{/if}}
     </div>
     <div class="item clear-dates">
-      <button {{action "clearDates"}}>
+      <button type="button" {{action "clearDates"}}>
         {{t "general.clearDates"}}
       </button>
     </div>
@@ -221,14 +221,14 @@
       </div>
     {{/if}}
     <div class="buttons">
-      <button class="done text" disabled={{or isSaving}} {{action "save"}}>
+      <button type="button" class="done text" disabled={{or isSaving}} {{action "save"}}>
         {{#if isSaving}}
           <LoadingSpinner />
         {{else}}
           {{t "general.done"}}
         {{/if}}
       </button>
-      <button class="cancel text" {{action "cancel"}}>
+      <button type="button" class="cancel text" {{action "cancel"}}>
         {{t "general.cancel"}}
       </button>
     </div>

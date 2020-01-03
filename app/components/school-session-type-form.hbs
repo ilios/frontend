@@ -163,6 +163,7 @@
   <div class="buttons">
     {{#if canUpdate}}
       <button
+        type="button"
         class="done text"
         disabled={{saveSessionType.isRunning}}
         {{action (perform saveSessionType)}}
@@ -173,11 +174,11 @@
           {{t "general.done"}}
         {{/if}}
       </button>
-      <button class="cancel text" {{action close}}>
+      <button type="button" class="cancel text" {{action close}}>
         {{t "general.cancel"}}
       </button>
     {{else}}
-      <button class="text" {{action close}}>
+      <button type="button" class="text" {{action close}}>
         {{t "general.close"}}
       </button>
     {{/if}}

@@ -10,17 +10,17 @@
   {{/if}}
   <div class="actions">
     {{#if isManaging}}
-      <button class="bigadd" onclick={{perform save}}>
+      <button type="button" class="bigadd" onclick={{perform save}}>
         <FaIcon
           @icon={{if save.isRunning "spinner" "check"}}
           @spin={{if save.isRunning true false}}
         />
       </button>
-      <button class="bigcancel" {{action "cancel"}}>
+      <button type="button" class="bigcancel" {{action "cancel"}}>
         <FaIcon @icon="undo" />
       </button>
     {{else if canUpdate}}
-      <button {{action manage true}}>
+      <button type="button" {{action manage true}}>
         {{t "general.manageSessionAttributes"}}
       </button>
     {{/if}}

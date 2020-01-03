@@ -177,14 +177,14 @@
     </p>
   {{/if}}
   <div class="input-buttons">
-    <button class="done text" onclick={{perform save}} data-test-report-save>
+    <button type="button" class="done text" onclick={{perform save}} data-test-report-save>
       {{#if save.isRunning}}
         <LoadingSpinner />
       {{else}}
         {{t "general.save"}}
       {{/if}}
     </button>
-    <button class="cancel text" {{action close}}>
+    <button type="button" class="cancel text" {{action close}}>
       {{t "general.cancel"}}
     </button>
   </div>

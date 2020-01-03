@@ -14,6 +14,7 @@
       </span>
     {{else}}
       <button
+        type="button"
         class="page-button {{if (eq @page pageNumber) "inactive"}}"
         {{action @onSelectPage pageNumber}}
       >

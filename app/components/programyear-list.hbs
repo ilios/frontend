@@ -147,6 +147,7 @@
                   {{else}}
                     {{#if (await programYearProxy.userCanActivate)}}
                       <button
+                        type="button"
                         class="text"
                         {{action "activateProgramYear" programYearProxy}}
                       >
@@ -195,12 +196,14 @@
                       <br>
                       <div class="confirm-buttons">
                         <button
+                          type="button"
                           class="remove text"
                           {{action "confirmRemove" programYearProxy}}
                         >
                           {{t "general.yes"}}
                         </button>
                         <button
+                          type="button"
                           class="done text"
                           {{action "cancelRemove" programYearProxy}}
                         >
@@ -218,12 +221,14 @@
                       <br>
                       <div class="confirm-buttons">
                         <button
+                          type="button"
                           class="remove text"
                           {{action "confirmRemove" programYearProxy}}
                         >
                           {{t "general.yes"}}
                         </button>
                         <button
+                          type="button"
                           class="done text"
                           {{action "cancelRemove" programYearProxy}}
                         >

@@ -5,7 +5,7 @@
       {{t "general.connectionLost"}}
     </h2>
     <p class="clear-errors">
-      <button {{action "refresh"}}>
+      <button type="button" {{action "refresh"}}>
         <FaIcon @icon="sync-alt" />
         {{t "general.reconnectNow"}}
       </button>
@@ -17,7 +17,7 @@
       {{t "general.errorDisplayMessage"}}
     </h2>
     <p class="clear-errors">
-      <button {{action clearErrors}}>
+      <button type="button" {{action clearErrors}}>
         {{t "general.clearErrors"}}
       </button>
     </p>

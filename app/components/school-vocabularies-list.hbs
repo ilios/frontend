@@ -34,6 +34,7 @@
       </div>
       <div class="buttons">
         <button
+          type="button"
           class="done text"
           {{action (perform saveNew) newVocabularyTitle}}
         >
@@ -43,7 +44,7 @@
             {{t "general.done"}}
           {{/if}}
         </button>
-        <button class="cancel text" {{action "toggleShowNewVocabularyForm"}}>
+        <button type="button" class="cancel text" {{action "toggleShowNewVocabularyForm"}}>
           {{t "general.cancel"}}
         </button>
       </div>
@@ -123,12 +124,13 @@
                     <br>
                     <div class="confirm-buttons">
                       <button
+                        type="button"
                         class="remove text"
                         {{action (perform remove) vocabulary}}
                       >
                         {{t "general.yes"}}
                       </button>
-                      <button class="done text" {{action "cancelRemoval"}}>
+                      <button type="button" class="done text" {{action "cancelRemoval"}}>
                         {{t "general.cancel"}}
                       </button>
                     </div>

@@ -1,6 +1,6 @@
 {{#if data}}
   <p>
-    <button {{action (mut data) null}}>
+    <button type="button" {{action (mut data) null}}>
       {{t "general.startOver"}}
     </button>
   </p>
@@ -148,6 +148,7 @@
 {{/if}}
 {{#if (and (eq invalidUsers.length 0) (gt validUsers.length 0))}}
   <button
+    type="button"
     disabled={{continue.isRunning}}
     data-test-upload-data-confirm
     {{action (perform continue)}}

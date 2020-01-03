@@ -7,17 +7,17 @@
   </div>
   <div class="actions">
     {{#if isManaging}}
-      <button class="bigadd" onclick={{perform save}}>
+      <button type="button" class="bigadd" onclick={{perform save}}>
         <FaIcon
           @icon={{if save.isRunning "spinner" "check"}}
           @spin={{if isSaving true false}}
         />
       </button>
-      <button class="bigcancel" {{action setIsManaging false}}>
+      <button type="button" class="bigcancel" {{action setIsManaging false}}>
         <FaIcon @icon="undo" />
       </button>
     {{else if canUpdate}}
-      <button {{action setIsManaging true}}>
+      <button type="button" {{action setIsManaging true}}>
         {{t "general.manageLeadership"}}
       </button>
     {{/if}}

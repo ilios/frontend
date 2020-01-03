@@ -168,6 +168,7 @@
     {{/if}}
     <div class="buttons">
       <button
+        type="button"
         class="done text"
         disabled={{or
           save.isRunning
@@ -182,7 +183,7 @@
           {{t "general.done"}}
         {{/if}}
       </button>
-      <button class="cancel text" {{action "unPickUser"}}>
+      <button type="button" class="cancel text" {{action "unPickUser"}}>
         {{t "general.cancel"}}
       </button>
     </div>
@@ -197,7 +198,7 @@
       value={{searchTerms}}
       oninput={{action setSearchTerms value="target.value"}}
     >
-    <button type="search" {{action (perform findUsersInDirectory) searchTerms}}>
+    <button type="button" {{action (perform findUsersInDirectory) searchTerms}}>
       {{t "general.searchDirectory"}}
     </button>
   </div>

@@ -7,7 +7,6 @@ module.exports = {
     'no-implicit-this': false,
     'no-action': false,
     'no-curly-component-invocation': false,
-    'require-button-type': false,
     'no-invalid-interactive': false,
     'no-triple-curlies': false,
     'link-href-attributes': false,

@@ -7,6 +7,7 @@
   <div class="learnergroup-overview-actions">
     {{#if (or isEditing isBulkAssigning)}}
       <button
+        type="button"
         {{action
           (pipe (action setIsEditing false) (action setIsBulkAssigning false))
         }}
@@ -14,10 +15,10 @@
         {{t "general.close"}}
       </button>
     {{else if canUpdate}}
-      <button data-test-activate-bulk-assign {{action setIsBulkAssigning true}}>
+      <button type="button" data-test-activate-bulk-assign {{action setIsBulkAssigning true}}>
         {{t "general.uploadGroupAssignments"}}
       </button>
-      <button data-test-manage {{action setIsEditing true}}>
+      <button type="button" data-test-manage {{action setIsEditing true}}>
         {{t "general.manage"}}
       </button>
     {{/if}}

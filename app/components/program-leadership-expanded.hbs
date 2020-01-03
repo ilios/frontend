@@ -4,17 +4,17 @@
   </h3>
   <div class="actions">
     {{#if isManaging}}
-      <button class="bigadd" onclick={{perform this.save}}>
+      <button type="button" class="bigadd" onclick={{perform this.save}}>
         <FaIcon
           @icon={{if this.isSaving "spinner" "check"}}
           @spin={{this.isSaving}}
         />
       </button>
-      <button class="bigcancel" onclick={{action "cancel"}}>
+      <button type="button" class="bigcancel" onclick={{action "cancel"}}>
         <FaIcon @icon="undo" />
       </button>
     {{else if @canUpdate}}
-      <button onclick={{action @setIsManaging true}}>
+      <button type="button" onclick={{action @setIsManaging true}}>
         {{t "general.manageLeadership"}}
       </button>
     {{/if}}

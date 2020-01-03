@@ -12,11 +12,11 @@
     {{/unless}}
   </span>
   <div class="buttons">
-    <button {{action (perform reconnect true)}}>
+    <button type="button" {{action (perform reconnect true)}}>
       {{t "general.reconnectNow"}}
     </button>
     {{#unless stopAttemptingToReconnect}}
-      <button {{action (toggle "stopAttemptingToReconnect" this)}}>
+      <button type="button" {{action (toggle "stopAttemptingToReconnect" this)}}>
         {{t "general.ignore"}}
       </button>
     {{/unless}}

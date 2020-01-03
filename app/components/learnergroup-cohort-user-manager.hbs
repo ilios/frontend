@@ -108,7 +108,7 @@
   </div>
 </div>
 {{#if (gt selectedUsers.length 0)}}
-  <button class="done text" {{action (perform addSelectedUsers)}}>
+  <button type="button" class="done text" {{action (perform addSelectedUsers)}}>
     {{t
       "general.moveToGroup"
       groupTitle=learnerGroupTitle
