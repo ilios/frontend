@@ -39,11 +39,7 @@
     <label>
       {{t "general.firstName"}}:
     </label>
-    {{#unless isManaging}}
-      <span class="value">
-        {{user.firstName}}
-      </span>
-    {{else}}
+    {{#if isManaging}}
       <input
         type="text"
         value={{firstName}}
@@ -60,17 +56,17 @@
           {{v-get this "firstName" "message"}}
         </span>
       {{/if}}
-    {{/unless}}
+    {{else}}
+      <span class="value">
+        {{user.firstName}}
+      </span>
+    {{/if}}
   </div>
   <div class="item">
     <label>
       {{t "general.middleName"}}:
     </label>
-    {{#unless isManaging}}
-      <span class="value">
-        {{user.middleName}}
-      </span>
-    {{else}}
+    {{#if isManaging}}
       <input
         type="text"
         value={{middleName}}
@@ -88,7 +84,11 @@
           {{v-get this "middleName" "message"}}
         </span>
       {{/if}}
-    {{/unless}}
+    {{else}}
+      <span class="value">
+        {{user.middleName}}
+      </span>
+    {{/if}}
   </div>
   <div
     class="item
@@ -98,11 +98,7 @@
     <label>
       {{t "general.lastName"}}:
     </label>
-    {{#unless isManaging}}
-      <span class="value">
-        {{user.lastName}}
-      </span>
-    {{else}}
+    {{#if isManaging}}
       <input
         type="text"
         value={{lastName}}
@@ -119,7 +115,11 @@
           {{v-get this "lastName" "message"}}
         </span>
       {{/if}}
-    {{/unless}}
+    {{else}}
+      <span class="value">
+        {{user.lastName}}
+      </span>
+    {{/if}}
   </div>
   <div
     class="item
@@ -129,11 +129,7 @@
     <label>
       {{t "general.campusId"}}:
     </label>
-    {{#unless isManaging}}
-      <span class="value">
-        {{user.campusId}}
-      </span>
-    {{else}}
+    {{#if isManaging}}
       <div class="campus-id-controls">
         <input
           type="text"
@@ -175,17 +171,17 @@
           {{t "general.unableToSyncUser"}}
         </span>
       {{/if}}
-    {{/unless}}
+    {{else}}
+      <span class="value">
+        {{user.campusId}}
+      </span>
+    {{/if}}
   </div>
   <div class="item">
     <label>
       {{t "general.otherId"}}:
     </label>
-    {{#unless isManaging}}
-      <span class="value">
-        {{user.otherId}}
-      </span>
-    {{else}}
+    {{#if isManaging}}
       <input
         type="text"
         value={{otherId}}
@@ -200,7 +196,11 @@
           {{v-get this "otherId" "message"}}
         </span>
       {{/if}}
-    {{/unless}}
+    {{else}}
+      <span class="value">
+        {{user.otherId}}
+      </span>
+    {{/if}}
   </div>
   <div
     class="item
@@ -209,11 +209,7 @@
     <label>
       {{t "general.email"}}:
     </label>
-    {{#unless isManaging}}
-      <span class="value">
-        {{user.email}}
-      </span>
-    {{else}}
+    {{#if isManaging}}
       <input
         type="text"
         value={{email}}
@@ -227,7 +223,11 @@
           {{v-get this "email" "message"}}
         </span>
       {{/if}}
-    {{/unless}}
+    {{else}}
+      <span class="value">
+        {{user.email}}
+      </span>
+    {{/if}}
   </div>
   <div
     class="item
@@ -239,11 +239,7 @@
     <label>
       {{t "general.displayName"}}:
     </label>
-    {{#unless isManaging}}
-      <span class="value">
-        {{user.displayName}}
-      </span>
-    {{else}}
+    {{#if isManaging}}
       <input
         type="text"
         value={{displayName}}
@@ -261,7 +257,11 @@
           {{v-get this "displayName" "message"}}
         </span>
       {{/if}}
-    {{/unless}}
+    {{else}}
+      <span class="value">
+        {{user.displayName}}
+      </span>
+    {{/if}}
   </div>
   <div
     class="item
@@ -273,11 +273,7 @@
     <label>
       {{t "general.preferredEmail"}}:
     </label>
-    {{#unless isManaging}}
-      <span class="value">
-        {{user.preferredEmail}}
-      </span>
-    {{else}}
+    {{#if isManaging}}
       <input
         type="text"
         value={{preferredEmail}}
@@ -295,7 +291,11 @@
           {{v-get this "preferredEmail" "message"}}
         </span>
       {{/if}}
-    {{/unless}}
+    {{else}}
+      <span class="value">
+        {{user.preferredEmail}}
+      </span>
+    {{/if}}
   </div>
   <div
     class="item
@@ -304,11 +304,7 @@
     <label>
       {{t "general.phone"}}:
     </label>
-    {{#unless isManaging}}
-      <span class="value">
-        {{user.phone}}
-      </span>
-    {{else}}
+    {{#if isManaging}}
       <input
         type="text"
         value={{phone}}
@@ -322,7 +318,11 @@
           {{v-get this "phone" "message"}}
         </span>
       {{/if}}
-    {{/unless}}
+    {{else}}
+      <span class="value">
+        {{user.phone}}
+      </span>
+    {{/if}}
   </div>
   <div
     class="item
@@ -332,11 +332,7 @@
     <label>
       {{t "general.username"}}:
     </label>
-    {{#unless isManaging}}
-      <span class="value">
-        {{get (await user.authentication) "username"}}
-      </span>
-    {{else}}
+    {{#if isManaging}}
       <input
         type="text"
         value={{username}}
@@ -354,69 +350,75 @@
           {{v-get this "username" "message"}}
         </span>
       {{/if}}
-    {{/unless}}
+    {{else}}
+      <span class="value">
+        {{get (await user.authentication) "username"}}
+      </span>
+    {{/if}}
   </div>
   {{#if (await canEditUsernameAndPassword)}}
     <div class="item password">
       <label>
         {{t "general.password"}}:
       </label>
-      {{#unless isManaging}}
-        <span class="value">
-          {{#unless (await usernameMissing)}}
-            *********
-          {{/unless}}
-        </span>
-      {{else if changeUserPassword}}
-        <input
-          type="password"
-          value={{password}}
-          oninput={{action (mut password) value="target.value"}}
-          onkeyup={{action "addErrorDisplayFor" "password"}}
-          data-test-password-input
-        >
-        {{#if (and (v-get this "password" "isInvalid") (contains "password" showErrorsFor))}}
-          <span class="message error">
-            {{v-get this "password" "message"}}
-          </span>
-        {{else if (and (gt password.length 0) (is-fulfilled passwordStrengthScore))}}
-          <span
-            class="password-strength
-              {{concat "strength-" (await passwordStrengthScore)}}"
-            data-test-password-strength-text
+      {{#if isManaging}}
+        {{#if changeUserPassword}}
+          <input
+            type="password"
+            value={{password}}
+            oninput={{action (mut password) value="target.value"}}
+            onkeyup={{action "addErrorDisplayFor" "password"}}
+            data-test-password-input
           >
-            {{#if (eq (await passwordStrengthScore) 0)}}
-              {{t "general.tryHarder"}}
-            {{else if (eq (await passwordStrengthScore) 1)}}
-              {{t "general.bad"}}
-            {{else if (eq (await passwordStrengthScore) 2)}}
-              {{t "general.weak"}}
-            {{else if (eq (await passwordStrengthScore) 3)}}
-              {{t "general.good"}}
-            {{else if (eq (await passwordStrengthScore) 4)}}
-              {{t "general.strong"}}
-            {{/if}}
+          {{#if (and (v-get this "password" "isInvalid") (contains "password" showErrorsFor))}}
+            <span class="message error">
+              {{v-get this "password" "message"}}
+            </span>
+          {{else if (and (gt password.length 0) (is-fulfilled passwordStrengthScore))}}
+            <span
+              class="password-strength
+                {{concat "strength-" (await passwordStrengthScore)}}"
+              data-test-password-strength-text
+            >
+              {{#if (eq (await passwordStrengthScore) 0)}}
+                {{t "general.tryHarder"}}
+              {{else if (eq (await passwordStrengthScore) 1)}}
+                {{t "general.bad"}}
+              {{else if (eq (await passwordStrengthScore) 2)}}
+                {{t "general.weak"}}
+              {{else if (eq (await passwordStrengthScore) 3)}}
+                {{t "general.good"}}
+              {{else if (eq (await passwordStrengthScore) 4)}}
+                {{t "general.strong"}}
+              {{/if}}
+            </span>
+            <meter
+              max="4"
+              value={{await passwordStrengthScore}}
+              data-test-password-strength-meter
+            ></meter>
+          {{/if}}
+          <span
+            class="cancel-password-field clickable link"
+            onclick={{action "cancelChangeUserPassword"}}
+          >
+            {{t "general.cancel"}}
           </span>
-          <meter
-            max="4"
-            value={{await passwordStrengthScore}}
-            data-test-password-strength-meter
-          ></meter>
+        {{else}}
+          <span
+            class="clickable link activate-password-field"
+            onclick={{action (mut changeUserPassword) true}}
+          >
+            {{t "general.modifyUserPassword"}}
+          </span>
         {{/if}}
-        <span
-          class="cancel-password-field clickable link"
-          onclick={{action "cancelChangeUserPassword"}}
-        >
-          {{t "general.cancel"}}
-        </span>
       {{else}}
-        <span
-          class="clickable link activate-password-field"
-          onclick={{action (mut changeUserPassword) true}}
-        >
-          {{t "general.modifyUserPassword"}}
+        <span class="value">
+          {{#if (not (await usernameMissing)) }}
+            *********
+          {{/if}}
         </span>
-      {{/unless}}
+      {{/if}}
     </div>
   {{/if}}
 </div>

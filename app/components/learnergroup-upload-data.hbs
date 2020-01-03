@@ -1,4 +1,10 @@
-{{#unless data}}
+{{#if data}}
+  <p>
+    <button {{action (mut data) null}}>
+      {{t "general.startOver"}}
+    </button>
+  </p>
+{{else}}
   <label for="user-file">
     {{t "general.uploadUsers"}}
     (<a
@@ -16,13 +22,7 @@
     onchange={{action "updateSelectedFile" value="target.files"}}
     data-test-user-upload
   >
-{{else}}
-  <p>
-    <button {{action (mut data) null}}>
-      {{t "general.startOver"}}
-    </button>
-  </p>
-{{/unless}}
+{{/if}}
 {{#if parseFile.isRunning}}
   <LoadingSpinner @tagName="div" class="loading-file" />
 {{/if}}

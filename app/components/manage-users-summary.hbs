@@ -43,8 +43,14 @@
   >
   <ul
     class="results
-      {{unless
-        (or searchForUsers.isRunning searchForUsers.lastSuccessful.value.length)
+      {{if
+        (and
+          searchForUsers.isIdle
+          (or
+            (eq searchForUsers.performCount 0)
+            (eq searchForUsers.lastSuccessful.value.length 0)
+          )
+        )
         "hidden"
       }}
 

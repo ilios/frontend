@@ -11,7 +11,6 @@ module.exports = {
     'no-invalid-interactive': false,
     'no-triple-curlies': false,
     'link-href-attributes': false,
-    'simple-unless': false,
     'link-rel-noopener': false,
   }
 };

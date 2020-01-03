@@ -14,16 +14,7 @@
       {{t "general.users"}}
     </span>
     <div class="actions">
-      {{#unless (or showNewUserForm showBulkNewUserForm)}}
-        <button {{action (toggle "showNewUserForm" this)}}>
-          {{t "general.create"}}
-        </button>
-        {{#if (not-eq (await iliosConfig.userSearchType) "ldap")}}
-          <button {{action (toggle "showBulkNewUserForm" this)}}>
-            {{t "general.createBulk"}}
-          </button>
-        {{/if}}
-      {{else}}
+      {{#if (or showNewUserForm showBulkNewUserForm)}}
         <button
           {{action
             (if
@@ -35,7 +26,16 @@
         >
           <FaIcon @icon="minus" />
         </button>
-      {{/unless}}
+      {{else}}
+        <button {{action (toggle "showNewUserForm" this)}}>
+          {{t "general.create"}}
+        </button>
+        {{#if (not-eq (await iliosConfig.userSearchType) "ldap")}}
+          <button {{action (toggle "showBulkNewUserForm" this)}}>
+            {{t "general.createBulk"}}
+          </button>
+        {{/if}}
+      {{/if}}
     </div>
   </div>
   <section class="new">

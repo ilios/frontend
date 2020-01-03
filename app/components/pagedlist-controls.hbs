@@ -3,9 +3,7 @@
     <FaIcon @icon="backward" />
   </span>
 {{/unless}}
-{{#unless limitless}}
-  {{t "general.pagedResultsCount" start=start end=end total=total}}
-{{else}}
+{{#if limitless}}
   <select onchange={{action "setLimit" value="target.value"}}>
     {{#each offsetOptions as |o|}}
       <option value={{o}} selected={{is-equal o limit}}>
@@ -14,7 +12,9 @@
     {{/each}}
   </select>
   {{t "general.perPage"}}
-{{/unless}}
+{{else}}
+  {{t "general.pagedResultsCount" start=start end=end total=total}}
+{{/if}}
 {{#unless lastPage}}
   <span class="clickable link forward" {{action "goForward"}}>
     <FaIcon @icon="forward" />

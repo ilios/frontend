@@ -5,7 +5,7 @@
 >
   <GlobalSearchBox @query={{@query}} @search={{@onQuery}} />
   <ul
-    class="results {{unless (or this.isLoading this.hasResults) "hidden"}}"
+    class="results {{if (and this.isIdle (not this.hasResults)) "hidden"}}"
     data-test-results
   >
     {{#if this.isLoading}}

@@ -67,21 +67,7 @@
   <p>
     {{t "general.tokenInfo" apiDocsUrl=apiDocsUrl htmlSafe=true}}
   </p>
-  {{#unless (or showInvalidateTokens showCreateNewToken)}}
-    <button
-      class="new-token done text"
-      onclick={{action toggleShowCreateNewToken}}
-      data-test-show-create-new-token
-    >
-      {{t "general.createNew"}}
-    </button>
-    <button
-      class="invalidate-tokens cancel text"
-      onclick={{action toggleShowInvalidateTokens}}
-    >
-      {{t "general.invalidateTokens"}}
-    </button>
-  {{else}}
+  {{#if (or showInvalidateTokens showCreateNewToken)}}
     {{#if showCreateNewToken}}
       {{#if generatedJwt}}
         <div class="new-token-result">
@@ -153,5 +139,19 @@
         </button>
       </div>
     {{/if}}
-  {{/unless}}
+  {{else}}
+    <button
+      class="new-token done text"
+      onclick={{action toggleShowCreateNewToken}}
+      data-test-show-create-new-token
+    >
+      {{t "general.createNew"}}
+    </button>
+    <button
+      class="invalidate-tokens cancel text"
+      onclick={{action toggleShowInvalidateTokens}}
+    >
+      {{t "general.invalidateTokens"}}
+    </button>
+  {{/if}}
 </section>

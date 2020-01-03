@@ -5,7 +5,7 @@
 {{#if (is-pending schoolData)}}
   <LoadingSpinner @tagName="h3" />
 {{/if}}
-{{#unless (is-pending schoolData)}}
+{{#if (is-fulfilled schoolData)}}
   <div class="content">
     <table class="condensed">
       <thead>
@@ -32,4 +32,4 @@
       </tbody>
     </table>
   </div>
-{{/unless}}
+{{/if}}
