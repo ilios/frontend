@@ -34,15 +34,13 @@
   {{/if}}
 </div>
 <div class="actions">
-  <a class="button" {{action (perform downloadReport report)}}>
-    <button type="button" class="download">
-      <FaIcon
-        @icon={{if downloadReport.isRunning "spinner" "download"}}
-        @spin={{if downloadReport.isRunning true false}}
-      />
-      {{t "general.download"}}
-    </button>
-  </a>
+  <button type="button" class="download" {{action (perform downloadReport report)}}>
+    <FaIcon
+      @icon={{if downloadReport.isRunning "spinner" "download"}}
+      @spin={{if downloadReport.isRunning true false}}
+    />
+    {{t "general.download"}}
+  </button>
   <button type="button" class="finalize" disabled={{not canUpdate}} {{action "finalize"}}>
     {{t "general.finalize"}}
   </button>
