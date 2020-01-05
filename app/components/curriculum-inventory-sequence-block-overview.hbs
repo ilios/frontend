@@ -87,7 +87,7 @@
         <span>{{if sequenceBlock.track (t "general.yes") (t "general.no")}}</span>
       {{/if}}
     </div>
-    {{#if (not isEditingDatesAndDuration)}}
+    {{#if isEditingDatesAndDuration}}
       {{curriculum-inventory-sequence-block-dates-duration-editor
         sequenceBlock=sequenceBlock
         save=(action "changeDatesAndDuration")
@@ -195,7 +195,7 @@
     <div class="block is-selective {{if (not isSelective) "hidden"}}">
       <label>{{t "general.sequenceBlockIsSelective"}}</label>
     </div>
-    {{#if (not isEditingMinMax)}}
+    {{#if isEditingMinMax}}
       {{curriculum-inventory-sequence-block-min-max-editor
         minimum=minimum
         maximum=maximum
@@ -246,7 +246,9 @@
       {{/if}}
     </div>
     {{#if (is-pending sessions)}}
-    {{#if (get (await sessions) "length")}}
+      <div class="block sessions">{{loading-spinner}}</div>
+    {{else}}
+      {{#if (get (await sessions) "length")}}
         {{#liquid-if isManagingSessions class="horizontal sessions-list"}}
           {{curriculum-inventory-sequence-block-session-manager
             sequenceBlock=sequenceBlock
@@ -273,8 +275,6 @@
           }}
         {{/liquid-if}}
       {{/if}}
-    {{else}}
-      <div class="block sessions">{{loading-spinner}}</div>
     {{/if}}
   {{/if}}
 </div>
