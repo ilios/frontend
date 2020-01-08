@@ -1,4 +1,4 @@
-{{print-course
-  course=this.model
-  includeUnpublishedSessions=(and this.unpublished this.canViewUnpublished)
-}}
+<PrintCourse
+  @course={{this.model}}
+  @includeUnpublishedSessions={{and this.unpublished this.canViewUnpublished}}
+/>

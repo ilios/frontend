@@ -1,17 +1,17 @@
-{{ilios-course-details
-  course=this.model
-  editable=this.editable
-  showDetails=this.details
-  setShowDetails=(action (mut this.details))
-  courseLeadershipDetails=this.courseLeadershipDetails
-  courseObjectiveDetails=this.courseObjectiveDetails
-  courseTaxonomyDetails=this.courseTaxonomyDetails
-  courseCompetencyDetails=this.courseCompetencyDetails
-  courseManageLeadership=this.courseManageLeadership
-  setCourseLeadershipDetails=(action (mut this.courseLeadershipDetails))
-  setCourseObjectiveDetails=(action (mut this.courseObjectiveDetails))
-  setCourseTaxonomyDetails=(action (mut this.courseTaxonomyDetails))
-  setCourseCompetencyDetails=(action (mut this.courseCompetencyDetails))
-  setCourseManageLeadership=(action (mut this.courseManageLeadership))
-}}
+<IliosCourseDetails
+  @course={{this.model}}
+  @editable={{this.editable}}
+  @showDetails={{this.details}}
+  @setShowDetails={{action (mut this.details)}}
+  @courseLeadershipDetails={{this.courseLeadershipDetails}}
+  @courseObjectiveDetails={{this.courseObjectiveDetails}}
+  @courseTaxonomyDetails={{this.courseTaxonomyDetails}}
+  @courseCompetencyDetails={{this.courseCompetencyDetails}}
+  @courseManageLeadership={{this.courseManageLeadership}}
+  @setCourseLeadershipDetails={{action (mut this.courseLeadershipDetails)}}
+  @setCourseObjectiveDetails={{action (mut this.courseObjectiveDetails)}}
+  @setCourseTaxonomyDetails={{action (mut this.courseTaxonomyDetails)}}
+  @setCourseCompetencyDetails={{action (mut this.courseCompetencyDetails)}}
+  @setCourseManageLeadership={{action (mut this.courseManageLeadership)}}
+/>
 {{outlet}}

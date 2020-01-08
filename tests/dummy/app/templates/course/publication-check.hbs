@@ -1,2 +1,4 @@
-{{#link-to "course" this.model}}{{t "general.backToTitle" title=this.model.title}}{{/link-to}}
-{{course-publicationcheck course=this.model}}
+<LinkTo @route="course" @model={{this.model}}>
+  {{t "general.backToTitle" title=this.model.title}}
+</LinkTo>
+<CoursePublicationcheck @course={{this.model}} />
