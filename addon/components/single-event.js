@@ -1,24 +1,8 @@
 import Component from '@glimmer/component';
-import { action, computed } from '@ember/object';
-import ObjectProxy from '@ember/object/proxy';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isBlank, isEmpty } from '@ember/utils';
 import moment from 'moment';
-
-const TypedLearningMaterial = ObjectProxy.extend({
-  type: computed('isBlanked', 'citation', 'link', 'file', function() {
-    if (this.isBlanked) {
-      return 'unknown';
-    }
-    if (!isBlank(this.citation)) {
-      return 'citation';
-    } else if (!isBlank(this.link)) {
-      return 'link';
-    } else {
-      return 'file';
-    }
-  })
-});
 
 export default class SingleEvent extends Component {
   @service currentUser;
@@ -74,9 +58,26 @@ export default class SingleEvent extends Component {
   }
 
   get typedLearningMaterials() {
+    const handler = {
+      get: function(obj, prop) {
+        if ('type' === prop) {
+          if (obj.isBlanked) {
+            return 'unknown';
+          }
+          if (!isBlank(obj.citation)) {
+            return 'citation';
+          } else if (!isBlank(obj.link)) {
+            return 'link';
+          } else {
+            return 'file';
+          }
+        }
+        return obj[prop];
+      }
+    };
     const lms = this.args.event.learningMaterials || [];
     return lms.map(lm => {
-      return TypedLearningMaterial.create(lm);
+      return new Proxy(lm, handler);
     });
   }
 
