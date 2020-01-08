@@ -1,9 +1,12 @@
 {{#unless this.loadAttr.isRunning}}
   <div class="actions">
-    <button class="bigadd" {{on "click" (action "save")}}>
-      <FaIcon @icon="check" />
+    <button class="bigadd" {{on "click" (perform this.callSave)}} data-test-save>
+      <FaIcon
+        @icon={{if this.callSave.isRunning "spinner" "check"}}
+        @spin={{this.callSave.isRunning}}
+      />
     </button>
-    <button class="bigcancel" {{on "click" (action "cancel")}}>
+    <button class="bigcancel" {{on "click" @cancel}} data-test-cancel>
       <FaIcon @icon="undo" />
     </button>
   </div>

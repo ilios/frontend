@@ -1,278 +1,227 @@
-import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  find,
-  settled,
-  click
-} from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
-const { resolve } = RSVP;
+import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/learning-materials';
 
 module('Integration | Component | detail learning materials', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
+  hooks.beforeEach(function () {
+    this.statues = this.server.createList('learning-material-status', 3);
+    this.roles = this.server.createList('learning-material-user-role', 3);
+    this.user = this.server.create('user');
+  });
 
   test('lm table items', async function(assert) {
-    assert.expect(8);
-    const table = 'table';
-    const rows = `${table} tbody tr`;
-    const title = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
-    const owner = `${rows}:nth-of-type(1) td:nth-of-type(2)`;
-    const required = `${rows}:nth-of-type(1) td:nth-of-type(3)`;
-    const notes = `${rows}:nth-of-type(1) td:nth-of-type(4)`;
-    const mesh = `${rows}:nth-of-type(1) td:nth-of-type(5)`;
-    const status = `${rows}:nth-of-type(1) td:nth-of-type(6)`;
+    assert.expect(10);
 
-    const clm = EmberObject.create({
-      id: 1,
-      learningMaterial: EmberObject.create({
-        title: 'test title',
-        type: 'citation',
-        owningUser: EmberObject.create({
-          fullName: 'Jolly Green Champ'
-        }),
-        status: EmberObject.create({
-          title: 'Good'
-        }),
-      }),
+    const learningMaterial = this.server.create('learning-material', {
+      title: 'test title',
+      citation: 'some text',
+      owningUser: this.user,
+      status: this.statues[1],
+      userRole: this.roles[0],
+    });
+
+    const clm = this.server.create('course-learning-material', {
+      learningMaterial,
       required: true,
       notes: 'notes',
     });
 
-    const subject = EmberObject.create({
-      id: 1,
-      learningMaterials: resolve([clm])
+    const course = this.server.create('course', {
+      learningMaterials: [clm]
     });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
-    this.set('subject', subject);
+    this.set('subject', courseModel);
 
     await render(hbs`<DetailLearningMaterials
-      @subject={{subject}}
+      @subject={{this.subject}}
       @isCourse={{true}}
       @isCourse={{true}}
       @editable={{true}}
     />`);
-    assert.dom(rows).exists({ count: 1 });
-    assert.ok(find(title).textContent.trim().startsWith('Citation'));
-    assert.ok(find(title).textContent.trim().endsWith('test title'));
-    assert.dom(owner).hasText('Jolly Green Champ');
-    assert.dom(required).hasText('Yes');
-    assert.dom(notes).hasText('Yes');
-    assert.dom(mesh).hasText('None');
-    assert.dom(status).hasText('Good');
+    assert.equal(component.current.length, 1);
+    assert.equal(component.current[0].type, 'Citation');
+    assert.equal(component.current[0].title, 'test title');
+    assert.equal(component.current[0].owner, '0 guy M. Mc0son');
+    assert.equal(component.current[0].required, 'Yes');
+    assert.equal(component.current[0].notes, 'Yes');
+    assert.equal(component.current[0].mesh, 'None');
+    assert.equal(component.current[0].status, 'status 1');
+    assert.ok(component.current[0].isNotePublic);
+    assert.notOk(component.current[0].isTimedRelease);
   });
 
   test('sort button visible when lm list has 2+ items and editing is allowed', async function(assert) {
     assert.expect(1);
 
-    const clm1 = EmberObject.create({
-      id: 1,
-      learningMaterial: resolve(EmberObject.create({
-        id: 1,
-      }))
+    const learningMaterial = this.server.create('learning-material', {
+      owningUser: this.user,
+      status: this.statues[1],
+      userRole: this.roles[0],
     });
 
-    const clm2 = EmberObject.create({
-      id: 2,
-      learningMaterial: resolve(EmberObject.create({
-        id: 2,
-      }))
-    });
-    const clms = [ clm1, clm2 ];
-
-    const subject = EmberObject.create({
-      id: 1,
-      learningMaterials: resolve(clms)
+    const learningMaterials = this.server.createList('course-learning-material', 2, {
+      learningMaterial,
     });
 
-    this.set('subject', subject);
+    const course = this.server.create('course', {
+      learningMaterials
+    });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('subject', courseModel);
 
     await render(hbs`<DetailLearningMaterials
-      @subject={{subject}}
+      @subject={{this.subject}}
       @isCourse={{true}}
       @editable={{true}}
     />`);
 
-    return settled().then(() => {
-      assert.dom('.sort-materials-btn').exists({ count: 1 });
-    });
+    assert.ok(component.canSort);
   });
 
   test('sort button not visible when in read-only mode', async function(assert) {
     assert.expect(1);
 
-    const lm1 = EmberObject.create({
-      id: 1,
+    const learningMaterial = this.server.create('learning-material', {
+      owningUser: this.user,
+      status: this.statues[1],
+      userRole: this.roles[0],
     });
 
-    const lm2 = EmberObject.create({
-      id: 2,
-    });
-    const lms = [ lm1, lm2 ];
-
-    const subject = EmberObject.create({
-      id: 1,
-      learningMaterials: resolve(lms)
+    const learningMaterials = this.server.createList('course-learning-material', 2, {
+      learningMaterial,
     });
 
-    this.set('subject', subject);
+    const course = this.server.create('course', {
+      learningMaterials
+    });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('subject', courseModel);
 
     await render(hbs`<DetailLearningMaterials
-      @subject={{subject}}
+      @subject={{this.subject}}
       @isCourse={{true}}
       @editable={{false}}
     />`);
 
-    return settled().then(() => {
-      assert.dom('.sort-materials-btn').doesNotExist();
-    });
+    assert.notOk(component.canSort);
   });
 
   test('sort button not visible when lm list is empty', async function(assert) {
     assert.expect(1);
 
-    const subject = EmberObject.create({
-      id: 1,
-      learningMaterials: resolve([])
-    });
-
-    this.set('subject', subject);
+    const course = this.server.create('course');
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('subject', courseModel);
 
     await render(hbs`<DetailLearningMaterials
-      @subject={{subject}}
+      @subject={{this.subject}}
       @isCourse={{true}}
       @editable={{true}}
     />`);
 
-    return settled().then(() => {
-      assert.dom('.sort-materials-btn').doesNotExist();
-    });
+    assert.notOk(component.canSort);
   });
 
-  test('sort button not visible when lm list only contains one item', async function(assert) {
-    const clm1 = EmberObject.create({
-      id: 1,
-      learningMaterial: resolve(EmberObject.create({
-        id: 1,
-      }))
+  test('sort button not visible when lm list only contains one item', async function (assert) {
+    const learningMaterial = this.server.create('learning-material', {
+      owningUser: this.user,
+      status: this.statues[1],
+      userRole: this.roles[0],
     });
 
-    const clms = [ clm1 ];
-
-    const subject = EmberObject.create({
-      id: 1,
-      learningMaterials: resolve(clms)
+    const clm = this.server.create('course-learning-material', {
+      learningMaterial,
+      required: true,
+      notes: 'notes',
     });
 
-    this.set('subject', subject);
+    const course = this.server.create('course', {
+      learningMaterials: [clm]
+    });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+
+    this.set('subject', courseModel);
 
     await render(hbs`<DetailLearningMaterials
-      @subject={{subject}}
+      @subject={{this.subject}}
       @isCourse={{true}}
       @editable={{true}}
     />`);
 
-    return settled().then(() => {
-      assert.dom('.sort-materials-btn').doesNotExist();
-    });
+    assert.notOk(component.canSort);
   });
 
   test('click sort button, then cancel', async function(assert) {
     assert.expect(6);
 
-    const clm1 = EmberObject.create({
-      id: 1,
-      learningMaterial: resolve(EmberObject.create({
-        id: 1,
-      }))
+    const learningMaterial = this.server.create('learning-material', {
+      owningUser: this.user,
+      status: this.statues[1],
+      userRole: this.roles[0],
     });
 
-    const clm2 = EmberObject.create({
-      id: 2,
-      learningMaterial: resolve(EmberObject.create({
-        id: 2,
-      }))
-    });
-    const clms = [ clm1, clm2 ];
-
-    const subject = EmberObject.create({
-      id: 1,
-      learningMaterials: resolve(clms)
+    const learningMaterials = this.server.createList('course-learning-material', 2, {
+      learningMaterial,
     });
 
-    this.set('subject', subject);
-
+    const course = this.server.create('course', {
+      learningMaterials
+    });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('subject', courseModel);
     await render(hbs`<DetailLearningMaterials
-      @subject={{subject}}
+      @subject={{this.subject}}
       @isCourse={{true}}
       @editable={{true}}
     />`);
-
-    return settled().then(async () => {
-      assert.dom('.sort-materials-btn').exists({ count: 1 }, 'Sort materials button is visible');
-      assert.dom('.learning-materials-sort-manager').doesNotExist('LM sort manager is not visible');
-
-      await click('.sort-materials-btn');
-      return settled().then(async () => {
-        assert.dom('.sort-materials-btn').doesNotExist('Sort materials button is not visible');
-        assert.dom('.learning-materials-sort-manager').exists({ count: 1 }, 'LM sort manager is visible');
-        await click('.learning-materials-sort-manager .bigcancel');
-        return settled().then(() => {
-          assert.dom('.sort-materials-btn').exists({ count: 1 }, 'Sort materials button is visible again');
-          assert.dom('.learning-materials-sort-manager').doesNotExist('LM sort manager is not visible again');
-        });
-      });
-    });
+    assert.ok(component.canSort);
+    assert.notOk(component.sortManager.isVisible);
+    await component.sort();
+    assert.notOk(component.canSort);
+    assert.ok(component.sortManager.isVisible);
+    await component.sortManager.cancel();
+    assert.ok(component.canSort);
+    assert.notOk(component.sortManager.isVisible);
   });
 
   test('click sort button, then save', async function(assert) {
     assert.expect(2);
 
-    const clm1 = EmberObject.create({
-      id: 1,
-      learningMaterial: resolve(EmberObject.create({
-        id: 1,
-      })),
-      save() {
-        assert.ok(true, 'Save() method was invoked');
-        resolve(this);
-      }
+    const learningMaterial = this.server.create('learning-material', {
+      owningUser: this.user,
+      status: this.statues[1],
+      userRole: this.roles[0],
     });
 
-    const clm2 = EmberObject.create({
-      id: 2,
-      learningMaterial: resolve(EmberObject.create({
-        id: 2,
-      })),
-      save() {
-        assert.ok(true, 'Save() method was invoked');
-        resolve(this);
-      }
+    const learningMaterials = this.server.createList('course-learning-material', 2, {
+      learningMaterial,
     });
-    const clms = [ clm1, clm2 ];
-
-    const subject = EmberObject.create({
-      id: 1,
-      learningMaterials: resolve(clms)
+    const course = this.server.create('course', {
+      learningMaterials
     });
-
-    this.set('subject', subject);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('subject', courseModel);
+    this.server.put('/api/courselearningmaterials/1', () => {
+      assert.ok(true);
+    });
+    this.server.put('/api/courselearningmaterials/2', () => {
+      assert.ok(true);
+    });
 
     await render(hbs`<DetailLearningMaterials
-      @subject={{subject}}
+      @subject={{this.subject}}
       @isCourse={{true}}
       @editable={{true}}
     />`);
-
-    return settled().then(async () => {
-      await click('.sort-materials-btn');
-      return settled().then(async () => {
-        await click('.learning-materials-sort-manager .bigadd');
-      });
-    });
+    await component.sort();
+    this.server.logging = true;
+    await component.sortManager.save();
   });
 });
