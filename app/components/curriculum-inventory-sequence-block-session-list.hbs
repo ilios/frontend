@@ -75,17 +75,17 @@
             </td>
             <td class="text-center" colspan="1">
               {{#if (contains session linkedSessions)}}
-                {{#unless (is-fulfilled session.maxDuration)}}
+                {{#if (is-pending session.maxDuration)}}
                   <LoadingSpinner />
                 {{else}}
                   {{await session.maxDuration}}
-                {{/unless}}
+                {{/if}}
               {{else}}
-                {{#unless (is-fulfilled session.totalSumDuration)}}
+                {{#if (is-pending session.totalSumDuration)}}
                   <LoadingSpinner />
                 {{else}}
                   {{await session.totalSumDuration}}
-                {{/unless}}
+                {{/if}}
               {{/if}}
             </td>
             <td class="text-center" colspan="1">

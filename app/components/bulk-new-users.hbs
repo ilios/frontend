@@ -58,7 +58,7 @@
       {{t "general.uploadUsers"}}
       (<a
          target="_blank"
-         rel="noopener"
+         rel="noopener noreferrer"
          download="SampleUserUpload.tsv"
          href="data:application/octet-stream;charset=utf-8;base64,{{sampleData}}"
        >
@@ -207,6 +207,7 @@
   {{/if}}
   <div class="buttons">
     <button
+      type="button"
       class="done text"
       disabled={{or
         (lt selectedUsers.length 1)
@@ -222,7 +223,7 @@
         {{t "general.done"}}
       {{/if}}
     </button>
-    <button class="cancel text" {{action (action close)}}>
+    <button type="button" class="cancel text" {{action (action close)}}>
       {{t "general.cancel"}}
     </button>
   </div>

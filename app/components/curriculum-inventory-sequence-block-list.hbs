@@ -132,10 +132,11 @@
                       {{t "general.sequenceBlockConfirmRemove"}}
                       <br>
                       <div class="confirm-buttons">
-                        <button class="remove text" {{action "remove" block}}>
+                        <button type="button" class="remove text" {{action "remove" block}}>
                           {{t "general.yes"}}
                         </button>
                         <button
+                          type="button"
                           class="done text"
                           {{action "cancelRemove" block}}
                         >

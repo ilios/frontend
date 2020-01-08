@@ -15,14 +15,14 @@
     </select>
   </div>
   <div class="buttons">
-    <button class="done text" {{action (perform saveNewYear)}}>
+    <button type="button" class="done text" {{action (perform saveNewYear)}}>
       {{#if saveNewYear.isRunning}}
         <LoadingSpinner />
       {{else}}
         {{t "general.done"}}
       {{/if}}
     </button>
-    <button class="cancel text" {{action cancel}}>
+    <button type="button" class="cancel text" {{action cancel}}>
       {{t "general.cancel"}}
     </button>
   </div>

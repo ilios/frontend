@@ -5,13 +5,14 @@
     </h3>
     <div class="actions">
       {{#if isManaging}}
-        <button class="bigadd" {{action (perform save)}}>
+        <button type="button" class="bigadd" {{action (perform save)}}>
           <FaIcon
             @icon={{if save.isRunning "spinner" "check"}}
             @spin={{if save.isRunning true false}}
           />
         </button>
         <button
+          type="button"
           disabled={{save.isRunning}}
           class="bigcancel"
           {{action setIsManaging false}}
@@ -19,7 +20,7 @@
           <FaIcon @icon="undo" />
         </button>
       {{else if isManageable}}
-        <button class="manage" {{action setIsManaging true}}>
+        <button type="button" class="manage" {{action setIsManaging true}}>
           <FaIcon @icon="edit" />
         </button>
       {{/if}}

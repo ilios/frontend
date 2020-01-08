@@ -50,7 +50,7 @@
         </td>
         <td class="text-right" colspan="2">
           {{#if (await program.canActivate)}}
-            <button class="text" onclick={{action "activate" program}}>
+            <button type="button" class="text" onclick={{action "activate" program}}>
               {{t "general.activate"}}
             </button>
           {{/if}}
@@ -79,12 +79,14 @@
                 <br>
                 <div class="confirm-buttons">
                   <button
+                    type="button"
                     class="remove text"
                     onclick={{action "remove" program}}
                   >
                     {{t "general.yes"}}
                   </button>
                   <button
+                    type="button"
                     class="done text"
                     onclick={{action "cancelRemove" program}}
                   >
@@ -107,12 +109,14 @@
                 <br>
                 <div class="confirm-buttons">
                   <button
+                    type="button"
                     class="remove text"
                     onclick={{action "remove" program}}
                   >
                     {{t "general.yes"}}
                   </button>
                   <button
+                    type="button"
                     class="done text"
                     onclick={{action "cancelRemove" program}}
                   >

@@ -5,7 +5,7 @@
 {{#if competencies.isPending}}
   <LoadingSpinner @tagName="h3" />
 {{/if}}
-{{#unless (is-pending school.competencies)}}
+{{#if (is-fulfilled school.competencies)}}
   <div class="content">
     <table class="condensed">
       <thead>
@@ -32,4 +32,4 @@
       </tbody>
     </table>
   </div>
-{{/unless}}
+{{/if}}

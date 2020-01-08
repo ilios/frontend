@@ -14,17 +14,17 @@
   {{/if}}
   <div class="actions">
     {{#if isManaging}}
-      <button class="bigadd" {{action "save"}}>
+      <button type="button" class="bigadd" {{action "save"}}>
         <FaIcon
           @icon={{if isSaving "spinner" "check"}}
           @spin={{if isSaving true false}}
         />
       </button>
-      <button class="bigcancel" {{action "cancel"}}>
+      <button type="button" class="bigcancel" {{action "cancel"}}>
         <FaIcon @icon="undo" />
       </button>
     {{else if (or canUpdate canDelete canCreate)}}
-      <button {{action "manage"}}>
+      <button type="button" {{action "manage"}}>
         {{t "general.manageCompetencies"}}
       </button>
     {{/if}}

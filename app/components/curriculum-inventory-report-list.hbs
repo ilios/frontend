@@ -105,7 +105,7 @@
             <a
               download="report.xml"
               href={{report.content.absoluteFileUri}}
-              rel="noopener"
+              rel="noopener noreferrer"
               target="_blank"
             >
               <FaIcon @icon="download" class="enabled" />
@@ -127,10 +127,11 @@
               {{t "general.reportConfirmRemove"}}
               <br>
               <div class="confirm-buttons">
-                <button class="remove text" onclick={{action "remove" report}}>
+                <button type="button" class="remove text" onclick={{action "remove" report}}>
                   {{t "general.yes"}}
                 </button>
                 <button
+                  type="button"
                   class="done text"
                   onclick={{action "cancelRemove" report}}
                 >

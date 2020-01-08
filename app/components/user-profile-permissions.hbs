@@ -1,9 +1,9 @@
 {{! template-lint-disable no-bare-strings }}
 <h3 class="title">
   {{t "general.permissions"}}
-  {{#unless (is-fulfilled isLoaded)}}
+  {{#if (is-pending isLoaded)}}
     <LoadingSpinner />
-  {{/unless}}
+  {{/if}}
 </h3>
 <span>
   <FaIcon @icon="university" @fixedWidth={{true}} />

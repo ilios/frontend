@@ -1,5 +1,6 @@
 <ClickOutside @onClickOutside={{action (mut isOpen) false}}>
   <button
+    type="button"
     aria-label={{t (concat "general.language." locale.id)}}
     role="menuitem"
     class="toggle"
@@ -18,6 +19,7 @@
     <div class="menu" role="menu">
       {{#each locales as |loc|}}
         <button
+          type="button"
           role="menuitemradio"
           lang={{loc.id}}
           tabindex="-1"

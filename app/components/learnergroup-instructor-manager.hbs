@@ -1,11 +1,11 @@
 <div class="detail-actions">
-  <button class="bigadd" {{action (perform saveChanges)}}>
+  <button type="button" class="bigadd" {{action (perform saveChanges)}}>
     <FaIcon
       @icon={{if saveChanges.isRunning "spinner" "check"}}
       @spin={{if saveChanges.isRunning true false}}
     />
   </button>
-  <button class="bigcancel" {{action close}}>
+  <button type="button" class="bigcancel" {{action close}}>
     <FaIcon @icon="undo" />
   </button>
 </div>

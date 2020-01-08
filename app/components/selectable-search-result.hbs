@@ -1,5 +1,7 @@
 <li class={{if selected "disabled" "enabled"}}>
-  {{#unless selected}}
+  {{#if selected}}
+    <FaIcon @icon="circle" />
+  {{else}}
     <span
       class="add"
       {{translateAttr title="general.add"}}
@@ -7,8 +9,6 @@
     >
       <FaIcon @icon="plus-circle" />
     </span>
-  {{else}}
-    <FaIcon @icon="circle" />
-  {{/unless}}
+  {{/if}}
   {{yield}}
 </li>

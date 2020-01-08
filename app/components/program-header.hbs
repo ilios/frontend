@@ -33,7 +33,7 @@
 </div>
 <div class="program-publication">
   {{#if (and canUpdate (or program.isScheduled (not program.isPublished)))}}
-    <button {{action "activate" program}}>
+    <button type="button" {{action "activate" program}}>
       {{t "general.activate"}}
     </button>
   {{/if}}

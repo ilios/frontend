@@ -170,7 +170,7 @@ module('Integration | Component | school session types list', function(hooks) {
 
     await settled();
     const rows = 'table tbody tr';
-    const title = `${rows}:nth-of-type(1) td:nth-of-type(1) a`;
+    const title = `${rows}:nth-of-type(1) td:nth-of-type(1) .clickable`;
 
     await click(title);
   });

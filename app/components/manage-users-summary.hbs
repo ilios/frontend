@@ -14,7 +14,7 @@
         @route="users"
         @query={{hash showNewUserForm=true showBulkNewUserForm=false}}
       >
-        <button>
+        <button type="button">
           {{t "general.create"}}
         </button>
       </LinkTo>
@@ -23,7 +23,7 @@
           @route="users"
           @query={{hash showBulkNewUserForm=true showNewUserForm=false}}
         >
-          <button>
+          <button type="button">
             {{t "general.createBulk"}}
           </button>
         </LinkTo>
@@ -43,8 +43,14 @@
   >
   <ul
     class="results
-      {{unless
-        (or searchForUsers.isRunning searchForUsers.lastSuccessful.value.length)
+      {{if
+        (and
+          searchForUsers.isIdle
+          (or
+            (eq searchForUsers.performCount 0)
+            (eq searchForUsers.lastSuccessful.value.length 0)
+          )
+        )
         "hidden"
       }}
 

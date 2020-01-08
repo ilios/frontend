@@ -7,14 +7,14 @@
   </div>
   <div class="actions">
     {{#if @canUpdate}}
-      <button class="bigadd" {{action "save"}}>
+      <button type="button" class="bigadd" {{action "save"}}>
         <FaIcon
           @icon={{if isSaving "spinner" "check"}}
           @spin={{if isSaving true false}}
         />
       </button>
     {{/if}}
-    <button class="bigcancel" {{action "cancel"}}>
+    <button type="button" class="bigcancel" {{action "cancel"}}>
       <FaIcon @icon="undo" />
     </button>
   </div>

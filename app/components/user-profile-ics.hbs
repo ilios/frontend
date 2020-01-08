@@ -4,6 +4,7 @@
 <div class="actions">
   {{#if isManaging}}
     <button
+      type="button"
       disabled={{refreshKey.isRunning}}
       title={{t "general.refreshIcsFeedKey"}}
       class="refresh-key"
@@ -15,6 +16,7 @@
       />
     </button>
     <button
+      type="button"
       disabled={{refreshKey.isRunning}}
       class="bigcancel"
       {{action setIsManaging false}}
@@ -23,6 +25,7 @@
     </button>
   {{else if isManageable}}
     <button
+      type="button"
       class="manage"
       title={{t "general.refreshIcsFeedKey"}}
       {{action setIsManaging true}}

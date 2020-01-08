@@ -1,16 +1,16 @@
 <div class="actions">
   {{#if isManaging}}
-    <button class="bigadd" data-test-save {{action (perform save)}}>
+    <button type="button" class="bigadd" data-test-save {{action (perform save)}}>
       <FaIcon
         @icon={{if save.isRunning "spinner" "check"}}
         @spin={{if save.isRunning true false}}
       />
     </button>
-    <button disabled={{save.isRunning}} class="bigcancel" {{action "cancel"}}>
+    <button type="button" disabled={{save.isRunning}} class="bigcancel" {{action "cancel"}}>
       <FaIcon @icon="undo" />
     </button>
   {{else if isManageable}}
-    <button class="manage" data-test-manage {{action setIsManaging true}}>
+    <button type="button" class="manage" data-test-manage {{action setIsManaging true}}>
       <FaIcon @icon="edit" />
     </button>
   {{/if}}
@@ -32,15 +32,7 @@
     <label for="former-student">
       {{t "general.formerStudent"}}:
     </label>
-    {{#unless isManaging}}
-      <span class="value {{if (await isFormerStudent) "yes" "no"}}">
-        {{#if (await isFormerStudent)}}
-          {{t "general.yes"}}
-        {{else}}
-          {{t "general.no"}}
-        {{/if}}
-      </span>
-    {{else}}
+    {{#if isManaging}}
       <input
         id="former-student"
         type="checkbox"
@@ -50,22 +42,22 @@
           (not isFormerStudentFlipped)
         }}
       >
-    {{/unless}}
+    {{else}}
+      <span class="value {{if (await isFormerStudent) "yes" "no"}}">
+        {{#if (await isFormerStudent)}}
+          {{t "general.yes"}}
+        {{else}}
+          {{t "general.no"}}
+        {{/if}}
+      </span>
+    {{/if}}
   </div>
   <hr>
   <div class="item" data-test-enabled>
     <label for="is-enabled">
       {{t "general.accountEnabled"}}:
     </label>
-    {{#unless isManaging}}
-      <span class="value {{if (await isEnabled) "yes" "no"}}">
-        {{#if (await isEnabled)}}
-          {{t "general.yes"}}
-        {{else}}
-          {{t "general.no"}}
-        {{/if}}
-      </span>
-    {{else}}
+    {{#if isManaging}}
       <input
         id="is-enabled"
         type="checkbox"
@@ -73,21 +65,21 @@
         onclick={{action (mut isEnabledFlipped) (not isEnabledFlipped)}}
         disabled={{if (eq user.id currentUser.model.id) true}}
       >
-    {{/unless}}
-  </div>
-  <div class="item" data-test-exclude-from-sync>
-    <label for="exclude-from-sync">
-      {{t "general.excludeFromSync"}}:
-    </label>
-    {{#unless isManaging}}
-      <span class="value {{if (await isUserSyncIgnored) "yes" "no"}}">
-        {{#if (await isUserSyncIgnored)}}
+    {{else}}
+      <span class="value {{if (await isEnabled) "yes" "no"}}">
+        {{#if (await isEnabled)}}
           {{t "general.yes"}}
         {{else}}
           {{t "general.no"}}
         {{/if}}
       </span>
-    {{else}}
+    {{/if}}
+  </div>
+  <div class="item" data-test-exclude-from-sync>
+    <label for="exclude-from-sync">
+      {{t "general.excludeFromSync"}}:
+    </label>
+    {{#if isManaging}}
       <input
         id="exclude-from-sync"
         type="checkbox"
@@ -97,7 +89,15 @@
           (not isUserSyncIgnoredFlipped)
         }}
       >
-    {{/unless}}
+    {{else}}
+      <span class="value {{if (await isUserSyncIgnored) "yes" "no"}}">
+        {{#if (await isUserSyncIgnored)}}
+          {{t "general.yes"}}
+        {{else}}
+          {{t "general.no"}}
+        {{/if}}
+      </span>
+    {{/if}}
   </div>
   <hr>
   <div class="item" data-test-performs-non-learner-function>

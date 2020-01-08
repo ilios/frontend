@@ -124,7 +124,7 @@
         oninput={{action (mut newTermTitle) value="target.value"}}
         onkeyup={{action "addErrorDisplayFor" "newTermTitle"}}
       >
-      <button class="save text" {{action "createTerm"}}>
+      <button type="button" class="save text" {{action "createTerm"}}>
         {{#if isSavingNewTerm}}
           <LoadingSpinner />
         {{else}}

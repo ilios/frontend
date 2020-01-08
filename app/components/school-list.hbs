@@ -74,14 +74,14 @@
           {{/if}}
         </div>
         <div class="buttons">
-          <button class="done text" {{action "createNewSchool"}}>
+          <button type="button" class="done text" {{action "createNewSchool"}}>
             {{#liquid-if isSavingNewSchool "crossFade"}}
               <LoadingSpinner />
             {{else}}
               {{t "general.done"}}
             {{/liquid-if}}
           </button>
-          <button class="cancel text" {{action "hideNewSchoolForm"}}>
+          <button type="button" class="cancel text" {{action "hideNewSchoolForm"}}>
             {{t "general.cancel"}}
           </button>
         </div>

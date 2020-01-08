@@ -46,7 +46,7 @@
       ({{get (await objective.competency.domain) "title"}})
     {{/if}}
   {{else if editable}}
-    <button {{action manageCompetency objective}}>
+    <button type="button" {{action manageCompetency objective}}>
       {{t "general.addNew"}}
     </button>
   {{else}}
@@ -69,7 +69,7 @@
       {{/each}}
     </ul>
   {{else if editable}}
-    <button {{action manageDescriptors objective}}>
+    <button type="button" {{action manageDescriptors objective}}>
       {{t "general.addNew"}}
     </button>
   {{else}}

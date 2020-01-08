@@ -28,7 +28,7 @@
     {{#if
       (and canUpdate (or programYear.isScheduled (not programYear.isPublished)))
     }}
-      <button {{action "activate" programYear}}>
+      <button type="button" {{action "activate" programYear}}>
         {{t "general.activate"}}
       </button>
     {{/if}}

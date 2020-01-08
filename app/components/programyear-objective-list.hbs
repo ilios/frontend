@@ -7,19 +7,17 @@
     />
   {{else if (get (await objectives) "length")}}
     {{#if (and editable (await hasMoreThanOneObjective))}}
-      <button class="sort-materials-btn" {{action (mut isSorting) true}}>
+      <button type="button" class="sort-materials-btn" {{action (mut isSorting) true}}>
         {{t "general.sortObjectives"}}
       </button>
     {{/if}}
-    <a class="button" {{action (perform downloadReport subject)}}>
-      <button class="download">
-        <FaIcon
-          @icon={{if downloadReport.isRunning "spinner" "download"}}
-          @spin={{if downloadReport.isRunning true false}}
-        />
-        {{t "general.downloadCompetencyMap"}}
-      </button>
-    </a>
+    <button type="button" class="download" {{action (perform downloadReport subject)}}>
+      <FaIcon
+        @icon={{if downloadReport.isRunning "spinner" "download"}}
+        @spin={{if downloadReport.isRunning true false}}
+      />
+      {{t "general.downloadCompetencyMap"}}
+    </button>
     <table>
       <thead>
         <tr>

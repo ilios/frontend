@@ -52,6 +52,7 @@
   </div>
   <div class="buttons">
     <button
+      type="button"
       class="done text"
       disabled={{if isSaving true}}
       {{action (perform save)}}
@@ -63,7 +64,7 @@
       {{/if}}
     </button>
     <LinkTo @route="curriculumInventoryReport" @model={{report}}>
-      <button class="cancel text">
+      <button  type="button" class="cancel text">
         {{t "general.cancel"}}
       </button>
     </LinkTo>
