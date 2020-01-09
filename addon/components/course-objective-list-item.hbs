@@ -1,7 +1,13 @@
 <tr
  class="course-objective-list-item objective-list-item {{if @showRemoveConfirmation "confirm-removal"}}"
+ data-test-course-objective-list-item
 >
-  <td id="objective-{{@objective.id}}" class="text-left text-top" colspan="3">
+  <td
+    id="objective-{{@objective.id}}"
+    class="text-left text-top"
+    colspan="3"
+    data-test-description
+  >
     {{#if @editable}}
       <EditableField
         @value={{this.title}}
@@ -22,7 +28,7 @@
       {{{@objective.title}}}
     {{/if}}
   </td>
-  <td class="text-left text-top" colspan="2">
+  <td class="text-left text-top" colspan="2" data-test-parents>
     {{#if @objective.hasParents}}
       {{#each (await @objective.parents) as |parent|}}
         {{#if @course.hasMultipleCohorts}}
@@ -64,7 +70,7 @@
       {{t "general.none"}}
     {{/if}}
   </td>
-  <td class="text-left text-top" colspan="2">
+  <td class="text-left text-top" colspan="2" data-test-mesh>
     <ul class="mesh-descriptor-list">
       {{#each (sort-by "name" (await @objective.meshDescriptors)) as |descriptor|}}
         {{#if @editable}}
@@ -94,9 +100,9 @@
       {{/each}}
     </ul>
   </td>
-  <td class="text-left text-top" colspan="1">
+  <td class="text-left text-top" colspan="1" data-test-actions>
     {{#if @editable}}
-      <span class="clickable remove" role="button" {{on "click" (fn @remove @objective)}}>
+      <span class="clickable remove" role="button" {{on "click" (fn @remove @objective)}} data-test-remove>
         <FaIcon @icon="trash" class="enabled" />
       </span>
     {{else}}

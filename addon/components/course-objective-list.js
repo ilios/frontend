@@ -51,11 +51,11 @@ export default class CourseObjectiveListComponent extends Component {
   }
   @action
   confirmRemoval(objective) {
-    this.objectivesForRemovalConfirmation = [...this.objectivesForRemovalConfirmation, objective];
+    this.objectivesForRemovalConfirmation = [...this.objectivesForRemovalConfirmation, objective.id];
   }
   @action
   cancelRemove(objective){
-    this.objectivesForRemovalConfirmation = this.objectivesForRemovalConfirmation.filter(obj => obj !== objective);
+    this.objectivesForRemovalConfirmation = this.objectivesForRemovalConfirmation.filter(id => id !== objective.id);
   }
   @action
   cancelSorting() {

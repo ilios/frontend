@@ -2,6 +2,7 @@
   class="course-objective-list"
   {{did-insert (perform this.load) (await @course.objectives)}}
   {{did-update (perform this.load) (await @course.objectives)}}
+  data-test-course-objective-list
 >
   {{#if (is-array this.objectives)}}
     {{#if this.isSorting}}
@@ -12,11 +13,11 @@
       />
     {{else if (get (await @course.objectives) "length")}}
       {{#if (and @editable this.hasMoreThanOneObjective)}}
-        <button class="sort-materials-btn" {{on "click" (set this.isSorting true)}}>
+        <button class="sort-materials-btn" {{on "click" (set this.isSorting true)}} data-test-sort>
           {{t "general.sortObjectives"}}
         </button>
       {{/if}}
-      <table>
+      <table data-test-objectives>
         <thead>
           <tr>
             <th class="text-left" colspan="3">
@@ -48,7 +49,7 @@
               @manageDescriptors={{@manageDescriptors}}
             />
             {{#if (contains objective.id this.objectivesForRemovalConfirmation)}}
-              <tr class="confirm-removal">
+              <tr class="confirm-removal" data-test-confirm-removal>
                 <td colspan="8">
                   <div class="confirm-message">
                     {{#if (gt objective.children.length 0)}}
@@ -61,10 +62,10 @@
                     {{/if}}
                     <br>
                     <div class="confirm-buttons">
-                      <button class="remove text" {{on "click" (perform this.remove objective)}}>
+                      <button class="remove text" {{on "click" (perform this.remove objective)}} data-test-confirm>
                         {{t "general.yes"}}
                       </button>
-                      <button class="done text" {{on "click" (fn this.cancelRemove objective)}}>
+                      <button class="done text" {{on "click" (fn this.cancelRemove objective)}} data-test-cancel>
                         {{t "general.cancel"}}
                       </button>
                     </div>

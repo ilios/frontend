@@ -1,15 +1,16 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/course-objective-list';
 
 module('Integration | Component | course objective list', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(7);
+    assert.expect(9);
 
     const objectives = this.server.createList('objective', 2);
     const course = this.server.create('course', {
@@ -29,14 +30,16 @@ module('Integration | Component | course objective list', function(hooks) {
       />`
     );
 
-    assert.ok(findAll('.sort-materials-btn').length, 'Sort Objectives button is visible');
-    assert.dom('thead th').hasText('Description');
-    assert.dom(findAll('thead th')[1]).hasText('Parent Objectives');
-    assert.dom(findAll('thead th')[2]).hasText('MeSH Terms');
-    assert.dom(findAll('thead th')[3]).hasText('Actions');
-    for (let i = 0, n = objectives.length; i < n; i++) {
-      assert.dom(`tbody tr:nth-of-type(${i + 1}) td`).hasText(`objective ${i}`);
-    }
+    assert.equal(component.objectives.length, 2);
+    assert.ok(component.canSort);
+    assert.equal(component.listHeadings.length, 4);
+    assert.equal(component.listHeadings[0].text, 'Description');
+    assert.equal(component.listHeadings[1].text, 'Parent Objectives');
+    assert.equal(component.listHeadings[2].text, 'MeSH Terms');
+    assert.equal(component.listHeadings[3].text, 'Actions');
+
+    assert.equal(component.objectives[0].description.text, 'objective 0');
+    assert.equal(component.objectives[1].description.text, 'objective 1');
   });
 
   test('empty list', async function (assert) {
@@ -49,9 +52,8 @@ module('Integration | Component | course objective list', function(hooks) {
         @course={{this.course}}
       />`
     );
-    const container = findAll('.course-objective-list');
-    assert.equal(container.length, 1, 'Component container element exists.');
-    assert.dom(container[0]).hasText('', 'No content is shown.');
+    assert.ok(component.isVisible);
+    assert.equal(component.text, '');
   });
 
   test('no "sort objectives" button in list with one item', async function(assert) {
@@ -73,7 +75,61 @@ module('Integration | Component | course objective list', function(hooks) {
         @manageDescriptors={{action this.nothing}}
       />`
     );
-    assert.notOk(findAll('.sort-materials-btn').length, 'Sort button is not visible');
-    assert.dom('tbody tr:nth-of-type(1) td').hasText('objective 0', 'Objective is visible');
+    assert.equal(component.objectives.length, 1);
+    assert.notOk(component.canSort);
+  });
+
+  test('cancel removal', async function(assert) {
+    assert.expect(4);
+    const objectives = this.server.createList('objective', 1);
+    const course = this.server.create('course', {
+      objectives
+    });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+
+    this.set('nothing', () => {});
+    this.set('course', courseModel);
+
+    await render(
+      hbs`<CourseObjectiveList
+        @course={{this.course}}
+        @editable={{true}}
+        @manageParents={{action this.nothing}}
+        @manageDescriptors={{action this.nothing}}
+      />`
+    );
+    assert.equal(component.objectives.length, 1);
+    await component.objectives[0].remove();
+    assert.ok(component.confirmRemoval.isVisible);
+    await component.confirmRemoval.cancel();
+    assert.ok(component.confirmRemoval.isHidden);
+    assert.equal(component.objectives.length, 1);
+  });
+
+  test('remove objective', async function(assert) {
+    assert.expect(4);
+    const objectives = this.server.createList('objective', 1);
+    const course = this.server.create('course', {
+      objectives
+    });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+
+    this.set('nothing', () => {});
+    this.set('course', courseModel);
+
+    await render(
+      hbs`<CourseObjectiveList
+        @course={{this.course}}
+        @editable={{true}}
+        @manageParents={{action this.nothing}}
+        @manageDescriptors={{action this.nothing}}
+      />`
+    );
+    assert.equal(component.objectives.length, 1);
+    await component.objectives[0].remove();
+    assert.ok(component.confirmRemoval.isVisible);
+    await component.confirmRemoval.confirm();
+    assert.ok(component.confirmRemoval.isHidden);
+    assert.equal(component.objectives.length, 0);
   });
 });
