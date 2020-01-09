@@ -26,7 +26,7 @@
     "@ilios/ember-template-lint-plugin": "^2.0.0",
     "@ilios/eslint-config-ember": "^2.3.0",
     "@sentry/browser": "^5.10.2",
-    "@sentry/integrations": "^5.10.2",
+    "@sentry/integrations": "^5.11.0",
     "autoprefixer": "^9.7.3",
     "babel-eslint": "^10.0.3",
     "broccoli-asset-rev": "^3.0.0",
