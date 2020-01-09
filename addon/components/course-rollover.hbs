@@ -1,133 +1,138 @@
-<LinkTo @route="course" @model={{@course}}>
-  {{t "general.backToTitle" title=@course.title}}
-</LinkTo>
-<div class="rollover-form">
-  <h3 class="title">
-    {{t "general.courseRollover"}}
-  </h3>
-  <p class="rollover-summary">
-    {{t "general.courseRolloverSummary"}}
-  </p>
-  <div class="item title">
-    <label>
-      {{t "general.title"}}:
-    </label>
-    <input
-      type="text"
-      value={{this.title}}
-      disabled={{this.isSaving}}
-      placeholder={{t "general.courseTitlePlaceholder"}}
-      {{on "input" (pipe (action "changeTitle" value="target.value") (fn (action "addErrorDisplayFor") "title"))}}
-      {{on "keyup" (fn (action "addErrorDisplayFor") "title")}}
-    >
-    {{#if (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))}}
-      <span class="validation-error-message">
-        {{v-get this "title" "message"}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item year-select">
-    <label>
-      {{t "general.year"}}:
-    </label>
-    {{#if this.loadUnavailableYears.isRunning}}
-      <LoadingSpinner />
-    {{else}}
-      <select {{on "change" (action (perform this.changeSelectedYear) value="target.value")}}>
-        {{#each this.years as |year|}}
-          <option
-            disabled={{contains year this.loadUnavailableYears.lastSuccessful.value}}
-            value={{year}}
-            selected={{is-equal year this.selectedYear}}
-          >
-            {{year}} - {{inc year}}
-            {{#if (contains year this.loadUnavailableYears.lastSuccessful.value)}}
-              ({{t "general.courseRolloverYearUnavailable"}})
-            {{/if}}
-          </option>
-        {{/each}}
-      </select>
-    {{/if}}
-    {{#if
-      (and
-        (v-get this "selectedYear" "isInvalid")
-        (contains "selectedYear" this.showErrorsFor)
-      )
-    }}
-      <span class="validation-error-message">
-        {{v-get this "selectedYear" "message"}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="advanced-options">
-    <div class="item">
+<div
+  class="course-rollover"
+  {{did-insert (perform this.load) @course}}
+  {{did-update (perform this.load) @course}}
+>
+  <LinkTo @route="course" @model={{@course}}>
+    {{t "general.backToTitle" title=@course.title}}
+  </LinkTo>
+  <div class="rollover-form">
+    <h3 class="title">
+      {{t "general.courseRollover"}}
+    </h3>
+    <p class="rollover-summary">
+      {{t "general.courseRolloverSummary"}}
+    </p>
+    <div class="item title">
       <label>
-        {{t "general.startDate"}}:
-        <br>
-        <small>
-          ({{t "general.mustBeSameDayOfWeekAsCurrentStartDate"}})
-        </small>
+        {{t "general.title"}}:
       </label>
-      <PikadayInput
-        @size={{10}}
-        @value={{this.startDate}}
-        @minDate={{@course.startDate}}
-        @format="YYYY-MM-DD"
-        @onSelection={{action (mut this.startDate)}}
-        @options={{hash disableDayFn=this.disableDayFn course=@course}}
+      <Input
+        type="text"
+        @value={{this.title}}
+        @input={{fn this.addErrorDisplayFor "title"}}
+        disabled={{this.save.isRunning}}
+        placeholder={{t "general.courseTitlePlaceholder"}}
       />
-    </div>
-    <div class="included">
-      <span class="title">
-        {{t "general.include"}}:
-      </span>
-      <div class="include">
-        <input
-          type="checkbox"
-          checked={{not this.skipOfferings}}
-          data-test-skip-offerings
-          {{on "click" (toggle "skipOfferings" this)}}
-        >
-        <span>
-          {{t "general.offerings"}}
+      {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+        <span class="validation-error-message">
+          {{message}}
         </span>
-      </div>
+      {{/each}}
     </div>
-    <div class="cohorts">
-      <span class="title">
-        {{t "general.selectCohortsToAttach"}}:
-      </span>
-      <DetailCohortManager
-        @selectedCohorts={{this.selectedCohorts}}
-        @school={{await @course.school}}
-        @add={{action "addCohort"}}
-        @remove={{action "removeCohort"}}
-      />
-    </div>
-  </div>
-  <div class="buttons">
-    <button
-      disabled={{if
-        (or
-          this.isSaving
-          (not this.selectedYear)
-          (contains this.selectedYear this.loadUnavailableYears.lastSuccessful.value)
-        )
-        true
-      }}
-      class="done text"
-      {{on "click" (perform this.save)}}
-    >
-      {{#if this.isSaving}}
+    <div class="item year-select">
+      <label>
+        {{t "general.year"}}:
+      </label>
+      {{#if this.loadUnavailableYears.isRunning}}
         <LoadingSpinner />
       {{else}}
-        {{t "general.done"}}
+        <select {{on "change" (action (perform this.changeSelectedYear) value="target.value")}} data-test-year>
+          {{#each this.years as |year|}}
+            <option
+              disabled={{contains year this.unavailableYears}}
+              value={{year}}
+              selected={{is-equal year this.selectedYear}}
+            >
+              {{year}} - {{inc year}}
+              {{#if (contains year this.unavailableYears)}}
+                ({{t "general.courseRolloverYearUnavailable"}})
+              {{/if}}
+            </option>
+          {{/each}}
+        </select>
       {{/if}}
-    </button>
-    <LinkTo @route="course" @model={{@course}}>
-      <button class="cancel text">
-        {{t "general.cancel"}}
+      {{#if
+        (and
+          (v-get this "selectedYear" "isInvalid")
+          (contains "selectedYear" this.showErrorsFor)
+        )
+      }}
+        <span class="validation-error-message">
+          {{v-get this "selectedYear" "message"}}
+        </span>
+      {{/if}}
+    </div>
+    <div class="advanced-options">
+      <div class="item">
+        <label>
+          {{t "general.startDate"}}:
+          <br>
+          <small>
+            ({{t "general.mustBeSameDayOfWeekAsCurrentStartDate"}})
+          </small>
+        </label>
+        <PikadayInput
+          @size={{10}}
+          @value={{this.startDate}}
+          @minDate={{@course.startDate}}
+          @format="YYYY-MM-DD"
+          @onSelection={{set this.startDate}}
+          @options={{hash disableDayFn=this.disableDayFn course=@course}}
+        />
+      </div>
+      <div class="included">
+        <span class="title">
+          {{t "general.include"}}:
+        </span>
+        <div class="include">
+          <input
+            type="checkbox"
+            checked={{not this.skipOfferings}}
+            data-test-skip-offerings
+            {{on "click" (toggle "skipOfferings" this)}}
+          >
+          <span>
+            {{t "general.offerings"}}
+          </span>
+        </div>
+      </div>
+      <div class="cohorts">
+        <span class="title">
+          {{t "general.selectCohortsToAttach"}}:
+        </span>
+        <DetailCohortManager
+          @selectedCohorts={{this.selectedCohorts}}
+          @school={{await @course.school}}
+          @add={{this.addCohort}}
+          @remove={{this.removeCohort}}
+        />
+      </div>
+    </div>
+    <div class="buttons">
+      <button
+        disabled={{if
+          (or
+            this.isSaving
+            (not this.selectedYear)
+            (contains this.selectedYear this.unavailableYears)
+          )
+          true
+        }}
+        class="done text"
+        {{on "click" (perform this.save)}}
+      >
+        {{#if this.isSaving}}
+          <LoadingSpinner />
+        {{else}}
+          {{t "general.done"}}
+        {{/if}}
       </button>
-    </LinkTo>
+      <LinkTo @route="course" @model={{@course}}>
+        <button class="cancel text">
+          {{t "general.cancel"}}
+        </button>
+      </LinkTo>
+    </div>
   </div>
 </div>

@@ -14,13 +14,12 @@ export function Length(min, max, validationOptions) {
           if (!constraints || constraints.length < 2) {
             throw new Error(`You must pass a min and max length to the Length validator on ${property}`);
           }
-          value = value || '';
-          value = value.trim();
           if (!value) {
             return true;
           }
+          const stringValue = String(value).trim();
           const [min, max] = constraints;
-          return value.length >= min && value.length <= max;
+          return stringValue.length >= min && stringValue.length <= max;
         },
         defaultMessage({ constraints, value, object: target }) {
           const owner = getOwner(target);

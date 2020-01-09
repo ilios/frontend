@@ -1,105 +1,112 @@
-<td id="objective-{{@objective.id}}" class="text-left text-top" colspan="3">
-  {{#if @editable}}
-    <EditableField
-      @value={{this.title}}
-      @renderHtml={{true}}
-      @isSaveDisabled={{and
-        (v-get this "title" "isInvalid")
-        (contains "title" this.showErrorsFor)
-      }}
-      @save={{action "saveTitleChanges"}}
-      @close={{action "revertTitleChanges"}}
-    >
-      <HtmlEditor @content={{this.title}} @update={{action "changeTitle"}} />
-      {{#if (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))}}
-        <span class="validation-error-message">
-          {{v-get this "title" "message"}}
-        </span>
-      {{/if}}
-    </EditableField>
-  {{else}}
-    {{! template-lint-disable no-triple-curlies }}
-    {{{@objective.title}}}
-  {{/if}}
-</td>
-<td class="text-left text-top" colspan="2">
-  {{#if @objective.hasParents}}
-    {{#each (await @objective.parents) as |parent|}}
-      {{#if @course.hasMultipleCohorts}}
-        <strong>
-          {{get (await parent.firstProgram) "title"}}
-          {{#if (get (await parent.firstCohort) "title")}}
-            {{get (await parent.firstCohort) "title"}}
-          {{else}}
-            {{t
-              "general.classOf"
-              year=(await (get (await parent.firstCohort) "classOfYear"))
-            }}
-          {{/if}}
-        </strong>
-        <br>
-      {{/if}}
-      {{#if @editable}}
-        <span
-          class="clickable link"
-          data-test-parent
-          role="button"
-          {{on "click" (fn @manageParents @objective)}}
-        >
-          {{parent.textTitle}}
-        </span>
-      {{else}}
-        {{parent.textTitle}}
-      {{/if}}
-      {{#if parent.competency}}
-        ({{parent.competency.title}})
-      {{/if}}
-      <br>
-    {{/each}}
-  {{else if @editable}}
-    <button {{on "click" (fn @manageParents @objective)}}>
-      {{t "general.addNew"}}
-    </button>
-  {{else}}
-    {{t "general.none"}}
-  {{/if}}
-</td>
-<td class="text-left text-top" colspan="2">
-  <ul class="mesh-descriptor-list">
-    {{#each (sort-by "name" (await @objective.meshDescriptors)) as |descriptor|}}
-      {{#if @editable}}
-        <li
-          class="clickable link"
-          role="button"
-          data-test-term
-          {{on "click" (fn @manageDescriptors @objective)}}
-        >
-          {{descriptor.name}}
-        </li>
-      {{else}}
-        <li data-test-term>
-          {{descriptor.name}}
-        </li>
-      {{/if}}
+<tr
+ class="course-objective-list-item objective-list-item {{if @showRemoveConfirmation "confirm-removal"}}"
+ data-test-course-objective-list-item
+>
+  <td
+    id="objective-{{@objective.id}}"
+    class="text-left text-top"
+    colspan="3"
+    data-test-description
+  >
+    {{#if @editable}}
+      <EditableField
+        @value={{this.title}}
+        @renderHtml={{true}}
+        @isSaveDisabled={{await (compute (fn this.hasErrorFor) "title")}}
+        @save={{perform this.saveTitleChanges}}
+        @close={{this.revertTitleChanges}}
+      >
+        <HtmlEditor @content={{this.title}} @update={{this.changeTitle}} />
+        {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+          <span class="validation-error-message">
+            {{message}}
+          </span>
+        {{/each}}
+      </EditableField>
     {{else}}
-      <li>
-        {{#if @editable}}
-          <button {{on "click" (fn @manageDescriptors @objective)}}>
-            {{t "general.addNew"}}
-          </button>
-        {{else}}
-          {{t "general.none"}}
+      {{! template-lint-disable no-triple-curlies }}
+      {{{@objective.title}}}
+    {{/if}}
+  </td>
+  <td class="text-left text-top" colspan="2" data-test-parents>
+    {{#if @objective.hasParents}}
+      {{#each (await @objective.parents) as |parent|}}
+        {{#if @course.hasMultipleCohorts}}
+          <strong>
+            {{get (await parent.firstProgram) "title"}}
+            {{#if (get (await parent.firstCohort) "title")}}
+              {{get (await parent.firstCohort) "title"}}
+            {{else}}
+              {{t
+                "general.classOf"
+                year=(await (get (await parent.firstCohort) "classOfYear"))
+              }}
+            {{/if}}
+          </strong>
+          <br>
         {{/if}}
-      </li>
-    {{/each}}
-  </ul>
-</td>
-<td class="text-left text-top" colspan="1">
-  {{#if @editable}}
-    <span class="clickable remove" role="button" {{on "click" (fn @remove @objective)}}>
-      <FaIcon @icon="trash" class="enabled" />
-    </span>
-  {{else}}
-    <FaIcon @icon="trash" class="disabled" />
-  {{/if}}
-</td>
+        {{#if @editable}}
+          <span
+            class="clickable link"
+            data-test-parent
+            role="button"
+            {{on "click" (fn @manageParents @objective)}}
+          >
+            {{parent.textTitle}}
+          </span>
+        {{else}}
+          {{parent.textTitle}}
+        {{/if}}
+        {{#if parent.competency}}
+          ({{parent.competency.title}})
+        {{/if}}
+        <br>
+      {{/each}}
+    {{else if @editable}}
+      <button {{on "click" (fn @manageParents @objective)}}>
+        {{t "general.addNew"}}
+      </button>
+    {{else}}
+      {{t "general.none"}}
+    {{/if}}
+  </td>
+  <td class="text-left text-top" colspan="2" data-test-mesh>
+    <ul class="mesh-descriptor-list">
+      {{#each (sort-by "name" (await @objective.meshDescriptors)) as |descriptor|}}
+        {{#if @editable}}
+          <li
+            class="clickable link"
+            role="button"
+            data-test-term
+            {{on "click" (fn @manageDescriptors @objective)}}
+          >
+            {{descriptor.name}}
+          </li>
+        {{else}}
+          <li data-test-term>
+            {{descriptor.name}}
+          </li>
+        {{/if}}
+      {{else}}
+        <li>
+          {{#if @editable}}
+            <button {{on "click" (fn @manageDescriptors @objective)}}>
+              {{t "general.addNew"}}
+            </button>
+          {{else}}
+            {{t "general.none"}}
+          {{/if}}
+        </li>
+      {{/each}}
+    </ul>
+  </td>
+  <td class="text-left text-top" colspan="1" data-test-actions>
+    {{#if @editable}}
+      <span class="clickable remove" role="button" {{on "click" (fn @remove @objective)}} data-test-remove>
+        <FaIcon @icon="trash" class="enabled" />
+      </span>
+    {{else}}
+      <FaIcon @icon="trash" class="disabled" />
+    {{/if}}
+  </td>
+</tr>

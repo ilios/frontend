@@ -1,19 +1,20 @@
 import { registerDecorator } from "class-validator";
 import { getOwner } from '@ember/application';
 
-export function NotBlank(validationOptions) {
+export function HtmlNotBlank(validationOptions) {
   return function (object, propertyName) {
     registerDecorator({
-      name: 'notBlank',
+      name: 'htmlNotBlank',
       target: object.constructor,
       propertyName: propertyName,
       options: validationOptions,
       validator: {
         validate(value) {
-          if (typeof value === 'string') {
-            return value.trim() !== '';
-          }
-          return value !== null || value !== undefined;
+          const text = value || '';
+          const noTagsText = text.replace(/(<([^>]+)>)/ig,"");
+          const strippedText = noTagsText.replace(/&nbsp;/ig, "").replace(/\s/g, "");
+
+          return strippedText.trim() !== '';
         },
         defaultMessage({ object: target }) {
           const owner = getOwner(target);

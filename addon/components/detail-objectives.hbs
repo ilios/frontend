@@ -62,7 +62,7 @@
   {{#liquid-unless this.isManaging class="horizontal"}}
     {{#if @isCourse}}
       <CourseObjectiveList
-        @subject={{@subject}}
+        @course={{@subject}}
         @editable={{@editable}}
         @manageParents={{action "manageParents"}}
         @manageDescriptors={{action "manageDescriptors"}}

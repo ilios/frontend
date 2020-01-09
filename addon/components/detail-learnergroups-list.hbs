@@ -1,11 +1,15 @@
-{{#if (is-fulfilled this.trees)}}
-  <div class="trees">
-    {{#each (sort-by "topLevelGroup.title" (await this.trees)) as |tree|}}
-      <fieldset>
-        <legend>
-          {{tree.topLevelGroup.title}} ({{tree.topLevelGroup.cohort.programYear.program.title}} {{tree.topLevelGroup.cohort.title}})
-        </legend>
-        {{#if (is-fulfilled tree.groups)}}
+<div
+  class="detail-learnergroups-list"
+  {{did-insert (perform this.load) @learnerGroups}}
+  {{did-update (perform this.load) @learnerGroups}}
+>
+  {{#if (is-array this.trees)}}
+    <div class="trees">
+      {{#each (sort-by "topLevelGroup.title" this.trees) as |tree|}}
+        <fieldset>
+          <legend>
+            {{tree.topLevelGroup.title}} ({{tree.topLevelGroup.cohort.programYear.program.title}} {{tree.topLevelGroup.cohort.title}})
+          </legend>
           {{#if @isManaging}}
             <div class="remove-all-subgroups">
               <span
@@ -42,10 +46,10 @@
               </li>
             {{/each}}
           </ul>
-        {{/if}}
-      </fieldset>
-    {{/each}}
-  </div>
-{{else}}
-  <LoadingSpinner />
-{{/if}}
+        </fieldset>
+      {{/each}}
+    </div>
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</div>

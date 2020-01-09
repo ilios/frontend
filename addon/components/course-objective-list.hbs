@@ -1,88 +1,95 @@
-{{#if (is-fulfilled this.objectives)}}
-  {{#if this.isSorting}}
-    <ObjectiveSortManager
-      @subject={{@subject}}
-      @save={{action "saveSortOrder"}}
-      @cancel={{action "cancelSorting"}}
-    />
-  {{else if (get (await @subject.objectives) "length")}}
-    {{#if (and @editable (await this.hasMoreThanOneObjective))}}
-      <button class="sort-materials-btn" {{on "click" (fn (mut this.isSorting) true)}}>
-        {{t "general.sortObjectives"}}
-      </button>
-    {{/if}}
-    <table>
-      <thead>
-        <tr>
-          <th class="text-left" colspan="3">
-            {{t "general.description"}}
-          </th>
-          <th class="text-left" colspan="2">
-            {{t "general.parentObjectives"}}
-          </th>
-          <th class="text-left" colspan="2">
-            {{t "general.meshTerms"}}
-          </th>
-          <th class="text-left" colspan="1">
-            {{t "general.actions"}}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each (await this.objectives) as |objective|}}
-          <CourseObjectiveListItem
-            @objective={{objective}}
-            @editable={{@editable}}
-            @course={{@subject}}
-            @showRemoveConfirmation={{contains
-              objective.id
-              this.objectivesForRemovalConfirmation
-            }}
-            @remove={{action "confirmRemoval"}}
-            @manageParents={{@manageParents}}
-            @manageDescriptors={{@manageDescriptors}}
-          />
-          {{#if (contains objective.id this.objectivesForRemovalConfirmation)}}
-            <tr class="confirm-removal">
-              <td colspan="8">
-                <div class="confirm-message">
-                  {{#if (gt objective.children.length 0)}}
-                    {{t
-                      "general.confirmObjectiveRemovalMultipleSessionObjectives"
-                      count=objective.children.length
-                    }}
-                  {{else}}
-                    {{t "general.confirmObjectiveRemoval"}}
-                  {{/if}}
-                  <br>
-                  <div class="confirm-buttons">
-                    <button class="remove text" {{on "click" (fn (action "remove") objective)}}>
-                      {{t "general.yes"}}
-                    </button>
-                    <button class="done text" {{on "click" (fn (action "cancelRemove") objective)}}>
-                      {{t "general.cancel"}}
-                    </button>
+<div
+  class="course-objective-list"
+  {{did-insert (perform this.load) (await @course.objectives)}}
+  {{did-update (perform this.load) (await @course.objectives)}}
+  data-test-course-objective-list
+>
+  {{#if (is-array this.objectives)}}
+    {{#if this.isSorting}}
+      <ObjectiveSortManager
+        @subject={{@course}}
+        @save={{perform this.saveSortOrder}}
+        @cancel={{this.cancelSorting}}
+      />
+    {{else if (get (await @course.objectives) "length")}}
+      {{#if (and @editable this.hasMoreThanOneObjective)}}
+        <button class="sort-materials-btn" {{on "click" (set this.isSorting true)}} data-test-sort>
+          {{t "general.sortObjectives"}}
+        </button>
+      {{/if}}
+      <table data-test-objectives>
+        <thead>
+          <tr>
+            <th class="text-left" colspan="3">
+              {{t "general.description"}}
+            </th>
+            <th class="text-left" colspan="2">
+              {{t "general.parentObjectives"}}
+            </th>
+            <th class="text-left" colspan="2">
+              {{t "general.meshTerms"}}
+            </th>
+            <th class="text-left" colspan="1">
+              {{t "general.actions"}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each this.objectives as |objective|}}
+            <CourseObjectiveListItem
+              @objective={{objective}}
+              @editable={{@editable}}
+              @course={{@course}}
+              @showRemoveConfirmation={{contains
+                objective.id
+                this.objectivesForRemovalConfirmation
+              }}
+              @remove={{fn this.confirmRemoval objective}}
+              @manageParents={{@manageParents}}
+              @manageDescriptors={{@manageDescriptors}}
+            />
+            {{#if (contains objective.id this.objectivesForRemovalConfirmation)}}
+              <tr class="confirm-removal" data-test-confirm-removal>
+                <td colspan="8">
+                  <div class="confirm-message">
+                    {{#if (gt objective.children.length 0)}}
+                      {{t
+                        "general.confirmObjectiveRemovalMultipleSessionObjectives"
+                        count=objective.children.length
+                      }}
+                    {{else}}
+                      {{t "general.confirmObjectiveRemoval"}}
+                    {{/if}}
+                    <br>
+                    <div class="confirm-buttons">
+                      <button class="remove text" {{on "click" (perform this.remove objective)}} data-test-confirm>
+                        {{t "general.yes"}}
+                      </button>
+                      <button class="done text" {{on "click" (fn this.cancelRemove objective)}} data-test-cancel>
+                        {{t "general.cancel"}}
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </td>
-            </tr>
-          {{/if}}
-        {{/each}}
-      </tbody>
-    </table>
+                </td>
+              </tr>
+            {{/if}}
+          {{/each}}
+        </tbody>
+      </table>
+    {{/if}}
+  {{else}}
+    {{! template-lint-disable unused-block-params }}
+    {{#each (repeat @course.objectives.length) as |empty|}}
+      <div>
+        <LoadingSpinner />
+      </div>
+    {{/each}}
   {{/if}}
-{{else}}
-  {{! template-lint-disable unused-block-params }}
-  {{#each (repeat @subject.objectives.length) as |empty|}}
-    <div>
-      <LoadingSpinner />
-    </div>
-  {{/each}}
-{{/if}}
-{{#liquid-if this.isSaving class="crossFade"}}
-  <WaitSaving
-    @showProgress={{true}}
-    @totalProgress={{this.totalObjectivesToSave}}
-    @currentProgress={{this.currentObjectivesSaved}}
-  />
-{{/liquid-if}}
+  {{#if this.saveSortOrder.isRunning}}
+    <WaitSaving
+      @showProgress={{true}}
+      @totalProgress={{this.totalObjectivesToSave}}
+      @currentProgress={{this.currentObjectivesSaved}}
+    />
+  {{/if}}
+</div>

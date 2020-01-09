@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { timeout } from 'ember-concurrency';
 import { dropTask } from 'ember-concurrency-decorators';
 
-export default class CoutseLeadershipExpanded extends Component {
+export default class CourseLeadershipExpandedComponent extends Component {
   @tracked directors = null;
   @tracked administrators = null;
   get isCollapsible() {
