@@ -1,42 +1,34 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isBlank, isEmpty } from '@ember/utils';
 import moment from 'moment';
 
-export default Component.extend({
-  currentUser: service(),
-  intl: service(),
-  router: service(),
-  store: service(),
+export default class SingleEvent extends Component {
+  @service currentUser;
+  @service intl;
+  @service store;
+  @service router;
 
-  classNames: ['single-event'],
+  get courseId() {
+    return this.args.event.course;
+  }
 
-  'data-test-single-event': true,
-  event: null,
-
-  courseId: reads('event.course'),
-
-  taughtBy: computed('event.instructors', 'intl.locale', function() {
-    const instructors = this.get('event.instructors');
+  get taughtBy() {
+    const instructors = this.args.event.instructors;
     if (isEmpty(instructors)) {
       return '';
     }
-    return this.get('intl').t('general.taughtBy', { instructors: instructors.join(', ') });
-  }),
+    return this.intl.t('general.taughtBy', { instructors: instructors.join(', ') });
+  }
 
-  sessionIs: computed('event.sessionType', 'intl.locale', function() {
-    const intl = this.get('intl');
-    const type = this.get('event.sessionTypeTitle');
-    return intl.t('general.sessionIs', { type });
-  }),
+  get sessionIs() {
+    return this.intl.t('general.sessionIs', { type: this.args.event.sessionTypeTitle });
+  }
 
-  courseObjectives: computed('intl.locale', 'event.courseObjectives.[]', 'event.competencies.[]', function(){
-    const intl = this.get('intl');
-    const event = this.get('event');
-    const objectives =  event.courseObjectives;
-    const competencies = event.competencies;
+  get courseObjectives() {
+    const objectives =  this.args.event.courseObjectives || [];
+    const competencies = this.args.event.competencies || [];
     return objectives.map(objective => {
       //strip all HTML
       const title = objective.title.replace(/(<([^>]+)>)/ig,"");
@@ -45,7 +37,7 @@ export default Component.extend({
         return {
           id: objective.id,
           title,
-          domain: intl.t('general.noAssociatedCompetencies'),
+          domain: this.intl.t('general.noAssociatedCompetencies'),
           position
         };
       }
@@ -63,28 +55,34 @@ export default Component.extend({
         position
       };
     }).sort(this.positionSortingCallback);
-  }),
+  }
 
-  typedLearningMaterials: computed('event.learningMaterials', function() {
-    const lms = this.get('event.learningMaterials') || [];
-    lms.forEach(lm => {
-      if (lm.isBlanked) {
-        lm['type'] = 'unknown';
-        return;
+  get typedLearningMaterials() {
+    const handler = {
+      get: function(obj, prop) {
+        if ('type' === prop) {
+          if (obj.isBlanked) {
+            return 'unknown';
+          }
+          if (!isBlank(obj.citation)) {
+            return 'citation';
+          } else if (!isBlank(obj.link)) {
+            return 'link';
+          } else {
+            return 'file';
+          }
+        }
+        return obj[prop];
       }
-      if (!isBlank(lm.citation)) {
-        lm['type'] = 'citation';
-      } else if (!isBlank(lm.link)) {
-        lm['type'] = 'link';
-      } else {
-        lm['type'] = 'file';
-      }
+    };
+    const lms = this.args.event.learningMaterials || [];
+    return lms.map(lm => {
+      return new Proxy(lm, handler);
     });
-    return lms;
-  }),
+  }
 
-  courseLearningMaterials: computed('intl.locale', 'typedLearningMaterials', function() {
-    const eventLms = this.get('typedLearningMaterials') || [];
+  get courseLearningMaterials() {
+    const eventLms = this.typedLearningMaterials;
     return eventLms.filterBy('courseLearningMaterial').sort((lm1, lm2) => {
       const pos1 = parseInt(lm1.position, 10) || 0;
       const pos2 = parseInt(lm2.position, 10) || 0;
@@ -106,13 +104,11 @@ export default Component.extend({
       }
       return 0;
     });
-  }),
+  }
 
-  sessionObjectives: computed('intl.locale', 'event.sessionObjectives.[]', 'event.competencies.[]', function(){
-    const intl = this.get('intl');
-    const event = this.get('event');
-    const objectives =  event.sessionObjectives;
-    const competencies = event.competencies;
+  get sessionObjectives() {
+    const objectives =  this.args.event.sessionObjectives || [];
+    const competencies = this.args.event.competencies || [];
     return objectives.map(objective => {
       //strip all HTML
       const title = objective.title.replace(/(<([^>]+)>)/ig,"");
@@ -121,7 +117,7 @@ export default Component.extend({
         return {
           id: objective.id,
           title,
-          domain: intl.t('general.noAssociatedCompetencies'),
+          domain: this.intl.t('general.noAssociatedCompetencies'),
           position
         };
       }
@@ -139,10 +135,10 @@ export default Component.extend({
         position
       };
     }).sort(this.positionSortingCallback);
-  }),
+  }
 
-  sessionLearningMaterials: computed('intl.locale', 'typedLearningMaterials', function() {
-    const eventLms = this.get('typedLearningMaterials') || [];
+  get sessionLearningMaterials() {
+    const eventLms = this.typedLearningMaterials;
     return eventLms.filterBy('sessionLearningMaterial').sort((lm1, lm2) => {
       const pos1 = parseInt(lm1.position, 10) || 0;
       const pos2 = parseInt(lm2.position, 10) || 0;
@@ -164,30 +160,29 @@ export default Component.extend({
       }
       return 0;
     });
-  }),
+  }
 
-  recentlyUpdated: computed('event.lastModified', function(){
-    const lastModifiedDate = moment(this.get('event.lastModified'));
+  get recentlyUpdated() {
+    const lastModifiedDate = moment(this.args.event.lastModified);
     const today = moment();
     const daysSinceLastUpdate = today.diff(lastModifiedDate, 'days');
     return daysSinceLastUpdate < 6;
-  }),
+  }
 
-  postrequisiteLink: computed('event.postrequisiteSlug', function(){
-    if (this.event.postrequisites.length) {
-      return this.router.urlFor('events', this.event.postrequisites[0].slug);
+  get postrequisiteLink() {
+    if (this.args.event.postrequisites.length) {
+      return this.router.urlFor('events', this.args.event.postrequisites[0].slug);
     }
 
     return '';
-  }),
+  }
 
-  actions: {
-    transitionToMyMaterials() {
-      const course = this.courseId;
-      const queryParams = { course, sortBy: 'sessionTitle' };
-      this.router.transitionTo('mymaterials', { queryParams });
-    }
-  },
+  @action
+  transitionToMyMaterials() {
+    const course = this.courseId;
+    const queryParams = { course, sortBy: 'sessionTitle' };
+    this.router.transitionTo('mymaterials', { queryParams });
+  }
 
   /**
    * Callback function for <code>Array.sort()<code>.
@@ -218,4 +213,4 @@ export default Component.extend({
     }
     return 0;
   }
-});
+}
