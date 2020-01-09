@@ -1,199 +1,206 @@
-<div class="detail-learningmaterials-header">
-  <div class="title">
-    {{#if this.isManaging}}
-      <span class="specific-title">
-        {{t "general.learningMaterialManageTitle"}}
-      </span>
-    {{else}}
-      {{t "general.learningMaterials"}} ({{get (await @subject.learningMaterials) "length"}})
-    {{/if}}
-  </div>
-  {{#if this.displaySearchBox}}
-    <LearningmaterialSearch
-      @add={{action "addLearningMaterial"}}
-      @currentMaterials={{this.parentMaterials}}
-    />
-  {{/if}}
-  <div class="detail-learningmaterials-actions">
-    {{#if this.displayAddNewForm}}
-      <button class="collapse-button" {{on "click" (fn (mut this.displayAddNewForm) false)}}>
-        <FaIcon @icon="minus" />
-      </button>
-    {{else if (and @editable (not this.isSorting) (not this.isManaging))}}
-      <ChooseMaterialType
-        @choose={{action "addNewLearningMaterial"}}
-        @types={{array "file" "link" "citation"}}
+<section
+  class="detail-learningmaterials {{if this.displaySearchBox "display-search-box"}}"
+  data-test-detail-learning-materials
+  {{did-insert (perform this.load) (await @subject.learningMaterials)}}
+  {{did-update (perform this.load) (await @subject.learningMaterials)}}
+>
+  <div class="detail-learningmaterials-header">
+    <div class="title">
+      {{#if this.isManaging}}
+        <span class="specific-title">
+          {{t "general.learningMaterialManageTitle"}}
+        </span>
+      {{else}}
+        {{t "general.learningMaterials"}} ({{get (await @subject.learningMaterials) "length"}})
+      {{/if}}
+    </div>
+    {{#if this.displaySearchBox}}
+      <LearningmaterialSearch
+        @add={{perform this.addLearningMaterial}}
+        @currentMaterials={{this.parentMaterials}}
       />
     {{/if}}
+    <div class="detail-learningmaterials-actions">
+      {{#if this.displayAddNewForm}}
+        <button class="collapse-button" {{on "click" (fn (mut this.displayAddNewForm) false)}}>
+          <FaIcon @icon="minus" />
+        </button>
+      {{else if (and @editable (not this.isSorting) (not this.isManaging))}}
+        <ChooseMaterialType
+          @choose={{fn this.addNewLearningMaterial}}
+          @types={{array "file" "link" "citation"}}
+        />
+      {{/if}}
+    </div>
   </div>
-</div>
-<div class="detail-learningmaterials-content">
-  {{#if this.isManaging}}
-    <LearningmaterialManager
-      @learningMaterial={{this.managingMaterial}}
-      @isCourse={{@isCourse}}
-      @editable={{@editable}}
-      @closeManager={{action (mut this.managingMaterial) null}}
-      @learningMaterialStatuses={{await this.learningMaterialStatuses}}
-    />
-  {{else if this.isSorting}}
-    <LearningMaterialsSortManager
-      @save={{action "saveSortOrder"}}
-      @cancel={{action (mut this.isSorting) false}}
-      @subject={{@subject}}
-    />
-  {{else if this.displayAddNewForm}}
-    <NewLearningmaterial
-      @type={{this.type}}
-      @learningMaterialStatuses={{await this.learningMaterialStatuses}}
-      @learningMaterialUserRoles={{await this.learningMaterialUserRoles}}
-      @save={{action "saveNewLearningMaterial"}}
-      @cancel={{action (mut this.displayAddNewForm) false}}
-    />
-  {{else if (get (await @subject.learningMaterials) "length")}}
-    {{#if (and @editable (await this.hasMoreThanOneLearningMaterial))}}
-      <button class="sort-materials-btn" {{on "click" (fn (mut this.isSorting) true)}}>
-        {{t "general.sortMaterials"}}
-      </button>
-    {{/if}}
-    <table>
-      <thead>
-        <tr>
-          <th class="text-left" colspan="3">
-            {{t "general.displayName"}}
-          </th>
-          <th class="text-center" colspan="2">
-            {{t "general.owner"}}
-          </th>
-          <th class="text-center" colspan="2">
-            {{t "general.required"}}
-          </th>
-          <th class="text-center" colspan="2">
-            {{t "general.notes"}}
-          </th>
-          <th class="text-center" colspan="2">
-            {{t "general.mesh"}}
-          </th>
-          <th class="text-center" colspan="2">
-            {{t "general.status"}}
-          </th>
-          <th class="text-left" colspan="1">
-            {{t "general.actions"}}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each (await this.proxyMaterials) as |lmProxy|}}
-          <tr class={{if lmProxy.showRemoveConfirmation "confirm-removal"}}>
-            <td
-              class="text-left clickable link"
-              colspan="3"
-              role="button"
-              {{on "click" (fn (mut this.managingMaterial) lmProxy.content)}}
-            >
-              <LmTypeIcon
-                @type={{lmProxy.learningMaterial.type}}
-                @mimetype={{lmProxy.learningMaterial.mimetype}}
-              />
-              <span data-test-title>
-                {{lmProxy.learningMaterial.title}}
-              </span>
-            </td>
-            <td class="text-center" colspan="2">
-              {{lmProxy.learningMaterial.owningUser.fullName}}
-            </td>
-            <td class="text-center" colspan="2">
-              {{#if lmProxy.required}}
-                <span class="add">
-                  {{t "general.yes"}}
-                </span>
-              {{else}}
-                <span class="remove">
-                  {{t "general.no"}}
-                </span>
-              {{/if}}
-            </td>
-            <td class="text-center" colspan="2">
-              {{#if lmProxy.notes}}
-                <span class="add">
-                  {{t "general.yes"}}
-                </span>
-                {{#if lmProxy.publicNotes}}
-                  <FaIcon @icon="eye" />
-                {{/if}}
-              {{else}}
-                <span class="remove">
-                  {{t "general.no"}}
-                </span>
-              {{/if}}
-            </td>
-            <td class="text-center" colspan="2">
-              {{#if lmProxy.meshDescriptors.length}}
-                <ul>
-                  {{#each
-                    (sort-by
-                      "name" (await lmProxy.meshDescriptors)
-                    ) as |descriptor|
-                  }}
-                    <li>
-                      {{descriptor.name}}
-                    </li>
-                  {{/each}}
-                </ul>
-              {{else}}
-                {{t "general.none"}}
-              {{/if}}
-            </td>
-            <td class="text-center" colspan="2">
-              {{lmProxy.learningMaterial.status.title}}
-              <span data-test-status>
-                {{this.value}}
-              </span>
-              {{#if (or lmProxy.startDate lmProxy.endDate)}}
-                <FaIcon @icon="clock" @title={{t "general.timedRelease"}} />
-              {{/if}}
-            </td>
-            <td class="text-left text-center" colspan="1">
-              {{#if @editable}}
-                <span
-                  class="clickable remove"
-                  role="button"
-                  {{on "click" (fn (action "confirmRemoval") lmProxy)}}
-                >
-                  <FaIcon @icon="trash" class="enabled" />
-                </span>
-              {{else}}
-                <FaIcon @icon="trash" class="disabled" />
-              {{/if}}
-            </td>
+  <div class="detail-learningmaterials-content">
+    {{#if this.isManaging}}
+      <LearningmaterialManager
+        @learningMaterial={{this.managingMaterial}}
+        @isCourse={{@isCourse}}
+        @editable={{@editable}}
+        @closeManager={{fn (set this.managingMaterial) null}}
+        @learningMaterialStatuses={{await this.learningMaterialStatuses}}
+      />
+    {{else if this.isSorting}}
+      <LearningMaterialsSortManager
+        @save={{perform this.saveSortOrder}}
+        @cancel={{fn (set this.isSorting) false}}
+        @subject={{@subject}}
+      />
+    {{else if this.displayAddNewForm}}
+      <NewLearningmaterial
+        @type={{this.type}}
+        @learningMaterialStatuses={{await this.learningMaterialStatuses}}
+        @learningMaterialUserRoles={{await this.learningMaterialUserRoles}}
+        @save={{perform this.saveNewLearningMaterial}}
+        @cancel={{fn (set this.displayAddNewForm) false}}
+      />
+    {{else if (get (await @subject.learningMaterials) "length")}}
+      {{#if (and @editable (await this.hasMoreThanOneLearningMaterial))}}
+        <button class="sort-materials-btn" {{on "click" (fn (mut this.isSorting) true)}} data-test-sort-button>
+          {{t "general.sortMaterials"}}
+        </button>
+      {{/if}}
+      <table>
+        <thead>
+          <tr>
+            <th class="text-left" colspan="3">
+              {{t "general.displayName"}}
+            </th>
+            <th class="text-center" colspan="2">
+              {{t "general.owner"}}
+            </th>
+            <th class="text-center" colspan="2">
+              {{t "general.required"}}
+            </th>
+            <th class="text-center" colspan="2">
+              {{t "general.notes"}}
+            </th>
+            <th class="text-center" colspan="2">
+              {{t "general.mesh"}}
+            </th>
+            <th class="text-center" colspan="2">
+              {{t "general.status"}}
+            </th>
+            <th class="text-left" colspan="1">
+              {{t "general.actions"}}
+            </th>
           </tr>
-          {{#if lmProxy.showRemoveConfirmation}}
-            <tr class="confirm-removal">
-              <td colspan="14">
-                <div class="confirm-message">
-                  {{t "general.confirmRemoval"}}
-                  <br>
-                  <div class="confirm-buttons">
-                    <button class="remove text" {{on "click" (fn (action "remove") lmProxy)}}>
-                      {{t "general.yes"}}
-                    </button>
-                    <button class="done text" {{on "click" (fn (action "cancelRemove") lmProxy)}}>
-                      {{t "general.cancel"}}
-                    </button>
-                  </div>
-                </div>
+        </thead>
+        <tbody>
+          {{#each (await this.proxyMaterials) as |lmProxy|}}
+            <tr class={{if lmProxy.showRemoveConfirmation "confirm-removal"}}>
+              <td
+                class="text-left clickable link"
+                colspan="3"
+                role="button"
+                {{on "click" (fn (mut this.managingMaterial) lmProxy.content)}}
+              >
+                <LmTypeIcon
+                  @type={{lmProxy.learningMaterial.type}}
+                  @mimetype={{lmProxy.learningMaterial.mimetype}}
+                />
+                <span data-test-title>
+                  {{lmProxy.learningMaterial.title}}
+                </span>
+              </td>
+              <td class="text-center" colspan="2">
+                {{lmProxy.learningMaterial.owningUser.fullName}}
+              </td>
+              <td class="text-center" colspan="2">
+                {{#if lmProxy.required}}
+                  <span class="add">
+                    {{t "general.yes"}}
+                  </span>
+                {{else}}
+                  <span class="remove">
+                    {{t "general.no"}}
+                  </span>
+                {{/if}}
+              </td>
+              <td class="text-center" colspan="2">
+                {{#if lmProxy.notes}}
+                  <span class="add">
+                    {{t "general.yes"}}
+                  </span>
+                  {{#if lmProxy.publicNotes}}
+                    <FaIcon @icon="eye" />
+                  {{/if}}
+                {{else}}
+                  <span class="remove">
+                    {{t "general.no"}}
+                  </span>
+                {{/if}}
+              </td>
+              <td class="text-center" colspan="2">
+                {{#if lmProxy.meshDescriptors.length}}
+                  <ul>
+                    {{#each
+                      (sort-by
+                        "name" (await lmProxy.meshDescriptors)
+                      ) as |descriptor|
+                    }}
+                      <li>
+                        {{descriptor.name}}
+                      </li>
+                    {{/each}}
+                  </ul>
+                {{else}}
+                  {{t "general.none"}}
+                {{/if}}
+              </td>
+              <td class="text-center" colspan="2">
+                {{lmProxy.learningMaterial.status.title}}
+                <span data-test-status>
+                  {{this.value}}
+                </span>
+                {{#if (or lmProxy.startDate lmProxy.endDate)}}
+                  <FaIcon @icon="clock" @title={{t "general.timedRelease"}} />
+                {{/if}}
+              </td>
+              <td class="text-left text-center" colspan="1">
+                {{#if @editable}}
+                  <span
+                    class="clickable remove"
+                    role="button"
+                    {{on "click" (fn this.confirmRemoval lmProxy)}}
+                  >
+                    <FaIcon @icon="trash" class="enabled" />
+                  </span>
+                {{else}}
+                  <FaIcon @icon="trash" class="disabled" />
+                {{/if}}
               </td>
             </tr>
-          {{/if}}
-        {{/each}}
-      </tbody>
-    </table>
+            {{#if lmProxy.showRemoveConfirmation}}
+              <tr class="confirm-removal">
+                <td colspan="14">
+                  <div class="confirm-message">
+                    {{t "general.confirmRemoval"}}
+                    <br>
+                    <div class="confirm-buttons">
+                      <button class="remove text" {{on "click" (perform this.remove lmProxy)}}>
+                        {{t "general.yes"}}
+                      </button>
+                      <button class="done text" {{on "click" (fn this.cancelRemove lmProxy)}}>
+                        {{t "general.cancel"}}
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {{/if}}
+          {{/each}}
+        </tbody>
+      </table>
+    {{/if}}
+  </div>
+  {{#if this.saveSortOrder.isRunning}}
+    <WaitSaving
+      @showProgress={{true}}
+      @totalProgress={{this.totalMaterialsToSave}}
+      @currentProgress={{this.currentMaterialsSaved}}
+    />
   {{/if}}
-</div>
-{{#if this.isSaving class="crossFade"}}
-  <WaitSaving
-    @showProgress={{true}}
-    @totalProgress={{this.totalMaterialsToSave}}
-    @currentProgress={{this.currentMaterialsSaved}}
-  />
-{{/if}}
+</section>

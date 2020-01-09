@@ -2,6 +2,7 @@ import {
   attribute,
   clickable,
   clickOnText,
+  create,
   collection,
   fillable,
   isVisible,
@@ -16,7 +17,7 @@ import {
   pageObjectFroalaEditorValue
 } from 'ilios-common';
 
-export default {
+const definition = {
   scope: '[data-test-detail-learning-materials]',
   search,
   createNew: clickable('.detail-learningmaterials-actions [data-test-choose-material-type] [data-test-toggle]'),
@@ -25,8 +26,11 @@ export default {
   cancel: clickable('.actions button.bigcancel'),
   canCreateNew: isVisible('.detail-learningmaterials-actions [data-test-choose-material-type]'),
   canCollapse: isVisible('.detail-learningmaterials-actions .collapse-button'),
+  canSort: isVisible('[data-test-sort-button]'),
+  sort: clickable('[data-test-sort-button]'),
   current: collection('.detail-learningmaterials-content table tbody tr', {
     title: text('td [data-test-title]', { at: 0 }),
+    type: text('title', 'td [data-test-lm-type-icon] title'),
     owner: text('td', { at: 1 }),
     required: text('td', { at: 2 }),
     notes: text('td', { at: 3 }),
@@ -106,4 +110,12 @@ export default {
     hasEndDateValidationError: isVisible('[data-test-end-date-validation-error-message]'),
     hasTitleValidationError: isVisible('[data-test-title-validation-error-message]')
   },
+  sortManager: {
+    scope: '[data-test-detail-learning-materials-sort-manager]',
+    save: clickable('[data-test-save]'),
+    cancel: clickable('[data-test-cancel]'),
+  }
 };
+
+export default definition;
+export const component = create(definition);
