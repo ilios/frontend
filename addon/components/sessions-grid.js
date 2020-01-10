@@ -38,9 +38,9 @@ export default class SessionsGrid extends Component {
 
   get sortedSessions() {
     if (this.sortInfo.descending) {
-      return this.args.sessions.sortBy(this.sortInfo.column).reverse();
+      return this.filteredSessions.sortBy(this.sortInfo.column).reverse();
     }
-    return this.args.sessions.sortBy(this.sortInfo.column);
+    return this.filteredSessions.sortBy(this.sortInfo.column);
   }
 
   get sortInfo() {
