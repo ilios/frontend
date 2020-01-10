@@ -3,11 +3,13 @@ import { tracked } from '@glimmer/tracking';
 import { isEmpty } from '@ember/utils';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { next } from '@ember/runloop';
 import escapeRegExp from '../utils/escape-reg-exp';
 import { dropTask } from "ember-concurrency-decorators";
 
 export default class SessionsGrid extends Component {
   @service router;
+  @service preserveScroll;
   @tracked confirmDeleteSessionIds = [];
 
   get filteredSessions() {
@@ -49,6 +51,27 @@ export default class SessionsGrid extends Component {
     const descending = parts.length > 1 && parts[1] === 'desc';
 
     return { column, descending, sortBy: this.args.sortBy };
+  }
+
+  @action
+  setScroll() {
+    const isCourseRoute = this.router.currentRouteName === 'course.index';
+    if (isCourseRoute) {
+      const yPos = window.scrollY;
+      console.log(yPos);
+      this.preserveScroll.set('yPos', yPos === 0 ? null : yPos);
+    }
+  }
+
+  @action
+  scrollDown() {
+    const preserveScroll = this.preserveScroll;
+    const { shouldScrollDown, yPos } = preserveScroll;
+    next(() => {
+      if (shouldScrollDown && yPos) {
+        window.scroll(0, yPos);
+      }
+    });
   }
 
   @action

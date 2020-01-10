@@ -1,6 +1,8 @@
+{{on-window "scroll" this.setScroll passive=true}}
 <div
   class="sessions-grid"
   data-test-sessions-grid
+  {{did-insert this.scrollDown}}
 >
   {{#each this.sortedSessions as |obj|}}
     <div
