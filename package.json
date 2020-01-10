@@ -59,6 +59,7 @@
     "ember-fetch": "^6.7.2",
     "ember-file-upload": "^2.5.0",
     "ember-intl": "^4.0.0",
+    "ember-lifeline": "^5.0.0",
     "ember-math-helpers": "^2.9.0",
     "ember-modal-dialog": "^3.0.0",
     "ember-modifier": "^1.0.2",
