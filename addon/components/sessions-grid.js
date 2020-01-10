@@ -58,7 +58,6 @@ export default class SessionsGrid extends Component {
     const isCourseRoute = this.router.currentRouteName === 'course.index';
     if (isCourseRoute) {
       const yPos = window.scrollY;
-      console.log(yPos);
       this.preserveScroll.set('yPos', yPos === 0 ? null : yPos);
     }
   }
