@@ -4,9 +4,8 @@
   {{did-update (fn this.load) (await @session.objectives)}}
 >
   <SessionOverview
-    @course={{await @session.course}}
     @session={{@session}}
-    @showCheckLink={{false}}
+    @hideCheckLink={{true}}
     @sessionTypes={{await @session.course.school.sessionTypes}}
   />
   <div class="back-to-session">

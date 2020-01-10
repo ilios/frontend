@@ -1,384 +1,371 @@
-{{! template-lint-disable attribute-indentation }}
-<div class="session-header">
-  <span class="title">
-    {{#if @editable}}
-      {{#editable-field
-        value=this.title
-        save=(action "changeTitle")
-        close=(action "revertTitleChanges")
-        saveOnEnter=true
-        closeOnEscape=true
-        as |isSaving|
-      }}
-        <input
-          type="text"
-          value={{this.title}}
-          disabled={{isSaving}}
-          {{on "input" (action (mut this.title) value="target.value")}}
-          {{on "keyup" (fn (action "addErrorDisplayFor") "title")}}
-        >
-        {{#if (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))}}
-          <span class="validation-error-message">{{v-get this "title" "message"}}</span>
-        {{/if}}
-      {{/editable-field}}
-    {{else}}
-      <h3>{{@session.title}}</h3>
-    {{/if}}
-  </span>
-  <span class ="session-publication">
-    {{#if @editable}}
-
-      {{publish-menu
-        title=this.menuTitle
-        icon=this.menuIcon
-        publicationStatus=this.publicationStatus
-        showAsIs=this.showAsIs
-        showPublish=this.showPublish
-        showReview=this.showReview
-        showTbd=this.showTbd
-        showUnPublish=this.showUnPublish
-        reviewRoute="session.publication_check"
-        reviewObject=@session
-        parentObject=(await @session.course)
-        publishTranslation="general.publishSession"
-        unPublishTranslation="general.unPublishSession"
-        publish=(action "publish")
-        publishAsTbd=(action "publishAsTbd")
-        unpublish=(action "unpublish")
-      }}
-    {{else}}
-      {{publication-status item=@session}}
-    {{/if}}
-  </span>
-</div>
-
-<section class="session-overview">
-  <div class="last-update">
-    {{fa-icon icon="history" title=(t "general.lastUpdate")}}
-    {{t "general.lastUpdate"}}:
-    {{this.updatedAt}}
-  </div>
-
-  <div class="session-overview-header">
-
-    <div class="title">
-      {{t "general.overview"}}
-    </div>
-
-    <div class="session-overview-actions">
-      {{#if (and (is-fulfilled this.showCopy) (await this.showCopy))}}
-        {{#link-to "session.copy" @session class="copy"}}
-          {{fa-icon icon="copy" title=(t "general.copySession") fixedWidth=true}}
-        {{/link-to}}
-      {{/if}}
-    </div>
-  </div>
-
-  <div class="session-overview-content">
-    <div class="sessiontype block">
-      <label>{{t "general.sessionType"}}:</label>
-      <span>
+<div
+  data-test-session-overview
+  {{did-insert (perform this.load) @session @sessionTypes}}
+  {{did-update (perform this.load) @session @sessionTypes}}
+>
+  {{#unless this.load.isRunning}}
+    <div class="session-header">
+      <span class="title">
         {{#if @editable}}
-          {{#editable-field
-            value=this.sessionType.title
-            save=(action "changeSessionType")
-            close=(action "revertSessionTypeChanges")
-          }}
-            {{one-way-select
-              value=this.sessionType.id
-              options=this.sortedSessionTypes
-              optionTargetPath="id"
-              optionLabelPath="title"
-              update=(action "setSessionType")
-            }}
-          {{/editable-field}}
-          {{#unless this.sessionType.active}}
-            <em>({{t "general.inactive"}})</em>
-          {{/unless}}
-        {{else}}
-          {{@session.sessionType.title}}
-          {{#unless this.sessionType.active}}
-            <em>({{t "general.inactive"}})</em>
-          {{/unless}}
-        {{/if}}
-      </span>
-    </div>
-    {{#if (await this.showSupplemental)}}
-      <div class="sessionsupplemental block">
-        <label>{{t "general.supplementalCurriculum"}}:</label>
-        <span>
-          {{#if @editable}}
-            {{toggle-yesno yes=@session.supplemental toggle=(action "changeSupplemental")}}
-          {{else}}
-            {{#if @session.supplemental}}
-              <span class="add">{{t "general.yes"}}</span>
-            {{else}}
-              <span class="remove">{{t "general.no"}}</span>
-            {{/if}}
-          {{/if}}
-        </span>
-      </div>
-    {{/if}}
-    {{#if (await this.showSpecialAttireRequired)}}
-      <div class="sessionspecialattire block">
-        <label>{{t "general.specialAttireRequired"}}:</label>
-        <span>
-          {{#if @editable}}
-            {{toggle-yesno
-              yes=@session.attireRequired
-              toggle=(action "changeSpecialAttire")
-            }}
-          {{else}}
-            {{#if @session.attireRequired}}
-              <span class="add">{{t "general.yes"}}</span>
-            {{else}}
-              <span class="remove">{{t "general.no"}}</span>
-            {{/if}}
-          {{/if}}
-        </span>
-      </div>
-    {{/if}}
-    {{#if (await this.showSpecialEquipmentRequired)}}
-      <div class="sessionspecialequipment block">
-        <label>{{t "general.specialEquipmentRequired"}}:</label>
-        <span>
-          {{#if @editable}}
-            {{toggle-yesno
-              yes=@session.equipmentRequired
-              toggle=(action "changeSpecialEquipment")
-            }}
-          {{else}}
-            {{#if @session.equipmentRequired}}
-              <span class="add">{{t "general.yes"}}</span>
-            {{else}}
-              <span class="remove">{{t "general.no"}}</span>
-            {{/if}}
-          {{/if}}
-        </span>
-      </div>
-    {{/if}}
-    {{#if (await this.showAttendanceRequired)}}
-      <div class="sessionattendancerequired block">
-        <label>{{t "general.attendanceRequired"}}:</label>
-        <span>
-          {{#if @editable}}
-            {{toggle-yesno
-              yes=@session.attendanceRequired
-              toggle=(action "changeAttendanceRequired")
-            }}
-          {{else}}
-            {{#if @session.attendanceRequired}}
-              <span class="add">{{t "general.yes"}}</span>
-            {{else}}
-              <span class="remove">{{t "general.no"}}</span>
-            {{/if}}
-          {{/if}}
-        </span>
-      </div>
-    {{/if}}
-    <hr>
-    <div class="independentlearningcontrol block">
-      <label>{{t "general.independentLearning"}}:</label>
-      <span class="independentlearningcontrol-value">
-        {{#if @editable}}
-          <ToggleYesno
-            @yes={{@session.isIndependentLearning}}
-            @toggle={{action "saveIndependentLearning"}}
-          />
-        {{else}}
-          {{#if @session.isIndependentLearning}}
-            <span class="add">{{t "general.yes"}}</span>
-          {{else}}
-            <span class="remove">{{t "general.no"}}</span>
-          {{/if}}
-        {{/if}}
-      </span>
-    </div>
-    {{#if @session.isIndependentLearning}}
-      <div class="sessionilmhours block">
-        <label>{{t "general.hours"}}:</label>
-        <span>
-          {{#if @editable}}
-            {{#editable-field
-              value=this.hours
-              save=(action "changeIlmHours")
-              close=(action "revertIlmHoursChanges")
-              saveOnEnter=true
-              closeOnEscape=true
-            as |isSaving|
-            }}
-              <input
-                type="text"
-                value={{this.hours}}
-                disabled={{isSaving}}
-                {{on "input" (action (mut this.hours) value="target.value")}}
-                {{on "keyup" (fn (action "addErrorDisplayFor") "hours")}}
-              >
-              {{#if (and (v-get this "hours" "isInvalid") (contains "hours" this.showErrorsFor))}}
-                <span class="validation-error-message">{{v-get this "hours" "message"}}</span>
-              {{/if}}
-            {{/editable-field}}
-          {{else}}
-            {{@session.ilmSession.hours}}&nbsp;
-          {{/if}}
-        </span>
-      </div>
-      <div class="sessionilmduedate block {{if @session.hasPostrequisite "not-applicable"}}">
-        <label>{{t "general.dueBy"}}:</label>
-        <span>
-          {{#if (is-fulfilled @session.ilmSession)}}
-            {{#if @editable}}
-              {{#editable-field
-                value=(moment-format @session.ilmSession.dueDate "L")
-                save=(action "changeIlmDueDate")
-                close=(action "revertIlmDueDateChanges")
-              }}
-                {{pikaday-input
-                  value=this.dueDate
-                  format="L"
-                  onSelection=(action (mut this.dueDate))
-                  focusOut=(action "addErrorDisplayFor" "dueDate")
-                }}
-                {{#if (and (v-get this "dueDate" "isInvalid") (contains "dueDate" this.showErrorsFor))}}
-                  <span class="validation-error-message">{{v-get this "dueDate" "message"}}</span>
-                {{/if}}
-              {{/editable-field}}
-            {{else}}
-              {{moment-format @session.ilmSession.dueDate "L"}}
-            {{/if}}
-          {{/if}}
-        </span>
-      </div>
-    {{/if}}
-    {{#if this.features.sessionLinkingAdminUi}}
-      <div class="postrequisite block" data-test-postrequisite>
-        {{#if @editable}}
-          {{#if this.isEditingPostRequisite}}
-            <Session::PostrequisiteEditor
-              @session={{@session}}
-              @close={{toggle "isEditingPostRequisite" this}}
+          <EditableField
+            @value={{this.title}}
+            @save={{fn this.changeTitle}}
+            @close={{fn this.revertTitleChanges}}
+            @saveOnEnter={{true}}
+            @closeOnEscape={{true}} as |isSaving|
+          >
+            <Input
+              type="text"
+              @value={{this.title}}
+              @key-press={{fn this.addErrorDisplayFor "title"}}
+              disabled={{isSaving}}
             />
-          {{else}}
-            <label>
-              {{#if @session.hasPostrequisite}}
-                {{#link-to "session.index" (await @session.postrequisite.course) (await @session.postrequisite)}}
-                  {{fa-icon  icon="external-link-square-alt"}} {{t "general.duePriorTo"}}:
-                {{/link-to}}
+            {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+              <span class="validation-error-message">
+                {{message}}
+              </span>
+            {{/each}}
+          </EditableField>
+        {{else}}
+          <h3>{{@session.title}}</h3>
+        {{/if}}
+      </span>
+      <span class="session-publication">
+        {{#if @editable}}
+          <Session::PublicationMenu @session={{@session}} @hideCheckLink={{@hideCheckLink}} />
+        {{else}}
+          <PublicationStatus @item={{@session}} />
+        {{/if}}
+      </span>
+    </div>
+
+    <section class="session-overview">
+      <div class="last-update">
+        {{fa-icon icon="history" title=(t "general.lastUpdate")}}
+        {{t "general.lastUpdate"}}:
+        {{this.updatedAt}}
+      </div>
+
+      <div class="session-overview-header">
+
+        <div class="title">
+          {{t "general.overview"}}
+        </div>
+
+        <div class="session-overview-actions">
+          {{#if (and (is-fulfilled this.showCopy) (await this.showCopy))}}
+            {{#link-to "session.copy" @session class="copy"}}
+              {{fa-icon icon="copy" title=(t "general.copySession") fixedWidth=true}}
+            {{/link-to}}
+          {{/if}}
+        </div>
+      </div>
+
+      <div class="session-overview-content">
+        <div class="sessiontype block">
+          <label>{{t "general.sessionType"}}:</label>
+          <span>
+            {{#if @editable}}
+              <EditableField
+                @value={{this.sessionType.title}}
+                @save={{fn this.changeSessionType}}
+                @close={{fn this.revertSessionTypeChanges}}
+              >
+                <select {{on "change" (action this.setSessionType value="target.value")}}>
+                  {{#each this.sortedSessionTypes as |sessionType|}}
+                    <option
+                      value={{sessionType.id}}
+                      selected={{eq sessionType.id this.sessionType.id}}
+                    >
+                      {{sessionType.title}}
+                    </option>
+                  {{/each}}
+                </select>
+              </EditableField>
+              {{#unless this.sessionType.active}}
+                <em>({{t "general.inactive"}})</em>
+              {{/unless}}
+            {{else}}
+              {{@session.sessionType.title}}
+              {{#unless this.sessionType.active}}
+                <em>({{t "general.inactive"}})</em>
+              {{/unless}}
+            {{/if}}
+          </span>
+        </div>
+        {{#if this.showSupplemental}}
+          <div class="sessionsupplemental block">
+            <label>{{t "general.supplementalCurriculum"}}:</label>
+            <span>
+              {{#if @editable}}
+                <ToggleYesno @yes={{@session.supplemental}} @toggle={{this.changeSupplemental}}/>
               {{else}}
-                {{t "general.duePriorTo"}}:
+                {{#if @session.supplemental}}
+                  <span class="add">{{t "general.yes"}}</span>
+                {{else}}
+                  <span class="remove">{{t "general.no"}}</span>
+                {{/if}}
               {{/if}}
-            </label>
-            <button class="post-requisite-edit" {{on "click" (toggle "isEditingPostRequisite" this)}} data-test-edit>
+            </span>
+          </div>
+        {{/if}}
+        {{#if this.showSpecialAttireRequired}}
+          <div class="sessionspecialattire block">
+            <label>{{t "general.specialAttireRequired"}}:</label>
+            <span>
+              {{#if @editable}}
+                <ToggleYesno @yes={{@session.attireRequired}} @toggle={{this.changeSpecialAttire}}/>
+              {{else}}
+                {{#if @session.attireRequired}}
+                  <span class="add">{{t "general.yes"}}</span>
+                {{else}}
+                  <span class="remove">{{t "general.no"}}</span>
+                {{/if}}
+              {{/if}}
+            </span>
+          </div>
+        {{/if}}
+        {{#if this.showSpecialEquipmentRequired}}
+          <div class="sessionspecialequipment block">
+            <label>{{t "general.specialEquipmentRequired"}}:</label>
+            <span>
+              {{#if @editable}}
+                <ToggleYesno @yes={{@session.equipmentRequired}} @toggle={{this.changeSpecialEquipment}}/>
+              {{else}}
+                {{#if @session.equipmentRequired}}
+                  <span class="add">{{t "general.yes"}}</span>
+                {{else}}
+                  <span class="remove">{{t "general.no"}}</span>
+                {{/if}}
+              {{/if}}
+            </span>
+          </div>
+        {{/if}}
+        {{#if this.showAttendanceRequired}}
+          <div class="sessionattendancerequired block">
+            <label>{{t "general.attendanceRequired"}}:</label>
+            <span>
+              {{#if @editable}}
+                <ToggleYesno @yes={{@session.attendanceRequired}} @toggle={{this.changeAttendanceRequired}}/>
+              {{else}}
+                {{#if @session.attendanceRequired}}
+                  <span class="add">{{t "general.yes"}}</span>
+                {{else}}
+                  <span class="remove">{{t "general.no"}}</span>
+                {{/if}}
+              {{/if}}
+            </span>
+          </div>
+        {{/if}}
+        <hr>
+        <div class="independentlearningcontrol block">
+          <label>{{t "general.independentLearning"}}:</label>
+          <span class="independentlearningcontrol-value">
+            {{#if @editable}}
+              <ToggleYesno @yes={{@session.isIndependentLearning}} @toggle={{this.saveIndependentLearning}}
+              />
+            {{else}}
+              {{#if @session.isIndependentLearning}}
+                <span class="add">{{t "general.yes"}}</span>
+              {{else}}
+                <span class="remove">{{t "general.no"}}</span>
+              {{/if}}
+            {{/if}}
+          </span>
+        </div>
+        {{#if @session.isIndependentLearning}}
+          <div class="sessionilmhours block">
+            <label>{{t "general.hours"}}:</label>
+            <span>
+              {{#if @editable}}
+                <EditableField
+                    @value={{this.hours}}
+                    @save={{fn this.changeIlmHours}}
+                    @close={{fn this.revertIlmHoursChanges}}
+                    @saveOnEnter={{true}}
+                    @closeOnEscape={{true}} as |isSaving|
+                >
+                  <Input
+                    type="text"
+                    @value={{this.hours}}
+                    @key-press={{fn this.addErrorDisplayFor "hours"}}
+                    disabled={{isSaving}}
+                  />
+                  {{#each (await (compute (fn this.getErrorsFor) "hours")) as |message|}}
+                    <span class="validation-error-message">
+                      {{message}}
+                    </span>
+                  {{/each}}
+                </EditableField>
+              {{else}}
+                {{@session.ilmSession.hours}}&nbsp;
+              {{/if}}
+            </span>
+          </div>
+          <div class="sessionilmduedate block {{if @session.hasPostrequisite "not-applicable"}}">
+            <label>{{t "general.dueBy"}}:</label>
+            <span>
+              {{#if (is-fulfilled @session.ilmSession)}}
+                {{#if @editable}}
+                  <EditableField
+                    @value={{moment-format @session.ilmSession.dueDate "L"}}
+                    @save={{fn this.changeIlmDueDate}}
+                    @close={{fn this.revertIlmDueDateChanges}}
+                  >
+                    <PikadayInput
+                      @value={{this.dueDate}}
+                      @format="L"
+                      @onSelection={{fn (set this.dueDate)}}
+                      @focusOut={{fn this.addErrorDisplayFor "dueDate"}}
+                    />
+                    {{#each (await (compute (fn this.getErrorsFor) "dueDate")) as |message|}}
+                      <span class="validation-error-message">
+                        {{message}}
+                      </span>
+                    {{/each}}
+                  </EditableField>
+                {{else}}
+                  {{moment-format @session.ilmSession.dueDate "L"}}
+                {{/if}}
+              {{/if}}
+            </span>
+          </div>
+        {{/if}}
+        {{#if this.features.sessionLinkingAdminUi}}
+          <div class="postrequisite block" data-test-postrequisite>
+            {{#if @editable}}
+              {{#if this.isEditingPostRequisite}}
+                <Session::PostrequisiteEditor
+                  @session={{@session}}
+                  @close={{toggle "isEditingPostRequisite" this}}
+                />
+              {{else}}
+                <label>
+                  {{#if @session.hasPostrequisite}}
+                    {{#link-to "session.index" (await @session.postrequisite.course) (await @session.postrequisite)}}
+                      {{fa-icon  icon="external-link-square-alt"}} {{t "general.duePriorTo"}}:
+                    {{/link-to}}
+                  {{else}}
+                    {{t "general.duePriorTo"}}:
+                  {{/if}}
+                </label>
+                <button class="post-requisite-edit" {{on "click" (toggle "isEditingPostRequisite" this)}} data-test-edit>
+                  {{#if @session.hasPostrequisite}}
+                    {{@session.postrequisite.title}}
+                  {{else}}
+                    {{t "general.none"}}
+                  {{/if}}
+                </button>
+              {{/if}}
+            {{else}}
+              <label>
+                {{#if @session.hasPostrequisite}}
+                  {{#link-to "session.index" (await @session.postrequisite.course) (await @session.postrequisite)}}
+                    {{fa-icon  icon="external-link-square-alt"}} {{t "general.duePriorTo"}}:
+                  {{/link-to}}
+                {{else}}
+                  {{t "general.duePriorTo"}}:
+                {{/if}}
+              </label>
               {{#if @session.hasPostrequisite}}
                 {{@session.postrequisite.title}}
               {{else}}
                 {{t "general.none"}}
               {{/if}}
-            </button>
-          {{/if}}
-        {{else}}
-          <label>
-            {{#if @session.hasPostrequisite}}
-              {{#link-to "session.index" (await @session.postrequisite.course) (await @session.postrequisite)}}
-                {{fa-icon  icon="external-link-square-alt"}} {{t "general.duePriorTo"}}:
-              {{/link-to}}
+            {{/if}}
+          </div>
+          <div class="prerequisites block">
+            <label>{{t "general.prerequisites"}}:</label>
+            {{#if @session.hasPrerequisites}}
+              <span>
+                {{#each (await @session.prerequisites) as |prerequisite|~}}{{#link-to "session.index" (await prerequisite.course) prerequisite}}{{fa-icon  icon="external-link-square-alt"}} {{prerequisite.title}}{{/link-to~}}{{#unless (eq prerequisite @session.prerequisites.lastObject)}}, {{/unless}}{{~/each}}
+              </span>
             {{else}}
-              {{t "general.duePriorTo"}}:
+              {{t "general.none"}}
             {{/if}}
-          </label>
-          {{#if @session.hasPostrequisite}}
-            {{@session.postrequisite.title}}
-          {{else}}
-            {{t "general.none"}}
-          {{/if}}
+          </div>
         {{/if}}
-      </div>
-      <div class="prerequisites block">
-        <label>{{t "general.prerequisites"}}:</label>
-        {{#if @session.hasPrerequisites}}
+        <hr>
+        <div class="sessiondescription">
+          <label>{{t "general.description"}}:</label>
           <span>
-            {{#each (await @session.prerequisites) as |prerequisite|~}}{{#link-to "session.index" (await prerequisite.course) prerequisite}}{{fa-icon  icon="external-link-square-alt"}} {{prerequisite.title}}{{/link-to~}}{{#unless (eq prerequisite @session.prerequisites.lastObject)}}, {{/unless}}{{~/each}}
+            {{#if @editable}}
+              <EditableField
+                @value={{this.description}}
+                @renderHtml={{true}}
+                @isSaveDisabled={{and
+                  (v-get this "description" "isInvalid")
+                  (contains "description" this.showErrorsFor)
+                }}
+                @save={{fn this.saveDescription}}
+                @close={{perform this.revertDescriptionChanges}}
+                @clickPrompt={{t "general.clickToEdit"}}
+
+              >
+                <HtmlEditor @content={{this.description}} @update={{fn this.changeDescription}} />
+                {{#if (and (v-get this "description" "isInvalid") (contains "description" this.showErrorsFor))
+                }}
+                  <span class="validation-error-message">
+                    {{v-get this "description" "message"}}
+                  </span>
+                {{/if}}
+              </EditableField>
+            {{else}}
+              {{! template-lint-disable no-triple-curlies}}
+              {{{this.description}}}
+            {{/if}}
           </span>
-        {{else}}
-          {{t "general.none"}}
-        {{/if}}
-      </div>
-    {{/if}}
-    <hr>
-    <div class="sessiondescription">
-      <label>{{t "general.description"}}:</label>
-      <span>
-        {{#if @editable}}
-          {{#editable-field
-            value=this.description
-            save=(action "saveDescription")
-            close=(perform this.revertDescriptionChanges)
-            renderHtml=true
-            isSaveDisabled=(and (v-get this "description" "isInvalid") (contains "description" this.showErrorsFor))
-            clickPrompt=(t "general.clickToEdit")
-          }}
-            {{html-editor
-              content=this.description
-              update=(action "changeDescription")
-            }}
-            {{#if
-              (and (v-get this "description" "isInvalid") (contains "description" this.showErrorsFor))
-            }}
-              <span class="validation-error-message">{{v-get this "description" "message"}}</span>
+        </div>
+        <div class="instructional-notes" data-test-instructional-notes>
+          <label>{{t "general.instructionalNotes"}}:</label>
+          <span>
+            {{#if @editable}}
+              <EditableField
+                @value={{@session.instructionalNotes}}
+                @renderHtml={{true}}
+                @isSaveDisabled={{and
+                  (v-get this "instructionalNotes" "isInvalid")
+                  (contains "instructionalNotes" this.showErrorsFor)
+                }}
+                @save={{perform this.saveInstructionalNotes}}
+                @close={{fn this.revertInstructionalNotesChanges}}
+                @clickPrompt={{t "general.clickToEdit"}}
+
+              >
+                <HtmlEditor @content={{this.instructionalNotes}} @update={{fn this.changeInstructionalNotes}} />
+                {{#if (and (v-get this "instructionalNotes" "isInvalid") (contains "instructionalNotes" this.showErrorsFor))
+                }}
+                  <span class="validation-error-message">
+                    {{v-get this "instructionalNotes" "message"}}
+                  </span>
+                {{/if}}
+              </EditableField>
+            {{else}}
+              {{! template-lint-disable no-triple-curlies}}
+              {{{this.instructionalNotes}}}
             {{/if}}
-          {{/editable-field}}
-        {{else}}
-          {{! template-lint-disable no-triple-curlies}}
-          {{{this.description}}}
-        {{/if}}
-      </span>
-    </div>
-    <div class="instructional-notes" data-test-instructional-notes>
-      <label>{{t "general.instructionalNotes"}}:</label>
-      <span>
-        {{#if @editable}}
-          {{#editable-field
-            value=@session.instructionalNotes
-            save=(perform this.saveInstructionalNotes)
-            close=(action "revertInstructionalNotesChanges")
-            renderHtml=true
-            isSaveDisabled=(and (v-get this "instructionalNotes" "isInvalid") (contains "instructionalNotes" this.showErrorsFor))
-            clickPrompt=(t "general.clickToEdit")
-          }}
-            {{html-editor
-              content=this.instructionalNotes
-              update=(action "changeInstructionalNotes")
-            }}
-            {{#if
-              (and (v-get this "instructionalNotes" "isInvalid") (contains "instructionalNotes" this.showErrorsFor))
-            }}
-              <span class="validation-error-message">{{v-get this "instructionalNotes" "message"}}</span>
-            {{/if}}
-          {{/editable-field}}
-        {{else}}
-          {{! template-lint-disable no-triple-curlies}}
-          {{{this.description}}}
-        {{/if}}
-      </span>
-    </div>
-    {{#unless @session.isIndependentLearning}}
-      <br>
-      <div class="sessionassociatedgroups">
-        <label>{{t "general.associatedGroups"}}:</label>
-        <span>
-          {{#if (is-fulfilled @session.associatedOfferingLearnerGroups)}}
+          </span>
+        </div>
+        {{#unless @session.isIndependentLearning}}
+          <br>
+          <div class="sessionassociatedgroups">
+            <label>{{t "general.associatedGroups"}}:</label>
             <span>
-              {{#each (await @session.associatedOfferingLearnerGroups) as |group|}}
-                {{group.title}},
+              {{#if (is-fulfilled @session.associatedOfferingLearnerGroups)}}
+                <span>
+                  {{#each (await @session.associatedOfferingLearnerGroups) as |group|}}
+                    {{group.title}},
+                  {{else}}
+                    {{t "general.none"}}
+                  {{/each}}
+                </span>
               {{else}}
-                {{t "general.none"}}
-              {{/each}}
+                <LoadingPart />
+              {{/if}}
             </span>
-          {{else}}
-            <LoadingPart />
-          {{/if}}
-        </span>
+          </div>
+        {{/unless}}
       </div>
-    {{/unless}}
-  </div>
-</section>
+    </section>
+  {{/unless}}
+</div>
