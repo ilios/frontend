@@ -5,13 +5,13 @@ import format from 'ember-moment/computeds/format';
 const { sort } = computed;
 
 const OfferingBlock = EmberObject.extend({
+  offerings: null,
   init() {
     this._super(...arguments);
-    this.set('offerings', []);
+    this.offerings = [];
   },
-  offerings: null,
   addOffering(offering){
-    this.get('offerings').pushObject(offering);
+    this.offerings = [...this.offerings, offering];
   },
 });
 
