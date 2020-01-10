@@ -1,93 +1,99 @@
-<SessionOverview
-  @course={{await @session.course}}
-  @session={{@session}}
-  @showCheckLink={{false}}
-  @sessionTypes={{await @session.course.school.sessionTypes}}
-/>
-<div class="back-to-session">
-  <LinkTo
-    @route="session.index"
-    @models={{array (await @session.course) @session}}
-  >
-    <FaIcon @icon="undo" />
-    {{t "general.backToTitle" title=@session.title}}
-  </LinkTo>
-</div>
-<div class="results">
-  <div class="title">
-    {{t "general.missingItems"}} ({{@session.allPublicationIssuesLength}})
+<div
+  class="session-publicationcheck"
+  {{did-insert (fn this.load) (await @session.objectives)}}
+  {{did-update (fn this.load) (await @session.objectives)}}
+>
+  <SessionOverview
+    @course={{await @session.course}}
+    @session={{@session}}
+    @showCheckLink={{false}}
+    @sessionTypes={{await @session.course.school.sessionTypes}}
+  />
+  <div class="back-to-session">
+    <LinkTo
+      @route="session.index"
+      @models={{array (await @session.course) @session}}
+    >
+      <FaIcon @icon="undo" />
+      {{t "general.backToTitle" title=@session.title}}
+    </LinkTo>
   </div>
-  <div class="session-publicationcheck-content">
-    <table>
-      <thead>
-        <tr>
-          <th>
-            {{t "general.sessionTitle"}}
-          </th>
-          <th>
-            {{t "general.offerings"}}
-          </th>
-          <th>
-            {{t "general.terms"}}
-          </th>
-          <th>
-            {{t "general.objectives"}}
-          </th>
-          <th>
-            {{t "general.meshTerms"}}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            {{@session.title}}
-          </td>
-          {{#if @session.offerings.length}}
-            <td class="yes">
-              {{t "general.yes"}} ({{@session.offerings.length}})
+  <div class="results">
+    <div class="title">
+      {{t "general.missingItems"}} ({{@session.allPublicationIssuesLength}})
+    </div>
+    <div class="session-publicationcheck-content">
+      <table>
+        <thead>
+          <tr>
+            <th>
+              {{t "general.sessionTitle"}}
+            </th>
+            <th>
+              {{t "general.offerings"}}
+            </th>
+            <th>
+              {{t "general.terms"}}
+            </th>
+            <th>
+              {{t "general.objectives"}}
+            </th>
+            <th>
+              {{t "general.meshTerms"}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              {{@session.title}}
             </td>
-          {{else}}
-            <td class="no">
-              {{t "general.no"}}
-            </td>
-          {{/if}}
-          {{#if @session.terms.length}}
-            <td class="yes">
-              {{t "general.yes"}} ({{@session.terms.length}})
-            </td>
-          {{else}}
-            <td class="no">
-              {{t "general.no"}}
-            </td>
-          {{/if}}
-          {{#if @session.objectives.length}}
-            <td class="yes">
-              {{t "general.yes"}} ({{@session.objectives.length}})
-              {{#if this.showUnlinkIcon}}
-                <FaIcon
-                  @icon="unlink"
-                  class="clickable"
-                  @click={{action "transitionToSession"}}
-                />
-              {{/if}}
-            </td>
-          {{else}}
-            <td class="no">
-              {{t "general.no"}}
-            </td>
-          {{/if}}
-          {{#if @session.meshDescriptors.length}}
-            <td class="yes">
-              {{t "general.yes"}} ({{@session.meshDescriptors.length}})
-            </td>
-          {{else}}
-            <td class="no">
-              {{t "general.no"}}
-            </td>
-          {{/if}}
-        </tr>
-      </tbody>
-    </table>
+            {{#if @session.offerings.length}}
+              <td class="yes">
+                {{t "general.yes"}} ({{@session.offerings.length}})
+              </td>
+            {{else}}
+              <td class="no">
+                {{t "general.no"}}
+              </td>
+            {{/if}}
+            {{#if @session.terms.length}}
+              <td class="yes">
+                {{t "general.yes"}} ({{@session.terms.length}})
+              </td>
+            {{else}}
+              <td class="no">
+                {{t "general.no"}}
+              </td>
+            {{/if}}
+            {{#if @session.objectives.length}}
+              <td class="yes">
+                {{t "general.yes"}} ({{@session.objectives.length}})
+                {{#if this.showUnlinkIcon}}
+                  <FaIcon
+                    @icon="unlink"
+                    class="clickable"
+                    @click={{action "transitionToSession"}}
+                  />
+                {{/if}}
+              </td>
+            {{else}}
+              <td class="no">
+                {{t "general.no"}}
+              </td>
+            {{/if}}
+            {{#if @session.meshDescriptors.length}}
+              <td class="yes">
+                {{t "general.yes"}} ({{@session.meshDescriptors.length}})
+              </td>
+            {{else}}
+              <td class="no">
+                {{t "general.no"}}
+              </td>
+            {{/if}}
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
