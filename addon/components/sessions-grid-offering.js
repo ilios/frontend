@@ -1,72 +1,54 @@
-import Component from '@ember/component';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { task, timeout } from 'ember-concurrency';
+import Component from "@glimmer/component";
+import { tracked } from "@glimmer/tracking";
+import { action } from "@ember/object";
+import { timeout } from 'ember-concurrency';
+import { restartableTask, dropTask } from 'ember-concurrency-decorators';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import scrollIntoView from 'scroll-into-view';
 
-const Validations = buildValidations({
-  room: [
-    validator('presence', {
-      presence: true
-    }),
-    validator('length', {
-      max: 255
-    }),
-  ],
-});
+@validatable
+export default class SessionsGridOffering extends Component {
+  @Length(1, 255) @NotBlank() @tracked room;
+  @tracked isEditing = false;
+  @tracked wasUpdated = false;
 
-export default Component.extend(ValidationErrorDisplay, Validations, {
-  tagName: 'tr',
-  classNameBindings: [':sessions-grid-offering', 'firstRow', 'even', 'wasUpdated'],
-  canUpdate: false,
-  room: null,
-  firstRow: false,
-  even: false,
-  isEditing: false,
-  wasUpdated: false,
-  'data-test-sessions-grid-offering': true,
+  @action
+  revertRoomChanges(){
+    this.room = this.args.offering.room;
+  }
 
-  didReceiveAttrs(){
-    this._super(...arguments);
-    const offering = this.get('offering');
-    this.set('room', offering.room);
-  },
+  @action
+  close() {
+    this.isEditing = false;
+    scrollIntoView(this.element);
+  }
 
-  actions: {
-    revertRoomChanges(){
-      const offering = this.get('offering');
-      this.set('room', offering.get('room'));
-    },
-    close() {
-      this.set('isEditing', false);
-      scrollIntoView(this.element);
-    },
-  },
-  changeRoom: task(function * (){
+  @dropTask
+  *changeRoom(){
     yield timeout(10);
-    this.send('addErrorDisplayFor', 'room');
-    const offering = this.get('offering');
-    const room = this.get('room');
-    const { validations } = yield this.validate();
-    if (validations.get('isInvalid')) {
-      return;
+    this.addErrorDisplayFor('room');
+    const isValid = yield this.isValid('room');
+    if (!isValid) {
+      return false;
     }
-    this.send('removeErrorDisplayFor', 'room');
-    offering.set('room', room);
-    yield offering.save();
-  }).drop(),
-  save: task(function * (startDate, endDate, room, learnerGroups, instructorGroups, instructors){
-    const offering = this.get('offering');
-    offering.setProperties({startDate, endDate, room, learnerGroups, instructorGroups, instructors});
+    this.removeErrorDisplayFor('room');
+    this.args.offering.set('room', this.room);
+    yield this.args.offering.save();
+  }
 
-    yield offering.save();
+  @dropTask
+  *save(startDate, endDate, room, learnerGroups, instructorGroups, instructors){
+    this.args.offering.setProperties({startDate, endDate, room, learnerGroups, instructorGroups, instructors});
+    yield this.args.offering.save();
     this.updateUi.perform();
-  }).drop(),
-  updateUi: task(function* () {
+  }
+
+  @restartableTask
+  *updateUi(){
     yield timeout(10);
-    this.set('wasUpdated', true);
+    this.wasUpdated = true;
     scrollIntoView(this.element);
     yield timeout(4000);
-    this.set('wasUpdated', false);
-  }).restartable(),
-});
+    this.wasUpdated = false;
+  }
+}

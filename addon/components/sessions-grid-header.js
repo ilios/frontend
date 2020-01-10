@@ -1,33 +1,34 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { task, timeout } from 'ember-concurrency';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { timeout } from 'ember-concurrency';
 import { next } from '@ember/runloop';
+import { dropTask } from "ember-concurrency-decorators";
 
-export default Component.extend({
-  classNames: ['sessions-grid-header'],
-  isExpanding: false,
-  'data-test-sessions-grid-header': true,
-  sortedAscending: computed('sortBy', function(){
-    const sortBy = this.get('sortBy');
-    return sortBy.search(/desc/) === -1;
-  }),
-  actions: {
-    setSortBy(what){
-      const sortBy = this.get('sortBy');
-      if(sortBy === what){
-        what += ':desc';
-      }
-      this.setSortBy(what);
-    },
-  },
-  expandAll: task(function * () {
-    this.set('isExpanding', true);
+export default class SessionsGridHeader extends Component {
+  @tracked isExpanding = false;
+
+  get sortedAscending () {
+    return this.args.sortBy.search(/desc/) === -1;
+  }
+
+  @action
+  setSortBy(what) {
+    if (this.args.sortBy === what) {
+      what += ':desc';
+    }
+    this.args.setSortBy(what);
+  }
+
+  @dropTask
+  *expandAll() {
+    this.isExpanding = true;
     yield timeout(100);
-    this.toggleExpandAll();
+    this.args.toggleExpandAll();
     // we need to wait for the browser to hand back
     //control and then swap the icon back
     yield next(() => {
-      this.set('isExpanding', false);
+      this.isExpanding = false;
     });
-  }).drop()
-});
+  }
+}

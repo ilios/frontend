@@ -1,18 +1,14 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
 
-export default Component.extend({
-  tagName: 'table',
-  classNames: ['sessions-grid-offering-table'],
-  'data-test-sessions-grid-offering-table': true,
-  offeringBlocks: computed('offerings.@each.{startDate,endDate,room,learnerGroups,instructorGroups}', function() {
-    const offerings = this.get('offerings');
-    if (!offerings) {
+export default class SessionsGridOfferingTable extends Component {
+
+  get offeringBlocks() {
+    if (! this.args.offerings) {
       return [];
     }
     const dateBlocks = {};
-    offerings.forEach(offering => {
+    this.args.offerings.forEach(offering => {
       const key = offering.get('dateKey');
       if (!(key in dateBlocks)) {
         dateBlocks[key] = OfferingDateBlock.create({
@@ -28,5 +24,5 @@ export default Component.extend({
       dateBlockArray.pushObject(dateBlocks[key]);
     }
     return dateBlockArray.sortBy('dateStamp');
-  }),
-});
+  }
+}

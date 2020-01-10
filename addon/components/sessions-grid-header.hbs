@@ -1,106 +1,107 @@
-{{! template-lint-disable attribute-indentation }}
-<span
-  data-test-expand-all
-  class="expand-collapse-control"
-  role="button"
-  data-test-expand-collapse-all
-  {{on "click" (perform this.expandAll)}}
->
-  {{#if @showExpandAll}}
-    {{#if this.isExpanding}}
-      <LoadingSpinner />
-    {{else if @allSessionsExpanded}}
-      <FaIcon @icon="caret-down" class="clickable" />
-    {{else}}
-      <FaIcon @icon="caret-right" class="clickable" />
+<div class="sessions-grid-header" data-test-sessions-grid-header>
+  <span
+    data-test-expand-all
+    class="expand-collapse-control"
+    role="button"
+    data-test-expand-collapse-all
+    {{on "click" (perform this.expandAll)}}
+  >
+    {{#if @showExpandAll}}
+      {{#if this.isExpanding}}
+        <LoadingSpinner />
+      {{else if @allSessionsExpanded}}
+        <FaIcon @icon="caret-down" class="clickable" />
+      {{else}}
+        <FaIcon @icon="caret-right" class="clickable" />
+      {{/if}}
     {{/if}}
-  {{/if}}
-</span>
-<SortableHeading
-  @click={{action "setSortBy" "title"}}
-  @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
-  @sortedAscending={{this.sortedAscending}}
-  @title={{t "general.title"}}
-  class="session-grid-title"
->
-  {{t "general.title"}}
-</SortableHeading>
-<SortableHeading
-  @click={{action "setSortBy" "sessionTypeTitle"}}
-  @sortedBy={{or
-    (eq @sortBy "sessionTypeTitle")
-    (eq @sortBy "sessionTypeTitle:desc")
-  }}
-  @sortedAscending={{this.sortedAscending}}
-  @title={{t "general.type"}}
-  class="session-grid-type"
->
-  {{t "general.type"}}
-</SortableHeading>
-<SortableHeading
-  @sortType="numeric"
-  @click={{action "setSortBy" "learnerGroupCount"}}
-  @sortedBy={{or
-    (eq @sortBy "learnerGroupCount")
-    (eq @sortBy "learnerGroupCount:desc")
-  }}
-  @sortedAscending={{this.sortedAscending}}
-  @title={{t "general.groups"}}
-  class="session-grid-groups"
->
-  {{t "general.groups"}}
-</SortableHeading>
-<SortableHeading
-  @sortType="numeric"
-  @click={{action "setSortBy" "objectiveCount"}}
-  @sortedBy={{or (eq @sortBy "objectiveCount") (eq @sortBy "objectiveCount:desc")
-  }}
-  @sortedAscending={{this.sortedAscending}}
-  @title={{t "general.objectives"}}
-  class="session-grid-objectives"
->
-  {{t "general.objectives"}}
-</SortableHeading>
-<SortableHeading
-  @sortType="numeric"
-  @click={{action "setSortBy" "termCount"}}
-  @sortedBy={{or (eq @sortBy "termCount") (eq @sortBy "termCount:desc")}}
-  @sortedAscending={{this.sortedAscending}}
-  @title={{t "general.terms"}}
-  class="session-grid-terms"
->
-  {{t "general.terms"}}
-</SortableHeading>
-<SortableHeading
-  @sortType="numeric"
-  @click={{action "setSortBy" "firstOfferingDate"}}
-  @sortedBy={{or
-    (eq @sortBy "firstOfferingDate")
-    (eq @sortBy "firstOfferingDate:desc")
-  }}
-  @sortedAscending={{this.sortedAscending}}
-  @title={{t "general.firstOffering"}}
-  class="session-grid-first-offering"
->
-  {{t "general.firstOffering"}}
-</SortableHeading>
-<SortableHeading
-  @sortType="numeric"
-  @click={{action "setSortBy" "offeringCount"}}
-  @sortedBy={{or (eq @sortBy "offeringCount") (eq @sortBy "offeringCount:desc")}}
-  @sortedAscending={{this.sortedAscending}}
-  @title={{t "general.offerings"}}
-  class="session-grid-offerings"
->
-  {{t "general.offerings"}}
-</SortableHeading>
-<SortableHeading
-  @click={{action "setSortBy" "status"}}
-  @sortedBy={{or (eq @sortBy "status") (eq @sortBy "status:desc")}}
-  @sortedAscending={{this.sortedAscending}}
-  @title={{t "general.status"}}
-  class="session-grid-status"
->
-  {{t "general.status"}}
-</SortableHeading>
-<span class="session-grid-actions"></span>
+  </span>
+  <SortableHeading
+    @click={{action "setSortBy" "title"}}
+    @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
+    @sortedAscending={{this.sortedAscending}}
+    @title={{t "general.title"}}
+    class="session-grid-title"
+  >
+    {{t "general.title"}}
+  </SortableHeading>
+  <SortableHeading
+    @click={{action "setSortBy" "sessionTypeTitle"}}
+    @sortedBy={{or
+      (eq @sortBy "sessionTypeTitle")
+      (eq @sortBy "sessionTypeTitle:desc")
+    }}
+    @sortedAscending={{this.sortedAscending}}
+    @title={{t "general.type"}}
+    class="session-grid-type"
+  >
+    {{t "general.type"}}
+  </SortableHeading>
+  <SortableHeading
+    @sortType="numeric"
+    @click={{action "setSortBy" "learnerGroupCount"}}
+    @sortedBy={{or
+      (eq @sortBy "learnerGroupCount")
+      (eq @sortBy "learnerGroupCount:desc")
+    }}
+    @sortedAscending={{this.sortedAscending}}
+    @title={{t "general.groups"}}
+    class="session-grid-groups"
+  >
+    {{t "general.groups"}}
+  </SortableHeading>
+  <SortableHeading
+    @sortType="numeric"
+    @click={{action "setSortBy" "objectiveCount"}}
+    @sortedBy={{or (eq @sortBy "objectiveCount") (eq @sortBy "objectiveCount:desc")
+    }}
+    @sortedAscending={{this.sortedAscending}}
+    @title={{t "general.objectives"}}
+    class="session-grid-objectives"
+  >
+    {{t "general.objectives"}}
+  </SortableHeading>
+  <SortableHeading
+    @sortType="numeric"
+    @click={{action "setSortBy" "termCount"}}
+    @sortedBy={{or (eq @sortBy "termCount") (eq @sortBy "termCount:desc")}}
+    @sortedAscending={{this.sortedAscending}}
+    @title={{t "general.terms"}}
+    class="session-grid-terms"
+  >
+    {{t "general.terms"}}
+  </SortableHeading>
+  <SortableHeading
+    @sortType="numeric"
+    @click={{action "setSortBy" "firstOfferingDate"}}
+    @sortedBy={{or
+      (eq @sortBy "firstOfferingDate")
+      (eq @sortBy "firstOfferingDate:desc")
+    }}
+    @sortedAscending={{this.sortedAscending}}
+    @title={{t "general.firstOffering"}}
+    class="session-grid-first-offering"
+  >
+    {{t "general.firstOffering"}}
+  </SortableHeading>
+  <SortableHeading
+    @sortType="numeric"
+    @click={{action "setSortBy" "offeringCount"}}
+    @sortedBy={{or (eq @sortBy "offeringCount") (eq @sortBy "offeringCount:desc")}}
+    @sortedAscending={{this.sortedAscending}}
+    @title={{t "general.offerings"}}
+    class="session-grid-offerings"
+  >
+    {{t "general.offerings"}}
+  </SortableHeading>
+  <SortableHeading
+    @click={{action "setSortBy" "status"}}
+    @sortedBy={{or (eq @sortBy "status") (eq @sortBy "status:desc")}}
+    @sortedAscending={{this.sortedAscending}}
+    @title={{t "general.status"}}
+    class="session-grid-status"
+  >
+    {{t "general.status"}}
+  </SortableHeading>
+  <span class="session-grid-actions"></span>
+</div>
