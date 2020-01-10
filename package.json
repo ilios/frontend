@@ -63,6 +63,7 @@
     "ember-modal-dialog": "^3.0.0",
     "ember-modifier": "^1.0.2",
     "ember-moment": "^8.0.0",
+    "ember-on-helper": "^0.1.0",
     "ember-one-way-select": "^4.0.0",
     "ember-pad": "^1.2.3",
     "ember-page-title": "^5.0.1",
