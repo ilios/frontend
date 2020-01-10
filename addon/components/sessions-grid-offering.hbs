@@ -1,110 +1,111 @@
 {{! template-lint-disable attribute-indentation }}
-{{#if (and this.isEditing (is-fulfilled @offering.session.course.cohorts))}}
-  <td colspan="10" class="expanded-offering-manager">
-    <OfferingForm
-      @showRoom={{true}}
-      @showInstructors={{true}}
-      @cohorts={{await @offering.session.course.cohorts}}
-      @courseStartDate={{await @offering.session.course.startDate}}
-      @courseEndDate={{await @offering.session.course.startDate}}
-      @close={{action "close"}}
-      @save={{perform this.save}}
-      @smallGroupMode={{false}}
-      @offering={{@offering}}
-      @session={{await @offering.session}}
-    />
-  </td>
-{{else}}
-  {{#if @firstRow}}
-    <td class="text-top offering-block-time-time" colspan="2" rowspan={{@span}}>
-      <span class="offering-block-time-time-starttime" data-test-starttime>
-        {{@startTime}}
-      </span>
-      <span class="offering-block-time-time-duration" data-test-duration>
-        {{#if (gte @durationHours 1)}}
-          {{t "general.durationHours" count=@durationHours}}
-        {{/if}}
-        {{#if (and (gt @durationMinutes 0) (lt @durationMinutes 60))}}
-          {{t "general.durationMinutes" count=@durationMinutes}}
-        {{/if}}
-      </span>
-    </td>
-  {{/if}}
-  <td>
-    {{#if @canUpdate}}
-      <EditableField
-        @value={{@offering.room}}
-        @save={{perform this.changeRoom}}
-        @close={{action "revertRoomChanges"}}
-        @saveOnEnter={{true}}
-        @closeOnEscape={{true}}
-        @isSaveDisabled={{and
-          (v-get this "room" "isInvalid")
-          (contains "room" this.showErrorsFor)
-        }} as |isSaving|
-      >
-        <input
-          type="text"
-          class="change-room"
-          value={{this.room}}
-          disabled={{isSaving}}
-          {{on "input" (action (mut this.room) value="target.value")}}
-          {{on "keyup" (fn (action "addErrorDisplayFor") "room")}}
-        >
-        {{#if (and (v-get this "room" "isInvalid") (contains "room" this.showErrorsFor))
-        }}
-          <span class="validation-error-message">
-            {{v-get this "room" "message"}}
-          </span>
-        {{/if}}
-      </EditableField>
-    {{else}}
-      {{@offering.room}}
-    {{/if}}
-  </td>
-  <td class="text-center">
-    {{get (await @offering.allLearners) "length"}}
-  </td>
-  <td
-    colspan="2"
-    title={{join
-      ", "
-      (map-by "title" (sort-by "title" (await @offering.learnerGroups)))
-    }}
-  >
-    {{truncate
-      (join
-        ", " (map-by "title" (sort-by "title" (await @offering.learnerGroups)))
-      )
-      30
-    }}
-  </td>
-  <td
-    colspan="2"
-    title={{join
-      ", "
-      (map-by "fullName" (sort-by "fullName" (await @offering.allInstructors)))
-    }}
-  >
-    {{truncate
-      (join
-        ", "
-        (map-by
-          "fullName" (sort-by "fullName" (await @offering.allInstructors))
-        )
-      )
-      30
-    }}
-  </td>
-  {{#if @canUpdate}}
-    <td class="text-center">
-      <FaIcon
-        @icon="pencil-alt"
-        class="link"
-        @title={{t "general.edit"}}
-        @click={{action (toggle "isEditing" this)}}
-        @ariaHidden={{false}}
+<tr
+  class="sessions-grid-offering {{if @even "even"}} {{if @firstRow "firstRow"}} {{if this.wasUpdated "wasUpdated"}}"
+  data-test-sessions-grid-offering
+  {{did-insert this.revertRoomChanges}}
+  {{did-update this.revertRoomChanges}}
+>
+  {{#if (and this.isEditing (is-fulfilled @offering.session.course.cohorts))}}
+    <td colspan="10" class="expanded-offering-manager">
+      <OfferingForm
+        @showRoom={{true}}
+        @showInstructors={{true}}
+        @cohorts={{await @offering.session.course.cohorts}}
+        @courseStartDate={{await @offering.session.course.startDate}}
+        @courseEndDate={{await @offering.session.course.startDate}}
+        @close={{action "close"}}
+        @save={{perform this.save}}
+        @smallGroupMode={{false}}
+        @offering={{@offering}}
+        @session={{await @offering.session}}
       />
     </td>
+  {{else}}
+    {{#if @firstRow}}
+      <td class="text-top offering-block-time-time" colspan="2" rowspan={{@span}}>
+        <span class="offering-block-time-time-starttime" data-test-starttime>
+          {{@startTime}}
+        </span>
+        <span class="offering-block-time-time-duration" data-test-duration>
+          {{#if (gte @durationHours 1)}}
+            {{t "general.durationHours" count=@durationHours}}
+          {{/if}}
+          {{#if (and (gt @durationMinutes 0) (lt @durationMinutes 60))}}
+            {{t "general.durationMinutes" count=@durationMinutes}}
+          {{/if}}
+        </span>
+      </td>
+    {{/if}}
+    <td>
+      {{#if @canUpdate}}
+        <EditableField
+          @value={{this.room}}
+          @save={{perform this.changeRoom}}
+          @close={{this.revertRoomChanges}}
+          @saveOnEnter={{true}}
+          @closeOnEscape={{true}} as |isSaving|
+        >
+          <Input
+            type="text"
+            class="change-room"
+            @value={{this.room}}
+            disabled={{isSaving}}
+            @key-press={{fn this.addErrorDisplayFor "room"}}
+          />
+          {{#each (await (compute (fn this.getErrorsFor) "room")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
+        </EditableField>
+      {{else}}
+        {{this.room}}
+      {{/if}}
+    </td>
+    <td class="text-center">
+      {{get (await @offering.allLearners) "length"}}
+    </td>
+    <td
+      colspan="2"
+      title={{join
+        ", "
+        (map-by "title" (sort-by "title" (await @offering.learnerGroups)))
+      }}
+    >
+      {{truncate
+        (join
+          ", " (map-by "title" (sort-by "title" (await @offering.learnerGroups)))
+        )
+        30
+      }}
+    </td>
+    <td
+      colspan="2"
+      title={{join
+        ", "
+        (map-by "fullName" (sort-by "fullName" (await @offering.allInstructors)))
+      }}
+    >
+      {{truncate
+        (join
+          ", "
+          (map-by
+            "fullName" (sort-by "fullName" (await @offering.allInstructors))
+          )
+        )
+        30
+      }}
+    </td>
+    {{#if @canUpdate}}
+      <td class="text-center">
+        <FaIcon
+          @icon="pencil-alt"
+          class="link"
+          @title={{t "general.edit"}}
+          @click={{action (toggle "isEditing" this)}}
+          @ariaHidden={{false}}
+        />
+      </td>
+    {{/if}}
   {{/if}}
-{{/if}}
+</tr>
