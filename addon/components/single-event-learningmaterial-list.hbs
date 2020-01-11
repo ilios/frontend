@@ -22,11 +22,21 @@
               {{/if}}
               {{#if lm.absoluteFileUri}}
                 {{#if (eq lm.mimetype "application/pdf")}}
-                  <a href="{{lm.absoluteFileUri}}?inline">
+                  <a id={{concat this.uniqueId lm.id "lm"}} href="{{lm.absoluteFileUri}}?inline">
                     {{lm.title}}
                   </a>
-                  <a target="_blank" href={{lm.absoluteFileUri}} rel="noopener">
-                    <FaIcon @icon="download" @title={{t "general.download"}} />
+                  <a
+                    id={{concat this.uniqueId lm.id "lmdownload"}}
+                    target="_blank"
+                    href={{lm.absoluteFileUri}}
+                    rel="noopener"
+                    aria-label={{t "general.download"}}
+                    aria-labelledby="
+                      {{concat this.uniqueId lm.id "lmdownload"}}
+                      {{concat this.uniqueId lm.id "lm"}}
+                    "
+                  >
+                    <FaIcon @icon="download" />
                   </a>
                 {{else}}
                   <a target="_blank" href={{lm.absoluteFileUri}} rel="noopener">
