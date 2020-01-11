@@ -1,81 +1,86 @@
-import Component from '@ember/component';
-import { schedule } from '@ember/runloop';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 
-export default Component.extend({
-  intl: service(),
-  moment: service(),
-  classNameBindings: [':locale-chooser', 'isOpen'],
-  isOpen: false,
-  ariaRole: 'menubar',
-  'data-test-locale-chooser': true,
+export default class LocaleChooserComponent extends Component {
+  @service intl;
+  @service moment;
+  @tracked isOpen = false;
 
-  locale: computed('locales.[]', 'intl.locale', function () {
+  get locale() {
     const locale = this.intl.get('locale');
     return this.locales.findBy('id', locale[0]);
-  }),
+  }
 
-  locales: computed('intl.locales.[]', function() {
+  get locales() {
     return this.intl.get('locales').uniq().map(locale => {
       return { id: locale, text: this.intl.t('general.language.' + locale) };
     });
-  }),
+  }
 
-  actions: {
-    toggleMenu() {
-      const isOpen = this.isOpen;
-      if (isOpen) {
-        this.set('isOpen', false);
-      } else {
-        this.openMenuAndSelectTheCurrentLocale();
-      }
-    },
-    changeLocale(id) {
-      this.set('isOpen', false);
-      this.intl.setLocale(id);
-      this.moment.setLocale(id);
-      window.document.querySelector('html').setAttribute('lang', id);
-    }
-  },
+  focusOnFirstItem(menuElement) {
+    menuElement.querySelector('button:first-of-type').focus();
+  }
 
-  openMenuAndSelectTheCurrentLocale() {
-    this.set('isOpen', true);
-    schedule('afterRender', () => {
-      this.element.querySelector(`.menu button[lang="${this.locale.id}"]`).focus();
-    });
-  },
+  @action
+  close() {
+    this.isOpen = false;
+  }
 
-  keyDown({ originalEvent }) {
-    switch (originalEvent.key) {
+  @action
+  changeLocale(id) {
+    this.isOpen = false;
+    this.intl.setLocale(id);
+    this.moment.setLocale(id);
+    window.document.querySelector('html').setAttribute('lang', id);
+  }
+
+  @action
+  moveFocus(event) {
+    const { key, target } = event;
+    switch (key) {
     case 'ArrowDown':
-      if (originalEvent.target.dataset.level === 'toggle') {
-        this.openMenuAndSelectTheCurrentLocale();
+      event.preventDefault();
+      if (target.nextElementSibling) {
+        target.nextElementSibling.focus();
       } else {
-        if (originalEvent.target.nextElementSibling) {
-          originalEvent.target.nextElementSibling.focus();
-        } else {
-          schedule('afterRender', () => {
-            this.element.querySelector('.menu button:nth-of-type(1)').focus();
-          });
-        }
+        this.menuElement.querySelector('button:nth-of-type(1)').focus();
       }
       break;
     case 'ArrowUp':
-      if (originalEvent.target.previousElementSibling) {
-        originalEvent.target.previousElementSibling.focus();
+      event.preventDefault();
+      if (target.previousElementSibling) {
+        target.previousElementSibling.focus();
       } else {
-        this.element.querySelector('.menu button:last-of-type').focus();
+        this.menuElement.querySelector('button:last-of-type').focus();
       }
       break;
     case 'Escape':
     case 'Tab':
     case 'ArrowRight':
     case 'ArrowLeft':
-      this.set('isOpen', false);
+      this.isOpen = false;
       break;
     }
-
-    return true;
   }
-});
+  @action
+  clearFocus() {
+    const buttons = this.menuElement.querySelectorAll('button');
+    buttons.forEach(el => el.blur());
+  }
+  @action
+  toggleMenu({ key }) {
+    switch (key) {
+    case 'ArrowDown':
+      this.isOpen = true;
+      break;
+    case 'Escape':
+    case 'Tab':
+    case 'ArrowRight':
+    case 'ArrowLeft':
+      this.isOpen = false;
+      break;
+    }
+  }
+}
