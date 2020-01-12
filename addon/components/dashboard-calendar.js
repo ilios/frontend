@@ -81,7 +81,7 @@ export default class DashboardCalendarComponent extends Component {
 
   @restartableTask
   *loadEvents(event, [school, fromTimeStamp, toTimeStamp]) {
-    if (!fromTimeStamp || !toTimeStamp) {
+    if (!school || !fromTimeStamp || !toTimeStamp) {
       return;
     }
     if (this.args.mySchedule) {
