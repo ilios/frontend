@@ -1,23 +1,31 @@
-<ClickOutside @onClickOutside={{action (mut isOpen) false}}>
+<div
+  class="locale-chooser"
+  data-test-locale-chooser
+  {{handle-click-outside this.close}}
+>
   <button
     type="button"
-    aria-label={{t (concat "general.language." locale.id)}}
-    role="menuitem"
     class="toggle"
     aria-haspopup="true"
-    aria-expanded={{if isOpen "true" "false"}}
+    aria-expanded={{if this.isOpen "true" "false"}}
     data-level="toggle"
     data-test-toggle
-    {{action "toggleMenu"}}
+    {{on "click" (toggle "isOpen" this)}}
+    {{on "keydown" (fn this.toggleMenu)}}
   >
     <FaIcon @icon="globe" />
     <span>
       {{t (concat "general.language." locale.id)}}
     </span>
   </button>
-  {{#if isOpen}}
-    <div class="menu" role="menu">
-      {{#each locales as |loc|}}
+  {{#if this.isOpen}}
+    <div
+      class="menu"
+      role="menu"
+      {{ref this "menuElement"}}
+      {{did-insert this.focusOnFirstItem}}
+    >
+      {{#each this.locales as |loc|}}
         <button
           type="button"
           role="menuitemradio"
@@ -26,11 +34,13 @@
           aria-checked={{if (eq locale.id loc.id) "true" "false"}}
           data-level="item"
           data-test-item
-          {{action "changeLocale" loc.id}}
+          {{on "click" (fn this.changeLocale loc.id)}}
+          {{on "keydown" (fn this.moveFocus)}}
+          {{on "mouseenter" (fn this.clearFocus)}}
         >
           {{loc.text}}
         </button>
       {{/each}}
     </div>
   {{/if}}
-</ClickOutside>
+</div>
