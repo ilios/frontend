@@ -5,6 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/single-event';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | ilios calendar single event', function(hooks) {
   setupRenderingTest(hooks);
@@ -15,7 +16,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
   });
 
   test('it renders', async function(assert) {
-    assert.expect(22);
+    assert.expect(23);
 
     const now = moment().hour(8).minute(0).second(0);
     const course = this.server.create('course', {
@@ -154,6 +155,8 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     assert.dom(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(2)`).hasText('Course Objective A');
     assert.dom(`${courseObjectivesSelector} ul.tree > li:nth-of-type(2)`).containsText('Domain B (Domain B)');
     assert.dom(`${courseObjectivesSelector} ul.tree > li:nth-of-type(2) li:nth-of-type(1)`).hasText('Course Objective C');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('unlinked event date and title are displayed', async function(assert) {
