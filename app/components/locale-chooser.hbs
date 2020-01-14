@@ -8,13 +8,14 @@
     class="toggle"
     aria-haspopup="true"
     aria-expanded={{if this.isOpen "true" "false"}}
+    aria-labelledby="{{this.uniqueId}}-locale-chooser-title"
     data-level="toggle"
     data-test-toggle
     {{on "click" (toggle "isOpen" this)}}
     {{on "keydown" (fn this.toggleMenu)}}
   >
     <FaIcon @icon="globe" />
-    <span>
+    <span id="{{this.uniqueId}}-locale-chooser-title">
       {{t (concat "general.language." locale.id)}}
     </span>
   </button>
