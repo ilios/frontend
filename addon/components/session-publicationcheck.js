@@ -1,24 +1,33 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { isEmpty } from '@ember/utils';
+import { tracked } from '@glimmer/tracking';
+import { action, computed } from '@ember/object';
 
-export default Component.extend({
-  router: service(),
+export default class SessionPublicationCheckComponent extends Component {
+  @service router;
+  @tracked objectives = [];
 
-  classNames: ['session-publicationcheck'],
+  @computed('objectives.@each.parents')
+  get showUnlinkIcon() {
+    const objectivesWithoutParents = this.objectives.filter(objective => {
+      const parentIds = objective.hasMany('parents').ids();
+      return parentIds.length === 0;
+    });
 
-  session: null,
-
-  showUnlinkIcon: computed('session.objectives.[]', function() {
-    const objectives = this.session.objectives;
-    return objectives.any((objective) => isEmpty(objective.parents));
-  }),
-
-  actions: {
-    transitionToSession() {
-      const queryParams = { sessionObjectiveDetails: true };
-      this.router.transitionTo('session', this.session, { queryParams });
-    }
+    return objectivesWithoutParents.length > 0;
   }
-});
+  @action
+  load(event, [objectives]) {
+    if (!objectives) {
+      this.objectives = [];
+      return;
+    }
+    this.objectives = objectives.toArray();
+  }
+
+  @action
+  transitionToSession() {
+    const queryParams = { sessionObjectiveDetails: true };
+    this.router.transitionTo('session', this.args.session, { queryParams });
+  }
+}
