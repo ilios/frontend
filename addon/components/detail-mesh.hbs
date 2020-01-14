@@ -1,56 +1,65 @@
-<div class="detail-mesh-header">
-  <div class="title">
-    {{#if this.isManaging}}
-      <span class="detail-specific-title">
-        {{t "general.meshManageTitle"}}
-      </span>
-    {{else}}
-      {{t "general.mesh"}} ({{this.terms.length}})
-    {{/if}}
-  </div>
-  <div class="actions">
-    {{#if this.isManaging}}
-      <button class="bigadd" {{on "click" (action "save")}}>
-        <FaIcon @icon="check" />
-      </button>
-      <button class="bigcancel" {{on "click" (action "cancel")}}>
-        <FaIcon @icon="undo" />
-      </button>
-    {{else if @editable}}
-      <button {{on "click" (action "manage")}}>
-        {{t "general.meshManageTitle"}}
-      </button>
-    {{/if}}
-  </div>
-</div>
-<div class="content">
-  {{#if this.isManaging}}
-    <MeshManager
-      @editable={{@editable}}
-      @terms={{this.bufferTerms}}
-      @add={{action "addTermToBuffer"}}
-      @remove={{action "removeTermFromBuffer"}}
-    />
-  {{else}}
-    <ul class="selected-mesh-terms">
-      {{#each this.sortedTerms as |term|}}
-        <li>
-          <span class="term-title">
-            {{term.name}}
+<section
+  class="detail-mesh"
+  data-test-detail-mesh
+  {{did-insert (fn this.load) (await @subject.meshDescriptors)}}
+  {{did-update (fn this.load) (await @subject.meshDescriptors)}}
+>
+  {{#if (is-array this.meshDescriptors)}}
+    <div class="detail-mesh-header">
+      <div class="title">
+        {{#if this.isManaging}}
+          <span class="detail-specific-title">
+            {{t "general.meshManageTitle"}}
           </span>
-          <span class="term-details">
-            {{term.id}}
-            {{#if term.deleted}}
-              -
-              <span class="deprecated">
-                ({{t "general.deprecatedAbbreviation"}})
+        {{else}}
+          {{t "general.mesh"}} ({{this.meshDescriptors.length}})
+        {{/if}}
+      </div>
+      <div class="actions">
+        {{#if this.isManaging}}
+          <button class="bigadd" {{on "click" (perform this.save)}}>
+            <FaIcon @icon="check" />
+          </button>
+          <button class="bigcancel" {{on "click" this.cancel}}>
+            <FaIcon @icon="undo" />
+          </button>
+        {{else if @editable}}
+          <button {{on "click" this.manage}}>
+            {{t "general.meshManageTitle"}}
+          </button>
+        {{/if}}
+      </div>
+    </div>
+    <div class="content">
+      {{#if this.isManaging}}
+        <MeshManager
+          @editable={{@editable}}
+          @terms={{this.bufferedDescriptors}}
+          @add={{fn this.addDescriptorToBuffer}}
+          @remove={{fn this.removeDescriptorFromBuffer}}
+        />
+      {{else}}
+        <ul class="selected-mesh-terms">
+          {{#each (sort-by "title" this.meshDescriptors) as |term|}}
+            <li>
+              <span class="term-title">
+                {{term.name}}
               </span>
-            {{else if term.trees}}
-              - {{term.trees.lastObject.treeNumber}}
-            {{/if}}
-          </span>
-        </li>
-      {{/each}}
-    </ul>
+              <span class="term-details">
+                {{term.id}}
+                {{#if term.deleted}}
+                  -
+                  <span class="deprecated">
+                    ({{t "general.deprecatedAbbreviation"}})
+                  </span>
+                {{else if term.trees}}
+                  - {{term.trees.lastObject.treeNumber}}
+                {{/if}}
+              </span>
+            </li>
+          {{/each}}
+        </ul>
+      {{/if}}
+    </div>
   {{/if}}
-</div>
+</section>

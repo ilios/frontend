@@ -1,64 +1,48 @@
-import { oneWay, sort } from '@ember/object/computed';
-import { all } from 'rsvp';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
+import { tracked } from '@glimmer/tracking';
+import { dropTask } from 'ember-concurrency-decorators';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  store: service(),
-  intl: service(),
-  classNames: ['detail-mesh'],
-  tagName: 'section',
-  subject: null,
-  isCourse: false,
-  sortTerms: null,
-  isSession: false,
-  isManaging: false,
-  editable: true,
-  bufferTerms: null,
-  'data-test-detail-mesh': true,
-  terms: oneWay('subject.meshDescriptors'),
-  sortedTerms: sort('terms', 'sortTerms'),
-  init() {
-    this._super(...arguments);
-    this.set('sortTerms', ['title']);
-    this.set('bufferTerms', []);
-  },
-  actions: {
-    manage() {
-      var self = this;
-      this.get('terms').then(function(terms){
-        self.set('bufferTerms', terms.toArray());
-        self.set('isManaging', true);
-      });
-    },
-    save() {
-      const subject = this.get('subject');
-      const terms = subject.get('meshDescriptors');
-      const promises = [];
-      terms.clear();
-      terms.addObjects(this.get('bufferTerms'));
-      this.get('bufferTerms').forEach((term)=>{
-        if(this.get('isCourse')){
-          term.get('courses').addObject(subject);
-        }
-        if(this.get('isSession')){
-          term.get('sessions').addObject(subject);
-        }
-      });
-      promises.pushObject(subject.save());
-      all(promises).then(()=> {
-        this.set('isManaging', false);
-      });
-    },
-    cancel() {
-      this.set('bufferTerms', []);
-      this.set('isManaging', false);
-    },
-    addTermToBuffer(term) {
-      this.get('bufferTerms').addObject(term);
-    },
-    removeTermFromBuffer(term) {
-      this.get('bufferTerms').removeObject(term);
+export default class DetailMeshComponent extends Component {
+  @service store;
+  @service intl;
+
+  @tracked isManaging = false;
+  @tracked bufferedDescriptors = null;
+  @tracked meshDescriptors = null;
+
+  @action
+  load(event, [meshDescriptors]) {
+    if (!meshDescriptors) {
+      return;
     }
+    this.meshDescriptors = meshDescriptors.toArray();
   }
-});
+  @action
+  manage() {
+    this.bufferedDescriptors = [...this.meshDescriptors];
+    this.isManaging = true;
+  }
+  @action
+  cancel() {
+    this.isManaging = false;
+    this.bufferedDescriptors = [];
+  }
+  @action
+  addDescriptorToBuffer(descriptor) {
+    this.bufferedDescriptors = [...this.bufferedDescriptors, descriptor];
+  }
+  @action
+  removeDescriptorFromBuffer(descriptor) {
+    this.bufferedDescriptors = this.bufferedDescriptors.filter(obj => obj.id !== descriptor.id);
+  }
+
+  @dropTask
+  *save() {
+    this.args.subject.set('meshDescriptors', this.bufferedDescriptors);
+    yield this.args.subject.save();
+    this.bufferedDescriptors = null;
+    this.isManaging = false;
+  }
+}
