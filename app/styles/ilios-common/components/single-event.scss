@@ -25,6 +25,13 @@
     }
   }
 
+  .pre-work {
+    h2 {
+      @include ilios-heading-h5;
+      margin: 0;
+    }
+  }
+
   .single-event-summary {
     grid-column: 1 / -1;
 

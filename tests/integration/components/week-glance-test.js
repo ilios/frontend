@@ -122,7 +122,7 @@ module('Integration | Component | week glance', function(hooks) {
       @year={{moment-format today "YYYY"}}
       @week={{moment-format today "W"}}
     />`);
-    const title = 'h3';
+    const title = '[data-test-week-title]';
     const body = 'p';
     const expectedTitle = this.getTitle(true);
 
@@ -146,7 +146,7 @@ module('Integration | Component | week glance', function(hooks) {
       @year={{moment-format today "YYYY"}}
       @week={{moment-format today "W"}}
     />`);
-    const title = 'h3';
+    const title = '[data-test-week-title]';
     const expectedTitle = this.getTitle(false);
     await settled();
 
@@ -166,7 +166,7 @@ module('Integration | Component | week glance', function(hooks) {
       @year={{moment-format today "YYYY"}}
       @week={{moment-format today "W"}}
     />`);
-    const title = 'h3';
+    const title = '[data-test-week-title]';
     const body = 'p';
     const expectedTitle = this.getTitle(false);
 
@@ -194,7 +194,7 @@ module('Integration | Component | week glance', function(hooks) {
       @week={{moment-format today "W"}}
       @toggleCollapsed={{action toggle}}
     />`);
-    const title = 'h3';
+    const title = '[data-test-week-title]';
     await settled();
     await click(title);
   });
@@ -216,7 +216,7 @@ module('Integration | Component | week glance', function(hooks) {
       @week={{moment-format today "W"}}
       @toggleCollapsed={{action toggle}}
     />`);
-    const title = 'h3';
+    const title = '[data-test-week-title]';
     await settled();
     await click(title);
   });
@@ -264,7 +264,7 @@ module('Integration | Component | week glance', function(hooks) {
       @year={{year}}
       @week={{moment-format today "W"}}
     />`);
-    const title = 'h3';
+    const title = '[data-test-week-title]';
     const body = 'p';
     const expectedTitle = this.getTitle(true);
 

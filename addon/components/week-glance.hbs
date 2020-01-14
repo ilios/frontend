@@ -4,10 +4,10 @@
   {{did-insert (perform this.load) @week @year}}
   {{did-update (perform this.load) @week @year}}
 >
-  <h3
+  <h2 class="title" {{! template-lint-disable}}
     class="{{if @collapsible "clickable collapsible"}}
     {{if @collapsed "collapsed" "expanded"}}"
-    role="button"
+    role={{if @collapsible "button"}}
     data-test-week-title
     {{on "click" (fn (optional @toggleCollapsed) @collapsed)}}
   >
@@ -15,7 +15,7 @@
     {{#if @showFullTitle}}
       {{t "general.weekAtAGlance"}}
     {{/if}}
-  </h3>
+  </h2>
   {{#liquid-unless @collapsed class="vertical"}}
     {{#unless this.load.isRunning}}
       <div class="ilm-pre-work">
