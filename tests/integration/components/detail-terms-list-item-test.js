@@ -65,9 +65,10 @@ module('Integration | Component | detail terms list item', function(hooks) {
       title: 'Foo',
       isActiveInTree: resolve(false)
     });
+    this.set('remove', () => { });
 
     this.set('term', term);
-    await render(hbs`<DetailTermsListItem @term={{term}} @canEdit={{true}} />`);
+    await render(hbs`<DetailTermsListItem @term={{term}} @canEdit={{true}} @remove={{this.remove}} />`);
     assert.dom('.inactive').hasText('(inactive)');
     assert.dom('.fa-times').exists({ count: 1 });
   });
