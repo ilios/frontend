@@ -8,60 +8,51 @@ import {
   findAll
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import EmberObject from '@ember/object';
-import { resolve } from 'rsvp';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | detail terms list', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('list with terms', async function(assert) {
     assert.expect(4);
-    const school = EmberObject.create({
+    const school = this.server.create('school', {
       title: 'Medicine'
     });
 
-    const vocabulary = EmberObject.create({
-      id: 1,
+    const vocabulary = this.server.create('vocabulary', {
       title: 'Topics',
-      school: school,
+      school,
     });
 
-    const vocabulary2 = EmberObject.create({
-      id: 2,
+    const vocabulary2 = this.server.create('vocabulary', {
       title: 'Something else',
-      school: school,
+      school,
     });
 
-    const term1 = EmberObject.create({
-      id: 1,
+    this.server.create('term', {
       title: 'foo',
       vocabulary,
-      titleWithParentTitles: resolve('foo')
 
     });
-    const term2 = EmberObject.create({
-      id: 2,
+    this.server.create('term', {
       title: 'bar',
       vocabulary,
-      titleWithParentTitles: resolve('bar')
 
     });
-    const term3 = EmberObject.create({
-      id: 3,
+    this.server.create('term', {
       title: 'baz',
       vocabulary: vocabulary2,
-      titleWithParentTitles: resolve('baz')
     });
-    const term4 = EmberObject.create({
-      id: 4,
+    this.server.create('term', {
       title: 'bat',
       vocabulary: vocabulary2,
-      titleWithParentTitles: resolve('bat')
     });
+    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const terms = await this.owner.lookup('service:store').findAll('term');
 
-    const selectedTerms = [ term1, term2, term3, term4 ];
-    this.set('vocabulary', vocabulary);
-    this.set('terms', selectedTerms);
+    this.set('vocabulary', vocabularyModel);
+    this.set('terms', terms);
     await render(hbs`<DetailTermsList
       @vocabulary={{vocabulary}}
       @terms={{terms}}
@@ -75,52 +66,42 @@ module('Integration | Component | detail terms list', function(hooks) {
 
   test('empty list', async function(assert) {
     assert.expect(2);
-    const school = EmberObject.create({
+    const school = this.server.create('school', {
       title: 'Medicine'
     });
 
-    const vocabulary = EmberObject.create({
-      id: 1,
+    const vocabulary = this.server.create('vocabulary', {
       title: 'Topics',
-      school: school,
+      school,
     });
 
-    const vocabulary2 = EmberObject.create({
-      id: 2,
+    const vocabulary2 = this.server.create('vocabulary', {
       title: 'Something else',
-      school: school,
+      school,
     });
 
-    const term1 = EmberObject.create({
-      id: 1,
+    this.server.create('term', {
       title: 'foo',
       vocabulary: vocabulary2,
-      titleWithParentTitles: resolve('foo')
-
     });
-    const term2 = EmberObject.create({
-      id: 2,
+    this.server.create('term', {
       title: 'bar',
       vocabulary: vocabulary2,
-      titleWithParentTitles: resolve('bar')
-
     });
-    const term3 = EmberObject.create({
-      id: 3,
+    this.server.create('term', {
       title: 'baz',
       vocabulary: vocabulary2,
-      titleWithParentTitles: resolve('baz')
     });
-    const term4 = EmberObject.create({
-      id: 4,
+    this.server.create('term', {
       title: 'bat',
       vocabulary: vocabulary2,
-      titleWithParentTitles: resolve('bat')
     });
 
-    const selectedTerms = [ term1, term2, term3, term4 ];
-    this.set('vocabulary', vocabulary);
-    this.set('terms', selectedTerms);
+    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const terms = await this.owner.lookup('service:store').findAll('term');
+
+    this.set('vocabulary', vocabularyModel);
+    this.set('terms', terms);
     await render(hbs`<DetailTermsList
       @vocabulary={{vocabulary}}
       @terms={{terms}}
@@ -133,56 +114,52 @@ module('Integration | Component | detail terms list', function(hooks) {
 
   test('remove term', async function(assert) {
     assert.expect(2);
-    const school = EmberObject.create({
+    const school = this.server.create('school', {
       title: 'Medicine'
     });
 
-    const vocabulary = EmberObject.create({
-      id: 1,
+    const vocabulary = this.server.create('vocabulary', {
       title: 'Topics',
-      school: school,
+      school,
     });
 
-    const term1 = EmberObject.create({
-      id: 1,
+    const term1 = this.server.create('term', {
       title: 'foo',
       vocabulary,
-      isActiveInTree: resolve(true),
-      titleWithParentTitles: resolve('foo')
     });
 
-    const selectedTerms = [ term1 ];
+    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const terms = await this.owner.lookup('service:store').findAll('term');
+    this.set('vocabulary', vocabularyModel);
+    this.set('terms', terms);
+
     this.set('remove', val => {
-      assert.equal(val, term1);
+      assert.equal(val.id, term1.id);
     });
-
-    this.set('vocabulary', vocabulary);
-    this.set('terms', selectedTerms);
     await render(hbs`<DetailTermsList
       @vocabulary={{vocabulary}}
       @terms={{terms}}
       @remove={{action remove}}
       @canEdit={{true}}
     />`);
-    await settled();
     assert.dom('li:nth-of-type(1) .fa-times').exists({ count: 1 });
     await click(find('li'));
   });
 
   test('inactive vocabulary labeled as such in edit mode', async function(assert) {
     assert.expect(1);
-    const school = EmberObject.create({
+    const school = this.server.create('school', {
       title: 'Medicine'
     });
 
-    const vocabulary = EmberObject.create({
-      id: 1,
+    const vocabulary = this.server.create('vocabulary', {
       title: 'Topics',
       active: false,
-      school: school,
+      school,
     });
 
-    this.set('vocabulary', vocabulary);
+    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    this.set('vocabulary', vocabularyModel);
     this.set('terms', []);
     await render(hbs`<DetailTermsList
       @vocabulary={{vocabulary}}
