@@ -23,7 +23,7 @@
     "@ember/jquery": "^1.1.0",
     "@ember/optional-features": "^1.0.0",
     "@ilios/eslint-config-ember": "^2.4.0",
-    "autoprefixer": "^9.7.3",
+    "autoprefixer": "^9.7.4",
     "babel-eslint": "^10.0.3",
     "broccoli-asset-rev": "^3.0.0",
     "broccoli-file-creator": "^2.1.1",
