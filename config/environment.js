@@ -73,7 +73,7 @@ module.exports = function (environment) {
       environment,
     },
     noScript: {
-      'placeIn': 'head-footer'
+      'placeIn': 'body-footer'
     },
     EmberENV: {
       FEATURES: {
