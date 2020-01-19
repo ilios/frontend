@@ -4,7 +4,7 @@
   }
 
   .title {
-    @include ilios-heading-h4;
+    @include ilios-heading-h3;
     margin-bottom: 1em;
   }
 
@@ -31,7 +31,7 @@
       padding: 0;
     }
 
-    h4 {
+    .event-title {
       @include ilios-heading-h5;
       font-weight: bolder;
       margin-bottom: 0;
@@ -95,6 +95,11 @@
   }
 
   .ilm-pre-work {
+    .pre-work-title {
+      @include ilios-heading-h4;
+      font-weight: 700;
+    }
+
     padding-bottom: 2rem;
   }
 }

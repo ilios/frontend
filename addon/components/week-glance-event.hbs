@@ -1,5 +1,5 @@
 <div class="event" data-test-week-glance-event>
-  <h4 id={{concat "event" @event.slug}}>
+  <h3 id={{concat "event" @event.slug}} class="event-title">
     <span
       id={{concat "event" @event.slug "title"}}
       class="title"
@@ -23,7 +23,7 @@
       {{/if}}
       {{moment-format @event.startDate "dddd h:mma"}}
     </span>
-  </h4>
+  </h3>
   {{#if @event.prerequisites.length}}
     <p class="pre-work" data-test-pre-work>
       <strong>

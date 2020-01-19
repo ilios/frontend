@@ -20,9 +20,9 @@
     {{#unless this.load.isRunning}}
       <div class="ilm-pre-work">
         {{#if (gt this.ilmPreWork.length 0)}}
-          <h4>
+          <h3 class="pre-work-title">
             {{t "general.preWork"}}
-          </h4>
+          </h3>
           {{#each this.ilmPreWork as |ilmGroup|}}
             <WeekGlancePreWork @events={{ilmGroup}} />
           {{/each}}
