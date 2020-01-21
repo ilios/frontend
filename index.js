@@ -13,7 +13,6 @@ module.exports = {
     babel: {
       plugins: [
         require.resolve('ember-auto-import/babel-plugin'),
-        require.resolve('@babel/plugin-proposal-nullish-coalescing-operator'),
       ]
     }
   },
