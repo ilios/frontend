@@ -67,7 +67,7 @@ general:
   courseOrType: "Course / Type"
   courseRollover: "Rollover Course"
   courseRolloverSuccess: "Course-Rollover Completed Successfully"
-  courseRolloverSummary: "You are about to roll over this course into the selected academic year, along with all selected options. To continue, click “done”. To return to your current course, click “cancel”"
+  courseRolloverSummary: "You are about to roll over this course into the selected academic year, along with all selected options. To continue, click “Done”. To return to your current course, click “Cancel”."
   courseRolloverYearUnavailable: "Course Already Exists"
   courses: Courses
   coursesAndSessions: "Courses and Sessions"
