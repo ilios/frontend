@@ -2,7 +2,7 @@
   role="menubar"
   class="publish-menu {{this.publicationStatus}}"
   data-test-course-publication-menu
-  {{handle-click-outside (set this.isOpen false)}}
+  {{on-click-outside (set this.isOpen false)}}
 >
   <button
     aria-label={{this.title}}
