@@ -4,6 +4,7 @@
 [![Build Status](https://travis-ci.org/ilios/frontend.svg?branch=master)](https://travis-ci.org/ilios/frontend)
 [![Code Climate](https://codeclimate.com/github/ilios/frontend/badges/gpa.svg)](https://codeclimate.com/github/ilios/frontend)
 [![Test Coverage](https://codeclimate.com/github/ilios/frontend/badges/coverage.svg)](https://codeclimate.com/github/ilios/frontend/coverage)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/348f5759-eda7-4f3d-b8a7-1b1189e63583/deploy-status)](https://app.netlify.com/sites/ilios-frontend/deploys)
 
 ## Open Source Heroes
 
