@@ -1,13 +1,15 @@
 import {
   clickable,
   collection,
+  create,
   fillable,
   hasClass,
+  isVisible,
   notHasClass,
   text,
 } from 'ember-cli-page-object';
 
-export default {
+const definition = {
   scope: '.mesh-manager',
   selectedTerms: collection('.selected-terms li', {
     title: text('.term-title'),
@@ -21,4 +23,9 @@ export default {
     isEnabled: notHasClass('disabled'),
     add: clickable(),
   }),
+  showMoreIsVisible: isVisible('[data-test-show-more]'),
+  showMore: clickable('[data-test-show-more]'),
 };
+
+export default definition;
+export const component = create(definition);

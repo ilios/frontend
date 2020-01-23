@@ -83,6 +83,7 @@
       <button
         disabled={{if this.searchMore.isRunning true}}
         {{on "click" (perform this.searchMore)}}
+        data-test-show-more
       >
         <FaIcon
           @icon={{if this.searchMore.isRunning "spinner"}}

@@ -25,10 +25,10 @@ export default class MeshManagerComponent extends Component {
     this.searching = true;
     this.query = query;
 
-    const descriptors = yield this.store.query('mesh-descriptor', {
+    const descriptors = (yield this.store.query('mesh-descriptor', {
       q: query,
       limit: SEARCH_RESULTS_PER_PAGE + 1
-    });
+    })).toArray();
 
     this.searching = false;
     this.searchPage = 1;
@@ -41,11 +41,11 @@ export default class MeshManagerComponent extends Component {
 
   @dropTask
   *searchMore() {
-    const descriptors = yield this.store.query('mesh-descriptor', {
+    const descriptors = (yield this.store.query('mesh-descriptor', {
       q: this.query,
       limit: SEARCH_RESULTS_PER_PAGE + 1,
       offset: this.searchPage * SEARCH_RESULTS_PER_PAGE
-    });
+    })).toArray();
     this.searchPage = this.searchPage + 1;
     this.hasMoreSearchResults = (descriptors.length > SEARCH_RESULTS_PER_PAGE);
     if (this.hasMoreSearchResults) {
