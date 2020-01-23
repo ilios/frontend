@@ -1,0 +1,27 @@
+name: Report Code Coverage
+
+on:
+  schedule:
+    - cron: '15 18 * * 5' # weekly, on Friday night
+
+env:
+  SW_DISABLED: true
+  COVERAGE: true
+  CC_TEST_REPORTER_ID: 8c510ad3aa4b1a2a3d504dfdbcc5605e7966c019dc1e9b68a815de50b946ebc6
+
+jobs:
+  test:
+    name: Test and Calculate Coverage
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 12
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: install dependencies
+      run: npm ci
+    - name: calculate
+      uses: paambaati/codeclimate-action@v2
+      with:
+        coverageCommand: npm test

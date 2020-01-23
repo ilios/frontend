@@ -1,0 +1,48 @@
+name: Deploy Production Build
+
+on:
+  push:
+    tags:
+      - '*'
+
+env:
+  SW_DISABLED: true
+  COVERAGE: false
+  SENTRY_ORG: ilios
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - run: npm ci
+      - run: npm test
+
+  deploy:
+    name: Deploy and Create Sentry Release
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js 12
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: install dependencies
+      run: npm ci
+    - name: Ember CLI Deploy
+      run: npm run deploy:staging
+    - name: Install Sentry CLI
+      run: npm install -g @sentry/cli
+    - name: Create a Sentry.io release
+      run: |
+        # Create new Sentry release
+        export SENTRY_RELEASE=$(sentry-cli releases propose-version)
+        sentry-cli releases new -p frontend $SENTRY_RELEASE
+        sentry-cli releases set-commits --auto $SENTRY_RELEASE
+        sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps tmp/deploy-dist/
+        sentry-cli releases finalize $SENTRY_RELEASE
