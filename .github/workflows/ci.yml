@@ -1,4 +1,4 @@
-name: Node CI
+name: Continuous Integration
 
 on:
   push:
@@ -8,9 +8,14 @@ on:
   schedule:
     - cron: '15 6 * * 2' # weekly, on Tuesday morning
 
-jobs:
-  build:
+env:
+  SW_DISABLED: true
+  COVERAGE: false
+  CI: true
 
+jobs:
+  test:
+    name: Lint and Tests
     runs-on: ubuntu-latest
 
     strategy:
@@ -23,10 +28,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - name: npm install, build, and test
-      run: |
-        npm ci
-        npm run build --if-present
-        npm test
-      env:
-        CI: true
+    - name: install dependencies
+      run: npm ci
+    - name: lint style
+      run: npm run lint:style
+    - name: lint hbs
+      run: npm run lint:hbs
+    - name: lint js
+      run: npm run lint:js
+    - name: test
+      run: npm test
