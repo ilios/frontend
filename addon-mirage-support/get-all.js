@@ -22,7 +22,7 @@ const filterResults = function (all, modelName, request) {
   const filteredByFilters = filterByFilterParams(all, queryParams.filterParams);
   const filteredByQueryTerms = filterByQueryTerms(filteredByFilters, modelName, queryParams.queryTerms);
 
-  const results = filteredByQueryTerms.slice(0, queryParams.limit);
+  const results = filteredByQueryTerms.slice(queryParams.offset, queryParams.offset + queryParams.limit);
 
   return results;
 };
@@ -37,7 +37,8 @@ const extractQueryParams = function(request){
   const rhett = {
     filterParams: [],
     queryTerms: [],
-    limit: 100000
+    limit: 100000,
+    offset: 0,
   };
 
   if (params) {
@@ -66,6 +67,9 @@ const extractQueryParams = function(request){
 
     if(params.includes('limit')){
       rhett.limit = parseInt(request.queryParams.limit, 10);
+    }
+    if(params.includes('offset')){
+      rhett.offset = parseInt(request.queryParams.offset, 10);
     }
   }
 

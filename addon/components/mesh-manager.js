@@ -1,120 +1,80 @@
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import ObjectProxy from '@ember/object/proxy';
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
-import { task } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { action } from '@ember/object';
 
-const ProxiedDescriptors = ObjectProxy.extend({
-  terms: null,
-  isActive: computed('content', 'terms.[]', function () {
-    const terms = this.get('terms');
-    if (isEmpty(terms)) {
-      return true;
-    }
-    return !this.get('terms').includes(this.get('content'));
-  })
-});
+const SEARCH_RESULTS_PER_PAGE = 50;
 
-export default Component.extend({
-  store: service(),
-  intl: service(),
-  'data-test-mesh-manager': true,
-  classNames: ['mesh-manager'],
-  terms: null,
-  editable: false,
-  query: '',
-  searchResults: null,
-  searchPage: 0,
-  searchResultsPerPage: 50,
-  hasMoreSearchResults: false,
-  targetItemTitle: '',
-  searching: false,
-  searchReturned: false,
-  sortTerms: null,
-  tagName: 'section',
+export default class MeshManagerComponent extends Component {
+  @service store;
+  @service intl;
+  @tracked query = '';
+  @tracked searchResults = [];
+  @tracked searchPage = 0;
+  @tracked hasMoreSearchResults = false;
 
-  sortedTerms: computed('terms.@each.name', function(){
-    var terms = this.get('terms');
-    if(!terms || terms.length === 0){
+  get sortedTerms(){
+    if(!this.args.terms || this.args.terms.length === 0){
       return [];
     }
-    return terms.sortBy('name');
-  }),
-  init(){
-    this._super(...arguments);
-    this.set('searchResults', []);
-    this.set('sortTerms', ['name']);
-  },
-  actions: {
-    search(query) {
-      this.set('searchReturned', false);
-      this.set('searching', true);
-      this.set('query', query);
-      var terms = this.get('terms');
-      this.get('store').query('mesh-descriptor', {
-        q: query,
-        limit: this.get('searchResultsPerPage') + 1
-      }).then(descriptors => {
-        const results = descriptors.map(function(descriptor){
-          return ProxiedDescriptors.create({
-            content: descriptor,
-            terms: terms
-          });
-        });
-        this.set('searchReturned', true);
-        this.set('searching', false);
-        this.set('searchPage', 1);
-        this.set('hasMoreSearchResults', (results.length > this.get('searchResultsPerPage')));
-        if (this.get('hasMoreSearchResults')) {
-          results.pop();
-        }
-        this.set('searchResults', results);
-      });
-    },
+    return this.args.terms.sortBy('name');
+  }
+  @restartableTask
+  *search(query) {
+    this.searching = true;
+    this.query = query;
 
-    clear() {
-      this.set('searchResults', []);
-      this.set('searchReturned', false);
-      this.set('searching', false);
-      this.set('searchPage', 0);
-      this.set('hasMoreSearchResults', false);
-      this.set('query', '');
-    },
-    add(term) {
-      const editable = this.get('editable');
-      if (editable) {
-        this.add(term.get('content'));
-      }
-    },
-    remove(term) {
-      const editable = this.get('editable');
-      if (editable) {
-        this.remove(term);
-      }
-    }
-  },
-  searchMore: task(function * () {
-    var terms = this.get('terms');
-    var query = this.get('query');
-    const descriptors = yield this.get('store').query('mesh-descriptor', {
+    const descriptors = (yield this.store.query('mesh-descriptor', {
       q: query,
-      limit: this.get('searchResultsPerPage') + 1,
-      offset: this.get('searchPage') * this.get('searchResultsPerPage')
-    });
-    const results = descriptors.map(function(descriptor){
-      return ProxiedDescriptors.create({
-        content: descriptor,
-        terms: terms
-      });
-    });
-    this.set('searchPage', this.get('searchPage') + 1);
-    this.set('hasMoreSearchResults', (results.length > this.get('searchResultsPerPage')));
-    if (this.get('hasMoreSearchResults')) {
-      results.pop();
+      limit: SEARCH_RESULTS_PER_PAGE + 1
+    })).toArray();
+
+    this.searching = false;
+    this.searchPage = 1;
+    this.hasMoreSearchResults = (descriptors.length > SEARCH_RESULTS_PER_PAGE);
+    if (this.hasMoreSearchResults) {
+      descriptors.pop();
     }
-    this.get('searchResults').pushObjects(results);
-  }).drop(),
+    this.searchResults = descriptors;
+  }
 
+  @dropTask
+  *searchMore() {
+    const descriptors = (yield this.store.query('mesh-descriptor', {
+      q: this.query,
+      limit: SEARCH_RESULTS_PER_PAGE + 1,
+      offset: this.searchPage * SEARCH_RESULTS_PER_PAGE
+    })).toArray();
+    this.searchPage = this.searchPage + 1;
+    this.hasMoreSearchResults = (descriptors.length > SEARCH_RESULTS_PER_PAGE);
+    if (this.hasMoreSearchResults) {
+      descriptors.pop();
+    }
+    this.searchResults = [...this.searchResults, ...descriptors];
+  }
 
-});
+  @action
+  clear() {
+    this.searchResults = [];
+    this.searching = false;
+    this.searchPage = 0;
+    this.hasMoreSearchResults = false;
+    this.query = '';
+  }
+
+  @action
+  add(term) {
+    if (this.args.editable) {
+      this.args.add(term);
+    }
+  }
+
+  @action
+  remove(term) {
+    if (this.args.editable) {
+      this.args.remove(term);
+    }
+  }
+
+}
