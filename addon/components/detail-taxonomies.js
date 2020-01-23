@@ -1,72 +1,55 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { dropTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  store: service(),
-  intl: service(),
-  flashMessages: service(),
-  subject: null,
-  bufferedTerms: null,
-  tagName: 'section',
-  classNameBindings: [':detail-taxonomies', ':taxonomy-manager', 'showCollapsible:collapsible'],
-  isManaging: false,
-  isSaving: false,
-  editable: true,
-  'data-test-detail-taxonomies': true,
+export default class DetailTaxonomiesComponent extends Component {
+  @service store;
+  @service intl;
+  @service flashMessages;
 
-  showCollapsible: computed('isManaging', 'subject.terms.[]', function () {
-    const isManaging = this.get('isManaging');
-    const terms = this.get('subject.terms');
-    return !isManaging && terms.get('length');
-  }),
+  @tracked bufferedTerms = [];
+  @tracked isManaging = false;
 
-  init(){
-    this._super(...arguments);
-    this.set('bufferedTerms', []);
-  },
+  get showCollapsible () {
+    const terms = this.args.subject.hasMany('terms').ids();
+    return !this.isManaging && terms.length;
+  }
 
-  actions: {
-    manage() {
-      const expand = this.get('expand');
-      expand();
-      this.get('subject.terms').then(terms => {
-        this.set('bufferedTerms', terms.toArray());
-        this.set('isManaging', true);
-      });
-    },
-    collapse(){
-      const collapse = this.get('collapse');
-      this.get('subject.terms').then(terms => {
-        if (terms.get('length')) {
-          collapse();
-        }
-      });
-    },
-    save(){
-      this.set('isSaving', true);
-      const subject = this.get('subject');
-      subject.get('terms').then(termsList => {
-        termsList.clear();
-        this.get('bufferedTerms').forEach(term=>{
-          termsList.pushObject(term);
-        });
-        subject.save().then(()=>{
-          this.set('bufferedTerms', []);
-          this.set('isSaving', false);
-          this.set('isManaging', false);
-        });
-      });
-    },
-    cancel() {
-      this.set('bufferedTerms', []);
-      this.set('isManaging', false);
-    },
-    addTermToBuffer(term) {
-      this.get('bufferedTerms').addObject(term);
-    },
-    removeTermFromBuffer(term) {
-      this.get('bufferedTerms').removeObject(term);
+  @dropTask
+  *manage() {
+    this.args.expand();
+    const terms = yield this.args.subject.terms;
+    this.bufferedTerms = [...terms.toArray()];
+    this.isManaging = true;
+  }
+
+  @dropTask
+  *save() {
+    this.args.subject.set('terms', this.bufferedTerms);
+    yield this.args.subject.save();
+    this.isManaging = false;
+  }
+
+  @action
+  collapse() {
+    if (this.showCollapsible) {
+      this.args.collapse();
     }
   }
-});
+  @action
+  cancel() {
+    this.bufferedTerms = [];
+    this.isManaging = false;
+  }
+
+  @action
+  addTermToBuffer(term) {
+    this.bufferedTerms = [...this.bufferedTerms, term];
+  }
+  @action
+  removeTermFromBuffer(term){
+    this.bufferedTerms = this.bufferedTerms.filter(obj => obj.id !== term.id);
+  }
+}

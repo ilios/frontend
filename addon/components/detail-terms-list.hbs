@@ -1,25 +1,31 @@
-{{#if (is-fulfilled this.sortedTerms)}}
-  <div data-test-title>
-    <strong>
-      {{@vocabulary.title}}
-    </strong> ({{@vocabulary.school.title}})
-    {{#if (and @canEdit (not @vocabulary.active))}}
-      <span class="inactive">
-        ({{t "general.inactive"}})
-      </span>
-    {{/if}}
-  </div>
-  <ul class="{{if @canEdit "removable-list" null}} selected-taxonomy-terms">
-    {{#each (await this.sortedTerms) as |term|}}
-      {{#if @canEdit}}
-        <DetailTermsListItem
-          @canEdit={{true}}
-          @remove={{this.remove}}
-          @term={{term}}
-        />
-      {{else}}
-        <DetailTermsListItem @canEdit={{false}} @term={{term}} />
+<div
+  class="detail-terms-list"
+  {{did-insert (perform this.load) this.filteredTerms}}
+  {{did-update (perform this.load) this.filteredTerms}}
+>
+  {{#if (is-array this.sortedTerms)}}
+    <div data-test-title>
+      <strong>
+        {{@vocabulary.title}}
+      </strong> ({{@vocabulary.school.title}})
+      {{#if (and @canEdit (not @vocabulary.active))}}
+        <span class="inactive">
+          ({{t "general.inactive"}})
+        </span>
       {{/if}}
-    {{/each}}
-  </ul>
-{{/if}}
+    </div>
+    <ul class="{{if @canEdit "removable-list"}} selected-taxonomy-terms">
+      {{#each this.sortedTerms as |term|}}
+        {{#if @canEdit}}
+          <DetailTermsListItem
+            @canEdit={{true}}
+            @remove={{@remove}}
+            @term={{term}}
+          />
+        {{else}}
+          <DetailTermsListItem @canEdit={{false}} @term={{term}} />
+        {{/if}}
+      {{/each}}
+    </ul>
+  {{/if}}
+</div>

@@ -1,28 +1,35 @@
-{{#if @term.description.length}}
-  {{#attach-tooltip
-    lazyRender=true
-    animation="shift"
-    }}
-    {{@term.description}}
-  {{/attach-tooltip}}
-{{/if}}
-{{#if @term.isTopLevel}}
-  {{@term.title}}
-{{else}}
-  {{#each (await @term.allParentTitles) as |title|}}
-    {{! template-lint-disable no-bare-strings}}
-    <span class="muted">
-      {{title}}
-      &raquo;
+<li
+  {{! template-lint-disable no-invalid-interactive }}
+  class="detail-terms-list-item"
+  role={{if @canEdit "button"}}
+  {{on "click" (if @canEdit (fn @remove @term) (noop))}}
+>
+  {{#if @term.description.length}}
+    {{#attach-tooltip
+      lazyRender=true
+      animation="shift"
+      }}
+      {{@term.description}}
+    {{/attach-tooltip}}
+  {{/if}}
+  {{#if @term.isTopLevel}}
+    {{@term.title}}
+  {{else}}
+    {{#each (await @term.allParentTitles) as |title|}}
+      {{! template-lint-disable no-bare-strings}}
+      <span class="muted">
+        {{title}}
+        &raquo;
+      </span>
+    {{/each}}
+    {{@term.title}}
+  {{/if}}
+  {{#if (and @canEdit (not (await @term.isActiveInTree)))}}
+    <span class="inactive">
+      ({{t "general.inactive"}})
     </span>
-  {{/each}}
-  {{@term.title}}
-{{/if}}
-{{#if (and @canEdit (not (await @term.isActiveInTree)))}}
-  <span class="inactive">
-    ({{t "general.inactive"}})
-  </span>
-{{/if}}
-{{#if @canEdit}}
-  <FaIcon @icon="times" class="remove" />
-{{/if}}
+  {{/if}}
+  {{#if @canEdit}}
+    <FaIcon @icon="times" class="remove" />
+  {{/if}}
+</li>

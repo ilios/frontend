@@ -1,51 +1,14 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
-import { all }  from 'rsvp';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { dropTask } from 'ember-concurrency-decorators';
+import { all } from 'rsvp';
 
-/**
- * Displays all given terms that belong to a given vocabulary as a list of tags.
- */
-export default Component.extend({
-  classNames: ['detail-terms-list'],
+export default class DetailTermsListComponent extends Component {
+  @tracked sortedTerms;
 
-  /**
-   * Flag indicating whether terms can be removed from the list or not.
-   *
-   * @property canEdit
-   * @type {boolean}
-   * @public
-   */
-  canEdit: false,
-
-  /**
-   * A vocabulary model.
-   *
-   * @property vocabulary
-   * @type {DS.Model}
-   */
-  vocabulary: null,
-
-  /**
-   * A list of term models.
-   *
-   * @property terms
-   * @type {Array}
-   * @public
-   */
-  terms: null,
-
-  /**
-   * A sorted list of the filtered terms.
-   * Terms are sorted by title including parent titles.
-   *
-   * @property sortedTerms
-   * @type {Ember.computed}
-   * @public
-   */
-  sortedTerms: computed('filteredTerms.[]', async function() {
-    const terms = this.filteredTerms;
-    const proxies = await all(terms.map(async (term) => {
+  @dropTask
+  *load(event, [filteredTerms]) {
+    const proxies = yield all(filteredTerms.map(async term => {
       const title = await term.titleWithParentTitles;
       return { term, title };
     }));
@@ -54,37 +17,17 @@ export default Component.extend({
       const titleB = b.title.toLowerCase();
       return (titleA > titleB ? 1 : (titleA < titleB ? -1 : 0));
     });
-    return sortedProxies.mapBy('term');
-  }),
 
-  /**
-   * A filtered list of the given terms.
-   * Terms are filtered by the given vocabulary.
-   *
-   * @property filteredTerms
-   * @type {Ember.computed}
-   * @protected
-   */
-  filteredTerms: computed('terms.[]', 'vocabulary', function () {
-    const terms = this.get('terms');
-    if (isEmpty(terms)) {
+    this.sortedTerms = sortedProxies.mapBy('term');
+  }
+
+  get filteredTerms() {
+    if (!this.args.terms) {
       return [];
     }
-    const vocab = this.get('vocabulary');
-    const filteredTerms = [];
-    terms.forEach((term) => {
-      if (term.get('vocabulary.id') === vocab.get('id')) {
-        filteredTerms.push(term);
-      }
+    return this.args.terms.filter(term => {
+      const vocabId = term.belongsTo('vocabulary').id();
+      return vocabId === this.args.vocabulary.id;
     });
-    return filteredTerms;
-  }),
-
-  actions: {
-    remove(term) {
-      if (this.get('canEdit')) {
-        this.remove(term);
-      }
-    }
   }
-});
+}
