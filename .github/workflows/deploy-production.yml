@@ -35,7 +35,7 @@ jobs:
     - name: install dependencies
       run: npm ci
     - name: Ember CLI Deploy
-      run: npm run deploy:staging
+      run: npm run deploy:production
     - name: Install Sentry CLI
       run: npm install -g @sentry/cli
     - name: Create a Sentry.io release
