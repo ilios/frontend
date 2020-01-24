@@ -37,7 +37,6 @@
       <div class="actions">
         {{#if (await canCreate)}}
           <ExpandCollapseButton
-            data-test-toggle-new-instructor-group-form
             @value={{showNewInstructorGroupForm}}
             @action={{action "toggleNewInstructorGroupForm"}}
           />
