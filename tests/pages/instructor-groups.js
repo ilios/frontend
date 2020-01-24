@@ -48,5 +48,5 @@ export default create({
   removalConfirmationMessage: text('[data-test-instructor-groups-list] .confirm-removal .confirm-message'),
   emptyListRowIsVisible: isVisible('[data-test-empty-list]'),
   savedResult: text('.saved-result'),
-  toggleNewInstructorGroupForm: clickable('[data-test-toggle-new-instructor-group-form] button'),
+  toggleNewInstructorGroupForm: clickable('[data-test-expand-collapse-button] button'),
 });
