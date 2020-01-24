@@ -1,4 +1,4 @@
-# Ilios Common Code
+# Ilios Common Code [![Netlify Status](https://api.netlify.com/api/v1/badges/75f80285-ab18-4556-8640-dcd47dbe1f9b/deploy-status)](https://app.netlify.com/sites/ilios-common/deploys)
 
 ## Shared code repository for:
 
