@@ -12,7 +12,7 @@ import {
 const definition = {
   scope: '[data-test-dashboard-myreports]',
   title: text('[data-test-title]'),
-  addNewReport: clickable('[data-test-add-new-report] button'),
+  addNewReport: clickable('[data-test-expand-collapse-button] button'),
   reports: collection('[data-test-saved-reports] li', {
     title: text(),
     select: clickable('.clickable')
