@@ -8,9 +8,7 @@
       <LinkTo
         @route="events"
         @model={{@event.slug}}
-        aria-labelledby="{{concat "event" @event.slug "title"}}
-
-          {{concat "event" @event.slug "date"}}"
+        aria-labelledby="{{concat "event" @event.slug "title"}} {{concat "event" @event.slug "date"}}"
       >
         {{@event.name}}
       </LinkTo>
@@ -116,9 +114,7 @@
               <a
                 id={{concat "event" @event.slug "lm" index}}
                 href="{{lm.absoluteFileUri}}?inline"
-                aria-labelledby="{{concat "event" @event.slug "lm" index}}
-
-                  {{concat "event" @event.slug "title"}}"
+                aria-labelledby="{{concat "event" @event.slug "lm" index}} {{concat "event" @event.slug "title"}}"
                 data-test-material-title
               >
                 {{lm.title}}
@@ -127,11 +123,7 @@
                 id={{concat "event" @event.slug "lmdownload" index}}
                 href={{lm.absoluteFileUri}}
                 aria-label={{t "general.download"}}
-                aria-labelledby="
-                  {{concat "event" @event.slug "lmdownload" index}}
-                  {{concat "event" @event.slug "lm" index}}
-                  {{concat "event" @event.slug "title"}}
-                "
+                aria-labelledby="{{concat "event" @event.slug "lmdownload" index}} {{concat "event" @event.slug "lm" index}} {{concat "event" @event.slug "title"}}"
                 target="_blank"
                 rel="noopener"
               >
@@ -141,9 +133,7 @@
               <a
                 id={{concat "event" @event.slug "lm" index}}
                 href={{lm.absoluteFileUri}}
-                aria-labelledby="{{concat "event" @event.slug "lm" index}}
-
-                  {{concat "event" @event.slug "title"}}"
+                aria-labelledby="{{concat "event" @event.slug "lm" index}} {{concat "event" @event.slug "title"}}"
                 target="_blank"
                 rel="noopener"
                 data-test-material-title
@@ -155,9 +145,7 @@
             <a
               id={{concat "event" @event.slug "lm" index}}
               href={{lm.link}}
-              aria-labelledby="{{concat "event" @event.slug "lm" index}}
-
-                {{concat "event" @event.slug "title"}}"
+              aria-labelledby="{{concat "event" @event.slug "lm" index}} {{concat "event" @event.slug "title"}}"
               target="_blank"
               rel="noopener"
               data-test-material-title
