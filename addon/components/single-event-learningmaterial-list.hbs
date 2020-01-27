@@ -31,10 +31,7 @@
                     href={{lm.absoluteFileUri}}
                     rel="noopener"
                     aria-label={{t "general.download"}}
-                    aria-labelledby="
-                      {{concat this.uniqueId lm.id "lmdownload"}}
-                      {{concat this.uniqueId lm.id "lm"}}
-                    "
+                    aria-labelledby="{{concat this.uniqueId lm.id "lmdownload"}} {{concat this.uniqueId lm.id "lm"}}"
                   >
                     <FaIcon @icon="download" />
                   </a>
