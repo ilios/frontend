@@ -10,6 +10,12 @@
     flex-direction: row;
   }
 
+  .session-publication {
+    @include for-laptop-and-up {
+      text-align: right;
+    }
+  }
+
   .title {
     @include ilios-heading-h5;
 

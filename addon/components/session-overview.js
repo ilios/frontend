@@ -1,380 +1,318 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
-import { reject } from 'rsvp';
+import { task, restartableTask } from 'ember-concurrency-decorators';
 import moment from 'moment';
-import Publishable from 'ilios-common/mixins/publishable';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { task } from 'ember-concurrency';
+import { validatable, Length, Gte, NotBlank } from 'ilios-common/decorators/validation';
 
-const { oneWay, sort } = computed;
+@validatable
+export default class SessionOverview extends Component {
+  @service currentUser;
+  @service features;
+  @service router;
+  @service permissionChecker;
+  @service intl;
+  @service store;
 
-const Validations = buildValidations({
-  title: [
-    validator('presence', true),
-    validator('length', {
-      min: 3,
-      max: 200
-    }),
-  ],
-  hours: [
-    validator('presence', true),
-    validator('number', {
-      allowString: true,
-      positive: true,
-    }),
-  ],
-  dueDate: [
-    validator('presence', true),
-  ],
-  description: [
-    validator('length', {
-      min: 3,
-      max: 65000
-    }),
-  ],
-  instructionalNotes: [
-    validator('length', {
-      min: 3,
-      max: 65000
-    }),
-  ],
-});
+  @Length(3, 200) @NotBlank() @tracked title = null;
+  @Length(3, 65000) @tracked instructionalNotes = null;
+  @NotBlank() @Gte(0) @tracked hours = null;
+  @NotBlank()@tracked dueDate = null;
+  @Length(3, 65000) @tracked description = null;
+  @tracked sessionType = null;
+  @tracked isSaving = false;
+  @tracked isEditingPostRequisite = false;
+  @tracked updatedAt = null;
+  @tracked showCopy = false;
 
-export default Component.extend(Publishable, Validations, ValidationErrorDisplay, {
-  currentUser: service(),
-  features: service(),
-  routing: service('-routing'),
-  permissionChecker: service(),
-  intl: service(),
-  session: null,
-  title: null,
-  instructionalNotes: null,
-  hours: null,
-  dueDate: null,
-  description: null,
-  editable: true,
-  sortTypes: null,
-  sessionTypes: null,
-  sessionType: null,
-  showCheckLink: true,
-  isSaving: false,
-  isEditingPostRequisite: false,
-  'data-test-session-overview': true,
-  updatedAt: null,
-  publishTarget: oneWay('session'),
-  sortedSessionTypes: sort('filteredSessionTypes', 'sortTypes'),
-  filteredSessionTypes: computed('sessionTypes.[]', function() {
-    const selectedSessionType = this.get('sessionType');
-    const selectedSessionTypeId = isEmpty(selectedSessionType) ? -1 : selectedSessionType.get('id');
-    return this.get('sessionTypes').filter(sessionType => {
-      return (sessionType.get('active') || sessionType.get('id') === selectedSessionTypeId);
+  @tracked sessionTypes = [];
+  @tracked showAttendanceRequired = false;
+  @tracked showSupplemental = false;
+  @tracked showSpecialAttireRequired = false;
+  @tracked showSpecialEquipmentRequired = false;
+
+  get filteredSessionTypes() {
+    const selectedSessionTypeId = isEmpty(this.sessionType) ? -1 : this.sessionType.id;
+    return this.sessionTypes.filter(sessionType => {
+      return (sessionType.active || sessionType.id === selectedSessionTypeId);
     });
-  }),
+  }
+
+  get sortedSessionTypes() {
+    return this.filteredSessionTypes.sortBy('title');
+  }
+
+  @restartableTask
+  *load(element, [session, sessionTypes]) {
+    this.showCopy = yield this.getShowCopy.perform(session);
+    const course = yield session.course;
+    const school = yield course.school;
+    const ilmSession = yield session.ilmSession;
+    const sessionDescription = yield session.sessionDescription;
+
+    this.showAttendanceRequired = yield school.getConfigValue('showSessionAttendanceRequired');
+    this.showSupplemental = yield  school.getConfigValue('showSessionSupplemental');
+    this.showSpecialAttireRequired = yield school.getConfigValue('showSessionSpecialAttireRequired');
+    this.showSpecialEquipmentRequired = yield school.getConfigValue('showSessionSpecialEquipmentRequired');
+    this.sessionType = yield session.sessionType;
+
+    this.title = session.title;
+    this.instructionalNotes = session.instructionalNotes;
+    if (ilmSession) {
+      this.hours = ilmSession.hours;
+      this.dueDate = ilmSession.dueDate;
+    }
+    this.updatedAt = moment(session.updatedAt).format("L LT");
+    this.sessionTypes = sessionTypes || [];
+    if (sessionDescription) {
+      this.description  = sessionDescription.description;
+    }
+  }
 
   /**
    * Check if a user is allowed to create a session anywhere
    * Try and do this by loading as little data as possible, but in the
    * end we do need to check every course in the school.
    */
-  showCopy: computed('currentUser', 'routing.currentRouteName', async function () {
-    const permissionChecker = this.get('permissionChecker');
-    const routing = this.get('routing');
-    if (routing.get('currentRouteName') === 'session.copy') {
+  @restartableTask
+  *getShowCopy(session) {
+    if (this.router.currentRouteName === 'session.copy') {
       return false;
     }
 
-    const session = this.get('session');
-    const course = await session.get('course');
-    if (await permissionChecker.canCreateSession(course)) {
+    const course = yield session.course;
+    if (yield this.permissionChecker.canCreateSession(course)) {
       return true;
     }
-    const user = await this.currentUser.getModel();
-    const allRelatedCourses = await user.get('allRelatedCourses');
+    const user = yield this.currentUser.getModel();
+    const allRelatedCourses = yield user.allRelatedCourses;
     let relatedCourse;
     for (relatedCourse of allRelatedCourses) {
-      if (await permissionChecker.canCreateSession(relatedCourse)) {
+      if (yield this.permissionChecker.canCreateSession(relatedCourse)) {
         return true;
       }
     }
-    const school = await course.get('school');
-    const schoolCourses = school.get('courses');
+    const school = yield course.school;
+    const schoolCourses = (yield school.courses).toArray();
     let schoolCourse;
     for (schoolCourse of schoolCourses) {
-      if (await permissionChecker.canCreateSession(schoolCourse)) {
+      if (yield this.permissionChecker.canCreateSession(schoolCourse)) {
         return true;
       }
     }
 
     return false;
-  }),
+  }
 
-  school: computed('session.course.school', async function(){
-    const session = this.get('session');
-    const course = await session.get('course');
-    return await course.get('school');
-  }),
-
-  showAttendanceRequired: computed('school.configurations.[]', async function(){
-    const school = await this.get('school');
-    return await school.getConfigValue('showSessionAttendanceRequired');
-  }),
-  showSupplemental: computed('school.configurations.[]', async function(){
-    const school = await this.get('school');
-    return await school.getConfigValue('showSessionSupplemental');
-  }),
-  showSpecialAttireRequired: computed('school.configurations.[]', async function(){
-    const school = await this.get('school');
-    return await school.getConfigValue('showSessionSpecialAttireRequired');
-  }),
-  showSpecialEquipmentRequired: computed('school.configurations.[]', async function(){
-    const school = await this.get('school');
-    return await school.getConfigValue('showSessionSpecialEquipmentRequired');
-  }),
-
-  init() {
-    this._super(...arguments);
-    this.set('sortTypes', ['title']);
-  },
-  didReceiveAttrs(){
-    this._super(...arguments);
-    this.set('title', this.get('session.title'));
-    this.set('instructionalNotes', this.get('session.instructionalNotes'));
-    this.get('session.ilmSession').then(ilmSession => {
-      if (ilmSession){
-        this.set('hours', ilmSession.get('hours'));
-        this.set('dueDate', ilmSession.get('dueDate'));
-      }
-    });
-    this.set('updatedAt', moment(this.get('session.updatedAt')).format("L LT"));
-
-    this.get('session.sessionType').then(sessionType => {
-      this.set('sessionType', sessionType);
-    });
-
-    this.get('session.sessionDescription').then(sessionDescription => {
-      if (sessionDescription){
-        this.set('description', sessionDescription.get('description'));
-      }
-    });
-  },
-  actions: {
-    async saveIndependentLearning(value) {
-      if (!value) {
-        const ilmSession = await this.session.ilmSession;
-        this.session.set('ilmSession', null);
-        ilmSession.deleteRecord();
-        await this.session.save();
-        await ilmSession.save();
-      } else {
-        const hours = 1;
-        const dueDate = moment().add(6, 'weeks').toDate();
-        this.set('hours', hours);
-
-        var ilmSession = this.get('store').createRecord('ilm-session', {
-          session: this.session,
-          hours,
-          dueDate
-        });
-        const savedIlmSession = await ilmSession.save();
-        this.session.set('ilmSession', savedIlmSession);
-        await this.session.save();
-      }
-    },
-
-    async changeTitle() {
-      const { session, title } = this.getProperties('session', 'title');
-      this.send('addErrorDisplayFor', 'title');
-      const { validations } = await this.validate({ on: ['title'] });
-
-      if (validations.isValid) {
-        this.send('removeErrorDisplayFor', 'title');
-        session.set('title', title);
-        const newSession = await session.save();
-        this.set('title', newSession.title);
-        this.set('session', newSession);
-      } else {
-        await reject();
-      }
-    },
-
-    revertTitleChanges(){
-      const session = this.get('session');
-      this.set('title', session.get('title'));
-    },
-    revertInstructionalNotesChanges(){
-      this.set('instructionalNotes', this.session.instructionalNotes);
-    },
-
-    setSessionType(id){
-      const type = this.get('sessionTypes').findBy('id', id);
-      this.set('sessionType', type);
-    },
-
-    changeSessionType() {
-      const session = this.get('session');
-      const type = this.get('sessionType');
-      session.set('sessionType', type);
-      session.save();
-    },
-
-    revertSessionTypeChanges() {
-      this.get('session').get('sessionType').then(sessionType => {
-        this.set('sessionType', sessionType);
-      });
-    },
-    changeSupplemental(value) {
-      this.get('session').set('supplemental', value);
-      this.get('session').save();
-    },
-    changeSpecialEquipment(value) {
-      this.get('session').set('equipmentRequired', value);
-      this.get('session').save();
-    },
-    changeSpecialAttire(value) {
-      this.get('session').set('attireRequired', value);
-      this.get('session').save();
-    },
-    changeAttendanceRequired(value) {
-      this.get('session').set('attendanceRequired', value);
-      this.get('session').save();
-    },
-
-    async changeIlmHours() {
-      const { hours, session } = this.getProperties('hours', 'session');
-      this.send('addErrorDisplayFor', 'hours');
-      const { validations } = await this.validate({ on: ['hours'] });
-
-      if (validations.isValid) {
-        this.send('removeErrorDisplayFor', 'hours');
-        const ilmSession = await session.get('ilmSession');
-
-        if (ilmSession) {
-          ilmSession.set('hours', hours);
-          await ilmSession.save();
-        } else {
-          await reject();
-        }
-      } else {
-        await reject();
-      }
-    },
-
-    revertIlmHoursChanges(){
-      this.get('session').get('ilmSession').then(ilmSession => {
-        if (ilmSession) {
-          this.set('hours', ilmSession.get('hours'));
-        }
-      });
-    },
-
-    async changeIlmDueDate() {
-      const { dueDate, session } = this.getProperties('dueDate', 'session');
-      this.send('addErrorDisplayFor', 'dueDate');
-      const { validations } = await this.validate({ on: ['dueDate'] });
-
-      if (validations.isValid) {
-        this.send('removeErrorDisplayFor', 'dueDate');
-        const ilmSession = await session.get('ilmSession');
-
-        if (ilmSession){
-          ilmSession.set('dueDate', dueDate);
-          await ilmSession.save();
-        } else {
-          await reject();
-        }
-      } else {
-        await reject();
-      }
-    },
-
-    revertIlmDueDateChanges(){
-      this.get('session').get('ilmSession').then(ilmSession => {
-        if (ilmSession) {
-          this.set('dueDate', ilmSession.get('dueDate'));
-        }
-      });
-    },
-
-    async saveDescription() {
-      const { session, store } = this.getProperties('session', 'store');
-      const newDescription = this.description;
-      this.send('addErrorDisplayFor', 'description');
-      const { validations } = await this.validate({ on: ['description'] });
-
-      if (validations.isValid) {
-        this.send('removeErrorDisplayFor', 'description');
-        let sessionDescription = await session.get('sessionDescription');
-
-        if (isEmpty(newDescription) && sessionDescription){
-          await sessionDescription.deleteRecord();
-        } else {
-          if (!sessionDescription) {
-            sessionDescription = store.createRecord('session-description');
-            sessionDescription.set('session', session);
-          }
-
-          sessionDescription.set('description', newDescription);
-        }
-
-        this.set('sessionDescription', newDescription);
-
-        if (sessionDescription) {
-          await sessionDescription.save();
-        }
-      } else {
-        await reject();
-      }
-    },
-
-    changeDescription(html){
-      this.send('addErrorDisplayFor', 'description');
-      const noTagsText = html.replace(/(<([^>]+)>)/ig,"");
-      const strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
-
-      //if all we have is empty html then save null
-      if(strippedText.length === 0){
-        html = null;
-      }
-
-      this.set('description', html);
-    },
-    changeInstructionalNotes(html){
-      this.send('addErrorDisplayFor', 'instructionalNotes');
-      const noTagsText = html.replace(/(<([^>]+)>)/ig,"");
-      const strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
-
-      //if all we have is empty html then save null
-      if(strippedText.length === 0){
-        html = null;
-      }
-
-      this.set('instructionalNotes', html);
-    },
-  },
-  revertDescriptionChanges: task(function * (){
-    const session = this.get('session');
-    const sessionDescription = yield session.get('sessionDescription');
-    if (sessionDescription) {
-      this.set('description', sessionDescription.get('description'));
+  @action
+  async saveIndependentLearning(value) {
+    if (!value) {
+      const ilmSession = await this.args.session.ilmSession;
+      this.args.session.ilmSession = null;
+      ilmSession.deleteRecord();
+      await this.args.session.save();
+      await ilmSession.save();
     } else {
-      this.set('description', null);
+      const hours = 1;
+      const dueDate = moment().add(6, 'weeks').toDate();
+      this.hours = hours;
+      this.dueDate = dueDate;
+      const ilmSession = this.store.createRecord('ilm-session', {
+        session: this.args.session,
+        hours,
+        dueDate
+      });
+      this.args.session.ilmSession = await ilmSession.save();
+      await this.args.session.save();
     }
-  }),
+  }
 
-  saveInstructionalNotes: task(function* () {
-    this.send('addErrorDisplayFor', 'instructionalNotes');
-    const { validations } = yield this.validate({ on: ['instructionalNotes'] });
-    if (validations.get('isInvalid')) {
+  @action
+  async changeTitle() {
+    this.addErrorDisplayFor('title');
+    const isValid = await this.isValid('title');
+    if (! isValid) {
       return false;
     }
-    this.send('removeErrorDisplayFor', 'instructionalNotes');
-    this.session.set('instructionalNotes', this.instructionalNotes);
 
-    yield this.session.save();
-    this.set('instructionalNotes', this.session.instructionalNotes);
-  }),
+    this.removeErrorDisplayFor('title');
+    this.args.session.title = this.title;
+    await this.args.session.save();
+  }
 
-});
+  @action
+  revertTitleChanges(){
+    this.title = this.args.session.title;
+  }
+
+  @action
+  revertInstructionalNotesChanges(){
+    this.instructionalNotes = this.args.session.instructionalNotes;
+  }
+
+  @action
+  setSessionType(id){
+    this.sessionType = this.sessionTypes.findBy('id', id);
+  }
+
+  @action
+  changeSessionType() {
+    this.args.session.sessionType = this.sessionType;
+    this.args.session.save();
+  }
+
+  @action
+  async revertSessionTypeChanges() {
+    this.sessionType = await this.args.session.sessionType;
+  }
+
+  @action
+  changeSupplemental(value) {
+    this.args.session.supplemental = value;
+    this.args.session.save();
+  }
+
+  @action
+  changeSpecialEquipment(value) {
+    this.args.session.equipmentRequired = value;
+    this.args.session.save();
+  }
+
+  @action
+  changeSpecialAttire(value) {
+    this.args.session.attireRequired = value;
+    this.args.session.save();
+  }
+
+  @action
+  changeAttendanceRequired(value) {
+    this.args.session.attendanceRequired = value;
+    this.args.session.save();
+  }
+
+  @action
+  async changeIlmHours() {
+    this.addErrorDisplayFor('hours');
+    const isValid = await this.isValid('hours');
+    if (! isValid) {
+      return false;
+    }
+    this.removeErrorDisplayFor('hours');
+    const ilmSession = await this.args.session.ilmSession;
+    if (ilmSession) {
+      ilmSession.hours = this.hours;
+      await ilmSession.save();
+    }
+  }
+
+  @action
+  async revertIlmHoursChanges(){
+    const ilmSession = await this.args.session.ilmSession;
+    if (ilmSession) {
+      this.hours = ilmSession.hours;
+    }
+  }
+
+  @action
+  async changeIlmDueDate() {
+    this.addErrorDisplayFor('dueDate');
+    const isValid = await this.isValid('dueDate');
+
+    if (! isValid) {
+      return false;
+    }
+    this.removeErrorDisplayFor('dueDate');
+    const ilmSession = await this.args.session.ilmSession;
+    if (ilmSession){
+      ilmSession.dueDate = this.dueDate;
+      await ilmSession.save();
+    }
+  }
+
+  @action
+  async revertIlmDueDateChanges(){
+    const ilmSession = await this.args.session.ilmSession;
+    if (ilmSession) {
+      this.dueDate = ilmSession.dueDate;
+    }
+  }
+
+  @action
+  async saveDescription() {
+    this.addErrorDisplayFor('description');
+    const isValid = await this.isValid('description');
+
+    if (! isValid) {
+      return false;
+    }
+
+    this.removeErrorDisplayFor('description');
+    let sessionDescription = await this.args.session.sessionDescription;
+    if (isEmpty(this.description) && sessionDescription){
+      await sessionDescription.deleteRecord();
+    } else {
+      if (! sessionDescription) {
+        sessionDescription = this.store.createRecord('session-description');
+        sessionDescription.session = this.args.session;
+      }
+
+      sessionDescription.description = this.description;
+    }
+
+    if (sessionDescription) {
+      await sessionDescription.save();
+    }
+  }
+
+  @action
+  changeDescription(html){
+    this.addErrorDisplayFor('description');
+    const noTagsText = html.replace(/(<([^>]+)>)/ig,"");
+    const strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
+
+    //if all we have is empty html then save null
+    if(strippedText.length === 0){
+      html = null;
+    }
+
+    this.description = html;
+  }
+
+  @action
+  changeInstructionalNotes(html){
+    this.addErrorDisplayFor('instructionalNotes');
+    const noTagsText = html.replace(/(<([^>]+)>)/ig,"");
+    const strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
+
+    //if all we have is empty html then save null
+    if(strippedText.length === 0){
+      html = null;
+    }
+    this.instructionalNotes = html;
+  }
+
+  @task
+  *revertDescriptionChanges(){
+    const sessionDescription = yield this.args.session.sessionDescription;
+    if (sessionDescription) {
+      this.description = sessionDescription.description;
+    } else {
+      this.description = null;
+    }
+  }
+
+  @task
+  *saveInstructionalNotes() {
+    this.addErrorDisplayFor('instructionalNotes');
+    const isValid = yield this.isValid('instructionalNotes');
+    if (! isValid) {
+      return false;
+    }
+    this.removeErrorDisplayFor('instructionalNotes');
+    this.args.session.instructionalNotes = this.instructionalNotes;
+
+    yield this.args.session.save();
+  }
+}

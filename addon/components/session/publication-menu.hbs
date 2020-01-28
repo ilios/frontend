@@ -1,0 +1,100 @@
+<div
+  role="menubar"
+  class="publish-menu {{this.publicationStatus}}"
+  data-test-session-publication-menu
+  {{on-click-outside (set this.isOpen false)}}
+>
+  <button
+    aria-label={{this.title}}
+    role="menuitem"
+    class="toggle"
+    aria-haspopup="true"
+    aria-expanded={{if this.isOpen "true" "false"}}
+    data-test-toggle
+    {{on "click" (toggle "isOpen" this)}}
+    {{on "keydown" (fn this.toggleMenu)}}
+  >
+    <FaIcon @icon={{this.icon}} />
+    <span>
+      {{this.title}}
+    </span>
+  </button>
+  {{#if this.isOpen}}
+    <div
+      class="menu"
+      role="menu"
+      {{ref this "menuElement"}}
+      {{did-insert this.focusOnFirstItem}}
+      data-test-menu
+    >
+      {{#if this.showAsIs}}
+        <button
+          class="danger"
+          role="menuitemradio"
+          tabindex="-1"
+          {{on "click" this.publish}}
+          {{on "keydown" (fn this.moveFocus)}}
+          {{on "mouseenter" (fn this.clearFocus)}}
+          data-test-publish-as-is
+        >
+          {{t "general.publishAsIs"}}
+        </button>
+      {{/if}}
+      {{#if this.showPublish}}
+        <button
+          class="good"
+          role="menuitemradio"
+          tabindex="-1"
+          {{on "click" this.publish}}
+          {{on "keydown" (fn this.moveFocus)}}
+          {{on "mouseenter" (fn this.clearFocus)}}
+          data-test-publish
+        >
+          {{t "general.publishSession"}}
+        </button>
+      {{/if}}
+      {{#if this.showReview}}
+        <button
+          class="good"
+          role="menuitemradio"
+          tabindex="-1"
+          {{on "click" this.scrollToSessionPublication}}
+          {{on "keydown" (fn this.moveFocus)}}
+          {{on "mouseenter" (fn this.clearFocus)}}
+          data-test-review
+        >
+          {{t
+            "general.reviewMissingItems"
+            count=(get @session "allPublicationIssuesLength")
+          }}
+        </button>
+      {{/if}}
+      {{#if this.showTbd}}
+        <button
+          class="good"
+          role="menuitemradio"
+          tabindex="-1"
+          {{on "click" this.publishAsTbd}}
+          {{on "keydown" (fn this.moveFocus)}}
+          {{on "mouseenter" (fn this.clearFocus)}}
+          data-test-tbd
+        >
+          {{t "general.markAsScheduled"}}
+        </button>
+      {{/if}}
+      {{#if this.showUnPublish}}
+        <button
+          class="danger"
+          role="menuitemradio"
+          tabindex="-1"
+          {{on "click" this.unpublish}}
+          {{on "keydown" (fn this.moveFocus)}}
+          {{on "mouseenter" (fn this.clearFocus)}}
+          data-test-un-publish
+        >
+          {{t "general.unPublishSession"}}
+        </button>
+      {{/if}}
+    </div>
+  {{/if}}
+</div>
