@@ -9,6 +9,7 @@ env:
   SW_DISABLED: true
   COVERAGE: false
   SENTRY_ORG: ilios
+  SENTRY_PROJECT: frontend
 
 jobs:
   test:
@@ -45,7 +46,7 @@ jobs:
       run: |
         # Create new Sentry release
         export SENTRY_RELEASE=$(sentry-cli releases propose-version)
-        sentry-cli releases new -p frontend $SENTRY_RELEASE
+        sentry-cli releases new $SENTRY_RELEASE
         sentry-cli releases set-commits --auto $SENTRY_RELEASE
         sentry-cli releases files $SENTRY_RELEASE upload-sourcemaps tmp/deploy-dist/
         sentry-cli releases finalize $SENTRY_RELEASE
