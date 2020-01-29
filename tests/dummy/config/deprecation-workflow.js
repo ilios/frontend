@@ -10,5 +10,6 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchId: "computed-property.override"}, //ember-modal
     { handler: "silence", matchId: "ember-runtime.deprecate-copy-copyable"},
     { handler: "silence", matchId: "computed-property.volatile"},
+    { handler: "silence", matchId: "ember-component.is-visible"},
   ]
 };
