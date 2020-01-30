@@ -174,7 +174,7 @@ export default class DashboardCalendarComponent extends Component {
   }
 
   get cohorts() {
-    return this.cohortProxies.mapBy('cohort');
+    return this.cohortProxies?.mapBy('cohort');
   }
 
   get filteredEvents() {

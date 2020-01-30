@@ -897,4 +897,28 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     await triggerEvent('[data-test-ilios-calendar-event]>div', 'mouseenter');
     assert.ok(isVisible('.ilios-calendar-event-tooltip'), 'Now shown');
   });
+
+  test('visit with course filters open #5098', async function(assert) {
+    const today = moment().hour(8);
+    this.server.create('userevent', {
+      user: parseInt(this.user.id, 10),
+      startDate: today.format(),
+      endDate: today.clone().add(1, 'hour').format(),
+      cohorts: [{ id: 1 }],
+    });
+    await visit('/dashboard?show=calendar&showFilters=true&courseFilters=true');
+    assert.equal(findAll('div.event').length, 1);
+  });
+
+  test('visit with detail filters open #5098', async function(assert) {
+    const today = moment().hour(8);
+    this.server.create('userevent', {
+      user: parseInt(this.user.id, 10),
+      startDate: today.format(),
+      endDate: today.clone().add(1, 'hour').format(),
+      cohorts: [{ id: 1 }],
+    });
+    await visit('/dashboard?show=calendar&showFilters=true&courseFilters=false');
+    assert.equal(findAll('div.event').length, 1);
+  });
 });
