@@ -1,10 +1,8 @@
-name: Continuous Integration
+name: Test Future Ember Versions
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
+  schedule:
+    - cron: '15 6 * * 3' # weekly, on Wednesday morning
 
 env:
   CI: true
@@ -31,10 +29,15 @@ jobs:
       run: npm run lint:hbs
     - name: test
       run: npm test
-
-  test-floating:
-    name: Floating Dependencies
+  try-scenarios:
+    name: ember-try
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ember-try-scenario:
+         - ember-release
+         - ember-beta
+         - ember-canary
 
     steps:
     - uses: actions/checkout@v1
@@ -42,6 +45,8 @@ jobs:
       with:
         node-version: 12
     - name: install dependencies
-      run: npm install --no-package-lock
+      run: npm ci
     - name: test
-      run: npm test
+      env:
+        EMBER_TRY_SCENARIO: ${{ matrix.ember-try-scenario }}
+      run: node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO
