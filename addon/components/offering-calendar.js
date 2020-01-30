@@ -1,142 +1,100 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import RSVP from 'rsvp';
-import { inject as service } from '@ember/service';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from "ember-concurrency-decorators";
+import { map } from 'rsvp';
 
-const { reads } = computed;
-const { map } = RSVP;
+export default class OfferingCalendar extends Component {
+  @tracked showLearnerGroupEvents = true;
+  @tracked showSessionEvents = true;
+  @tracked learnerGroupEvents = [];
+  @tracked sessionEvents = [];
+  @tracked currentEvent = null;
 
-export default Component.extend({
-  iliosConfig: service(),
-  classNames: ['offering-calendar'],
-
-  session: null,
-  learnerGroups: null,
-  startDate: null,
-  endDate: null,
-  showLearnerGroupEvents: true,
-  showSessionEvents: true,
-  namespace: reads('iliosConfig.apiNameSpace'),
-  learnerGroupEvents: computed('learnerGroups.[]', async function () {
-    const learnerGroups = this.get('learnerGroups');
-    if (!learnerGroups) {
+  get calendarEvents() {
+    if(! this.currentEvent) {
       return [];
     }
-    const data = await map(learnerGroups, async learnerGroup => {
-      const offerings = await learnerGroup.get('offerings');
-      const events = await map(offerings.toArray(), async offering => {
-        const session = await offering.get('session');
-        const course = await session.get('course');
-        const event = {
-          startDate: offering.get('startDate'),
-          endDate: offering.get('endDate'),
-          courseTitle: course.get('title'),
-          name: session.get('title'),
-          offering: offering.get("id"),
-          location: offering.get("location"),
-          color: "#84c444",
+    let events = [];
+    if (this.showLearnerGroupEvents) {
+      events = [...events, ...this.learnerGroupEvents];
+    }
+    if (this.showSessionEvents) {
+      events = [...events, ...this.sessionEvents];
+    }
+    const currentEventIdentifier = this.currentEvent.name + this.currentEvent.startDate + this.currentEvent.endDate;
+    const filteredEvents = events.filter(event => {
+      if (! event) {
+        return false;
+      }
+      const eventIdentifier = event.name + event.startDate + event.endDate;
+      return (eventIdentifier !== currentEventIdentifier);
+    });
+
+    return [...filteredEvents, this.currentEvent];
+  }
+
+  @restartableTask
+  *load(element, [startDate, endDate, learnerGroups, session]) {
+    if (! learnerGroups) {
+      this.learnerGroupEvents = [];
+    } else {
+      const data = yield map(learnerGroups, async learnerGroup => {
+        const offerings = await learnerGroup.offerings;
+        return await map(offerings.toArray(), async offering => {
+          const session = await offering.session;
+          const course = await session.course;
+          return {
+            startDate: offering.startDate,
+            endDate: offering.endDate,
+            courseTitle: course.title,
+            name: session.title,
+            offering: offering.id,
+            location: offering.location,
+            color: "#84c444",
+            postrequisites: [],
+            prerequisites: [],
+          };
+        });
+      });
+
+      this.learnerGroupEvents = data.reduce((flattened, obj) => {
+        return [...flattened, ...obj.toArray()];
+      }, []);
+    }
+
+    if (! session) {
+      this.sessionEvents = [];
+      this.currentEvent = null;
+    } else {
+      const offerings = yield session.offerings;
+      const sessionType = yield session.sessionType;
+      const course = yield session.course;
+      this.sessionEvents = yield map(offerings.toArray(), async offering => {
+        return {
+          startDate: offering.startDate,
+          endDate: offering.endDate,
+          courseTitle: course.title,
+          name: session.title,
+          offering: offering.id,
+          location: offering.location,
+          color: "#f6f6f6",
           postrequisites: [],
           prerequisites: [],
         };
-
-        return event;
       });
 
-      return events;
-    });
-
-    const flat = data.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.toArray());
-    }, []);
-
-    return flat;
-  }),
-
-  sessionEvents: computed('session', async function () {
-    const session = this.get('session');
-    if (!session) {
-      return [];
-    }
-    const offerings = await session.get('offerings');
-    const events = await map(offerings.toArray(), async offering => {
-      const course = await session.get('course');
-      const event = {
-        startDate: offering.get('startDate'),
-        endDate: offering.get('endDate'),
-        courseTitle: course.get('title'),
-        name: session.get('title'),
-        offering: offering.get("id"),
-        location: offering.get("location"),
-        color: "#f6f6f6",
+      this.currentEvent = {
+        startDate,
+        endDate,
+        courseTitle: course.title,
+        name: session.title,
+        isPublished: session.isPublished,
+        offering: 1,
+        location: '',
+        color: sessionType.calendarColor,
         postrequisites: [],
         prerequisites: [],
       };
-
-      return event;
-    });
-
-    return events;
-  }),
-
-  currentEvent: computed('startDate', 'endDate', 'location', 'session', async function () {
-    const startDate = this.get('startDate');
-    const endDate = this.get('endDate');
-    const session = this.get('session');
-    if (!session) {
-      return null;
     }
-    const loc = this.get('location');
-    const sessionType = await session.get('sessionType');
-    const course = await session.get('course');
-    return {
-      startDate,
-      endDate,
-      courseTitle: course.get('title'),
-      name: session.get('title'),
-      isPublished: session.get('isPublished'),
-      offering: 1,
-      loc,
-      color: sessionType.get('calendarColor'),
-      postrequisites: [],
-      prerequisites: [],
-    };
-  }),
-
-  calendarEvents: computed(
-    'learnerGroupEvents.[]',
-    'sessionEvents.[]',
-    'currentEvent',
-    'showLearnerGroupEvents',
-    'showSessionEvents',
-    async function () {
-      const currentEvent = await this.get('currentEvent');
-      const showLearnerGroupEvents = await this.get('showLearnerGroupEvents');
-      const showSessionEvents = await this.get('showSessionEvents');
-      if(!currentEvent) {
-        return [];
-      }
-      const events = [];
-      if (showLearnerGroupEvents) {
-        const learnerGroupEvents = await this.get('learnerGroupEvents');
-        events.pushObjects(learnerGroupEvents);
-      }
-      if (showSessionEvents) {
-        const sessionEvents = await this.get('sessionEvents');
-        events.pushObjects(sessionEvents);
-      }
-      const currentEventIdentifier = currentEvent.name + currentEvent.startDate + currentEvent.endDate;
-      const filteredEvents = events.filter(event => {
-        if(!event) {
-          return false;
-        }
-        const eventIdentifier = event.name + event.startDate + event.endDate;
-        if(eventIdentifier === currentEventIdentifier) {
-          return false;
-        }
-        return true;
-      });
-      filteredEvents.pushObject(currentEvent);
-      return filteredEvents;
-    }
-  ),
-});
+  }
+}
