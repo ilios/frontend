@@ -3,12 +3,7 @@ import { computed } from '@ember/object';
 import { not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
-import {
-  Promise as RSVPPromise,
-  filter,
-  hash,
-  map
-} from 'rsvp';
+import { filter, hash, map } from 'rsvp';
 import moment from 'moment';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
@@ -98,37 +93,29 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   loaded: false,
   'data-test-offering-form': true,
 
-  associatedSchools: computed('cohorts.[]', function(){
-    return new RSVPPromise(resolve => {
-      const cohorts = this.get('cohorts');
-      if (isEmpty(cohorts)) {
-        resolve([]);
-      } else {
-        map(cohorts.toArray(), cohort => {
-          return cohort.get('school');
-        }).then(cohortSchools => {
-          const schools = [];
-          schools.pushObjects(cohortSchools);
-          resolve(schools.uniq().toArray());
-        });
-      }
-    });
-  }),
-  availableInstructorGroups: computed('associatedSchools.[]', function(){
-    return new RSVPPromise(resolve => {
-      this.get('associatedSchools').then(associatedSchools => {
-        map(associatedSchools, school => {
-          return school.get('instructorGroups');
-        }).then(allInstructorGropus => {
-          const flat = allInstructorGropus.reduce((flattened, obj) => {
-            return flattened.pushObjects(obj.toArray());
-          }, []);
-
-          resolve(flat);
-        });
+  associatedSchools: computed('cohorts.[]', async function(){
+    const cohorts = this.get('cohorts');
+    if (isEmpty(cohorts)) {
+      return [];
+    } else {
+      const cohortSchools = await map(cohorts.toArray(), cohort => {
+        return cohort.get('school');
       });
-    });
+      const schools = [];
+      schools.pushObjects(cohortSchools);
+      return schools.uniq().toArray();
+    }
   }),
+  availableInstructorGroups: computed('associatedSchools.[]', async function(){
+    const associatedSchools = await this.get('associatedSchools');
+    const allInstructorGroups = await map(associatedSchools, school => {
+      return school.get('instructorGroups');
+    });
+    return allInstructorGroups.reduce((flattened, obj) => {
+      return flattened.pushObjects(obj.toArray());
+    }, []);
+  }),
+
   defaultStartDate: computed('courseStartDate', 'courseEndDate', function(){
     const today = moment();
     const courseStartDate = this.get('courseStartDate');
@@ -185,20 +172,16 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return this.timezone.formatTimezone(this.currentTimezone);
   }),
 
-  lowestLearnerGroupLeaves: computed('learnerGroups.[]', function(){
+  lowestLearnerGroupLeaves: computed('learnerGroups.[]', async function(){
     const learnerGroups = this.get('learnerGroups');
     const ids = learnerGroups.mapBy('id');
-    return new RSVPPromise(resolve => {
-      filter(learnerGroups, group => {
-        return new RSVPPromise(resolve => {
-          group.get('allDescendants').then(children => {
-            const selectedChildren = children.filter(child => ids.includes(child.get('id')));
-            resolve(selectedChildren.length === 0);
-          });
-        });
-      }).then(lowestLeaves => resolve(lowestLeaves));
+    return filter(learnerGroups, async group => {
+      const children = await group.get('allDescendants');
+      const selectedChildren = children.filter(child => ids.includes(child.get('id')));
+      return selectedChildren.length === 0;
     });
   }),
+
   init(){
     this._super(...arguments);
 
