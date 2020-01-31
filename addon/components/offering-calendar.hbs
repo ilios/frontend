@@ -1,37 +1,45 @@
-<h2 class="offering-calendar-title">
-  {{t "general.calendar"}}
-</h2>
-<p class="offering-calendar-filter-options">
-  <span class="filter">
-    <ToggleYesno
-      @yes={{this.showLearnerGroupEvents}}
-      @toggle={{action (mut this.showLearnerGroupEvents)}}
+<div
+  class="offering-calendar"
+  {{did-insert (perform this.load) @startDate @endDate @learnerGroups @session}}
+  {{did-update (perform this.load) @startDate @endDate @learnerGroups @session}}
+>
+  <h2 class="offering-calendar-title">
+    {{t "general.calendar"}}
+  </h2>
+  <p class="offering-calendar-filter-options">
+    <span class="filter">
+      <ToggleYesno
+        @yes={{this.showLearnerGroupEvents}}
+        @toggle={{action (mut this.showLearnerGroupEvents)}}
+      />
+      <label {{on "click" (toggle "showLearnerGroupEvents" this)}}>
+        {{t "general.showLearnerGroupEvents"}}
+      </label>
+    </span>
+    <span class="filter">
+      <ToggleYesno
+        @yes={{this.showSessionEvents}}
+        @toggle={{action (mut this.showSessionEvents)}}
+      />
+      <label {{on "click" (toggle "showSessionEvents" this)}}>
+        {{! template-lint-disable no-triple-curlies }}
+        {{{t "general.showSessionEvents" sessionTitle=@session.title}}}
+      </label>
+    </span>
+  </p>
+  <div class="ilios-calendar">
+    <IliosCalendarWeek
+      @calendarEvents={{await this.calendarEvents}}
+      @date={{@startDate}}
+      @areEventsSelectable={{false}}
+      @areDaysSelectable={{false}}
     />
-    <label {{on "click" (toggle "showLearnerGroupEvents" this)}}>
-      {{t "general.showLearnerGroupEvents"}}
-    </label>
-  </span>
-  <span class="filter">
-    <ToggleYesno
-      @yes={{this.showSessionEvents}}
-      @toggle={{action (mut this.showSessionEvents)}}
-    />
-    <label {{on "click" (toggle "showSessionEvents" this)}}>
-      {{! template-lint-disable no-triple-curlies }}
-      {{{t "general.showSessionEvents" sessionTitle=@session.title}}}
-    </label>
-  </span>
-</p>
-<div class="ilios-calendar">
-  <IliosCalendarWeek
-    @calendarEvents={{await this.calendarEvents}}
-    @date={{@startDate}}
-    @areEventsSelectable={{false}}
-    @areDaysSelectable={{false}}
-  />
+  </div>
+  {{#if this.load.isRunning}}
+    <span class="loading-indicator">
+      <LoadingSpinner />
+      {{t "general.loadingEvents"}}
+      ...
+    </span>
+  {{/if}}
 </div>
-<span class="loding-indicator {{if (is-fulfilled this.calendarEvents) "loaded"}}">
-  <LoadingSpinner />
-  {{t "general.loadingEvents"}}
-  ...
-</span>
