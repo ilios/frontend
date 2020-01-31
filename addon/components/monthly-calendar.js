@@ -10,8 +10,12 @@ export default class MonthlyCalendarComponent extends Component {
     return this.args.events.sortBy('startDate', 'endDate', 'name');
   }
 
+  get firstDayOfMonth() {
+    return moment(this.args.date).startOf('month');
+  }
+
   get eventDays() {
-    const date = moment(this.args.date).startOf('month');
+    const date = this.firstDayOfMonth;
     const lastDayOfMonth = moment(this.args.date).endOf('month');
     const firstDayOfWeek = date.clone().startOf('week');
     const offset = date.diff(firstDayOfWeek, 'days');
@@ -19,6 +23,7 @@ export default class MonthlyCalendarComponent extends Component {
 
     while (date < lastDayOfMonth) {
       const day = {
+        date: date.toDate(),
         dayOfMonth: date.date(),
         dayOfWeek: date.day(),
         weekOfMonth: Math.ceil((date.date() + offset) / 7),

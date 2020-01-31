@@ -1,4 +1,9 @@
-<MonthlyCalendar @date={{@date}} @events={{this.nonIlmPreWorkEvents}} />
+<MonthlyCalendar
+  @date={{@date}}
+  @events={{this.nonIlmPreWorkEvents}}
+  @changeToDayView={{action "changeToDayView"}}
+  @selectEvent={{@selectEvent}}
+/>
 
 <IliosCalendarPreWorkEvents
   @events={{this.ilmPreWorkEvents}}

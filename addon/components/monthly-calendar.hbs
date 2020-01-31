@@ -1,19 +1,49 @@
 <section class="monthly-calendar">
-  {{#each this.eventDays as |day|}}
-    <div class="day week-{{day.weekOfMonth}} day-{{day.dayOfWeek}}">
-      <h2 class="day-number" aria-label={{day.name}}>{{day.dayOfMonth}}</h2>
-      <ul>
-        {{#each day.events as |event|}}
-          <li>{{event.name}}</li>
+  <h2 class="month-year">{{moment-format this.firstDayOfMonth "MMMM YYYY"}}</h2>
+  <div class="calendar">
+    {{#each this.eventDays as |day|}}
+      <div class="day week-{{day.weekOfMonth}} day-{{day.dayOfWeek}}">
+        <h3 class="day-number" aria-label={{day.name}}>
+          <button
+            type="button"
+            aria-label={{concat (t "general.view") " " day.name}}
+            {{on "click" (fn @changeToDayView day.date)}}
+          >
+            {{day.dayOfMonth}}
+          </button>
+        </h3>
+        {{#each (slice 0 2 day.events) as |event|}}
+          {{#if event.isMulti}}
+            <IliosCalendarEventMonth
+              @event={{event}}
+              @selectEvent={{fn @changeToDayView event.startDate}}
+            />
+          {{else}}
+            <IliosCalendarEventMonth
+              @event={{event}}
+              @selectEvent={{fn @selectEvent event}}
+            />
+          {{/if}}
         {{/each}}
-      </ul>
-    </div>
-  {{/each}}
+        {{#if (gt day.events.length 2)}}
+          <button
+            type="button"
+            class="month-more-events"
+            {{on "click" (fn @changeToDayView day.date)}}
+          >
+            <FaIcon @icon="ellipsis-h" />
+            {{t "general.showMore"}}
+            <FaIcon @icon="angle-double-down" />
+          </button>
+        {{/if}}
+      </div>
+    {{/each}}
 
-  {{#each this.days as |day i|}}
-    <span class="day-heading day-{{i}}" aria-hidden="true">
-      <span class="long-name">{{day.longName}}</span>
-      <span class="short-name">{{day.shortName}}</span>
-    </span>
-  {{/each}}
+    {{#each this.days as |day i|}}
+      <span class="day-heading day-{{i}}" aria-hidden="true">
+        <span class="long-name">{{day.longName}}</span>
+        <span class="short-name">{{day.shortName}}</span>
+      </span>
+    {{/each}}
+  </div>
 </section>
