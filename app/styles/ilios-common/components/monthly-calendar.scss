@@ -1,0 +1,45 @@
+.monthly-calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  grid-gap: 10px;
+  grid-template-rows: 1rem repeat(5, 6rem);
+
+  .day-heading {
+    @for $i from 0 through 6 {
+      &.day-#{$i} {
+        grid-column: ($i + 1);
+        grid-row: 1;
+      }
+    }
+
+    .long-name {
+      display: none;
+    }
+
+    @include for-tablet-and-up {
+      .long-name {
+        display: inline;
+      }
+      .short-name {
+        display: none;
+      }
+    }
+  }
+
+  .day {
+    @for $week from 1 through 6 {
+      @for $day from 0 through 6 {
+        &.week-#{$week}.day-#{$day} {
+          grid-column: ($day + 1);
+          grid-row: ($week + 1);
+          overflow: hidden;
+        }
+      }
+    }
+
+    .day-number {
+      font-size: 1rem;
+      font-weight: normal;
+    }
+  }
+}

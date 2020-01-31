@@ -1,0 +1,19 @@
+<section class="monthly-calendar">
+  {{#each this.eventDays as |day|}}
+    <div class="day week-{{day.weekOfMonth}} day-{{day.dayOfWeek}}">
+      <h2 class="day-number" aria-label={{day.name}}>{{day.dayOfMonth}}</h2>
+      <ul>
+        {{#each day.events as |event|}}
+          <li>{{event.name}}</li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/each}}
+
+  {{#each this.days as |day i|}}
+    <span class="day-heading day-{{i}}" aria-hidden="true">
+      <span class="long-name">{{day.longName}}</span>
+      <span class="short-name">{{day.shortName}}</span>
+    </span>
+  {{/each}}
+</section>
