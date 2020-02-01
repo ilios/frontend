@@ -15,6 +15,7 @@ export default CalendarEvent.extend(TooltipContent, {
   event: null,
   timeFormat: 'h:mma',
   classNameBindings: [':event', ':event-pos', ':ilios-calendar-event', ':month-event', 'clickable:clickable'],
+  'data-test-ilios-calendar-event': true,
   daysToShowAlert: null,
 
   isIlm: notEmpty('event.ilmSession'),
@@ -43,7 +44,7 @@ export default CalendarEvent.extend(TooltipContent, {
     }
   }).readOnly(),
 
-  click(){
+  click() {
     if(this.get('clickable')){
       this.get('selectEvent')();
     }

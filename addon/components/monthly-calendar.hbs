@@ -1,13 +1,14 @@
-<section class="monthly-calendar">
+<section class="monthly-calendar" data-test-monthly-calendar>
   <h2 class="month-year">{{moment-format this.firstDayOfMonth "MMMM YYYY"}}</h2>
   <div class="calendar">
     {{#each this.eventDays as |day|}}
-      <div class="day week-{{day.weekOfMonth}} day-{{day.dayOfWeek}}">
-        <h3 class="day-number" aria-label={{day.name}}>
+      <div class="day week-{{day.weekOfMonth}} day-{{day.dayOfWeek}}" data-test-day>
+        <h3 class="day-number" aria-label={{day.name}} data-test-number>
           <button
             type="button"
             aria-label={{concat (t "general.view") " " day.name}}
             {{on "click" (fn @changeToDayView day.date)}}
+            data-test-day-button={{day.dayOfMonth}}
           >
             {{day.dayOfMonth}}
           </button>
@@ -30,6 +31,7 @@
             type="button"
             class="month-more-events"
             {{on "click" (fn @changeToDayView day.date)}}
+            data-test-show-more-button
           >
             <FaIcon @icon="ellipsis-h" />
             {{t "general.showMore"}}

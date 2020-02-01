@@ -192,8 +192,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     });
     await visit('/dashboard?show=calendar&view=month');
     const dayOfMonth = aDayInTheMonth.date();
-    const link = findAll('.day .clickable').find(e => parseInt(find(e).textContent, 10) === dayOfMonth);
-    await click(link);
+    await click(`[data-test-day-button="${dayOfMonth}"]`);
     assert.equal(currentURL(), '/dashboard?date=' + aDayInTheMonth.format('YYYY-MM-DD') + '&show=calendar&view=day');
   });
 
