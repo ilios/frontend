@@ -19,9 +19,9 @@
 
     .day-heading {
       font-weight: bold;
-      @for $i from 0 through 6 {
+      @for $i from 1 through 7 {
         &.day-#{$i} {
-          grid-column: ($i + 1);
+          grid-column: $i;
           grid-row: 1;
         }
       }
@@ -44,9 +44,9 @@
       border: 1px solid $grey;
       padding: 5px;
       @for $week from 1 through 6 {
-        @for $day from 0 through 6 {
+        @for $day from 1 through 7 {
           &.week-#{$week}.day-#{$day} {
-            grid-column: ($day + 1);
+            grid-column: $day;
             grid-row: ($week + 1);
             overflow: hidden;
           }

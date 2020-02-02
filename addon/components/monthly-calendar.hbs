@@ -1,7 +1,7 @@
 <section class="monthly-calendar" data-test-monthly-calendar>
   <h2 class="month-year">{{moment-format this.firstDayOfMonth "MMMM YYYY"}}</h2>
   <div class="calendar">
-    {{#each this.eventDays as |day|}}
+    {{#each this.days as |day|}}
       <div class="day week-{{day.weekOfMonth}} day-{{day.dayOfWeek}}" data-test-day>
         <h3 class="day-number" aria-label={{day.name}} data-test-number>
           <button
@@ -41,8 +41,8 @@
       </div>
     {{/each}}
 
-    {{#each this.days as |day i|}}
-      <span class="day-heading day-{{i}}" aria-hidden="true">
+    {{#each this.dayNames as |day|}}
+      <span class="day-heading day-{{day.day}}" aria-hidden="true">
         <span class="long-name">{{day.longName}}</span>
         <span class="short-name">{{day.shortName}}</span>
       </span>
