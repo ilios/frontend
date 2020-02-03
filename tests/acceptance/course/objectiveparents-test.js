@@ -66,23 +66,24 @@ module('Acceptance | Course - Objective Parents', function(hooks) {
 
 
     await page.objectives.current[0].manageParents();
+    const m = page.objectives.manageObjectiveParents;
 
-    assert.equal(page.objectiveParentManager.title, 'objective 3');
-    assert.equal(page.objectiveParentManager.groupTitle, 'Select Parent For: program 0 cohort 0');
-    assert.equal(page.objectiveParentManager.competencies.length, 2);
-    assert.equal(page.objectiveParentManager.competencies[0].title, 'competency 0');
-    assert.ok(page.objectiveParentManager.competencies[0].selected);
-    assert.equal(page.objectiveParentManager.competencies[0].objectives.length, 1);
-    assert.equal(page.objectiveParentManager.competencies[0].objectives[0].title, 'objective 0');
-    assert.ok(page.objectiveParentManager.competencies[0].objectives[0].selected);
+    assert.equal(m.objectiveTitle, 'objective 3');
+    assert.equal(m.selectedCohortTitle, 'program 0 cohort 0');
+    assert.equal(m.competencies.length, 2);
+    assert.equal(m.competencies[0].title, 'competency 0');
+    assert.ok(m.competencies[0].selected);
+    assert.equal(m.competencies[0].objectives.length, 1);
+    assert.equal(m.competencies[0].objectives[0].title, 'objective 0');
+    assert.ok(m.competencies[0].objectives[0].selected);
 
-    assert.equal(page.objectiveParentManager.competencies[1].title, 'competency 1');
-    assert.ok(page.objectiveParentManager.competencies[1].notSelected);
-    assert.equal(page.objectiveParentManager.competencies[1].objectives.length, 2);
-    assert.equal(page.objectiveParentManager.competencies[1].objectives[0].title, 'objective 1');
-    assert.ok(page.objectiveParentManager.competencies[1].objectives[0].notSelected);
-    assert.equal(page.objectiveParentManager.competencies[1].objectives[1].title, 'objective 2');
-    assert.ok(page.objectiveParentManager.competencies[1].objectives[1].notSelected);
+    assert.equal(m.competencies[1].title, 'competency 1');
+    assert.ok(m.competencies[1].notSelected);
+    assert.equal(m.competencies[1].objectives.length, 2);
+    assert.equal(m.competencies[1].objectives[0].title, 'objective 1');
+    assert.ok(m.competencies[1].objectives[0].notSelected);
+    assert.equal(m.competencies[1].objectives[1].title, 'objective 2');
+    assert.ok(m.competencies[1].objectives[1].notSelected);
   });
 
   test('save changes', async function(assert) {
@@ -97,12 +98,13 @@ module('Acceptance | Course - Objective Parents', function(hooks) {
 
 
     await page.objectives.current[0].manageParents();
+    const m = page.objectives.manageObjectiveParents;
 
-    assert.equal(page.objectiveParentManager.title, 'objective 3');
-    assert.equal(page.objectiveParentManager.groupTitle, 'Select Parent For: program 0 cohort 0');
-    await page.objectiveParentManager.competencies[1].objectives[0].add();
-    assert.ok(page.objectiveParentManager.competencies[0].objectives[0].notSelected);
-    assert.ok(page.objectiveParentManager.competencies[1].objectives[0].selected);
+    assert.equal(m.objectiveTitle, 'objective 3');
+    assert.equal(m.selectedCohortTitle, 'program 0 cohort 0');
+    await m.competencies[1].objectives[0].add();
+    assert.ok(m.competencies[0].objectives[0].notSelected);
+    assert.ok(m.competencies[1].objectives[0].selected);
     await page.objectives.save();
 
     assert.equal(page.objectives.current[0].description.text, 'objective 3');
@@ -123,12 +125,13 @@ module('Acceptance | Course - Objective Parents', function(hooks) {
 
 
     await page.objectives.current[0].manageParents();
+    const m = page.objectives.manageObjectiveParents;
 
-    assert.equal(page.objectiveParentManager.title, 'objective 3');
-    assert.equal(page.objectiveParentManager.groupTitle, 'Select Parent For: program 0 cohort 0');
-    await page.objectiveParentManager.competencies[1].objectives[0].add();
-    assert.ok(page.objectiveParentManager.competencies[0].objectives[0].notSelected);
-    assert.ok(page.objectiveParentManager.competencies[1].objectives[0].selected);
+    assert.equal(m.objectiveTitle, 'objective 3');
+    assert.equal(m.selectedCohortTitle, 'program 0 cohort 0');
+    await m.competencies[1].objectives[0].add();
+    assert.ok(m.competencies[0].objectives[0].notSelected);
+    assert.ok(m.competencies[1].objectives[0].selected);
     await page.objectives.cancel();
 
     assert.equal(page.objectives.current[0].description.text, 'objective 3');

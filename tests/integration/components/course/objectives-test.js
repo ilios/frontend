@@ -103,7 +103,7 @@ module('Integration | Component | course/objectives', function(hooks) {
     const m = component.manageObjectiveParents;
     assert.equal(m.objectiveTitle, 'objective 5');
     assert.notOk(m.hasMultipleCohorts);
-    assert.equal(m.selectedCohortTitle, 'cohort 0');
+    assert.equal(m.selectedCohortTitle, 'program 0 cohort 0');
     assert.equal(m.competencies.length, 2);
     assert.equal(m.competencies[0].title, 'competency 0');
     assert.ok(m.competencies[0].selected);
@@ -175,7 +175,7 @@ module('Integration | Component | course/objectives', function(hooks) {
     const m = component.manageObjectiveParents;
     assert.equal(m.objectiveTitle, 'objective 4');
     assert.ok(m.hasMultipleCohorts);
-    assert.equal(m.selectedCohortTitle, 'cohort 0 cohort 1');
+    assert.equal(m.selectedCohortTitle, 'program 0 cohort 0 program 0 cohort 1');
     assert.equal(m.selectedCohortId, '1');
 
     assert.equal(m.competencies.length, 1);

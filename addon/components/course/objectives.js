@@ -50,6 +50,7 @@ export default class CourseObjectivesComponent extends Component {
     const cohorts = (await course.cohorts).toArray();
     return await map(cohorts, async cohort => {
       const programYear = await cohort.programYear;
+      const program = await programYear.program;
       const objectives = (await programYear.objectives).toArray();
       const objectiveObjects = await map(objectives, async objective => {
         let competencyId = 0;
@@ -64,6 +65,7 @@ export default class CourseObjectivesComponent extends Component {
           title: objective.textTitle,
           competencyId,
           competencyTitle,
+          cohortId: cohort.id,
         };
       });
       const competencies = objectiveObjects.reduce((set, obj) => {
@@ -81,7 +83,7 @@ export default class CourseObjectivesComponent extends Component {
       }, []);
 
       return {
-        title: cohort.title,
+        title: `${program.title} ${cohort.title}`,
         id: cohort.id,
         competencies,
       };

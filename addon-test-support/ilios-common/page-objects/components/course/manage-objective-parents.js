@@ -17,6 +17,10 @@ const definition = {
   selectedCohortTitle: text('[data-test-selected-cohort-title]'),
   selectedCohortId: value('[data-test-cohort-selector]'),
   selectCohort: fillable('[data-test-cohort-selector]'),
+  cohorts: collection('[data-test-cohort-selector] option', {
+    title: text(),
+    value: value(),
+  }),
   competencies: collection('.parent-picker [data-test-competency]', {
     title: text('.competency-title'),
     selected: hasClass('selected', '.competency-title'),

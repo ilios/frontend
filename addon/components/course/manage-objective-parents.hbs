@@ -30,15 +30,18 @@
 
   {{#if this.selectedCohort}}
     <ul class="parent-picker" data-test-parent-picker>
-      {{#each this.selectedCohort.competencies as |competency|}}
+      {{#each this.competenciesFromSelectedCohort as |competency|}}
         <li data-test-competency>
           <h4
-            class="competency-title {{if (contains competency.id (map-by "competencyId" @selected)) "selected"}}"
+            class="competency-title {{if
+              (contains competency.id this.selectedCompetencyIdsInSelectedCohort)
+              "selected"
+            }}"
           >
             {{competency.title}}
           </h4>
           <ul>
-            {{#each competency.objectives as |objective|}}
+            {{#each (sort-by "title" competency.objectives) as |objective|}}
               <li>
                 <Course::ManageObjectiveParentsItem
                   @title={{objective.title}}

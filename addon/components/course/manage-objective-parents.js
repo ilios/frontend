@@ -17,4 +17,13 @@ export default class CourseManageObjectiveParentsComponent extends Component {
     const cohortId = event.target.value;
     this.selectedCohort = this.args.cohortObjectives.findBy('id', cohortId);
   }
+
+  get selectedCompetencyIdsInSelectedCohort() {
+    const selectedInCohort = this.args.selected.filter(obj => obj.cohortId === this.selectedCohort.id);
+    return selectedInCohort.mapBy('competencyId');
+  }
+
+  get competenciesFromSelectedCohort() {
+    return this.selectedCohort.competencies.sortBy('title');
+  }
 }

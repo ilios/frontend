@@ -15,7 +15,7 @@ import manageObjectiveParents from './manage-objective-parents';
 
 const definition = {
   scope: '[data-test-course-objectives]',
-  createNew: clickable('[data-test-actions] [data-test-expand-collapse-button]'),
+  createNew: clickable('[data-test-actions] [data-test-expand-collapse-button] button'),
   save: clickable('[data-test-actions] [data-test-save]'),
   cancel: clickable('[data-test-actions] [data-test-cancel]'),
   newObjective: {

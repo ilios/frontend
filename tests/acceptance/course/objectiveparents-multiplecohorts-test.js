@@ -3,7 +3,6 @@ import {
   test
 } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/course';
@@ -51,43 +50,44 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
     assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
     assert.equal(page.objectives.current[0].parents[1].description, 'objective 3');
     await page.objectives.current[0].manageParents();
+    const m = page.objectives.manageObjectiveParents;
 
-    assert.equal(page.objectiveParentManager.title, 'objective 4');
-    await page.objectiveParentManager.selectGroup(1);
+    assert.equal(m.objectiveTitle, 'objective 4');
+    await m.selectCohort(1);
 
-    assert.equal(page.objectiveParentManager.groups.length, 2);
-    assert.equal(page.objectiveParentManager.groups[0].title, 'program 0 cohort 0');
-    assert.equal(page.objectiveParentManager.groups[0].value, '1');
-    assert.equal(page.objectiveParentManager.groups[1].title, 'program 0 cohort 1');
-    assert.equal(page.objectiveParentManager.groups[1].value, '2');
+    assert.equal(m.cohorts.length, 2);
+    assert.equal(m.cohorts[0].title, 'program 0 cohort 0');
+    assert.equal(m.cohorts[0].value, '1');
+    assert.equal(m.cohorts[1].title, 'program 0 cohort 1');
+    assert.equal(m.cohorts[1].value, '2');
 
-    assert.equal(page.objectiveParentManager.competencies.length, 2);
-    assert.equal(page.objectiveParentManager.competencies[0].title, 'competency 0');
-    assert.ok(page.objectiveParentManager.competencies[0].selected);
-    assert.equal(page.objectiveParentManager.competencies[0].objectives.length, 1);
-    assert.equal(page.objectiveParentManager.competencies[0].objectives[0].title, 'objective 0');
-    assert.ok(page.objectiveParentManager.competencies[0].objectives[0].selected);
+    assert.equal(m.competencies.length, 2);
+    assert.equal(m.competencies[0].title, 'competency 0');
+    assert.ok(m.competencies[0].selected);
+    assert.equal(m.competencies[0].objectives.length, 1);
+    assert.equal(m.competencies[0].objectives[0].title, 'objective 0');
+    assert.ok(m.competencies[0].objectives[0].selected);
 
-    assert.equal(page.objectiveParentManager.competencies[1].title, 'competency 1');
-    assert.ok(page.objectiveParentManager.competencies[1].notSelected);
-    assert.equal(page.objectiveParentManager.competencies[1].objectives.length, 1);
-    assert.equal(page.objectiveParentManager.competencies[1].objectives[0].title, 'objective 1');
-    assert.ok(page.objectiveParentManager.competencies[1].objectives[0].notSelected);
+    assert.equal(m.competencies[1].title, 'competency 1');
+    assert.ok(m.competencies[1].notSelected);
+    assert.equal(m.competencies[1].objectives.length, 1);
+    assert.equal(m.competencies[1].objectives[0].title, 'objective 1');
+    assert.ok(m.competencies[1].objectives[0].notSelected);
 
-    await page.objectiveParentManager.selectGroup(2);
+    await m.selectCohort(2);
 
-    assert.equal(page.objectiveParentManager.competencies.length, 2);
-    assert.equal(page.objectiveParentManager.competencies[0].title, 'competency 0');
-    assert.ok(page.objectiveParentManager.competencies[0].notSelected);
-    assert.equal(page.objectiveParentManager.competencies[0].objectives.length, 1);
-    assert.equal(page.objectiveParentManager.competencies[0].objectives[0].title, 'objective 2');
-    assert.ok(page.objectiveParentManager.competencies[0].objectives[0].notSelected);
+    assert.equal(m.competencies.length, 2);
+    assert.equal(m.competencies[0].title, 'competency 0');
+    assert.ok(m.competencies[0].notSelected);
+    assert.equal(m.competencies[0].objectives.length, 1);
+    assert.equal(m.competencies[0].objectives[0].title, 'objective 2');
+    assert.ok(m.competencies[0].objectives[0].notSelected);
 
-    assert.equal(page.objectiveParentManager.competencies[1].title, 'competency 1');
-    assert.ok(page.objectiveParentManager.competencies[1].selected);
-    assert.equal(page.objectiveParentManager.competencies[1].objectives.length, 1);
-    assert.equal(page.objectiveParentManager.competencies[1].objectives[0].title, 'objective 3');
-    assert.ok(page.objectiveParentManager.competencies[1].objectives[0].selected);
+    assert.equal(m.competencies[1].title, 'competency 1');
+    assert.ok(m.competencies[1].selected);
+    assert.equal(m.competencies[1].objectives.length, 1);
+    assert.equal(m.competencies[1].objectives[0].title, 'objective 3');
+    assert.ok(m.competencies[1].objectives[0].selected);
   });
 
   test('save changes', async function(assert) {
@@ -99,18 +99,18 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
     assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
     assert.equal(page.objectives.current[0].parents[1].description, 'objective 3');
     await page.objectives.current[0].manageParents();
+    const m = page.objectives.manageObjectiveParents;
 
+    assert.equal(m.objectiveTitle, 'objective 4');
+    await m.selectCohort(1);
 
-    assert.equal(page.objectiveParentManager.title, 'objective 4');
-    await page.objectiveParentManager.selectGroup(1);
-
-    await page.objectiveParentManager.competencies[1].objectives[0].add();
-    assert.ok(page.objectiveParentManager.competencies[0].objectives[0].notSelected);
-    assert.ok(page.objectiveParentManager.competencies[1].objectives[0].selected);
-    await page.objectiveParentManager.selectGroup(2);
-    await page.objectiveParentManager.competencies[0].objectives[0].add();
-    assert.ok(page.objectiveParentManager.competencies[0].objectives[0].selected);
-    assert.ok(page.objectiveParentManager.competencies[1].objectives[0].notSelected);
+    await m.competencies[1].objectives[0].add();
+    assert.ok(m.competencies[0].objectives[0].notSelected);
+    assert.ok(m.competencies[1].objectives[0].selected);
+    await m.selectCohort(2);
+    await m.competencies[0].objectives[0].add();
+    assert.ok(m.competencies[0].objectives[0].selected);
+    assert.ok(m.competencies[1].objectives[0].notSelected);
 
     await page.objectives.save();
 
@@ -130,18 +130,19 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
     assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
     assert.equal(page.objectives.current[0].parents[1].description, 'objective 3');
     await page.objectives.current[0].manageParents();
+    const m = page.objectives.manageObjectiveParents;
 
 
-    assert.equal(page.objectiveParentManager.title, 'objective 4');
-    await page.objectiveParentManager.selectGroup(1);
+    assert.equal(m.objectiveTitle, 'objective 4');
+    await m.selectCohort(1);
 
-    await page.objectiveParentManager.competencies[1].objectives[0].add();
-    assert.ok(page.objectiveParentManager.competencies[0].objectives[0].notSelected);
-    assert.ok(page.objectiveParentManager.competencies[1].objectives[0].selected);
-    await page.objectiveParentManager.selectGroup(2);
-    await page.objectiveParentManager.competencies[0].objectives[0].add();
-    assert.ok(page.objectiveParentManager.competencies[0].objectives[0].selected);
-    assert.ok(page.objectiveParentManager.competencies[1].objectives[0].notSelected);
+    await m.competencies[1].objectives[0].add();
+    assert.ok(m.competencies[0].objectives[0].notSelected);
+    assert.ok(m.competencies[1].objectives[0].selected);
+    await m.selectCohort(2);
+    await m.competencies[0].objectives[0].add();
+    assert.ok(m.competencies[0].objectives[0].selected);
+    assert.ok(m.competencies[1].objectives[0].notSelected);
 
     await page.objectives.cancel();
 
