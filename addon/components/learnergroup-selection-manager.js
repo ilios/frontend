@@ -1,11 +1,6 @@
-import { inject as service } from '@ember/service';
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 
-export default Component.extend({
-  intl: service(),
-  classNames: ['learnergroup-selection-manager'],
-  filter: '',
-  cohorts: null,
-  learnerGroups: null,
-  'data-test-learnergroup-selection-manager': true,
-});
+export default class LearnergroupSelectionManager extends Component {
+  @tracked filter = '';
+}
