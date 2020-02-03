@@ -10,7 +10,7 @@ import {
   pageObjectFillInFroalaEditor,
   pageObjectFroalaEditorValue
 } from 'ilios-common';
-import meshManager from '../mesh-manager';
+import manageObjectiveDescriptors from './manage-objective-descriptors';
 import manageObjectiveParents from './manage-objective-parents';
 
 const definition = {
@@ -46,7 +46,7 @@ const definition = {
     manageMesh: clickable('li:eq(0)', { scope: 'td:eq(2) .mesh-descriptor-list' }),
   }),
   manageObjectiveParents,
-  meshManager,
+  manageObjectiveDescriptors,
 };
 
 export default definition;

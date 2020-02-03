@@ -90,9 +90,12 @@
         />
       {{/if}}
       {{#if this.isManagingDescriptors}}
-        <ObjectiveManageDescriptors
+        <Course::ManageObjectiveDescriptors
+          @objectiveTitle={{this.manageDescriptorsObjective.title}}
+          @selected={{this.descriptorsBuffer}}
+          @add={{this.addDescriptorToBuffer}}
+          @remove={{this.removeDescriptorFromBuffer}}
           @editable={{@editable}}
-          @objective={{this.manageDescriptorsObjective}}
         />
       {{/if}}
     {{/unless}}

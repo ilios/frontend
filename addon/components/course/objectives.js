@@ -14,7 +14,7 @@ export default class CourseObjectivesComponent extends Component {
   @tracked manageParentsObjective;
   @tracked parentsBuffer = [];
   @tracked manageDescriptorsObjective;
-  @tracked meshBuffer = [];
+  @tracked descriptorsBuffer = [];
 
   @tracked newObjectiveEditorOn = false;
   @tracked newObjectiveTitle;
@@ -106,7 +106,7 @@ export default class CourseObjectivesComponent extends Component {
   *manageDescriptors(objective) {
     const meshDescriptors = yield objective.meshDescriptors;
     scrollTo('.detail-objectives', 1000);
-    this.meshBuffer = meshDescriptors.toArray();
+    this.descriptorsBuffer = meshDescriptors.toArray();
     this.manageDescriptorsObjective = objective;
   }
 
@@ -120,69 +120,25 @@ export default class CourseObjectivesComponent extends Component {
     }
   }
 
-
   @dropTask
   *saveParents() {
     const objective = this.manageParentsObjective;
     const newParents = this.parentsBuffer.map(obj => {
       return this.store.peekRecord('objective', obj.id);
     });
-    // const parents = yield objective.parents;
-    // const newParents = this.parentsBuffer;
-    // const newParentIds = newParents.mapBy('id');
-    // const removedParents = parents.filter(parent => !newParentIds.include(parent.id));
-
     objective.set('parents', newParents);
     yield objective.save();
     this.manageParentsObjective = null;
     scrollTo("#objective-" + objective.get('id'));
-
-    // const oldParents = this.get('initialStateForManageParentsObjective').filter(parent => {
-    //   return !newParents.includes(parent);
-    // });
-    // oldParents.forEach(parent => {
-    //   parent.get('children').removeObject(objective);
-    // });
-    // objective.save().then(() => {
-
-    // });
   }
 
   @dropTask
-  saveMesh() {
-    if(this.isManagingParents){
-      const objective = this.get('manageParentsObjective');
-      objective.get('parents').then(newParents => {
-        const oldParents = this.get('initialStateForManageParentsObjective').filter(parent => {
-          return !newParents.includes(parent);
-        });
-        oldParents.forEach(parent => {
-          parent.get('children').removeObject(objective);
-        });
-        objective.save().then(() => {
-          this.set('manageParentsObjective', null);
-          scrollTo("#objective-" + objective.get('id'));
-        });
-      });
-    }
-    if(this.isManagingDescriptors){
-      const objective = this.get('manageDescriptorsObjective');
-      objective.get('meshDescriptors').then(newDescriptors => {
-        const oldDescriptors = this.get('initialStateForManageMeshObjective').filter(descriptor => {
-          return !newDescriptors.includes(descriptor);
-        });
-        oldDescriptors.forEach(descriptor => {
-          descriptor.get('objectives').removeObject(objective);
-        });
-        newDescriptors.forEach(descriptor => {
-          descriptor.get('objectives').addObject(objective);
-        });
-        objective.save().then(() => {
-          this.set('manageDescriptorsObjective', null);
-          scrollTo("#objective-" + objective.get('id'));
-        });
-      });
-    }
+  *saveMesh() {
+    const objective = this.manageDescriptorsObjective;
+    objective.set('meshDescriptors', this.descriptorsBuffer);
+    yield objective.save();
+    this.manageDescriptorsObjective = null;
+    scrollTo("#objective-" + objective.get('id'));
   }
 
   @dropTask
@@ -237,5 +193,13 @@ export default class CourseObjectivesComponent extends Component {
     this.parentsBuffer = this.parentsBuffer.filter(obj => {
       return !ids.includes(obj.id);
     });
+  }
+  @action
+  addDescriptorToBuffer(descriptor) {
+    this.descriptorsBuffer = [...this.descriptorsBuffer, descriptor];
+  }
+  @action
+  removeDescriptorFromBuffer(descriptor) {
+    this.descriptorsBuffer = this.descriptorsBuffer.filter(obj => obj.id !== descriptor.id);
   }
 }
