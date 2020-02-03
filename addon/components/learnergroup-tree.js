@@ -1,68 +1,53 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { filter } from 'rsvp';
-import { task } from 'ember-concurrency';
 import { isEmpty } from '@ember/utils';
+import {restartableTask} from "ember-concurrency-decorators";
 
-const { gt } = computed;
+export default class LearnergroupTree extends Component {
+  @tracked isHidden = true;
+  @tracked selectable = false;
+  @tracked hasChildren = false;
 
-export default Component.extend({
-  learnerGroup: null,
-  selectedGroups: null,
-  filter: '',
-  tagName: 'li',
-  classNameBindings: ['hasChildren:strong:em', 'selectable::disabled'],
-  isVisible: false,
-  selectable: false,
-  'data-test-learnergroup-tree': true,
-  hasChildren: gt('learnerGroup.children.length', 0),
-  didReceiveAttrs(){
-    this._super(...arguments);
-    this.get('updateIsVisible').perform();
-  },
-  /**
-   * Recursivly search a group tree to see if there are any children
-   * which have not been selected
-  **/
-  async hasUnSelectedChildren(children){
-    const selectedGroups = this.selectedGroups;
-    const unselectedChildren = await filter(children.toArray(), async (child) => {
-      if (isEmpty(selectedGroups) || !selectedGroups.includes(child)) {
-        return true;
-      }
-
-      const childChildren = await child.get('children');
-      return await this.hasUnSelectedChildren(childChildren);
-    });
-    return unselectedChildren.length > 0;
-  },
-  /**
-   * Controls visibility of the learner group element
-   * If a filter has been applied use that first
-   * If there are any unselected children then display
-   * If the group is not already picked then display
-  **/
-  updateIsVisible: task(function * () {
-    const selectedGroups = this.get('selectedGroups');
-    const learnerGroup = this.get('learnerGroup');
-    const filterString = this.get('filter');
-    const exp = new RegExp(filterString, 'gi');
-
-    const children = yield learnerGroup.get('children');
-    const hasUnSelectedChildren = yield this.hasUnSelectedChildren(children);
+  @restartableTask
+  *load(element, [learnerGroup, selectedGroups, filter]) {
+    const exp = new RegExp(filter, 'gi');
+    const children = yield learnerGroup.children;
+    const hasUnSelectedChildren = yield this.hasUnSelectedChildren(children.toArray(), selectedGroups);
     let filterMatch = true;
-    if (filterString && filterString.length > 0) {
-      const filterTitle = yield learnerGroup.get('filterTitle');
+    if (filter && filter.length > 0) {
+      const filterTitle = yield learnerGroup.filterTitle;
       filterMatch = filterTitle.match(exp) != null;
     }
     const available = hasUnSelectedChildren || isEmpty(selectedGroups) || !selectedGroups.includes(learnerGroup);
 
-    this.set('isVisible', filterMatch && available);
-    this.set('selectable', available);
-  }).restartable(),
+    this.isHidden = !filterMatch || !available;
+    this.selectable = available;
+    this.hasChildren = children.length;
+  }
+
+  /**
+   * Recursively search a group tree to see if there are any children which have not been selected.
+   * @param {Array} children
+   * @param {Array} selectedGroups
+   * @return {boolean}
+  **/
+  async hasUnSelectedChildren(children, selectedGroups){
+    const unselectedChildren = await filter(children, async (child) => {
+      if (isEmpty(selectedGroups) || ! selectedGroups.includes(child)) {
+        return true;
+      }
+      const childChildren = await child.children;
+      return this.hasUnSelectedChildren(childChildren.toArray(), selectedGroups);
+    });
+    return unselectedChildren.length > 0;
+  }
+
+  @action
   add(learnerGroup) {
     if (this.selectable) {
-      this.add(learnerGroup);
+      this.args.add(learnerGroup);
     }
   }
-});
+}
