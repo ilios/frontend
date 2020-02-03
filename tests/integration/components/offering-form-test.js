@@ -83,7 +83,7 @@ module('Integration | Component | offering form', function(hooks) {
     const thursday = '[data-test-recurring-day-label="4"]';
     const friday = '[data-test-recurring-day-label="5"]';
     const saturday = '[data-test-recurring-day-label="6"]';
-    const toggle = '.make-recurring .toggle-yesno .switch-handle';
+    const toggle = '.make-recurring [data-test-toggle-yesno] [data-test-handle]';
 
     await click(toggle);
     assert.dom(sunday).hasText('Sunday');
@@ -102,7 +102,7 @@ module('Integration | Component | offering form', function(hooks) {
 
     const item = '.make-recurring-input-container';
     const error = `${item} .validation-error-message`;
-    const toggle = '.make-recurring .toggle-yesno .switch-handle';
+    const toggle = '.make-recurring [data-test-toggle-yesno] [data-test-handle]';
 
     await click(toggle);
     assert.dom(error).doesNotExist();
@@ -115,7 +115,7 @@ module('Integration | Component | offering form', function(hooks) {
     const item = '.make-recurring-input-container';
     const error = `${item} .validation-error-message`;
     const input = `${item} input`;
-    const toggle = '.make-recurring .toggle-yesno .switch-handle';
+    const toggle = '.make-recurring [data-test-toggle-yesno] [data-test-handle]';
 
     await click(toggle);
     const save = '.buttons .done';
@@ -130,7 +130,7 @@ module('Integration | Component | offering form', function(hooks) {
 
     const inputs = '.make-recurring-days input';
     const dayToday = moment().day();
-    const toggle = '.make-recurring .toggle-yesno .switch-handle';
+    const toggle = '.make-recurring [data-test-toggle-yesno] [data-test-handle]';
 
     await click(toggle);
     const checkbox = findAll(inputs)[dayToday];
@@ -290,7 +290,7 @@ module('Integration | Component | offering form', function(hooks) {
     const wednesday = moment().add(1, 'week').day(3);
     const thursday = wednesday.clone().add(1, 'day').day();
     const tuesday = wednesday.clone().subtract(1, 'day').day();
-    const toggle = '.make-recurring .toggle-yesno .switch-handle';
+    const toggle = '.make-recurring [data-test-toggle-yesno] [data-test-handle]';
     const startDateInput = '.start-date input';
     const newStartDate = wednesday.toDate();
 
@@ -337,7 +337,7 @@ module('Integration | Component | offering form', function(hooks) {
     const thursday = wednesday.clone().add(1, 'day').day();
     const tuesday = wednesday.clone().subtract(1, 'day').day();
     const weeks = '.make-recurring-input-container input';
-    const toggle = '.make-recurring .toggle-yesno .switch-handle';
+    const toggle = '.make-recurring [data-test-toggle-yesno] [data-test-handle]';
     const startDateInput = '.start-date input';
     const newStartDate = wednesday.toDate();
 

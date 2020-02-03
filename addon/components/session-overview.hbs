@@ -162,10 +162,9 @@
           <label>{{t "general.independentLearning"}}:</label>
           <span class="independentlearningcontrol-value">
             {{#if @editable}}
-              <ToggleYesno @yes={{@session.isIndependentLearning}} @toggle={{this.saveIndependentLearning}}
-              />
+              <ToggleYesno @yes={{this.isIndependentLearning}} @toggle={{perform this.saveIndependentLearning}} />
             {{else}}
-              {{#if @session.isIndependentLearning}}
+              {{#if this.isIndependentLearning}}
                 <span class="add">{{t "general.yes"}}</span>
               {{else}}
                 <span class="remove">{{t "general.no"}}</span>
@@ -173,7 +172,7 @@
             {{/if}}
           </span>
         </div>
-        {{#if @session.isIndependentLearning}}
+        {{#if this.isIndependentLearning}}
           <div class="sessionilmhours block">
             <label>{{t "general.hours"}}:</label>
             <span>
@@ -346,7 +345,7 @@
             {{/if}}
           </span>
         </div>
-        {{#unless @session.isIndependentLearning}}
+        {{#unless this.isIndependentLearning}}
           <br>
           <div class="sessionassociatedgroups">
             <label>{{t "general.associatedGroups"}}:</label>

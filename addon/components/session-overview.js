@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
-import { task, restartableTask } from 'ember-concurrency-decorators';
+import { task, restartableTask, dropTask } from 'ember-concurrency-decorators';
 import moment from 'moment';
 import { validatable, Length, Gte, NotBlank } from 'ilios-common/decorators/validation';
 
@@ -32,6 +32,7 @@ export default class SessionOverview extends Component {
   @tracked showSupplemental = false;
   @tracked showSpecialAttireRequired = false;
   @tracked showSpecialEquipmentRequired = false;
+  @tracked isIndependentLearning = false;
 
   get filteredSessionTypes() {
     const selectedSessionTypeId = isEmpty(this.sessionType) ? -1 : this.sessionType.id;
@@ -63,6 +64,9 @@ export default class SessionOverview extends Component {
     if (ilmSession) {
       this.hours = ilmSession.hours;
       this.dueDate = ilmSession.dueDate;
+      this.isIndependentLearning = true;
+    } else {
+      this.isIndependentLearning = false;
     }
     this.updatedAt = moment(session.updatedAt).format("L LT");
     this.sessionTypes = sessionTypes || [];
@@ -106,14 +110,15 @@ export default class SessionOverview extends Component {
     return false;
   }
 
-  @action
-  async saveIndependentLearning(value) {
+  @dropTask
+  *saveIndependentLearning(value) {
+    this.isIndependentLearning = value;
     if (!value) {
-      const ilmSession = await this.args.session.ilmSession;
-      this.args.session.ilmSession = null;
+      const ilmSession = yield this.args.session.ilmSession;
+      this.args.session.set('ilmSession', null);
       ilmSession.deleteRecord();
-      await this.args.session.save();
-      await ilmSession.save();
+      yield this.args.session.save();
+      yield ilmSession.save();
     } else {
       const hours = 1;
       const dueDate = moment().add(6, 'weeks').toDate();
@@ -124,8 +129,8 @@ export default class SessionOverview extends Component {
         hours,
         dueDate
       });
-      this.args.session.ilmSession = await ilmSession.save();
-      await this.args.session.save();
+      this.args.session.set('ilmSession', (yield ilmSession.save()));
+      yield this.args.session.save();
     }
   }
 

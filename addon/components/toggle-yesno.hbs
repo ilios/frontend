@@ -12,5 +12,5 @@
     data-off={{t "general.no"}}
     {{on "click" (action "click")}}
   ></span>
-  <span class="switch-handle" role="button" {{on "click" (action "click")}}></span>
+  <span class="switch-handle" role="button" {{on "click" this.click}} data-test-handle></span>
 </span>
