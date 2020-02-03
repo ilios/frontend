@@ -1,63 +1,64 @@
-{{! template-lint-disable attribute-indentation }}
-<div class="selected-learner-groups">
-  <h4>
-    {{t "general.selectedLearnerGroups"}}
-  </h4>
-  {{#if @learnerGroups.length}}
-    <DetailLearnergroupsList
-      @learnerGroups={{@learnerGroups}}
-      @isManaging={{true}}
-      @remove={{@remove}}
+<div class="learnergroup-selection-manager" data-test-learnergroup-selection-manager>
+  <div class="selected-learner-groups">
+    <h4>
+      {{t "general.selectedLearnerGroups"}}
+    </h4>
+    {{#if @learnerGroups.length}}
+      <DetailLearnergroupsList
+        @learnerGroups={{@learnerGroups}}
+        @isManaging={{true}}
+        @remove={{@remove}}
+      />
+    {{else}}
+      <p>
+        {{t "general.none"}}
+      </p>
+    {{/if}}
+  </div>
+  <div class="available-learner-groups">
+    <h4>
+      {{t "general.availableLearnerGroups"}}
+      {{#unless (and (is-fulfilled this.allLearnerGroups) (is-fulfilled @cohorts))}}
+        <LoadingSpinner />
+      {{/unless}}
+    </h4>
+    <SearchBox
+      @search={{action (mut this.filter)}}
+      placeholder={{t "general.filterPlaceholder"}}
     />
-  {{else}}
-    <p>
-      {{t "general.none"}}
-    </p>
-  {{/if}}
-</div>
-<div class="available-learner-groups">
-  <h4>
-    {{t "general.availableLearnerGroups"}}
-    {{#unless (and (is-fulfilled this.allLearnerGroups) (is-fulfilled @cohorts))}}
-      <LoadingSpinner />
-    {{/unless}}
-  </h4>
-  <SearchBox
-    @search={{action (mut this.filter)}}
-    placeholder={{t "general.filterPlaceholder"}}
-  />
-  <div class="cohorts-container" data-test-cohorts>
-    {{#each (sort-by "title" (await @cohorts)) as |cohort|}}
-      <div class="cohort-learner-groups" data-test-cohort>
-        {{#if
-          (and
-            (is-fulfilled cohort.programYear)
-            (is-fulfilled cohort.programYear.program)
-            (is-fulfilled cohort.rootLevelLearnerGroups)
-          )
-        }}
-          <h5 class="cohort-title">
-            {{cohort.programYear.program.title}}
-            {{cohort.title}}
-          </h5>
-          <ul class="tree-groups-list">
-            {{#each
-              (sort-by
-                "title" (await cohort.rootLevelLearnerGroups)
-              ) as |learnerGroup|
-            }}
-              <LearnergroupTree
-                @learnerGroup={{learnerGroup}}
-                @selectedGroups={{@learnerGroups}}
-                @filter={{this.filter}}
-                @add={{action @add}}
-              />
-            {{/each}}
-          </ul>
-        {{else}}
-          <LoadingSpinner />
-        {{/if}}
-      </div>
-    {{/each}}
+    <div class="cohorts-container" data-test-cohorts>
+      {{#each (sort-by "title" (await @cohorts)) as |cohort|}}
+        <div class="cohort-learner-groups" data-test-cohort>
+          {{#if
+            (and
+              (is-fulfilled cohort.programYear)
+              (is-fulfilled cohort.programYear.program)
+              (is-fulfilled cohort.rootLevelLearnerGroups)
+            )
+          }}
+            <h5 class="cohort-title">
+              {{cohort.programYear.program.title}}
+              {{cohort.title}}
+            </h5>
+            <ul class="tree-groups-list">
+              {{#each
+                (sort-by
+                  "title" (await cohort.rootLevelLearnerGroups)
+                ) as |learnerGroup|
+              }}
+                <LearnergroupTree
+                  @learnerGroup={{learnerGroup}}
+                  @selectedGroups={{@learnerGroups}}
+                  @filter={{this.filter}}
+                  @add={{action @add}}
+                />
+              {{/each}}
+            </ul>
+          {{else}}
+            <LoadingSpinner />
+          {{/if}}
+        </div>
+      {{/each}}
+    </div>
   </div>
 </div>
