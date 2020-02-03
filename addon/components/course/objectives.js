@@ -147,7 +147,7 @@ export default class CourseObjectivesComponent extends Component {
     newObjective.set('title', title);
     let position = 0;
 
-    if (this.objectives) {
+    if (this.objectives?.length) {
       position = this.objectives.sortBy('position').lastObject.position + 1;
     }
 
