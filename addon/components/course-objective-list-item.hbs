@@ -102,7 +102,7 @@
   </td>
   <td class="text-left text-top" colspan="1" data-test-actions>
     {{#if @editable}}
-      <span class="clickable remove" role="button" {{on "click" (fn @remove @objective)}} data-test-remove>
+      <span class="clickable remove" role="button" {{on "click" (fn @remove @objective)}} aria-label={{t "general.remove"}} data-test-remove>
         <FaIcon @icon="trash" class="enabled" />
       </span>
     {{else}}

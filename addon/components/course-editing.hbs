@@ -22,9 +22,8 @@
     />
   {{/if}}
   {{#if (or (eq @course.objectives.length 0) @courseObjectiveDetails)}}
-    <DetailObjectives
-      @subject={{@course}}
-      @isCourse={{true}}
+    <Course::Objectives
+      @course={{@course}}
       @editable={{@editable}}
       @collapse={{fn @setCourseObjectiveDetails false}}
       @expand={{fn @setCourseObjectiveDetails true}}

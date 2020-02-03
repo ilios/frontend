@@ -1,0 +1,61 @@
+<section
+  class="course-manage-objective-parents"
+  {{did-insert (fn this.chooseFirstCohort) @cohortObjectives}}
+  {{did-update (fn this.chooseFirstCohort) @cohortObjectives}}
+  data-test-course-manage-objective-parents
+>
+  <h3 class="objective-title" data-test-objective-title>
+    {{! template-lint-disable no-triple-curlies }}
+    {{{@objective.title}}}
+  </h3>
+  <label>
+    {{t "general.chooseCohortTitle"}}:
+    {{#if (gt @cohortObjectives.length 1)}}
+      <select {{on "change" this.chooseCohort}} data-test-cohort-selector data-test-selected-cohort-title>
+        {{#each
+          (sort-by "title" @cohortObjectives) as |cohort|
+        }}
+          <option
+            value={{cohort.id}}
+            selected={{eq cohort.id this.selectedCohort.id}}
+          >
+            {{cohort.title}}
+          </option>
+        {{/each}}
+      </select>
+    {{else}}
+      <span data-test-selected-cohort-title>{{this.selectedCohort.title}}</span>
+    {{/if}}
+  </label>
+
+  {{#if this.selectedCohort}}
+    <ul class="parent-picker" data-test-parent-picker>
+      {{#each this.selectedCohort.competencies as |competency|}}
+        <li data-test-competency>
+          <h4
+            class="competency-title {{if (contains competency.id (map-by "competencyId" @selected)) "selected"}}"
+          >
+            {{competency.title}}
+          </h4>
+          <ul>
+            {{#each competency.objectives as |objective|}}
+              <li>
+                <Course::ManageObjectiveParentsItem
+                  @title={{objective.title}}
+                  @allowMultipleParents={{this.selectedCohort.allowMultipleParents}}
+                  @isSelected={{contains objective @selected}}
+                  @add={{
+                    pipe
+                      (if (not this.selectedCohort.allowMultipleParents) (fn @removeFromCohort this.selectedCohort))
+                      (fn @add objective)
+                    }}
+                  @remove={{fn @remove objective}}
+                />
+              </li>
+            {{/each}}
+          </ul>
+        </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+</section>
