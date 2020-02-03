@@ -1,0 +1,51 @@
+<section class="monthly-calendar" data-test-monthly-calendar>
+  <h2 class="month-year">{{moment-format this.firstDayOfMonth "MMMM YYYY"}}</h2>
+  <div class="calendar">
+    {{#each this.days as |day|}}
+      <div class="day week-{{day.weekOfMonth}} day-{{day.dayOfWeek}}" data-test-day>
+        <h3 class="day-number" aria-label={{day.name}} data-test-number>
+          <button
+            type="button"
+            aria-label={{concat (t "general.view") " " day.name}}
+            {{on "click" (fn @changeToDayView day.date)}}
+            data-test-day-button={{day.dayOfMonth}}
+          >
+            {{day.dayOfMonth}}
+          </button>
+        </h3>
+        {{#each (slice 0 2 day.events) as |event|}}
+          {{#if event.isMulti}}
+            <IliosCalendarEventMonth
+              @event={{event}}
+              @selectEvent={{fn @changeToDayView event.startDate}}
+            />
+          {{else}}
+            <IliosCalendarEventMonth
+              @event={{event}}
+              @selectEvent={{fn @selectEvent event}}
+            />
+          {{/if}}
+        {{/each}}
+        {{#if (gt day.events.length 2)}}
+          <button
+            type="button"
+            class="month-more-events"
+            {{on "click" (fn @changeToDayView day.date)}}
+            data-test-show-more-button
+          >
+            <FaIcon @icon="ellipsis-h" />
+            {{t "general.showMore"}}
+            <FaIcon @icon="angle-double-down" />
+          </button>
+        {{/if}}
+      </div>
+    {{/each}}
+
+    {{#each this.dayNames as |day|}}
+      <span class="day-heading day-{{day.day}}" aria-hidden="true">
+        <span class="long-name">{{day.longName}}</span>
+        <span class="short-name">{{day.shortName}}</span>
+      </span>
+    {{/each}}
+  </div>
+</section>

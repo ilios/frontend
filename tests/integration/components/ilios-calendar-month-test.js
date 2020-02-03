@@ -42,13 +42,12 @@ module('Integration | Component | ilios calendar month', function(hooks) {
       @date={{date}}
       @calendarEvents={{events}}
       @selectEvent={{action nothing}}
-      @showMore="Show More"
     />`);
     //Date input is Wednesday, Septrmber 30th.  Should be the first string
     assert.equal(this.element.textContent.trim().search(/^September 2015/), 0);
     assert.equal(this.element.querySelectorAll(events).length, 2);
     assert.equal(this.element.querySelectorAll(more).length, 1);
-    assert.dom(this.element.querySelector(more)).hasText('Show More');
+    assert.dom(this.element.querySelector(more)).hasText('Show more');
   });
 
   test('month displays with two events', async function(assert) {
@@ -76,9 +75,8 @@ module('Integration | Component | ilios calendar month', function(hooks) {
       @date={{date}}
       @calendarEvents={{events}}
       @selectEvent={{action nothing}}
-      @showMore="Show More"
     />`);
-    //Date input is Wednesday, Septrmber 30th.  Should be the first string
+    //Date input is Wednesday, September 30th.  Should be the first string
     assert.equal(this.element.textContent.trim().search(/^September 2015/), 0);
     assert.equal(this.element.querySelectorAll(events).length, 2);
     assert.equal(this.element.querySelectorAll(more).length, 0);
@@ -91,7 +89,7 @@ module('Integration | Component | ilios calendar month', function(hooks) {
 
     this.actions.changeDate = newDate => {
       assert.ok(newDate instanceof Date);
-      assert.ok(newDate.toString().search(/Sun Aug 30/) === 0);
+      assert.ok(newDate.toString().includes("Tue Sep 01"));
     };
     this.actions.changeView = newView => {
       assert.equal(newView, 'day');
@@ -104,7 +102,7 @@ module('Integration | Component | ilios calendar month', function(hooks) {
       @calendarEvents={{events}}
     />`);
 
-    click('.day:nth-of-type(1) .clickable');
+    await click('[data-test-day-button="1"]');
   });
 
   const createUserEventObject = function () {

@@ -1,73 +1,10 @@
-<ElMonthlyCalendar @date={{@date}} @events={{this.nonIlmPreWorkEvents}} as |weeks|>
-  <div class="row month-titles">
-    <div class="cell"></div>
-    <div class="cell title">
-      {{moment-format @date "MMMM YYYY"}}
-    </div>
-  </div>
-  <div class="row">
-    {{#each weeks.firstObject.days as |day|}}
-      <div class="cell title">
-        {{day.dayName}}
-      </div>
-    {{/each}}
-  </div>
-  {{#each weeks as |week|}}
-    <div class="week">
-      {{#each week.days as |day|}}
-        <div class="day">
-          <span
-            class="clickable"
-            role="button"
-            {{on "click" (fn (action "changeToDayView") day.date)}}
-          >
-            {{moment-format day.date "D"}}
-          </span>
-          <div class="events">
-            {{#if (gt day.events.length 2)}}
-              {{#each (slice 0 2 day.events) as |event|}}
-                {{#if event.isMulti}}
-                  <IliosCalendarEventMonth
-                    @event={{event}}
-                    @selectEvent={{action "changeToDayView" event.startDate}}
-                  />
-                {{else}}
-                  <IliosCalendarEventMonth
-                    @event={{event}}
-                    @selectEvent={{action @selectEvent event}}
-                  />
-                {{/if}}
-              {{/each}}
-              <span
-                class="clickable link month-more-events"
-                role="button"
-                {{on "click" (fn (action "changeToDayView") day.date)}}
-              >
-                <FaIcon @icon="ellipsis-h" />
-                {{this.showMore}}
-                <FaIcon @icon="angle-double-down" />
-              </span>
-            {{else}}
-              {{#each day.events as |event|}}
-                {{#if event.isMulti}}
-                  <IliosCalendarEventMonth
-                    @event={{event}}
-                    @selectEvent={{action "changeToDayView" event.startDate}}
-                  />
-                {{else}}
-                  <IliosCalendarEventMonth
-                    @event={{event}}
-                    @selectEvent={{action @selectEvent event}}
-                  />
-                {{/if}}
-              {{/each}}
-            {{/if}}
-          </div>
-        </div>
-      {{/each}}
-    </div>
-  {{/each}}
-</ElMonthlyCalendar>
+<MonthlyCalendar
+  @date={{@date}}
+  @events={{this.nonIlmPreWorkEvents}}
+  @changeToDayView={{action "changeToDayView"}}
+  @selectEvent={{@selectEvent}}
+/>
+
 <IliosCalendarPreWorkEvents
   @events={{this.ilmPreWorkEvents}}
   @areEventsSelectable={{this.areEventsSelectable}}
