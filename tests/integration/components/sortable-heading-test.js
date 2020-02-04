@@ -26,10 +26,9 @@ module('Integration | Component | sortable heading', function(hooks) {
     this.set('sortedBy', true);
     this.set('sortedAscending', false);
     this.set('sortType', 'numeric');
-    this.set('class', 'ham-of-shame');
     await render(
       hbs`<SortableHeading
-            @class={{this.class}}
+            class="ham-of-shame"
             @colspan={{this.colspan}}
             @align={{this.align}}
             @title={{this.title}}
@@ -49,7 +48,6 @@ module('Integration | Component | sortable heading', function(hooks) {
     assert.dom('span').hasAttribute('title', title);
     assert.dom('svg').hasClass('fa-sort-numeric-down');
   });
-
   test('click event fires', async function(assert) {
     assert.expect(1);
     this.set('click', () => {
