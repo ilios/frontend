@@ -21,7 +21,7 @@
     @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
     @sortedAscending={{this.sortedAscending}}
     @title={{t "general.title"}}
-    class="session-grid-title"
+    @class={{"session-grid-title"}}
   >
     {{t "general.title"}}
   </SortableHeading>
@@ -33,7 +33,7 @@
     }}
     @sortedAscending={{this.sortedAscending}}
     @title={{t "general.type"}}
-    class="session-grid-type"
+    @class={{"session-grid-type"}}
   >
     {{t "general.type"}}
   </SortableHeading>
@@ -46,7 +46,7 @@
     }}
     @sortedAscending={{this.sortedAscending}}
     @title={{t "general.groups"}}
-    class="session-grid-groups"
+    @class={{"session-grid-groups"}}
   >
     {{t "general.groups"}}
   </SortableHeading>
@@ -57,7 +57,7 @@
     }}
     @sortedAscending={{this.sortedAscending}}
     @title={{t "general.objectives"}}
-    class="session-grid-objectives"
+    @class={{"session-grid-objectives"}}
   >
     {{t "general.objectives"}}
   </SortableHeading>
@@ -67,7 +67,7 @@
     @sortedBy={{or (eq @sortBy "termCount") (eq @sortBy "termCount:desc")}}
     @sortedAscending={{this.sortedAscending}}
     @title={{t "general.terms"}}
-    class="session-grid-terms"
+    @class={{"session-grid-terms"}}
   >
     {{t "general.terms"}}
   </SortableHeading>
@@ -80,7 +80,7 @@
     }}
     @sortedAscending={{this.sortedAscending}}
     @title={{t "general.firstOffering"}}
-    class="session-grid-first-offering"
+    @class={{"session-grid-first-offering"}}
   >
     {{t "general.firstOffering"}}
   </SortableHeading>
@@ -90,7 +90,7 @@
     @sortedBy={{or (eq @sortBy "offeringCount") (eq @sortBy "offeringCount:desc")}}
     @sortedAscending={{this.sortedAscending}}
     @title={{t "general.offerings"}}
-    class="session-grid-offerings"
+    @class={{"session-grid-offerings"}}
   >
     {{t "general.offerings"}}
   </SortableHeading>
@@ -99,7 +99,7 @@
     @sortedBy={{or (eq @sortBy "status") (eq @sortBy "status:desc")}}
     @sortedAscending={{this.sortedAscending}}
     @title={{t "general.status"}}
-    class="session-grid-status"
+    @class={{"session-grid-status"}}
   >
     {{t "general.status"}}
   </SortableHeading>
