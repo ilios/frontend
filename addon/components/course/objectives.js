@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { waitForProperty } from 'ember-concurrency';
 import { action } from '@ember/object';
 import scrollTo from 'ilios-common/utils/scroll-to';
 import { map } from 'rsvp';
@@ -92,7 +93,8 @@ export default class CourseObjectivesComponent extends Component {
 
   @dropTask
   *manageParents(objective) {
-    const objectives = this.cohortObjectives.reduce((set, cohortObject) => {
+    const cohortObjectives = yield waitForProperty(this, 'cohortObjectives', Array.isArray);
+    const objectives = cohortObjectives.reduce((set, cohortObject) => {
       const cohortObjectives = cohortObject.competencies.mapBy('objectives');
       return [...set, ...cohortObjectives.flat()];
     }, []);
