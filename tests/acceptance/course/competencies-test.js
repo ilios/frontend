@@ -65,9 +65,10 @@ module('Acceptance | Course - Competencies', function(hooks) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     await page.objectives.current[1].manageParents();
-    await page.objectiveParentManager.competencies[1].objectives[0].add();
-    assert.ok(page.objectiveParentManager.competencies[0].objectives[0].notSelected);
-    assert.ok(page.objectiveParentManager.competencies[1].objectives[0].selected);
+    const m = page.objectives.manageObjectiveParents;
+    await m.competencies[1].objectives[0].add();
+    assert.ok(m.competencies[0].objectives[0].notSelected);
+    assert.ok(m.competencies[1].objectives[0].selected);
     await page.objectives.save();
 
     assert.equal(page.collapsedCompetencies.title, 'Competencies (2)');
