@@ -23,6 +23,7 @@ export default Mixin.create({
     const store = this.get('store');
     const courses = [model.get('id')];
     const course = model.get('id');
+    const school = model.belongsTo('school').id();
     const sessions = model.hasMany('sessions').ids();
     const existingSessionsInStore = store.peekAll('session');
     const existingSessionIds = existingSessionsInStore.mapBy('id');
@@ -39,6 +40,10 @@ export default Mixin.create({
       store.query('offering', { filters: { courses } }),
       store.query('ilm-session', { filters: { courses } }),
       store.query('objective', { filters: { courses } }),
+      store.query('cohort', { filters: { courses } }),
+      store.query('programYear', { filters: { courses } }),
+      store.query('program', { filters: { courses } }),
+      store.query('competency', { filters: { school } }),
     ];
     const maximumSessionLoad = 100;
     if (sessions.length < maximumSessionLoad) {

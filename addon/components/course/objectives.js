@@ -49,6 +49,14 @@ export default class CourseObjectivesComponent extends Component {
 
   async getCohortObjectives(course) {
     const cohorts = (await course.cohorts).toArray();
+    const programYears = cohorts.map(c => c.belongsTo('programYear').id());
+    if (programYears.length) {
+      await this.store.query('objective', {
+        filters: {
+          programYears,
+        },
+      });
+    }
     return await map(cohorts, async cohort => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;
