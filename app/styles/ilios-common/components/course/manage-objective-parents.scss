@@ -11,13 +11,20 @@
     height: auto;
     line-height: 1.3rem;
 
-    .competency-title {
-      font-weight: bold;
-      margin: .5rem 0 0 .5rem;
-      padding: 0;
+    .competency {
+      border-left: 10px solid $white;
 
+      .competency-title {
+        margin: .5rem 0 0 .5rem;
+        padding: 0;
+      }
       &.selected {
-        color: $ilios-green;
+        border-left: 10px solid $ilios-orange;
+
+        .competency-title {
+          color: $ilios-green;
+          font-weight: bold;
+        }
       }
     }
 
@@ -29,7 +36,7 @@
         padding-left: .5rem;
 
         .selected {
-          color: $ilios-green;
+          font-weight: bold;
         }
       }
     }
