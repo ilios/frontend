@@ -39,7 +39,7 @@ const definition = {
     parents: collection('td:eq(1) [data-test-parent]', {
       description: text(),
     }, { at: 1 }),
-    manageParents: clickable('.clickable:eq(0)', { scope: 'td:eq(1)' }),
+    manageParents: clickable('[data-test-manage-parents]', { scope: 'td:eq(1)' }),
     meshTerms: collection('td:eq(2) [data-test-term]', {
       title: text(),
     }, { at: 1 }),

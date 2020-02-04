@@ -49,6 +49,7 @@
           <span
             class="clickable link"
             data-test-parent
+            data-test-manage-parents
             role="button"
             {{on "click" (fn @manageParents @objective)}}
           >
@@ -63,7 +64,7 @@
         <br>
       {{/each}}
     {{else if @editable}}
-      <button {{on "click" (fn @manageParents @objective)}}>
+      <button {{on "click" (fn @manageParents @objective)}} data-test-manage-parents>
         {{t "general.addNew"}}
       </button>
     {{else}}

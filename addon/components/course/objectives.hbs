@@ -1,8 +1,8 @@
 <section
   class="detail-objectives {{if this.showCollapsible "collapsible"}}"
   data-test-course-objectives
-  {{did-insert (perform this.load) (await @course)}}
-  {{did-update (perform this.load) (await @course)}}
+  {{did-insert (perform this.load) @course @course.cohorts}}
+  {{did-update (perform this.load) @course @course.cohorts}}
 >
   <div class="detail-objectives-header">
     {{#if this.isManaging}}

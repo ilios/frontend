@@ -32,6 +32,7 @@ const definition = {
       add: clickable('input')
     }),
   }),
+  hasNoCohortWarning: isPresent('[data-test-no-cohorts-message]'),
 };
 
 export default definition;
