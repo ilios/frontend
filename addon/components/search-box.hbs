@@ -1,14 +1,18 @@
-<input
-  class="search-input"
-  type="search"
-  value={{this.value}}
-  placeholder={{@placeholder}}
-  {{on "input" (action "update" value="target.value")}}
->
-<span
-  class="search-icon"
-  role="button"
-  {{on "click" (pipe-action (action "focus") (perform this.searchTask))}}
->
-  <FaIcon @icon="search" />
-</span>
+<div class="search-box" data-test-search-box>
+  <input
+    class="search-input"
+    type="search"
+    value={{this.value}}
+    placeholder={{@placeholder}}
+    {{on "input" (action "update" value="target.value")}}
+    {{on "keyup" (fn this.keyUp)}}
+    {{ref this "searchInput"}}
+  >
+  <span
+    class="search-icon"
+    role="button"
+    {{on "click" (pipe-action (fn this.moveFocus this.searchInput) (perform this.searchTask))}}
+  >
+    <FaIcon @icon="search" />
+  </span>
+</div>

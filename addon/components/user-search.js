@@ -79,7 +79,7 @@ export default class UserSearch extends Component {
   }
 
   @restartableTask
-  *search(searchTerms) {
+  *search(searchTerms = '') {
     this.showMoreInputPrompt = false;
     this.searchReturned = false;
     const noWhiteSpaceTerm = searchTerms.replace(/ /g,'');

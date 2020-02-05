@@ -1,57 +1,56 @@
-import Component from '@ember/component';
-import { isPresent } from '@ember/utils';
-import { task, timeout } from 'ember-concurrency';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { isNone } from '@ember/utils';
+import { timeout } from 'ember-concurrency';
+import {restartableTask} from "ember-concurrency-decorators";
 
 const DEBOUNCE_TIMEOUT = 250;
 
-export default Component.extend({
-  classNames: ['search-box'],
-  value: '',
-  liveSearch: true,
-  'data-test-search-box': true,
-  actions: {
-    update(value){
-      const liveSearch = this.get('liveSearch');
-      this.set('value', value);
-      if (liveSearch) {
-        this.get('searchTask').perform();
-      }
-    },
-    clear() {
-      this.set('value', '');
-      const clear = this.get('clear');
-      if (isPresent(clear)) {
-        clear();
-      }
-    },
-    focus() {
-      //place focus into the search box when search icon is clicked
-      this.element.querySelector('input[type="search"]').focus();
-    },
-  },
-  searchTask: task(function * () {
+export default class SearchBox extends Component {
+  @tracked value = '';
+
+  get liveSearch() {
+    return isNone(this.args.liveSearch) ? true : this.args.liveSearch;
+  }
+
+  @action
+  update(value){
+    this.value = value;
+    if (this.liveSearch) {
+      this.searchTask.perform();
+    }
+  }
+
+  @action
+  clear() {
+    this.value = '';
+    if (this.args.clear) {
+      this.args.clear();
+    }
+  }
+
+  @action
+  moveFocus(searchInput) {
+    // place focus into the search box when search icon is clicked
+    searchInput.focus();
+  }
+
+  @action
+  keyUp({ key }) {
+    switch (key) {
+    case 'Enter':
+      this.searchTask.perform();
+      break;
+    case 'Escape':
+      this.clear();
+      break;
+    }
+  }
+
+  @restartableTask
+  *searchTask() {
     yield timeout(DEBOUNCE_TIMEOUT);
-    const value = this.get('value');
-    yield this.get('search')(value);
-  }).restartable(),
-
-  keyUp(event) {
-    const keyCode = event.keyCode;
-    const target = event.target;
-
-    if ('search' !== target.type) {
-      return;
-    }
-
-    if (13 === keyCode) {
-      this.get('searchTask').perform();
-      return;
-    }
-
-    if(27 === keyCode) {
-      if (this.clear) {
-        this.clear();
-      }
-    }
-  },
-});
+    yield this.args.search(this.value);
+  }
+}
