@@ -36,29 +36,16 @@ module.exports = {
 
   setupPreprocessorRegistry: function(type, registry) {
     // ACHTUNG!
-    // check if v-get helper is already registered. if it's not, then add it.
-    // this is necessary in order to make this helper available to
+    // This is necessary in order to make this helper available to
     // applications that include ilios-common and that use its components that make use of cp-validations.
-    // @link https://github.com/offirgolan/ember-cp-validations/issues/334
+    // @link https://github.com/offirgolan/ember-cp-validations/issues/334#issuecomment-290665860
     // [ST 2018/09/26]
-    const registered = registry.load('htmlbars-ast-plugins');
-    let isRegistered = false;
-    for(let i = 0; i < registered.length; i++) {
-      const plugin = registered[i];
-      if (Object.prototype.hasOwnProperty.call(plugin, 'name') && 'v-get' === plugin.name) {
-        isRegistered = true;
-        break;
+    // revised [JJ 2020/02/04]
+    if (!this.isDevelopingAddon()) {
+      const cpValidationsAddon = this.addons.find(addon => addon.name === 'ember-cp-validations');
+      if (cpValidationsAddon && cpValidationsAddon.setupPreprocessorRegistry) {
+        cpValidationsAddon.setupPreprocessorRegistry(type, registry);
       }
-    }
-    if (!isRegistered) {
-      const vget = require('ember-cp-validations/htmlbars-plugins/v-get');
-      registry.add('htmlbars-ast-plugin', {
-        name: 'v-get',
-        plugin: vget,
-        baseDir: function() {
-          return __dirname;
-        }
-      });
     }
   },
 
