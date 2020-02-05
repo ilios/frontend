@@ -4,6 +4,7 @@
   role="button"
   title={{this.title}}
   {{on "click" this.click}}
+  ...attributes
 >
   {{yield}}<FaIcon @icon={{this.sortIcon}} />
 </span>

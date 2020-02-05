@@ -17,7 +17,7 @@ module('Integration | Component | sortable heading', function(hooks) {
   });
 
   test('it renders', async function(assert) {
-    assert.expect(5);
+    assert.expect(6);
     const title = 'Bar';
     const align = 'right';
     this.set('title', title);
@@ -28,6 +28,7 @@ module('Integration | Component | sortable heading', function(hooks) {
     this.set('sortType', 'numeric');
     await render(
       hbs`<SortableHeading
+            class="ham-of-shame"
             @colspan={{this.colspan}}
             @align={{this.align}}
             @title={{this.title}}
@@ -43,10 +44,10 @@ module('Integration | Component | sortable heading', function(hooks) {
     assert.dom('span').hasText('Foo');
     assert.dom('span').hasClass(`text-${align}`);
     assert.dom('span').hasClass('hide-from-small-screen');
+    assert.dom('span').hasClass('ham-of-shame');
     assert.dom('span').hasAttribute('title', title);
     assert.dom('svg').hasClass('fa-sort-numeric-down');
   });
-
   test('click event fires', async function(assert) {
     assert.expect(1);
     this.set('click', () => {
