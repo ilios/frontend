@@ -43,9 +43,7 @@ export default class SearchBox extends Component {
       this.searchTask.perform();
       break;
     case 'Escape':
-      if (this.args.clear) {
-        this.args.clear();
-      }
+      this.clear();
       break;
     }
   }
