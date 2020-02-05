@@ -4,14 +4,11 @@ import {
   create,
   collection,
   fillable,
-  hasClass,
-  notHasClass,
   text,
-  value,
-  visitable
+  visitable,
 } from 'ember-cli-page-object';
 
-import objectives from './components/objectives';
+import objectives from './components/course/objectives';
 import learningMaterials from './components/learning-materials';
 import meshTerms from './components/mesh-terms';
 import taxonomies from './components/taxonomies';
@@ -44,28 +41,6 @@ export default create({
   meshTerms,
   taxonomies,
   collapsedTaxonomies,
-
-  objectiveParentManager: {
-    scope: '[data-test-course-objective-manager]',
-    title: text('.objectivetitle'),
-    groupTitle: text('.group-picker'),
-    selectGroup: fillable('.group-picker select'),
-    groups: collection('.group-picker select option', {
-      title: text(),
-      value: value(),
-    }),
-    competencies: collection('.parent-picker [data-test-competency]', {
-      title: text('.competency-title'),
-      selected: hasClass('selected', '.competency-title'),
-      notSelected: notHasClass('selected', '.competency-title'),
-      objectives: collection('ul li', {
-        title: text(),
-        selected: hasClass('selected'),
-        notSelected: notHasClass('selected'),
-        add: clickable('input')
-      }),
-    }),
-  },
 
   cohorts: {
     scope: '[data-test-detail-cohorts]',

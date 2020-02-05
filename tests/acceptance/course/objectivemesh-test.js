@@ -54,37 +54,38 @@ module('Acceptance | Course - Objective Mesh Descriptors', function(hooks) {
     assert.equal(page.objectives.current[1].meshTerms[4].title, 'descriptor 5');
 
     await page.objectives.current[1].manageMesh();
-    assert.equal(page.objectives.meshManager.selectedTerms.length, 5);
-    assert.equal(page.objectives.meshManager.selectedTerms[0].title, 'descriptor 1');
-    assert.equal(page.objectives.meshManager.selectedTerms[1].title, 'descriptor 2');
-    assert.equal(page.objectives.meshManager.selectedTerms[2].title, 'descriptor 3');
-    assert.equal(page.objectives.meshManager.selectedTerms[3].title, 'descriptor 4');
-    assert.equal(page.objectives.meshManager.selectedTerms[4].title, 'descriptor 5');
-    await page.objectives.meshManager.search('descriptor');
-    await page.objectives.meshManager.runSearch();
+    const m = page.objectives.manageObjectiveDescriptors.meshManager;
+    assert.equal(m.selectedTerms.length, 5);
+    assert.equal(m.selectedTerms[0].title, 'descriptor 1');
+    assert.equal(m.selectedTerms[1].title, 'descriptor 2');
+    assert.equal(m.selectedTerms[2].title, 'descriptor 3');
+    assert.equal(m.selectedTerms[3].title, 'descriptor 4');
+    assert.equal(m.selectedTerms[4].title, 'descriptor 5');
+    await m.search('descriptor');
+    await m.runSearch();
 
-    assert.equal(page.objectives.meshManager.searchResults.length, 6);
+    assert.equal(m.searchResults.length, 6);
     for (let i = 0; i < 6; i++) {
-      assert.equal(page.objectives.meshManager.searchResults[i].title, `descriptor ${i}`);
+      assert.equal(m.searchResults[i].title, `descriptor ${i}`);
     }
-    assert.ok(page.objectives.meshManager.searchResults[0].isEnabled);
-    assert.ok(page.objectives.meshManager.searchResults[1].isDisabled);
-    assert.ok(page.objectives.meshManager.searchResults[2].isDisabled);
-    assert.ok(page.objectives.meshManager.searchResults[3].isDisabled);
-    assert.ok(page.objectives.meshManager.searchResults[4].isDisabled);
-    assert.ok(page.objectives.meshManager.searchResults[5].isDisabled);
+    assert.ok(m.searchResults[0].isEnabled);
+    assert.ok(m.searchResults[1].isDisabled);
+    assert.ok(m.searchResults[2].isDisabled);
+    assert.ok(m.searchResults[3].isDisabled);
+    assert.ok(m.searchResults[4].isDisabled);
+    assert.ok(m.searchResults[5].isDisabled);
 
-    await page.objectives.meshManager.selectedTerms[0].remove();
-    await page.objectives.meshManager.searchResults[0].add();
-    assert.ok(page.objectives.meshManager.searchResults[0].isDisabled);
-    assert.ok(page.objectives.meshManager.searchResults[1].isEnabled);
-    assert.equal(page.objectives.meshManager.selectedTerms.length, 5);
+    await m.selectedTerms[0].remove();
+    await m.searchResults[0].add();
+    assert.ok(m.searchResults[0].isDisabled);
+    assert.ok(m.searchResults[1].isEnabled);
+    assert.equal(m.selectedTerms.length, 5);
 
-    assert.equal(page.objectives.meshManager.selectedTerms[0].title, 'descriptor 0');
-    assert.equal(page.objectives.meshManager.selectedTerms[1].title, 'descriptor 2');
-    assert.equal(page.objectives.meshManager.selectedTerms[2].title, 'descriptor 3');
-    assert.equal(page.objectives.meshManager.selectedTerms[3].title, 'descriptor 4');
-    assert.equal(page.objectives.meshManager.selectedTerms[4].title, 'descriptor 5');
+    assert.equal(m.selectedTerms[0].title, 'descriptor 0');
+    assert.equal(m.selectedTerms[1].title, 'descriptor 2');
+    assert.equal(m.selectedTerms[2].title, 'descriptor 3');
+    assert.equal(m.selectedTerms[3].title, 'descriptor 4');
+    assert.equal(m.selectedTerms[4].title, 'descriptor 5');
   });
 
   test('save terms', async function(assert) {
@@ -96,19 +97,20 @@ module('Acceptance | Course - Objective Mesh Descriptors', function(hooks) {
     assert.equal(page.objectives.current[1].meshTerms.length, 5);
     await page.objectives.current[1].manageMesh();
 
-    assert.equal(page.objectives.meshManager.selectedTerms.length, 5);
-    await page.objectives.meshManager.search('descriptor');
-    await page.objectives.meshManager.runSearch();
+    const m = page.objectives.manageObjectiveDescriptors.meshManager;
+    assert.equal(m.selectedTerms.length, 5);
+    await m.search('descriptor');
+    await m.runSearch();
 
-    await page.objectives.meshManager.selectedTerms[0].remove();
-    await page.objectives.meshManager.searchResults[0].add();
+    await m.selectedTerms[0].remove();
+    await m.searchResults[0].add();
 
-    assert.equal(page.objectives.meshManager.selectedTerms.length, 5);
-    assert.equal(page.objectives.meshManager.selectedTerms[0].title, 'descriptor 0');
-    assert.equal(page.objectives.meshManager.selectedTerms[1].title, 'descriptor 2');
-    assert.equal(page.objectives.meshManager.selectedTerms[2].title, 'descriptor 3');
-    assert.equal(page.objectives.meshManager.selectedTerms[3].title, 'descriptor 4');
-    assert.equal(page.objectives.meshManager.selectedTerms[4].title, 'descriptor 5');
+    assert.equal(m.selectedTerms.length, 5);
+    assert.equal(m.selectedTerms[0].title, 'descriptor 0');
+    assert.equal(m.selectedTerms[1].title, 'descriptor 2');
+    assert.equal(m.selectedTerms[2].title, 'descriptor 3');
+    assert.equal(m.selectedTerms[3].title, 'descriptor 4');
+    assert.equal(m.selectedTerms[4].title, 'descriptor 5');
 
     await page.objectives.save();
     assert.equal(page.objectives.current[1].meshTerms.length, 5);
@@ -128,19 +130,20 @@ module('Acceptance | Course - Objective Mesh Descriptors', function(hooks) {
     assert.equal(page.objectives.current[1].meshTerms.length, 5);
     await page.objectives.current[1].manageMesh();
 
-    assert.equal(page.objectives.meshManager.selectedTerms.length, 5);
-    await page.objectives.meshManager.search('descriptor');
-    await page.objectives.meshManager.runSearch();
+    const m = page.objectives.manageObjectiveDescriptors.meshManager;
+    assert.equal(m.selectedTerms.length, 5);
+    await m.search('descriptor');
+    await m.runSearch();
 
-    await page.objectives.meshManager.selectedTerms[0].remove();
-    await page.objectives.meshManager.searchResults[0].add();
+    await m.selectedTerms[0].remove();
+    await m.searchResults[0].add();
 
-    assert.equal(page.objectives.meshManager.selectedTerms.length, 5);
-    assert.equal(page.objectives.meshManager.selectedTerms[0].title, 'descriptor 0');
-    assert.equal(page.objectives.meshManager.selectedTerms[1].title, 'descriptor 2');
-    assert.equal(page.objectives.meshManager.selectedTerms[2].title, 'descriptor 3');
-    assert.equal(page.objectives.meshManager.selectedTerms[3].title, 'descriptor 4');
-    assert.equal(page.objectives.meshManager.selectedTerms[4].title, 'descriptor 5');
+    assert.equal(m.selectedTerms.length, 5);
+    assert.equal(m.selectedTerms[0].title, 'descriptor 0');
+    assert.equal(m.selectedTerms[1].title, 'descriptor 2');
+    assert.equal(m.selectedTerms[2].title, 'descriptor 3');
+    assert.equal(m.selectedTerms[3].title, 'descriptor 4');
+    assert.equal(m.selectedTerms[4].title, 'descriptor 5');
 
     await page.objectives.cancel();
     assert.equal(page.objectives.current[1].meshTerms.length, 5);

@@ -16,15 +16,15 @@ module('Acceptance | Course - Objective Create', function(hooks) {
     this.server.createList('program', 2);
     this.server.createList('programYear', 2);
     this.server.createList('cohort', 2);
-    this.objective = this.server.create('objective');
-    this.course = this.server.create('course', {
-      year: 2013,
-      school: this.school,
-      objectiveIds: [1]
-    });
   });
 
-  test('save new objective', async function(assert) {
+  test('save new objective', async function (assert) {
+    const objective = this.server.create('objective');
+    this.server.create('course', {
+      year: 2013,
+      school: this.school,
+      objectives: [objective]
+    });
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(9);
     const newObjectiveDescription = 'Test junk 123';
@@ -41,11 +41,17 @@ module('Acceptance | Course - Objective Create', function(hooks) {
     assert.equal(page.objectives.current[0].parents.length, 0);
     assert.equal(page.objectives.current[0].meshTerms.length, 0);
     assert.equal(page.objectives.current[1].description.text, newObjectiveDescription);
-    assert.equal(page.objectives.current[0].parents.length, 0);
-    assert.equal(page.objectives.current[0].meshTerms.length, 0);
+    assert.equal(page.objectives.current[1].parents.length, 0);
+    assert.equal(page.objectives.current[1].meshTerms.length, 0);
   });
 
   test('cancel new objective', async function(assert) {
+    const objective = this.server.create('objective');
+    this.server.create('course', {
+      year: 2013,
+      school: this.school,
+      objectives: [objective]
+    });
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(6);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
@@ -62,6 +68,12 @@ module('Acceptance | Course - Objective Create', function(hooks) {
   });
 
   test('empty objective title can not be created', async function(assert) {
+    const objective = this.server.create('objective');
+    this.server.create('course', {
+      year: 2013,
+      school: this.school,
+      objectives: [objective]
+    });
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
@@ -73,5 +85,26 @@ module('Acceptance | Course - Objective Create', function(hooks) {
     await page.objectives.newObjective.save();
     assert.ok(page.objectives.newObjective.hasValidationError);
     assert.equal(page.objectives.newObjective.validationError, 'This field can not be blank');
+  });
+
+  test('create objective in empty course', async function(assert) {
+    this.server.create('course', {
+      year: 2013,
+      school: this.school,
+    });
+    this.user.update({ administeredSchools: [this.school] });
+    assert.expect(5);
+    const newObjectiveDescription = 'Test junk 123';
+
+    await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
+    assert.equal(page.objectives.current.length, 0);
+    await page.objectives.createNew();
+    await page.objectives.newObjective.description(newObjectiveDescription);
+    await page.objectives.newObjective.save();
+
+    assert.equal(page.objectives.current.length, 1);
+    assert.equal(page.objectives.current[0].description.text, newObjectiveDescription);
+    assert.equal(page.objectives.current[0].parents.length, 0);
+    assert.equal(page.objectives.current[0].meshTerms.length, 0);
   });
 });

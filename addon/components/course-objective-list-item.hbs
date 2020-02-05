@@ -30,7 +30,7 @@
   </td>
   <td class="text-left text-top" colspan="2" data-test-parents>
     {{#if @objective.hasParents}}
-      {{#each (await @objective.parents) as |parent|}}
+      {{#each (await (sort-by "title" @objective.parents)) as |parent|}}
         {{#if @course.hasMultipleCohorts}}
           <strong>
             {{get (await parent.firstProgram) "title"}}
@@ -49,6 +49,7 @@
           <span
             class="clickable link"
             data-test-parent
+            data-test-manage-parents
             role="button"
             {{on "click" (fn @manageParents @objective)}}
           >
@@ -63,7 +64,7 @@
         <br>
       {{/each}}
     {{else if @editable}}
-      <button {{on "click" (fn @manageParents @objective)}}>
+      <button {{on "click" (fn @manageParents @objective)}} data-test-manage-parents>
         {{t "general.addNew"}}
       </button>
     {{else}}
@@ -102,7 +103,7 @@
   </td>
   <td class="text-left text-top" colspan="1" data-test-actions>
     {{#if @editable}}
-      <span class="clickable remove" role="button" {{on "click" (fn @remove @objective)}} data-test-remove>
+      <span class="clickable remove" role="button" {{on "click" (fn @remove @objective)}} aria-label={{t "general.remove"}} data-test-remove>
         <FaIcon @icon="trash" class="enabled" />
       </span>
     {{else}}

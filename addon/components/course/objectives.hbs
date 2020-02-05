@@ -1,0 +1,103 @@
+<section
+  class="detail-objectives {{if this.showCollapsible "collapsible"}}"
+  data-test-course-objectives
+  {{did-insert (perform this.load) @course @course.cohorts}}
+  {{did-update (perform this.load) @course @course.cohorts}}
+>
+  <div class="detail-objectives-header">
+    {{#if this.isManaging}}
+      <div class="title">
+        {{#if this.isManagingParents}}
+          <span class="specific-title">
+            {{t "general.objectiveParentTitleSingular"}}
+          </span>
+        {{/if}}
+        {{#if this.isManagingDescriptors}}
+          <span class="specific-title">
+            {{t "general.objectiveDescriptorTitle"}}
+          </span>
+        {{/if}}
+      </div>
+    {{else}}
+      <div
+        class="title {{if this.showCollapsible "clickable collapsible"}}"
+        role="button"
+        {{on "click" this.collapse}}
+      >
+        {{t "general.objectives"}} ({{@course.objectives.length}})
+      </div>
+    {{/if}}
+    <div class="detail-objectives-actions" data-test-actions>
+      {{#if this.isManaging}}
+        <button
+          type="button"
+          class="bigadd"
+          {{on "click" (perform this.save)}}
+          aria-label={{t "general.save"}}
+          data-test-save
+        >
+          <FaIcon @icon="check" />
+        </button>
+        <button
+          type="button"
+          class="bigcancel"
+          {{on "click" this.cancel}}
+          aria-label={{t "general.cancel"}}
+          data-test-cancel
+        >
+          <FaIcon @icon="undo" />
+        </button>
+      {{else if @editable}}
+        <LinkTo @route="course-visualize-objectives" @model={{@course}}>
+          <VisualizerCourseObjectives
+            @course={{@course}}
+            @width={{20}}
+            @height={{20}}
+            @isIcon={{true}}
+          />
+        </LinkTo>
+        <ExpandCollapseButton
+          @value={{this.newObjectiveEditorOn}}
+          @action={{this.toggleNewObjectiveEditor}}
+          @expandButtonLabel={{t "general.addNew"}}
+        />
+      {{/if}}
+    </div>
+  </div>
+  <div class="detail-objectives-content">
+    {{#if this.newObjectiveEditorOn class="vertical"}}
+      <NewObjective
+        @save={{perform this.saveNewObjective}}
+        @cancel={{this.toggleNewObjectiveEditor}}
+      />
+    {{/if}}
+    {{#unless this.isManaging}}
+      <CourseObjectiveList
+        @course={{@course}}
+        @editable={{@editable}}
+        @manageParents={{perform this.manageParents}}
+        @manageDescriptors={{perform this.manageDescriptors}}
+      />
+    {{else}}
+      {{#if this.isManagingParents}}
+        <Course::ManageObjectiveParents
+          @objective={{this.manageParentsObjective}}
+          @cohortObjectives={{this.cohortObjectives}}
+          @selected={{this.parentsBuffer}}
+          @add={{this.addParentToBuffer}}
+          @remove={{this.removeParentFromBuffer}}
+          @removeFromCohort={{this.removeParentsWithCohortFromBuffer}}
+        />
+      {{/if}}
+      {{#if this.isManagingDescriptors}}
+        <Course::ManageObjectiveDescriptors
+          @objectiveTitle={{this.manageDescriptorsObjective.title}}
+          @selected={{this.descriptorsBuffer}}
+          @add={{this.addDescriptorToBuffer}}
+          @remove={{this.removeDescriptorFromBuffer}}
+          @editable={{@editable}}
+        />
+      {{/if}}
+    {{/unless}}
+  </div>
+</section>
