@@ -15,7 +15,9 @@
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "ember test",
-    "lint:style": "stylelint app/styles"
+    "lint:style": "stylelint app/styles",
+    "deploy:production": "ember deploy production --activate",
+    "deploy:staging": "ember deploy staging --activate"
   },
   "devDependencies": {
     "@csstools/postcss-sass": "^4.0.0",
