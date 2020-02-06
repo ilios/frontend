@@ -9,7 +9,7 @@
     <div class="cell"></div>
     {{#each days as |day|}}
       <div
-        class="cell title {{if this.areDaysSelectable "clickable"}}"
+        class="cell title {{if this.areDaysSelectable "clickable link"}}"
         role="button"
         {{on "click" (fn (action "changeToDayView") day.date)}}
       >

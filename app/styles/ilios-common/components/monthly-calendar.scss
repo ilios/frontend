@@ -91,9 +91,17 @@
         @include ilios-link-button;
         display: block;
         width: 100%;
-        font-size: .5rem;
+        font-size: .8rem;
         text-align: right;
         margin-top: .5rem;
+
+        .text {
+          display: none;
+
+          @include for-tablet-and-up {
+            display: inline;
+          }
+        }
       }
     }
   }
