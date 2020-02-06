@@ -23,6 +23,6 @@ jobs:
     - name: install dependencies
       run: npm ci
     - name: calculate
-      uses: paambaati/codeclimate-action@v2
+      uses: paambaati/codeclimate-action@v2.4.0
       with:
         coverageCommand: npm test
