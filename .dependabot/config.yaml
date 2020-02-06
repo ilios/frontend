@@ -72,6 +72,24 @@ update_configs:
     - match:
         dependency_name: "ember-test-selectors"
     - match:
+        update_type: "semver:minor"
+        dependency_name: "@fortawesome/pro-light-svg-icons"
+    - match:
+        update_type: "semver:minor"
+        dependency_name: "@fortawesome/pro-regular-svg-icons"
+    - match:
+        update_type: "semver:minor"
+        dependency_name: "@fortawesome/pro-solid-svg-icons"
+    - match:
+        update_type: "semver:minor"
+        dependency_name: "@fortawesome/free-brands-svg-icons"
+    - match:
+        update_type: "semver:minor"
+        dependency_name: "@fortawesome/free-regular-svg-icons"
+    - match:
+        update_type: "semver:minor"
+        dependency_name: "@fortawesome/free-solid-svg-icons"
+    - match:
         dependency_name: "@ilios/ember-template-lint-plugin"
     - match:
         dependency_name: "@ilios/eslint-config-ember-addon"
