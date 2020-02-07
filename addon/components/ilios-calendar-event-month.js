@@ -1,52 +1,56 @@
-import Ember from 'ember';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 import { htmlSafe } from '@ember/string';
-import { default as CalendarEvent } from 'elemental-calendar/components/calendar-event';
 import moment from 'moment';
-import TooltipContent from '../mixins/tooltip-content';
 import colorChange from '../utils/color-change';
+import calendarEventTooltip from '../utils/calendar-event-tooltip';
 
-const { Handlebars } = Ember;
-const { notEmpty, or } = computed;
-const { Utils } = Handlebars;
-const { escapeExpression } = Utils;
+export default class IliosCalendarEventMonthComponent extends Component {
+  @service intl;
+  @service moment;
 
-export default CalendarEvent.extend(TooltipContent, {
-  event: null,
-  timeFormat: 'h:mma',
-  classNameBindings: [':event', ':event-pos', ':ilios-calendar-event', ':month-event', 'clickable:clickable'],
-  'data-test-ilios-calendar-event': true,
-  daysToShowAlert: null,
+  get isIlm() {
+    return !!this.args.event.ilmSession;
+  }
 
-  isIlm: notEmpty('event.ilmSession'),
-  isOffering: notEmpty('event.offering'),
-  clickable: or('isIlm', 'isOffering'),
+  get isOffering() {
+    return !!this.args.event.offering;
+  }
 
-  style: computed(function() {
-    const event = this.get('event');
-    if (event == null) {
-      return new htmlSafe('');
-    }
-    const darkcolor = colorChange(event.color, -0.15);
+  get clickable() {
+    return this.isIlm || this.isOffering;
+  }
+
+  get tooltipContent() {
+    //access the locale info here so the getter will recompute when it changes
+    this.moment.locale;
+    this.intl.locale;
+    return calendarEventTooltip(this.args.event, this.intl, 'h:mma');
+  }
+
+  get style() {
+    const { color } = this.args.event;
+    const darkcolor = colorChange(color, -0.15);
 
     return new htmlSafe(
-      `background-color: ${escapeExpression(event.color)};
-       border-left: 4px solid ${escapeExpression(darkcolor)};`
+      `background-color: ${color};
+       border-left: 4px solid ${darkcolor};`
     );
-  }),
-  recentlyUpdated: computed('event.lastModified', {
-    get() {
-      const lastModifiedDate = moment(this.get('event.lastModified'));
-      const today = moment();
-      const daysSinceLastUpdate = today.diff(lastModifiedDate, 'days');
+  }
 
-      return daysSinceLastUpdate < 6 ? true : false;
-    }
-  }).readOnly(),
+  get recentlyUpdated() {
+    const lastModifiedDate = moment(this.args.event.lastModified);
+    const today = moment();
+    const daysSinceLastUpdate = today.diff(lastModifiedDate, 'days');
 
+    return daysSinceLastUpdate < 6 ? true : false;
+  }
+
+  @action
   click() {
-    if(this.get('clickable')){
-      this.get('selectEvent')();
+    if (this.clickable) {
+      this.args.selectEvent();
     }
   }
-});
+}
