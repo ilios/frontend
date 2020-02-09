@@ -46,13 +46,6 @@ export default Component.extend({
       event => !moment(event.startDate).isSame(moment(event.endDate), 'day')
     );
   }),
-  didInsertElement(){
-    run.next(() => {
-      if (!this.isDestroyed && !this.isDestroying && this.element) {
-        this.element.querySelector(".el-calendar .week").scrollTop = 500;
-      }
-    });
-  },
   actions: {
     changeToDayView(date){
       const changeDate = this.get('changeDate');
