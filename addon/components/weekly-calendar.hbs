@@ -29,17 +29,21 @@
           {{day.shortName}}
         </button>
       </h3>
-      {{#each day.events as |event|}}
+      {{#each day.events as |event i|}}
         {{#if event.isMulti}}
           <WeeklyCalendarEvent
             @event={{event}}
             @day={{day.dayOfWeek}}
+            @otherDayEvents={{without event day.events}}
+            @i={{i}}
             @selectEvent={{fn @changeToDayView event.startDate}}
           />
         {{else}}
           <WeeklyCalendarEvent
             @event={{event}}
             @day={{day.dayOfWeek}}
+            @otherDayEvents={{without event day.events}}
+            @i={{i}}
             @selectEvent={{fn @selectEvent event}}
           />
         {{/if}}
