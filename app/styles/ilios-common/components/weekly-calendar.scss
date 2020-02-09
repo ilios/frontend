@@ -67,10 +67,6 @@
       }
     }
 
-    .day {
-      grid-row: 1;
-    }
-
     .day-name {
       @include visually-hidden;
     }
