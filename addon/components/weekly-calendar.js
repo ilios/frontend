@@ -1,10 +1,16 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
+import scrollIntoView from 'scroll-into-view';
 
 export default class WeeklyCalendarComponent extends Component {
   @service intl;
   @service moment;
+
+  scrollToFirstEvent(element) {
+    const firstEvent = element.querySelector('.weekly-calendar-event');
+    scrollIntoView(firstEvent);
+  }
 
   get firstDayOfWeek() {
     //access the locale info here so the getter will recompute when it changes

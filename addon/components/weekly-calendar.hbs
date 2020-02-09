@@ -1,4 +1,8 @@
-<section class="weekly-calendar" data-test-weekly-calendar>
+<section
+  class="weekly-calendar"
+  {{did-insert this.scrollToFirstEvent}}
+  data-test-weekly-calendar
+>
   <h2 class="week-of-year">
     <span class="short">
       {{moment-format this.firstDayOfWeek "M/D"}} &ndash;
