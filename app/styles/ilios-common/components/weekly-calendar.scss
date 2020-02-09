@@ -40,6 +40,7 @@
     grid-template-rows: repeat((24 * 60), .25rem);
     max-height: 100vh;
     overflow-y: scroll;
+    scroll-snap-type: y mandatory;
 
     .weekly-calendar-event {
       @for $minute from 1 through (24 * 60) {
@@ -56,6 +57,8 @@
       align-self: start;
       border-top: 1px solid $grey;
       padding: 0;
+      scroll-snap-align: start;
+
       @for $hour from 0 through 23 {
         &.hour-#{$hour} {
           grid-column: 1;
