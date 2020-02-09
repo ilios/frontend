@@ -62,7 +62,7 @@
       @for $hour from 0 through 23 {
         &.hour-#{$hour} {
           grid-column: 1;
-          grid-row: ($hour * 60) + 2;
+          grid-row: $hour * 60;
         }
       }
     }
