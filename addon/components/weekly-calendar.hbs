@@ -42,8 +42,8 @@
       <div class="hour-border hour-{{hour.hour}}" aria-hidden="true"></div>
     {{/each}}
   </div>
-  {{#each this.dayNames as |day|}}
-    <div class="day-headings" aria-hidden="true">
+  <div class="day-headings" aria-hidden="true">
+    {{#each this.dayNames as |day|}}
       <div class="day-heading day-{{day.day}}">
         <button
           type="button"
@@ -60,7 +60,7 @@
           {{day.shortName}}
         </button>
       </div>
-    </div>
-  {{/each}}
+    {{/each}}
+  </div>
 
 </section>

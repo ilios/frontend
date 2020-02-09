@@ -51,7 +51,7 @@ export default class WeeklyCalendarEventComponent extends Component {
 
     return new htmlSafe(
       `background-color: ${color};
-       border-left: 4px solid ${darkcolor};
+       border-left: .25rem solid ${darkcolor};
        width: ${width}%;
        margin-left: ${left}%;
        grid-row-start: ${this.startMinute + 1};

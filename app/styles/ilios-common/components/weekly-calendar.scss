@@ -43,6 +43,7 @@
     scroll-snap-type: y mandatory;
 
     .weekly-calendar-event {
+      overflow: hidden;
       z-index: 5;
     }
 
