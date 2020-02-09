@@ -1,15 +1,19 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 import moment from 'moment';
-import scrollIntoView from 'scroll-into-view';
 
 export default class WeeklyCalendarComponent extends Component {
   @service intl;
   @service moment;
 
-  scrollToFirstEvent(element) {
-    const firstEvent = element.querySelector('.weekly-calendar-event');
-    scrollIntoView(firstEvent);
+  @action
+  scrollToHourBeforeFirstHourWithEvent(calendarElement) {
+    const firstEvent = this.sortedEvents[0];
+    const startHour = moment(firstEvent.startDate).format('H');
+    if (startHour > 4) {
+      calendarElement.scrollTop = this[`hour${startHour - 2}`].offsetTop;
+    }
   }
 
   get firstDayOfWeek() {

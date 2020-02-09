@@ -1,6 +1,5 @@
 <section
   class="weekly-calendar"
-  {{did-insert this.scrollToFirstEvent}}
   data-test-weekly-calendar
 >
   <h2 class="week-of-year">
@@ -11,7 +10,7 @@
     </span>
     <span class="long">{{t "general.weekOf" date=(moment-format this.firstDayOfWeek "MMMM Do YYYY")}}</span>
   </h2>
-  <div class="calendar">
+  <div class="calendar" {{did-insert this.scrollToHourBeforeFirstHourWithEvent}}>
     {{#each this.days as |day|}}
       <h3 class="day-name">{{day.longName}}</h3>
       {{#each day.events as |event i|}}
@@ -35,7 +34,7 @@
       {{/each}}
     {{/each}}
     {{#each this.hours as |hour|}}
-      <span aria-hidden="true" class="hour hour-{{hour.hour}}">
+      <span aria-hidden="true" class="hour hour-{{hour.hour}}" {{ref this (concat "hour" hour.hour)}}>
         {{hour.name}}
       </span>
     {{/each}}
