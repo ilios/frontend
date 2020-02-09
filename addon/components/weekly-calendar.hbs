@@ -32,31 +32,33 @@
           />
         {{/if}}
       {{/each}}
+      <div class="day-border day-{{day.dayOfWeek}}" aria-hidden="true"></div>
     {{/each}}
     {{#each this.hours as |hour|}}
       <span aria-hidden="true" class="hour hour-{{hour.hour}}" {{ref this (concat "hour" hour.hour)}}>
         {{hour.name}}
       </span>
+      <div class="hour-border hour-{{hour.hour}}" aria-hidden="true"></div>
     {{/each}}
   </div>
   {{#each this.dayNames as |day|}}
-    <div class="day-headings">
-      <button
-        type="button"
-        class="day-heading long day-{{day.day}}"
-        aria-hidden="true"
-        {{on "click" (fn @changeToDayView day.date)}}
-      >
-        {{day.longName}}
-      </button>
-      <button
-        type="button"
-        class="day-heading short day-{{day.day}}"
-        aria-hidden="true"
-        {{on "click" (fn @changeToDayView day.date)}}
-      >
-        {{day.shortName}}
-      </button>
+    <div class="day-headings" aria-hidden="true">
+      <div class="day-heading day-{{day.day}}">
+        <button
+          type="button"
+          class="long "
+          {{on "click" (fn @changeToDayView day.date)}}
+        >
+          {{day.longName}}
+        </button>
+        <button
+          type="button"
+          class="short"
+          {{on "click" (fn @changeToDayView day.date)}}
+        >
+          {{day.shortName}}
+        </button>
+      </div>
     </div>
   {{/each}}
 
