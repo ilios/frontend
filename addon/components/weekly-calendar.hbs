@@ -13,21 +13,18 @@
   <div class="calendar" {{did-insert this.scrollToHourBeforeFirstHourWithEvent}}>
     {{#each this.days as |day|}}
       <h3 class="day-name">{{day.longName}}</h3>
-      {{#each day.events as |event i|}}
+      {{#each day.events as |event|}}
         {{#if event.isMulti}}
           <WeeklyCalendarEvent
             @event={{event}}
             @day={{day.dayOfWeek}}
-            @otherDayEvents={{without event day.events}}
-            @i={{i}}
-            @selectEvent={{fn @changeToDayView event.startDate}}
+            @allDayEvents={{day.events}}
           />
         {{else}}
           <WeeklyCalendarEvent
             @event={{event}}
             @day={{day.dayOfWeek}}
-            @otherDayEvents={{without event day.events}}
-            @i={{i}}
+            @allDayEvents={{day.events}}
             @selectEvent={{fn @selectEvent event}}
           />
         {{/if}}

@@ -23,9 +23,9 @@ export default class WeeklyCalendarEventComponent extends Component {
     return this.endMoment.diff(this.startMoment, 'minutes');
   }
 
-  get countOfEventsInSameSpace() {
+  get eventsInSameSpace() {
     const { startMoment, endMoment } = this;
-    const events = this.args.otherDayEvents.filter(event => {
+    return this.args.allDayEvents.filter(event => {
       const eStartMoment = moment(event.startDate);
       const eEndMoment = moment(event.endDate);
       return eStartMoment.isBetween(
@@ -40,15 +40,14 @@ export default class WeeklyCalendarEventComponent extends Component {
         '[]'
       );
     });
-
-    return events.length + 1;
   }
 
   get style() {
     const { color } = this.args.event;
     const darkcolor = colorChange(color, -0.15);
-    const width = 100 / this.countOfEventsInSameSpace;
-    const left = width * this.args.i;
+    const width = 100 / this.eventsInSameSpace.length;
+    const order = this.eventsInSameSpace.indexOf(this.args.event);
+    const left = width * order;
 
     return new htmlSafe(
       `background-color: ${color};
