@@ -8,12 +8,11 @@ export default class WeeklyCalendarComponent extends Component {
   @service moment;
 
   @action
-  scrollToHourBeforeFirstHourWithEvent(calendarElement) {
-    const firstEvent = this.sortedEvents[0];
-    const startHour = moment(firstEvent.startDate).format('H');
-    if (startHour > 4) {
-      calendarElement.scrollTop = this[`hour${startHour - 2}`].offsetTop;
+  scrollView(calendarElement, [earliestHour]) {
+    if (earliestHour === 24 || earliestHour < 2) {
+      return;
     }
+    calendarElement.scrollTop = this[`hour${earliestHour - 2}`].offsetTop;
   }
 
   get firstDayOfWeek() {
@@ -37,6 +36,17 @@ export default class WeeklyCalendarComponent extends Component {
         dayOfWeek: i + 1
       };
     });
+  }
+
+  get earliestHour() {
+    if (!this.args.events) {
+      return null;
+    }
+
+    return this.sortedEvents.reduce((earliestHour, event) => {
+      const hour = Number(moment(event.startDate).format('H'));
+      return hour < earliestHour ? hour : earliestHour;
+    }, 24);
   }
 
   get sortedEvents() {
