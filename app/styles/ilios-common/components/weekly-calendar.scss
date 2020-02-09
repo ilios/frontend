@@ -2,7 +2,7 @@
   display: grid;
   align-items: center;
   grid-template-columns: 1fr;
-  grid-template-rows: 2rem 1fr;
+  grid-template-rows: 2rem 1.5rem 1fr;
   margin: .5rem 1rem;
   height: 100vh;
 
@@ -16,7 +16,7 @@
   }
 
   .week-of-year,
-  .day-heading {
+  .day-headings {
     .long {
       display: none;
     }
@@ -37,22 +37,14 @@
     grid-row: 3;
     grid-column: 1;
     grid-template-columns: 5rem repeat(7, 1fr);
-    grid-template-rows: 1.5rem repeat((24 * 60), .25rem);
-
-    .weekly-calendar-event,
-    .day-heading {
-      @for $day from 1 through 7 {
-        &.day-#{$day} {
-          grid-column: ($day + 1);
-          grid-row: 1;
-        }
-      }
-    }
+    grid-template-rows: repeat((24 * 60), .25rem);
+    max-height: 100vh;
+    overflow-y: scroll;
 
     .weekly-calendar-event {
       @for $minute from 1 through (24 * 60) {
         &.start-minute-#{$minute} {
-          grid-row-start: ($minute + 1);
+          grid-row-start: $minute;
         }
         &.total-minutes-#{$minute} {
           grid-row-end: span $minute;
@@ -72,14 +64,34 @@
       }
     }
 
+    .day {
+      grid-row: 1;
+    }
+
+    .day-name {
+      @include visually-hidden;
+    }
+  }
+
+  .calendar .weekly-calendar-event,
+  .day-heading {
+    @for $day from 1 through 7 {
+      &.day-#{$day} {
+        grid-column: ($day + 1);
+      }
+    }
+  }
+
+  .day-headings {
+    display: grid;
+    grid-row: 2;
+    grid-column: 1;
+    grid-template-columns: 5rem repeat(7, 1fr);
+    grid-template-rows: 1fr;
     .day-heading {
       align-self: center;
       justify-self: center;
-      grid-row: 1;
-
-      button {
-        @include ilios-link-button;
-      }
+      @include ilios-link-button;
     }
   }
 }

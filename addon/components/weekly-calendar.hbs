@@ -13,22 +13,7 @@
   </h2>
   <div class="calendar">
     {{#each this.days as |day|}}
-      <h3 class="day-heading day-{{day.dayOfWeek}}">
-        <button
-          type="button"
-          class="long"
-          {{on "click" (fn @changeToDayView day.date)}}
-        >
-          {{day.longName}}
-        </button>
-        <button
-          type="button"
-          class="short"
-          {{on "click" (fn @changeToDayView day.date)}}
-        >
-          {{day.shortName}}
-        </button>
-      </h3>
+      <h3 class="day-name">{{day.longName}}</h3>
       {{#each day.events as |event i|}}
         {{#if event.isMulti}}
           <WeeklyCalendarEvent
@@ -55,4 +40,25 @@
       </span>
     {{/each}}
   </div>
+  {{#each this.dayNames as |day|}}
+    <div class="day-headings">
+      <button
+        type="button"
+        class="day-heading long day-{{day.day}}"
+        aria-hidden="true"
+        {{on "click" (fn @changeToDayView day.date)}}
+      >
+        {{day.longName}}
+      </button>
+      <button
+        type="button"
+        class="day-heading short day-{{day.day}}"
+        aria-hidden="true"
+        {{on "click" (fn @changeToDayView day.date)}}
+      >
+        {{day.shortName}}
+      </button>
+    </div>
+  {{/each}}
+
 </section>
