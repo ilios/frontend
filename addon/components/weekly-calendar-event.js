@@ -53,7 +53,9 @@ export default class WeeklyCalendarEventComponent extends Component {
       `background-color: ${color};
        border-left: 4px solid ${darkcolor};
        width: ${width}%;
-       margin-left: ${left}%;`
+       margin-left: ${left}%;
+       grid-row-start: ${this.startMinute + 1};
+       grid-row-end: span ${this.totalMinutes};`
     );
   }
 

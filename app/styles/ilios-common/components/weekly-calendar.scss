@@ -44,14 +44,6 @@
 
     .weekly-calendar-event {
       z-index: 5;
-      @for $minute from 1 through (24 * 60) {
-        &.start-minute-#{$minute} {
-          grid-row-start: $minute;
-        }
-        &.total-minutes-#{$minute} {
-          grid-row-end: span $minute;
-        }
-      }
     }
 
     .hour {
