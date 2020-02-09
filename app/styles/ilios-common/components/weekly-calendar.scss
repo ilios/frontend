@@ -37,7 +37,7 @@
     grid-row: 3;
     grid-column: 1;
     grid-template-columns: 5rem repeat(7, 1fr);
-    grid-template-rows: repeat((24 * 60), .25rem);
+    grid-template-rows: repeat((24 * 60), .1rem);
     max-height: 100vh;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
