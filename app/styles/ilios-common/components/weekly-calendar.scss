@@ -1,0 +1,85 @@
+.weekly-calendar {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2rem 1fr;
+  margin: .5rem 1rem;
+  height: 100vh;
+
+  .week-of-year {
+    @include ilios-heading-h4;
+    grid-column: 1;
+    grid-row: 1;
+    justify-self: center;
+    margin: 0 0 .25rem 0;
+    padding: 0;
+  }
+
+  .week-of-year,
+  .day-heading {
+    .long {
+      display: none;
+    }
+
+    @include for-tablet-and-up {
+      .long {
+        display: inline;
+      }
+      .short {
+        display: none;
+      }
+    }
+  }
+
+  .calendar {
+    align-self: start;
+    display: grid;
+    grid-row: 3;
+    grid-column: 1;
+    grid-template-columns: 5rem repeat(7, 1fr);
+    grid-template-rows: 1.5rem repeat((24 * 60), .25rem);
+
+    .weekly-calendar-event,
+    .day-heading {
+      @for $day from 1 through 7 {
+        &.day-#{$day} {
+          grid-column: ($day + 1);
+          grid-row: 1;
+        }
+      }
+    }
+
+    .weekly-calendar-event {
+      @for $minute from 1 through (24 * 60) {
+        &.start-minute-#{$minute} {
+          grid-row-start: ($minute + 1);
+        }
+        &.total-minutes-#{$minute} {
+          grid-row-end: span ($minute + 1);
+        }
+      }
+    }
+
+    .hour {
+      align-self: start;
+      border-top: 1px solid $grey;
+      padding: 0;
+      @for $hour from 0 through 23 {
+        &.hour-#{$hour} {
+          grid-column: 1;
+          grid-row: ($hour * 60) + 2;
+        }
+      }
+    }
+
+    .day-heading {
+      align-self: center;
+      justify-self: center;
+      grid-row: 1;
+
+      button {
+        @include ilios-link-button;
+      }
+    }
+  }
+}
