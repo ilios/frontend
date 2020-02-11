@@ -45,6 +45,7 @@
     .weekly-calendar-event {
       overflow: hidden;
       z-index: 5;
+      border: 1px inset $white;
     }
 
     .hour {
