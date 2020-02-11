@@ -50,8 +50,9 @@
 
     .hour {
       align-self: start;
-      padding: 0;
+      padding: 0 .25rem 0 0;
       scroll-snap-align: start;
+      text-align: right;
       grid-column: 1;
     }
 
