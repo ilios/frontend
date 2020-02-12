@@ -12,7 +12,9 @@ export default class WeeklyCalendarComponent extends Component {
     if (earliestHour === 24 || earliestHour < 2) {
       return;
     }
-    calendarElement.scrollTop = this[`hour${earliestHour - 2}`].offsetTop;
+    // all of the hour elements are registered in the template as hour0, hour1, etc
+    const hourElement = this[`hour${earliestHour - 2}`];
+    calendarElement.scrollTop = hourElement.offsetTop;
   }
 
   get firstDayOfWeek() {
