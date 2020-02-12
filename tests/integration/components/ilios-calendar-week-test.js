@@ -1,7 +1,8 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { component as weeklyCalendarComponent } from 'ilios-common/page-objects/components/weekly-calendar';
 
 module('Integration | Component | ilios calendar week', function(hooks) {
   setupRenderingTest(hooks);
@@ -16,13 +17,13 @@ module('Integration | Component | ilios calendar week', function(hooks) {
     const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
 
-    await render(hbs`<IliosCalendarWeek @date={{date}} />`);
-    assert.equal(this.element.textContent.trim().search(/^Week of September/), 0);
-    assert.equal(this.element.querySelectorAll('.event').length, 0);
+    await render(hbs`<IliosCalendarWeek @date={{this.date}} />`);
+    assert.dom().containsText('Week of September 27th 2015');
+    assert.equal(weeklyCalendarComponent.events.length, 0);
   });
 
   test('clicking on a day header fires the correct events', async function(assert) {
-    assert.expect(4);
+    assert.expect(3);
     const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
     this.actions.changeDate = newDate => {
@@ -34,21 +35,15 @@ module('Integration | Component | ilios calendar week', function(hooks) {
     };
 
     await render(hbs`<IliosCalendarWeek
-      @date={{date}}
+      @date={{this.date}}
       @changeDate={{action "changeDate"}}
       @changeView={{action "changeView"}}
     />`);
-
-    const weekTitles = '.week-titles .cell';
-    const sunday = `${weekTitles}:nth-of-type(2)`;
-
-    assert.dom(sunday).hasClass('clickable');
-
-    await click(sunday);
+    weeklyCalendarComponent.dayHeadings[0].selectLongDay();
   });
 
   test('clicking on a day header does nothing when areDaysSelectable is false', async function(assert) {
-    assert.expect(1);
+    assert.expect(0);
     const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
     this.set('nothing', () => {
@@ -56,17 +51,11 @@ module('Integration | Component | ilios calendar week', function(hooks) {
     });
 
     await render(hbs`<IliosCalendarWeek
-      @date={{date}}
+      @date={{this.date}}
       @areDaysSelectable={{false}}
-      @changeDate={{action nothing}}
-      @changeView={{action nothing}}
+      @changeDate={{this.nothing}}
+      @changeView={{this.nothing}}
     />`);
-
-    const weekTitles = '.week-titles .cell';
-    const sunday = `${weekTitles}:nth-of-type(2)`;
-
-    assert.dom(sunday).hasNoClass('clickable');
-
-    await click(sunday);
+    await weeklyCalendarComponent.dayHeadings[0].selectLongDay();
   });
 });
