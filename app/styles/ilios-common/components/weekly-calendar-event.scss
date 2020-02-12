@@ -1,10 +1,15 @@
 .weekly-calendar-event {
   color: $black;
-  line-height: .9em;
+  font-size: .8rem;
+  padding: .25rem;
+  overflow: hidden;
+  z-index: 5;
+  border: 1px inset $white;
 
   .ilios-calendar-event-time {
     color: $maroon;
     display: block;
+    font-size: .7rem;
     font-weight: bold;
     padding-bottom: .5em;
   }

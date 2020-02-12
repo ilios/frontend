@@ -37,16 +37,10 @@
     grid-row: 3;
     grid-column: 1;
     grid-template-columns: 5rem repeat(7, 1fr);
-    grid-template-rows: repeat((24 * 60), .1rem);
+    grid-template-rows: repeat((24 * 60), .07rem);
     max-height: 90vh;
     overflow-y: scroll;
     scroll-snap-type: y mandatory;
-
-    .weekly-calendar-event {
-      overflow: hidden;
-      z-index: 5;
-      border: 1px inset $white;
-    }
 
     .hour {
       align-self: start;
