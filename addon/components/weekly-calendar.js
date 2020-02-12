@@ -16,14 +16,11 @@ export default class WeeklyCalendarComponent extends Component {
   }
 
   get firstDayOfWeek() {
-    //access the locale info here so the getter will recompute when it changes
-    this.moment.locale;
-    this.intl.locale;
-    return moment(this.args.date).startOf('week').hour(0).minute(0).second(0);
+    return this.moment.moment(this.args.date).startOf('week');
   }
 
   get lastDayOfWeek() {
-    return this.firstDayOfWeek.add(7, 'days');
+    return this.firstDayOfWeek.endOf('week');
   }
 
   get week() {
@@ -32,7 +29,7 @@ export default class WeeklyCalendarComponent extends Component {
       return {
         date: date.toDate(),
         longName: date.format('dddd'),
-        shortName: date.toDate('ddd'),
+        shortName: date.format('ddd'),
         dayOfWeek: i + 1
       };
     });
@@ -71,22 +68,6 @@ export default class WeeklyCalendarComponent extends Component {
       day.fullName = date.format('dddd LL');
 
       return day;
-    });
-  }
-
-  get dayNames() {
-    //access the locale info here so the getter will recompute when it changes
-    this.moment.locale;
-    this.intl.locale;
-    const longDays = moment.weekdays(true);
-    const shortDays = moment.weekdaysShort(true);
-
-    return [...Array(7).keys()].map(i => {
-      return {
-        day: i + 1,
-        longName: longDays[i],
-        shortName: shortDays[i],
-      };
     });
   }
 
