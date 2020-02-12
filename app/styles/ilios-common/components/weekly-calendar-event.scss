@@ -1,0 +1,20 @@
+.weekly-calendar-event {
+  color: $black;
+  line-height: .9em;
+
+  .ilios-calendar-event-time {
+    color: $maroon;
+    display: block;
+    font-weight: bold;
+    padding-bottom: .5em;
+  }
+
+  .ilios-calendar-event-location {
+    display: inline;
+    font-weight: bold;
+  }
+
+  &.ilm {
+    border-top: 2px dotted $black;
+  }
+}

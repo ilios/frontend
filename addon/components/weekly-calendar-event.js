@@ -2,8 +2,13 @@ import Component from '@glimmer/component';
 import moment from 'moment';
 import colorChange from '../utils/color-change';
 import { htmlSafe } from '@ember/string';
+import calendarEventTooltip from '../utils/calendar-event-tooltip';
+import { inject as service } from '@ember/service';
 
 export default class WeeklyCalendarEventComponent extends Component {
+  @service intl;
+  @service moment;
+
   constructor() {
     super(...arguments);
     const allMinutesInDay = Array((60 * 24)).fill(0);
@@ -17,6 +22,34 @@ export default class WeeklyCalendarEventComponent extends Component {
 
     this.minutes = allMinutesInDay;
   }
+
+  get isIlm() {
+    return !!this.args.event.ilmSession;
+  }
+
+  get isOffering() {
+    return !!this.args.event.offering;
+  }
+
+  get clickable() {
+    return this.isIlm || this.isOffering;
+  }
+
+  get tooltipContent() {
+    //access the locale info here so the getter will recompute when it changes
+    this.moment.locale;
+    this.intl.locale;
+    return calendarEventTooltip(this.args.event, this.intl, 'h:mma');
+  }
+
+  get recentlyUpdated() {
+    const lastModifiedDate = moment(this.args.event.lastModified);
+    const today = moment();
+    const daysSinceLastUpdate = today.diff(lastModifiedDate, 'days');
+
+    return daysSinceLastUpdate < 6 ? true : false;
+  }
+
 
   get startMoment() {
     return moment(this.args.event.startDate);
