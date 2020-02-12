@@ -1,42 +1,52 @@
-{{#if @event}}
-  {{#attach-tooltip
-    lazyRender=true
-    placement="left"
-    interactive=true
-    animation="shift"
-    class="ilios-calendar-event-tooltip"
-    }}
-    {{! template-lint-disable no-triple-curlies }}
-    {{{this.tooltipContent}}}
-  {{/attach-tooltip}}
-  {{#if this.recentlyUpdated}}
-    <FaIcon
-      @icon="exclamation"
-      class="recently-updated-icon"
-      @title={{t "general.newUpdates"}}
-    />
-  {{/if}}
-  <span class="ilios-calendar-event-time">
-    <span class="ilios-calendar-event-start">
-      {{moment-format @event.startDate "h:mma"}}
-    </span>
-    <span class="ilios-calendar-event-end">
-      -
-      {{moment-format @event.endDate "h:mma"}}
-    </span>
-  </span>
-  {{#unless @event.isMulti}}
-    <span class="ilios-calendar-event-location">
-      {{@event.location}}:
-    </span>
-  {{/unless}}
-  <span class="ilios-calendar-event-name">
-    {{@event.name}}
-    {{#if @event.isMulti}}
-      ,
-      <em>
-        {{t "general.multiple"}}
-      </em>
+<div
+  {{! template-lint-disable no-inline-styles }}
+  style={{this.style}}
+  class="event ilios-calendar-event month-event {{if this.clickable "clickable"}}"
+  role="button"
+  data-test-ilios-calendar-event
+  data-test-ilios-calendar-event-month
+  {{on "click" (if this.clickable (fn @selectEvent) (noop))}}
+>
+  {{#if @event}}
+    {{#attach-tooltip
+      lazyRender=true
+      placement="left"
+      interactive=true
+      animation="shift"
+      class="ilios-calendar-event-tooltip"
+      }}
+      {{this.tooltipContent}}
+    {{/attach-tooltip}}
+    {{#if this.recentlyUpdated}}
+      <FaIcon
+        @icon="exclamation"
+        class="recently-updated-icon"
+        @title={{t "general.newUpdates"}}
+      />
     {{/if}}
-  </span>
-{{/if}}
+    <span class="ilios-calendar-event-time">
+      <span class="ilios-calendar-event-start">
+        {{moment-format @event.startDate "h:mma"}}
+      </span>
+      <span class="ilios-calendar-event-end">
+        -
+        {{moment-format @event.endDate "h:mma"}}
+      </span>
+    </span>
+    {{#unless @event.isMulti}}
+      <span class="ilios-calendar-event-location">
+        {{@event.location}}:
+      </span>
+    {{/unless}}
+    <span class="ilios-calendar-event-name">
+      {{@event.name}}
+      {{#if @event.isMulti}}
+        ,
+        <em>
+          {{t "general.multiple"}}
+        </em>
+      {{/if}}
+    </span>
+  {{/if}}
+
+</div>
