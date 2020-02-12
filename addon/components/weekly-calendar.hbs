@@ -2,27 +2,29 @@
   class="weekly-calendar"
   data-test-weekly-calendar
 >
-  <h2 class="week-of-year">
-    <span class="short">
+  <h2 class="week-of-year" data-test-week-of-year>
+    <span class="short" data-test-short>
       {{moment-format this.firstDayOfWeek "M/D"}} &ndash;
       {{moment-format this.lastDayOfWeek "M/D"}}
       {{moment-format this.lastDayOfWeek "YYYY"}}
     </span>
-    <span class="long">{{t "general.weekOf" date=(moment-format this.firstDayOfWeek "MMMM Do YYYY")}}</span>
+    <span class="long" data-test-long>{{t "general.weekOf" date=(moment-format this.firstDayOfWeek "MMMM Do YYYY")}}</span>
   </h2>
   <div
     class="calendar"
+    tabindex="0"
     {{did-insert (fn this.scrollView) this.earliestHour}}
     {{did-update (fn this.scrollView) this.earliestHour}}
   >
     {{#each this.days as |day|}}
-      <h3 class="day-name">{{day.longName}}</h3>
+      <h3 class="day-name" data-test-day-name>{{day.longName}}</h3>
       {{#each day.events as |event|}}
         {{#if event.isMulti}}
           <WeeklyCalendarEvent
             @event={{event}}
             @day={{day.dayOfWeek}}
             @allDayEvents={{day.events}}
+            @selectEvent={{fn @changeToDayView event.startDate}}
           />
         {{else}}
           <WeeklyCalendarEvent
@@ -42,20 +44,24 @@
       <div class="hour-border hour-{{hour.hour}}" aria-hidden="true"></div>
     {{/each}}
   </div>
-  <div class="day-headings" aria-hidden="true">
-    {{#each this.dayNames as |day|}}
-      <div class="day-heading day-{{day.day}}">
+  <div class="day-headings" aria-hidden="true" data-test-day-headings>
+    {{#each this.week as |day|}}
+      <div class="day-heading day-{{day.dayOfWeek}}">
         <button
           type="button"
-          class="long "
+          class="long"
+          tabindex="-1"
           {{on "click" (fn @changeToDayView day.date)}}
+          data-test-long
         >
           {{day.longName}}
         </button>
         <button
           type="button"
           class="short"
+          tabindex="-1"
           {{on "click" (fn @changeToDayView day.date)}}
+          data-test-short
         >
           {{day.shortName}}
         </button>
