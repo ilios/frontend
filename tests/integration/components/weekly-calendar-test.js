@@ -35,7 +35,7 @@ module('Integration | Component | weekly-calendar', function(hooks) {
     />`);
 
     assert.equal(component.longWeekOfYear, 'Week of January 6 2019');
-    assert.equal(component.shortWeekOfYear, '1/6 – 1/12 2019');
+    assert.equal(component.shortWeekOfYear, '1/6 — 1/12 2019');
     assert.equal(component.dayHeadings.length, 7);
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
     assert.equal(component.dayHeadings[0].text, 'Sunday Sun');
@@ -210,7 +210,7 @@ module('Integration | Component | weekly-calendar', function(hooks) {
     />`);
 
     assert.equal(component.longWeekOfYear, 'Week of December 7 1980');
-    assert.equal(component.shortWeekOfYear, '12/7 – 12/13 1980');
+    assert.equal(component.shortWeekOfYear, '12/7 — 12/13 1980');
 
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
     assert.equal(component.dayHeadings[0].text, 'Sunday Sun');
@@ -224,7 +224,7 @@ module('Integration | Component | weekly-calendar', function(hooks) {
     await settled();
 
     assert.equal(component.longWeekOfYear, 'Semana de diciembre 8º 1980');
-    assert.equal(component.shortWeekOfYear, '12/8 – 12/14 1980');
+    assert.equal(component.shortWeekOfYear, '12/8 — 12/14 1980');
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
     assert.equal(component.dayHeadings[0].text, 'lunes lun.');
 
@@ -251,7 +251,7 @@ module('Integration | Component | weekly-calendar', function(hooks) {
     />`);
 
     assert.equal(component.longWeekOfYear, 'Week of February 23 2020');
-    assert.equal(component.shortWeekOfYear, '2/23 – 2/29 2020');
+    assert.equal(component.shortWeekOfYear, '2/23 — 2/29 2020');
 
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
     assert.equal(component.dayHeadings[0].text, 'Sunday Sun');
@@ -265,7 +265,7 @@ module('Integration | Component | weekly-calendar', function(hooks) {
     await settled();
 
     assert.equal(component.longWeekOfYear, 'Semana de febrero 24º 2020');
-    assert.equal(component.shortWeekOfYear, '2/24 – 3/1 2020');
+    assert.equal(component.shortWeekOfYear, '2/24 — 3/1 2020');
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
     assert.equal(component.dayHeadings[0].text, 'lunes lun.');
 
