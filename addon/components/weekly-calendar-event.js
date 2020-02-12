@@ -21,6 +21,30 @@ export default class WeeklyCalendarEventComponent extends Component {
     });
 
     this.minutes = allMinutesInDay;
+
+    this.eventsInSameSpace = this.args.allDayEvents.filter(e => {
+      const startMoment = moment(e.startDate);
+      const endMoment = moment(e.endDate);
+
+      //events which touch are not in the same space
+      if (
+        this.endMoment.isSame(startMoment, 'minute') ||
+        this.startMoment.isSame(endMoment, 'minute')
+      ) {
+        return false;
+      }
+      return this.startMoment.isBetween(
+        startMoment,
+        endMoment,
+        'minute',
+        '[]'
+      ) || this.endMoment.isBetween(
+        startMoment,
+        endMoment,
+        'minute',
+        '[]'
+      );
+    });
   }
 
   get isIlm() {
@@ -50,7 +74,6 @@ export default class WeeklyCalendarEventComponent extends Component {
     return daysSinceLastUpdate < 6 ? true : false;
   }
 
-
   get startMoment() {
     return moment(this.args.event.startDate);
   }
@@ -71,34 +94,6 @@ export default class WeeklyCalendarEventComponent extends Component {
     return this.endMoment.diff(this.startMoment, 'minutes');
   }
 
-  getEventsInSameSpace(event) {
-    const startMoment = moment(event.startDate);
-    const endMoment = moment(event.endDate);
-    return this.args.allDayEvents.filter(e => {
-      const eStartMoment = moment(e.startDate);
-      const eEndMoment = moment(e.endDate);
-
-      //events which touch are not in the same space
-      if (
-        endMoment.isSame(eStartMoment, 'minute') ||
-        startMoment.isSame(eEndMoment, 'minute')
-      ) {
-        return false;
-      }
-      return startMoment.isBetween(
-        eStartMoment,
-        eEndMoment,
-        'minute',
-        '[]'
-      ) || endMoment.isBetween(
-        eStartMoment,
-        eEndMoment,
-        'minute',
-        '[]'
-      );
-    });
-  }
-
   getMinuteInTheDay(date) {
     const m = moment(date);
     const midnight = moment(date).startOf('day');
@@ -116,15 +111,15 @@ export default class WeeklyCalendarEventComponent extends Component {
   }
 
   get left() {
-    const eventsInTheSameSpace = this.getEventsInSameSpace(this.args.event);
-    eventsInTheSameSpace.sort(({ startDate: s1, endDate: e1 }, { startDate: s2, endDate: e2 }) => {
+    const events = this.eventsInSameSpace;
+    events.sort(({ startDate: s1, endDate: e1 }, { startDate: s2, endDate: e2 }) => {
       const d1 = moment(e1).diff(moment(s1), 'minutes');
       const d2 = moment(e2).diff(moment(s2), 'minutes');
 
       return d2 - d1;
     });
 
-    return eventsInTheSameSpace.indexOf(this.args.event) * this.width;
+    return events.indexOf(this.args.event) * this.width;
   }
 
   get style() {
