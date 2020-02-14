@@ -62,12 +62,14 @@ export default class WeeklyCalendarEventComponent extends Component {
     return this.startMoment.startOf('day');
   }
 
-  get startMinute() {
-    return this.startMoment.diff(this.startOfDay, 'minutes');
+  get startMinuteRounded() {
+    const minute = this.startMoment.diff(this.startOfDay, 'minutes');
+    return Math.ceil(minute / 5);
   }
 
-  get totalMinutes() {
-    return this.endMoment.diff(this.startMoment, 'minutes');
+  get totalMinutesRounded() {
+    const minutes = this.endMoment.diff(this.startMoment, 'minutes');
+    return Math.floor(minutes / 5);
   }
 
   getMinuteInTheDay(date) {
@@ -94,8 +96,8 @@ export default class WeeklyCalendarEventComponent extends Component {
       `background-color: ${color};
        border-left: .25rem solid ${darkcolor};
        grid-column: span ${this.span};
-       grid-row-start: ${this.startMinute + 1};
-       grid-row-end: span ${this.totalMinutes};`
+       grid-row-start: ${this.startMinuteRounded + 1};
+       grid-row-end: span ${this.totalMinutesRounded};`
     );
   }
 

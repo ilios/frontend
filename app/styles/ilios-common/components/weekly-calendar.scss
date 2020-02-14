@@ -9,7 +9,7 @@
   .week-of-year {
     @include ilios-heading-h4;
     grid-column-start: 2;
-    grid-column-end: 8;
+    grid-column-end: span 7;
     grid-row: 1;
     justify-self: center;
     margin: 0 0 .25rem 0;
@@ -55,6 +55,6 @@
     @include ilios-list-reset;
     display: grid;
     grid-row: 3;
-    grid-template-rows: repeat((24 * 60), .07rem);
+    grid-template-rows: repeat((24 * 60) / 5, .5rem);
   }
 }
