@@ -2,6 +2,7 @@
   $hour-height: .3rem;
   $minute-rows: 24 * 60 / 5; //every 5 minutes
   $hour-space: 5.5rem;
+  $grid-border-color: $grey;
 
   display: grid;
   align-items: center;
@@ -54,7 +55,7 @@
       display: grid;
       grid-row: 1 / -1;
       grid-template-rows: repeat($minute-rows, $hour-height);
-      border: 1px solid $grey;
+      border: 1px solid $grid-border-color;
       @for $day from 1 through 7 {
         &.day-#{$day} {
           grid-column: ($day + 1);
@@ -71,9 +72,19 @@
       }
     }
 
-    .hour-border {
-      border-top: 1px solid $grey;
-      grid-column: 1 / -1;
+    .hour-border,
+    .half-hour-border {
+      border-top: 1px solid $grid-border-color;
+      grid-column: 2 / -1;
+    }
+
+    .half-hour-border {
+      border-top-width: .25px;
+      @for $hour from 0 through 23 {
+        &.half-hour-#{$hour} {
+          grid-row: ($hour * 12) + 7;
+        }
+      }
     }
 
     .hours {

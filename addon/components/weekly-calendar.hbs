@@ -17,7 +17,6 @@
         <span aria-hidden="true" class="hour hour-{{hour.hour}}" {{ref this (concat "hour" hour.hour)}}>
           {{hour.name}}
         </span>
-        <div class="hour-border hour-{{hour.hour}}" aria-hidden="true"></div>
       {{/each}}
     </div>
     {{#each this.days as |day|}}
@@ -42,6 +41,7 @@
     {{/each}}
     {{#each this.hours as |hour|}}
       <div class="hour-border hour-{{hour.hour}}" aria-hidden="true"></div>
+      <div class="half-hour-border half-hour-{{hour.hour}}" aria-hidden="true"></div>
     {{/each}}
   </div>
   <div class="day-headings" aria-hidden="true" data-test-day-headings>
