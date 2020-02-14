@@ -57,4 +57,28 @@
     grid-row: 3;
     grid-template-rows: repeat((24 * 60) / 5, .5rem);
   }
+
+  .hours {
+    display: grid;
+    grid-row: 3;
+    grid-column: 1;
+    grid-template-rows: repeat((24 * 60) / 5, .5rem);
+
+    .hour {
+      align-self: start;
+      padding: 0 .25rem 0 0;
+      scroll-snap-align: start;
+      text-align: right;
+      grid-column: 1;
+    }
+
+    .hour,
+    .hour-border {
+      @for $hour from 0 through 23 {
+        &.hour-#{$hour} {
+          grid-row: ($hour * 12) + 1;
+        }
+      }
+    }
+  }
 }

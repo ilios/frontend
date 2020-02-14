@@ -34,5 +34,12 @@
       {{/each}}
     </ol>
   {{/each}}
+  <div aria-hidden="true" class="hours">
+    {{#each this.hours as |hour|}}
+      <span class="hour hour-{{hour.hour}}" {{ref this (concat "hour" hour.hour)}}>
+        {{hour.name}}
+      </span>
+    {{/each}}
+  </div>
 
 </section>
