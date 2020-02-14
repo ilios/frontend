@@ -1,23 +1,22 @@
 .weekly-calendar {
   display: grid;
   align-items: center;
-  grid-template-columns: 5rem repeat(7, minmax(0, 1fr));
-  grid-template-rows: 2rem 2rem 1fr;
+  grid-template-columns: 1fr;
+  grid-template-rows: 2rem auto 1fr;
   margin: .5rem 1rem;
   height: 75vh;
 
   .week-of-year {
     @include ilios-heading-h4;
-    grid-column-start: 2;
-    grid-column-end: span 7;
+    grid-column: 1;
     grid-row: 1;
     justify-self: center;
-    margin: 0 0 .25rem 0;
+    margin: 0 0 .25rem 5rem;
     padding: 0;
   }
 
   .week-of-year,
-  .day-name {
+  .day-heading {
     .long {
       display: none;
     }
@@ -32,44 +31,31 @@
     }
   }
 
-  .day-name {
-    grid-row: 2;
-    align-self: center;
-    justify-self: center;
-
-    button {
-      @include ilios-link-button;
-    }
-  }
-
-  .events,
-  .day-name {
-    @for $day from 1 through 7 {
-      &.day-#{$day} {
-        grid-column: ($day + 1);
-      }
-    }
-  }
-
-  .events {
-    @include ilios-list-reset;
+  .days {
     display: grid;
-    grid-row: 3;
-    grid-template-rows: repeat((24 * 60) / 5, .5rem);
-  }
-
-  .hours {
-    display: grid;
-    grid-row: 3;
+    align-self: start;
     grid-column: 1;
+    grid-row: 3;
+    grid-template-columns: 5rem repeat(7, minmax(0, 1fr));
     grid-template-rows: repeat((24 * 60) / 5, .5rem);
+    max-height: 90%;
+    overflow-y: scroll;
 
-    .hour {
-      align-self: start;
-      padding: 0 .25rem 0 0;
-      scroll-snap-align: start;
-      text-align: right;
-      grid-column: 1;
+    .day-name {
+      @include visually-hidden;
+    }
+
+    .events {
+      @include ilios-list-reset;
+      display: grid;
+      grid-row: 1 / -1;
+      grid-template-rows: repeat((24 * 60) / 5, .5rem);
+      border: 1px solid $grey;
+      @for $day from 1 through 7 {
+        &.day-#{$day} {
+          grid-column: ($day + 1);
+        }
+      }
     }
 
     .hour,
@@ -78,6 +64,50 @@
         &.hour-#{$hour} {
           grid-row: ($hour * 12) + 1;
         }
+      }
+    }
+
+    .hour-border {
+      border-top: 1px solid $grey;
+      grid-column: 1 / -1;
+    }
+
+    .hours {
+      display: grid;
+      grid-row: 1;
+      grid-column: 1;
+      grid-template-rows: repeat((24 * 60) / 5, .5rem);
+
+      .hour {
+        align-self: start;
+        padding: 0 .25rem 0 0;
+        scroll-snap-align: start;
+        text-align: right;
+        grid-column: 1;
+      }
+
+    }
+
+  }
+
+  .day-headings {
+    display: grid;
+    grid-row: 2;
+    grid-column: 1;
+    grid-template-columns: 5rem repeat(7, minmax(0, 1fr));
+
+    .day-heading {
+      align-self: center;
+      justify-self: center;
+
+      @for $day from 1 through 7 {
+        &.day-#{$day} {
+          grid-column: ($day + 1);
+        }
+      }
+
+      button {
+        @include ilios-link-button;
       }
     }
   }

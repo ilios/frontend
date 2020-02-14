@@ -11,35 +11,53 @@
     <span class="long" data-test-long>{{t "general.weekOf" date=(moment-format this.firstDayOfWeek "MMMM Do YYYY")}}</span>
   </h2>
 
-  {{#each this.days as |day|}}
-    <h3 class="day-name day-{{day.dayOfWeek}}" data-test-day-name>
-      <button
-        type="button"
-        {{on "click" (fn @changeToDayView day.date)}}
-        data-test-long
-        aria-label={{day.longName}}
-      >
-        <span class="long">{{day.longName}}</span>
-        <span class="short">{{day.shortName}}</span>
-      </button>
-    </h3>
-    <ol class="events day-{{day.dayOfWeek}}">
-      {{#each day.events as |event|}}
-        <WeeklyCalendarEvent
-          @event={{event}}
-          @day={{day.dayOfWeek}}
-          @allDayEvents={{day.events}}
-          @selectEvent={{if event.isMulti (fn @changeToDayView event.startDate) (fn @selectEvent event)}}
-        />
+  <div class="days">
+    <div class="hours">
+      {{#each this.hours as |hour|}}
+        <span aria-hidden="true" class="hour hour-{{hour.hour}}" {{ref this (concat "hour" hour.hour)}}>
+          {{hour.name}}
+        </span>
+        <div class="hour-border hour-{{hour.hour}}" aria-hidden="true"></div>
       {{/each}}
-    </ol>
-  {{/each}}
-  <div aria-hidden="true" class="hours">
+    </div>
+    {{#each this.days as |day|}}
+      <h3 class="day-name" data-test-day-name>
+        <button
+          type="button"
+          {{on "click" (fn @changeToDayView day.date)}}
+        >
+          {{day.longName}}
+        </button>
+      </h3>
+      <ol class="events day-{{day.dayOfWeek}}">
+        {{#each day.events as |event|}}
+          <WeeklyCalendarEvent
+            @event={{event}}
+            @day={{day.dayOfWeek}}
+            @allDayEvents={{day.events}}
+            @selectEvent={{if event.isMulti (fn @changeToDayView event.startDate) (fn @selectEvent event)}}
+          />
+        {{/each}}
+      </ol>
+    {{/each}}
     {{#each this.hours as |hour|}}
-      <span class="hour hour-{{hour.hour}}" {{ref this (concat "hour" hour.hour)}}>
-        {{hour.name}}
-      </span>
+      <div class="hour-border hour-{{hour.hour}}" aria-hidden="true"></div>
     {{/each}}
   </div>
-
+  <div class="day-headings" aria-hidden="true" data-test-day-headings>
+    {{#each this.week as |day|}}
+      <div class="day-heading day-{{day.dayOfWeek}}">
+        <button
+          type="button"
+          {{on "click" (fn @changeToDayView day.date)}}
+          tab-index="-1"
+          data-test-long
+          aria-label={{day.longName}}
+        >
+          <span class="long">{{day.longName}}</span>
+          <span class="short">{{day.shortName}}</span>
+        </button>
+      </div>
+    {{/each}}
+  </div>
 </section>
