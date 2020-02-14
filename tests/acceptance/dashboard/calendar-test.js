@@ -201,7 +201,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(currentURL(), '/dashboard?date=' + aDayInTheMonth.format('YYYY-MM-DD') + '&show=calendar&view=day');
   });
 
-  test('click week day long title and go to day', async function(assert) {
+  test('click week day title and go to day', async function(assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
@@ -212,21 +212,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     await page.visit({ show: 'calendar', view: 'week' });
     const dayOfWeek = today.day();
     assert.equal(page.weeklyCalendar.dayHeadings.length, 7);
-    await page.weeklyCalendar.dayHeadings[dayOfWeek].selectLongDay();
-    assert.equal(currentURL(), '/dashboard?date=' + today.format('YYYY-MM-DD') + '&show=calendar&view=day');
-  });
-
-  test('click week day short title and go to day', async function(assert) {
-    const today = moment().hour(8);
-    this.server.create('userevent', {
-      user: parseInt(this.user.id, 10),
-      name: 'today',
-      startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format()
-    });await page.visit({ show: 'calendar', view: 'week' });
-    const dayOfWeek = today.day();
-    assert.equal(page.weeklyCalendar.dayHeadings.length, 7);
-    await page.weeklyCalendar.dayHeadings[dayOfWeek].selectShortDay();
+    await page.weeklyCalendar.dayHeadings[dayOfWeek].selectDay();
     assert.equal(currentURL(), '/dashboard?date=' + today.format('YYYY-MM-DD') + '&show=calendar&view=day');
   });
 

@@ -113,7 +113,7 @@ module('Integration | Component | weekly-calendar', function(hooks) {
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('click on long day', async function (assert) {
+  test('click on day', async function (assert) {
     assert.expect(1);
     const january9th2018 = moment('2019-01-09 08:00:00');
     this.set('date', january9th2018);
@@ -127,24 +127,7 @@ module('Integration | Component | weekly-calendar', function(hooks) {
       @selectEvent={{noop}}
     />`);
 
-    await component.dayHeadings[1].selectLongDay();
-  });
-
-  test('click on short day', async function (assert) {
-    assert.expect(1);
-    const january9th2018 = moment('2019-01-09 08:00:00');
-    this.set('date', january9th2018);
-    this.set('changeToDayView', () => {
-      assert.ok(true);
-    });
-    await render(hbs`<WeeklyCalendar
-      @date={{this.date}}
-      @events={{array}}
-      @changeToDayView={{fn this.changeToDayView}}
-      @selectEvent={{noop}}
-    />`);
-
-    await component.dayHeadings[1].selectShortDay();
+    await component.dayHeadings[1].selectDay();
   });
 
   test('click on event', async function (assert) {

@@ -48,7 +48,7 @@ module('Integration | Component | offering-calendar', function(hooks) {
       @startDate={{startDate}}
       @endDate={{endDate}}
     />`);
-    const events = '.ilios-calendar-event';
+    const events = '[data-test-calendar-event]';
     assert.dom(events).exists({ count: 4 });
   });
 });

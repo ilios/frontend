@@ -36,10 +36,11 @@ module('Integration | Component | ilios calendar week', function(hooks) {
 
     await render(hbs`<IliosCalendarWeek
       @date={{this.date}}
+      @areDaysSelectable={{true}}
       @changeDate={{action "changeDate"}}
       @changeView={{action "changeView"}}
     />`);
-    weeklyCalendarComponent.dayHeadings[0].selectLongDay();
+    weeklyCalendarComponent.dayHeadings[0].selectDay();
   });
 
   test('clicking on a day header does nothing when areDaysSelectable is false', async function(assert) {
@@ -56,6 +57,6 @@ module('Integration | Component | ilios calendar week', function(hooks) {
       @changeDate={{this.nothing}}
       @changeView={{this.nothing}}
     />`);
-    await weeklyCalendarComponent.dayHeadings[0].selectLongDay();
+    await weeklyCalendarComponent.dayHeadings[0].selectDay();
   });
 });

@@ -21,8 +21,7 @@ const definition = {
     isSeventhDayOfWeek: hasClass('day-7'),
   }),
   dayHeadings: collection('[data-test-day-headings] div', {
-    selectLongDay: clickable('[data-test-long]'),
-    selectShortDay: clickable('[data-test-short]'),
+    selectDay: clickable('[data-test-day]'),
     isFirstDayOfWeek: hasClass('day-1'),
     isSecondDayOfWeek: hasClass('day-2'),
     isThirdDayOfWeek: hasClass('day-3'),

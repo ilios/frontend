@@ -3,6 +3,7 @@
   style={{this.style}}
   class="weekly-calendar-event day-{{@day}} {{if this.isIlm "ilm"}} {{if this.clickable "clickable"}}"
   {{on "click" (if this.clickable (fn @selectEvent) (noop))}}
+  data-test-calendar-event
   data-test-weekly-calendar-event
 >
   {{#attach-tooltip
