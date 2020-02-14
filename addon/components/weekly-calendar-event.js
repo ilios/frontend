@@ -21,30 +21,6 @@ export default class WeeklyCalendarEventComponent extends Component {
     });
 
     this.minutes = allMinutesInDay;
-
-    this.eventsInSameSpace = this.args.allDayEvents.filter(e => {
-      const startMoment = moment(e.startDate);
-      const endMoment = moment(e.endDate);
-
-      //events which touch are not in the same space
-      if (
-        this.endMoment.isSame(startMoment, 'minute') ||
-        this.startMoment.isSame(endMoment, 'minute')
-      ) {
-        return false;
-      }
-      return this.startMoment.isBetween(
-        startMoment,
-        endMoment,
-        'minute',
-        '[]'
-      ) || this.endMoment.isBetween(
-        startMoment,
-        endMoment,
-        'minute',
-        '[]'
-      );
-    });
   }
 
   get isIlm() {
@@ -100,26 +76,14 @@ export default class WeeklyCalendarEventComponent extends Component {
     return  m.diff(midnight, 'minutes');
   }
 
-  get width() {
+  get span() {
     const start = this.getMinuteInTheDay(this.args.event.startDate);
     const end = this.getMinuteInTheDay(this.args.event.endDate);
 
     const minutes = this.minutes.slice(start, end - 1);
     const max = Math.max(...minutes);
 
-    return 100 / max;
-  }
-
-  get left() {
-    const events = this.eventsInSameSpace;
-    events.sort(({ startDate: s1, endDate: e1 }, { startDate: s2, endDate: e2 }) => {
-      const d1 = moment(e1).diff(moment(s1), 'minutes');
-      const d2 = moment(e2).diff(moment(s2), 'minutes');
-
-      return d2 - d1;
-    });
-
-    return events.indexOf(this.args.event) * this.width;
+    return Math.floor(50 / max);
   }
 
   get style() {
@@ -129,8 +93,7 @@ export default class WeeklyCalendarEventComponent extends Component {
     return new htmlSafe(
       `background-color: ${color};
        border-left: .25rem solid ${darkcolor};
-       width: ${this.width}%;
-       margin-left: ${this.left}%;
+       grid-column: span ${this.span};
        grid-row-start: ${this.startMinute + 1};
        grid-row-end: span ${this.totalMinutes};`
     );
