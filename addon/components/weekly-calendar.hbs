@@ -33,7 +33,7 @@
           {{day.longName}}
         </button>
       </h3>
-      <ol class="events day-{{day.dayOfWeek}}">
+      <div class="events day-{{day.dayOfWeek}}">
         {{#each day.events as |event|}}
           <WeeklyCalendarEvent
             @event={{event}}
@@ -42,7 +42,7 @@
             @selectEvent={{if event.isMulti (fn @changeToDayView event.startDate) (fn @selectEvent event)}}
           />
         {{/each}}
-      </ol>
+      </div>
     {{/each}}
     {{#each this.hours as |hour|}}
       <div class="hour-border hour-{{hour.hour}}" aria-hidden="true"></div>
@@ -55,7 +55,7 @@
         <button
           type="button"
           {{on "click" (fn @changeToDayView day.date)}}
-          tab-index="-1"
+          tabindex="-1"
           data-test-long
           aria-label={{day.longName}}
         >

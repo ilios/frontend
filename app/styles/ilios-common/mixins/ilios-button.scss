@@ -13,11 +13,19 @@
   white-space: nowrap;
 }
 
-@mixin ilios-link-button () {
-  background: transparent;
+@mixin ilios-button-reset {
+  padding: 0;
   border: 0;
-  color: $base-link-color;
+  border-radius: 0;
+  font: inherit;
+  color: inherit;
+  background-color: transparent;
   cursor: pointer;
   line-height: $base-line-height;
-  padding: 0;
+  white-space: normal;
+}
+
+@mixin ilios-link-button () {
+  @include ilios-button-reset;
+  color: $base-link-color;
 }

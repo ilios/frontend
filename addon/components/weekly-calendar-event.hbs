@@ -1,7 +1,6 @@
-<li
+<button
   {{! template-lint-disable no-inline-styles }}
   style={{this.style}}
-  role="button"
   class="weekly-calendar-event day-{{@day}} {{if this.isIlm "ilm"}} {{if this.clickable "clickable"}}"
   {{on "click" (if this.clickable (fn @selectEvent) (noop))}}
   data-test-weekly-calendar-event
@@ -55,4 +54,4 @@
       </em>
     {{/if}}
   </span>
-</li>
+</button>
