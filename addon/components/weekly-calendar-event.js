@@ -95,7 +95,7 @@ export default class WeeklyCalendarEventComponent extends Component {
     return new htmlSafe(
       `background-color: ${color};
        border-left: .25rem solid ${darkcolor};
-       grid-column: span ${this.span};
+       grid-column-start: span ${this.span};
        grid-row-start: ${this.startMinuteRounded + 1};
        grid-row-end: span ${this.totalMinutesRounded};`
     );
