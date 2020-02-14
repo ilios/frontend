@@ -1,8 +1,8 @@
 <WeeklyCalendar
   @date={{@date}}
   @events={{this.singleDayEvents}}
-  @changeToDayView={{action "changeToDayView"}}
-  @selectEvent={{@selectEvent}}
+  @changeToDayView={{if this.areDaysSelectable (action "changeToDayView") (noop)}}
+  @selectEvent={{if this.areEventsSelectable @selectEvent (noop)}}
 />
 <IliosCalendarPreWorkEvents
   @events={{this.ilmPreWorkEvents}}
