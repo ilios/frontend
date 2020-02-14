@@ -11,7 +11,12 @@
     <span class="long" data-test-long>{{t "general.weekOf" date=(moment-format this.firstDayOfWeek "MMMM Do YYYY")}}</span>
   </h2>
 
-  <div class="days">
+  <div
+    class="days"
+    tabindex="0"
+    {{did-insert (fn this.scrollView) this.earliestHour}}
+    {{did-update (fn this.scrollView) this.earliestHour}}
+  >
     <div class="hours">
       {{#each this.hours as |hour|}}
         <span aria-hidden="true" class="hour hour-{{hour.hour}}" {{ref this (concat "hour" hour.hour)}}>
