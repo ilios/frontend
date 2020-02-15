@@ -30,9 +30,7 @@ export default class WeeklyCalendarComponent extends Component {
       const date = this.firstDayOfWeek.add(i, 'days');
       return {
         date: date.toDate(),
-        longName: date.format('dddd'),
-        shortName: date.format('ddd'),
-        dayOfWeek: i + 1
+        dayOfWeek: i + 1,
       };
     });
   }

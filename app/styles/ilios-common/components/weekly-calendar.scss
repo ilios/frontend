@@ -123,6 +123,8 @@
 
       button {
         @include ilios-link-button;
+        display: flex;
+        flex-direction: column;
       }
     }
   }

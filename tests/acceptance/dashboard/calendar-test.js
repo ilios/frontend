@@ -125,6 +125,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     const today = moment().hour(8);
     const startOfWeek = today.clone().startOf('week');
     const endOfWeek = today.clone().endOf('week').hour(22).minute(59);
+    const dayHeading = startOfWeek.format('MMM Do Do');
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       name: 'start of week',
@@ -144,7 +145,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
 
     assert.equal(page.weeklyCalendar.dayHeadings.length, 7);
     assert.ok(page.weeklyCalendar.dayHeadings[0].isFirstDayOfWeek);
-    assert.equal(page.weeklyCalendar.dayHeadings[0].text, 'Sunday Sun');
+    assert.equal(page.weeklyCalendar.dayHeadings[0].text, `Sunday Sun ${dayHeading}`);
 
     assert.equal(page.weeklyCalendar.events.length, 2);
     assert.ok(page.weeklyCalendar.events[0].isFirstDayOfWeek);

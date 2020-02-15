@@ -25,15 +25,15 @@
       {{/each}}
     </div>
     {{#each this.days as |day|}}
-      <h3 class="day-name" data-test-day-name>
-        <button
-          type="button"
-          {{on "click" (fn @changeToDayView day.date)}}
-        >
-          {{day.longName}}
-        </button>
-      </h3>
       <div class="events day-{{day.dayOfWeek}}">
+        <h3 class="day-name" data-test-day-name>
+          <button
+            type="button"
+            {{on "click" (fn @changeToDayView day.date)}}
+          >
+            {{moment-format day.date "dddd"}}
+          </button>
+        </h3>
         {{#each day.events as |event|}}
           <WeeklyCalendarEvent
             @event={{event}}
@@ -59,8 +59,10 @@
           data-test-day
           aria-label={{day.longName}}
         >
-          <span class="long">{{day.longName}}</span>
-          <span class="short">{{day.shortName}}</span>
+          <span class="long">{{moment-format day.date "dddd"}}</span>
+          <span class="short">{{moment-format day.date "ddd"}}</span>
+          <span class="long">{{moment-format day.date "MMM Do"}}</span>
+          <span class="short">{{moment-format day.date "Do"}}</span>
         </button>
       </div>
     {{/each}}
