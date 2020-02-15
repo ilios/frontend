@@ -1,8 +1,12 @@
 .weekly-calendar {
   $hour-height: .3rem;
   $minute-rows: 24 * 60 / 5; //every 5 minutes
-  $hour-space: 5.5rem;
+  --hour-space: 2.9rem;
   $grid-border-color: $grey;
+
+  @include for-tablet-and-up {
+    --hour-space: 5.5rem;
+  }
 
   display: grid;
   align-items: center;
@@ -16,12 +20,13 @@
     grid-column: 1;
     grid-row: 1;
     justify-self: center;
-    margin: 0 0 .25rem $hour-space;
+    margin: 0 0 .25rem var(--hour-space);
     padding: 0;
   }
 
   .week-of-year,
-  .day-heading {
+  .day-heading,
+  .hour {
     .long {
       display: none;
     }
@@ -41,7 +46,7 @@
     align-self: start;
     grid-column: 1;
     grid-row: 3;
-    grid-template-columns: $hour-space repeat(7, minmax(0, 1fr));
+    grid-template-columns: var(--hour-space) repeat(7, minmax(0, 1fr));
     grid-template-rows: repeat($minute-rows, $hour-height);
     max-height: 90%;
     overflow-y: scroll;
@@ -109,7 +114,7 @@
     display: grid;
     grid-row: 2;
     grid-column: 1;
-    grid-template-columns: $hour-space repeat(7, minmax(0, 1fr));
+    grid-template-columns: var(--hour-space) repeat(7, minmax(0, 1fr));
 
     .day-heading {
       align-self: center;

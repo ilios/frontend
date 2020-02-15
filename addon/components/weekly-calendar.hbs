@@ -20,7 +20,8 @@
     <div class="hours">
       {{#each this.hours as |hour|}}
         <span aria-hidden="true" class="hour hour-{{hour.hour}}" {{ref this (concat "hour" hour.hour)}}>
-          {{hour.name}}
+          <span class="long">{{hour.longName}}</span>
+          <span class="short">{{hour.shortName}}</span>
         </span>
       {{/each}}
     </div>

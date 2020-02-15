@@ -76,7 +76,8 @@ export default class WeeklyCalendarComponent extends Component {
       const time = this.firstDayOfWeek.hour(i);
       return {
         hour: time.format('H'),
-        name: time.format('LT'),
+        longName: time.format('LT'),
+        shortName: time.format('hA'),
       };
     });
   }
