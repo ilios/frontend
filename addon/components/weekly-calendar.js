@@ -9,11 +9,12 @@ export default class WeeklyCalendarComponent extends Component {
 
   @action
   scrollView(calendarElement, [earliestHour]) {
-    if (earliestHour === 24 || earliestHour < 2) {
-      return;
-    }
     // all of the hour elements are registered in the template as hour0, hour1, etc
-    const hourElement = this[`hour${earliestHour - 2}`];
+    let hourElement = this.hour6;
+
+    if (earliestHour < 24 && earliestHour > 2) {
+      hourElement = this[`hour${earliestHour - 2}`];
+    }
     calendarElement.scrollTop = hourElement.offsetTop;
   }
 
