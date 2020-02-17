@@ -35,7 +35,7 @@ export default class WeeklyGlance extends Component {
   }
 
   get title() {
-    if (!this.midnightAtTheStartOfThisWeek || !this.midnightAtTheStartOfThisWeek) {
+    if (!this.midnightAtTheStartOfThisWeek && !this.midnightAtTheEndOfThisWeek) {
       return '';
     }
 
