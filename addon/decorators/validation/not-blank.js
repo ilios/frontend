@@ -13,7 +13,7 @@ export function NotBlank(validationOptions) {
           if (typeof value === 'string') {
             return value.trim() !== '';
           }
-          return value !== null || value !== undefined;
+          return value !== null && value !== undefined;
         },
         defaultMessage({ object: target }) {
           const owner = getOwner(target);
