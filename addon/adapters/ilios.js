@@ -50,4 +50,19 @@ export default RESTAdapter.extend({
   },
 
   sortQueryParams: false,
+
+  /**
+   * Don't send cookies with API requests
+   * https://github.com/emberjs/data/issues/6413
+   * Providing the 'omit' option to fetch parameters causes it not to send any cookies
+   * https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/fetch#Parameters
+   * this is important for us because we store the JWT in a cookie so if we send cookies it will
+   * send the JWT at least twice (sometimes more depending on the auth options used)
+   */
+  ajaxOptions() {
+    return {
+      ...this._super(...arguments),
+      credentials: 'omit'
+    };
+  },
 });
