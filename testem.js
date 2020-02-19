@@ -10,7 +10,7 @@ module.exports = {
     'Firefox'
   ],
   browser_disconnect_timeout: 300,
-  browser_start_timeout: 60,
+  browser_start_timeout: 120,
   browser_args: {
     Chrome: {
       ci: [
