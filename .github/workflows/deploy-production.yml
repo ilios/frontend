@@ -6,10 +6,10 @@ on:
       - '*'
 
 env:
-  SW_DISABLED: true
   COVERAGE: false
   SENTRY_ORG: ilios
   SENTRY_PROJECT: frontend
+  CI: true
 
 jobs:
   test:
@@ -22,6 +22,8 @@ jobs:
           node-version: 12
       - run: npm ci
       - run: npm test
+        env:
+          SW_DISABLED: true
 
   deploy:
     name: Deploy and Create Sentry Release
