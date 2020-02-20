@@ -6,8 +6,8 @@ on:
       - master
 
 env:
-  SW_DISABLED: true
   COVERAGE: false
+  CI: true
 
 jobs:
   test:
@@ -20,6 +20,8 @@ jobs:
           node-version: 12
       - run: npm ci
       - run: npm test
+        env:
+          SW_DISABLED: true
 
   deploy:
     name: Deploy
