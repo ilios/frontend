@@ -1,59 +1,9 @@
-<ElWeeklyCalendar @date={{@date}} @events={{this.singleDayEvents}} as |days|>
-  <div class="row">
-    <div class="cell"></div>
-    <div class="cell title">
-      {{t "general.weekOf" date=this.weekOf}}
-    </div>
-  </div>
-  <div class="row week-titles">
-    <div class="cell"></div>
-    {{#each days as |day|}}
-      <div
-        class="cell title {{if this.areDaysSelectable "clickable link"}}"
-        role="button"
-        {{on "click" (fn (action "changeToDayView") day.date)}}
-      >
-        {{moment-format day.date "ddd M/D"}}
-      </div>
-    {{/each}}
-  </div>
-  <div class="week">
-    <ul class="week-hours">
-      {{#each days.firstObject.hours as |hour|}}
-        <li class="week-hour">
-          {{hour.formattedHour}}
-        </li>
-      {{/each}}
-    </ul>
-    {{#each days as |day|}}
-      <ul class="week-day">
-        <li class="event-column">
-          {{#each day.events as |event|}}
-            {{#if event.isMulti}}
-              <IliosCalendarEvent
-                @event={{event}}
-                @selectEvent={{action "changeToDayView" event.startDate}}
-                @clickable={{this.areEventsSelectable}}
-              />
-            {{else}}
-              <IliosCalendarEvent
-                @event={{event}}
-                @selectEvent={{action "selectEvent" event}}
-                @clickable={{this.areEventsSelectable}}
-              />
-            {{/if}}
-          {{/each}}
-        </li>
-        {{! template-lint-disable unused-block-params }}
-        {{#each day.hours as |hour|}}
-          <li class="day-hour">
-            <div class="day-half-hour"></div>
-          </li>
-        {{/each}}
-      </ul>
-    {{/each}}
-  </div>
-</ElWeeklyCalendar>
+<WeeklyCalendar
+  @date={{@date}}
+  @events={{this.singleDayEvents}}
+  @changeToDayView={{if this.areDaysSelectable (action "changeToDayView") (noop)}}
+  @selectEvent={{if this.areEventsSelectable @selectEvent (noop)}}
+/>
 <IliosCalendarPreWorkEvents
   @events={{this.ilmPreWorkEvents}}
   @areEventsSelectable={{this.areEventsSelectable}}

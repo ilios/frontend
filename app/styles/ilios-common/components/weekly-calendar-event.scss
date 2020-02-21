@@ -1,0 +1,32 @@
+.weekly-calendar-event {
+  @include ilios-button-reset;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  color: $text-grey;
+  font-size: .8rem;
+  border: 1px solid $white;
+  margin: 1px;
+  padding: .25rem;
+  text-align: left;
+  overflow: hidden;
+  z-index: 2;
+
+
+  .ilios-calendar-event-time {
+    color: $maroon;
+    display: block;
+    font-size: .7rem;
+    font-weight: bold;
+    padding-bottom: .5em;
+  }
+
+  .ilios-calendar-event-location {
+    display: inline;
+    font-weight: bold;
+  }
+
+  &.ilm {
+    border-top: 2px dotted $black;
+  }
+}

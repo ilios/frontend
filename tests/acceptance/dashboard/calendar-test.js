@@ -19,6 +19,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { map } from 'rsvp';
 import { isVisible } from 'ember-attacher';
+import page from 'ilios-common/page-objects/dashboard';
 
 module('Acceptance | Dashboard Calendar', function(hooks) {
   setupApplicationTest(hooks);
@@ -124,6 +125,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     const today = moment().hour(8);
     const startOfWeek = today.clone().startOf('week');
     const endOfWeek = today.clone().endOf('week').hour(22).minute(59);
+    const dayHeading = startOfWeek.format('MMM Do Do');
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       name: 'start of week',
@@ -138,14 +140,18 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       endDate: endOfWeek.clone().add(1, 'hour').format(),
       lastModified: today.clone().subtract(1, 'year'),
     });
-    await visit('/dashboard?show=calendar');
+    await page.visit({ show: 'calendar' });
     assert.equal(currentRouteName(), 'dashboard');
-    const events = findAll('div.event');
-    assert.equal(events.length, 2);
-    let eventInfo = '';
-    eventInfo += startOfWeek.format('h:mma') + '-' + startOfWeek.clone().add(1, 'hour').format('h:mma') + ' start of week';
-    eventInfo += endOfWeek.format('h:mma') + '-' + endOfWeek.clone().add(1, 'hour').format('h:mma') + ' end of week';
-    assert.equal(await getElementText(events), getText(eventInfo));
+
+    assert.equal(page.weeklyCalendar.dayHeadings.length, 7);
+    assert.ok(page.weeklyCalendar.dayHeadings[0].isFirstDayOfWeek);
+    assert.equal(page.weeklyCalendar.dayHeadings[0].text, `Sunday Sun ${dayHeading}`);
+
+    assert.equal(page.weeklyCalendar.events.length, 2);
+    assert.ok(page.weeklyCalendar.events[0].isFirstDayOfWeek);
+    assert.equal(page.weeklyCalendar.events[0].name, 'start of week');
+    assert.ok(page.weeklyCalendar.events[1].isSeventhDayOfWeek);
+    assert.equal(page.weeklyCalendar.events[1].name, 'end of week');
   });
 
   test('load day calendar', async function(assert) {
@@ -204,9 +210,10 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format()
     });
-    await visit('/dashboard?show=calendar&view=week');
+    await page.visit({ show: 'calendar', view: 'week' });
     const dayOfWeek = today.day();
-    await click(findAll('.week-titles .clickable')[dayOfWeek]);
+    assert.equal(page.weeklyCalendar.dayHeadings.length, 7);
+    await page.weeklyCalendar.dayHeadings[dayOfWeek].selectDay();
     assert.equal(currentURL(), '/dashboard?date=' + today.format('YYYY-MM-DD') + '&show=calendar&view=day');
   });
 
@@ -302,9 +309,8 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       endDate: today.clone().add(1, 'hour').format(),
       offering: 2,
     });
-    await visit('/dashboard?show=calendar');
-    const events = findAll('div.event');
-    assert.equal(events.length, 2);
+    await page.visit({ show: 'calendar' });
+    assert.equal(page.weeklyCalendar.events.length, 2);
   });
 
   const chooseSchoolEvents = async function(){
@@ -324,10 +330,9 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       endDate: today.clone().add(1, 'hour').format(),
       offering: 2,
     });
-    await visit('/dashboard?show=calendar');
+    await page.visit({ show: 'calendar' });
     await chooseSchoolEvents();
-    const events = findAll('div.event');
-    assert.equal(events.length, 2);
+    assert.equal(page.weeklyCalendar.events.length, 2);
   });
 
   const showFilters = async function(){
@@ -352,22 +357,18 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       endDate: today.clone().add(1, 'hour').format(),
       sessionTypeId: 2,
     });
-    await visit('/dashboard?show=calendar');
+    await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
-    let events = findAll('div.event');
-    assert.equal(events.length, 2);
+    assert.equal(page.weeklyCalendar.events.length, 2);
     await pickSessionType(1);
-    events = findAll('div.event');
-    assert.equal(events.length, 1);
+    assert.equal(page.weeklyCalendar.events.length, 1);
     await pickSessionType(2);
-    events = findAll('div.event');
-    assert.equal(events.length, 2);
+    assert.equal(page.weeklyCalendar.events.length, 2);
 
     await pickSessionType(1);
     await pickSessionType(2);
     await pickSessionType(3);
-    events = findAll('div.event');
-    assert.equal(events.length, 0);
+    assert.equal(page.weeklyCalendar.events.length, 0);
   });
 
   const pickCourseLevel = async function(i) {
@@ -392,18 +393,15 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       endDate: today.clone().add(1, 'hour').format(),
       courseLevel: 1,
     });
-    await visit('/dashboard?show=calendar');
+    await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
     await chooseDetailFilter();
-    let events = findAll('div.event');
-    assert.equal(events.length, 2);
+    assert.equal(page.weeklyCalendar.events.length, 2);
     await pickCourseLevel(1);
-    events = findAll('div.event');
-    assert.equal(events.length, 2);
+    assert.equal(page.weeklyCalendar.events.length, 2);
     await clearCourseLevels();
     await pickCourseLevel(3);
-    events = findAll('div.event');
-    assert.equal(events.length, 0);
+    assert.equal(page.weeklyCalendar.events.length, 0);
   });
 
   const pickCohort = async function(i) {
@@ -424,19 +422,16 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       endDate: today.clone().add(1, 'hour').format(),
       cohorts: [{ id: 1 }],
     });
-    await visit('/dashboard?show=calendar');
+    await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
     await chooseDetailFilter();
-    let events = findAll('div.event');
-    assert.equal(events.length, 2);
+    assert.equal(page.weeklyCalendar.events.length, 2);
     await pickCohort(1);
-    events = findAll('div.event');
-    assert.equal(events.length, 2);
+    assert.equal(page.weeklyCalendar.events.length, 2);
 
     await pickCohort(1);
     await pickCohort(2);
-    events = findAll('div.event');
-    assert.equal(events.length, 0);
+    assert.equal(page.weeklyCalendar.events.length, 0);
   });
 
   const chooseDetailFilter = async function(){
@@ -471,17 +466,14 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       endDate: today.clone().add(1, 'hour').format(),
       course: 1,
     });
-    await visit('/dashboard?show=calendar');
+    await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
-    let events = findAll('div.event');
-    assert.equal(events.length, 3);
+    assert.equal(page.weeklyCalendar.events.length, 3);
     await pickCourse(1);
-    events = findAll('div.event');
-    assert.equal(events.length, 2);
+    assert.equal(page.weeklyCalendar.events.length, 2);
     await clearCourses();
     await pickCourse(2);
-    events = findAll('div.event');
-    assert.equal(events.length, 1);
+    assert.equal(page.weeklyCalendar.events.length, 1);
   });
 
   test('test course and session type filter together', async function(assert) {
@@ -507,19 +499,16 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       course: 1,
       sessionTypeId: 2,
     });
-    await visit('/dashboard?show=calendar');
+    await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
 
-    let events = findAll('div.event');
-    assert.equal(events.length, 3);
+    assert.equal(page.weeklyCalendar.events.length, 3);
     await pickCourse(1);
-    events = findAll('div.event');
-    assert.equal(events.length, 2);
+    assert.equal(page.weeklyCalendar.events.length, 2);
     await clearCourses();
     await pickCourse(1);
     await pickSessionType(1);
-    events = findAll('div.event');
-    assert.equal(events.length, 1);
+    assert.equal(page.weeklyCalendar.events.length, 1);
   });
 
   test('agenda show next seven days of events', async function(assert) {
@@ -569,7 +558,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     this.server.create('cohort', {
       programYearId: 3
     });
-    await visit('/dashboard?show=calendar');
+    await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
     await chooseDetailFilter();
     await fillIn('.calendar-year-picker select', '2015');
@@ -589,7 +578,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       year: 2014,
       school: this.school
     });
-    await visit('/dashboard?show=calendar');
+    await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
     await fillIn('.calendar-year-picker select', '2015');
     let courseFilters = findAll('.coursefilter li');
@@ -612,7 +601,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     const course = '.coursefilter li:nth-of-type(1) input';
     const term = '.vocabularyfilter li:nth-of-type(1) input';
 
-    await visit('/dashboard?show=calendar');
+    await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
     assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
 
@@ -638,7 +627,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     const courselevel = '.courselevelfilter li:nth-of-type(1) input';
     const cohort = '.cohortfilter li:nth-of-type(1) input';
 
-    await visit('/dashboard?show=calendar');
+    await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
     await chooseDetailFilter();
     assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
@@ -675,7 +664,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       return await click(`.filter-tag:nth-of-type(${n + 1})`);
     }
 
-    await visit('/dashboard?show=calendar');
+    await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
     await chooseDetailFilter();
     assert.ok(isEmpty(find(filtersList)), 'filter tags list is inactive');
@@ -834,18 +823,15 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       endDate: today.clone().add(1, 'hour').format(),
       sessionTerms: [{id: 1}],
     });
-    await visit('/dashboard?show=calendar');
+    await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
-    let events = findAll('div.event');
-    assert.equal(events.length, 2);
+    assert.equal(page.weeklyCalendar.events.length, 2);
     await pickTerm(1);
-    events = findAll('div.event');
-    assert.equal(events.length, 2);
+    assert.equal(page.weeklyCalendar.events.length, 2);
 
     await pickTerm(1);
     await pickTerm(2);
-    events = findAll('div.event');
-    assert.equal(events.length, 0);
+    assert.equal(page.weeklyCalendar.events.length, 0);
   });
 
   test('clear vocab filter #3450', async function(assert) {
@@ -872,16 +858,16 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     const filters = '.filter-tags .filter-tag';
     const filter = `${filters}:nth-of-type(1)`;
 
-    await visit('/dashboard?show=calendar');
+    await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
-    assert.dom('div.event').exists({ count: 2 });
+    assert.equal(page.weeklyCalendar.events.length, 2);
     await pickTerm(1);
-    assert.dom('div.event').exists({ count: 1 });
+    assert.equal(page.weeklyCalendar.events.length, 1);
 
     assert.dom(filters).exists({ count: 1 });
     await click(filter);
     assert.dom(filters).doesNotExist();
-    assert.dom('div.event').exists({ count: 2 });
+    assert.equal(page.weeklyCalendar.events.length, 2);
   });
 
   test('test tooltip', async function(assert) {
@@ -892,8 +878,8 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       endDate: today.clone().add(1, 'hour').format(),
       offering: 1,
     });
-    await visit('/dashboard?show=calendar');
-    await triggerEvent('[data-test-ilios-calendar-event]>div', 'mouseenter');
+    await page.visit({ show: 'calendar', view: 'week' });
+    await triggerEvent('[data-test-weekly-calendar-event]', 'mouseenter');
     assert.ok(isVisible('.ilios-calendar-event-tooltip'), 'Now shown');
   });
 
@@ -905,8 +891,13 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       endDate: today.clone().add(1, 'hour').format(),
       cohorts: [{ id: 1 }],
     });
-    await visit('/dashboard?show=calendar&showFilters=true&courseFilters=true');
-    assert.equal(findAll('div.event').length, 1);
+    await page.visit({
+      show: 'calendar',
+      view: 'week',
+      showFilters: 'true',
+      courseFilters: 'true',
+    });
+    assert.equal(page.weeklyCalendar.events.length, 1);
   });
 
   test('visit with detail filters open #5098', async function(assert) {
@@ -917,7 +908,12 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       endDate: today.clone().add(1, 'hour').format(),
       cohorts: [{ id: 1 }],
     });
-    await visit('/dashboard?show=calendar&showFilters=true&courseFilters=false');
-    assert.equal(findAll('div.event').length, 1);
+    await page.visit({
+      show: 'calendar',
+      view: 'week',
+      showFilters: 'true',
+      courseFilters: 'false',
+    });
+    assert.equal(page.weeklyCalendar.events.length, 1);
   });
 });

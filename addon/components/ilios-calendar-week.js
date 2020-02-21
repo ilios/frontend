@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import { computed } from '@ember/object';
-import { run } from '@ember/runloop';
 import { isEmpty } from '@ember/utils';
 import moment from 'moment';
 
@@ -46,13 +45,6 @@ export default Component.extend({
       event => !moment(event.startDate).isSame(moment(event.endDate), 'day')
     );
   }),
-  didInsertElement(){
-    run.next(() => {
-      if (!this.isDestroyed && !this.isDestroying && this.element) {
-        this.element.querySelector(".el-calendar .week").scrollTop = 500;
-      }
-    });
-  },
   actions: {
     changeToDayView(date){
       const changeDate = this.get('changeDate');
