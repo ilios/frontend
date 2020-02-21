@@ -23,9 +23,11 @@ module('Integration | Component | editable field', function(hooks) {
   });
 
   test('it renders content', async function(assert) {
-    await render(hbs`<EditableField @value="text">
-      template block text
-    </EditableField>`);
+    await render(hbs`
+      <EditableField @value="text">
+        template block text
+      </EditableField>
+    `);
 
     assert.dom(this.element).hasText('text');
     await click('[data-test-edit]');
@@ -39,7 +41,7 @@ module('Integration | Component | editable field', function(hooks) {
         &nbsp;
       </p>
     `);
-    await render(hbs`<EditableField @value={{value}} />`);
+    await render(hbs`<EditableField @value={{this.value}} />`);
 
     assert.dom(this.element).hasText('');
     assert.dom(icon).exists({ count: 1 });
@@ -53,13 +55,13 @@ module('Integration | Component | editable field', function(hooks) {
     });
     await render(
       hbs`<EditableField
-            @save={{action save}} @saveOnEnter={{true}} @value={{value}}
+            @save={{action this.save}} @saveOnEnter={{true}} @value={{this.value}}
           >
-            <input value={{value}} oninput={{action (mut value) value="target.value"}} />
+            <input value={{this.value}} oninput={{action (mut this.value) value="target.value"}}>
           </EditableField>
       `);
     await click('[data-test-edit]');
-    await triggerKeyEvent('.editinplace input', 'keyup', 13);
+    await triggerKeyEvent('.editinplace input', 'keydown', 13);
   });
 
   test('close on escape', async function(assert) {
@@ -70,15 +72,15 @@ module('Integration | Component | editable field', function(hooks) {
     });
     await render(
       hbs`<EditableField
-        @close={{action revert}}
-        @closeOnEscape={{true}}
-        @value={{value}}
-      >
-        <input value={{value}} oninput={{action (mut value) value="target.value"}} />
-      </EditableField>
+            @close={{action this.revert}}
+            @closeOnEscape={{true}}
+            @value={{this.value}}
+          >
+            <input value={{this.value}} oninput={{action (mut this.value) value="target.value"}}>
+          </EditableField>
       `);
     await click('[data-test-edit]');
-    await triggerKeyEvent('.editinplace input', 'keyup', 27);
+    await triggerKeyEvent('.editinplace input', 'keydown', 27);
   });
 
   test('focus when editor opens on input', async function(assert) {
@@ -86,9 +88,9 @@ module('Integration | Component | editable field', function(hooks) {
     this.set('value', 'lorem');
     await render(
       hbs`<EditableField
-            @value={{value}}
+            @value={{this.value}}
           >
-            <input />
+            <input>
           </EditableField>
       `);
     await click('[data-test-edit]');
@@ -100,7 +102,7 @@ module('Integration | Component | editable field', function(hooks) {
     this.set('value', 'lorem');
     await render(
       hbs`<EditableField
-            @value={{value}}
+            @value={{this.value}}
           >
             <textarea></textarea>
           </EditableField>

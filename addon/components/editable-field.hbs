@@ -1,78 +1,88 @@
-<span class="content">
-  {{#unless this.isEditing}}
-    <span>
-      {{#if @value}}
-        {{#if this.looksEmpty}}
-          <FaIcon
-            @icon="edit"
-            class="enabled"
-            data-test-edit
-            @click={{perform this.edit}}
-          />
-        {{else}}
-          <TruncateText
-            @renderHtml={{this.renderHtml}}
-            @text={{@value}}
-            @onEdit={{perform this.edit}}
-            as |displayText expand isTruncated|
-          >
-            <span
-              class="clickable editable"
-              aria-label={{t "general.edit"}}
+<div
+  class="editinplace"
+>
+  <span class="content">
+    {{#unless this.isEditing}}
+      <span>
+        {{#if @value}}
+          {{#if this.looksEmpty}}
+            <FaIcon
+              @icon="edit"
+              class="enabled"
               data-test-edit
-              role="button"
-              {{on "click" (perform this.edit)}}
+              @click={{set this.isEditing true}}
+            />
+          {{else}}
+            <TruncateText
+              @renderHtml={{@renderHtml}}
+              @text={{@value}}
+              @onEdit={{set this.isEditing true}}
+              as |displayText expand isTruncated|
             >
-              {{displayText}}
-            </span>
-            {{#if isTruncated}}
-              <FaIcon @icon="ellipsis-h" @transform="down-6" />
-              <button
-                class="expand-text-button"
-                aria-label={{t "general.expand"}}
-                data-test-expand
-                {{on "click" expand}}
+              <span
+                class="clickable editable"
+                aria-label={{t "general.edit"}}
+                data-test-edit
+                role="button"
+                {{on "click" (set this.isEditing true)}}
               >
-                <FaIcon @icon="info-circle" />
-              </button>
-            {{/if}}
-          </TruncateText>
+                {{displayText}}
+              </span>
+              {{#if isTruncated}}
+                <FaIcon @icon="ellipsis-h" @transform="down-6" />
+                <button
+                  class="expand-text-button"
+                  aria-label={{t "general.expand"}}
+                  data-test-expand
+                  {{on "click" expand}}
+                >
+                  <FaIcon @icon="info-circle" />
+                </button>
+              {{/if}}
+            </TruncateText>
+          {{/if}}
+        {{else}}
+          <span
+            class="clickable editable"
+            aria-label={{t "general.edit"}}
+            data-test-edit
+            role="button"
+            {{on "click" (set this.isEditing true)}}
+          >
+            {{@clickPrompt}}
+          </span>
         {{/if}}
-      {{else}}
-        <span
-          class="clickable editable"
-          aria-label={{t "general.edit"}}
-          data-test-edit
-          role="button"
-          {{on "click" (perform this.edit)}}
-        >
-          {{this.clickPrompt}}
-        </span>
-      {{/if}}
-    </span>
-  {{else}}
-    <span class="editor">
-      {{yield this.saveData.isRunning (perform this.saveData) (perform this.closeEditor)}}
-      <span class="actions">
-        <button
-          disabled={{this.isSaveDisabled}}
-          class="done"
-          title={{t "general.save"}}
-          {{on "click" (perform this.saveData)}}
-        >
-          <FaIcon
-            @icon={{if this.saveData.isRunning "spinner" "check"}}
-            @spin={{this.saveData.isRunning}}
-          />
-        </button>
-        <button
-          class="cancel"
-          title={{t "general.cancel"}}
-          {{on "click" (perform this.closeEditor)}}
-        >
-          <FaIcon @icon="times" />
-        </button>
       </span>
-    </span>
-  {{/unless}}
-</span>
+    {{else}}
+      <span
+        class="editor"
+        {{did-insert this.focusFirstControl}}
+        {{! template-lint-disable no-invalid-interactive}}
+        {{on "keydown" this.keydown}}
+      >
+        {{yield this.saveData.isRunning (perform this.saveData) (perform this.closeEditor)}}
+        <span class="actions">
+          <button
+            disabled={{@isSaveDisabled}}
+            class="done"
+            title={{t "general.save"}}
+            {{on "click" (perform this.saveData)}}
+          >
+            <FaIcon
+              @icon={{if this.saveData.isRunning "spinner" "check"}}
+              @spin={{this.saveData.isRunning}}
+            />
+          </button>
+          <button
+            class="cancel"
+            title={{t "general.cancel"}}
+            {{on "click" (perform this.closeEditor)}}
+          >
+            <FaIcon @icon="times" />
+          </button>
+        </span>
+      </span>
+    {{/unless}}
+  </span>
+
+</div>

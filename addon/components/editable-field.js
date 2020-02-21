@@ -1,54 +1,49 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
-import { timeout, task } from 'ember-concurrency';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { timeout } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency-decorators';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  value: null,
-  isEditing: false,
-  isSaving: false,
-  isSaveDisabled: false,
-  renderHtml: false,
-  classNames: ['editinplace'],
-  saveOnEnter: false,
-  closeOnEscape: false,
-  clickPrompt: null,
-  looksEmpty: computed('value', function(){
-    const value = this.get('value') || '';
+export default class EditableFieldComponent extends Component {
+  @tracked isEditing = false;
+
+  get looksEmpty(){
+    const value = this.args.value || '';
     const text = value.toString();
     const noTagsText = text.replace(/(<([^>]+)>)/ig,"");
     const strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
 
-    return isEmpty(strippedText);
-  }),
+    return strippedText.length === 0;
+  }
 
-  saveData: task(function * () {
+  @dropTask
+  *saveData() {
     yield timeout(1);
-    const result = yield this.get('save')();
+    const result = yield this.args.save();
     if (result !== false) {
-      this.set('isEditing', false);
+      this.isEditing = false;
     }
-  }).drop(),
+  }
 
-  closeEditor: task(function * () {
+  @dropTask
+  *closeEditor() {
     yield timeout(1);
-    yield this.get('close')();
-    this.set('isEditing', false);
-  }).drop(),
+    yield this.args.close();
+    this.isEditing = false;
+  }
 
-  edit: task(function * () {
-    this.set('isEditing', true);
-    yield timeout(10);
-    const elements = this.element.querySelectorAll('input,textarea,select,.fr-element');
+  focusFirstControl(element) {
+    const elements = element.querySelectorAll('input,textarea,select,.fr-element');
     if (elements.length) {
       const visibleControls = Array.from(elements).filter(el => {
         return !el.hidden;
       });
       visibleControls[0].focus();
     }
-  }).drop(),
+  }
 
-  keyUp(event) {
+  @action
+  keydown(event) {
     const keyCode = event.keyCode;
     const target = event.target;
 
@@ -57,10 +52,10 @@ export default Component.extend({
       return;
     }
 
-    if (13 === keyCode && this.get('saveOnEnter')) {
-      this.get('saveData').perform();
-    } else if(27 === keyCode && this.get('closeOnEscape')) {
-      this.get('closeEditor').perform();
+    if (13 === keyCode && this.args.saveOnEnter) {
+      this.saveData.perform();
+    } else if(27 === keyCode && this.args.closeOnEscape) {
+      this.closeEditor.perform();
     }
   }
-});
+}
