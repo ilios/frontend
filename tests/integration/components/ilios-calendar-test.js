@@ -1,29 +1,23 @@
-import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
-const { resolve } = RSVP;
 
 module('Integration | Component | ilios calendar', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
     assert.expect(1);
-    const events = resolve([]);
-    this.set('events', events);
     const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
-    this.set('nothing', parseInt);
 
     await render(hbs`<IliosCalendar
-      @selectedDate={{date}}
+      @selectedDate={{this.date}}
       @selectedView="day"
-      @calendarEventsPromise={{events}}
-      @changeDate={{action nothing}}
-      @changeView={{action nothing}}
-      @selectEvent={{action nothing}}
+      @calendarEvents={{array}}
+      @changeDate={{noop}}
+      @changeView={{noop}}
+      @selectEvent={{noop}}
     />`);
 
     assert.ok(this.element.textContent.includes('Wednesday, September 30th 2015'));

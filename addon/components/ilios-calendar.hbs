@@ -1,55 +1,55 @@
-<ul class="inline calendar-view-picker">
-  <li
-    class="clickable highlight {{if this.showIcsFeed "on"}}"
-    role="button"
-    {{on "click" (toggle "showIcsFeed" this)}}
-  >
-    <FaIcon @icon="rss-square" />
-  </li>
-  <li class="clickable link" role="button" {{on "click" (fn @changeView "day")}}>
-    {{t "general.day"}}
-  </li>
-  <li class="clickable link" role="button" {{on "click" (fn @changeView "week")}}>
-    {{t "general.week"}}
-  </li>
-  <li class="clickable link" role="button" {{on "click" (fn @changeView "month")}}>
-    {{t "general.month"}}
-  </li>
-</ul>
-<ul class="inline calendar-time-picker">
-  <li class="clickable link" role="button" {{on "click" (action "goBack")}}>
-    <FaIcon @icon="backward" />
-  </li>
-  <li class="clickable link" role="button" {{on "click" (action "gotoToday")}}>
-    {{t "general.today"}}
-  </li>
-  <li class="clickable link" role="button" {{on "click" (action "goForward")}}>
-    <FaIcon @icon="forward" />
-  </li>
-</ul>
-<div class="ilios-calendar-calendar">
-  {{#if this.showIcsFeed}}
-    <IcsFeed
-      @url={{@icsFeedUrl}}
-      @instructions={{@icsInstructions}}
-      @refresh={{action "refreshIcsFeed"}}
-    />
-  {{/if}}
-  <h1 class={{if (or (gt this.compiledCalendarEvents.length 0) (not @isLoadingEvents)) "loaded"}}>
-    <FaIcon @icon="spinner" @spin={{true}} />
-    {{t "general.loadingEvents"}}
-    ...
-  </h1>
-  {{component
-    (concat "ilios-calendar-" @selectedView)
-    calendarEvents=(sort-by
-      (action "sortEvents") this.compiledCalendarEvents
-    )
-    date=@selectedDate
-    selectEvent=@selectEvent
-    changeDate=@changeDate
-    changeView=@changeView
-    areDaysSelectable=true
-    areEventsSelectable=true
-  }}
+<div class="ilios-calendar">
+  <ul class="inline calendar-view-picker">
+    <li
+      class="clickable highlight {{if this.showIcsFeed "on"}}"
+      role="button"
+      {{on "click" (toggle "showIcsFeed" this)}}
+    >
+      <FaIcon @icon="rss-square" />
+    </li>
+    <li class="clickable link" role="button" {{on "click" (fn @changeView "day")}}>
+      {{t "general.day"}}
+    </li>
+    <li class="clickable link" role="button" {{on "click" (fn @changeView "week")}}>
+      {{t "general.week"}}
+    </li>
+    <li class="clickable link" role="button" {{on "click" (fn @changeView "month")}}>
+      {{t "general.month"}}
+    </li>
+  </ul>
+  <ul class="inline calendar-time-picker">
+    <li class="clickable link" role="button" {{on "click" (action "goBack")}}>
+      <FaIcon @icon="backward" />
+    </li>
+    <li class="clickable link" role="button" {{on "click" (action "gotoToday")}}>
+      {{t "general.today"}}
+    </li>
+    <li class="clickable link" role="button" {{on "click" (action "goForward")}}>
+      <FaIcon @icon="forward" />
+    </li>
+  </ul>
+  <div class="ilios-calendar-calendar">
+    {{#if this.showIcsFeed}}
+      <IcsFeed
+        @url={{@icsFeedUrl}}
+        @instructions={{@icsInstructions}}
+      />
+    {{/if}}
+    <h1 class={{if (or (gt this.compiledCalendarEvents.length 0) (not @isLoadingEvents)) "loaded"}}>
+      <FaIcon @icon="spinner" @spin={{true}} />
+      {{t "general.loadingEvents"}}
+      ...
+    </h1>
+    {{#let (concat "ilios-calendar-" @selectedView) as |Calendar|}}
+      <Calendar
+        @calendarEvents={{this.sortedEvents}}
+        @date={{@selectedDate}}
+        @selectEvent={{@selectEvent}}
+        @changeDate={{@changeDate}}
+        @changeView={{@changeView}}
+        @areDaysSelectable={{true}}
+        @areEventsSelectable={{true}}
+      />
+    {{/let}}
+  </div>
 </div>
