@@ -6,7 +6,7 @@
     <ul>
       {{#each @events as |event|}}
         <IliosCalendarMultidayEvent
-          @isEventSelectable={{this.areEventsSelectable}}
+          @isEventSelectable={{@areEventsSelectable}}
           @selectEvent={{@selectEvent}}
           @event={{event}}
         />
