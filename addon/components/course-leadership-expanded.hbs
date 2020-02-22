@@ -44,6 +44,8 @@
         <LeadershipList
           @directors={{await @course.directors}}
           @administrators={{await @course.administrators}}
+          @showAdministrators={{true}}
+          @showDirectors={{true}}
         />
       {{/if}}
     {{else}}
