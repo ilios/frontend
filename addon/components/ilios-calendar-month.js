@@ -1,31 +1,26 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  classNames: ['ilios-calendar-month'],
-  date: null,
-  calendarEvents: null,
-  showMore: null,
-  areEventsSelectable: true,
-  ilmPreWorkEvents: computed('calendarEvents.[]', function () {
-    const calendarEvents = this.calendarEvents || [];
-    const preWork =  calendarEvents.reduce((arr, eventObject) => {
+export default class IliosCalendarMonthComponent extends Component {
+  get ilmPreWorkEvents() {
+    const preWork =  this.args.calendarEvents.reduce((arr, eventObject) => {
       return arr.pushObjects(eventObject.prerequisites);
     }, []);
 
     return preWork.filter(ev => ev.ilmSession);
-  }),
+  }
 
-  nonIlmPreWorkEvents: computed('calendarEvents.[]', function () {
-    const calendarEvents = this.calendarEvents || [];
-    return calendarEvents.filter(ev => {
+  get nonIlmPreWorkEvents() {
+    return this.args.calendarEvents.filter(ev => {
       return ev.postrequisites.length === 0 || !ev.ilmSession;
     });
-  }),
-  actions: {
-    changeToDayView(date){
-      this.get('changeDate')(date);
-      this.get('changeView')('day');
-    },
   }
-});
+
+  @action
+  changeToDayView(date){
+    if (this.args.areDaysSelectable && this.args.changeDate && this.args.changeView) {
+      this.args.changeDate(date);
+      this.args.changeView('day');
+    }
+  }
+}

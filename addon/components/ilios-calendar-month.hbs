@@ -1,11 +1,15 @@
-<MonthlyCalendar
-  @date={{@date}}
-  @events={{this.nonIlmPreWorkEvents}}
-  @changeToDayView={{action "changeToDayView"}}
-  @selectEvent={{@selectEvent}}
-/>
+{{#if (is-array @calendarEvents)}}
+  <div class="ilios-calendar-month">
+    <MonthlyCalendar
+      @date={{@date}}
+      @events={{this.nonIlmPreWorkEvents}}
+      @changeToDayView={{this.changeToDayView}}
+      @selectEvent={{@selectEvent}}
+    />
 
-<IliosCalendarPreWorkEvents
-  @events={{this.ilmPreWorkEvents}}
-  @areEventsSelectable={{this.areEventsSelectable}}
-/>
+    <IliosCalendarPreWorkEvents
+      @events={{this.ilmPreWorkEvents}}
+      @areEventsSelectable={{@areEventsSelectable}}
+    />
+  </div>
+{{/if}}

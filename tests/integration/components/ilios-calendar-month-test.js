@@ -99,7 +99,8 @@ module('Integration | Component | ilios calendar month', function(hooks) {
       @date={{date}}
       @changeDate={{action "changeDate"}}
       @changeView={{action "changeView"}}
-      @calendarEvents={{events}}
+      @calendarEvents={{array}}
+      @areDaysSelectable={{true}}
     />`);
 
     await click('[data-test-day-button="1"]');
