@@ -19,6 +19,8 @@
       @directorsCount={{has-many-length @course "directors"}}
       @administratorsCount={{has-many-length @course "administrators"}}
       @expand={{fn @setCourseLeadershipDetails true}}
+      @showAdministrators={{true}}
+      @showDirectors={{true}}
     />
   {{/if}}
   {{#if (or (eq @course.objectives.length 0) @courseObjectiveDetails)}}

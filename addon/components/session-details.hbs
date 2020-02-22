@@ -16,6 +16,7 @@
   <LeadershipCollapsed
     @title={{t "general.sessionAdministration"}}
     @showDirectors={{false}}
+    @showAdministrators={{true}}
     @administratorsCount={{has-many-length @session "administrators"}}
     @expand={{action @setSessionLeadershipDetails true}}
   />
