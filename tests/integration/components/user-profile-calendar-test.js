@@ -48,10 +48,10 @@ module('Integration | Component | user profile calendar', function(hooks) {
     });
     this.set('user', user);
     await render(hbs`<UserProfileCalendar @user={{user}} />`);
-    const events = '.ilios-calendar-event';
-    const firstEventTitle = `${events}:nth-of-type(1) .ilios-calendar-event-name`;
-    const secondEventTitle = `${events}:nth-of-type(2) .ilios-calendar-event-name`;
-    const thirdEventTitle = `${events}:nth-of-type(3) .ilios-calendar-event-name`;
+    const events = '[data-test-calendar-event]';
+    const firstEventTitle = `${events}:nth-of-type(1) [data-test-name]`;
+    const secondEventTitle = `${events}:nth-of-type(2) [data-test-name]`;
+    const thirdEventTitle = `${events}:nth-of-type(3) [data-test-name]`;
 
     assert.dom(firstEventTitle).hasText('first');
     assert.dom(secondEventTitle).hasText('second');

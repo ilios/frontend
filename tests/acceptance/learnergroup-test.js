@@ -335,7 +335,7 @@ module('Acceptance | Learnergroup', function(hooks) {
     this.server.create('offering');
 
     const calendarToggle = '[data-test-toggle-learnergroup-calendar] label:nth-of-type(2)';
-    const event = '.event';
+    const event = '[data-test-calendar-event]';
 
     await visit('/learnergroups/1');
     assert.dom(event).doesNotExist();
@@ -371,7 +371,7 @@ module('Acceptance | Learnergroup', function(hooks) {
 
     const calendarToggle = '[data-test-toggle-learnergroup-calendar] label:nth-of-type(2)';
     const subgroupEventsToggle = '[data-test-learnergroup-calendar-toggle-subgroup-events] [data-test-toggle-yesno] .switch-handle';
-    const event = '.event';
+    const event = '[data-test-calendar-event]';
 
     await visit('/learnergroups/1');
     assert.dom(event).doesNotExist();
