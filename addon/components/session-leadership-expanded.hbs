@@ -24,6 +24,7 @@
   {{#if (is-array this.administrators)}}
     {{#if @isManaging}}
       <LeadershipManager
+        @showAdministrators={{true}}
         @showDirectors={{false}}
         @administrators={{this.administrators}}
         @removeAdministrator={{action "removeAdministrator"}}
@@ -31,6 +32,7 @@
       />
     {{else}}
       <LeadershipList
+        @showAdministrators={{true}}
         @showDirectors={{false}}
         @administrators={{this.administrators}}
       />

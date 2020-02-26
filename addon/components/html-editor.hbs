@@ -1,1 +1,8 @@
-<div id={{this.editorId}} class="html-editor" data-test-html-editor data-test-load-finished={{this.loadFinished}}></div>
+<div
+  {{did-insert (perform this.loadEditor) this.options}}
+  {{did-update (perform this.loadEditor) this.options}}
+  id={{this.editorId}}
+  class="html-editor"
+  data-test-html-editor
+  data-test-load-finished={{this.loadFinished}}>
+</div>

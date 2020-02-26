@@ -1,12 +1,14 @@
-{{moment-format @event.startDate "M/D/YY h:mma"}}
--
-{{moment-format @event.endDate "M/D/YY h:mma"}}
-<span
-  class={{if (and this.clickable @isEventSelectable) "clickable"}}
-  role="button"
-  data-test-event-name
-  {{on "click" (fn (action "selectEvent") @event)}}
->
-  {{@event.name}}
-</span>
-{{@event.location}}
+<li>
+  {{moment-format @event.startDate "M/D/YY h:mma"}}
+  &ndash;
+  {{moment-format @event.endDate "M/D/YY h:mma"}}
+  <span
+    class={{if (and this.clickable @isEventSelectable) "clickable"}}
+    role="button"
+    data-test-event-name
+    {{on "click" (fn this.selectEvent @event)}}
+  >
+    {{@event.name}}
+  </span>
+  {{@event.location}}
+</li>

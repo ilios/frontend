@@ -22,16 +22,19 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
   });
 
   test('event displays correctly', async function(assert) {
-    assert.expect(4);
+    assert.expect(3);
     const event = getEvent();
     this.set('event', event);
-    this.set('nothing', parseInt);
-    await render(hbs`<IliosCalendarMultidayEvent @event={{event}} @selectEvent={{action nothing}} />`);
-
-    assert.equal(this.element.textContent.search(/11\/11\/84/), 0);
-    assert.equal(this.element.textContent.search(/11\/12\/84/), 19);
-    assert.equal(this.element.textContent.search(/Cheramie is born/), 39);
-    assert.equal(this.element.textContent.search(/Lancaster, CA/), 57);
+    await render(hbs`
+      <IliosCalendarMultidayEvent
+        @event={{this.event}}
+        @isEventSelectable={{true}}
+        @selectEvent={{noop}}
+      />
+    `);
+    assert.dom(this.element).containsText('11/11/84');
+    assert.dom(this.element).containsText('Cheramie is born');
+    assert.dom(this.element).containsText('Lancaster, CA');
 
   });
 
@@ -44,8 +47,14 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
     this.set('selectEvent', (value) => {
       assert.deepEqual(event, value);
     });
-    await render(hbs`<IliosCalendarMultidayEvent @event={{event}} @selectEvent={{selectEvent}} />`);
-    assert.ok(this.element.textContent.search(/Cheramie is born/) > 0);
+    await render(hbs`
+      <IliosCalendarMultidayEvent
+        @event={{this.event}}
+        @isEventSelectable={{true}}
+        @selectEvent={{this.selectEvent}}
+      />
+    `);
+    assert.dom(this.element).containsText('Cheramie is born');
 
     await click('[data-test-event-name]');
   });
@@ -55,16 +64,18 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
 
     this.set('event', event);
     assert.expect(1);
-    this.actions.handleAction = () => {
+    this.set('selectEvent', () => {
       //this should never get called
       assert.ok(false);
-    };
-    await render(hbs`<IliosCalendarMultidayEvent
-      @event={{event}}
-      @selectEvent={{action "handleAction"}}
-    />`);
-    assert.ok(this.element.textContent.search(/Cheramie is born/) > 0);
-
+    });
+    await render(hbs`
+      <IliosCalendarMultidayEvent
+        @event={{this.event}}
+        @isEventSelectable={{true}}
+        @selectEvent={{this.selectEvent}}
+      />
+    `);
+    assert.dom(this.element).containsText('Cheramie is born');
     await click('[data-test-event-name]');
   });
 
@@ -74,17 +85,17 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
 
     this.set('event', event);
     assert.expect(1);
-    this.actions.handleAction = () => {
+    this.set('selectEvent', () => {
       //this should never get called
       assert.ok(false);
-    };
-    await render(hbs`<IliosCalendarMultidayEvent
-      @event={{event}}
-      @isEventSelectable={{false}}
-      @selectEvent={{action "handleAction"}}
-    />`);
-    assert.ok(this.element.textContent.search(/Cheramie is born/) > 0);
-
+    });
+    await render(hbs`
+      <IliosCalendarMultidayEvent
+        @event={{this.event}}
+        @selectEvent={{this.selectEvent}}
+      />
+    `);
+    assert.dom(this.element).containsText('Cheramie is born');
     await click('[data-test-event-name]');
   });
 });

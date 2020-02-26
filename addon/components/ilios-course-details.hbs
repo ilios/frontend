@@ -1,42 +1,48 @@
-{{#if (has-route "courses")}}
-  <div class="back-to-courses-list">
-    <LinkTo @route="courses">
-      {{t "general.backToCourses"}}
-    </LinkTo>
-  </div>
-{{/if}}
-<CourseHeader @course={{@course}} @editable={{@editable}} />
-<CourseOverview @course={{@course}} @editable={{@editable}} />
-{{#if (not this.showDetails)}}
-  <div
-    class="detail-collapsed-control"
-    role="button"
-    {{on "click" (fn this.setShowDetails true)}}
-  >
-    <span>
-      {{t "general.expandDetail"}}
-      <FaIcon @icon="plus-square" class="expand-collapse-icon" />
-    </span>
-  </div>
-{{else}}
-  <CourseEditing
-    @course={{@course}}
-    @editable={{@editable}}
-    @courseLeadershipDetails={{@courseLeadershipDetails}}
-    @courseObjectiveDetails={{@courseObjectiveDetails}}
-    @courseTaxonomyDetails={{@courseTaxonomyDetails}}
-    @courseCompetencyDetails={{@courseCompetencyDetails}}
-    @courseManageLeadership={{@courseManageLeadership}}
-    @setCourseObjectiveDetails={{@setCourseObjectiveDetails}}
-    @setCourseLeadershipDetails={{@setCourseLeadershipDetails}}
-    @setCourseTaxonomyDetails={{@setCourseTaxonomyDetails}}
-    @setCourseCompetencyDetails={{@setCourseCompetencyDetails}}
-    @setCourseManageLeadership={{@setCourseManageLeadership}}
-  />
-  <div class="detail-collapsed-control" role="button" {{on "click" (action "collapse")}}>
-    <span class="is-expanded">
-      {{t "general.collapseDetail"}}
-      <FaIcon @icon="minus-square" class="expand-collapse-icon" />
-    </span>
-  </div>
-{{/if}}
+<section
+  class="course-details"
+  data-test-ilios-course-details
+  {{ref this "topSection"}}
+>
+  {{#if (has-route "courses")}}
+    <div class="back-to-courses-list">
+      <LinkTo @route="courses">
+        {{t "general.backToCourses"}}
+      </LinkTo>
+    </div>
+  {{/if}}
+  <CourseHeader @course={{@course}} @editable={{@editable}} />
+  <CourseOverview @course={{@course}} @editable={{@editable}} />
+  {{#if (not @showDetails)}}
+    <div
+      class="detail-collapsed-control"
+      role="button"
+      {{on "click" (fn @setShowDetails true)}}
+    >
+      <span>
+        {{t "general.expandDetail"}}
+        <FaIcon @icon="plus-square" class="expand-collapse-icon" />
+      </span>
+    </div>
+  {{else}}
+    <CourseEditing
+      @course={{@course}}
+      @editable={{@editable}}
+      @courseLeadershipDetails={{@courseLeadershipDetails}}
+      @courseObjectiveDetails={{@courseObjectiveDetails}}
+      @courseTaxonomyDetails={{@courseTaxonomyDetails}}
+      @courseCompetencyDetails={{@courseCompetencyDetails}}
+      @courseManageLeadership={{@courseManageLeadership}}
+      @setCourseObjectiveDetails={{@setCourseObjectiveDetails}}
+      @setCourseLeadershipDetails={{@setCourseLeadershipDetails}}
+      @setCourseTaxonomyDetails={{@setCourseTaxonomyDetails}}
+      @setCourseCompetencyDetails={{@setCourseCompetencyDetails}}
+      @setCourseManageLeadership={{@setCourseManageLeadership}}
+    />
+    <div class="detail-collapsed-control" role="button" {{on "click" this.collapse}}>
+      <span class="is-expanded">
+        {{t "general.collapseDetail"}}
+        <FaIcon @icon="minus-square" class="expand-collapse-icon" />
+      </span>
+    </div>
+  {{/if}}
+</section>

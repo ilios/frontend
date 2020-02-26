@@ -1,77 +1,79 @@
-<table>
-  <thead>
-    <tr>
-      {{#if this.showDirectors}}
-        <th>
-          {{t "general.directors"}}
-        </th>
-      {{/if}}
-      {{#if this.showAdministrators}}
-        <th>
-          {{t "general.administrators"}}
-        </th>
-      {{/if}}
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      {{#if this.showDirectors}}
-        <td class="text-top" data-test-directors>
-          <ul>
-            {{#if (is-array @directors)}}
-              {{#each (sort-by "lastName" "firstName" @directors) as |user|}}
-                <li>
-                  {{#unless user.enabled}}
-                    <FaIcon
-                      @icon="user-times"
-                      @title={{t "general.disabled"}}
-                      class="error"
-                    />
-                  {{/unless}}
-                  <span data-test-name>
-                    {{user.fullName}}
-                  </span>
-                </li>
+<div class="leadership-list" data-test-leadership-list>
+  <table>
+    <thead>
+      <tr>
+        {{#if @showDirectors}}
+          <th>
+            {{t "general.directors"}}
+          </th>
+        {{/if}}
+        {{#if @showAdministrators}}
+          <th>
+            {{t "general.administrators"}}
+          </th>
+        {{/if}}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {{#if @showDirectors}}
+          <td class="text-top" data-test-directors>
+            <ul>
+              {{#if (is-array @directors)}}
+                {{#each (sort-by "lastName" "firstName" @directors) as |user|}}
+                  <li>
+                    {{#unless user.enabled}}
+                      <FaIcon
+                        @icon="user-times"
+                        @title={{t "general.disabled"}}
+                        class="error"
+                      />
+                    {{/unless}}
+                    <span data-test-name>
+                      {{user.fullName}}
+                    </span>
+                  </li>
+                {{else}}
+                  <li>
+                    {{t "general.none"}}
+                  </li>
+                {{/each}}
               {{else}}
-                <li>
-                  {{t "general.none"}}
-                </li>
-              {{/each}}
-            {{else}}
-              <LoadingSpinner />
-            {{/if}}
-          </ul>
-        </td>
-      {{/if}}
-      {{#if this.showAdministrators}}
-        <td class="text-top" data-test-administrators>
-          <ul>
-            {{#if (is-array @administrators)}}
-              {{#each (sort-by "lastName" "firstName" @administrators) as |user|
-              }}
-                <li>
-                  {{#unless user.enabled}}
-                    <FaIcon
-                      @icon="user-times"
-                      @title={{t "general.disabled"}}
-                      class="error"
-                    />
-                  {{/unless}}
-                  <span data-test-name>
-                    {{user.fullName}}
-                  </span>
-                </li>
+                <LoadingSpinner />
+              {{/if}}
+            </ul>
+          </td>
+        {{/if}}
+        {{#if @showAdministrators}}
+          <td class="text-top" data-test-administrators>
+            <ul>
+              {{#if (is-array @administrators)}}
+                {{#each (sort-by "lastName" "firstName" @administrators) as |user|
+                }}
+                  <li>
+                    {{#unless user.enabled}}
+                      <FaIcon
+                        @icon="user-times"
+                        @title={{t "general.disabled"}}
+                        class="error"
+                      />
+                    {{/unless}}
+                    <span data-test-name>
+                      {{user.fullName}}
+                    </span>
+                  </li>
+                {{else}}
+                  <li>
+                    {{t "general.none"}}
+                  </li>
+                {{/each}}
               {{else}}
-                <li>
-                  {{t "general.none"}}
-                </li>
-              {{/each}}
-            {{else}}
-              <LoadingSpinner />
-            {{/if}}
-          </ul>
-        </td>
-      {{/if}}
-    </tr>
-  </tbody>
-</table>
+                <LoadingSpinner />
+              {{/if}}
+            </ul>
+          </td>
+        {{/if}}
+      </tr>
+    </tbody>
+  </table>
+</div>

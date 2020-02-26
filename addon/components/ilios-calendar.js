@@ -1,22 +1,17 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { copy } from '@ember/object/internals';
+import Component from '@glimmer/component';
 import moment from 'moment';
+import { tracked } from '@glimmer/tracking';
+import { copy } from '@ember/object/internals';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  classNames: ['ilios-calendar'],
-  selectedView: null,
-  selectedDate: null,
-  calendarEvents: null,
-  icsFeedUrl: null,
-  showIcsFeed: false,
-  compiledCalendarEvents: computed('calendarEvents.[]', 'selectedView', function(){
-    const events = this.get('calendarEvents');
-    if(this.get('selectedView') === 'day'){
-      return events;
+export default class IliosCalendarComponent extends Component {
+  @tracked showIcsFeed = false;
+  get compiledCalendarEvents(){
+    if(this.args.selectedView === 'day'){
+      return this.args.calendarEvents;
     } else {
       const hashedEvents = {};
-      events.forEach(event => {
+      this.args.calendarEvents.forEach(event => {
         const hash = moment(event.startDate).format() +
           moment(event.endDate).format() +
           event.name;
@@ -38,31 +33,10 @@ export default Component.extend({
       }
       return compiledEvents;
     }
-  }),
-  actions: {
-    changeDate(newDate){
-      this.get('changeDate')(newDate);
-    },
-    goForward(){
-      const newDate = moment(this.get('selectedDate')).add(1, this.get('selectedView')).toDate();
-      this.get('changeDate')(newDate);
-    },
-    goBack(){
-      const newDate = moment(this.get('selectedDate')).subtract(1, this.get('selectedView')).toDate();
-      this.get('changeDate')(newDate);
-    },
-    gotoToday(){
-      const newDate = moment().toDate();
-      this.get('changeDate')(newDate);
-    },
-    selectEvent(event){
-      this.get('selectEvent')(event);
-    },
-    refreshIcsFeed(){
-      this.set('icsFeedUrl', null);
-      this.get('refreshIcsFeed')();
-    },
-    sortEvents(a, b){
+  }
+
+  get sortedEvents(){
+    return this.compiledCalendarEvents.sort((a, b) => {
       const startDiff = moment(a.startDate).diff(moment(b.startDate));
       if (startDiff !== 0) {
         return startDiff;
@@ -78,7 +52,22 @@ export default Component.extend({
       }
 
       return a.title - b.title;
-
-    },
+    });
   }
-});
+
+  @action
+  goForward(){
+    const newDate = moment(this.args.selectedDate).add(1, this.args.selectedView).toDate();
+    this.args.changeDate(newDate);
+  }
+  @action
+  goBack(){
+    const newDate = moment(this.args.selectedDate).subtract(1, this.args.selectedView).toDate();
+    this.args.changeDate(newDate);
+  }
+  @action
+  gotoToday(){
+    const newDate = moment().toDate();
+    this.args.changeDate(newDate);
+  }
+}

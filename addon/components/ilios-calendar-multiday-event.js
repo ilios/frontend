@@ -1,21 +1,21 @@
-import Component from '@ember/component';
-import { or, notEmpty } from '@ember/object/computed';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  tagName: 'li',
-  event: null,
-  isEventSelectable: true,
-  isIlm: notEmpty('event.ilmSession'),
-  isOffering: notEmpty('event.offering'),
-  clickable: or('isIlm', 'isOffering'),
-  actions: {
-    selectEvent(selectedEvent) {
-      const clickable = this.get('clickable');
-      const isEventSelectable = this.get('isEventSelectable');
-      const selectEvent = this.get('selectEvent');
-      if (clickable && isEventSelectable) {
-        selectEvent(selectedEvent);
-      }
+export default class IliosCalendarMultidayEventComponent extends Component {
+  get isIlm() {
+    return !!this.args.event.ilmSession;
+  }
+  get isOffering() {
+    return !!this.args.event.offering;
+  }
+  get clickable() {
+    return this.isIlm || this.isOffering;
+  }
+
+  @action
+  selectEvent(selectedEvent) {
+    if (this.clickable && this.args.isEventSelectable) {
+      this.args.selectEvent(selectedEvent);
     }
   }
-});
+}

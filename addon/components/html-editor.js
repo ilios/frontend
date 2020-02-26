@@ -1,51 +1,55 @@
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
-import { task } from 'ember-concurrency';
 import { guidFor } from '@ember/object/internals';
 
-const defaultButtons = {
-  moreText: {
-    buttons: [
-      'bold',
-      'italic',
-      'subscript',
-      'superscript',
-      'formatOL',
-      'formatUL',
-      'insertLink',
-    ],
-    'buttonsVisible': 7
-  },
-  moreMisc: {
-    buttons: ['undo', 'redo', 'html'],
-    align: 'right',
-  }
-};
-export default Component.extend({
-  intl: service(),
-  editor: null,
-  loadFinished: false,
-  editorId: null,
-  options: computed('intl.locale', function(){
-    const intl = this.get('intl');
-    const language = intl.get('locale');
+export default class HtmlEditorComponent extends Component {
+  @service intl;
+  @tracked editor = null;
+  @tracked editorId = null;
+  @tracked loadFinished = false;
 
+  defaultButtons = {
+    moreText: {
+      buttons: [
+        'bold',
+        'italic',
+        'subscript',
+        'superscript',
+        'formatOL',
+        'formatUL',
+        'insertLink',
+      ],
+      'buttonsVisible': 7
+    },
+    moreMisc: {
+      buttons: ['undo', 'redo', 'html'],
+      align: 'right',
+    }
+  };
+
+  constructor() {
+    super(...arguments);
+    this.editorId = guidFor(this);
+  }
+
+  get options(){
     return {
       key: 'Kb3A3pE2E2A1E4G4I4oCd2ZSb1XHi1Cb2a1KIWCWMJHXCLSwG1G1B2C1B1C7F6E1E4F4==',
       theme: 'gray',
       attribution: false,
-      language,
+      language: this.intl.locale,
       toolbarInline: false,
       placeholderText: '',
       saveInterval: false,
       pastePlain: true,
       spellcheck: true,
-      toolbarButtons: defaultButtons,
-      toolbarButtonsMD: defaultButtons,
-      toolbarButtonsSM: defaultButtons,
-      toolbarButtonsXS: defaultButtons,
+      toolbarButtons: this.defaultButtons,
+      toolbarButtonsMD: this.defaultButtons,
+      toolbarButtonsSM: this.defaultButtons,
+      toolbarButtonsXS: this.defaultButtons,
       quickInsertButtons: false,
       pluginsEnabled: ['lists', 'code_view', 'link'],
       listAdvancedTypes: false,
@@ -53,7 +57,7 @@ export default Component.extend({
       events: {
         contentChanged: () => {
           if (!this.isDestroyed && !this.isDestroying) {
-            this.update(this.editor.html.get());
+            this.args.update(this.editor.html.get());
           }
         }
       },
@@ -66,20 +70,13 @@ export default Component.extend({
       ],
       linkEditButtons: ['linkEdit', 'linkRemove'],
     };
-  }),
-  didInsertElement() {
-    this._super(...arguments);
-    const uid = guidFor(this.element.querySelector('div'));
-    this.set('editorId', uid);
-    this.loadEditor.perform();
-  },
-  willDestroyElement() {
-    this._super(...arguments);
+  }
+  willDestroy() {
     if (this.editor) {
       this.editor.destroy();
       this.editor = null;
     }
-  },
+  }
   createEditor(element, options) {
     return new Promise(resolve => {
       loadFroalaEditor().then(({ FroalaEditor }) => {
@@ -88,14 +85,15 @@ export default Component.extend({
         });
       });
     });
-  },
-  loadEditor: task(function* () {
+  }
+  @restartableTask
+  *loadEditor(element, [options]) {
     if (!this.editor) {
-      this.editor = yield this.createEditor(this.element.querySelector('div'), this.options);
-      this.editor.html.set(this.content);
-      this.set('loadFinished', true);
+      this.editor = yield this.createEditor(element, options);
+      this.editor.html.set(this.args.content);
+      this.loadFinished = true;
     }
 
     return true;
-  }).drop(),
-});
+  }
+}

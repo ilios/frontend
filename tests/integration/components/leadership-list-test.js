@@ -24,7 +24,12 @@ module('Integration | Component | leadership list', function(hooks) {
     this.set('directors', [user1]);
     this.set('administrators', [user2, user1]);
 
-    await render(hbs`<LeadershipList @directors={{directors}} @administrators={{administrators}} />`);
+    await render(hbs`<LeadershipList
+      @directors={{this.directors}}
+      @administrators={{this.administrators}}
+      @showAdministrators={{true}}
+      @showDirectors={{true}}
+    />`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-name]';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li [data-test-name]';
 
@@ -44,7 +49,11 @@ module('Integration | Component | leadership list', function(hooks) {
     });
     this.set('administrators', [user1]);
 
-    await render(hbs`<LeadershipList @showDirectors={{false}} @administrators={{administrators}} />`);
+    await render(hbs`<LeadershipList
+      @showDirectors={{false}}
+      @showAdministrators={{true}}
+      @administrators={{this.administrators}}
+    />`);
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-name]';
 
     assert.dom(administrators).exists({ count: 1 });
@@ -60,7 +69,11 @@ module('Integration | Component | leadership list', function(hooks) {
     });
     this.set('directors', [user1]);
 
-    await render(hbs`<LeadershipList @showAdministrators={{false}} @directors={{directors}} />`);
+    await render(hbs`<LeadershipList
+      @showAdministrators={{false}}
+      @showDirectors={{true}}
+      @directors={{this.directors}}
+    />`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-name]';
 
     assert.dom(directors).exists({ count: 1 });
@@ -72,7 +85,12 @@ module('Integration | Component | leadership list', function(hooks) {
     this.set('directors', []);
     this.set('administrators', []);
 
-    await render(hbs`<LeadershipList @directors={{directors}} @administrators={{administrators}} />`);
+    await render(hbs`<LeadershipList
+      @directors={{this.directors}}
+      @administrators={{this.administrators}}
+      @showAdministrators={{true}}
+      @showDirectors={{true}}
+      />`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
 
@@ -99,7 +117,12 @@ module('Integration | Component | leadership list', function(hooks) {
     this.set('directors', [user1]);
     this.set('administrators', [user2, user1]);
 
-    await render(hbs`<LeadershipList @directors={{directors}} @administrators={{administrators}} />`);
+    await render(hbs`<LeadershipList
+      @directors={{this.directors}}
+      @administrators={{this.administrators}}
+      @showAdministrators={{true}}
+      @showDirectors={{true}}
+    />`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
     const directorNames = `${directors} [data-test-name]`;

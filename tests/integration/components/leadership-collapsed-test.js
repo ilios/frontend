@@ -18,6 +18,8 @@ module('Integration | Component | leadership collapsed', function(hooks) {
       @directorsCount={{directorsCount}}
       @administratorsCount={{administratorsCount}}
       @expand={{action click}}
+      @showAdministrators={{true}}
+      @showDirectors={{true}}
     />`);
     const title = '.title';
     const table = 'table';
@@ -41,6 +43,8 @@ module('Integration | Component | leadership collapsed', function(hooks) {
       @directorsCount={{0}}
       @administratorsCount={{0}}
       @expand={{action click}}
+      @showAdministrators={{true}}
+      @showDirectors={{true}}
     />`);
     const title = '.title';
 
@@ -57,6 +61,7 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     await render(hbs`<LeadershipCollapsed
       @title={{title}}
       @showDirectors={{false}}
+      @showAdministrators={{true}}
       @directorsCount={{directorsCount}}
       @administratorsCount={{administratorsCount}}
       @expand={{action click}}
@@ -80,6 +85,7 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     await render(hbs`<LeadershipCollapsed
       @title={{title}}
       @showAdministrators={{false}}
+      @showDirectors={{true}}
       @directorsCount={{directorsCount}}
       @administratorsCount={{administratorsCount}}
       @expand={{action click}}

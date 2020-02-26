@@ -1,15 +1,19 @@
-<WeeklyCalendar
-  @date={{@date}}
-  @events={{this.singleDayEvents}}
-  @changeToDayView={{if this.areDaysSelectable (action "changeToDayView") (noop)}}
-  @selectEvent={{if this.areEventsSelectable @selectEvent (noop)}}
-/>
-<IliosCalendarPreWorkEvents
-  @events={{this.ilmPreWorkEvents}}
-  @areEventsSelectable={{this.areEventsSelectable}}
-/>
-<IliosCalendarMultidayEvents
-  @events={{this.multiDayEventsList}}
-  @selectEvent={{action "selectEvent"}}
-  @areEventsSelectable={{this.areDaysSelectable}}
-/>
+{{#if (is-array @calendarEvents)}}
+  <div class="ilios-calendar-week">
+    <WeeklyCalendar
+      @date={{@date}}
+      @events={{this.singleDayEvents}}
+      @changeToDayView={{if @areDaysSelectable this.changeToDayView (noop)}}
+      @selectEvent={{if @areEventsSelectable @selectEvent (noop)}}
+    />
+    <IliosCalendarPreWorkEvents
+      @events={{this.ilmPreWorkEvents}}
+      @areEventsSelectable={{@areEventsSelectable}}
+    />
+    <IliosCalendarMultidayEvents
+      @events={{this.multiDayEventsList}}
+      @selectEvent={{@selectEvent}}
+      @areEventsSelectable={{@areDaysSelectable}}
+    />
+  </div>
+{{/if}}

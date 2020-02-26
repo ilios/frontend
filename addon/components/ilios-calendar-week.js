@@ -1,66 +1,40 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
+import Component from '@glimmer/component';
 import moment from 'moment';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  classNames: ['ilios-calendar-week'],
-  date: null,
-  calendarEvents: null,
-  areEventsSelectable: true,
-  areDaysSelectable: true,
-  weekOf: computed('date', function(){
-    return moment(this.get('date')).startOf('week').format('MMMM Do YYYY');
-  }),
-  ilmPreWorkEvents: computed('calendarEvents.[]', function () {
-    const calendarEvents = this.calendarEvents || [];
-    const preWork =  calendarEvents.reduce((arr, eventObject) => {
+export default class IliosCalendarWeekComponent extends Component {
+  get weekOf(){
+    return moment(this.args.date).startOf('week').format('MMMM Do YYYY');
+  }
+  get ilmPreWorkEvents() {
+    const preWork =  this.args.calendarEvents.reduce((arr, eventObject) => {
       return arr.pushObjects(eventObject.prerequisites);
     }, []);
 
     return preWork.filter(ev => ev.ilmSession);
-  }),
+  }
 
-  nonIlmPreWorkEvents: computed('calendarEvents.[]', function () {
-    const calendarEvents = this.calendarEvents || [];
-    return calendarEvents.filter(ev => {
+  get nonIlmPreWorkEvents() {
+    return this.args.calendarEvents.filter(ev => {
       return ev.postrequisites.length === 0 || !ev.ilmSession;
     });
-  }),
-  singleDayEvents: computed('nonIlmPreWorkEvents.[]', function(){
-    const events = this.get('nonIlmPreWorkEvents');
-    if(isEmpty(events)){
-      return [];
-    }
-    return events.filter(
+  }
+  get singleDayEvents(){
+    return this.nonIlmPreWorkEvents.filter(
       event => moment(event.startDate).isSame(moment(event.endDate), 'day')
     );
-  }),
-  multiDayEventsList: computed('nonIlmPreWorkEvents.[]', function(){
-    const events = this.get('nonIlmPreWorkEvents');
-    if(isEmpty(events)){
-      return [];
-    }
-    return events.filter(
+  }
+  get multiDayEventsList(){
+    return this.nonIlmPreWorkEvents.filter(
       event => !moment(event.startDate).isSame(moment(event.endDate), 'day')
     );
-  }),
-  actions: {
-    changeToDayView(date){
-      const changeDate = this.get('changeDate');
-      const changeView = this.get('changeView');
-      const areDaysSelectable = this.get('areDaysSelectable');
-      if (areDaysSelectable && changeDate && changeView) {
-        changeDate(date);
-        changeView('day');
-      }
-    },
-    selectEvent(evt){
-      const selectEvent = this.get('selectEvent');
-      const areEventsSelectable = this.get('areEventsSelectable');
-      if (areEventsSelectable && selectEvent) {
-        selectEvent(evt);
-      }
+  }
+
+  @action
+  changeToDayView(date){
+    if (this.args.areDaysSelectable && this.args.changeDate && this.args.changeView) {
+      this.args.changeDate(date);
+      this.args.changeView('day');
     }
   }
-});
+}

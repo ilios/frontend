@@ -1,36 +1,38 @@
-<div class="title clickable" role="button" {{on "click" @expand}}>
-  {{@title}}
-</div>
-<div class="content">
-  <table class="condensed">
-    <thead>
-      <tr>
-        <th colspan="2" class="text-left">
-          {{t "general.summary"}}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#if this.showDirectors}}
+<section class="leadership-collapsed" data-test-leadership-collapsed>
+  <div class="title clickable" role="button" {{on "click" @expand}}>
+    {{@title}}
+  </div>
+  <div class="content">
+    <table class="condensed">
+      <thead>
         <tr>
-          <td>
-            {{t "general.directors"}}
-          </td>
-          <td>
-            {{t "general.directorCount" count=@directorsCount}}
-          </td>
+          <th colspan="2" class="text-left">
+            {{t "general.summary"}}
+          </th>
         </tr>
-      {{/if}}
-      {{#if this.showAdministrators}}
-        <tr>
-          <td>
-            {{t "general.administrators"}}
-          </td>
-          <td>
-            {{t "general.administratorCount" count=@administratorsCount}}
-          </td>
-        </tr>
-      {{/if}}
-    </tbody>
-  </table>
-</div>
+      </thead>
+      <tbody>
+        {{#if @showDirectors}}
+          <tr>
+            <td>
+              {{t "general.directors"}}
+            </td>
+            <td>
+              {{t "general.directorCount" count=@directorsCount}}
+            </td>
+          </tr>
+        {{/if}}
+        {{#if @showAdministrators}}
+          <tr>
+            <td>
+              {{t "general.administrators"}}
+            </td>
+            <td>
+              {{t "general.administratorCount" count=@administratorsCount}}
+            </td>
+          </tr>
+        {{/if}}
+      </tbody>
+    </table>
+  </div>
+</section>

@@ -1,92 +1,95 @@
-<table>
-  <thead>
-    <tr>
-      {{#if this.showDirectors}}
-        <th>
-          {{t "general.directors"}}
-        </th>
-      {{/if}}
-      {{#if this.showAdministrators}}
-        <th>
-          {{t "general.administrators"}}
-        </th>
-      {{/if}}
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      {{#if this.showDirectors}}
-        <td class="text-top" data-test-directors>
-          <ul>
-            {{#each (sort-by "lastName" "firstName" @directors) as |user|}}
-              <li>
-                <FaIcon
-                  @icon="times"
-                  class="clickable remove"
-                  @click={{action @removeDirector user}}
-                />
-                {{#unless user.enabled}}
+<div class="leadership-manager" data-test-leadership-manager>
+  <table>
+    <thead>
+      <tr>
+        {{#if @showDirectors}}
+          <th>
+            {{t "general.directors"}}
+          </th>
+        {{/if}}
+        {{#if @showAdministrators}}
+          <th>
+            {{t "general.administrators"}}
+          </th>
+        {{/if}}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {{#if @showDirectors}}
+          <td class="text-top" data-test-directors>
+            <ul>
+              {{#each (sort-by "lastName" "firstName" @directors) as |user|}}
+                <li>
                   <FaIcon
-                    @icon="user-times"
-                    @title={{t "general.disabled"}}
-                    class="disabled-user"
+                    @icon="times"
+                    class="clickable remove"
+                    @click={{action @removeDirector user}}
                   />
-                {{/unless}}
-                <span data-test-name>
-                  {{user.fullName}}
-                </span>
-              </li>
-            {{else}}
-              {{t "general.none"}}
-            {{/each}}
-          </ul>
-        </td>
-      {{/if}}
-      {{#if this.showAdministrators}}
-        <td class="text-top" data-test-administrators>
-          <ul>
-            {{#each (sort-by "lastName" "firstName" @administrators) as |user|}}
-              <li>
-                <FaIcon
-                  @icon="times"
-                  class="clickable remove"
-                  @click={{action @removeAdministrator user}}
-                />
-                {{#unless user.enabled}}
+                  {{#unless user.enabled}}
+                    <FaIcon
+                      @icon="user-times"
+                      @title={{t "general.disabled"}}
+                      class="disabled-user"
+                    />
+                  {{/unless}}
+                  <span data-test-name>
+                    {{user.fullName}}
+                  </span>
+                </li>
+              {{else}}
+                {{t "general.none"}}
+              {{/each}}
+            </ul>
+          </td>
+        {{/if}}
+        {{#if @showAdministrators}}
+          <td class="text-top" data-test-administrators>
+            <ul>
+              {{#each (sort-by "lastName" "firstName" @administrators) as |user|}}
+                <li>
                   <FaIcon
-                    @icon="user-times"
-                    @title={{t "general.disabled"}}
-                    class="disabled-user"
+                    @icon="times"
+                    class="clickable remove"
+                    @click={{action @removeAdministrator user}}
                   />
-                {{/unless}}
-                <span data-test-name>
-                  {{user.fullName}}
-                </span>
-              </li>
-            {{else}}
-              {{t "general.none"}}
-            {{/each}}
-          </ul>
-        </td>
-      {{/if}}
-    </tr>
-    <tr>
-      {{#if this.showDirectors}}
-        <td data-test-director-search>
-          <LeadershipSearch
-            @existingUsers={{@directors}}
-            @selectUser={{this.addDirector}}
-          />
-        </td>
-      {{/if}}
-      {{#if this.showAdministrators}}
-        <td data-test-administrator-search>
-          <LeadershipSearch
-            @existingUsers={{@administrators}}
-            @selectUser={{this.addAdministrator}}
-          />
-        </td>
-      {{/if}}
-    </tr>
-  </tbody>
-</table>
+                  {{#unless user.enabled}}
+                    <FaIcon
+                      @icon="user-times"
+                      @title={{t "general.disabled"}}
+                      class="disabled-user"
+                    />
+                  {{/unless}}
+                  <span data-test-name>
+                    {{user.fullName}}
+                  </span>
+                </li>
+              {{else}}
+                {{t "general.none"}}
+              {{/each}}
+            </ul>
+          </td>
+        {{/if}}
+      </tr>
+      <tr>
+        {{#if @showDirectors}}
+          <td data-test-director-search>
+            <LeadershipSearch
+              @existingUsers={{@directors}}
+              @selectUser={{@addDirector}}
+            />
+          </td>
+        {{/if}}
+        {{#if @showAdministrators}}
+          <td data-test-administrator-search>
+            <LeadershipSearch
+              @existingUsers={{@administrators}}
+              @selectUser={{@addAdministrator}}
+            />
+          </td>
+        {{/if}}
+      </tr>
+    </tbody>
+  </table>
+
+</div>
