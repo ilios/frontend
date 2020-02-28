@@ -1,36 +1,45 @@
-<div class="detail-actions">
-  <button type="button" class="bigadd" {{action (perform saveChanges)}}>
-    <FaIcon
-      @icon={{if saveChanges.isRunning "spinner" "check"}}
-      @spin={{if saveChanges.isRunning true false}}
-    />
-  </button>
-  <button type="button" class="bigcancel" {{action close}}>
-    <FaIcon @icon="undo" />
-  </button>
-</div>
-<div class="detail-content">
-  <ul class="removable-list tag-list">
-    {{#each (sort-by "lastName" instructors) as |user|}}
-      <li {{action "removeInstructor" user}}>
-        {{user.fullName}}
-        |
-        <FaIcon @icon="times" />
-      </li>
-    {{/each}}
-    {{#each (sort-by "title" instructorGroups) as |instructorGroup|}}
-      <li {{action "removeInstructorGroup" instructorGroup}}>
-        {{instructorGroup.title}}
-        |
-        <FaIcon @icon="times" />
-      </li>
-    {{/each}}
-  </ul>
-  <UserSearch
-    @addUser={{action "addInstructor"}}
-    @addInstructorGroup={{action "addInstructorGroup"}}
-    @currentlyActiveUsers={{instructors}}
-    @availableInstructorGroups={{await availableInstructorGroups}}
-    @currentlyActiveInstructorGroups={{instructorGroups}}
-  />
+<div
+  class="learnergroup-instructor-manager"
+  {{did-insert (perform this.load) @learnerGroup}}
+  {{did-update (perform this.load) @learnerGroup}}
+  data-test-learnergroup-instructor-manager
+>
+  {{#unless this.load.isRunning}}
+    <div class="detail-actions">
+      <button type="button" class="bigadd" {{action (perform this.saveChanges)}}>
+        <FaIcon
+          @icon={{if this.saveChanges.isRunning "spinner" "check"}}
+          @spin={{if this.saveChanges.isRunning true false}}
+        />
+      </button>
+      <button type="button" class="bigcancel" {{on "click" @close}}>
+        <FaIcon @icon="undo" />
+      </button>
+    </div>
+    <div class="detail-content">
+      <ul class="removable-list tag-list">
+        {{#each (sort-by "lastName" this.instructors) as |user|}}
+          <li {{on "click" (fn this.removeInstructor user)}}>
+            {{user.fullName}}
+            |
+            <FaIcon @icon="times" />
+          </li>
+        {{/each}}
+        {{#each (sort-by "title" this.instructorGroups) as |instructorGroup|}}
+          <li {{on "click" (fn this.removeInstructorGroup instructorGroup)}}>
+            {{instructorGroup.title}}
+            |
+            <FaIcon @icon="times" />
+          </li>
+        {{/each}}
+      </ul>
+      <UserSearch
+        @addUser={{this.addInstructor}}
+        @addInstructorGroup={{this.addInstructorGroup}}
+        @currentlyActiveUsers={{this.instructors}}
+        @availableInstructorGroups={{this.availableInstructorGroups}}
+        @currentlyActiveInstructorGroups={{this.instructorGroups}}
+      />
+    </div>
+  {{/unless}}
 </div>
