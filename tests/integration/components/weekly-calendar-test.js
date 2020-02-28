@@ -16,6 +16,12 @@ module('Integration | Component | weekly-calendar', function(hooks) {
     this.owner.lookup('service:moment').setLocale('en-us');
   });
 
+  //reset locale for other tests
+  hooks.afterEach(function () {
+    this.owner.lookup('service:intl').setLocale('en-us');
+    this.owner.lookup('service:moment').setLocale('en-us');
+  });
+
   this.createEvent = function (startDate, endDate, color) {
     this.server.create('userevent', {
       startDate: moment(startDate).toDate(),

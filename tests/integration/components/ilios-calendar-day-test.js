@@ -12,7 +12,7 @@ module('Integration | Component | ilios calendar day', function(hooks) {
     this.set('date', date);
     await render(hbs`<IliosCalendarDay @date={{date}} @selectEvent={{noop}} @calendarEvents={{array}} />`);
     //Date input is Wednesday, Septrmber 30th.  Should be the first string
-    assert.equal(this.element.textContent.trim().search(/^Wednesday/), 0);
-    assert.equal(this.element.querySelectorAll('.event').length, 0);
+    assert.dom().containsText('Wednesday');
+    assert.dom('[data-test-calender-event]').doesNotExist();
   });
 });

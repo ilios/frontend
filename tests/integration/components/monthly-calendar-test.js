@@ -16,6 +16,12 @@ module('Integration | Component | monthly-calendar', function(hooks) {
     this.owner.lookup('service:moment').setLocale('en-us');
   });
 
+  //reset locale for other tests
+  hooks.afterEach(function () {
+    this.owner.lookup('service:intl').setLocale('en-us');
+    this.owner.lookup('service:moment').setLocale('en-us');
+  });
+
   test('it renders empty and is accessible', async function (assert) {
     const january9th2018 = moment('2019-01-09 08:00:00');
     this.set('date', january9th2018);
