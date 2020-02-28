@@ -46,7 +46,6 @@ export default class LearnergroupInstructorManager extends Component {
     this.instructorGroups = this.instructorGroups.filter(group => group !== instructorGroup);
   }
 
-
   @dropTask
   *saveChanges() {
     yield this.args.save(this.instructors, this.instructorGroups);
