@@ -17,19 +17,17 @@
       </button>
     </div>
     <div class="detail-content">
-      <ul class="removable-list tag-list">
+      <ul class="removable-instructors">
         {{#each (sort-by "lastName" this.instructors) as |user|}}
           <li {{on "click" (fn this.removeInstructor user)}}>
             {{user.fullName}}
-            |
-            <FaIcon @icon="times" />
+            <FaIcon @icon="times" class="remove" />
           </li>
         {{/each}}
         {{#each (sort-by "title" this.instructorGroups) as |instructorGroup|}}
           <li {{on "click" (fn this.removeInstructorGroup instructorGroup)}}>
             {{instructorGroup.title}}
-            |
-            <FaIcon @icon="times" />
+            <FaIcon @icon="times" class="remove" />
           </li>
         {{/each}}
       </ul>
