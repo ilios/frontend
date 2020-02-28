@@ -96,7 +96,7 @@
       {{#if (is-fulfilled learnerGroup.allInstructors)}}
         {{#liquid-if manageInstructors class="crossFade"}}
           <LearnergroupInstructorManager
-            @learnerGroup={{learnerGroup}}
+            @learnerGroup={{@learnerGroup}}
             @save={{action "saveInstructors"}}
             @close={{toggle-action "manageInstructors" this}}
           />
