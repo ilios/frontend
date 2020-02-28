@@ -31,7 +31,7 @@ module('Integration | Component | timed release schedule', function(hooks) {
     assert.dom(this.element).hasText(`(Available: ${expectedStartDate} and available until ${expectedEndDate})`);
   });
 
-  test('it renders just start date', async function(assert) {
+  test('it renders with only start date in the future', async function(assert) {
     const tomorrow = moment().add(1, 'day');
     this.set('tomorrow', tomorrow.toDate());
     await render(hbs`<TimedReleaseSchedule @startDate={{tomorrow}} />`);
@@ -40,12 +40,27 @@ module('Integration | Component | timed release schedule', function(hooks) {
     assert.dom(this.element).hasText(`(Available: ${expectedDate})`);
   });
 
-  test('it renders just end date', async function(assert) {
+  test('it renders nothing with only start date in the past', async function(assert) {
+    const tomorrow = moment().subtract(1, 'day');
+    this.set('tomorrow', tomorrow.toDate());
+    await render(hbs`<TimedReleaseSchedule @startDate={{tomorrow}} />`);
+    assert.dom(this.element).hasNoText();
+  });
+
+  test('it renders with only end date in the future', async function(assert) {
     const tomorrow = moment().add(1, 'day');
     this.set('tomorrow', tomorrow.toDate());
     await render(hbs`<TimedReleaseSchedule @endDate={{tomorrow}} />`);
     const expectedDate = tomorrow.format('L LT');
 
+    assert.dom(this.element).hasText(`(Available until ${expectedDate})`);
+  });
+
+  test('it renders with only end date the past', async function(assert) {
+    const tomorrow = moment().subtract(1, 'day');
+    this.set('tomorrow', tomorrow.toDate());
+    await render(hbs`<TimedReleaseSchedule @endDate={{tomorrow}} />`);
+    const expectedDate = tomorrow.format('L LT');
     assert.dom(this.element).hasText(`(Available until ${expectedDate})`);
   });
 });
