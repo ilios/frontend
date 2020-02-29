@@ -125,7 +125,7 @@
                     {{t "general.yes"}}
                   </span>
                   {{#if lmProxy.publicNotes}}
-                    <FaIcon @icon="eye" />
+                    <FaIcon @icon="eye" @title={{t "general.visibleToStudents"}}/>
                   {{/if}}
                 {{else}}
                   <span class="remove">

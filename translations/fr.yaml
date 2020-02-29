@@ -313,6 +313,7 @@ general:
   url: URL
   userRole: "Rôle d'utilisateur"
   view: Vue
+  visibleToStudents: "Visible pour les étudiants"
   vocabularies: Vocabulaires
   vocabulary: Vocabulaire
   vocabularyTermsFor: "Termes Vocabulaire par {subject}"
