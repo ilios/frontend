@@ -30,10 +30,10 @@ const definition = {
   sort: clickable('[data-test-sort-button]'),
   current: collection('.detail-learningmaterials-content table tbody tr', {
     title: text('td [data-test-title]', { at: 0 }),
-    type: text('title', 'td [data-test-lm-type-icon] title'),
+    type: text( 'td [data-test-lm-type-icon] title'),
     owner: text('td', { at: 1 }),
     required: text('td', { at: 2 }),
-    notes: text('td', { at: 3 }),
+    notes: text('td:eq(3) > span'),
     mesh: text('td', { at: 4 }),
     status: text('td', { at: 5 }),
     isNotePublic: isVisible('.fa-eye'),

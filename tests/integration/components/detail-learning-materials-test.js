@@ -10,7 +10,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(function () {
-    this.statues = this.server.createList('learning-material-status', 3);
+    this.status = this.server.createList('learning-material-status', 3);
     this.roles = this.server.createList('learning-material-user-role', 3);
     this.user = this.server.create('user');
   });
@@ -22,7 +22,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
       title: 'test title',
       citation: 'some text',
       owningUser: this.user,
-      status: this.statues[1],
+      status: this.status[1],
       userRole: this.roles[0],
     });
 
@@ -62,7 +62,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
 
     const learningMaterial = this.server.create('learning-material', {
       owningUser: this.user,
-      status: this.statues[1],
+      status: this.status[1],
       userRole: this.roles[0],
     });
 
@@ -90,7 +90,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
 
     const learningMaterial = this.server.create('learning-material', {
       owningUser: this.user,
-      status: this.statues[1],
+      status: this.status[1],
       userRole: this.roles[0],
     });
 
@@ -132,7 +132,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
   test('sort button not visible when lm list only contains one item', async function (assert) {
     const learningMaterial = this.server.create('learning-material', {
       owningUser: this.user,
-      status: this.statues[1],
+      status: this.status[1],
       userRole: this.roles[0],
     });
 
@@ -163,7 +163,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
 
     const learningMaterial = this.server.create('learning-material', {
       owningUser: this.user,
-      status: this.statues[1],
+      status: this.status[1],
       userRole: this.roles[0],
     });
 
@@ -196,7 +196,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
 
     const learningMaterial = this.server.create('learning-material', {
       owningUser: this.user,
-      status: this.statues[1],
+      status: this.status[1],
       userRole: this.roles[0],
     });
 
