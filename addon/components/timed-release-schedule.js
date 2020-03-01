@@ -21,11 +21,4 @@ export default class TimedReleaseSchedule extends Component {
     }
     return moment(this.args.startDate).isAfter(this.now);
   }
-
-  get endDateInTheFuture() {
-    if (! this.args.endDate) {
-      return false;
-    }
-    return moment(this.args.endDate).isAfter(this.now);
-  }
 }

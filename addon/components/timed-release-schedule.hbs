@@ -1,5 +1,5 @@
 <span class="timed-release-schedule">
-  {{#if (and @startDate @endDate this.endDateInTheFuture)}}
+  {{#if (and @startDate @endDate)}}
     ({{t
       "general.timedReleaseStartAndEndDate"
       startDate=(moment-format @startDate "L LT")
@@ -12,7 +12,7 @@
       startDate=(moment-format @startDate "L LT")
     }})
   {{/if}}
-  {{#if (and @endDate (not @startDate) this.endDateInTheFuture)}}
+  {{#if (and @endDate (not @startDate))}}
     ({{t "general.timedReleaseOnlyEndDate" endDate=(moment-format @endDate "L LT")}})
   {{/if}}
   {{#if (and (not @startDate) (not @endDate) this.showNoSchedule)}}
