@@ -1,5 +1,6 @@
 .daily-calendar-event {
   @include ilios-button-reset;
+  border-radius: $base-border-radius;
   display: flex;
   flex-direction: column;
   justify-content: start;

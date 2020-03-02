@@ -113,7 +113,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     });
     await visit('/dashboard?show=calendar&view=month');
     assert.equal(currentRouteName(), 'dashboard');
-    const events = findAll('div.event');
+    const events = findAll('[data-test-ilios-calendar-event]');
     assert.equal(events.length, 2);
     let eventInfo = '';
     eventInfo += startOfMonth.format('h:mma') + '-' + startOfMonth.clone().add(1, 'hour').format('h:mma') + ': start of month';
