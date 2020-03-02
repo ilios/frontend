@@ -37,12 +37,7 @@ export default Component.extend(SortableByPosition, {
         sortedMeshDescriptors: sort('content.meshDescriptors', 'sortTitle'),
         sessionLearningMaterials: computed('content', function(){
           return new RSVPPromise(resolve => {
-            const session = this.get('content').get('id');
-            this.get('store').query('sessionLearningMaterial', {
-              filters: {
-                session
-              }
-            }).then(learningMaterials => {
+            this.content.get('learningMaterials').then(learningMaterials => {
               resolve(learningMaterials.toArray().sort(this.get('positionSortingCallback')));
             });
           });
@@ -69,12 +64,7 @@ export default Component.extend(SortableByPosition, {
 
   courseLearningMaterials: computed('course', function(){
     return new RSVPPromise(resolve => {
-      const course = this.get('course').get('id');
-      this.get('store').query('courseLearningMaterial', {
-        filters: {
-          course
-        }
-      }).then(learningMaterials => {
+      this.course.get('learningMaterials').then(learningMaterials => {
         resolve(learningMaterials.toArray().sort(this.get('positionSortingCallback')));
       });
     });

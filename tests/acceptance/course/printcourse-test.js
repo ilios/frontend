@@ -75,7 +75,7 @@ module('Acceptance | Course - Print Course', function(hooks) {
     assert.dom('[data-test-course-mesh] ul li').hasText('Flux Capacitor');
   });
 
-  test('test print course learning materials', async function (assert) {
+  test('print course learning materials', async function (assert) {
     assert.expect(4);
     await setupAuthentication( { school: this.school });
     await visit('/course/1/print');
