@@ -8,11 +8,11 @@ export function BeforeDate(property, validationOptions) {
       name: "beforeDate",
       target: object.constructor,
       propertyName: propertyName,
-      constraints: [property],
+      constraints: [property, validationOptions ?? 'second'],
       options: validationOptions,
       validator: {
         validate(value, { constraints, object: target, property }) {
-          if (!constraints || constraints.length < 1) {
+          if (!constraints[0]) {
             throw new Error(`You must pass the name of a property that ${property} is before as the first argument to BeforeDate`);
           }
           const beforeKey = constraints[0];
@@ -23,10 +23,14 @@ export function BeforeDate(property, validationOptions) {
             throw new Error(`${beforeKey} is not a property of this object`);
           }
           const beforeValue = target[beforeKey];
+          if (!beforeValue) {
+            //allow the before value to be empty
+            return true;
+          }
           if (!(beforeValue instanceof Date)) {
             throw new Error(`${beforeKey} must be a Date()`);
           }
-          return value < beforeValue;
+          return moment(value).isBefore(beforeValue, constraints[1]);
         },
         defaultMessage({ constraints, object: target }) {
           const owner = getOwner(target);
@@ -35,7 +39,8 @@ export function BeforeDate(property, validationOptions) {
           const beforeValue = target[beforeKey];
           const before = moment(beforeValue);
           const description = intl.t('errors.description');
-          const message = intl.t('errors.before', { description, before: before.format('LL') });
+          const format = constraints[1] === 'day' ? 'LL' : 'LLL';
+          const message = intl.t('errors.before', { description, before: before.format(format) });
           return message;
         }
       },
