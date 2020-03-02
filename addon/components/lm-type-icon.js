@@ -1,19 +1,11 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  listItem: false,
-  type: null,
-  mimetype: null,
-  tagName: 'span',
-  classNames: ['lm-type-icon'],
-  'data-test-lm-type-icon': true,
-  icon: computed('type', 'mimetype', function() {
-    const type = this.get('type');
-    const mimetype = this.get('mimetype') || '';
-    if(type === 'link'){
+export default class LmTypeIconComponent extends Component {
+  get icon() {
+    const mimetype = this.args.mimetype || '';
+    if(this.args.type === 'link'){
       return 'link';
-    } else if(type === 'citation'){
+    } else if(this.args.type === 'citation'){
       return 'paragraph';
     } else {
       if(mimetype.search(/pdf/) !== -1){
@@ -30,9 +22,9 @@ export default Component.extend({
       }
     }
     return 'file';
-  }),
-  title: computed('type', function () {
-    const type = this.type ? this.type : 'file';
+  }
+  get title() {
+    const type = this.args.type ?? 'file';
     return `general.${type}`;
-  })
-});
+  }
+}

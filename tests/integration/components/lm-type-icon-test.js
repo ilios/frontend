@@ -10,16 +10,16 @@ module('Integration | Component | lm type icon', function(hooks) {
     assert.expect(1);
     const lm = { type: 'link' };
     this.set('lm', lm);
-    await render(hbs`{{lm-type-icon type=lm.type}}`);
-    assert.equal(this.element.querySelectorAll('.fa-link').length, 1, 'Correct type icon is used.');
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} />`);
+    assert.dom('.fa-link').exists();
   });
 
   test('citation', async function(assert) {
     assert.expect(1);
     const lm = { type: 'citation' };
     this.set('lm', lm);
-    await render(hbs`{{lm-type-icon type=lm.type}}`);
-    assert.equal(this.element.querySelectorAll('.fa-paragraph').length, 1, 'Correct type icon is used.');
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} />`);
+    assert.dom('.fa-paragraph').exists();
   });
 
   test('file', async function(assert) {
@@ -44,11 +44,9 @@ module('Integration | Component | lm type icon', function(hooks) {
     ];
 
     for (let i = 0; i < fixtures.length; i++) {
-      const lm = fixtures[i].lm;
-      const icon = fixtures[i].icon;
-      this.set('lm', lm);
-      await render(hbs`{{lm-type-icon type=lm.type mimetype=lm.mimetype}}`);
-      assert.equal(this.element.querySelectorAll(`.${icon}`).length, 1, `Correct type icon is used for ${lm.mimetype}`);
+      this.set('lm', fixtures[i].lm);
+      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />`);
+      assert.dom(`.${fixtures[i].icon}`).exists();
     }
   });
 
@@ -56,8 +54,8 @@ module('Integration | Component | lm type icon', function(hooks) {
     assert.expect(1);
     const lm = { type: 'link' };
     this.set('lm', lm);
-    await render(hbs`{{lm-type-icon type=lm.type listItem=true}}`);
-    assert.equal(this.element.querySelectorAll('.fa-li').length, 1, 'List icon is applied.');
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{true}} />`);
+    assert.dom('.fa-li').exists();
   });
 
   test('no listItem', async function(assert) {
@@ -65,10 +63,10 @@ module('Integration | Component | lm type icon', function(hooks) {
     const lm = { type: 'link' };
     this.set('lm', lm);
 
-    await render(hbs`{{lm-type-icon type=lm.type}}`);
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} />`);
     assert.equal(this.element.querySelectorAll('.fa-li').length, 0, 'List icon class is not applied by default.');
 
-    await render(hbs`{{lm-type-icon type=lm.type listItem=false}}`);
-    assert.equal(this.element.querySelectorAll('.fa-li').length, 0, 'List icon class is not applied.');
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{false}} />`);
+    assert.dom('.fa-li').doesNotExist();
   });
 });
