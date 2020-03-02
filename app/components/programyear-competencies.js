@@ -2,8 +2,10 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { all, filter } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
+  flashMessages: service(),
   classNames: ['programyear-competencies'],
 
   canUpdate: false,
