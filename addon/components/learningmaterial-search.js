@@ -1,87 +1,76 @@
+import Component from '@glimmer/component';
+import { dropTask, enqueueTask, restartableTask } from 'ember-concurrency-decorators';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { task } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  store: service(),
-  intl: service(),
-  classNames: ['learningmaterial-search'],
-  currentMaterials: null,
-  query: '',
-  searchResults: null,
-  searchPage: 0,
-  searchResultsPerPage: 50,
-  hasMoreSearchResults: false,
-  targetItemTitle: '',
-  searching: false,
-  searchReturned: false,
-  'data-test-learningmaterial-search': true,
+export default class LearningMaterialSearchComponent extends Component {
+  @service store;
+  @service intl;
+  @tracked query = '';
+  @tracked searchResults = [];
+  @tracked searchPage = 0;
 
-  init(){
-    this._super(...arguments);
-    this.set('searchResults', []);
-  },
-  actions: {
-    search(query){
-      if (query.trim() === '') {
-        this.set('searchReturned', false);
-        this.set('searching', false);
-        this.set('searchPage', 1);
-        this.set('hasMoreSearchResults', false);
-        this.set('searchResults', []);
-        return;
-      }
-      this.set('searchReturned', false);
-      this.set('searching', true);
-      this.set('query', query);
-      this.get('store').query('learningMaterial', {
-        q: query,
-        limit: this.get('searchResultsPerPage') + 1,
-        'order_by[title]': 'ASC',
-      }).then(results => {
-        const lms = results.map(lm => {
-          return lm;
-        });
-        this.set('searchReturned', true);
-        this.set('searching', false);
-        this.set('searchPage', 1);
-        this.set('hasMoreSearchResults', (lms.length > this.get('searchResultsPerPage')));
-        if (this.get('hasMoreSearchResults')) {
-          lms.pop();
-        }
-        this.set('searchResults', lms);
-      });
-    },
-    clear(){
-      this.set('searchResults', []);
-      this.set('searchReturned', false);
-      this.set('searching', false);
-      this.set('searchPage', 0);
-      this.set('hasMoreSearchResults', false);
-      this.set('query', '');
-    },
-  },
-  searchMore: task(function * () {
-    const query = this.get('query');
-    const results  = yield this.get('store').query('learningMaterial', {
+  @tracked searchResultsPerPage = 50;
+  @tracked hasMoreSearchResults = false;
+  @tracked searchReturned = false;
+
+  @restartableTask
+  *search(query){
+    if (query.trim() === '') {
+      this.searchReturned = false;
+      this.searchPage = 1;
+      this.hasMoreSearchResults = false;
+      this.searchResults = [];
+      return;
+    }
+    this.searchReturned = false;
+    this.query = query;
+    const results = yield this.store.query('learningMaterial', {
       q: query,
-      limit: this.get('searchResultsPerPage') + 1,
-      offset: this.get('searchPage') * this.get('searchResultsPerPage'),
+      limit: this.searchResultsPerPage + 1,
       'order_by[title]': 'ASC',
     });
-    const lms = results.map(lm => {
-      return lm;
-    });
-    this.set('searchPage', this.get('searchPage') + 1);
-    this.set('hasMoreSearchResults', (lms.length > this.get('searchResultsPerPage')));
-    if (this.get('hasMoreSearchResults')) {
+
+    const lms = results.toArray();
+    this.searchReturned = true;
+    this.searching = false;
+    this.searchPage = 1;
+    this.hasMoreSearchResults = lms.length > this.searchResultsPerPage;
+    if (this.hasMoreSearchResults) {
       lms.pop();
     }
-    this.get('searchResults').pushObjects(lms);
-  }).drop(),
+    this.searchResults =  lms;
+  }
 
-  addLearningMaterial: task(function * (lm) {
-    yield this.add(lm);
-  }).enqueue(),
+  @action
+  clear(){
+    this.searchResults = [];
+    this.searchReturned = false;
+    this.searching = false;
+    this.searchPage = 0;
+    this.hasMoreSearchResults = false;
+    this.query = '';
+  }
+  @dropTask
+  *searchMore() {
+    const results  = yield this.store.query('learningMaterial', {
+      q: this.query,
+      limit: this.searchResultsPerPage + 1,
+      offset: this.searchPage * this.searchResultsPerPage,
+      'order_by[title]': 'ASC',
+    });
+    const lms = results.toArray();
+    this.searchPage = this.searchPage + 1;
+    this.hasMoreSearchResults = lms.length > this.searchResultsPerPage;
+    if (this.hasMoreSearchResults) {
+      lms.pop();
+    }
+    this.searchResults = [...this.searchResults, ...lms];
+  }
 
-});
+  @enqueueTask
+  *addLearningMaterial(lm) {
+    yield this.args.add(lm);
+  }
+}
