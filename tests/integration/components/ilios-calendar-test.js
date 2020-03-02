@@ -19,7 +19,6 @@ module('Integration | Component | ilios calendar', function(hooks) {
       @changeView={{noop}}
       @selectEvent={{noop}}
     />`);
-
-    assert.ok(this.element.textContent.includes('Wednesday, September 30th 2015'));
+    assert.dom().includesText('Wednesday September 30, 2015');
   });
 });

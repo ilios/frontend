@@ -13,13 +13,13 @@ module('Integration | Component | weekly-calendar', function(hooks) {
 
   hooks.beforeEach(function () {
     this.owner.lookup('service:intl').setLocale('en-us');
-    this.owner.lookup('service:moment').setLocale('en-us');
+    this.owner.lookup('service:moment').setLocale('en');
   });
 
   //reset locale for other tests
   hooks.afterEach(function () {
     this.owner.lookup('service:intl').setLocale('en-us');
-    this.owner.lookup('service:moment').setLocale('en-us');
+    this.owner.lookup('service:moment').setLocale('en');
   });
 
   this.createEvent = function (startDate, endDate, color) {
@@ -40,11 +40,11 @@ module('Integration | Component | weekly-calendar', function(hooks) {
       @changeToDayView={{noop}}
     />`);
 
-    assert.equal(component.longWeekOfYear, 'Week of January 6 2019');
+    assert.equal(component.longWeekOfYear, 'Week of January 6th 2019');
     assert.equal(component.shortWeekOfYear, '1/6 — 1/12 2019');
     assert.equal(component.dayHeadings.length, 7);
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
-    assert.equal(component.dayHeadings[0].text, 'Sunday Sun Jan 6 6');
+    assert.equal(component.dayHeadings[0].text, 'Sunday Sun Jan 6th 6th');
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -64,7 +64,7 @@ module('Integration | Component | weekly-calendar', function(hooks) {
 
     assert.equal(component.dayHeadings.length, 7);
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
-    assert.equal(component.dayHeadings[0].text, 'Sunday Sun Jan 6 6');
+    assert.equal(component.dayHeadings[0].text, 'Sunday Sun Jan 6th 6th');
 
     assert.equal(component.events.length, 2);
     assert.ok(component.events[0].isFourthDayOfWeek);
@@ -94,7 +94,7 @@ module('Integration | Component | weekly-calendar', function(hooks) {
 
     assert.equal(component.dayHeadings.length, 7);
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
-    assert.equal(component.dayHeadings[0].text, 'Sunday Sun Jan 6 6');
+    assert.equal(component.dayHeadings[0].text, 'Sunday Sun Jan 6th 6th');
 
     assert.equal(component.events.length, 6);
     assert.ok(component.events[0].isSecondDayOfWeek);
@@ -198,11 +198,11 @@ module('Integration | Component | weekly-calendar', function(hooks) {
       @selectEvent={{noop}}
     />`);
 
-    assert.equal(component.longWeekOfYear, 'Week of December 7 1980');
+    assert.equal(component.longWeekOfYear, 'Week of December 7th 1980');
     assert.equal(component.shortWeekOfYear, '12/7 — 12/13 1980');
 
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
-    assert.equal(component.dayHeadings[0].text, 'Sunday Sun Dec 7 7');
+    assert.equal(component.dayHeadings[0].text, 'Sunday Sun Dec 7th 7th');
 
     assert.equal(component.events.length, 1);
     assert.ok(component.events[0].isFifthDayOfWeek);
@@ -239,11 +239,11 @@ module('Integration | Component | weekly-calendar', function(hooks) {
       @selectEvent={{noop}}
     />`);
 
-    assert.equal(component.longWeekOfYear, 'Week of February 23 2020');
+    assert.equal(component.longWeekOfYear, 'Week of February 23rd 2020');
     assert.equal(component.shortWeekOfYear, '2/23 — 2/29 2020');
 
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
-    assert.equal(component.dayHeadings[0].text, 'Sunday Sun Feb 23 23');
+    assert.equal(component.dayHeadings[0].text, 'Sunday Sun Feb 23rd 23rd');
 
     assert.equal(component.events.length, 1);
     assert.ok(component.events[0].isThirdDayOfWeek);
