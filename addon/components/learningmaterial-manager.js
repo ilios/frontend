@@ -1,79 +1,111 @@
+import Component from '@glimmer/component';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { task, timeout } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import moment from 'moment';
+import { validatable, Length, AfterDate, NotBlank } from 'ilios-common/decorators/validation';
 
-const { equal, not, reads } = computed;
+@validatable
+export default class LearningMaterialManagerComponent extends Component {
+  @service store;
 
-const Validations = buildValidations({
-  endDate: [
-    validator('date', {
-      allowBlank: true,
-      descriptionKey: 'general.endDate',
-      dependentKeys: ['model.startDate'],
-      after: reads('model.startDate'),
-      disabled: not('model.startDate'),
-      precision: 'minute',
-      errorFormat: 'L LT'
-    }),
-  ],
-  title: [
-    validator('presence', true),
-    validator('length', {
-      min: 4,
-      max: 120
-    }),
-  ],
-});
+  @tracked statusId;
+  @tracked notes;
+  @tracked learningMaterial;
 
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: service(),
-  classNames: ['learningmaterial-manager'],
+  @Length(4, 120) @NotBlank() @tracked title;
+  @AfterDate('startDate', 'minute') @tracked endDate;
 
-  statusId: null,
-  notes: null,
-  learningMaterial: null,
-  isCourse: false,
-  editable: false,
-  type: null,
-  title: null,
-  owningUserName: null,
-  originalAuthor: null,
-  userRoleTitle: null,
-  description: null,
-  copyrightPermission: null,
-  copyrightRationale: null,
-  citation: null,
-  link: null,
-  mimetype: null,
-  absoluteFileUri: null,
-  filename: null,
-  uploadDate: null,
-  closeManager: null,
-  terms: null,
-  startDate: null,
-  endDate: null,
+  @tracked type;
+  @tracked owningUserName;
+  @tracked originalAuthor;
+  @tracked userRoleTitle;
+  @tracked description;
+  @tracked copyrightPermission;
+  @tracked copyrightRationale;
+  @tracked citation;
+  @tracked link;
+  @tracked mimetype;
+  @tracked absoluteFileUri;
+  @tracked filename;
+  @tracked uploadDate;
+  @tracked closeManager;
+  @tracked terms;
+  @tracked startDate;
+  @tracked parentMaterial;
+  @tracked statusId;
+  @tracked userRoleTitle;
+  @tracked publicNotes;
 
-  isSession: not('isCourse'),
-  isFile: equal('type', 'file'),
-  isLink: equal('type', 'link'),
-  isCitation: equal('type', 'citation'),
+  get isFile() {
+    return this.type === 'file';
+  }
+  get isLink() {
+    return this.type === 'link';
+  }
+  get isCitation() {
+    return this.type === 'citation';
+  }
 
-  parentMaterial: computed('learningMaterial.learningMaterial', async function () {
-    const learningMaterial = this.get('learningMaterial');
-    return learningMaterial.get('learningMaterial');
-  }),
-  courseLearningMaterialIds: computed('parentMaterial.courseLearningMaterials.[]', async function () {
-    const parentMaterial = await this.get('parentMaterial');
-    return parentMaterial.hasMany('courseLearningMaterials').ids();
-  }),
-  sessionLearningMaterialIds: computed('parentMaterial.sessionLearningMaterials.[]', async function () {
-    const parentMaterial = await this.get('parentMaterial');
-    return parentMaterial.hasMany('sessionLearningMaterials').ids();
-  }),
+  @action
+  updateDate(which, value) {
+    const oldDate = moment(this[which]);
+    const newDate = moment(value);
+    const hour = oldDate.get('hour');
+    const minute = oldDate.get('minute');
+    newDate.set({ hour, minute });
+    this[which] = newDate.toDate();
+  }
+  @action
+  updateTime(which, value, type) {
+    const oldDate = moment(this[which]);
+    const year = oldDate.get('year');
+    const month = oldDate.get('month');
+    const date = oldDate.get('date');
+    let hour = oldDate.get('hour');
+    let minute = oldDate.get('minute');
+    if (type === 'hour') {
+      hour = value;
+    }
+    if (type === 'minute') {
+      minute = value;
+    }
+
+    const newDate = moment();
+    newDate.set({year, month, date, hour, minute});
+    this[which] = newDate.toDate();
+  }
+  @action
+  addDate(which) {
+    this[which] = moment().hour(8).minute(0).second(0).toDate();
+  }
+  @action
+  addTerm(term) {
+    this.terms = [...this.terms, term];
+  }
+  @action
+  removeTerm(term) {
+    this.terms = this.terms.filter(obj => obj !== term);
+  }
+  @action
+  updateStatusId(event) {
+    this.statusId = event.target.value;
+  }
+
+  get courseLearningMaterialIds() {
+    if (!this.parentMaterial) {
+      return [];
+    }
+    return this.parentMaterial.hasMany('courseLearningMaterials').ids();
+  }
+
+  get sessionLearningMaterialIds() {
+    if (!this.parentMaterial) {
+      return [];
+    }
+    return this.parentMaterial.hasMany('sessionLearningMaterials').ids();
+  }
 
   /**
    * Whether the given learning material is linked to no more than one session or course.
@@ -81,142 +113,72 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @type {Ember.computed}
    * @public
    */
-  isLinkedOnlyOnce: computed('courseLearningMaterialIds.[]', 'sessionLearningMaterialIds.[]', async function() {
-    const cLmIds = await this.get('courseLearningMaterialIds');
-    const sLmIds = await this.get('sessionLearningMaterialIds');
+  get isLinkedOnlyOnce() {
+    return this.courseLearningMaterialIds.length + this.sessionLearningMaterialIds.length === 1;
+  }
 
-    return cLmIds.length + sLmIds.length === 1;
-  }),
+  get currentStatus() {
+    return this.args.learningMaterialStatuses.findBy('id', this.statusId);
+  }
 
-  currentStatus: computed('statusId', 'learningMaterialStatuses.[]', async function () {
-    const statusId = this.get('statusId');
-    const learningMaterialStatuses = await this.get('learningMaterialStatuses');
-    return learningMaterialStatuses.findBy('id', statusId);
-  }),
-  didReceiveAttrs(){
-    this._super(...arguments);
-    const setup = this.get('setup');
-    setup.perform();
-  },
-  actions: {
-    updateDate(which, value) {
-      const oldDate = moment(this.get(which));
-      const newDate = moment(value);
-      const hour = oldDate.get('hour');
-      const minute = oldDate.get('minute');
-      newDate.set({hour, minute});
-      this.set(which, newDate.toDate());
-    },
-    updateTime(which, value, type) {
-      const oldDate = moment(this.get(which));
-      const year = oldDate.get('year');
-      const month = oldDate.get('month');
-      const date = oldDate.get('date');
-      let hour = oldDate.get('hour');
-      let minute = oldDate.get('minute');
-      if (type === 'hour') {
-        hour = value;
-      }
-      if (type === 'minute') {
-        minute = value;
-      }
-
-      const newDate = moment();
-      newDate.set({year, month, date, hour, minute});
-      this.set(which, newDate.toDate());
-    },
-    addDate(which) {
-      const now = moment().hour(8).minute(0).second(0).toDate();
-      this.set(which, now);
-    },
-    addTerm(term) {
-      const terms = this.get('terms');
-      terms.pushObject(term);
-    },
-    removeTerm(term) {
-      const terms = this.get('terms');
-      terms.removeObject(term);
-    },
-  },
-  setup: task(function * (){
-    const learningMaterial = this.get('learningMaterial');
-    if (!learningMaterial) {
-      yield timeout(10000);
-      const setup = this.get('setup');
-      yield setup.perform();
-    }
-    this.setProperties(learningMaterial.getProperties(
-      'notes',
-      'required',
-      'publicNotes',
-      'startDate',
-      'endDate'
-    ));
-    const meshDescriptors = yield learningMaterial.get('meshDescriptors');
-    this.set('terms', meshDescriptors.toArray());
-    const parent = yield learningMaterial.get('learningMaterial');
-    this.setProperties(parent.getProperties(
-      'type',
-      'title',
-      'originalAuthor',
-      'description',
-      'copyrightPermission',
-      'copyrightRationale',
-      'citation',
-      'link',
-      'mimetype',
-      'absoluteFileUri',
-      'filename',
-      'uploadDate'
-    ));
-
-    const status = yield parent.get('status');
-    this.set('statusId', status.get('id'));
-    const owningUser = yield parent.get('owningUser');
-    this.set('owningUserName', owningUser.get('fullName'));
-    const userRole = yield parent.get('userRole');
-    this.set('userRoleTitle', userRole.get('title'));
-
-    return true;
-  }).restartable(),
-  save: task(function* () {
-    this.send('addErrorDisplaysFor', ['endDate', 'title']);
-    const {validations} = yield this.validate();
-
-    if (validations.get('isInvalid')) {
+  @restartableTask
+  *load(element, [learningMaterial, parentMaterial]) {
+    if (!learningMaterial || !parentMaterial) {
       return;
     }
-    this.send('clearErrorDisplay');
-    const {
-      description,
-      learningMaterial,
-      title,
-      notes,
-      required,
-      publicNotes,
-      startDate,
-      endDate,
-      statusId,
-      terms,
-      closeManager,
-    } = this.getProperties('description', 'learningMaterial', 'title', 'notes', 'required', 'publicNotes', 'startDate', 'endDate', 'statusId', 'terms', 'closeManager');
-    learningMaterial.set('publicNotes', publicNotes);
-    learningMaterial.set('required', required);
-    learningMaterial.set('notes', notes);
-    learningMaterial.set('startDate', startDate);
-    learningMaterial.set('endDate', endDate);
+    this.notes = learningMaterial.notes;
+    this.required = learningMaterial.required;
+    this.publicNotes = learningMaterial.publicNotes;
+    this.startDate = learningMaterial.startDate;
+    this.endDate = learningMaterial.endDate;
 
-    const statues = yield this.get('learningMaterialStatuses');
-    const status = statues.findBy('id', statusId);
+    const meshDescriptors = yield learningMaterial.get('meshDescriptors');
+    this.terms = meshDescriptors.toArray();
 
-    const parent = yield learningMaterial.get('learningMaterial');
-    parent.set('status', status);
-    parent.set('title', title);
-    parent.set('description', description);
+    this.parentMaterial = parentMaterial;
+    this.type = parentMaterial.type;
+    this.title = parentMaterial.title;
+    this.originalAuthor = parentMaterial.originalAuthor;
+    this.description = parentMaterial.description;
+    this.copyrightPermission = parentMaterial.copyrightPermission;
+    this.copyrightRationale = parentMaterial.copyrightRationale;
+    this.citation = parentMaterial.citation;
+    this.link = parentMaterial.link;
+    this.mimetype = parentMaterial.mimetype;
+    this.absoluteFileUri = parentMaterial.absoluteFileUri;
+    this.filename = parentMaterial.filename;
+    this.uploadDate = parentMaterial.uploadDate;
 
-    learningMaterial.set('meshDescriptors', terms);
-    yield learningMaterial.save();
-    yield parent.save();
-    closeManager();
-  }),
-});
+    const status = yield parentMaterial.get('status');
+    this.statusId = status.id;
+    const owningUser = yield parentMaterial.get('owningUser');
+    this.owningUserName = owningUser.fullName;
+    const userRole = yield parentMaterial.get('userRole');
+    this.userRoleTitle = userRole.title;
+  }
+  @dropTask
+  *save() {
+    this.addErrorDisplayForAllFields();
+    const isTitleValid = yield this.isValid('title');
+    const isEndDateValid = (this.startDate && this.endDate) ? yield this.isValid('endDate'): true;
+    if (!isTitleValid || !isEndDateValid) {
+      return false;
+    }
+    this.clearErrorDisplay();
+
+    this.args.learningMaterial.set('publicNotes', this.publicNotes);
+    this.args.learningMaterial.set('required', this.required);
+    this.args.learningMaterial.set('notes', this.notes);
+    this.args.learningMaterial.set('startDate', this.startDate);
+    this.args.learningMaterial.set('endDate', this.endDate);
+
+    this.parentMaterial.set('status', this.currentStatus);
+    this.parentMaterial.set('title', this.title);
+    this.parentMaterial.set('description', this.description);
+
+    this.args.learningMaterial.set('meshDescriptors', this.terms);
+    yield this.args.learningMaterial.save();
+    yield this.parentMaterial.save();
+    this.args.closeManager();
+  }
+}
