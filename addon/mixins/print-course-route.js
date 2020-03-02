@@ -1,6 +1,6 @@
 import Mixin from '@ember/object/mixin';
-import { all }  from 'rsvp';
 import { inject as service } from '@ember/service';
+import preloadCourse from 'ilios-common/utils/preload-course';
 
 export default Mixin.create({
   currentUser: service(),
@@ -12,11 +12,7 @@ export default Mixin.create({
     const canViewUnpublished = currentUser.get('performsNonLearnerFunction');
     this.set('canViewUnpublished', canViewUnpublished);
     if (canViewUnpublished || course.get('isPublishedOrScheduled')) {
-      return all([
-        course.get('sessions'),
-        course.get('competencies'),
-        course.get('objectives'),
-      ]);
+      return await preloadCourse(this.store, course);
     }
 
     transition.abort();
