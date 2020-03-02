@@ -1,8 +1,10 @@
 import Component from '@ember/component';
 import { reads } from '@ember/object/computed';
 import { all } from 'rsvp';
+import { inject as service } from '@ember/service';
 
 export default Component.extend({
+  flashMessages: service(),
   classNames: ['pending-single-user-updates'],
 
   isSaving: false,

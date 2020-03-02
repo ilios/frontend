@@ -62,7 +62,7 @@
     "ember-cli-deploy-revision-data": "1.0.0",
     "ember-cli-deploy-s3-index": "1.0.1",
     "ember-cli-deprecation-workflow": "1.0.1",
-    "ember-cli-flash": "1.8.0",
+    "ember-cli-flash": "1.8.1",
     "ember-cli-head": "0.4.1",
     "ember-cli-htmlbars": "^4.2.2",
     "ember-cli-image-transformer": "^3.2.0",
