@@ -1,0 +1,50 @@
+<button
+  {{! template-lint-disable no-inline-styles }}
+  style={{this.style}}
+  class="daily-calendar-event {{if this.isIlm "ilm"}} {{if this.clickable "clickable"}}"
+  {{on "click" (if this.clickable (fn @selectEvent) (noop))}}
+  data-test-calendar-event
+  data-test-daily-calendar-event
+>
+  {{#attach-tooltip
+    lazyRender=true
+    placement="left"
+    interactive=true
+    animation="shift"
+    class="ilios-calendar-event-tooltip"
+  }}
+    {{this.tooltipContent}}
+  {{/attach-tooltip}}
+  {{#if this.recentlyUpdated}}
+    <FaIcon
+      @icon="exclamation-circle"
+      class="recently-updated-icon"
+      @title={{t "general.newUpdates"}}
+    />
+  {{/if}}
+  {{#if (not @event.isPublished)}}
+    <FaIcon @icon="file-signature" />
+  {{else if @event.isScheduled}}
+    <FaIcon @icon="clock" />
+  {{/if}}
+  <span class="ilios-calendar-event-time">
+    {{#if this.isIlm}}
+      <span class="ilios-calendar-event-start">
+        {{t "general.ilmDue"}}:
+        {{moment-format @event.startDate "h:mma"}}
+      </span>
+    {{else}}
+      <span class="ilios-calendar-event-start">
+        {{moment-format @event.startDate "h:mma"}}
+      </span>
+    {{/if}}
+  </span>
+  <span class="ilios-calendar-event-location">
+    {{#if @event.location.length}}
+      {{@event.location}}:
+    {{/if}}
+  </span>
+  <span class="ilios-calendar-event-name" data-test-name>
+    {{@event.name}}
+  </span>
+</button>

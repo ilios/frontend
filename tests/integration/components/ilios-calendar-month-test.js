@@ -35,7 +35,7 @@ module('Integration | Component | ilios calendar month', function(hooks) {
 
     this.set('events', [firstEvent, secondEvent, thirdEvent]);
     this.set('nothing', parseInt);
-    const events = '.event';
+    const events = '[data-test-ilios-calendar-event-month]';
     const more = '.month-more-events';
 
     await render(hbs`<IliosCalendarMonth
@@ -68,7 +68,7 @@ module('Integration | Component | ilios calendar month', function(hooks) {
     secondEvent.endDate = date.clone().add(3, 'hour');
 
     this.set('events', [firstEvent, secondEvent]);
-    const events = '.event';
+    const events = '[data-test-ilios-calendar-event-month]';
     const more = '.month-more-events';
 
     await render(hbs`<IliosCalendarMonth

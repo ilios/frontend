@@ -113,7 +113,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     });
     await visit('/dashboard?show=calendar&view=month');
     assert.equal(currentRouteName(), 'dashboard');
-    const events = findAll('div.event');
+    const events = findAll('[data-test-ilios-calendar-event]');
     assert.equal(events.length, 2);
     let eventInfo = '';
     eventInfo += startOfMonth.format('h:mma') + '-' + startOfMonth.clone().add(1, 'hour').format('h:mma') + ': start of month';
@@ -181,11 +181,9 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     });
     await visit('/dashboard?show=calendar&view=day');
     assert.equal(currentRouteName(), 'dashboard');
-    const events = findAll('div.event');
-    assert.equal(events.length, 1);
-    let eventInfo = '';
-    eventInfo += today.format('h:mma') + '-' + today.clone().add(1, 'hour').format('h:mma') + ' today';
-    assert.equal(await getElementText(events), getText(eventInfo));
+
+    assert.equal(page.dailyCalendar.events.length, 1);
+    assert.equal(page.dailyCalendar.events[0].name, 'today');
   });
 
   test('click month day number and go to day', async function(assert) {

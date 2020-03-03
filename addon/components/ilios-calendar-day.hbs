@@ -1,41 +1,10 @@
 {{#if (is-array @calendarEvents)}}
-  <div class="ilios-calendar-day" {{did-insert this.scroll}}>
-    <ElDailyCalendar @date={{@date}} @events={{this.singleDayEvents}} as |hours|>
-      <div class="row week-titles">
-        <div class="cell"></div>
-        <div class="cell title">
-          {{moment-format @date "dddd, MMMM Do YYYY"}}
-        </div>
-      </div>
-      <div class="week">
-        <ul class="week-hours">
-          {{#each hours as |hour|}}
-            <li class="week-hour">
-              {{hour.formattedHour}}
-            </li>
-          {{/each}}
-        </ul>
-        <ul class="week-day-full">
-          <li class="event-column">
-            {{#each hours as |hour|}}
-              {{#each hour.events as |event|}}
-                <IliosCalendarEvent
-                  @event={{event}}
-                  @selectEvent={{action @selectEvent event}}
-                  @isDay={{true}}
-                />
-              {{/each}}
-            {{/each}}
-          </li>
-          {{! template-lint-disable unused-block-params }}
-          {{#each hours as |empty|}}
-            <li class="day-hour">
-              <div class="day-half-hour"></div>
-            </li>
-          {{/each}}
-        </ul>
-      </div>
-    </ElDailyCalendar>
+  <div class="ilios-calendar-day">
+    <DailyCalendar
+      @date={{@date}}
+      @events={{this.singleDayEvents}}
+      @selectEvent={{if @areEventsSelectable @selectEvent (noop)}}
+    />
     <IliosCalendarPreWorkEvents
       @events={{this.ilmPreWorkEvents}}
       @areEventsSelectable={{@areEventsSelectable}}
@@ -45,6 +14,5 @@
       @selectEvent={{@selectEvent}}
       @areEventsSelectable={{@areEventsSelectable}}
     />
-
   </div>
 {{/if}}

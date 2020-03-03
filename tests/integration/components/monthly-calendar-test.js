@@ -13,7 +13,13 @@ module('Integration | Component | monthly-calendar', function(hooks) {
 
   hooks.beforeEach(function () {
     this.owner.lookup('service:intl').setLocale('en-us');
-    this.owner.lookup('service:moment').setLocale('en-us');
+    this.owner.lookup('service:moment').setLocale('en');
+  });
+
+  //reset locale for other tests
+  hooks.afterEach(function () {
+    this.owner.lookup('service:intl').setLocale('en-us');
+    this.owner.lookup('service:moment').setLocale('en');
   });
 
   test('it renders empty and is accessible', async function (assert) {

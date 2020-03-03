@@ -1,9 +1,21 @@
 import Component from '@glimmer/component';
-import moment from 'moment';
+import { inject as service } from '@ember/service';
 
 export default class IliosCalendarDayComponent extends Component {
+  @service moment;
+
+  get today() {
+    return this.moment.moment(this.args.date).startOf('day');
+  }
+  get events() {
+    return this.args.calendarEvents.filter(
+      event =>
+        this.moment.moment(event.startDate).isSame(this.today, 'day') ||
+        this.moment.moment(event.endDate).isSame(this.today, 'day')
+    );
+  }
   get ilmPreWorkEvents() {
-    const preWork =  this.args.calendarEvents.reduce((arr, eventObject) => {
+    const preWork =  this.events.reduce((arr, eventObject) => {
       return arr.pushObjects(eventObject.prerequisites);
     }, []);
 
@@ -11,23 +23,19 @@ export default class IliosCalendarDayComponent extends Component {
   }
 
   get nonIlmPreWorkEvents() {
-    return this.args.calendarEvents.filter(ev => {
+    return this.events.filter(ev => {
       return ev.postrequisites.length === 0 || !ev.ilmSession;
     });
   }
 
   get singleDayEvents(){
     return this.nonIlmPreWorkEvents.filter(
-      event => moment(event.startDate).isSame(moment(event.endDate), 'day')
+      event => this.moment.moment(event.startDate).isSame(this.moment.moment(event.endDate), 'day')
     );
   }
   multiDayEvents(){
     return this.nonIlmPreWorkEvents.filter(
-      event => !moment(event.startDate).isSame(moment(event.endDate), 'day')
+      event => !this.moment.moment(event.startDate).isSame(this.moment.moment(event.endDate), 'day')
     );
-  }
-
-  scroll(element){
-    element.querySelector(".el-calendar .week").scrollTop = 500;
   }
 }

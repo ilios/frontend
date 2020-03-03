@@ -27,10 +27,6 @@ export default class DashboardCalendarComponent extends Component {
 
   courseLevels = [1, 2, 3, 4, 5];
 
-  get calendarDate() {
-    return moment(this.args.selectedDate, 'YYYY-MM-DD');
-  }
-
   get fromTimeStamp() {
     return moment(this.args.selectedDate).startOf(this.args.selectedView).subtract(this.clockSkew, 'days').unix();
   }

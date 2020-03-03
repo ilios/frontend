@@ -1,0 +1,40 @@
+<section
+  class="daily-calendar"
+  data-test-daily-calendar
+>
+  <h2 class="day-of-week" data-test-day-of-week>
+    <span class="short" data-test-short>
+      {{moment-format @date "l"}}
+    </span>
+    <span class="long" data-test-long>{{moment-format @date "dddd LL"}}</span>
+  </h2>
+
+  <div
+    class="day"
+    tabindex="0"
+    {{did-insert (fn this.scrollView) this.earliestHour}}
+    {{did-update (fn this.scrollView) this.earliestHour}}
+  >
+    <div class="hours">
+      {{#each this.hours as |hour|}}
+        <span aria-hidden="true" class="hour hour-{{hour.hour}}" {{ref this (concat "hour" hour.hour)}}>
+          <span class="long">{{hour.longName}}</span>
+          <span class="short">{{hour.shortName}}</span>
+        </span>
+      {{/each}}
+    </div>
+    <div class="events">
+      {{#each this.sortedEvents as |event|}}
+        <DailyCalendarEvent
+          @event={{event}}
+          @allDayEvents={{this.sortedEvents}}
+          @selectEvent={{fn @selectEvent event}}
+        />
+      {{/each}}
+    </div>
+    {{#each this.hours as |hour|}}
+      <div class="hour-border hour-{{hour.hour}}" aria-hidden="true"></div>
+      <div class="half-hour-border half-hour-{{hour.hour}}" aria-hidden="true"></div>
+    {{/each}}
+  </div>
+</section>
