@@ -15,7 +15,7 @@ export default class LearningMaterialManagerComponent extends Component {
   @tracked learningMaterial;
 
   @Length(4, 120) @NotBlank() @tracked title;
-  @AfterDate('startDate', 'minute') @tracked endDate;
+  @AfterDate('startDate', { granularity: 'minute'}) @tracked endDate;
 
   @tracked type;
   @tracked owningUserName;

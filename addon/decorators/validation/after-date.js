@@ -8,7 +8,7 @@ export function AfterDate(property, validationOptions) {
       name: "afterDate",
       target: object.constructor,
       propertyName: propertyName,
-      constraints: [property, validationOptions ?? 'second'],
+      constraints: [property],
       options: validationOptions,
       validator: {
         validate(value, { constraints, object: target, property }) {
@@ -30,7 +30,7 @@ export function AfterDate(property, validationOptions) {
           if (!(afterValue instanceof Date)) {
             throw new Error(`${afterKey} must be a Date()`);
           }
-          return moment(value).isAfter(afterValue, constraints[1]);
+          return moment(value).isAfter(afterValue, validationOptions?.granularity ?? 'second');
         },
         defaultMessage({ constraints, object: target }) {
           const owner = getOwner(target);
@@ -38,7 +38,7 @@ export function AfterDate(property, validationOptions) {
           const afterKey = constraints[0];
           const afterValue = target[afterKey];
           const after = moment(afterValue);
-          const format = constraints[1] === 'day' ? 'LL' : 'LLL';
+          const format = validationOptions?.granularity === 'day' ? 'LL' : 'LLL';
           const description = intl.t('errors.description');
           const message = intl.t('errors.after', { description, after: after.format(format) });
           return message;

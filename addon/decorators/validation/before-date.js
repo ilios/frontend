@@ -8,7 +8,7 @@ export function BeforeDate(property, validationOptions) {
       name: "beforeDate",
       target: object.constructor,
       propertyName: propertyName,
-      constraints: [property, validationOptions ?? 'second'],
+      constraints: [property],
       options: validationOptions,
       validator: {
         validate(value, { constraints, object: target, property }) {
@@ -30,7 +30,7 @@ export function BeforeDate(property, validationOptions) {
           if (!(beforeValue instanceof Date)) {
             throw new Error(`${beforeKey} must be a Date()`);
           }
-          return moment(value).isBefore(beforeValue, constraints[1]);
+          return moment(value).isBefore(beforeValue, validationOptions?.granularity ?? 'second');
         },
         defaultMessage({ constraints, object: target }) {
           const owner = getOwner(target);
@@ -39,7 +39,7 @@ export function BeforeDate(property, validationOptions) {
           const beforeValue = target[beforeKey];
           const before = moment(beforeValue);
           const description = intl.t('errors.description');
-          const format = constraints[1] === 'day' ? 'LL' : 'LLL';
+          const format = validationOptions?.granularity === 'day' ? 'LL' : 'LLL';
           const message = intl.t('errors.before', { description, before: before.format(format) });
           return message;
         }
