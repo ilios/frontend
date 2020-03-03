@@ -32,16 +32,18 @@
   <div class="course-leadership-expanded-content">
     {{#if (and (is-fulfilled @course.directors) (is-fulfilled @course.administrators))}}
       {{#if @isManaging}}
-        <LeadershipManager
-          @directors={{this.directors}}
-          @administrators={{this.administrators}}
-          @showAdministrators={{true}}
-          @showDirectors={{true}}
-          @removeDirector={{fn this.removeDirector}}
-          @addDirector={{fn this.addDirector}}
-          @removeAdministrator={{fn this.removeAdministrator}}
-          @addAdministrator={{fn this.addAdministrator}}
-        />
+        {{#unless this.manage.isRunning}}
+          <LeadershipManager
+            @directors={{this.directors}}
+            @administrators={{this.administrators}}
+            @showAdministrators={{true}}
+            @showDirectors={{true}}
+            @removeDirector={{fn this.removeDirector}}
+            @addDirector={{fn this.addDirector}}
+            @removeAdministrator={{fn this.removeAdministrator}}
+            @addAdministrator={{fn this.addAdministrator}}
+          />
+        {{/unless}}
       {{else}}
         <LeadershipList
           @directors={{await @course.directors}}
