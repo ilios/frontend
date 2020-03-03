@@ -1,64 +1,65 @@
-{{! template-lint-disable attribute-indentation }}
-<input
-  type="search"
-  value={{this.searchValue}}
-  placeholder={{t "general.searchForIliosUsers"}}
-  incremental="true"
-  {{on "input" (perform this.searchForUsers value="target.value")}}
-  {{on "search" (perform this.searchForUsers value="target.value")}}
-  {{on "keyup" (perform this.searchForUsers value="target.value")}}
->
-<ul
-  class="results
-    {{unless
-      (or this.searchForUsers.isRunning this.searchForUsers.lastSuccessful.value.length)
-      "hidden"
-    }}"
->
-  {{#if this.searchForUsers.isRunning}}
-    <li>
-      {{t "general.currentlySearchingPrompt"}}
-    </li>
-  {{else}}
-    {{#each this.searchForUsers.lastSuccessful.value as |result index|}}
-      {{#if (eq result.type "text")}}
-        <li>
-          {{result.text}}
-        </li>
-      {{/if}}
-      {{#if (eq result.type "summary")}}
-        <li class="summary">
-          {{result.text}}
-        </li>
-      {{/if}}
-      {{#if (eq result.type "user")}}
-        <li
-          class="user
-            {{unless
-              (contains result.user.id this.existingUserIds)
-              "clickable"
-              "inactive"
-            }}"
-          role="button"
-          data-test-result-index={{index}}
-          data-test-result
-          {{on "click" (fn (perform this.clickUser) result.user)}}
-        >
-          <span class="name">
-            {{result.user.fullName}}
-            {{#unless result.user.enabled}}
-              <FaIcon
-                @icon="user-times"
-                @title={{t "general.disabled"}}
-                class="error"
-              />
-            {{/unless}}
-          </span>
-          <span class="email">
-            {{result.user.email}}
-          </span>
-        </li>
-      {{/if}}
-    {{/each}}
-  {{/if}}
-</ul>
+<div class="leadership-search" data-test-leadership-search>
+  <input
+    type="search"
+    value={{this.searchValue}}
+    placeholder={{t "general.searchForIliosUsers"}}
+    incremental="true"
+    {{on "input" (perform this.searchForUsers value="target.value")}}
+    {{on "search" (perform this.searchForUsers value="target.value")}}
+    {{on "keyup" (perform this.searchForUsers value="target.value")}}
+  >
+  <ul
+    class="results
+      {{unless
+        (or this.searchForUsers.isRunning this.searchForUsers.lastSuccessful.value.length)
+        "hidden"
+      }}"
+  >
+    {{#if this.searchForUsers.isRunning}}
+      <li>
+        {{t "general.currentlySearchingPrompt"}}
+      </li>
+    {{else}}
+      {{#each this.searchForUsers.lastSuccessful.value as |result index|}}
+        {{#if (eq result.type "text")}}
+          <li>
+            {{result.text}}
+          </li>
+        {{/if}}
+        {{#if (eq result.type "summary")}}
+          <li class="summary">
+            {{result.text}}
+          </li>
+        {{/if}}
+        {{#if (eq result.type "user")}}
+          <li
+            class="user
+              {{unless
+                (contains result.user.id this.existingUserIds)
+                "clickable"
+                "inactive"
+              }}"
+            role="button"
+            data-test-result-index={{index}}
+            data-test-result
+            {{on "click" (perform this.clickUser result.user)}}
+          >
+            <span class="name">
+              {{result.user.fullName}}
+              {{#unless result.user.enabled}}
+                <FaIcon
+                  @icon="user-times"
+                  @title={{t "general.disabled"}}
+                  class="error"
+                />
+              {{/unless}}
+            </span>
+            <span class="email">
+              {{result.user.email}}
+            </span>
+          </li>
+        {{/if}}
+      {{/each}}
+    {{/if}}
+  </ul>
+</div>

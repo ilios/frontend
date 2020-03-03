@@ -17,8 +17,8 @@ export default class CourseOverview extends Component {
   universalLocator = 'ILIOS';
 
   @Length(2, 255) @tracked externalId = null;
-  @BeforeDate('endDate') @tracked startDate = null;
-  @AfterDate('startDate') @tracked endDate = null;
+  @BeforeDate('endDate', { granularity: 'day'}) @tracked startDate = null;
+  @AfterDate('startDate', { granularity: 'day'}) @tracked endDate = null;
   @tracked level = null;
   @tracked levelOptions = null;
   @tracked clerkshipTypeId = null;

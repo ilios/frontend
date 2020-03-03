@@ -1,349 +1,345 @@
-{{#if this.setup.isRunning}}
-  <LoadingSpinner class="loading" />
-{{else}}
-  <div class="item displayname">
-    <label>
-      {{t "general.displayName"}}:
-    </label>
-    {{#if (and @editable (await this.isLinkedOnlyOnce))}}
-      <input
-        type="text"
-        value={{this.title}}
-        disabled={{this.save.isRunning}}
-        {{on "input" (action (mut this.title) value="target.value")}}
-        {{on "keyup" (fn (action "addErrorDisplayFor") "title")}}
-      >
-      {{#if (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))}}
-        <span
-          class="validation-error-message"
-          data-test-title-validation-error-message
-        >
-          {{v-get this "title" "message"}}
-        </span>
-      {{/if}}
-    {{else}}
-      <span>
-        {{this.title}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item status">
-    <label>
-      {{t "general.status"}}:
-    </label>
-    {{#if @editable}}
-      <OneWaySelect
-        @value={{this.statusId}}
-        @options={{await @learningMaterialStatuses}}
-        @optionTargetPath="id"
-        @optionLabelPath="title"
-        @update={{action (mut this.statusId)}}
-      />
-    {{else}}
-      {{get (await this.currentStatus) "title"}}
-    {{/if}}
-  </div>
-  <div class="item required">
-    <label>
-      {{t "general.required"}}:
-    </label>
-    {{#if @editable}}
-      <ToggleYesno @yes={{this.required}} @toggle={{action (mut this.required)}} />
-    {{else if this.required}}
-      <span class="add">
-        {{t "general.yes"}}
-      </span>
-    {{else}}
-      <span class="remove">
-        {{t "general.no"}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item notes">
-    <label>
-      {{t "general.instructionalNotes"}}:
-    </label>
-    {{#if @editable}}
-      <HtmlEditor @content={{this.notes}} @update={{action (mut this.notes)}} />
-    {{else}}
-      <span>
-        {{! template-lint-disable no-triple-curlies }}
-        {{{this.notes}}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item publicnotes">
-    <label>
-      {{t "general.showNotesToStudents"}}:
-    </label>
-    {{#if @editable}}
-      <ToggleYesno @yes={{this.publicNotes}} @toggle={{action (mut this.publicNotes)}} />
-    {{else if this.publicNotes}}
-      <span class="add">
-        {{t "general.yes"}}
-      </span>
-    {{else}}
-      <span class="remove">
-        {{t "general.no"}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item">
-    <label>
-      {{t "general.owner"}}:
-    </label>
-    <span class="owninguser">
-      {{this.owningUserName}}
-    </span>
-  </div>
-  <div class="item">
-    <label>
-      {{t "general.contentAuthor"}}:
-    </label>
-    <span class="originalauthor">
-      {{this.originalAuthor}}
-    </span>
-  </div>
-  <div class="item">
-    <label>
-      {{t "general.userRole"}}:
-    </label>
-    <span class="userrole">
-      {{this.userRoleTitle}}
-    </span>
-  </div>
-  <div class="item">
-    <label>
-      {{t "general.description"}}:
-    </label>
-    <span class="description">
-      {{#if (and @editable (await this.isLinkedOnlyOnce))}}
-        <HtmlEditor
-          @content={{this.description}}
-          @update={{action (mut this.description)}}
-        />
-      {{else}}
-        {{! template-lint-disable no-triple-curlies }}
-        <span>
-          {{{this.description}}}
-        </span>
-      {{/if}}
-    </span>
-  </div>
-  {{#if this.copyrightPermission}}
-    <div class="item">
+<div
+  class="learningmaterial-manager"
+  {{did-insert (perform this.load) @learningMaterial (await @learningMaterial.learningMaterial)}}
+  {{did-update (perform this.load) @learningMaterial (await @learningMaterial.learningMaterial)}}
+>
+  {{#if this.load.isRunning}}
+    <LoadingSpinner class="loading" />
+  {{else}}
+    <div class="item displayname">
       <label>
-        {{t "general.copyrightPermission"}}:
+        {{t "general.displayName"}}:
       </label>
-      {{#if this.copyrightPermission}}
-        <span class="copyrightpermission add">
+      {{#if (and @editable this.isLinkedOnlyOnce)}}
+        <Input
+          type="text"
+          @value={{this.title}}
+          disabled={{this.save.isRunning}}
+          @key-press={{fn this.addErrorDisplayFor "title"}}
+        />
+        {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+          <span class="validation-error-message" data-test-title-validation-error-message>
+            {{message}}
+          </span>
+        {{/each}}
+      {{else}}
+        <span>
+          {{this.title}}
+        </span>
+      {{/if}}
+    </div>
+    <div class="item status">
+      <label>
+        {{t "general.status"}}:
+      </label>
+      {{#if @editable}}
+        <select {{on "change" this.updateStatusId}}>
+          {{#each @learningMaterialStatuses as |status|}}
+            <option value={{status.id}} selected={{eq status.id this.statusId}}>{{status.title}}</option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{get (await this.currentStatus) "title"}}
+      {{/if}}
+    </div>
+    <div class="item required">
+      <label>
+        {{t "general.required"}}:
+      </label>
+      {{#if @editable}}
+        <ToggleYesno @yes={{this.required}} @toggle={{set this.required}} />
+      {{else if this.required}}
+        <span class="add">
           {{t "general.yes"}}
         </span>
       {{else}}
-        <span class="copyrightpermission remove">
+        <span class="remove">
           {{t "general.no"}}
         </span>
       {{/if}}
     </div>
-  {{/if}}
-  {{#if this.copyrightRationale}}
-    <div class="item">
+    <div class="item notes">
       <label>
-        {{t "general.copyrightRationale"}}:
+        {{t "general.instructionalNotes"}}:
       </label>
-      <span class="copyrightrationale">
-        {{this.copyrightRationale}}
-      </span>
-    </div>
-  {{/if}}
-  {{#if this.isCitation}}
-    <div class="item">
-      <label>
-        {{t "general.citation"}}:
-      </label>
-      <span class="citation">
-        {{this.citation}}
-      </span>
-    </div>
-  {{/if}}
-  {{#if this.isLink}}
-    <div class="item weblink">
-      <label>
-        {{t "general.link"}}:
-      </label>
-      <span class="link">
-        <a href={{this.link}} target="_blank" rel="noopener">
-          {{this.link}}
-        </a>
-        <CopyButton @clipboardText={{this.link}}>
-          <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
-        </CopyButton>
-      </span>
-    </div>
-  {{/if}}
-  {{#if this.isFile}}
-    <div class="item filename">
-      <label>
-        {{t "general.file"}}:
-      </label>
-      <span class="downloadurl">
-        {{#if (eq this.mimetype "application/pdf")}}
-          <a href="{{this.absoluteFileUri}}?inline">
-            {{this.filename}}
-          </a>
-          <a href={{this.absoluteFileUri}} target="_blank" rel="noopener">
-            <FaIcon @icon="download" @title={{t "general.download"}} />
-          </a>
-        {{else}}
-          <a href={{this.absoluteFileUri}} target="_blank" rel="noopener">
-            {{this.filename}}
-          </a>
-        {{/if}}
-        <CopyButton @clipboardText={{this.absoluteFileUri}}>
-          <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
-        </CopyButton>
-      </span>
-    </div>
-  {{/if}}
-  <div class="item">
-    <label>
-      {{t "general.uploadDate"}}:
-    </label>
-    <span class="upload-date">
-      {{moment-format this.uploadDate "M-D-YYYY"}}
-    </span>
-  </div>
-  <label>
-    {{t "general.timedRelease"}}:
-  </label>
-  <TimedReleaseSchedule @startDate={{this.startDate}} @endDate={{this.endDate}} />
-  <div class="timed-release">
-    {{#if this.startDate}}
-      <div class="item start-date">
-        <label>
-          {{t "general.startDate"}}:
-        </label>
-        {{#if @editable}}
-          <PikadayInput
-            @value={{this.startDate}}
-            @onSelection={{action "updateDate" "startDate"}}
-            @format="M/D/YYYY"
-          />
-        {{else}}
-          {{moment-format this.startDate "L"}}
-        {{/if}}
-      </div>
-      <div class="item start-time">
-        <label>
-          {{t "general.startTime"}}:
-        </label>
-        {{#if @editable}}
-          <TimePicker
-            @date={{this.startDate}}
-            @action={{action "updateTime" "startDate"}}
-          />
-        {{else}}
-          {{moment-format this.startDate "h:mm a"}}
-        {{/if}}
-      </div>
       {{#if @editable}}
-        <button class="remove-date" {{on "click" (fn (mut this.startDate) null)}}>
-          {{t "general.timedReleaseClearStartDate"}}
-        </button>
-      {{/if}}
-    {{else if @editable}}
-      <p>
-        <button
-          class="add-date"
-          data-test-add-start-date
-          {{on "click" (fn (action "addDate") "startDate")}}
-        >
-          {{t "general.timedReleaseAddStartDate"}}
-        </button>
-      </p>
-    {{/if}}
-    {{#if this.endDate}}
-      <div class="item end-date">
-        <label>
-          {{t "general.endDate"}}:
-        </label>
-        {{#if @editable}}
-          <PikadayInput
-            @value={{this.endDate}}
-            @onSelection={{action "updateDate" "endDate"}}
-            @format="M/D/YYYY"
-          />
-        {{else}}
-          {{moment-format this.endDate "L"}}
-        {{/if}}
-      </div>
-      <div class="item end-time">
-        <label>
-          {{t "general.endTime"}}:
-        </label>
-        {{#if @editable}}
-          <TimePicker
-            @date={{this.endDate}}
-            @action={{action "updateTime" "endDate"}}
-          />
-        {{else}}
-          {{moment-format this.endDate "h:mm a"}}
-        {{/if}}
-      </div>
-      {{#if
-        (and (v-get this "endDate" "isInvalid") (contains "endDate" this.showErrorsFor))
-      }}
-        <span
-          class="validation-error-message"
-          data-test-end-date-validation-error-message
-        >
-          {{v-get this "endDate" "message"}}
+        <HtmlEditor @content={{this.notes}} @update={{set this.notes}} />
+      {{else}}
+        <span>
+          {{! template-lint-disable no-triple-curlies }}
+          {{{this.notes}}}
         </span>
       {{/if}}
+    </div>
+    <div class="item publicnotes">
+      <label>
+        {{t "general.showNotesToStudents"}}:
+      </label>
       {{#if @editable}}
-        <button class="remove-date" {{on "click" (fn (mut this.endDate) null)}}>
-          {{t "general.timedReleaseClearEndDate"}}
+        <ToggleYesno @yes={{this.publicNotes}} @toggle={{set this.publicNotes}} />
+      {{else if this.publicNotes}}
+        <span class="add">
+          {{t "general.yes"}}
+        </span>
+      {{else}}
+        <span class="remove">
+          {{t "general.no"}}
+        </span>
+      {{/if}}
+    </div>
+    <div class="item">
+      <label>
+        {{t "general.owner"}}:
+      </label>
+      <span class="owninguser">
+        {{this.owningUserName}}
+      </span>
+    </div>
+    <div class="item">
+      <label>
+        {{t "general.contentAuthor"}}:
+      </label>
+      <span class="originalauthor">
+        {{this.originalAuthor}}
+      </span>
+    </div>
+    <div class="item">
+      <label>
+        {{t "general.userRole"}}:
+      </label>
+      <span class="userrole">
+        {{this.userRoleTitle}}
+      </span>
+    </div>
+    <div class="item">
+      <label>
+        {{t "general.description"}}:
+      </label>
+      <span class="description">
+        {{#if (and @editable this.isLinkedOnlyOnce)}}
+          <HtmlEditor
+            @content={{this.description}}
+            @update={{set this.description}}
+          />
+        {{else}}
+          {{! template-lint-disable no-triple-curlies }}
+          <span>
+            {{{this.description}}}
+          </span>
+        {{/if}}
+      </span>
+    </div>
+    {{#if this.copyrightPermission}}
+      <div class="item">
+        <label>
+          {{t "general.copyrightPermission"}}:
+        </label>
+        {{#if this.copyrightPermission}}
+          <span class="copyrightpermission add">
+            {{t "general.yes"}}
+          </span>
+        {{else}}
+          <span class="copyrightpermission remove">
+            {{t "general.no"}}
+          </span>
+        {{/if}}
+      </div>
+    {{/if}}
+    {{#if this.copyrightRationale}}
+      <div class="item">
+        <label>
+          {{t "general.copyrightRationale"}}:
+        </label>
+        <span class="copyrightrationale">
+          {{this.copyrightRationale}}
+        </span>
+      </div>
+    {{/if}}
+    {{#if this.isCitation}}
+      <div class="item">
+        <label>
+          {{t "general.citation"}}:
+        </label>
+        <span class="citation">
+          {{this.citation}}
+        </span>
+      </div>
+    {{/if}}
+    {{#if this.isLink}}
+      <div class="item weblink">
+        <label>
+          {{t "general.link"}}:
+        </label>
+        <span class="link">
+          <a href={{this.link}} target="_blank" rel="noopener">
+            {{this.link}}
+          </a>
+          <CopyButton @clipboardText={{this.link}}>
+            <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
+          </CopyButton>
+        </span>
+      </div>
+    {{/if}}
+    {{#if this.isFile}}
+      <div class="item filename">
+        <label>
+          {{t "general.file"}}:
+        </label>
+        <span class="downloadurl">
+          {{#if (eq this.mimetype "application/pdf")}}
+            <a href="{{this.absoluteFileUri}}?inline">
+              {{this.filename}}
+            </a>
+            <a href={{this.absoluteFileUri}} target="_blank" rel="noopener">
+              <FaIcon @icon="download" @title={{t "general.download"}} />
+            </a>
+          {{else}}
+            <a href={{this.absoluteFileUri}} target="_blank" rel="noopener">
+              {{this.filename}}
+            </a>
+          {{/if}}
+          <CopyButton @clipboardText={{this.absoluteFileUri}}>
+            <FaIcon @icon="copy" @title={{t "general.copyLink"}} />
+          </CopyButton>
+        </span>
+      </div>
+    {{/if}}
+    <div class="item">
+      <label>
+        {{t "general.uploadDate"}}:
+      </label>
+      <span class="upload-date">
+        {{moment-format this.uploadDate "M-D-YYYY"}}
+      </span>
+    </div>
+    <label>
+      {{t "general.timedRelease"}}:
+    </label>
+    <TimedReleaseSchedule @startDate={{this.startDate}} @endDate={{this.endDate}} />
+    <div class="timed-release">
+      {{#if this.startDate}}
+        <div class="item start-date">
+          <label>
+            {{t "general.startDate"}}:
+          </label>
+          {{#if @editable}}
+            <PikadayInput
+              @value={{this.startDate}}
+              @onSelection={{fn this.updateDate "startDate"}}
+              @format="M/D/YYYY"
+            />
+          {{else}}
+            {{moment-format this.startDate "L"}}
+          {{/if}}
+        </div>
+        <div class="item start-time">
+          <label>
+            {{t "general.startTime"}}:
+          </label>
+          {{#if @editable}}
+            <TimePicker
+              @date={{this.startDate}}
+              @action={{fn this.updateTime "startDate"}}
+            />
+          {{else}}
+            {{moment-format this.startDate "h:mm a"}}
+          {{/if}}
+        </div>
+        {{#if @editable}}
+          <button class="remove-date" {{on "click" (fn (set this.startDate) null)}}>
+            {{t "general.timedReleaseClearStartDate"}}
+          </button>
+        {{/if}}
+      {{else if @editable}}
+        <p>
+          <button
+            class="add-date"
+            data-test-add-start-date
+            {{on "click" (fn this.addDate "startDate")}}
+          >
+            {{t "general.timedReleaseAddStartDate"}}
+          </button>
+        </p>
+      {{/if}}
+      {{#if this.endDate}}
+        <div class="item end-date">
+          <label>
+            {{t "general.endDate"}}:
+          </label>
+          {{#if @editable}}
+            <PikadayInput
+              @value={{this.endDate}}
+              @onSelection={{fn this.updateDate "endDate"}}
+              @format="M/D/YYYY"
+            />
+          {{else}}
+            {{moment-format this.endDate "L"}}
+          {{/if}}
+        </div>
+        <div class="item end-time">
+          <label>
+            {{t "general.endTime"}}:
+          </label>
+          {{#if @editable}}
+            <TimePicker
+              @date={{this.endDate}}
+              @action={{fn this.updateTime "endDate"}}
+            />
+          {{else}}
+            {{moment-format this.endDate "h:mm a"}}
+          {{/if}}
+        </div>
+        {{#each (await (compute (fn this.getErrorsFor) "endDate")) as |message|}}
+          <span class="validation-error-message" data-test-end-date-validation-error-message>
+            {{message}}
+          </span>
+        {{/each}}
+        {{#if @editable}}
+          <button class="remove-date" {{on "click" (fn (set this.endDate) null)}}>
+            {{t "general.timedReleaseClearEndDate"}}
+          </button>
+        {{/if}}
+      {{else if @editable}}
+        <p>
+          <button
+            class="add-date"
+            data-test-add-end-date
+            {{on "click" (fn this.addDate "endDate")}}
+          >
+            {{t "general.timedReleaseAddEndDate"}}
+          </button>
+        </p>
+      {{/if}}
+    </div>
+    <MeshManager
+      @terms={{this.terms}}
+      @editable={{@editable}}
+      @add={{this.addTerm}}
+      @remove={{this.removeTerm}}
+      @targetItemTitle={{this.title}}
+    />
+    <div class="buttons">
+      {{#if @editable}}
+        <button
+          class="done"
+          disabled={{this.save.isRunning}}
+          {{on "click" (perform this.save)}}
+        >
+          {{#if this.save.isRunning}}
+            <LoadingSpinner />
+          {{else}}
+            {{t "general.done"}}
+          {{/if}}
+        </button>
+        <button class="cancel" {{on "click" @closeManager}}>
+          {{t "general.cancel"}}
+        </button>
+      {{else}}
+        <button {{on "click" @closeManager}}>
+          {{t "general.close"}}
         </button>
       {{/if}}
-    {{else if @editable}}
-      <p>
-        <button
-          class="add-date"
-          data-test-add-end-date
-          {{on "click" (fn (action "addDate") "endDate")}}
-        >
-          {{t "general.timedReleaseAddEndDate"}}
-        </button>
-      </p>
-    {{/if}}
-  </div>
-  <MeshManager
-    @terms={{this.terms}}
-    @editable={{@editable}}
-    @add={{action "addTerm"}}
-    @remove={{action "removeTerm"}}
-    @targetItemTitle={{this.title}}
-  />
-  <div class="buttons">
-    {{#if @editable}}
-      <button
-        class="done"
-        disabled={{this.save.isRunning}}
-        {{on "click" (perform this.save)}}
-      >
-        {{#if this.save.isRunning}}
-          <LoadingSpinner />
-        {{else}}
-          {{t "general.done"}}
-        {{/if}}
-      </button>
-      <button class="cancel" {{on "click" @closeManager}}>
-        {{t "general.cancel"}}
-      </button>
-    {{else}}
-      <button {{on "click" @closeManager}}>
-        {{t "general.close"}}
-      </button>
-    {{/if}}
-  </div>
-{{/if}}
+    </div>
+  {{/if}}
+
+</div>

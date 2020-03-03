@@ -37,7 +37,6 @@
     {{#if this.isManaging}}
       <LearningmaterialManager
         @learningMaterial={{this.managingMaterial}}
-        @isCourse={{@isCourse}}
         @editable={{@editable}}
         @closeManager={{fn (set this.managingMaterial) null}}
         @learningMaterialStatuses={{await this.learningMaterialStatuses}}
