@@ -5,8 +5,8 @@ import { timeout } from 'ember-concurrency';
 import { dropTask } from 'ember-concurrency-decorators';
 
 export default class CourseLeadershipExpandedComponent extends Component {
-  @tracked directors = null;
-  @tracked administrators = null;
+  @tracked directors = [];
+  @tracked administrators = [];
   get isCollapsible() {
     const administratorIds = this.args.course.hasMany('administrators').ids();
     const directorIds = this.args.course.hasMany('directors').ids();
