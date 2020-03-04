@@ -15,12 +15,12 @@ export function Gt(gt, validationOptions) {
             throw new Error(`You must pass a ${property} value as the first argument to Gte`);
           }
           const numValue = Number(value);
-          if (typeof numValue !== 'number' || isNaN(numValue)) {
+          if (isNaN(numValue)) {
             return false;
           }
 
           const gtValue = Number(constraints[0]);
-          if (typeof gtValue !== 'number' || isNaN(gtValue)) {
+          if (isNaN(gtValue)) {
             throw new Error(`${property} must be a Number`);
           }
           return numValue > gtValue;

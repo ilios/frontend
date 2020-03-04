@@ -15,12 +15,12 @@ export function Lte(lte, validationOptions) {
             throw new Error(`You must pass a ${property} value as the first argument to Gte`);
           }
           const numValue = Number(value);
-          if (typeof numValue !== 'number' || isNaN(numValue)) {
+          if (isNaN(numValue)) {
             return false;
           }
 
           const lteValue = Number(constraints[0]);
-          if (typeof lteValue !== 'number' || isNaN(lteValue)) {
+          if (isNaN(lteValue)) {
             throw new Error(`${property} must be a Number`);
           }
           return numValue >= numValue;
