@@ -41,6 +41,12 @@ export function validatable(target) {
       const errors = await this.getErrorsFor(field);
       return errors.length > 0;
     }
+
+    @action
+    addErrorDisplaysFor(fields) {
+      fields.forEach(field => this.addErrorDisplayFor(field));
+    }
+
     @action
     addErrorDisplayFor(field) {
       if (!this._evdVisibleErrors.includes(field)) {

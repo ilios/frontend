@@ -1,13 +1,13 @@
 import { registerDecorator } from "class-validator";
 import { getOwner } from '@ember/application';
 
-export function Gte(gte, validationOptions) {
+export function Gt(gt, validationOptions) {
   return function (object, propertyName) {
     registerDecorator({
-      name: "gte",
+      name: "gt",
       target: object.constructor,
       propertyName: propertyName,
-      constraints: [gte],
+      constraints: [gt],
       options: validationOptions,
       validator: {
         validate(value, { constraints, property }) {
@@ -19,18 +19,18 @@ export function Gte(gte, validationOptions) {
             return false;
           }
 
-          const gteValue = Number(constraints[0]);
-          if (isNaN(gteValue)) {
+          const gtValue = Number(constraints[0]);
+          if (isNaN(gtValue)) {
             throw new Error(`${property} must be a Number`);
           }
-          return numValue >= gteValue;
+          return numValue > gtValue;
         },
         defaultMessage({ constraints, object: target }) {
           const owner = getOwner(target);
           const intl = owner.lookup('service:intl');
-          const gteValue = constraints[0];
+          const gtValue = constraints[0];
           const description = intl.t('errors.description');
-          return intl.t('errors.greaterThanOrEqualTo', { description, gte: gteValue });
+          return intl.t('errors.greaterThan', { description, gt: gtValue });
         }
       },
     });

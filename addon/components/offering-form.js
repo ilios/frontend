@@ -1,125 +1,63 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { not } from '@ember/object/computed';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
 import { filter, hash, map } from 'rsvp';
 import moment from 'moment';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
+import {dropTask, restartableTask, task} from "ember-concurrency-decorators";
+import { ArrayNotEmpty, IsInt, Lte, Gte, Gt, NotBlank, Length, validatable } from 'ilios-common/decorators/validation';
+import { ValidateIf } from "class-validator";
 
 const DEBOUNCE_DELAY = 600;
 
-const Validations = buildValidations({
-  room: [
-    validator('presence', {
-      presence: true
-    }),
-    validator('length', {
-      max: 255
-    }),
-  ],
-  numberOfWeeks: {
-    dependentKeys: ['model.makeRecurring'],
-    disabled: not('model.makeRecurring'),
-    validators: [
-      validator('presence', {
-        presence: true
-      }),
-      validator('number', {
-        allowString: true,
-        integer: true,
-        gt: 0,
-      }),
-    ]
-  },
-  durationHours: [
-    validator('number', {
-      allowString: true,
-      integer: true,
-      gte: 0
-    })
-  ],
-  durationMinutes: [
-    validator('number', {
-      allowString: true,
-      integer: true,
-      gte: 0,
-      lte: 59
-    })
-  ],
-  learnerGroups: {
-    dependentKeys: ['model.smallGroupMode'],
-    disabled: not('model.smallGroupMode'),
-    validators: [
-      validator('length', {
-        min: 1,
-        messageKey: 'general.smallGroupMessage'
-      })
-    ]
+@validatable
+export default class OfferingForm extends Component {
+  @service currentUser;
+  @service timezone;
+  @service intl;
+
+  @tracked currentTimezone = null;
+  @tracked isEditingTimezone = false;
+  @tracked timezones = null;
+  @tracked startDate = null;
+  @tracked endDate = null;
+  @NotBlank() @Length(1, 255) @tracked room = 'TBD';
+  @ValidateIf(o => o.args.smallGroupMode) @ArrayNotEmpty() @tracked learnerGroups = [];
+  @tracked showOfferingCalendar =false;
+  @tracked makeRecurring = false;
+  @tracked recurringDays = null;
+  @ValidateIf(o => o.makeRecurring) @IsInt() @Gt(0) @tracked numberOfWeeks = 1;
+  @tracked instructors = null;
+  @tracked instructorGroups = null;
+  @tracked offeringsToSave = 0;
+  @tracked savedOfferings = 0;
+  @tracked recurringDayOptions = null;
+  @tracked availableInstructorGroups = [];
+  @tracked loaded = false;
+
+  constructor() {
+    super(...arguments);
+
+    this.currentTimezone = this.timezone.getCurrentTimezone();
+    this.timezones = this.timezone.getTimezones();
+
+    this.recurringDayOptions = [
+      {day: '0', t: 'general.sunday'},
+      {day: '1', t: 'general.monday'},
+      {day: '2', t: 'general.tuesday'},
+      {day: '3', t: 'general.wednesday'},
+      {day: '4', t: 'general.thursday'},
+      {day: '5', t: 'general.friday'},
+      {day: '6', t: 'general.saturday'},
+    ];
   }
-});
 
-export default Component.extend(ValidationErrorDisplay, Validations, {
-  currentUser: service(),
-  timezone: service(),
-
-  classNames: ['offering-form'],
-
-  currentTimezone: null,
-  isEditingTimezone: false,
-  timezones: null,
-  startDate: null,
-  endDate: null,
-  room: 'TBD',
-  cohorts: null,
-  learnerGroups: null,
-  showRoom: false,
-  showMakeRecurring: false,
-  showInstructors: false,
-  showOfferingCalendar: false,
-  makeRecurring: false,
-  recurringDays: null,
-  numberOfWeeks: 1,
-  instructors: null,
-  instructorGroups: null,
-  courseStartDate: null,
-  courseEndDate: null,
-  smallGroupMode: false,
-  offeringsToSave: 0,
-  savedOfferings: 0,
-  recurringDayOptions: null,
-  loaded: false,
-  'data-test-offering-form': true,
-
-  associatedSchools: computed('cohorts.[]', async function(){
-    const cohorts = this.get('cohorts');
-    if (isEmpty(cohorts)) {
-      return [];
-    } else {
-      const cohortSchools = await map(cohorts.toArray(), cohort => {
-        return cohort.get('school');
-      });
-      const schools = [];
-      schools.pushObjects(cohortSchools);
-      return schools.uniq().toArray();
-    }
-  }),
-  availableInstructorGroups: computed('associatedSchools.[]', async function(){
-    const associatedSchools = await this.get('associatedSchools');
-    const allInstructorGroups = await map(associatedSchools, school => {
-      return school.get('instructorGroups');
-    });
-    return allInstructorGroups.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.toArray());
-    }, []);
-  }),
-
-  defaultStartDate: computed('courseStartDate', 'courseEndDate', function(){
+  get defaultStartDate() {
     const today = moment();
-    const courseStartDate = this.get('courseStartDate');
-    const courseEndDate = this.get('courseEndDate');
+    const courseStartDate = this.args.courseStartDate;
+    const courseEndDate = this.args.courseEndDate;
     let defaultStartDate = today.clone();
     if (isPresent(courseStartDate) && today.isBefore(courseStartDate)) {
       defaultStartDate = moment(courseStartDate);
@@ -129,23 +67,25 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
 
     return defaultStartDate.toDate();
-  }),
-  durationHours: computed('startDate', 'endDate', function(){
-    const startDate = this.get('startDate');
-    const endDate = this.get('endDate');
+  }
+
+  @IsInt() @Gte(0)
+  get durationHours() {
+    const startDate = this.startDate;
+    const endDate = this.endDate;
 
     if (isEmpty(startDate) || isEmpty(endDate)) {
       return 1;
     }
     const mStart = moment(startDate);
     const mEnd = moment(endDate);
-    const diffInHours = mEnd.diff(mStart, 'hours');
+    return mEnd.diff(mStart, 'hours');
+  }
 
-    return diffInHours;
-  }),
-  durationMinutes: computed('startDate', 'endDate', function(){
-    const startDate = this.get('startDate');
-    const endDate = this.get('endDate');
+  @IsInt() @Gte(0) @Lte(59)
+  get durationMinutes() {
+    const startDate = this.startDate;
+    const endDate = this.endDate;
 
     if (isEmpty(startDate) || isEmpty(endDate)) {
       return 0;
@@ -166,160 +106,233 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       diff = (60 - startMinute) + endMinute;
     }
     return diff;
-  }),
+  }
 
-  formattedCurrentTimezone: computed('currentTimezone', function() {
+  get formattedCurrentTimezone() {
     return this.timezone.formatTimezone(this.currentTimezone);
-  }),
+  }
 
-  lowestLearnerGroupLeaves: computed('learnerGroups.[]', async function(){
-    const learnerGroups = this.get('learnerGroups');
+  @restartableTask
+  *load(element, [offering, cohorts]) {
+    this.availableInstructorGroups = yield this.loadAvailableInstructorGroups(cohorts);
+
+    if (isPresent(offering)) {
+      yield this.loadAttrsFromOffering.perform(offering);
+    } else {
+      this.loadDefaultAttrs();
+    }
+  }
+
+  @action
+  async addLearnerGroup(learnerGroup) {
+    const descendants = await learnerGroup.get('allDescendants');
+    this.learnerGroups = [...this.learnerGroups, ...descendants, learnerGroup];
+  }
+
+  @action
+  async removeLearnerGroup(learnerGroup) {
+    const descendants = await learnerGroup.get('allDescendants');
+    const groupsToRemove = [...descendants, learnerGroup];
+    this.learnerGroups = this.learnerGroups.filter(g => ! groupsToRemove.includes(g));
+  }
+
+  @action
+  toggleRecurringDay(day){
+    if (this.recurringDays.includes(day)) {
+      this.recurringDays = this.recurringDays.filter(d => d !== day);
+    } else {
+      this.recurringDays = [...this.recurringDays, day];
+    }
+  }
+
+  @action
+  addInstructor(user){
+    this.instructors = [...this.instructors, user];
+  }
+
+  @action
+  addInstructorGroup(group){
+    this.instructorGroups = [...this.instructorGroups, group];
+  }
+
+  @action
+  removeInstructor(user){
+    this.instructors = this.instructors.filter(u => u !== user);
+  }
+
+  @action
+  removeInstructorGroup(group){
+    this.instructorGroups = this.instructorGroups.filter(g => g !== group);
+  }
+
+  @action
+  updateStartTime(value, type) {
+    const startDate = moment(this.startDate);
+
+    if (type === 'hour') {
+      startDate.hour(value);
+    } else {
+      startDate.minute(value);
+    }
+    const minutes = this.durationMinutes;
+    const hours = this.durationHours;
+    const endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes');
+
+    this.startDate = startDate.toDate();
+    this.endDate = endDate.toDate();
+  }
+
+  @action
+  updateStartDate(date) {
+    const minutes = this.durationMinutes;
+    const hours = this.durationHours;
+    const currentStartDate = moment(this.startDate);
+    const startDate = moment(date).hour(currentStartDate.hour()).minute(currentStartDate.minute()).toDate();
+    const endDate = moment(startDate).add(hours, 'hours').add(minutes, 'minutes').toDate();
+
+    this.startDate = startDate;
+    this.endDate = endDate;
+  }
+
+  @action
+  changeTimezone(value) {
+    this.currentTimezone = value;
+    this.isEditingTimezone = false;
+  }
+
+  async loadAvailableInstructorGroups(cohorts) {
+    let associatedSchools;
+    if (isEmpty(cohorts)) {
+      associatedSchools = [];
+    } else {
+      const cohortSchools = await map(cohorts.toArray(), cohort => {
+        return cohort.get('school');
+      });
+      const schools = [];
+      schools.pushObjects(cohortSchools);
+      associatedSchools = schools.uniq().toArray();
+    }
+    const allInstructorGroups = await map(associatedSchools, school => {
+      return school.get('instructorGroups');
+    });
+    return allInstructorGroups.reduce((flattened, obj) => {
+      return flattened.pushObjects(obj.toArray());
+    }, []);
+  }
+
+  async lowestLearnerGroupLeaves(learnerGroups) {
     const ids = learnerGroups.mapBy('id');
     return filter(learnerGroups, async group => {
       const children = await group.get('allDescendants');
       const selectedChildren = children.filter(child => ids.includes(child.get('id')));
       return selectedChildren.length === 0;
     });
-  }),
+  }
 
-  init(){
-    this._super(...arguments);
-
-    this.set('currentTimezone', this.timezone.getCurrentTimezone());
-    this.set('timezones', this.timezone.getTimezones());
-
-    this.set('recurringDayOptions', [
-      {day: '0', t: 'general.sunday'},
-      {day: '1', t: 'general.monday'},
-      {day: '2', t: 'general.tuesday'},
-      {day: '3', t: 'general.wednesday'},
-      {day: '4', t: 'general.thursday'},
-      {day: '5', t: 'general.friday'},
-      {day: '6', t: 'general.saturday'},
-    ]);
-  },
-  didReceiveAttrs(){
-    this._super(...arguments);
-    const offering = this.get('offering');
-    if (isPresent(offering)) {
-      this.get('loadAttrsFromOffering').perform(offering);
-    } else {
-      this.loadDefaultAttrs();
+  loadDefaultAttrs() {
+    if (this.loaded) {
+      return;
     }
-  },
+    this.startDate = moment(this.defaultStartDate).hour(8).minute(0).second(0).toDate();
+    this.endDate = moment(this.defaultStartDate).hour(9).minute(0).second(0).toDate();
+    this.room = 'TBD';
+    this.learnerGroups = [];
+    this.recurringDays = [];
+    this.instructors = [];
+    this.instructorGroups = [];
+    this.loaded = true;
+  }
 
-  actions: {
-    addLearnerGroup(learnerGroup) {
-      const learnerGroups = this.get('learnerGroups').toArray();
-      learnerGroups.addObject(learnerGroup);
-      learnerGroup.get('allDescendants').then(function(descendants){
-        learnerGroups.addObjects(descendants);
+  @dropTask
+  *loadAttrsFromOffering(offering) {
+    if (this.loaded) {
+      return;
+    }
+    this.startDate = offering.get('startDate');
+    this.endDate = offering.get('endDate');
+    this.room = offering.get('room');
+    this.recurringDays = [];
+    const obj = yield hash({
+      learnerGroups : offering.get('learnerGroups'),
+      instructors : offering.get('instructors'),
+      instructorGroups : offering.get('instructorGroups'),
+    });
+    this.learnerGroups = obj.learnerGroups.toArray();
+    this.instructors = obj.instructors.toArray();
+    this.instructorGroups = obj.instructorGroups.toArray();
+    this.loaded = true;
+  }
+
+  @task
+  *saveOffering() {
+    this.offeringsToSave = 0;
+    this.savedOfferings = 0;
+    this.addErrorDisplaysFor(['room', 'numberOfWeeks', 'durationHours', 'durationMinutes', 'learnerGroups']);
+
+    yield timeout(10);
+    const isValid = yield this.isValid();
+    if (! isValid) {
+      return false;
+    }
+    let offerings = yield this.makeRecurringOfferingObjects.perform();
+    offerings = yield this.makeSmallGroupOfferingObjects.perform(offerings);
+
+    // adjust timezone
+    offerings.forEach(offering => {
+      offering.startDate = moment.tz(
+        moment(offering.startDate).format('Y-MM-DD HH:mm:ss'), this.currentTimezone).toDate();
+      offering.endDate = moment.tz(
+        moment(offering.endDate).format('Y-MM-DD HH:mm:ss'), this.currentTimezone).toDate();
+    });
+
+    this.offeringsToSave = offerings.length;
+    //save offerings in sets of 5
+    let parts;
+    while (offerings.length > 0){
+      parts = offerings.splice(0, 5);
+      yield map(parts, ({startDate, endDate, room, learnerGroups, instructorGroups, instructors}) => {
+        return this.args.save(startDate, endDate, room, learnerGroups, instructorGroups, instructors);
       });
-      //re-create the object so we trigger downstream didReceiveAttrs
-      this.set('learnerGroups', learnerGroups);
-    },
-    removeLearnerGroup(learnerGroup) {
-      const learnerGroups = this.get('learnerGroups').toArray();
-      learnerGroups.removeObject(learnerGroup);
-      learnerGroup.get('allDescendants').then(function(descendants){
-        learnerGroups.removeObjects(descendants);
-      });
-      //re-create the object so we trigger downstream didReceiveAttrs
-      this.set('learnerGroups', learnerGroups);
-    },
-    toggleRecurringDay(day){
-      const recurringDays = this.get('recurringDays');
-      if (recurringDays.includes(day)) {
-        recurringDays.removeObject(day);
-      } else {
-        recurringDays.pushObject(day);
-      }
-    },
-    addInstructor(user){
-      const instructors = this.get('instructors').toArray();
-      instructors.addObject(user);
-      //re-create the object so we trigger downstream didReceiveAttrs
-      this.set('instructors', instructors);
-    },
-    addInstructorGroup(group){
-      const instructorGroups = this.get('instructorGroups').toArray();
-      instructorGroups.addObject(group);
-      //re-create the object so we trigger downstream didReceiveAttrs
-      this.set('instructorGroups', instructorGroups);
-    },
-    removeInstructor(user){
-      const instructors = this.get('instructors').toArray();
-      instructors.removeObject(user);
-      //re-create the object so we trigger downstream didReceiveAttrs
-      this.set('instructors', instructors);
-    },
-    removeInstructorGroup(group){
-      const instructorGroups = this.get('instructorGroups').toArray();
-      instructorGroups.removeObject(group);
-      //re-create the object so we trigger downstream didReceiveAttrs
-      this.set('instructorGroups', instructorGroups);
-    },
-    updateStartTime(value, type) {
-      const startDate = moment(this.get('startDate'));
+      this.savedOfferings = this.savedOfferings + parts.length;
+    }
+    this.clearErrorDisplay();
+    this.args.close();
+  }
 
-      if (type === 'hour') {
-        startDate.hour(value);
-      } else {
-        startDate.minute(value);
-      }
-      const minutes = this.get('durationMinutes');
-      const hours = this.get('durationHours');
-      const endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes');
-
-      this.set('startDate', startDate.toDate());
-      this.set('endDate', endDate.toDate());
-    },
-    updateStartDate(date) {
-      const minutes = this.get('durationMinutes');
-      const hours = this.get('durationHours');
-      const currentStartDate = moment(this.get('startDate'));
-      const startDate = moment(date).hour(currentStartDate.hour()).minute(currentStartDate.minute()).toDate();
-      const endDate = moment(startDate).add(hours, 'hours').add(minutes, 'minutes').toDate();
-
-      this.setProperties({startDate, endDate});
-    },
-
-    changeTimezone(value) {
-      this.set('currentTimezone', value);
-      this.set('isEditingTimezone', false);
-    },
-  },
-
-  makeRecurringOfferingObjects: task(function * () {
-    const {
-      startDate,
-      endDate,
-      room,
-      instructorGroups,
-      instructors,
-      numberOfWeeks,
-      recurringDays
-    } = this.getProperties('startDate', 'endDate', 'room', 'instructorGroups', 'instructors', 'numberOfWeeks', 'recurringDays');
-    const makeRecurring = this.get('makeRecurring');
-    const learnerGroups = yield this.get('lowestLearnerGroupLeaves');
+  @task
+  *makeRecurringOfferingObjects() {
+    const makeRecurring = this.makeRecurring;
+    const learnerGroups = yield this.lowestLearnerGroupLeaves(this.learnerGroups);
     const offerings = [];
-    offerings.push({startDate, endDate, room, learnerGroups, instructorGroups, instructors});
+    offerings.push({
+      startDate: this.startDate,
+      endDate: this.endDate,
+      room: this.room,
+      learnerGroups,
+      instructorGroups: this.instructorGroups,
+      instructors: this.instructors
+    });
     if (!makeRecurring) {
       return offerings;
     }
 
-    const userPickedDay = moment(startDate).day();
+    const userPickedDay = moment(this.startDate).day();
     //convert strings to numbers use parseFloat because parseInt takes a second
     //argument and gets thrown off by map sending that argument as the counter
-    const recurringDayInts = recurringDays.map(parseFloat).sort();
+    const recurringDayInts = this.recurringDays.map(parseFloat).sort();
 
     // Add offerings for the rest of first week
     //only days AFTER the initial day are considered
     recurringDayInts.forEach(day => {
       if (day > userPickedDay) {
-        const obj = {room, learnerGroups, instructorGroups, instructors};
-        obj.startDate = moment(startDate).day(day).toDate();
-        obj.endDate = moment(endDate).day(day).toDate();
+        const obj = {
+          room: this.room,
+          learnerGroups,
+          instructorGroups: this.instructorGroups,
+          instructors: this.instructors
+        };
+        obj.startDate = moment(this.startDate).day(day).toDate();
+        obj.endDate = moment(this.endDate).day(day).toDate();
 
         offerings.push(obj);
       }
@@ -327,20 +340,26 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     recurringDayInts.pushObject(userPickedDay);
     recurringDayInts.sort();
 
-    for (let i = 1; i < numberOfWeeks; i++) {
+    for (let i = 1; i < this.numberOfWeeks; i++) {
       recurringDayInts.forEach(day => {
-        const obj = {room, learnerGroups, instructorGroups, instructors};
-        obj.startDate = moment(startDate).day(day).add(i, 'weeks').toDate();
-        obj.endDate = moment(endDate).day(day).add(i, 'weeks').toDate();
+        const obj = {
+          room: this.room,
+          learnerGroups,
+          instructorGroups: this.instructorGroups,
+          instructors: this.instructors
+        };
+        obj.startDate = moment(this.startDate).day(day).add(i, 'weeks').toDate();
+        obj.endDate = moment(this.endDate).day(day).add(i, 'weeks').toDate();
 
         offerings.push(obj);
       });
     }
-
     return offerings;
-  }),
-  makeSmallGroupOfferingObjects: task(function * (offerings){
-    const smallGroupMode = this.get('smallGroupMode');
+  }
+
+  @task
+  *makeSmallGroupOfferingObjects(offerings){
+    const smallGroupMode = this.args.smallGroupMode;
     if (!smallGroupMode) {
       return offerings;
     }
@@ -366,116 +385,40 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
 
     return smallGroupOfferings;
-  }),
+  }
 
-
-  loadDefaultAttrs() {
-    let loaded = this.get('loaded');
-    if (loaded) {
+  @restartableTask
+  *validateThenSaveOffering() {
+    this.addErrorDisplaysFor(['room', 'numberOfWeeks', 'durationHours', 'durationMinutes', 'learnerGroups']);
+    const isValid = yield this.isValid();
+    if (! isValid) {
       return;
     }
-    const startDate = moment(this.get('defaultStartDate')).hour(8).minute(0).second(0).toDate();
-    const endDate = moment(this.get('defaultStartDate')).hour(9).minute(0).second(0).toDate();
-    const room = 'TBD';
-    const learnerGroups = [];
-    const recurringDays = [];
-    const instructors = [];
-    const instructorGroups = [];
-    loaded = true;
+    yield this.saveOffering.perform();
+  }
 
-    this.setProperties({startDate, endDate, room, learnerGroups, recurringDays, instructors, instructorGroups, loaded});
-  },
-
-  loadAttrsFromOffering: task(function * (offering) {
-    let loaded = this.get('loaded');
-    if (loaded) {
-      return;
-    }
-    const startDate = offering.get('startDate');
-    const endDate = offering.get('endDate');
-    const room = offering.get('room');
-    const recurringDays = [];
-    const obj = yield hash({
-      learnerGroups : offering.get('learnerGroups'),
-      instructors : offering.get('instructors'),
-      instructorGroups : offering.get('instructorGroups'),
-    });
-    const learnerGroups = obj.learnerGroups.toArray();
-    const instructors = obj.instructors.toArray();
-    const instructorGroups = obj.instructorGroups.toArray();
-    loaded = true;
-
-    this.setProperties({startDate, endDate, room, learnerGroups, recurringDays, instructors, instructorGroups, loaded});
-  }).drop(),
-
-  saveOffering: task(function * () {
-    this.set('offeringsToSave', 0);
-    this.set('savedOfferings', 0);
-    this.send('addErrorDisplaysFor', ['room', 'numberOfWeeks', 'durationHours', 'durationMinutes', 'learnerGroups']);
-    yield timeout(10);
-    const {validations} = yield this.validate();
-
-    if (validations.get('isInvalid')) {
-      return;
-    }
-    let offerings = yield this.get('makeRecurringOfferingObjects').perform();
-    offerings = yield this.get('makeSmallGroupOfferingObjects').perform(offerings);
-
-    // adjust timezone
-    offerings.forEach(offering => {
-      offering.startDate = moment.tz(
-        moment(offering.startDate).format('Y-MM-DD HH:mm:ss'), this.currentTimezone).toDate();
-      offering.endDate = moment.tz(
-        moment(offering.endDate).format('Y-MM-DD HH:mm:ss'), this.currentTimezone).toDate();
-    });
-
-    this.set('offeringsToSave', offerings.length);
-    //save offerings in sets of 5
-    let parts;
-    while (offerings.length > 0){
-      parts = offerings.splice(0, 5);
-      yield map(parts, ({startDate, endDate, room, learnerGroups, instructorGroups, instructors}) => {
-        return this.get('save')(startDate, endDate, room, learnerGroups, instructorGroups, instructors);
-      });
-      this.set('savedOfferings', this.get('savedOfferings') + parts.length);
-    }
-    this.send('clearErrorDisplay');
-    this.get('close')();
-  }),
-
-  validateThenSaveOffering: task(function * () {
-    this.send('addErrorDisplaysFor', ['room', 'numberOfWeeks', 'durationHours', 'durationMinutes', 'learnerGroups']);
-    const {validations} = yield this.validate();
-
-    if (validations.get('isInvalid')) {
-      return;
-    }
-
-    yield this.get('saveOffering').perform();
-  }),
-
-  updateDurationHours: task(function * (hours) {
+  @restartableTask
+  *updateDurationHours(hours) {
     yield timeout(DEBOUNCE_DELAY);
-    this.send('addErrorDisplayFor', 'durationHours');
+    this.addErrorDisplayFor('durationHours');
     const minutes = this.durationMinutes;
-    const endDate = moment(this.startDate)
+    this.endDate = moment(this.startDate)
       .clone()
       .add(hours, 'hours')
       .add(minutes, 'minutes')
       .toDate();
-    this.set('endDate', endDate);
-  }).restartable(),
+  }
 
-  updateDurationMinutes: task(function * (minutes) {
+
+  @restartableTask
+  *updateDurationMinutes(minutes) {
     yield timeout(DEBOUNCE_DELAY);
-    this.send('addErrorDisplayFor', 'durationMinutes');
+    this.addErrorDisplayFor('durationMinutes');
     const hours = this.durationHours;
-    const endDate = moment(this.startDate)
+    this.endDate = moment(this.startDate)
       .clone()
       .add(hours, 'hours')
       .add(minutes, 'minutes')
       .toDate();
-    this.set('endDate', endDate);
-  }).restartable(),
-
-});
+  }
+}
