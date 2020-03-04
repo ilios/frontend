@@ -5,5 +5,5 @@
     @showCheckLink={{false}}
     @sessionTypes={{this.model.sessionTypes}}
   />
-  <SessionCopy @session={{this.model}} @visit={{action "loadSession"}} />
+  <SessionCopy @session={{this.model}} @visit={{fn this.loadSession}} />
 </div>

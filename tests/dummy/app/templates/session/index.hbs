@@ -10,16 +10,16 @@
   @sessionTypes={{await this.model.course.school.sessionTypes}}
   @sessionObjectiveDetails={{this.sessionObjectiveDetails}}
   @sessionTaxonomyDetails={{this.sessionTaxonomyDetails}}
-  @setSessionObjectiveDetails={{action (mut this.sessionObjectiveDetails)}}
-  @setSessionTaxonomyDetails={{action (mut this.sessionTaxonomyDetails)}}
+  @setSessionObjectiveDetails={{fn (mut this.sessionObjectiveDetails)}}
+  @setSessionTaxonomyDetails={{fn (mut this.sessionTaxonomyDetails)}}
   @isManagingLearnerGroups={{this.isManagingLearnerGroups}}
-  @setIsManagingLearnerGroups={{action (mut this.isManagingLearnerGroups)}}
+  @setIsManagingLearnerGroups={{fn (mut this.isManagingLearnerGroups)}}
   @sessionLearnergroupDetails={{this.sessionLearnergroupDetails}}
-  @setSessionLearnergroupDetails={{action (mut this.sessionLearnergroupDetails)}}
+  @setSessionLearnergroupDetails={{fn (mut this.sessionLearnergroupDetails)}}
   @showNewOfferingForm={{this.showNewOfferingForm}}
   @toggleShowNewOfferingForm={{toggle-action "showNewOfferingForm" this}}
   @sessionLeadershipDetails={{this.sessionLeadershipDetails}}
-  @setSessionLeadershipDetails={{action (mut this.sessionLeadershipDetails)}}
+  @setSessionLeadershipDetails={{fn (mut this.sessionLeadershipDetails)}}
   @sessionManageLeadership={{this.sessionManageLeadership}}
-  @setSessionManageLeadership={{action (mut this.sessionManageLeadership)}}
+  @setSessionManageLeadership={{fn (mut this.sessionManageLeadership)}}
 />

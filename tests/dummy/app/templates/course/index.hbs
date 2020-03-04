@@ -3,7 +3,7 @@
   @canCreateSession={{this.canCreateSession}}
   @canUpdateCourse={{this.canUpdateCourse}}
   @sortBy={{this.sortSessionsBy}}
-  @setSortBy={{action (mut this.sortSessionsBy)}}
+  @setSortBy={{fn (mut this.sortSessionsBy)}}
   @filterBy={{this.filterSessionsBy}}
-  @setFilterBy={{action (mut this.filterSessionsBy)}}
+  @setFilterBy={{fn (mut this.filterSessionsBy)}}
 />

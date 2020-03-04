@@ -1,9 +1,9 @@
 import Mixin from '@ember/object/mixin';
+import { action } from '@ember/object';
 
 export default Mixin.create({
-  actions: {
-    loadCourse(newCourse){
-      this.transitionToRoute('course', newCourse);
-    }
+  @action
+  loadCourse(newCourse){
+    this.transitionToRoute('course', newCourse);
   }
 });
