@@ -1,5 +1,5 @@
 import Mixin from '@ember/object/mixin';
-import { computed } from '@ember/object';
+import { computed, action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { all } from 'rsvp';
 import moment from 'moment';
@@ -109,122 +109,131 @@ export default Mixin.create({
     });
   },
 
-  actions: {
-    changeDate(newDate) {
-      this.set('date', moment(newDate).format('YYYY-MM-DD'));
-    },
+  @action
+  changeDate(newDate) {
+    this.set('date', moment(newDate).format('YYYY-MM-DD'));
+  },
 
-    selectEvent(event) {
-      this.transitionToRoute('events', event.slug);
-    },
+  @action
+  selectEvent(event) {
+    this.transitionToRoute('events', event.slug);
+  },
 
-    toggleMySchedule() {
-      if (this.get('mySchedule')) {
-        this.setProperties({ mySchedule: false, school: null });
-      } else {
-        this.set('mySchedule', true);
-      }
-    },
-
-    toggleShowFilters() {
-      if (this.get('showFilters')) {
-        this.setProperties({ showFilters: false, school: null, academicYear: null, courseFilters: true });
-      } else {
-        this.set('showFilters', true);
-      }
-    },
-
-    updateCohorts(cohortId) {
-      const cohortIds = this.cohorts;
-
-      if (cohortIds) {
-        const idArray = cohortIds.split(',');
-
-        if (idArray.includes(cohortId)) {
-          idArray.removeObject(cohortId);
-          this.set('cohorts', idArray.join(','));
-        } else {
-          this.set('cohorts', cohortIds + `,${cohortId}`);
-        }
-      } else {
-        this.set('cohorts', cohortId);
-      }
-    },
-
-    updateCourseLevels(level) {
-      const id = level.toString();
-      const levels = this.courseLevels;
-
-      if (levels) {
-        const idArray = levels.split(',');
-
-        if (idArray.includes(id)) {
-          idArray.removeObject(id);
-          this.set('courseLevels', idArray.join(','));
-        } else {
-          this.set('courseLevels', levels + `,${id}`);
-        }
-      } else {
-        this.set('courseLevels', id);
-      }
-    },
-
-    updateCourses(courseId) {
-      const courseIds = this.courses;
-
-      if (courseIds) {
-        const idArray = courseIds.split(',');
-
-        if (idArray.includes(courseId)) {
-          idArray.removeObject(courseId);
-          this.set('courses', idArray.join(','));
-        } else {
-          this.set('courses', courseIds + `,${courseId}`);
-        }
-      } else {
-        this.set('courses', courseId);
-      }
-    },
-
-    updateSessionTypes(sessionTypeId) {
-      const sessionTypeIds = this.sessionTypes;
-
-      if (sessionTypeIds) {
-        const idArray = sessionTypeIds.split(',');
-
-        if (idArray.includes(sessionTypeId)) {
-          idArray.removeObject(sessionTypeId);
-          this.set('sessionTypes', idArray.join(','));
-        } else {
-          this.set('sessionTypes', sessionTypeIds + `,${sessionTypeId}`);
-        }
-      } else {
-        this.set('sessionTypes', sessionTypeId);
-      }
-    },
-
-    updateTerms(term) {
-      const termId = term.id;
-      const termIds = this.terms;
-
-      if (termIds) {
-        const idArray = termIds.split(',');
-
-        if (idArray.includes(termId)) {
-          idArray.removeObject(termId);
-          this.set('terms', idArray.join(','));
-        } else {
-          this.set('terms', termIds + `,${termId}`);
-        }
-      } else {
-        this.set('terms', termId);
-      }
-    },
-
-    clearFilters() {
-      this.setProperties({
-        cohorts: '', courseLevels: '', courses: '', sessionTypes: '', terms: ''
-      });
+  @action
+  toggleMySchedule() {
+    if (this.get('mySchedule')) {
+      this.setProperties({ mySchedule: false, school: null });
+    } else {
+      this.set('mySchedule', true);
     }
+  },
+
+  @action
+  toggleShowFilters() {
+    if (this.get('showFilters')) {
+      this.setProperties({ showFilters: false, school: null, academicYear: null, courseFilters: true });
+    } else {
+      this.set('showFilters', true);
+    }
+  },
+
+  @action
+  updateCohorts(cohortId) {
+    const cohortIds = this.cohorts;
+
+    if (cohortIds) {
+      const idArray = cohortIds.split(',');
+
+      if (idArray.includes(cohortId)) {
+        idArray.removeObject(cohortId);
+        this.set('cohorts', idArray.join(','));
+      } else {
+        this.set('cohorts', cohortIds + `,${cohortId}`);
+      }
+    } else {
+      this.set('cohorts', cohortId);
+    }
+  },
+
+  @action
+  updateCourseLevels(level) {
+    const id = level.toString();
+    const levels = this.courseLevels;
+
+    if (levels) {
+      const idArray = levels.split(',');
+
+      if (idArray.includes(id)) {
+        idArray.removeObject(id);
+        this.set('courseLevels', idArray.join(','));
+      } else {
+        this.set('courseLevels', levels + `,${id}`);
+      }
+    } else {
+      this.set('courseLevels', id);
+    }
+  },
+
+  @action
+  updateCourses(courseId) {
+    const courseIds = this.courses;
+
+    if (courseIds) {
+      const idArray = courseIds.split(',');
+
+      if (idArray.includes(courseId)) {
+        idArray.removeObject(courseId);
+        this.set('courses', idArray.join(','));
+      } else {
+        this.set('courses', courseIds + `,${courseId}`);
+      }
+    } else {
+      this.set('courses', courseId);
+    }
+  },
+
+  @action
+  updateSessionTypes(sessionTypeId) {
+    const sessionTypeIds = this.sessionTypes;
+
+    if (sessionTypeIds) {
+      const idArray = sessionTypeIds.split(',');
+
+      if (idArray.includes(sessionTypeId)) {
+        idArray.removeObject(sessionTypeId);
+        this.set('sessionTypes', idArray.join(','));
+      } else {
+        this.set('sessionTypes', sessionTypeIds + `,${sessionTypeId}`);
+      }
+    } else {
+      this.set('sessionTypes', sessionTypeId);
+    }
+  },
+
+  @action
+  updateTerms(term) {
+    const termId = term.id;
+    const termIds = this.terms;
+
+    if (termIds) {
+      const idArray = termIds.split(',');
+
+      if (idArray.includes(termId)) {
+        idArray.removeObject(termId);
+        this.set('terms', idArray.join(','));
+      } else {
+        this.set('terms', termIds + `,${termId}`);
+      }
+    } else {
+      this.set('terms', termId);
+    }
+  },
+
+  @action
+  clearFilters() {
+    this.setProperties({
+      cohorts: '', courseLevels: '', courses: '', sessionTypes: '', terms: ''
+    });
   }
+
 });
