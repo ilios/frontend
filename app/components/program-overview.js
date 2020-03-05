@@ -1,5 +1,4 @@
 import Component from '@ember/component';
-import EmberObject, { computed } from '@ember/object';
 import { reject } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
@@ -22,18 +21,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   program: null,
   shortTitle: null,
 
-  durationOptions: computed({
-    get() {
-      const arr = [];
-      for (let i = 1; i <= 10; i++) {
-        arr.pushObject(EmberObject.create({
-          id: i,
-          title: i
-        }));
-      }
-      return arr;
-    }
-  }),
+  durationOptions: null,
+
+  init() {
+    this._super(...arguments);
+    this.durationOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  },
 
   didReceiveAttrs() {
     this._super(...arguments);
@@ -75,6 +68,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     revertDurationChanges() {
       this.set('duration', this.program.get('duration'));
+    },
+
+    setDuration(event) {
+      this.set('duration', Number(event.target.value));
     }
   }
 });

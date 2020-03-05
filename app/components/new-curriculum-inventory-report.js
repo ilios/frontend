@@ -68,7 +68,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     cancel() {
       this.cancel();
-    }
+    },
+
+    setSelectedYear(event) {
+      const id = Number(event.target.value);
+      const year = this.years.findBy('id', id);
+      this.set('selectedYear', year);
+    },
   },
 
   keyUp(event) {

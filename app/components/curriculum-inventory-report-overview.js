@@ -171,6 +171,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     transitionToRollover() {
       this.router.transitionTo('curriculumInventoryReport.rollover', this.report);
       scrollTo('.rollover-form');
-    }
+    },
+
+    updateYear({ target }) {
+      this.set('year', Number(target.value));
+    },
   }
 });

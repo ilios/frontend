@@ -41,14 +41,11 @@
     <label>
       {{t "general.academicYear"}}:
     </label>
-    <OneWaySelect
-      @value={{selectedYear}}
-      @options={{years}}
-      @optionValuePath="id"
-      @optionLabelPath="title"
-      @disabled={{isSaving}}
-      @update={{action (mut selectedYear)}}
-    />
+    <select disabled={{this.isSaving}} {{on "change" (action "setSelectedYear")}}>
+      {{#each this.years as |year|}}
+        <option value={{year.id}} selected={{eq year.id this.selectedYear.id}}>{{year.title}}</option>
+      {{/each}}
+    </select>
   </div>
   <div class="buttons">
     <button

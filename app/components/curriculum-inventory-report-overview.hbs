@@ -107,13 +107,11 @@
           @save={{action "changeYear"}}
           @close={{action "revertYearChanges"}}
         >
-          {{one-way-select
-            year
-            options=yearOptions
-            optionTargetPath="id"
-            optionLabelPath="title"
-            update=(action (mut year))
-          }}
+          <select {{on "change" (action "updateYear")}}>
+            {{#each this.yearOptions as |obj|}}
+              <option value={{obj.id}} selected={{eq obj.id this.year}}>{{obj.title}}</option>
+            {{/each}}
+          </select>
         </EditableField>
       {{else}}
         <span>

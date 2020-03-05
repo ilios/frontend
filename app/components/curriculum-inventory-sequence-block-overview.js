@@ -219,9 +219,9 @@ export default Component.extend({
       block.save();
     },
 
-    setAcademicLevel(id) {
-      const levels = this.academicLevels;
-      const level = levels.findBy('id', id);
+    setAcademicLevel(event) {
+      const id = event.target.value;
+      const level = this.academicLevels.findBy('id', id);
       this.set('academicLevel', level);
     },
 
@@ -300,7 +300,21 @@ export default Component.extend({
       return block.save().then(() => {
         this.set('isManagingSessions', false);
       });
-    }
+    },
+
+    async updateCourse(event) {
+      const value = event.target.value;
+      if (!value) {
+        this.set('course', null);
+      } else {
+        const linkableCourses = await this.linkableCourses;
+        const selectedCourse = linkableCourses.findBy('id', value);
+        this.set('course', selectedCourse);
+      }
+    },
+    async updateOrderInSequence(event) {
+      this.set('orderInSequence', event.target.value);
+    },
   },
 
   loadAttr: task(function* (sequenceBlock) {

@@ -26,15 +26,15 @@
       <label>
         {{t "general.course"}}:
       </label>
-      <OneWaySelect
-        @value={{course}}
-        @options={{sort-by "title" (await linkableCourses)}}
-        @optionValuePath="id"
-        @optionLabelPath="title"
-        @update={{action (mut course)}}
-        @prompt={{t "general.selectCourse"}}
-        @promptIsSelectable={{true}}
-      />
+      <select
+        disabled={{this.saveCourseChange.isRunning}}
+        {{on "change" (action "setCourse")}}
+      >
+        <option value="" selected={{is-empty this.course}}>{{t "general.selectCourse"}}</option>
+        {{#each (sort-by "title" (await this.linkableCourses)) as |obj|}}
+          <option value={{obj.id}} selected={{eq obj this.course}}>{{obj.title}}</option>
+        {{/each}}
+      </select>
       {{#if course}}
         <span class="details">
           {{t "general.level"}}:
@@ -64,13 +64,11 @@
       <label>
         {{t "general.required"}}:
       </label>
-      <OneWaySelect
-        @value={{required}}
-        @options={{requiredOptions}}
-        @optionValuePath="id"
-        @optionLabelPath="title"
-        @update={{action (mut required)}}
-      />
+      <select {{on "change" (action "setRequired")}}>
+        {{#each requiredOptions as |obj|}}
+          <option value={{obj.id}} selected={{eq obj.id this.required.id}}>{{obj.title}}</option>
+        {{/each}}
+      </select>
     </div>
     <div class="item track">
       <label>
@@ -188,36 +186,32 @@
       <label>
         {{t "general.academicLevel"}}:
       </label>
-      <OneWaySelect
-        @value={{academicLevel}}
-        @options={{sort-by "level" (await academicLevels)}}
-        @optionValuePath="id"
-        @optionLabelPath="name"
-        @update={{action (mut academicLevel)}}
-      />
+      <select {{on "change" (action "setAcademicLevel")}}>
+        {{#each (sort-by "level" this.academicLevels) as |obj|}}
+          <option value={{obj.id}} selected={{eq obj.id this.academicLevel.id}}>{{obj.name}}</option>
+        {{/each}}
+      </select>
     </div>
     <div class="item child-sequence-order">
       <label>
         {{t "general.childSequenceOrder"}}:
       </label>
-      <OneWaySelect
-        @value={{childSequenceOrder}}
-        @options={{childSequenceOrderOptions}}
-        @optionValuePath="id"
-        @optionLabelPath="title"
-        @update={{action (mut childSequenceOrder)}}
-      />
+      <select {{on "change" (action "setChildSequenceOrder")}}>
+        {{#each this.childSequenceOrderOptions as |obj|}}
+          <option value={{obj.id}} selected={{eq obj.id this.childSequenceOrder.id}}>{{obj.title}}</option>
+        {{/each}}
+      </select>
     </div>
     {{#if isInOrderedSequence}}
       <div class="item order-in-sequence">
         <label>
           {{t "general.orderInSequence"}}:
         </label>
-        <OneWaySelect
-          @value={{orderInSequence}}
-          @options={{orderInSequenceOptions}}
-          @update={{action (mut orderInSequence)}}
-        />
+        <select {{on "change" (action "setOrderInSequence")}}>
+          {{#each this.orderInSequenceOptions as |val|}}
+            <option value={{val}} selected={{eq val this.orderInSequence}}>{{val}}</option>
+          {{/each}}
+        </select>
       </div>
     {{/if}}
     <div class="buttons">
