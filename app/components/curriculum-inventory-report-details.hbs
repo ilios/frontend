@@ -35,6 +35,7 @@
 {{else}}
   <LeadershipCollapsed
     @title={{t "general.curriculumInventoryReportLeadership"}}
+    @showAdministrators={{true}}
     @showDirectors={{false}}
     @administratorsCount={{has-many-length report "administrators"}}
     @expand={{action setLeadershipDetails true}}
