@@ -51,6 +51,8 @@
   {{else}}
     <LeadershipCollapsed
       @title={{t "general.schoolLeadership"}}
+      @showAdministrators={{true}}
+      @showDirectors={{true}}
       @directorsCount={{has-many-length school "directors"}}
       @administratorsCount={{has-many-length school "administrators"}}
       @expand={{action setSchoolLeadershipDetails true}}

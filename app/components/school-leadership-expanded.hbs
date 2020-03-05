@@ -29,6 +29,8 @@
       <LeadershipManager
         @directors={{await directors}}
         @administrators={{await administrators}}
+        @showAdministrators={{true}}
+        @showDirectors={{true}}
         @removeDirector={{action "removeDirector"}}
         @addDirector={{action "addDirector"}}
         @removeAdministrator={{action "removeAdministrator"}}
@@ -38,6 +40,8 @@
       <LeadershipList
         @directors={{await directors}}
         @administrators={{await administrators}}
+        @showAdministrators={{true}}
+        @showDirectors={{true}}
       />
     {{/if}}
   {{else}}
