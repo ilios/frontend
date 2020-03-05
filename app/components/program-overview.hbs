@@ -50,13 +50,11 @@
           @save={{action "changeDuration"}}
           @close={{action "revertDurationChanges"}}
         >
-          {{one-way-select
-            duration
-            options=durationOptions
-            optionTargetPath="id"
-            optionLabelPath="title"
-            update=(action (mut duration))
-          }}
+          <select {{on "change" (action "setDuration")}}>
+            {{#each durationOptions as |val|}}
+              <option value={{val}} selected={{eq val this.duration}}>{{val}}</option>
+            {{/each}}
+          </select>
         </EditableField>
       {{else}}
         {{duration}}

@@ -181,10 +181,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.cancel();
     },
 
-    changeRequired(required) {
-      this.set('required', required);
-    },
-
     changeTrack(track) {
       this.set('track', track);
     },
@@ -199,7 +195,38 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     clearDates() {
       this.setProperties({ endDate: null, startDate: null });
-    }
+    },
+
+    async setCourse(event) {
+      const value = event.target.value;
+      if (!value) {
+        this.set('course', null);
+      } else {
+        const linkableCourses = await this.linkableCourses;
+        const selectedCourse = linkableCourses.findBy('id', value);
+        this.set('course', selectedCourse);
+      }
+    },
+
+    setRequired(event) {
+      const value = Number(event.target.value);
+      const required = this.requiredOptions.findBy('id', value);
+      this.set('required', required);
+    },
+
+    setAcademicLevel(event) {
+      const id = event.target.value;
+      const level = this.academicLevels.findBy('id', id);
+      this.set('academicLevel', level);
+    },
+    setChildSequenceOrder(event) {
+      const id = Number(event.target.value);
+      const childSequenceOrder = this.childSequenceOrderOptions.findBy('id', id);
+      this.set('childSequenceOrder', childSequenceOrder);
+    },
+    setOrderInSequence(event) {
+      this.set('orderInSequence', Number(event.target.value));
+    },
   },
 
   keyUp(event) {

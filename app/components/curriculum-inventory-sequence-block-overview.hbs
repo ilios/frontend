@@ -13,16 +13,15 @@
             close=(action "revertCourseChanges")
             clickPrompt=(t "general.selectCourse")
           }}
-            {{one-way-select
-              course
-              prompt=(t "general.selectCourse")
-              promptIsSelectable=true
-              options=(sort-by "title" (await linkableCourses))
-              optionValuePath="id"
-              optionLabelPath="title"
-              disabled=saveCourseChange.isRunning
-              update=(action (mut course))
-            }}
+            <select
+              disabled={{this.saveCourseChange.isRunning}}
+              {{on "change" (action "updateCourse")}}
+            >
+              <option value="" selected={{is-empty this.course}}>{{t "general.selectCourse"}}</option>
+              {{#each (sort-by "title" (await this.linkableCourses)) as |obj|}}
+                <option value={{obj.id}} selected={{eq obj this.course}}>{{obj.title}}</option>
+              {{/each}}
+            </select>
           {{/editable-field}}
         {{else}}
           <span data-test-course-title>{{if course course.title (t "general.notApplicableAbbr")}}</span>
@@ -178,11 +177,11 @@
               save=(action "changeOrderInSequence")
               close=(action "revertOrderInSequenceChanges")
             }}
-              {{one-way-select
-                value=orderInSequence
-                options=orderInSequenceOptions
-                update=(action (mut orderInSequence))
-              }}
+              <select {{on "change" (action "updateOrderInSequence")}}>
+                {{#each this.orderInSequenceOptions as |val|}}
+                  <option value={{val}} selected={{eq val this.orderInSequence}}>{{val}}</option>
+                {{/each}}
+              </select>
             {{/editable-field}}
           {{else}}
             {{sequenceBlock.orderInSequence}}
@@ -233,13 +232,11 @@
           save=(action "changeAcademicLevel")
           close=(action "revertAcademicLevelChanges")
         }}
-          {{one-way-select
-            academicLevel.id
-            options=(sort-by "level" academicLevels)
-            optionTargetPath="id"
-            optionLabelPath="name"
-            update=(action "setAcademicLevel")
-          }}
+          <select {{on "change" (action "setAcademicLevel")}}>
+            {{#each (sort-by "level" this.academicLevels) as |obj|}}
+              <option value={{obj.id}} selected={{eq obj.id this.academicLevel.id}}>{{obj.name}}</option>
+            {{/each}}
+          </select>
         {{/editable-field}}
       {{else}}
         <span>{{academicLevel.name}}</span>

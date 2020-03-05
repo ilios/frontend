@@ -64,7 +64,12 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   actions: {
     changeName(newName){
       this.set('name', newName);
-    }
+    },
+    setSelectedYear(event) {
+      const id = Number(event.target.value);
+      const year = this.years.findBy('id', id);
+      this.set('selectedYear', year);
+    },
   },
 
   save: task(function* () {
