@@ -248,7 +248,12 @@
                     {{t "general.duePriorTo"}}:
                   {{/if}}
                 </label>
-                <button class="post-requisite-edit" {{on "click" (toggle "isEditingPostRequisite" this)}} data-test-edit>
+                <button
+                  class="post-requisite-edit"
+                  type="button"
+                  {{on "click" (toggle "isEditingPostRequisite" this)}}
+                  data-test-edit
+                >
                   {{#if @session.hasPostrequisite}}
                     {{@session.postrequisite.title}}
                   {{else}}

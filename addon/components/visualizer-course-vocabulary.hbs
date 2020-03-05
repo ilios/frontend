@@ -9,7 +9,7 @@
         @name="horz-bar"
         @isIcon={{@isIcon}}
         @data={{this.data}}
-        @click={{action "barClick"}}
+        @click={{fn this.barClick}}
         @hover={{perform this.barHover}}
         @leave={{perform this.barHover}} as |chart|
       >

@@ -82,6 +82,7 @@
     {{#if this.hasMoreSearchResults}}
       <button
         disabled={{if this.searchMore.isRunning true}}
+        type="button"
         {{on "click" (perform this.searchMore)}}
         data-test-show-more
       >

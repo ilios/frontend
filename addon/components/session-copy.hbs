@@ -78,6 +78,7 @@
   <div class="buttons">
     <button
       class="done text"
+      type="button"
       disabled={{if
         (or
           this.save.isRunning
@@ -95,7 +96,7 @@
       {{/if}}
     </button>
     <LinkTo @route="session" @model={{@session}}>
-      <button class="cancel text">
+      <button class="cancel text" type="button">
         {{t "general.cancel"}}
       </button>
     </LinkTo>

@@ -4,6 +4,7 @@
     {{#if this.showDisplayModeToggle}}
       <button
         class={{if this.groupByCompetencies "active"}}
+        type="button"
         {{on "click" (set this.groupByCompetencies (not this.groupByCompetencies))}}
       >
         {{#if this.groupByCompetencies}}

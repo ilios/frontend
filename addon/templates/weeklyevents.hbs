@@ -2,6 +2,6 @@
 <WeeklyEvents
   @year={{this.year}}
   @expandedWeeks={{this.expandedWeeks}}
-  @setYear={{action (mut this.year)}}
-  @toggleOpenWeek={{action "toggleOpenWeek"}}
+  @setYear={{fn (mut this.year)}}
+  @toggleOpenWeek={{fn this.toggleOpenWeek}}
 />

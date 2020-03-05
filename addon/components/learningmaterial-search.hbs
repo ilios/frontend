@@ -63,6 +63,7 @@
         <li>
           <button
             disabled={{if this.searchMore.isRunning true}}
+            type="button"
             {{on "click" (perform this.searchMore)}}
           >
             {{#if this.searchMore.isRunning}}

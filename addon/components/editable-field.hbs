@@ -30,6 +30,7 @@
                 <FaIcon @icon="ellipsis-h" @transform="down-6" />
                 <button
                   class="expand-text-button"
+                  type="button"
                   aria-label={{t "general.expand"}}
                   data-test-expand
                   {{on "click" expand}}
@@ -62,6 +63,7 @@
         <span class="actions">
           <button
             disabled={{@isSaveDisabled}}
+            type="button"
             class="done"
             title={{t "general.save"}}
             {{on "click" (perform this.saveData)}}
@@ -73,6 +75,7 @@
           </button>
           <button
             class="cancel"
+            type="button"
             title={{t "general.cancel"}}
             {{on "click" (perform this.closeEditor)}}
           >

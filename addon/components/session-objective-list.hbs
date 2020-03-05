@@ -7,7 +7,11 @@
     />
   {{else if (get (await this.objectives) "length")}}
     {{#if (and @editable (await this.hasMoreThanOneObjective))}}
-      <button class="sort-materials-btn" {{on "click" (fn (mut this.isSorting) true)}}>
+      <button
+        class="sort-materials-btn"
+        type="button"
+        {{on "click" (fn (mut this.isSorting) true)}}
+      >
         {{t "general.sortObjectives"}}
       </button>
     {{/if}}
@@ -49,11 +53,16 @@
                   {{t "general.confirmObjectiveRemoval"}}
                   <br>
                   <div class="confirm-buttons">
-                    <button class="remove text" {{on "click" (fn (action "remove") objective)}}>
+                    <button
+                      class="remove text"
+                      type="button"
+                      {{on "click" (fn (action "remove") objective)}}
+                    >
                       {{t "general.yes"}}
                     </button>
                     <button
                       class="done text"
+                      type="button"
                       {{on "click" (fn (action "cancelRemove") objective)}}
                     >
                       {{t "general.cancel"}}
@@ -68,7 +77,7 @@
     </table>
   {{/if}}
 {{else}}
-  {{! template-lint-disable unused-block-params }}
+  {{! template-lint-disable no-unused-block-params }}
   {{#each (repeat this.session.objectives.length) as |empty|}}
     <div>
       <LoadingSpinner />

@@ -183,10 +183,10 @@
   </div>
   <div class="content">
     {{#if (get (await this.overridableSessions) "length")}}
-      <button disabled={{await this.allSessionsAsIs}} {{on "click" (action "publishAllAsIs")}}>
+      <button type="button" disabled={{await this.allSessionsAsIs}} {{on "click" (action "publishAllAsIs")}}>
         {{t "general.publishAsIs"}}
       </button>
-      <button disabled={{this.noSessionsAsIs}} {{on "click" (action "publishNoneAsIs")}}>
+      <button type="button" disabled={{this.noSessionsAsIs}} {{on "click" (action "publishNoneAsIs")}}>
         {{t "general.markAsScheduled"}}
       </button>
       <table>
@@ -240,6 +240,7 @@
                     <span
                       class="clickable"
                       role="button"
+                      type="button"
                       {{on "click" (fn (action "toggleSession") session)}}
                     >
                       {{t "general.markAsScheduled"}}
@@ -324,7 +325,7 @@
       ignoreCount=(await this.ignoreCount)
     }}
   </p>
-  <button {{on "click" (action "save")}}>
+  <button type="button" {{on "click" (action "save")}}>
     {{t "general.go"}}
   </button>
 </div>

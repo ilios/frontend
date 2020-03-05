@@ -42,7 +42,11 @@
       {{/if}}
     {{/each}}
   {{else if @editable}}
-    <button role="button" {{on "click" (fn @manageParents @objective)}}>
+    <button
+      role="button"
+      type="button"
+      {{on "click" (fn @manageParents @objective)}}
+    >
       {{t "general.addNew"}}
     </button>
   {{else}}
@@ -69,7 +73,7 @@
     {{else}}
       <li>
         {{#if @editable}}
-          <button {{on "click" (fn @manageDescriptors @objective)}}>
+          <button type="button" {{on "click" (fn @manageDescriptors @objective)}}>
             {{t "general.addNew"}}
           </button>
         {{else}}

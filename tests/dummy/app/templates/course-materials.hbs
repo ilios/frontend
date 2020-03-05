@@ -8,6 +8,6 @@
   @course={{this.model}}
   @courseSort={{or this.courseSort "title"}}
   @sessionSort={{or this.sessionSort "title"}}
-  @onCourseSort={{action (mut this.courseSort)}}
-  @onSessionSort={{action (mut this.sessionSort)}}
+  @onCourseSort={{fn (mut this.courseSort)}}
+  @onSessionSort={{fn (mut this.sessionSort)}}
 />

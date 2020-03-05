@@ -56,6 +56,7 @@
       <span
         class="clickable edit"
         role="button"
+        type="button"
         {{on "click" (toggle "isEditing" this)}}
       >
         <FaIcon @icon="edit" class="enabled" />
@@ -78,10 +79,10 @@
         }}
         <br>
         <div class="confirm-buttons">
-          <button class="remove text" {{on "click" (action "remove")}}>
+          <button type="button" class="remove text" {{on "click" (action "remove")}}>
             {{t "general.yes"}}
           </button>
-          <button class="cancel text" {{on "click" (action "cancelRemove")}}>
+          <button type="button" class="cancel text" {{on "click" (action "cancelRemove")}}>
             {{t "general.cancel"}}
           </button>
         </div>

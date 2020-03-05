@@ -28,10 +28,10 @@
   {{/if}}
   <div class="detail-objectives-actions">
     {{#if this.isManaging class="horizontal"}}
-      <button class="bigadd" {{on "click" (action "save")}}>
+      <button class="bigadd" type="button" {{on "click" (action "save")}}>
         <FaIcon @icon="check" />
       </button>
-      <button class="bigcancel" {{on "click" (action "cancel")}}>
+      <button class="bigcancel" type="button" {{on "click" (action "cancel")}}>
         <FaIcon @icon="undo" />
       </button>
     {{else if @editable}}

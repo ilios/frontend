@@ -17,7 +17,7 @@
       {{/if}}
       {{#if (and @canUpdateCourse (gt this.sessionsCount 0))}}
         <LinkTo @route="course.publishall" @model={{@course}}>
-          <button>
+          <button type="button">
             {{t "general.publishAllSessions" sessionCount=this.sessionsCount}}
           </button>
         </LinkTo>

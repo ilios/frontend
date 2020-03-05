@@ -1,19 +1,19 @@
 <div class="time-picker">
-  <select class="hour" {{on "change" (action "changeHour" value="target.value")}}>
+  <select class="hour" {{on "change" (fn this.changeHour)}}>
     {{#each this.hours as |listHour|}}
       <option value={{listHour}} selected={{is-equal listHour this.hour}}>
         {{listHour}}
       </option>
     {{/each}}
   </select>
-  <select class="minute" {{on "change" (action "changeMinute" value="target.value")}}>
+  <select class="minute" {{on "change" (fn this.changeMinute)}}>
     {{#each this.minutes as |listMinute|}}
       <option value={{listMinute}} selected={{is-equal listMinute this.minute}}>
         {{listMinute}}
       </option>
     {{/each}}
   </select>
-  <select class="ampm" {{on "change" (action "changeAmPm" value="target.value")}}>
+  <select class="ampm" {{on "change" (fn this.changeAmPm)}}>
     {{#each this.ampms as |listAmPm|}}
       <option value={{listAmPm}} selected={{is-equal listAmPm this.ampm}}>
         {{listAmPm}}

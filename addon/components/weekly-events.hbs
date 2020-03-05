@@ -12,7 +12,7 @@
       @collapsed={{not (contains week @expandedWeeks)}}
       @year={{@year}}
       @week={{week}}
-      @toggleCollapsed={{action @toggleOpenWeek week}}
+      @toggleCollapsed={{fn @toggleOpenWeek week}}
     />
   {{/each}}
   <div class="year">

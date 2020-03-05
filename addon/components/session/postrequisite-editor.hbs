@@ -9,7 +9,11 @@
       <strong data-test-label>{{t "general.duePriorTo"}}:</strong>
       {{#if this.selectedPostrequisite}}
         <span data-test-title>{{this.selectedPostrequisite.title}}</span>
-        <button {{on "click" (set this.selectedPostrequisite null)}} class="remove" data-test-remove>
+        <button {{on "click" (set this.selectedPostrequisite null)}}
+          class="remove"
+          type="button"
+          data-test-remove
+        >
           <FaIcon @icon="times" @title={{t "general.remove"}} />
         </button>
       {{else}}
@@ -69,6 +73,7 @@
   <div class="buttons">
     <button
       class="done"
+      type="button"
       {{on "click" (perform this.save)}}
        data-test-save
     >
@@ -78,7 +83,12 @@
         {{t "general.done"}}
       {{/if}}
     </button>
-    <button class="cancel" {{on "click" @close}} data-test-cancel>
+    <button
+      class="cancel"
+      type="button"
+      {{on "click" @close}}
+      data-test-cancel
+    >
       {{t "general.cancel"}}
     </button>
   </div>

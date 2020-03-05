@@ -111,6 +111,7 @@
     </div>
     <div class="buttons">
       <button
+        type="button"
         disabled={{if
           (or
             this.isSaving
@@ -129,7 +130,7 @@
         {{/if}}
       </button>
       <LinkTo @route="course" @model={{@course}}>
-        <button class="cancel text">
+        <button class="cancel text" type="button">
           {{t "general.cancel"}}
         </button>
       </LinkTo>

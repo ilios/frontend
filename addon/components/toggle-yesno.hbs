@@ -10,7 +10,7 @@
     role="button"
     data-on={{t "general.yes"}}
     data-off={{t "general.no"}}
-    {{on "click" (action "click")}}
+    {{on "click" (fn this.click)}}
   ></span>
-  <span class="switch-handle" role="button" {{on "click" this.click}} data-test-handle></span>
+  <span class="switch-handle" role="button" {{on "click" (fn this.click)}} data-test-handle></span>
 </span>

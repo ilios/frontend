@@ -2,6 +2,7 @@
   {{! template-lint-disable no-inline-styles }}
   style={{this.style}}
   class="weekly-calendar-event day-{{@day}} {{if this.isIlm "ilm"}} {{if this.clickable "clickable"}}"
+  type="button"
   {{on "click" (if this.clickable (fn @selectEvent) (noop))}}
   data-test-calendar-event
   data-test-weekly-calendar-event

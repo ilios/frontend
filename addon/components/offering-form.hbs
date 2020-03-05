@@ -40,7 +40,9 @@
           <div
             data-test-current-timezone
             class="editable clickable current-timezone"
-            role="button" onclick={{action (mut this.isEditingTimezone) true}}
+            role="button"
+            type="button"
+            onclick={{action (mut this.isEditingTimezone) true}}
           >
             {{this.formattedCurrentTimezone}}
           </div>
@@ -62,8 +64,9 @@
             </select>
             <span class="actions">
               <button
-                  class="cancel"
-                  title={{t "general.cancel"}}
+                class="cancel"
+                title={{t "general.cancel"}}
+                type="button"
                 {{action (mut this.isEditingTimezone) false}}
               >
                 <FaIcon @icon="times" />
@@ -245,6 +248,7 @@
       <div class="buttons">
         <button
           class="done text"
+          type="button"
           disabled={{or this.saveOffering.isRunning}}
           {{on "click" (perform this.validateThenSaveOffering)}}
         >
@@ -254,7 +258,11 @@
             {{t "general.done"}}
           {{/if}}
         </button>
-        <button class="cancel text" {{on "click" @close}}>
+        <button
+          class="cancel text"
+          type="button"
+          {{on "click" @close}}
+        >
           {{t "general.cancel"}}
         </button>
       </div>

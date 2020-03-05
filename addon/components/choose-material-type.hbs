@@ -8,6 +8,7 @@
     aria-label={{t "general.add"}}
     role="menuitem"
     class="toggle new-material-type"
+    type="button"
     aria-haspopup="true"
     aria-expanded={{if this.isOpen "true" "false"}}
     data-test-toggle
@@ -26,6 +27,7 @@
       {{#each @types as |type|}}
         <button
           role="menuitemradio"
+          type="button"
           tabindex="-1"
           data-test-item
           {{on "click" (fn @choose type)}}

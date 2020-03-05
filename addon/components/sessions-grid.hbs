@@ -21,14 +21,14 @@
             <FaIcon
               @icon="caret-down"
               class="link"
-              @click={{action @closeSession obj.session}}
+              @click={{fn @closeSession obj.session}}
             />
           {{else}}
             <FaIcon
               @icon="caret-right"
               class={{if (gt obj.offeringCount 0) "link" "disabled"}}
               @title={{if (eq obj.offeringCount 0) (t "general.noOfferings")}}
-              @click={{action this.expandSession obj}}
+              @click={{fn this.expandSession obj}}
             />
           {{/if}}
         </span>
@@ -112,7 +112,7 @@
               @ariaHidden={{false}}
               class="clickable remove enabled"
               @title={{t "general.remove"}}
-              @click={{action "confirmDelete" obj.session.id}}
+              @click={{fn this.confirmDelete obj.session.id}}
             />
           {{else}}
             <FaIcon
@@ -130,6 +130,7 @@
           <div class="confirm-buttons">
             <button
               class="cancel"
+              type="button"
               data-test-yes
               disabled={{this.removeSession.isRunning}}
               {{on "click" (perform this.removeSession obj.session)}}
@@ -140,7 +141,11 @@
                 {{t "general.yes"}}
               {{/if}}
             </button>
-            <button class="done" {{on "click" (fn (action "cancelDelete") obj.session.id)}}>
+            <button
+              class="done"
+              type="button"
+              {{on "click" (fn this.cancelDelete obj.session.id)}}
+            >
               {{t "general.cancel"}}
             </button>
           </div>
