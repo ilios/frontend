@@ -1,31 +1,36 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
-export default Controller.extend({
-  iliosConfig: service(),
-  session: service(),
-  jwt: null,
-  error: null,
-  actions: {
-    async login(){
-      this.set('error', null);
-      const jwt = this.get('jwt');
-      const iliosConfig = this.get('iliosConfig');
+export default class LoginController extends Controller {
+  @service iliosConfig;
+  @service session;
+  @tracked jwt =  null;
+  @tracked error = null;
 
-      if (jwt) {
-        const apiHost = iliosConfig.get('apiHost');
-        const url = `${apiHost}/auth/token`;
-        const response = await fetch(url, {
-          headers: {
-            'X-JWT-Authorization': `Token ${jwt}`
-          }
-        });
-        if (response.ok) {
-          const obj = await response.json();
-          const authenticator = 'authenticator:ilios-jwt';
-          this.get('session').authenticate(authenticator, {jwt: obj.jwt});
+  @action
+  updateJwt(event) {
+    this.jwt = event.target.value;
+  }
+
+  @action
+  async login(){
+    this.error = null;
+
+    if (this.jwt) {
+      const apiHost = this.iliosConfig.get('apiHost');
+      const url = `${apiHost}/auth/token`;
+      const response = await fetch(url, {
+        headers: {
+          'X-JWT-Authorization': `Token ${this.jwt}`
         }
+      });
+      if (response.ok) {
+        const obj = await response.json();
+        const authenticator = 'authenticator:ilios-jwt';
+        this.session.authenticate(authenticator, {jwt: obj.jwt});
       }
     }
   }
-});
+}
