@@ -20,7 +20,7 @@ export default class SessionsGridOffering extends Component {
   @action
   close() {
     this.isEditing = false;
-    scrollIntoView(this.element);
+    scrollIntoView(this.row);
   }
 
   @dropTask

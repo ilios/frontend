@@ -3,6 +3,7 @@
   data-test-sessions-grid-offering
   {{did-insert this.revertRoomChanges}}
   {{did-update this.revertRoomChanges}}
+  {{ref this "row"}}
 >
   {{#if (and this.isEditing (is-fulfilled @offering.session.course.cohorts))}}
     <td colspan="10" class="expanded-offering-manager">
