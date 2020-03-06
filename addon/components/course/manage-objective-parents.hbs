@@ -52,7 +52,7 @@
                     @isSelected={{contains objective @selected}}
                     @add={{
                       pipe
-                        (if (not this.selectedCohort.allowMultipleParents) (fn @removeFromCohort this.selectedCohort))
+                        (unless this.selectedCohort.allowMultipleParents (fn @removeFromCohort this.selectedCohort))
                         (fn @add objective)
                       }}
                     @remove={{fn @remove objective}}

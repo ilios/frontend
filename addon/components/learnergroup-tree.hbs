@@ -1,6 +1,6 @@
 <li
   hidden={{this.isHidden}}
-  class="{{if this.hasChildren "strong" "em"}} {{if (not this.selectable) "disabled"}}"
+  class="{{if this.hasChildren "strong" "em"}} {{unless this.selectable "disabled"}}"
   data-test-learnergroup-tree
   {{did-insert (perform this.load) @learnerGroup @selectedGroups @filter}}
   {{did-update (perform this.load) @learnerGroup @selectedGroups @filter}}

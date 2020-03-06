@@ -1,5 +1,5 @@
 <div
-  class="visualizer-course-vocabulary {{if (not @isIcon) "not-icon"}}"
+  class="visualizer-course-vocabulary {{unless @isIcon "not-icon"}}"
   {{did-insert (perform this.load) @course @vocabulary}}
   {{did-update (perform this.load) @course @vocabulary}}
 >

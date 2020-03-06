@@ -12,7 +12,7 @@
   {{/if}}
   <CourseHeader @course={{@course}} @editable={{@editable}} />
   <CourseOverview @course={{@course}} @editable={{@editable}} />
-  {{#if (not @showDetails)}}
+  {{#unless @showDetails}}
     <div
       class="detail-collapsed-control"
       role="button"
@@ -44,5 +44,5 @@
         <FaIcon @icon="minus-square" class="expand-collapse-icon" />
       </span>
     </div>
-  {{/if}}
+  {{/unless}}
 </section>

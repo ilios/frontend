@@ -47,7 +47,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#if (not this.courseLearningMaterialObjects)}}
+        {{#unless this.courseLearningMaterialObjects}}
           <tr>
             <td colspan="6" align="center">
               <FaIcon @icon="spinner" class="orange" @size="2x" @spin={{true}} />
@@ -91,7 +91,7 @@
               </td>
             </tr>
           {{/each}}
-        {{/if}}
+        {{/unless}}
       </tbody>
     </table>
   </div>
@@ -167,7 +167,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#if (not this.sessionLearningMaterialObjects)}}
+        {{#unless this.sessionLearningMaterialObjects}}
           <tr>
             <td colspan="9" align="center">
               <FaIcon @icon="spinner" class="orange" @size="2x" @spin={{true}} />
@@ -221,7 +221,7 @@
               </td>
             </tr>
           {{/each}}
-        {{/if}}
+        {{/unless}}
       </tbody>
     </table>
   </div>
