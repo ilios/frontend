@@ -71,7 +71,7 @@
                 @save={{fn this.changeSessionType}}
                 @close={{fn this.revertSessionTypeChanges}}
               >
-                <select {{on "change" (action this.setSessionType value="target.value")}}>
+                <select {{on "change" (fn this.setSessionType)}}>
                   {{#each this.sortedSessionTypes as |sessionType|}}
                     <option
                       value={{sessionType.id}}

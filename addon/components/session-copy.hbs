@@ -13,7 +13,7 @@
       {{t "general.year"}}:
     </label>
     {{#if (is-fulfilled this.years)}}
-      <select {{on "change" (action "changeSelectedYear" value="target.value")}}>
+      <select {{on "change" (fn this.changeSelectedYear)}}>
         {{#each (await this.years) as |year|}}
           <option
             value={{year}}
@@ -45,7 +45,7 @@
     </label>
     {{#if (is-fulfilled this.courses)}}
       {{#if (get (await this.courses) "length")}}
-        <select {{on "change" (action (mut this.selectedCourseId) value="target.value")}}>
+        <select {{on "change" (fn this.changeSelectedCourseId)}}>
           {{#each (sort-by "title" (await this.courses)) as |course|}}
             <option
               value={{course.id}}

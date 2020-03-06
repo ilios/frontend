@@ -158,8 +158,8 @@ export default class SessionOverview extends Component {
   }
 
   @action
-  setSessionType(id){
-    this.sessionType = this.sessionTypes.findBy('id', id);
+  setSessionType(event){
+    this.sessionType = this.sessionTypes.findBy('id', event.target.value);
   }
 
   @action

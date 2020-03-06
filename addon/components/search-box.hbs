@@ -4,7 +4,7 @@
     type="search"
     value={{this.value}}
     placeholder={{@placeholder}}
-    {{on "input" (action "update" value="target.value")}}
+    {{on "input" (fn this.update)}}
     {{on "keyup" (fn this.keyUp)}}
     {{ref this "searchInput"}}
   >

@@ -17,7 +17,7 @@
     {{/if}}
   </span>
   <SortableHeading
-    @click={{action "setSortBy" "title"}}
+    @click={{fn this.setSortBy "title"}}
     @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
     @sortedAscending={{this.sortedAscending}}
     @title={{t "general.title"}}
@@ -26,7 +26,7 @@
     {{t "general.title"}}
   </SortableHeading>
   <SortableHeading
-    @click={{action "setSortBy" "sessionTypeTitle"}}
+    @click={{fn this.setSortBy "sessionTypeTitle"}}
     @sortedBy={{or
       (eq @sortBy "sessionTypeTitle")
       (eq @sortBy "sessionTypeTitle:desc")
@@ -39,7 +39,7 @@
   </SortableHeading>
   <SortableHeading
     @sortType="numeric"
-    @click={{action "setSortBy" "learnerGroupCount"}}
+    @click={{fn this.setSortBy "learnerGroupCount"}}
     @sortedBy={{or
       (eq @sortBy "learnerGroupCount")
       (eq @sortBy "learnerGroupCount:desc")
@@ -52,7 +52,7 @@
   </SortableHeading>
   <SortableHeading
     @sortType="numeric"
-    @click={{action "setSortBy" "objectiveCount"}}
+    @click={{fn this.setSortBy "objectiveCount"}}
     @sortedBy={{or (eq @sortBy "objectiveCount") (eq @sortBy "objectiveCount:desc")
     }}
     @sortedAscending={{this.sortedAscending}}
@@ -63,7 +63,7 @@
   </SortableHeading>
   <SortableHeading
     @sortType="numeric"
-    @click={{action "setSortBy" "termCount"}}
+    @click={{fn this.setSortBy "termCount"}}
     @sortedBy={{or (eq @sortBy "termCount") (eq @sortBy "termCount:desc")}}
     @sortedAscending={{this.sortedAscending}}
     @title={{t "general.terms"}}
@@ -73,7 +73,7 @@
   </SortableHeading>
   <SortableHeading
     @sortType="numeric"
-    @click={{action "setSortBy" "firstOfferingDate"}}
+    @click={{fn this.setSortBy "firstOfferingDate"}}
     @sortedBy={{or
       (eq @sortBy "firstOfferingDate")
       (eq @sortBy "firstOfferingDate:desc")
@@ -86,7 +86,7 @@
   </SortableHeading>
   <SortableHeading
     @sortType="numeric"
-    @click={{action "setSortBy" "offeringCount"}}
+    @click={{fn this.setSortBy "offeringCount"}}
     @sortedBy={{or (eq @sortBy "offeringCount") (eq @sortBy "offeringCount:desc")}}
     @sortedAscending={{this.sortedAscending}}
     @title={{t "general.offerings"}}
@@ -95,7 +95,7 @@
     {{t "general.offerings"}}
   </SortableHeading>
   <SortableHeading
-    @click={{action "setSortBy" "status"}}
+    @click={{fn this.setSortBy "status"}}
     @sortedBy={{or (eq @sortBy "status") (eq @sortBy "status:desc")}}
     @sortedAscending={{this.sortedAscending}}
     @title={{t "general.status"}}

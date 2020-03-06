@@ -1,6 +1,6 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { computed, action } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 
 import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
@@ -44,14 +44,13 @@ export default Component.extend({
     return dateBlockArray.sortBy('dateStamp');
   }),
 
-  actions: {
-    removeOffering(offering) {
-      const session = this.get('session');
-      session.get('offerings').then(offerings => {
-        offerings.removeObject(offering);
-        offering.deleteRecord();
-        offering.save();
-      });
-    },
-  }
+  @action
+  removeOffering(offering) {
+    const session = this.get('session');
+    session.get('offerings').then(offerings => {
+      offerings.removeObject(offering);
+      offering.deleteRecord();
+      offering.save();
+    });
+  },
 });

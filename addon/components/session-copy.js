@@ -5,7 +5,7 @@ import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 
 const Validations = buildValidations({
   bestSelectedCourse: [
@@ -83,12 +83,17 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     return courses.get('firstObject');
   }),
 
-  actions: {
-    changeSelectedYear(newYear){
-      this.set('selectedCourseId', null);
-      this.set('selectedYear', parseInt(newYear, 10));
-    },
+  @action
+  changeSelectedYear(event){
+    this.set('selectedCourseId', null);
+    this.set('selectedYear', parseInt(event.target.value, 10));
   },
+
+  @action
+  changeSelectedCourseId(event) {
+    this.set('selectedCourseId', event.target.value);
+  },
+
   save: task(function * (){
     yield timeout(10);
     this.send('addErrorDisplaysFor', ['selectedCourse', 'selectedYear']);

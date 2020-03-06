@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { equal } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
@@ -125,106 +125,118 @@ export default Component.extend({
     this._super(...arguments);
     this.set('sessionsToOverride', []);
   },
-  actions: {
-    toggleSession(session){
-      if(this.get('sessionsToOverride').includes(session)){
-        this.get('sessionsToOverride').removeObject(session);
-      } else{
-        this.get('sessionsToOverride').pushObject(session);
-      }
-    },
-    publishAllAsIs(){
-      this.get('overridableSessions').then(overridableSessions => {
-        overridableSessions.forEach(session => {
-          if (!this.get('sessionsToOverride').includes(session)) {
-            this.get('sessionsToOverride').pushObject(session);
-          }
-        });
-      });
-    },
-    publishNoneAsIs(){
-      this.get('overridableSessions').then(overridableSessions => {
-        overridableSessions.forEach(session => {
-          if(this.get('sessionsToOverride').includes(session)){
-            this.get('sessionsToOverride').removeObject(session);
-          }
-        });
-      });
-    },
-    save(){
-      this.set('isSaving', true);
-      const asIsSessions = this.get('sessionsToOverride');
-      const sessionsToSave = [];
-      const promises = [];
 
-      promises.pushObject(
-        new RSVPPromise(resolve => {
-          this.get('overridableSessions').then(overridableSessions => {
-            overridableSessions.forEach(session => {
-              session.set('publishedAsTbd', !asIsSessions.includes(session));
-              session.set('published', true);
-              sessionsToSave.pushObject(session);
-            });
-            resolve();
-          });
-        })
-      );
-
-      promises.pushObject(
-        new RSVPPromise(resolve => {
-          this.get('publishableSessions').then(publishableSessions => {
-            publishableSessions.forEach(session => {
-              session.set('published', true);
-              sessionsToSave.pushObject(session);
-            });
-            resolve();
-          });
-        })
-      );
-
-      all(promises).then(() => {
-        this.set('totalSessionsToSave', sessionsToSave.length);
-        this.set('currentSessionsSaved', 0);
-
-        const saveSomeSessions = (sessions) => {
-          const chunk = sessions.splice(0, 6);
-
-          all(chunk.invoke('save')).then(() => {
-            if (sessions.length){
-              this.set('currentSessionsSaved', this.get('currentSessionsSaved') + chunk.length);
-              saveSomeSessions(sessions);
-            } else {
-              this.set('isSaving', false);
-              this.saved();
-              this.get('flashMessages').success('general.savedSuccessfully');
-            }
-          });
-        };
-        saveSomeSessions(sessionsToSave);
-      });
-    },
-
-    togglePublishableCollapsed(){
-      this.set('publishableCollapsed', !this.get('publishableCollapsed'));
-    },
-    toggleUnPublishableCollapsed(){
-      this.set('unPublishableCollapsed', !this.get('unPublishableCollapsed'));
-    },
-
-    async transitionToCourse() {
-      const course = await this.course;
-      const queryParams = { courseObjectiveDetails: true, details: true };
-      this.router.transitionTo('course', course, { queryParams });
-    },
-
-    async transitionToVisualizeObjectives() {
-      const course = await this.course;
-      this.router.transitionTo('course-visualize-objectives', course);
-    },
-
-    transitionToSession(session) {
-      const queryParams = { sessionObjectiveDetails: true };
-      this.router.transitionTo('session', session, { queryParams });
+  @action
+  toggleSession(session){
+    if(this.get('sessionsToOverride').includes(session)){
+      this.get('sessionsToOverride').removeObject(session);
+    } else{
+      this.get('sessionsToOverride').pushObject(session);
     }
+  },
+
+  @action
+  publishAllAsIs(){
+    this.get('overridableSessions').then(overridableSessions => {
+      overridableSessions.forEach(session => {
+        if (!this.get('sessionsToOverride').includes(session)) {
+          this.get('sessionsToOverride').pushObject(session);
+        }
+      });
+    });
+  },
+
+  @action
+  publishNoneAsIs(){
+    this.get('overridableSessions').then(overridableSessions => {
+      overridableSessions.forEach(session => {
+        if(this.get('sessionsToOverride').includes(session)){
+          this.get('sessionsToOverride').removeObject(session);
+        }
+      });
+    });
+  },
+
+  @action
+  save(){
+    this.set('isSaving', true);
+    const asIsSessions = this.get('sessionsToOverride');
+    const sessionsToSave = [];
+    const promises = [];
+
+    promises.pushObject(
+      new RSVPPromise(resolve => {
+        this.get('overridableSessions').then(overridableSessions => {
+          overridableSessions.forEach(session => {
+            session.set('publishedAsTbd', !asIsSessions.includes(session));
+            session.set('published', true);
+            sessionsToSave.pushObject(session);
+          });
+          resolve();
+        });
+      })
+    );
+
+    promises.pushObject(
+      new RSVPPromise(resolve => {
+        this.get('publishableSessions').then(publishableSessions => {
+          publishableSessions.forEach(session => {
+            session.set('published', true);
+            sessionsToSave.pushObject(session);
+          });
+          resolve();
+        });
+      })
+    );
+
+    all(promises).then(() => {
+      this.set('totalSessionsToSave', sessionsToSave.length);
+      this.set('currentSessionsSaved', 0);
+
+      const saveSomeSessions = (sessions) => {
+        const chunk = sessions.splice(0, 6);
+
+        all(chunk.invoke('save')).then(() => {
+          if (sessions.length){
+            this.set('currentSessionsSaved', this.get('currentSessionsSaved') + chunk.length);
+            saveSomeSessions(sessions);
+          } else {
+            this.set('isSaving', false);
+            this.saved();
+            this.get('flashMessages').success('general.savedSuccessfully');
+          }
+        });
+      };
+      saveSomeSessions(sessionsToSave);
+    });
+  },
+
+  @action
+  togglePublishableCollapsed(){
+    this.set('publishableCollapsed', !this.get('publishableCollapsed'));
+  },
+
+  @action
+  toggleUnPublishableCollapsed(){
+    this.set('unPublishableCollapsed', !this.get('unPublishableCollapsed'));
+  },
+
+  @action
+  async transitionToCourse() {
+    const course = await this.course;
+    const queryParams = { courseObjectiveDetails: true, details: true };
+    this.router.transitionTo('course', course, { queryParams });
+  },
+
+  @action
+  async transitionToVisualizeObjectives() {
+    const course = await this.course;
+    this.router.transitionTo('course-visualize-objectives', course);
+  },
+
+  @action
+  transitionToSession(session) {
+    const queryParams = { sessionObjectiveDetails: true };
+    this.router.transitionTo('session', session, { queryParams });
   }
 });

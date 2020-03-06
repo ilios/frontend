@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { action } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
@@ -16,13 +17,15 @@ export default Component.extend({
       });
     }
   },
-  actions: {
-    addAdministrator(user){
-      this.add('administrators', user);
-    },
-    removeAdministrator(user){
-      this.remove('administrators', user);
-    },
+
+  @action
+  addAdministrator(user){
+    this.add('administrators', user);
+  },
+
+  @action
+  removeAdministrator(user){
+    this.remove('administrators', user);
   },
   save: task(function * (){
     yield timeout(10);

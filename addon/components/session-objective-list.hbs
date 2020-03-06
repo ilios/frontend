@@ -2,8 +2,8 @@
   {{#if this.isSorting}}
     <ObjectiveSortManager
       @subject={{this.session}}
-      @save={{action "saveSortOrder"}}
-      @cancel={{action "cancelSorting"}}
+      @save={{fn this.saveSortOrder}}
+      @cancel={{fn this.cancelSorting}}
     />
   {{else if (get (await this.objectives) "length")}}
     {{#if (and @editable (await this.hasMoreThanOneObjective))}}
@@ -42,7 +42,7 @@
               objective.id
               this.objectivesForRemovalConfirmation
             }}
-            @remove={{action "confirmRemoval"}}
+            @remove={{fn this.confirmRemoval}}
             @manageParents={{@manageParents}}
             @manageDescriptors={{@manageDescriptors}}
           />
@@ -56,14 +56,14 @@
                     <button
                       class="remove text"
                       type="button"
-                      {{on "click" (fn (action "remove") objective)}}
+                      {{on "click" (fn this.remove objective)}}
                     >
                       {{t "general.yes"}}
                     </button>
                     <button
                       class="done text"
                       type="button"
-                      {{on "click" (fn (action "cancelRemove") objective)}}
+                      {{on "click" (fn this.cancelRemove objective)}}
                     >
                       {{t "general.cancel"}}
                     </button>

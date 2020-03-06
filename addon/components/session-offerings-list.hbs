@@ -47,7 +47,7 @@
           {{#each offeringTimeBlock.sortedOfferings as |offering|}}
             <OfferingManager
               @offering={{offering}}
-              @remove={{action "removeOffering"}}
+              @remove={{fn this.removeOffering}}
               @editable={{@editable}}
             />
           {{/each}}

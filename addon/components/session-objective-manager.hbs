@@ -13,13 +13,13 @@
           <li
             class="selected clickable"
             role="button"
-            {{on "click" (fn (action "removeParent") objective)}}
+            {{on "click" (fn this.removeParent objective)}}
           >
             <Input @type="checkbox" @checked={{true}} />
             {{objective.textTitle}}
           </li>
         {{else}}
-          <li class="clickable" role="button" {{on "click" (fn (action "addParent") objective)}}>
+          <li class="clickable" role="button" {{on "click" (fn this.addParent objective)}}>
             <Input @type="checkbox" @checked={{false}} />
             {{objective.textTitle}}
           </li>

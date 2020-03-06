@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import { action } from '@ember/object';
 import scrollTo from 'ilios-common/utils/scroll-to';
 
 export default Component.extend({
@@ -16,10 +17,10 @@ export default Component.extend({
   didInsertElement() {
     scrollTo(`#${this.element.id}`);
   },
-  actions: {
-    save() {
-      const  session = this.get('session');
-      session.save();
-    },
-  }
+
+  @action
+  save() {
+    const  session = this.get('session');
+    session.save();
+  },
 });

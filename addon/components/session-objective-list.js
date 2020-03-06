@@ -1,4 +1,4 @@
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import Component from '@ember/component';
 import SortableObjectiveList from 'ilios-common/mixins/sortable-objective-list';
 
@@ -13,16 +13,20 @@ export default Component.extend(SortableObjectiveList, {
     this._super(...arguments);
     this.set('objectivesForRemovalConfirmation', []);
   },
-  actions: {
-    remove(objective){
-      objective.deleteRecord();
-      objective.save();
-    },
-    cancelRemove(objective){
-      this.get('objectivesForRemovalConfirmation').removeObject(objective.get('id'));
-    },
-    confirmRemoval(objective){
-      this.get('objectivesForRemovalConfirmation').pushObject(objective.get('id'));
-    }
+
+  @action
+  remove(objective){
+    objective.deleteRecord();
+    objective.save();
+  },
+
+  @action
+  cancelRemove(objective){
+    this.get('objectivesForRemovalConfirmation').removeObject(objective.get('id'));
+  },
+
+  @action
+  confirmRemoval(objective){
+    this.get('objectivesForRemovalConfirmation').pushObject(objective.get('id'));
   }
 });
