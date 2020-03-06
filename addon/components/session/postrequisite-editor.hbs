@@ -6,14 +6,14 @@
 >
   <div class="info">
     <span data-test-selected-postrequisite>
-      <strong>{{t "general.duePriorTo"}}:</strong>
+      <strong data-test-label>{{t "general.duePriorTo"}}:</strong>
       {{#if this.selectedPostrequisite}}
-        {{this.selectedPostrequisite.title}}
+        <span data-test-title>{{this.selectedPostrequisite.title}}</span>
         <button {{on "click" (set this.selectedPostrequisite null)}} class="remove" data-test-remove>
-          <FaIcon @icon="times" title={{t "general.remove"}} />
+          <FaIcon @icon="times" @title={{t "general.remove"}} />
         </button>
       {{else}}
-        {{t "general.none"}}
+        <span data-test-title>{{t "general.none"}}</span>
       {{/if}}
     </span>
     <Input

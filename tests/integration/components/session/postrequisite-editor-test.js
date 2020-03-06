@@ -22,7 +22,8 @@ module('Integration | Component | session/postrequisite-editor', function(hooks)
      @close={{this.nothing}}
      @session={{this.session}}
     />`);
-    assert.equal(component.selectedPostrequisite, 'Due prior to: None');
+    assert.equal(component.selectedPostrequisiteLabel, 'Due prior to:');
+    assert.equal(component.selectedPostrequisiteTitle, 'None');
     assert.equal(component.postRequisites.length, 4);
     assert.equal(component.postRequisites[0].isSelected, false);
     assert.equal(component.postRequisites[1].isSelected, false);
@@ -47,7 +48,7 @@ module('Integration | Component | session/postrequisite-editor', function(hooks)
      @close={{this.nothing}}
      @session={{this.session}}
     />`);
-    assert.equal(component.selectedPostrequisite, 'Due prior to: session 1');
+    assert.equal(component.selectedPostrequisiteTitle, 'session 1');
     assert.equal(component.postRequisites.length, 4);
     assert.equal(component.postRequisites[0].isSelected, false);
     assert.equal(component.postRequisites[1].isSelected, true);
@@ -72,7 +73,7 @@ module('Integration | Component | session/postrequisite-editor', function(hooks)
      @close={{this.nothing}}
      @session={{this.session}}
     />`);
-    assert.equal(component.selectedPostrequisite, 'Due prior to: session 1');
+    assert.equal(component.selectedPostrequisiteTitle, 'session 1');
     assert.equal(component.postRequisites.length, 4);
     assert.equal(component.postRequisites[0].isSelected, false);
     assert.equal(component.postRequisites[1].isSelected, true);
@@ -80,7 +81,7 @@ module('Integration | Component | session/postrequisite-editor', function(hooks)
     assert.equal(component.postRequisites[3].isSelected, false);
 
     await component.removeSelectedPostrequisite();
-    assert.equal(component.selectedPostrequisite, 'Due prior to: None');
+    assert.equal(component.selectedPostrequisiteTitle, 'None');
     assert.equal(component.postRequisites[0].isSelected, false);
     assert.equal(component.postRequisites[1].isSelected, false);
     assert.equal(component.postRequisites[2].isSelected, false);
@@ -104,7 +105,7 @@ module('Integration | Component | session/postrequisite-editor', function(hooks)
      @close={{this.nothing}}
      @session={{this.session}}
     />`);
-    assert.equal(component.selectedPostrequisite, 'Due prior to: session 1');
+    assert.equal(component.selectedPostrequisiteTitle, 'session 1');
     assert.equal(component.postRequisites.length, 4);
     assert.equal(component.postRequisites[0].isSelected, false);
     assert.equal(component.postRequisites[1].isSelected, true);
@@ -112,7 +113,7 @@ module('Integration | Component | session/postrequisite-editor', function(hooks)
     assert.equal(component.postRequisites[3].isSelected, false);
 
     await component.postRequisites[1].click();
-    assert.equal(component.selectedPostrequisite, 'Due prior to: None');
+    assert.equal(component.selectedPostrequisiteTitle, 'None');
     assert.equal(component.postRequisites[0].isSelected, false);
     assert.equal(component.postRequisites[1].isSelected, false);
     assert.equal(component.postRequisites[2].isSelected, false);
@@ -132,7 +133,7 @@ module('Integration | Component | session/postrequisite-editor', function(hooks)
      @close={{this.nothing}}
      @session={{this.session}}
     />`);
-    assert.equal(component.selectedPostrequisite, 'Due prior to: None');
+    assert.equal(component.selectedPostrequisiteTitle, 'None');
     assert.equal(component.postRequisites.length, 4);
     assert.equal(component.postRequisites[0].isSelected, false);
     assert.equal(component.postRequisites[1].isSelected, false);
@@ -140,7 +141,7 @@ module('Integration | Component | session/postrequisite-editor', function(hooks)
     assert.equal(component.postRequisites[3].isSelected, false);
 
     await component.postRequisites[1].click();
-    assert.equal(component.selectedPostrequisite, 'Due prior to: session 2');
+    assert.equal(component.selectedPostrequisiteTitle, 'session 2');
     assert.equal(component.postRequisites[0].isSelected, false);
     assert.equal(component.postRequisites[1].isSelected, true);
     assert.equal(component.postRequisites[2].isSelected, false);
