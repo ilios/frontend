@@ -11,5 +11,6 @@ module.exports = {
         'browser-timezone'
       ]
     },
+    'no-action': false,
   }
 };
