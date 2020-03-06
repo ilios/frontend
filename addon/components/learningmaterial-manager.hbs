@@ -171,7 +171,7 @@
           {{t "general.link"}}:
         </label>
         <span class="link">
-          <a href={{this.link}} target="_blank" rel="noopener">
+          <a href={{this.link}} target="_blank" rel="noopener noreferrer">
             {{this.link}}
           </a>
           <CopyButton @clipboardText={{this.link}}>
@@ -190,11 +190,11 @@
             <a href="{{this.absoluteFileUri}}?inline">
               {{this.filename}}
             </a>
-            <a href={{this.absoluteFileUri}} target="_blank" rel="noopener">
+            <a href={{this.absoluteFileUri}} target="_blank" rel="noopener noreferrer">
               <FaIcon @icon="download" @title={{t "general.download"}} />
             </a>
           {{else}}
-            <a href={{this.absoluteFileUri}} target="_blank" rel="noopener">
+            <a href={{this.absoluteFileUri}} target="_blank" rel="noopener noreferrer">
               {{this.filename}}
             </a>
           {{/if}}

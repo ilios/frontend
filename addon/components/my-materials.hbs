@@ -116,7 +116,7 @@
                       </a>
                       <a
                         href={{lmObject.absoluteFileUri}}
-                        rel="noopener"
+                        rel="noopener noreferrer"
                         target="_blank"
                       >
                         <FaIcon
@@ -127,14 +127,14 @@
                     {{else}}
                       <a
                         href={{lmObject.absoluteFileUri}}
-                        rel="noopener"
+                        rel="noopener noreferrer"
                         target="_blank"
                       >
                         {{lmObject.title}}
                       </a>
                     {{/if}}
                   {{else if lmObject.link}}
-                    <a href={{lmObject.link}} rel="noopener" target="_blank">
+                    <a href={{lmObject.link}} rel="noopener noreferrer" target="_blank">
                       {{lmObject.title}}
                     </a>
                   {{else}}

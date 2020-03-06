@@ -29,14 +29,14 @@
                     id={{concat this.uniqueId lm.id "lmdownload"}}
                     target="_blank"
                     href={{lm.absoluteFileUri}}
-                    rel="noopener"
+                    rel="noopener noreferrer"
                     aria-label={{t "general.download"}}
                     aria-labelledby="{{concat this.uniqueId lm.id "lmdownload"}} {{concat this.uniqueId lm.id "lm"}}"
                   >
                     <FaIcon @icon="download" />
                   </a>
                 {{else}}
-                  <a target="_blank" href={{lm.absoluteFileUri}} rel="noopener">
+                  <a target="_blank" href={{lm.absoluteFileUri}} rel="noopener noreferrer">
                     {{lm.title}}
                   </a>
                 {{/if}}
@@ -46,7 +46,7 @@
                   {{/if}}
                 </span>
               {{else if lm.link}}
-                <a target="_blank" href={{lm.link}} rel="noopener">
+                <a target="_blank" href={{lm.link}} rel="noopener noreferrer">
                   {{lm.title}}
                 </a>
               {{else}}
