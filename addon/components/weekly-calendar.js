@@ -1,14 +1,17 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { action } from '@ember/object';
+import { restartableTask } from 'ember-concurrency-decorators';
+import { timeout } from 'ember-concurrency';
 import moment from 'moment';
 
 export default class WeeklyCalendarComponent extends Component {
   @service intl;
   @service moment;
 
-  @action
-  scrollView(calendarElement, [earliestHour]) {
+  @restartableTask
+  *scrollView(calendarElement, [earliestHour]) {
+    //waiting ensures that {{ref}} modifier has time to setup hour elements
+    yield timeout(1);
     // all of the hour elements are registered in the template as hour0, hour1, etc
     let hourElement = this.hour6;
 
