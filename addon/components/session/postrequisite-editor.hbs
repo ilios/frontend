@@ -10,7 +10,7 @@
       {{#if this.selectedPostrequisite}}
         {{this.selectedPostrequisite.title}}
         <button {{on "click" (set this.selectedPostrequisite null)}} class="remove" data-test-remove>
-          <FaIcon @icon="times" title={{t "general.remove"}} />
+          <FaIcon @icon="times" @title={{t "general.remove"}} />
         </button>
       {{else}}
         {{t "general.none"}}
