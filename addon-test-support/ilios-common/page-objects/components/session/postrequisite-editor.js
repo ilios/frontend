@@ -9,7 +9,8 @@ import {
 
 const definition = {
   scope: '[data-test-session-postrequisite-editor]',
-  selectedPostrequisite: text('[data-test-selected-postrequisite]'),
+  selectedPostrequisiteLabel: text('[data-test-selected-postrequisite] [data-test-label]'),
+  selectedPostrequisiteTitle: text('[data-test-selected-postrequisite] [data-test-title]'),
   removeSelectedPostrequisite: clickable('[data-test-selected-postrequisite] [data-test-remove]'),
   filterBy: fillable('[data-test-filter]'),
   postRequisites: collection('[data-test-postrequisites] [data-test-postrequisite]', {
