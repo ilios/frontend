@@ -1,21 +1,26 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { map, all } from 'rsvp';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { dropTask } from 'ember-concurrency-decorators';
 import moment from 'moment';
+import { all, map } from 'rsvp';
 
-export default Component.extend({
-  classNames: ['learnergroup-calendar'],
+export default class IliosCalendarWeekComponent extends Component {
+  @tracked selectedDate = moment().toDate();
+  @tracked showSubgroupEvents = false;
+  @tracked offerings = [];
+  @tracked calendarEvents = [];
 
-  learnerGroup: null,
-  selectedDate: null,
-  showSubgroupEvents: false,
-
-  offerings: computed('learnerGroup.offerings.[]', 'learnerGroup.allDescendants.[]', 'showSubgroupEvents', async function () {
-    const learnerGroup = this.learnerGroup;
-    const showSubgroupEvents = this.showSubgroupEvents;
+  @dropTask
+  *load(element, [learnerGroup, showSubgroupEvents]) {
     if (!learnerGroup) {
-      return [];
+      return;
     }
+    this.offerings = yield this.getOfferings(learnerGroup, showSubgroupEvents);
+    this.calendarEvents = yield this.getCalendarEvents(this.offerings);
+  }
+
+  async getOfferings(learnerGroup, showSubgroupEvents) {
     const learnerGroups = [learnerGroup];
     if (showSubgroupEvents) {
       const allDescendants = await learnerGroup.get('allDescendants');
@@ -27,49 +32,36 @@ export default Component.extend({
     }, []);
 
     return flat;
-  }),
+  }
 
-  calendarEvents: computed('offerings.[]', async function () {
-    const offerings = await this.offerings;
-    const events = await map(offerings.toArray(), async offering => {
-      const session = await offering.get('session');
-      const course = await session.get('course');
+  async getCalendarEvents(offerings) {
+    return await map(offerings, async offering => {
+      const session = await offering.session;
+      const course = await session.course;
       return {
-        startDate: offering.get('startDate'),
-        endDate: offering.get('endDate'),
-        courseTitle: course.get('title'),
-        name: session.get('title'),
-        offering: offering.get("id"),
-        location: offering.get("location"),
+        startDate: offering.startDate,
+        endDate: offering.endDate,
+        courseTitle: course.title,
+        name: session.title,
+        offering: offering.id,
+        location: offering.location,
         color: "#84c444",
         prerequisites: [],
         postrequisites: [],
       };
     });
-
-    return events;
-  }),
-
-  init() {
-    this._super(...arguments);
-    const today = moment();
-    this.set('selectedDate', today.toDate());
-  },
-
-  actions: {
-    goForward(){
-      const selectedDate = this.selectedDate;
-      const newDate = moment(selectedDate).add(1, 'week').toDate();
-      this.set('selectedDate', newDate);
-    },
-    goBack(){
-      const selectedDate = this.selectedDate;
-      const newDate = moment(selectedDate).subtract(1, 'week').toDate();
-      this.set('selectedDate', newDate);
-    },
-    gotoToday(){
-      const newDate = moment().toDate();
-      this.set('selectedDate', newDate);
-    },
   }
-});
+
+  @action
+  goForward(){
+    this.selectedDate = moment(this.selectedDate).add(1, 'week').toDate();
+  }
+  @action
+  goBack(){
+    this.selectedDate = moment(this.selectedDate).subtract(1, 'week').toDate();
+  }
+  @action
+  gotoToday(){
+    this.selectedDate = moment().toDate();
+  }
+}

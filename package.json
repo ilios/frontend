@@ -90,6 +90,7 @@
     "ember-responsive": "^3.0.5",
     "ember-service-worker": "^0.8.4",
     "ember-service-worker-cache-first": "^0.6.2",
+    "ember-simple-set-helper": "^0.1.2",
     "ember-source": "~3.16.0",
     "ember-template-lint": "^1.14.0",
     "ember-truth-helpers": "^2.0.0",
