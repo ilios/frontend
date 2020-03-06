@@ -7,15 +7,15 @@
   data-test-calendar-event
   data-test-weekly-calendar-event
 >
-  {{#attach-tooltip
-    lazyRender=true
-    placement="left"
-    interactive=true
-    animation="shift"
+  <AttachTooltip
+    @lazyRender={{true}}
+    @placement="left"
+    @interactive={{true}}
+    @animation="shift"
     class="ilios-calendar-event-tooltip"
-  }}
+  >
     {{this.tooltipContent}}
-  {{/attach-tooltip}}
+  </AttachTooltip>
   {{#if this.recentlyUpdated}}
     <FaIcon
       @icon="exclamation-circle"

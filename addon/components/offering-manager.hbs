@@ -23,9 +23,9 @@
               (is-fulfilled learnerGroup.allParents)
             )
           }}
-            {{#attach-tooltip lazyRender=true animation="shift"}}
+            <AttachTooltip @lazyRender={{true}} @animation="shift">
               {{join " > " (map-by "title" (await learnerGroup.allParents))}}
-            {{/attach-tooltip}}
+            </AttachTooltip>
           {{/if}}
         </li>
       {{else}}
