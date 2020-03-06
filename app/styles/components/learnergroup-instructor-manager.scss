@@ -1,0 +1,5 @@
+.learnergroup-instructor-manager {
+  .removable-instructors {
+    @include ilios-removable-list;
+  }
+}

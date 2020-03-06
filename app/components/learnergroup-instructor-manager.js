@@ -1,47 +1,53 @@
-import Component from '@ember/component';
-import { oneWay } from '@ember/object/computed';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { isPresent } from '@ember/utils';
-import { task } from 'ember-concurrency';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  learnerGroup: null,
+export default class LearnergroupInstructorManager extends Component {
+  @tracked availableInstructorGroups = [];
+  @tracked instructors = [];
+  @tracked instructorGroups = [];
 
-  availableInstructorGroups: oneWay('learnerGroup.cohort.programYear.program.school.instructorGroups'),
-
-  init() {
-    this._super(...arguments);
-    const learnerGroup = this.learnerGroup;
+  @restartableTask
+  *load(element, [learnerGroup]) {
     if (isPresent(learnerGroup)) {
-      learnerGroup.get('instructors').then(instructors => {
-        this.set('instructors', instructors.toArray());
-      });
-      learnerGroup.get('instructorGroups').then(instructorGroups => {
-        this.set('instructorGroups', instructorGroups.toArray());
-      });
+      const instructors = yield learnerGroup.get('instructors');
+      const instructorGroups = yield learnerGroup.get('instructorGroups');
+      const cohort = yield learnerGroup.get('cohort');
+      const programYear = yield cohort.get('programYear');
+      const program = yield programYear.get('program');
+      const school = yield program.get('school');
+      const availableInstructorGroups = yield school.get('instructorGroups');
+
+      this.instructors = instructors.toArray();
+      this.instructorGroups = instructorGroups.toArray();
+      this.availableInstructorGroups = availableInstructorGroups.toArray();
     }
-  },
+  }
 
-  actions: {
-    addInstructor(user) {
-      this.instructors.pushObject(user);
-    },
+  @action
+  addInstructor(user) {
+    this.instructors = [...this.instructors, user];
+  }
 
-    addInstructorGroup(instructorGroup) {
-      this.instructorGroups.pushObject(instructorGroup);
-    },
+  @action
+  addInstructorGroup(instructorGroup) {
+    this.instructorGroups = [...this.instructorGroups, instructorGroup];
+  }
 
-    removeInstructor(user) {
-      this.instructors.removeObject(user);
-    },
+  @action
+  removeInstructor(user) {
+    this.instructors = this.instructors.filter(instructor => instructor !== user);
+  }
 
-    removeInstructorGroup(instructorGroup) {
-      this.instructorGroups.removeObject(instructorGroup);
-    }
-  },
+  @action
+  removeInstructorGroup(instructorGroup) {
+    this.instructorGroups = this.instructorGroups.filter(group => group !== instructorGroup);
+  }
 
-  saveChanges: task(function* () {
-    const instructors = this.instructors;
-    const instructorGroups = this.instructorGroups;
-    yield this.save(instructors, instructorGroups);
-  }).drop()
-});
+  @dropTask
+  *saveChanges() {
+    yield this.args.save(this.instructors, this.instructorGroups);
+  }
+}
