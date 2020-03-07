@@ -30,7 +30,7 @@ module('Acceptance | Course - Publish', function(hooks) {
     });
     await visit('/courses/1');
 
-    const menu = '[data-test-course-header] .publish-menu';
+    const menu = '[data-test-course-header] .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
     await click(selector);
@@ -47,7 +47,7 @@ module('Acceptance | Course - Publish', function(hooks) {
       cohortIds: [1],
     });
     await visit('/courses/1');
-    const menu = '[data-test-course-header] .publish-menu';
+    const menu = '[data-test-course-header] .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
     await click(selector);
@@ -66,7 +66,7 @@ module('Acceptance | Course - Publish', function(hooks) {
       cohortIds: [1],
     });
     await visit('/courses/1');
-    const menu = '[data-test-course-header] .publish-menu';
+    const menu = '[data-test-course-header] .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
     await click(selector);
@@ -85,7 +85,7 @@ module('Acceptance | Course - Publish', function(hooks) {
       cohortIds: [1],
     });
     await visit('/courses/1');
-    const menu = '[data-test-course-header] .publish-menu';
+    const menu = '[data-test-course-header] .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
     await click(selector);
@@ -103,7 +103,7 @@ module('Acceptance | Course - Publish', function(hooks) {
       cohortIds: [1],
     });
     await visit('/courses/1');
-    const menu = '[data-test-course-header] .publish-menu';
+    const menu = '[data-test-course-header] .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
     await click(selector);
@@ -121,7 +121,7 @@ module('Acceptance | Course - Publish', function(hooks) {
       cohortIds: [1],
     });
     await visit('/courses/1');
-    const menu = '[data-test-course-header] .publish-menu';
+    const menu = '[data-test-course-header] .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
     await click(selector);
