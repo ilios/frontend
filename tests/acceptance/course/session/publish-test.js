@@ -62,7 +62,7 @@ module('Acceptance | Session - Publish', function(hooks) {
     await visit('/courses/1/sessions/' + this.publishedSession.id);
 
     assert.equal(currentRouteName(), 'session.index');
-    const menu = '.session-header .publish-menu';
+    const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
     assert.equal(await getElementText(selector), getText('Published'));
@@ -81,7 +81,7 @@ module('Acceptance | Session - Publish', function(hooks) {
     await visit('/courses/1/sessions/' + this.scheduledSession.id);
 
     assert.equal(currentRouteName(), 'session.index');
-    const menu = '.session-header .publish-menu';
+    const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
     assert.equal(await getElementText(selector), getText('Scheduled'));
@@ -99,7 +99,7 @@ module('Acceptance | Session - Publish', function(hooks) {
     await visit('/courses/1/sessions/' + this.draftSession.id);
 
     assert.equal(currentRouteName(), 'session.index');
-    const menu = '.session-header .publish-menu';
+    const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
     assert.equal(await getElementText(selector), getText('Not Published'));
@@ -115,7 +115,7 @@ module('Acceptance | Session - Publish', function(hooks) {
 
   test('check publish draft session', async function(assert) {
     await visit('/courses/1/sessions/' + this.draftSession.id);
-    const menu = '.session-header .publish-menu';
+    const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
     const publish = `${choices}:nth-of-type(1)`;
@@ -127,7 +127,7 @@ module('Acceptance | Session - Publish', function(hooks) {
 
   test('check schedule draft session', async function(assert) {
     await visit('/courses/1/sessions/' + this.draftSession.id);
-    const menu = '.session-header .publish-menu';
+    const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
     const schedule = `${choices}:nth-of-type(3)`;
@@ -138,7 +138,7 @@ module('Acceptance | Session - Publish', function(hooks) {
 
   test('check publish scheduled session', async function(assert) {
     await visit('/courses/1/sessions/' + this.scheduledSession.id);
-    const menu = '.session-header .publish-menu';
+    const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
     const publish = `${choices}:nth-of-type(1)`;
@@ -150,7 +150,7 @@ module('Acceptance | Session - Publish', function(hooks) {
 
   test('check unpublish scheduled session', async function(assert) {
     await visit('/courses/1/sessions/' + this.scheduledSession.id);
-    const menu = '.session-header .publish-menu';
+    const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
     const unPublish = `${choices}:nth-of-type(3)`;
@@ -161,7 +161,7 @@ module('Acceptance | Session - Publish', function(hooks) {
 
   test('check schedule published session', async function(assert) {
     await visit('/courses/1/sessions/' + this.publishedSession.id);
-    const menu = '.session-header .publish-menu';
+    const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] > button`;
     const schedule = `${choices}:nth-of-type(2)`;
@@ -172,7 +172,7 @@ module('Acceptance | Session - Publish', function(hooks) {
 
   test('check unpublish published session', async function(assert) {
     await visit('/courses/1/sessions/' + this.publishedSession.id);
-    const menu = '.session-header .publish-menu';
+    const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] button`;
     const unPublish = `${choices}:nth-of-type(3)`;
@@ -183,7 +183,7 @@ module('Acceptance | Session - Publish', function(hooks) {
 
   test('check publish requirements for ilm session', async function(assert) {
     await visit('/courses/1/sessions/' + this.ilmSession.id);
-    const menu = '.session-header .publish-menu';
+    const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
     const choices = `${menu} [data-test-menu] > button`;
     const firstChoice = `${choices}:nth-of-type(1)`;
