@@ -61,7 +61,7 @@
     "normalize.css": "8.0.1",
     "postcss-scss": "^2.0.0",
     "qunit-dom": "^0.9.0",
-    "stylelint": "^13.2.0",
+    "stylelint": "^13.2.1",
     "stylelint-config-recommended-scss": "^4.2.0",
     "stylelint-scss": "^3.14.2"
   },
