@@ -103,7 +103,7 @@
     "postcss-scss": "^2.0.0",
     "pre-commit": "^1.2.2",
     "qunit-dom": "^1.0.0",
-    "stylelint": "^13.2.0",
+    "stylelint": "^13.2.1",
     "stylelint-config-recommended-scss": "^4.2.0",
     "stylelint-scss": "^3.14.2",
     "validator": "^12.2.0",
