@@ -65,9 +65,15 @@ export default class MeshManagerComponent extends Component {
 
   @action
   add(term) {
-    if (this.args.editable) {
-      this.args.add(term);
+    if (! this.args.editable) {
+      return;
     }
+
+    if (this.args.terms.mapBy('id').includes(term.id)) {
+      return;
+    }
+
+    this.args.add(term);
   }
 
   @action
