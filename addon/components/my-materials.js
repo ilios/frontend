@@ -62,9 +62,15 @@ export default class MyMaterials extends Component {
     this.args.setSortBy(what);
   }
 
+  @action
+  changeCourseIdFilter(event) {
+    this.args.setCourseIdFilter(event.target.value);
+  }
+
   @restartableTask
   *setQuery(query) {
     yield timeout(DEBOUNCE_DELAY);
     this.args.setFilter(query);
   }
+
 }

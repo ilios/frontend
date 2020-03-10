@@ -94,7 +94,8 @@ export default class CourseOverview extends Component {
   }
 
   @action
-  setCourseClerkshipType(id){
+  setCourseClerkshipType(event){
+    let id = event.target.value;
     //convert the string 'null' to a real null
     if (id === 'null') {
       id = null;
@@ -167,8 +168,8 @@ export default class CourseOverview extends Component {
   }
 
   @action
-  setLevel(level){
-    this.level = parseInt(level, 10);
+  setLevel(event){
+    this.level = parseInt(event.target.value, 10);
   }
 
   @action

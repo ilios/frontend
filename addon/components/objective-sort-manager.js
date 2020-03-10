@@ -14,14 +14,6 @@ export default Component.extend(SortableByPosition, {
 
   },
 
-  actions: {
-    cancel(){
-      this.cancel();
-    },
-    save() {
-      this.save(this.get('sortableObjectList'));
-    }
-  },
   loadAttr: task(function * (subject) {
     const objectives = yield subject.get('objectives');
     this.set('sortableObjectList', objectives.toArray().sort(this.get('positionSortingCallback')));

@@ -6,7 +6,7 @@
     @courseStartDate={{await @offering.session.course.startDate}}
     @courseEndDate={{await @offering.session.course.startDate}}
     @close={{toggle "isEditing" this}}
-    @save={{action "save"}}
+    @save={{fn this.save}}
     @smallGroupMode={{false}}
     @offering={{@offering}}
     @session={{await @offering.session}}
@@ -62,7 +62,7 @@
         <FaIcon @icon="edit" class="enabled" />
       </span>
       {{#if (await this.userCanDelete)}}
-        <span class="clickable remove" role="button" {{on "click" (action "confirmRemove")}}>
+        <span class="clickable remove" role="button" {{on "click" (fn this.confirmRemove)}}>
           <FaIcon @icon="trash" class="enabled" />
         </span>
       {{else}}
@@ -79,10 +79,10 @@
         }}
         <br>
         <div class="confirm-buttons">
-          <button type="button" class="remove text" {{on "click" (action "remove")}}>
+          <button type="button" class="remove text" {{on "click" (fn @remove @offering)}}>
             {{t "general.yes"}}
           </button>
-          <button type="button" class="cancel text" {{on "click" (action "cancelRemove")}}>
+          <button type="button" class="cancel text" {{on "click" (fn this.cancelRemove)}}>
             {{t "general.cancel"}}
           </button>
         </div>

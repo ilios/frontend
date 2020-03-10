@@ -44,7 +44,7 @@
       <div class="calendar-options-control calendar-school-picker">
         <FaIcon @icon="university" />
         {{#if this.hasMoreThanOneSchool}}
-          <select {{on "change" (action @changeSchool value="target.value")}}>
+          <select {{on "change" (fn this.changeSchool)}}>
             {{#each (sort-by "title" @allSchools) as |school|}}
               <option
                 value={{school.id}}
@@ -64,7 +64,7 @@
         id="calendar-year-picker"
         class="calendar-options-control calendar-year-picker"
       >
-        <select {{on "change" (action @changeAcademicYear value="target.value")}}>
+        <select {{on "change" (fn this.changeAcademicYear)}}>
           {{#each (sort-by "title" @allAcademicYears) as |year|}}
             <option
               value={{year.title}}
@@ -158,7 +158,7 @@
                   <SelectedTermTree
                     @selectedTerms={{@selectedTerms}}
                     @terms={{await vocabulary.topLevelTerms}}
-                    @toggle={{action @updateTerms}}
+                    @toggle={{fn @updateTerms}}
                   />
                 {{/each}}
               </ul>

@@ -88,7 +88,7 @@
             @save={{fn this.changeClerkshipType}}
             @close={{perform this.revertClerkshipTypeChanges}}
           >
-            <select {{on "change" (action this.setCourseClerkshipType value="target.value")}}>
+            <select {{on "change" (fn this.setCourseClerkshipType)}}>
               <option
                 value="null"
                 selected={{is-empty this.selectedClerkshipType}}
@@ -176,7 +176,7 @@
             @save={{this.changeLevel}}
             @close={{this.revertLevelChanges}}
           >
-            <select {{on "change" (action this.setLevel value="target.value")}}>
+            <select {{on "change" (fn this.setLevel)}}>
               {{#each this.levelOptions as |levelOption|}}
                 <option
                   value={{levelOption}}

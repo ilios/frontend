@@ -3,7 +3,7 @@
 >
   <div class="material-list">
     <span class="course-filter">
-      <select {{on "change" (action @setCourseIdFilter value="target.value")}}>
+      <select {{on "change" (fn this.changeCourseIdFilter)}}>
         <option value="">
           {{t "general.allCourses"}}
         </option>
@@ -36,7 +36,7 @@
               (eq @sortBy "sessionTitle")
               (eq @sortBy "sessionTitle:desc")
             }}
-            @click={{action this.sortBy "sessionTitle"}}
+            @click={{fn this.sortBy "sessionTitle"}}
           >
             {{t "general.session"}}
           </SortableTh>
@@ -47,7 +47,7 @@
               (eq @sortBy "courseTitle")
               (eq @sortBy "courseTitle:desc")
             }}
-            @click={{action this.sortBy "courseTitle"}}
+            @click={{fn this.sortBy "courseTitle"}}
           >
             {{t "general.course"}}
           </SortableTh>
@@ -55,7 +55,7 @@
             @colspan={{3}}
             @sortedAscending={{this.sortedAscending}}
             @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
-            @click={{action this.sortBy "title"}}
+            @click={{fn this.sortBy "title"}}
           >
             {{t "general.title"}}
           </SortableTh>
@@ -70,7 +70,7 @@
               (eq @sortBy "firstOfferingDate:desc")
             }}
             @sortType="numeric"
-            @click={{action this.sortBy "firstOfferingDate"}}
+            @click={{fn this.sortBy "firstOfferingDate"}}
           >
             {{t "general.date"}}
           </SortableTh>
@@ -151,7 +151,7 @@
                   @length={{25}}
                   @text={{join
                     ", "
-                    (sort-by (action this.sortString) lmObject.instructors)
+                    (sort-by (fn this.sortString) lmObject.instructors)
                   }}
                 />
               </td>

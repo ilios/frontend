@@ -195,9 +195,19 @@ export default class OfferingForm extends Component {
   }
 
   @action
-  changeTimezone(value) {
-    this.currentTimezone = value;
+  changeTimezone(event) {
+    this.currentTimezone = event.target.value;
     this.isEditingTimezone = false;
+  }
+
+  @action
+  changeNumberOfWeeks(event) {
+    this.numberOfWeeks = event.target.value;
+  }
+
+  @action
+  changeRoom(event) {
+    this.room = event.target.value;
   }
 
   async loadAvailableInstructorGroups(cohorts) {

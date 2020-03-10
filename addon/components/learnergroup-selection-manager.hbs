@@ -23,7 +23,7 @@
       {{/unless}}
     </h4>
     <SearchBox
-      @search={{action (mut this.filter)}}
+      @search={{fn (mut this.filter)}}
       placeholder={{t "general.filterPlaceholder"}}
     />
     <div class="cohorts-container" data-test-cohorts>
@@ -50,7 +50,7 @@
                   @learnerGroup={{learnerGroup}}
                   @selectedGroups={{@learnerGroups}}
                   @filter={{this.filter}}
-                  @add={{action @add}}
+                  @add={{fn @add}}
                 />
               {{/each}}
             </ul>

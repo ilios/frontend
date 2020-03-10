@@ -297,4 +297,14 @@ export default class DashboardCalendarComponent extends Component {
       }
     }
   }
+
+  @action
+  changeSchool(event) {
+    this.args.changeSchool(event.target.value);
+  }
+
+  @action
+  changeAcademicYear(event) {
+    this.args.changeAcademicYear(event.target.value);
+  }
 }

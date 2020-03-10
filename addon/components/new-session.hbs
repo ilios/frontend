@@ -14,8 +14,8 @@
         "has-error"
       }}
       data-test-title
-      {{on "input" (action (mut this.title) value="target.value")}}
-      {{on "keyup" (fn (action "addErrorDisplayFor") "title")}}
+      {{on "input" (fn this.changeTitle)}}
+      {{on "keyup" (fn this.addErrorDisplayFor "title")}}
     >
     {{#if (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))}}
       <span class="validation-error-message">
@@ -28,7 +28,7 @@
       {{t "general.sessionType"}}:
     </label>
     {{#if (is-fulfilled this.activeSessionTypes)}}
-      <select data-test-type {{on "change" (action (mut this.selectedSessionTypeId) value="target.value")}}>
+      <select data-test-type {{on "change" (fn this.changeSelectedSessionTypeId)}}>
         {{#each (sort-by "title" (await this.activeSessionTypes)) as |sessionType|}}
           <option
             value={{sessionType.id}}

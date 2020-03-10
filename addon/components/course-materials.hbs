@@ -23,14 +23,14 @@
             @colspan={{4}}
             @sortedAscending={{this.clmSortedAscending}}
             @sortedBy={{or (eq @courseSort "title") (eq @courseSort "title:desc")}}
-            @click={{action "courseSortBy" "title"}}
+            @click={{fn this.courseSortBy "title"}}
           >
             {{t "general.title"}}
           </SortableTh>
           <SortableTh
             @sortedAscending={{this.clmSortedAscending}}
             @sortedBy={{or (eq @courseSort "type") (eq @courseSort "type:desc")}}
-            @click={{action "courseSortBy" "type"}}
+            @click={{fn this.courseSortBy "type"}}
           >
             {{t "general.type"}}
           </SortableTh>
@@ -40,7 +40,7 @@
               (eq @courseSort "author")
               (eq @courseSort "author:desc")
             }}
-            @click={{action "courseSortBy" "author"}}
+            @click={{fn this.courseSortBy "author"}}
           >
             {{t "general.author"}}
           </SortableTh>
@@ -117,7 +117,7 @@
               (eq @sessionSort "title")
               (eq @sessionSort "title:desc")
             }}
-            @click={{action "sessionSortBy" "title"}}
+            @click={{fn this.sessionSortBy "title"}}
           >
             {{t "general.title"}}
           </SortableTh>
@@ -126,7 +126,7 @@
             @sortedAscending={{this.slmSortedAscending}}
             @sortedBy={{or (eq @sessionSort "type") (eq @sessionSort "type:desc")
             }}
-            @click={{action "sessionSortBy" "type"}}
+            @click={{fn this.sessionSortBy "type"}}
           >
             {{t "general.type"}}
           </SortableTh>
@@ -137,7 +137,7 @@
               (eq @sessionSort "author")
               (eq @sessionSort "author:desc")
             }}
-            @click={{action "sessionSortBy" "author"}}
+            @click={{fn this.sessionSortBy "author"}}
           >
             {{t "general.author"}}
           </SortableTh>
@@ -148,7 +148,7 @@
               (eq @sessionSort "sessionTitle")
               (eq @sessionSort "sessionTitle:desc")
             }}
-            @click={{action "sessionSortBy" "sessionTitle"}}
+            @click={{fn this.sessionSortBy "sessionTitle"}}
           >
             {{t "general.session"}}
           </SortableTh>
@@ -160,7 +160,7 @@
               (eq @sessionSort "firstOfferingDate:desc")
             }}
             @sortType="numeric"
-            @click={{action "sessionSortBy" "firstOfferingDate"}}
+            @click={{fn this.sessionSortBy "firstOfferingDate"}}
           >
             {{t "general.firstOffering"}}
           </SortableTh>
