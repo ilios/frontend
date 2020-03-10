@@ -69,7 +69,7 @@
     "ember-pikaday": "^2.2.6",
     "ember-promise-helpers": "1.0.9",
     "ember-ref-modifier": "^1.0.0",
-    "ember-simple-auth-token": "^4.0.4",
+    "ember-simple-auth-token": "^5.0.0",
     "ember-simple-charts": "^2.0.2",
     "ember-simple-set-helper": "^0.1.0",
     "ember-test-selectors": "^4.0.0",
