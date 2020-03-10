@@ -59,10 +59,12 @@ export default RESTAdapter.extend({
    * this is important for us because we store the JWT in a cookie so if we send cookies it will
    * send the JWT at least twice (sometimes more depending on the auth options used)
    */
-  ajaxOptions() {
-    return {
-      ...this._super(...arguments),
-      credentials: 'omit'
-    };
-  },
+
+  /** TEMPORARY DISABLE - LM uploads aren't working on load balanced machines  **/
+  // ajaxOptions() {
+  //   return {
+  //     ...this._super(...arguments),
+  //     credentials: 'omit'
+  //   };
+  // },
 });
