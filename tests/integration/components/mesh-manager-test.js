@@ -79,4 +79,46 @@ module('Integration | Component | mesh-manager', function(hooks) {
       assert.equal(component.searchResults[i].title, `descriptor ${i}`);
     }
   });
+
+  test('clicking on unselected term adds it.', async function(assert) {
+    assert.expect(3);
+    const descriptors = this.server.createList('meshDescriptor', 3);
+    this.set('nothing', () => { });
+    this.set('add', term => {
+      assert.equal(term.name, 'descriptor 1');
+    });
+    this.set('terms', [descriptors[0], descriptors[2]]);
+    await render(hbs`<MeshManager
+      @editable={{true}}
+      @terms={{this.terms}}
+      @add={{this.add}}
+      @remove={{this.nothing}}
+    />`);
+    await component.search('descriptor');
+    await component.runSearch();
+    assert.ok(component.searchResults[1].isEnabled);
+    assert.equal(component.searchResults[1].title, 'descriptor 1');
+    await component.searchResults[1].add();
+  });
+
+  test('clicking on selected term does not add it.', async function(assert) {
+    assert.expect(1);
+    const descriptors = this.server.createList('meshDescriptor', 3);
+    this.set('nothing', () => { });
+    this.set('add', () => {
+      // this function should never be invoked.
+      assert.ok(false);
+    });
+    this.set('terms', descriptors);
+    await render(hbs`<MeshManager
+      @editable={{true}}
+      @terms={{this.terms}}
+      @add={{this.add}}
+      @remove={{this.nothing}}
+    />`);
+    await component.search('descriptor');
+    await component.runSearch();
+    assert.ok(component.searchResults[0].isDisabled);
+    await component.searchResults[0].add();
+  });
 });
