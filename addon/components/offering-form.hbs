@@ -42,7 +42,7 @@
             class="editable clickable current-timezone"
             role="button"
             type="button"
-            onclick={{fn (set this.isEditingTimezone) true}}
+            {{on "click" (set this.isEditingTimezone true)}}
           >
             {{this.formattedCurrentTimezone}}
           </div>
@@ -55,7 +55,7 @@
             {{t "general.timezone"}}:
           </label>
           <span class="picker">
-            <select onchange={{fn this.changeTimezone}}>
+            <select {{on "change" (fn this.changeTimezone)}}>
               {{#each this.timezones as |timezone|}}
                 <option value={{timezone.value}} selected={{is-equal timezone.value this.currentTimezone}}>
                   {{timezone.label}}
@@ -67,7 +67,7 @@
                 class="cancel"
                 title={{t "general.cancel"}}
                 type="button"
-                {{fn (set this.isEditingTimezone) false}}
+                {{on "click" (set this.isEditingTimezone false)}}
               >
                 <FaIcon @icon="times" />
               </button>
