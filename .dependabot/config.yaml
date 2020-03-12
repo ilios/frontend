@@ -64,6 +64,10 @@ update_configs:
         dependency_name: "qunit-dom"
     automerged_updates:
     - match:
+        dependency_name: "@sentry/browser"
+    - match:
+        dependency_name: "@sentry/integrations"
+    - match:
         dependency_name: "browserslist"
     - match:
         dependency_name: "caniuse-db"
