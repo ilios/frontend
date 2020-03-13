@@ -1,5 +1,7 @@
-{{#if value}}
-  {{t "general.yes"}}
-{{else}}
-  {{t "general.no"}}
-{{/if}}
+<span class={{if this.value "yes" "no"}} ...attributes>
+  {{#if value}}
+    {{t "general.yes"}}
+  {{else}}
+    {{t "general.no"}}
+  {{/if}}
+</span>

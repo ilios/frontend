@@ -1,170 +1,172 @@
-{{#unless loadAttr.isRunning}}
-  <div class="report-overview-header">
-    <div class="title">
-      {{t "general.overview"}}
-    </div>
-    <div class="report-overview-actions">
-      <LinkTo
-        @route="verificationPreview"
-        @model={{report}}
-        class="verification-preview"
-      >
-        <FaIcon
-          @icon="table"
-          @fixedWidth={{true}}
-          @title={{t "general.verificationPreviewFor" name=report.name}}
-        />
-      </LinkTo>
-      {{#if (and (is-fulfilled showRollover) (await showRollover))}}
-        <span
-          class="link rollover"
-          role="button"
-          {{action "transitionToRollover"}}
+<section class="curriculum-inventory-report-overview" ...attributes>
+  {{#unless loadAttr.isRunning}}
+    <div class="report-overview-header">
+      <div class="title">
+        {{t "general.overview"}}
+      </div>
+      <div class="report-overview-actions">
+        <LinkTo
+          @route="verificationPreview"
+          @model={{report}}
+          class="verification-preview"
         >
           <FaIcon
-            @icon="random"
+            @icon="table"
             @fixedWidth={{true}}
-            @title={{t "general.curriculumInventoryReportRollover"}}
+            @title={{t "general.verificationPreviewFor" name=report.name}}
           />
-        </span>
-      {{/if}}
-    </div>
-  </div>
-  <div class="curriculum-inventory-report-overview-content">
-    <div class="block start-date">
-      <label>
-        {{t "general.start"}}:
-      </label>
-      <span>
-        {{#if canUpdate}}
-          <EditableField
-            @value={{moment-format report.startDate "L"}}
-            @save={{action "changeStartDate"}}
-            @close={{action "revertStartDateChanges"}}
+        </LinkTo>
+        {{#if (and (is-fulfilled showRollover) (await showRollover))}}
+          <span
+            class="link rollover"
+            role="button"
+            {{action "transitionToRollover"}}
           >
-            <PikadayInput
-              @value={{startDate}}
-              @format="L"
-              @onSelection={{action (mut startDate)}}
-              @focusOut={{action "addErrorDisplayFor" "startDate"}}
+            <FaIcon
+              @icon="random"
+              @fixedWidth={{true}}
+              @title={{t "general.curriculumInventoryReportRollover"}}
             />
-            {{#if
-              (and
-                (v-get this "startDate" "isInvalid")
-                (contains "startDate" showErrorsFor)
-              )
-            }}
-              <span class="validation-error-message">
-                {{v-get this "startDate" "message"}}
-              </span>
-            {{/if}}
-          </EditableField>
-        {{else}}
-          {{moment-format report.startDate "L"}}
+          </span>
         {{/if}}
-      </span>
+      </div>
     </div>
-    <div class="block end-date">
-      <label>
-        {{t "general.end"}}:
-      </label>
-      <span>
-        {{#if canUpdate}}
-          <EditableField
-            @value={{moment-format report.endDate "L"}}
-            @save={{action "changeEndDate"}}
-            @close={{action "revertEndDateChanges"}}
-          >
-            <PikadayInput
-              @value={{endDate}}
-              @format="L"
-              @onSelection={{action (mut endDate)}}
-              @focusOut={{action "addErrorDisplayFor" "endDate"}}
-            />
-            {{#if
-              (and
-                (v-get this "endDate" "isInvalid")
-                (contains "endDate" showErrorsFor)
-              )
-            }}
-              <span class="validation-error-message">
-                {{v-get this "endDate" "message"}}
-              </span>
-            {{/if}}
-          </EditableField>
-        {{else}}
-          {{moment-format report.endDate "L"}}
-        {{/if}}
-      </span>
-    </div>
-    <div class="block academic-year">
-      <label>
-        {{t "general.academicYear"}}:
-      </label>
-      {{#if (and canUpdate (not (await report.hasLinkedCourses)))}}
-        <EditableField
-          @value={{yearLabel}}
-          @save={{action "changeYear"}}
-          @close={{action "revertYearChanges"}}
-        >
-          <select {{on "change" (action "updateYear")}}>
-            {{#each this.yearOptions as |obj|}}
-              <option value={{obj.id}} selected={{eq obj.id this.year}}>{{obj.title}}</option>
-            {{/each}}
-          </select>
-        </EditableField>
-      {{else}}
+    <div class="curriculum-inventory-report-overview-content">
+      <div class="block start-date">
+        <label>
+          {{t "general.start"}}:
+        </label>
         <span>
-          {{yearLabel}}
-        </span>
-      {{/if}}
-    </div>
-    <div class="block program">
-      <label>
-        {{t "general.program"}}:
-      </label>
-      <span>
-        {{report.program.title}}
-        ({{report.program.shortTitle}})
-      </span>
-    </div>
-    <div class="description">
-      <label>
-        {{t "general.description"}}:
-      </label>
-      <span>
-        {{#if canUpdate}}
-          <EditableField
-            @value={{description}}
-            @save={{action "changeDescription"}}
-            @close={{action "revertDescriptionChanges"}}
-            @clickPrompt={{if description description (t "general.clickToEdit")
-            }}
-            @closeOnEscape={{true}} as |isSaving|
-          >
-            <textarea
-              oninput={{action (mut description) value="target.value"}}
-              value={{description}}
-              disabled={{isSaving}}
-              onkeyup={{action "addErrorDisplayFor" "description"}}
+          {{#if canUpdate}}
+            <EditableField
+              @value={{moment-format report.startDate "L"}}
+              @save={{action "changeStartDate"}}
+              @close={{action "revertStartDateChanges"}}
             >
-              {{description}}
-            </textarea>
-            {{#if
-              (and
-                (v-get this "description" "isInvalid")
-                (contains "description" showErrorsFor)
-              )
-            }}
-              <span class="validation-error-message">
-                {{v-get this "description" "message"}}
-              </span>
-            {{/if}}
+              <PikadayInput
+                @value={{startDate}}
+                @format="L"
+                @onSelection={{action (mut startDate)}}
+                @focusOut={{action "addErrorDisplayFor" "startDate"}}
+              />
+              {{#if
+                (and
+                  (v-get this "startDate" "isInvalid")
+                  (contains "startDate" showErrorsFor)
+                )
+              }}
+                <span class="validation-error-message">
+                  {{v-get this "startDate" "message"}}
+                </span>
+              {{/if}}
+            </EditableField>
+          {{else}}
+            {{moment-format report.startDate "L"}}
+          {{/if}}
+        </span>
+      </div>
+      <div class="block end-date">
+        <label>
+          {{t "general.end"}}:
+        </label>
+        <span>
+          {{#if canUpdate}}
+            <EditableField
+              @value={{moment-format report.endDate "L"}}
+              @save={{action "changeEndDate"}}
+              @close={{action "revertEndDateChanges"}}
+            >
+              <PikadayInput
+                @value={{endDate}}
+                @format="L"
+                @onSelection={{action (mut endDate)}}
+                @focusOut={{action "addErrorDisplayFor" "endDate"}}
+              />
+              {{#if
+                (and
+                  (v-get this "endDate" "isInvalid")
+                  (contains "endDate" showErrorsFor)
+                )
+              }}
+                <span class="validation-error-message">
+                  {{v-get this "endDate" "message"}}
+                </span>
+              {{/if}}
+            </EditableField>
+          {{else}}
+            {{moment-format report.endDate "L"}}
+          {{/if}}
+        </span>
+      </div>
+      <div class="block academic-year">
+        <label>
+          {{t "general.academicYear"}}:
+        </label>
+        {{#if (and canUpdate (not (await report.hasLinkedCourses)))}}
+          <EditableField
+            @value={{yearLabel}}
+            @save={{action "changeYear"}}
+            @close={{action "revertYearChanges"}}
+          >
+            <select {{on "change" (action "updateYear")}}>
+              {{#each this.yearOptions as |obj|}}
+                <option value={{obj.id}} selected={{eq obj.id this.year}}>{{obj.title}}</option>
+              {{/each}}
+            </select>
           </EditableField>
         {{else}}
-          {{description}}
+          <span>
+            {{yearLabel}}
+          </span>
         {{/if}}
-      </span>
+      </div>
+      <div class="block program">
+        <label>
+          {{t "general.program"}}:
+        </label>
+        <span>
+          {{report.program.title}}
+          ({{report.program.shortTitle}})
+        </span>
+      </div>
+      <div class="description">
+        <label>
+          {{t "general.description"}}:
+        </label>
+        <span>
+          {{#if canUpdate}}
+            <EditableField
+              @value={{description}}
+              @save={{action "changeDescription"}}
+              @close={{action "revertDescriptionChanges"}}
+              @clickPrompt={{if description description (t "general.clickToEdit")
+              }}
+              @closeOnEscape={{true}} as |isSaving|
+            >
+              <textarea
+                oninput={{action (mut description) value="target.value"}}
+                value={{description}}
+                disabled={{isSaving}}
+                onkeyup={{action "addErrorDisplayFor" "description"}}
+              >
+                {{description}}
+              </textarea>
+              {{#if
+                (and
+                  (v-get this "description" "isInvalid")
+                  (contains "description" showErrorsFor)
+                )
+              }}
+                <span class="validation-error-message">
+                  {{v-get this "description" "message"}}
+                </span>
+              {{/if}}
+            </EditableField>
+          {{else}}
+            {{description}}
+          {{/if}}
+        </span>
+      </div>
     </div>
-  </div>
-{{/unless}}
+  {{/unless}}
+</section>

@@ -1,49 +1,51 @@
-<div class="blocks">
-  <ManageUsersSummary @canCreate={{canCreate}} />
-</div>
-<h1 class="user-display-name">
-  {{#unless user.enabled}}
-    <FaIcon @icon="ban" class="no" @title={{t "general.disabled"}} />
-  {{/unless}}
-  {{user.fullName}}
-</h1>
-<div class="user-roles">
-  {{#if (await user.isStudent)}}
-    <span class="user-is-student">
-      {{t "general.student"}}
-    </span>
-  {{/if}}
-</div>
-<PendingSingleUserUpdate @user={{user}} @canUpdate={{canUpdate}} />
-<div class="blocks">
-  <UserProfileBio
-    @user={{user}}
-    @isManageable={{canUpdate}}
-    @isManaging={{isManagingBio}}
-    @setIsManaging={{setIsManagingBio}}
-  />
-  <UserProfileRoles
-    @user={{user}}
-    @isManageable={{canUpdate}}
-    @isManaging={{isManagingRoles}}
-    @setIsManaging={{setIsManagingRoles}}
-  />
-  <UserProfileCohorts
-    @user={{user}}
-    @isManageable={{canUpdate}}
-    @isManaging={{isManagingCohorts}}
-    @setIsManaging={{setIsManagingCohorts}}
-  />
-  <UserProfileIcs
-    @user={{user}}
-    @isManageable={{and
-      canUpdate
-      (eq (get (await currentUser.model) "id") user.id)
-    }}
-    @isManaging={{isManagingIcs}}
-    @setIsManaging={{setIsManagingIcs}}
-  />
-  <UserProfilePermissions @user={{user}} />
-  <UserProfileCalendar @user={{user}} />
-  <UserProfileLearnergroups @user={{user}} />
+<div class="user-profile" data-test-user-profile ...attributes>
+  <div class="blocks">
+    <ManageUsersSummary @canCreate={{canCreate}} />
+  </div>
+  <h1 class="user-display-name">
+    {{#unless user.enabled}}
+      <FaIcon @icon="ban" class="no" @title={{t "general.disabled"}} />
+    {{/unless}}
+    {{user.fullName}}
+  </h1>
+  <div class="user-roles">
+    {{#if (await user.isStudent)}}
+      <span class="user-is-student">
+        {{t "general.student"}}
+      </span>
+    {{/if}}
+  </div>
+  <PendingSingleUserUpdate @user={{user}} @canUpdate={{canUpdate}} />
+  <div class="blocks">
+    <UserProfileBio
+      @user={{user}}
+      @isManageable={{canUpdate}}
+      @isManaging={{isManagingBio}}
+      @setIsManaging={{setIsManagingBio}}
+    />
+    <UserProfileRoles
+      @user={{user}}
+      @isManageable={{canUpdate}}
+      @isManaging={{isManagingRoles}}
+      @setIsManaging={{setIsManagingRoles}}
+    />
+    <UserProfileCohorts
+      @user={{user}}
+      @isManageable={{canUpdate}}
+      @isManaging={{isManagingCohorts}}
+      @setIsManaging={{setIsManagingCohorts}}
+    />
+    <UserProfileIcs
+      @user={{user}}
+      @isManageable={{and
+        canUpdate
+        (eq (get (await currentUser.model) "id") user.id)
+      }}
+      @isManaging={{isManagingIcs}}
+      @setIsManaging={{setIsManagingIcs}}
+    />
+    <UserProfilePermissions @user={{user}} />
+    <UserProfileCalendar @user={{user}} />
+    <UserProfileLearnergroups @user={{user}} />
+  </div>
 </div>

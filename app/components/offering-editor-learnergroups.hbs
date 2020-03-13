@@ -1,44 +1,46 @@
-<section class="half-grouping">
-  <header class="title-selected-groups center">
-    {{t "general.selected"}}
-  </header>
-  <ul class="tree-list removable">
-    {{#each (await sortedLearnerGroups) as |learnerGroup|}}
-      <li {{action "removeLearnerGroup" learnerGroup.group}}>
-        <div class="selected-subgroup-style">
-          {{learnerGroup.sortName}}
-        </div>
-      </li>
-    {{else}}
-      <li>
-        {{t "general.noUnselectedLearnerGroupsInCohort"}}
-      </li>
-    {{/each}}
-  </ul>
-</section>
-<section class="half-grouping">
-  <header class="title-available-groups center">
-    {{t "general.availableLearnerGroups"}}
-  </header>
-  <ul class="tree-list selectable">
-    {{#each cohort.filteredAvailableLearnerGroups as |learnerGroup|}}
-      <li {{action "addLearnerGroup" learnerGroup}}>
-        {{#if (await learnerGroup.allParentTitles)}}
-          <div class="available-subgroup-style">
-            <SeparatedList
-              @icon="angle-right"
-              @list={{await learnerGroup.allParentTitles}}
-            />
-            {{learnerGroup.title}}
+<div class="offering-editor-learnergroups" ...attributes>
+  <section class="half-grouping">
+    <header class="title-selected-groups center">
+      {{t "general.selected"}}
+    </header>
+    <ul class="tree-list removable">
+      {{#each (await sortedLearnerGroups) as |learnerGroup|}}
+        <li {{action "removeLearnerGroup" learnerGroup.group}}>
+          <div class="selected-subgroup-style">
+            {{learnerGroup.sortName}}
           </div>
-        {{else}}
-          {{learnerGroup.title}}
-        {{/if}}
-      </li>
-    {{else}}
-      <li>
-        {{t "general.noAvailableLearnerGroups"}}
-      </li>
-    {{/each}}
-  </ul>
-</section>
+        </li>
+      {{else}}
+        <li>
+          {{t "general.noUnselectedLearnerGroupsInCohort"}}
+        </li>
+      {{/each}}
+    </ul>
+  </section>
+  <section class="half-grouping">
+    <header class="title-available-groups center">
+      {{t "general.availableLearnerGroups"}}
+    </header>
+    <ul class="tree-list selectable">
+      {{#each cohort.filteredAvailableLearnerGroups as |learnerGroup|}}
+        <li {{action "addLearnerGroup" learnerGroup}}>
+          {{#if (await learnerGroup.allParentTitles)}}
+            <div class="available-subgroup-style">
+              <SeparatedList
+                @icon="angle-right"
+                @list={{await learnerGroup.allParentTitles}}
+              />
+              {{learnerGroup.title}}
+            </div>
+          {{else}}
+            {{learnerGroup.title}}
+          {{/if}}
+        </li>
+      {{else}}
+        <li>
+          {{t "general.noAvailableLearnerGroups"}}
+        </li>
+      {{/each}}
+    </ul>
+  </section>
+</div>

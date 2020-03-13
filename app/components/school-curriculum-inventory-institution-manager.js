@@ -65,8 +65,7 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   store: service(),
-  "data-test-school-curriculum-inventory-institution-manager": true,
-  classNames: ["school-curriculum-inventory-institution-manager"],
+  tagName: "",
   isSaving: false,
   name: null,
   aamcCode: null,

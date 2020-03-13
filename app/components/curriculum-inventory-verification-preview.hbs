@@ -1,110 +1,112 @@
-{{#if this.tables}}
-  <ul data-test-table-of-contents id={{this.tocId}} class="table-of-contents">
-    <li>
-      <a href="#verification-preview-table1">
-        {{t "general.table1ProgramExpectationsMappedToPcrs"}}
-      </a>
-    </li>
-    <li>
-      <a href="#verification-preview-table2">
-        {{t
-          "general.table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock"
-        }}
-      </a>
-    </li>
-    <li>
-      <a href="#verification-preview-table3a">
-        {{t "general.table3aNonClerkshipSequenceBlockInstructionalTime"}}
-      </a>
-    </li>
-    <li>
-      <a href="#verification-preview-table3b">
-        {{t "general.table3bClerkshipSequenceBlockInstructionalTime"}}
-      </a>
-    </li>
-    <li>
-      <a href="#verification-preview-table4">
-        {{t "general.table4InstructionalMethodCounts"}}
-      </a>
-    </li>
-    <li>
-      <a href="#verification-preview-table5">
-        {{t "general.table5NonClerkshipSequenceBlockAssessmentMethods"}}
-      </a>
-    </li>
-    <li>
-      <a href="#verification-preview-table6">
-        {{t "general.table6ClerkshipSequenceBlockAssessmentMethods"}}
-      </a>
-    </li>
-    <li>
-      <a href="#verification-preview-table7">
-        {{t "general.table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative"
-        }}
-      </a>
-    </li>
-    <li>
-      <a href="#verification-preview-table8">
-        {{t "general.table8AllResourceTypes"}}
-      </a>
-    </li>
-  </ul>
-  <CurriculumInventoryVerificationPreviewTable1
-    @data={{this.tables.program_expectations_mapped_to_pcrs}}
-  />
-  <a class="back-to-toc" href="#{{this.tocId}}">
-    {{t "general.backToTableOfContents"}}
-  </a>
-  <CurriculumInventoryVerificationPreviewTable2
-    @data={{this.tables.primary_instructional_methods_by_non_clerkship_sequence_blocks
-    }}
-  />
-  <a class="back-to-toc" href="#{{this.tocId}}">
-    {{t "general.backToTableOfContents"}}
-  </a>
-  <CurriculumInventoryVerificationPreviewTable3a
-    @data={{this.tables.non_clerkship_sequence_block_instructional_time}}
-  />
-  <a class="back-to-toc" href="#{{this.tocId}}">
-    {{t "general.backToTableOfContents"}}
-  </a>
-  <CurriculumInventoryVerificationPreviewTable3b
-    @data={{this.tables.clerkship_sequence_block_instructional_time}}
-  />
-  <a class="back-to-toc" href="#{{this.tocId}}">
-    {{t "general.backToTableOfContents"}}
-  </a>
-  <CurriculumInventoryVerificationPreviewTable4
-    @data={{this.tables.instructional_method_counts}}
-  />
-  <a class="back-to-toc" href="#{{this.tocId}}">
-    {{t "general.backToTableOfContents"}}
-  </a>
-  <CurriculumInventoryVerificationPreviewTable5
-    @data={{this.tables.non_clerkship_sequence_block_assessment_methods}}
-  />
-  <a class="back-to-toc" href="#{{this.tocId}}">
-    {{t "general.backToTableOfContents"}}
-  </a>
-  <CurriculumInventoryVerificationPreviewTable6
-    @data={{this.tables.clerkship_sequence_block_assessment_methods}}
-  />
-  <a class="back-to-toc" href="#{{this.tocId}}">
-    {{t "general.backToTableOfContents"}}
-  </a>
-  <CurriculumInventoryVerificationPreviewTable7
-    @data={{this.tables.all_events_with_assessments_tagged_as_formative_or_summative
-    }}
-  />
-  <a class="back-to-toc" href="#{{this.tocId}}">
-    {{t "general.backToTableOfContents"}}
-  </a>
-  <CurriculumInventoryVerificationPreviewTable8
-    @data={{this.tables.all_resource_types}}
-  />
-  <a class="back-to-toc" href="#{{this.tocId}}">
-    {{t "general.backToTableOfContents"}}
-  </a>
-{{else}}
-  <LoadingSpinner />
-{{/if}}
+<div class="curriculum-inventory-verification-preview" data-test-curriculum-inventory-verification-preview ...attributes>
+  {{#if this.tables}}
+    <ul data-test-table-of-contents id={{this.tocId}} class="table-of-contents">
+      <li>
+        <a href="#verification-preview-table1">
+          {{t "general.table1ProgramExpectationsMappedToPcrs"}}
+        </a>
+      </li>
+      <li>
+        <a href="#verification-preview-table2">
+          {{t
+            "general.table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock"
+          }}
+        </a>
+      </li>
+      <li>
+        <a href="#verification-preview-table3a">
+          {{t "general.table3aNonClerkshipSequenceBlockInstructionalTime"}}
+        </a>
+      </li>
+      <li>
+        <a href="#verification-preview-table3b">
+          {{t "general.table3bClerkshipSequenceBlockInstructionalTime"}}
+        </a>
+      </li>
+      <li>
+        <a href="#verification-preview-table4">
+          {{t "general.table4InstructionalMethodCounts"}}
+        </a>
+      </li>
+      <li>
+        <a href="#verification-preview-table5">
+          {{t "general.table5NonClerkshipSequenceBlockAssessmentMethods"}}
+        </a>
+      </li>
+      <li>
+        <a href="#verification-preview-table6">
+          {{t "general.table6ClerkshipSequenceBlockAssessmentMethods"}}
+        </a>
+      </li>
+      <li>
+        <a href="#verification-preview-table7">
+          {{t "general.table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative"
+          }}
+        </a>
+      </li>
+      <li>
+        <a href="#verification-preview-table8">
+          {{t "general.table8AllResourceTypes"}}
+        </a>
+      </li>
+    </ul>
+    <CurriculumInventoryVerificationPreviewTable1
+      @data={{this.tables.program_expectations_mapped_to_pcrs}}
+    />
+    <a class="back-to-toc" href="#{{this.tocId}}">
+      {{t "general.backToTableOfContents"}}
+    </a>
+    <CurriculumInventoryVerificationPreviewTable2
+      @data={{this.tables.primary_instructional_methods_by_non_clerkship_sequence_blocks
+      }}
+    />
+    <a class="back-to-toc" href="#{{this.tocId}}">
+      {{t "general.backToTableOfContents"}}
+    </a>
+    <CurriculumInventoryVerificationPreviewTable3a
+      @data={{this.tables.non_clerkship_sequence_block_instructional_time}}
+    />
+    <a class="back-to-toc" href="#{{this.tocId}}">
+      {{t "general.backToTableOfContents"}}
+    </a>
+    <CurriculumInventoryVerificationPreviewTable3b
+      @data={{this.tables.clerkship_sequence_block_instructional_time}}
+    />
+    <a class="back-to-toc" href="#{{this.tocId}}">
+      {{t "general.backToTableOfContents"}}
+    </a>
+    <CurriculumInventoryVerificationPreviewTable4
+      @data={{this.tables.instructional_method_counts}}
+    />
+    <a class="back-to-toc" href="#{{this.tocId}}">
+      {{t "general.backToTableOfContents"}}
+    </a>
+    <CurriculumInventoryVerificationPreviewTable5
+      @data={{this.tables.non_clerkship_sequence_block_assessment_methods}}
+    />
+    <a class="back-to-toc" href="#{{this.tocId}}">
+      {{t "general.backToTableOfContents"}}
+    </a>
+    <CurriculumInventoryVerificationPreviewTable6
+      @data={{this.tables.clerkship_sequence_block_assessment_methods}}
+    />
+    <a class="back-to-toc" href="#{{this.tocId}}">
+      {{t "general.backToTableOfContents"}}
+    </a>
+    <CurriculumInventoryVerificationPreviewTable7
+      @data={{this.tables.all_events_with_assessments_tagged_as_formative_or_summative
+      }}
+    />
+    <a class="back-to-toc" href="#{{this.tocId}}">
+      {{t "general.backToTableOfContents"}}
+    </a>
+    <CurriculumInventoryVerificationPreviewTable8
+      @data={{this.tables.all_resource_types}}
+    />
+    <a class="back-to-toc" href="#{{this.tocId}}">
+      {{t "general.backToTableOfContents"}}
+    </a>
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</div>

@@ -1,12 +1,14 @@
-{{#unless loadTitle.isRunning}}
-  {{#if reporttitle}}
-    <span class="link clickable" {{action @onReportSelect report.id}}>
-      <FaIcon @icon="external-link-square-alt" />
-      {{reporttitle}}
-    </span>
-  {{else}}
-    <span>
-      {{t "general.thisReportIsNoLongerAvailable"}}
-    </span>
-  {{/if}}
-{{/unless}}
+<span class="myreports-list-item" ...attributes>
+  {{#unless loadTitle.isRunning}}
+    {{#if reporttitle}}
+      <span class="link clickable" {{action @onReportSelect report.id}}>
+        <FaIcon @icon="external-link-square-alt" />
+        {{reporttitle}}
+      </span>
+    {{else}}
+      <span>
+        {{t "general.thisReportIsNoLongerAvailable"}}
+      </span>
+    {{/if}}
+  {{/unless}}
+</span>

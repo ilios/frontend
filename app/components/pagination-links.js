@@ -3,14 +3,11 @@ import { computed } from '@ember/object';
 import { equal } from '@ember/object/computed';
 
 export default Component.extend({
-  classNames: ['pagination-links'],
-  'data-test-pagination-links': true,
-
+  tagName: "",
   page: null,
   results: null,
   size: null,
   onSelectPage() {},
-
   disablePrev: equal('page', 1),
 
   disableNext: computed('lastPage', 'page', function() {

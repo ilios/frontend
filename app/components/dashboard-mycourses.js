@@ -4,9 +4,7 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   currentUser: service(),
-
-  classNames: ['dashboard-mycourses'],
-  tagName: 'div',
+  tagName: "",
 
   listOfCourses: computed('currentUser.activeRelatedCoursesInThisYearAndLastYear.[]', function() {
     return this.currentUser.get('activeRelatedCoursesInThisYearAndLastYear').then(courses => {

@@ -5,12 +5,12 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   store: service(),
+  tagName: "",
   user: null,
   validUsers: null,
-  learnerGroup: null,
 
+  learnerGroup: null,
   matchedGroups: null,
-  classNames: ['learnergroup-bulk-assignment'],
 
   unmatchedGroups: computed('validUsers.@each.subGroupName', function () {
     const validUsers = this.validUsers;

@@ -30,7 +30,7 @@ const ProgramProxy = ObjectProxy.extend({
 
 export default Component.extend({
   permissionChecker: service(),
-
+  tagName: "",
   programs: null,
   query: null,
   activate() {},

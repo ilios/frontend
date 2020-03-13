@@ -2,8 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-  'data-test-curriculum-inventory-verification-preview-table4': true,
-  classNames: ['curriculum-inventory-verification-preview-table4'],
+  tagName: "",
 
   totalNumEventsPrimaryMethod: computed('data', function(){
     return this.data.reduce((value, row) => {

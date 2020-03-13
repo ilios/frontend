@@ -1,43 +1,45 @@
-<div class="program-leadership-expanded-header">
-  <h3 class="title collapsible clickable" {{action @collapse}}>
-    {{t "general.programLeadership"}}
-  </h3>
-  <div class="actions">
-    {{#if isManaging}}
-      <button type="button" class="bigadd" onclick={{perform this.save}}>
-        <FaIcon
-          @icon={{if this.isSaving "spinner" "check"}}
-          @spin={{this.isSaving}}
+<div class="program-leadership-expanded" data-test-program-leadership-expanded ...attributes>
+  <div class="program-leadership-expanded-header">
+    <h3 class="title collapsible clickable" {{action @collapse}}>
+      {{t "general.programLeadership"}}
+    </h3>
+    <div class="actions">
+      {{#if isManaging}}
+        <button type="button" class="bigadd" onclick={{perform this.save}}>
+          <FaIcon
+            @icon={{if this.isSaving "spinner" "check"}}
+            @spin={{this.isSaving}}
+          />
+        </button>
+        <button type="button" class="bigcancel" onclick={{action "cancel"}}>
+          <FaIcon @icon="undo" />
+        </button>
+      {{else if @canUpdate}}
+        <button type="button" onclick={{action @setIsManaging true}}>
+          {{t "general.manageLeadership"}}
+        </button>
+      {{/if}}
+    </div>
+  </div>
+  <div class="program-leadership-expanded-content">
+    {{#if (is-array (await this.directors))}}
+      {{#if isManaging}}
+        <LeadershipManager
+          @directors={{await this.directors}}
+          @showAdministrators={{false}}
+          @showDirectors={{true}}
+          @addDirector={{action "addDirector"}}
+          @removeDirector={{action "removeDirector"}}
         />
-      </button>
-      <button type="button" class="bigcancel" onclick={{action "cancel"}}>
-        <FaIcon @icon="undo" />
-      </button>
-    {{else if @canUpdate}}
-      <button type="button" onclick={{action @setIsManaging true}}>
-        {{t "general.manageLeadership"}}
-      </button>
+      {{else}}
+        <LeadershipList
+          @directors={{await this.directors}}
+          @showAdministrators={{false}}
+          @showDirectors={{true}}
+        />
+      {{/if}}
+    {{else}}
+      <LoadingSpinner @tagName="h3" />
     {{/if}}
   </div>
-</div>
-<div class="program-leadership-expanded-content">
-  {{#if (is-array (await this.directors))}}
-    {{#if isManaging}}
-      <LeadershipManager
-        @directors={{await this.directors}}
-        @showAdministrators={{false}}
-        @showDirectors={{true}}
-        @addDirector={{action "addDirector"}}
-        @removeDirector={{action "removeDirector"}}
-      />
-    {{else}}
-      <LeadershipList
-        @directors={{await this.directors}}
-        @showAdministrators={{false}}
-        @showDirectors={{true}}
-      />
-    {{/if}}
-  {{else}}
-    <LoadingSpinner @tagName="h3" />
-  {{/if}}
 </div>

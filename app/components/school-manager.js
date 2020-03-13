@@ -16,10 +16,7 @@ const Validations = buildValidations({
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
   flashMessages: service(),
-
-  classNames: ['school-manager' ],
-  tagName: 'section',
-
+  tagName: "",
   canCreateCompetency: false,
   canCreateSessionType: false,
   canCreateTerm: false,

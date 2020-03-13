@@ -7,10 +7,7 @@ import { task } from 'ember-concurrency';
 
 export default Component.extend({
   store: service(),
-
-  classNames: ['detail-steward-manager'],
-  tagName: 'section',
-
+  tagName: "",
   availableSchoolsLoaded: false,
   stewards: null,
   stewardsBySchoolLoaded: false,

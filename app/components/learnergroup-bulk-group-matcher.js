@@ -2,13 +2,11 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-  'data-test-learnergroup-bulk-group-matcher': true,
-  tagName: 'tr',
+  tagName: "",
   matches: null,
   groups: null,
   groupName: null,
-  classNames: ['learnergroup-bulk-group-matcher'],
-  classNameBindings: ['matchedGroupId:matched:not-matched'],
+
   matchedGroupId: computed('matches.[]', 'groupName', function () {
     const matches = this.matches;
     const groupName = this.groupName;
@@ -19,12 +17,14 @@ export default Component.extend({
 
     return null;
   }),
+
   noGroupWithThisName: computed('groups.[]', 'groupName', function () {
     const groups = this.groups;
     const groupName = this.groupName;
     const match = groups.findBy('title', groupName);
     return match ? false : true;
   }),
+
   actions: {
     matchGroup(learnerGroupId) {
       const groupName = this.groupName;

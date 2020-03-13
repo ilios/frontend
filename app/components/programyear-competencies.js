@@ -6,8 +6,8 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   flashMessages: service(),
-  classNames: ['programyear-competencies'],
 
+  tagName: "",
   canUpdate: false,
   isManaging: null,
   isSaving: false,

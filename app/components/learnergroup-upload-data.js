@@ -10,7 +10,7 @@ export default Component.extend({
   store: service(),
   iliosConfig: service(),
   intl: service(),
-  classNames: ['learnergroup-upload-data'],
+  tagName: "",
   file: null,
   data: null,
   learnerGroup: null,

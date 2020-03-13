@@ -1,25 +1,27 @@
-<div class="backtolink">
-  <LinkTo @route="programs">
-    {{t "general.backToPrograms"}}
-  </LinkTo>
-</div>
-<ProgramHeader @program={{program}} @canUpdate={{canUpdate}} />
-<ProgramOverview @program={{program}} @canUpdate={{canUpdate}} />
-{{#if leadershipDetails}}
-  <ProgramLeadershipExpanded
-    @program={{program}}
-    @canUpdate={{canUpdate}}
-    @collapse={{action setLeadershipDetails false}}
-    @expand={{action setLeadershipDetails true}}
-    @isManaging={{manageLeadership}}
-    @setIsManaging={{setManageLeadership}}
-  />
-{{else}}
-  <LeadershipCollapsed
-    @title={{t "general.programLeadership"}}
-    @showAdministrators={{false}}
-    @showDirectors={{true}}
-    @directorsCount={{has-many-length program "directors"}}
-    @expand={{action setLeadershipDetails true}}
-  />
-{{/if}}
+<section class="program-details" data-test-program-details ...attributes>
+  <div class="backtolink">
+    <LinkTo @route="programs">
+      {{t "general.backToPrograms"}}
+    </LinkTo>
+  </div>
+  <ProgramHeader @program={{program}} @canUpdate={{canUpdate}} />
+  <ProgramOverview @program={{program}} @canUpdate={{canUpdate}} />
+  {{#if leadershipDetails}}
+    <ProgramLeadershipExpanded
+      @program={{program}}
+      @canUpdate={{canUpdate}}
+      @collapse={{action setLeadershipDetails false}}
+      @expand={{action setLeadershipDetails true}}
+      @isManaging={{manageLeadership}}
+      @setIsManaging={{setManageLeadership}}
+    />
+  {{else}}
+    <LeadershipCollapsed
+      @title={{t "general.programLeadership"}}
+      @showAdministrators={{false}}
+      @showDirectors={{true}}
+      @directorsCount={{has-many-length program "directors"}}
+      @expand={{action setLeadershipDetails true}}
+    />
+  {{/if}}
+</section>

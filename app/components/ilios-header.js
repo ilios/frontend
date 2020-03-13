@@ -11,13 +11,8 @@ export default Component.extend({
   pageTitleList: service(),
   router: service(),
   iliosConfig: service(),
-
-  classNames: ['ilios-header'],
-  tagName: 'header',
-  ariaRole: 'banner',
+  tagName: "",
   title: null,
-
-  'data-test-ilios-header': true,
 
   showSearch: computed(
     'currentUser.performsNonLearnerFunction',

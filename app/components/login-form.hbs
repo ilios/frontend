@@ -1,50 +1,52 @@
-{{#if noAccountExistsError}}
-  <div class="error">
-    {{t "general.noAccountExists" accountName=noAccountExistsAccount}}
-  </div>
-{{else}}
-  <h2>
-    {{t "general.login"}}
-  </h2>
-  {{#each error.keys as |key|}}
+<div class="login-form" ...attributes>
+  {{#if noAccountExistsError}}
     <div class="error">
-      {{t key}}
+      {{t "general.noAccountExists" accountName=noAccountExistsAccount}}
     </div>
-  {{/each}}
-  <form {{action (perform authenticate) on="submit"}}>
-    <div class="item">
-      <label for={{concat elementId "-username-input"}}>
-        {{t "general.username"}}:
-      </label>
-      <input
-        autocapitalize="off"
-        autocorrect="off"
-        autofocus=""
-        id={{concat elementId "-username-input"}}
-        type="text"
-        value={{username}}
-        oninput={{action (mut username) value="target.value"}}
-      >
-    </div>
-    <div class="item">
-      <label for={{concat elementId "-password-input"}}>
-        {{t "general.password"}}:
-      </label>
-      <input
-        id={{concat elementId "-password-input"}}
-        type="password"
-        value={{password}}
-        oninput={{action (mut password) value="target.value"}}
-      >
-    </div>
-    <div class="buttons">
-      <button type="submit" class="done {{if authenticate.isRunning "active"}}">
-        {{#if authenticate.isRunning}}
-          <LoadingSpinner />
-        {{else}}
-          {{t "general.login"}}
-        {{/if}}
-      </button>
-    </div>
-  </form>
-{{/if}}
+  {{else}}
+    <h2>
+      {{t "general.login"}}
+    </h2>
+    {{#each error.keys as |key|}}
+      <div class="error">
+        {{t key}}
+      </div>
+    {{/each}}
+    <form {{action (perform authenticate) on="submit"}}>
+      <div class="item">
+        <label for={{concat elementId "-username-input"}}>
+          {{t "general.username"}}:
+        </label>
+        <input
+          autocapitalize="off"
+          autocorrect="off"
+          autofocus=""
+          id={{concat elementId "-username-input"}}
+          type="text"
+          value={{username}}
+          oninput={{action (mut username) value="target.value"}}
+        >
+      </div>
+      <div class="item">
+        <label for={{concat elementId "-password-input"}}>
+          {{t "general.password"}}:
+        </label>
+        <input
+          id={{concat elementId "-password-input"}}
+          type="password"
+          value={{password}}
+          oninput={{action (mut password) value="target.value"}}
+        >
+      </div>
+      <div class="buttons">
+        <button type="submit" class="done {{if authenticate.isRunning "active"}}">
+          {{#if authenticate.isRunning}}
+            <LoadingSpinner />
+          {{else}}
+            {{t "general.login"}}
+          {{/if}}
+        </button>
+      </div>
+    </form>
+  {{/if}}
+</div>

@@ -3,9 +3,7 @@ import ReportTitleMixin from 'ilios/mixins/report-title';
 import { task } from 'ember-concurrency';
 
 export default Component.extend(ReportTitleMixin, {
-  classNames: ['myreports-list-item'],
-  tagName: 'span',
-
+  tagName: "",
   reporttitle: null,
   onReportSelect() {},
 

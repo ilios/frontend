@@ -6,7 +6,7 @@ import { all } from 'rsvp';
 export default Component.extend({
   store: service(),
 
-  classNames: ['school-session-attributes'],
+  tagName: "",
 
   canUpdate: false,
   details: false,

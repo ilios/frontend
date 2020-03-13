@@ -6,11 +6,7 @@ import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
   store: service(),
-
-  classNameBindings: [':user-profile-roles', ':small-component', ':last', 'hasSavedRecently:has-saved:has-not-saved'],
-
-  'data-test-user-profile-roles': true,
-
+  tagName: "",
   finishedSetup: false,
   hasSavedRecently: false,
   isEnabledFlipped: false,

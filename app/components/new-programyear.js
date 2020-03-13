@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  classNames: ['new-programyear'],
+  tagName: "",
 
   availableAcademicYears: null,
   year: null,

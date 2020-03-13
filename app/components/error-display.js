@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
 
 export default Component.extend({
-  classNames: ['error-display'],
+  tagName: "",
 
   errors: null,
   isOffline: false,

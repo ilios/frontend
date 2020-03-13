@@ -2,8 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-  'data-test-curriculum-inventory-verification-preview-table5': true,
-  classNames: ['curriculum-inventory-verification-preview-table5'],
+  tagName: "",
 
   nonClerkships: computed('data.rows', 'data.methods', function ()  {
     const methods = this.data.methods;
@@ -19,5 +18,5 @@ export default Component.extend({
         title: row.title,
       };
     });
-  }),
+  })
 });

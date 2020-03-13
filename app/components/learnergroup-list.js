@@ -2,17 +2,13 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-  classNames: ['learnergroup-list'],
-
+  tagName: "",
   bubbleSort: true,
   canCreate: false,
   canDelete: false,
   learnerGroups: null,
   query: null,
   sortBy: 'title',
-
-  'data-test-learnergroup-list': true,
-
   copy() {},
   remove() {},
   setSortBy() {},

@@ -1,16 +1,18 @@
-{{#if domains.length}}
-  <ul data-test-domains>
-    {{#each (sort-by "title" domains) as |domain|}}
-      <li>
-        {{domain.title}}
-        <ul>
-          {{#each (sort-by "title" (await domain.children)) as |competency|}}
-            <li>
-              {{competency.title}}
-            </li>
-          {{/each}}
-        </ul>
-      </li>
-    {{/each}}
-  </ul>
-{{/if}}
+<div ...attributes>
+  {{#if domains.length}}
+    <ul data-test-domains>
+      {{#each (sort-by "title" domains) as |domain|}}
+        <li>
+          {{domain.title}}
+          <ul>
+            {{#each (sort-by "title" (await domain.children)) as |competency|}}
+              <li>
+                {{competency.title}}
+              </li>
+            {{/each}}
+          </ul>
+        </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+</div>

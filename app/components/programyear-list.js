@@ -12,10 +12,10 @@ import moment from 'moment';
 export default Component.extend({
   currentUser: service(),
   permissionChecker: service(),
+
   store: service(),
 
-  classNames: ['programyear-list'],
-
+  tagName: "",
   canCreate: false,
   editorOn: false,
   itemsToSave: null,

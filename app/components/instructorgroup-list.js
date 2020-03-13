@@ -3,6 +3,7 @@ import ObjectProxy from '@ember/object/proxy';
 import { computed } from '@ember/object';
 
 export default Component.extend({
+  tagName: "",
   canDelete: false,
   instructorGroups: null,
   query: null,

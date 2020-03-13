@@ -7,9 +7,11 @@ import { all } from 'rsvp';
 
 export default Component.extend({
   flashMessages: service(),
+  tagName: "",
   users: null,
   matchedGroups: null,
   learnerGroup: null,
+
   finalData: computed('users.[]', 'matchedGroups.[]', 'learnerGroup', function(){
     const users = this.users;
     const learnerGroup = this.learnerGroup;
@@ -46,5 +48,5 @@ export default Component.extend({
     yield all(groupsToSave.invoke('save'));
     flashMessages.success('general.savedSuccessfully');
     done();
-  }),
+  })
 });

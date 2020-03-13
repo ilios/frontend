@@ -4,7 +4,7 @@ import { task } from 'ember-concurrency';
 
 export default Component.extend({
   session: service(),
-  classNames: ['login-form'],
+  tagName: "",
   noAccountExistsError: false,
   noAccountExistsAccount: null,
   username: null,

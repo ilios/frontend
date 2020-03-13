@@ -1,50 +1,52 @@
-<div class="school-leadership-expanded-header">
-  <div
-    class="title {{if isCollapsible "collapsible clickable"}}"
-    {{action collapse}}
-  >
-    {{t "general.schoolLeadership"}}
+<div class="school-leadership-expanded" ...attributes>
+  <div class="school-leadership-expanded-header">
+    <div
+      class="title {{if isCollapsible "collapsible clickable"}}"
+      {{action collapse}}
+    >
+      {{t "general.schoolLeadership"}}
+    </div>
+    <div class="actions">
+      {{#if isManaging}}
+        <button type="button" class="bigadd" onclick={{perform save}}>
+          <FaIcon
+            @icon={{if save.isRunning "spinner" "check"}}
+            @spin={{if isSaving true false}}
+          />
+        </button>
+        <button type="button" class="bigcancel" {{action setIsManaging false}}>
+          <FaIcon @icon="undo" />
+        </button>
+      {{else if canUpdate}}
+        <button type="button" {{action setIsManaging true}}>
+          {{t "general.manageLeadership"}}
+        </button>
+      {{/if}}
+    </div>
   </div>
-  <div class="actions">
-    {{#if isManaging}}
-      <button type="button" class="bigadd" onclick={{perform save}}>
-        <FaIcon
-          @icon={{if save.isRunning "spinner" "check"}}
-          @spin={{if isSaving true false}}
+  <div class="school-leadership-expanded-content">
+    {{#if (and (is-fulfilled directors) (is-fulfilled administrators))}}
+      {{#if isManaging}}
+        <LeadershipManager
+          @directors={{await directors}}
+          @administrators={{await administrators}}
+          @showAdministrators={{true}}
+          @showDirectors={{true}}
+          @removeDirector={{action "removeDirector"}}
+          @addDirector={{action "addDirector"}}
+          @removeAdministrator={{action "removeAdministrator"}}
+          @addAdministrator={{action "addAdministrator"}}
         />
-      </button>
-      <button type="button" class="bigcancel" {{action setIsManaging false}}>
-        <FaIcon @icon="undo" />
-      </button>
-    {{else if canUpdate}}
-      <button type="button" {{action setIsManaging true}}>
-        {{t "general.manageLeadership"}}
-      </button>
+      {{else}}
+        <LeadershipList
+          @directors={{await directors}}
+          @administrators={{await administrators}}
+          @showAdministrators={{true}}
+          @showDirectors={{true}}
+        />
+      {{/if}}
+    {{else}}
+      <LoadingSpinner @tagName="h3" />
     {{/if}}
   </div>
-</div>
-<div class="school-leadership-expanded-content">
-  {{#if (and (is-fulfilled directors) (is-fulfilled administrators))}}
-    {{#if isManaging}}
-      <LeadershipManager
-        @directors={{await directors}}
-        @administrators={{await administrators}}
-        @showAdministrators={{true}}
-        @showDirectors={{true}}
-        @removeDirector={{action "removeDirector"}}
-        @addDirector={{action "addDirector"}}
-        @removeAdministrator={{action "removeAdministrator"}}
-        @addAdministrator={{action "addAdministrator"}}
-      />
-    {{else}}
-      <LeadershipList
-        @directors={{await directors}}
-        @administrators={{await administrators}}
-        @showAdministrators={{true}}
-        @showDirectors={{true}}
-      />
-    {{/if}}
-  {{else}}
-    <LoadingSpinner @tagName="h3" />
-  {{/if}}
 </div>

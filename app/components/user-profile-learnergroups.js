@@ -4,7 +4,7 @@ import { isEmpty } from '@ember/utils';
 import { map } from 'rsvp';
 
 export default Component.extend({
-  classNameBindings: [':user-profile-learnergroups', ':large-component'],
+  tagName: "",
 
   user: null,
 

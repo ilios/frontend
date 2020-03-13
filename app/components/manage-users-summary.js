@@ -14,10 +14,7 @@ export default Component.extend({
   router: service(),
   search: service(),
   store: service(),
-
-  classNames: ['manage-users-summary', 'large-component'],
-  tagName: 'section',
-
+  tagName: "",
   canCreate: false,
   searchValue: null,
 
@@ -63,7 +60,7 @@ export default Component.extend({
       }];
     }
     const searchEnabled = yield this.iliosConfig.searchEnabled;
-    const searchResults = searchEnabled ? yield this.indexSearch(q) : yield this.apiSearch(q);
+    const searchResults = searchEnabled ? (yield this.indexSearch(q)) : (yield this.apiSearch(q));
 
     if (searchResults.length === 0) {
       return [{
@@ -100,5 +97,5 @@ export default Component.extend({
     });
     this.set('searchValue', null);
     yield this.searchForUsers.perform(null);
-  }).drop(),
+  }).drop()
 });

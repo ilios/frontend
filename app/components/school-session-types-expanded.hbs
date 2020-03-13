@@ -1,48 +1,50 @@
-<div class="school-session-types-header">
-  <div
-    class="title {{if (await isCollapsible) "collapsible clickable"}}"
-    {{action "collapse"}}
-  >
-    {{t "general.sessionTypes"}}
+<section class="school-session-types-expanded" ...attributes>
+  <div class="school-session-types-header">
+    <div
+      class="title {{if (await isCollapsible) "collapsible clickable"}}"
+      {{action "collapse"}}
+    >
+      {{t "general.sessionTypes"}}
+    </div>
+    <div class="actions">
+      {{#if (and canCreate (not managedSessionTypeId))}}
+        <ExpandCollapseButton
+          @value={{schoolNewSessionType}}
+          @action={{action "toggleSchoolNewSessionType"}}
+        />
+      {{/if}}
+    </div>
   </div>
-  <div class="actions">
-    {{#if (and canCreate (not managedSessionTypeId))}}
-      <ExpandCollapseButton
-        @value={{schoolNewSessionType}}
-        @action={{action "toggleSchoolNewSessionType"}}
+  <div class="school-session-types-expanded-content">
+    {{#liquid-if schoolNewSessionType class="vertical"}}
+      <SchoolSessionTypeForm
+        @title={{null}}
+        @calendarColor="#ffffff"
+        @assessment={{false}}
+        @isActive={{true}}
+        @canEditTitle={{true}}
+        @canEditAamcMethod={{true}}
+        @canEditCalendarColor={{true}}
+        @canEditAssessment={{true}}
+        @canEditAssessmentOption={{true}}
+        @canEditActive={{true}}
+        @canUpdate={{true}}
+        @save={{perform save}}
+        @close={{action setSchoolNewSessionType false}}
       />
-    {{/if}}
+    {{/liquid-if}}
+    {{#liquid-if managedSessionTypeId class="horizontal"}}
+      <SchoolSessionTypeManager
+        @sessionType={{await managedSessionType}}
+        @close={{action setSchoolManagedSessionType null}}
+        @canUpdate={{canUpdate}}
+      />
+    {{else}}
+      <SchoolSessionTypesList
+        @sessionTypes={{await sessionTypes}}
+        @manageSessionType={{setSchoolManagedSessionType}}
+        @canDelete={{canDelete}}
+      />
+    {{/liquid-if}}
   </div>
-</div>
-<div class="school-session-types-expanded-content">
-  {{#liquid-if schoolNewSessionType class="vertical"}}
-    <SchoolSessionTypeForm
-      @title={{null}}
-      @calendarColor="#ffffff"
-      @assessment={{false}}
-      @isActive={{true}}
-      @canEditTitle={{true}}
-      @canEditAamcMethod={{true}}
-      @canEditCalendarColor={{true}}
-      @canEditAssessment={{true}}
-      @canEditAssessmentOption={{true}}
-      @canEditActive={{true}}
-      @canUpdate={{true}}
-      @save={{perform save}}
-      @close={{action setSchoolNewSessionType false}}
-    />
-  {{/liquid-if}}
-  {{#liquid-if managedSessionTypeId class="horizontal"}}
-    <SchoolSessionTypeManager
-      @sessionType={{await managedSessionType}}
-      @close={{action setSchoolManagedSessionType null}}
-      @canUpdate={{canUpdate}}
-    />
-  {{else}}
-    <SchoolSessionTypesList
-      @sessionTypes={{await sessionTypes}}
-      @manageSessionType={{setSchoolManagedSessionType}}
-      @canDelete={{canDelete}}
-    />
-  {{/liquid-if}}
-</div>
+</section>

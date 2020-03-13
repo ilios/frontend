@@ -8,10 +8,7 @@ import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
   router: service(),
-
-  classNameBindings: ['isIcon::not-icon', ':visualizer-session-type-vocabularies'],
-  tagName: 'span',
-
+  tagName: "",
   isIcon: false,
   sessionType: null,
   tooltipContent: null,

@@ -13,7 +13,7 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  classNames: ['program-header'],
+  tagName: "",
 
   canUpdate: false,
   program: null,

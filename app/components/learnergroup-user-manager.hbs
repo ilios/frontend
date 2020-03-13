@@ -1,156 +1,85 @@
-<div class="title">
-  {{#unless isEditing}}
-    {{t "general.members"}}
-    ({{users.length}})
-  {{/unless}}
-</div>
-{{#if users.length}}
-  <div class="actions">
-    <input
-      value={{filter}}
-      oninput={{action (mut filter) value="target.value"}}
-      placeholder={{t "general.filterByNameOrEmail"}}
-    >
+<div class="learnergroup-user-manager" ...attributes>
+  <div class="title">
+    {{#unless isEditing}}
+      {{t "general.members"}}
+      ({{users.length}})
+    {{/unless}}
   </div>
-  <div class="learnergroup-user-manager-content">
-    <div class="list">
-      <table>
-        <thead>
-          <tr>
-            <th class="text-left" colspan="1">
-              {{#if isEditing}}
-                <input
-                  type="checkbox"
-                  onclick={{action "toggleUserSelectionAllOrNone"}}
-                >
-              {{/if}}
-            </th>
-            <SortableTh
-              @colspan={{2}}
-              @click={{action "sortBy" "firstName"}}
-              @sortedBy={{or
-                (eq sortBy "firstName")
-                (eq sortBy "firstName:desc")
-              }}
-              @sortedAscending={{sortedAscending}}
-            >
-              {{t "general.firstName"}}
-            </SortableTh>
-            <SortableTh
-              @colspan={{2}}
-              @click={{action "sortBy" "lastName"}}
-              @sortedBy={{or (eq sortBy "lastName") (eq sortBy "lastName:desc")
-              }}
-              @sortedAscending={{sortedAscending}}
-            >
-              {{t "general.lastName"}}
-            </SortableTh>
-            <th class="text-left" colspan="2">
-              {{t "general.campusId"}}
-            </th>
-            <th class="text-left hide-from-small-screen" colspan="5">
-              {{t "general.email"}}
-            </th>
-            {{#if isEditing}}
+  {{#if users.length}}
+    <div class="actions">
+      <input
+        value={{filter}}
+        oninput={{action (mut filter) value="target.value"}}
+        placeholder={{t "general.filterByNameOrEmail"}}
+      >
+    </div>
+    <div class="learnergroup-user-manager-content">
+      <div class="list">
+        <table>
+          <thead>
+            <tr>
+              <th class="text-left" colspan="1">
+                {{#if isEditing}}
+                  <input
+                    type="checkbox"
+                    onclick={{action "toggleUserSelectionAllOrNone"}}
+                  >
+                {{/if}}
+              </th>
               <SortableTh
                 @colspan={{2}}
-                @click={{action "sortBy" "lowestGroupInTreeTitle"}}
+                @click={{action "sortBy" "firstName"}}
                 @sortedBy={{or
-                  (eq sortBy "lowestGroupInTreeTitle")
-                  (eq sortBy "lowestGroupInTreeTitle:desc")
+                  (eq sortBy "firstName")
+                  (eq sortBy "firstName:desc")
                 }}
                 @sortedAscending={{sortedAscending}}
               >
-                {{t "general.groupName"}}
+                {{t "general.firstName"}}
               </SortableTh>
-              <th class="text-left" colspan="1">
-                {{t "general.actions"}}
+              <SortableTh
+                @colspan={{2}}
+                @click={{action "sortBy" "lastName"}}
+                @sortedBy={{or (eq sortBy "lastName") (eq sortBy "lastName:desc")
+                }}
+                @sortedAscending={{sortedAscending}}
+              >
+                {{t "general.lastName"}}
+              </SortableTh>
+              <th class="text-left" colspan="2">
+                {{t "general.campusId"}}
               </th>
-            {{/if}}
-          </tr>
-        </thead>
-      </table>
-      {{#if isEditing}}
-        <div class="title" data-test-group-members>
-          {{t "general.groupMembers"}}
-          ({{usersInCurrentGroup.length}})
-        </div>
-      {{/if}}
-      <table>
-        <tbody>
-          {{#each (sort-by sortBy usersInCurrentGroup) as |user|}}
-            <tr class={{unless user.enabled "disabled-user-account" ""}}>
-              <td class="text-left" colspan="1">
-                {{#if (or user.enabled currentUser.isRoot)}}
-                  {{#if isEditing}}
-                    <input
-                      type="checkbox"
-                      checked={{contains user.content selectedUsers}}
-                      onclick={{action "toggleUserSelection" user.content}}
-                    >
-                  {{/if}}
-                {{/if}}
-                {{#if (not user.enabled)}}
-                  <FaIcon
-                    @icon="user-times"
-                    @title={{t "general.disabled"}}
-                    class="error"
-                  />
-                {{/if}}
-              </td>
-              <td class="text-left" colspan="2">
-                {{user.firstName}}
-              </td>
-              <td class="text-left" colspan="2">
-                {{user.lastName}}
-              </td>
-              <td class="text-left" colspan="2">
-                {{user.campusId}}
-              </td>
-              <td class="text-left hide-from-small-screen" colspan="5">
-                {{user.email}}
-              </td>
+              <th class="text-left hide-from-small-screen" colspan="5">
+                {{t "general.email"}}
+              </th>
               {{#if isEditing}}
-                <td class="text-left" colspan="2">
-                  <LinkTo
-                    @route="learnerGroup"
-                    @model={{user.lowestGroupInTree}}
-                    @query={{hash isEditing=isEditing sortUsersBy=sortBy}}
-                  >
-                    {{user.lowestGroupInTree.title}}
-                  </LinkTo>
-                </td>
-                <td>
-                  {{#if (contains user.content usersBeingMoved)}}
-                    <LoadingSpinner />
-                  {{else if user.enabled}}
-                    {{#if (eq selectedUsers.length 0)}}
-                      <FaIcon
-                        @icon="minus"
-                        class="no clickable"
-                        @title={{t
-                          "general.removeLearnerToCohort"
-                          cohort=cohortTitle
-                          count=1
-                        }}
-                        @click={{perform removeSingleUser user.content}}
-                      />
-                    {{/if}}
-                  {{/if}}
-                </td>
+                <SortableTh
+                  @colspan={{2}}
+                  @click={{action "sortBy" "lowestGroupInTreeTitle"}}
+                  @sortedBy={{or
+                    (eq sortBy "lowestGroupInTreeTitle")
+                    (eq sortBy "lowestGroupInTreeTitle:desc")
+                  }}
+                  @sortedAscending={{sortedAscending}}
+                >
+                  {{t "general.groupName"}}
+                </SortableTh>
+                <th class="text-left" colspan="1">
+                  {{t "general.actions"}}
+                </th>
               {{/if}}
             </tr>
-          {{/each}}
-        </tbody>
-      </table>
-      {{#if isEditing}}
-        <div class="title" data-test-all-other-members>
-          {{t "general.allOtherMembers" topLevelGroupTitle=topLevelGroupTitle}}
-          ({{usersNotInCurrentGroup.length}})
-        </div>
+          </thead>
+        </table>
+        {{#if isEditing}}
+          <div class="title" data-test-group-members>
+            {{t "general.groupMembers"}}
+            ({{usersInCurrentGroup.length}})
+          </div>
+        {{/if}}
         <table>
           <tbody>
-            {{#each (sort-by sortBy usersNotInCurrentGroup) as |user|}}
+            {{#each (sort-by sortBy usersInCurrentGroup) as |user|}}
               <tr class={{unless user.enabled "disabled-user-account" ""}}>
                 <td class="text-left" colspan="1">
                   {{#if (or user.enabled currentUser.isRoot)}}
@@ -198,14 +127,14 @@
                     {{else if user.enabled}}
                       {{#if (eq selectedUsers.length 0)}}
                         <FaIcon
-                          @icon="plus"
-                          class="yes clickable"
+                          @icon="minus"
+                          class="no clickable"
                           @title={{t
-                            "general.moveToGroup"
-                            groupTitle=learnerGroupTitle
+                            "general.removeLearnerToCohort"
+                            cohort=cohortTitle
                             count=1
                           }}
-                          @click={{perform addSingleUser user.content}}
+                          @click={{perform removeSingleUser user.content}}
                         />
                       {{/if}}
                     {{/if}}
@@ -215,25 +144,98 @@
             {{/each}}
           </tbody>
         </table>
-      {{/if}}
+        {{#if isEditing}}
+          <div class="title" data-test-all-other-members>
+            {{t "general.allOtherMembers" topLevelGroupTitle=topLevelGroupTitle}}
+            ({{usersNotInCurrentGroup.length}})
+          </div>
+          <table>
+            <tbody>
+              {{#each (sort-by sortBy usersNotInCurrentGroup) as |user|}}
+                <tr class={{unless user.enabled "disabled-user-account" ""}}>
+                  <td class="text-left" colspan="1">
+                    {{#if (or user.enabled currentUser.isRoot)}}
+                      {{#if isEditing}}
+                        <input
+                          type="checkbox"
+                          checked={{contains user.content selectedUsers}}
+                          onclick={{action "toggleUserSelection" user.content}}
+                        >
+                      {{/if}}
+                    {{/if}}
+                    {{#if (not user.enabled)}}
+                      <FaIcon
+                        @icon="user-times"
+                        @title={{t "general.disabled"}}
+                        class="error"
+                      />
+                    {{/if}}
+                  </td>
+                  <td class="text-left" colspan="2">
+                    {{user.firstName}}
+                  </td>
+                  <td class="text-left" colspan="2">
+                    {{user.lastName}}
+                  </td>
+                  <td class="text-left" colspan="2">
+                    {{user.campusId}}
+                  </td>
+                  <td class="text-left hide-from-small-screen" colspan="5">
+                    {{user.email}}
+                  </td>
+                  {{#if isEditing}}
+                    <td class="text-left" colspan="2">
+                      <LinkTo
+                        @route="learnerGroup"
+                        @model={{user.lowestGroupInTree}}
+                        @query={{hash isEditing=isEditing sortUsersBy=sortBy}}
+                      >
+                        {{user.lowestGroupInTree.title}}
+                      </LinkTo>
+                    </td>
+                    <td>
+                      {{#if (contains user.content usersBeingMoved)}}
+                        <LoadingSpinner />
+                      {{else if user.enabled}}
+                        {{#if (eq selectedUsers.length 0)}}
+                          <FaIcon
+                            @icon="plus"
+                            class="yes clickable"
+                            @title={{t
+                              "general.moveToGroup"
+                              groupTitle=learnerGroupTitle
+                              count=1
+                            }}
+                            @click={{perform addSingleUser user.content}}
+                          />
+                        {{/if}}
+                      {{/if}}
+                    </td>
+                  {{/if}}
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        {{/if}}
+      </div>
     </div>
-  </div>
-  {{#if (gt selectedUsers.length 0) class="vertical"}}
-    <p class="fullwidth">
-      <button type="button" class="done text" {{action (perform addSelectedUsers)}}>
-        {{t
-          "general.moveToGroup"
-          groupTitle=learnerGroupTitle
-          count=selectedUsers.length
-        }}
-      </button>
-      <button type="button" class="cancel text" {{action (perform removeSelectedUsers)}}>
-        {{t
-          "general.removeLearnerToCohort"
-          cohort=cohortTitle
-          count=selectedUsers.length
-        }}
-      </button>
-    </p>
+    {{#if (gt selectedUsers.length 0) class="vertical"}}
+      <p class="fullwidth">
+        <button type="button" class="done text" {{action (perform addSelectedUsers)}}>
+          {{t
+            "general.moveToGroup"
+            groupTitle=learnerGroupTitle
+            count=selectedUsers.length
+          }}
+        </button>
+        <button type="button" class="cancel text" {{action (perform removeSelectedUsers)}}>
+          {{t
+            "general.removeLearnerToCohort"
+            cohort=cohortTitle
+            count=selectedUsers.length
+          }}
+        </button>
+      </p>
+    {{/if}}
   {{/if}}
-{{/if}}
+</div>

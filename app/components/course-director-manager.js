@@ -2,10 +2,7 @@ import Component from '@ember/component';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
-  classNames: ['course-director-manager'],
-
-  'data-test-course-director-manager': true,
-
+  tagName: "",
   course: null,
   directors: null,
 

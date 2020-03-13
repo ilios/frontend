@@ -1,68 +1,70 @@
-{{#if (is-fulfilled objectives)}}
-  {{#if isSorting}}
-    <ObjectiveSortManager
-      @subject={{programYear}}
-      @save={{action "saveSortOrder"}}
-      @cancel={{action "cancelSorting"}}
-    />
-  {{else if (get (await objectives) "length")}}
-    {{#if (and editable (await hasMoreThanOneObjective))}}
-      <button type="button" class="sort-materials-btn" {{action (mut isSorting) true}}>
-        {{t "general.sortObjectives"}}
-      </button>
-    {{/if}}
-    <button type="button" class="download" {{action (perform downloadReport subject)}}>
-      <FaIcon
-        @icon={{if downloadReport.isRunning "spinner" "download"}}
-        @spin={{if downloadReport.isRunning true false}}
+<div class="programyear-objective-list" ...attributes>
+  {{#if (is-fulfilled objectives)}}
+    {{#if isSorting}}
+      <ObjectiveSortManager
+        @subject={{programYear}}
+        @save={{action "saveSortOrder"}}
+        @cancel={{action "cancelSorting"}}
       />
-      {{t "general.downloadCompetencyMap"}}
-    </button>
-    <table>
-      <thead>
-        <tr>
-          <th colspan="1"></th>
-          <th class="text-left" colspan="12">
-            {{t "general.description"}}
-          </th>
-          <th class="text-left" colspan="8">
-            {{t "general.competency"}}
-          </th>
-          <th class="text-left" colspan="8">
-            {{t "general.meshTerms"}}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each (await objectives) as |objective|}}
-          <ProgramyearObjectiveListItem
-            @objective={{objective}}
-            @programYear={{programYear}}
-            @manageCompetency={{manageCompetency}}
-            @manageDescriptors={{manageDescriptors}}
-            @editable={{editable}}
-            @expanded={{contains objective.id expandedObjectiveIds}}
-            @toggleExpand={{action "toggleExpand"}}
-          />
-          {{#if (contains objective.id expandedObjectiveIds)}}
-            <ProgramyearObjectiveListItemExpanded @objective={{objective}} />
-          {{/if}}
-        {{/each}}
-      </tbody>
-    </table>
+    {{else if (get (await objectives) "length")}}
+      {{#if (and editable (await hasMoreThanOneObjective))}}
+        <button type="button" class="sort-materials-btn" {{action (mut isSorting) true}}>
+          {{t "general.sortObjectives"}}
+        </button>
+      {{/if}}
+      <button type="button" class="download" {{action (perform downloadReport subject)}}>
+        <FaIcon
+          @icon={{if downloadReport.isRunning "spinner" "download"}}
+          @spin={{if downloadReport.isRunning true false}}
+        />
+        {{t "general.downloadCompetencyMap"}}
+      </button>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="1"></th>
+            <th class="text-left" colspan="12">
+              {{t "general.description"}}
+            </th>
+            <th class="text-left" colspan="8">
+              {{t "general.competency"}}
+            </th>
+            <th class="text-left" colspan="8">
+              {{t "general.meshTerms"}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each (await objectives) as |objective|}}
+            <ProgramyearObjectiveListItem
+              @objective={{objective}}
+              @programYear={{programYear}}
+              @manageCompetency={{manageCompetency}}
+              @manageDescriptors={{manageDescriptors}}
+              @editable={{editable}}
+              @expanded={{contains objective.id expandedObjectiveIds}}
+              @toggleExpand={{action "toggleExpand"}}
+            />
+            {{#if (contains objective.id expandedObjectiveIds)}}
+              <ProgramyearObjectiveListItemExpanded @objective={{objective}} />
+            {{/if}}
+          {{/each}}
+        </tbody>
+      </table>
+    {{/if}}
+  {{else}}
+    {{! template-lint-disable unused-block-params }}
+    {{#each (repeat (get (await programYear.objectives) "length")) as |empty|}}
+      <div>
+        <LoadingSpinner />
+      </div>
+    {{/each}}
   {{/if}}
-{{else}}
-  {{! template-lint-disable unused-block-params }}
-  {{#each (repeat (get (await programYear.objectives) "length")) as |empty|}}
-    <div>
-      <LoadingSpinner />
-    </div>
-  {{/each}}
-{{/if}}
-{{#liquid-if isSaving class="crossFade"}}
-  <WaitSaving
-    @showProgress={{true}}
-    @totalProgress={{totalObjectivesToSave}}
-    @currentProgress={{currentObjectivesSaved}}
-  />
-{{/liquid-if}}
+  {{#liquid-if isSaving class="crossFade"}}
+    <WaitSaving
+      @showProgress={{true}}
+      @totalProgress={{totalObjectivesToSave}}
+      @currentProgress={{currentObjectivesSaved}}
+    />
+  {{/liquid-if}}
+</div>

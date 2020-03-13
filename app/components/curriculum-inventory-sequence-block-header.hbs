@@ -1,35 +1,37 @@
-<div class="title">
-  {{#if canUpdate}}
-    <EditableField
-      @tagName="h2"
-      @value={{blockTitle}}
-      @save={{action "changeTitle"}}
-      @close={{action "revertTitleChanges"}}
-      @saveOnEnter={{true}}
-      @closeOnEscape={{true}} as |isSaving|
-    >
-      <input
-        type="text"
-        value={{blockTitle}}
-        oninput={{action (mut blockTitle) value="target.value"}}
-        disabled={{isSaving}}
-        onkeyup={{action "addErrorDisplayFor" "blockTitle"}}
+<div class="curriculum-inventory-sequence-block-header" ...attributes>
+  <div class="title">
+    {{#if canUpdate}}
+      <EditableField
+        @tagName="h2"
+        @value={{blockTitle}}
+        @save={{action "changeTitle"}}
+        @close={{action "revertTitleChanges"}}
+        @saveOnEnter={{true}}
+        @closeOnEscape={{true}} as |isSaving|
       >
-      {{#if
-        (and
-          (v-get this "blockTitle" "isInvalid")
-          (contains "blockTitle" showErrorsFor)
-        )
-      }}
-        <span class="validation-error-message">
-          {{v-get this "blockTitle" "message"}}
-        </span>
-      {{/if}}
-    </EditableField>
-  {{else}}
-    <h2>
-      <FaIcon @icon="lock" />
-      {{sequenceBlock.title}}
-    </h2>
-  {{/if}}
+        <input
+          type="text"
+          value={{blockTitle}}
+          oninput={{action (mut blockTitle) value="target.value"}}
+          disabled={{isSaving}}
+          onkeyup={{action "addErrorDisplayFor" "blockTitle"}}
+        >
+        {{#if
+          (and
+            (v-get this "blockTitle" "isInvalid")
+            (contains "blockTitle" showErrorsFor)
+          )
+        }}
+          <span class="validation-error-message">
+            {{v-get this "blockTitle" "message"}}
+          </span>
+        {{/if}}
+      </EditableField>
+    {{else}}
+      <h2>
+        <FaIcon @icon="lock" />
+        {{sequenceBlock.title}}
+      </h2>
+    {{/if}}
+  </div>
 </div>

@@ -17,7 +17,7 @@ const Validations = buildValidations({
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
 
-  classNames: ['instructorgroup-header'],
+  tagName: "",
 
   canUpdate: false,
   title: null,

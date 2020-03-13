@@ -1,46 +1,48 @@
-<div class="school-competencies-expanded-header">
-  {{#if isManaging}}
-    <div class="title">
-      {{t "general.competencies"}}
-    </div>
-  {{else}}
-    <div
-      class="title {{if showCollapsible "collapsible clickable"}}"
-      {{action "collapse"}}
-    >
-      {{t "general.competencies"}}
-      ({{get (await domains) "length"}}/{{get (await childCompetencies) "length"}})
-    </div>
-  {{/if}}
-  <div class="actions">
+<section class="school-competencies-expanded" ...attributes>
+  <div class="school-competencies-expanded-header">
     {{#if isManaging}}
-      <button type="button" class="bigadd" {{action "save"}}>
-        <FaIcon
-          @icon={{if isSaving "spinner" "check"}}
-          @spin={{if isSaving true false}}
-        />
-      </button>
-      <button type="button" class="bigcancel" {{action "cancel"}}>
-        <FaIcon @icon="undo" />
-      </button>
-    {{else if (or canUpdate canDelete canCreate)}}
-      <button type="button" {{action "manage"}}>
-        {{t "general.manageCompetencies"}}
-      </button>
+      <div class="title">
+        {{t "general.competencies"}}
+      </div>
+    {{else}}
+      <div
+        class="title {{if showCollapsible "collapsible clickable"}}"
+        {{action "collapse"}}
+      >
+        {{t "general.competencies"}}
+        ({{get (await domains) "length"}}/{{get (await childCompetencies) "length"}})
+      </div>
     {{/if}}
+    <div class="actions">
+      {{#if isManaging}}
+        <button type="button" class="bigadd" {{action "save"}}>
+          <FaIcon
+            @icon={{if isSaving "spinner" "check"}}
+            @spin={{if isSaving true false}}
+          />
+        </button>
+        <button type="button" class="bigcancel" {{action "cancel"}}>
+          <FaIcon @icon="undo" />
+        </button>
+      {{else if (or canUpdate canDelete canCreate)}}
+        <button type="button" {{action "manage"}}>
+          {{t "general.manageCompetencies"}}
+        </button>
+      {{/if}}
+    </div>
   </div>
-</div>
-<div class="school-competencies-expanded-content">
-  {{#liquid-if isManaging class="horizontal"}}
-    <SchoolCompetenciesManager
-      @canUpdate={{canUpdate}}
-      @canDelete={{canDelete}}
-      @canCreate={{canCreate}}
-      @competencies={{bufferedCompetencies}}
-      @add={{action "addCompetencyToBuffer"}}
-      @remove={{action "removeCompetencyFromBuffer"}}
-    />
-  {{else}}
-    <SchoolCompetenciesList @domains={{await domains}} />
-  {{/liquid-if}}
-</div>
+  <div class="school-competencies-expanded-content">
+    {{#liquid-if isManaging class="horizontal"}}
+      <SchoolCompetenciesManager
+        @canUpdate={{canUpdate}}
+        @canDelete={{canDelete}}
+        @canCreate={{canCreate}}
+        @competencies={{bufferedCompetencies}}
+        @add={{action "addCompetencyToBuffer"}}
+        @remove={{action "removeCompetencyFromBuffer"}}
+      />
+    {{else}}
+      <SchoolCompetenciesList @domains={{await domains}} />
+    {{/liquid-if}}
+  </div>
+</section>

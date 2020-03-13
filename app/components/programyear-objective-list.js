@@ -11,7 +11,7 @@ export default Component.extend(SortableObjectiveList, {
   ajax: service(),
   iliosConfig: service(),
   session:service(),
-  classNames: ['programyear-objective-list'],
+  tagName: "",
   editable: false,
   isDownloading: false,
   subject: null,

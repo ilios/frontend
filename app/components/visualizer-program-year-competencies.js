@@ -9,7 +9,7 @@ import { task, timeout } from 'ember-concurrency';
 export default Component.extend({
   intl: service(),
 
-  classNameBindings: ['isIcon::not-icon', ':visualizer-program-year-competencies'],
+  tagName: "",
 
   isIcon: false,
   programYear: null,

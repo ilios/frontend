@@ -34,10 +34,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   permissionChecker: service(),
   router: service(),
   routing: service('-routing'),
-
-  classNames: ['curriculum-inventory-report-overview'],
-  tagName: 'section',
-
+  tagName: "",
   canUpdate: false,
   currentRoute: '',
   description: null,

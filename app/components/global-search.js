@@ -11,7 +11,7 @@ export default Component.extend({
   intl: service(),
   iliosSearch: service('search'),
   store: service(),
-
+  tagName: "",
   page: null,
   query: null,
   selectedYear: null,
@@ -22,7 +22,6 @@ export default Component.extend({
   onSelectPage() {},
   setIgnoredSchoolIds() {},
   setSelectedYear() {},
-
   isLoading: reads('search.isRunning'),
   hasResults: reads('results.length'),
   results: reads('search.lastSuccessful.value'),

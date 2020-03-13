@@ -5,7 +5,7 @@ import config from '../config/environment';
 const { IliosFeatures: { programYearVisualizations } } = config;
 
 export default Component.extend({
-  classNames: ['programyear-overview'],
+  tagName: "",
 
   canUpdate: false,
   directorsSort: null,

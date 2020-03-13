@@ -4,9 +4,7 @@ import { isEmpty } from '@ember/utils';
 import moment from 'moment';
 
 export default Component.extend({
-  classNames: ['recently-updated-display'],
-  tagName: 'span',
-
+  tagName: "",
   lastModified: null,
 
   recentlyUpdated: computed('lastModified', {

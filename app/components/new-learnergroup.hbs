@@ -1,31 +1,33 @@
-<div class="detail-content">
-  {{#if multiModeSupported}}
-    <div class="multi-mode-chooser">
-      <label>
-        {{t "general.createNew"}}:
-      </label>
-      <ClickChoiceButtons
-        @buttonContent1={{t "general.singleGroup"}}
-        @buttonContent2={{t "general.multipleGroups"}}
-        @firstChoicePicked={{singleMode}}
-        @toggle={{action (mut singleMode)}}
+<div class="new-learnergroup" ...attributes>
+  <div class="detail-content">
+    {{#if multiModeSupported}}
+      <div class="multi-mode-chooser">
+        <label>
+          {{t "general.createNew"}}:
+        </label>
+        <ClickChoiceButtons
+          @buttonContent1={{t "general.singleGroup"}}
+          @buttonContent2={{t "general.multipleGroups"}}
+          @firstChoicePicked={{singleMode}}
+          @toggle={{action (mut singleMode)}}
+        />
+      </div>
+    {{else}}
+      <h4>
+        {{t "general.newLearnerGroup"}}
+      </h4>
+    {{/if}}
+    {{#if singleMode}}
+      <NewLearnergroupSingle
+        @save={{save}}
+        @cancel={{cancel}}
+        @fillModeSupported={{fillModeSupported}}
       />
-    </div>
-  {{else}}
-    <h4>
-      {{t "general.newLearnerGroup"}}
-    </h4>
-  {{/if}}
-  {{#if singleMode}}
-    <NewLearnergroupSingle
-      @save={{save}}
-      @cancel={{cancel}}
-      @fillModeSupported={{fillModeSupported}}
-    />
-  {{else}}
-    <NewLearnergroupMultiple
-      @generateNewLearnerGroups={{action "generateNewLearnerGroups"}}
-      @cancel={{cancel}}
-    />
-  {{/if}}
+    {{else}}
+      <NewLearnergroupMultiple
+        @generateNewLearnerGroups={{action "generateNewLearnerGroups"}}
+        @cancel={{cancel}}
+      />
+    {{/if}}
+  </div>
 </div>

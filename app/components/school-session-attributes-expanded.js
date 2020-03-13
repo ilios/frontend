@@ -4,9 +4,7 @@ import { isEmpty } from '@ember/utils';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  classNames: ['school-session-attributes-expanded'],
-  tagName: 'section',
-
+  tagName: "",
   canUpdate: false,
   bufferedShowSessionAttendanceRequired: false,
   bufferedShowSessionSpecialAttireRequired: false,

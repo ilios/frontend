@@ -1,38 +1,40 @@
-<LinkTo @route="course" @model={{@course.id}} data-test-course-title>
-  <small>{{@course.year}}</small>
-  {{@course.title}}
-</LinkTo>
-<span class="school-flag" data-test-school-title>
-  {{@course.school}}
-</span>
-<span class="course-flag">
-  {{t "general.course"}}
-</span>
-<GlobalSearchTags @tags={{this.courseTags}} />
-<ul>
-  <li class="sessions">
-    {{t "general.sessions"}}:
-  </li>
-  {{#each this.sessions as |session|}}
-    <li class="session-row">
-      <LinkTo
-        @route="session"
-        @models={{array @course.id session.id}}
-        class="session-title-link"
-      >
-        {{session.title}}
-      </LinkTo>
-      <GlobalSearchTags @tags={{session.matchedIn}} />
+<li class="course-search-result" data-test-course-search-result ...attributes>
+  <LinkTo @route="course" @model={{@course.id}} data-test-course-title>
+    <small>{{@course.year}}</small>
+    {{@course.title}}
+  </LinkTo>
+  <span class="school-flag" data-test-school-title>
+    {{@course.school}}
+  </span>
+  <span class="course-flag">
+    {{t "general.course"}}
+  </span>
+  <GlobalSearchTags @tags={{this.courseTags}} />
+  <ul>
+    <li class="sessions">
+      {{t "general.sessions"}}:
     </li>
-  {{/each}}
-  {{#if (and (not this.showMore) (gt @course.sessions.length 3))}}
-    <span
-      class="show-more clickable link"
-      role="button"
-      {{action (mut this.showMore) true}}
-    >
-      <FaIcon @icon="angle-down" />
-      {{t "general.showMore"}}
-    </span>
-  {{/if}}
-</ul>
+    {{#each this.sessions as |session|}}
+      <li class="session-row">
+        <LinkTo
+          @route="session"
+          @models={{array @course.id session.id}}
+          class="session-title-link"
+        >
+          {{session.title}}
+        </LinkTo>
+        <GlobalSearchTags @tags={{session.matchedIn}} />
+      </li>
+    {{/each}}
+    {{#if (and (not this.showMore) (gt @course.sessions.length 3))}}
+      <span
+        class="show-more clickable link"
+        role="button"
+        {{action (mut this.showMore) true}}
+      >
+        <FaIcon @icon="angle-down" />
+        {{t "general.showMore"}}
+      </span>
+    {{/if}}
+  </ul>
+</li>

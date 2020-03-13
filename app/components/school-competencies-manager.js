@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 
 export default Component.extend({
-  classNames: ['school-competencies-manager'],
+  tagName: "",
 
   canCreate: false,
   canDelete: false,

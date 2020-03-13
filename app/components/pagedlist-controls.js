@@ -3,14 +3,11 @@ import { computed } from '@ember/object';
 import { lte } from '@ember/object/computed';
 
 export default Component.extend({
-  classNames: ['pagedlist-controls'],
-  tagName: 'div',
-
+  tagName: "",
   limit: null,
   limitless: false,
   offset: null,
   total: null,
-
   firstPage: lte('offset', 0),
 
   start: computed('offset', function() {

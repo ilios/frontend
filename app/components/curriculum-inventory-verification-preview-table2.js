@@ -2,8 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-  'data-test-curriculum-inventory-verification-preview-table2': true,
-  classNames: ['curriculum-inventory-verification-preview-table2'],
+  tagName: "",
 
   methodTotals: computed('data.methods', function ()  {
     return this.data.methods.map(method => {
@@ -34,5 +33,5 @@ export default Component.extend({
       return value + method.total;
     }, 0);
     return (sumTotal / 60).toFixed(2);
-  }),
+  })
 });

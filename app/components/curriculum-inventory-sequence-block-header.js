@@ -17,8 +17,8 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
-  classNames: ['curriculum-inventory-sequence-block-header'],
 
+  tagName: "",
   canUpdate: false,
   report: null,
   reportName: null,

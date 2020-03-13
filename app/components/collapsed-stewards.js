@@ -4,9 +4,7 @@ import { isEmpty, isPresent } from '@ember/utils';
 import { map } from 'rsvp';
 
 export default Component.extend({
-  classNames: ['collapsed-stewards'],
-  tagName: 'section',
-
+  tagName: "",
   programYear: null,
 
   schoolData: computed('programYear.stewards.[]', async function(){

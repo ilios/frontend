@@ -2,9 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-  classNames: ['school-session-types-collapsed'],
-  tagName: 'section',
-
+  tagName: "",
   school: null,
 
   sessionTypes: computed('school.sessionTypes.[]', async function() {

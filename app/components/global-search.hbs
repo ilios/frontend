@@ -1,78 +1,80 @@
-<div
-  class="global-search"
-  {{did-update (perform this.search) @query}}
-  data-test-global-search
->
-  <GlobalSearchBox @query={{@query}} @search={{@onQuery}} />
-  <ul
-    class="results {{if (and this.isIdle (not this.hasResults)) "hidden"}}"
-    data-test-results
+<div ...attributes>
+  <div
+    class="global-search"
+    {{did-update (perform this.search) @query}}
+    data-test-global-search
   >
-    {{#if this.isLoading}}
-      <li class="searching">
-        <FaIcon @icon="spinner" class="orange" @spin={{true}} />
-        {{t "general.currentlySearchingPrompt"}}
-      </li>
-    {{else}}
-      {{#each this.paginatedResults as |course|}}
-        <CourseSearchResult @course={{course}} />
-      {{else}}
-        <li class="no-results">
-          {{t "general.noSearchResultsPrompt"}}
+    <GlobalSearchBox @query={{@query}} @search={{@onQuery}} />
+    <ul
+      class="results {{if (and this.isIdle (not this.hasResults)) "hidden"}}"
+      data-test-results
+    >
+      {{#if this.isLoading}}
+        <li class="searching">
+          <FaIcon @icon="spinner" class="orange" @spin={{true}} />
+          {{t "general.currentlySearchingPrompt"}}
         </li>
-      {{/each}}
-    {{/if}}
-  </ul>
-  {{#if this.hasResults}}
-    <fieldset class="filters">
-      <legend>
-        {{t "general.showResultsFor"}}
-      </legend>
-      <div class="year-filters">
-        <select
-          data-test-academic-year-filter
-          onchange={{action "setSelectedYear" value="target.value"}}
-        >
-          <option selected={{is-equal null this.selectedYear}} value="">
-            {{t "general.allAcademicYears"}}
-          </option>
-          {{#each this.yearOptions as |year|}}
-            <option selected={{is-equal year this.selectedYear}} value={{year}}>
-              {{year}}
-              -
-              {{inc year}}
-            </option>
-          {{/each}}
-        </select>
-      </div>
-      {{#if (gt (get allSchools "length") 1)}}
-        <div class="school-filters" data-test-school-filters>
-          {{#each this.schoolOptions as |obj index|}}
-            <span class="filter" data-test-school-filter>
-              <input
-                id="school={{index}}"
-                type="checkbox"
-                checked={{or
-                  (eq obj.results 0)
-                  (not (contains obj.id ignoredSchoolIds))
-                }}
-                onclick={{action "toggleSchoolSelection" obj.id}}
-                disabled={{eq obj.results 0}}
-              >
-              <label for="school={{index}}">
-                {{obj.title}}
-                ({{obj.results}})
-              </label>
-            </span>
-          {{/each}}
-        </div>
+      {{else}}
+        {{#each this.paginatedResults as |course|}}
+          <CourseSearchResult @course={{course}} />
+        {{else}}
+          <li class="no-results">
+            {{t "general.noSearchResultsPrompt"}}
+          </li>
+        {{/each}}
       {{/if}}
-    </fieldset>
-  {{/if}}
+    </ul>
+    {{#if this.hasResults}}
+      <fieldset class="filters">
+        <legend>
+          {{t "general.showResultsFor"}}
+        </legend>
+        <div class="year-filters">
+          <select
+            data-test-academic-year-filter
+            onchange={{action "setSelectedYear" value="target.value"}}
+          >
+            <option selected={{is-equal null this.selectedYear}} value="">
+              {{t "general.allAcademicYears"}}
+            </option>
+            {{#each this.yearOptions as |year|}}
+              <option selected={{is-equal year this.selectedYear}} value={{year}}>
+                {{year}}
+                -
+                {{inc year}}
+              </option>
+            {{/each}}
+          </select>
+        </div>
+        {{#if (gt (get allSchools "length") 1)}}
+          <div class="school-filters" data-test-school-filters>
+            {{#each this.schoolOptions as |obj index|}}
+              <span class="filter" data-test-school-filter>
+                <input
+                  id="school={{index}}"
+                  type="checkbox"
+                  checked={{or
+                    (eq obj.results 0)
+                    (not (contains obj.id ignoredSchoolIds))
+                  }}
+                  onclick={{action "toggleSchoolSelection" obj.id}}
+                  disabled={{eq obj.results 0}}
+                >
+                <label for="school={{index}}">
+                  {{obj.title}}
+                  ({{obj.results}})
+                </label>
+              </span>
+            {{/each}}
+          </div>
+        {{/if}}
+      </fieldset>
+    {{/if}}
+  </div>
+  <PaginationLinks
+    @page={{this.page}}
+    @results={{this.filteredResults}}
+    @size={{this.size}}
+    @onSelectPage={{@onSelectPage}}
+  />
 </div>
-<PaginationLinks
-  @page={{this.page}}
-  @results={{this.filteredResults}}
-  @size={{this.size}}
-  @onSelectPage={{@onSelectPage}}
-/>

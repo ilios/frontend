@@ -7,8 +7,7 @@ import { task } from 'ember-concurrency';
 export default Component.extend({
   fetch: service(),
   iliosConfig: service(),
-  'data-test-curriculum-inventory-verification-preview': true,
-  classNames: ['curriculum-inventory-verification-preview'],
+  tagName: "",
   report: null,
   tables: null,
   tocId: 'verification-preview-toc',

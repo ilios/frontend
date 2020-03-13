@@ -3,9 +3,7 @@ import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  classNames: ['curriculum-inventory-sequence-block-session-list'],
-  tagName: 'section',
-
+  tagName: "",
   excludedSessions: null,
   linkedSessions: null,
   sessions: null,

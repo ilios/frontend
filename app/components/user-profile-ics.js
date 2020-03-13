@@ -9,7 +9,7 @@ import sha256 from 'crypto-js/sha256';
 export default Component.extend({
   iliosConfig: service(),
 
-  classNameBindings: [':user-profile-ics', ':small-component', 'hasSavedRecently:has-saved:has-not-saved'],
+  tagName: "",
 
   finishedSetup: false,
   hasSavedRecently: false,

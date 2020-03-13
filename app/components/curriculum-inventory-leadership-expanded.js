@@ -2,11 +2,11 @@ import Component from '@ember/component';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
+  tagName: "",
   report: null,
-  classNames: ['curriculum-inventory-leadership-expanded'],
   administrators: null,
   isManaging: false,
-  'data-test-curriculum-inventory-leadership-expanded': true,
+
   didReceiveAttrs(){
     this._super(...arguments);
     const report = this.report;
@@ -16,6 +16,7 @@ export default Component.extend({
       });
     }
   },
+
   actions: {
     addAdministrator(user){
       this.add('administrators', user);
@@ -24,6 +25,7 @@ export default Component.extend({
       this.remove('administrators', user);
     },
   },
+
   save: task(function * (){
     yield timeout(10);
     const administrators = this.administrators;
@@ -33,14 +35,16 @@ export default Component.extend({
     yield report.save();
     this.setIsManaging(false);
   }),
+
   add(where, user){
     const arr = this.get(where).toArray();
     arr.pushObject(user);
     this.set(where, arr);
   },
+
   remove(where, user){
     const arr = this.get(where).toArray();
     arr.removeObject(user);
     this.set(where, arr);
-  },
+  }
 });

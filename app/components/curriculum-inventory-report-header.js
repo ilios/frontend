@@ -19,10 +19,10 @@ const Validations = buildValidations({
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   ajax: service(),
+
   flashMessages: service(),
 
-  classNames: ['curriculum-inventory-report-header'],
-
+  tagName: "",
   canUpdate: false,
   isDownloading: false,
   report: null,

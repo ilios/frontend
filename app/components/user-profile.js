@@ -3,11 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   currentUser: service(),
-
-  classNames: ['user-profile'],
-
-  'data-test-user-profile': true,
-
+  tagName: "",
   canCreate: false,
   canUpdate: false,
   user: null

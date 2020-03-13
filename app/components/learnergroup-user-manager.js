@@ -7,7 +7,7 @@ import { task, timeout } from 'ember-concurrency';
 export default Component.extend({
   currentUser: service(),
 
-  classNames: ['learnergroup-user-manager'],
+  tagName: "",
 
   cohortTitle: null,
   filter: '',

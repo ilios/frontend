@@ -1,47 +1,49 @@
-<div class="title">
-  {{#if canUpdate}}
-    <EditableField
-      @tagName="h2"
-      @value={{reportName}}
-      @save={{action "changeName"}}
-      @close={{action "revertNameChanges"}}
-      @saveOnEnter={{true}}
-      @closeOnEscape={{true}} as |isSaving|
-    >
-      <input
-        type="text"
-        value={{reportName}}
-        oninput={{action (mut reportName) value="target.value"}}
-        disabled={{isSaving}}
-        onkeyup={{action "addErrorDisplayFor" "reportName"}}
+<div class="curriculum-inventory-report-header" ...attributes>
+  <div class="title">
+    {{#if canUpdate}}
+      <EditableField
+        @tagName="h2"
+        @value={{reportName}}
+        @save={{action "changeName"}}
+        @close={{action "revertNameChanges"}}
+        @saveOnEnter={{true}}
+        @closeOnEscape={{true}} as |isSaving|
       >
-      {{#if
-        (and
-          (v-get this "reportName" "isInvalid")
-          (contains "reportName" showErrorsFor)
-        )
-      }}
-        <span class="validation-error-message">
-          {{v-get this "reportName" "message"}}
-        </span>
-      {{/if}}
-    </EditableField>
-  {{else}}
-    <h2>
-      <FaIcon @icon="lock" />
-      {{report.name}}
-    </h2>
-  {{/if}}
-</div>
-<div class="actions">
-  <button type="button" class="download" {{action (perform downloadReport report)}}>
-    <FaIcon
-      @icon={{if downloadReport.isRunning "spinner" "download"}}
-      @spin={{if downloadReport.isRunning true false}}
-    />
-    {{t "general.download"}}
-  </button>
-  <button type="button" class="finalize" disabled={{not canUpdate}} {{action "finalize"}}>
-    {{t "general.finalize"}}
-  </button>
+        <input
+          type="text"
+          value={{reportName}}
+          oninput={{action (mut reportName) value="target.value"}}
+          disabled={{isSaving}}
+          onkeyup={{action "addErrorDisplayFor" "reportName"}}
+        >
+        {{#if
+          (and
+            (v-get this "reportName" "isInvalid")
+            (contains "reportName" showErrorsFor)
+          )
+        }}
+          <span class="validation-error-message">
+            {{v-get this "reportName" "message"}}
+          </span>
+        {{/if}}
+      </EditableField>
+    {{else}}
+      <h2>
+        <FaIcon @icon="lock" />
+        {{report.name}}
+      </h2>
+    {{/if}}
+  </div>
+  <div class="actions">
+    <button type="button" class="download" {{action (perform downloadReport report)}}>
+      <FaIcon
+        @icon={{if downloadReport.isRunning "spinner" "download"}}
+        @spin={{if downloadReport.isRunning true false}}
+      />
+      {{t "general.download"}}
+    </button>
+    <button type="button" class="finalize" disabled={{not canUpdate}} {{action "finalize"}}>
+      {{t "general.finalize"}}
+    </button>
+  </div>
 </div>
