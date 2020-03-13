@@ -99,9 +99,8 @@ module('Integration | Component | objective sort manager', function(hooks) {
       assert.ok(data.includes(objective1));
       assert.ok(data.includes(objective2));
     });
-    this.set('cancel', parseInt);
 
-    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @save={{fn this.save}} @cancel={{fn this.cancel}} />`);
+    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @save={{fn this.save}} @cancel={{noop}} />`);
 
     return settled().then(async () => {
       await click('.actions .bigadd');
