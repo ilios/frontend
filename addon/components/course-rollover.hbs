@@ -37,7 +37,7 @@
       {{#if this.loadUnavailableYears.isRunning}}
         <LoadingSpinner />
       {{else}}
-        <select {{on "change" (fn (perform this.setSelectedYear))}} data-test-year>
+        <select {{on "change" (perform this.setSelectedYear)}} data-test-year>
           {{#each this.years as |year|}}
             <option
               disabled={{contains year this.unavailableYears}}

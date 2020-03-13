@@ -7,7 +7,7 @@
           @vocabulary={{vocab}}
           @terms={{@selectedTerms}}
           @canEdit={{true}}
-          @remove={{fn @remove}}
+          @remove={{@remove}}
         />
       {{/each}}
     </div>
@@ -38,8 +38,8 @@
         @selectedTerms={{@selectedTerms}}
         @vocabulary={{this.selectedVocabulary}}
         @termFilter={{this.termFilter}}
-        @add={{fn @add}}
-        @remove={{fn @remove}}
+        @add={{@add}}
+        @remove={{@remove}}
       />
     </div>
   {{/if}}
