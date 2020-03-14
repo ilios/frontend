@@ -21,17 +21,17 @@
     <div
       class="title {{if this.showCollapsible "clickable collapsible"}}"
       role="button"
-      {{on "click" (action "collapse")}}
+      {{on "click" (fn this.collapseObjective)}}
     >
       {{t "general.objectives"}} ({{@subject.objectives.length}})
     </div>
   {{/if}}
   <div class="detail-objectives-actions">
     {{#if this.isManaging class="horizontal"}}
-      <button class="bigadd" {{on "click" (action "save")}}>
+      <button class="bigadd" type="button" {{on "click" (fn this.save)}}>
         <FaIcon @icon="check" />
       </button>
-      <button class="bigcancel" {{on "click" (action "cancel")}}>
+      <button class="bigcancel" type="button" {{on "click" (fn this.cancel)}}>
         <FaIcon @icon="undo" />
       </button>
     {{else if @editable}}
@@ -47,7 +47,7 @@
       {{/if}}
       <ExpandCollapseButton
         @value={{this.newObjectiveEditorOn}}
-        @action={{action "toggleNewObjectiveEditor"}}
+        @action={{fn this.toggleNewObjectiveEditor}}
       />
     {{/if}}
   </div>
@@ -55,8 +55,8 @@
 <div class="detail-objectives-content">
   {{#if this.newObjectiveEditorOn class="vertical"}}
     <NewObjective
-      @save={{action "saveNewObjective"}}
-      @cancel={{action "toggleNewObjectiveEditor"}}
+      @save={{fn this.saveNewObjective}}
+      @cancel={{fn this.toggleNewObjectiveEditor}}
     />
   {{/if}}
   {{#liquid-unless this.isManaging class="horizontal"}}
@@ -64,24 +64,24 @@
       <CourseObjectiveList
         @course={{@subject}}
         @editable={{@editable}}
-        @manageParents={{action "manageParents"}}
-        @manageDescriptors={{action "manageDescriptors"}}
+        @manageParents={{fn this.manageParents}}
+        @manageDescriptors={{fn this.manageDescriptors}}
       />
     {{/if}}
     {{#if this.isSession}}
       <SessionObjectiveList
         @subject={{@subject}}
         @editable={{@editable}}
-        @manageParents={{action "manageParents"}}
-        @manageDescriptors={{action "manageDescriptors"}}
+        @manageParents={{fn this.manageParents}}
+        @manageDescriptors={{fn this.manageDescriptors}}
       />
     {{/if}}
     {{#if this.isProgramYear}}
       <ProgramyearObjectiveList
         @subject={{@subject}}
         @editable={{@editable}}
-        @manageDescriptors={{action "manageDescriptors"}}
-        @manageCompetency={{action "manageCompetency"}}
+        @manageDescriptors={{fn this.manageDescriptors}}
+        @manageCompetency={{fn this.manageCompetency}}
       />
     {{/if}}
   {{else}}

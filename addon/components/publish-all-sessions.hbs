@@ -9,7 +9,7 @@
   <div
     class="title {{if this.unPublishableCollapsed "collapsed" "collapsible"}}"
     role="button"
-    {{on "click" (action "toggleUnPublishableCollapsed")}}
+    {{on "click" (fn this.toggleUnPublishableCollapsed)}}
   >
     {{t "general.incompleteSessions"}} ({{get (await this.unPublishableSessions) "length"}})
   </div>
@@ -66,7 +66,7 @@
                     <FaIcon
                       @icon="unlink"
                       class="clickable"
-                      @click={{action "transitionToSession" session}}
+                      @click={{fn this.transitionToSession session}}
                     />
                   {{/if}}
                 </td>
@@ -95,7 +95,7 @@
   <div
     class="title {{if this.publishableCollapsed "collapsed" "collapsible"}}"
     role="button"
-    {{on "click" (action "togglePublishableCollapsed")}}
+    {{on "click" (fn this.togglePublishableCollapsed)}}
   >
     {{t "general.completeSessions"}} ({{get (await this.publishableSessions) "length"}})
   </div>
@@ -152,7 +152,7 @@
                     <FaIcon
                       @icon="unlink"
                       class="clickable"
-                      @click={{action "transitionToSession" session}}
+                      @click={{fn this.transitionToSession session}}
                     />
                   {{/if}}
                 </td>
@@ -183,10 +183,10 @@
   </div>
   <div class="content">
     {{#if (get (await this.overridableSessions) "length")}}
-      <button disabled={{await this.allSessionsAsIs}} {{on "click" (action "publishAllAsIs")}}>
+      <button type="button" disabled={{await this.allSessionsAsIs}} {{on "click" (fn this.publishAllAsIs)}}>
         {{t "general.publishAsIs"}}
       </button>
-      <button disabled={{this.noSessionsAsIs}} {{on "click" (action "publishNoneAsIs")}}>
+      <button type="button" disabled={{this.noSessionsAsIs}} {{on "click" (fn this.publishNoneAsIs)}}>
         {{t "general.markAsScheduled"}}
       </button>
       <table>
@@ -221,12 +221,12 @@
                     <input
                       type="checkbox"
                       checked={{contains session this.sessionsToOverride}}
-                      {{on "click" (fn (action "toggleSession") session)}}
+                      {{on "click" (fn this.toggleSession session)}}
                     >
                     <span
                       class="clickable"
                       role="button"
-                      {{on "click" (fn (action "toggleSession") session)}}
+                      {{on "click" (fn this.toggleSession session)}}
                     >
                       {{t "general.publishAsIs"}}
                     </span>
@@ -235,12 +235,13 @@
                     <input
                       type="checkbox"
                       checked={{not (contains session this.sessionsToOverride)}}
-                      {{on "click" (fn (action "toggleSession") session)}}
+                      {{on "click" (fn this.toggleSession session)}}
                     >
                     <span
                       class="clickable"
                       role="button"
-                      {{on "click" (fn (action "toggleSession") session)}}
+                      type="button"
+                      {{on "click" (fn this.toggleSession session)}}
                     >
                       {{t "general.markAsScheduled"}}
                     </span>
@@ -275,7 +276,7 @@
                     <FaIcon
                       @icon="unlink"
                       class="clickable"
-                      @click={{action "transitionToSession" session}}
+                      @click={{fn this.transitionToSession session}}
                     />
                   {{/if}}
                 </td>
@@ -308,12 +309,12 @@
     <FaIcon
       @icon="unlink"
       class="clickable"
-      @click={{action "transitionToCourse"}}
+      @click={{fn this.transitionToCourse}}
     />
     <FaIcon
       @icon="chart-bar"
       class="clickable"
-      @click={{action "transitionToVisualizeObjectives"}}
+      @click={{fn this.transitionToVisualizeObjectives}}
     />
   {{/if}}
   <p>
@@ -324,7 +325,7 @@
       ignoreCount=(await this.ignoreCount)
     }}
   </p>
-  <button {{on "click" (action "save")}}>
+  <button type="button" {{on "click" (fn this.save)}}>
     {{t "general.go"}}
   </button>
 </div>

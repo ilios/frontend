@@ -5,12 +5,12 @@
   {{on "click" (if @canEdit (fn @remove @term) (noop))}}
 >
   {{#if @term.description.length}}
-    {{#attach-tooltip
-      lazyRender=true
-      animation="shift"
-      }}
+    <AttachTooltip
+      @lazyRender={{true}}
+      @animation="shift"
+     >
       {{@term.description}}
-    {{/attach-tooltip}}
+    </AttachTooltip>
   {{/if}}
   {{#if @term.isTopLevel}}
     {{@term.title}}

@@ -2,19 +2,20 @@
   {{! template-lint-disable no-inline-styles }}
   style={{this.style}}
   class="daily-calendar-event {{if this.isIlm "ilm"}} {{if this.clickable "clickable"}}"
+  type="button"
   {{on "click" (if this.clickable (fn @selectEvent) (noop))}}
   data-test-calendar-event
   data-test-daily-calendar-event
 >
-  {{#attach-tooltip
-    lazyRender=true
-    placement="left"
-    interactive=true
-    animation="shift"
-    class="ilios-calendar-event-tooltip"
-  }}
+  <AttachTooltip
+    @lazyRender={{true}}
+    @placement="left"
+    @interactive={{true}}
+    @animation="shift"
+    @class="ilios-calendar-event-tooltip"
+  >
     {{this.tooltipContent}}
-  {{/attach-tooltip}}
+  </AttachTooltip>
   {{#if this.recentlyUpdated}}
     <FaIcon
       @icon="exclamation-circle"

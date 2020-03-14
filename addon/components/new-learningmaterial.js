@@ -1,6 +1,6 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import { task } from 'ember-concurrency';
@@ -178,4 +178,28 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     this.send('clearErrorDisplay');
   }),
 
+  @action
+  changeTitle(event) {
+    this.set('title', event.target.value);
+  },
+
+  @action
+  changeStatusId(event) {
+    this.set('statusId', event.target.value);
+  },
+
+  @action
+  changeOriginalAuthor(event) {
+    this.set('originalAuthor', event.target.value);
+  },
+
+  @action
+  changeUserRoleId(event) {
+    this.set('userRoleId', event.target.value);
+  },
+
+  @action
+  changeLink(event) {
+    this.set('link', event.target.value);
+  }
 });

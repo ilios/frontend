@@ -4,17 +4,17 @@
   </div>
   <div class="actions">
     {{#if @isManaging}}
-      <button class="bigadd" {{on "click" (perform this.save)}}>
+      <button class="bigadd" type="button" {{on "click" (perform this.save)}}>
         <FaIcon
           @icon={{if this.save.isRunning "spinner" "check"}}
           @spin={{if this.isSaving true false}}
         />
       </button>
-      <button class="bigcancel" {{on "click" (fn @setIsManaging false)}}>
+      <button class="bigcancel" type="button" {{on "click" (fn @setIsManaging false)}}>
         <FaIcon @icon="undo" />
       </button>
     {{else if @canUpdate}}
-      <button {{on "click" (fn @setIsManaging true)}}>
+      <button type="button" {{on "click" (fn @setIsManaging true)}}>
         {{t "general.manageLeadership"}}
       </button>
     {{/if}}
@@ -27,8 +27,8 @@
         @showAdministrators={{true}}
         @showDirectors={{false}}
         @administrators={{this.administrators}}
-        @removeAdministrator={{action "removeAdministrator"}}
-        @addAdministrator={{action "addAdministrator"}}
+        @removeAdministrator={{fn this.removeAdministrator}}
+        @addAdministrator={{fn this.addAdministrator}}
       />
     {{else}}
       <LeadershipList

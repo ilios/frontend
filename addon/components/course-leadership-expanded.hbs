@@ -13,17 +13,17 @@
     </h3>
     <div class="actions">
       {{#if @isManaging}}
-        <button class="bigadd" {{on "click" (perform this.save)}} data-test-save>
+        <button class="bigadd" type="button" {{on "click" (perform this.save)}} data-test-save>
           <FaIcon
             @icon={{if this.save.isRunning "spinner" "check"}}
             @spin={{this.save.isRunning}}
           />
         </button>
-        <button class="bigcancel" {{on "click" (fn @setIsManaging false)}} data-test-cancel>
+        <button class="bigcancel" type="button" {{on "click" (fn @setIsManaging false)}} data-test-cancel>
           <FaIcon @icon="undo" />
         </button>
       {{else if @editable}}
-        <button {{on "click" (perform this.manage)}} data-test-manage>
+        <button type="button" {{on "click" (perform this.manage)}} data-test-manage>
           {{t "general.manageLeadership"}}
         </button>
       {{/if}}

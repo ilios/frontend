@@ -7,10 +7,10 @@
         (v-get this "title" "isInvalid")
         (contains "title" this.showErrorsFor)
       }}
-      @save={{action "saveTitleChanges"}}
-      @close={{action "revertTitleChanges"}}
+      @save={{fn this.saveTitleChanges}}
+      @close={{fn this.revertTitleChanges}}
     >
-      <HtmlEditor @content={{this.title}} @update={{action "changeTitle"}} />
+      <HtmlEditor @content={{this.title}} @update={{fn this.changeTitle}} />
       {{#if (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))
       }}
         <span class="validation-error-message">
@@ -42,7 +42,10 @@
       {{/if}}
     {{/each}}
   {{else if @editable}}
-    <button role="button" {{on "click" (fn @manageParents @objective)}}>
+    <button
+      type="button"
+      {{on "click" (fn @manageParents @objective)}}
+    >
       {{t "general.addNew"}}
     </button>
   {{else}}
@@ -69,7 +72,7 @@
     {{else}}
       <li>
         {{#if @editable}}
-          <button {{on "click" (fn @manageDescriptors @objective)}}>
+          <button type="button" {{on "click" (fn @manageDescriptors @objective)}}>
             {{t "general.addNew"}}
           </button>
         {{else}}

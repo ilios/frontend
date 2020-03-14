@@ -1,6 +1,6 @@
 import { inject as service } from '@ember/service';
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 
 export default Component.extend({
@@ -21,21 +21,21 @@ export default Component.extend({
     return this.get('editable');
   }),
 
-  actions: {
-    save(startDate, endDate, room, learnerGroups, instructorGroups, instructors){
-      const offering = this.get('offering');
-      offering.setProperties({startDate, endDate, room, learnerGroups, instructorGroups, instructors});
+  @action
+  save(startDate, endDate, room, learnerGroups, instructorGroups, instructors){
+    const offering = this.get('offering');
+    offering.setProperties({startDate, endDate, room, learnerGroups, instructorGroups, instructors});
 
-      return offering.save();
-    },
-    remove() {
-      this.remove(this.get('offering'));
-    },
-    cancelRemove() {
-      this.set('showRemoveConfirmation', false);
-    },
-    confirmRemove() {
-      this.set('showRemoveConfirmation', true);
-    },
-  }
+    return offering.save();
+  },
+
+  @action
+  cancelRemove() {
+    this.set('showRemoveConfirmation', false);
+  },
+
+  @action
+  confirmRemove() {
+    this.set('showRemoveConfirmation', true);
+  },
 });

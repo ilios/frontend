@@ -5,7 +5,7 @@
   <label class="form-label">
     {{t "general.description"}}:
   </label>
-  <HtmlEditor @content={{this.title}} @update={{action "changeTitle"}} />
+  <HtmlEditor @content={{this.title}} @update={{fn this.changeTitle}} />
   {{#if (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))}}
     <span class="validation-error-message">
       {{v-get this "title" "message"}}
@@ -18,7 +18,8 @@
         (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))
       }}
       class="done text"
-      {{on "click" (action "save")}}
+      type="button"
+      {{on "click" (fn this.saveObjective)}}
     >
       {{#if this.isSaving}}
         <LoadingSpinner />
@@ -26,7 +27,7 @@
         {{t "general.done"}}
       {{/if}}
     </button>
-    <button class="cancel text" {{on "click" @cancel}}>
+    <button class="cancel text" type="button" {{on "click" @cancel}}>
       {{t "general.cancel"}}
     </button>
   </div>

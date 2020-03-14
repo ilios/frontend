@@ -1,4 +1,4 @@
-import { computed } from '@ember/object';
+import { computed, action } from '@ember/object';
 import Mixin from '@ember/object/mixin';
 import { isPresent } from '@ember/utils';
 import moment from 'moment';
@@ -16,19 +16,19 @@ export default Mixin.create({
 
     return arr;
   }),
-  actions: {
-    toggleOpenWeek(week, shouldOpen) {
-      const expanded = this.get('expanded');
-      const expandedString = expanded?expanded:'';
-      let arr =  expandedString.split('-');
-      arr.removeObject(week);
-      if (shouldOpen) {
-        arr.pushObject(week);
-      }
-      arr = arr.sort();
-      arr = arr.filter(val => isPresent(val));
 
-      this.set('expanded', arr.join('-'));
+  @action
+  toggleOpenWeek(week, shouldOpen) {
+    const expanded = this.get('expanded');
+    const expandedString = expanded?expanded:'';
+    let arr =  expandedString.split('-');
+    arr.removeObject(week);
+    if (shouldOpen) {
+      arr.pushObject(week);
     }
+    arr = arr.sort();
+    arr = arr.filter(val => isPresent(val));
+
+    this.set('expanded', arr.join('-'));
   }
 });

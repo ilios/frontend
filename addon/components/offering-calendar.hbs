@@ -10,16 +10,16 @@
     <span class="filter">
       <ToggleYesno
         @yes={{this.showLearnerGroupEvents}}
-        @toggle={{action (mut this.showLearnerGroupEvents)}}
+        @toggle={{fn (mut this.showLearnerGroupEvents)}}
       />
-      <label {{on "click" (toggle "showLearnerGroupEvents" this)}}>
+      <label {{on "click" (set this.showLearnerGroupEvents (not this.showLearnerGroupEvents))}}>
         {{t "general.showLearnerGroupEvents"}}
       </label>
     </span>
     <span class="filter">
       <ToggleYesno
         @yes={{this.showSessionEvents}}
-        @toggle={{action (mut this.showSessionEvents)}}
+        @toggle={{fn (mut this.showSessionEvents)}}
       />
       <label {{on "click" (toggle "showSessionEvents" this)}}>
         {{! template-lint-disable no-triple-curlies }}

@@ -13,7 +13,7 @@
       />
     {{else if (get (await @course.objectives) "length")}}
       {{#if (and @editable this.hasMoreThanOneObjective)}}
-        <button class="sort-materials-btn" {{on "click" (set this.isSorting true)}} data-test-sort>
+        <button class="sort-materials-btn" type="button" {{on "click" (set this.isSorting true)}} data-test-sort>
           {{t "general.sortObjectives"}}
         </button>
       {{/if}}
@@ -62,10 +62,10 @@
                     {{/if}}
                     <br>
                     <div class="confirm-buttons">
-                      <button class="remove text" {{on "click" (perform this.remove objective)}} data-test-confirm>
+                      <button class="remove text" type="button" {{on "click" (perform this.remove objective)}} data-test-confirm>
                         {{t "general.yes"}}
                       </button>
-                      <button class="done text" {{on "click" (fn this.cancelRemove objective)}} data-test-cancel>
+                      <button class="done text" type="button" {{on "click" (fn this.cancelRemove objective)}} data-test-cancel>
                         {{t "general.cancel"}}
                       </button>
                     </div>
@@ -78,7 +78,7 @@
       </table>
     {{/if}}
   {{else}}
-    {{! template-lint-disable unused-block-params }}
+    {{! template-lint-disable no-unused-block-params }}
     {{#each (repeat @course.objectives.length) as |empty|}}
       <div>
         <LoadingSpinner />

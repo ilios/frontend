@@ -1,6 +1,7 @@
 <div class="click-choice-buttons" data-test-click-choice-buttons>
   <button
     class="first-button {{if @firstChoicePicked "active"}}"
+    type="button"
     data-test-first-button
     {{on "click" (if @firstChoicePicked (noop) (fn @toggle true))}}
   >
@@ -8,6 +9,7 @@
   </button>
   <button
     class="second-button {{unless @firstChoicePicked "active"}}"
+    type="button"
     data-test-second-button
     {{on "click" (if @firstChoicePicked (fn @toggle false) (noop))}}
   >

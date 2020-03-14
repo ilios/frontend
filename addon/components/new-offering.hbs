@@ -6,7 +6,7 @@
     @buttonContent1={{t "general.smallGroups"}}
     @buttonContent2={{t "general.offering"}}
     @firstChoicePicked={{this.smallGroupMode}}
-    @toggle={{action (mut this.smallGroupMode)}}
+    @toggle={{fn (mut this.smallGroupMode)}}
   />
 </div>
 <OfferingForm
@@ -17,7 +17,7 @@
   @courseStartDate={{@courseStartDate}}
   @courseEndDate={{@courseEndDate}}
   @close={{@close}}
-  @save={{action "save"}}
+  @save={{fn this.save}}
   @smallGroupMode={{this.smallGroupMode}}
   @session={{@session}}
 />

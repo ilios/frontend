@@ -171,7 +171,7 @@
           {{t "general.link"}}:
         </label>
         <span class="link">
-          <a href={{this.link}} target="_blank" rel="noopener">
+          <a href={{this.link}} target="_blank" rel="noopener noreferrer">
             {{this.link}}
           </a>
           <CopyButton @clipboardText={{this.link}}>
@@ -190,11 +190,11 @@
             <a href="{{this.absoluteFileUri}}?inline">
               {{this.filename}}
             </a>
-            <a href={{this.absoluteFileUri}} target="_blank" rel="noopener">
+            <a href={{this.absoluteFileUri}} target="_blank" rel="noopener noreferrer">
               <FaIcon @icon="download" @title={{t "general.download"}} />
             </a>
           {{else}}
-            <a href={{this.absoluteFileUri}} target="_blank" rel="noopener">
+            <a href={{this.absoluteFileUri}} target="_blank" rel="noopener noreferrer">
               {{this.filename}}
             </a>
           {{/if}}
@@ -246,7 +246,7 @@
           {{/if}}
         </div>
         {{#if @editable}}
-          <button class="remove-date" {{on "click" (fn (set this.startDate) null)}}>
+          <button class="remove-date" type="button" {{on "click" (fn (set this.startDate) null)}}>
             {{t "general.timedReleaseClearStartDate"}}
           </button>
         {{/if}}
@@ -254,6 +254,7 @@
         <p>
           <button
             class="add-date"
+            type="button"
             data-test-add-start-date
             {{on "click" (fn this.addDate "startDate")}}
           >
@@ -295,7 +296,7 @@
           </span>
         {{/each}}
         {{#if @editable}}
-          <button class="remove-date" {{on "click" (fn (set this.endDate) null)}}>
+          <button class="remove-date" type="button" {{on "click" (fn (set this.endDate) null)}}>
             {{t "general.timedReleaseClearEndDate"}}
           </button>
         {{/if}}
@@ -303,6 +304,7 @@
         <p>
           <button
             class="add-date"
+            type="button"
             data-test-add-end-date
             {{on "click" (fn this.addDate "endDate")}}
           >
@@ -322,6 +324,7 @@
       {{#if @editable}}
         <button
           class="done"
+          type="button"
           disabled={{this.save.isRunning}}
           {{on "click" (perform this.save)}}
         >
@@ -331,11 +334,11 @@
             {{t "general.done"}}
           {{/if}}
         </button>
-        <button class="cancel" {{on "click" @closeManager}}>
+        <button class="cancel" type="button" {{on "click" @closeManager}}>
           {{t "general.cancel"}}
         </button>
       {{else}}
-        <button {{on "click" @closeManager}}>
+        <button type="button" {{on "click" @closeManager}}>
           {{t "general.close"}}
         </button>
       {{/if}}

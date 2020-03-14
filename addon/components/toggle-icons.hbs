@@ -5,7 +5,7 @@
       id={{concat "first-toggle-" this.uniqueId}}
       name={{concat "toggle-" this.uniqueId}}
       checked={{eq @firstOptionSelected true}}
-      {{on "click" (prevent-default (action "firstChoice"))}}
+      {{on "click" (prevent-default (fn this.firstChoice))}}
     >
     <label for={{concat "first-toggle-" this.uniqueId}}>
       {{@firstLabel}}
@@ -15,7 +15,7 @@
       id={{concat "second-toggle-" this.uniqueId}}
       name={{concat "toggle-" this.uniqueId}}
       checked={{eq @firstOptionSelected false}}
-      {{on "click" (prevent-default (action "secondChoice"))}}
+      {{on "click" (prevent-default (fn this.secondChoice))}}
     >
     <label for={{concat "second-toggle-" this.uniqueId}}>
       {{@secondLabel}}
@@ -27,14 +27,14 @@
         @icon={{@firstIcon}}
         class="first"
         @title={{@secondLabel}}
-        @click={{action "secondChoice"}}
+        @click={{fn this.secondChoice}}
       />
     {{else}}
       <FaIcon
         @icon={{@secondIcon}}
         class="second"
         @title={{@firstLabel}}
-        @click={{action "firstChoice"}}
+        @click={{fn this.firstChoice}}
       />
     {{/if}}
   </div>

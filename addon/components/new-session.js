@@ -1,5 +1,5 @@
 import { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import Component from '@ember/component';
 import { isPresent, isEmpty } from '@ember/utils';
 import { validator, buildValidations } from 'ember-cp-validations';
@@ -89,4 +89,14 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.cancel();
     }
   },
+
+  @action
+  changeTitle(event) {
+    this.set('title', event.target.value);
+  },
+
+  @action
+  changeSelectedSessionTypeId(event) {
+    this.set('selectedSessionTypeId', event.target.value);
+  }
 });

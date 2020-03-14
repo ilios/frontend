@@ -15,21 +15,21 @@
               <input
                 type="checkbox"
                 checked
-                {{on "click" (fn (action "removeCurrentCompetency") domain)}}
+                {{on "click" (fn this.removeCurrentCompetency domain)}}
               >
               <span
                 class="clickable"
                 role="button"
-                {{on "click" (fn (action "removeCurrentCompetency") domain)}}
+                {{on "click" (fn this.removeCurrentCompetency domain)}}
               >
                 {{domain.title}}
               </span>
             {{else}}
-              <input type="checkbox" {{on "click" (fn (action "changeCompetency") domain)}}>
+              <input type="checkbox" {{on "click" (fn this.changeCompetency domain)}}>
               <span
                 class="clickable"
                 role="button"
-                {{on "click" (fn (action "changeCompetency") domain)}}
+                {{on "click" (fn this.changeCompetency domain)}}
               >
                 {{domain.title}}
               </span>
@@ -61,24 +61,24 @@
                     <input
                       type="checkbox"
                       checked
-                      {{on "click" (fn (action "removeCurrentCompetency") competency)}}
+                      {{on "click" (fn this.removeCurrentCompetency competency)}}
                     >
                     <span
                       class="clickable"
                       role="button"
-                      {{on "click" (fn (action "removeCurrentCompetency") competency)}}
+                      {{on "click" (fn this.removeCurrentCompetency competency)}}
                     >
                       {{competency.title}}
                     </span>
                   {{else}}
                     <input
                       type="checkbox"
-                      {{on "click" (fn (action "changeCompetency") competency)}}
+                      {{on "click" (fn this.changeCompetency competency)}}
                     >
                     <span
                       class="clickable"
                       role="button"
-                      {{on "click" (fn (action "changeCompetency") competency)}}
+                      {{on "click" (fn this.changeCompetency competency)}}
                     >
                       {{competency.title}}
                     </span>

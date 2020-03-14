@@ -7,8 +7,8 @@
   <SessionLeadershipExpanded
     @session={{@session}}
     @canUpdate={{@editable}}
-    @collapse={{action @setSessionLeadershipDetails false}}
-    @expand={{action @setSessionLeadershipDetails true}}
+    @collapse={{fn @setSessionLeadershipDetails false}}
+    @expand={{fn @setSessionLeadershipDetails true}}
     @isManaging={{@sessionManageLeadership}}
     @setIsManaging={{@setSessionManageLeadership}}
   />
@@ -18,7 +18,7 @@
     @showDirectors={{false}}
     @showAdministrators={{true}}
     @administratorsCount={{has-many-length @session "administrators"}}
-    @expand={{action @setSessionLeadershipDetails true}}
+    @expand={{fn @setSessionLeadershipDetails true}}
   />
 {{/if}}
 {{#if @session.isIndependentLearning}}
@@ -34,14 +34,14 @@
       @isIlmSession={{true}}
       @editable={{@editable}}
       @isManaging={{@isManagingLearnerGroups}}
-      @setIsManaging={{action @setIsManagingLearnerGroups}}
-      @collapse={{action @setSessionLearnergroupDetails false}}
-      @expand={{action @setSessionLearnergroupDetails true}}
+      @setIsManaging={{fn @setIsManagingLearnerGroups}}
+      @collapse={{fn @setSessionLearnergroupDetails false}}
+      @expand={{fn @setSessionLearnergroupDetails true}}
     />
   {{else}}
     <CollapsedLearnergroups
       @subject={{await @session.ilmSession}}
-      @expand={{action @setSessionLearnergroupDetails true}}
+      @expand={{fn @setSessionLearnergroupDetails true}}
     />
   {{/if}}
   <DetailInstructors
@@ -54,14 +54,14 @@
     @subject={{@session}}
     @isSession={{true}}
     @editable={{@editable}}
-    @collapse={{action @setSessionObjectiveDetails false}}
-    @expand={{action @setSessionObjectiveDetails true}}
+    @collapse={{fn @setSessionObjectiveDetails false}}
+    @expand={{fn @setSessionObjectiveDetails true}}
   />
 {{else}}
   <CollapsedObjectives
     @subject={{@session}}
     @editable={{@editable}}
-    @expand={{action @setSessionObjectiveDetails true}}
+    @expand={{fn @setSessionObjectiveDetails true}}
   />
 {{/if}}
 <DetailLearningMaterials
@@ -73,13 +73,13 @@
   <DetailTaxonomies
     @subject={{@session}}
     @editable={{@editable}}
-    @collapse={{action @setSessionTaxonomyDetails false}}
-    @expand={{action @setSessionTaxonomyDetails true}}
+    @collapse={{fn @setSessionTaxonomyDetails false}}
+    @expand={{fn @setSessionTaxonomyDetails true}}
   />
 {{else}}
   <CollapsedTaxonomies
     @subject={{@session}}
-    @expand={{action @setSessionTaxonomyDetails true}}
+    @expand={{fn @setSessionTaxonomyDetails true}}
   />
 {{/if}}
 <DetailMesh @subject={{@session}} @isSession={{true}} @editable={{@editable}} />

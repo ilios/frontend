@@ -1,4 +1,4 @@
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import Mixin from '@ember/object/mixin';
 import RSVP from 'rsvp';
 import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
@@ -30,24 +30,24 @@ export default Mixin.create(SortableByPosition, {
     });
   },
 
-  actions: {
-    saveSortOrder(objectives){
-      this.set('isSaving', true);
-      for (let i = 0, n = objectives.length; i < n; i++) {
-        const lm = objectives[i];
-        lm.set('position', i + 1);
-      }
-      this.set('totalObjectivesToSave', objectives.length);
-      this.set('currentObjectivesSaved', 0);
+  @action
+  saveSortOrder(objectives){
+    this.set('isSaving', true);
+    for (let i = 0, n = objectives.length; i < n; i++) {
+      const lm = objectives[i];
+      lm.set('position', i + 1);
+    }
+    this.set('totalObjectivesToSave', objectives.length);
+    this.set('currentObjectivesSaved', 0);
 
-      this.saveSomeObjectives(objectives).then(() => {
-        this.set('isSaving', false);
-        this.set('isSorting', false);
-      });
-    },
-
-    cancelSorting() {
+    this.saveSomeObjectives(objectives).then(() => {
+      this.set('isSaving', false);
       this.set('isSorting', false);
-    },
-  }
+    });
+  },
+
+  @action
+  cancelSorting() {
+    this.set('isSorting', false);
+  },
 });

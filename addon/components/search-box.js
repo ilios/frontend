@@ -15,8 +15,8 @@ export default class SearchBox extends Component {
   }
 
   @action
-  update(value){
-    this.value = value;
+  update(event){
+    this.value = event.target.value;
     if (this.liveSearch) {
       this.searchTask.perform();
     }

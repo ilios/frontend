@@ -4,7 +4,7 @@
   @filter={{this.filter}}
   @materials={{await this.materials}}
   @sortBy={{this.sortBy}}
-  @setCourseIdFilter={{action (mut this.course)}}
-  @setFilter={{action (mut this.filter)}}
-  @setSortBy={{action (mut this.sortBy)}}
+  @setCourseIdFilter={{fn (mut this.course)}}
+  @setFilter={{fn (mut this.filter)}}
+  @setSortBy={{fn (mut this.sortBy)}}
 />

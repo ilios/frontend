@@ -1,5 +1,5 @@
 <div
-  class="visualizer-course-vocabularies {{if (not @isIcon) "not-icon"}}"
+  class="visualizer-course-vocabularies {{unless @isIcon "not-icon"}}"
   {{did-insert (perform this.load) @course}}
   {{did-update (perform this.load) @course}}
 >
@@ -9,7 +9,7 @@
         @name="donut"
         @isIcon={{@isIcon}}
         @data={{this.data}}
-        @click={{action "donutClick"}}
+        @click={{fn this.donutClick}}
         @hover={{perform this.donutHover}}
         @leave={{perform this.donutHover}} as |chart|
       >

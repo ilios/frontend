@@ -120,6 +120,11 @@ export default class CourseRolloverComponent extends Component {
   }
 
   @restartableTask
+  *setSelectedYear(event){
+    yield this.changeSelectedYear.perform(event.target.value);
+  }
+
+  @restartableTask
   *changeSelectedYear(selectedYear){
     this.selectedYear = Number(selectedYear);
     yield timeout(1); //let max/min cp's recalculate

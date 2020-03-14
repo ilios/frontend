@@ -130,7 +130,8 @@ export default class CourseSessionsComponent extends Component {
   }
 
   @restartableTask
-  *changeFilterBy(value){
+  *changeFilterBy(event){
+    const value = event.target.value;
     this.filterByLocalCache = value;
     yield timeout(DEBOUNCE_DELAY);
     this.args.setFilterBy(value);

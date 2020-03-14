@@ -10,15 +10,15 @@
           <SelectableTermsListItem
             @selectedTerms={{@selectedTerms}}
             @term={{term}}
-            @add={{action @add}}
-            @remove={{action @remove}}
+            @add={{@add}}
+            @remove={{@remove}}
           />
           {{#if term.hasChildren}}
             <SelectableTermsList
               @selectedTerms={{@selectedTerms}}
               @terms={{await term.children}}
-              @add={{action @add}}
-              @remove={{action @remove}}
+              @add={{@add}}
+              @remove={{@remove}}
             />
           {{/if}}
         </li>

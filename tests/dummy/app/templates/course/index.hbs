@@ -1,9 +1,9 @@
-{{course-sessions
-  course=this.model
-  canCreateSession=this.canCreateSession
-  canUpdateCourse=this.canUpdateCourse
-  sortBy=this.sortSessionsBy
-  setSortBy=(action (mut this.sortSessionsBy))
-  filterBy=this.filterSessionsBy
-  setFilterBy=(action (mut this.filterSessionsBy))
-}}
+<CourseSessions
+  @course={{this.model}}
+  @canCreateSession={{this.canCreateSession}}
+  @canUpdateCourse={{this.canUpdateCourse}}
+  @sortBy={{this.sortSessionsBy}}
+  @setSortBy={{fn (mut this.sortSessionsBy)}}
+  @filterBy={{this.filterSessionsBy}}
+  @setFilterBy={{fn (mut this.filterSessionsBy)}}
+/>

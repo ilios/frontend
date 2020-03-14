@@ -25,8 +25,8 @@ export default class TimePicker extends Component {
   }
 
   @action
-  changeHour(string) {
-    let hour = parseInt(string, 10);
+  changeHour(event) {
+    let hour = parseInt(event.target.value, 10);
     const ampm = this.ampm;
 
     if (ampm === 'pm') {
@@ -37,13 +37,14 @@ export default class TimePicker extends Component {
   }
 
   @action
-  changeMinute(string) {
-    const minute = parseInt(string, 10);
+  changeMinute(event) {
+    const minute = parseInt(event.target.value, 10);
     this.args.action(minute, 'minute');
   }
 
   @action
-  changeAmPm(value) {
+  changeAmPm(event) {
+    const value = event.target.value;
     const currentValue = this.ampm;
     const hour = moment(this.args.date).hours();
 

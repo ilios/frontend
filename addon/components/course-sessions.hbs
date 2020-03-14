@@ -17,7 +17,7 @@
       {{/if}}
       {{#if (and @canUpdateCourse (gt this.sessionsCount 0))}}
         <LinkTo @route="course.publishall" @model={{@course}}>
-          <button>
+          <button type="button">
             {{t "general.publishAllSessions" sessionCount=this.sessionsCount}}
           </button>
         </LinkTo>
@@ -50,7 +50,7 @@
       value={{this.filterByDebounced}}
       placeholder={{t "general.sessionTitleFilterPlaceholder"}}
       data-test-session-filter
-      {{on "input" (action (perform this.changeFilterBy) value="target.value")}}
+      {{on "input" (fn (perform this.changeFilterBy))}}
     >
   </div>
   <section>

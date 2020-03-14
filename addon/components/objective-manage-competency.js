@@ -3,7 +3,7 @@ import  {
   all,
   filter
 } from 'rsvp';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 
 export default Component.extend({
   classNames: ['objective-manager', 'objective-manage-competency'],
@@ -59,12 +59,13 @@ export default Component.extend({
     });
   }),
 
-  actions: {
-    changeCompetency(competency) {
-      this.get('objective').set('competency', competency);
-    },
-    removeCurrentCompetency() {
-      this.get('objective').set('competency', null);
-    }
+  @action
+  changeCompetency(competency) {
+    this.get('objective').set('competency', competency);
+  },
+
+  @action
+  removeCurrentCompetency() {
+    this.get('objective').set('competency', null);
   }
 });

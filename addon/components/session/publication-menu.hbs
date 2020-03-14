@@ -10,6 +10,7 @@
     class="toggle"
     aria-haspopup="true"
     aria-expanded={{if this.isOpen "true" "false"}}
+    type="button"
     data-test-toggle
     {{on "click" (toggle "isOpen" this)}}
     {{on "keydown" (fn this.toggleMenu)}}
@@ -32,6 +33,7 @@
           class="danger"
           role="menuitemradio"
           tabindex="-1"
+          type="button"
           {{on "click" this.publish}}
           {{on "keydown" (fn this.moveFocus)}}
           {{on "mouseenter" (fn this.clearFocus)}}
@@ -45,6 +47,7 @@
           class="good"
           role="menuitemradio"
           tabindex="-1"
+          type="button"
           {{on "click" this.publish}}
           {{on "keydown" (fn this.moveFocus)}}
           {{on "mouseenter" (fn this.clearFocus)}}
@@ -58,6 +61,7 @@
           class="good"
           role="menuitemradio"
           tabindex="-1"
+          type="button"
           {{on "click" this.scrollToSessionPublication}}
           {{on "keydown" (fn this.moveFocus)}}
           {{on "mouseenter" (fn this.clearFocus)}}
@@ -74,6 +78,7 @@
           class="good"
           role="menuitemradio"
           tabindex="-1"
+          type="button"
           {{on "click" this.publishAsTbd}}
           {{on "keydown" (fn this.moveFocus)}}
           {{on "mouseenter" (fn this.clearFocus)}}
@@ -87,6 +92,7 @@
           class="danger"
           role="menuitemradio"
           tabindex="-1"
+          type="button"
           {{on "click" this.unpublish}}
           {{on "keydown" (fn this.moveFocus)}}
           {{on "mouseenter" (fn this.clearFocus)}}

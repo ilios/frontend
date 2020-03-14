@@ -1,4 +1,5 @@
 import Mixin from '@ember/object/mixin';
+import { action } from '@ember/object';
 
 export default Mixin.create({
   didReceiveAttrs(){
@@ -6,18 +7,24 @@ export default Mixin.create({
     this.set('showErrorsFor', []);
   },
   showErrorsFor: [],
-  actions: {
-    addErrorDisplayFor(field){
-      this.get('showErrorsFor').pushObject(field);
-    },
-    addErrorDisplaysFor(fields){
-      this.get('showErrorsFor').pushObjects(fields);
-    },
-    removeErrorDisplayFor(field){
-      this.get('showErrorsFor').removeObject(field);
-    },
-    clearErrorDisplay(){
-      this.set('showErrorsFor', []);
-    },
-  }
+
+  @action
+  addErrorDisplayFor(field){
+    this.get('showErrorsFor').pushObject(field);
+  },
+
+  @action
+  addErrorDisplaysFor(fields){
+    this.get('showErrorsFor').pushObjects(fields);
+  },
+
+  @action
+  removeErrorDisplayFor(field){
+    this.get('showErrorsFor').removeObject(field);
+  },
+
+  @action
+  clearErrorDisplay(){
+    this.set('showErrorsFor', []);
+  },
 });

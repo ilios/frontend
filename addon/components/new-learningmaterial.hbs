@@ -7,8 +7,8 @@
       type="text"
       value={{this.title}}
       disabled={{this.prepareSave.isRunning}}
-      {{on "input" (action (mut this.title) value="target.value")}}
-      {{on "keyup" (fn (action "addErrorDisplayFor") "title")}}
+      {{on "input" (fn this.changeTitle)}}
+      {{on "keyup" (fn this.addErrorDisplayFor "title")}}
     >
     {{#if (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))}}
       <span class="validation-error-message">
@@ -22,7 +22,7 @@
     {{t "general.status"}}:
   </label>
   <span>
-    <select {{on "change" (action (mut this.statusId) value="target.value")}}>
+    <select {{on "change" (fn this.changeStatusId)}}>
       {{#each @learningMaterialStatuses as |lmStatus|}}
         <option
           value={{lmStatus.id}}
@@ -51,8 +51,8 @@
       type="text"
       value={{this.originalAuthor}}
       disabled={{this.prepareSave.isRunning}}
-      {{on "input" (action (mut this.originalAuthor) value="target.value")}}
-      {{on "keyup" (fn (action "addErrorDisplayFor") "originalAuthor")}}
+      {{on "input" (fn this.changeOriginalAuthor)}}
+      {{on "keyup" (fn this.addErrorDisplayFor "originalAuthor")}}
     >
     {{#if
       (and
@@ -71,7 +71,7 @@
     {{t "general.userRole"}}:
   </label>
   <span>
-    <select {{on "change" (action (mut this.userRoleId) value="target.value")}}>
+    <select {{on "change" (fn this.changeUserRoleId)}}>
       {{#each @learningMaterialUserRoles as |role|}}
         <option value={{role.id}} selected={{is-equal role this.selectedUserRole}}>
           {{role.title}}
@@ -89,8 +89,8 @@
       <input
         value={{this.link}}
         disabled={{this.prepareSave.isRunning}}
-        {{on "input" (action (mut this.link) value="target.value")}}
-        {{on "keyup" (fn (action "addErrorDisplayFor") "link")}}
+        {{on "input" (fn this.changeLink)}}
+        {{on "keyup" (fn this.addErrorDisplayFor "link")}}
       >
       {{#if (and (v-get this "link" "isInvalid") (contains "link" this.showErrorsFor))}}
         <span class="validation-error-message">
@@ -108,8 +108,8 @@
     <span class="citation">
       <Textarea
         @value={{this.citation}}
-        @focus-out={{action "addErrorDisplayFor" "citation"}}
-        @key-press={{action "addErrorDisplayFor" "citation"}}
+        @focus-out={{fn this.addErrorDisplayFor "citation"}}
+        @key-press={{fn this.addErrorDisplayFor "citation"}}
       />
       {{#if
         (and
@@ -128,7 +128,7 @@
     {{t "general.description"}}:
   </label>
   <span>
-    <HtmlEditor @content={{this.description}} @update={{action (mut this.description)}} />
+    <HtmlEditor @content={{this.description}} @update={{fn (mut this.description)}} />
   </span>
 </div>
 {{#if this.isFile}}
@@ -155,8 +155,8 @@
       <span>
         <Textarea
           @value={{this.copyrightRationale}}
-          @focus-out={{action "addErrorDisplayFor" "copyrightRationale"}}
-          @key-press={{action "addErrorDisplayFor" "copyrightRationale"}}
+          @focus-out={{fn this.addErrorDisplayFor "copyrightRationale"}}
+          @key-press={{fn this.addErrorDisplayFor "copyrightRationale"}}
         />
         {{#if
           (and
@@ -183,14 +183,14 @@
   </div>
 {{/if}}
 <div class="buttons">
-  <button class="done text" {{on "click" (perform this.prepareSave)}}>
+  <button class="done text" type="button" {{on "click" (perform this.prepareSave)}}>
     {{#if this.prepareSave.isRunning}}
       <LoadingSpinner />
     {{else}}
       {{t "general.done"}}
     {{/if}}
   </button>
-  <button class="cancel text" {{on "click" @cancel}}>
+  <button class="cancel text" type="button" {{on "click" @cancel}}>
     {{t "general.cancel"}}
   </button>
 </div>

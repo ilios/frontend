@@ -1,4 +1,5 @@
 import Mixin from '@ember/object/mixin';
+import { action } from '@ember/object';
 import { reject } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
@@ -28,28 +29,30 @@ export default Mixin.create(ValidationErrorDisplay, Validations, {
   showRemoveConfirmation: false,
   editable: true,
 
-  actions: {
-    async saveTitleChanges() {
-      this.send('addErrorDisplayFor', 'title');
-      const { objective, title } = this.getProperties('objective', 'title');
-      const { validations } = await this.validate();
+  @action
+  async saveTitleChanges() {
+    this.send('addErrorDisplayFor', 'title');
+    const { objective, title } = this.getProperties('objective', 'title');
+    const { validations } = await this.validate();
 
-      if (validations.isValid) {
-        objective.set('title', title);
-        this.send('removeErrorDisplayFor', 'title');
-        await objective.save();
-      } else {
-        await reject();
-      }
-    },
+    if (validations.isValid) {
+      objective.set('title', title);
+      this.send('removeErrorDisplayFor', 'title');
+      await objective.save();
+    } else {
+      await reject();
+    }
+  },
 
-    revertTitleChanges() {
-      const objective = this.get('objective');
-      this.set('title', objective.get('title'));
-    },
-    changeTitle(contents){
-      this.send('addErrorDisplayFor', 'title');
-      this.set('title', contents);
-    },
-  }
+  @action
+  revertTitleChanges() {
+    const objective = this.get('objective');
+    this.set('title', objective.get('title'));
+  },
+
+  @action
+  changeTitle(contents){
+    this.send('addErrorDisplayFor', 'title');
+    this.set('title', contents);
+  },
 });

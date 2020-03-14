@@ -24,7 +24,7 @@
                   <FaIcon
                     @icon="times"
                     class="clickable remove"
-                    @click={{action @removeDirector user}}
+                    @click={{fn @removeDirector user}}
                   />
                   {{#unless user.enabled}}
                     <FaIcon
@@ -51,7 +51,7 @@
                   <FaIcon
                     @icon="times"
                     class="clickable remove"
-                    @click={{action @removeAdministrator user}}
+                    @click={{fn @removeAdministrator user}}
                   />
                   {{#unless user.enabled}}
                     <FaIcon

@@ -1,5 +1,5 @@
 import Component from '@ember/component';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 
 export default Component.extend({
   objective: null,
@@ -10,14 +10,17 @@ export default Component.extend({
     }
     return objective.get('meshDescriptors');
   }),
-  actions: {
-    add(descriptor) {
-      var objective = this.get('objective');
-      objective.get('meshDescriptors').addObject(descriptor);
-    },
-    remove(descriptor) {
-      var objective = this.get('objective');
-      objective.get('meshDescriptors').removeObject(descriptor);
-    }
+
+  @action
+  add(descriptor) {
+    var objective = this.get('objective');
+    objective.get('meshDescriptors').addObject(descriptor);
+  },
+
+  @action
+  remove(descriptor) {
+    var objective = this.get('objective');
+    objective.get('meshDescriptors').removeObject(descriptor);
   }
+
 });

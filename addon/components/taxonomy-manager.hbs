@@ -7,7 +7,7 @@
           @vocabulary={{vocab}}
           @terms={{@selectedTerms}}
           @canEdit={{true}}
-          @remove={{action @remove}}
+          @remove={{@remove}}
         />
       {{/each}}
     </div>
@@ -18,7 +18,7 @@
         <label>
           {{t "general.selectVocabulary"}}:
         </label>
-        <select {{on "change" (action "changeSelectedVocabulary" value="target.value")}}>
+        <select {{on "change" (fn this.changeSelectedVocabulary)}}>
           {{#each this.assignableVocabularies as |vocab|}}
             <option value={{vocab.id}}>
               {{vocab.title}} ({{vocab.school.title}})
@@ -38,8 +38,8 @@
         @selectedTerms={{@selectedTerms}}
         @vocabulary={{this.selectedVocabulary}}
         @termFilter={{this.termFilter}}
-        @add={{action @add}}
-        @remove={{action @remove}}
+        @add={{@add}}
+        @remove={{@remove}}
       />
     </div>
   {{/if}}

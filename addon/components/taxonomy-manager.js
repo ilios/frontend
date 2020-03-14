@@ -61,8 +61,8 @@ export default class TaxonomyManager extends Component {
   }
 
   @action
-  changeSelectedVocabulary(vocabId) {
-    this.vocabId = vocabId;
+  changeSelectedVocabulary(event) {
+    this.vocabId = event.target.value;
   }
 
   @restartableTask

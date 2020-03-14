@@ -20,17 +20,17 @@
     {{/if}}
     <div class="actions">
       {{#if this.isManaging}}
-        <button class="bigadd" {{on "click" (perform this.save)}}>
+        <button class="bigadd" type="button" {{on "click" (perform this.save)}}>
           <FaIcon
             @icon={{if this.save.isRunning "spinner" "check"}}
             @spin={{this.save.isRunning}}
           />
         </button>
-        <button class="bigcancel" {{on "click" this.cancel}}>
+        <button class="bigcancel" type="button" {{on "click" this.cancel}}>
           <FaIcon @icon="undo" />
         </button>
       {{else if @editable}}
-        <button {{on "click" (perform this.manage)}}>
+        <button type="button" {{on "click" (perform this.manage)}}>
           {{t "general.termsManageTitle"}}
         </button>
       {{/if}}

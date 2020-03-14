@@ -1,5 +1,5 @@
 <div
-  class="visualizer-course-term {{if (not @isIcon) "not-icon"}}"
+  class="visualizer-course-term {{unless @isIcon "not-icon"}}"
   {{did-insert (perform this.load) @course @term}}
   {{did-update (perform this.load) @course @term}}
 >

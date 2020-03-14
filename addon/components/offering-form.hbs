@@ -29,23 +29,24 @@
         <PikadayInput
           @format="M/D/YYYY"
           @value={{this.startDate}}
-          @onSelection={{action "updateStartDate"}}
+          @onSelection={{fn this.updateStartDate}}
         />
       </div>
       <div class="item start-time">
         <label>
           {{t "general.startTime"}}:
         </label>
-        {{#if (not this.isEditingTimezone)}}
+        {{#unless this.isEditingTimezone}}
           <div
             data-test-current-timezone
             class="editable clickable current-timezone"
-            role="button" onclick={{action (mut this.isEditingTimezone) true}}
+            role="button"
+            {{on "click" (set this.isEditingTimezone true)}}
           >
             {{this.formattedCurrentTimezone}}
           </div>
-        {{/if}}
-        <TimePicker @date={{this.startDate}} @action={{action "updateStartTime"}} />
+        {{/unless}}
+        <TimePicker @date={{this.startDate}} @action={{fn this.updateStartTime}} />
       </div>
       <div class="item timezone" data-test-timezone-picker>
         {{#if this.isEditingTimezone}}
@@ -53,7 +54,7 @@
             {{t "general.timezone"}}:
           </label>
           <span class="picker">
-            <select onchange={{action "changeTimezone" value="target.value"}}>
+            <select {{on "change" (fn this.changeTimezone)}}>
               {{#each this.timezones as |timezone|}}
                 <option value={{timezone.value}} selected={{is-equal timezone.value this.currentTimezone}}>
                   {{timezone.label}}
@@ -62,9 +63,10 @@
             </select>
             <span class="actions">
               <button
-                  class="cancel"
-                  title={{t "general.cancel"}}
-                {{action (mut this.isEditingTimezone) false}}
+                class="cancel"
+                title={{t "general.cancel"}}
+                type="button"
+                {{on "click" (set this.isEditingTimezone false)}}
               >
                 <FaIcon @icon="times" />
               </button>
@@ -148,7 +150,7 @@
                       }}
                       disabled={{eq (moment-format this.startDate "d") obj.day}}
                       data-test-recurring-day-input={{i}}
-                      {{on "click" (fn (action "toggleRecurringDay") obj.day)}}
+                      {{on "click" (fn this.toggleRecurringDay obj.day)}}
                     >
                     <label
                       class="day-of-week clickable"
@@ -164,7 +166,7 @@
                 <input type="text"
                   value={{this.numberOfWeeks}}
                   class="make-recurring-input"
-                  {{on "input" (action (mut this.numberOfWeeks) value="target.value")}}
+                  {{on "input" (fn this.changeNumberOfWeeks)}}
                   {{on "keyup" (fn this.addErrorDisplayFor "numberOfWeeks")}}
                 >
                 <label class="make-recurring-input-label">
@@ -191,7 +193,7 @@
           <input
             type="text"
             value={{this.room}}
-            {{on "input" (action (mut this.room) value="target.value")}}
+            {{on "input" (fn this.changeRoom)}}
             {{on "keyup" (fn this.addErrorDisplayFor "room")}}
           >
           {{#each (await (compute (fn this.getErrorsFor) "room")) as |message|}}
@@ -210,10 +212,10 @@
             {{/unless}}
           </label>
           <InstructorSelectionManager
-            @addInstructor={{action "addInstructor"}}
-            @addInstructorGroup={{action "addInstructorGroup"}}
-            @removeInstructor={{action "removeInstructor"}}
-            @removeInstructorGroup={{action "removeInstructorGroup"}}
+            @addInstructor={{fn this.addInstructor}}
+            @addInstructorGroup={{fn this.addInstructorGroup}}
+            @removeInstructor={{fn this.removeInstructor}}
+            @removeInstructorGroup={{fn this.removeInstructorGroup}}
             @availableInstructorGroups={{this.availableInstructorGroups}}
             @instructorGroups={{this.instructorGroups}}
             @instructors={{this.instructors}}
@@ -228,8 +230,8 @@
           <LearnergroupSelectionManager
             @learnerGroups={{this.learnerGroups}}
             @cohorts={{@cohorts}}
-            @add={{action "addLearnerGroup"}}
-            @remove={{action "removeLearnerGroup"}}
+            @add={{fn this.addLearnerGroup}}
+            @remove={{fn this.removeLearnerGroup}}
           />
         {{else}}
           <p>
@@ -245,6 +247,7 @@
       <div class="buttons">
         <button
           class="done text"
+          type="button"
           disabled={{or this.saveOffering.isRunning}}
           {{on "click" (perform this.validateThenSaveOffering)}}
         >
@@ -254,7 +257,11 @@
             {{t "general.done"}}
           {{/if}}
         </button>
-        <button class="cancel text" {{on "click" @close}}>
+        <button
+          class="cancel text"
+          type="button"
+          {{on "click" @close}}
+        >
           {{t "general.cancel"}}
         </button>
       </div>

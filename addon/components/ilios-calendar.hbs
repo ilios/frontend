@@ -18,13 +18,13 @@
     </li>
   </ul>
   <ul class="inline calendar-time-picker">
-    <li class="clickable link" role="button" {{on "click" (action "goBack")}}>
+    <li class="clickable link" role="button" {{on "click" (fn this.goBack)}}>
       <FaIcon @icon="backward" />
     </li>
-    <li class="clickable link" role="button" {{on "click" (action "gotoToday")}}>
+    <li class="clickable link" role="button" {{on "click" (fn this.gotoToday)}}>
       {{t "general.today"}}
     </li>
-    <li class="clickable link" role="button" {{on "click" (action "goForward")}}>
+    <li class="clickable link" role="button" {{on "click" (fn this.goForward)}}>
       <FaIcon @icon="forward" />
     </li>
   </ul>
