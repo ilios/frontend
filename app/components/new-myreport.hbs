@@ -136,7 +136,7 @@
             </li>
           </ul>
         {{else}}
-          <MeshManager @add={{action "chooseMeshTerm"}} @editable={{true}} />
+          <MeshManager @add={{action "chooseMeshTerm"}} @editable={{true}} @terms={{array}} />
         {{/if}}
       {{else if (is-fulfilled filteredPrepositionalObjectIdList) class="crossFade"}}
         <select
