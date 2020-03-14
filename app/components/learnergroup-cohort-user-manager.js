@@ -1,113 +1,80 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { isEmpty } from '@ember/utils';
-import { task, timeout } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { enqueueTask } from 'ember-concurrency-decorators';
+import { timeout } from 'ember-concurrency';
 
-export default Component.extend({
-  currentUser: service(),
+export default class LearnergroupCohortUserManagerComponent extends Component {
+  @service currentUser;
 
-  tagName: "",
+  @tracked filter = '';
+  @tracked selectedUsers = [];
+  @tracked usersBeingMoved = [];
 
-  canUpdate: false,
-  filter: '',
-  selectedUsers: null,
-  sortBy: 'firstName',
-  users: null,
-  usersBeingMoved: null,
+  get sortedAscending() {
+    return this.args.sortBy.search(/desc/) === -1;
+  }
 
-  sortedAscending: computed('sortBy', function() {
-    return this.sortBy.search(/desc/) === -1;
-  }),
-
-  filteredUsers: computed('filter', 'users.[]', function() {
-    const users = this.users;
+  get filteredUsers() {
     const filter = this.filter.toLowerCase();
 
-    if (isEmpty(filter)){
-      return users;
+    if (!filter){
+      return this.args.users;
     }
 
-    return users.filter((user) => {
-      return user.get('firstName').toLowerCase().includes(filter) ||
-        user.get('lastName').toLowerCase().includes(filter) ||
-        user.get('email').toLowerCase().includes(filter);
+    return this.args.users.filter((user) => {
+      return user.firstName.toLowerCase().includes(filter) ||
+        user.lastName.toLowerCase().includes(filter) ||
+        user.email.toLowerCase().includes(filter);
     });
-  }),
+  }
 
-  init() {
-    this._super(...arguments);
-    this.setProperties({ selectedUsers: [], usersBeingMoved: [] });
-  },
-
-  didRender() {
-    this._super(...arguments);
-    this.setCheckAllState();
-  },
-
-  actions: {
-    sortBy(what) {
-      const sortBy = this.sortBy;
-      if(sortBy === what){
-        what += ':desc';
-      }
-      this.setSortBy(what);
-    },
-
-    toggleUserSelection(user) {
-      if (this.selectedUsers.includes(user)) {
-        this.selectedUsers.removeObject(user);
-      } else {
-        this.selectedUsers.pushObject(user);
-      }
-    },
-
-    toggleUserSelectionAllOrNone() {
-      const selectedUsers = this.selectedUsers.get('length');
-      const filteredUsers = this.filteredUsers.get('length');
-
-      if (selectedUsers >= filteredUsers) {
-        this.selectedUsers.clear();
-      } else {
-        const users = this.filteredUsers;
-        this.selectedUsers.pushObjects(users);
-      }
-
-      this.setCheckAllState();
+  @action
+  setSortBy(what) {
+    if(this.args.sortBy === what){
+      what += ':desc';
     }
-  },
+    this.args.setSortBy(what);
+  }
 
-  setCheckAllState() {
-    const selectedUsers = this.get('selectedUsers.length');
-    const filteredUsers = this.get('filteredUsers.length');
-    const el = this.$('th:eq(0) input');
-    if (selectedUsers === 0) {
-      el.prop('indeterminate', false);
-      el.prop('checked', false);
-    } else if (selectedUsers < filteredUsers) {
-      el.prop('indeterminate', true);
-      el.prop('checked', false);
+  @action
+  toggleUserSelection(user) {
+    if (this.selectedUsers.includes(user)) {
+      this.selectedUsers = this.selectedUsers.filter(selectedUser => selectedUser !== user);
     } else {
-      el.prop('indeterminate', false);
-      el.prop('checked', true);
+      this.selectedUsers = [...this.selectedUsers, user];
     }
-  },
+  }
 
-  addSingleUser: task(function* (user) {
-    this.usersBeingMoved.pushObject(user);
-    //timeout gives the spinner time to render
-    yield timeout(10);
-    yield this.addUserToGroup(user);
-    this.usersBeingMoved.removeObject(user);
-  }),
+  @action
+  toggleUserSelectionAllOrNone() {
+    const selectedUsers = this.selectedUsers.length;
+    const filteredUsers = this.filteredUsers.length;
 
-  addSelectedUsers: task(function* () {
-    const users = this.selectedUsers;
-    this.usersBeingMoved.pushObjects(users);
+    if (selectedUsers >= filteredUsers) {
+      this.selectedUsers = [];
+    } else {
+      this.selectedUsers = [...this.selectedUsers, ...this.filteredUsers];
+    }
+  }
+
+  @enqueueTask
+  *addSingleUser(user) {
+    this.usersBeingMoved = [...this.usersBeingMoved, user];
     //timeout gives the spinner time to render
-    yield timeout(10);
-    yield this.addUsersToGroup(users);
-    this.usersBeingMoved.removeObjects(users);
-    this.set('selectedUsers', []);
-  })
-});
+    yield timeout(1);
+    yield this.args.addUserToGroup(user);
+    this.usersBeingMoved = this.usersBeingMoved.filter(movingUser => movingUser !== user);
+  }
+
+  @enqueueTask
+  *addSelectedUsers() {
+    this.usersBeingMoved = [...this.usersBeingMoved, ...this.selectedUsers];
+    //timeout gives the spinner time to render
+    yield timeout(1);
+    yield this.args.addUsersToGroup(this.selectedUsers);
+    this.usersBeingMoved = this.usersBeingMoved.filter(user => this.selectedUsers.includes(user));
+    this.selectedUsers = [];
+  }
+}
