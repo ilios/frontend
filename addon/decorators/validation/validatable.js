@@ -19,11 +19,15 @@ export function validatable(target) {
     }
     @action
     async isValid(field = null) {
+      return !(await this.isInvalid(field));
+    }
+    @action
+    async isInvalid(field = null) {
       const errors = await this.validate();
       if (field === null) {
-        return !errors._hasErrors;
+        return errors._hasErrors;
       }
-      return !(field in errors);
+      return (field in errors);
     }
     @action
     async getErrorsFor(field) {
