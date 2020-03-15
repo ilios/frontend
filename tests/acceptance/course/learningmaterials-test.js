@@ -156,6 +156,7 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       const testDescription = 'testsome description';
       const testUrl = 'http://www.ucsf.edu/';
 
+      assert.equal(this.server.db.learningMaterials.length, 5);
       await page.visit({ courseId: 1, details: true });
       assert.equal(page.learningMaterials.current.length, 4);
       assert.ok(page.learningMaterials.search.isVisible);
@@ -172,6 +173,8 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       await page.learningMaterials.newLearningMaterial.description(testDescription);
       await page.learningMaterials.newLearningMaterial.save();
 
+      assert.equal(this.server.db.learningMaterials.length, 6);
+      assert.equal(this.server.db.learningMaterials[5].link, testUrl);
       assert.equal(page.learningMaterials.current.length, 5);
       assert.equal(page.learningMaterials.current[4].title, testTitle);
     });
@@ -183,6 +186,7 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       const testDescription = 'testsome description';
       const testCitation = 'testsome citation';
 
+      assert.equal(this.server.db.learningMaterials.length, 5);
       await page.visit({ courseId: 1, details: true });
       assert.equal(page.learningMaterials.current.length, 4);
       assert.ok(page.learningMaterials.search.isVisible);
@@ -198,6 +202,9 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       await page.learningMaterials.newLearningMaterial.role('2');
       await page.learningMaterials.newLearningMaterial.description(testDescription);
       await page.learningMaterials.newLearningMaterial.save();
+
+      assert.equal(this.server.db.learningMaterials.length, 6);
+      assert.equal(this.server.db.learningMaterials[5].citation, testCitation);
 
       assert.equal(page.learningMaterials.current.length, 5);
       assert.equal(page.learningMaterials.current[4].title, testTitle);

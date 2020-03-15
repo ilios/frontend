@@ -1,205 +1,120 @@
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { action, computed } from '@ember/object';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { task } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { dropTask } from 'ember-concurrency-decorators';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { ValidateIf } from "class-validator";
+import { guidFor } from '@ember/object/internals';
 
-const { equal } = computed;
+@validatable
+export default class NewLearningmaterialComponent extends Component {
+  @service store;
+  @service currentUser;
+  @service iliosConfig;
 
-const Validations = buildValidations({
-  title: [
-    validator('presence', true),
-    validator('length', {
-      min: 4,
-      max: 120
-    }),
-  ],
-  originalAuthor: [
-    validator('presence', true),
-    validator('length', {
-      min: 2,
-      max: 80
-    }),
-  ],
-  fileHash: [
-    validator('presence', {
-      presence: true,
-      dependentKeys: ['model.isFile'],
-      disabled(model) {
-        return !model.get('isFile');
-      }
-    }),
-  ],
-  filename: [
-    validator('presence', {
-      presence: true,
-      dependentKeys: ['model.isFile'],
-      disabled(model) {
-        return !model.get('isFile');
-      }
-    }),
-  ],
-  link: [
-    validator('presence', {
-      presence: true,
-      dependentKeys: ['model.isLink'],
-      disabled(model) {
-        return !model.get('isLink');
-      }
-    }),
-  ],
-  citation: [
-    validator('presence', {
-      presence: true,
-      dependentKeys: ['model.isCitation'],
-      disabled(model) {
-        return !model.get('isCitation');
-      }
-    }),
-  ],
-  copyrightRationale: [
-    validator('presence', {
-      presence: true,
-      dependentKeys: ['model.isFile', 'model.copyrightPermission'],
-      disabled(model) {
-        return !model.get('isFile') || model.get('copyrightPermission');
-      }
-    }),
-    validator('length', {
-      min: 2,
-      max: 65000
-    }),
-  ],
-});
+  @ValidateIf(o => o.isFile) @NotBlank() @tracked filename;
+  @ValidateIf(o => o.isFile) @NotBlank() @tracked fileHash;
+  @tracked statusId;
+  @tracked userRoleId;
+  @tracked description;
+  @NotBlank() @Length(2, 80) @tracked originalAuthor;
+  @NotBlank() @Length(4, 120) @tracked title;
+  @ValidateIf(o => o.isLink) @NotBlank() @tracked link = 'http://';
+  @tracked copyrightPermission = false;
+  @ValidateIf(o => o.isFile) @Length(2, 65000) @tracked copyrightRationale;
+  @tracked owner;
+  @ValidateIf(o => o.isCitation) @NotBlank() @tracked citation;
+  @tracked fileUploadErrorMessage = false;
 
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: service(),
-  currentUser: service(),
-  iliosConfig: service(),
-  classNames: ['new-learningmaterial'],
+  get uniqueId() {
+    return guidFor(this);
+  }
 
-  learningMaterialStatuses: null,
-  learningMaterialUserRoles: null,
+  get isFile() {
+    return this.args.type === 'file';
+  }
 
-  filename: null,
-  fileHash: null,
-  statusId: null,
-  userRoleId: null,
-  description: null,
-  originalAuthor: null,
-  title: null,
-  link: 'http://',
-  copyrightPermission: false,
-  copyrightRationale: null,
-  owner: null,
-  citation: null,
-  fileUploadErrorMessage: false,
+  get isCitation() {
+    return this.args.type === 'citation';
+  }
 
-  isFile: equal('type', 'file'),
-  isCitation: equal('type', 'citation'),
-  isLink: equal('type', 'link'),
+  get isLink() {
+    return this.args.type === 'link';
+  }
 
-  selectedStatus: computed('learningMaterialStatuses.[]', 'statusId', function () {
-    const learningMaterialStatuses = this.get('learningMaterialStatuses');
-    if (!learningMaterialStatuses) {
-      return;
+  get selectedStatus() {
+    if (!this.args.learningMaterialStatuses) {
+      return null;
     }
 
-    const statusId = this.get('statusId');
-    if (statusId) {
-      return learningMaterialStatuses.findBy('id', statusId);
+    if (this.statusId) {
+      return this.args.learningMaterialStatuses.findBy('id', this.statusId);
     }
 
-    return learningMaterialStatuses.findBy('title', 'Final');
-  }),
+    return this.args.learningMaterialStatuses.findBy('title', 'Final');
+  }
 
-  selectedUserRole: computed('learningMaterialUserRoles.[]', 'userRoleId', function () {
-    const learningMaterialUserRoles = this.get('learningMaterialUserRoles');
-    if (!learningMaterialUserRoles) {
-      return;
+  get selectedUserRole() {
+    if (!this.args.learningMaterialUserRoles) {
+      return null;
     }
 
-    const userRoleId = this.get('userRoleId');
-    if (userRoleId) {
-      return learningMaterialUserRoles.findBy('id', userRoleId);
+    if (this.userRoleId) {
+      return this.args.learningMaterialUserRoles.findBy('id', this.userRoleId);
     }
 
-    return learningMaterialUserRoles.get('firstObject');
-  }),
+    return this.args.learningMaterialUserRoles.get('firstObject');
+  }
 
-  prepareSave: task(function *() {
-    this.send('addErrorDisplaysFor', ['title', 'originalAuthor', 'fileHash', 'url', 'citation']);
-    const {validations} = yield this.validate();
-
-    if (validations.get('isInvalid')) {
-      return;
+  @dropTask
+  * prepareSave() {
+    this.addErrorDisplayForAllFields();
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
     }
-    const store = this.get('store');
-    const save = this.get('save');
-    const title = this.get('title');
-    const type = this.get('type');
-    const status = this.get('selectedStatus');
-    const userRole = this.get('selectedUserRole');
-    const description = this.get('description');
-    const originalAuthor = this.get('originalAuthor');
     const owningUser = yield this.currentUser.getModel();
 
-    const learningMaterial = store.createRecord('learningMaterial', {
-      title,
-      status,
-      userRole,
-      description,
-      originalAuthor,
-      owningUser
+    const learningMaterial = this.store.createRecord('learningMaterial', {
+      title: this.title,
+      status: this.selectedStatus,
+      userRole: this.selectedUserRole,
+      description: this.description,
+      originalAuthor: this.originalAuthor,
+      owningUser,
     });
-    switch(type){
+    switch(this.args.type){
     case 'file': {
-      const copyrightPermission = this.get('copyrightPermission');
-      const copyrightRationale = this.get('copyrightRationale');
-      const filename = this.get('filename');
-      const fileHash = this.get('fileHash');
-      learningMaterial.setProperties({copyrightRationale, copyrightPermission, filename, fileHash});
+      learningMaterial.setProperties({
+        copyrightRationale: this.copyrightRationale,
+        copyrightPermission: this.copyrightPermission,
+        filename: this.filename,
+        fileHash: this.fileHash,
+      });
       break;
     }
     case 'link': {
-      const link = this.get('link');
-      learningMaterial.setProperties({link});
+      learningMaterial.set('link', this.link);
       break;
     }
     case 'citation': {
-      const citation = this.get('citation');
-      learningMaterial.setProperties({citation});
+      learningMaterial.set('citation', this.citation);
       break;
     }
     }
 
-    yield save(learningMaterial);
-    this.send('clearErrorDisplay');
-  }),
-
-  @action
-  changeTitle(event) {
-    this.set('title', event.target.value);
-  },
+    yield this.args.save(learningMaterial);
+    this.clearErrorDisplay();
+  }
 
   @action
   changeStatusId(event) {
-    this.set('statusId', event.target.value);
-  },
-
-  @action
-  changeOriginalAuthor(event) {
-    this.set('originalAuthor', event.target.value);
-  },
+    this.statusId = event.target.value;
+  }
 
   @action
   changeUserRoleId(event) {
-    this.set('userRoleId', event.target.value);
-  },
-
-  @action
-  changeLink(event) {
-    this.set('link', event.target.value);
+    this.userRoleId = event.target.value;
   }
-});
+}
