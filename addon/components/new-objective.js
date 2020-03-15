@@ -1,41 +1,28 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import { dropTask } from 'ember-concurrency-decorators';
+import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
 
-const Validations = buildValidations({
-  title: [
-    validator('html-presence', true),
-    validator('length', {
-      min: 3,
-      max: 65000
-    }),
-  ],
-});
+@validatable
+export default class NewObjectiveComponent extends Component {
+  @HtmlNotBlank() @Length(3, 65000) @tracked title;
 
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  tagName: 'section',
-  classNames: ['new-objective'],
-
-  title: null,
-  isSaving: false,
-
-  @action
-  async saveObjective() {
-    this.set('isSaving', true);
-    this.send('addErrorDisplayFor', 'title');
-    const { validations } = await this.validate();
-    if (validations.isValid) {
-      this.send('removeErrorDisplayFor', 'title');
-      await this.save(this.title);
-      this.set('title', null);
+  @dropTask
+  *saveObjective() {
+    this.addErrorDisplayFor('title');
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
     }
-    this.set('isSaving', false);
-  },
+    this.removeErrorDisplayFor('title');
+    yield this.args.save(this.title);
+    this.title = null;
+  }
 
   @action
   changeTitle(contents){
-    this.send('addErrorDisplayFor', 'title');
-    this.set('title', contents);
-  },
-});
+    this.addErrorDisplayFor('title');
+    this.title = contents;
+  }
+}

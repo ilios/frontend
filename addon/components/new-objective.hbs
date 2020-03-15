@@ -1,34 +1,33 @@
-<h4>
-  {{t "general.newObjective"}}
-</h4>
-<div class="new-objective-form">
-  <label class="form-label">
-    {{t "general.description"}}:
-  </label>
-  <HtmlEditor @content={{this.title}} @update={{fn this.changeTitle}} />
-  {{#if (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))}}
-    <span class="validation-error-message">
-      {{v-get this "title" "message"}}
-    </span>
-  {{/if}}
-  <div class="buttons">
-    <button
-      disabled={{or
-        this.isSaving
-        (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))
-      }}
-      class="done text"
-      type="button"
-      {{on "click" (fn this.saveObjective)}}
-    >
-      {{#if this.isSaving}}
-        <LoadingSpinner />
-      {{else}}
-        {{t "general.done"}}
-      {{/if}}
-    </button>
-    <button class="cancel text" type="button" {{on "click" @cancel}}>
-      {{t "general.cancel"}}
-    </button>
+<section class="new-objective">
+  <h4>{{t "general.newObjective"}}</h4>
+  <div class="new-objective-form">
+    <label class="form-label">
+      {{t "general.description"}}:
+    </label>
+    <HtmlEditor @content={{this.title}} @update={{this.changeTitle}} />
+    {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+      <span class="validation-error-message">
+        {{message}}
+      </span>
+    {{/each}}
+    <div class="buttons">
+      <button
+        disabled={{or
+          this.saveObjective.isRunning
+        }}
+        class="done text"
+        type="button"
+        {{on "click" (perform this.saveObjective)}}
+      >
+        {{#if this.saveObjective.isRunning}}
+          <LoadingSpinner />
+        {{else}}
+          {{t "general.done"}}
+        {{/if}}
+      </button>
+      <button class="cancel text" type="button" {{on "click" @cancel}}>
+        {{t "general.cancel"}}
+      </button>
+    </div>
   </div>
-</div>
+</section>
