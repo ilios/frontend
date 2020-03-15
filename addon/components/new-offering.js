@@ -1,22 +1,24 @@
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import Component from '@ember/component';
 
-export default Component.extend({
-  store: service(),
-  classNames: ['new-offering'],
-  session: null,
-  courseStartDate: null,
-  courseEndDate: null,
-  smallGroupMode: true,
+export default class NewObjectiveComponent extends Component {
+  @service store;
+  @tracked smallGroupMode = true;
 
   @action
-  save(startDate, endDate, room, learnerGroups, instructorGroups, instructors){
-    const store = this.get('store');
-    const session = this.get('session');
-    const offering = store.createRecord('offering');
-    offering.setProperties({startDate, endDate, room, learnerGroups, instructorGroups, instructors, session});
+  async save(startDate, endDate, room, learnerGroups, instructorGroups, instructors){
+    const offering = this.store.createRecord('offering', {
+      startDate,
+      endDate,
+      room,
+      learnerGroups,
+      instructorGroups,
+      instructors,
+      session: this.args.session
+    });
 
     return offering.save();
   }
-});
+}
