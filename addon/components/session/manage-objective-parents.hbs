@@ -1,0 +1,27 @@
+<section
+  class="session-manage-objective-parents"
+  data-test-session-manage-objective-parents
+>
+  <h3 class="objective-title" data-test-objective-title>
+    {{! template-lint-disable no-triple-curlies }}
+    {{{@objective.title}}}
+  </h3>
+  {{#if @courseObjectives.length}}
+    <h4 data-test-course-title>{{@courseTitle}}</h4>
+    <ul class="parent-picker" data-test-parent-picker>
+      {{#each @courseObjectives as |objective|}}
+        <li>
+          <Session::ManageObjectiveParentsItem
+            @title={{objective.textTitle}}
+            @isSelected={{contains objective @selected}}
+            @add={{fn @add objective}}
+            @remove={{fn @remove objective}}
+          />
+        </li>
+      {{/each}}
+
+    </ul>
+  {{else}}
+    <p class="no-group" data-test-no-course-objectives-message>{{t "general.missingCourseObjectivesMessage"}}</p>
+  {{/if}}
+</section>

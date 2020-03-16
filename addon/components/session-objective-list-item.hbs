@@ -29,6 +29,7 @@
         <span
           class="clickable link"
           data-test-parent
+          data-test-manage-parents
           role="button"
           {{on "click" (fn @manageParents @objective)}}
         >
@@ -44,6 +45,7 @@
   {{else if @editable}}
     <button
       type="button"
+      data-test-manage-parents
       {{on "click" (fn @manageParents @objective)}}
     >
       {{t "general.addNew"}}
@@ -84,7 +86,7 @@
 </td>
 <td class="text-left text-top" colspan="1">
   {{#if @editable}}
-    <span class="clickable remove" role="button" {{on "click" (fn @remove @objective)}}>
+    <span class="clickable remove" role="button" {{on "click" (fn @remove @objective)}} aria-label={{t "general.remove"}}>
       <FaIcon @icon="trash" class="enabled" />
     </span>
   {{else}}

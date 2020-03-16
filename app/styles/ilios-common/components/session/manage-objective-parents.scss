@@ -1,0 +1,24 @@
+.session-manage-objective-parents {
+  .objective-title {
+    @include ilios-browser-defaults;
+    background-color: $background-grey;
+    margin-bottom: 1rem;
+    padding: .5rem;
+  }
+
+  .parent-picker {
+    @include ilios-list-reset;
+    height: auto;
+    line-height: 1.3rem;
+    padding-left: .5rem;
+
+    .selected {
+      font-weight: bold;
+    }
+  }
+
+  .no-groups {
+    color: $warning-color;
+    font-weight: bold;
+  }
+}

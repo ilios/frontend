@@ -11,7 +11,7 @@ import {
   text,
   visitable
 } from 'ember-cli-page-object';
-import objectives from './components/objectives';
+import objectives from './components/session/objectives';
 import learningMaterials from './components/learning-materials';
 import meshTerms from './components/mesh-terms';
 import taxonomies from './components/taxonomies';
