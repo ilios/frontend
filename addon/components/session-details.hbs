@@ -50,9 +50,8 @@
   />
 {{/if}}
 {{#if (or (eq @session.objectives.length 0) @sessionObjectiveDetails)}}
-  <DetailObjectives
-    @subject={{@session}}
-    @isSession={{true}}
+  <Session::Objectives
+    @session={{@session}}
     @editable={{@editable}}
     @collapse={{fn @setSessionObjectiveDetails false}}
     @expand={{fn @setSessionObjectiveDetails true}}

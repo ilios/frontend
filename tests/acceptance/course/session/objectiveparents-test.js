@@ -44,15 +44,16 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
 
     await page.objectives.current[0].manageParents();
 
-    assert.equal(page.objectiveParentManager.title, 'objective 3');
-    assert.equal(page.objectiveParentManager.courseTitle, 'course 0');
-    assert.equal(page.objectiveParentManager.objectives.length, 3);
-    assert.equal(page.objectiveParentManager.objectives[0].title, 'objective 0');
-    assert.ok(page.objectiveParentManager.objectives[0].selected);
-    assert.equal(page.objectiveParentManager.objectives[1].title, 'objective 1');
-    assert.ok(page.objectiveParentManager.objectives[1].selected);
-    assert.equal(page.objectiveParentManager.objectives[2].title, 'objective 2');
-    assert.ok(page.objectiveParentManager.objectives[2].notSelected);
+    const m = page.objectives.manageObjectiveParents;
+    assert.equal(m.objectiveTitle, 'objective 3');
+    assert.equal(m.courseTitle, 'course 0');
+    assert.equal(m.objectives.length, 3);
+    assert.equal(m.objectives[0].title, 'objective 0');
+    assert.ok(m.objectives[0].selected);
+    assert.equal(m.objectives[1].title, 'objective 1');
+    assert.ok(m.objectives[1].selected);
+    assert.equal(m.objectives[2].title, 'objective 2');
+    assert.ok(m.objectives[2].notSelected);
   });
 
   test('save changes', async function(assert) {
@@ -67,13 +68,14 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
 
     await page.objectives.current[0].manageParents();
 
-    assert.equal(page.objectiveParentManager.title, 'objective 3');
-    assert.equal(page.objectiveParentManager.courseTitle, 'course 0');
-    await page.objectiveParentManager.objectives[0].click();
-    await page.objectiveParentManager.objectives[2].click();
-    assert.ok(page.objectiveParentManager.objectives[0].notSelected);
-    assert.ok(page.objectiveParentManager.objectives[1].selected);
-    assert.ok(page.objectiveParentManager.objectives[2].selected);
+    const m = page.objectives.manageObjectiveParents;
+    assert.equal(m.objectiveTitle, 'objective 3');
+    assert.equal(m.courseTitle, 'course 0');
+    await m.objectives[0].add();
+    await m.objectives[2].add();
+    assert.ok(m.objectives[0].notSelected);
+    assert.ok(m.objectives[1].selected);
+    assert.ok(m.objectives[2].selected);
     await page.objectives.save();
 
     assert.equal(page.objectives.current[0].description.text, 'objective 3');
@@ -95,13 +97,14 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
 
     await page.objectives.current[0].manageParents();
 
-    assert.equal(page.objectiveParentManager.title, 'objective 3');
-    assert.equal(page.objectiveParentManager.courseTitle, 'course 0');
-    await page.objectiveParentManager.objectives[0].click();
-    await page.objectiveParentManager.objectives[2].click();
-    assert.ok(page.objectiveParentManager.objectives[0].notSelected);
-    assert.ok(page.objectiveParentManager.objectives[1].selected);
-    assert.ok(page.objectiveParentManager.objectives[2].selected);
+    const m = page.objectives.manageObjectiveParents;
+    assert.equal(m.objectiveTitle, 'objective 3');
+    assert.equal(m.courseTitle, 'course 0');
+    await m.objectives[0].add();
+    await m.objectives[2].add();
+    assert.ok(m.objectives[0].notSelected);
+    assert.ok(m.objectives[1].selected);
+    assert.ok(m.objectives[2].selected);
     await page.objectives.cancel();
 
     assert.equal(page.objectives.current[0].description.text, 'objective 3');
@@ -122,13 +125,14 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
 
     await page.objectives.current[0].manageParents();
 
-    assert.equal(page.objectiveParentManager.title, 'objective 3');
-    assert.equal(page.objectiveParentManager.courseTitle, 'course 0');
-    await page.objectiveParentManager.objectives[0].click();
-    await page.objectiveParentManager.objectives[1].click();
-    assert.ok(page.objectiveParentManager.objectives[0].notSelected);
-    assert.ok(page.objectiveParentManager.objectives[1].notSelected);
-    assert.ok(page.objectiveParentManager.objectives[2].notSelected);
+    const m = page.objectives.manageObjectiveParents;
+    assert.equal(m.objectiveTitle, 'objective 3');
+    assert.equal(m.courseTitle, 'course 0');
+    await m.objectives[0].add();
+    await m.objectives[1].add();
+    assert.ok(m.objectives[0].notSelected);
+    assert.ok(m.objectives[1].notSelected);
+    assert.ok(m.objectives[2].notSelected);
     await page.objectives.save();
 
     assert.equal(page.objectives.current[0].description.text, 'objective 3');
