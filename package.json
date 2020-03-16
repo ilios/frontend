@@ -56,7 +56,7 @@
     "ember-event-helpers": "^0.1.0",
     "ember-feature-flags": "^6.0.0",
     "ember-fetch": "^6.7.2",
-    "ember-file-upload": "^2.5.0",
+    "ember-file-upload": "^3.0.2",
     "ember-intl": "^4.0.0",
     "ember-lifeline": "^5.0.0",
     "ember-math-helpers": "^2.9.0",
