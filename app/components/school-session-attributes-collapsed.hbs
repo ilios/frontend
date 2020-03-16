@@ -1,63 +1,65 @@
-<div class="title clickable" onclick={{action expand}}>
-  {{t "general.sessionAttributes"}}
-</div>
-<div class="content">
-  <table class="condensed">
-    <thead>
-      <tr>
-        <th class="text-left">
-          {{t "general.attribute"}}
-        </th>
-        <th class="text-left">
-          {{t "general.enabled"}}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          {{t "general.attendanceRequired"}}
-        </td>
-        <td>
-          <FaIcon
-            @icon={{if showSessionAttendanceRequired "check" "ban"}}
-            class={{if showSessionAttendanceRequired "yes" "no"}}
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          {{t "general.supplementalCurriculum"}}
-        </td>
-        <td>
-          <FaIcon
-            @icon={{if showSessionSupplemental "check" "ban"}}
-            class={{if showSessionSupplemental "yes" "no"}}
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          {{t "general.specialAttireRequired"}}
-        </td>
-        <td>
-          <FaIcon
-            @icon={{if showSessionSpecialAttireRequired "check" "ban"}}
-            class={{if showSessionSpecialAttireRequired "yes" "no"}}
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          {{t "general.specialEquipmentRequired"}}
-        </td>
-        <td>
-          <FaIcon
-            @icon={{if showSessionSpecialEquipmentRequired "check" "ban"}}
-            class={{if showSessionSpecialEquipmentRequired "yes" "no"}}
-          />
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<section class="school-session-attributes-collapsed" ...attributes>
+  <div class="title clickable" onclick={{action expand}}>
+    {{t "general.sessionAttributes"}}
+  </div>
+  <div class="content">
+    <table class="condensed">
+      <thead>
+        <tr>
+          <th class="text-left">
+            {{t "general.attribute"}}
+          </th>
+          <th class="text-left">
+            {{t "general.enabled"}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            {{t "general.attendanceRequired"}}
+          </td>
+          <td>
+            <FaIcon
+              @icon={{if showSessionAttendanceRequired "check" "ban"}}
+              class={{if showSessionAttendanceRequired "yes" "no"}}
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{t "general.supplementalCurriculum"}}
+          </td>
+          <td>
+            <FaIcon
+              @icon={{if showSessionSupplemental "check" "ban"}}
+              class={{if showSessionSupplemental "yes" "no"}}
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{t "general.specialAttireRequired"}}
+          </td>
+          <td>
+            <FaIcon
+              @icon={{if showSessionSpecialAttireRequired "check" "ban"}}
+              class={{if showSessionSpecialAttireRequired "yes" "no"}}
+            />
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {{t "general.specialEquipmentRequired"}}
+          </td>
+          <td>
+            <FaIcon
+              @icon={{if showSessionSpecialEquipmentRequired "check" "ban"}}
+              class={{if showSessionSpecialEquipmentRequired "yes" "no"}}
+            />
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

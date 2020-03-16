@@ -18,9 +18,7 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  classNames: ['learnergroup-summary'],
-  tagName: 'section',
-
+  tagName: "",
   canCreate: false,
   canDelete: false,
   canUpdate: false,

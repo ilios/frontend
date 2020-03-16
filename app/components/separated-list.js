@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 
 export default Component.extend({
-  tagName: 'span',
+  tagName: "",
 
   icon: 'angle-right',
   list: null

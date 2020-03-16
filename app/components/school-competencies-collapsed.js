@@ -2,9 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-  classNames: ['school-competencies-collapsed'],
-  tagName: 'section',
-
+  tagName: "",
   school: null,
 
   competencies: computed('school.competencies.[]', async function() {

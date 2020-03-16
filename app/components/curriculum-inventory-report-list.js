@@ -29,7 +29,7 @@ export default Component.extend({
   currentUser: service(),
   intl: service(),
   permissionChecker: service(),
-
+  tagName: "",
   program: null,
   sortBy: 'title',
   edit() {},

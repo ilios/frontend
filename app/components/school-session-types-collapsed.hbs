@@ -1,39 +1,41 @@
-<div class="title clickable" {{action expand}}>
-  {{t "general.sessionTypes"}}
-</div>
-{{#if (is-pending sessionTyepes)}}
-  <LoadingSpinner @tagName="h3" />
-{{else}}
-  <div class="content">
-    <table class="condensed">
-      <thead>
-        <tr>
-          <th class="text-left">
-            {{t "general.sessionTypes"}}
-          </th>
-          <th class="text-left">
-            {{t "general.summary"}}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            {{t "general.assessmentMethods"}}
-          </td>
-          <td class="summary-highlight">
-            {{get (await assessmentMethods) "length"}}
-          </td>
-        </tr>
-        <tr>
-          <td>
-            {{t "general.instructionalMethods"}}
-          </td>
-          <td class="summary-highlight">
-            {{get (await instructionalMethods) "length"}}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+<section class="school-session-types-collapsed" ...attributes>
+  <div class="title clickable" {{action expand}}>
+    {{t "general.sessionTypes"}}
   </div>
-{{/if}}
+  {{#if (is-pending sessionTyepes)}}
+    <LoadingSpinner @tagName="h3" />
+  {{else}}
+    <div class="content">
+      <table class="condensed">
+        <thead>
+          <tr>
+            <th class="text-left">
+              {{t "general.sessionTypes"}}
+            </th>
+            <th class="text-left">
+              {{t "general.summary"}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              {{t "general.assessmentMethods"}}
+            </td>
+            <td class="summary-highlight">
+              {{get (await assessmentMethods) "length"}}
+            </td>
+          </tr>
+          <tr>
+            <td>
+              {{t "general.instructionalMethods"}}
+            </td>
+            <td class="summary-highlight">
+              {{get (await instructionalMethods) "length"}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
+</section>

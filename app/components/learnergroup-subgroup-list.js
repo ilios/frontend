@@ -10,12 +10,7 @@ export default Component.extend({
   flashMessages: service(),
   intl: service(),
   store: service(),
-
-  classNames: ['learnergroup-subgroup-list'],
-  tagName: 'section',
-
-  'data-test-learnergroup-subgroup-list': true,
-
+  tagName: "",
   canCreate: false,
   canDelete: false,
   isSaving: false,

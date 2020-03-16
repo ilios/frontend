@@ -1,172 +1,174 @@
-<div
-  data-test-school-curriculum-inventory-institution-manager-header
-  class="school-curriculum-inventory-institution-manager-header"
->
-  <div class="title">
-    {{t "general.curriculumInventoryInstitutionalInfo"}}
-  </div>
-  <div class="actions">
-    {{#if @canUpdate}}
-      <button type="button" class="bigadd" {{action "save"}}>
-        <FaIcon
-          @icon={{if isSaving "spinner" "check"}}
-          @spin={{if isSaving true false}}
-        />
+<div class="school-curriculum-inventory-institution-manager" data-test-school-curriculum-inventory-institution-manager ...attributes>
+  <div
+    data-test-school-curriculum-inventory-institution-manager-header
+    class="school-curriculum-inventory-institution-manager-header"
+  >
+    <div class="title">
+      {{t "general.curriculumInventoryInstitutionalInfo"}}
+    </div>
+    <div class="actions">
+      {{#if @canUpdate}}
+        <button type="button" class="bigadd" {{action "save"}}>
+          <FaIcon
+            @icon={{if isSaving "spinner" "check"}}
+            @spin={{if isSaving true false}}
+          />
+        </button>
+      {{/if}}
+      <button type="button" class="bigcancel" {{action "cancel"}}>
+        <FaIcon @icon="undo" />
       </button>
-    {{/if}}
-    <button type="button" class="bigcancel" {{action "cancel"}}>
-      <FaIcon @icon="undo" />
-    </button>
+    </div>
   </div>
-</div>
-<div
-  data-test-school-curriculum-inventory-institution-manager-content
-  class="school-curriculum-inventory-institution-manager-content"
->
-  <div class="form">
-    <div class="item" data-test-institution-name>
-      <label>
-        {{t "general.schoolName"}}
-      </label>
-      <input
-        type="text"
-        value={{this.name}}
-        oninput={{action (mut this.name) value="target.value"}}
-        onkeyup={{action "addErrorDisplayFor" "name"}}
-      >
-      {{#if (and (v-get this "name" "isInvalid") (contains "name" showErrorsFor))}}
-        <span class="validation-error-message">
-          {{v-get this "name" "message"}}
-        </span>
-      {{/if}}
-    </div>
-    <div class="item" data-test-institution-aamc-code>
-      <label>
-        {{t "general.aamcSchoolId"}}
-      </label>
-      <input
-        type="text"
-        maxlength="5"
-        value={{this.aamcCode}}
-        oninput={{action (mut this.aamcCode) value="target.value"}}
-        onkeyup={{action "addErrorDisplayFor" "aamcCode"}}
-      >
-      {{#if
-        (and
-          (v-get this "aamcCode" "isInvalid") (contains "aamcCode" showErrorsFor)
-        )
-      }}
-        <span class="validation-error-message">
-          {{v-get this "aamcCode" "message"}}
-        </span>
-      {{/if}}
-    </div>
-    <div class="item" data-test-institution-address-street>
-      <label>
-        {{t "general.street"}}
-      </label>
-      <input
-        type="text"
-        value={{this.addressStreet}}
-        oninput={{action (mut this.addressStreet) value="target.value"}}
-        onkeyup={{action "addErrorDisplayFor" "addressStreet"}}
-      >
-      {{#if
-        (and
-          (v-get this "addressStreet" "isInvalid")
-          (contains "addressStreet" showErrorsFor)
-        )
-      }}
-        <span class="validation-error-message">
-          {{v-get this "addressStreet" "message"}}
-        </span>
-      {{/if}}
-    </div>
-    <div class="item" data-test-institution-address-city>
-      <label>
-        {{t "general.city"}}
-      </label>
-      <input
-        type="text"
-        value={{this.addressCity}}
-        oninput={{action (mut this.addressCity) value="target.value"}}
-        onkeyup={{action "addErrorDisplayFor" "addressCity"}}
-      >
-      {{#if
-        (and
-          (v-get this "addressCity" "isInvalid")
-          (contains "addressCity" showErrorsFor)
-        )
-      }}
-        <span class="validation-error-message">
-          {{v-get this "addressCity" "message"}}
-        </span>
-      {{/if}}
-    </div>
-    <div class="item" data-test-institution-address-state-or-province>
-      <label>
-        {{t "general.stateOrProvince"}}
-      </label>
-      <input
-        type="text"
-        value={{this.addressStateOrProvince}}
-        oninput={{action (mut this.addressStateOrProvince) value="target.value"
+  <div
+    data-test-school-curriculum-inventory-institution-manager-content
+    class="school-curriculum-inventory-institution-manager-content"
+  >
+    <div class="form">
+      <div class="item" data-test-institution-name>
+        <label>
+          {{t "general.schoolName"}}
+        </label>
+        <input
+          type="text"
+          value={{this.name}}
+          oninput={{action (mut this.name) value="target.value"}}
+          onkeyup={{action "addErrorDisplayFor" "name"}}
+        >
+        {{#if (and (v-get this "name" "isInvalid") (contains "name" showErrorsFor))}}
+          <span class="validation-error-message">
+            {{v-get this "name" "message"}}
+          </span>
+        {{/if}}
+      </div>
+      <div class="item" data-test-institution-aamc-code>
+        <label>
+          {{t "general.aamcSchoolId"}}
+        </label>
+        <input
+          type="text"
+          maxlength="5"
+          value={{this.aamcCode}}
+          oninput={{action (mut this.aamcCode) value="target.value"}}
+          onkeyup={{action "addErrorDisplayFor" "aamcCode"}}
+        >
+        {{#if
+          (and
+            (v-get this "aamcCode" "isInvalid") (contains "aamcCode" showErrorsFor)
+          )
         }}
-        onkeyup={{action "addErrorDisplayFor" "addressStateOrProvince"}}
-      >
-      {{#if
-        (and
-          (v-get this "addressStateOrProvince" "isInvalid")
-          (contains "addressStateOrProvince" showErrorsFor)
-        )
-      }}
-        <span class="validation-error-message">
-          {{v-get this "addressStateOrProvince" "message"}}
-        </span>
-      {{/if}}
-    </div>
-    <div class="item" data-test-institution-address-zip-code>
-      <label>
-        {{t "general.zipCode"}}
-      </label>
-      <input
-        type="text"
-        value={{this.addressZipCode}}
-        oninput={{action (mut this.addressZipCode) value="target.value"}}
-        onkeyup={{action "addErrorDisplayFor" "addressZipCode"}}
-      >
-      {{#if
-        (and
-          (v-get this "addressZipCode" "isInvalid")
-          (contains "addressZipCode" showErrorsFor)
-        )
-      }}
-        <span class="validation-error-message">
-          {{v-get this "addressZipCode" "message"}}
-        </span>
-      {{/if}}
-    </div>
-    <div class="item" data-test-institution-address-country-code>
-      <label>
-        {{t "general.country"}}
-      </label>
-      <input
-        type="text"
-        maxlength="2"
-        value={{this.addressCountryCode}}
-        oninput={{action (mut this.addressCountryCode) value="target.value"}}
-        onkeyup={{action "addErrorDisplayFor" "addressCountryCode"}}
-      >
-      {{#if
-        (and
-          (v-get this "addressCountryCode" "isInvalid")
-          (contains "addressCountryCode" showErrorsFor)
-        )
-      }}
-        <span class="validation-error-message">
-          {{v-get this "addressCountryCode" "message"}}
-        </span>
-      {{/if}}
+          <span class="validation-error-message">
+            {{v-get this "aamcCode" "message"}}
+          </span>
+        {{/if}}
+      </div>
+      <div class="item" data-test-institution-address-street>
+        <label>
+          {{t "general.street"}}
+        </label>
+        <input
+          type="text"
+          value={{this.addressStreet}}
+          oninput={{action (mut this.addressStreet) value="target.value"}}
+          onkeyup={{action "addErrorDisplayFor" "addressStreet"}}
+        >
+        {{#if
+          (and
+            (v-get this "addressStreet" "isInvalid")
+            (contains "addressStreet" showErrorsFor)
+          )
+        }}
+          <span class="validation-error-message">
+            {{v-get this "addressStreet" "message"}}
+          </span>
+        {{/if}}
+      </div>
+      <div class="item" data-test-institution-address-city>
+        <label>
+          {{t "general.city"}}
+        </label>
+        <input
+          type="text"
+          value={{this.addressCity}}
+          oninput={{action (mut this.addressCity) value="target.value"}}
+          onkeyup={{action "addErrorDisplayFor" "addressCity"}}
+        >
+        {{#if
+          (and
+            (v-get this "addressCity" "isInvalid")
+            (contains "addressCity" showErrorsFor)
+          )
+        }}
+          <span class="validation-error-message">
+            {{v-get this "addressCity" "message"}}
+          </span>
+        {{/if}}
+      </div>
+      <div class="item" data-test-institution-address-state-or-province>
+        <label>
+          {{t "general.stateOrProvince"}}
+        </label>
+        <input
+          type="text"
+          value={{this.addressStateOrProvince}}
+          oninput={{action (mut this.addressStateOrProvince) value="target.value"
+          }}
+          onkeyup={{action "addErrorDisplayFor" "addressStateOrProvince"}}
+        >
+        {{#if
+          (and
+            (v-get this "addressStateOrProvince" "isInvalid")
+            (contains "addressStateOrProvince" showErrorsFor)
+          )
+        }}
+          <span class="validation-error-message">
+            {{v-get this "addressStateOrProvince" "message"}}
+          </span>
+        {{/if}}
+      </div>
+      <div class="item" data-test-institution-address-zip-code>
+        <label>
+          {{t "general.zipCode"}}
+        </label>
+        <input
+          type="text"
+          value={{this.addressZipCode}}
+          oninput={{action (mut this.addressZipCode) value="target.value"}}
+          onkeyup={{action "addErrorDisplayFor" "addressZipCode"}}
+        >
+        {{#if
+          (and
+            (v-get this "addressZipCode" "isInvalid")
+            (contains "addressZipCode" showErrorsFor)
+          )
+        }}
+          <span class="validation-error-message">
+            {{v-get this "addressZipCode" "message"}}
+          </span>
+        {{/if}}
+      </div>
+      <div class="item" data-test-institution-address-country-code>
+        <label>
+          {{t "general.country"}}
+        </label>
+        <input
+          type="text"
+          maxlength="2"
+          value={{this.addressCountryCode}}
+          oninput={{action (mut this.addressCountryCode) value="target.value"}}
+          onkeyup={{action "addErrorDisplayFor" "addressCountryCode"}}
+        >
+        {{#if
+          (and
+            (v-get this "addressCountryCode" "isInvalid")
+            (contains "addressCountryCode" showErrorsFor)
+          )
+        }}
+          <span class="validation-error-message">
+            {{v-get this "addressCountryCode" "message"}}
+          </span>
+        {{/if}}
+      </div>
     </div>
   </div>
 </div>

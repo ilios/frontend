@@ -1,55 +1,57 @@
-{{#liquid-if (or (eq programYear.competencies.length 0) pyCompetencyDetails)}}
-  <ProgramyearCompetencies
-    @programYear={{programYear}}
-    @canUpdate={{canUpdate}}
-    @isManaging={{managePyCompetencies}}
-    @collapse={{action setPyCompetencyDetails false}}
-    @expand={{action setPyCompetencyDetails true}}
-    @setIsManaging={{action setManagePyCompetencies}}
-  />
-{{else}}
-  <CollapsedCompetencies
-    @subject={{programYear}}
-    @expand={{action setPyCompetencyDetails true}}
-  />
-{{/liquid-if}}
-{{#liquid-if (or (eq programYear.objectives.length 0) pyObjectiveDetails)}}
-  <DetailObjectives
-    @subject={{programYear}}
-    @isProgramYear={{true}}
-    @editable={{canUpdate}}
-    @collapse={{action setPyObjectiveDetails false}}
-    @expand={{action setPyObjectiveDetails true}}
-  />
-{{else}}
-  <CollapsedObjectivesProgramYears
-    @subject={{programYear}}
-    @expand={{action setPyObjectiveDetails true}}
-  />
-{{/liquid-if}}
-{{#liquid-if (or (eq programYear.terms.length 0) pyTaxonomyDetails)}}
-  <DetailTaxonomies
-    @subject={{programYear}}
-    @editable={{canUpdate}}
-    @collapse={{action setPyTaxonomyDetails false}}
-    @expand={{action setPyTaxonomyDetails true}}
-  />
-{{else}}
-  <CollapsedTaxonomies
-    @subject={{programYear}}
-    @expand={{action setPyTaxonomyDetails true}}
-  />
-{{/liquid-if}}
-{{#liquid-if (or (eq programYear.stewards.length 0) pyStewardDetails)}}
-  <DetailStewards
-    @programYear={{programYear}}
-    @editable={{canUpdate}}
-    @collapse={{action setPyStewardDetails false}}
-    @expand={{action setPyStewardDetails true}}
-  />
-{{else}}
-  <CollapsedStewards
-    @programYear={{programYear}}
-    @expand={{action setPyStewardDetails true}}
-  />
-{{/liquid-if}}
+<div class="programyear-details" ...attributes>
+  {{#liquid-if (or (eq programYear.competencies.length 0) pyCompetencyDetails)}}
+    <ProgramyearCompetencies
+      @programYear={{programYear}}
+      @canUpdate={{canUpdate}}
+      @isManaging={{managePyCompetencies}}
+      @collapse={{action setPyCompetencyDetails false}}
+      @expand={{action setPyCompetencyDetails true}}
+      @setIsManaging={{action setManagePyCompetencies}}
+    />
+  {{else}}
+    <CollapsedCompetencies
+      @subject={{programYear}}
+      @expand={{action setPyCompetencyDetails true}}
+    />
+  {{/liquid-if}}
+  {{#liquid-if (or (eq programYear.objectives.length 0) pyObjectiveDetails)}}
+    <DetailObjectives
+      @subject={{programYear}}
+      @isProgramYear={{true}}
+      @editable={{canUpdate}}
+      @collapse={{action setPyObjectiveDetails false}}
+      @expand={{action setPyObjectiveDetails true}}
+    />
+  {{else}}
+    <CollapsedObjectivesProgramYears
+      @subject={{programYear}}
+      @expand={{action setPyObjectiveDetails true}}
+    />
+  {{/liquid-if}}
+  {{#liquid-if (or (eq programYear.terms.length 0) pyTaxonomyDetails)}}
+    <DetailTaxonomies
+      @subject={{programYear}}
+      @editable={{canUpdate}}
+      @collapse={{action setPyTaxonomyDetails false}}
+      @expand={{action setPyTaxonomyDetails true}}
+    />
+  {{else}}
+    <CollapsedTaxonomies
+      @subject={{programYear}}
+      @expand={{action setPyTaxonomyDetails true}}
+    />
+  {{/liquid-if}}
+  {{#liquid-if (or (eq programYear.stewards.length 0) pyStewardDetails)}}
+    <DetailStewards
+      @programYear={{programYear}}
+      @editable={{canUpdate}}
+      @collapse={{action setPyStewardDetails false}}
+      @expand={{action setPyStewardDetails true}}
+    />
+  {{else}}
+    <CollapsedStewards
+      @programYear={{programYear}}
+      @expand={{action setPyStewardDetails true}}
+    />
+  {{/liquid-if}}
+</div>

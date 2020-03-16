@@ -77,7 +77,7 @@ export default Component.extend(NewUser, {
   iliosConfig: service(),
   intl: service(),
 
-  classNames: ['bulk-new-users'],
+  tagName: "",
 
   file: null,
   fileUploadError: false,

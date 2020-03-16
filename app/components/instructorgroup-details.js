@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 
 export default Component.extend({
-  classNames: ['instructorgroup-details'],
+  tagName: "",
 
   canUpdate: false,
   instructorGroup: null,

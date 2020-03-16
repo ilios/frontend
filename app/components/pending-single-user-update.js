@@ -5,8 +5,8 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   flashMessages: service(),
-  classNames: ['pending-single-user-updates'],
 
+  tagName: "",
   isSaving: false,
   user: null,
 

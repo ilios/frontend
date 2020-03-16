@@ -11,10 +11,10 @@ export default Component.extend({
   fetch: service(),
   flashMessages: service(),
   iliosConfig: service(),
+
   session: service(),
 
-  classNames: ['my-profile'],
-
+  tagName: "",
   expiresAt: null,
   generatedJwt: null,
   maxDate: null,

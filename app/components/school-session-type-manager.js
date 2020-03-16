@@ -6,7 +6,7 @@ import { task } from 'ember-concurrency';
 export default Component.extend({
   store: service(),
 
-  classNames: ['school-session-type-manager'],
+  tagName: "",
 
   canUpdate: false,
   sessionType: null,

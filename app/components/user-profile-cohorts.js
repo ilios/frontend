@@ -8,10 +8,10 @@ import { task, timeout } from 'ember-concurrency';
 export default Component.extend({
   currentUser: service(),
   permissionChecker: service(),
+
   store: service(),
 
-  classNameBindings: [':user-profile-cohorts', ':small-component', 'hasSavedRecently:has-saved:has-not-saved'],
-
+  tagName: "",
   cohorts: null,
   finishedSetup: false,
   hasSavedRecently: false,

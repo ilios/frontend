@@ -4,16 +4,13 @@ import { reads } from '@ember/object/computed';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
-  classNames: ['program-leadership-expanded'],
-
+  tagName: "",
   canUpdate: null,
-  'data-test-program-leadership-expanded': true,
   program: null,
   isManaging: false,
   collapse() {},
   expand() {},
   setIsManaging() {},
-
   isSaving: reads('save.isRunning'),
 
   directors: computed('directorsToAdd.[]', 'directorsToRemove.[]', 'program', async function() {

@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
-  classNames: ['school-session-types-list'],
+  tagName: "",
 
   canDelete: false,
   deletedSessionTypes: null,

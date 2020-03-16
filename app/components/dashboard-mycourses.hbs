@@ -1,48 +1,50 @@
-<div class="dashboard-block-header">
-  <h3>
-    {{t "general.myCourses"}}
-  </h3>
-</div>
-<div class="dashboard-block-body">
-  {{#if (is-fulfilled listOfCourses)}}
-    {{#if (get (await listOfCourses) "length")}}
-      <table>
-        <tbody>
-          {{#each (await listOfCourses) as |course|}}
-            {{#if (await canEditCourses)}}
-              <tr class="clickable">
-                <td>
-                  <LinkTo @route="course" @model={{course}}>
-                    <FaIcon @icon="external-link-square-alt" />
+<div class="dashboard-mycourses" ...attributes>
+  <div class="dashboard-block-header">
+    <h3>
+      {{t "general.myCourses"}}
+    </h3>
+  </div>
+  <div class="dashboard-block-body">
+    {{#if (is-fulfilled listOfCourses)}}
+      {{#if (get (await listOfCourses) "length")}}
+        <table>
+          <tbody>
+            {{#each (await listOfCourses) as |course|}}
+              {{#if (await canEditCourses)}}
+                <tr class="clickable">
+                  <td>
+                    <LinkTo @route="course" @model={{course}}>
+                      <FaIcon @icon="external-link-square-alt" />
+                      {{course.academicYear}}
+                    </LinkTo>
+                  </td>
+                  <td>
+                    <LinkTo @route="course" @model={{course}}>
+                      {{course.title}}
+                      {{#if course.externalId}}
+                        ({{course.externalId}})
+                      {{/if}}
+                    </LinkTo>
+                  </td>
+                </tr>
+              {{else}}
+                <tr>
+                  <td>
                     {{course.academicYear}}
-                  </LinkTo>
-                </td>
-                <td>
-                  <LinkTo @route="course" @model={{course}}>
+                  </td>
+                  <td>
                     {{course.title}}
-                    {{#if course.externalId}}
-                      ({{course.externalId}})
-                    {{/if}}
-                  </LinkTo>
-                </td>
-              </tr>
-            {{else}}
-              <tr>
-                <td>
-                  {{course.academicYear}}
-                </td>
-                <td>
-                  {{course.title}}
-                </td>
-              </tr>
-            {{/if}}
-          {{/each}}
-        </tbody>
-      </table>
+                  </td>
+                </tr>
+              {{/if}}
+            {{/each}}
+          </tbody>
+        </table>
+      {{else}}
+        {{t "general.none"}}
+      {{/if}}
     {{else}}
-      {{t "general.none"}}
+      <LoadingSpinner @tagName="h1" />
     {{/if}}
-  {{else}}
-    <LoadingSpinner @tagName="h1" />
-  {{/if}}
+  </div>
 </div>

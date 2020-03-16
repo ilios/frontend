@@ -1,74 +1,76 @@
-<div class="detail-stewards-header">
-  {{#if isManaging}}
-    <div class="title">
-      <span class="detail-specific-title">
-        {{t "general.stewardingSchoolsAndDepartments"}}
-      </span>
-    </div>
-  {{else}}
-    <div
-      class="title {{if showCollapsible "clickable collapsible"}}"
-      {{action "collapse"}}
-    >
-      {{t "general.stewardingSchoolsAndDepartments"}}
-      ({{programYear.stewards.length}})
-    </div>
-  {{/if}}
-  <div class="actions">
+<div class="detail-stewards stewards-manager {{if this.showCollapsible "collapsible"}}" ...attributes>
+  <div class="detail-stewards-header">
     {{#if isManaging}}
-      <button type="button" class="bigadd" onclick={{perform save}}>
-        <FaIcon
-          @icon={{if save.isRunning "spinner" "check"}}
-          @spin={{save.isRunning}}
-        />
-      </button>
-      <button type="button" class="bigcancel" {{action "cancel"}}>
-        <FaIcon @icon="undo" />
-      </button>
-    {{else if editable}}
-      <button type="button" class="manage" onclick={{perform manage}}>
-        {{t "general.stewardsManageTitle"}}
-        {{#if manage.isRunning}}
-          <LoadingSpinner />
+      <div class="title">
+        <span class="detail-specific-title">
+          {{t "general.stewardingSchoolsAndDepartments"}}
+        </span>
+      </div>
+    {{else}}
+      <div
+        class="title {{if showCollapsible "clickable collapsible"}}"
+        {{action "collapse"}}
+      >
+        {{t "general.stewardingSchoolsAndDepartments"}}
+        ({{programYear.stewards.length}})
+      </div>
+    {{/if}}
+    <div class="actions">
+      {{#if isManaging}}
+        <button type="button" class="bigadd" onclick={{perform save}}>
+          <FaIcon
+            @icon={{if save.isRunning "spinner" "check"}}
+            @spin={{save.isRunning}}
+          />
+        </button>
+        <button type="button" class="bigcancel" {{action "cancel"}}>
+          <FaIcon @icon="undo" />
+        </button>
+      {{else if editable}}
+        <button type="button" class="manage" onclick={{perform manage}}>
+          {{t "general.stewardsManageTitle"}}
+          {{#if manage.isRunning}}
+            <LoadingSpinner />
+          {{/if}}
+        </button>
+      {{/if}}
+    </div>
+  </div>
+  <div class="detail-stewards-content">
+    {{#if isManaging}}
+      <DetailStewardManager
+        @stewards={{bufferStewards}}
+        @isSaving={{save.isRunning}}
+        @add={{action "addStewardToBuffer"}}
+        @remove={{action "removeStewardFromBuffer"}}
+      />
+    {{else}}
+      <ul class="static-list">
+        {{#if (is-fulfilled stewardsBySchool)}}
+          {{#each (sort-by "schoolTitle" (await stewardsBySchool)) as |obj|}}
+            <li>
+              {{obj.schoolTitle}}
+              {{#if obj.departments.length}}
+                <ul>
+                  {{#each
+                    (sort-by "departmentTitle" obj.departments) as |depObject|
+                  }}
+                    <li>
+                      {{depObject.departmentTitle}}
+                    </li>
+                  {{/each}}
+                </ul>
+              {{/if}}
+            </li>
+          {{else}}
+            <li>
+              {{t "general.none"}}
+            </li>
+          {{/each}}
+        {{else}}
+          <LoadingSpinner @tagName="div" class="loading" />
         {{/if}}
-      </button>
+      </ul>
     {{/if}}
   </div>
-</div>
-<div class="detail-stewards-content">
-  {{#if isManaging}}
-    <DetailStewardManager
-      @stewards={{bufferStewards}}
-      @isSaving={{save.isRunning}}
-      @add={{action "addStewardToBuffer"}}
-      @remove={{action "removeStewardFromBuffer"}}
-    />
-  {{else}}
-    <ul class="static-list">
-      {{#if (is-fulfilled stewardsBySchool)}}
-        {{#each (sort-by "schoolTitle" (await stewardsBySchool)) as |obj|}}
-          <li>
-            {{obj.schoolTitle}}
-            {{#if obj.departments.length}}
-              <ul>
-                {{#each
-                  (sort-by "departmentTitle" obj.departments) as |depObject|
-                }}
-                  <li>
-                    {{depObject.departmentTitle}}
-                  </li>
-                {{/each}}
-              </ul>
-            {{/if}}
-          </li>
-        {{else}}
-          <li>
-            {{t "general.none"}}
-          </li>
-        {{/each}}
-      {{else}}
-        <LoadingSpinner @tagName="div" class="loading" />
-      {{/if}}
-    </ul>
-  {{/if}}
 </div>

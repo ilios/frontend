@@ -10,8 +10,7 @@ import moment from 'moment';
 export default Component.extend({
   flashMessages: service(),
   store: service(),
-
-  classNames: ['students'],
+  tagName: "",
 
   school: null,
   students: null,

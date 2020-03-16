@@ -4,7 +4,7 @@ import { isEmpty, isPresent } from '@ember/utils';
 import { map } from 'rsvp';
 
 export default Component.extend({
-  classNames: ['offering-editor-learnergroups'],
+  tagName: "",
 
   revisedLearnerGroups: computed('cohort.filteredAvailableLearnerGroups.[]', async function() {
     const cohortId = this.get('cohort.id');

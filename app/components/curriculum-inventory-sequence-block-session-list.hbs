@@ -1,99 +1,101 @@
-{{#unless loadAttr.isRunning}}
-  <div class="sessions-list">
-    <table>
-      <thead>
-        <tr>
-          <th class="text-center" colspan="2">
-            {{t "general.countAsOneOffering"}}
-          </th>
-          <th class="text-center" colspan="2">
-            {{t "general.exclude"}}
-          </th>
-          <SortableTh
-            @colspan={{3}}
-            @click={{action "sortBy" "title"}}
-            @sortedBy={{or (eq sortBy "title") (eq sortBy "title:desc")}}
-            @sortedAscending={{sortedAscending}}
-          >
-            {{t "general.sessionTitle"}}
-          </SortableTh>
-          <SortableTh
-            @colspan={{3}}
-            @click={{action "sortBy" "sessionType.title"}}
-            @sortedBy={{or
-              (eq sortBy "sessionType.title")
-              (eq sortBy "sessionType.title:desc")
-            }}
-            @sortedAscending={{sortedAscending}}
-          >
-            {{t "general.sessionType"}}
-          </SortableTh>
-          <th class="text-center" colspan="1">
-            {{t "general.totalTime"}}
-          </th>
-          <SortableTh
-            @colspan={{1}}
-            @click={{action "sortBy" "offerings.length"}}
-            @sortedBy={{or
-              (eq sortBy "offerings.length")
-              (eq sortBy "offerings.length:desc")
-            }}
-            @sortedAscending={{sortedAscending}}
-            @sortType="numeric"
-          >
-            {{t "general.offerings"}}
-          </SortableTh>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each (sort-by sortBy sessionsBuffer) as |session|}}
+<section class="curriculum-inventory-sequence-block-session-list" ...attributes>
+  {{#unless loadAttr.isRunning}}
+    <div class="sessions-list">
+      <table>
+        <thead>
           <tr>
-            <td class="text-center" colspan="2">
-              {{if
-                (contains session linkedSessions)
-                (t "general.yes")
-                (t "general.no")
+            <th class="text-center" colspan="2">
+              {{t "general.countAsOneOffering"}}
+            </th>
+            <th class="text-center" colspan="2">
+              {{t "general.exclude"}}
+            </th>
+            <SortableTh
+              @colspan={{3}}
+              @click={{action "sortBy" "title"}}
+              @sortedBy={{or (eq sortBy "title") (eq sortBy "title:desc")}}
+              @sortedAscending={{sortedAscending}}
+            >
+              {{t "general.sessionTitle"}}
+            </SortableTh>
+            <SortableTh
+              @colspan={{3}}
+              @click={{action "sortBy" "sessionType.title"}}
+              @sortedBy={{or
+                (eq sortBy "sessionType.title")
+                (eq sortBy "sessionType.title:desc")
               }}
-            </td>
-            <td class="text-center" colspan="2">
-              {{if
-                (contains session excludedSessions)
-                (t "general.yes")
-                (t "general.no")
+              @sortedAscending={{sortedAscending}}
+            >
+              {{t "general.sessionType"}}
+            </SortableTh>
+            <th class="text-center" colspan="1">
+              {{t "general.totalTime"}}
+            </th>
+            <SortableTh
+              @colspan={{1}}
+              @click={{action "sortBy" "offerings.length"}}
+              @sortedBy={{or
+                (eq sortBy "offerings.length")
+                (eq sortBy "offerings.length:desc")
               }}
-            </td>
-            <td class="text-left" colspan="3">
-              {{#if session.isIndependentLearning}}
-                <strong>
-                  ({{t "general.ilm"}})
-                </strong>
-              {{/if}}
-              {{session.title}}
-            </td>
-            <td class="text-left" colspan="3">
-              {{get (await session.sessionType) "title"}}
-            </td>
-            <td class="text-center" colspan="1">
-              {{#if (contains session linkedSessions)}}
-                {{#if (is-pending session.maxDuration)}}
-                  <LoadingSpinner />
-                {{else}}
-                  {{await session.maxDuration}}
-                {{/if}}
-              {{else}}
-                {{#if (is-pending session.totalSumDuration)}}
-                  <LoadingSpinner />
-                {{else}}
-                  {{await session.totalSumDuration}}
-                {{/if}}
-              {{/if}}
-            </td>
-            <td class="text-center" colspan="1">
-              {{get (await session.offerings) "length"}}
-            </td>
+              @sortedAscending={{sortedAscending}}
+              @sortType="numeric"
+            >
+              {{t "general.offerings"}}
+            </SortableTh>
           </tr>
-        {{/each}}
-      </tbody>
-    </table>
-  </div>
-{{/unless}}
+        </thead>
+        <tbody>
+          {{#each (sort-by sortBy sessionsBuffer) as |session|}}
+            <tr>
+              <td class="text-center" colspan="2">
+                {{if
+                  (contains session linkedSessions)
+                  (t "general.yes")
+                  (t "general.no")
+                }}
+              </td>
+              <td class="text-center" colspan="2">
+                {{if
+                  (contains session excludedSessions)
+                  (t "general.yes")
+                  (t "general.no")
+                }}
+              </td>
+              <td class="text-left" colspan="3">
+                {{#if session.isIndependentLearning}}
+                  <strong>
+                    ({{t "general.ilm"}})
+                  </strong>
+                {{/if}}
+                {{session.title}}
+              </td>
+              <td class="text-left" colspan="3">
+                {{get (await session.sessionType) "title"}}
+              </td>
+              <td class="text-center" colspan="1">
+                {{#if (contains session linkedSessions)}}
+                  {{#if (is-pending session.maxDuration)}}
+                    <LoadingSpinner />
+                  {{else}}
+                    {{await session.maxDuration}}
+                  {{/if}}
+                {{else}}
+                  {{#if (is-pending session.totalSumDuration)}}
+                    <LoadingSpinner />
+                  {{else}}
+                    {{await session.totalSumDuration}}
+                  {{/if}}
+                {{/if}}
+              </td>
+              <td class="text-center" colspan="1">
+                {{get (await session.offerings) "length"}}
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/unless}}
+</section>

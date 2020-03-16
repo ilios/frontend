@@ -3,11 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   store: service(),
-
-  classNames: ['curriculum-inventory-report-details'],
-
-  'data-test-curriculum-inventory-report-details': true,
-
+  tagName: "",
   canUpdate: false,
   isFinalizing: false,
   report: null,

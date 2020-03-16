@@ -1,49 +1,51 @@
-<div class="programyear-overview-header">
-  <h5>
-    {{t "general.overview"}}
-  </h5>
-  <div class="programyear-overview-actions">
-    {{#if programYearVisualizations}}
-      <LinkTo
-        @route="program-year-visualizations"
-        @model={{programYear}}
-        @title={{t "general.programYearVisualizations"}}
-      >
-        <FaIcon @icon="chart-bar" />
-      </LinkTo>
-    {{/if}}
+<div class="programyear-overview" ...attributes>
+  <div class="programyear-overview-header">
+    <h5>
+      {{t "general.overview"}}
+    </h5>
+    <div class="programyear-overview-actions">
+      {{#if programYearVisualizations}}
+        <LinkTo
+          @route="program-year-visualizations"
+          @model={{programYear}}
+          @title={{t "general.programYearVisualizations"}}
+        >
+          <FaIcon @icon="chart-bar" />
+        </LinkTo>
+      {{/if}}
+    </div>
   </div>
-</div>
-<div class="programyear-overview-content">
-  <label>
-    {{t "general.directors"}}:
-  </label>
-  <div>
+  <div class="programyear-overview-content">
+    <label>
+      {{t "general.directors"}}:
+    </label>
+    <div>
+      {{#if canUpdate}}
+        <ul class="removable-directors">
+          {{#each sortedDirectors as |user|}}
+            <li {{action "removeDirector" user}}>
+              {{user.fullName}}
+              <FaIcon @icon="times" class="remove" />
+            </li>
+          {{/each}}
+        </ul>
+      {{else}}
+        <ul class="directors">
+          {{#each sortedDirectors as |user|}}
+            <li>
+              {{user.fullName}}
+            </li>
+          {{else}}
+            {{t "general.none"}}
+          {{/each}}
+        </ul>
+      {{/if}}
+    </div>
     {{#if canUpdate}}
-      <ul class="removable-directors">
-        {{#each sortedDirectors as |user|}}
-          <li {{action "removeDirector" user}}>
-            {{user.fullName}}
-            <FaIcon @icon="times" class="remove" />
-          </li>
-        {{/each}}
-      </ul>
-    {{else}}
-      <ul class="directors">
-        {{#each sortedDirectors as |user|}}
-          <li>
-            {{user.fullName}}
-          </li>
-        {{else}}
-          {{t "general.none"}}
-        {{/each}}
-      </ul>
+      <UserSearch
+        @addUser={{action "addDirector"}}
+        @currentlyActiveUsers={{await programYear.directors}}
+      />
     {{/if}}
   </div>
-  {{#if canUpdate}}
-    <UserSearch
-      @addUser={{action "addDirector"}}
-      @currentlyActiveUsers={{await programYear.directors}}
-    />
-  {{/if}}
 </div>

@@ -6,10 +6,7 @@ import { all } from 'rsvp';
 
 export default Component.extend({
   store: service(),
-
-  classNames: ['school-competencies-expanded'],
-  tagName: 'section',
-
+  tagName: "",
   bufferedCompetencies: null,
   canCreate: false,
   canDelete: false,

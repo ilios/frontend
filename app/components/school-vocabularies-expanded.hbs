@@ -1,35 +1,37 @@
-<div
-  class="title {{if showCollapsible "collapsible clickable"}}"
-  {{action "collapse"}}
->
-  {{t "general.vocabularies"}}
-  ({{get (await school.vocabularies) "length"}})
-</div>
-<div class="school-vocabularies-expanded-content">
-  {{#if managedTermId}}
-    <SchoolVocabularyTermManager
-      @vocabulary={{managedVocabulary}}
-      @term={{managedTerm}}
-      @manageTerm={{setSchoolManagedVocabularyTerm}}
-      @manageVocabulary={{setSchoolManagedVocabulary}}
-      @canUpdate={{canUpdateTerm}}
-      @canDelete={{canDeleteTerm}}
-      @canCreate={{canCreateTerm}}
-    />
-  {{else if managedVocabularyId}}
-    <SchoolVocabularyManager
-      @vocabulary={{managedVocabulary}}
-      @manageTerm={{setSchoolManagedVocabularyTerm}}
-      @manageVocabulary={{setSchoolManagedVocabulary}}
-      @canUpdate={{canUpdateVocabulary}}
-      @canCreate={{canCreateTerm}}
-    />
-  {{else}}
-    <SchoolVocabulariesList
-      @school={{school}}
-      @manageVocabulary={{setSchoolManagedVocabulary}}
-      @canDelete={{canDeleteVocabulary}}
-      @canCreate={{canCreateVocabulary}}
-    />
-  {{/if}}
-</div>
+<section class="school-vocabularies-expanded" ...attributes>
+  <div
+    class="title {{if showCollapsible "collapsible clickable"}}"
+    {{action "collapse"}}
+  >
+    {{t "general.vocabularies"}}
+    ({{get (await school.vocabularies) "length"}})
+  </div>
+  <div class="school-vocabularies-expanded-content">
+    {{#if managedTermId}}
+      <SchoolVocabularyTermManager
+        @vocabulary={{managedVocabulary}}
+        @term={{managedTerm}}
+        @manageTerm={{setSchoolManagedVocabularyTerm}}
+        @manageVocabulary={{setSchoolManagedVocabulary}}
+        @canUpdate={{canUpdateTerm}}
+        @canDelete={{canDeleteTerm}}
+        @canCreate={{canCreateTerm}}
+      />
+    {{else if managedVocabularyId}}
+      <SchoolVocabularyManager
+        @vocabulary={{managedVocabulary}}
+        @manageTerm={{setSchoolManagedVocabularyTerm}}
+        @manageVocabulary={{setSchoolManagedVocabulary}}
+        @canUpdate={{canUpdateVocabulary}}
+        @canCreate={{canCreateTerm}}
+      />
+    {{else}}
+      <SchoolVocabulariesList
+        @school={{school}}
+        @manageVocabulary={{setSchoolManagedVocabulary}}
+        @canDelete={{canDeleteVocabulary}}
+        @canCreate={{canCreateVocabulary}}
+      />
+    {{/if}}
+  </div>
+</section>

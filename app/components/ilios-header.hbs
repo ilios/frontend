@@ -1,20 +1,22 @@
-<LinkTo @route="dashboard" @classNames="logo" @title={{t "general.dashboard"}}>
-  <h1 class="visually-hidden">
-    {{t "general.ilios"}}
-  </h1>
-  <span class="image"></span>
-</LinkTo>
-{{#if @title}}
-  <h1 data-test-title>
-    {{@title}}
-  </h1>
-{{/if}}
-<div class="tools">
-  {{#if (await showSearch)}}
-    <GlobalSearchBox @search={{action "search"}} />
+<header role="banner" class="ilios-header" data-test-ilios-header ...attributes>
+  <LinkTo @route="dashboard" @classNames="logo" @title={{t "general.dashboard"}}>
+    <h1 class="visually-hidden">
+      {{t "general.ilios"}}
+    </h1>
+    <span class="image"></span>
+  </LinkTo>
+  {{#if @title}}
+    <h1 data-test-title>
+      {{@title}}
+    </h1>
   {{/if}}
-  <LocaleChooser />
-  {{#if session.isAuthenticated}}
-    <UserMenu />
-  {{/if}}
-</div>
+  <div class="tools">
+    {{#if (await showSearch)}}
+      <GlobalSearchBox @search={{action "search"}} />
+    {{/if}}
+    <LocaleChooser />
+    {{#if session.isAuthenticated}}
+      <UserMenu />
+    {{/if}}
+  </div>
+</header>

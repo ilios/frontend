@@ -14,7 +14,7 @@ const Validations = buildValidations({
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  classNames: ['program-overview'],
+  tagName: "",
 
   canUpdate: false,
   duration: null,

@@ -1,40 +1,42 @@
-<div class="title">
-  <h4>
-    {{#if canUpdate}}
-      <EditableField
-        @value={{programTitle}}
-        @save={{action "changeTitle"}}
-        @close={{action "revertTitleChanges"}}
-        @saveOnEnter={{true}}
-        @closeOnEscape={{true}} as |isSaving|
-      >
-        <input
-          type="text"
-          value={{programTitle}}
-          oninput={{action (mut programTitle) value="target.value"}}
-          disabled={{isSaving}}
-          onkeyup={{action "addErrorDisplayFor" "programTitle"}}
+<div class="program-header" ...attributes>
+  <div class="title">
+    <h4>
+      {{#if canUpdate}}
+        <EditableField
+          @value={{programTitle}}
+          @save={{action "changeTitle"}}
+          @close={{action "revertTitleChanges"}}
+          @saveOnEnter={{true}}
+          @closeOnEscape={{true}} as |isSaving|
         >
-        {{#if
-          (and
-            (v-get this "programTitle" "isInvalid")
-            (contains "programTitle" showErrorsFor)
-          )
-        }}
-          <span class="validation-error-message">
-            {{v-get this "programTitle" "message"}}
-          </span>
-        {{/if}}
-      </EditableField>
-    {{else}}
-      {{programTitle}}
+          <input
+            type="text"
+            value={{programTitle}}
+            oninput={{action (mut programTitle) value="target.value"}}
+            disabled={{isSaving}}
+            onkeyup={{action "addErrorDisplayFor" "programTitle"}}
+          >
+          {{#if
+            (and
+              (v-get this "programTitle" "isInvalid")
+              (contains "programTitle" showErrorsFor)
+            )
+          }}
+            <span class="validation-error-message">
+              {{v-get this "programTitle" "message"}}
+            </span>
+          {{/if}}
+        </EditableField>
+      {{else}}
+        {{programTitle}}
+      {{/if}}
+    </h4>
+  </div>
+  <div class="program-publication">
+    {{#if (and canUpdate (or program.isScheduled (not program.isPublished)))}}
+      <button type="button" {{action "activate" program}}>
+        {{t "general.activate"}}
+      </button>
     {{/if}}
-  </h4>
-</div>
-<div class="program-publication">
-  {{#if (and canUpdate (or program.isScheduled (not program.isPublished)))}}
-    <button type="button" {{action "activate" program}}>
-      {{t "general.activate"}}
-    </button>
-  {{/if}}
+  </div>
 </div>

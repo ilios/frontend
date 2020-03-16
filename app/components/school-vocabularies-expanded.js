@@ -6,10 +6,7 @@ import { isPresent } from '@ember/utils';
 
 export default Component.extend({
   store: service(),
-
-  classNames: ['school-vocabularies-expanded'],
-  tagName: 'section',
-
+  tagName: "",
   canCreateTerm: false,
   canCreateVocabulary: false,
   canDeleteTerm: false,
@@ -21,7 +18,6 @@ export default Component.extend({
   managedVocabulary: null,
   managedVocabularyId: null,
   school: null,
-
   isManaging: notEmpty('managedVocabulary'),
 
   showCollapsible: computed('isManaging', 'school.vocabularies.length', function() {

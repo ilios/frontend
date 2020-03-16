@@ -1,56 +1,58 @@
-<h3 class="title">
-  {{t "general.icsFeed"}}
-</h3>
-<div class="actions">
-  {{#if isManaging}}
-    <button
-      type="button"
-      disabled={{refreshKey.isRunning}}
-      title={{t "general.refreshIcsFeedKey"}}
-      class="refresh-key"
-      {{action (perform refreshKey)}}
-    >
-      <FaIcon
-        @icon={{if refreshKey.isRunning "spinner" "sync"}}
-        @spin={{if refreshKey.isRunning true false}}
-      />
-    </button>
-    <button
-      type="button"
-      disabled={{refreshKey.isRunning}}
-      class="bigcancel"
-      {{action setIsManaging false}}
-    >
-      <FaIcon @icon="undo" />
-    </button>
-  {{else if isManageable}}
-    <button
-      type="button"
-      class="manage"
-      title={{t "general.refreshIcsFeedKey"}}
-      {{action setIsManaging true}}
-    >
-      <FaIcon @icon="edit" />
-    </button>
-  {{/if}}
+<div class="user-profile-ics small-component {{if this.hasSavedRecently "has-saved" "has-not-saved"}}" ...attributes>
+  <h3 class="title">
+    {{t "general.icsFeed"}}
+  </h3>
+  <div class="actions">
+    {{#if isManaging}}
+      <button
+        type="button"
+        disabled={{refreshKey.isRunning}}
+        title={{t "general.refreshIcsFeedKey"}}
+        class="refresh-key"
+        {{action (perform refreshKey)}}
+      >
+        <FaIcon
+          @icon={{if refreshKey.isRunning "spinner" "sync"}}
+          @spin={{if refreshKey.isRunning true false}}
+        />
+      </button>
+      <button
+        type="button"
+        disabled={{refreshKey.isRunning}}
+        class="bigcancel"
+        {{action setIsManaging false}}
+      >
+        <FaIcon @icon="undo" />
+      </button>
+    {{else if isManageable}}
+      <button
+        type="button"
+        class="manage"
+        title={{t "general.refreshIcsFeedKey"}}
+        {{action setIsManaging true}}
+      >
+        <FaIcon @icon="edit" />
+      </button>
+    {{/if}}
+  </div>
+  <p>
+    {{#if icsFeedKey.length}}
+      <p class="ics-instructions">
+        {{t "general.icsAdminInstructions"}}
+      </p>
+      <p>
+        <CopyButton @clipboardText={{icsFeedUrl}} @success={{perform textCopied}}>
+          <FaIcon @icon="copy" />
+          {{t "general.link"}}
+        </CopyButton>
+        {{#if showCopySuccessMessage}}
+          <span class="yes">
+            {{t "general.copiedSuccessfully"}}
+          </span>
+        {{/if}}
+      </p>
+    {{else}}
+      {{t "general.none"}}
+    {{/if}}
+  </p>
 </div>
-<p>
-  {{#if icsFeedKey.length}}
-    <p class="ics-instructions">
-      {{t "general.icsAdminInstructions"}}
-    </p>
-    <p>
-      <CopyButton @clipboardText={{icsFeedUrl}} @success={{perform textCopied}}>
-        <FaIcon @icon="copy" />
-        {{t "general.link"}}
-      </CopyButton>
-      {{#if showCopySuccessMessage}}
-        <span class="yes">
-          {{t "general.copiedSuccessfully"}}
-        </span>
-      {{/if}}
-    </p>
-  {{else}}
-    {{t "general.none"}}
-  {{/if}}
-</p>

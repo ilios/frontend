@@ -3,9 +3,7 @@ import { computed } from '@ember/object';
 import { all } from 'rsvp';
 
 export default Component.extend({
-  classNames: ['collapsed-objectives-program-years'],
-  tagName: 'section',
-
+  tagName: "",
   subject: null,
   expand() {},
 

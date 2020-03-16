@@ -1,35 +1,37 @@
-<div class="title clickable" {{action expand}}>
-  {{t "general.competencies"}}
-  ({{get (await domains) "length"}}/{{get (await childCompetencies) "length"}})
-</div>
-{{#if competencies.isPending}}
-  <LoadingSpinner @tagName="h3" />
-{{/if}}
-{{#if (is-fulfilled school.competencies)}}
-  <div class="content">
-    <table class="condensed">
-      <thead>
-        <tr>
-          <th class="text-left">
-            {{t "general.domain"}}
-          </th>
-          <th class="text-left">
-            {{t "general.summary"}}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each (sort-by "title" (await domains)) as |domain|}}
-          <tr>
-            <td>
-              {{domain.title}}
-            </td>
-            <td class="summary-highlight">
-              {{t "general.competencyCount" count=domain.childCount}}
-            </td>
-          </tr>
-        {{/each}}
-      </tbody>
-    </table>
+<section class="school-competencies-collapsed" ...attributes>
+  <div class="title clickable" {{action expand}}>
+    {{t "general.competencies"}}
+    ({{get (await domains) "length"}}/{{get (await childCompetencies) "length"}})
   </div>
-{{/if}}
+  {{#if competencies.isPending}}
+    <LoadingSpinner @tagName="h3" />
+  {{/if}}
+  {{#if (is-fulfilled school.competencies)}}
+    <div class="content">
+      <table class="condensed">
+        <thead>
+          <tr>
+            <th class="text-left">
+              {{t "general.domain"}}
+            </th>
+            <th class="text-left">
+              {{t "general.summary"}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each (sort-by "title" (await domains)) as |domain|}}
+            <tr>
+              <td>
+                {{domain.title}}
+              </td>
+              <td class="summary-highlight">
+                {{t "general.competencyCount" count=domain.childCount}}
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
+</section>

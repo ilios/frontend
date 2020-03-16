@@ -1,33 +1,35 @@
-{{#if (gt @results.length @size)}}
-  <span
-    class="prev-link link clickable {{if this.disablePrev "inactive"}}"
-    role="button"
-    {{action "selectPage" -1}}
-  >
-    <FaIcon @icon="angle-left" />
-    {{t "general.prev"}}
-  </span>
-  {{#each this.pages as |pageNumber|}}
-    {{#if (eq pageNumber "...")}}
-      <span class="ellipsis">
-        . . .
-      </span>
-    {{else}}
-      <button
-        type="button"
-        class="page-button {{if (eq @page pageNumber) "inactive"}}"
-        {{action @onSelectPage pageNumber}}
-      >
-        {{pageNumber}}
-      </button>
-    {{/if}}
-  {{/each}}
-  <span
-    class="next-link link clickable {{if this.disableNext "inactive"}}"
-    role="button"
-    {{action "selectPage" 1}}
-  >
-    {{t "general.next"}}
-    <FaIcon @icon="angle-right" />
-  </span>
-{{/if}}
+<div class="pagination-links" data-test-pagination-links ...attributes>
+  {{#if (gt @results.length @size)}}
+    <span
+      class="prev-link link clickable {{if this.disablePrev "inactive"}}"
+      role="button"
+      {{action "selectPage" -1}}
+    >
+      <FaIcon @icon="angle-left" />
+      {{t "general.prev"}}
+    </span>
+    {{#each this.pages as |pageNumber|}}
+      {{#if (eq pageNumber "...")}}
+        <span class="ellipsis">
+          . . .
+        </span>
+      {{else}}
+        <button
+          type="button"
+          class="page-button {{if (eq @page pageNumber) "inactive"}}"
+          {{action @onSelectPage pageNumber}}
+        >
+          {{pageNumber}}
+        </button>
+      {{/if}}
+    {{/each}}
+    <span
+      class="next-link link clickable {{if this.disableNext "inactive"}}"
+      role="button"
+      {{action "selectPage" 1}}
+    >
+      {{t "general.next"}}
+      <FaIcon @icon="angle-right" />
+    </span>
+  {{/if}}
+</div>

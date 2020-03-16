@@ -1,166 +1,168 @@
-{{#unless loadAttr.running}}
-  <div class="header">
-    <div class="title">
-      {{t "general.sequenceBlocks"}}
-      ({{get (await sortedBlocks) "length"}})
+<div class="curriculum-inventory-sequence-block-list" data-test-curriculum-inventory-sequence-block-list ...attributes>
+  {{#unless loadAttr.running}}
+    <div class="header">
+      <div class="title">
+        {{t "general.sequenceBlocks"}}
+        ({{get (await sortedBlocks) "length"}})
+      </div>
+      <div class="actions">
+        {{#if canUpdate}}
+          <ExpandCollapseButton
+            @value={{editorOn}}
+            @action={{action "toggleEditor"}}
+          />
+        {{/if}}
+      </div>
     </div>
-    <div class="actions">
-      {{#if canUpdate}}
-        <ExpandCollapseButton
-          @value={{editorOn}}
-          @action={{action "toggleEditor"}}
+    <div class="new">
+      {{#if editorOn}}
+        <NewCurriculumInventorySequenceBlock
+          @parent={{parent}}
+          @report={{report}}
+          @save={{action "save"}}
+          @cancel={{action "cancel"}}
         />
       {{/if}}
+      {{#if saved}}
+        <div class="saved-result">
+          <LinkTo @route="curriculumInventorySequenceBlock" @model={{savedBlock}}>
+            <FaIcon @icon="external-link-square-alt" />
+            {{savedBlock.title}}
+          </LinkTo>
+          {{t "general.savedSuccessfully"}}
+        </div>
+      {{/if}}
     </div>
-  </div>
-  <div class="new">
-    {{#if editorOn}}
-      <NewCurriculumInventorySequenceBlock
-        @parent={{parent}}
-        @report={{report}}
-        @save={{action "save"}}
-        @cancel={{action "cancel"}}
-      />
-    {{/if}}
-    {{#if saved}}
-      <div class="saved-result">
-        <LinkTo @route="curriculumInventorySequenceBlock" @model={{savedBlock}}>
-          <FaIcon @icon="external-link-square-alt" />
-          {{savedBlock.title}}
-        </LinkTo>
-        {{t "general.savedSuccessfully"}}
-      </div>
-    {{/if}}
-  </div>
-  {{#if (is-fulfilled sortedBlocks)}}
-    {{#if (get (await sortedBlocks) "length")}}
-      <div class="list">
-        <table>
-          <thead>
-            <tr>
-              <th class="text-center" colspan="5">
-                {{t "general.sequenceBlock"}}
-              </th>
-              <th class="text-center" colspan="1">
-                {{t "general.level"}}
-              </th>
-              <th class="text-center" colspan="2">
-                {{t "general.sequenceNumber"}}
-              </th>
-              <th class="text-center hide-from-small-screen" colspan="2">
-                {{t "general.startDate"}}
-              </th>
-              <th class="text-center hide-from-small-screen" colspan="2">
-                {{t "general.endDate"}}
-              </th>
-              <th class="text-center hide-from-small-screen" colspan="2">
-                {{t "general.course"}}
-              </th>
-              <th class="text-left" colspan="1">
-                {{t "general.actions"}}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each (await sortedBlocks) as |block|}}
-              <tr
-                class={{if block.showRemoveConfirmation "confirm-removal" ""}}
-              >
-                <td class="text-left" colspan="5">
-                  <LinkTo
-                    @route="curriculumInventorySequenceBlock"
-                    @model={{block.content}}
-                  >
-                    {{block.title}}
-                  </LinkTo>
-                </td>
-                <td class="text-center" colspan="1">
-                  {{get (await block.academicLevel) "level"}}
-                </td>
-                <td class="text-center" colspan="2">
-                  {{#if isInOrderedSequence}}
-                    {{block.orderInSequence}}
-                  {{else}}
-                    {{t "general.notApplicableAbbr"}}
-                  {{/if}}
-                </td>
-                <td class="text-center hide-from-small-screen" colspan="2">
-                  {{#if block.startDate}}
-                    {{moment-format block.startDate "L"}}
-                  {{else}}
-                    {{t "general.notApplicableAbbr"}}
-                  {{/if}}
-                </td>
-                <td class="text-center hide-from-small-screen" colspan="2">
-                  {{#if block.endDate}}
-                    {{moment-format block.endDate "L"}}
-                  {{else}}
-                    {{t "general.notApplicableAbbr"}}
-                  {{/if}}
-                </td>
-                <td class="text-center hide-from-small-screen" colspan="2">
-                  {{#if (await block.course)}}
-                    {{get (await block.course) "title"}}
-                  {{else}}
-                    {{t "general.notApplicableAbbr"}}
-                  {{/if}}
-                </td>
-                <td class="text-center" colspan="1">
-                  <LinkTo
-                    @route="curriculumInventorySequenceBlock"
-                    @model={{block.content}}
-                    class="edit"
-                  >
-                    <FaIcon @icon="edit" class="enabled" />
-                  </LinkTo>
-                  {{#if canUpdate}}
-                    <span
-                      class="clickable remove"
-                      {{action "confirmRemove" block}}
-                    >
-                      <FaIcon @icon="trash" class="enabled" />
-                    </span>
-                  {{else}}
-                    <FaIcon @icon="trash" class="disabled" />
-                  {{/if}}
-                </td>
+    {{#if (is-fulfilled sortedBlocks)}}
+      {{#if (get (await sortedBlocks) "length")}}
+        <div class="list">
+          <table>
+            <thead>
+              <tr>
+                <th class="text-center" colspan="5">
+                  {{t "general.sequenceBlock"}}
+                </th>
+                <th class="text-center" colspan="1">
+                  {{t "general.level"}}
+                </th>
+                <th class="text-center" colspan="2">
+                  {{t "general.sequenceNumber"}}
+                </th>
+                <th class="text-center hide-from-small-screen" colspan="2">
+                  {{t "general.startDate"}}
+                </th>
+                <th class="text-center hide-from-small-screen" colspan="2">
+                  {{t "general.endDate"}}
+                </th>
+                <th class="text-center hide-from-small-screen" colspan="2">
+                  {{t "general.course"}}
+                </th>
+                <th class="text-left" colspan="1">
+                  {{t "general.actions"}}
+                </th>
               </tr>
-              {{#if block.showRemoveConfirmation}}
-                <tr class="confirm-removal">
-                  <td colspan="15">
-                    <div class="confirm-message">
-                      {{t "general.sequenceBlockConfirmRemove"}}
-                      <br>
-                      <div class="confirm-buttons">
-                        <button type="button" class="remove text" {{action "remove" block}}>
-                          {{t "general.yes"}}
-                        </button>
-                        <button
-                          type="button"
-                          class="done text"
-                          {{action "cancelRemove" block}}
-                        >
-                          {{t "general.cancel"}}
-                        </button>
-                      </div>
-                    </div>
+            </thead>
+            <tbody>
+              {{#each (await sortedBlocks) as |block|}}
+                <tr
+                  class={{if block.showRemoveConfirmation "confirm-removal" ""}}
+                >
+                  <td class="text-left" colspan="5">
+                    <LinkTo
+                      @route="curriculumInventorySequenceBlock"
+                      @model={{block.content}}
+                    >
+                      {{block.title}}
+                    </LinkTo>
+                  </td>
+                  <td class="text-center" colspan="1">
+                    {{get (await block.academicLevel) "level"}}
+                  </td>
+                  <td class="text-center" colspan="2">
+                    {{#if isInOrderedSequence}}
+                      {{block.orderInSequence}}
+                    {{else}}
+                      {{t "general.notApplicableAbbr"}}
+                    {{/if}}
+                  </td>
+                  <td class="text-center hide-from-small-screen" colspan="2">
+                    {{#if block.startDate}}
+                      {{moment-format block.startDate "L"}}
+                    {{else}}
+                      {{t "general.notApplicableAbbr"}}
+                    {{/if}}
+                  </td>
+                  <td class="text-center hide-from-small-screen" colspan="2">
+                    {{#if block.endDate}}
+                      {{moment-format block.endDate "L"}}
+                    {{else}}
+                      {{t "general.notApplicableAbbr"}}
+                    {{/if}}
+                  </td>
+                  <td class="text-center hide-from-small-screen" colspan="2">
+                    {{#if (await block.course)}}
+                      {{get (await block.course) "title"}}
+                    {{else}}
+                      {{t "general.notApplicableAbbr"}}
+                    {{/if}}
+                  </td>
+                  <td class="text-center" colspan="1">
+                    <LinkTo
+                      @route="curriculumInventorySequenceBlock"
+                      @model={{block.content}}
+                      class="edit"
+                    >
+                      <FaIcon @icon="edit" class="enabled" />
+                    </LinkTo>
+                    {{#if canUpdate}}
+                      <span
+                        class="clickable remove"
+                        {{action "confirmRemove" block}}
+                      >
+                        <FaIcon @icon="trash" class="enabled" />
+                      </span>
+                    {{else}}
+                      <FaIcon @icon="trash" class="disabled" />
+                    {{/if}}
                   </td>
                 </tr>
-              {{/if}}
-            {{/each}}
-          </tbody>
-        </table>
-      </div>
-    {{else if parent}}
-      <div class="default-message">
-        {{t "general.noSubSequenceBlocks"}}
-      </div>
+                {{#if block.showRemoveConfirmation}}
+                  <tr class="confirm-removal">
+                    <td colspan="15">
+                      <div class="confirm-message">
+                        {{t "general.sequenceBlockConfirmRemove"}}
+                        <br>
+                        <div class="confirm-buttons">
+                          <button type="button" class="remove text" {{action "remove" block}}>
+                            {{t "general.yes"}}
+                          </button>
+                          <button
+                            type="button"
+                            class="done text"
+                            {{action "cancelRemove" block}}
+                          >
+                            {{t "general.cancel"}}
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                {{/if}}
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+      {{else if parent}}
+        <div class="default-message">
+          {{t "general.noSubSequenceBlocks"}}
+        </div>
+      {{else}}
+        <div class="default-message">
+          {{t "general.noSequenceBlocks"}}
+        </div>
+      {{/if}}
     {{else}}
-      <div class="default-message">
-        {{t "general.noSequenceBlocks"}}
-      </div>
+      <LoadingSpinner @tagName="div" />
     {{/if}}
-  {{else}}
-    <LoadingSpinner @tagName="div" />
-  {{/if}}
-{{/unless}}
+  {{/unless}}
+</div>

@@ -61,7 +61,7 @@ export default Component.extend({
   currentUser: service(),
   intl: service(),
   permissionChecker: service(),
-
+  tagName: "",
   courses: null,
   query: null,
   sortBy: 'title',

@@ -3,8 +3,8 @@ import { computed } from '@ember/object';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
+  tagName: "",
   school: null,
-  classNames: ['school-leadership-expanded'],
   directorsToAdd: null,
   directorsToRemove: null,
   administratorsToAdd: null,

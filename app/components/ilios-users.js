@@ -8,10 +8,10 @@ const DEBOUNCE_TIMEOUT = 250;
 
 export default Component.extend({
   iliosConfig: service(),
+
   store: service(),
 
-  classNames: ['ilios-users'],
-
+  tagName: "",
   limit: null,
   offset: null,
   query: null,

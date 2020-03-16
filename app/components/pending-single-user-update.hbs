@@ -1,58 +1,60 @@
-{{#liquid-if updates.isFulfilled class="crossFade"}}
-  {{#if isSaving}}
-    <LoadingSpinner @tagName="h2" />
-  {{else}}
-    {{#each updates as |update|}}
-      <div class="update">
-        <div class="explanation">
-          <h2>
-            <FaIcon @icon="exclamation-triangle" class="no" />
-          </h2>
-          {{#if (eq update.type "emailMismatch")}}
-            {{t
-              "general.pendingUserUpdates.emailMismatch"
-              value=update.value
-              email=update.user.email
-            }}
-          {{else}}
-            {{t (concat "general.pendingUserUpdates." update.type)}}
-          {{/if}}
-        </div>
-        <div class="actions">
-          {{#if (eq update.type "emailMismatch")}}
+<div class="pending-single-user-updates" ...attributes>
+  {{#liquid-if updates.isFulfilled class="crossFade"}}
+    {{#if isSaving}}
+      <LoadingSpinner @tagName="h2" />
+    {{else}}
+      {{#each updates as |update|}}
+        <div class="update">
+          <div class="explanation">
+            <h2>
+              <FaIcon @icon="exclamation-triangle" class="no" />
+            </h2>
+            {{#if (eq update.type "emailMismatch")}}
+              {{t
+                "general.pendingUserUpdates.emailMismatch"
+                value=update.value
+                email=update.user.email
+              }}
+            {{else}}
+              {{t (concat "general.pendingUserUpdates." update.type)}}
+            {{/if}}
+          </div>
+          <div class="actions">
+            {{#if (eq update.type "emailMismatch")}}
+              <span
+                class="clickable link"
+                onclick={{action "updateEmailAddress" update}}
+              >
+                <FaIcon
+                  @icon="arrow-circle-up"
+                  class="yes"
+                  @title={{t "general.update"}}
+                />
+                {{t "general.pendingUserUpdates.updateIlios"}}
+              </span>
+            {{/if}}
             <span
               class="clickable link"
-              onclick={{action "updateEmailAddress" update}}
+              onclick={{action "excludeFromSync" update}}
             >
               <FaIcon
-                @icon="arrow-circle-up"
-                class="yes"
-                @title={{t "general.update"}}
+                @icon="ban"
+                class="no"
+                @title={{t "general.excludeFromSync"}}
               />
-              {{t "general.pendingUserUpdates.updateIlios"}}
+              {{t "general.excludeFromSync"}}
             </span>
-          {{/if}}
-          <span
-            class="clickable link"
-            onclick={{action "excludeFromSync" update}}
-          >
-            <FaIcon
-              @icon="ban"
-              class="no"
-              @title={{t "general.excludeFromSync"}}
-            />
-            {{t "general.excludeFromSync"}}
-          </span>
-          <span class="clickable link" onclick={{action "disableUser" update}}>
-            <FaIcon
-              @icon="times"
-              class="no"
-              @title={{t "general.disableUser"}}
-            />
-            {{t "general.disableUser"}}
-          </span>
+            <span class="clickable link" onclick={{action "disableUser" update}}>
+              <FaIcon
+                @icon="times"
+                class="no"
+                @title={{t "general.disableUser"}}
+              />
+              {{t "general.disableUser"}}
+            </span>
+          </div>
         </div>
-      </div>
-    {{/each}}
-  {{/if}}
-{{/liquid-if}}
+      {{/each}}
+    {{/if}}
+  {{/liquid-if}}
+</div>

@@ -1,64 +1,66 @@
-<h2>
-  {{t "general.overview"}}
-</h2>
-<div class="program-overview-content">
-  <div class="block programtitleshort">
-    <label>
-      {{t "general.programTitleShort"}}:
-    </label>
-    <span>
-      {{#if canUpdate}}
-        <EditableField
-          @value={{shortTitle}}
-          @save={{action "changeShortTitle"}}
-          @close={{action "revertShortTitleChanges"}}
-          @clickPrompt={{t "general.clickToEdit"}}
-          @saveOnEnter={{true}}
-          @closeOnEscape={{true}} as |isSaving|
-        >
-          <input
-            type="text"
-            value={{shortTitle}}
-            oninput={{action (mut shortTitle) value="target.value"}}
-            disabled={{isSaving}}
-            onkeyup={{action "addErrorDisplayFor" "shortTitle"}}
+<div class="program-overview" ...attributes>
+  <h2>
+    {{t "general.overview"}}
+  </h2>
+  <div class="program-overview-content">
+    <div class="block programtitleshort">
+      <label>
+        {{t "general.programTitleShort"}}:
+      </label>
+      <span>
+        {{#if canUpdate}}
+          <EditableField
+            @value={{shortTitle}}
+            @save={{action "changeShortTitle"}}
+            @close={{action "revertShortTitleChanges"}}
+            @clickPrompt={{t "general.clickToEdit"}}
+            @saveOnEnter={{true}}
+            @closeOnEscape={{true}} as |isSaving|
           >
-          {{#if
-            (and
-              (v-get this "shortTitle" "isInvalid")
-              (contains "shortTitle" showErrorsFor)
-            )
-          }}
-            <span class="validation-error-message">
-              {{v-get this "shortTitle" "message"}}
-            </span>
-          {{/if}}
-        </EditableField>
-      {{else}}
-        {{shortTitle}}
-      {{/if}}
-    </span>
-  </div>
-  <div class="block programduration">
-    <label>
-      {{t "general.durationInYears"}}:
-    </label>
-    <span>
-      {{#if canUpdate}}
-        <EditableField
-          @value={{duration}}
-          @save={{action "changeDuration"}}
-          @close={{action "revertDurationChanges"}}
-        >
-          <select {{on "change" (action "setDuration")}}>
-            {{#each durationOptions as |val|}}
-              <option value={{val}} selected={{eq val this.duration}}>{{val}}</option>
-            {{/each}}
-          </select>
-        </EditableField>
-      {{else}}
-        {{duration}}
-      {{/if}}
-    </span>
+            <input
+              type="text"
+              value={{shortTitle}}
+              oninput={{action (mut shortTitle) value="target.value"}}
+              disabled={{isSaving}}
+              onkeyup={{action "addErrorDisplayFor" "shortTitle"}}
+            >
+            {{#if
+              (and
+                (v-get this "shortTitle" "isInvalid")
+                (contains "shortTitle" showErrorsFor)
+              )
+            }}
+              <span class="validation-error-message">
+                {{v-get this "shortTitle" "message"}}
+              </span>
+            {{/if}}
+          </EditableField>
+        {{else}}
+          {{shortTitle}}
+        {{/if}}
+      </span>
+    </div>
+    <div class="block programduration">
+      <label>
+        {{t "general.durationInYears"}}:
+      </label>
+      <span>
+        {{#if canUpdate}}
+          <EditableField
+            @value={{duration}}
+            @save={{action "changeDuration"}}
+            @close={{action "revertDurationChanges"}}
+          >
+            <select {{on "change" (action "setDuration")}}>
+              {{#each durationOptions as |val|}}
+                <option value={{val}} selected={{eq val this.duration}}>{{val}}</option>
+              {{/each}}
+            </select>
+          </EditableField>
+        {{else}}
+          {{duration}}
+        {{/if}}
+      </span>
+    </div>
   </div>
 </div>

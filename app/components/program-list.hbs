@@ -1,141 +1,143 @@
-<table>
-  <thead>
-    <tr>
-      <th class="text-left" colspan="3">
-        {{t "general.programTitle"}}
-      </th>
-      <th class="text-center hide-from-small-screen" colspan="2">
-        {{t "general.school"}}
-      </th>
-      <th class="text-center hide-from-small-screen">
-        {{t "general.status"}}
-      </th>
-      <th class="text-right" colspan="2">
-        {{t "general.actions"}}
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each this.proxiedPrograms as |program|}}
-      <tr
-        class={{if program.showRemoveConfirmation "confirm-removal"}}
-        data-test-active-row
-      >
-        <td class="text-left" colspan="3">
-          <LinkTo @route="program" @model={{program.content}}>
-            {{program.title}}
-          </LinkTo>
-        </td>
-        <td
-          class="text-center hide-from-small-screen"
-          colspan="2"
-          {{action "edit" program}}
-        >
-          {{program.school.title}}
-        </td>
-        <td class="text-center hide-from-small-screen">
-          {{#if (and program.isPublished (not program.isScheduled))}}
-            <FaIcon
-              @icon="circle"
-              class="yes"
-              @title={{capitalize (t "general.active")}}
-            />
-          {{else}}
-            <FaIcon
-              @icon="circle"
-              class="warning"
-              @title={{capitalize (t "general.inactive")}}
-            />
-          {{/if}}
-        </td>
-        <td class="text-right" colspan="2">
-          {{#if (await program.canActivate)}}
-            <button type="button" class="text" onclick={{action "activate" program}}>
-              {{t "general.activate"}}
-            </button>
-          {{/if}}
-          <LinkTo @route="program" @model={{program.content}} class="edit">
-            <FaIcon @icon="edit" class="enabled" />
-          </LinkTo>
-          {{#if (await program.canDelete)}}
-            <span class="clickable remove" {{action "confirmRemove" program}}>
-              <FaIcon @icon="trash" class="enabled" />
-            </span>
-          {{else}}
-            <FaIcon @icon="trash" class="disabled" />
-          {{/if}}
-        </td>
+<div ...attributes>
+  <table>
+    <thead>
+      <tr>
+        <th class="text-left" colspan="3">
+          {{t "general.programTitle"}}
+        </th>
+        <th class="text-center hide-from-small-screen" colspan="2">
+          {{t "general.school"}}
+        </th>
+        <th class="text-center hide-from-small-screen">
+          {{t "general.status"}}
+        </th>
+        <th class="text-right" colspan="2">
+          {{t "general.actions"}}
+        </th>
       </tr>
-      {{#if program.showRemoveConfirmation}}
-        <tr class="confirm-removal">
-          <td class="hide-from-small-screen" colspan="8">
-            <div class="confirm-message">
-              {{#if (is-fulfilled program.courses)}}
-                {{t
-                  "general.confirmRemoveProgram"
-                  courseCount=(get (await program.courses) "length")
-                  programYearCount=(get (await program.programYears) "length")
-                }}
-                <br>
-                <div class="confirm-buttons">
-                  <button
-                    type="button"
-                    class="remove text"
-                    onclick={{action "remove" program}}
-                  >
-                    {{t "general.yes"}}
-                  </button>
-                  <button
-                    type="button"
-                    class="done text"
-                    onclick={{action "cancelRemove" program}}
-                  >
-                    {{t "general.cancel"}}
-                  </button>
-                </div>
-              {{else}}
-                <LoadingSpinner @tagName="div" />
-              {{/if}}
-            </div>
+    </thead>
+    <tbody>
+      {{#each this.proxiedPrograms as |program|}}
+        <tr
+          class={{if program.showRemoveConfirmation "confirm-removal"}}
+          data-test-active-row
+        >
+          <td class="text-left" colspan="3">
+            <LinkTo @route="program" @model={{program.content}}>
+              {{program.title}}
+            </LinkTo>
           </td>
-          <td class="hide-from-large-screen" colspan="5">
-            <div class="confirm-message">
-              {{#if (is-fulfilled program.courses)}}
-                {{t
-                  "general.confirmRemoveProgram"
-                  courseCount=(get (await program.courses) "length")
-                  programYearCount=(get (await program.programYears) "length")
-                }}
-                <br>
-                <div class="confirm-buttons">
-                  <button
-                    type="button"
-                    class="remove text"
-                    onclick={{action "remove" program}}
-                  >
-                    {{t "general.yes"}}
-                  </button>
-                  <button
-                    type="button"
-                    class="done text"
-                    onclick={{action "cancelRemove" program}}
-                  >
-                    {{t "general.cancel"}}
-                  </button>
-                </div>
-              {{else}}
-                <LoadingSpinner @tagName="div" />
-              {{/if}}
-            </div>
+          <td
+            class="text-center hide-from-small-screen"
+            colspan="2"
+            {{action "edit" program}}
+          >
+            {{program.school.title}}
+          </td>
+          <td class="text-center hide-from-small-screen">
+            {{#if (and program.isPublished (not program.isScheduled))}}
+              <FaIcon
+                @icon="circle"
+                class="yes"
+                @title={{capitalize (t "general.active")}}
+              />
+            {{else}}
+              <FaIcon
+                @icon="circle"
+                class="warning"
+                @title={{capitalize (t "general.inactive")}}
+              />
+            {{/if}}
+          </td>
+          <td class="text-right" colspan="2">
+            {{#if (await program.canActivate)}}
+              <button type="button" class="text" onclick={{action "activate" program}}>
+                {{t "general.activate"}}
+              </button>
+            {{/if}}
+            <LinkTo @route="program" @model={{program.content}} class="edit">
+              <FaIcon @icon="edit" class="enabled" />
+            </LinkTo>
+            {{#if (await program.canDelete)}}
+              <span class="clickable remove" {{action "confirmRemove" program}}>
+                <FaIcon @icon="trash" class="enabled" />
+              </span>
+            {{else}}
+              <FaIcon @icon="trash" class="disabled" />
+            {{/if}}
           </td>
         </tr>
-      {{/if}}
-    {{else}}
-      <tr data-test-empty-list>
-        <td class="text-center" colspan={{if (media "isLaptopAndUp") "8" "5"}}>
-          {{if @query (t "general.noResultsFound") (t "general.none")}}
-        </td>
-      </tr>
-    {{/each}}
-  </tbody>
-</table>
+        {{#if program.showRemoveConfirmation}}
+          <tr class="confirm-removal">
+            <td class="hide-from-small-screen" colspan="8">
+              <div class="confirm-message">
+                {{#if (is-fulfilled program.courses)}}
+                  {{t
+                    "general.confirmRemoveProgram"
+                    courseCount=(get (await program.courses) "length")
+                    programYearCount=(get (await program.programYears) "length")
+                  }}
+                  <br>
+                  <div class="confirm-buttons">
+                    <button
+                      type="button"
+                      class="remove text"
+                      onclick={{action "remove" program}}
+                    >
+                      {{t "general.yes"}}
+                    </button>
+                    <button
+                      type="button"
+                      class="done text"
+                      onclick={{action "cancelRemove" program}}
+                    >
+                      {{t "general.cancel"}}
+                    </button>
+                  </div>
+                {{else}}
+                  <LoadingSpinner @tagName="div" />
+                {{/if}}
+              </div>
+            </td>
+            <td class="hide-from-large-screen" colspan="5">
+              <div class="confirm-message">
+                {{#if (is-fulfilled program.courses)}}
+                  {{t
+                    "general.confirmRemoveProgram"
+                    courseCount=(get (await program.courses) "length")
+                    programYearCount=(get (await program.programYears) "length")
+                  }}
+                  <br>
+                  <div class="confirm-buttons">
+                    <button
+                      type="button"
+                      class="remove text"
+                      onclick={{action "remove" program}}
+                    >
+                      {{t "general.yes"}}
+                    </button>
+                    <button
+                      type="button"
+                      class="done text"
+                      onclick={{action "cancelRemove" program}}
+                    >
+                      {{t "general.cancel"}}
+                    </button>
+                  </div>
+                {{else}}
+                  <LoadingSpinner @tagName="div" />
+                {{/if}}
+              </div>
+            </td>
+          </tr>
+        {{/if}}
+      {{else}}
+        <tr data-test-empty-list>
+          <td class="text-center" colspan={{if (media "isLaptopAndUp") "8" "5"}}>
+            {{if @query (t "general.noResultsFound") (t "general.none")}}
+          </td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>

@@ -1,48 +1,50 @@
-{{#each domains as |obj|}}
-  <div class="domain">
-    <div class="block">
-      <CompetencyTitleEditor
-        @competency={{obj.domain}}
-        @canUpdate={{canUpdate}}
-      />
-      {{#if (eq obj.competencies.length 0)}}
-        <FaIcon
-          @icon="trash"
-          class="clickable enabled"
-          @click={{action remove obj.domain}}
+<div class="school-competencies-manager" ...attributes>
+  {{#each domains as |obj|}}
+    <div class="domain">
+      <div class="block">
+        <CompetencyTitleEditor
+          @competency={{obj.domain}}
+          @canUpdate={{canUpdate}}
         />
-      {{else}}
-        <FaIcon @icon="trash" class="disabled" />
-      {{/if}}
-    </div>
-    <ul>
-      {{#each obj.competencies as |competency|}}
-        <li class="block">
-          <CompetencyTitleEditor
-            @competency={{competency}}
-            @canUpdate={{canUpdate}}
+        {{#if (eq obj.competencies.length 0)}}
+          <FaIcon
+            @icon="trash"
+            class="clickable enabled"
+            @click={{action remove obj.domain}}
           />
-          ({{competency.objectives.length}})
-          {{#if (and canDelete (eq competency.objectives.length 0))}}
-            <FaIcon
-              @icon="trash"
-              class="clickable enabled"
-              @click={{action remove competency}}
+        {{else}}
+          <FaIcon @icon="trash" class="disabled" />
+        {{/if}}
+      </div>
+      <ul>
+        {{#each obj.competencies as |competency|}}
+          <li class="block">
+            <CompetencyTitleEditor
+              @competency={{competency}}
+              @canUpdate={{canUpdate}}
             />
-          {{else}}
-            <FaIcon @icon="trash" class="disabled" />
-          {{/if}}
-        </li>
-      {{/each}}
-      {{#if (and obj.domain.id canCreate)}}
-        <NewCompetency @add={{action add obj.domain}} />
-      {{/if}}
-    </ul>
-  </div>
-{{/each}}
-{{#if canCreate}}
-  <h5>
-    {{t "general.newDomain"}}
-  </h5>
-  <NewCompetency @add={{action add null}} />
-{{/if}}
+            ({{competency.objectives.length}})
+            {{#if (and canDelete (eq competency.objectives.length 0))}}
+              <FaIcon
+                @icon="trash"
+                class="clickable enabled"
+                @click={{action remove competency}}
+              />
+            {{else}}
+              <FaIcon @icon="trash" class="disabled" />
+            {{/if}}
+          </li>
+        {{/each}}
+        {{#if (and obj.domain.id canCreate)}}
+          <NewCompetency @add={{action add obj.domain}} />
+        {{/if}}
+      </ul>
+    </div>
+  {{/each}}
+  {{#if canCreate}}
+    <h5>
+      {{t "general.newDomain"}}
+    </h5>
+    <NewCompetency @add={{action add null}} />
+  {{/if}}
+</div>

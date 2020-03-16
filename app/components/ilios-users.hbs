@@ -1,91 +1,93 @@
-<div class="filters">
-  <div class="filter user-search">
-    <input
-      type="search"
-      value={{query}}
-      oninput={{setQuery}}
-      placeholder={{t "general.searchUsers"}}
-    >
+<div class="ilios-users" ...attributes>
+  <div class="filters">
+    <div class="filter user-search">
+      <input
+        type="search"
+        value={{query}}
+        oninput={{setQuery}}
+        placeholder={{t "general.searchUsers"}}
+      >
+    </div>
   </div>
-</div>
-<section class="users">
-  <div class="header">
-    <span class="title">
-      {{t "general.users"}}
-    </span>
-    <div class="actions">
-      {{#if (or showNewUserForm showBulkNewUserForm)}}
-        <button
-          type="button"
-          {{action
-            (if
-              showNewUserForm
-              (toggle "showNewUserForm" this)
-              (toggle "showBulkNewUserForm" this)
-            )
-          }}
-        >
-          <FaIcon @icon="minus" />
-        </button>
-      {{else}}
-        <button type="button" {{action (toggle "showNewUserForm" this)}}>
-          {{t "general.create"}}
-        </button>
-        {{#if (not-eq (await iliosConfig.userSearchType) "ldap")}}
-          <button type="button" {{action (toggle "showBulkNewUserForm" this)}}>
-            {{t "general.createBulk"}}
+  <section class="users">
+    <div class="header">
+      <span class="title">
+        {{t "general.users"}}
+      </span>
+      <div class="actions">
+        {{#if (or showNewUserForm showBulkNewUserForm)}}
+          <button
+            type="button"
+            {{action
+              (if
+                showNewUserForm
+                (toggle "showNewUserForm" this)
+                (toggle "showBulkNewUserForm" this)
+              )
+            }}
+          >
+            <FaIcon @icon="minus" />
           </button>
+        {{else}}
+          <button type="button" {{action (toggle "showNewUserForm" this)}}>
+            {{t "general.create"}}
+          </button>
+          {{#if (not-eq (await iliosConfig.userSearchType) "ldap")}}
+            <button type="button" {{action (toggle "showBulkNewUserForm" this)}}>
+              {{t "general.createBulk"}}
+            </button>
+          {{/if}}
+        {{/if}}
+      </div>
+    </div>
+    <section class="new">
+      {{#if showNewUserForm class="vertical"}}
+        {{#if (is-fulfilled newUserComponent)}}
+          {{component
+            (await newUserComponent)
+            close=(action setShowNewUserForm false)
+            transitionToUser=transitionToUser
+            searchTerms=searchTerms
+            setSearchTerms=setSearchTerms
+          }}
+        {{else}}
+          <LoadingSpinner />
         {{/if}}
       {{/if}}
-    </div>
-  </div>
-  <section class="new">
-    {{#if showNewUserForm class="vertical"}}
-      {{#if (is-fulfilled newUserComponent)}}
-        {{component
-          (await newUserComponent)
-          close=(action setShowNewUserForm false)
-          transitionToUser=transitionToUser
-          searchTerms=searchTerms
-          setSearchTerms=setSearchTerms
-        }}
-      {{else}}
-        <LoadingSpinner />
+      {{#if showBulkNewUserForm class="vertical"}}
+        {{#if (is-fulfilled newBulkUserComponent)}}
+          <BulkNewUsers @close={{action setShowNewUserForm false}} />
+        {{else}}
+          <LoadingSpinner />
+        {{/if}}
       {{/if}}
-    {{/if}}
-    {{#if showBulkNewUserForm class="vertical"}}
-      {{#if (is-fulfilled newBulkUserComponent)}}
-        <BulkNewUsers @close={{action setShowNewUserForm false}} />
-      {{else}}
-        <LoadingSpinner />
-      {{/if}}
+    </section>
+    {{#if searchForUsers.lastSuccessful}}
+      <PagedlistControls
+        @offset={{offset}}
+        @limit={{limit}}
+        @limitless={{true}}
+        @setOffset={{action "setOffset"}}
+        @setLimit={{setLimit}}
+      />
+      <div class="list">
+        {{#if (gt searchForUsers.lastSuccessful.value.length 0)}}
+          <UserList @users={{searchForUsers.lastSuccessful.value}} />
+        {{else}}
+          <span class="no-results">
+            {{t "general.noResultsFound"}}
+          </span>
+        {{/if}}
+      </div>
+      <PagedlistControls
+        @offset={{offset}}
+        @limit={{limit}}
+        @limitless={{true}}
+        @setOffset={{action "setOffset"}}
+        @setLimit={{setLimit}}
+      />
+    {{else}}
+      <PulseLoader />
     {{/if}}
   </section>
-  {{#if searchForUsers.lastSuccessful}}
-    <PagedlistControls
-      @offset={{offset}}
-      @limit={{limit}}
-      @limitless={{true}}
-      @setOffset={{action "setOffset"}}
-      @setLimit={{setLimit}}
-    />
-    <div class="list">
-      {{#if (gt searchForUsers.lastSuccessful.value.length 0)}}
-        <UserList @users={{searchForUsers.lastSuccessful.value}} />
-      {{else}}
-        <span class="no-results">
-          {{t "general.noResultsFound"}}
-        </span>
-      {{/if}}
-    </div>
-    <PagedlistControls
-      @offset={{offset}}
-      @limit={{limit}}
-      @limitless={{true}}
-      @setOffset={{action "setOffset"}}
-      @setLimit={{setLimit}}
-    />
-  {{else}}
-    <PulseLoader />
-  {{/if}}
-</section>
+</div>

@@ -1,259 +1,261 @@
-<section class="programyears">
-  <div class="header">
-    <div class="title">
-      {{t "general.programYears"}}
+<div class="programyear-list" ...attributes>
+  <section class="programyears">
+    <div class="header">
+      <div class="title">
+        {{t "general.programYears"}}
+      </div>
+      {{#if canCreate}}
+        <div class="actions">
+          <ExpandCollapseButton
+            @value={{editorOn}}
+            @action={{action "toggleEditor"}}
+          />
+        </div>
+      {{/if}}
     </div>
-    {{#if canCreate}}
-      <div class="actions">
-        <ExpandCollapseButton
-          @value={{editorOn}}
-          @action={{action "toggleEditor"}}
+    <section class="new">
+      {{#if editorOn}}
+        <NewProgramyear
+          @availableAcademicYears={{availableAcademicYears}}
+          @save={{perform save}}
+          @cancel={{action "cancel"}}
         />
-      </div>
-    {{/if}}
-  </div>
-  <section class="new">
-    {{#if editorOn}}
-      <NewProgramyear
-        @availableAcademicYears={{availableAcademicYears}}
-        @save={{perform save}}
-        @cancel={{action "cancel"}}
-      />
-    {{/if}}
-    {{#if saved}}
-      <div class="saved-result">
-        <LinkTo
-          @route="programYear.index"
-          @models={{array program savedProgramYear}}
-        >
-          <FaIcon @icon="external-link-square-alt" />
-          {{savedProgramYear.academicYear}}
-        </LinkTo>
-        {{t "general.savedSuccessfully"}}
-      </div>
-    {{/if}}
-  </section>
-  <div class="list">
-    {{#if (get (await sortedContent) "length")}}
-      <table>
-        <thead>
-          <tr>
-            <th class="text-left">
-              {{t "general.matriculationYear"}}
-            </th>
-            <th class="text-left hide-from-small-screen">
-              {{t "general.cohort"}}
-            </th>
-            <th class="text-left hide-from-small-screen">
-              {{t "general.competencies"}}
-            </th>
-            <th class="text-left hide-from-small-screen">
-              {{t "general.objectives"}}
-            </th>
-            <th class="text-left hide-from-small-screen">
-              {{t "general.directors"}}
-            </th>
-            <th class="text-left hide-from-small-screen">
-              {{t "general.terms"}}
-            </th>
-            <th class="text-center hide-from-small-screen">
-              {{t "general.status"}}
-            </th>
-            <th class="text-right" colspan="2">
-              {{t "general.actions"}}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each (await proxiedProgramYears) as |programYearProxy|}}
-            {{#unless programYearProxy.archived}}
-              <tr
-                class={{if
-                  programYearProxy.showRemoveConfirmation
-                  "confirm-removal"
-                  ""
-                }}
-              >
-                <td class="text-left">
-                  <LinkTo
-                    @route="programYear.index"
-                    @models={{array program programYearProxy.content}}
-                  >
-                    <FaIcon @icon="external-link-square-alt" />
-                    {{programYearProxy.academicYear}}
-                  </LinkTo>
-                </td>
-                <td class="text-left hide-from-small-screen">
-                  {{#if (get (await programYearProxy.cohort) "title")}}
-                    {{get (await programYearProxy.cohort) "title"}}
-                  {{else}}
-                    {{t
-                      "general.classOf"
-                      year=(await programYearProxy.content.classOfYear)
-                    }}
-                  {{/if}}
-                </td>
-                <td class="text-left hide-from-small-screen">
-                  {{#if programYearProxy.competencies.length}}
-                    {{programYearProxy.competencies.length}}
-                  {{else}}
-                    <FaIcon @icon="exclamation-triangle" class="warning" />
-                  {{/if}}
-                </td>
-                <td class="text-left hide-from-small-screen">
-                  {{#if programYearProxy.objectives.length}}
-                    {{programYearProxy.objectives.length}}
-                  {{else}}
-                    <FaIcon @icon="exclamation-triangle" class="warning" />
-                  {{/if}}
-                </td>
-                <td class="text-left hide-from-small-screen">
-                  {{#if programYearProxy.directors.length}}
-                    {{programYearProxy.directors.length}}
-                  {{else}}
-                    <FaIcon @icon="exclamation-triangle" class="warning" />
-                  {{/if}}
-                </td>
-                <td class="text-left hide-from-small-screen">
-                  {{#if programYearProxy.terms.length}}
-                    {{programYearProxy.terms.length}}
-                  {{else}}
-                    <FaIcon @icon="exclamation-triangle" class="warning" />
-                  {{/if}}
-                </td>
-                <td class="text-center hide-from-small-screen">
-                  {{#if
-                    (and
-                      programYearProxy.isPublished
-                      (not programYearProxy.isScheduled)
-                    )
+      {{/if}}
+      {{#if saved}}
+        <div class="saved-result">
+          <LinkTo
+            @route="programYear.index"
+            @models={{array program savedProgramYear}}
+          >
+            <FaIcon @icon="external-link-square-alt" />
+            {{savedProgramYear.academicYear}}
+          </LinkTo>
+          {{t "general.savedSuccessfully"}}
+        </div>
+      {{/if}}
+    </section>
+    <div class="list">
+      {{#if (get (await sortedContent) "length")}}
+        <table>
+          <thead>
+            <tr>
+              <th class="text-left">
+                {{t "general.matriculationYear"}}
+              </th>
+              <th class="text-left hide-from-small-screen">
+                {{t "general.cohort"}}
+              </th>
+              <th class="text-left hide-from-small-screen">
+                {{t "general.competencies"}}
+              </th>
+              <th class="text-left hide-from-small-screen">
+                {{t "general.objectives"}}
+              </th>
+              <th class="text-left hide-from-small-screen">
+                {{t "general.directors"}}
+              </th>
+              <th class="text-left hide-from-small-screen">
+                {{t "general.terms"}}
+              </th>
+              <th class="text-center hide-from-small-screen">
+                {{t "general.status"}}
+              </th>
+              <th class="text-right" colspan="2">
+                {{t "general.actions"}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each (await proxiedProgramYears) as |programYearProxy|}}
+              {{#unless programYearProxy.archived}}
+                <tr
+                  class={{if
+                    programYearProxy.showRemoveConfirmation
+                    "confirm-removal"
+                    ""
                   }}
-                    <FaIcon
-                      @icon="circle"
-                      class="yes"
-                      @title={{capitalize (t "general.active")}}
-                    />
-                  {{else}}
-                    <FaIcon
-                      @icon="circle"
-                      class="warning"
-                      @title={{capitalize (t "general.inactive")}}
-                    />
-                  {{/if}}
-                </td>
-                <td class="text-right" colspan="2">
-                  {{#if programYearProxy.isSaving}}
-                    <LoadingSpinner />
-                  {{else}}
-                    {{#if (await programYearProxy.userCanActivate)}}
-                      <button
-                        type="button"
-                        class="text"
-                        {{action "activateProgramYear" programYearProxy}}
-                      >
-                        {{t "general.activate"}}
-                      </button>
+                >
+                  <td class="text-left">
+                    <LinkTo
+                      @route="programYear.index"
+                      @models={{array program programYearProxy.content}}
+                    >
+                      <FaIcon @icon="external-link-square-alt" />
+                      {{programYearProxy.academicYear}}
+                    </LinkTo>
+                  </td>
+                  <td class="text-left hide-from-small-screen">
+                    {{#if (get (await programYearProxy.cohort) "title")}}
+                      {{get (await programYearProxy.cohort) "title"}}
+                    {{else}}
+                      {{t
+                        "general.classOf"
+                        year=(await programYearProxy.content.classOfYear)
+                      }}
                     {{/if}}
-                    {{#if programYearProxy.locked}}
-                      {{#if (await programYearProxy.userCanUnLock)}}
+                  </td>
+                  <td class="text-left hide-from-small-screen">
+                    {{#if programYearProxy.competencies.length}}
+                      {{programYearProxy.competencies.length}}
+                    {{else}}
+                      <FaIcon @icon="exclamation-triangle" class="warning" />
+                    {{/if}}
+                  </td>
+                  <td class="text-left hide-from-small-screen">
+                    {{#if programYearProxy.objectives.length}}
+                      {{programYearProxy.objectives.length}}
+                    {{else}}
+                      <FaIcon @icon="exclamation-triangle" class="warning" />
+                    {{/if}}
+                  </td>
+                  <td class="text-left hide-from-small-screen">
+                    {{#if programYearProxy.directors.length}}
+                      {{programYearProxy.directors.length}}
+                    {{else}}
+                      <FaIcon @icon="exclamation-triangle" class="warning" />
+                    {{/if}}
+                  </td>
+                  <td class="text-left hide-from-small-screen">
+                    {{#if programYearProxy.terms.length}}
+                      {{programYearProxy.terms.length}}
+                    {{else}}
+                      <FaIcon @icon="exclamation-triangle" class="warning" />
+                    {{/if}}
+                  </td>
+                  <td class="text-center hide-from-small-screen">
+                    {{#if
+                      (and
+                        programYearProxy.isPublished
+                        (not programYearProxy.isScheduled)
+                      )
+                    }}
+                      <FaIcon
+                        @icon="circle"
+                        class="yes"
+                        @title={{capitalize (t "general.active")}}
+                      />
+                    {{else}}
+                      <FaIcon
+                        @icon="circle"
+                        class="warning"
+                        @title={{capitalize (t "general.inactive")}}
+                      />
+                    {{/if}}
+                  </td>
+                  <td class="text-right" colspan="2">
+                    {{#if programYearProxy.isSaving}}
+                      <LoadingSpinner />
+                    {{else}}
+                      {{#if (await programYearProxy.userCanActivate)}}
+                        <button
+                          type="button"
+                          class="text"
+                          {{action "activateProgramYear" programYearProxy}}
+                        >
+                          {{t "general.activate"}}
+                        </button>
+                      {{/if}}
+                      {{#if programYearProxy.locked}}
+                        {{#if (await programYearProxy.userCanUnLock)}}
+                          <FaIcon
+                            @icon="lock"
+                            class="clickable enabled"
+                            @click={{action "unlockProgramYear" programYearProxy}}
+                          />
+                        {{else}}
+                          <FaIcon @icon="lock" />
+                        {{/if}}
+                      {{else if (await programYearProxy.userCanLock)}}
                         <FaIcon
-                          @icon="lock"
+                          @icon="unlock"
                           class="clickable enabled"
-                          @click={{action "unlockProgramYear" programYearProxy}}
+                          @click={{action "lockProgramYear" programYearProxy}}
                         />
                       {{else}}
-                        <FaIcon @icon="lock" />
+                        <FaIcon @icon="unlock" />
                       {{/if}}
-                    {{else if (await programYearProxy.userCanLock)}}
-                      <FaIcon
-                        @icon="unlock"
-                        class="clickable enabled"
-                        @click={{action "lockProgramYear" programYearProxy}}
-                      />
-                    {{else}}
-                      <FaIcon @icon="unlock" />
+                      {{#if (await programYearProxy.userCanDelete)}}
+                        <FaIcon
+                          @icon="trash"
+                          class="clickable remove enabled"
+                          @click={{action "remove" programYearProxy}}
+                        />
+                      {{else}}
+                        <FaIcon @icon="trash" class="disabled" />
+                      {{/if}}
                     {{/if}}
-                    {{#if (await programYearProxy.userCanDelete)}}
-                      <FaIcon
-                        @icon="trash"
-                        class="clickable remove enabled"
-                        @click={{action "remove" programYearProxy}}
-                      />
-                    {{else}}
-                      <FaIcon @icon="trash" class="disabled" />
-                    {{/if}}
-                  {{/if}}
-                </td>
-              </tr>
-              {{#if programYearProxy.showRemoveConfirmation}}
-                <tr class="confirm-removal">
-                  <td colspan="9" class="hide-from-small-screen">
-                    <div class="confirm-message">
-                      {{t
-                        "general.confirmRemoveProgramYear"
-                        courseCount=programYearProxy.cohort.courses.length
-                      }}
-                      <br>
-                      <div class="confirm-buttons">
-                        <button
-                          type="button"
-                          class="remove text"
-                          {{action "confirmRemove" programYearProxy}}
-                        >
-                          {{t "general.yes"}}
-                        </button>
-                        <button
-                          type="button"
-                          class="done text"
-                          {{action "cancelRemove" programYearProxy}}
-                        >
-                          {{t "general.cancel"}}
-                        </button>
-                      </div>
-                    </div>
-                  </td>
-                  <td colspan="3" class="hide-from-large-screen">
-                    <div class="confirm-message">
-                      {{t
-                        "general.confirmRemoveProgramYear"
-                        courseCount=programYearProxy.cohort.courses.length
-                      }}
-                      <br>
-                      <div class="confirm-buttons">
-                        <button
-                          type="button"
-                          class="remove text"
-                          {{action "confirmRemove" programYearProxy}}
-                        >
-                          {{t "general.yes"}}
-                        </button>
-                        <button
-                          type="button"
-                          class="done text"
-                          {{action "cancelRemove" programYearProxy}}
-                        >
-                          {{t "general.cancel"}}
-                        </button>
-                      </div>
-                    </div>
                   </td>
                 </tr>
-              {{/if}}
-            {{/unless}}
-          {{/each}}
-        </tbody>
-      </table>
-    {{else}}
-      <span class="default-message">
-        {{t "general.noProgramYears"}}
-      </span>
-    {{/if}}
-  </div>
-  {{#liquid-if save.isRunning class="crossFade"}}
-    <WaitSaving
-      @showProgress={{true}}
-      @totalProgress={{itemsToSave}}
-      @currentProgress={{savedItems}}
-    />
-  {{/liquid-if}}
-</section>
+                {{#if programYearProxy.showRemoveConfirmation}}
+                  <tr class="confirm-removal">
+                    <td colspan="9" class="hide-from-small-screen">
+                      <div class="confirm-message">
+                        {{t
+                          "general.confirmRemoveProgramYear"
+                          courseCount=programYearProxy.cohort.courses.length
+                        }}
+                        <br>
+                        <div class="confirm-buttons">
+                          <button
+                            type="button"
+                            class="remove text"
+                            {{action "confirmRemove" programYearProxy}}
+                          >
+                            {{t "general.yes"}}
+                          </button>
+                          <button
+                            type="button"
+                            class="done text"
+                            {{action "cancelRemove" programYearProxy}}
+                          >
+                            {{t "general.cancel"}}
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                    <td colspan="3" class="hide-from-large-screen">
+                      <div class="confirm-message">
+                        {{t
+                          "general.confirmRemoveProgramYear"
+                          courseCount=programYearProxy.cohort.courses.length
+                        }}
+                        <br>
+                        <div class="confirm-buttons">
+                          <button
+                            type="button"
+                            class="remove text"
+                            {{action "confirmRemove" programYearProxy}}
+                          >
+                            {{t "general.yes"}}
+                          </button>
+                          <button
+                            type="button"
+                            class="done text"
+                            {{action "cancelRemove" programYearProxy}}
+                          >
+                            {{t "general.cancel"}}
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                {{/if}}
+              {{/unless}}
+            {{/each}}
+          </tbody>
+        </table>
+      {{else}}
+        <span class="default-message">
+          {{t "general.noProgramYears"}}
+        </span>
+      {{/if}}
+    </div>
+    {{#liquid-if save.isRunning class="crossFade"}}
+      <WaitSaving
+        @showProgress={{true}}
+        @totalProgress={{itemsToSave}}
+        @currentProgress={{savedItems}}
+      />
+    {{/liquid-if}}
+  </section>
+</div>

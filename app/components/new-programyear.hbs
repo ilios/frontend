@@ -1,29 +1,31 @@
-<h4 class="title" data-test-newprogramyear-title>
-  {{t "general.newProgramYear"}}
-</h4>
-<div class="form">
-  <div class="startyear-select" data-test-newprogramyear-startyear>
-    <label>
-      {{t "general.academicYear"}}:
-    </label>
-    <select onchange={{action (mut year) value="target.value"}}>
-      {{#each (sort-by "value" availableAcademicYears) as |obj|}}
-        <option value={{obj.value}} selected={{eq obj selectedYear}}>
-          {{obj.label}}
-        </option>
-      {{/each}}
-    </select>
-  </div>
-  <div class="buttons">
-    <button type="button" class="done text" {{action (perform saveNewYear)}}>
-      {{#if saveNewYear.isRunning}}
-        <LoadingSpinner />
-      {{else}}
-        {{t "general.done"}}
-      {{/if}}
-    </button>
-    <button type="button" class="cancel text" {{action cancel}}>
-      {{t "general.cancel"}}
-    </button>
+<div class="new-programyear" ...attributes>
+  <h4 class="title" data-test-newprogramyear-title>
+    {{t "general.newProgramYear"}}
+  </h4>
+  <div class="form">
+    <div class="startyear-select" data-test-newprogramyear-startyear>
+      <label>
+        {{t "general.academicYear"}}:
+      </label>
+      <select onchange={{action (mut year) value="target.value"}}>
+        {{#each (sort-by "value" availableAcademicYears) as |obj|}}
+          <option value={{obj.value}} selected={{eq obj selectedYear}}>
+            {{obj.label}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="buttons">
+      <button type="button" class="done text" {{action (perform saveNewYear)}}>
+        {{#if saveNewYear.isRunning}}
+          <LoadingSpinner />
+        {{else}}
+          {{t "general.done"}}
+        {{/if}}
+      </button>
+      <button type="button" class="cancel text" {{action cancel}}>
+        {{t "general.cancel"}}
+      </button>
+    </div>
   </div>
 </div>

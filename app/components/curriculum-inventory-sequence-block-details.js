@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 
 export default Component.extend({
-  'data-test-curriculum-inventory-sequence-block-details': true,
+  tagName: "",
   sequenceBlock: null,
   canUpdate: false,
 });

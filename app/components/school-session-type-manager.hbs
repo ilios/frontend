@@ -1,30 +1,32 @@
-{{#if (and (is-fulfilled readonlySessionType) (await readonlySessionType))}}
-  <div class="session-type-title">
-    {{sessionType.title}}
-  </div>
-  <SchoolSessionTypeForm
-    @title={{get (await readonlySessionType) "title"}}
-    @calendarColor={{get (await readonlySessionType) "calendarColor"}}
-    @assessment={{get (await readonlySessionType) "assessment"}}
-    @isActive={{get (await readonlySessionType) "isActive"}}
-    @selectedAssessmentOptionId={{get
-      (await readonlySessionType)
-      "selectedAssessmentOptionId"
-    }}
-    @selectedAamcMethodId={{get
-      (await readonlySessionType)
-      "selectedAamcMethodId"
-    }}
-    @canEditTitle={{and canUpdate (eq sessionType.sessionCount 0)}}
-    @canEditAamcMethod={{canUpdate}}
-    @canEditCalendarColor={{canUpdate}}
-    @canEditAssessment={{and canUpdate (eq sessionType.sessionCount 0)}}
-    @canEditAssessmentOption={{and canUpdate (eq sessionType.sessionCount 0)}}
-    @canEditActive={{canUpdate}}
-    @canUpdate={{canUpdate}}
-    @save={{perform save}}
-    @close={{close}}
-  />
-{{else}}
-  <LoadingSpinner />
-{{/if}}
+<div class="school-session-type-manager" ...attributes>
+  {{#if (and (is-fulfilled readonlySessionType) (await readonlySessionType))}}
+    <div class="session-type-title">
+      {{sessionType.title}}
+    </div>
+    <SchoolSessionTypeForm
+      @title={{get (await readonlySessionType) "title"}}
+      @calendarColor={{get (await readonlySessionType) "calendarColor"}}
+      @assessment={{get (await readonlySessionType) "assessment"}}
+      @isActive={{get (await readonlySessionType) "isActive"}}
+      @selectedAssessmentOptionId={{get
+        (await readonlySessionType)
+        "selectedAssessmentOptionId"
+      }}
+      @selectedAamcMethodId={{get
+        (await readonlySessionType)
+        "selectedAamcMethodId"
+      }}
+      @canEditTitle={{and canUpdate (eq sessionType.sessionCount 0)}}
+      @canEditAamcMethod={{canUpdate}}
+      @canEditCalendarColor={{canUpdate}}
+      @canEditAssessment={{and canUpdate (eq sessionType.sessionCount 0)}}
+      @canEditAssessmentOption={{and canUpdate (eq sessionType.sessionCount 0)}}
+      @canEditActive={{canUpdate}}
+      @canUpdate={{canUpdate}}
+      @save={{perform save}}
+      @close={{close}}
+    />
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</div>

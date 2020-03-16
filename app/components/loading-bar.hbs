@@ -1,2 +1,4 @@
-{{! template-lint-disable no-inline-styles }}
-<span class="bar" value={{progress}} style={{barWidth}}></span>
+<div aria-hidden={{this.ariaHidden}} class="loading-bar" ...attributes>
+  {{! template-lint-disable no-inline-styles }}
+  <span class="bar" value={{progress}} style={{barWidth}}></span>
+</div>

@@ -1,55 +1,57 @@
-<h3>
-  {{t "general.uploadGroupAssignments"}}
-</h3>
-{{#if validUsers}}
-  <p>
-    {{t "general.usersSelected" count=validUsers.length}}
-    <br>
-    <button type="button" {{action "clear"}}>
-      {{t "general.startOver"}}
-    </button>
-  </p>
-  {{#if unmatchedGroups.length}}
-    <table class="group-matcher" data-test-match-groups-unmatched>
-      <caption>
-        {{t "general.matchGroups"}}
-      </caption>
-      <thead>
-        <tr>
-          <td>
-            {{t "general.uploadedGroup"}}
-          </td>
-          <td>
-            {{t "general.existingGroup"}}
-          </td>
-        </tr>
-      </thead>
-      <tbody>
-        {{#each unmatchedGroups as |name|}}
-          <LearnergroupBulkGroupMatcher
-            @groupName={{name}}
-            @setMatch={{action "addMatch"}}
-            @unsetMatch={{action "removeMatch"}}
-            @createGroup={{action "createGroup"}}
-            @matches={{matchedGroups}}
-            @groups={{sort-by "title" (await groups)}}
-          />
-        {{/each}}
-      </tbody>
-    </table>
-  {{/if}}
-  {{#if (and allUnmatchedGroupsMatched (gt validUsers.length 0))}}
-    <LearnergroupBulkFinalizeUsers
-      @users={{validUsers}}
-      @matchedGroups={{matchedGroups}}
+<div class="learnergroup-bulk-assignment" ...attributes>
+  <h3>
+    {{t "general.uploadGroupAssignments"}}
+  </h3>
+  {{#if validUsers}}
+    <p>
+      {{t "general.usersSelected" count=validUsers.length}}
+      <br>
+      <button type="button" {{action "clear"}}>
+        {{t "general.startOver"}}
+      </button>
+    </p>
+    {{#if unmatchedGroups.length}}
+      <table class="group-matcher" data-test-match-groups-unmatched>
+        <caption>
+          {{t "general.matchGroups"}}
+        </caption>
+        <thead>
+          <tr>
+            <td>
+              {{t "general.uploadedGroup"}}
+            </td>
+            <td>
+              {{t "general.existingGroup"}}
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each unmatchedGroups as |name|}}
+            <LearnergroupBulkGroupMatcher
+              @groupName={{name}}
+              @setMatch={{action "addMatch"}}
+              @unsetMatch={{action "removeMatch"}}
+              @createGroup={{action "createGroup"}}
+              @matches={{matchedGroups}}
+              @groups={{sort-by "title" (await groups)}}
+            />
+          {{/each}}
+        </tbody>
+      </table>
+    {{/if}}
+    {{#if (and allUnmatchedGroupsMatched (gt validUsers.length 0))}}
+      <LearnergroupBulkFinalizeUsers
+        @users={{validUsers}}
+        @matchedGroups={{matchedGroups}}
+        @learnerGroup={{learnerGroup}}
+        @done={{done}}
+      />
+    {{/if}}
+  {{else}}
+    <LearnergroupUploadData
       @learnerGroup={{learnerGroup}}
-      @done={{done}}
+      @sendValidUsers={{action (mut validUsers)}}
+      @sendMatchedGroups={{action (mut matchedGroups)}}
     />
   {{/if}}
-{{else}}
-  <LearnergroupUploadData
-    @learnerGroup={{learnerGroup}}
-    @sendValidUsers={{action (mut validUsers)}}
-    @sendMatchedGroups={{action (mut matchedGroups)}}
-  />
-{{/if}}
+</div>

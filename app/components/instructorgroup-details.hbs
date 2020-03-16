@@ -1,70 +1,72 @@
-<div class="backtolink">
-  <LinkTo @route="instructorGroups">
-    {{t "general.backToInstructorGroups"}}
-  </LinkTo>
-</div>
-<InstructorgroupHeader
-  @instructorGroup={{instructorGroup}}
-  @canUpdate={{canUpdate}}
-/>
-<div class="instructorgroup-overview">
-  <h2>
-    {{instructorGroup.title}}
-    {{t "general.members"}}
-    ({{instructorGroup.users.length}})
-  </h2>
-  {{#if (is-fulfilled instructorGroup.users)}}
-    <label>
-      {{t "general.instructors"}}:
-    </label>
-    <div>
-      <ul class="instructorgroup-users">
-        {{#each
-          (sort-by
-            "lastName" "firstName" (await instructorGroup.users)
-          ) as |user|
-        }}
-          {{#if canUpdate}}
-            <li class="clickable" {{action "removeUser" user}}>
-              {{user.fullName}}
-              <FaIcon @icon="times" class="remove" />
-            </li>
-          {{else}}
-            <li>
-              {{user.fullName}}
-            </li>
-          {{/if}}
-        {{/each}}
-      </ul>
-    </div>
-  {{else}}
-    <LoadingSpinner class="instructorgroup-loading" />
-  {{/if}}
-  {{#if canUpdate}}
-    <UserSearch
-      @addUser={{action "addUser"}}
-      @currentlyActiveUsers={{await instructorGroup.users}}
-    />
-  {{/if}}
-  <div class="instructorgroupcourses">
-    <label>
-      {{t "general.associatedCourses"}}:
-    </label>
-    {{#if (is-fulfilled instructorGroup.courses)}}
-      <ul>
-        {{#each (sort-by "title" (await instructorGroup.courses)) as |course|}}
-          <li>
-            <LinkTo @route="course" @model={{course}}>
-              <FaIcon @icon="external-link-square-alt" />
-              {{course.title}}
-            </LinkTo>
-          </li>
-        {{else}}
-          {{t "general.none"}}
-        {{/each}}
-      </ul>
+<div class="instructorgroup-details" ...attributes>
+  <div class="backtolink">
+    <LinkTo @route="instructorGroups">
+      {{t "general.backToInstructorGroups"}}
+    </LinkTo>
+  </div>
+  <InstructorgroupHeader
+    @instructorGroup={{instructorGroup}}
+    @canUpdate={{canUpdate}}
+  />
+  <div class="instructorgroup-overview">
+    <h2>
+      {{instructorGroup.title}}
+      {{t "general.members"}}
+      ({{instructorGroup.users.length}})
+    </h2>
+    {{#if (is-fulfilled instructorGroup.users)}}
+      <label>
+        {{t "general.instructors"}}:
+      </label>
+      <div>
+        <ul class="instructorgroup-users">
+          {{#each
+            (sort-by
+              "lastName" "firstName" (await instructorGroup.users)
+            ) as |user|
+          }}
+            {{#if canUpdate}}
+              <li class="clickable" {{action "removeUser" user}}>
+                {{user.fullName}}
+                <FaIcon @icon="times" class="remove" />
+              </li>
+            {{else}}
+              <li>
+                {{user.fullName}}
+              </li>
+            {{/if}}
+          {{/each}}
+        </ul>
+      </div>
     {{else}}
       <LoadingSpinner class="instructorgroup-loading" />
     {{/if}}
+    {{#if canUpdate}}
+      <UserSearch
+        @addUser={{action "addUser"}}
+        @currentlyActiveUsers={{await instructorGroup.users}}
+      />
+    {{/if}}
+    <div class="instructorgroupcourses">
+      <label>
+        {{t "general.associatedCourses"}}:
+      </label>
+      {{#if (is-fulfilled instructorGroup.courses)}}
+        <ul>
+          {{#each (sort-by "title" (await instructorGroup.courses)) as |course|}}
+            <li>
+              <LinkTo @route="course" @model={{course}}>
+                <FaIcon @icon="external-link-square-alt" />
+                {{course.title}}
+              </LinkTo>
+            </li>
+          {{else}}
+            {{t "general.none"}}
+          {{/each}}
+        </ul>
+      {{else}}
+        <LoadingSpinner class="instructorgroup-loading" />
+      {{/if}}
+    </div>
   </div>
 </div>

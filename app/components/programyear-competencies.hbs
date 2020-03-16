@@ -1,143 +1,145 @@
-<div class="programyear-competencies-header">
-  {{#if isManaging}}
-    <div class="title">
-      <span class="specific-title">
-        {{t "general.competenciesManageTitle"}}
-      </span>
-    </div>
-  {{else}}
-    <div
-      class="title
-        {{if programYear.competencies.length "clickable collapsible"}}"
-      {{action "collapse"}}
-    >
-      {{t "general.competencies"}}
-      ({{get (await programYear.competencies) "length"}})
-    </div>
-  {{/if}}
-  <div class="programyear-competencies-actions">
-    {{#if canUpdate}}
-      {{#if isManaging}}
-        <button type="button" class="bigadd" onclick={{perform save}}>
-          <FaIcon
-            @icon={{if save.isRunning "spinner" "check"}}
-            @spin={{if save.isRunning true false}}
-          />
-        </button>
-        <button type="button" class="bigcancel" {{action "cancel"}}>
-          <FaIcon @icon="undo" />
-        </button>
-      {{else}}
-        <button type="button" {{action setIsManaging true}}>
-          {{t "general.competenciesManageTitle"}}
-        </button>
-      {{/if}}
-    {{/if}}
-  </div>
-</div>
-<div class="programyear-competencies-content">
-  {{#if
-    (and
-      (is-fulfilled programYear.competencies)
-      (is-fulfilled competencies)
-      (not loadSelectedCompetencies.isRunning)
-    )
-  }}
+<div class="programyear-competencies" ...attributes>
+  <div class="programyear-competencies-header">
     {{#if isManaging}}
-      <ul class="managed-competency-list">
-        {{#each (sort-by "title" (await domains)) as |domain|}}
-          <li>
-            {{#if
-              (contains (get domain "id") (map-by "id" selectedCompetencies))
-            }}
-              <span
-                class="clickable"
-                onclick={{action "removeCompetencyFromBuffer" domain}}
-              >
-                <input type="checkbox" checked="">
-                {{domain.title}}
-              </span>
-            {{else}}
-              <span
-                class="clickable"
-                onclick={{action "addCompetencyToBuffer" domain}}
-              >
-                <input
-                  type="checkbox"
-                  indeterminate={{contains
-                    domain
-                    (await competenciesWithSelectedChildren)
-                  }}
-                >
-                {{domain.title}}
-              </span>
-            {{/if}}
-            <ul>
-              {{#each (sort-by "title" (await competencies)) as |competency|}}
-                {{#if (contains competency (await domain.treeChildren))}}
-                  <li>
-                    {{#if
-                      (contains
-                        (get competency "id") (map-by "id" selectedCompetencies)
-                      )
-                    }}
-                      <span
-                        class="clickable"
-                        onclick={{action "removeCompetencyFromBuffer" competency
-                        }}
-                      >
-                        <input type="checkbox" checked="">
-                        {{competency.title}}
-                      </span>
-                    {{else}}
-                      <span
-                        class="clickable"
-                        onclick={{action "addCompetencyToBuffer" competency}}
-                      >
-                        <input type="checkbox">
-                        {{competency.title}}
-                      </span>
-                    {{/if}}
-                  </li>
-                {{/if}}
-              {{/each}}
-            </ul>
-          </li>
-        {{/each}}
-      </ul>
-    {{else if (get (await programYear.competencies) "length")}}
-      <ul class="competency-list">
-        {{#each (sort-by "title" (await domains)) as |domain|}}
-          {{#if
-            (or
-              (contains domain.id (map-by "id" selectedCompetencies))
-              (contains domain (await competenciesWithSelectedChildren))
-            )
-          }}
+      <div class="title">
+        <span class="specific-title">
+          {{t "general.competenciesManageTitle"}}
+        </span>
+      </div>
+    {{else}}
+      <div
+        class="title
+          {{if programYear.competencies.length "clickable collapsible"}}"
+        {{action "collapse"}}
+      >
+        {{t "general.competencies"}}
+        ({{get (await programYear.competencies) "length"}})
+      </div>
+    {{/if}}
+    <div class="programyear-competencies-actions">
+      {{#if canUpdate}}
+        {{#if isManaging}}
+          <button type="button" class="bigadd" onclick={{perform save}}>
+            <FaIcon
+              @icon={{if save.isRunning "spinner" "check"}}
+              @spin={{if save.isRunning true false}}
+            />
+          </button>
+          <button type="button" class="bigcancel" {{action "cancel"}}>
+            <FaIcon @icon="undo" />
+          </button>
+        {{else}}
+          <button type="button" {{action setIsManaging true}}>
+            {{t "general.competenciesManageTitle"}}
+          </button>
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
+  <div class="programyear-competencies-content">
+    {{#if
+      (and
+        (is-fulfilled programYear.competencies)
+        (is-fulfilled competencies)
+        (not loadSelectedCompetencies.isRunning)
+      )
+    }}
+      {{#if isManaging}}
+        <ul class="managed-competency-list">
+          {{#each (sort-by "title" (await domains)) as |domain|}}
             <li>
-              {{domain.title}}
+              {{#if
+                (contains (get domain "id") (map-by "id" selectedCompetencies))
+              }}
+                <span
+                  class="clickable"
+                  onclick={{action "removeCompetencyFromBuffer" domain}}
+                >
+                  <input type="checkbox" checked="">
+                  {{domain.title}}
+                </span>
+              {{else}}
+                <span
+                  class="clickable"
+                  onclick={{action "addCompetencyToBuffer" domain}}
+                >
+                  <input
+                    type="checkbox"
+                    indeterminate={{contains
+                      domain
+                      (await competenciesWithSelectedChildren)
+                    }}
+                  >
+                  {{domain.title}}
+                </span>
+              {{/if}}
               <ul>
                 {{#each (sort-by "title" (await competencies)) as |competency|}}
-                  {{#if
-                    (and
-                      (contains competency (await domain.treeChildren))
-                      (contains
-                        competency.id (map-by "id" selectedCompetencies)
-                      )
-                    )
-                  }}
+                  {{#if (contains competency (await domain.treeChildren))}}
                     <li>
-                      {{competency.title}}
+                      {{#if
+                        (contains
+                          (get competency "id") (map-by "id" selectedCompetencies)
+                        )
+                      }}
+                        <span
+                          class="clickable"
+                          onclick={{action "removeCompetencyFromBuffer" competency
+                          }}
+                        >
+                          <input type="checkbox" checked="">
+                          {{competency.title}}
+                        </span>
+                      {{else}}
+                        <span
+                          class="clickable"
+                          onclick={{action "addCompetencyToBuffer" competency}}
+                        >
+                          <input type="checkbox">
+                          {{competency.title}}
+                        </span>
+                      {{/if}}
                     </li>
                   {{/if}}
                 {{/each}}
               </ul>
             </li>
-          {{/if}}
-        {{/each}}
-      </ul>
+          {{/each}}
+        </ul>
+      {{else if (get (await programYear.competencies) "length")}}
+        <ul class="competency-list">
+          {{#each (sort-by "title" (await domains)) as |domain|}}
+            {{#if
+              (or
+                (contains domain.id (map-by "id" selectedCompetencies))
+                (contains domain (await competenciesWithSelectedChildren))
+              )
+            }}
+              <li>
+                {{domain.title}}
+                <ul>
+                  {{#each (sort-by "title" (await competencies)) as |competency|}}
+                    {{#if
+                      (and
+                        (contains competency (await domain.treeChildren))
+                        (contains
+                          competency.id (map-by "id" selectedCompetencies)
+                        )
+                      )
+                    }}
+                      <li>
+                        {{competency.title}}
+                      </li>
+                    {{/if}}
+                  {{/each}}
+                </ul>
+              </li>
+            {{/if}}
+          {{/each}}
+        </ul>
+      {{/if}}
+    {{else}}
+      <LoadingSpinner />
     {{/if}}
-  {{else}}
-    <LoadingSpinner />
-  {{/if}}
+  </div>
 </div>

@@ -1,39 +1,41 @@
-{{! template-lint-disable no-bare-strings }}
-<div class="title">
-  <h4 class="school-title">
-    {{instructorGroup.school.title}}
-    &gt;
-  </h4>
-  {{#if canUpdate}}
-    <EditableField
-      data-test-group-title
-      @value={{title}}
-      @save={{action "changeTitle"}}
-      @close={{action "revertTitleChanges"}}
-      @saveOnEnter={{true}}
-      @closeOnEscape={{true}} as |isSaving|
-    >
-      <input
-        type="text"
-        value={{title}}
-        oninput={{action (mut title) value="target.value"}}
-        disabled={{isSaving}}
-        onkeyup={{action "addErrorDisplayFor" "title"}}
-      >
-      {{#if (and (v-get this "title" "isInvalid") (contains "title" showErrorsFor))
-      }}
-        <span class="validation-error-message">
-          {{v-get this "title" "message"}}
-        </span>
-      {{/if}}
-    </EditableField>
-  {{else}}
-    <h4 data-test-group-title>
-      {{title}}
+<div class="instructorgroup-header" ...attributes>
+  {{! template-lint-disable no-bare-strings }}
+  <div class="title">
+    <h4 class="school-title">
+      {{instructorGroup.school.title}}
+      &gt;
     </h4>
-  {{/if}}
+    {{#if canUpdate}}
+      <EditableField
+        data-test-group-title
+        @value={{title}}
+        @save={{action "changeTitle"}}
+        @close={{action "revertTitleChanges"}}
+        @saveOnEnter={{true}}
+        @closeOnEscape={{true}} as |isSaving|
+      >
+        <input
+          type="text"
+          value={{title}}
+          oninput={{action (mut title) value="target.value"}}
+          disabled={{isSaving}}
+          onkeyup={{action "addErrorDisplayFor" "title"}}
+        >
+        {{#if (and (v-get this "title" "isInvalid") (contains "title" showErrorsFor))
+        }}
+          <span class="validation-error-message">
+            {{v-get this "title" "message"}}
+          </span>
+        {{/if}}
+      </EditableField>
+    {{else}}
+      <h4 data-test-group-title>
+        {{title}}
+      </h4>
+    {{/if}}
+  </div>
+  <span class="info">
+    {{t "general.members"}}:
+    {{instructorGroup.users.length}}
+  </span>
 </div>
-<span class="info">
-  {{t "general.members"}}:
-  {{instructorGroup.users.length}}
-</span>

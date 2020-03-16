@@ -13,12 +13,7 @@ export default Component.extend(DomMixin, ReportTitleMixin, {
   preserveScroll: service(),
   reporting: service(),
   store: service(),
-
-  classNames: ['dashboard-myreports'],
-  tagName: 'div',
-
-  'data-test-dashboard-myreports': true,
-
+  tagName: "",
   finishedBuildingReport: false,
   myReportEditorOn: false,
   scrollKey: 'reportList',

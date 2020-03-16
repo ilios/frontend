@@ -7,10 +7,7 @@ import { task } from 'ember-concurrency';
 export default Component.extend({
   intl: service(),
   store: service(),
-
-  classNames: ['curriculum-inventory-sequence-block-overview'],
-  tagName: 'section',
-
+  tagName: "",
   academicLevel: null,
   academicLevels: null,
   canUpdate: false,

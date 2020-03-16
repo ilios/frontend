@@ -6,9 +6,7 @@ import { filter, map } from 'rsvp';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
-  classNameBindings: ['isIcon::not-icon', ':visualizer-session-type-terms'],
-  tagName: 'span',
-
+  tagName: "",
   isIcon: false,
   sessionType: null,
   tooltipContent: null,

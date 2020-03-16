@@ -1,43 +1,45 @@
-<div class="curriculum-inventory-leadership-expanded-header">
-  <div class="title collapsible clickable" {{action collapse}}>
-    {{t "general.curriculumInventoryReportLeadership"}}
+<div class="curriculum-inventory-leadership-expanded" data-test-curriculum-inventory-leadership-expanded ...attributes>
+  <div class="curriculum-inventory-leadership-expanded-header">
+    <div class="title collapsible clickable" {{action collapse}}>
+      {{t "general.curriculumInventoryReportLeadership"}}
+    </div>
+    <div class="actions">
+      {{#if isManaging}}
+        <button type="button" class="bigadd" onclick={{perform save}}>
+          <FaIcon
+            @icon={{if save.isRunning "spinner" "check"}}
+            @spin={{if isSaving true false}}
+          />
+        </button>
+        <button type="button" class="bigcancel" {{action setIsManaging false}}>
+          <FaIcon @icon="undo" />
+        </button>
+      {{else if canUpdate}}
+        <button type="button" {{action setIsManaging true}}>
+          {{t "general.manageLeadership"}}
+        </button>
+      {{/if}}
+    </div>
   </div>
-  <div class="actions">
-    {{#if isManaging}}
-      <button type="button" class="bigadd" onclick={{perform save}}>
-        <FaIcon
-          @icon={{if save.isRunning "spinner" "check"}}
-          @spin={{if isSaving true false}}
+  <div class="curriculum-inventory-leadership-expanded-content">
+    {{#if (is-array administrators)}}
+      {{#if isManaging}}
+        <LeadershipManager
+          @showAdministrators={{true}}
+          @showDirectors={{false}}
+          @administrators={{administrators}}
+          @removeAdministrator={{action "removeAdministrator"}}
+          @addAdministrator={{action "addAdministrator"}}
         />
-      </button>
-      <button type="button" class="bigcancel" {{action setIsManaging false}}>
-        <FaIcon @icon="undo" />
-      </button>
-    {{else if canUpdate}}
-      <button type="button" {{action setIsManaging true}}>
-        {{t "general.manageLeadership"}}
-      </button>
+      {{else}}
+        <LeadershipList
+          @showAdministrators={{true}}
+          @showDirectors={{false}}
+          @administrators={{administrators}}
+        />
+      {{/if}}
+    {{else}}
+      <LoadingSpinner @tagName="h3" />
     {{/if}}
   </div>
-</div>
-<div class="curriculum-inventory-leadership-expanded-content">
-  {{#if (is-array administrators)}}
-    {{#if isManaging}}
-      <LeadershipManager
-        @showAdministrators={{true}}
-        @showDirectors={{false}}
-        @administrators={{administrators}}
-        @removeAdministrator={{action "removeAdministrator"}}
-        @addAdministrator={{action "addAdministrator"}}
-      />
-    {{else}}
-      <LeadershipList
-        @showAdministrators={{true}}
-        @showDirectors={{false}}
-        @administrators={{administrators}}
-      />
-    {{/if}}
-  {{else}}
-    <LoadingSpinner @tagName="h3" />
-  {{/if}}
 </div>

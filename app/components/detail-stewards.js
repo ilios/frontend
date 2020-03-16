@@ -8,7 +8,7 @@ import { task, timeout } from 'ember-concurrency';
 export default Component.extend({
   store: service(),
 
-  classNameBindings: [':detail-stewards', ':stewards-manager', 'showCollapsible:collapsible'],
+  tagName: "",
 
   bufferStewards: null,
   editable: true,

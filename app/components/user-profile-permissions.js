@@ -7,7 +7,7 @@ import moment from 'moment';
 
 export default Component.extend({
   store: service(),
-  classNames: ['user-profile-permissions', 'large-component'],
+  tagName: "",
   selectedSchoolId: null,
   selectedYearId: null,
   schoolCollapsed: true,

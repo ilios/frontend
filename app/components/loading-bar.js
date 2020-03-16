@@ -4,11 +4,9 @@ import { task, timeout } from 'ember-concurrency';
 import { htmlSafe } from '@ember/string';
 
 export default Component.extend({
-  classNameBindings: [':loading-bar'],
-  attributeBindings: ['ariaHidden:aria-hidden'],
+  tagName: "",
   ariaHidden: 'true',
   progress: 0,
-
   isLoading: false,
 
   barWidth: computed('progress', function () {
@@ -43,5 +41,5 @@ export default Component.extend({
       yield timeout(500);
       this.set('progress', 0);
     }
-  }).drop(),
+  }).drop()
 });

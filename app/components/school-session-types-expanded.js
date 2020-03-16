@@ -6,16 +6,12 @@ import { task } from 'ember-concurrency';
 
 export default Component.extend({
   store: service(),
-
-  classNames: ['school-session-types-expanded'],
-  tagName: 'section',
-
+  tagName: "",
   canCreate: false,
   canDelete: false,
   canUpdate: false,
   managedSessionTypeId: null,
   school: null,
-
   isManaging: notEmpty('managedSessionTypeId'),
 
   isCollapsible: computed('isManaging', 'school.session-types.length', async function() {

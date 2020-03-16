@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 
 export default Component.extend({
-  classNames: ['programyear-details'],
+  tagName: "",
 
   canUpdate: false,
   program: null,
