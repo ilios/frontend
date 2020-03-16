@@ -41,7 +41,7 @@
     {{#if @editable}}
       <Course::PublicationMenu @course={{@course}} />
     {{else}}
-      <PublicationStatus @item={{@course}} />
+      <PublicationStatus @item={{@course}} @showIcon={{true}} @showText={{true}} />
     {{/if}}
   </span>
 </div>

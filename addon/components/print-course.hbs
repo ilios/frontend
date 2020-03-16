@@ -11,7 +11,7 @@
     <h4>
       {{@course.academicYear}}
     </h4>
-    <PublicationStatus @item={{@course}} />
+    <PublicationStatus @item={{@course}} @showIcon={{true}} @showText={{true}} />
   </div>
   <section class="overview block" data-test-course-overview>
     <div class="title">
@@ -268,7 +268,7 @@
       <h2>
         {{session.title}}
       </h2>
-      <PublicationStatus @item={{session}} />
+      <PublicationStatus @item={{session}} @showIcon={{true}} @showText={{true}} />
     </div>
     <section class="overview block">
       <div class="title">
