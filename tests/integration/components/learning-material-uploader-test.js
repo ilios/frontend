@@ -2,8 +2,8 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { upload as uploadHandler } from 'ember-file-upload/mirage';
-import { upload as uploadAction } from 'ember-file-upload/test-support';
+import { upload  } from 'ember-file-upload/mirage';
+import { selectFiles } from 'ember-file-upload/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import Service from '@ember/service';
 import Response from 'ember-cli-mirage/response';
@@ -21,7 +21,7 @@ module('Integration | Component | learning-material-uploader', function(hooks) {
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
 
-    this.server.post('/upload', uploadHandler(function (db, request) {
+    this.server.post('/upload', upload(function (db, request) {
       const { name } = request.requestBody.file;
       assert.equal(name, 'blob');
       return new Response(200, {}, {
@@ -45,7 +45,7 @@ module('Integration | Component | learning-material-uploader', function(hooks) {
       @setFileHash={{this.setFileHash}}
     />`);
     const file = new Blob(['test'], { type: 'text/plain' });
-    await uploadAction('[data-test-learning-material-uploader] input', file, 'test.file');
+    await selectFiles('[data-test-learning-material-uploader] input', file);
     assert.equal(filename, 'test.file');
     assert.equal(fileHash, '1234');
     assert.dom('[data-test-learning-material-uploader]').containsText('test.file');
@@ -68,7 +68,7 @@ module('Integration | Component | learning-material-uploader', function(hooks) {
       @setFileHash={{this.nothing}}
     />`);
     const file = new Blob(['test'], { type: 'text/plain' });
-    await uploadAction('[data-test-learning-material-uploader] input', file, 'test.file');
+    await selectFiles('[data-test-learning-material-uploader] input', file);
     assert.dom('[data-test-learning-material-uploader]').includesText('This file is too large.');
   });
 });
