@@ -1,60 +1,36 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-const { alias } = computed;
+export default class ProgressBarComponent extends Component {
 
-export default Component.extend({
-  publishedLangKey: 'general.published',
-  scheduledLangKey: 'general.scheduled',
-  notPublishedLangKey: 'general.notPublished',
-
-  showIcon: true,
-  showText: true,
-  tagName: 'span',
-  classNameBindings: [
-    ':status',
-    ':publication-status',
-    'publicationStatus'
-  ],
-  item: null,
-  isPublished: alias('item.isPublished'),
-  isScheduled: alias('item.publishedAsTbd'),
-  textKey: computed('publishedLangKey', 'scheduledLangKey',  'notPublishedLangKey', 'isPublished', 'isScheduled', function(){
-    const isPublished = this.get('isPublished');
-    const isScheduled = this.get('isScheduled');
-    const publishedLangKey = this.get('publishedLangKey');
-    const scheduledLangKey = this.get('scheduledLangKey');
-    const notPublishedLangKey = this.get('notPublishedLangKey');
-    if (isScheduled) {
-      return scheduledLangKey;
+  get textKey(){
+    if (this.args.item.isScheduled) {
+      return 'general.scheduled';
     }
-    if (isPublished) {
-      return publishedLangKey;
+    if (this.args.item.isPublished) {
+      return 'general.published';
     }
 
-    return notPublishedLangKey;
-  }),
-  iconKey: computed('isPublished', 'isScheduled', function(){
-    const isPublished = this.get('isPublished');
-    const isScheduled = this.get('isScheduled');
-    if (isScheduled) {
+    return 'general.notPublished';
+  }
+
+  get iconKey() {
+    if (this.args.item.isScheduled) {
       return 'clock';
     }
-    if (isPublished) {
+    if (this.args.item.isPublished) {
       return 'star';
     }
 
     return 'star-half-alt';
-  }),
-  publicationStatus: computed('isPublished', 'isScheduled', function(){
-    const isPublished = this.get('isPublished');
-    const isScheduled = this.get('isScheduled');
-    if(isScheduled){
+  }
+
+  get publicationStatus() {
+    if(this.args.item.isScheduled){
       return 'scheduled';
-    } else if (isPublished){
+    } else if (this.args.item.isPublished){
       return 'published';
     }
 
     return 'notpublished';
-  }),
-});
+  }
+}

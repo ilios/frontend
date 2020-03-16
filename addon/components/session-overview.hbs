@@ -34,7 +34,7 @@
         {{#if @editable}}
           <Session::PublicationMenu @session={{@session}} @hideCheckLink={{@hideCheckLink}} />
         {{else}}
-          <PublicationStatus @item={{@session}} />
+          <PublicationStatus @item={{@session}} @showIcon={{true}} @showText={{true}} />
         {{/if}}
       </span>
     </div>

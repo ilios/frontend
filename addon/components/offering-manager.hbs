@@ -1,91 +1,98 @@
-{{#if (and this.isEditing (is-fulfilled @offering.session.course.cohorts))}}
-  <OfferingForm
-    @showRoom={{true}}
-    @showInstructors={{true}}
-    @cohorts={{await @offering.session.course.cohorts}}
-    @courseStartDate={{await @offering.session.course.startDate}}
-    @courseEndDate={{await @offering.session.course.startDate}}
-    @close={{toggle "isEditing" this}}
-    @save={{fn this.save}}
-    @smallGroupMode={{false}}
-    @offering={{@offering}}
-    @session={{await @offering.session}}
-  />
-{{else}}
-  <div class="offering-manager-learner-groups">
-    <ul>
-      {{#each (await @offering.learnerGroups) as |learnerGroup|}}
-        <li>
-          {{learnerGroup.title}}
-          {{#if
-            (and
-              (not learnerGroup.isTopLevelGroup)
-              (is-fulfilled learnerGroup.allParents)
-            )
-          }}
-            <AttachTooltip @lazyRender={{true}} @animation="shift">
-              {{join " > " (map-by "title" (await learnerGroup.allParents))}}
-            </AttachTooltip>
-          {{/if}}
-        </li>
-      {{else}}
-        <li>
-          <FaIcon @icon="users" />
-        </li>
-      {{/each}}
-    </ul>
-  </div>
-  <div class="offering-manager-location">
-    {{@offering.room}}
-  </div>
-  <div class="offering-manager-instructors">
-    <ul>
-      {{#each (await @offering.allInstructors) as |instructor|}}
-        <li data-test-instructor>
-          {{instructor.fullName}}
-        </li>
-      {{else}}
-        <li>
-          <FaIcon @icon="user-plus" />
-        </li>
-      {{/each}}
-    </ul>
-  </div>
-  {{#if @editable}}
-    <div class="offering-manager-actions">
-      <span
-        class="clickable edit"
-        role="button"
-        {{on "click" (toggle "isEditing" this)}}
-      >
-        <FaIcon @icon="edit" class="enabled" />
-      </span>
-      {{#if (await this.userCanDelete)}}
-        <span class="clickable remove" role="button" {{on "click" (fn this.confirmRemove)}}>
-          <FaIcon @icon="trash" class="enabled" />
-        </span>
-      {{else}}
-        <FaIcon @icon="trash" class="disabled" />
-      {{/if}}
+<div
+  class="offering-manager {{if this.showRemoveConfirmation "show-remove-confirmation"}}"
+  data-test-offering-manager
+  ...attributes
+>
+  {{#if (and this.isEditing (is-fulfilled @offering.session.course.cohorts))}}
+    <OfferingForm
+      @showRoom={{true}}
+      @showInstructors={{true}}
+      @cohorts={{await @offering.session.course.cohorts}}
+      @courseStartDate={{await @offering.session.course.startDate}}
+      @courseEndDate={{await @offering.session.course.startDate}}
+      @close={{toggle "isEditing" this}}
+      @save={{this.save}}
+      @smallGroupMode={{false}}
+      @offering={{@offering}}
+      @session={{await @offering.session}}
+    />
+  {{else}}
+    <div class="offering-manager-learner-groups">
+      <ul>
+        {{#each (await @offering.learnerGroups) as |learnerGroup|}}
+          <li>
+            {{learnerGroup.title}}
+            {{#if
+              (and
+                (not learnerGroup.isTopLevelGroup)
+                (is-fulfilled learnerGroup.allParents)
+              )
+            }}
+              <AttachTooltip @lazyRender={{true}} @animation="shift">
+                {{join " > " (map-by "title" (await learnerGroup.allParents))}}
+              </AttachTooltip>
+            {{/if}}
+          </li>
+        {{else}}
+          <li>
+            <FaIcon @icon="users" />
+          </li>
+        {{/each}}
+      </ul>
     </div>
-  {{/if}}
-  {{#if this.showRemoveConfirmation class="vertical"}}
-    <div class="confirm-removal">
-      <div class="confirm-message">
-        {{t
-          "general.confirmRemove"
-          learnerGroupCount=@offering.learnerGroups.length
-        }}
-        <br>
-        <div class="confirm-buttons">
-          <button type="button" class="remove text" {{on "click" (fn @remove @offering)}}>
-            {{t "general.yes"}}
-          </button>
-          <button type="button" class="cancel text" {{on "click" (fn this.cancelRemove)}}>
-            {{t "general.cancel"}}
-          </button>
+    <div class="offering-manager-location">
+      {{@offering.room}}
+    </div>
+    <div class="offering-manager-instructors">
+      <ul>
+        {{#each (await @offering.allInstructors) as |instructor|}}
+          <li data-test-instructor>
+            {{instructor.fullName}}
+          </li>
+        {{else}}
+          <li>
+            <FaIcon @icon="user-plus" />
+          </li>
+        {{/each}}
+      </ul>
+    </div>
+    {{#if @editable}}
+      <div class="offering-manager-actions">
+        <span
+          class="clickable edit"
+          role="button"
+          {{on "click" (toggle "isEditing" this)}}
+        >
+          <FaIcon @icon="edit" class="enabled" />
+        </span>
+        {{#if @editable}}
+          <span class="clickable remove" role="button" {{on "click" (set this.showRemoveConfirmation true)}}>
+            <FaIcon @icon="trash" class="enabled" />
+          </span>
+        {{else}}
+          <FaIcon @icon="trash" class="disabled" />
+        {{/if}}
+      </div>
+    {{/if}}
+    {{#if this.showRemoveConfirmation class="vertical"}}
+      <div class="confirm-removal">
+        <div class="confirm-message">
+          {{t
+            "general.confirmRemove"
+            learnerGroupCount=@offering.learnerGroups.length
+          }}
+          <br>
+          <div class="confirm-buttons">
+            <button type="button" class="remove text" {{on "click" (fn @remove @offering)}}>
+              {{t "general.yes"}}
+            </button>
+            <button type="button" class="cancel text" {{on "click" (set this.showRemoveConfirmation false)}}>
+              {{t "general.cancel"}}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    {{/if}}
   {{/if}}
-{{/if}}
+
+</div>

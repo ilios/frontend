@@ -1,63 +1,67 @@
-<h4>
-  {{t "general.newSession"}}
-</h4>
-<div class="new-session-content">
-  <div class="item">
-    <label>
-      {{t "general.title"}}:
-    </label>
-    <input
-      type="text"
-      value={{this.title}}
-      class={{if
-        (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))
-        "has-error"
-      }}
-      data-test-title
-      {{on "input" (fn this.changeTitle)}}
-      {{on "keyup" (fn this.addErrorDisplayFor "title")}}
-    >
-    {{#if (and (v-get this "title" "isInvalid") (contains "title" this.showErrorsFor))}}
-      <span class="validation-error-message">
-        {{v-get this "title" "message"}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item">
-    <label>
-      {{t "general.sessionType"}}:
-    </label>
-    {{#if (is-fulfilled this.activeSessionTypes)}}
-      <select data-test-type {{on "change" (fn this.changeSelectedSessionTypeId)}}>
-        {{#each (sort-by "title" (await this.activeSessionTypes)) as |sessionType|}}
-          <option
-            value={{sessionType.id}}
-            selected={{eq sessionType.id (get (await this.selectedSessionType) "id")
-            }}
-          >
-            {{sessionType.title}}
-          </option>
-        {{/each}}
-      </select>
-    {{else}}
-      <LoadingSpinner />
-    {{/if}}
-  </div>
-  <div class="buttons">
-    <button
-      class="done text"
-      type="button"
-      data-test-save
-      {{on "click" (perform this.saveNewSession)}}
-    >
-      {{#if this.saveNewSession.isRunning}}
-        <LoadingSpinner />
+<div
+
+  class="new-session"
+  data-test-new-session
+  ...attributes
+  {{did-insert (fn this.load) @sessionTypes}}
+  {{did-update (fn this.load) @sessionTypes}}
+>
+  <h4>{{t "general.newSession"}}</h4>
+  <div class="new-session-content">
+    <div class="item">
+      <label>
+        {{t "general.title"}}:
+      </label>
+      <Input
+        type="text"
+        @value={{this.title}}
+        @focus-out={{fn this.addErrorDisplayFor "title"}}
+        @key-down={{this.keyboard}}
+        class={{if (await (compute (fn this.hasErrorFor) "title")) "has-error"}}
+        disabled={{this.saveNewSession.isRunning}}
+        data-test-title
+      />
+      {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+        <span class="validation-error-message">
+          {{message}}
+        </span>
+      {{/each}}
+    </div>
+    <div class="item">
+      <label>
+        {{t "general.sessionType"}}:
+      </label>
+      {{#if (is-array this.activeSessionTypes)}}
+        <select data-test-type {{on "change" (fn this.changeSelectedSessionTypeId)}}>
+          {{#each (sort-by "title" this.activeSessionTypes) as |sessionType|}}
+            <option
+              value={{sessionType.id}}
+              selected={{eq sessionType.id this.selectedSessionType.id}}
+            >
+              {{sessionType.title}}
+            </option>
+          {{/each}}
+        </select>
       {{else}}
-        {{t "general.save"}}
+        <LoadingSpinner />
       {{/if}}
-    </button>
-    <button class="cancel text" type="button" data-test-cancel {{on "click" this.cancel}}>
-      {{t "general.cancel"}}
-    </button>
+    </div>
+    <div class="buttons">
+      <button
+        class="done text"
+        type="button"
+        data-test-save
+        {{on "click" (perform this.saveNewSession)}}
+      >
+        {{#if this.saveNewSession.isRunning}}
+          <LoadingSpinner />
+        {{else}}
+          {{t "general.save"}}
+        {{/if}}
+      </button>
+      <button class="cancel text" type="button" data-test-cancel {{on "click" @cancel}}>
+        {{t "general.cancel"}}
+      </button>
+    </div>
   </div>
 </div>

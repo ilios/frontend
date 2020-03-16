@@ -1,78 +1,66 @@
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { action, computed } from '@ember/object';
-import Component from '@ember/component';
-import { isPresent, isEmpty } from '@ember/utils';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { task } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { dropTask } from 'ember-concurrency-decorators';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 
-const Validations = buildValidations({
-  title: [
-    validator('presence', true),
-    validator('length', {
-      min: 3,
-      max: 200,
-      descriptionKey: 'general.title'
-    }),
-  ]
-});
+@validatable
+export default class NewSessionComponent extends Component {
+  @service store;
 
-export default Component.extend(ValidationErrorDisplay, Validations, {
-  store: service(),
-  classNames: ['new-session'],
+  @NotBlank() @Length(3, 200) @tracked title;
+  @tracked selectedSessionTypeId;
+  @tracked activeSessionTypes;
 
-  sessionTypes: null,
+  @action
+  load(element, [sessionTypes]) {
+    if (!sessionTypes) {
+      return;
+    }
 
-  title: null,
-  selectedSessionTypeId: null,
-  isSaving: false,
+    this.activeSessionTypes = sessionTypes.filterBy('active', true);
+  }
 
-  'data-test-new-session': true,
-
-  activeSessionTypes: computed('sessionTypes.[]', async function() {
-    const sessionTypes = await this.get('sessionTypes');
-    return sessionTypes.filterBy('active', true);
-  }),
-
-  selectedSessionType: computed('activeSessionTypes.[]', 'selectedSessionTypeId', async function() {
+  get selectedSessionType() {
     let selectedSessionType;
-    const sessionTypes = await this.sessionTypes;
-    const selectedSessionTypeId = this.selectedSessionTypeId;
 
-    if (isPresent(selectedSessionTypeId)) {
-      selectedSessionType = sessionTypes.find((sessionType) => {
-        return parseInt(sessionType.id, 10) === parseInt(selectedSessionTypeId, 10);
+    if (this.selectedSessionTypeId) {
+      selectedSessionType = this.args.sessionTypes.find(sessionType => {
+        return Number(sessionType.id) === this.selectedSessionTypeId;
       });
     }
 
-    if (isEmpty(selectedSessionType)) {
+    if (!selectedSessionType) {
       // try and default to a type names 'Lecture';
-      selectedSessionType = sessionTypes.find(sessionType => sessionType.title === 'Lecture');
+      selectedSessionType = this.args.sessionTypes.findBy('title', 'Lecture');
     }
 
-    if (isEmpty(selectedSessionType)) {
-      selectedSessionType = sessionTypes.firstObject;
+    if (!selectedSessionType) {
+      selectedSessionType = this.args.sessionTypes.firstObject;
     }
 
     return selectedSessionType;
-  }),
+  }
 
-  saveNewSession: task(function * () {
-    const save = this.get('save');
-    this.send('addErrorDisplayFor', 'title');
-    const { validations } = yield this.validate();
-    if (validations.get('isValid')) {
-      const sessionType = yield this.get('selectedSessionType');
-      const session = this.get('store').createRecord('session', {
-        title: this.get('title'),
-        sessionType
-      });
-      yield save(session);
-      this.cancel();
+  @dropTask
+  *saveNewSession() {
+    this.addErrorDisplayFor('title');
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
     }
-  }),
+    this.removeErrorDisplayFor('title');
+    const session = this.store.createRecord('session', {
+      title: this.title,
+      sessionType: this.selectedSessionType
+    });
+    yield this.args.save(session);
+    this.args.cancel();
+  }
 
-  keyUp(event) {
+  @action
+  keyboard(event) {
     const keyCode = event.keyCode;
     const target = event.target;
 
@@ -88,15 +76,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     if(27 === keyCode) {
       this.cancel();
     }
-  },
-
-  @action
-  changeTitle(event) {
-    this.set('title', event.target.value);
-  },
+  }
 
   @action
   changeSelectedSessionTypeId(event) {
-    this.set('selectedSessionTypeId', event.target.value);
+    this.selectedSessionTypeId = Number(event.target.value);
   }
-});
+}
