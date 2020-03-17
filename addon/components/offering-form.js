@@ -26,6 +26,7 @@ export default class OfferingForm extends Component {
   @tracked endDate = null;
   @NotBlank() @Length(1, 255) @tracked room = 'TBD';
   @ValidateIf(o => o.args.smallGroupMode) @ArrayNotEmpty() @tracked learnerGroups = [];
+  @tracked learners = [];
   @tracked showOfferingCalendar = false;
   @tracked makeRecurring = false;
   @tracked recurringDays = null;
@@ -147,6 +148,16 @@ export default class OfferingForm extends Component {
   }
 
   @action
+  async addLearner(learner) {
+    this.learners = [...this.learners, learner];
+  }
+
+  @action
+  async removeLearner(learner) {
+    this.learners = this.learners.filter(l => l !== learner);
+  }
+
+  @action
   toggleRecurringDay(day) {
     if (this.recurringDays.includes(day)) {
       this.recurringDays = this.recurringDays.filter(d => d !== day);
@@ -257,6 +268,7 @@ export default class OfferingForm extends Component {
     this.endDate = moment(this.defaultStartDate).hour(9).minute(0).second(0).toDate();
     this.room = 'TBD';
     this.learnerGroups = [];
+    this.learners = [];
     this.recurringDays = [];
     this.instructors = [];
     this.instructorGroups = [];
@@ -274,10 +286,12 @@ export default class OfferingForm extends Component {
     this.recurringDays = [];
     const obj = yield hash({
       learnerGroups: offering.get('learnerGroups'),
+      learners: offering.get('learners'),
       instructors: offering.get('instructors'),
       instructorGroups: offering.get('instructorGroups'),
     });
     this.learnerGroups = obj.learnerGroups.toArray();
+    this.learners = obj.learners.toArray();
     this.instructors = obj.instructors.toArray();
     this.instructorGroups = obj.instructorGroups.toArray();
     this.loaded = true;
@@ -310,8 +324,8 @@ export default class OfferingForm extends Component {
     let parts;
     while (offerings.length > 0) {
       parts = offerings.splice(0, 5);
-      yield map(parts, ({startDate, endDate, room, learnerGroups, instructorGroups, instructors}) => {
-        return this.args.save(startDate, endDate, room, learnerGroups, instructorGroups, instructors);
+      yield map(parts, ({startDate, endDate, room, learnerGroups, learners, instructorGroups, instructors}) => {
+        return this.args.save(startDate, endDate, room, learnerGroups, learners, instructorGroups, instructors);
       });
       this.savedOfferings = this.savedOfferings + parts.length;
     }
@@ -329,6 +343,7 @@ export default class OfferingForm extends Component {
       endDate: this.endDate,
       room: this.room,
       learnerGroups,
+      learners: this.learners,
       instructorGroups: this.instructorGroups,
       instructors: this.instructors
     });
@@ -387,7 +402,7 @@ export default class OfferingForm extends Component {
     const smallGroupOfferings = [];
 
     for (let i = 0; i < offerings.length; i++) {
-      const {startDate, endDate, learnerGroups} = offerings[i];
+      const {startDate, endDate, learnerGroups, learners} = offerings[i];
       let {room} = offerings[i];
       for (let j = 0; j < learnerGroups.length; j++) {
         const learnerGroup = learnerGroups[j];
@@ -397,7 +412,7 @@ export default class OfferingForm extends Component {
         }
         const instructors = yield learnerGroup.get('instructors');
         const instructorGroups = yield learnerGroup.get('instructorGroups');
-        const offering = {startDate, endDate, room, instructorGroups, instructors};
+        const offering = {startDate, endDate, room, instructorGroups, instructors, learners};
         offering.learnerGroups = [learnerGroup];
 
         smallGroupOfferings.pushObject(offering);

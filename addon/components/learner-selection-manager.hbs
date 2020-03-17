@@ -1,0 +1,24 @@
+<div class="learner-selection-manager" data-test-learner-selection-manager>
+  <div class="selected-learners">
+    <h4>
+      {{t "general.selectedLearners"}}
+    </h4>
+    {{#if @learners.length}}
+      <DetailLearnerList
+          @learners={{@learners}}
+          @isManaging={{true}}
+          @remove={{@remove}}
+      />
+    {{else}}
+      <p>
+        {{t "general.none"}}
+      </p>
+    {{/if}}
+  </div>
+
+  <UserSearch
+    @addUser={{@add}}
+    @currentlyActiveUsers={{@learners}}
+    @placeholder={{t "general.findLearners"}}
+  />
+</div>

@@ -111,6 +111,7 @@ general:
   filterPlaceholder: "Start typing to filter list"
   fileSizeError: "This file is too large.  Maximum size is {maxSize}."
   findInstructorOrGroup: "Find Instructor or Group"
+  findLearners: "Find Learners"
   firstOffering: "First Offering"
   friday: Friday
   go: Go
@@ -182,6 +183,7 @@ general:
   noAssociatedCompetencies: "No Associated Competencies"
   noAssociatedCompetency: "No Associated Competency"
   noAvailableLearnerGroups: "No learner groups available; No cohort is attached to this course."
+  noAvailableLearners: "No learners available; No cohort is attached to this course."
   noCohorts: "There are no cohorts in this course"
   noCourseLearningMaterialsAvailable: "No Course Learning Materials Available"
   none: None
@@ -242,6 +244,7 @@ general:
   searchPlaceholder: "Find Learning Material"
   selectCohortsToAttach: "Select the cohort of students you wish to attach to the new course"
   selectedLearnerGroups: "Selected Learner Groups"
+  selectedLearners: "Selected Learners"
   selectMeshFor: "Select MeSH for: {title}"
   selectVocabulary: "Select Vocabulary"
   session: Session

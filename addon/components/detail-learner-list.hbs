@@ -1,0 +1,12 @@
+<ul class="detail-learner-list" data-test-detail-learner-list>
+  {{#each (sort-by "fullName" (await @learners)) as |user|}}
+    {{#if @isManaging}}
+      <li role="button" {{on "click" (fn @remove user)}}>
+        {{user.fullName}}
+        <FaIcon @icon="times" class="remove" />
+      </li>
+    {{else}}
+      <li>{{user.fullname}}</li>
+    {{/if}}
+  {{/each}}
+</ul>

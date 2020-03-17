@@ -37,8 +37,8 @@ export default class SessionsGridOffering extends Component {
   }
 
   @dropTask
-  *save(startDate, endDate, room, learnerGroups, instructorGroups, instructors){
-    this.args.offering.setProperties({startDate, endDate, room, learnerGroups, instructorGroups, instructors});
+  *save(startDate, endDate, room, learnerGroups, learners, instructorGroups, instructors){
+    this.args.offering.setProperties({startDate, endDate, room, learnerGroups, learners, instructorGroups, instructors});
     yield this.args.offering.save();
     this.updateUi.perform();
   }
