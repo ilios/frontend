@@ -9,6 +9,7 @@ import { timeout } from 'ember-concurrency';
 import {dropTask, restartableTask, task} from "ember-concurrency-decorators";
 import { ArrayNotEmpty, IsInt, Lte, Gte, Gt, NotBlank, Length, validatable } from 'ilios-common/decorators/validation';
 import { ValidateIf } from "class-validator";
+import scrollIntoView from "scroll-into-view";
 
 const DEBOUNCE_DELAY = 600;
 
@@ -25,7 +26,7 @@ export default class OfferingForm extends Component {
   @tracked endDate = null;
   @NotBlank() @Length(1, 255) @tracked room = 'TBD';
   @ValidateIf(o => o.args.smallGroupMode) @ArrayNotEmpty() @tracked learnerGroups = [];
-  @tracked showOfferingCalendar =false;
+  @tracked showOfferingCalendar = false;
   @tracked makeRecurring = false;
   @tracked recurringDays = null;
   @ValidateIf(o => o.makeRecurring) @IsInt() @Gt(0) @tracked numberOfWeeks = 1;
@@ -113,7 +114,14 @@ export default class OfferingForm extends Component {
   }
 
   @restartableTask
-  *load(element, [offering, cohorts]) {
+  * load(element, [offering, cohorts]) {
+    yield this.loadData.perform(offering, cohorts);
+    yield timeout(1);
+    scrollIntoView(this.scrollTo);
+  }
+
+  @restartableTask()
+  *loadData(offering, cohorts) {
     this.availableInstructorGroups = yield this.loadAvailableInstructorGroups(cohorts);
 
     if (isPresent(offering)) {
@@ -133,11 +141,11 @@ export default class OfferingForm extends Component {
   async removeLearnerGroup(learnerGroup) {
     const descendants = await learnerGroup.get('allDescendants');
     const groupsToRemove = [...descendants, learnerGroup];
-    this.learnerGroups = this.learnerGroups.filter(g => ! groupsToRemove.includes(g));
+    this.learnerGroups = this.learnerGroups.filter(g => !groupsToRemove.includes(g));
   }
 
   @action
-  toggleRecurringDay(day){
+  toggleRecurringDay(day) {
     if (this.recurringDays.includes(day)) {
       this.recurringDays = this.recurringDays.filter(d => d !== day);
     } else {
@@ -146,22 +154,22 @@ export default class OfferingForm extends Component {
   }
 
   @action
-  addInstructor(user){
+  addInstructor(user) {
     this.instructors = [...this.instructors, user];
   }
 
   @action
-  addInstructorGroup(group){
+  addInstructorGroup(group) {
     this.instructorGroups = [...this.instructorGroups, group];
   }
 
   @action
-  removeInstructor(user){
+  removeInstructor(user) {
     this.instructors = this.instructors.filter(u => u !== user);
   }
 
   @action
-  removeInstructorGroup(group){
+  removeInstructorGroup(group) {
     this.instructorGroups = this.instructorGroups.filter(g => g !== group);
   }
 
@@ -254,7 +262,7 @@ export default class OfferingForm extends Component {
   }
 
   @dropTask
-  *loadAttrsFromOffering(offering) {
+  * loadAttrsFromOffering(offering) {
     if (this.loaded) {
       return;
     }
@@ -263,9 +271,9 @@ export default class OfferingForm extends Component {
     this.room = offering.get('room');
     this.recurringDays = [];
     const obj = yield hash({
-      learnerGroups : offering.get('learnerGroups'),
-      instructors : offering.get('instructors'),
-      instructorGroups : offering.get('instructorGroups'),
+      learnerGroups: offering.get('learnerGroups'),
+      instructors: offering.get('instructors'),
+      instructorGroups: offering.get('instructorGroups'),
     });
     this.learnerGroups = obj.learnerGroups.toArray();
     this.instructors = obj.instructors.toArray();
@@ -274,14 +282,14 @@ export default class OfferingForm extends Component {
   }
 
   @task
-  *saveOffering() {
+  * saveOffering() {
     this.offeringsToSave = 0;
     this.savedOfferings = 0;
     this.addErrorDisplaysFor(['room', 'numberOfWeeks', 'durationHours', 'durationMinutes', 'learnerGroups']);
 
     yield timeout(10);
     const isValid = yield this.isValid();
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     let offerings = yield this.makeRecurringOfferingObjects.perform();
@@ -298,7 +306,7 @@ export default class OfferingForm extends Component {
     this.offeringsToSave = offerings.length;
     //save offerings in sets of 5
     let parts;
-    while (offerings.length > 0){
+    while (offerings.length > 0) {
       parts = offerings.splice(0, 5);
       yield map(parts, ({startDate, endDate, room, learnerGroups, instructorGroups, instructors}) => {
         return this.args.save(startDate, endDate, room, learnerGroups, instructorGroups, instructors);
@@ -310,7 +318,7 @@ export default class OfferingForm extends Component {
   }
 
   @task
-  *makeRecurringOfferingObjects() {
+  * makeRecurringOfferingObjects() {
     const makeRecurring = this.makeRecurring;
     const learnerGroups = yield this.lowestLearnerGroupLeaves(this.learnerGroups);
     const offerings = [];
@@ -368,7 +376,7 @@ export default class OfferingForm extends Component {
   }
 
   @task
-  *makeSmallGroupOfferingObjects(offerings){
+  * makeSmallGroupOfferingObjects(offerings) {
     const smallGroupMode = this.args.smallGroupMode;
     if (!smallGroupMode) {
       return offerings;
@@ -377,8 +385,8 @@ export default class OfferingForm extends Component {
     const smallGroupOfferings = [];
 
     for (let i = 0; i < offerings.length; i++) {
-      const { startDate, endDate, learnerGroups } = offerings[i];
-      let { room } = offerings[i];
+      const {startDate, endDate, learnerGroups} = offerings[i];
+      let {room} = offerings[i];
       for (let j = 0; j < learnerGroups.length; j++) {
         const learnerGroup = learnerGroups[j];
         const defaultLocation = learnerGroup.get('location');
@@ -398,17 +406,17 @@ export default class OfferingForm extends Component {
   }
 
   @restartableTask
-  *validateThenSaveOffering() {
+  * validateThenSaveOffering() {
     this.addErrorDisplaysFor(['room', 'numberOfWeeks', 'durationHours', 'durationMinutes', 'learnerGroups']);
     const isValid = yield this.isValid();
-    if (! isValid) {
+    if (!isValid) {
       return;
     }
     yield this.saveOffering.perform();
   }
 
   @restartableTask
-  *updateDurationHours(hours) {
+  * updateDurationHours(hours) {
     yield timeout(DEBOUNCE_DELAY);
     this.addErrorDisplayFor('durationHours');
     const minutes = this.durationMinutes;
@@ -421,7 +429,7 @@ export default class OfferingForm extends Component {
 
 
   @restartableTask
-  *updateDurationMinutes(minutes) {
+  * updateDurationMinutes(minutes) {
     yield timeout(DEBOUNCE_DELAY);
     this.addErrorDisplayFor('durationMinutes');
     const hours = this.durationHours;

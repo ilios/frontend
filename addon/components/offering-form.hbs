@@ -4,7 +4,7 @@
   {{did-insert (perform this.load) @offering @cohorts}}
   {{did-update (perform this.load) @offering @cohorts}}
 >
-  {{#unless this.load.isRunning}}
+  {{#unless this.loadData.isRunning}}
     <div class="toggle-offering-calendar">
       <ToggleButtons
         @firstLabel={{t "general.hideCalendar"}}
@@ -244,7 +244,7 @@
           </p>
         {{/each}}
       </div>
-      <div class="buttons">
+      <div class="buttons" {{ref this "scrollTo"}}>
         <button
           class="done text"
           type="button"
