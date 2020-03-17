@@ -114,10 +114,12 @@ export default class OfferingForm extends Component {
   }
 
   @restartableTask
-  * load(element, [offering, cohorts]) {
+  * load(element, [offering, cohorts, scrollToBottom]) {
     yield this.loadData.perform(offering, cohorts);
     yield timeout(1);
-    scrollIntoView(this.scrollTo);
+    if (scrollToBottom) {
+      scrollIntoView(this.scrollTo);
+    }
   }
 
   @restartableTask()

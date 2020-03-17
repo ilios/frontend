@@ -1,8 +1,8 @@
 <div
   class="offering-form"
   data-test-offering-form
-  {{did-insert (perform this.load) @offering @cohorts}}
-  {{did-update (perform this.load) @offering @cohorts}}
+  {{did-insert (perform this.load) @offering @cohorts @scrollToBottom}}
+  {{did-update (perform this.load) @offering @cohorts @scrollToBottom}}
 >
   {{#unless this.loadData.isRunning}}
     <div class="toggle-offering-calendar">
