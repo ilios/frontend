@@ -1,0 +1,49 @@
+.program-year-manage-objective-competency {
+  .objective-title {
+    @include ilios-browser-defaults;
+    background-color: $background-grey;
+    margin-bottom: 1rem;
+    padding: .5rem;
+  }
+
+  .parent-picker {
+    @include ilios-list-reset;
+    height: auto;
+    line-height: 1.3rem;
+
+    .domain {
+      border-left: 10px solid $white;
+
+      .domain-title {
+        margin: .5rem 0 0 .5rem;
+        padding: 0;
+      }
+      &.selected {
+        border-left: 10px solid $ilios-orange;
+
+        .domain-title {
+          color: $ilios-green;
+          font-weight: bold;
+        }
+      }
+    }
+
+    li {
+      margin: 0;
+      padding: 0;
+
+      ul {
+        padding-left: .5rem;
+
+        .selected {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .no-group {
+    color: $warning-color;
+    font-weight: bold;
+  }
+}

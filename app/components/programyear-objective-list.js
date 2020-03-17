@@ -5,8 +5,6 @@ import SortableObjectiveList from 'ilios-common/mixins/sortable-objective-list';
 import { task } from 'ember-concurrency';
 import fetch from 'fetch';
 
-const { alias } = computed;
-
 export default Component.extend(SortableObjectiveList, {
   ajax: service(),
   iliosConfig: service(),
@@ -14,9 +12,7 @@ export default Component.extend(SortableObjectiveList, {
   tagName: "",
   editable: false,
   isDownloading: false,
-  subject: null,
   expandedObjectiveIds: null,
-  programYear: alias('subject'),
 
   authHeaders: computed('session.isAuthenticated', function(){
     const session = this.session;
@@ -46,9 +42,9 @@ export default Component.extend(SortableObjectiveList, {
     }
   },
 
-  downloadReport: task(function * (subject) {
+  downloadReport: task(function * (programYear) {
     const apiPath = '/' + this.iliosConfig.apiNameSpace;
-    const resourcePath = '/programyears/' + subject.get('id') + '/downloadobjectivesmapping';
+    const resourcePath = '/programyears/' + programYear.get('id') + '/downloadobjectivesmapping';
     const host = this.iliosConfig.get('apiHost')?this.iliosConfig.get('apiHost'):window.location.protocol + '//' + window.location.host;
     const url = host + apiPath + resourcePath;
     const { saveAs } = yield import('file-saver');
