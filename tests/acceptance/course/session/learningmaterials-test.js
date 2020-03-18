@@ -350,6 +350,20 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.manager.statusValue, 3);
     });
 
+    test('change from required to not required #1249', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
+
+      await page.visit({ courseId: 1, sessionId: 1 });
+      assert.equal(page.learningMaterials.current.length, 4);
+      await page.learningMaterials.current[2].details();
+      await page.learningMaterials.manager.required();
+
+      await page.learningMaterials.manager.save();
+
+      assert.equal(page.learningMaterials.current[2].title, 'learning material 2');
+      assert.equal(page.learningMaterials.current[2].required, 'No');
+    });
+
     test('cancel editing learning material', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       const newNote = 'text text. Woo hoo!';
