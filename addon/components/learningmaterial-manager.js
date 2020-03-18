@@ -37,6 +37,7 @@ export default class LearningMaterialManagerComponent extends Component {
   @tracked statusId;
   @tracked userRoleTitle;
   @tracked publicNotes;
+  @tracked required;
 
   get isFile() {
     return this.type === 'file';
