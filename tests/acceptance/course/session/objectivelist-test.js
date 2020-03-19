@@ -49,26 +49,26 @@ module('Acceptance | Session - Objective List', function(hooks) {
       objectiveIds: [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
     });
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
-    assert.equal(page.objectives.current.length, 13);
+    assert.equal(page.objectives.objectiveList.objectives.length, 13);
 
 
-    assert.equal(page.objectives.current[0].description.text, 'objective 2');
-    assert.equal(page.objectives.current[0].parents.length, 1);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
-    assert.equal(page.objectives.current[0].meshTerms.length, 1);
-    assert.equal(page.objectives.current[0].meshTerms[0].title, 'descriptor 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 2');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].meshTerms.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].meshTerms[0].title, 'descriptor 0');
 
-    assert.equal(page.objectives.current[1].description.text, 'objective 3');
-    assert.equal(page.objectives.current[1].parents.length, 1);
-    assert.equal(page.objectives.current[1].parents[0].description, 'objective 1');
-    assert.equal(page.objectives.current[1].meshTerms.length, 2);
-    assert.equal(page.objectives.current[1].meshTerms[0].title, 'descriptor 0');
-    assert.equal(page.objectives.current[1].meshTerms[1].title, 'descriptor 1');
+    assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'objective 3');
+    assert.equal(page.objectives.objectiveList.objectives[1].parents.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[1].parents[0].description, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[0].title, 'descriptor 0');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[1].title, 'descriptor 1');
 
     for (let i=2; i <= 12; i++) {
-      assert.equal(page.objectives.current[i].description.text, `objective ${i + 2}`);
-      assert.equal(page.objectives.current[i].parents.length, 0);
-      assert.equal(page.objectives.current[i].meshTerms.length, 0);
+      assert.equal(page.objectives.objectiveList.objectives[i].description.text, `objective ${i + 2}`);
+      assert.equal(page.objectives.objectiveList.objectives[i].parents.length, 0);
+      assert.equal(page.objectives.objectiveList.objectives[i].meshTerms.length, 0);
     }
   });
 
@@ -89,10 +89,10 @@ module('Acceptance | Session - Objective List', function(hooks) {
       objectiveIds: [1]
     });
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
-    assert.equal(page.objectives.current.length, 1);
-    assert.equal(page.objectives.current[0].description.text, longTitle.substring(0, 200));
-    await page.objectives.current[0].description.openEditor();
-    assert.equal(await page.objectives.current[0].description.editorContents(), `<p>${longTitle}</p>`);
+    assert.equal(page.objectives.objectiveList.objectives.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, longTitle.substring(0, 200));
+    await page.objectives.objectiveList.objectives[0].description.openEditor();
+    assert.equal(await page.objectives.objectiveList.objectives[0].description.editorContents(), `<p>${longTitle}</p>`);
   });
 
   test('edit objective title', async function(assert) {
@@ -110,13 +110,13 @@ module('Acceptance | Session - Objective List', function(hooks) {
       objectiveIds: [1]
     });
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
-    assert.equal(page.objectives.current.length, 1);
-    assert.equal(page.objectives.current[0].description.text, 'objective 0');
-    await page.objectives.current[0].description.openEditor();
-    await page.objectives.current[0].description.edit(newDescription);
-    await page.objectives.current[0].description.save();
-    assert.equal(page.objectives.current.length, 1);
-    assert.equal(page.objectives.current[0].description.text, newDescription);
+    assert.equal(page.objectives.objectiveList.objectives.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
+    await page.objectives.objectiveList.objectives[0].description.openEditor();
+    await page.objectives.objectiveList.objectives[0].description.edit(newDescription);
+    await page.objectives.objectiveList.objectives[0].description.save();
+    assert.equal(page.objectives.objectiveList.objectives.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, newDescription);
   });
 
   test('empty objective title can not be saved', async function(assert) {
@@ -133,12 +133,12 @@ module('Acceptance | Session - Objective List', function(hooks) {
       objectiveIds: [1]
     });
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
-    assert.equal(page.objectives.current.length, 1);
-    assert.notOk(page.objectives.current[0].description.hasValidationError);
-    await page.objectives.current[0].description.openEditor();
-    await page.objectives.current[0].description.edit('<p>&nbsp</p><div></div><span>  </span>');
-    await page.objectives.current[0].description.save();
-    assert.ok(page.objectives.current[0].description.hasValidationError);
-    assert.equal(page.objectives.current[0].description.validationError, 'This field can not be blank');
+    assert.equal(page.objectives.objectiveList.objectives.length, 1);
+    assert.notOk(page.objectives.objectiveList.objectives[0].description.hasValidationError);
+    await page.objectives.objectiveList.objectives[0].description.openEditor();
+    await page.objectives.objectiveList.objectives[0].description.edit('<p>&nbsp</p><div></div><span>  </span>');
+    await page.objectives.objectiveList.objectives[0].description.save();
+    assert.ok(page.objectives.objectiveList.objectives[0].description.hasValidationError);
+    assert.equal(page.objectives.objectiveList.objectives[0].description.validationError, 'This field can not be blank');
   });
 });
