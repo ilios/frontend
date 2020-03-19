@@ -1,19 +1,31 @@
-import Component from '@ember/component';
-import ObjectProxy from '@ember/object/proxy';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { task } from 'ember-concurrency-decorators';
 
-const CourseProxy = ObjectProxy.extend({
-  currentUser: null,
-  content: null,
-  intl: null,
-  isSaving: false,
-  permissionChecker: null,
-  showRemoveConfirmation: false,
+export default class IliosCourseListComponent extends Component {
+  @service intl;
+  @service permissionChecker;
+  @tracked coursesForRemovalConfirmation = [];
+  @tracked savingCourseIds = [];
 
-  status: computed('content.{isPublished,isScheduled}', function() {
-    const intl = this.intl;
-    const course = this.content;
+  get sortedAscending() {
+    return !this.args.sortBy.includes(':desc');
+  }
+
+  startSavingCourse(id) {
+    this.savingCourseIds = [...this.savingCourseIds, id];
+  }
+  stopSavingCourse(courseId) {
+    this.savingCourseIds = this.savingCourseIds.filter(id => id !== courseId);
+  }
+
+  get sortingByStatus() {
+    return this.args.sortBy.includes('status');
+  }
+
+  getStatus(course) {
     let translation = 'general.';
     if (course.get('isScheduled')) {
       translation += 'scheduled';
@@ -21,134 +33,76 @@ const CourseProxy = ObjectProxy.extend({
       translation += 'published';
     } else {
       translation += 'notPublished';
-
     }
-    return intl.t(translation);
-  }),
+    return this.intl.t(translation);
+  }
 
-  userCanDelete: computed('content', 'content.{archived,locked}', 'currentUser.model.directedCourses.[]', async function() {
-    const permissionChecker = this.permissionChecker;
-    const course = this.content;
+  @task
+  *unlockCourse(course) {
+    const permission = yield this.permissionChecker.canUnlockCourse(course);
+    this.startSavingCourse(course.id);
+    if (permission) {
+      yield this.args.unlock(course);
+      this.stopSavingCourse(course.id);
+    }
+  }
+  @task
+  *lockCourse(course) {
+    const permission = yield this.permissionChecker.canUpdateCourse(course);
+    this.startSavingCourse(course.id);
+    if (permission) {
+      yield this.args.lock(course);
+      this.stopSavingCourse(course.id);
+    }
+  }
+
+  @action
+  confirmRemoval(course) {
+    this.coursesForRemovalConfirmation = [...this.coursesForRemovalConfirmation, course.id];
+  }
+
+  @action
+  cancelRemove(course){
+    this.coursesForRemovalConfirmation = this.coursesForRemovalConfirmation.filter(id => id !== course.id);
+  }
+
+  @action
+  sortBy(what){
+    if(this.args.sortBy === what){
+      what += ':desc';
+    }
+    this.args.setSortBy(what);
+  }
+
+  @action
+  async canUnlock(course) {
+    return this.permissionChecker.canUnlockCourse(course);
+  }
+
+  @action
+  async canLock(course) {
+    return this.permissionChecker.canUpdateCourse(course);
+  }
+
+  @action
+  async canDelete(course) {
     if (course.get('isPublishedOrScheduled')) {
       return false;
     } else if (course.hasMany('descendants').ids().length > 0) {
       return false;
     }
-    return permissionChecker.canDeleteCourse(course);
-  }),
-
-  userCanLock: computed(
-    'content',
-    'content.{archived,locked}',
-    'currentUser.model.directedCourses.[]', async function() {
-      const permissionChecker = this.permissionChecker;
-      const course = this.content;
-      return permissionChecker.canUpdateCourse(course);
-    }
-  ),
-
-  userCanUnLock: computed(
-    'content',
-    'content.{archived,locked}', async function() {
-      const permissionChecker = this.permissionChecker;
-      const course = this.content;
-      return permissionChecker.canUnlockCourse(course);
-    }
-  )
-});
-
-export default Component.extend({
-  currentUser: service(),
-  intl: service(),
-  permissionChecker: service(),
-  tagName: "",
-  courses: null,
-  query: null,
-  sortBy: 'title',
-  lock() {},
-  remove() {},
-  setSortBy() {},
-  unlock() {},
-
-  proxiedCourses: computed('courses.[]', function() {
-    const intl = this.intl;
-    const courses = this.courses;
-    if (!courses) {
-      return [];
-    }
-    return courses.map(course => {
-      return CourseProxy.create({
-        content: course,
-        intl,
-        currentUser: this.currentUser,
-        permissionChecker: this.permissionChecker
-      });
-    });
-  }),
-
-  sortedCourses: computed(
-    'proxiedCourses.[]',
-    'sortedAscending',
-    'sortBy', function() {
-      let sortBy = this.sortBy;
-      if (-1 !== sortBy.indexOf(':')) {
-        sortBy = sortBy.split(':', 1)[0];
-      }
-      const sortedAscending = this.sortedAscending;
-      const courses = this.proxiedCourses;
-      let sortedCourses = courses.sortBy(sortBy);
-      if (!sortedAscending) {
-        sortedCourses = sortedCourses.slice().reverse();
-      }
-      return sortedCourses;
-    }
-  ),
-
-  sortedAscending: computed('sortBy', function() {
-    return this.sortBy.search(/desc/) === -1;
-  }),
-
-  actions: {
-    remove(courseProxy) {
-      this.remove(courseProxy.get('content'));
-    },
-
-    cancelRemove(courseProxy) {
-      courseProxy.set('showRemoveConfirmation', false);
-    },
-
-    confirmRemove(courseProxy) {
-      courseProxy.set('showRemoveConfirmation', true);
-    },
-
-    unlockCourse(courseProxy){
-      courseProxy.get('userCanUnLock').then(permission => {
-        if (permission) {
-          courseProxy.set('isSaving', true);
-          this.unlock(courseProxy.get('content')).then(()=>{
-            courseProxy.set('isSaving', false);
-          });
-        }
-      });
-    },
-
-    lockCourse(courseProxy){
-      courseProxy.get('userCanLock').then(permission => {
-        if (permission) {
-          courseProxy.set('isSaving', true);
-          this.lock(courseProxy.get('content')).then(()=>{
-            courseProxy.set('isSaving', false);
-          });
-        }
-      });
-    },
-
-    sortBy(what){
-      const sortBy = this.sortBy;
-      if(sortBy === what){
-        what += ':desc';
-      }
-      this.setSortBy(what);
-    }
+    return this.permissionChecker.canDeleteCourse(course);
   }
-});
+
+  @action
+  sortCoursesByStatus(a, b) {
+    const aStatus = this.getStatus(a);
+    const bStatus = this.getStatus(b);
+
+    if (this.sortedAscending) {
+      return aStatus.localeCompare(bStatus);
+    }
+
+    return bStatus.localeCompare(aStatus);
+  }
+}
