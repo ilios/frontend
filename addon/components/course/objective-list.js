@@ -1,39 +1,43 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
+import { enqueueTask, dropTask, restartableTask } from 'ember-concurrency-decorators';
 import { action } from '@ember/object';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 import { all } from 'rsvp';
-import { timeout } from 'ember-concurrency';
 
 export default class CourseObjectiveListComponent extends Component {
-  @tracked objectivesForRemovalConfirmation = [];
-  @tracked totalObjectivesToSave = [];
-  @tracked currentObjectivesSaved = [];
-  @tracked isSorting = false;
   @tracked objectives;
+  @tracked objectivesForRemovalConfirmation = [];
+  @tracked totalObjectivesToSave;
+  @tracked currentObjectivesSaved;
+  @tracked isSorting = false;
 
   @restartableTask
-  *load() {
-    this.objectives = yield this.args.course.sortedObjectives;
+  *load(element, [course]) {
+    if (!course) {
+      return;
+    }
+    this.objectives = yield course.sortedObjectives;
   }
 
   get hasMoreThanOneObjective() {
-    return this.objectives && this.objectives.length > 1;
+    return this.objectives?.length > 1;
   }
 
-  @dropTask
-  *remove(objective) {
-    objective.deleteRecord();
-    yield objective.save();
-  }
-
-  @dropTask
-  *saveSortOrder(objectives) {
-    yield timeout(1); //let saving animation load
-    for (let i = 0, n = objectives.length; i < n; i++) {
-      const o = objectives[i];
-      o.set('position', i + 1);
+  async saveSomeObjectives(arr){
+    const chunk = arr.splice(0, 5);
+    await all(chunk.invoke('save'));
+    if (arr.length){
+      this.currentObjectivesSaved += chunk.length;
+      await this.saveSomeObjectives(arr);
     }
+  }
+
+  @dropTask
+  *saveSortOrder(objectives){
+    for (let i = 0, n = objectives.length; i < n; i++) {
+      objectives[i].set('position', i + 1);
+    }
+
     this.totalObjectivesToSave = objectives.length;
     this.currentObjectivesSaved = 0;
 
@@ -41,13 +45,9 @@ export default class CourseObjectiveListComponent extends Component {
     this.isSorting = false;
   }
 
-  async saveSomeObjectives(arr){
-    const chunk = arr.splice(0, 5);
-    await all(chunk.invoke('save'));
-    if (arr.length) {
-      this.currentObjectivesSaved = this.currentObjectivesSaved + chunk.length;
-      return this.saveSomeObjectives(arr);
-    }
+  @enqueueTask
+  *deleteObjective(objective) {
+    yield objective.destroyRecord();
   }
   @action
   confirmRemoval(objective) {
@@ -56,9 +56,5 @@ export default class CourseObjectiveListComponent extends Component {
   @action
   cancelRemove(objective){
     this.objectivesForRemovalConfirmation = this.objectivesForRemovalConfirmation.filter(id => id !== objective.id);
-  }
-  @action
-  cancelSorting() {
-    this.isSorting = false;
   }
 }

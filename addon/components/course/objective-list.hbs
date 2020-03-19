@@ -1,23 +1,27 @@
 <div
   class="course-objective-list"
-  {{did-insert (perform this.load) (await @course.objectives)}}
-  {{did-update (perform this.load) (await @course.objectives)}}
   data-test-course-objective-list
+  {{did-insert (perform this.load) @course @course.objectives}}
+  {{did-update (perform this.load) @course @course.objectives}}
 >
   {{#if (is-array this.objectives)}}
     {{#if this.isSorting}}
       <ObjectiveSortManager
         @subject={{@course}}
         @save={{perform this.saveSortOrder}}
-        @cancel={{this.cancelSorting}}
+        @cancel={{set this.sorting false}}
       />
-    {{else if (get (await @course.objectives) "length")}}
+    {{else if this.objectives.length}}
       {{#if (and @editable this.hasMoreThanOneObjective)}}
-        <button class="sort-materials-btn" type="button" {{on "click" (set this.isSorting true)}} data-test-sort>
+        <button
+          type="button"
+          {{on "click" (fn (mut this.isSorting) true)}}
+          data-test-sort
+        >
           {{t "general.sortObjectives"}}
         </button>
       {{/if}}
-      <table data-test-objectives>
+      <table>
         <thead>
           <tr>
             <th class="text-left" colspan="3">
@@ -36,36 +40,37 @@
         </thead>
         <tbody>
           {{#each this.objectives as |objective|}}
-            <CourseObjectiveListItem
+            <Course::ObjectiveListItem
               @objective={{objective}}
               @editable={{@editable}}
-              @course={{@course}}
+              @course={{this.course}}
               @showRemoveConfirmation={{contains
                 objective.id
                 this.objectivesForRemovalConfirmation
               }}
-              @remove={{fn this.confirmRemoval objective}}
+              @remove={{this.confirmRemoval}}
               @manageParents={{@manageParents}}
               @manageDescriptors={{@manageDescriptors}}
             />
             {{#if (contains objective.id this.objectivesForRemovalConfirmation)}}
-              <tr class="confirm-removal" data-test-confirm-removal>
+              <tr class="confirm-removal">
                 <td colspan="8">
                   <div class="confirm-message">
-                    {{#if (gt objective.children.length 0)}}
-                      {{t
-                        "general.confirmObjectiveRemovalMultipleSessionObjectives"
-                        count=objective.children.length
-                      }}
-                    {{else}}
-                      {{t "general.confirmObjectiveRemoval"}}
-                    {{/if}}
+                    {{t "general.confirmObjectiveRemoval"}}
                     <br>
                     <div class="confirm-buttons">
-                      <button class="remove text" type="button" {{on "click" (perform this.remove objective)}} data-test-confirm>
+                      <button
+                        class="remove text"
+                        type="button"
+                        {{on "click" (perform this.deleteObjective objective)}}
+                      >
                         {{t "general.yes"}}
                       </button>
-                      <button class="done text" type="button" {{on "click" (fn this.cancelRemove objective)}} data-test-cancel>
+                      <button
+                        class="done text"
+                        type="button"
+                        {{on "click" (fn this.cancelRemove objective)}}
+                      >
                         {{t "general.cancel"}}
                       </button>
                     </div>
@@ -79,17 +84,17 @@
     {{/if}}
   {{else}}
     {{! template-lint-disable no-unused-block-params }}
-    {{#each (repeat @course.objectives.length) as |empty|}}
+    {{#each (repeat (has-many-length @course "objectives")) as |empty|}}
       <div>
         <LoadingSpinner />
       </div>
     {{/each}}
   {{/if}}
-  {{#if this.saveSortOrder.isRunning}}
-    <WaitSaving
-      @showProgress={{true}}
-      @totalProgress={{this.totalObjectivesToSave}}
-      @currentProgress={{this.currentObjectivesSaved}}
-    />
-  {{/if}}
 </div>
+{{#if this.saveSortOrder.isRunning}}
+  <WaitSaving
+    @showProgress={{true}}
+    @totalProgress={{this.totalObjectivesToSave}}
+    @currentProgress={{this.currentObjectivesSaved}}
+  />
+{{/if}}

@@ -43,13 +43,13 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
     assert.expect(33);
 
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    assert.equal(page.objectives.current.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives.length, 2);
 
-    assert.equal(page.objectives.current[0].description.text, 'objective 4');
-    assert.equal(page.objectives.current[0].parents.length, 2);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
-    assert.equal(page.objectives.current[0].parents[1].description, 'objective 3');
-    await page.objectives.current[0].manageParents();
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 4');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[1].description, 'objective 3');
+    await page.objectives.objectiveList.objectives[0].manageParents();
     const m = page.objectives.manageObjectiveParents;
 
     assert.equal(m.objectiveTitle, 'objective 4');
@@ -94,11 +94,11 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(13);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    assert.equal(page.objectives.current[0].description.text, 'objective 4');
-    assert.equal(page.objectives.current[0].parents.length, 2);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
-    assert.equal(page.objectives.current[0].parents[1].description, 'objective 3');
-    await page.objectives.current[0].manageParents();
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 4');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[1].description, 'objective 3');
+    await page.objectives.objectiveList.objectives[0].manageParents();
     const m = page.objectives.manageObjectiveParents;
 
     assert.equal(m.objectiveTitle, 'objective 4');
@@ -114,10 +114,10 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
 
     await page.objectives.save();
 
-    assert.equal(page.objectives.current[0].description.text, 'objective 4');
-    assert.equal(page.objectives.current[0].parents.length, 2);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 1');
-    assert.equal(page.objectives.current[0].parents[1].description, 'objective 2');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 4');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[1].description, 'objective 2');
 
   });
 
@@ -125,11 +125,11 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(13);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    assert.equal(page.objectives.current[0].description.text, 'objective 4');
-    assert.equal(page.objectives.current[0].parents.length, 2);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
-    assert.equal(page.objectives.current[0].parents[1].description, 'objective 3');
-    await page.objectives.current[0].manageParents();
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 4');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[1].description, 'objective 3');
+    await page.objectives.objectiveList.objectives[0].manageParents();
     const m = page.objectives.manageObjectiveParents;
 
 
@@ -146,9 +146,9 @@ module('Acceptance | Course with multiple Cohorts - Objective Parents', function
 
     await page.objectives.cancel();
 
-    assert.equal(page.objectives.current[0].description.text, 'objective 4');
-    assert.equal(page.objectives.current[0].parents.length, 2);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
-    assert.equal(page.objectives.current[0].parents[1].description, 'objective 3');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 4');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[1].description, 'objective 3');
   });
 });

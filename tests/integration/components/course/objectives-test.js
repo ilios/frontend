@@ -47,15 +47,15 @@ module('Integration | Component | course/objectives', function(hooks) {
       @expand={{noop}}
     />`);
 
-    assert.equal(component.current.length, 2);
-    assert.equal(component.current[0].description.text, 'objective 5');
-    assert.equal(component.current[0].parents.length, 1);
-    assert.equal(component.current[0].parents[0].description, 'objective 0');
-    assert.equal(component.current[0].meshTerms.length, 0);
+    assert.equal(component.objectiveList.objectives.length, 2);
+    assert.equal(component.objectiveList.objectives[0].description.text, 'objective 5');
+    assert.equal(component.objectiveList.objectives[0].parents.length, 1);
+    assert.equal(component.objectiveList.objectives[0].parents[0].description, 'objective 0');
+    assert.equal(component.objectiveList.objectives[0].meshTerms.length, 0);
 
-    assert.equal(component.current[1].description.text, 'objective 6');
-    assert.equal(component.current[1].parents.length, 0);
-    assert.equal(component.current[1].meshTerms.length, 0);
+    assert.equal(component.objectiveList.objectives[1].description.text, 'objective 6');
+    assert.equal(component.objectiveList.objectives[1].parents.length, 0);
+    assert.equal(component.objectiveList.objectives[1].meshTerms.length, 0);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -95,10 +95,10 @@ module('Integration | Component | course/objectives', function(hooks) {
       @expand={{noop}}
     />`);
 
-    assert.equal(component.current.length, 1);
-    assert.equal(component.current[0].description.text, 'objective 5');
-    assert.equal(component.current[0].parents.length, 1);
-    await component.current[0].manageParents();
+    assert.equal(component.objectiveList.objectives.length, 1);
+    assert.equal(component.objectiveList.objectives[0].description.text, 'objective 5');
+    assert.equal(component.objectiveList.objectives[0].parents.length, 1);
+    await component.objectiveList.objectives[0].manageParents();
 
     const m = component.manageObjectiveParents;
     assert.equal(m.objectiveTitle, 'objective 5');
@@ -167,10 +167,10 @@ module('Integration | Component | course/objectives', function(hooks) {
       @expand={{noop}}
     />`);
 
-    assert.equal(component.current.length, 1);
-    assert.equal(component.current[0].description.text, 'objective 4');
-    assert.equal(component.current[0].parents.length, 1);
-    await component.current[0].manageParents();
+    assert.equal(component.objectiveList.objectives.length, 1);
+    assert.equal(component.objectiveList.objectives[0].description.text, 'objective 4');
+    assert.equal(component.objectiveList.objectives[0].parents.length, 1);
+    await component.objectiveList.objectives[0].manageParents();
 
     const m = component.manageObjectiveParents;
     assert.equal(m.objectiveTitle, 'objective 4');
