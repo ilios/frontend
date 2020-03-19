@@ -6,10 +6,10 @@
 </div>
 <CurriculumInventoryReportDetails
   @report={{model}}
-  @canUpdate={{and (not model.isFinalized) canUpdate}}
-  @leadershipDetails={{leadershipDetails}}
-  @setLeadershipDetails={{action (mut leadershipDetails)}}
-  @manageLeadership={{manageLeadership}}
-  @setManageLeadership={{action (mut manageLeadership)}}
+  @canUpdate={{and (not @model.isFinalized) this.canUpdate}}
+  @leadershipDetails={{this.leadershipDetails}}
+  @setLeadershipDetails={{action (mut this.leadershipDetails)}}
+  @manageLeadership={{this.manageLeadership}}
+  @setManageLeadership={{action (mut this.manageLeadership)}}
 />
 {{outlet}}

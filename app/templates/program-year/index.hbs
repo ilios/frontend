@@ -1,17 +1,17 @@
 <ProgramyearDetails
-  @program={{await model.program}}
-  @canUpdate={{canUpdate}}
+  @program={{await @model.program}}
+  @canUpdate={{this.canUpdate}}
   @programYear={{model}}
-  @pyObjectiveDetails={{pyObjectiveDetails}}
-  @pyTaxonomyDetails={{pyTaxonomyDetails}}
-  @pyCompetencyDetails={{pyCompetencyDetails}}
-  @managePyCompetencies={{managePyCompetencies}}
-  @pyStewardDetails={{pyStewardDetails}}
-  @managePyStewards={{managePyStewards}}
-  @setPyObjectiveDetails={{action (mut pyObjectiveDetails)}}
-  @setPyTaxonomyDetails={{action (mut pyTaxonomyDetails)}}
-  @setPyCompetencyDetails={{action (mut pyCompetencyDetails)}}
-  @setManagePyCompetencies={{action (mut managePyCompetencies)}}
-  @setPyStewardDetails={{action (mut pyStewardDetails)}}
-  @setManagePyStewards={{action (mut managePyStewards)}}
+  @pyObjectiveDetails={{this.pyObjectiveDetails}}
+  @pyTaxonomyDetails={{this.pyTaxonomyDetails}}
+  @pyCompetencyDetails={{this.pyCompetencyDetails}}
+  @managePyCompetencies={{this.managePyCompetencies}}
+  @pyStewardDetails={{this.pyStewardDetails}}
+  @managePyStewards={{this.managePyStewards}}
+  @setPyObjectiveDetails={{action (mut this.pyObjectiveDetails)}}
+  @setPyTaxonomyDetails={{action (mut this.pyTaxonomyDetails)}}
+  @setPyCompetencyDetails={{action (mut this.pyCompetencyDetails)}}
+  @setManagePyCompetencies={{action (mut this.managePyCompetencies)}}
+  @setPyStewardDetails={{action (mut this.pyStewardDetails)}}
+  @setManagePyStewards={{action (mut this.managePyStewards)}}
 />

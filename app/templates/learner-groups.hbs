@@ -3,22 +3,22 @@
   <div class="filters">
     <div class="schoolsfilter">
       <FaIcon @icon="university" @fixedWidth={{true}} />
-      {{#if (get (await sortedSchools) "length")}}
-        {{#if (gt (get (await sortedSchools) "length") 1)}}
+      {{#if (get (await this.sortedSchools) "length")}}
+        {{#if (gt (get (await this.sortedSchools) "length") 1)}}
           <select
             onchange={{action "changeSelectedSchool" value="target.value"}}
           >
-            {{#each (await sortedSchools) as |school|}}
+            {{#each (await this.sortedSchools) as |school|}}
               <option
                 value={{school.id}}
-                selected={{is-equal school (await selectedSchool)}}
+                selected={{is-equal school (await this.selectedSchool)}}
               >
                 {{school.title}}
               </option>
             {{/each}}
           </select>
         {{else}}
-          {{get (await selectedSchool) "title"}}
+          {{get (await this.selectedSchool) "title"}}
         {{/if}}
       {{else}}
         {{t "general.none"}}
@@ -26,22 +26,22 @@
     </div>
     <div class="programsfilter">
       <FaIcon @icon="users" @fixedWidth={{true}} />
-      {{#if (get (await sortedPrograms) "length")}}
-        {{#if (gt (get (await sortedPrograms) "length") 1)}}
+      {{#if (get (await this.sortedPrograms) "length")}}
+        {{#if (gt (get (await this.sortedPrograms) "length") 1)}}
           <select
             onchange={{action "changeSelectedProgram" value="target.value"}}
           >
-            {{#each (await sortedPrograms) as |program|}}
+            {{#each (await this.sortedPrograms) as |program|}}
               <option
                 value={{program.id}}
-                selected={{is-equal program (await selectedProgram)}}
+                selected={{is-equal program (await this.selectedProgram)}}
               >
                 {{program.title}}
               </option>
             {{/each}}
           </select>
         {{else}}
-          {{get (await selectedProgram) "title"}}
+          {{get (await this.selectedProgram) "title"}}
         {{/if}}
       {{else}}
         {{t "general.none"}}
@@ -49,22 +49,22 @@
     </div>
     <div class="programyearsfilter">
       <FaIcon @icon="calendar" @fixedWidth={{true}} />
-      {{#if (get (await sortedProgramYears) "length")}}
-        {{#if (gt (get (await sortedProgramYears) "length") 1)}}
+      {{#if (get (await this.sortedProgramYears) "length")}}
+        {{#if (gt (get (await this.sortedProgramYears) "length") 1)}}
           <select
             onchange={{action "changeSelectedProgramYear" value="target.value"}}
           >
-            {{#each (await sortedProgramYears) as |programYear|}}
+            {{#each (await this.sortedProgramYears) as |programYear|}}
               <option
                 value={{programYear.id}}
-                selected={{is-equal programYear (await selectedProgramYear)}}
+                selected={{is-equal programYear (await this.selectedProgramYear)}}
               >
                 {{programYear.cohort.title}}
               </option>
             {{/each}}
           </select>
         {{else}}
-          {{get (get (await selectedProgramYear) "cohort") "title"}}
+          {{get (get (await this.selectedProgramYear) "cohort") "title"}}
         {{/if}}
       {{else}}
         {{t "general.none"}}
@@ -72,8 +72,8 @@
     </div>
     <div class="titlefilter">
       <input
-        value={{titleFilter}}
-        oninput={{action (perform changeTitleFilter) value="target.value"}}
+        value={{this.titleFilter}}
+        oninput={{action (perform this.changeTitleFilter) value="target.value"}}
         placeholder={{t "general.learnerGroupTitleFilterPlaceholder"}}
       >
     </div>
@@ -86,16 +86,16 @@
         </h2>
       </div>
       <div class="actions">
-        {{#if (and (await canCreate) (await selectedProgramYear))}}
+        {{#if (and (await this.canCreate) (await this.selectedProgramYear))}}
           <ExpandCollapseButton
-            @value={{showNewLearnerGroupForm}}
+            @value={{this.showNewLearnerGroupForm}}
             @action={{action "toggleNewLearnerGroupForm"}}
           />
         {{/if}}
       </div>
     </div>
     <section class="new">
-      {{#liquid-if showNewLearnerGroupForm class="vertical"}}
+      {{#liquid-if this.showNewLearnerGroupForm class="vertical"}}
         <NewLearnergroup
           @save={{action "saveNewLearnerGroup"}}
           @cancel={{action "cancel"}}
@@ -113,15 +113,15 @@
       {{/if}}
     </section>
     <div class="list">
-      {{#if (is-fulfilled learnerGroups)}}
+      {{#if (is-fulfilled this.learnerGroups)}}
         <LearnergroupList
-          @canCreate={{await canCreate}}
-          @canDelete={{await canDelete}}
+          @canCreate={{await this.canCreate}}
+          @canDelete={{await this.canDelete}}
           @canCopyWithLearners={{true}}
-          @learnerGroups={{await filteredLearnerGroups}}
-          @query={{titleFilter}}
+          @learnerGroups={{await this.filteredLearnerGroups}}
+          @query={{this.titleFilter}}
           @sortBy={{this.sortLearnerGroupsBy}}
-          @copy={{perform copyGroup}}
+          @copy={{perform this.copyGroup}}
           @remove={{action "removeLearnerGroup"}}
           @setSortBy={{action (mut this.sortLearnerGroupsBy)}}
         />
@@ -131,10 +131,10 @@
     </div>
   </section>
 </section>
-{{#liquid-if copyGroup.isRunning class="crossFade"}}
+{{#liquid-if this.copyGroup.isRunning class="crossFade"}}
   <WaitSaving
     @showProgress={{true}}
-    @totalProgress={{totalGroupsToSave}}
-    @currentProgress={{currentGroupsSaved}}
+    @totalProgress={{this.totalGroupsToSave}}
+    @currentProgress={{this.currentGroupsSaved}}
   />
 {{/liquid-if}}

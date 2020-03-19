@@ -1,13 +1,13 @@
 {{title (t "general.learnerGroups")}}
 <LearnergroupSummary
-  @setIsEditing={{action (mut isEditing)}}
-  @canCreate={{canCreate}}
-  @canUpdate={{canUpdate}}
-  @canDelete={{canDelete}}
-  @setIsBulkAssigning={{action (mut isBulkAssigning)}}
-  @sortUsersBy={{sortUsersBy}}
-  @setSortUsersBy={{action (mut sortUsersBy)}}
+  @setIsEditing={{action (mut this.isEditing)}}
+  @canCreate={{this.canCreate}}
+  @canUpdate={{this.canUpdate}}
+  @canDelete={{this.canDelete}}
+  @setIsBulkAssigning={{action (mut this.isBulkAssigning)}}
+  @sortUsersBy={{this.sortUsersBy}}
+  @setSortUsersBy={{action (mut this.sortUsersBy)}}
   @learnerGroup={{model}}
-  @isEditing={{isEditing}}
-  @isBulkAssigning={{isBulkAssigning}}
+  @isEditing={{this.isEditing}}
+  @isBulkAssigning={{this.isBulkAssigning}}
 />

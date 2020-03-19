@@ -1,22 +1,22 @@
 <section class="course-visualize-instructor">
   <div class="backtolink">
-    <LinkTo @route="course-visualizations" @model={{model.course}}>
+    <LinkTo @route="course-visualizations" @model={{@model.course}}>
       {{t "general.otherVisualizations"}}
     </LinkTo>
   </div>
   <h2>
-    {{model.user.fullName}}
+    {{@model.user.fullName}}
   </h2>
   <h3>
-    {{t "general.totalInstructionalTime" minutes=model.offeringMinutes}}
+    {{t "general.totalInstructionalTime" minutes=@model.offeringMinutes}}
   </h3>
   <h3>
-    {{t "general.totalIlmTime" minutes=model.ilmMinutes}}
+    {{t "general.totalIlmTime" minutes=@model.ilmMinutes}}
   </h3>
   <h3 class="clickable">
-    <LinkTo @route="course" @model={{model.course}}>
-      {{model.course.title}}
-      {{model.course.academicYear}}
+    <LinkTo @route="course" @model={{@model.course}}>
+      {{@model.course.title}}
+      {{@model.course.academicYear}}
     </LinkTo>
   </h3>
   <div class="visualizations">
@@ -25,8 +25,8 @@
         {{t "general.terms"}}
       </h4>
       <VisualizerCourseInstructorTerm
-        @course={{model.course}}
-        @user={{model.user}}
+        @course={{@model.course}}
+        @user={{@model.user}}
       />
     </div>
     <div>
@@ -34,8 +34,8 @@
         {{t "general.sessionTypes"}}
       </h4>
       <VisualizerCourseInstructorSessionType
-        @course={{model.course}}
-        @user={{model.user}}
+        @course={{@model.course}}
+        @user={{@model.user}}
       />
     </div>
   </div>

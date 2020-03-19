@@ -1,6 +1,6 @@
 <CurriculumInventorySequenceBlockList
-  @report={{await model}}
-  @sequenceBlocks={{await model.topLevelSequenceBlocks}}
-  @canUpdate={{canUpdate}}
+  @report={{await @model}}
+  @sequenceBlocks={{await @model.topLevelSequenceBlocks}}
+  @canUpdate={{this.canUpdate}}
   @remove={{action "removeSequenceBlock"}}
 />

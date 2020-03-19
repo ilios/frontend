@@ -1,20 +1,20 @@
 {{title (t "general.admin")}}
-{{#if (and isLoading (is-fulfilled canCreate))}}
-  <UserProfileLoading @canCreate={{await canCreate}} />
-{{else if (is-fulfilled canCreate)}}
+{{#if (and this.isLoading (is-fulfilled this.canCreate))}}
+  <UserProfileLoading @canCreate={{await this.canCreate}} />
+{{else if (is-fulfilled this.canCreate)}}
   <UserProfile
     @user={{model}}
-    @canUpdate={{canUpdate}}
-    @canCreate={{await canCreate}}
-    @isManagingBio={{isManagingBio}}
-    @setIsManagingBio={{action (mut isManagingBio)}}
-    @isManagingRoles={{isManagingRoles}}
-    @setIsManagingRoles={{action (mut isManagingRoles)}}
-    @isManagingCohorts={{isManagingCohorts}}
-    @setIsManagingCohorts={{action (mut isManagingCohorts)}}
-    @isManagingIcs={{isManagingIcs}}
-    @setIsManagingIcs={{action (mut isManagingIcs)}}
-    @isManagingSchools={{isManagingSchools}}
-    @setIsManagingSchools={{action (mut isManagingSchools)}}
+    @canUpdate={{this.canUpdate}}
+    @canCreate={{await this.canCreate}}
+    @isManagingBio={{this.isManagingBio}}
+    @setIsManagingBio={{action (mut this.isManagingBio)}}
+    @isManagingRoles={{this.isManagingRoles}}
+    @setIsManagingRoles={{action (mut this.isManagingRoles)}}
+    @isManagingCohorts={{this.isManagingCohorts}}
+    @setIsManagingCohorts={{action (mut this.isManagingCohorts)}}
+    @isManagingIcs={{this.isManagingIcs}}
+    @setIsManagingIcs={{action (mut this.isManagingIcs)}}
+    @isManagingSchools={{this.isManagingSchools}}
+    @setIsManagingSchools={{action (mut this.isManagingSchools)}}
   />
 {{/if}}

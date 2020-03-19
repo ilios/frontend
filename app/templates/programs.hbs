@@ -3,25 +3,25 @@
   <div class="filters">
     <div class="schoolsfilter">
       <FaIcon @icon="university" @fixedWidth={{true}} />
-      {{#if hasMoreThanOneSchool}}
+      {{#if this.hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-          {{#each (sort-by "title" model.schools) as |school|}}
+          {{#each (sort-by "title" @model.schools) as |school|}}
             <option
               value={{school.id}}
-              selected={{is-equal school selectedSchool}}
+              selected={{is-equal school this.selectedSchool}}
             >
               {{school.title}}
             </option>
           {{/each}}
         </select>
       {{else}}
-        {{selectedSchool.title}}
+        {{this.selectedSchool.title}}
       {{/if}}
     </div>
     <div class="titlefilter">
       <input
-        value={{titleFilter}}
-        oninput={{action (perform changeTitleFilter) value="target.value"}}
+        value={{this.titleFilter}}
+        oninput={{action (perform this.changeTitleFilter) value="target.value"}}
         placeholder={{t "general.programTitleFilterPlaceholder"}}
       >
     </div>
@@ -34,34 +34,34 @@
         </h2>
       </div>
       <div class="actions">
-        {{#if (await canCreate)}}
+        {{#if (await this.canCreate)}}
           <ExpandCollapseButton
-            @value={{showNewProgramForm}}
+            @value={{this.showNewProgramForm}}
             @action={{action "toggleEditor"}}
           />
         {{/if}}
       </div>
     </div>
     <section class="new">
-      {{#liquid-if showNewProgramForm class="vertical"}}
+      {{#liquid-if this.showNewProgramForm class="vertical"}}
         <NewProgram
           @save={{action "saveNewProgram"}}
           @cancel={{action "cancel"}}
         />
       {{/liquid-if}}
-      {{#if newProgram}}
+      {{#if this.newProgram}}
         <div class="saved-result">
-          <LinkTo @route="program" @model={{newProgram}}>
+          <LinkTo @route="program" @model={{this.newProgram}}>
             <FaIcon @icon="external-link-square-alt" />
-            {{newProgram.title}}
+            {{this.newProgram.title}}
           </LinkTo>
           {{t "general.savedSuccessfully"}}
         </div>
       {{/if}}
     </section>
-    {{#if deleted}}
+    {{#if this.deleted}}
       <div class="saved-program">
-        {{savedProgram.title}}
+        {{this.savedProgram.title}}
         {{t "general.removedSuccessfully"}}
       </div>
     {{/if}}

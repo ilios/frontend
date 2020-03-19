@@ -6,8 +6,8 @@
   </div>
   <h2 class="clickable">
     <LinkTo @route="course" @model={{model}}>
-      {{model.title}}
-      {{model.academicYear}}
+      {{@model.title}}
+      {{@model.academicYear}}
     </LinkTo>
   </h2>
   <h3>
@@ -16,10 +16,10 @@
   <div class="filter">
     <input
       type="search"
-      value={{name}}
+      value={{this.name}}
       placeholder={{t "general.filterPlaceholder"}}
-      oninput={{perform setName value="target.value"}}
+      oninput={{perform this.setName value="target.value"}}
     >
   </div>
-  <VisualizerCourseInstructors @filter={{name}} @course={{model}} />
+  <VisualizerCourseInstructors @filter={{this.name}} @course={{model}} />
 </section>

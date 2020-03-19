@@ -3,11 +3,11 @@
   <h2 class="clickable">
     <LinkTo
       @route="school"
-      @model={{model.school}}
+      @model={{@model.school}}
       @query={{hash schoolSessionTypeDetails=true}}
     >
-      {{model.school.title}}
-      {{model.title}}
+      {{@model.school.title}}
+      {{@model.title}}
     </LinkTo>
   </h2>
   <h3>

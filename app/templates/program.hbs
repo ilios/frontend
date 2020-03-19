@@ -1,10 +1,10 @@
 {{title (t "general.programs")}}
 <ProgramDetails
   @program={{model}}
-  @canUpdate={{canUpdate}}
-  @leadershipDetails={{leadershipDetails}}
-  @setLeadershipDetails={{action (mut leadershipDetails)}}
-  @manageLeadership={{manageLeadership}}
-  @setManageLeadership={{action (mut manageLeadership)}}
+  @canUpdate={{this.canUpdate}}
+  @leadershipDetails={{this.leadershipDetails}}
+  @setLeadershipDetails={{action (mut this.leadershipDetails)}}
+  @manageLeadership={{this.manageLeadership}}
+  @setManageLeadership={{action (mut this.manageLeadership)}}
 />
 {{outlet}}
