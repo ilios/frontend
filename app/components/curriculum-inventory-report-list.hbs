@@ -91,13 +91,7 @@
             {{#if report.isFinalized}}
               <FaIcon @icon="lock" class="enabled" />
             {{/if}}
-            <PublicationStatus
-              @item={{report}}
-              @notPublishedLangKey="general.draft"
-              @publishedLangKey="general.finalized"
-              @showText={{true}}
-              @showIcon={{false}}
-            />
+            <CurriculumInventory::PublicationStatus @item={{report}} />
           </td>
           <td class="text-right report-actions" colspan="2" data-test-actions>
             <LinkTo @route="curriculumInventoryReport" @model={{report.content}}>
