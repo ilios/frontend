@@ -2,7 +2,7 @@
   {{#if (is-fulfilled objectives)}}
     {{#if isSorting}}
       <ObjectiveSortManager
-        @subject={{programYear}}
+        @subject={{@subject}}
         @save={{action "saveSortOrder"}}
         @cancel={{action "cancelSorting"}}
       />
@@ -12,7 +12,7 @@
           {{t "general.sortObjectives"}}
         </button>
       {{/if}}
-      <button type="button" class="download" {{action (perform downloadReport subject)}}>
+      <button type="button" class="download" {{action (perform downloadReport @subject)}}>
         <FaIcon
           @icon={{if downloadReport.isRunning "spinner" "download"}}
           @spin={{if downloadReport.isRunning true false}}

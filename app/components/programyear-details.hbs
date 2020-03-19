@@ -1,4 +1,4 @@
-<div class="programyear-details" ...attributes>
+<div class="programyear-details" data-test-program-year-details ...attributes>
   {{#liquid-if (or (eq programYear.competencies.length 0) pyCompetencyDetails)}}
     <ProgramyearCompetencies
       @programYear={{programYear}}
@@ -15,12 +15,11 @@
     />
   {{/liquid-if}}
   {{#liquid-if (or (eq programYear.objectives.length 0) pyObjectiveDetails)}}
-    <DetailObjectives
-      @subject={{programYear}}
-      @isProgramYear={{true}}
-      @editable={{canUpdate}}
-      @collapse={{action setPyObjectiveDetails false}}
-      @expand={{action setPyObjectiveDetails true}}
+    <ProgramYear::Objectives
+      @programYear={{@programYear}}
+      @editable={{@canUpdate}}
+      @collapse={{fn @setPyObjectiveDetails false}}
+      @expand={{fn @setPyObjectiveDetails true}}
     />
   {{else}}
     <CollapsedObjectivesProgramYears

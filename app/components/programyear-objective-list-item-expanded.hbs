@@ -14,15 +14,15 @@
 </tr>
 {{#if (is-fulfilled courseObjects)}}
   {{#each (sort-by "title" (await courseObjects)) as |obj|}}
-    <tr class="programyear-objective-list-item-expanded">
+    <tr class="programyear-objective-list-item-expanded" data-test-programyear-objective-list-item-expanded>
       <td colspan="2"></td>
-      <td colspan="13" class="text-top">
+      <td colspan="13" class="text-top" data-test-course>
         {{obj.title}}
       </td>
       <td colspan="13" class="text-top">
-        <ul>
+        <ul data-test-course-objectives>
           {{#each (sort-by "title" obj.objectives) as |obj|}}
-            <li>
+            <li data-test-course-objective>
               {{obj.title}}
             </li>
           {{/each}}

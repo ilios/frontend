@@ -1,0 +1,16 @@
+{{#if @isSelected}}
+  <label {{on "click" @remove}} class="selected">
+    <input
+      type="radio"
+      checked="checked"
+    >
+    {{@title}}
+  </label>
+{{else}}
+  <label {{on "click" @add}}>
+    <input
+      type="radio"
+    >
+    {{@title}}
+  </label>
+{{/if}}

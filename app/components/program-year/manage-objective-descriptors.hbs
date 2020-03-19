@@ -1,0 +1,12 @@
+<div data-test-program-year-manage-objective-descriptors>
+  <span data-test-objective-title>
+    {{! template-lint-disable no-triple-curlies}}
+    {{{@objectiveTitle}}}
+  </span>
+  <MeshManager
+    @add={{@add}}
+    @remove={{@remove}}
+    @terms={{@selected}}
+    @editable={{@editable}}
+  />
+</div>
