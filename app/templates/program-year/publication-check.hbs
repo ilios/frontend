@@ -7,7 +7,7 @@
   <section>
     <div class="detail-title">
       {{t "general.missingItems"}}
-      ({{model.allPublicationIssuesLength}})
+      ({{@model.allPublicationIssuesLength}})
     </div>
     <div class="detail-content">
       <table>
@@ -33,42 +33,42 @@
         <tbody>
           <tr>
             <td>
-              {{model.academicYear}}
+              {{@model.academicYear}}
             </td>
-            {{#if model.directors.length}}
+            {{#if @model.directors.length}}
               <td class="yes">
                 {{t "general.yes"}}
-                ({{model.directors.length}})
+                ({{@model.directors.length}})
               </td>
             {{else}}
               <td class="no">
                 {{t "general.no"}}
               </td>
             {{/if}}
-            {{#if model.terms.length}}
+            {{#if @model.terms.length}}
               <td class="yes">
                 {{t "general.yes"}}
-                ({{model.terms.length}})
+                ({{@model.terms.length}})
               </td>
             {{else}}
               <td class="no">
                 {{t "general.no"}}
               </td>
             {{/if}}
-            {{#if model.competencies.length}}
+            {{#if @model.competencies.length}}
               <td class="yes">
                 {{t "general.yes"}}
-                ({{model.competencies.length}})
+                ({{@model.competencies.length}})
               </td>
             {{else}}
               <td class="no">
                 {{t "general.no"}}
               </td>
             {{/if}}
-            {{#if model.objectives.length}}
+            {{#if @model.objectives.length}}
               <td class="yes">
                 {{t "general.yes"}}
-                ({{model.objectives.length}})
+                ({{@model.objectives.length}})
               </td>
             {{else}}
               <td class="no">

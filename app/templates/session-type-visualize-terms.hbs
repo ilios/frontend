@@ -3,18 +3,18 @@
   <h2>
     <LinkTo
       @route="session-type-visualize-vocabularies"
-      @model={{model.sessionType}}
+      @model={{@model.sessionType}}
     >
-      {{model.sessionType.title}}
+      {{@model.sessionType.title}}
     </LinkTo>
     >
-    {{model.vocabulary.title}}
+    {{@model.vocabulary.title}}
   </h2>
   <h3>
     {{t "general.terms"}}
   </h3>
   <VisualizerSessionTypeTerms
-    @sessionType={{model.sessionType}}
-    @vocabulary={{model.vocabulary}}
+    @sessionType={{@model.sessionType}}
+    @vocabulary={{@model.vocabulary}}
   />
 </section>

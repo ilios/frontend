@@ -3,17 +3,17 @@
   {{t "general.backToAdminDashboard"}}
 </LinkTo>
 <IliosUsers
-  @offset={{offset}}
-  @setOffset={{action (mut offset)}}
-  @limit={{limit}}
-  @setLimit={{action (mut limit)}}
-  @query={{query}}
-  @setQuery={{action (mut query) value="target.value"}}
-  @showNewUserForm={{showNewUserForm}}
-  @setShowNewUserForm={{action (mut showNewUserForm)}}
-  @showBulkNewUserForm={{showBulkNewUserForm}}
-  @setShowBulkNewUserForm={{action (mut showBulkNewUserForm)}}
-  @searchTerms={{searchTerms}}
-  @setSearchTerms={{action (mut searchTerms)}}
+  @offset={{this.offset}}
+  @setOffset={{action (mut this.offset)}}
+  @limit={{this.limit}}
+  @setLimit={{action (mut this.limit)}}
+  @query={{this.query}}
+  @setQuery={{action (mut this.query) value="target.value"}}
+  @showNewUserForm={{this.showNewUserForm}}
+  @setShowNewUserForm={{action (mut this.showNewUserForm)}}
+  @showBulkNewUserForm={{this.showBulkNewUserForm}}
+  @setShowBulkNewUserForm={{action (mut this.showBulkNewUserForm)}}
+  @searchTerms={{this.searchTerms}}
+  @setSearchTerms={{action (mut this.searchTerms)}}
   @transitionToUser={{action "transitionToUser"}}
 />

@@ -3,7 +3,7 @@
   <div class="filters">
     <div class="toggle-mycourses" data-test-my-courses-filter>
       <ToggleButtons
-        @firstOptionSelected={{userCoursesOnly}}
+        @firstOptionSelected={{this.userCoursesOnly}}
         @firstLabel={{t "general.myCourses"}}
         @secondLabel={{t "general.allCourses"}}
         @toggle={{toggle "userCoursesOnly" this}}
@@ -11,19 +11,19 @@
     </div>
     <div class="schoolsfilter" data-test-school-filter>
       <FaIcon @icon="university" @fixedWidth={{true}} />
-      {{#if hasMoreThanOneSchool}}
+      {{#if this.hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-          {{#each sortedSchools as |school|}}
+          {{#each this.sortedSchools as |school|}}
             <option
               value={{school.id}}
-              selected={{is-equal school selectedSchool}}
+              selected={{is-equal school this.selectedSchool}}
             >
               {{school.title}}
             </option>
           {{/each}}
         </select>
       {{else}}
-        {{selectedSchool.title}}
+        {{this.selectedSchool.title}}
       {{/if}}
     </div>
     <div class="yearsfilter">
@@ -32,8 +32,8 @@
         onchange={{action "changeSelectedYear" value="target.value"}}
         data-test-year-filter
       >
-        {{#each sortedYears as |year|}}
-          <option value={{year.year}} selected={{is-equal year selectedYear}}>
+        {{#each this.sortedYears as |year|}}
+          <option value={{year.year}} selected={{is-equal year this.selectedYear}}>
             {{year.academicYearTitle}}
           </option>
         {{/each}}
@@ -41,8 +41,8 @@
     </div>
     <div class="titlefilter">
       <input
-        value={{titleFilter}}
-        oninput={{action (perform changeTitleFilter) value="target.value"}}
+        value={{this.titleFilter}}
+        oninput={{action (perform this.changeTitleFilter) value="target.value"}}
         placeholder={{t "general.courseTitleFilterPlaceholder"}}
         data-test-title-filter
       >
@@ -52,31 +52,31 @@
     <div class="header">
       <h2 data-test-courses-header-title class="title">
         {{t "general.courses"}}
-        ({{get (await filteredCourses) "length"}})
+        ({{get (await this.filteredCourses) "length"}})
       </h2>
       <div class="actions">
-        {{#if (await canCreateCourse)}}
+        {{#if (await this.canCreateCourse)}}
           <ExpandCollapseButton
-            @value={{showNewCourseForm}}
+            @value={{this.showNewCourseForm}}
             @action={{action "toggleNewCourseForm"}}
           />
         {{/if}}
       </div>
     </div>
     <section class="new">
-      {{#liquid-if (and (is-fulfilled sessionTypes) showNewCourseForm)}}
+      {{#liquid-if (and (is-fulfilled this.sessionTypes) this.showNewCourseForm)}}
         <NewCourse
-          @currentSchool={{selectedSchool}}
-          @currentYear={{selectedYear}}
+          @currentSchool={{this.selectedSchool}}
+          @currentYear={{this.selectedYear}}
           @save={{action "saveNewCourse"}}
           @cancel={{action "toggleNewCourseForm"}}
         />
       {{/liquid-if}}
-      {{#if newCourse}}
+      {{#if this.newCourse}}
         <div class="saved-result" data-test-new-course>
-          <LinkTo @route="course" @model={{newCourse}}>
+          <LinkTo @route="course" @model={{this.newCourse}}>
             <FaIcon @icon="external-link-square-alt" />
-            {{newCourse.title}}
+            {{this.newCourse.title}}
           </LinkTo>
           {{t "general.savedSuccessfully"}}
         </div>

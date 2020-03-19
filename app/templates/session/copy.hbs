@@ -1,9 +1,9 @@
 <div class="session-details">
   <SessionOverview
     @session={{model}}
-    @editable={{canUpdate}}
+    @editable={{this.canUpdate}}
     @showCheckLink={{false}}
-    @sessionTypes={{model.sessionTypes}}
+    @sessionTypes={{@model.sessionTypes}}
   />
   <SessionCopy @session={{model}} @visit={{action "loadSession"}} />
 </div>

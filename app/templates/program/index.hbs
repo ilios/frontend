@@ -1,6 +1,6 @@
 <ProgramyearList
-  @programYears={{await model.programYears}}
-  @canCreate={{canCreate}}
+  @programYears={{await @model.programYears}}
+  @canCreate={{this.canCreate}}
   @program={{model}}
   @lock={{action "lockProgramYear"}}
   @unlock={{action "unlockProgramYear"}}

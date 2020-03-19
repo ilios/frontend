@@ -6,32 +6,32 @@
   <div class="filters">
     <div class="schoolsfilter">
       <FaIcon @icon="university" @fixedWidth={{true}} />
-      {{#if hasMoreThanOneSchool}}
+      {{#if this.hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-          {{#each sortedSchools as |school|}}
+          {{#each this.sortedSchools as |school|}}
             <option
               value={{school.id}}
-              selected={{is-equal school selectedSchool}}
+              selected={{is-equal school this.selectedSchool}}
             >
               {{school.title}}
             </option>
           {{/each}}
         </select>
       {{else}}
-        {{selectedSchool.title}}
+        {{this.selectedSchool.title}}
       {{/if}}
     </div>
     <div class="titlefilter">
       <input
         type="text"
         value={{filter}}
-        oninput={{action (mut filter) value="target.value"}}
+        oninput={{action (mut this.filter) value="target.value"}}
         placeholder={{t "general.pendingUserUpdates.filterBy"}}
       >
     </div>
   </div>
   <div class="updates">
-    {{#liquid-if (is-fulfilled allUpdates)}}
+    {{#liquid-if (is-fulfilled this.allUpdates)}}
       <div class="list">
         <table>
           <thead>
@@ -49,7 +49,7 @@
             </tr>
           </thead>
           <tbody>
-            {{#each (await displayedUpdates) as |update|}}
+            {{#each (await this.displayedUpdates) as |update|}}
               <tr>
                 <td class="text-left" colspan="2">
                   <LinkTo @route="user" @model={{update.user}}>
@@ -69,7 +69,7 @@
                 </td>
                 <td></td>
                 <td class="text-left" colspan="2">
-                  {{#if (contains update updatesBeingSaved)}}
+                  {{#if (contains update this.updatesBeingSaved)}}
                     <LoadingSpinner />
                   {{else}}
                     {{#if (eq update.type "emailMismatch")}}

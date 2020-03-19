@@ -6,14 +6,14 @@
     </LinkTo>
   </div>
   <h3>
-    <LinkTo @route="program" @model={{model.program}}>
-      {{get (await model.program) "title"}}
+    <LinkTo @route="program" @model={{@model.program}}>
+      {{get (await @model.program) "title"}}
     </LinkTo>
-    <LinkTo @route="programYear" @models={{array model.program model}}>
-      {{#if (get (await model.cohort) "title")}}
-        {{get (await model.cohort) "title"}}
+    <LinkTo @route="programYear" @models={{array @model.program @model}}>
+      {{#if (get (await @model.cohort) "title")}}
+        {{get (await @model.cohort) "title"}}
       {{else}}
-        {{t "general.classOf" year=(await model.classOfYear)}}
+        {{t "general.classOf" year=(await @model.classOfYear)}}
       {{/if}}
     </LinkTo>
   </h3>

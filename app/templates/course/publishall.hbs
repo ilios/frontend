@@ -1,7 +1,7 @@
 <LinkTo @route="course" @model={{model}}>
-  {{t "general.backToTitle" title=model.title}}
+  {{t "general.backToTitle" title=@model.title}}
 </LinkTo>
 <PublishAllSessions
-  @sessions={{model.sessions}}
+  @sessions={{@model.sessions}}
   @saved={{action "returnToList"}}
 />

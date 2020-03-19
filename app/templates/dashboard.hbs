@@ -1,8 +1,8 @@
 {{title (t "general.dashboard")}}
 <div class="ilios-dashboard" data-test-dashboard>
   <CommonDashboard
-    @allSchools={{this.model.schools}}
-    @allAcademicYears={{this.model.academicYears}}
+    @allSchools={{@model.schools}}
+    @allAcademicYears={{@model.academicYears}}
     @show={{this.show}}
     @setShow={{action (mut this.show)}}
     @selectedDate={{this.selectedDate}}

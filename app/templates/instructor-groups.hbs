@@ -3,25 +3,25 @@
   <div class="filters">
     <div class="schoolsfilter" data-test-school-filter>
       <FaIcon @icon="university" @fixedWidth={{true}} />
-      {{#if hasMoreThanOneSchool}}
+      {{#if this.hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-          {{#each (sort-by "title" model.schools) as |school|}}
+          {{#each (sort-by "title" @model.schools) as |school|}}
             <option
               value={{school.id}}
-              selected={{is-equal school selectedSchool}}
+              selected={{is-equal school this.selectedSchool}}
             >
               {{school.title}}
             </option>
           {{/each}}
         </select>
       {{else}}
-        {{selectedSchool.title}}
+        {{this.selectedSchool.title}}
       {{/if}}
     </div>
     <div class="titlefilter">
       <input
-        value={{titleFilter}}
-        oninput={{action (perform changeTitleFilter) value="target.value"}}
+        value={{this.titleFilter}}
+        oninput={{action (perform this.changeTitleFilter) value="target.value"}}
         placeholder={{t "general.instructorGroupTitleFilterPlaceholder"}}
         data-test-title-filter
       >
@@ -35,27 +35,27 @@
         </h2>
       </div>
       <div class="actions">
-        {{#if (await canCreate)}}
+        {{#if (await this.canCreate)}}
           <ExpandCollapseButton
-            @value={{showNewInstructorGroupForm}}
+            @value={{this.showNewInstructorGroupForm}}
             @action={{action "toggleNewInstructorGroupForm"}}
           />
         {{/if}}
       </div>
     </div>
     <section class="new">
-      {{#liquid-if showNewInstructorGroupForm class="vertical"}}
+      {{#liquid-if this.showNewInstructorGroupForm class="vertical"}}
         <NewInstructorgroup
-          @currentSchool={{selectedSchool}}
+          @currentSchool={{this.selectedSchool}}
           @save={{action "saveNewInstructorGroup"}}
           @cancel={{action "toggleNewInstructorGroupForm"}}
         />
       {{/liquid-if}}
-      {{#if newInstructorGroup}}
+      {{#if this.newInstructorGroup}}
         <div class="saved-result">
-          <LinkTo @route="instructorGroup" @model={{newInstructorGroup}}>
+          <LinkTo @route="instructorGroup" @model={{this.newInstructorGroup}}>
             <FaIcon @icon="external-link-square-alt" />
-            {{newInstructorGroup.title}}
+            {{this.newInstructorGroup.title}}
           </LinkTo>
           {{t "general.savedSuccessfully"}}
         </div>

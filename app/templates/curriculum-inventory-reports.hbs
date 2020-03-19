@@ -3,41 +3,41 @@
   <div class="filter-tools">
     <div class="schoolsfilter">
       <FaIcon @icon="university" @fixedWidth={{true}} />
-      {{#if hasMoreThanOneSchool}}
+      {{#if this.hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-          {{#each sortedSchools as |school|}}
+          {{#each this.sortedSchools as |school|}}
             <option
               value={{school.id}}
-              selected={{is-equal school (await selectedSchool)}}
+              selected={{is-equal school (await this.selectedSchool)}}
             >
               {{school.title}}
             </option>
           {{/each}}
         </select>
-      {{else if (await selectedSchool)}}
-        {{get (await selectedSchool) "title"}}
+      {{else if (await this.selectedSchool)}}
+        {{get (await this.selectedSchool) "title"}}
       {{else}}
         {{t "general.none"}}
       {{/if}}
     </div>
     <div class="programsfilter">
       <FaIcon @icon="list-alt" @fixedWidth={{true}} />
-      {{#if (gt (get (await programs) "length") 1)}}
+      {{#if (gt (get (await this.programs) "length") 1)}}
         <select
           onchange={{action "changeSelectedProgram" value="target.value"}}
         >
-          {{#each (sort-by "title" (await programs)) as |program|}}
+          {{#each (sort-by "title" (await this.programs)) as |program|}}
             <option
               value={{program.id}}
-              selected={{is-equal program (await selectedProgram)}}
+              selected={{is-equal program (await this.selectedProgram)}}
             >
               {{program.title}}
             </option>
           {{/each}}
         </select>
-      {{else if (is-fulfilled selectedProgram)}}
-        {{#if (await selectedProgram)}}
-          {{get (await selectedProgram) "title"}}
+      {{else if (is-fulfilled this.selectedProgram)}}
+        {{#if (await this.selectedProgram)}}
+          {{get (await this.selectedProgram) "title"}}
         {{else}}
           {{t "general.none"}}
         {{/if}}
@@ -51,28 +51,28 @@
           {{t "general.curriculumInventoryReports"}}
         </h2>
       </div>
-      {{#if (and (await canCreate) (await selectedProgram))}}
+      {{#if (and (await this.canCreate) (await this.selectedProgram))}}
         <div class="actions">
           <ExpandCollapseButton
-            @value={{showNewCurriculumInventoryReportForm}}
+            @value={{this.showNewCurriculumInventoryReportForm}}
             @action={{action "toggleNewCurriculumInventoryReportForm"}}
           />
         </div>
       {{/if}}
     </div>
     <section class="new">
-      {{#liquid-if showNewCurriculumInventoryReportForm class="vertical"}}
+      {{#liquid-if this.showNewCurriculumInventoryReportForm class="vertical"}}
         <NewCurriculumInventoryReport
-          @currentProgram={{await selectedProgram}}
+          @currentProgram={{await this.selectedProgram}}
           @save={{action "saveNewCurriculumInventoryReport"}}
           @cancel={{action "cancel"}}
         />
       {{/liquid-if}}
-      {{#if newReport}}
+      {{#if this.newReport}}
         <div class="saved-result">
-          <LinkTo @route="curriculumInventoryReport" @model={{newReport}}>
+          <LinkTo @route="curriculumInventoryReport" @model={{this.newReport}}>
             <FaIcon @icon="external-link-square-alt" />
-            {{newReport.name}}
+            {{this.newReport.name}}
           </LinkTo>
           {{t "general.savedSuccessfully"}}
         </div>
@@ -81,7 +81,7 @@
     <div class="list">
       {{#if (is-fulfilled this.reports)}}
         <CurriculumInventoryReportList
-          @program={{await selectedProgram}}
+          @program={{await this.selectedProgram}}
           @sortBy={{this.sortReportsBy}}
           @edit={{action "editCurriculumInventoryReport"}}
           @remove={{action "removeCurriculumInventoryReport"}}

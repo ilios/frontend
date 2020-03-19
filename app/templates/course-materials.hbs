@@ -6,8 +6,8 @@
 <CourseSummaryHeader @course={{model}} />
 <CourseMaterials
   @course={{model}}
-  @courseSort={{courseSort}}
-  @sessionSort={{sessionSort}}
-  @onCourseSort={{action (mut courseSort)}}
-  @onSessionSort={{action (mut sessionSort)}}
+  @courseSort={{this.courseSort}}
+  @sessionSort={{this.sessionSort}}
+  @onCourseSort={{action (mut this.courseSort)}}
+  @onSessionSort={{action (mut this.sessionSort)}}
 />

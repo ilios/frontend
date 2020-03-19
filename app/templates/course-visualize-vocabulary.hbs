@@ -1,20 +1,20 @@
 <section class="course-visualize-vocabulary">
   <div class="backtolink">
-    <LinkTo @route="course-visualizations" @model={{model.course}}>
+    <LinkTo @route="course-visualizations" @model={{@model.course}}>
       {{t "general.otherVisualizations"}}
     </LinkTo>
   </div>
   <h2>
-    {{model.vocabulary.title}}
+    {{@model.vocabulary.title}}
   </h2>
   <h3 class="clickable">
-    <LinkTo @route="course" @model={{model.course}}>
-      {{model.course.title}}
-      {{model.course.academicYear}}
+    <LinkTo @route="course" @model={{@model.course}}>
+      {{@model.course.title}}
+      {{@model.course.academicYear}}
     </LinkTo>
   </h3>
   <VisualizerCourseVocabulary
-    @course={{model.course}}
-    @vocabulary={{model.vocabulary}}
+    @course={{@model.course}}
+    @vocabulary={{@model.vocabulary}}
   />
 </section>

@@ -5,26 +5,26 @@
 </NewVersionNotifier>
 <div
   class="application-wrapper
-    {{if currentUser.performsNonLearnerFunction "show-navigation"}}"
+    {{if this.currentUser.performsNonLearnerFunction "show-navigation"}}"
 >
-  <IliosHeader @currentlyLoading={{currentlyLoading}} />
-  {{#if session.isAuthenticated}}
+  <IliosHeader @currentlyLoading={{this.currentlyLoading}} />
+  {{#if this.session.isAuthenticated}}
     <IliosNavigation />
   {{/if}}
   <main>
-    {{#if showErrorDisplay}}
-      <ErrorDisplay @errors={{errors}} @clearErrors={{action "clearErrors"}} />
+    {{#if this.showErrorDisplay}}
+      <ErrorDisplay @errors={{this.errors}} @clearErrors={{action "clearErrors"}} />
     {{else}}
       {{outlet}}
     {{/if}}
   </main>
   <footer class="ilios-footer">
     <div class="version">
-      {{apiVersion.version}}
+      {{this.apiVersion.version}}
       {{app-version versionOnly=true}}
     </div>
   </footer>
-  <LoadingBar @isLoading={{currentlyLoading}} />
+  <LoadingBar @isLoading={{this.currentlyLoading}} />
 </div>
 <FlashMessages />
 <HeadLayout />
