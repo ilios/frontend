@@ -17,17 +17,7 @@ module('Integration | Component | curriculum-inventory/publication-status', func
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
-  test('it renders schedule and is accessible', async function (assert) {
-    this.set('item', { isPublished: true, isScheduled: true });
-    await render(hbs`<CurriculumInventory::PublicationStatus
-      @item={{this.item}}
-    />`);
-    assert.dom().hasTextContaining('Scheduled');
-
-    await a11yAudit(this.element);
-    assert.ok(true, 'no a11y errors found!');
-  });
-  test('it renders not published and is accessible', async function (assert) {
+  test('it renders draft and is accessible', async function (assert) {
     this.set('item', { isPublished: false, isScheduled: false });
     await render(hbs`<CurriculumInventory::PublicationStatus
       @item={{this.item}}

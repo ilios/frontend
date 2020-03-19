@@ -1,5 +1,9 @@
-<span class="status publication-status {{this.publicationStatus}}">
+<span class="status publication-status {{if @item.isPublished "published" "notpublished"}}">
   <span data-test-text>
-    {{t this.textKey}}
+    {{#if @item.isPublished}}
+      {{t "general.finalized"}}
+    {{else}}
+      {{t "general.draft"}}
+    {{/if}}
   </span>
 </span>
