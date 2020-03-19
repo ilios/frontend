@@ -60,13 +60,13 @@
       </tr>
     </thead>
     <tbody data-test-courses>
-      {{#each (await this.sortedCourses) as |course|}}
+      {{#each (sort-by (if this.sortingByStatus (fn this.sortCoursesByStatus) @sortBy) @courses) as |course|}}
         <tr
-          class={{if course.showRemoveConfirmation "confirm-removal"}}
+          class={{if (contains course.id this.coursesForRemovalConfirmation) "confirm-removal"}}
           data-test-active-row
         >
           <td class="text-left" colspan="3">
-            <LinkTo @route="course" @model={{course.content}}>
+            <LinkTo @route="course" @model={{course}}>
               {{course.title}}
               {{#if course.externalId}}
                 ({{course.externalId}})
@@ -89,37 +89,31 @@
             {{moment-format course.endDate "L"}}
           </td>
           <td class="text-left" colspan="3">
-            {{#if course.isSaving}}
+            {{#if (contains course.id this.savingCourseIds)}}
               <LoadingSpinner />
             {{else}}
-              <PublicationStatus @item={{course}} @showIcon={{false}} />
-              {{#if
-                (and
-                  (is-fulfilled course.userCanUnlock)
-                  (is-fulfilled course.userCanLock)
-                  course.locked
-                )
-              }}
-                {{#if (await course.userCanUnLock)}}
+              <PublicationStatus @item={{course}} @showText={{true}} @showIcon={{false}} />
+              {{#if course.locked }}
+                {{#if (await (compute (fn this.canUnlock) course))}}
                   <FaIcon
                     @icon="lock"
                     class="clickable enabled"
-                    @click={{action "unlockCourse" course}}
+                    @click={{perform this.unlockCourse course}}
                   />
                 {{else}}
                   <FaIcon @icon="lock" class="disabled" />
                 {{/if}}
-              {{else if (await course.userCanLock)}}
+              {{else if (await (compute (fn this.canLock) course))}}
                 <FaIcon
                   @icon="unlock"
                   class="clickable enabled"
-                  @click={{action "lockCourse" course}}
+                  @click={{perform this.lockCourse course}}
                 />
               {{else}}
                 <FaIcon @icon="unlock" class="disabled" />
               {{/if}}
-              {{#if (await course.userCanDelete)}}
-                <span class="clickable remove" {{action "confirmRemove" course}}>
+              {{#if (await (compute (fn this.canDelete) course))}}
+                <span class="clickable remove" role="button" {{on "click" (fn this.confirmRemoval course)}}>
                   <FaIcon @icon="trash" class="enabled" />
                 </span>
               {{else}}
@@ -128,7 +122,7 @@
             {{/if}}
           </td>
         </tr>
-        {{#if course.showRemoveConfirmation}}
+        {{#if (contains course.id this.coursesForRemovalConfirmation)}}
           <tr class="confirm-removal">
             <td colspan="15">
               <div class="confirm-message">
@@ -138,13 +132,13 @@
                 }}
                 <br>
                 <div class="confirm-buttons">
-                  <button type="button" class="remove text" onclick={{action "remove" course}}>
+                  <button {{on "click" (fn @remove course)}} type="button" class="remove text">
                     {{t "general.yes"}}
                   </button>
                   <button
                     type="button"
                     class="done text"
-                    onclick={{action "cancelRemove" course}}
+                    onclick={{fn this.cancelRemove course}}
                   >
                     {{t "general.cancel"}}
                   </button>
