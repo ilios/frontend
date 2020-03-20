@@ -5,7 +5,7 @@
   </LinkTo>
 </div>
 <CurriculumInventoryReportDetails
-  @report={{model}}
+  @report={{@model}}
   @canUpdate={{and (not @model.isFinalized) this.canUpdate}}
   @leadershipDetails={{this.leadershipDetails}}
   @setLeadershipDetails={{action (mut this.leadershipDetails)}}

@@ -22,13 +22,13 @@
   </h3>
   <div class="visualizations">
     <div>
-      <LinkTo @route="program-year-visualize-competencies" @model={{model}}>
+      <LinkTo @route="program-year-visualize-competencies" @model={{@model}}>
         <h4>
           {{t "general.objectiveMap"}}
         </h4>
         <VisualizerProgramYearCompetencies
           @isIcon={{true}}
-          @programYear={{model}}
+          @programYear={{@model}}
         />
       </LinkTo>
     </div>
