@@ -64,7 +64,7 @@ module('Acceptance | Course - Cohorts', function(hooks) {
 
   });
 
-  test('save cohort chages', async function(assert) {
+  test('save cohort changes', async function(assert) {
     assert.expect(4);
     await page.visit({ courseId: 1, details: true });
     await page.cohorts.manage();
@@ -96,17 +96,17 @@ module('Acceptance | Course - Cohorts', function(hooks) {
     assert.expect(7);
 
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    assert.equal(page.objectives.current.length, 1);
-    assert.equal(page.objectives.current[0].parents.length, 2);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
-    assert.equal(page.objectives.current[0].parents[1].description, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[1].description, 'objective 1');
 
     await page.cohorts.manage();
     await page.cohorts.selected[0].remove();
     await page.cohorts.save();
 
-    assert.equal(page.objectives.current.length, 1);
-    assert.equal(page.objectives.current[0].parents.length, 1);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 1');
   });
 });

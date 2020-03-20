@@ -31,19 +31,19 @@ module('Integration | Component | session/objectives', function(hooks) {
       @expand={{noop}}
     />`);
 
-    assert.equal(component.current.length, 3);
-    assert.equal(component.current[0].description.text, 'objective 1');
-    assert.equal(component.current[0].parents.length, 0);
-    assert.equal(component.current[0].meshTerms.length, 0);
+    assert.equal(component.objectiveList.objectives.length, 3);
+    assert.equal(component.objectiveList.objectives[0].description.text, 'objective 1');
+    assert.equal(component.objectiveList.objectives[0].parents.length, 0);
+    assert.equal(component.objectiveList.objectives[0].meshTerms.length, 0);
 
-    assert.equal(component.current[1].description.text, 'objective 2');
-    assert.equal(component.current[1].parents.length, 0);
-    assert.equal(component.current[1].meshTerms.length, 0);
+    assert.equal(component.objectiveList.objectives[1].description.text, 'objective 2');
+    assert.equal(component.objectiveList.objectives[1].parents.length, 0);
+    assert.equal(component.objectiveList.objectives[1].meshTerms.length, 0);
 
-    assert.equal(component.current[2].description.text, 'objective 3');
-    assert.equal(component.current[2].parents.length, 1);
-    assert.equal(component.current[2].parents[0].description, 'objective 0');
-    assert.equal(component.current[2].meshTerms.length, 0);
+    assert.equal(component.objectiveList.objectives[2].description.text, 'objective 3');
+    assert.equal(component.objectiveList.objectives[2].parents.length, 1);
+    assert.equal(component.objectiveList.objectives[2].parents[0].description, 'objective 0');
+    assert.equal(component.objectiveList.objectives[2].meshTerms.length, 0);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

@@ -58,14 +58,14 @@ module('Acceptance | Course - Objective Parents', function(hooks) {
     assert.expect(19);
 
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    assert.equal(page.objectives.current.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives.length, 2);
 
-    assert.equal(page.objectives.current[0].description.text, 'objective 3');
-    assert.equal(page.objectives.current[0].parents.length, 1);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
 
 
-    await page.objectives.current[0].manageParents();
+    await page.objectives.objectiveList.objectives[0].manageParents();
     const m = page.objectives.manageObjectiveParents;
 
     assert.equal(m.objectiveTitle, 'objective 3');
@@ -90,14 +90,14 @@ module('Acceptance | Course - Objective Parents', function(hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(11);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    assert.equal(page.objectives.current.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives.length, 2);
 
-    assert.equal(page.objectives.current[0].description.text, 'objective 3');
-    assert.equal(page.objectives.current[0].parents.length, 1);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
 
 
-    await page.objectives.current[0].manageParents();
+    await page.objectives.objectiveList.objectives[0].manageParents();
     const m = page.objectives.manageObjectiveParents;
 
     assert.equal(m.objectiveTitle, 'objective 3');
@@ -107,9 +107,9 @@ module('Acceptance | Course - Objective Parents', function(hooks) {
     assert.ok(m.competencies[1].objectives[0].selected);
     await page.objectives.save();
 
-    assert.equal(page.objectives.current[0].description.text, 'objective 3');
-    assert.equal(page.objectives.current[0].parents.length, 1);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 1');
 
   });
 
@@ -117,14 +117,14 @@ module('Acceptance | Course - Objective Parents', function(hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(11);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    assert.equal(page.objectives.current.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives.length, 2);
 
-    assert.equal(page.objectives.current[0].description.text, 'objective 3');
-    assert.equal(page.objectives.current[0].parents.length, 1);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
 
 
-    await page.objectives.current[0].manageParents();
+    await page.objectives.objectiveList.objectives[0].manageParents();
     const m = page.objectives.manageObjectiveParents;
 
     assert.equal(m.objectiveTitle, 'objective 3');
@@ -134,8 +134,8 @@ module('Acceptance | Course - Objective Parents', function(hooks) {
     assert.ok(m.competencies[1].objectives[0].selected);
     await page.objectives.cancel();
 
-    assert.equal(page.objectives.current[0].description.text, 'objective 3');
-    assert.equal(page.objectives.current[0].parents.length, 1);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
   });
 });

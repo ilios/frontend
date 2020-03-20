@@ -30,19 +30,19 @@ module('Acceptance | Course - Objective Create', function(hooks) {
     const newObjectiveDescription = 'Test junk 123';
 
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    assert.equal(page.objectives.current.length, 1);
-    assert.equal(page.objectives.current[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
     await page.objectives.createNew();
     await page.objectives.newObjective.description(newObjectiveDescription);
     await page.objectives.newObjective.save();
 
-    assert.equal(page.objectives.current.length, 2);
-    assert.equal(page.objectives.current[0].description.text, 'objective 0');
-    assert.equal(page.objectives.current[0].parents.length, 0);
-    assert.equal(page.objectives.current[0].meshTerms.length, 0);
-    assert.equal(page.objectives.current[1].description.text, newObjectiveDescription);
-    assert.equal(page.objectives.current[1].parents.length, 0);
-    assert.equal(page.objectives.current[1].meshTerms.length, 0);
+    assert.equal(page.objectives.objectiveList.objectives.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 0);
+    assert.equal(page.objectives.objectiveList.objectives[0].meshTerms.length, 0);
+    assert.equal(page.objectives.objectiveList.objectives[1].description.text, newObjectiveDescription);
+    assert.equal(page.objectives.objectiveList.objectives[1].parents.length, 0);
+    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms.length, 0);
   });
 
   test('cancel new objective', async function(assert) {
@@ -55,16 +55,16 @@ module('Acceptance | Course - Objective Create', function(hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(6);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    assert.equal(page.objectives.current.length, 1);
-    assert.equal(page.objectives.current[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
     await page.objectives.createNew();
     await page.objectives.newObjective.description('junk');
     await page.objectives.newObjective.cancel();
 
-    assert.equal(page.objectives.current.length, 1);
-    assert.equal(page.objectives.current[0].description.text, 'objective 0');
-    assert.equal(page.objectives.current[0].parents.length, 0);
-    assert.equal(page.objectives.current[0].meshTerms.length, 0);
+    assert.equal(page.objectives.objectiveList.objectives.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 0);
+    assert.equal(page.objectives.objectiveList.objectives[0].meshTerms.length, 0);
   });
 
   test('empty objective title can not be created', async function(assert) {
@@ -77,8 +77,8 @@ module('Acceptance | Course - Objective Create', function(hooks) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    assert.equal(page.objectives.current.length, 1);
-    assert.equal(page.objectives.current[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
     await page.objectives.createNew();
     assert.notOk(page.objectives.newObjective.hasValidationError);
     await page.objectives.newObjective.description('<p>&nbsp</p><div></div><span>  </span>');
@@ -97,14 +97,14 @@ module('Acceptance | Course - Objective Create', function(hooks) {
     const newObjectiveDescription = 'Test junk 123';
 
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    assert.equal(page.objectives.current.length, 0);
+    assert.equal(page.objectives.objectiveList.objectives.length, 0);
     await page.objectives.createNew();
     await page.objectives.newObjective.description(newObjectiveDescription);
     await page.objectives.newObjective.save();
 
-    assert.equal(page.objectives.current.length, 1);
-    assert.equal(page.objectives.current[0].description.text, newObjectiveDescription);
-    assert.equal(page.objectives.current[0].parents.length, 0);
-    assert.equal(page.objectives.current[0].meshTerms.length, 0);
+    assert.equal(page.objectives.objectiveList.objectives.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, newObjectiveDescription);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 0);
+    assert.equal(page.objectives.objectiveList.objectives[0].meshTerms.length, 0);
   });
 });

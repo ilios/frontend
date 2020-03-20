@@ -1,13 +1,9 @@
 <tr
- class="course-objective-list-item objective-list-item {{if @showRemoveConfirmation "confirm-removal"}}"
- data-test-course-objective-list-item
+  id="objective-{{@objective.id}}"
+  class="session-objective-list-item objective-list-item {{if @showRemoveConfirmation "confirm-removal"}}"
+  data-test-session-objective-list-item
 >
-  <td
-    id="objective-{{@objective.id}}"
-    class="text-left text-top"
-    colspan="3"
-    data-test-description
-  >
+  <td class="text-left text-top" colspan="3" data-test-description>
     {{#if @editable}}
       <EditableField
         @value={{this.title}}
@@ -30,21 +26,7 @@
   </td>
   <td class="text-left text-top" colspan="2" data-test-parents>
     {{#if @objective.hasParents}}
-      {{#each (await (sort-by "title" @objective.parents)) as |parent|}}
-        {{#if @course.hasMultipleCohorts}}
-          <strong>
-            {{get (await parent.firstProgram) "title"}}
-            {{#if (get (await parent.firstCohort) "title")}}
-              {{get (await parent.firstCohort) "title"}}
-            {{else}}
-              {{t
-                "general.classOf"
-                year=(await (get (await parent.firstCohort) "classOfYear"))
-              }}
-            {{/if}}
-          </strong>
-          <br>
-        {{/if}}
+      {{#each (sort-by "title" (await @objective.parents)) as |parent|}}
         {{#if @editable}}
           <span
             class="clickable link"
@@ -58,20 +40,23 @@
         {{else}}
           {{parent.textTitle}}
         {{/if}}
-        {{#if parent.competency}}
-          ({{parent.competency.title}})
+        {{#if @objective.hasMultipleParents}}
+          <br><br>
         {{/if}}
-        <br>
       {{/each}}
     {{else if @editable}}
-      <button type="button" {{on "click" (fn @manageParents @objective)}} data-test-manage-parents>
+      <button
+        type="button"
+        data-test-manage-parents
+        {{on "click" (fn @manageParents @objective)}}
+      >
         {{t "general.addNew"}}
       </button>
     {{else}}
       {{t "general.none"}}
     {{/if}}
   </td>
-  <td class="text-left text-top" colspan="2" data-test-mesh>
+  <td class="text-left text-top" colspan="2" data-test-mesh-descriptors>
     <ul class="mesh-descriptor-list">
       {{#each (sort-by "name" (await @objective.meshDescriptors)) as |descriptor|}}
         {{#if @editable}}
@@ -79,6 +64,7 @@
             class="clickable link"
             role="button"
             data-test-term
+            data-test-manage
             {{on "click" (fn @manageDescriptors @objective)}}
           >
             {{descriptor.name}}
@@ -91,7 +77,7 @@
       {{else}}
         <li>
           {{#if @editable}}
-            <button type="button" {{on "click" (fn @manageDescriptors @objective)}}>
+            <button type="button" {{on "click" (fn @manageDescriptors @objective)}} data-test-manage>
               {{t "general.addNew"}}
             </button>
           {{else}}
@@ -102,8 +88,8 @@
     </ul>
   </td>
   <td class="text-left text-top" colspan="1" data-test-actions>
-    {{#if @editable}}
-      <span class="clickable remove" role="button" {{on "click" (fn @remove @objective)}} aria-label={{t "general.remove"}} data-test-remove>
+    {{#if (and @editable (not @showRemoveConfirmation))}}
+      <span class="clickable remove icon" role="button" {{on "click" (fn @remove @objective)}} aria-label={{t "general.remove"}}>
         <FaIcon @icon="trash" class="enabled" />
       </span>
     {{else}}

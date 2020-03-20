@@ -35,14 +35,14 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
     assert.expect(14);
 
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
-    assert.equal(page.objectives.current.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives.length, 2);
 
-    assert.equal(page.objectives.current[0].description.text, 'objective 3');
-    assert.equal(page.objectives.current[0].parents.length, 2);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
-    assert.equal(page.objectives.current[0].parents[1].description, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[1].description, 'objective 1');
 
-    await page.objectives.current[0].manageParents();
+    await page.objectives.objectiveList.objectives[0].manageParents();
 
     const m = page.objectives.manageObjectiveParents;
     assert.equal(m.objectiveTitle, 'objective 3');
@@ -61,12 +61,12 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
     assert.expect(13);
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
 
-    assert.equal(page.objectives.current[0].description.text, 'objective 3');
-    assert.equal(page.objectives.current[0].parents.length, 2);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
-    assert.equal(page.objectives.current[0].parents[1].description, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[1].description, 'objective 1');
 
-    await page.objectives.current[0].manageParents();
+    await page.objectives.objectiveList.objectives[0].manageParents();
 
     const m = page.objectives.manageObjectiveParents;
     assert.equal(m.objectiveTitle, 'objective 3');
@@ -78,10 +78,10 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
     assert.ok(m.objectives[2].selected);
     await page.objectives.save();
 
-    assert.equal(page.objectives.current[0].description.text, 'objective 3');
-    assert.equal(page.objectives.current[0].parents.length, 2);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 1');
-    assert.equal(page.objectives.current[0].parents[1].description, 'objective 2');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[1].description, 'objective 2');
 
   });
 
@@ -90,12 +90,12 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
     assert.expect(13);
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
 
-    assert.equal(page.objectives.current[0].description.text, 'objective 3');
-    assert.equal(page.objectives.current[0].parents.length, 2);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
-    assert.equal(page.objectives.current[0].parents[1].description, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[1].description, 'objective 1');
 
-    await page.objectives.current[0].manageParents();
+    await page.objectives.objectiveList.objectives[0].manageParents();
 
     const m = page.objectives.manageObjectiveParents;
     assert.equal(m.objectiveTitle, 'objective 3');
@@ -107,10 +107,10 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
     assert.ok(m.objectives[2].selected);
     await page.objectives.cancel();
 
-    assert.equal(page.objectives.current[0].description.text, 'objective 3');
-    assert.equal(page.objectives.current[0].parents.length, 2);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
-    assert.equal(page.objectives.current[0].parents[1].description, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[1].description, 'objective 1');
   });
 
   test('deselect all parents for session objective', async function(assert) {
@@ -118,12 +118,12 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
     assert.expect(11);
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
 
-    assert.equal(page.objectives.current[0].description.text, 'objective 3');
-    assert.equal(page.objectives.current[0].parents.length, 2);
-    assert.equal(page.objectives.current[0].parents[0].description, 'objective 0');
-    assert.equal(page.objectives.current[0].parents[1].description, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents[1].description, 'objective 1');
 
-    await page.objectives.current[0].manageParents();
+    await page.objectives.objectiveList.objectives[0].manageParents();
 
     const m = page.objectives.manageObjectiveParents;
     assert.equal(m.objectiveTitle, 'objective 3');
@@ -135,7 +135,7 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
     assert.ok(m.objectives[2].notSelected);
     await page.objectives.save();
 
-    assert.equal(page.objectives.current[0].description.text, 'objective 3');
-    assert.equal(page.objectives.current[0].parents.length, 0);
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 0);
   });
 });

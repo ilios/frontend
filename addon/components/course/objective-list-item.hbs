@@ -1,0 +1,99 @@
+<tr
+  id="objective-{{@objective.id}}"
+  class="course-objective-list-item objective-list-item {{if @showRemoveConfirmation "confirm-removal"}}"
+  data-test-course-objective-list-item
+>
+  <td class="text-left text-top" colspan="3" data-test-description>
+    {{#if @editable}}
+      <EditableField
+        @value={{this.title}}
+        @renderHtml={{true}}
+        @isSaveDisabled={{await (compute (fn this.hasErrorFor) "title")}}
+        @save={{perform this.saveTitleChanges}}
+        @close={{this.revertTitleChanges}}
+      >
+        <HtmlEditor @content={{this.title}} @update={{this.changeTitle}} />
+        {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+          <span class="validation-error-message">
+            {{message}}
+          </span>
+        {{/each}}
+      </EditableField>
+    {{else}}
+      {{! template-lint-disable no-triple-curlies }}
+      {{{@objective.title}}}
+    {{/if}}
+  </td>
+  <td class="text-left text-top" colspan="2" data-test-parents>
+    {{#if @objective.hasParents}}
+      {{#each (sort-by "title" (await @objective.parents)) as |parent|}}
+        {{#if @editable}}
+          <span
+            class="clickable link"
+            data-test-parent
+            data-test-manage-parents
+            role="button"
+            {{on "click" (fn @manageParents @objective)}}
+          >
+            {{parent.textTitle}}
+          </span>
+        {{else}}
+          {{parent.textTitle}}
+        {{/if}}
+        {{#if @objective.hasMultipleParents}}
+          <br><br>
+        {{/if}}
+      {{/each}}
+    {{else if @editable}}
+      <button
+        type="button"
+        data-test-manage-parents
+        {{on "click" (fn @manageParents @objective)}}
+      >
+        {{t "general.addNew"}}
+      </button>
+    {{else}}
+      {{t "general.none"}}
+    {{/if}}
+  </td>
+  <td class="text-left text-top" colspan="2" data-test-mesh-descriptors>
+    <ul class="mesh-descriptor-list">
+      {{#each (sort-by "name" (await @objective.meshDescriptors)) as |descriptor|}}
+        {{#if @editable}}
+          <li
+            class="clickable link"
+            role="button"
+            data-test-term
+            data-test-manage
+            {{on "click" (fn @manageDescriptors @objective)}}
+          >
+            {{descriptor.name}}
+          </li>
+        {{else}}
+          <li data-test-term>
+            {{descriptor.name}}
+          </li>
+        {{/if}}
+      {{else}}
+        <li>
+          {{#if @editable}}
+            <button type="button" {{on "click" (fn @manageDescriptors @objective)}} data-test-manage>
+              {{t "general.addNew"}}
+            </button>
+          {{else}}
+            {{t "general.none"}}
+          {{/if}}
+        </li>
+      {{/each}}
+    </ul>
+  </td>
+  <td class="text-left text-top" colspan="1" data-test-actions>
+    {{#if (and @editable (not @showRemoveConfirmation))}}
+      <span class="clickable remove icon" role="button" {{on "click" (fn @remove @objective)}} aria-label={{t "general.remove"}}>
+        <FaIcon @icon="trash" class="enabled" />
+      </span>
+    {{else}}
+      <FaIcon @icon="trash" class="disabled" />
+    {{/if}}
+  </td>
+</tr>
