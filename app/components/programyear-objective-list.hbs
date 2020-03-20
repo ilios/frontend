@@ -53,7 +53,7 @@
       </table>
     {{/if}}
   {{else}}
-    {{! template-lint-disable unused-block-params }}
+    {{! template-lint-disable no-unused-block-params }}
     {{#each (repeat (get (await programYear.objectives) "length")) as |empty|}}
       <div>
         <LoadingSpinner />
