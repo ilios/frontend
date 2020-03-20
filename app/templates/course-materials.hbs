@@ -1,11 +1,11 @@
 <div class="backtolink">
-  <LinkTo @route="course" @model={{model}}>
+  <LinkTo @route="course" @model={{@model}}>
     {{t "general.backToCourse"}}
   </LinkTo>
 </div>
-<CourseSummaryHeader @course={{model}} />
+<CourseSummaryHeader @course={{@model}} />
 <CourseMaterials
-  @course={{model}}
+  @course={{@model}}
   @courseSort={{this.courseSort}}
   @sessionSort={{this.sessionSort}}
   @onCourseSort={{action (mut this.courseSort)}}

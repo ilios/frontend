@@ -1,13 +1,13 @@
 {{title (t "general.curriculumInventoryReports")}}
 <CurriculumInventorySequenceBlockDetails
-  @sequenceBlock={{model}}
+  @sequenceBlock={{@model}}
   @canUpdate={{this.canUpdate}}
   @sortSessionsBy={{this.sortSessionsBy}}
   @setSortSessionBy={{action (mut this.sortSessionsBy)}}
 />
 <CurriculumInventorySequenceBlockList
   @report={{await @model.report}}
-  @parent={{model}}
+  @parent={{@model}}
   @canUpdate={{this.canUpdate}}
   @sequenceBlocks={{await @model.children}}
   @remove={{action "removeChildSequenceBlock"}}

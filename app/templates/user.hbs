@@ -3,7 +3,7 @@
   <UserProfileLoading @canCreate={{await this.canCreate}} />
 {{else if (is-fulfilled this.canCreate)}}
   <UserProfile
-    @user={{model}}
+    @user={{@model}}
     @canUpdate={{this.canUpdate}}
     @canCreate={{await this.canCreate}}
     @isManagingBio={{this.isManagingBio}}
