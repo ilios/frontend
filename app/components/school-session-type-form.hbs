@@ -41,9 +41,9 @@
               selected={{eq aamcMethod.id selectedAamcMethodId}}
             >
               {{aamcMethod.description}}
-              {{#if (not aamcMethod.active)}}
+              {{#unless aamcMethod.active}}
                 ({{t "general.inactive"}})
-              {{/if}}
+              {{/unless}}
             </option>
           {{/each}}
         </select>

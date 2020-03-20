@@ -1,5 +1,4 @@
 <div class="error-display" ...attributes>
-  {{! template-lint-disable bare-strings }}
   <div class="error-main">
     {{#if isOffline}}
       <h2>
@@ -40,13 +39,13 @@
               </h5>
               {{#if error.statusCode}}
                 <span class="error-status-code">
-                  Status Code:
+                  {{t "general.statusCode"}}:
                   {{error.statusCode}}
                 </span>
               {{/if}}
               {{#if error.message}}
                 <span class="error-message">
-                  Message:
+                  {{t "general.message"}}:
                   {{error.message}}
                 </span>
               {{/if}}

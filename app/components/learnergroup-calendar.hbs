@@ -33,7 +33,7 @@
       @areDaysSelectable={{false}}
     />
   </div>
-  <span class="loading-indicator {{if (not this.load.isRunning) "loaded"}}">
+  <span class="loading-indicator {{unless this.load.isRunning "loaded"}}">
     <LoadingSpinner />
     {{t "general.loadingEvents"}}
     ...

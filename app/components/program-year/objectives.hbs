@@ -63,14 +63,7 @@
         @cancel={{this.toggleNewObjectiveEditor}}
       />
     {{/if}}
-    {{#if (not this.isManaging)}}
-      <ProgramyearObjectiveList
-        @subject={{@programYear}}
-        @editable={{@editable}}
-        @manageDescriptors={{perform this.manageDescriptors}}
-        @manageCompetency={{perform this.manageCompetency}}
-      />
-    {{else}}
+    {{#if this.isManaging}}
       {{#if this.isManagingDescriptors}}
         <ProgramYear::ManageObjectiveDescriptors
           @objectiveTitle={{this.manageDescriptorsObjective.title}}
@@ -90,6 +83,13 @@
           @editable={{@editable}}
         />
       {{/if}}
+    {{else}}
+      <ProgramyearObjectiveList
+        @subject={{@programYear}}
+        @editable={{@editable}}
+        @manageDescriptors={{perform this.manageDescriptors}}
+        @manageCompetency={{perform this.manageCompetency}}
+      />
     {{/if}}
   </div>
 </section>

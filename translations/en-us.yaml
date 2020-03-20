@@ -187,6 +187,7 @@ general:
   members: Members
   menu: "Ilios Menu"
   meshTerm: "MeSH Term"
+  message: Message
   middleName: "Middle Name"
   minimum: Minimum
   missingPassword: "Password required"
@@ -357,6 +358,7 @@ general:
   singleGroup: "Single Group"
   startOver: "Start Over"
   stateOrProvince: "State or Province"
+  statusCode: "Status Code"
   stewardingSchoolsAndDepartments: "Stewarding Schools and Departments"
   stewardsManageTitle: "Manage Stewards"
   street: Street

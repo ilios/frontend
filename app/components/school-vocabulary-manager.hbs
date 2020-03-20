@@ -89,11 +89,11 @@
       {{#each (await sortedTerms) as |term|}}
         <li data-test-term {{action manageTerm term.id}}>
           {{term.title}}
-          {{#if (not term.active)}}
+          {{#unless term.active}}
             <em>
               ({{t "general.inactive"}})
             </em>
-          {{/if}}
+          {{/unless}}
         </li>
       {{/each}}
     </ul>

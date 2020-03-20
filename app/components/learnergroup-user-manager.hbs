@@ -94,13 +94,13 @@
                       >
                     {{/if}}
                   {{/if}}
-                  {{#if (not user.enabled)}}
+                  {{#unless user.enabled}}
                     <FaIcon
                       @icon="user-times"
                       @title={{t "general.disabled"}}
                       class="error"
                     />
-                  {{/if}}
+                  {{/unless}}
                 </td>
                 <td class="text-left" colspan="2">
                   {{user.firstName}}
@@ -166,13 +166,13 @@
                         >
                       {{/if}}
                     {{/if}}
-                    {{#if (not user.enabled)}}
+                    {{#unless user.enabled}}
                       <FaIcon
                         @icon="user-times"
                         @title={{t "general.disabled"}}
                         class="error"
                       />
-                    {{/if}}
+                    {{/unless}}
                   </td>
                   <td class="text-left" colspan="2">
                     {{user.firstName}}

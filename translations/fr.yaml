@@ -187,6 +187,7 @@ general:
   members: Membres
   menu: "Ilios Menu"
   meshTerm: "Terme de MeSH"
+  message: Message
   middleName: "Deuxième Prénom"
   minimum: Minimum
   missingPassword: "Nécessite un mot de passe"
@@ -357,6 +358,7 @@ general:
   singleGroup: "Seul groupe"
   startOver: recommencer
   stateOrProvince: "État ou province"
+  statusCode: "Code d'état"
   stewardingSchoolsAndDepartments: "Écôles et Départements intendants"
   stewardsManageTitle: "Manager des intendants"
   street: Rue
