@@ -110,7 +110,7 @@
         {{#if selectedUser}}
           <ul class="removable-list tag-list">
             <li {{action "changePrepositionalObjectId" null}}>
-              {{selectedUser.fullName}}
+              {{this.selectedUser.fullName}}
               <FaIcon @icon="times" />
             </li>
           </ul>
@@ -123,12 +123,12 @@
             <li>
               <div class="content">
                 <span class="title">
-                  {{selectedMeshTerm.name}}
+                  {{this.selectedMeshTerm.name}}
                 </span>
                 <span class="details">
-                  {{selectedMeshTerm.id}}
+                  {{this.selectedMeshTerm.id}}
                   {{#if selectedMeshTerm.trees}}
-                    -{{selectedMeshTerm.trees.lastObject.treeNumber}}
+                    -{{this.selectedMeshTerm.trees.lastObject.treeNumber}}
                   {{/if}}
                 </span>
               </div>

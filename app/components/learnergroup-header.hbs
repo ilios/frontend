@@ -26,7 +26,7 @@
             {{/if}}
           </EditableField>
         {{else}}
-          {{title}}
+          {{this.title}}
         {{/if}}
       </h2>
     </span>
@@ -41,7 +41,7 @@
         {{t "general.members"}}:
         {{get (await learnerGroup.usersOnlyAtThisLevel) "length"}}
         /
-        {{learnerGroup.cohort.users.length}}
+        {{@learnerGroup.cohort.users.length}}
       {{/if}}
     </span>
   </div>
@@ -73,7 +73,7 @@
         </span>
       {{/each}}
       <span>
-        {{learnerGroup.title}}
+        {{@learnerGroup.title}}
       </span>
     </div>
   {{/if}}

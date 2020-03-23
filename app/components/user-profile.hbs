@@ -6,7 +6,7 @@
     {{#unless user.enabled}}
       <FaIcon @icon="ban" class="no" @title={{t "general.disabled"}} />
     {{/unless}}
-    {{user.fullName}}
+    {{@user.fullName}}
   </h1>
   <div class="user-roles">
     {{#if (await user.isStudent)}}

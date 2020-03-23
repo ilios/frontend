@@ -51,7 +51,7 @@
             <strong>
               {{get (await primaryCohort.program) "title"}}
             </strong>
-            {{primaryCohort.title}}
+            {{this.primaryCohort.title}}
           </span>
         {{/if}}
       {{else}}
@@ -127,7 +127,7 @@
               {{/each}}
             </select>
           {{else}}
-            {{selectedSchool.title}}
+            {{this.selectedSchool.title}}
           {{/if}}
         </div>
         {{#if (is-fulfilled assignableCohortsForSelectedSchool)}}

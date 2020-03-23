@@ -1,7 +1,7 @@
 <div class="school-session-type-manager" ...attributes>
   {{#if (and (is-fulfilled readonlySessionType) (await readonlySessionType))}}
     <div class="session-type-title">
-      {{sessionType.title}}
+      {{@sessionType.title}}
     </div>
     <SchoolSessionTypeForm
       @title={{get (await readonlySessionType) "title"}}

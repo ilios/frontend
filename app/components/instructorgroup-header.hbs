@@ -2,7 +2,7 @@
   {{! template-lint-disable no-bare-strings }}
   <div class="title">
     <h4 class="school-title">
-      {{instructorGroup.school.title}}
+      {{@instructorGroup.school.title}}
       &gt;
     </h4>
     {{#if canUpdate}}
@@ -30,12 +30,12 @@
       </EditableField>
     {{else}}
       <h4 data-test-group-title>
-        {{title}}
+        {{this.title}}
       </h4>
     {{/if}}
   </div>
   <span class="info">
     {{t "general.members"}}:
-    {{instructorGroup.users.length}}
+    {{@instructorGroup.users.length}}
   </span>
 </div>

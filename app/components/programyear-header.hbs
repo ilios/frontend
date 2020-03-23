@@ -14,7 +14,7 @@
       {{#if programYear}}
         <h4>
           {{t "general.matriculationYear"}}
-          {{programYear.academicYear}}
+          {{@programYear.academicYear}}
         </h4>
         <h5>
           {{#if (get (await programYear.cohort) "title")}}

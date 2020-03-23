@@ -3,7 +3,7 @@
     {{t "general.allVocabularies"}}
   </span>
   <span data-test-vocabulary>
-    {{vocabulary.title}}
+    {{@vocabulary.title}}
   </span>
 </div>
 <br>
@@ -41,7 +41,7 @@
       </span>
     {{/if}}
   {{else}}
-    {{vocabularyTitle}}
+    {{this.vocabularyTitle}}
   {{/if}}
 </div>
 <h5>
@@ -52,7 +52,7 @@
     <div class="saved-result">
       <span class="clickable link" {{action manageTerm newTerm.id}}>
         <FaIcon @icon="external-link-square-alt" />
-        {{newTerm.title}}
+        {{this.newTerm.title}}
       </span>
       {{t "general.savedSuccessfully"}}
     </div>

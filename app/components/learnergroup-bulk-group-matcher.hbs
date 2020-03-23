@@ -1,7 +1,7 @@
 <tr class="learnergroup-bulk-group-matcher {{if this.matchedGroupId "matched" "not-matched"}}" data-test-learnergroup-bulk-group-matcher ...attributes>
   <td>
     <span data-test-group-name>
-      {{groupName}}
+      {{@groupName}}
     </span>
     {{#if noGroupWithThisName}}
       <button type="button" data-test-create-group {{action createGroup groupName}}>

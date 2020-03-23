@@ -38,13 +38,13 @@
       {{#if course}}
         <span class="details">
           {{t "general.level"}}:
-          {{course.level}},
+          {{this.course.level}},
           {{t "general.startDate"}}:
           {{moment-format course.startDate "YYYY-MM-DD"}},
           {{t "general.endDate"}}:
           {{moment-format course.endDate "YYYY-MM-DD"}}
           {{#if course.clerkshipType}}
-            -{{t "general.clerkship"}} ({{course.clerkshipType.title}})
+            -{{t "general.clerkship"}} ({{this.course.clerkshipType.title}})
           {{/if}}
         </span>
       {{/if}}
