@@ -1,0 +1,33 @@
+{{#if this.activeFilters.length}}
+  <section
+    class="filters-list"
+    {{did-insert (perform this.load) this.activeFilters}}
+    {{did-update (perform this.load) this.activeFilters}}
+  >
+    {{#if this.filterTags}}
+      <header class="filters-header">
+        {{t "general.activeFilters"}}:
+      </header>
+      <div class="filter-tags">
+        {{#each (sort-by "name" this.filterTags) as |tag|}}
+          <span
+            class="filter-tag {{tag.class}}"
+            role="button"
+            {{on "click" (fn tag.remove tag.id)}}
+          >
+            {{tag.name}}
+            <FaIcon @icon="times" />
+          </span>
+        {{/each}}
+        <span
+          id="calendar-clear-filters"
+          class="filters-clear-filters"
+          role="button"
+          {{on "click" @clearFilters}}
+        >
+          {{t "general.clearFilters"}}
+        </span>
+      </div>
+    {{/if}}
+  </section>
+{{/if}}
