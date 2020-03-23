@@ -5,7 +5,7 @@
   role="button"
   data-test-ilios-calendar-event
   data-test-ilios-calendar-event-month
-  {{on "click" (if this.clickable (fn @selectEvent) (noop))}}
+  {{on "click" (if this.clickable @selectEvent (noop))}}
 >
   {{#if @event}}
     <AttachTooltip
