@@ -38,6 +38,7 @@ jobs:
          - ember-release
          - ember-beta
          - ember-canary
+         - ember-classic
 
     steps:
     - uses: actions/checkout@v1
