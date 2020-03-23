@@ -1,1 +1,0 @@
-export { default } from 'ilios-common/components/selected-term-tree';

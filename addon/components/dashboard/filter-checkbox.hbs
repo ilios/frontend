@@ -1,0 +1,8 @@
+<label data-test-target data-test-checked={{@checked}}>
+  <input
+    type="checkbox"
+    checked={{@checked}}
+    {{on "click" (if @checked @remove @add)}}
+  >
+  {{yield}}
+</label>

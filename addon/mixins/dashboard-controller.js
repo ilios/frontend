@@ -1,7 +1,6 @@
 import Mixin from '@ember/object/mixin';
 import { computed, action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { all } from 'rsvp';
 import moment from 'moment';
 
 export default Mixin.create({
@@ -38,35 +37,6 @@ export default Mixin.create({
   terms: '',
   view: 'week',
 
-  selectedCohorts: computed('cohorts', async function() {
-    const cohortIds = this.cohorts;
-    return cohortIds ? await all(this.fetchModels(cohortIds, 'cohort')) : [];
-  }),
-
-  selectedCourseLevels: computed('courseLevels', function() {
-    const courseLevels = this.courseLevels;
-    return courseLevels
-      ? courseLevels.split(',').map((level) => parseInt(level, 10))
-      : [];
-  }),
-
-  selectedCourses: computed('courses', async function() {
-    const courseIds = this.courses;
-    return courseIds ? await all(this.fetchModels(courseIds, 'course')) : [];
-  }),
-
-  selectedSessionTypes: computed('sessionTypes', async function() {
-    const sessionTypeIds = this.sessionTypes;
-    return sessionTypeIds
-      ? await all(this.fetchModels(sessionTypeIds, 'session-type'))
-      : [];
-  }),
-
-  selectedTerms: computed('terms', async function() {
-    const termIds = this.terms;
-    return termIds ? await all(this.fetchModels(termIds, 'term')) : [];
-  }),
-
   selectedAcademicYear: computed('academicYear', 'model.academicYears.[]', function(){
     const academicYear = this.get('academicYear');
     const { academicYears } = this.get('model');
@@ -101,14 +71,6 @@ export default Mixin.create({
     return view;
   }),
 
-  fetchModels(ids, modelName) {
-    const store = this.store;
-    return ids.split(',').map((id) => {
-      const model = store.peekRecord(modelName, id);
-      return model ? model : store.findRecord(modelName, id);
-    });
-  },
-
   @action
   changeDate(newDate) {
     this.set('date', moment(newDate).format('YYYY-MM-DD'));
@@ -138,94 +100,26 @@ export default Mixin.create({
   },
 
   @action
-  updateCohorts(cohortId) {
-    const cohortIds = this.cohorts;
-
-    if (cohortIds) {
-      const idArray = cohortIds.split(',');
-
-      if (idArray.includes(cohortId)) {
-        idArray.removeObject(cohortId);
-        this.set('cohorts', idArray.join(','));
-      } else {
-        this.set('cohorts', cohortIds + `,${cohortId}`);
+  add(what, id) {
+    const str = this[what];
+    if (str) {
+      const idArray = str.split(',');
+      if (!idArray.includes(id)) {
+        this.set(what, str + `,${id}`);
       }
     } else {
-      this.set('cohorts', cohortId);
+      this.set(what, id);
     }
   },
-
   @action
-  updateCourseLevels(level) {
-    const id = level.toString();
-    const levels = this.courseLevels;
-
-    if (levels) {
-      const idArray = levels.split(',');
-
+  remove(what, id) {
+    const str = this[what];
+    if (str) {
+      const idArray = str.split(',');
       if (idArray.includes(id)) {
         idArray.removeObject(id);
-        this.set('courseLevels', idArray.join(','));
-      } else {
-        this.set('courseLevels', levels + `,${id}`);
+        this.set(what, idArray.join(','));
       }
-    } else {
-      this.set('courseLevels', id);
-    }
-  },
-
-  @action
-  updateCourses(courseId) {
-    const courseIds = this.courses;
-
-    if (courseIds) {
-      const idArray = courseIds.split(',');
-
-      if (idArray.includes(courseId)) {
-        idArray.removeObject(courseId);
-        this.set('courses', idArray.join(','));
-      } else {
-        this.set('courses', courseIds + `,${courseId}`);
-      }
-    } else {
-      this.set('courses', courseId);
-    }
-  },
-
-  @action
-  updateSessionTypes(sessionTypeId) {
-    const sessionTypeIds = this.sessionTypes;
-
-    if (sessionTypeIds) {
-      const idArray = sessionTypeIds.split(',');
-
-      if (idArray.includes(sessionTypeId)) {
-        idArray.removeObject(sessionTypeId);
-        this.set('sessionTypes', idArray.join(','));
-      } else {
-        this.set('sessionTypes', sessionTypeIds + `,${sessionTypeId}`);
-      }
-    } else {
-      this.set('sessionTypes', sessionTypeId);
-    }
-  },
-
-  @action
-  updateTerms(term) {
-    const termId = term.id;
-    const termIds = this.terms;
-
-    if (termIds) {
-      const idArray = termIds.split(',');
-
-      if (idArray.includes(termId)) {
-        idArray.removeObject(termId);
-        this.set('terms', idArray.join(','));
-      } else {
-        this.set('terms', termIds + `,${termId}`);
-      }
-    } else {
-      this.set('terms', termId);
     }
   },
 

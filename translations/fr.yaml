@@ -62,6 +62,7 @@ general:
   course: Cours
   courseLeadership: "Dirigeants de Cours"
   courseLearningMaterials: "Matériels d'Étude du Cours"
+  courseLevel: "Niveau du cours {level}"
   courseLevels: "Niveaux de Cours"
   courseObjectives: "Objectifs du Cours"
   courseOrType: "Cours / Type"

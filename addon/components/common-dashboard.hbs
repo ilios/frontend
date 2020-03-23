@@ -19,17 +19,22 @@
       @changeSchool={{@changeSchool}}
       @courseFilters={{@courseFilters}}
       @toggleCourseFilters={{@toggleCourseFilters}}
-      @selectedCohorts={{@selectedCohorts}}
+      @selectedCohortIds={{@selectedCohortIds}}
+      @addCohortId={{@addCohortId}}
+      @removeCohortId={{@removeCohortId}}
       @selectedCourseLevels={{@selectedCourseLevels}}
-      @selectedCourses={{@selectedCourses}}
-      @selectedSessionTypes={{@selectedSessionTypes}}
-      @selectedTerms={{@selectedTerms}}
+      @addCourseLevel={{@addCourseLevel}}
+      @removeCourseLevel={{@removeCourseLevel}}
+      @selectedCourseIds={{@selectedCourseIds}}
+      @addCourseId={{@addCourseId}}
+      @removeCourseId={{@removeCourseId}}
+      @selectedSessionTypeIds={{@selectedSessionTypeIds}}
+      @addSessionTypeId={{@addSessionTypeId}}
+      @removeSessionTypeId={{@removeSessionTypeId}}
+      @selectedTermIds={{@selectedTermIds}}
+      @addTermId={{@addTermId}}
+      @removeTermId={{@removeTermId}}
       @clearFilters={{@clearFilters}}
-      @updateCohorts={{@updateCohorts}}
-      @updateCourseLevels={{@updateCourseLevels}}
-      @updateCourses={{@updateCourses}}
-      @updateSessionTypes={{@updateSessionTypes}}
-      @updateTerms={{@updateTerms}}
     />
   {{else if (eq @show "materials")}}
     <DashboardMaterials />
