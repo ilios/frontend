@@ -28,7 +28,7 @@ jobs:
     - name: lint hbs
       run: npm run lint:hbs
     - name: test
-      run: npm test
+      run: npm run test:ember
   try-scenarios:
     name: ember-try
     runs-on: ubuntu-latest
