@@ -116,7 +116,7 @@
           </EditableField>
         {{else}}
           <span>
-            {{yearLabel}}
+            {{this.yearLabel}}
           </span>
         {{/if}}
       </div>
@@ -125,8 +125,8 @@
           {{t "general.program"}}:
         </label>
         <span>
-          {{report.program.title}}
-          ({{report.program.shortTitle}})
+          {{@report.program.title}}
+          ({{@report.program.shortTitle}})
         </span>
       </div>
       <div class="description">
@@ -149,7 +149,7 @@
                 disabled={{isSaving}}
                 onkeyup={{action "addErrorDisplayFor" "description"}}
               >
-                {{description}}
+                {{this.description}}
               </textarea>
               {{#if
                 (and
@@ -163,7 +163,7 @@
               {{/if}}
             </EditableField>
           {{else}}
-            {{description}}
+            {{this.description}}
           {{/if}}
         </span>
       </div>

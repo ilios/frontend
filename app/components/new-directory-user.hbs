@@ -18,7 +18,7 @@
         {{t "general.firstName"}}:
       </label>
       <span>
-        {{firstName}}
+        {{this.firstName}}
       </span>
     </div>
     <div class="item" data-test-last-name>
@@ -26,7 +26,7 @@
         {{t "general.lastName"}}:
       </label>
       <span>
-        {{lastName}}
+        {{this.lastName}}
       </span>
     </div>
     <div class="item" data-test-campus-id>
@@ -34,7 +34,7 @@
         {{t "general.campusId"}}:
       </label>
       <span>
-        {{campusId}}
+        {{this.campusId}}
       </span>
     </div>
     <div class="item" data-test-email>
@@ -42,7 +42,7 @@
         {{t "general.email"}}:
       </label>
       <span>
-        {{email}}
+        {{this.email}}
       </span>
     </div>
     <div class="item" data-test-phone>
@@ -51,7 +51,7 @@
       </label>
       <span>
         {{#if phone.length}}
-          {{phone}}
+          {{this.phone}}
         {{else}}
           &nbsp;
         {{/if}}
@@ -97,7 +97,7 @@
         {{/if}}
       {{else}}
         <span>
-          {{username}}
+          {{this.username}}
         </span>
       {{/if}}
     </div>
@@ -272,7 +272,7 @@
             </table>
           {{else}}
             <span class="no-results">
-              {{general.noResultsFound}}
+              {{t "general.noResultsFound"}}
             </span>
           {{/if}}
         </div>

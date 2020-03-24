@@ -1,6 +1,6 @@
 <div class="my-profile" ...attributes>
   <h1 class="name">
-    {{user.fullName}}
+    {{@user.fullName}}
   </h1>
   {{#if (await user.isStudent)}}
     <span class="is-student">

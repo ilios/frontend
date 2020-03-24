@@ -10,9 +10,9 @@
   />
   <div class="instructorgroup-overview">
     <h2>
-      {{instructorGroup.title}}
+      {{@instructorGroup.title}}
       {{t "general.members"}}
-      ({{instructorGroup.users.length}})
+      ({{@instructorGroup.users.length}})
     </h2>
     {{#if (is-fulfilled instructorGroup.users)}}
       <label>

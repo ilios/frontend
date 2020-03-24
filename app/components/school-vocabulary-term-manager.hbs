@@ -4,7 +4,7 @@
       {{t "general.allVocabularies"}}
     </span>
     <span data-test-vocabulary {{action manageTerm null}}>
-      {{vocabulary.title}}
+      {{@vocabulary.title}}
     </span>
     {{#each (await allParents) as |parent|}}
       <span data-test-term {{action manageTerm parent.id}}>
@@ -12,7 +12,7 @@
       </span>
     {{/each}}
     <span data-test-term>
-      {{term.title}}
+      {{@term.title}}
     </span>
   </div>
 {{/if}}
@@ -37,7 +37,7 @@
           >
         </EditableField>
       {{else}}
-        {{termTitle}}
+        {{this.termTitle}}
       {{/if}}
       {{#if
         (and
@@ -94,11 +94,11 @@
             oninput={{action (mut description) value="target.value"}}
             disabled={{isSaving}}
           >
-            {{description}}
+            {{this.description}}
           </textarea>
         </EditableField>
       {{else}}
-        {{description}}
+        {{this.description}}
       {{/if}}
     </div>
   </div>
@@ -111,7 +111,7 @@
     <div class="saved-result">
       <span class="clickable link" {{action manageTerm newTerm.id}}>
         <FaIcon @icon="external-link-square-alt" />
-        {{newTerm.title}}
+        {{this.newTerm.title}}
       </span>
       {{t "general.savedSuccessfully"}}
     </div>
