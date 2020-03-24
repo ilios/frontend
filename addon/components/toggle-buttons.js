@@ -13,7 +13,6 @@ export default class ToggleButtons extends Component {
     if (! this.args.firstOptionSelected) {
       this.args.toggle(true);
     }
-    console.log(this.elementId);
   }
 
   @action

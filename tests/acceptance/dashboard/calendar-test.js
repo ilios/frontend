@@ -338,7 +338,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
   };
 
   const pickSessionType = async function(i) {
-    return await click(find(`.sessiontypefilter li:nth-of-type(${i})>span`));
+    return await click(find(`.sessiontypefilter li:nth-of-type(${i}) [data-test-target]`));
   };
 
   test('test session type filter', async function(assert) {
@@ -370,10 +370,10 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
   });
 
   const pickCourseLevel = async function(i) {
-    return await click(find(`.courselevelfilter li:nth-of-type(${i})>span`));
+    return await click(find(`.courselevelfilter li:nth-of-type(${i}) [data-test-target]`));
   };
   const clearCourseLevels = async function () {
-    const selected = findAll('.courselevelfilter .checkbox:checked');
+    const selected = findAll('.courselevelfilter [data-test-checked]');
     await map(selected, e => click(e));
   };
 
@@ -403,7 +403,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
   });
 
   const pickCohort = async function(i) {
-    return await click(find(`.cohortfilter li:nth-of-type(${i})>span`));
+    return await click(find(`.cohortfilter li:nth-of-type(${i}) [data-test-target]`));
   };
 
   test('test cohort filter', async function(assert) {
@@ -437,10 +437,10 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
   };
 
   const pickCourse = async function(i) {
-    return await click(find(`.coursefilter li:nth-of-type(${i})>span`));
+    return await click(find(`.coursefilter li:nth-of-type(${i}) [data-test-target]`));
   };
   const clearCourses = async function () {
-    const selected = findAll('.coursefilter .checkbox:checked');
+    const selected = findAll('.coursefilter [data-test-checked]');
     await map(selected, e => click(e));
   };
 
@@ -647,9 +647,9 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
   });
 
   test('filter tags work properly', async function(assert) {
-    const sessiontype = '.sessiontypefilter li:nth-of-type(1) input';
-    const courselevel = '.courselevelfilter li:nth-of-type(1) input';
-    const cohort = '.cohortfilter li:nth-of-type(1) input';
+    const sessiontype = '.sessiontypefilter li:nth-of-type(1) [data-test-target]';
+    const courselevel = '.courselevelfilter li:nth-of-type(1) [data-test-target]';
+    const cohort = '.cohortfilter li:nth-of-type(1) [data-test-target]';
 
     const filtersList = '.filters-list';
     const clearFilter = '.filters-clear-filters';
@@ -670,17 +670,17 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     await click(sessiontype);
     await click(courselevel);
     await click(cohort);
-    assert.equal(getTagText(0), 'session type 0', 'filter tag is active');
+    assert.equal(getTagText(0), 'cohort 0 program 0', 'filter tag is active');
     assert.equal(getTagText(1), 'Course Level 1', 'filter tag is active');
-    assert.equal(getTagText(2), 'cohort 0 program 0', 'filter tag is active');
+    assert.equal(getTagText(2), 'session type 0', 'filter tag is active');
 
     await clickTag(1);
     assert.ok(!find(courselevel).checked, 'filter is unchecked');
-    assert.equal(getTagText(0), 'session type 0', 'filter tag is active');
-    assert.equal(getTagText(1), 'cohort 0 program 0', 'filter tag is active');
+    assert.equal(getTagText(0), 'cohort 0 program 0', 'filter tag is active');
+    assert.equal(getTagText(1), 'session type 0', 'filter tag is active');
 
     await clickTag(0);
-    assert.equal(getTagText(0), 'cohort 0 program 0', 'filter tag is active');
+    assert.equal(getTagText(0), 'session type 0', 'filter tag is active');
 
     await click(clearFilter);
     assert.ok(isEmpty(find(filtersList)), 'filter tags list is inactive');
@@ -794,7 +794,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
   });
 
   const pickTerm = async function(i) {
-    return await click(find(`.vocabularyfilter li:nth-of-type(${i})>span`));
+    return await click(find(`.vocabularyfilter li:nth-of-type(${i}) [data-test-target]`));
   };
 
   test('test term filter', async function(assert) {

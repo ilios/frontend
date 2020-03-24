@@ -90,23 +90,17 @@
             {{#if (is-array this.courses)}}
               <ul>
                 {{#each this.courses as |course|}}
-                  <li class="clickable">
-                    <input
-                      class="checkbox"
-                      type="checkbox"
-                      checked={{contains course @selectedCourses}}
-                      {{on "change" (fn @updateCourses course.id)}}
-                    >
-                    <span
-                      class="list-indentation"
-                      role="button"
-                      {{on "click" (fn @updateCourses course.id)}}
+                  <li>
+                    <Dashboard::FilterCheckbox
+                      @checked={{contains course.id @selectedCourseIds}}
+                      @add={{fn @addCourseId course.id}}
+                      @remove={{fn @removeCourseId course.id}}
                     >
                       {{course.title}}
                       {{#if course.externalId}}
                         ({{course.externalId}})
                       {{/if}}
-                    </span>
+                    </Dashboard::FilterCheckbox>
                   </li>
                 {{/each}}
               </ul>
@@ -125,19 +119,13 @@
               <ul>
                 {{#each this.sessionTypes as |type|}}
                   <li class="clickable">
-                    <input
-                      checked={{contains type @selectedSessionTypes}}
-                      class="checkbox"
-                      type="checkbox"
-                      {{on "change" (fn @updateSessionTypes type.id)}}
-                    >
-                    <span
-                      class="list-indentation"
-                      role="button"
-                      {{on "click" (fn @updateSessionTypes type.id)}}
+                    <Dashboard::FilterCheckbox
+                      @checked={{contains type.id @selectedSessionTypeIds}}
+                      @add={{fn @addSessionTypeId type.id}}
+                      @remove={{fn @removeSessionTypeId type.id}}
                     >
                       {{type.title}}
-                    </span>
+                    </Dashboard::FilterCheckbox>
                   </li>
                 {{/each}}
               </ul>
@@ -155,10 +143,11 @@
                   <h6>
                     {{vocabulary.title}}
                   </h6>
-                  <SelectedTermTree
-                    @selectedTerms={{@selectedTerms}}
+                  <Dashboard::SelectedTermTree
+                    @selectedTermIds={{@selectedTermIds}}
                     @terms={{await vocabulary.topLevelTerms}}
-                    @toggle={{fn @updateTerms}}
+                    @add={{@addTermId}}
+                    @remove={{@removeTermId}}
                   />
                 {{/each}}
               </ul>
@@ -178,19 +167,13 @@
               <ul>
                 {{#each this.sessionTypes as |type|}}
                   <li class="clickable">
-                    <input
-                      class="checkbox"
-                      type="checkbox"
-                      checked={{contains type @selectedSessionTypes}}
-                      {{on "change" (fn @updateSessionTypes type.id)}}
-                    >
-                    <span
-                      class="list-indentation"
-                      role="button"
-                      {{on "click" (fn @updateSessionTypes type.id)}}
+                    <Dashboard::FilterCheckbox
+                      @checked={{contains type.id @selectedSessionTypeIds}}
+                      @add={{fn @addSessionTypeId type.id}}
+                      @remove={{fn @removeSessionTypeId type.id}}
                     >
                       {{type.title}}
-                    </span>
+                    </Dashboard::FilterCheckbox>
                   </li>
                 {{/each}}
               </ul>
@@ -208,19 +191,13 @@
             <ul>
               {{#each this.courseLevels as |level|}}
                 <li class="clickable">
-                  <input
-                    class="checkbox"
-                    type="checkbox"
-                    checked={{contains level @selectedCourseLevels}}
-                    {{on "change" (fn @updateCourseLevels level)}}
-                  >
-                  <span
-                    class="list-indentation"
-                    role="button"
-                    {{on "click" (fn @updateCourseLevels level)}}
+                  <Dashboard::FilterCheckbox
+                    @checked={{contains level @selectedCourseLevels}}
+                    @add={{fn @addCourseLevel level}}
+                    @remove={{fn @removeCourseLevel level}}
                   >
                     {{level}}
-                  </span>
+                  </Dashboard::FilterCheckbox>
                 </li>
               {{/each}}
             </ul>
@@ -237,16 +214,10 @@
               <ul>
                 {{#each this.cohorts as |cohort|}}
                   <li class="clickable">
-                    <input
-                      class="checkbox"
-                      type="checkbox"
-                      checked={{contains cohort @selectedCohorts}}
-                      {{on "change" (fn @updateCohorts cohort.id)}}
-                    >
-                    <span
-                      class="list-indentation"
-                      role="button"
-                      {{on "click" (fn @updateCohorts cohort.id)}}
+                    <Dashboard::FilterCheckbox
+                      @checked={{contains cohort.id @selectedCohortIds}}
+                      @add={{fn @addCohortId cohort.id}}
+                      @remove={{fn @removeCohortId cohort.id}}
                     >
                       {{#if cohort.title}}
                         {{cohort.title}}
@@ -254,7 +225,7 @@
                         {{t "general.classOf" year=(await cohort.classOfYear)}}
                       {{/if}}
                       {{get (await cohort.programYear.program) "title"}}
-                    </span>
+                    </Dashboard::FilterCheckbox>
                   </li>
                 {{/each}}
               </ul>
@@ -266,35 +237,21 @@
       {{/liquid-if}}
     </div>
   </section>
-  {{#if (gt this.activeFilters.length 0)}}
-    <section class="filters-list">
-      <header class="filters-header">
-        {{t "general.activeFilters"}}:
-      </header>
-      <div class="filter-tags"
-        {{did-insert (perform this.loadFilterTags) this.activeFilters}}
-        {{did-update (perform this.loadFilterTags) this.activeFilters}}
-      >
-        {{#each this.filterTags as |tag|}}
-          <span
-            class="filter-tag {{tag.class}}"
-            role="button"
-            {{on "click" (fn this.removeFilter tag.filter)}}
-          >
-            {{tag.name}}
-            <FaIcon @icon="times" />
-          </span>
-        {{/each}}
-        <span
-          id="calendar-clear-filters"
-          class="filters-clear-filters"
-          role="button"
-          {{on "click" @clearFilters}}
-        >
-          {{t "general.clearFilters"}}
-        </span>
-      </div>
-    </section>
+  {{#if (is-array this.cohortProxies)}}
+    <Dashboard::FilterTags
+      @selectedCourseLevels={{@selectedCourseLevels}}
+      @selectedSessionTypeIds={{@selectedSessionTypeIds}}
+      @selectedCohortIds={{@selectedCohortIds}}
+      @selectedCourseIds={{@selectedCourseIds}}
+      @selectedTermIds={{@selectedTermIds}}
+      @cohortProxies={{this.cohortProxies}}
+      @removeCourseLevel={{@removeCourseLevel}}
+      @removeSessionTypeId={{@removeSessionTypeId}}
+      @removeCohortId={{@removeCohortId}}
+      @removeCourseId={{@removeCourseId}}
+      @removeTermId={{@removeTermId}}
+      @clearFilters={{@clearFilters}}
+    />
   {{/if}}
   <section class="fullwidth ilios-calendar-container"
     {{did-insert (perform this.loadEvents) this.bestSelectedSchool this.fromTimeStamp this.toTimeStamp @mySchedule}}

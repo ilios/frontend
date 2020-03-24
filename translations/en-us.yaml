@@ -62,6 +62,7 @@ general:
   course: Course
   courseLeadership: "Course Leadership"
   courseLearningMaterials: "Course Learning Materials"
+  courseLevel: "Course Level {level}"
   courseLevels: "Course Levels"
   courseObjectives: "Course Objectives"
   courseOrType: "Course / Type"

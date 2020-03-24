@@ -25,7 +25,7 @@ export default class DashboardCalendarComponent extends Component {
   @tracked ourEvents = [];
   @tracked filterTags = [];
 
-  courseLevels = [1, 2, 3, 4, 5];
+  courseLevels = ['1', '2', '3', '4', '5'];
 
   get fromTimeStamp() {
     return moment(this.args.selectedDate).startOf(this.args.selectedView).subtract(this.clockSkew, 'days').unix();
@@ -85,45 +85,6 @@ export default class DashboardCalendarComponent extends Component {
     } else {
       this.ourEvents = yield this.schoolEvents.getEvents(school.id, fromTimeStamp, toTimeStamp);
     }
-  }
-
-  @restartableTask
-  *loadFilterTags(event, [activeFilters]) {
-    this.filterTags = yield map(activeFilters, async filter => {
-      const hash = { filter };
-      if (typeof filter === 'number') {
-        hash.class = 'tag-course-level';
-        hash.name = `Course Level ${filter}`;
-      } else {
-        const model = filter.constructor.modelName;
-        switch (model) {
-        case 'session-type':
-          hash.class = 'tag-session-type';
-          hash.name = filter.title;
-          break;
-        case 'cohort': {
-          hash.class = 'tag-cohort';
-          const proxy = this.cohortProxies.findBy('id', filter.id);
-          hash.name = `${proxy.displayTitle} ${proxy.programTitle}`;
-          break;
-        }
-        case 'term': {
-          hash.class = 'tag-term';
-          const allTitles = await filter.get('titleWithParentTitles');
-          const vocabulary = await filter.get('vocabulary');
-          const title = vocabulary.get('title');
-          hash.name = `${title} > ${allTitles}`;
-          break;
-        }
-        case 'course':
-          hash.class = 'tag-course';
-          hash.name = filter.get('title');
-          break;
-        }
-      }
-
-      return hash;
-    });
   }
 
   async getCohortProxies(school, year) {
@@ -212,40 +173,31 @@ export default class DashboardCalendarComponent extends Component {
     return this.args.allAcademicYears.sortBy('title').lastObject;
   }
 
-  get activeFilters() {
-    return [].concat(
-      this.args.selectedSessionTypes || [],
-      this.args.selectedCourseLevels || [],
-      this.args.selectedCohorts || [],
-      this.args.selectedCourses || [],
-      this.args.selectedTerms || [],
-    );
-  }
-
   get eventsWithSelectedSessionTypes() {
-    if (!this.args.selectedSessionTypes || !this.args.selectedSessionTypes.length) {
+    if (!this.args.selectedSessionTypeIds?.length) {
       return this.ourEvents;
     }
-    const selectedIds = this.args.selectedSessionTypes.mapBy('id').map(Number);
+    const selectedIds = this.args.selectedSessionTypeIds.map(Number);
     return this.ourEvents.filter(event => {
       return selectedIds.includes(event.sessionTypeId);
     });
   }
 
   get eventsWithSelectedCourseLevels() {
-    if (!this.args.selectedCourseLevels || !this.args.selectedCourseLevels.length) {
+    if (!this.args.selectedCourseLevels?.length) {
       return this.ourEvents;
     }
+    const levels = this.args.selectedCourseLevels.map(Number);
     return this.ourEvents.filter(event => {
-      return this.args.selectedCourseLevels.includes(event.courseLevel);
+      return levels.includes(event.courseLevel);
     });
   }
 
   get eventsWithSelectedCohorts() {
-    if (!this.args.selectedCohorts || !this.args.selectedCohorts.length) {
+    if (!this.args.selectedCohortIds?.length) {
       return this.ourEvents;
     }
-    const selectedIds = this.args.selectedCohorts.mapBy('id').map(Number);
+    const selectedIds = this.args.selectedCohortIds.map(Number);
     return this.ourEvents.filter(event => {
       const matchingCohorts = event.cohorts.filter(({ id }) => selectedIds.includes(id));
       return matchingCohorts.length > 0;
@@ -253,49 +205,25 @@ export default class DashboardCalendarComponent extends Component {
   }
 
   get eventsWithSelectedCourses() {
-    if (!this.args.selectedCourses || !this.args.selectedCourses.length) {
+    if (!this.args.selectedCourseIds?.length) {
       return this.ourEvents;
     }
-    const selectedIds = this.args.selectedCourses.mapBy('id').map(Number);
+    const selectedIds = this.args.selectedCourseIds.map(Number);
     return this.ourEvents.filter(event => {
       return selectedIds.includes(event.course);
     });
   }
 
   get eventsWithSelectedTerms() {
-    if (!this.args.selectedTerms || !this.args.selectedTerms.length) {
+    if (!this.args.selectedTermIds?.length) {
       return this.ourEvents;
     }
-    const selectedIds = this.args.selectedTerms.mapBy('id').map(Number);
+    const selectedIds = this.args.selectedTermIds.map(Number);
     return this.ourEvents.filter(event => {
       const allTerms = [].concat(event.sessionTerms || [], event.courseTerms || []).mapBy('id');
       const matchingTerms = allTerms.filter(id => selectedIds.includes(id));
       return matchingTerms.length > 0;
     });
-  }
-
-  @action
-  removeFilter(filter) {
-    if (typeof filter === 'number') {
-      this.args.updateCourseLevels(filter);
-    } else {
-      const model = filter.constructor.modelName;
-      const id = filter.id;
-      switch (model) {
-      case 'session-type':
-        this.args.updateSessionTypes(id);
-        break;
-      case 'cohort':
-        this.args.updateCohorts(id);
-        break;
-      case 'course':
-        this.args.updateCourses(id);
-        break;
-      case 'term':
-        this.args.updateTerms(filter);
-        break;
-      }
-    }
   }
 
   @action

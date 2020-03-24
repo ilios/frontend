@@ -1,0 +1,21 @@
+<ul class="selected-term-tree">
+  {{#each (sort-by "title" @terms) as |term|}}
+    <li class="clickable">
+      <Dashboard::FilterCheckbox
+        @checked={{contains term.id @selectedTermIds}}
+        @add={{fn @add term.id}}
+        @remove={{fn @remove term.id}}
+      >
+        {{term.title}}
+      </Dashboard::FilterCheckbox>
+      {{#if (gt (get (await term.children) "length") 0)}}
+        <Dashboard::SelectedTermTree
+          @terms={{await term.children}}
+          @selectedTermIds={{@selectedTermIds}}
+          @add={{@add}}
+          @remove={{@remove}}
+        />
+      {{/if}}
+    </li>
+  {{/each}}
+</ul>
