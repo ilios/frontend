@@ -1,15 +1,15 @@
 import Controller from '@ember/controller';
 
 export default class SessionIndexController extends Controller {
-  queryParams = {
-    sessionObjectiveDetails: 'sessionObjectiveDetails',
-    sessionTaxonomyDetails: 'sessionTaxonomyDetails',
-    isManagingLearnerGroups: 'isManagingLearnerGroups',
-    sessionLearnergroupDetails: 'sessionLearnergroupDetails',
-    sessionLeadershipDetails: 'sessionLeadershipDetails',
-    sessionManageLeadership: 'sessionManageLeadership',
-    showNewOfferingForm: 'addOffering',
-  };
+  queryParams = [
+    'sessionObjectiveDetails',
+    'sessionTaxonomyDetails',
+    'isManagingLearnerGroups',
+    'sessionLearnergroupDetails',
+    'sessionLeadershipDetails',
+    'sessionManageLeadership',
+    'addOffering',
+  ];
   sessionObjectiveDetails = false;
   sessionTaxonomyDetails = false;
   isManagingLearnerGroups = false;
@@ -17,4 +17,5 @@ export default class SessionIndexController extends Controller {
   sessionLeadershipDetails = false;
   sessionManageLeadership = false;
   showNewOfferingForm = false;
+  addOffering = false;
 }

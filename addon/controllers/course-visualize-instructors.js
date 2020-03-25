@@ -2,6 +2,7 @@ import Controller from '@ember/controller';
 import { restartableTask } from 'ember-concurrency-decorators';
 import { timeout } from 'ember-concurrency';
 import escapeRegExp from '../utils/escape-reg-exp';
+import { set } from '@ember/object';
 
 export default class CourseVisualizeInstructorsController extends Controller {
   queryParams = ['name'];
@@ -13,6 +14,6 @@ export default class CourseVisualizeInstructorsController extends Controller {
     if (clean) {
       yield timeout(250);
     }
-    this.name = clean;
+    set(this, 'name', clean);
   }
 }
