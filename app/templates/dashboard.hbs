@@ -48,8 +48,8 @@
       data-test-myreports
       @selectedReport={{await this.selectedReport}}
       @selectedYear={{this.reportYear}}
-      @onReportSelect={{action (mut this.report)}}
-      @onReportYearSelect={{action (mut this.reportYear)}}
+      @onReportSelect={{set this.report}}
+      @onReportYearSelect={{set this.reportYear}}
     />
     <DashboardMycourses />
   </div>
