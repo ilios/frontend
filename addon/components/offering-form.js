@@ -154,7 +154,8 @@ export default class OfferingForm extends Component {
 
   @action
   async removeLearner(learner) {
-    this.learners = this.learners.filter(l => l !== learner);
+    const id = learner.get('id');
+    this.learners = this.learners.filter(l => l.get('id') !== id);
   }
 
   @action
