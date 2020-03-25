@@ -222,16 +222,18 @@
           />
         </div>
       {{/if}}
-      <div class="learners item">
-        <label>
-          {{t "general.learners"}}:
-        </label>
-          <LearnerSelectionManager
-            @learners={{this.learners}}
-            @add={{fn this.addLearner}}
-            @remove={{fn this.removeLearner}}
-          />
-      </div>
+      {{#unless @smallGroupMode}}
+        <div class="learners item">
+          <label>
+            {{t "general.learners"}}:
+          </label>
+            <LearnerSelectionManager
+              @learners={{this.learners}}
+              @add={{fn this.addLearner}}
+              @remove={{fn this.removeLearner}}
+            />
+        </div>
+      {{/unless}}
       <div class="learner-groups item">
         <label>
           {{t "general.learnerGroups"}}:
