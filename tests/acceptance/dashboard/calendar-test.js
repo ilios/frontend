@@ -719,7 +719,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(currentURL(), '/dashboard?courses=1&mySchedule=false&show=calendar&showFilters=true');
 
     await click('.coursefilter ul li:nth-child(2) input');
-    assert.equal(currentURL(), '/dashboard?courses=1%2C2&mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(currentURL(), '/dashboard?courses=1-2&mySchedule=false&show=calendar&showFilters=true');
 
     await click('.coursefilter ul li:nth-child(2) input');
     assert.equal(currentURL(), '/dashboard?courses=1&mySchedule=false&show=calendar&showFilters=true');
@@ -731,7 +731,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(currentURL(), '/dashboard?mySchedule=false&sessionTypes=1&show=calendar&showFilters=true');
 
     await click('.sessiontypefilter ul li:nth-child(2) input');
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&sessionTypes=1%2C2&show=calendar&showFilters=true');
+    assert.equal(currentURL(), '/dashboard?mySchedule=false&sessionTypes=1-2&show=calendar&showFilters=true');
 
     await click('.sessiontypefilter ul li:nth-child(2) input');
     assert.equal(currentURL(), '/dashboard?mySchedule=false&sessionTypes=1&show=calendar&showFilters=true');
@@ -744,7 +744,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(currentURL(), '/dashboard?courseFilters=false&courseLevels=1&mySchedule=false&show=calendar&showFilters=true');
 
     await click('.courselevelfilter ul li:nth-child(2) input');
-    assert.equal(currentURL(), '/dashboard?courseFilters=false&courseLevels=1%2C2&mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(currentURL(), '/dashboard?courseFilters=false&courseLevels=1-2&mySchedule=false&show=calendar&showFilters=true');
 
     await click('.courselevelfilter ul li:nth-child(2) input');
     assert.equal(currentURL(), '/dashboard?courseFilters=false&courseLevels=1&mySchedule=false&show=calendar&showFilters=true');
@@ -756,7 +756,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(currentURL(), '/dashboard?cohorts=1&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
     await click('.cohortfilter ul li:nth-child(2) input');
-    assert.equal(currentURL(), '/dashboard?cohorts=1%2C2&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(currentURL(), '/dashboard?cohorts=1-2&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
     await click('.cohortfilter ul li:nth-child(2) input');
     assert.equal(currentURL(), '/dashboard?cohorts=1&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');

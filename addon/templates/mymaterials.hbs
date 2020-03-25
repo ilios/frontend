@@ -2,9 +2,9 @@
 <MyMaterials
   @courseIdFilter={{this.course}}
   @filter={{this.filter}}
-  @materials={{await this.materials}}
+  @materials={{await @model.materials}}
   @sortBy={{this.sortBy}}
-  @setCourseIdFilter={{fn (mut this.course)}}
-  @setFilter={{fn (mut this.filter)}}
-  @setSortBy={{fn (mut this.sortBy)}}
+  @setCourseIdFilter={{set this.course}}
+  @setFilter={{set this.filter}}
+  @setSortBy={{set this.sortBy}}
 />
