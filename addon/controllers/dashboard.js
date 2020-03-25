@@ -1,6 +1,7 @@
 import Controller from '@ember/controller';
-import { action, computed, set } from '@ember/object';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 import moment from 'moment';
 
 export default class DashboardController extends Controller {
@@ -22,27 +23,25 @@ export default class DashboardController extends Controller {
     'view'
   ];
 
-  courseFilters = true;
-  cohorts = '';
-  courseLevels = '';
-  courses = '';
-  terms = '';
-  sessionTypes = '';
-  date = null;
-  mySchedule = true;
-  school = null;
-  show = 'week';
-  showFilters = false;
-  view = 'week';
+  @tracked courseFilters = true;
+  @tracked cohorts = '';
+  @tracked courseLevels = '';
+  @tracked courses = '';
+  @tracked terms = '';
+  @tracked sessionTypes = '';
+  @tracked date = null;
+  @tracked mySchedule = true;
+  @tracked school = null;
+  @tracked show = 'week';
+  @tracked showFilters = false;
+  @tracked view = 'week';
 
-  @computed("school")
   get selectedSchool(){
     const { schools } = this.model;
 
     return schools.findBy('id', this.school);
   }
 
-  @computed("date")
   get selectedDate(){
     if (this.date) {
       return moment(this.date, 'YYYY-MM-DD').format();
@@ -51,7 +50,6 @@ export default class DashboardController extends Controller {
     return moment().format();
   }
 
-  @computed("view")
   get selectedView() {
     if (!['month', 'week', 'day'].includes(this.view)) {
       return 'week';
@@ -62,7 +60,7 @@ export default class DashboardController extends Controller {
 
   @action
   changeDate(newDate) {
-    set(this, 'date', moment(newDate).format('YYYY-MM-DD'));
+    this.date = moment(newDate).format('YYYY-MM-DD');
   }
 
   @action
@@ -73,30 +71,22 @@ export default class DashboardController extends Controller {
   @action
   toggleMySchedule() {
     if (this.mySchedule) {
-      /*
-       * Temporary setter needed to avoid issues with QP tracking
-       * ref: https://github.com/emberjs/ember.js/issues/18715
-      */
-      set(this, 'mySchedule', false);
-      set(this, 'school', null);
+      this.mySchedule = false;
+      this.school = null;
     } else {
-      set(this, 'mySchedule', true);
+      this.mySchedule = true;
     }
   }
 
   @action
   toggleShowFilters() {
     if (this.showFilters) {
-      /*
-       * Temporary setter needed to avoid issues with QP tracking
-       * ref: https://github.com/emberjs/ember.js/issues/18715
-      */
-      set(this, 'showFilters', false);
-      set(this, 'school', null);
-      set(this, 'academicYear', null);
-      set(this, 'courseFilters', null);
+      this.showFilters = false;
+      this.school = null;
+      this.academicYear = null;
+      this.courseFilters = null;
     } else {
-      set(this, 'showFilters', true);
+      this.showFilters = true;
     }
   }
 
@@ -106,14 +96,10 @@ export default class DashboardController extends Controller {
     if (str) {
       const idArray = str.split('-');
       if (!idArray.includes(id)) {
-        /*
-         * Temporary setter needed to avoid issues with QP tracking
-         * ref: https://github.com/emberjs/ember.js/issues/18715
-        */
-        set(this, what, str + `-${id}`);
+        this[what] = str + `-${id}`;
       }
     } else {
-      set(this, what, id);
+      this[what] = id;
     }
   }
 
@@ -124,21 +110,17 @@ export default class DashboardController extends Controller {
       const idArray = str.split('-');
       if (idArray.includes(id)) {
         idArray.removeObject(id);
-        /*
-         * Temporary setter needed to avoid issues with QP tracking
-         * ref: https://github.com/emberjs/ember.js/issues/18715
-        */
-        set(this, what, idArray.join('-'));
+        this[what] = idArray.join('-');
       }
     }
   }
 
   @action
   clearFilters() {
-    set(this, 'cohorts', '');
-    set(this, 'courseLevels', '');
-    set(this, 'courses', '');
-    set(this, 'sessionTypes', '');
-    set(this, 'terms', '');
+    this.cohorts = '';
+    this.courseLevels = '';
+    this.courses = '';
+    this.sessionTypes = '';
+    this.terms = '';
   }
 }
