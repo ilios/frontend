@@ -11,10 +11,12 @@
   },
   "scripts": {
     "build": "ember build --environment=production",
+    "lint": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*",
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",
-    "test": "ember test",
+    "test": "npm-run-all lint:* test:*",
+    "test:ember": "ember test",
     "lint:style": "stylelint app/styles",
     "deploy:production": "ember deploy production --activate",
     "deploy:staging": "ember deploy staging --activate"
@@ -43,9 +45,9 @@
     "ember-ajax": "^5.0.0",
     "ember-auto-import": "^1.5.3",
     "ember-chrome-devtools": "^0.2.0",
-    "ember-cli": "~3.16.0",
+    "ember-cli": "~3.17.0",
     "ember-cli-app-version": "^3.2.0",
-    "ember-cli-babel": "^7.17.2",
+    "ember-cli-babel": "^7.18.0",
     "ember-cli-bourbon": "2.0.1",
     "ember-cli-bundle-analyzer": "^0.2.0",
     "ember-cli-code-coverage": "^v1.0.0-beta.9",
@@ -64,7 +66,7 @@
     "ember-cli-deprecation-workflow": "1.0.1",
     "ember-cli-flash": "1.8.1",
     "ember-cli-head": "0.4.1",
-    "ember-cli-htmlbars": "^4.2.2",
+    "ember-cli-htmlbars": "^4.2.3",
     "ember-cli-image-transformer": "^4.0.0",
     "ember-cli-inject-live-reload": "^2.0.2",
     "ember-cli-new-version": "^2.0.1",
@@ -91,7 +93,7 @@
     "ember-service-worker": "^0.8.4",
     "ember-service-worker-cache-first": "^0.6.2",
     "ember-simple-set-helper": "^0.1.2",
-    "ember-source": "~3.16.0",
+    "ember-source": "~3.17.0",
     "ember-template-lint": "^2.4.0",
     "ember-truth-helpers": "^2.0.0",
     "ember-web-app": "^4.0.0",
@@ -99,10 +101,11 @@
     "file-saver": "^2.0.2",
     "ilios-common": "37.1.1",
     "loader.js": "^4.7.0",
+    "npm-run-all": "^4.1.5",
     "papaparse": "^5.1.1",
     "postcss-scss": "^2.0.0",
     "pre-commit": "^1.2.2",
-    "qunit-dom": "^1.0.0",
+    "qunit-dom": "^1.1.0",
     "stylelint": "^13.2.1",
     "stylelint-config-recommended-scss": "^4.2.0",
     "stylelint-scss": "^3.16.0",
@@ -122,9 +125,7 @@
     ]
   },
   "pre-commit": [
-    "lint:hbs",
-    "lint:style",
-    "lint:js"
+    "lint"
   ],
   "private": true
 }

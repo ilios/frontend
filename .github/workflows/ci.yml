@@ -37,4 +37,4 @@ jobs:
     - name: lint js
       run: npm run lint:js
     - name: test
-      run: npm test
+      run: npm run test:ember

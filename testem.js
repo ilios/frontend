@@ -1,4 +1,5 @@
 /* eslint camelcase: 0 */
+'use strict';
 
 module.exports = {
   test_page: 'tests/index.html?hidepassed',
