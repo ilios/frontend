@@ -1,8 +1,7 @@
 import Controller from '@ember/controller';
-import { action } from '@ember/object';
+import { action, computed, set } from '@ember/object';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
-import { tracked } from '@glimmer/tracking';
 
 export default class DashboardController extends Controller {
   @service currentUser;
@@ -24,32 +23,35 @@ export default class DashboardController extends Controller {
     'view'
   ];
 
-  @tracked academicYear = null;
-  @tracked cohorts = '';
-  @tracked courseFilters = true;
-  @tracked courseLevels = '';
-  @tracked courses = '';
-  @tracked date = null;
-  @tracked mySchedule = true;
-  @tracked school = null;
-  @tracked sessionTypes = '';
-  @tracked show = 'week';
-  @tracked showFilters = false;
-  @tracked terms = '';
-  @tracked view = 'week';
+  academicYear = null;
+  courseFilters = true;
+  cohorts = '';
+  courseLevels = '';
+  courses = '';
+  terms = '';
+  sessionTypes = '';
+  date = null;
+  mySchedule = true;
+  school = null;
+  show = 'week';
+  showFilters = false;
+  view = 'week';
 
+  @computed("academicYear")
   get selectedAcademicYear(){
     const { academicYears } = this.model;
 
     return academicYears.findBy('id', this.academicYear);
   }
 
+  @computed("school")
   get selectedSchool(){
     const { schools } = this.model;
 
     return schools.findBy('id', this.school);
   }
 
+  @computed("date")
   get selectedDate(){
     if (this.date) {
       return moment(this.date, 'YYYY-MM-DD').format();
@@ -58,7 +60,8 @@ export default class DashboardController extends Controller {
     return moment().format();
   }
 
-  get selectedView(){
+  @computed("view")
+  get selectedView() {
     if (!['month', 'week', 'day'].includes(this.view)) {
       return 'week';
     }
@@ -68,7 +71,7 @@ export default class DashboardController extends Controller {
 
   @action
   changeDate(newDate) {
-    this.date = moment(newDate).format('YYYY-MM-DD');
+    set(this, 'date', moment(newDate).format('YYYY-MM-DD'));
   }
 
   @action
@@ -79,22 +82,30 @@ export default class DashboardController extends Controller {
   @action
   toggleMySchedule() {
     if (this.mySchedule) {
-      this.mySchedule = false;
-      this.school = null;
+      /*
+       * Temporary setter needed to avoid issues with QP tracking
+       * ref: https://github.com/emberjs/ember.js/issues/18715
+      */
+      set(this, 'mySchedule', false);
+      set(this, 'school', null);
     } else {
-      this.mySchedule = true;
+      set(this, 'mySchedule', true);
     }
   }
 
   @action
   toggleShowFilters() {
     if (this.showFilters) {
-      this.showFilters = false;
-      this.school = null;
-      this.academicYear = null;
-      this.courseFilters = null;
+      /*
+       * Temporary setter needed to avoid issues with QP tracking
+       * ref: https://github.com/emberjs/ember.js/issues/18715
+      */
+      set(this, 'showFilters', false);
+      set(this, 'school', null);
+      set(this, 'academicYear', null);
+      set(this, 'courseFilters', null);
     } else {
-      this.showFilters = true;
+      set(this, 'showFilters', true);
     }
   }
 
@@ -102,12 +113,16 @@ export default class DashboardController extends Controller {
   add(what, id) {
     const str = this[what];
     if (str) {
-      const idArray = str.split(',');
+      const idArray = str.split('-');
       if (!idArray.includes(id)) {
-        this.set(what, str + `,${id}`);
+        /*
+         * Temporary setter needed to avoid issues with QP tracking
+         * ref: https://github.com/emberjs/ember.js/issues/18715
+        */
+        set(this, what, str + `-${id}`);
       }
     } else {
-      this.set(what, id);
+      set(this, what, id);
     }
   }
 
@@ -115,20 +130,24 @@ export default class DashboardController extends Controller {
   remove(what, id) {
     const str = this[what];
     if (str) {
-      const idArray = str.split(',');
+      const idArray = str.split('-');
       if (idArray.includes(id)) {
         idArray.removeObject(id);
-        this.set(what, idArray.join(','));
+        /*
+         * Temporary setter needed to avoid issues with QP tracking
+         * ref: https://github.com/emberjs/ember.js/issues/18715
+        */
+        set(this, what, idArray.join('-'));
       }
     }
   }
 
   @action
   clearFilters() {
-    this.cohorts = '';
-    this.courseLevels = '';
-    this.courses = '';
-    this.sessionTypes = '';
-    this.terms = '';
+    set(this, 'cohorts', '');
+    set(this, 'courseLevels', '');
+    set(this, 'courses', '');
+    set(this, 'sessionTypes', '');
+    set(this, 'terms', '');
   }
 }

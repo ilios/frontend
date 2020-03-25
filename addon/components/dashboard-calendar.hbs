@@ -77,8 +77,8 @@
       </div>
     {{/if}}
     <div class="calendar-filters">
-      {{#liquid-if @showFilters class="vertical"}}
-        {{#liquid-if @courseFilters class="crossFade"}}
+      {{#if @showFilters}}
+        {{#if @courseFilters}}
           <div
             id="calendar-coursefilter"
             class="calendar-filter-list large-filter-list coursefilter"
@@ -233,8 +233,8 @@
               <FaIcon @icon="spinner" @spin={{true}} />
             {{/if}}
           </div>
-        {{/liquid-if}}
-      {{/liquid-if}}
+        {{/if}}
+      {{/if}}
     </div>
   </section>
   {{#if (is-array this.cohortProxies)}}
