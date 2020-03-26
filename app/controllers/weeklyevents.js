@@ -1,4 +1,1 @@
-import Controller from '@ember/controller';
-import WeeklyeventsController from 'ilios-common/mixins/weeklyevents-controller';
-
-export default Controller.extend(WeeklyeventsController);
+export { default} from 'ilios-common/controllers/weeklyevents';
