@@ -364,6 +364,7 @@ export default class OfferingForm extends Component {
         const obj = {
           room: this.room,
           learnerGroups,
+          learners: this.learners,
           instructorGroups: this.instructorGroups,
           instructors: this.instructors
         };
@@ -381,6 +382,7 @@ export default class OfferingForm extends Component {
         const obj = {
           room: this.room,
           learnerGroups,
+          learners: this.learners,
           instructorGroups: this.instructorGroups,
           instructors: this.instructors
         };
