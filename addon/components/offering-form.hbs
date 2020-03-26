@@ -229,8 +229,8 @@
           </label>
             <LearnerSelectionManager
               @learners={{this.learners}}
-              @add={{fn this.addLearner}}
-              @remove={{fn this.removeLearner}}
+              @add={{this.addLearner}}
+              @remove={{this.removeLearner}}
             />
         </div>
       {{/unless}}
