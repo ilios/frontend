@@ -111,6 +111,7 @@ general:
   filterPlaceholder: "Commencez à taper pour filtre la liste"
   fileSizeError: "Ce dossier est trop grand. Taille maximale est {maxSize})."
   findInstructorOrGroup: "Trouver Instructeur ou Groupe"
+  findLearners: "Trouver des apprenants"
   firstOffering: "Premier Offre"
   friday: Vendredi
   go: Aller
@@ -182,6 +183,7 @@ general:
   noAssociatedCompetencies: "Nul compétences associées"
   noAssociatedCompetency: "Nul compétence associée"
   noAvailableLearnerGroups: "Pas de groupes d'étudiants sont disponibles; pas de cohorte est attaché à ce cours."
+  noAvailableLearners: "Pas d'étudiants sont disponibles; pas de cohorte est attaché à ce cours."
   noCohorts: "Il n'y a aucun des cohortes dans ce cours"
   noCourseLearningMaterialsAvailable: "Aucun Matériels D'étude de Cours"
   none: Nul
@@ -242,6 +244,7 @@ general:
   searchPlaceholder: "Trouver matériels d'étude"
   selectCohortsToAttach: "Choisissez le cohorte d'étudiants que vous voulez attacher au cours nouveau"
   selectedLearnerGroups: "Groupes d’Étudiants Selectionées"
+  selectedLearners: "Étudiants Selectionées"
   selectMeshFor: "Sélectionnez MeSH pour: {title}"
   selectVocabulary: "Choisi Vocabulaire"
   session: "Séance"

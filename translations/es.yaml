@@ -111,6 +111,7 @@ general:
   filterPlaceholder: "Empieza marcando para aplicar un filtro"
   fileSizeError: "Este archivo es demasiado grande.  El tamaño máximo es {maxSize}."
   findInstructorOrGroup: "Buscar Instructor o Grupo"
+  findLearners: "Encontrar estudiantes"
   firstOffering: "Ofrecimiento Primero"
   friday: Viernes
   go: Vaya
@@ -182,6 +183,7 @@ general:
   noAssociatedCompetencies: "No Competencias Asociadas"
   noAssociatedCompetency: "No Competencia Asociada"
   noAvailableLearnerGroups: "No grupo de aprendedores disponible; Este curso no contiene ninguna clase de la graduación."
+  noAvailableLearners: "No aprendedores disponible; Este curso no contiene ninguna clase de la graduación."
   noCohorts: "No hay ningún clase de la graduación en este curso"
   noCourseLearningMaterialsAvailable: "Ningunos Materiales Didácticos del Curso Disponibles"
   none: "Ningún"
@@ -242,6 +244,7 @@ general:
   searchPlaceholder: "encontrar material de aprendizaje"
   selectCohortsToAttach: "Seleccione la cohorte de estudiantes que desea adjuntar al nuevo curso"
   selectedLearnerGroups: "Grupos de Aprendizaje Seleccionados"
+  selectedLearners: "Aprendizaje Seleccionados"
   selectMeshFor: "Seleccione MeSH para: {title}"
   selectVocabulary: "Seleccione un Vocabulario"
   session: "Sessión"
