@@ -335,6 +335,7 @@ general:
 errors:
   accepted: "{description} must be accepted"
   after: "{description} must be after {after}"
+  agreementRequired: "Agreement or alternate rationale is required for upload"
   before: "{description} must be before {before}"
   blank: "{description} can not be blank"
   collection: "{description} must be a collection"

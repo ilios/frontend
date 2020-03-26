@@ -50,8 +50,11 @@ const definition = {
     status: fillable('select', { at: 0 }),
     role: fillable('select', { at: 1 }),
     description: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
+    rationale: fillable('[data-test-copyright-rationale]'),
+    agreement: clickable('[data-test-copyright-agreement]'),
     save: clickable('.done'),
     cancel: clickable('.cancel'),
+    hasAgreementValidationError: isVisible('[data-test-agreement-validation-error-message]'),
   },
   manager: {
     scope: '.learningmaterial-manager',
@@ -108,7 +111,7 @@ const definition = {
       ampm: fillable('select', { at: 2 }),
     },
     hasEndDateValidationError: isVisible('[data-test-end-date-validation-error-message]'),
-    hasTitleValidationError: isVisible('[data-test-title-validation-error-message]')
+    hasTitleValidationError: isVisible('[data-test-title-validation-error-message]'),
   },
   sortManager: {
     scope: '[data-test-detail-learning-materials-sort-manager]',

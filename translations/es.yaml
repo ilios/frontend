@@ -335,6 +335,7 @@ general:
 errors:
   accepted: "{description} debe ser aceptado"
   after: "{description} necesita estar después de {after}"
+  agreementRequired: "Acuerdo o se requiere una justificación alternativa para cargar"
   before: "{description} necesita estar antes de {before}"
   blank: "{description} no puede estar en blanco"
   collection: "{description} necesita ser una colección"

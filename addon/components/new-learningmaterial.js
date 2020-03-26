@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency-decorators';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { validatable, Length, NotBlank, IsTrue } from 'ilios-common/decorators/validation';
 import { ValidateIf } from "class-validator";
 import { guidFor } from '@ember/object/internals';
 
@@ -21,7 +21,7 @@ export default class NewLearningmaterialComponent extends Component {
   @NotBlank() @Length(2, 80) @tracked originalAuthor;
   @NotBlank() @Length(4, 120) @tracked title;
   @ValidateIf(o => o.isLink) @NotBlank() @tracked link = 'http://';
-  @tracked copyrightPermission = false;
+  @ValidateIf(o => o.isFile && !o.copyrightRationale) @IsTrue() @tracked copyrightPermission = false;
   @ValidateIf(o => o.isFile) @Length(2, 65000) @tracked copyrightRationale;
   @tracked owner;
   @ValidateIf(o => o.isCitation) @NotBlank() @tracked citation;
