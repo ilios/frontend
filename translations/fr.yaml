@@ -332,6 +332,7 @@ general:
 errors:
   accepted: "{description} doit être accepté"
   after: "{description} doit être après {after}"
+  agreementRequired: "Entente ou autre justification requise pour le téléchargement"
   before: "{description} doit être avant {before}"
   blank: "{description} ne doit pas être blanc"
   collection: "{description} doit être un collection"

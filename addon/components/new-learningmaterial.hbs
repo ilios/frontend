@@ -132,8 +132,15 @@
             type="checkbox"
             checked={{this.copyrightPermission}}
             {{on "click" (set this.copyrightPermission (not this.copyrightPermission))}}
+            data-test-copyright-agreement
           >
           {{t "general.copyrightAgreement"}}
+          {{#if (await (compute (fn this.hasErrorFor) "copyrightPermission"))}}
+            <br>
+            <span class="validation-error-message" data-test-agreement-validation-error-message>
+              {{t "errors.agreementRequired"}}
+            </span>
+          {{/if}}
         </p>
       </span>
     </div>
@@ -146,6 +153,7 @@
           <Textarea
             @value={{this.copyrightRationale}}
             @focus-out={{fn this.addErrorDisplayFor "copyrightRationale"}}
+            data-test-copyright-rationale
           />
         {{#each (await (compute (fn this.getErrorsFor) "copyrightRationale")) as |message|}}
           <span class="validation-error-message">
@@ -164,6 +172,11 @@
         @setFilename={{set this.filename}}
         @setFileHash={{set this.fileHash}}
       />
+      {{#each (await (compute (fn this.getErrorsFor) "filename")) as |message|}}
+        <span class="validation-error-message">
+          {{message}}
+        </span>
+      {{/each}}
     </div>
   {{/if}}
   <div class="buttons">

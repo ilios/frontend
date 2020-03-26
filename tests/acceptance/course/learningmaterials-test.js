@@ -616,6 +616,23 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       await page.learningMaterials.manager.save();
       assert.ok(page.learningMaterials.manager.hasTitleValidationError);
     });
+
+    test('missing copyright info #1204', async function (assert) {
+      this.user.update({ administeredSchools: [this.school] });
+      await page.visit({ courseId: 1, details: true });
+      await page.learningMaterials.createNew();
+      await page.learningMaterials.pickNew('File');
+
+      assert.notOk(page.learningMaterials.newLearningMaterial.hasAgreementValidationError);
+      await page.learningMaterials.newLearningMaterial.save();
+      assert.ok(page.learningMaterials.newLearningMaterial.hasAgreementValidationError);
+      await page.learningMaterials.newLearningMaterial.agreement();
+      assert.notOk(page.learningMaterials.newLearningMaterial.hasAgreementValidationError);
+      await page.learningMaterials.newLearningMaterial.agreement();
+      assert.ok(page.learningMaterials.newLearningMaterial.hasAgreementValidationError);
+      await page.learningMaterials.newLearningMaterial.rationale('mine!');
+      assert.notOk(page.learningMaterials.newLearningMaterial.hasAgreementValidationError);
+    });
   });
 
   module('Double Linked Materials', function (hooks2) {
