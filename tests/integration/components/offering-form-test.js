@@ -265,13 +265,14 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('save not recurring', async function(assert) {
-    assert.expect(6);
+    assert.expect(7);
     this.set('nothing', nothing);
-    this.set('save', (startDate, endDate, room, learnerGroups, instructorGroups, instructors)=>{
+    this.set('save', (startDate, endDate, room, learners, learnerGroups, instructorGroups, instructors)=>{
       assert.equal(moment(startDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
       assert.equal(moment(endDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
       assert.equal(room, 'TBD');
       assert.equal(learnerGroups.length, 0);
+      assert.equal(learners.length, 0);
       assert.equal(instructorGroups.length, 0);
       assert.equal(instructors.length, 0);
     });
@@ -458,6 +459,18 @@ module('Integration | Component | offering form', function(hooks) {
     assert.equal(moment().hour(17).minute(0).format(format), find(endDate).textContent.trim());
   });
 
+  test('learner manager is not present in small-group mode', async function(assert) {
+    assert.expect(1);
+    await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`);
+    assert.dom('[data-test-learner-selection-manager').doesNotExist();
+  });
+
+  test('learner manager is present in single-offering mode', async function(assert) {
+    assert.expect(1);
+    await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{false}} />`);
+    assert.dom('[data-test-learner-selection-manager').exists();
+  });
+
   test('learnerGroup validation errors do not show up initially', async function(assert) {
     this.set('nothing', nothing);
     await render(hbs`<OfferingForm @close={{action nothing}} @smallGroupMode={{true}} />`);
@@ -491,6 +504,7 @@ module('Integration | Component | offering form', function(hooks) {
       startDate: moment('2005-06-24').hour(18).minute(24).toDate(),
       endDate: moment('2005-06-24').hour(19).minute(24).toDate(),
       learnerGroups: resolve([]),
+      learners: resolve([]),
       instructors: resolve([]),
       instructorGroups: resolve([]),
     });
@@ -554,6 +568,7 @@ module('Integration | Component | offering form', function(hooks) {
       startDate: moment('2005-06-24').hour(18).minute(24).toDate(),
       endDate: moment('2005-06-24').hour(19).minute(24).toDate(),
       learnerGroups: resolve([]),
+      learners: resolve([]),
       instructors: resolve([]),
       instructorGroups: resolve([]),
     });
