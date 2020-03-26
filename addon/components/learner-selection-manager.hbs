@@ -1,5 +1,5 @@
 <div class="learner-selection-manager" data-test-learner-selection-manager>
-  <div class="selected-learners">
+  <div class="selected-learners" data-test-selected-learners-section>
     <h4>
       {{t "general.selectedLearners"}}
     </h4>
@@ -10,7 +10,7 @@
           @remove={{@remove}}
       />
     {{else}}
-      <p>
+      <p data-test-no-selected-learners>
         {{t "general.none"}}
       </p>
     {{/if}}
