@@ -1,8 +1,15 @@
-<div class="selectable-terms-list-item {{if this.isSelected "selected"}}" {{on "click" this.click}} role="button">
-  {{#if @term.description.length}}
-    <AttachTooltip @lazyRender={{true}} @animation="shift">
+<div
+  class="selectable-terms-list-item {{if this.isSelected "selected"}}"
+  role="button"
+  {{on "click" this.click}}
+  {{on "mouseover" (fn (set this.isHovering) true)}}
+  {{on "mouseout" (fn (set this.isHovering) false)}}
+  {{ref this "theElement"}}
+>
+  {{#if this.showTooltip}}
+    <IliosTooltip @target={{this.theElement}}>
       {{@term.description}}
-    </AttachTooltip>
+    </IliosTooltip>
   {{/if}}
   {{@term.title}}
   <span class="actions">

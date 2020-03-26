@@ -1,12 +1,19 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
 export default class SelectableTermsListItem extends Component {
+  @tracked isHovering;
+  @tracked theElement;
 
   get isSelected() {
     const term = this.args.term;
     const selectedTerms = this.args.selectedTerms;
     return selectedTerms.includes(term);
+  }
+
+  get showTooltip() {
+    return this.args?.term.description?.length && this.theElement && this.isHovering;
   }
 
   @action
