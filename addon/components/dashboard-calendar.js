@@ -84,8 +84,12 @@ export default class DashboardCalendarComponent extends Component {
     }
   }
 
-  async getCohortProxies(school, year) {
-    const cohorts = await school.getCohortsForYear(year.get('title'));
+  async getCohortProxies(school) {
+    const cohorts = await this.store.query('cohort', {
+      filters: {
+        schools: [school.id],
+      },
+    });
     const cohortProxies = await map(cohorts.toArray(), async cohort => {
       let displayTitle = cohort.get('title');
       if (!displayTitle) {
@@ -93,13 +97,16 @@ export default class DashboardCalendarComponent extends Component {
         const classOfYear = await cohort.get('classOfYear');
         displayTitle = intl.t('general.classOf', { year: classOfYear });
       }
-      const program = await cohort.program;
+      const programYear = await cohort.programYear;
+      const program = await programYear.program;
+      const classOfYear = await programYear.classOfYear;
 
       return {
         id: cohort.id,
         programTitle: program.title,
         cohort,
-        displayTitle
+        displayTitle,
+        classOfYear,
       };
     });
 
@@ -115,10 +122,6 @@ export default class DashboardCalendarComponent extends Component {
     const vocabularies = await school.get('vocabularies');
     await all(vocabularies.mapBy('terms'));
     return vocabularies.toArray().sortBy('title');
-  }
-
-  get cohorts() {
-    return this.cohortProxies?.mapBy('cohort');
   }
 
   get filteredEvents() {

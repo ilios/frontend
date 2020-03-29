@@ -179,37 +179,12 @@
               {{/each}}
             </ul>
           </div>
-          <div
-            id="calendar-cohortfilter"
-            class="calendar-filter-list large-filter-list cohortfilter"
-          >
-            <h5>
-              {{get this.bestSelectedAcademicYear "academicYearTitle"}}
-              {{t "general.programAndCohort"}}
-            </h5>
-            {{#if (is-array this.cohorts)}}
-              <ul>
-                {{#each this.cohorts as |cohort|}}
-                  <li class="clickable">
-                    <Dashboard::FilterCheckbox
-                      @checked={{contains cohort.id @selectedCohortIds}}
-                      @add={{fn @addCohortId cohort.id}}
-                      @remove={{fn @removeCohortId cohort.id}}
-                    >
-                      {{#if cohort.title}}
-                        {{cohort.title}}
-                      {{else}}
-                        {{t "general.classOf" year=(await cohort.classOfYear)}}
-                      {{/if}}
-                      {{get (await cohort.programYear.program) "title"}}
-                    </Dashboard::FilterCheckbox>
-                  </li>
-                {{/each}}
-              </ul>
-            {{else}}
-              <FaIcon @icon="spinner" @spin={{true}} />
-            {{/if}}
-          </div>
+          <Dashboard::CohortCalendarFilter
+            @cohortProxies={{this.cohortProxies}}
+            @add={{@addCohortId}}
+            @remove={{@removeCohortId}}
+            @selectedIds={{@selectedCohortIds}}
+          />
         {{/if}}
       {{/if}}
     </div>

@@ -403,7 +403,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
   });
 
   const pickCohort = async function(i) {
-    return await click(find(`.cohortfilter li:nth-of-type(${i}) [data-test-target]`));
+    return await click(find(`[data-test-cohort-calendar-filter] li:nth-of-type(${i}) [data-test-target]`));
   };
 
   test('test cohort filter', async function(assert) {
@@ -541,32 +541,6 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(await getElementText(events[1]), getText(endOfTheWeek.format('dddd, MMMM Do, YYYY h:mma') + 'event 1'));
   });
 
-  test('academic year filters cohort', async function(assert) {
-    this.server.create('academicYear', {
-      id: 2014,
-      title: 2014
-    });
-    this.server.create('program', {
-      school: this.school,
-    });
-    this.server.create('programYear', {
-      startYear: 2014,
-      programId: 2,
-    });
-    this.server.create('cohort', {
-      programYearId: 3
-    });
-    await page.visit({ show: 'calendar', view: 'week' });
-    await showFilters();
-    await chooseDetailFilter();
-    await fillIn('.calendar-year-picker select', '2015');
-    let cohortFilter = findAll('.cohortfilter li');
-    assert.equal(cohortFilter.length, 3);
-    await fillIn('.calendar-year-picker select', '2014');
-    cohortFilter = findAll('.cohortfilter li');
-    assert.equal(cohortFilter.length, 1);
-  });
-
   test('clear all filters', async function (assert) {
     const vocabulary = this.server.create('vocabulary', {
       school: this.school
@@ -604,7 +578,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     const clearFilter = '.filters-clear-filters';
     const sessiontype = '.sessiontypefilter li:nth-of-type(1) input';
     const courselevel = '.courselevelfilter li:nth-of-type(1) input';
-    const cohort = '.cohortfilter li:nth-of-type(1) input';
+    const cohort = '[data-test-cohort-calendar-filter] li:nth-of-type(1) input';
 
     await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
@@ -630,7 +604,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
   test('filter tags work properly', async function(assert) {
     const sessiontype = '.sessiontypefilter li:nth-of-type(1) [data-test-target]';
     const courselevel = '.courselevelfilter li:nth-of-type(1) [data-test-target]';
-    const cohort = '.cohortfilter li:nth-of-type(1) [data-test-target]';
+    const cohort = '[data-test-cohort-calendar-filter] li:nth-of-type(1) [data-test-target]';
 
     const filtersList = '.filters-list';
     const clearFilter = '.filters-clear-filters';
@@ -733,16 +707,16 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     await click('.courselevelfilter ul li:nth-child(1) input');
     assert.equal(currentURL(), '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
-    await click('.cohortfilter ul li:nth-child(1) input');
+    await click('[data-test-cohort-calendar-filter] ul li:nth-child(1) input');
     assert.equal(currentURL(), '/dashboard?cohorts=1&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
-    await click('.cohortfilter ul li:nth-child(2) input');
+    await click('[data-test-cohort-calendar-filter] ul li:nth-child(2) input');
     assert.equal(currentURL(), '/dashboard?cohorts=1-2&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
-    await click('.cohortfilter ul li:nth-child(2) input');
+    await click('[data-test-cohort-calendar-filter] ul li:nth-child(2) input');
     assert.equal(currentURL(), '/dashboard?cohorts=1&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
-    await click('.cohortfilter ul li:nth-child(1) input');
+    await click('[data-test-cohort-calendar-filter] ul li:nth-child(1) input');
     assert.equal(currentURL(), '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
   });
 
