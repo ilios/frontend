@@ -57,12 +57,12 @@ export default class DashboardCalendarComponent extends Component {
   }
 
   @restartableTask
-  *load(event, [school, year]) {
-    if (!school || !year) {
+  *load(event, [school]) {
+    if (!school) {
       return;
     }
     const promises = {
-      cohortProxies: this.getCohortProxies(school, year),
+      cohortProxies: this.getCohortProxies(school),
       sessionTypes: this.getSessionTypes(school),
       vocabularies: this.getVocabularies(school),
     };
@@ -155,14 +155,6 @@ export default class DashboardCalendarComponent extends Component {
     return this.usersPrimarySchool;
   }
 
-  get bestSelectedAcademicYear() {
-    if (this.args.selectedAcademicYear) {
-      return this.args.selectedAcademicYear;
-    }
-
-    return this.args.allAcademicYears.sortBy('title').lastObject;
-  }
-
   get eventsWithSelectedSessionTypes() {
     if (!this.args.selectedSessionTypeIds?.length) {
       return this.ourEvents;
@@ -219,10 +211,5 @@ export default class DashboardCalendarComponent extends Component {
   @action
   changeSchool(event) {
     this.args.changeSchool(event.target.value);
-  }
-
-  @action
-  changeAcademicYear(event) {
-    this.args.changeAcademicYear(event.target.value);
   }
 }

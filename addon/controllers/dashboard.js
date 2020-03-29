@@ -8,7 +8,6 @@ export default class DashboardController extends Controller {
   @service store;
 
   queryParams = [
-    'academicYear',
     'cohorts',
     'courseFilters',
     'courseLevels',
@@ -23,7 +22,6 @@ export default class DashboardController extends Controller {
     'view'
   ];
 
-  academicYear = null;
   courseFilters = true;
   cohorts = '';
   courseLevels = '';
@@ -36,13 +34,6 @@ export default class DashboardController extends Controller {
   show = 'week';
   showFilters = false;
   view = 'week';
-
-  @computed("academicYear")
-  get selectedAcademicYear(){
-    const { academicYears } = this.model;
-
-    return academicYears.findBy('id', this.academicYear);
-  }
 
   @computed("school")
   get selectedSchool(){

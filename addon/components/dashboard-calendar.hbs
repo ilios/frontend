@@ -1,7 +1,7 @@
 <div
   class="dashboard-calendar"
-  {{did-insert (perform this.load) this.bestSelectedSchool this.bestSelectedAcademicYear}}
-  {{did-update (perform this.load) this.bestSelectedSchool this.bestSelectedAcademicYear}}
+  {{did-insert (perform this.load) this.bestSelectedSchool}}
+  {{did-update (perform this.load) this.bestSelectedSchool}}
 >
   <section class="calendar-controls">
     <div class="calendar-options-control togglemyschedule">
@@ -59,23 +59,6 @@
         {{/if}}
       </div>
     {{/unless}}
-    {{#if (and @showFilters (is-array @allAcademicYears))}}
-      <div
-        id="calendar-year-picker"
-        class="calendar-options-control calendar-year-picker"
-      >
-        <select {{on "change" (fn this.changeAcademicYear)}}>
-          {{#each (sort-by "title" @allAcademicYears) as |year|}}
-            <option
-              value={{year.title}}
-              selected={{eq year this.bestSelectedAcademicYear}}
-            >
-              {{year.academicYearTitle}}
-            </option>
-          {{/each}}
-        </select>
-      </div>
-    {{/if}}
     <div class="calendar-filters">
       {{#if @showFilters}}
         {{#if @courseFilters}}

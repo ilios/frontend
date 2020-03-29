@@ -1,6 +1,5 @@
 <CommonDashboard
   @allSchools={{this.model.schools}}
-  @allAcademicYears={{this.model.academicYears}}
   @show={{this.show}}
   @setShow={{set this.show}}
   @selectedDate={{this.selectedDate}}
@@ -12,9 +11,7 @@
   @selectEvent={{this.selectEvent}}
   @toggleMySchedule={{this.toggleMySchedule}}
   @toggleShowFilters={{this.toggleShowFilters}}
-  @selectedAcademicYear={{this.selectedAcademicYear}}
   @selectedSchool={{this.selectedSchool}}
-  @changeAcademicYear={{set this.academicYear}}
   @changeSchool={{set this.school}}
   @courseFilters={{this.courseFilters}}
   @toggleCourseFilters={{fn (set this.courseFilters) (not this.courseFilters)}}

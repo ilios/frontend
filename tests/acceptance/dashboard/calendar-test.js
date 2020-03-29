@@ -1,6 +1,5 @@
 import {
   click,
-  fillIn,
   findAll,
   find,
   currentURL,
@@ -648,7 +647,6 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     const schoolEvents = '.togglemyschedule label:nth-of-type(2)';
     const showFiltersButton = '.showfilters label:nth-of-type(2)';
     const hideFiltersButton = '.showfilters label:nth-of-type(1)';
-    const academicYearDropdown = '.calendar-year-picker select';
 
     await visit('/dashboard');
     await click(calendarPicker);
@@ -662,9 +660,6 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
 
     await chooseDetailFilter();
     assert.equal(currentURL(), '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
-
-    await fillIn(academicYearDropdown, '2015');
-    assert.equal(currentURL(), '/dashboard?academicYear=2015&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
     await click(hideFiltersButton);
     assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
