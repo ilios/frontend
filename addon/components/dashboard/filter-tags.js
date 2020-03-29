@@ -89,7 +89,7 @@ export default class DashboardFilterTagsComponent extends Component {
         id,
         class: 'tag-course',
         remove: this.args.removeCourseId,
-        name: course.title
+        name: `${course.year} ${course.title}`
       };
     });
   }

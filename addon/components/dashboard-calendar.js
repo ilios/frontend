@@ -15,7 +15,6 @@ export default class DashboardCalendarComponent extends Component {
   @service iliosConfig;
 
   @tracked cohortProxies = null;
-  @tracked courses = null;
   @tracked sessionTypes = null;
   @tracked vocabularies = null;
 
@@ -64,13 +63,11 @@ export default class DashboardCalendarComponent extends Component {
     }
     const promises = {
       cohortProxies: this.getCohortProxies(school, year),
-      courses: this.getCourses(school, year),
       sessionTypes: this.getSessionTypes(school),
       vocabularies: this.getVocabularies(school),
     };
     const results = yield hash(promises);
     this.cohortProxies = results.cohortProxies;
-    this.courses = results.courses;
     this.sessionTypes = results.sessionTypes;
     this.vocabularies = results.vocabularies;
   }
@@ -107,16 +104,6 @@ export default class DashboardCalendarComponent extends Component {
     });
 
     return cohortProxies.sortBy('displayTitle');
-  }
-
-  async getCourses(school, year) {
-    const courses = await this.store.query('course', {
-      filters: {
-        school: school.id,
-        year: year.title,
-      },
-    });
-    return courses.sortBy('title');
   }
 
   async getSessionTypes(school) {

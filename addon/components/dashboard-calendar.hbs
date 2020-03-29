@@ -79,35 +79,12 @@
     <div class="calendar-filters">
       {{#if @showFilters}}
         {{#if @courseFilters}}
-          <div
-            id="calendar-coursefilter"
-            class="calendar-filter-list large-filter-list coursefilter"
-          >
-            <h5>
-              {{get this.bestSelectedAcademicYear "academicYearTitle"}}
-              {{t "general.courses"}}
-            </h5>
-            {{#if (is-array this.courses)}}
-              <ul>
-                {{#each this.courses as |course|}}
-                  <li>
-                    <Dashboard::FilterCheckbox
-                      @checked={{contains course.id @selectedCourseIds}}
-                      @add={{fn @addCourseId course.id}}
-                      @remove={{fn @removeCourseId course.id}}
-                    >
-                      {{course.title}}
-                      {{#if course.externalId}}
-                        ({{course.externalId}})
-                      {{/if}}
-                    </Dashboard::FilterCheckbox>
-                  </li>
-                {{/each}}
-              </ul>
-            {{else}}
-              <FaIcon @icon="spinner" @spin={{true}} />
-            {{/if}}
-          </div>
+          <Dashboard::CoursesCalendarFilter
+            @school={{this.bestSelectedSchool}}
+            @add={{@addCourseId}}
+            @remove={{@removeCourseId}}
+            @selectedCourseIds={{@selectedCourseIds}}
+          />
           <div
             id="calendar-sessiontypefilter"
             class="calendar-filter-list sessiontypefilter"

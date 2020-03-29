@@ -437,10 +437,10 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
   };
 
   const pickCourse = async function(i) {
-    return await click(find(`.coursefilter li:nth-of-type(${i}) [data-test-target]`));
+    return await click(find(`[data-test-courses-calendar-filter] li:nth-of-type(${i}) [data-test-target]`));
   };
   const clearCourses = async function () {
-    const selected = findAll('.coursefilter [data-test-checked]');
+    const selected = findAll('[data-test-courses-calendar-filter] [data-test-checked]');
     await map(selected, e => click(e));
   };
 
@@ -567,25 +567,6 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(cohortFilter.length, 1);
   });
 
-  test('academic year filters courses', async function(assert) {
-    this.server.create('academicYear', {
-      id: 2014,
-      title: 2014
-    });
-    this.server.create('course', {
-      year: 2014,
-      school: this.school
-    });
-    await page.visit({ show: 'calendar', view: 'week' });
-    await showFilters();
-    await fillIn('.calendar-year-picker select', '2015');
-    let courseFilters = findAll('.coursefilter li');
-    assert.equal(courseFilters.length, 2);
-    await fillIn('.calendar-year-picker select', '2014');
-    courseFilters = findAll('.coursefilter li');
-    assert.equal(courseFilters.length, 1);
-  });
-
   test('clear all filters', async function (assert) {
     const vocabulary = this.server.create('vocabulary', {
       school: this.school
@@ -596,7 +577,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
 
     const clearFilter = '.filters-clear-filters';
     const sessiontype = '.sessiontypefilter li:nth-of-type(1) input';
-    const course = '.coursefilter li:nth-of-type(1) input';
+    const course = '[data-test-courses-calendar-filter] li:nth-of-type(1) input';
     const term = '.vocabularyfilter li:nth-of-type(1) input';
 
     await page.visit({ show: 'calendar', view: 'week' });
@@ -715,16 +696,16 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
 
     await click(showFiltersButton);
-    await click('.coursefilter ul li:nth-child(1) input');
+    await click('[data-test-courses-calendar-filter] ul li:nth-child(1) input');
     assert.equal(currentURL(), '/dashboard?courses=1&mySchedule=false&show=calendar&showFilters=true');
 
-    await click('.coursefilter ul li:nth-child(2) input');
+    await click('[data-test-courses-calendar-filter] ul li:nth-child(2) input');
     assert.equal(currentURL(), '/dashboard?courses=1-2&mySchedule=false&show=calendar&showFilters=true');
 
-    await click('.coursefilter ul li:nth-child(2) input');
+    await click('[data-test-courses-calendar-filter] ul li:nth-child(2) input');
     assert.equal(currentURL(), '/dashboard?courses=1&mySchedule=false&show=calendar&showFilters=true');
 
-    await click('.coursefilter ul li:nth-child(1) input');
+    await click('[data-test-courses-calendar-filter] ul li:nth-child(1) input');
     assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
 
     await click('.sessiontypefilter ul li:nth-child(1) input');

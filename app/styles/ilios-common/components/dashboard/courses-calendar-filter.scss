@@ -1,0 +1,35 @@
+.dashboard-courses-calendar-filter {
+
+  .year {
+    margin: .5rem 0;
+
+    button {
+      @include ilios-button-reset;
+    }
+
+    ul {
+      @include ilios-list-reset;
+
+      li {
+        margin-left: .25em;
+      }
+    }
+
+    &.collapsed {
+      .year-title button {
+        &::after {
+          content: '\25BA';
+        }
+      }
+    }
+
+    &.expanded {
+      .year-title button {
+        &::after {
+          content: '\25BC';
+        }
+      }
+    }
+
+  }
+}
