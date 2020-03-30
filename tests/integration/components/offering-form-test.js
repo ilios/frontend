@@ -1,7 +1,6 @@
-import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 import {
   render,
   settled,
@@ -15,10 +14,10 @@ import { padStart } from 'ember-pad/utils/pad';
 import moment from 'moment';
 import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
-const { resolve } = RSVP;
 
 module('Integration | Component | offering form', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('room input does not show by default', async function(assert) {
     await render(hbs`<OfferingForm @close={{noop}} />`);
@@ -246,7 +245,7 @@ module('Integration | Component | offering form', function(hooks) {
 
   test('save not recurring', async function(assert) {
     assert.expect(7);
-    this.set('save', (startDate, endDate, room, learners, learnerGroups, instructorGroups, instructors)=>{
+    this.set('save', async (startDate, endDate, room, learners, learnerGroups, instructorGroups, instructors) => {
       assert.equal(moment(startDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
       assert.equal(moment(endDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
       assert.equal(room, 'TBD');
@@ -273,7 +272,7 @@ module('Integration | Component | offering form', function(hooks) {
     const newStartDate = wednesday.toDate();
 
     let savedCount = 0;
-    this.set('save', (startDate)=>{
+    this.set('save', async (startDate) => {
       let expectedStartDate;
       if (savedCount === 0) {
         expectedStartDate = wednesday.clone();
@@ -287,8 +286,6 @@ module('Integration | Component | offering form', function(hooks) {
       }
 
       savedCount++;
-
-      return resolve();
     });
 
     const save = '.buttons .done';
@@ -318,7 +315,7 @@ module('Integration | Component | offering form', function(hooks) {
     const newStartDate = wednesday.toDate();
 
     let savedCount = 0;
-    this.set('save', (startDate)=>{
+    this.set('save', async (startDate) => {
       let expectedStartDate;
       if (savedCount === 0) {
         expectedStartDate = wednesday.clone();
@@ -344,8 +341,6 @@ module('Integration | Component | offering form', function(hooks) {
       }
 
       savedCount++;
-
-      return resolve();
     });
 
     const save = '.buttons .done';
@@ -468,17 +463,14 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('renders when an offering is provided', async function(assert) {
-    const offering = EmberObject.create({
+    const offering = this.server.create('offering', {
       room: 'emerald bay',
       startDate: moment('2005-06-24').hour(18).minute(24).toDate(),
       endDate: moment('2005-06-24').hour(19).minute(24).toDate(),
-      learnerGroups: resolve([]),
-      learners: resolve([]),
-      instructors: resolve([]),
-      instructorGroups: resolve([]),
     });
+    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
 
-    this.set('offering', offering);
+    this.set('offering', offeringModel);
     await render(hbs`<OfferingForm
       @offering={{this.offering}}
       @close={{noop}}
@@ -530,17 +522,15 @@ module('Integration | Component | offering form', function(hooks) {
     const utc = 'Etc/UTC';
     const currentTimezone = moment.tz.guess();
 
-    const offering = EmberObject.create({
+    const offering = this.server.create('offering', {
       room: 'emerald bay',
       startDate: moment('2005-06-24').hour(18).minute(24).toDate(),
       endDate: moment('2005-06-24').hour(19).minute(24).toDate(),
-      learnerGroups: resolve([]),
-      learners: resolve([]),
-      instructors: resolve([]),
-      instructorGroups: resolve([]),
     });
-    this.set('offering', offering);
-    this.set('save', (startDate, endDate)=>{
+    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
+
+    this.set('offering', offeringModel);
+    this.set('save', async (startDate, endDate) => {
       assert.equal('2005-06-25 05:24', moment(startDate).tz(utc).format('Y-MM-DD HH:mm'));
       assert.equal('2005-06-25 06:24', moment(endDate).tz(utc).format('Y-MM-DD HH:mm'));
     });
