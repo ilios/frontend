@@ -1,0 +1,109 @@
+<div
+  data-test-program-year-objective-list
+  {{did-insert (perform this.load) @programYear @programYear.objectives}}
+  {{did-update (perform this.load) @programYear @programYear.objectives}}
+>
+  {{#if (is-array this.objectives)}}
+    {{#if this.isSorting}}
+      <ObjectiveSortManager
+        @subject={{@programYear}}
+        @save={{perform this.saveSortOrder}}
+        @cancel={{set this.sorting false}}
+      />
+    {{else if this.objectives.length}}
+      {{#if (and @editable this.hasMoreThanOneObjective)}}
+        <button
+          type="button"
+          {{on "click" (set this.isSorting true)}}
+          data-test-sort
+        >
+          {{t "general.sortObjectives"}}
+        </button>
+      {{/if}}
+      <button type="button" class="download" {{on "click" (perform this.downloadReport)}}>
+        <FaIcon
+          @icon={{if this.downloadReport.isRunning "spinner" "download"}}
+          @spin={{this.downloadReport.isRunning}}
+        />
+        {{t "general.downloadCompetencyMap"}}
+      </button>
+      <table>
+        <thead>
+          <tr>
+            <th colspan="1"></th>
+            <th class="text-left" colspan="12">
+              {{t "general.description"}}
+            </th>
+            <th class="text-left" colspan="8">
+              {{t "general.competency"}}
+            </th>
+            <th class="text-left" colspan="8">
+              {{t "general.meshTerms"}}
+            </th>
+            <th class="text-left" colspan="2"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each this.objectives as |objective|}}
+            <ProgramYear::ObjectiveListItem
+              @objective={{objective}}
+              @editable={{@editable}}
+              @showRemoveConfirmation={{contains
+                objective.id
+                this.objectivesForRemovalConfirmation
+              }}
+              @remove={{this.confirmRemoval}}
+              @manageCompetency={{@manageCompetency}}
+              @manageDescriptors={{@manageDescriptors}}
+              @expanded={{contains objective.id this.expandedObjectiveIds}}
+              @toggleExpand={{fn this.toggleExpand objective.id}}
+            />
+            {{#if (contains objective.id this.objectivesForRemovalConfirmation)}}
+              <tr class="confirm-removal">
+                <td colspan="30">
+                  <div class="confirm-message">
+                    {{t "general.confirmObjectiveRemoval"}}
+                    <br>
+                    <div class="confirm-buttons">
+                      <button
+                        class="remove text"
+                        type="button"
+                        {{on "click" (perform this.deleteObjective objective)}}
+                      >
+                        {{t "general.yes"}}
+                      </button>
+                      <button
+                        class="done text"
+                        type="button"
+                        {{on "click" (fn this.cancelRemove objective)}}
+                      >
+                        {{t "general.cancel"}}
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {{/if}}
+            {{#if (contains objective.id this.expandedObjectiveIds)}}
+              <ProgramYear::ObjectiveListItemExpanded @objective={{objective}} />
+            {{/if}}
+          {{/each}}
+        </tbody>
+      </table>
+    {{/if}}
+  {{else}}
+    {{! template-lint-disable no-unused-block-params }}
+    {{#each (repeat (has-many-length @programYear "objectives")) as |empty|}}
+      <div>
+        <LoadingSpinner />
+      </div>
+    {{/each}}
+  {{/if}}
+</div>
+{{#if this.saveSortOrder.isRunning}}
+  <WaitSaving
+    @showProgress={{true}}
+    @totalProgress={{this.totalObjectivesToSave}}
+    @currentProgress={{this.currentObjectivesSaved}}
+  />
+{{/if}}

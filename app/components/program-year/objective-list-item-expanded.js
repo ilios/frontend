@@ -1,15 +1,19 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { restartableTask } from 'ember-concurrency-decorators';
 import { map } from 'rsvp';
 import { htmlSafe } from '@ember/string';
+import { tracked } from '@glimmer/tracking';
 
-export default Component.extend({
-  objective: null,
-  tagName: '',
-  courseObjects: computed('objective.children', async function () {
-    const objective = this.objective;
-    const children = await objective.children;
-    const objectiveObjects = await map(children.toArray(), async courseObjective => {
+export default class ProgramYearObjectiveListItemExpandedComponent extends Component {
+  @tracked courseObjects;
+
+  @restartableTask
+  *load(elemement, [objective]) {
+    if (!objective) {
+      return;
+    }
+    const children = (yield objective.children).toArray();
+    const objectiveObjects = yield map(children, async courseObjective => {
       const courses = await courseObjective.courses;
       const obj = {
         title: courseObjective.title,
@@ -25,7 +29,7 @@ export default Component.extend({
       }
       return obj;
     });
-    return objectiveObjects.reduce((set, obj) => {
+    this.courseObjects = objectiveObjects.reduce((set, obj) => {
       let existing = set.findBy('id', obj.courseId);
       if (!existing) {
         let title = obj.courseTitle;
@@ -44,5 +48,5 @@ export default Component.extend({
       });
       return set;
     }, []);
-  }),
-});
+  }
+}

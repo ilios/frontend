@@ -1,0 +1,112 @@
+<tr
+  class="program-year-objective-list-item {{if @showRemoveConfirmation "confirm-removal"}}"
+  data-test-program-year-objective-list-item
+>
+  <td class="text-top" colspan="1">
+    <button
+      type="button"
+      class="link-button"
+      data-test-toggle-expand
+      {{on "click" @toggleExpand}}
+    >
+      {{#if @expanded}}
+        <FaIcon @icon="caret-down" @title={{t "general.collapse"}} />
+      {{else}}
+        <FaIcon @icon="caret-right" @title={{t "general.expand"}} />
+      {{/if}}
+    </button>
+  </td>
+  <td id="objective-{{@objective.id}}" class="title text-left text-top" colspan="12">
+    {{#if @editable}}
+      <EditableField
+        @value={{this.title}}
+        @renderHtml={{true}}
+        @isSaveDisabled={{await (compute (fn this.hasErrorFor) "title")}}
+        @save={{perform this.saveTitleChanges}}
+        @close={{this.revertTitleChanges}}
+      >
+        <HtmlEditor @content={{this.title}} @update={{this.changeTitle}} />
+        {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+          <span class="validation-error-message">
+            {{message}}
+          </span>
+        {{/each}}
+      </EditableField>
+    {{else}}
+      {{! template-lint-disable no-triple-curlies }}
+      {{{@objective.title}}}
+    {{/if}}
+  </td>
+  <td class="text-left text-top" colspan="8">
+    {{#if (await @objective.competency)}}
+      {{#if @editable}}
+        <button
+          type="button"
+          class="link-button"
+          data-test-competency
+          data-test-manage-competency
+          {{on "click" (fn @manageCompetency @objective)}}
+        >
+          {{get (await @objective.competency) "title"}}
+        </button>
+      {{else}}
+        <span data-test-competency>{{get (await @objective.competency) "title"}}</span>
+      {{/if}}
+      {{#if
+        (not-eq
+          (get (await @objective.competency) "id")
+          (get (await @objective.competency.domain) "id")
+        )
+      }}
+        <span data-test-domain>({{get (await @objective.competency.domain) "title"}})</span>
+      {{/if}}
+    {{else if @editable}}
+      <button type="button" {{on "click" (fn @manageCompetency @objective)}} data-test-manage-competency>
+        {{t "general.addNew"}}
+      </button>
+    {{else}}
+      {{t "general.none"}}
+    {{/if}}
+  </td>
+  <td class="text-left text-top" colspan="8" data-test-mesh-descriptors>
+    <ul class="mesh-descriptor-list">
+      {{#each (sort-by "name" (await @objective.meshDescriptors)) as |descriptor|}}
+        {{#if @editable}}
+          <li
+            class="clickable link"
+            role="button"
+            data-test-term
+            data-test-manage
+            {{on "click" (fn @manageDescriptors @objective)}}
+          >
+            {{descriptor.name}}
+          </li>
+        {{else}}
+          <li data-test-term>
+            {{descriptor.name}}
+          </li>
+        {{/if}}
+      {{else}}
+        <li>
+          {{#if @editable}}
+            <button type="button" {{on "click" (fn @manageDescriptors @objective)}} data-test-manage>
+              {{t "general.addNew"}}
+            </button>
+          {{else}}
+            {{t "general.none"}}
+          {{/if}}
+        </li>
+      {{/each}}
+    </ul>
+  </td>
+  <td class="text-left text-top" colspan="1" data-test-actions>
+    {{#if (and this.canDelete (not @showRemoveConfirmation))}}
+      <span class="clickable remove icon" role="button" {{on "click" (fn @remove @objective)}} aria-label={{t "general.remove"}}>
+        <FaIcon @icon="trash" class="enabled" />
+      </span>
+    {{else}}
+      <FaIcon @icon="trash" class="disabled" />
+    {{/if}}
+  </td>
+
+</tr>

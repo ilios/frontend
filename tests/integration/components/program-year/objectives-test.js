@@ -36,16 +36,16 @@ module('Integration | Component | program-year/objectives', function(hooks) {
       @expand={{noop}}
     />`);
 
-    assert.equal(component.current.length, 2);
-    assert.equal(component.current[0].description.text, 'objective 0');
-    assert.ok(component.current[0].hasCompetency);
-    assert.equal(component.current[0].competencyTitle, 'competency 2');
-    assert.equal(component.current[0].domainTitle, '(competency 0)');
-    assert.equal(component.current[0].meshTerms.length, 0);
+    assert.equal(component.objectiveList.objectives.length, 2);
+    assert.equal(component.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.ok(component.objectiveList.objectives[0].hasCompetency);
+    assert.equal(component.objectiveList.objectives[0].competencyTitle, 'competency 2');
+    assert.equal(component.objectiveList.objectives[0].domainTitle, '(competency 0)');
+    assert.equal(component.objectiveList.objectives[0].meshTerms.length, 0);
 
-    assert.equal(component.current[1].description.text, 'objective 1');
-    assert.notOk(component.current[1].hasCompetency);
-    assert.equal(component.current[1].meshTerms.length, 0);
+    assert.equal(component.objectiveList.objectives[1].description.text, 'objective 1');
+    assert.notOk(component.objectiveList.objectives[1].hasCompetency);
+    assert.equal(component.objectiveList.objectives[1].meshTerms.length, 0);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -74,10 +74,10 @@ module('Integration | Component | program-year/objectives', function(hooks) {
       @expand={{noop}}
     />`);
 
-    assert.equal(component.current.length, 1);
-    assert.equal(component.current[0].description.text, 'objective 0');
-    assert.ok(component.current[0].hasCompetency);
-    await component.current[0].manageCompetency();
+    assert.equal(component.objectiveList.objectives.length, 1);
+    assert.equal(component.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.ok(component.objectiveList.objectives[0].hasCompetency);
+    await component.objectiveList.objectives[0].manageCompetency();
     const m = component.manageObjectiveCompetency;
     assert.equal(m.objectiveTitle, 'objective 0');
 
