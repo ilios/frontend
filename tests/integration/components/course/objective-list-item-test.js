@@ -120,7 +120,7 @@ module('Integration | Component | course/objective-list-item', function(hooks) {
         @course={{this.course}}
         @showRemoveConfirmation={{false}}
         @remove={{noop}}
-        @manageParents={{fn this.manageParents}}
+        @manageParents={{this.manageParents}}
         @manageDescriptors={{noop}}
       />`
     );
@@ -148,7 +148,7 @@ module('Integration | Component | course/objective-list-item', function(hooks) {
         @showRemoveConfirmation={{false}}
         @remove={{noop}}
         @manageParents={{noop}}
-        @manageDescriptors={{fn this.manageDescriptors}}
+        @manageDescriptors={{this.manageDescriptors}}
       />`
     );
     await component.manageMesh();
@@ -173,7 +173,7 @@ module('Integration | Component | course/objective-list-item', function(hooks) {
         @editable={{true}}
         @course={{this.course}}
         @showRemoveConfirmation={{false}}
-        @remove={{fn this.remove}}
+        @remove={{this.remove}}
         @manageParents={{noop}}
         @manageDescriptors={{noop}}
       />`

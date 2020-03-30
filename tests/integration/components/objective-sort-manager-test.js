@@ -64,7 +64,7 @@ module('Integration | Component | objective sort manager', function(hooks) {
     this.set('cancel', () => {
       assert.ok(true, 'Cancel action was invoked correctly.');
     });
-    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @cancel={{fn this.cancel}} @save={{noop}} />`);
+    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @cancel={{this.cancel}} @save={{noop}} />`);
 
     return settled().then(async () => {
       await click('.actions .bigcancel');
@@ -96,7 +96,7 @@ module('Integration | Component | objective sort manager', function(hooks) {
       assert.ok(data.includes(objective2));
     });
 
-    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @save={{fn this.save}} @cancel={{noop}} />`);
+    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @save={{this.save}} @cancel={{noop}} />`);
 
     return settled().then(async () => {
       await click('.actions .bigadd');

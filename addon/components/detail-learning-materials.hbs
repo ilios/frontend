@@ -31,7 +31,7 @@
         </button>
       {{else if (and @editable (not this.isSorting) (not this.isManaging))}}
         <ChooseMaterialType
-          @choose={{fn this.addNewLearningMaterial}}
+          @choose={{this.addNewLearningMaterial}}
           @types={{array "file" "link" "citation"}}
         />
       {{/if}}

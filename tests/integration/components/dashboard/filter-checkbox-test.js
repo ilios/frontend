@@ -48,7 +48,7 @@ module('Integration | Component | dashboard/filter-checkbox', function(hooks) {
       <Dashboard::FilterCheckbox
         @checked={{true}}
         @add={{noop}}
-        @remove={{fn this.remove}}
+        @remove={{this.remove}}
       >
         label text
       </Dashboard::FilterCheckbox>
@@ -64,7 +64,7 @@ module('Integration | Component | dashboard/filter-checkbox', function(hooks) {
     await render(hbs`
       <Dashboard::FilterCheckbox
         @checked={{false}}
-        @add={{fn this.add}}
+        @add={{this.add}}
         @remove={{noop}}
       >
         label text

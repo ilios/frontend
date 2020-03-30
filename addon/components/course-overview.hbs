@@ -58,7 +58,7 @@
           <EditableField
             @value={{if this.externalId this.externalId (t "general.clickToEdit")}}
             @save={{perform this.changeExternalId}}
-            @close={{fn this.revertExternalIdChanges}}
+            @close={{this.revertExternalIdChanges}}
             @saveOnEnter={{true}}
             @closeOnEscape={{true}} as |isSaving|
           >
@@ -85,7 +85,7 @@
         {{#if @editable}}
           <EditableField
             @value={{this.clerkshipTypeTitle}}
-            @save={{fn this.changeClerkshipType}}
+            @save={{this.changeClerkshipType}}
             @close={{perform this.revertClerkshipTypeChanges}}
           >
             <select {{on "change" (fn this.setCourseClerkshipType)}}>
@@ -122,7 +122,7 @@
           <EditableField
             @value={{moment-format @course.startDate "L"}}
             @save={{perform this.changeStartDate}}
-            @close={{fn this.revertStartDateChanges}}
+            @close={{this.revertStartDateChanges}}
           >
             <PikadayInput
               @value={{this.startDate}}
@@ -148,7 +148,7 @@
           <EditableField
             @value={{moment-format @course.endDate "L"}}
             @save={{perform this.changeEndDate}}
-            @close={{fn this.revertEndDateChanges}}
+            @close={{this.revertEndDateChanges}}
           >
             <PikadayInput
               @value={{this.endDate}}

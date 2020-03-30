@@ -93,7 +93,7 @@ module('Integration | Component | leadership search', function(hooks) {
     });
     await render(hbs`<LeadershipSearch
       @existingUsers={{array}}
-      @selectUser={{fn select}}
+      @selectUser={{this.select}}
     />`);
     const search = 'input[type="search"]';
     const results = 'ul li';
@@ -124,7 +124,7 @@ module('Integration | Component | leadership search', function(hooks) {
     this.set('existingUsers', [user1]);
     await render(hbs`<LeadershipSearch
       @existingUsers={{this.existingUsers}}
-      @selectUser={{fn select}}
+      @selectUser={{this.select}}
     />`);
     const search = 'input[type="search"]';
     const results = 'ul li';

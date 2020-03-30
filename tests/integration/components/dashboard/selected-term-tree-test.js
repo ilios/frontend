@@ -60,7 +60,7 @@ module('Integration | Component | dashboard/SelectedTermTree', function(hooks) {
     await render(hbs`<Dashboard::SelectedTermTree
       @terms={{this.tree}}
       @selectedTermIds={{array}}
-      @add={{fn this.add}}
+      @add={{this.add}}
       @remove={{noop}}
     />`);
     await click('[data-test-target]:nth-of-type(1)');
@@ -77,7 +77,7 @@ module('Integration | Component | dashboard/SelectedTermTree', function(hooks) {
       @terms={{this.tree}}
       @selectedTermIds={{this.selectedTermIds}}
       @add={{noop}}
-      @remove={{fn this.remove}}
+      @remove={{this.remove}}
     />`);
     await click('[data-test-target]:nth-of-type(1)');
   });
