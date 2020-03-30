@@ -141,7 +141,7 @@
             <div class="make-recurring-options">
               <div class="make-recurring-days">
                 {{#each this.recurringDayOptions as |obj i|}}
-                  <div>
+                  <div data-test-make-recurring-day>
                     <input id="make-recurring-day-input-{{i}}"
                       type="checkbox"
                       checked={{or
