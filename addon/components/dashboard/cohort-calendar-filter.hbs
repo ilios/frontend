@@ -4,7 +4,7 @@
   data-test-cohort-calendar-filter
 >
   <h5>{{t "general.programAndCohort"}}</h5>
-  <ul class="cohorts">
+  <ul class="cohorts filters">
     {{#each (sort-by "classOfYear:desc" @cohortProxies) as |obj|}}
       <li data-test-cohort>
         <Dashboard::FilterCheckbox

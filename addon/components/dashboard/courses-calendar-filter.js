@@ -52,7 +52,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   @action
   scrollToLastYear(element, [year]) {
     if (year === this.thisYear - 1) {
-      this.el.scrollTop = element.offsetTop - element.parentNode.offsetTop;
+      this.el.querySelector('.filters').scrollTop = element.offsetTop - element.parentNode.offsetTop;
     }
   }
 

@@ -75,45 +75,49 @@
             <h5>
               {{t "general.sessionTypes"}}
             </h5>
-            {{#if (is-array this.sessionTypes)}}
-              <ul>
-                {{#each this.sessionTypes as |type|}}
-                  <li class="clickable">
-                    <Dashboard::FilterCheckbox
-                      @checked={{contains type.id @selectedSessionTypeIds}}
-                      @add={{fn @addSessionTypeId type.id}}
-                      @remove={{fn @removeSessionTypeId type.id}}
-                    >
-                      {{type.title}}
-                    </Dashboard::FilterCheckbox>
-                  </li>
-                {{/each}}
-              </ul>
-            {{else}}
-              <FaIcon @icon="spinner" @spin={{true}} />
-            {{/if}}
+            <div class="filters">
+              {{#if (is-array this.sessionTypes)}}
+                <ul>
+                  {{#each this.sessionTypes as |type|}}
+                    <li class="clickable">
+                      <Dashboard::FilterCheckbox
+                        @checked={{contains type.id @selectedSessionTypeIds}}
+                        @add={{fn @addSessionTypeId type.id}}
+                        @remove={{fn @removeSessionTypeId type.id}}
+                      >
+                        {{type.title}}
+                      </Dashboard::FilterCheckbox>
+                    </li>
+                  {{/each}}
+                </ul>
+              {{else}}
+                <FaIcon @icon="spinner" @spin={{true}} />
+              {{/if}}
+            </div>
           </div>
           <div class="calendar-filter-list vocabularyfilter">
             <h5>
               {{t "general.terms"}}
             </h5>
-            {{#if (is-array this.vocabularies)}}
-              <ul>
-                {{#each this.vocabularies as |vocabulary|}}
-                  <h6>
-                    {{vocabulary.title}}
-                  </h6>
-                  <Dashboard::SelectedTermTree
-                    @selectedTermIds={{@selectedTermIds}}
-                    @terms={{await vocabulary.topLevelTerms}}
-                    @add={{@addTermId}}
-                    @remove={{@removeTermId}}
-                  />
-                {{/each}}
-              </ul>
-            {{else}}
-              <FaIcon @icon="spinner" @spin={{true}} />
-            {{/if}}
+            <div class="filters">
+              {{#if (is-array this.vocabularies)}}
+                <ul>
+                  {{#each this.vocabularies as |vocabulary|}}
+                    <h6>
+                      {{vocabulary.title}}
+                    </h6>
+                    <Dashboard::SelectedTermTree
+                      @selectedTermIds={{@selectedTermIds}}
+                      @terms={{await vocabulary.topLevelTerms}}
+                      @add={{@addTermId}}
+                      @remove={{@removeTermId}}
+                    />
+                  {{/each}}
+                </ul>
+              {{else}}
+                <FaIcon @icon="spinner" @spin={{true}} />
+              {{/if}}
+            </div>
           </div>
         {{else}}
           <div
@@ -123,23 +127,25 @@
             <h5>
               {{t "general.sessionTypes"}}
             </h5>
-            {{#if (is-array this.sessionTypes)}}
-              <ul>
-                {{#each this.sessionTypes as |type|}}
-                  <li class="clickable">
-                    <Dashboard::FilterCheckbox
-                      @checked={{contains type.id @selectedSessionTypeIds}}
-                      @add={{fn @addSessionTypeId type.id}}
-                      @remove={{fn @removeSessionTypeId type.id}}
-                    >
-                      {{type.title}}
-                    </Dashboard::FilterCheckbox>
-                  </li>
-                {{/each}}
-              </ul>
-            {{else}}
-              <FaIcon @icon="spinner" @spin={{true}} />
-            {{/if}}
+            <div class="filters">
+              {{#if (is-array this.sessionTypes)}}
+                <ul>
+                  {{#each this.sessionTypes as |type|}}
+                    <li class="clickable">
+                      <Dashboard::FilterCheckbox
+                        @checked={{contains type.id @selectedSessionTypeIds}}
+                        @add={{fn @addSessionTypeId type.id}}
+                        @remove={{fn @removeSessionTypeId type.id}}
+                      >
+                        {{type.title}}
+                      </Dashboard::FilterCheckbox>
+                    </li>
+                  {{/each}}
+                </ul>
+              {{else}}
+                <FaIcon @icon="spinner" @spin={{true}} />
+              {{/if}}
+            </div>
           </div>
           <div
             id="calendar-courselevelfilter"
@@ -148,19 +154,21 @@
             <h5>
               {{t "general.courseLevels"}}
             </h5>
-            <ul>
-              {{#each this.courseLevels as |level|}}
-                <li class="clickable">
-                  <Dashboard::FilterCheckbox
-                    @checked={{contains level @selectedCourseLevels}}
-                    @add={{fn @addCourseLevel level}}
-                    @remove={{fn @removeCourseLevel level}}
-                  >
-                    {{level}}
-                  </Dashboard::FilterCheckbox>
-                </li>
-              {{/each}}
-            </ul>
+            <div class="filters">
+              <ul>
+                {{#each this.courseLevels as |level|}}
+                  <li class="clickable">
+                    <Dashboard::FilterCheckbox
+                      @checked={{contains level @selectedCourseLevels}}
+                      @add={{fn @addCourseLevel level}}
+                      @remove={{fn @removeCourseLevel level}}
+                    >
+                      {{level}}
+                    </Dashboard::FilterCheckbox>
+                  </li>
+                {{/each}}
+              </ul>
+            </div>
           </div>
           <Dashboard::CohortCalendarFilter
             @cohortProxies={{this.cohortProxies}}
