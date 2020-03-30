@@ -13,7 +13,7 @@
         @cohorts={{await @offering.session.course.cohorts}}
         @courseStartDate={{await @offering.session.course.startDate}}
         @courseEndDate={{await @offering.session.course.startDate}}
-        @close={{fn this.close}}
+        @close={{this.close}}
         @save={{perform this.save}}
         @smallGroupMode={{false}}
         @offering={{@offering}}

@@ -35,8 +35,8 @@
         <MeshManager
           @editable={{@editable}}
           @terms={{this.bufferedDescriptors}}
-          @add={{fn this.addDescriptorToBuffer}}
-          @remove={{fn this.removeDescriptorFromBuffer}}
+          @add={{this.addDescriptorToBuffer}}
+          @remove={{this.removeDescriptorFromBuffer}}
         />
       {{else}}
         <ul class="selected-mesh-terms">

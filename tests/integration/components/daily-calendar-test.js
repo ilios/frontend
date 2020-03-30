@@ -110,7 +110,7 @@ module('Integration | Component | daily-calendar', function(hooks) {
     await render(hbs`<DailyCalendar
       @date={{this.date}}
       @events={{this.events}}
-      @selectEvent={{fn this.selectEvent}}
+      @selectEvent={{this.selectEvent}}
     />`);
 
     await component.events[0].click();

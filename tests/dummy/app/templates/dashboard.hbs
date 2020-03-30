@@ -7,11 +7,11 @@
   @selectedView={{this.selectedView}}
   @mySchedule={{this.mySchedule}}
   @showFilters={{this.showFilters}}
-  @changeDate={{fn this.changeDate}}
+  @changeDate={{this.changeDate}}
   @changeView={{set this.view}}
-  @selectEvent={{fn this.selectEvent}}
-  @toggleMySchedule={{fn this.toggleMySchedule}}
-  @toggleShowFilters={{fn this.toggleShowFilters}}
+  @selectEvent={{this.selectEvent}}
+  @toggleMySchedule={{this.toggleMySchedule}}
+  @toggleShowFilters={{this.toggleShowFilters}}
   @selectedAcademicYear={{this.selectedAcademicYear}}
   @selectedSchool={{this.selectedSchool}}
   @changeAcademicYear={{set this.academicYear}}
@@ -39,5 +39,5 @@
   @addTermId={{fn this.add "terms"}}
   @removeTermId={{fn this.remove "terms"}}
 
-  @clearFilters={{fn this.clearFilters}}
+  @clearFilters={{this.clearFilters}}
 />

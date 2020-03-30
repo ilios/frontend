@@ -9,8 +9,8 @@
         {{#if @editable}}
           <EditableField
             @value={{this.title}}
-            @save={{fn this.changeTitle}}
-            @close={{fn this.revertTitleChanges}}
+            @save={{this.changeTitle}}
+            @close={{this.revertTitleChanges}}
             @saveOnEnter={{true}}
             @closeOnEscape={{true}} as |isSaving|
           >
@@ -68,8 +68,8 @@
             {{#if @editable}}
               <EditableField
                 @value={{this.sessionType.title}}
-                @save={{fn this.changeSessionType}}
-                @close={{fn this.revertSessionTypeChanges}}
+                @save={{this.changeSessionType}}
+                @close={{this.revertSessionTypeChanges}}
               >
                 <select {{on "change" (fn this.setSessionType)}}>
                   {{#each this.sortedSessionTypes as |sessionType|}}
@@ -179,8 +179,8 @@
               {{#if @editable}}
                 <EditableField
                     @value={{this.hours}}
-                    @save={{fn this.changeIlmHours}}
-                    @close={{fn this.revertIlmHoursChanges}}
+                    @save={{this.changeIlmHours}}
+                    @close={{this.revertIlmHoursChanges}}
                     @saveOnEnter={{true}}
                     @closeOnEscape={{true}} as |isSaving|
                 >
@@ -208,8 +208,8 @@
                 {{#if @editable}}
                   <EditableField
                     @value={{moment-format @session.ilmSession.dueDate "L"}}
-                    @save={{fn this.changeIlmDueDate}}
-                    @close={{fn this.revertIlmDueDateChanges}}
+                    @save={{this.changeIlmDueDate}}
+                    @close={{this.revertIlmDueDateChanges}}
                   >
                     <PikadayInput
                       @value={{this.dueDate}}
@@ -302,12 +302,12 @@
                   (v-get this "description" "isInvalid")
                   (contains "description" this.showErrorsFor)
                 }}
-                @save={{fn this.saveDescription}}
+                @save={{this.saveDescription}}
                 @close={{perform this.revertDescriptionChanges}}
                 @clickPrompt={{t "general.clickToEdit"}}
 
               >
-                <HtmlEditor @content={{this.description}} @update={{fn this.changeDescription}} />
+                <HtmlEditor @content={{this.description}} @update={{this.changeDescription}} />
                 {{#if (and (v-get this "description" "isInvalid") (contains "description" this.showErrorsFor))
                 }}
                   <span class="validation-error-message">
@@ -333,11 +333,11 @@
                   (contains "instructionalNotes" this.showErrorsFor)
                 }}
                 @save={{perform this.saveInstructionalNotes}}
-                @close={{fn this.revertInstructionalNotesChanges}}
+                @close={{this.revertInstructionalNotesChanges}}
                 @clickPrompt={{t "general.clickToEdit"}}
 
               >
-                <HtmlEditor @content={{this.instructionalNotes}} @update={{fn this.changeInstructionalNotes}} />
+                <HtmlEditor @content={{this.instructionalNotes}} @update={{this.changeInstructionalNotes}} />
                 {{#if (and (v-get this "instructionalNotes" "isInvalid") (contains "instructionalNotes" this.showErrorsFor))
                 }}
                   <span class="validation-error-message">
