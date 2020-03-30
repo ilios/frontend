@@ -146,8 +146,8 @@ module('Integration | Component | offering form', function(hooks) {
 
     await render(hbs`<OfferingForm
       @close={{noop}}
-      @courseStartDate={{courseStartDate}}
-      @courseEndDate={{courseEndDate}}
+      @courseStartDate={{this.courseStartDate}}
+      @courseEndDate={{this.courseEndDate}}
     />`);
 
     const startDate = '.start-date input';
@@ -178,8 +178,8 @@ module('Integration | Component | offering form', function(hooks) {
 
     await render(hbs`<OfferingForm
       @close={{noop}}
-      @courseStartDate={{courseStartDate}}
-      @courseEndDate={{courseEndDate}}
+      @courseStartDate={{this.courseStartDate}}
+      @courseEndDate={{this.courseEndDate}}
     />`);
 
     const startDate = '.start-date input';
@@ -211,8 +211,8 @@ module('Integration | Component | offering form', function(hooks) {
 
     await render(hbs`<OfferingForm
       @close={{noop}}
-      @courseStartDate={{courseStartDate}}
-      @courseEndDate={{courseEndDate}}
+      @courseStartDate={{this.courseStartDate}}
+      @courseEndDate={{this.courseEndDate}}
     />`);
 
     const startDate = '.start-date input';
@@ -240,7 +240,7 @@ module('Integration | Component | offering form', function(hooks) {
       assert.ok(true);
     });
     const closeButton = '.buttons .cancel';
-    await render(hbs`<OfferingForm @close={{action close}} />`);
+    await render(hbs`<OfferingForm @close={{this.close}} />`);
     await click(closeButton);
   });
 
@@ -256,7 +256,7 @@ module('Integration | Component | offering form', function(hooks) {
       assert.equal(instructors.length, 0);
     });
     const save = '.buttons .done';
-    await render(hbs`<OfferingForm @close={{noop}} @save={{action save}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} @save={{this.save}} />`);
 
     await click(save);
 
@@ -295,7 +295,7 @@ module('Integration | Component | offering form', function(hooks) {
     await render(hbs`<OfferingForm
       @close={{noop}}
       @showMakeRecurring={{true}}
-      @save={{action save}}
+      @save={{this.save}}
     />`);
 
     await click(toggle);
@@ -352,7 +352,7 @@ module('Integration | Component | offering form', function(hooks) {
     await render(hbs`<OfferingForm
       @close={{noop}}
       @showMakeRecurring={{true}}
-      @save={{action save}}
+      @save={{this.save}}
     />`);
 
     await click(toggle);
@@ -480,7 +480,7 @@ module('Integration | Component | offering form', function(hooks) {
 
     this.set('offering', offering);
     await render(hbs`<OfferingForm
-      @offering={{offering}}
+      @offering={{this.offering}}
       @close={{noop}}
       @showRoom={{true}}
       @showMakeRecurring={{true}}
@@ -545,7 +545,7 @@ module('Integration | Component | offering form', function(hooks) {
       assert.equal('2005-06-25 06:24', moment(endDate).tz(utc).format('Y-MM-DD HH:mm'));
     });
     const save = '.buttons .done';
-    await render(hbs`<OfferingForm @offering={{offering}} @close={{noop}} @save={{action save}} />`);
+    await render(hbs`<OfferingForm @offering={{this.offering}} @close={{noop}} @save={{this.save}} />`);
 
     const timezoneService = this.owner.lookup('service:timezone');
 
