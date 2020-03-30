@@ -17,28 +17,23 @@ import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 const { resolve } = RSVP;
 
-const nothing = ()=>{};
-
 module('Integration | Component | offering form', function(hooks) {
   setupRenderingTest(hooks);
 
   test('room input does not show by default', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} />`);
 
     assert.dom('.room').doesNotExist();
   });
 
   test('room input shows up when requested', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showRoom={{true}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
 
     assert.dom('.room').exists({ count: 1 });
   });
 
   test('room validation errors do not show up initially', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showRoom={{true}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
 
     const item = '.room';
     const error = `${item} .validation-error-message`;
@@ -46,8 +41,7 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('room validation errors show up when typing', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showRoom={{true}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
 
     const item = '.room';
     const input = `${item} input`;
@@ -59,22 +53,19 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('recurring options does not show by default', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} />`);
 
     assert.dom('.make-recurring').doesNotExist();
   });
 
   test('recurring options shows up when requested', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showMakeRecurring={{true}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
 
     assert.dom('.make-recurring').exists({ count: 1 });
   });
 
   test('recurring options has all the days of the week', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showMakeRecurring={{true}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
 
     const sunday = '[data-test-recurring-day-label="0"]';
     const monday = '[data-test-recurring-day-label="1"]';
@@ -97,8 +88,7 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('recurring numberOfWeeks validation errors do not show up initially', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showMakeRecurring={{true}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
 
     const item = '.make-recurring-input-container';
     const error = `${item} .validation-error-message`;
@@ -109,8 +99,7 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('recurring numberOfWeeks validation errors show up when saving', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showMakeRecurring={{true}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
 
     const item = '.make-recurring-input-container';
     const error = `${item} .validation-error-message`;
@@ -125,8 +114,7 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('recurring default day is disabled and checked', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showMakeRecurring={{true}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
 
     const inputs = '.make-recurring-days input';
     const dayToday = moment().day();
@@ -139,29 +127,25 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('instructor manager does not show by default', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} />`);
 
     assert.dom('.instructors').doesNotExist();
   });
 
   test('instructor manager shows up when requested', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showInstructors={{true}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} @showInstructors={{true}} />`);
 
     assert.dom('.instructors').exists({ count: 1 });
   });
 
   test('before course startDate default initial startDate falls on course start date', async function(assert) {
-    this.set('nothing', nothing);
     const courseStartDate = moment().add(2, 'days');
     const courseEndDate = moment().add(4, 'days');
     this.set('courseStartDate', courseStartDate);
     this.set('courseEndDate', courseEndDate);
-    this.set('nothing', nothing);
 
     await render(hbs`<OfferingForm
-      @close={{action nothing}}
+      @close={{noop}}
       @courseStartDate={{courseStartDate}}
       @courseEndDate={{courseEndDate}}
     />`);
@@ -187,15 +171,13 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('after course endDate default initial startDate falls on course end date', async function(assert) {
-    this.set('nothing', nothing);
     const courseStartDate = moment().subtract(4, 'days');
     const courseEndDate = moment().subtract(2, 'days');
     this.set('courseStartDate', courseStartDate);
     this.set('courseEndDate', courseEndDate);
-    this.set('nothing', nothing);
 
     await render(hbs`<OfferingForm
-      @close={{action nothing}}
+      @close={{noop}}
       @courseStartDate={{courseStartDate}}
       @courseEndDate={{courseEndDate}}
     />`);
@@ -221,16 +203,14 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('between course startDate and endDate default initial startDate falls on today', async function(assert) {
-    this.set('nothing', nothing);
     const courseStartDate = moment().subtract(4, 'days');
     const courseEndDate = moment().add(4, 'days');
     const today = moment();
     this.set('courseStartDate', courseStartDate);
     this.set('courseEndDate', courseEndDate);
-    this.set('nothing', nothing);
 
     await render(hbs`<OfferingForm
-      @close={{action nothing}}
+      @close={{noop}}
       @courseStartDate={{courseStartDate}}
       @courseEndDate={{courseEndDate}}
     />`);
@@ -266,7 +246,6 @@ module('Integration | Component | offering form', function(hooks) {
 
   test('save not recurring', async function(assert) {
     assert.expect(7);
-    this.set('nothing', nothing);
     this.set('save', (startDate, endDate, room, learners, learnerGroups, instructorGroups, instructors)=>{
       assert.equal(moment(startDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
       assert.equal(moment(endDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
@@ -277,7 +256,7 @@ module('Integration | Component | offering form', function(hooks) {
       assert.equal(instructors.length, 0);
     });
     const save = '.buttons .done';
-    await render(hbs`<OfferingForm @close={{action nothing}} @save={{action save}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} @save={{action save}} />`);
 
     await click(save);
 
@@ -286,8 +265,6 @@ module('Integration | Component | offering form', function(hooks) {
 
   test('save recurring one week with days selected before initial date', async function(assert) {
     assert.expect(2);
-    this.set('nothing', nothing);
-
     const wednesday = moment().add(1, 'week').day(3);
     const thursday = wednesday.clone().add(1, 'day').day();
     const tuesday = wednesday.clone().subtract(1, 'day').day();
@@ -316,7 +293,7 @@ module('Integration | Component | offering form', function(hooks) {
 
     const save = '.buttons .done';
     await render(hbs`<OfferingForm
-      @close={{action nothing}}
+      @close={{noop}}
       @showMakeRecurring={{true}}
       @save={{action save}}
     />`);
@@ -332,8 +309,6 @@ module('Integration | Component | offering form', function(hooks) {
 
   test('save recurring 3 weeks should get lots of days', async function(assert) {
     assert.expect(8);
-    this.set('nothing', nothing);
-
     const wednesday = moment().add(1, 'week').day(3);
     const thursday = wednesday.clone().add(1, 'day').day();
     const tuesday = wednesday.clone().subtract(1, 'day').day();
@@ -375,7 +350,7 @@ module('Integration | Component | offering form', function(hooks) {
 
     const save = '.buttons .done';
     await render(hbs`<OfferingForm
-      @close={{action nothing}}
+      @close={{noop}}
       @showMakeRecurring={{true}}
       @save={{action save}}
     />`);
@@ -391,8 +366,7 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('changing start date changes end date', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} />`);
 
     const startDate = '.start-date input';
     const endDate = '.end-date-time .text';
@@ -407,8 +381,7 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('changing start time changes end date', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} />`);
 
     const startHour = '.start-time select:nth-of-type(1)';
     const startMinute = '.start-time select:nth-of-type(2)';
@@ -425,8 +398,7 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('changing duration changes end date', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} />`);
 
     const durationHour = '.offering-duration .hours input';
     const durationMinute = '.offering-duration .minutes input';
@@ -440,8 +412,7 @@ module('Integration | Component | offering form', function(hooks) {
 
   // @see https://github.com/ilios/frontend/issues/1903
   test('changing duration and start time changes end date', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} />`);
 
     const startHour = '.start-time select:nth-of-type(1)';
     const startMinute = '.start-time select:nth-of-type(2)';
@@ -472,8 +443,7 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('learnerGroup validation errors do not show up initially', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @smallGroupMode={{true}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`);
 
     const item = '.learner-groups';
     const error = `${item} .validation-error-message`;
@@ -484,8 +454,7 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('learnerGroup validation errors show up when saving', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @smallGroupMode={{true}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`);
 
     const item = '.learner-groups';
     const error = `${item} .validation-error-message`;
@@ -509,11 +478,10 @@ module('Integration | Component | offering form', function(hooks) {
       instructorGroups: resolve([]),
     });
 
-    this.set('nothing', nothing);
     this.set('offering', offering);
     await render(hbs`<OfferingForm
       @offering={{offering}}
-      @close={{action nothing}}
+      @close={{noop}}
       @showRoom={{true}}
       @showMakeRecurring={{true}}
       @showInstructors={{true}}
@@ -548,8 +516,7 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('shows current timezone', async function(assert) {
-    this.set('nothing', () => {});
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
+    await render(hbs`<OfferingForm @close={{noop}} />`);
 
     const timezoneService = this.owner.lookup('service:timezone');
     const timezoneValue  = '[data-test-current-timezone]';
@@ -572,14 +539,13 @@ module('Integration | Component | offering form', function(hooks) {
       instructors: resolve([]),
       instructorGroups: resolve([]),
     });
-    this.set('nothing', nothing);
     this.set('offering', offering);
     this.set('save', (startDate, endDate)=>{
       assert.equal('2005-06-25 05:24', moment(startDate).tz(utc).format('Y-MM-DD HH:mm'));
       assert.equal('2005-06-25 06:24', moment(endDate).tz(utc).format('Y-MM-DD HH:mm'));
     });
     const save = '.buttons .done';
-    await render(hbs`<OfferingForm @offering={{offering}} @close={{action nothing}} @save={{action save}} />`);
+    await render(hbs`<OfferingForm @offering={{offering}} @close={{noop}} @save={{action save}} />`);
 
     const timezoneService = this.owner.lookup('service:timezone');
 
