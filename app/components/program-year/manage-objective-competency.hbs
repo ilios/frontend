@@ -10,7 +10,10 @@
     <ul class="parent-picker" data-test-parent-picker>
       {{#each @domains as |domain|}}
         <li class="domain {{if
-              (contains @selected.id (map-by "id" domain.competencies))
+              (or
+                (is-equal @selected.id domain.id)
+                (contains @selected.id (map-by "id" domain.competencies))
+              )
               "selected"
             }}"
             data-test-domain
