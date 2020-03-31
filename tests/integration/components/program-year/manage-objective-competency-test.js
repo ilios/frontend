@@ -10,26 +10,32 @@ module('Integration | Component | program-year/manage-objective-competency', fun
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders and is accessible', async function (assert) {
+  hooks.beforeEach(async function () {
     const course = this.server.create('course');
     const objective = this.server.create('objective', {
       courses: [course],
     });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
+    const domain = this.server.create('competency', { title: "domain 0" });
+    const competency = this.server.create('competency', { title: "competency 0", parent: domain });
+    this.objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
+    this.domainModel = await this.owner.lookup('service:store').find('competency', domain.id);
+    this.competencyModel = await this.owner.lookup('service:store').find('competency', competency.id);
+  });
 
+  test('it renders and is accessible', async function (assert) {
     const domains = [
       {
-        title: 'domain 0',
-        id: 1,
+        title: this.domainModel.title,
+        id: this.domainModel.id,
         competencies: [
           {
-            id: 2,
-            title: 'competency 0',
+            id: this.competencyModel.id,
+            title: this.competencyModel.title,
           }
         ]
       }
     ];
-    this.set('objectiveTitle', objectiveModel.title);
+    this.set('objectiveTitle', this.objectiveModel.title);
     this.set('domains', domains);
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
       @objectiveTitle={{this.objectiveTitle}}
@@ -39,16 +45,65 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       @remove={{noop}}
     />`);
 
-    assert.equal(component.objectiveTitle, objectiveModel.title);
+    assert.equal(component.objectiveTitle, this.objectiveModel.title);
 
     assert.equal(component.domains.length, 1);
-    assert.equal(component.domains[0].title, 'domain 0');
+    assert.equal(component.domains[0].title, this.domainModel.title);
     assert.ok(component.domains[0].notSelected);
 
     assert.equal(component.domains[0].competencies.length, 1);
-    assert.equal(component.domains[0].competencies[0].title, 'competency 0');
+    assert.equal(component.domains[0].competencies[0].title, this.competencyModel.title);
     assert.ok(component.domains[0].competencies[0].notSelected);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('unselect domain', async function (assert) {
+    assert.expect(2);
+    const domains = [
+      {
+        title: this.domainModel.title,
+        id: this.domainModel.id,
+        competencies: []
+      }
+    ];
+    this.set('selected', this.domainModel);
+    this.set('domains', domains);
+    this.set('remove', () => {
+      assert.ok(true); // input doesn't matter, we just need to confirm this fired.
+    });
+    await render(hbs`<ProgramYear::ManageObjectiveCompetency
+      @objectiveTitle={{string}}
+      @domains={{this.domains}}
+      @selected={{this.selected}}
+      @add={{noop}}
+      @remove={{this.remove}}
+    />`);
+    assert.ok(component.domains[0].selected);
+    await component.domains[0].toggle();
+  });
+
+  test('select domain', async function (assert) {
+    assert.expect(2);
+    const domains = [
+      {
+        title: this.domainModel.title,
+        id: this.domainModel.id,
+        competencies: []
+      }
+    ];
+    this.set('domains', domains);
+    this.set('add', id => {
+      assert.equal(id, this.domainModel.id);
+    });
+    await render(hbs`<ProgramYear::ManageObjectiveCompetency
+      @objectiveTitle={{string}}
+      @domains={{this.domains}}
+      @selected={{null}}
+      @add={{this.add}}
+      @remove={{noop}}
+    />`);
+    assert.ok(component.domains[0].notSelected);
+    await component.domains[0].toggle();
   });
 });
