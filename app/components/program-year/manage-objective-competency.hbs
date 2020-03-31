@@ -10,16 +10,25 @@
     <ul class="parent-picker" data-test-parent-picker>
       {{#each @domains as |domain|}}
         <li class="domain {{if
-              (contains @selected.id (map-by "id" domain.competencies))
+              (or
+                (eq @selected.id domain.id)
+                (contains @selected.id (map-by "id" domain.competencies))
+              )
               "selected"
             }}"
             data-test-domain
         >
-          <h4
-            class="domain-title"
-          >
-            {{domain.title}}
-          </h4>
+          {{#if (eq @selected.id domain.id)}}
+            <label class="domain-title selected">
+              <input type="radio" checked="checked" {{on "click" @remove}}>
+              {{domain.title}}
+            </label>
+          {{else}}
+            <label class="domain-title">
+              <input type="radio" {{on "click" (fn @add domain.id)}}>
+              {{domain.title}}
+            </label>
+          {{/if}}
           <ul>
             {{#each (sort-by "title" domain.competencies) as |competency|}}
               <li>

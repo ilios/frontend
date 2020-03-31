@@ -236,7 +236,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     await page.objectives.objectiveList.objectives[0].manageCompetency();
     const m = page.objectives.manageObjectiveCompetency;
     assert.equal(m.objectiveTitle, 'objective 0');
-    await m.domains[0].competencies[1].add();
+    await m.domains[0].competencies[1].toggle();
     assert.ok(m.domains[0].selected);
     assert.ok(m.domains[0].competencies[0].notSelected);
     assert.ok(m.domains[0].competencies[1].selected);
@@ -257,7 +257,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     await page.objectives.objectiveList.objectives[0].manageCompetency();
     const m = page.objectives.manageObjectiveCompetency;
     assert.equal(m.objectiveTitle, 'objective 0');
-    await m.domains[0].competencies[0].add();
+    await m.domains[0].competencies[0].toggle();
     assert.ok(m.domains[0].notSelected);
     assert.ok(m.domains[0].competencies[0].notSelected);
     await page.objectives.save();
@@ -273,7 +273,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     await page.objectives.objectiveList.objectives[0].manageCompetency();
     const m = page.objectives.manageObjectiveCompetency;
     assert.equal(m.objectiveTitle, 'objective 0');
-    await m.domains[0].competencies[1].add();
+    await m.domains[0].competencies[1].toggle();
     assert.ok(m.domains[0].selected);
     assert.ok(m.domains[0].competencies[0].notSelected);
     assert.ok(m.domains[0].competencies[1].selected);
@@ -293,7 +293,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     await page.objectives.objectiveList.objectives[0].manageCompetency();
     const m = page.objectives.manageObjectiveCompetency;
     assert.equal(m.objectiveTitle, 'objective 0');
-    await m.domains[0].competencies[0].add();
+    await m.domains[0].competencies[0].toggle();
     assert.ok(m.domains[0].notSelected);
     assert.ok(m.domains[0].competencies[0].notSelected);
     assert.ok(m.domains[0].competencies[1].notSelected);
@@ -316,7 +316,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     await page.objectives.objectiveList.objectives[2].manageCompetency();
     const m = page.objectives.manageObjectiveCompetency;
     assert.equal(m.objectiveTitle, 'objective 2');
-    await m.domains[0].competencies[1].add();
+    await m.domains[0].competencies[1].toggle();
     assert.ok(m.domains[0].selected);
     assert.ok(m.domains[0].competencies[0].notSelected);
     assert.ok(m.domains[0].competencies[1].selected);
