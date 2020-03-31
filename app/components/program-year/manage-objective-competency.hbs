@@ -19,13 +19,13 @@
             data-test-domain
         >
           {{#if (eq @selected.id domain.id)}}
-            <label {{on "click" @remove}} class="domain-title selected">
-              <input type="radio" checked="checked">
+            <label class="domain-title selected">
+              <input type="radio" checked="checked" {{on "click" @remove}}>
               {{domain.title}}
             </label>
           {{else}}
-            <label {{on "click" (fn @add domain.id)}} class="domain-title">
-              <input type="radio">
+            <label class="domain-title">
+              <input type="radio" {{on "click" (fn @add domain.id)}}>
               {{domain.title}}
             </label>
           {{/if}}
