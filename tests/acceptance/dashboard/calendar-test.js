@@ -443,7 +443,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     await map(selected, e => click(e));
   };
 
-  test('test course filter', async function(assert) {
+  test('test course filter', async function (assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),

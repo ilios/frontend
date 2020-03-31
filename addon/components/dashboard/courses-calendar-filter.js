@@ -11,7 +11,16 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   @tracked expandedYears = [];
   @tracked el;
 
-  thisYear = Number(moment().format('YYYY'));
+  get academicYear() {
+    const today = moment();
+    const thisYear = Number(today.format('YYYY'));
+    const thisMonth = Number(today.format('M'));
+    if (thisMonth < 4) {
+      return thisYear - 1;
+    }
+
+    return thisYear;
+  }
 
   @restartableTask
   *load(element, [school]) {
@@ -39,9 +48,9 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
       return acc;
     }, []).sortBy('year');
     if (this.courseYears.length) {
-      const coursesThisYear = this.courseYears.findBy('year', this.thisYear);
+      const coursesThisYear = this.courseYears.findBy('year', this.academicYear);
       if (coursesThisYear) {
-        this.expandedYears = [this.thisYear];
+        this.expandedYears = [this.academicYear];
       } else {
         this.expandedYears = [this.courseYears[this.courseYears.length - 1].year];
       }
@@ -51,7 +60,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
 
   @action
   scrollToLastYear(element, [year]) {
-    if (year === this.thisYear - 1) {
+    if (year === this.academicYear - 1) {
       this.el.querySelector('.filters').scrollTop = element.offsetTop - element.parentNode.offsetTop;
     }
   }
