@@ -51,7 +51,7 @@
       </span>
     </p>
     <p class={{if programCollapsed "collapsed" "expanded"}}>
-      <h5 {{action (toggle "programCollapsed" this)}}>
+      <h5 {{action (toggle "programCollapsed" this)}} role="button">
         {{t "general.programs"}}
         ({{get (await directedPrograms) "length"}})
       </h5>
@@ -71,7 +71,7 @@
       </ul>
     </p>
     <p class={{if programYearCollapsed "collapsed" "expanded"}}>
-      <h5 {{action (toggle "programYearCollapsed" this)}}>
+      <h5 {{action (toggle "programYearCollapsed" this)}} role="button">
         {{t "general.programYears"}}
         ({{get (await directedProgramYears) "length"}})
       </h5>
@@ -98,7 +98,7 @@
       </ul>
     </p>
     <p class={{if courseCollapsed "collapsed" "expanded"}}>
-      <h5 {{action (toggle "courseCollapsed" this)}}>
+      <h5 {{action (toggle "courseCollapsed" this)}} role="button">
         {{t "general.courses"}}
         ({{await courseCount}})
       </h5>
@@ -155,7 +155,7 @@
       </ul>
     </p>
     <p class={{if sessionCollapsed "collapsed" "expanded"}}>
-      <h5 {{action (toggle "sessionCollapsed" this)}}>
+      <h5 {{action (toggle "sessionCollapsed" this)}} role="button">
         {{t "general.sessions"}}
         ({{await sessionCount}})
       </h5>

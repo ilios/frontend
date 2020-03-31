@@ -47,20 +47,23 @@
           <th
             class="text-left clickable"
             colspan="1"
-            onclick={{action "toggleCheck"}}
+
           >
-            <input
-              checked={{eq
-                this.selectedUserIds.length
-                this.filteredStudents.length
-              }}
-              type="checkbox"
-              indeterminate={{and
-                (gt this.selectedUserIds.length 0)
-                (lt this.selectedUserIds.length this.filteredStudents.length)
-              }}
-            >
-            {{t "general.all"}}
+            <label>
+              <input
+                checked={{eq
+                  this.selectedUserIds.length
+                  this.filteredStudents.length
+                }}
+                type="checkbox"
+                indeterminate={{and
+                  (gt this.selectedUserIds.length 0)
+                  (lt this.selectedUserIds.length this.filteredStudents.length)
+                }}
+                {{on "click" (action "toggleCheck")}}
+              >
+              {{t "general.all"}}
+            </label>
           </th>
           <th class="text-left" colspan="4">
             {{t "general.fullName"}}
@@ -77,15 +80,13 @@
         {{#each this.filteredStudents as |user|}}
           <tr class={{if (contains user.id this.selectedUserIds) "highlighted"}}>
             <td
-              class="text-left clickable"
+              class="text-left"
               colspan="1"
-              {{action "toggleUserSelection" user.id}}
             >
-              {{#if (contains user.id this.selectedUserIds)}}
-                <input type="checkbox" checked="">
-              {{else}}
-                <input type="checkbox">
-              {{/if}}
+              <input type="checkbox"
+                checked={{if (contains user.id this.selectedUserIds) "checked"}}
+                {{on "click" (action "toggleUserSelection" user.id)}}
+              >
             </td>
             <td class="text-left" colspan="4">
               <LinkTo @route="user" @model={{user}}>

@@ -26,7 +26,7 @@
             ) as |user|
           }}
             {{#if canUpdate}}
-              <li class="clickable" {{action "removeUser" user}}>
+              <li class="clickable" role="button" {{action "removeUser" user}}>
                 {{user.fullName}}
                 <FaIcon @icon="times" class="remove" />
               </li>

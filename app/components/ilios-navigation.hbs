@@ -1,6 +1,7 @@
 {{#if (or currentUser.performsNonLearnerFunction)}}
   <ul
     class="expand-navigation link clickable"
+    role="button"
     onclick={{action (toggle "expanded" this)}}
   >
     <li title={{t "general.menu"}}>

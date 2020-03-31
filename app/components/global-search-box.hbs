@@ -13,6 +13,7 @@
 >
 <span
   class="search-icon"
+  role="button"
   data-test-search-icon
   onclick={{pipe-action (action "focus") (action "search")}}
 >
@@ -24,6 +25,7 @@
       {{#each this.results as |result|}}
         <li
           class="autocomplete-row"
+          role="button"
           onclick={{pipe-action
             (action (mut this.autocompleteSelectedQuery) null)
             (action (mut this.internalQuery) result.text)

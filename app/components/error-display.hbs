@@ -21,7 +21,7 @@
           {{t "general.clearErrors"}}
         </button>
       </p>
-      <span class="error-detail-action" {{action "toggleDetails"}}>
+      <span class="error-detail-action" role="button" {{action "toggleDetails"}}>
         {{t (if showDetails "general.collapseDetail" "general.expandDetail")}}
       </span>
       {{#if showDetails}}

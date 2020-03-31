@@ -13,7 +13,7 @@
   <div class="selected-directors">
     <ul>
       {{#each (sort-by "lastName" directors) as |user|}}
-        <li {{action "removeDirector" user}}>
+        <li role="button" {{action "removeDirector" user}}>
           {{user.fullName}}
           <FaIcon @icon="times" class="remove" />
         </li>

@@ -109,7 +109,7 @@
       {{#if (is-equal currentPrepositionalObject "instructor")}}
         {{#if selectedUser}}
           <ul class="removable-list tag-list">
-            <li {{action "changePrepositionalObjectId" null}}>
+            <li role="button" {{action "changePrepositionalObjectId" null}}>
               {{this.selectedUser.fullName}}
               <FaIcon @icon="times" />
             </li>

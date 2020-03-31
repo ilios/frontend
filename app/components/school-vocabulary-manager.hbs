@@ -1,5 +1,5 @@
 <div class="breadcrumbs" data-test-breadcrumbs>
-  <span data-test-all {{action manageVocabulary null}}>
+  <span role="button" data-test-all {{action manageVocabulary null}}>
     {{t "general.allVocabularies"}}
   </span>
   <span data-test-vocabulary>
@@ -50,7 +50,7 @@
 <div class="terms" data-test-terms>
   {{#if newTerm}}
     <div class="saved-result">
-      <span class="clickable link" {{action manageTerm newTerm.id}}>
+      <span class="clickable link" role="button" {{action manageTerm newTerm.id}}>
         <FaIcon @icon="external-link-square-alt" />
         {{this.newTerm.title}}
       </span>
@@ -87,7 +87,7 @@
   {{#if (is-fulfilled sortedTerms)}}
     <ul data-test-term-list>
       {{#each (await sortedTerms) as |term|}}
-        <li data-test-term {{action manageTerm term.id}}>
+        <li role="button" data-test-term {{action manageTerm term.id}}>
           {{term.title}}
           {{#unless term.active}}
             <em>

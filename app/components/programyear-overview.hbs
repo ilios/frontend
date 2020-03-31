@@ -23,7 +23,7 @@
       {{#if canUpdate}}
         <ul class="removable-directors">
           {{#each sortedDirectors as |user|}}
-            <li {{action "removeDirector" user}}>
+            <li role="button" {{action "removeDirector" user}}>
               {{user.fullName}}
               <FaIcon @icon="times" class="remove" />
             </li>

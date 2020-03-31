@@ -30,6 +30,7 @@
           <td
             class="text-center hide-from-small-screen"
             colspan="2"
+            role="button"
             {{action "edit" program}}
           >
             {{program.school.title}}
@@ -59,7 +60,7 @@
               <FaIcon @icon="edit" class="enabled" />
             </LinkTo>
             {{#if (await program.canDelete)}}
-              <span class="clickable remove" {{action "confirmRemove" program}}>
+              <span class="clickable remove" role="button" {{action "confirmRemove" program}}>
                 <FaIcon @icon="trash" class="enabled" />
               </span>
             {{else}}

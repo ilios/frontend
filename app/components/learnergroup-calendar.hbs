@@ -15,13 +15,13 @@
     </span>
   </p>
   <ul class="inline learnergroup-calendar-time-picker">
-    <li class="clickable" {{on "click" this.goBack}}>
+    <li class="clickable" role="button" {{on "click" this.goBack}}>
       <FaIcon @icon="backward" />
     </li>
-    <li class="clickable" {{on "click" this.gotoToday}}>
+    <li class="clickable" role="button" {{on "click" this.gotoToday}}>
       {{t "general.today"}}
     </li>
-    <li class="clickable" {{on "click" this.goForward}}>
+    <li class="clickable" role="button" {{on "click" this.goForward}}>
       <FaIcon @icon="forward" />
     </li>
   </ul>

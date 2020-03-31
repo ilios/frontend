@@ -76,6 +76,7 @@
           {{#if (eq result.type "user")}}
             <li
               class="user {{unless clickUser.isRunning "clickable"}}"
+              role="button"
               {{action (perform clickUser) result.user}}
             >
               <span class="name">
