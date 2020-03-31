@@ -1,33 +1,39 @@
-{{#unless this.loadAttr.isRunning}}
-  <div class="actions">
-    <button class="bigadd" type="button" {{on "click" (fn @save this.sortableObjectList)}}>
-      <FaIcon @icon="check" />
-    </button>
-    <button class="bigcancel" type="button" {{on "click" (fn @cancel)}}>
-      <FaIcon @icon="undo" />
-    </button>
-  </div>
-  <div class="content">
-    <SortableObjects
-      @sortableObjectList={{this.sortableObjectList}}
-      @enableSort={{true}}
-      @useSwap={{true}}
-      @sortingScope="sortingGroup"
-    >
-      {{#each this.sortableObjectList as |item|}}
-        <DraggableObject
-          @content={{item}}
-          @isSortable={{true}}
-          @sortingScope="sortingGroup"
-        >
-          <FaIcon @icon="arrows-alt" />
-          <span class="draggable-object-content">
-            <span>
-              <TruncateText @text={{item.title}} />
+<div
+  class="objective-sort-manager"
+  {{did-insert (perform this.load) @subject}}
+  {{did-update (perform this.load) @subject}}
+>
+  {{#if (is-array this.sortableObjectList)}}
+    <div class="actions">
+      <button class="bigadd" type="button" {{on "click" (fn @save this.sortableObjectList)}}>
+        <FaIcon @icon="check" />
+      </button>
+      <button class="bigcancel" type="button" {{on "click" @cancel}}>
+        <FaIcon @icon="undo" />
+      </button>
+    </div>
+    <div class="content">
+      <SortableObjects
+        @sortableObjectList={{this.sortableObjectList}}
+        @enableSort={{true}}
+        @useSwap={{true}}
+        @sortingScope="sortingGroup"
+      >
+        {{#each this.sortableObjectList as |item|}}
+          <DraggableObject
+            @content={{item}}
+            @isSortable={{true}}
+            @sortingScope="sortingGroup"
+          >
+            <FaIcon @icon="arrows-alt" />
+            <span class="draggable-object-content">
+              <span>
+                <TruncateText @text={{item.title}} />
+              </span>
             </span>
-          </span>
-        </DraggableObject>
-      {{/each}}
-    </SortableObjects>
-  </div>
-{{/unless}}
+          </DraggableObject>
+        {{/each}}
+      </SortableObjects>
+    </div>
+  {{/if}}
+</div>

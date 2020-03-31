@@ -1,51 +1,58 @@
-{{#unless this.loadAttr.isRunning}}
-  <div class="actions">
-    <button class="bigadd" type="button" {{on "click" (perform this.callSave)}} data-test-save>
-      <FaIcon
-        @icon={{if this.callSave.isRunning "spinner" "check"}}
-        @spin={{this.callSave.isRunning}}
-      />
-    </button>
-    <button class="bigcancel" type="button" {{on "click" @cancel}} data-test-cancel>
-      <FaIcon @icon="undo" />
-    </button>
-  </div>
-  <div class="content">
-    <SortableObjects
-      @sortableObjectList={{this.sortableObjectList}}
-      @enableSort={{true}}
-      @useSwap={{true}}
-      @sortingScope="sortingGroup"
-    >
-      {{#each this.sortableObjectList as |item|}}
-        <DraggableObject
-          @content={{item}}
-          @isSortable={{true}}
-          @sortingScope="sortingGroup"
-        >
-          <FaIcon @icon="arrows-alt" />
-          <span class="draggable-object-content">
-            <span class="title">
-              <LmTypeIcon
-                @type={{get (await item.learningMaterial) "type"}}
-                @mimetype={{get (await item.learningMaterial) "mimetype"}}
-              />
-              <span data-test-title>
-                {{get (await item.learningMaterial) "title"}}
+<div
+  class="learning-materials-sort-manager"
+  {{did-insert (perform this.load) @subject}}
+  {{did-update (perform this.load) @subject}}
+  data-test-detail-learning-materials-sort-manager
+>
+  {{#if (is-array this.sortableObjectList)}}
+    <div class="actions">
+      <button class="bigadd" type="button" {{on "click" (perform this.callSave)}} data-test-save>
+        <FaIcon
+          @icon={{if this.callSave.isRunning "spinner" "check"}}
+          @spin={{this.callSave.isRunning}}
+        />
+      </button>
+      <button class="bigcancel" type="button" {{on "click" @cancel}} data-test-cancel>
+        <FaIcon @icon="undo" />
+      </button>
+    </div>
+    <div class="content">
+      <SortableObjects
+        @sortableObjectList={{this.sortableObjectList}}
+        @enableSort={{true}}
+        @useSwap={{true}}
+        @sortingScope="sortingGroup"
+      >
+        {{#each this.sortableObjectList as |item|}}
+          <DraggableObject
+            @content={{item}}
+            @isSortable={{true}}
+            @sortingScope="sortingGroup"
+          >
+            <FaIcon @icon="arrows-alt" />
+            <span class="draggable-object-content">
+              <span class="title">
+                <LmTypeIcon
+                  @type={{get (await item.learningMaterial) "type"}}
+                  @mimetype={{get (await item.learningMaterial) "mimetype"}}
+                />
+                <span data-test-title>
+                  {{get (await item.learningMaterial) "title"}}
+                </span>
+              </span>
+              <span class="details">
+                {{capitalize item.learningMaterial.type}},
+                {{t
+                  "general.ownedBy"
+                  owner=item.learningMaterial.owningUser.fullName
+                }},
+                {{t "general.status"}}:
+                {{item.learningMaterial.status.title}}
               </span>
             </span>
-            <span class="details">
-              {{capitalize item.learningMaterial.type}},
-              {{t
-                "general.ownedBy"
-                owner=item.learningMaterial.owningUser.fullName
-              }},
-              {{t "general.status"}}:
-              {{item.learningMaterial.status.title}}
-            </span>
-          </span>
-        </DraggableObject>
-      {{/each}}
-    </SortableObjects>
-  </div>
-{{/unless}}
+          </DraggableObject>
+        {{/each}}
+      </SortableObjects>
+    </div>
+  {{/if}}
+</div>

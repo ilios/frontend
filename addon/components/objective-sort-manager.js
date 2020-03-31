@@ -1,22 +1,14 @@
-import Component from '@ember/component';
-import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
-import { task } from 'ember-concurrency';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
+import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 
-export default Component.extend(SortableByPosition, {
-  classNames: ['objective-sort-manager'],
-  sortableObjectList: null,
-  subject: null,
+export default class ObjectiveSortManagerComponent extends Component {
+  @tracked sortableObjectList;
 
-  didReceiveAttrs() {
-    this._super(...arguments);
-    const subject = this.get('subject');
-    this.get('loadAttr').perform(subject);
-
-  },
-
-  loadAttr: task(function * (subject) {
-    const objectives = yield subject.get('objectives');
-    this.set('sortableObjectList', objectives.toArray().sort(this.get('positionSortingCallback')));
-  }),
-
-});
+  @restartableTask
+  *load(element, [subject]) {
+    const objectives = (yield subject.objectives).toArray();
+    this.sortableObjectList = objectives.sort(sortableByPosition);
+  }
+}

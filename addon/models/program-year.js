@@ -2,11 +2,11 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import PublishableModel from 'ilios-common/mixins/publishable-model';
 import CategorizableModel from 'ilios-common/mixins/categorizable-model';
-import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
+import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 
 const { alias } = computed;
 
-export default Model.extend(PublishableModel, CategorizableModel, SortableByPosition, {
+export default Model.extend(PublishableModel, CategorizableModel, {
   startYear: attr('string'),
   locked: attr('boolean'),
   archived: attr('boolean'),
@@ -47,7 +47,7 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    */
   sortedObjectives: computed('objectives.@each.position', 'objectives.@each.title', async function() {
     const objectives = await this.get('objectives');
-    return objectives.toArray().sort(this.positionSortingCallback);
+    return objectives.toArray().sort(sortableByPosition);
   }),
 
   init() {
