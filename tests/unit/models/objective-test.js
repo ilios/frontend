@@ -9,6 +9,12 @@ module('Unit | Model | Objective', function(hooks) {
     assert.ok(!!model);
   });
 
+  test('active defaults to true', function(assert) {
+    const model = this.owner.lookup('service:store').createRecord('objective');
+    assert.ok(!!model);
+    assert.ok(model.active);
+  });
+
   test('top parent with no parents should be self', async function(assert) {
     assert.expect(2);
 
