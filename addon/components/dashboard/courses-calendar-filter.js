@@ -10,6 +10,8 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   @tracked courseYears = [];
   @tracked expandedYears = [];
   @tracked el;
+  @tracked yearsInView = [];
+  @tracked titlesInView = [];
 
   get academicYear() {
     const today = moment();
@@ -20,6 +22,17 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
     }
 
     return thisYear;
+  }
+
+  get expandedYearWithoutTitleView() {
+    const yearsWithNoTitle = this.yearsInView.filter(year => !this.titlesInView.includes(year));
+    const expandedYearsWithNoTitle = yearsWithNoTitle.filter(year => this.expandedYears.includes(year));
+
+    if (expandedYearsWithNoTitle.length) {
+      return expandedYearsWithNoTitle[0];
+    }
+
+    return null;
   }
 
   @restartableTask
@@ -72,5 +85,26 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
     } else {
       this.expandedYears = [...this.expandedYears, year];
     }
+  }
+
+  @action
+  addYearInView(year) {
+    if (!this.yearsInView.includes(year)) {
+      this.yearsInView = [...this.yearsInView, year];
+    }
+  }
+  @action
+  removeYearInView(year) {
+    this.yearsInView = this.yearsInView.filter(theYear => theYear !== year);
+  }
+  @action
+  addTitleInView(title) {
+    if (!this.titlesInView.includes(title)) {
+      this.titlesInView = [...this.titlesInView, title];
+    }
+  }
+  @action
+  removeTitleInView(title) {
+    this.titlesInView = this.titlesInView.filter(theTitle => theTitle !== title);
   }
 }
