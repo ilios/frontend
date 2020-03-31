@@ -1,254 +1,172 @@
-import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  settled,
-  click,
-  find,
-  findAll,
-  fillIn,
-} from '@ember/test-helpers';
+import { setupMirage } from 'ember-cli-mirage/test-support';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { padStart } from 'ember-pad/utils/pad';
 import moment from 'moment';
-import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
-
-const { resolve } = RSVP;
-
-const nothing = ()=>{};
+import { component } from 'ilios-common/page-objects/components/offering-form';
 
 module('Integration | Component | offering form', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('room input does not show by default', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
-
-    assert.dom('.room').doesNotExist();
+    await render(hbs`<OfferingForm @close={{noop}} />`);
+    assert.notOk(component.location.isPresent);
   });
 
   test('room input shows up when requested', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showRoom={{true}} />`);
-
-    assert.dom('.room').exists({ count: 1 });
+    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    assert.ok(component.location.isPresent);
   });
 
   test('room validation errors do not show up initially', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showRoom={{true}} />`);
-
-    const item = '.room';
-    const error = `${item} .validation-error-message`;
-    assert.dom(error).doesNotExist();
+    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    assert.notOk(component.location.hasError);
   });
 
   test('room validation errors show up when typing', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showRoom={{true}} />`);
-
-    const item = '.room';
-    const input = `${item} input`;
-    const error = `${item} .validation-error-message`;
-    const save = '.buttons .done';
-    await fillIn(input, padStart('a', 300, 'a'));
-    await click(save);
-    assert.dom(error).exists({ count: 1 });
+    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    await component.location.set(padStart('a', 300, 'a'));
+    await component.save();
+    assert.ok(component.location.hasError);
   });
 
   test('recurring options does not show by default', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
-
-    assert.dom('.make-recurring').doesNotExist();
+    await render(hbs`<OfferingForm @close={{noop}} />`);
+    assert.notOk(component.recurring.isPresent);
   });
 
   test('recurring options shows up when requested', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showMakeRecurring={{true}} />`);
-
-    assert.dom('.make-recurring').exists({ count: 1 });
+    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
+    assert.ok(component.recurring.isPresent);
   });
 
   test('recurring options has all the days of the week', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showMakeRecurring={{true}} />`);
-
-    const sunday = '[data-test-recurring-day-label="0"]';
-    const monday = '[data-test-recurring-day-label="1"]';
-    const tuesday = '[data-test-recurring-day-label="2"]';
-    const wednesday = '[data-test-recurring-day-label="3"]';
-    const thursday = '[data-test-recurring-day-label="4"]';
-    const friday = '[data-test-recurring-day-label="5"]';
-    const saturday = '[data-test-recurring-day-label="6"]';
-    const toggle = '.make-recurring [data-test-toggle-yesno] [data-test-handle]';
-
-    await click(toggle);
-    assert.dom(sunday).hasText('Sunday');
-    assert.dom(monday).hasText('Monday');
-    assert.dom(tuesday).hasText('Tuesday');
-    assert.dom(wednesday).hasText('Wednesday');
-    assert.dom(thursday).hasText('Thursday');
-    assert.dom(friday).hasText('Friday');
-    assert.dom(saturday).hasText('Saturday');
-
+    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
+    await component.recurring.toggle();
+    assert.ok(component.recurring.weekdays[0].label, 'Sunday');
+    assert.ok(component.recurring.weekdays[1].label, 'Monday');
+    assert.ok(component.recurring.weekdays[2].label, 'Tuesday');
+    assert.ok(component.recurring.weekdays[3].label, 'Wednesday');
+    assert.ok(component.recurring.weekdays[4].label, 'Thursday');
+    assert.ok(component.recurring.weekdays[5].label, 'Friday');
+    assert.ok(component.recurring.weekdays[6].label, 'Saturday');
   });
 
   test('recurring numberOfWeeks validation errors do not show up initially', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showMakeRecurring={{true}} />`);
-
-    const item = '.make-recurring-input-container';
-    const error = `${item} .validation-error-message`;
-    const toggle = '.make-recurring [data-test-toggle-yesno] [data-test-handle]';
-
-    await click(toggle);
-    assert.dom(error).doesNotExist();
+    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
+    await component.recurring.toggle();
+    assert.notOk(component.recurring.hasError);
   });
 
   test('recurring numberOfWeeks validation errors show up when saving', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showMakeRecurring={{true}} />`);
-
-    const item = '.make-recurring-input-container';
-    const error = `${item} .validation-error-message`;
-    const input = `${item} input`;
-    const toggle = '.make-recurring [data-test-toggle-yesno] [data-test-handle]';
-
-    await click(toggle);
-    const save = '.buttons .done';
-    await fillIn(input, 0);
-    await click(save);
-    assert.dom(error).exists({ count: 1 });
+    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
+    await component.recurring.toggle();
+    await component.recurring.setWeeks("0");
+    await component.save();
+    assert.ok(component.recurring.hasError);
   });
 
   test('recurring default day is disabled and checked', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showMakeRecurring={{true}} />`);
-
-    const inputs = '.make-recurring-days input';
+    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
     const dayToday = moment().day();
-    const toggle = '.make-recurring [data-test-toggle-yesno] [data-test-handle]';
-
-    await click(toggle);
-    const checkbox = findAll(inputs)[dayToday];
-    assert.ok(checkbox.checked);
-    assert.ok(checkbox.disabled);
+    await component.recurring.toggle();
+    assert.ok(component.recurring.weekdays[dayToday].input.isSelected);
+    assert.ok(component.recurring.weekdays[dayToday].input.isDisabled);
   });
 
   test('instructor manager does not show by default', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
-
-    assert.dom('.instructors').doesNotExist();
+    await render(hbs`<OfferingForm @close={{noop}} />`);
+    assert.notOk(component.instructors.isPresent);
   });
 
   test('instructor manager shows up when requested', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @showInstructors={{true}} />`);
-
-    assert.dom('.instructors').exists({ count: 1 });
+    await render(hbs`<OfferingForm @close={{noop}} @showInstructors={{true}} />`);
+    assert.ok(component.instructors.isPresent);
   });
 
   test('before course startDate default initial startDate falls on course start date', async function(assert) {
-    this.set('nothing', nothing);
     const courseStartDate = moment().add(2, 'days');
     const courseEndDate = moment().add(4, 'days');
     this.set('courseStartDate', courseStartDate);
     this.set('courseEndDate', courseEndDate);
-    this.set('nothing', nothing);
-
     await render(hbs`<OfferingForm
-      @close={{action nothing}}
-      @courseStartDate={{courseStartDate}}
-      @courseEndDate={{courseEndDate}}
+      @close={{noop}}
+      @courseStartDate={{this.courseStartDate}}
+      @courseEndDate={{this.courseEndDate}}
     />`);
-
-    const startDate = '.start-date input';
-    const interactor = openDatepicker(find(startDate));
+    const selectedDate = new Date(component.startDate.value);
     assert.equal(
-      interactor.selectedYear(),
+      selectedDate.getFullYear(),
       courseStartDate.year(),
       'Selected year initialized to course start date year.'
     );
     assert.equal(
-      interactor.selectedMonth(),
+      selectedDate.getMonth(),
       courseStartDate.month(),
       'Selected month initialized to course start date month.'
     );
     assert.equal(
-      interactor.selectedDay(),
+      selectedDate.getDate(),
       courseStartDate.date(),
       'Selected day initialized to course start date day.'
     );
-
   });
 
   test('after course endDate default initial startDate falls on course end date', async function(assert) {
-    this.set('nothing', nothing);
     const courseStartDate = moment().subtract(4, 'days');
     const courseEndDate = moment().subtract(2, 'days');
     this.set('courseStartDate', courseStartDate);
     this.set('courseEndDate', courseEndDate);
-    this.set('nothing', nothing);
-
     await render(hbs`<OfferingForm
-      @close={{action nothing}}
-      @courseStartDate={{courseStartDate}}
-      @courseEndDate={{courseEndDate}}
+      @close={{noop}}
+      @courseStartDate={{this.courseStartDate}}
+      @courseEndDate={{this.courseEndDate}}
     />`);
-
-    const startDate = '.start-date input';
-    const interactor = openDatepicker(find(startDate));
+    const selectedDate = new Date(component.startDate.value);
     assert.equal(
-      interactor.selectedYear(),
+      selectedDate.getFullYear(),
       courseEndDate.year(),
       'Selected year initialized to course start date year.'
     );
     assert.equal(
-      interactor.selectedMonth(),
+      selectedDate.getMonth(),
       courseEndDate.month(),
       'Selected month initialized to course start date month.'
     );
     assert.equal(
-      interactor.selectedDay(),
+      selectedDate.getDate(),
       courseEndDate.date(),
       'Selected day initialized to course start date day.'
     );
-
   });
 
   test('between course startDate and endDate default initial startDate falls on today', async function(assert) {
-    this.set('nothing', nothing);
     const courseStartDate = moment().subtract(4, 'days');
     const courseEndDate = moment().add(4, 'days');
     const today = moment();
     this.set('courseStartDate', courseStartDate);
     this.set('courseEndDate', courseEndDate);
-    this.set('nothing', nothing);
-
     await render(hbs`<OfferingForm
-      @close={{action nothing}}
-      @courseStartDate={{courseStartDate}}
-      @courseEndDate={{courseEndDate}}
+      @close={{noop}}
+      @courseStartDate={{this.courseStartDate}}
+      @courseEndDate={{this.courseEndDate}}
     />`);
-
-    const startDate = '.start-date input';
-    const interactor = openDatepicker(find(startDate));
+    const selectedDate = new Date(component.startDate.value);
     assert.equal(
-      interactor.selectedYear(),
+      selectedDate.getFullYear(),
       today.year(),
       'Selected year initialized to course start date year.'
     );
     assert.equal(
-      interactor.selectedMonth(),
+      selectedDate.getMonth(),
       today.month(),
       'Selected month initialized to course start date month.'
     );
     assert.equal(
-      interactor.selectedDay(),
+      selectedDate.getDate(),
       today.date(),
       'Selected day initialized to course start date day.'
     );
@@ -256,18 +174,16 @@ module('Integration | Component | offering form', function(hooks) {
 
   test('close sends close', async function(assert) {
     assert.expect(1);
-    this.set('close', ()=>{
+    this.set('close', () => {
       assert.ok(true);
     });
-    const closeButton = '.buttons .cancel';
-    await render(hbs`<OfferingForm @close={{action close}} />`);
-    await click(closeButton);
+    await render(hbs`<OfferingForm @close={{this.close}} />`);
+    await component.close();
   });
 
   test('save not recurring', async function(assert) {
     assert.expect(7);
-    this.set('nothing', nothing);
-    this.set('save', (startDate, endDate, room, learners, learnerGroups, instructorGroups, instructors)=>{
+    this.set('save', async (startDate, endDate, room, learners, learnerGroups, instructorGroups, instructors) => {
       assert.equal(moment(startDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
       assert.equal(moment(endDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
       assert.equal(room, 'TBD');
@@ -276,27 +192,18 @@ module('Integration | Component | offering form', function(hooks) {
       assert.equal(instructorGroups.length, 0);
       assert.equal(instructors.length, 0);
     });
-    const save = '.buttons .done';
-    await render(hbs`<OfferingForm @close={{action nothing}} @save={{action save}} />`);
-
-    await click(save);
-
-    return settled();
+    await render(hbs`<OfferingForm @close={{noop}} @save={{this.save}} />`);
+    await component.save();
   });
 
   test('save recurring one week with days selected before initial date', async function(assert) {
     assert.expect(2);
-    this.set('nothing', nothing);
-
     const wednesday = moment().add(1, 'week').day(3);
     const thursday = wednesday.clone().add(1, 'day').day();
     const tuesday = wednesday.clone().subtract(1, 'day').day();
-    const toggle = '.make-recurring [data-test-toggle-yesno] [data-test-handle]';
-    const startDateInput = '.start-date input';
     const newStartDate = wednesday.toDate();
-
     let savedCount = 0;
-    this.set('save', (startDate)=>{
+    this.set('save', async (startDate) => {
       let expectedStartDate;
       if (savedCount === 0) {
         expectedStartDate = wednesday.clone();
@@ -310,40 +217,27 @@ module('Integration | Component | offering form', function(hooks) {
       }
 
       savedCount++;
-
-      return resolve();
     });
-
-    const save = '.buttons .done';
     await render(hbs`<OfferingForm
-      @close={{action nothing}}
+      @close={{noop}}
       @showMakeRecurring={{true}}
-      @save={{action save}}
+      @save={{this.save}}
     />`);
-
-    await click(toggle);
-    const interactor = openDatepicker(find(startDateInput));
-    interactor.selectDate(newStartDate);
-
-    await click(`[data-test-recurring-day-input="${thursday}"]`);
-    await click(`[data-test-recurring-day-input="${tuesday}"]`);
-    await click(save);
+    await component.recurring.toggle();
+    await component.startDate.set(newStartDate);
+    await component.recurring.weekdays[tuesday].input.toggle();
+    await component.recurring.weekdays[thursday].input.toggle();
+    await component.save();
   });
 
   test('save recurring 3 weeks should get lots of days', async function(assert) {
     assert.expect(8);
-    this.set('nothing', nothing);
-
     const wednesday = moment().add(1, 'week').day(3);
     const thursday = wednesday.clone().add(1, 'day').day();
     const tuesday = wednesday.clone().subtract(1, 'day').day();
-    const weeks = '.make-recurring-input-container input';
-    const toggle = '.make-recurring [data-test-toggle-yesno] [data-test-handle]';
-    const startDateInput = '.start-date input';
     const newStartDate = wednesday.toDate();
-
     let savedCount = 0;
-    this.set('save', (startDate)=>{
+    this.set('save', async (startDate) => {
       let expectedStartDate;
       if (savedCount === 0) {
         expectedStartDate = wednesday.clone();
@@ -369,192 +263,123 @@ module('Integration | Component | offering form', function(hooks) {
       }
 
       savedCount++;
-
-      return resolve();
     });
-
-    const save = '.buttons .done';
     await render(hbs`<OfferingForm
-      @close={{action nothing}}
+      @close={{noop}}
       @showMakeRecurring={{true}}
-      @save={{action save}}
+      @save={{this.save}}
     />`);
-
-    await click(toggle);
-    await fillIn(weeks, 3);
-    const interactor = openDatepicker(find(startDateInput));
-    interactor.selectDate(newStartDate);
-    await click(`[data-test-recurring-day-input="${thursday}"]`);
-    await click(`[data-test-recurring-day-input="${tuesday}"]`);
-
-    await click(save);
+    await component.recurring.toggle();
+    await component.recurring.setWeeks("3");
+    await component.startDate.set(newStartDate);
+    await component.recurring.weekdays[tuesday].input.toggle();
+    await component.recurring.weekdays[thursday].input.toggle();
+    await component.save();
   });
 
   test('changing start date changes end date', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
-
-    const startDate = '.start-date input';
-    const endDate = '.end-date-time .text';
+    await render(hbs`<OfferingForm @close={{noop}} />`);
     const format = 'M/D/YYYY h:mm a';
     const newStartDate = moment().add(1, 'day').toDate();
-    const interactor = openDatepicker(find(startDate));
-    assert.equal(moment().hour(9).minute(0).format(format), find(endDate).textContent.trim());
-    interactor.selectDate(newStartDate);
-    await settled();
-    assert.equal(moment(newStartDate).hour(9).minute(0).format(format), find(endDate).textContent.trim());
-
+    assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
+    await component.startDate.set(newStartDate);
+    assert.equal(moment(newStartDate).hour(9).minute(0).format(format), component.endDate.value);
   });
 
   test('changing start time changes end date', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
-
-    const startHour = '.start-time select:nth-of-type(1)';
-    const startMinute = '.start-time select:nth-of-type(2)';
-    const startAmPm = '.start-time select:nth-of-type(3)';
-    const endDate = '.end-date-time .text';
+    await render(hbs`<OfferingForm @close={{noop}} />`);
     const format = 'M/D/YYYY h:mm a';
-    assert.equal(moment().hour(9).minute(0).format(format), find(endDate).textContent.trim());
-    await fillIn(startHour, '2');
-    await fillIn(startMinute, '15');
-    await fillIn(startAmPm, 'pm');
-
-    assert.equal(moment().hour(15).minute(15).format(format), find(endDate).textContent.trim());
-
+    assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
+    await component.startTime.hour('2');
+    await component.startTime.minutes('15');
+    await component.startTime.ampm('pm');
+    assert.equal(moment().hour(15).minute(15).format(format), component.endDate.value);
   });
 
   test('changing duration changes end date', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
-
-    const durationHour = '.offering-duration .hours input';
-    const durationMinute = '.offering-duration .minutes input';
-    const endDate = '.end-date-time .text';
+    await render(hbs`<OfferingForm @close={{noop}} />`);
     const format = 'M/D/YYYY h:mm a';
-    assert.equal(moment().hour(9).minute(0).format(format), find(endDate).textContent.trim());
-    await fillIn(durationHour, '2');
-    await fillIn(durationMinute, '15');
-    assert.equal(moment().hour(10).minute(15).format(format), find(endDate).textContent.trim());
+    assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
+    await component.duration.hours.set('2');
+    await component.duration.minutes.set('15');
+    assert.equal(moment().hour(10).minute(15).format(format), component.endDate.value);
   });
 
   // @see https://github.com/ilios/frontend/issues/1903
   test('changing duration and start time changes end date', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
-
-    const startHour = '.start-time select:nth-of-type(1)';
-    const startMinute = '.start-time select:nth-of-type(2)';
-    const startAmPm = '.start-time select:nth-of-type(3)';
-    const durationHour = '.offering-duration .hours input';
-    const durationMinute = '.offering-duration .minutes input';
-    const endDate = '.end-date-time .text';
+    await render(hbs`<OfferingForm @close={{noop}} />`);
     const format = 'M/D/YYYY h:mm a';
-    assert.equal(moment().hour(9).minute(0).format(format), find(endDate).textContent.trim());
-    await fillIn(startHour, '2');
-    await fillIn(startMinute, '10');
-    await fillIn(startAmPm, 'pm');
-    await fillIn(durationHour, '2');
-    await fillIn(durationMinute, '50');
-    assert.equal(moment().hour(17).minute(0).format(format), find(endDate).textContent.trim());
+    assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
+    await component.startTime.hour('2');
+    await component.startTime.minutes('10');
+    await component.startTime.ampm('pm');
+    await component.duration.hours.set('2');
+    await component.duration.minutes.set( '50');
+    assert.equal(moment().hour(17).minute(0).format(format), component.endDate.value);
   });
 
   test('learner manager is not present in small-group mode', async function(assert) {
-    assert.expect(1);
     await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`);
-    assert.dom('[data-test-learner-selection-manager').doesNotExist();
+    assert.notOk(component.learners.isPresent);
   });
 
   test('learner manager is present in single-offering mode', async function(assert) {
-    assert.expect(1);
     await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{false}} />`);
-    assert.dom('[data-test-learner-selection-manager').exists();
+    assert.ok(component.learners.isPresent);
   });
 
   test('learnerGroup validation errors do not show up initially', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @smallGroupMode={{true}} />`);
-
-    const item = '.learner-groups';
-    const error = `${item} .validation-error-message`;
-
-    return settled().then(()=>{
-      assert.dom(error).doesNotExist();
-    });
+    await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`);
+    assert.notOk(component.learnerGroups.hasError);
   });
 
   test('learnerGroup validation errors show up when saving', async function(assert) {
-    this.set('nothing', nothing);
-    await render(hbs`<OfferingForm @close={{action nothing}} @smallGroupMode={{true}} />`);
-
-    const item = '.learner-groups';
-    const error = `${item} .validation-error-message`;
-    const save = '.buttons .done';
-
-    await click(save);
-
-    return settled().then(()=>{
-      assert.dom(error).exists({ count: 1 });
-    });
+    await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`);
+    await component.save();
+    assert.ok(component.learnerGroups.hasError);
   });
 
   test('renders when an offering is provided', async function(assert) {
-    const offering = EmberObject.create({
+    const offering = this.server.create('offering', {
       room: 'emerald bay',
       startDate: moment('2005-06-24').hour(18).minute(24).toDate(),
       endDate: moment('2005-06-24').hour(19).minute(24).toDate(),
-      learnerGroups: resolve([]),
-      learners: resolve([]),
-      instructors: resolve([]),
-      instructorGroups: resolve([]),
     });
-
-    this.set('nothing', nothing);
-    this.set('offering', offering);
+    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
+    this.set('offering', offeringModel);
     await render(hbs`<OfferingForm
-      @offering={{offering}}
-      @close={{action nothing}}
+      @offering={{this.offering}}
+      @close={{noop}}
       @showRoom={{true}}
       @showMakeRecurring={{true}}
       @showInstructors={{true}}
     />`);
-    const startDate = '.start-date input';
-    const room = '.room input';
-    const durationHours = '.offering-duration .hours input';
-    const durationMinutes = '.offering-duration .minutes input';
-
-    assert.dom(room).hasValue('emerald bay');
-    assert.dom(durationHours).hasValue('1');
-    assert.dom(durationMinutes).hasValue('0');
-
-    const interactor = openDatepicker(find(startDate));
-    return settled().then(()=> {
-      assert.equal(
-        interactor.selectedYear(),
-        2005,
-        'Selected year initialized to offering start date year.'
-      );
-      assert.equal(
-        interactor.selectedMonth(),
-        '5',
-        'Selected month initialized to offering start date month.'
-      );
-      assert.equal(
-        interactor.selectedDay(),
-        '24',
-        'Selected day initialized to offering start date day.'
-      );
-    });
+    assert.equal(component.location.value, 'emerald bay');
+    assert.equal(component.duration.hours.value, '1');
+    assert.equal(component.duration.minutes.value, '0');
+    const selectedDate = new Date(component.startDate.value);
+    assert.equal(
+      selectedDate.getFullYear(),
+      offeringModel.startDate.getFullYear(),
+      'Selected year initialized to offering start date year.'
+    );
+    assert.equal(
+      selectedDate.getMonth(),
+      offeringModel.startDate.getMonth(),
+      'Selected month initialized to offering start date month.'
+    );
+    assert.equal(
+      selectedDate.getDate(),
+      offeringModel.startDate.getDate(),
+      'Selected day initialized to offering start date day.'
+    );
   });
 
   test('shows current timezone', async function(assert) {
-    this.set('nothing', () => {});
-    await render(hbs`<OfferingForm @close={{action nothing}} />`);
-
+    await render(hbs`<OfferingForm @close={{noop}} />`);
     const timezoneService = this.owner.lookup('service:timezone');
-    const timezoneValue  = '[data-test-current-timezone]';
     const currentTimezone = moment.tz.guess();
-    assert.dom(timezoneValue).containsText(timezoneService.formatTimezone(currentTimezone));
+    assert.equal(component.currentTimezone.text, timezoneService.formatTimezone(currentTimezone));
   });
 
   test('save date with new timezone', async function(assert) {
@@ -562,48 +387,30 @@ module('Integration | Component | offering form', function(hooks) {
     const newTimezone = 'Pacific/Midway';
     const utc = 'Etc/UTC';
     const currentTimezone = moment.tz.guess();
-
-    const offering = EmberObject.create({
+    const offering = this.server.create('offering', {
       room: 'emerald bay',
       startDate: moment('2005-06-24').hour(18).minute(24).toDate(),
       endDate: moment('2005-06-24').hour(19).minute(24).toDate(),
-      learnerGroups: resolve([]),
-      learners: resolve([]),
-      instructors: resolve([]),
-      instructorGroups: resolve([]),
     });
-    this.set('nothing', nothing);
-    this.set('offering', offering);
-    this.set('save', (startDate, endDate)=>{
+    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
+    this.set('offering', offeringModel);
+    this.set('save', async (startDate, endDate) => {
       assert.equal('2005-06-25 05:24', moment(startDate).tz(utc).format('Y-MM-DD HH:mm'));
       assert.equal('2005-06-25 06:24', moment(endDate).tz(utc).format('Y-MM-DD HH:mm'));
     });
-    const save = '.buttons .done';
-    await render(hbs`<OfferingForm @offering={{offering}} @close={{action nothing}} @save={{action save}} />`);
-
     const timezoneService = this.owner.lookup('service:timezone');
-
-    const currentTimezoneDisplay = '[data-test-current-timezone]';
-    const timezonePicker = '[data-test-timezone-picker] select';
-    const timezonePickerLabel = '[data-test-timezone-picker] label';
-
+    await render(hbs`<OfferingForm @offering={{this.offering}} @close={{noop}} @save={{this.save}} />`);
     assert.notEqual(newTimezone, currentTimezone);
-
-    assert.dom(timezonePicker).isNotVisible();
-    assert.dom(timezonePickerLabel).isNotVisible();
-
-    await click(currentTimezoneDisplay);
-
-    assert.dom(timezonePicker).isVisible();
-    assert.dom(timezonePickerLabel).isVisible();
-    assert.dom(timezonePicker).hasValue(currentTimezone);
-
-    await fillIn(timezonePicker, newTimezone);
-
-    assert.dom(timezonePicker).isNotVisible();
-    assert.dom(timezonePickerLabel).isNotVisible();
-    assert.dom(currentTimezoneDisplay).containsText(timezoneService.formatTimezone(newTimezone));
-
-    await click(save);
+    assert.notOk(component.timezoneEditor.label.isPresent);
+    assert.notOk(component.timezoneEditor.picker.isPresent);
+    await component.currentTimezone.edit();
+    assert.ok(component.timezoneEditor.label.isPresent);
+    assert.ok(component.timezoneEditor.picker.isPresent);
+    assert.equal(component.timezoneEditor.picker.value, currentTimezone);
+    await component.timezoneEditor.picker.select(newTimezone);
+    assert.notOk(component.timezoneEditor.label.isPresent);
+    assert.notOk(component.timezoneEditor.picker.isPresent);
+    assert.equal(component.currentTimezone.text, timezoneService.formatTimezone(newTimezone));
+    await component.save();
   });
 });

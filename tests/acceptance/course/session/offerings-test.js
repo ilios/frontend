@@ -189,18 +189,18 @@ module('Acceptance | Session - Offerings', function(hooks) {
     await page.offerings.header.createNew();
     const { offeringForm: form } = page.offerings;
     await page.offerings.singleOffering();
-    await form.startDate(new Date(2011, 8, 11));
+    await form.startDate.set(new Date(2011, 8, 11));
     await form.startTime.hour(2);
     await form.startTime.minutes(15);
     await form.startTime.ampm('am');
-    await form.hours(15);
-    await form.minutes(15);
-    await form.location('Rm. 111');
+    await form.duration.hours.set(15);
+    await form.duration.minutes.set(15);
+    await form.location.set('Rm. 111');
 
-    await form.learnerGroupManager.availableLearnerGroups.cohorts[0].topLevelGroups[0].add();
-    await form.learnerGroupManager.availableLearnerGroups.cohorts[0].topLevelGroups[1].add();
-    await form.instructorSelectionManager.search('guy');
-    await form.instructorSelectionManager.searchResults[0].add();
+    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[0].add();
+    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[1].add();
+    await form.instructors.manager.search('guy');
+    await form.instructors.manager.searchResults[0].add();
     await form.save();
 
     const block = page.offerings.dateBlocks[0];
@@ -230,18 +230,18 @@ module('Acceptance | Session - Offerings', function(hooks) {
     await page.offerings.header.createNew();
     const { offeringForm: form } = page.offerings;
     await page.offerings.singleOffering();
-    await form.startDate(new Date(2011, 8, 11));
+    await form.startDate.set(new Date(2011, 8, 11));
     await form.startTime.hour(2);
     await form.startTime.minutes(15);
     await form.startTime.ampm('am');
-    await form.hours(39);
-    await form.minutes(15);
-    await form.location('Rm. 111');
+    await form.duration.hours.set(39);
+    await form.duration.minutes.set(15);
+    await form.location.set('Rm. 111');
 
-    await form.learnerGroupManager.availableLearnerGroups.cohorts[0].topLevelGroups[0].add();
-    await form.learnerGroupManager.availableLearnerGroups.cohorts[0].topLevelGroups[1].add();
-    await form.instructorSelectionManager.search('guy');
-    await form.instructorSelectionManager.searchResults[0].add();
+    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[0].add();
+    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[1].add();
+    await form.instructors.manager.search('guy');
+    await form.instructors.manager.searchResults[0].add();
     await form.save();
 
     const block = page.offerings.dateBlocks[0];
@@ -273,15 +273,15 @@ module('Acceptance | Session - Offerings', function(hooks) {
     await page.offerings.header.createNew();
     const { offeringForm: form } = page.offerings;
     await page.offerings.smallGroup();
-    await form.startDate(new Date(2011, 8, 11));
+    await form.startDate.set(new Date(2011, 8, 11));
     await form.startTime.hour(2);
     await form.startTime.minutes(15);
     await form.startTime.ampm('am');
-    await form.hours(15);
-    await form.minutes(15);
+    await form.duration.hours.set(15);
+    await form.duration.minutes.set(15);
 
-    await form.learnerGroupManager.availableLearnerGroups.cohorts[0].topLevelGroups[0].add();
-    await form.learnerGroupManager.availableLearnerGroups.cohorts[0].topLevelGroups[1].add();
+    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[0].add();
+    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[1].add();
     await form.save();
 
     const block = page.offerings.dateBlocks[0];
@@ -319,17 +319,17 @@ module('Acceptance | Session - Offerings', function(hooks) {
 
     const { offeringForm: form } = page.offerings.dateBlocks[0].offerings[0];
 
-    await form.startDate(new Date(2011, 9, 5));
+    await form.startDate.set(new Date(2011, 9, 5));
     await form.startTime.hour(11);
     await form.startTime.minutes(45);
     await form.startTime.ampm('am');
-    await form.hours(6);
-    await form.minutes(10);
-    await form.location('Rm. 111');
+    await form.duration.hours.set(6);
+    await form.duration.minutes.set(10);
+    await form.location.set('Rm. 111');
 
-    await form.learnerGroupManager.selectedLearnerGroups[0].removeAll();
-    await form.instructorSelectionManager.instructors[0].remove();
-    await form.instructorSelectionManager.instructorGroups[0].remove();
+    await form.learnerGroups.manager.selectedLearnerGroups[0].removeAll();
+    await form.instructors.manager.instructors[0].remove();
+    await form.instructors.manager.instructorGroups[0].remove();
 
     await form.save();
 
@@ -365,19 +365,19 @@ module('Acceptance | Session - Offerings', function(hooks) {
     await page.offerings.header.createNew();
     const { offeringForm: form } = page.offerings;
     await page.offerings.smallGroup();
-    await form.startDate(new Date(2015, 4, 22));
+    await form.startDate.set(new Date(2015, 4, 22));
     await form.startTime.hour(2);
     await form.startTime.minutes(15);
     await form.startTime.ampm('am');
-    await form.hours(13);
-    await form.minutes(8);
+    await form.duration.hours.set(13);
+    await form.duration.minutes.set(8);
 
 
-    await form.toggleRecurring();
-    await form.recurringWeeks(4);
+    await form.recurring.toggle();
+    await form.recurring.setWeeks(4);
 
-    await form.learnerGroupManager.availableLearnerGroups.cohorts[0].topLevelGroups[0].add();
-    await form.learnerGroupManager.availableLearnerGroups.cohorts[0].topLevelGroups[1].add();
+    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[0].add();
+    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[1].add();
 
     await form.save();
 
@@ -420,19 +420,19 @@ module('Acceptance | Session - Offerings', function(hooks) {
     await page.offerings.header.createNew();
     const { offeringForm: form } = page.offerings;
     await page.offerings.singleOffering();
-    await form.startDate(new Date(2015, 4, 22));
+    await form.startDate.set(new Date(2015, 4, 22));
     await form.startTime.hour(2);
     await form.startTime.minutes(15);
     await form.startTime.ampm('am');
-    await form.hours(13);
-    await form.minutes(8);
-    await form.location('Scottsdale Stadium');
+    await form.duration.hours.set(13);
+    await form.duration.minutes.set(8);
+    await form.location.set('Scottsdale Stadium');
 
-    await form.toggleRecurring();
-    await form.recurringWeeks(4);
+    await form.recurring.toggle();
+    await form.recurring.setWeeks(4);
 
-    await form.learnerGroupManager.availableLearnerGroups.cohorts[0].topLevelGroups[0].add();
-    await form.learnerGroupManager.availableLearnerGroups.cohorts[0].topLevelGroups[1].add();
+    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[0].add();
+    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[1].add();
 
     await form.save();
 

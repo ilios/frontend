@@ -308,7 +308,7 @@ module('Acceptance | Course - Session List', function(hooks) {
     await offerings.objectAt(0).edit();
     const { offeringForm: form } = offerings.objectAt(0);
     const newDate = moment(new Date(2011, 8, 11)).hour(2).minute(15);
-    await form.startDate(newDate.toDate());
+    await form.startDate.set(newDate.toDate());
     await form.startTime.hour(newDate.format('h'));
     await form.startTime.minutes(newDate.format('m'));
     await form.startTime.ampm(newDate.format('a'));
