@@ -15,11 +15,12 @@ const definition = {
     title: text('.domain-title'),
     selected: hasClass('selected'),
     notSelected: notHasClass('selected'),
+    toggle: clickable('input'),
     competencies: collection('ul li', {
       title: text(),
       selected: hasClass('selected', 'label'),
       notSelected: notHasClass('selected', 'label'),
-      add: clickable('input')
+      toggle: clickable('input')
     }),
   }),
   hasNoCompetenciesMessage: isPresent('[data-test-no-competencies-message]'),
