@@ -1,0 +1,14 @@
+.program-year-objective-list-item {
+  .link-button {
+    @include ilios-link-button;
+  }
+  ul {
+    @include ilios-list-reset;
+  }
+
+  .title {
+    p:first-of-type {
+      margin-top: 0;
+    }
+  }
+}

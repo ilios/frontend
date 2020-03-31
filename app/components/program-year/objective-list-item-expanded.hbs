@@ -1,4 +1,8 @@
-<tr>
+<tr
+  {{did-insert (perform this.load) @objective}}
+  {{did-update (perform this.load) @objective @objective.courses}}
+  data-test-program-year-objective-list-item-expanded-heading
+>
   <td colspan="2"></td>
   <td colspan="13">
     <strong>
@@ -12,11 +16,14 @@
   </td>
   <td colspan="1"></td>
 </tr>
-{{#if (is-fulfilled courseObjects)}}
-  {{#each (sort-by "title" (await courseObjects)) as |obj|}}
-    <tr class="programyear-objective-list-item-expanded" data-test-programyear-objective-list-item-expanded>
+{{#if (is-array this.courseObjects)}}
+  {{#each (sort-by "title" this.courseObjects) as |obj|}}
+    <tr
+      class="programyear-objective-list-item-expanded"
+      data-test-program-year-objective-list-item-expanded-course
+    >
       <td colspan="2"></td>
-      <td colspan="13" class="text-top" data-test-course>
+      <td colspan="13" class="text-top" data-test-title>
         {{obj.title}}
       </td>
       <td colspan="13" class="text-top">
@@ -33,7 +40,7 @@
   {{else}}
     <tr>
       <td colspan="2"></td>
-      <td colspan="27">
+      <td colspan="27" data-test-none>
         {{t "general.none"}}
       </td>
     </tr>

@@ -84,8 +84,8 @@
         />
       {{/if}}
     {{else}}
-      <ProgramyearObjectiveList
-        @subject={{@programYear}}
+      <ProgramYear::ObjectiveList
+        @programYear={{@programYear}}
         @editable={{@editable}}
         @manageDescriptors={{perform this.manageDescriptors}}
         @manageCompetency={{perform this.manageCompetency}}
