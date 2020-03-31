@@ -1,8 +1,8 @@
 import Component from '@ember/component';
-import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
+import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { task } from 'ember-concurrency';
 
-export default Component.extend(SortableByPosition, {
+export default Component.extend({
   classNames: ['objective-sort-manager'],
   sortableObjectList: null,
   subject: null,
@@ -16,7 +16,7 @@ export default Component.extend(SortableByPosition, {
 
   loadAttr: task(function * (subject) {
     const objectives = yield subject.get('objectives');
-    this.set('sortableObjectList', objectives.toArray().sort(this.get('positionSortingCallback')));
+    this.set('sortableObjectList', objectives.toArray().sort(sortableByPosition));
   }),
 
 });

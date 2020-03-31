@@ -6,12 +6,12 @@ import { isEmpty } from '@ember/utils';
 import moment from 'moment';
 import PublishableModel from 'ilios-common/mixins/publishable-model';
 import CategorizableModel from 'ilios-common/mixins/categorizable-model';
-import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
+import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 
 const { filterBy, mapBy, sum } = computed;
 const { all, map } = RSVP;
 
-export default Model.extend(PublishableModel, CategorizableModel, SortableByPosition, {
+export default Model.extend(PublishableModel, CategorizableModel, {
   title: attr('string'),
   level: attr('number'),
   year: attr('number'),
@@ -152,7 +152,7 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    */
   sortedObjectives: computed('objectives.@each.position', async function() {
     const objectives = await this.get('objectives');
-    return objectives.toArray().sort(this.positionSortingCallback);
+    return objectives.toArray().sort(sortableByPosition);
   }),
 
   hasMultipleCohorts: computed('cohorts.[]', function(){

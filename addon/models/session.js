@@ -5,13 +5,13 @@ import RSVP from 'rsvp';
 import moment from 'moment';
 import PublishableModel from 'ilios-common/mixins/publishable-model';
 import CategorizableModel from 'ilios-common/mixins/categorizable-model';
-import SortableByPosition from 'ilios-common/mixins/sortable-by-position';
+import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 
 
 const { alias, mapBy, sum } = computed;
 const { all } = RSVP;
 
-export default Model.extend(PublishableModel, CategorizableModel, SortableByPosition, {
+export default Model.extend(PublishableModel, CategorizableModel, {
   title: attr('string'),
   attireRequired: attr('boolean'),
   equipmentRequired: attr('boolean'),
@@ -239,7 +239,7 @@ export default Model.extend(PublishableModel, CategorizableModel, SortableByPosi
    */
   sortedObjectives: computed('objectives.@each.position', async function() {
     const objectives = await this.get('objectives');
-    return objectives.toArray().sort(this.positionSortingCallback);
+    return objectives.toArray().sort(sortableByPosition);
   }),
 
   /**
