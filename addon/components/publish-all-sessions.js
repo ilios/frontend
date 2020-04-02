@@ -1,242 +1,134 @@
-import Component from '@ember/component';
-import { action, computed } from '@ember/object';
-import { equal } from '@ember/object/computed';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { isEmpty } from '@ember/utils';
-import { all, Promise as RSVPPromise } from 'rsvp';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { all } from 'rsvp';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  router: service(),
-  store: service(),
+export default class PublishAllSessionsComponent extends Component {
+  @service router;
+  @service store;
+  @service flashMessages;
 
-  isSaving: false,
-  classNames: ['publish-all-sessions'],
-  sessions: null,
-  sessionsToOverride: null,
-  publishableCollapsed: true,
-  unPublishableCollapsed: true,
-  totalSessionsToSave: null,
-  currentSessionsSaved: null,
+  @tracked sessionsToOverride = [];
+  @tracked publishableCollapsed = true;
+  @tracked unPublishableCollapsed = true;
+  @tracked showWarning = false;
+  @tracked totalSessionsToSave = [];
+  @tracked currentSessionsSaved = [];
 
-  noSessionsAsIs: equal('sessionsToOverride.length', 0),
-  /**
-   * @property allSessionsAsIs
-   * @type {Ember.computed}
-   * @public
-   */
-  allSessionsAsIs: computed('sessionsToOverride.[]', 'overridableSessions.[]', async function(){
-    const overridableSessions = await this.get('overridableSessions');
-    return (this.get('sessionsToOverride').get('length') === overridableSessions.length);
-  }),
+  get noSessionsAsIs() {
+    return this.sessionsToOverride.length === 0;
+  }
 
-  /**
-   * @property publishableSessions
-   * @type {Ember.computed}
-   * @public
-   */
-  publishableSessions: computed('sessions.@each.allPublicationIssuesLength', async function(){
-    const sessions = await this.get('sessions');
-    return sessions.filter(session => {
-      return (session.get('allPublicationIssuesLength') === 0);
+  @restartableTask
+  *load() {
+    const objectives = yield this.args.course.objectives;
+    this.showWarning = objectives.any((objective) => !objective.parents.length);
+  }
+
+  get allSessionsAsIs(){
+    return (this.sessionsToOverride.length === this.overridableSessions.length);
+  }
+
+  get publishableSessions(){
+    return this.args.sessions.filter(session => {
+      return (session.allPublicationIssuesLength === 0);
     });
-  }),
+  }
 
-  /**
-   * @property unPublishableSessions
-   * @type {Ember.computed}
-   * @public
-   */
-  unPublishableSessions: computed('sessions.@each.requiredPublicationIssues', async function(){
-    const sessions = await this.get('sessions');
-    return sessions.filter(session => {
-      return (session.get('requiredPublicationIssues').get('length') > 0);
+  get unPublishableSessions(){
+    return this.args.sessions.filter(session => {
+      return (session.requiredPublicationIssues.length > 0);
     });
-  }),
+  }
 
-  /**
-   * @property overridableSessions
-   * @type {Ember.computed}
-   * @public
-   */
-  overridableSessions: computed('sessions.@each.{requiredPublicationIssues,optionalPublicationIssues}', function(){
-    return new RSVPPromise(resolve => {
-      this.get('sessions').then(sessions=>{
-        const filteredSessions = sessions.filter(session => {
-          return (
-            session.get('requiredPublicationIssues').get('length') === 0 &&
-            session.get('optionalPublicationIssues').get('length') > 0
-          );
-        });
-        resolve(filteredSessions);
-      });
+  get overridableSessions(){
+    return this.args.sessions.filter(session => {
+      return (
+        session.requiredPublicationIssues.length === 0 &&
+        session.optionalPublicationIssues.length > 0
+      );
     });
-  }),
+  }
 
-  /**
-   * @property publishCount
-   * @type {Ember.computed}
-   * @public
-   */
-  publishCount: computed('publishableSessions.[]','sessionsToOverride.length', function() {
-    return new RSVPPromise(resolve => {
-      this.get('publishableSessions').then(publishableSessions => {
-        resolve(publishableSessions.length + parseInt(this.get('sessionsToOverride.length'), 10));
-      });
-    });
-  }),
+  get publishCount() {
+    return this.publishableSessions.length + this.sessionsToOverride.length;
+  }
 
-  /**
-   * @property scheduleCount
-   * @type {Ember.computed}
-   * @public
-   */
-  scheduleCount: computed('overridableSessions.[]', 'sessionsToOverride.length', function() {
-    return new RSVPPromise(resolve => {
-      this.get('overridableSessions').then(overridableSessions => {
-        resolve(overridableSessions.length - parseInt(this.get('sessionsToOverride.length'), 10));
-      });
-    });
-  }),
+  get scheduleCount() {
+    return this.overridableSessions.length - this.sessionsToOverride.length;
+  }
 
-  /**
-   * @property ignoreCount
-   * @type {Ember.computed}
-   * @public
-   */
-  ignoreCount: computed('unPublishableSessions.[]', function() {
-    return new RSVPPromise(resolve => {
-      this.get('unPublishableSessions').then(unPublishableSessions => {
-        resolve(unPublishableSessions.length);
-      });
-    });
-  }),
-
-  course: computed('sessions', async function() {
-    return await this.sessions.firstObject.course;
-  }),
-
-  showWarning: computed('course', async function() {
-    const course = await this.course;
-    const objectives = await course.objectives;
-    return objectives.any((objective) => isEmpty(objective.parents));
-  }),
-
-  init(){
-    this._super(...arguments);
-    this.set('sessionsToOverride', []);
-  },
+  get ignoreCount() {
+    return this.unPublishableSessions.length;
+  }
 
   @action
   toggleSession(session){
-    if(this.get('sessionsToOverride').includes(session)){
-      this.get('sessionsToOverride').removeObject(session);
+    if (this.sessionsToOverride.includes(session)) {
+      this.sessionsToOverride = this.sessionsToOverride.filter(({ id }) => id !== session.id);
     } else{
-      this.get('sessionsToOverride').pushObject(session);
+      this.sessionsToOverride = [...this.sessionsToOverride, session];
     }
-  },
+  }
 
   @action
-  publishAllAsIs(){
-    this.get('overridableSessions').then(overridableSessions => {
-      overridableSessions.forEach(session => {
-        if (!this.get('sessionsToOverride').includes(session)) {
-          this.get('sessionsToOverride').pushObject(session);
-        }
-      });
-    });
-  },
+  publishAllAsIs() {
+    this.sessionsToOverride = [...this.sessionsToOverride, ...this.overridableSessions].uniq();
+  }
 
   @action
-  publishNoneAsIs(){
-    this.get('overridableSessions').then(overridableSessions => {
-      overridableSessions.forEach(session => {
-        if(this.get('sessionsToOverride').includes(session)){
-          this.get('sessionsToOverride').removeObject(session);
-        }
-      });
-    });
-  },
+  publishNoneAsIs() {
+    this.sessionsToOverride = [];
+  }
 
-  @action
-  save(){
-    this.set('isSaving', true);
-    const asIsSessions = this.get('sessionsToOverride');
+  async saveSomeSessions(sessions){
+    const chunk = sessions.splice(0, 6);
+
+    await all(chunk.invoke('save'));
+    if (sessions.length) {
+      this.currentSessionsSaved += chunk.length;
+      await this.saveSomeSessions(sessions);
+    }
+  }
+
+  @dropTask
+  *save(){
     const sessionsToSave = [];
-    const promises = [];
 
-    promises.pushObject(
-      new RSVPPromise(resolve => {
-        this.get('overridableSessions').then(overridableSessions => {
-          overridableSessions.forEach(session => {
-            session.set('publishedAsTbd', !asIsSessions.includes(session));
-            session.set('published', true);
-            sessionsToSave.pushObject(session);
-          });
-          resolve();
-        });
-      })
-    );
-
-    promises.pushObject(
-      new RSVPPromise(resolve => {
-        this.get('publishableSessions').then(publishableSessions => {
-          publishableSessions.forEach(session => {
-            session.set('published', true);
-            sessionsToSave.pushObject(session);
-          });
-          resolve();
-        });
-      })
-    );
-
-    all(promises).then(() => {
-      this.set('totalSessionsToSave', sessionsToSave.length);
-      this.set('currentSessionsSaved', 0);
-
-      const saveSomeSessions = (sessions) => {
-        const chunk = sessions.splice(0, 6);
-
-        all(chunk.invoke('save')).then(() => {
-          if (sessions.length){
-            this.set('currentSessionsSaved', this.get('currentSessionsSaved') + chunk.length);
-            saveSomeSessions(sessions);
-          } else {
-            this.set('isSaving', false);
-            this.saved();
-            this.get('flashMessages').success('general.savedSuccessfully');
-          }
-        });
-      };
-      saveSomeSessions(sessionsToSave);
+    this.overridableSessions.forEach(session => {
+      session.set('publishedAsTbd', !this.sessionsToOverride.includes(session));
+      session.set('published', true);
+      sessionsToSave.push(session);
     });
-  },
 
-  @action
-  togglePublishableCollapsed(){
-    this.set('publishableCollapsed', !this.get('publishableCollapsed'));
-  },
+    this.publishableSessions.forEach(session => {
+      session.set('published', true);
+      sessionsToSave.push(session);
+    });
+    this.totalSessionsToSave = sessionsToSave.length;
+    this.currentSessionsSaved = 0;
 
-  @action
-  toggleUnPublishableCollapsed(){
-    this.set('unPublishableCollapsed', !this.get('unPublishableCollapsed'));
-  },
+    yield this.saveSomeSessions(sessionsToSave);
+    this.flashMessages.success('general.savedSuccessfully');
+    this.args.saved();
+  }
 
   @action
   async transitionToCourse() {
-    const course = await this.course;
     const queryParams = { courseObjectiveDetails: true, details: true };
-    this.router.transitionTo('course', course, { queryParams });
-  },
+    this.router.transitionTo('course', this.args.course, { queryParams });
+  }
 
   @action
   async transitionToVisualizeObjectives() {
-    const course = await this.course;
-    this.router.transitionTo('course-visualize-objectives', course);
-  },
+    this.router.transitionTo('course-visualize-objectives', this.args.course);
+  }
 
   @action
   transitionToSession(session) {
     const queryParams = { sessionObjectiveDetails: true };
     this.router.transitionTo('session', session, { queryParams });
   }
-});
+}
