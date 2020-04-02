@@ -1,9 +1,8 @@
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { find, render, settled } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { resolve } from 'rsvp';
 
 module('Integration | Component | publish all sessions', function(hooks) {
   setupRenderingTest(hooks);
@@ -54,10 +53,10 @@ module('Integration | Component | publish all sessions', function(hooks) {
     assert.expect(4);
 
     const sessions = [unpublishableSession, completeSession, publishableSession];
-    this.set('sessions', resolve(sessions));
+    this.set('sessions', sessions);
+    this.set('course', course);
 
-    await render(hbs`<PublishAllSessions @sessions={{sessions}} />`);
-    await settled();
+    await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />`);
 
     assert.ok(this.element.textContent.search(/Sessions Incomplete: cannot publish \(1\)/) !== -1);
     assert.ok(this.element.textContent.search(/Sessions Complete: ready to publish \(1\)/) !== -1);
@@ -67,14 +66,12 @@ module('Integration | Component | publish all sessions', function(hooks) {
 
   test('it renders empty', async function(assert) {
     assert.expect(5);
-    const sessions = [];
-    this.set('sessions', resolve(sessions));
 
     const reviewButtons = '.publish-all-sessions-overridable button';
     const reviewTable = '.publish-all-sessions-overridable table';
+    this.set('course', course);
 
-    await render(hbs`<PublishAllSessions @sessions={{sessions}} />`);
-    await settled();
+    await render(hbs`<PublishAllSessions @sessions={{array}} @course={{this.course}} />`);
 
     assert.ok(this.element.textContent.search(/Sessions Incomplete: cannot publish \(0\)/) !== -1);
     assert.ok(this.element.textContent.search(/Sessions Complete: ready to publish \(0\)/) !== -1);
@@ -92,10 +89,10 @@ module('Integration | Component | publish all sessions', function(hooks) {
 
     const sessions = [unpublishableSession];
     this.set('sessions', sessions);
-    await render(hbs`<PublishAllSessions @sessions={{sessions}} />`);
-    await settled();
+    this.set('course', course);
+    await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />`);
     assert.dom('[data-test-unlinked-warning]').hasText('This course has unlinked objective(s)');
-    assert.ok(!!find('.fa-unlink'));
-    assert.ok(!!find('.fa-chart-bar'));
+    assert.dom('.fa-unlink').exists();
+    assert.dom('.fa-chart-bar').exists();
   });
 });
