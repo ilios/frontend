@@ -102,7 +102,7 @@
     "ilios-common": "38.1.0",
     "loader.js": "^4.7.0",
     "npm-run-all": "^4.1.5",
-    "papaparse": "^5.1.1",
+    "papaparse": "^5.2.0",
     "postcss-scss": "^2.0.0",
     "pre-commit": "^1.2.2",
     "qunit-dom": "^1.1.0",
