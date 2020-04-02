@@ -8,7 +8,7 @@
           ) as |obj|
         }}
           <li>
-            <span class="removable" onclick={{perform removeSchool obj.school}}>
+            <span class="removable" role="button" onclick={{perform removeSchool obj.school}}>
               <FaIcon @icon="times" />
               {{obj.school.title}}
             </span>
@@ -16,6 +16,7 @@
               {{#each (sort-by "title" obj.departments) as |department|}}
                 <li
                   class="clickable"
+                  role="button"
                   onclick={{perform removeDepartment obj.school department}}
                 >
                   <FaIcon @icon="times" />
@@ -43,13 +44,14 @@
           ) as |obj|
         }}
           <li>
-            <span class="clickable" onclick={{perform addSchool obj.school}}>
+            <span class="clickable" role="button" onclick={{perform addSchool obj.school}}>
               {{obj.school.title}}
             </span>
             <ul>
               {{#each (sort-by "title" obj.departments) as |department|}}
                 <li
                   class="clickable"
+                  role="button"
                   onclick={{perform addDepartment obj.school department}}
                 >
                   {{department.title}}

@@ -1,7 +1,7 @@
 <span class="myreports-list-item" ...attributes>
   {{#unless loadTitle.isRunning}}
     {{#if reporttitle}}
-      <span class="link clickable" {{action @onReportSelect report.id}}>
+      <span class="link clickable" role="button" {{action @onReportSelect report.id}}>
         <FaIcon @icon="external-link-square-alt" />
         {{this.reporttitle}}
       </span>

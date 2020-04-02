@@ -1,5 +1,5 @@
 <section class="school-vocabularies-collapsed" ...attributes>
-  <div class="title clickable" {{action (action expand)}}>
+  <div class="title clickable" role="button" {{action (action expand)}}>
     {{t "general.vocabularies"}}
     ({{get (await school.vocabularies) "length"}})
   </div>

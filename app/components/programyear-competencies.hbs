@@ -8,8 +8,8 @@
       </div>
     {{else}}
       <div
-        class="title
-          {{if programYear.competencies.length "clickable collapsible"}}"
+        class="title {{if programYear.competencies.length "clickable collapsible"}}"
+        role="button"
         {{action "collapse"}}
       >
         {{t "general.competencies"}}
@@ -51,27 +51,22 @@
               {{#if
                 (contains (get domain "id") (map-by "id" selectedCompetencies))
               }}
-                <span
-                  class="clickable"
-                  onclick={{action "removeCompetencyFromBuffer" domain}}
-                >
-                  <input type="checkbox" checked="">
+                <label class="clickable">
+                  <input type="checkbox" checked="" {{on "click" (action "removeCompetencyFromBuffer" domain)}}>
                   {{domain.title}}
-                </span>
+                </label>
               {{else}}
-                <span
-                  class="clickable"
-                  onclick={{action "addCompetencyToBuffer" domain}}
-                >
+                <label class="clickable">
                   <input
                     type="checkbox"
                     indeterminate={{contains
                       domain
                       (await competenciesWithSelectedChildren)
                     }}
+                    {{on "click" (action "addCompetencyToBuffer" domain)}}
                   >
                   {{domain.title}}
-                </span>
+                </label>
               {{/if}}
               <ul>
                 {{#each (sort-by "title" (await competencies)) as |competency|}}
@@ -82,22 +77,21 @@
                           (get competency "id") (map-by "id" selectedCompetencies)
                         )
                       }}
-                        <span
-                          class="clickable"
-                          onclick={{action "removeCompetencyFromBuffer" competency
-                          }}
-                        >
-                          <input type="checkbox" checked="">
+                        <label class="clickable">
+                          <input
+                            type="checkbox"
+                            checked=""
+                            {{on "click" (action "removeCompetencyFromBuffer" competency)}}
+                          >
                           {{competency.title}}
-                        </span>
+                        </label>
                       {{else}}
-                        <span
-                          class="clickable"
-                          onclick={{action "addCompetencyToBuffer" competency}}
-                        >
-                          <input type="checkbox">
+                        <label class="clickable">
+                          <input
+                            type="checkbox"
+                            {{on "click" (action "addCompetencyToBuffer" competency)}}>
                           {{competency.title}}
-                        </span>
+                        </label>
                       {{/if}}
                     </li>
                   {{/if}}

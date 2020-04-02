@@ -52,7 +52,7 @@
   {{/liquid-if}}
   {{#if newVocabulary}}
     <div class="savedvocabulary">
-      <span class="clickable link" {{action manageVocabulary newVocabulary.id}}>
+      <span class="clickable link" role="button" {{action manageVocabulary newVocabulary.id}}>
         <FaIcon @icon="external-link-square-alt" />
         {{this.newVocabulary.title}}
       </span>
@@ -90,6 +90,7 @@
               <td class="text-left text-top" colspan="3">
                 <span
                   class="clickable link"
+                  role="button"
                   {{action manageVocabulary vocabulary.id}}
                 >
                   {{vocabulary.title}}
@@ -101,6 +102,7 @@
               <td class="text-left text-top" colspan="1">
                 <span
                   class="clickable edit"
+                  role="button"
                   {{action manageVocabulary vocabulary.id}}
                 >
                   <FaIcon @icon="edit" class="enabled" />

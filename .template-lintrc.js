@@ -6,7 +6,6 @@ module.exports = {
   rules: {
     'no-implicit-this': false,
     'no-action': false,
-    'no-invalid-interactive': false,
     'no-triple-curlies': false,
   }
 };

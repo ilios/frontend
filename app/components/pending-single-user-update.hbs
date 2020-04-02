@@ -23,6 +23,7 @@
             {{#if (eq update.type "emailMismatch")}}
               <span
                 class="clickable link"
+                role="button"
                 onclick={{action "updateEmailAddress" update}}
               >
                 <FaIcon
@@ -35,6 +36,7 @@
             {{/if}}
             <span
               class="clickable link"
+              role="button"
               onclick={{action "excludeFromSync" update}}
             >
               <FaIcon
@@ -44,7 +46,7 @@
               />
               {{t "general.excludeFromSync"}}
             </span>
-            <span class="clickable link" onclick={{action "disableUser" update}}>
+            <span class="clickable link" role="button" onclick={{action "disableUser" update}}>
               <FaIcon
                 @icon="times"
                 class="no"

@@ -19,13 +19,13 @@
     <div class="detail-content">
       <ul class="removable-instructors">
         {{#each (sort-by "lastName" this.instructors) as |user|}}
-          <li {{on "click" (fn this.removeInstructor user)}}>
+          <li role="button" {{on "click" (fn this.removeInstructor user)}}>
             {{user.fullName}}
             <FaIcon @icon="times" class="remove" />
           </li>
         {{/each}}
         {{#each (sort-by "title" this.instructorGroups) as |instructorGroup|}}
-          <li {{on "click" (fn this.removeInstructorGroup instructorGroup)}}>
+          <li role="button" {{on "click" (fn this.removeInstructorGroup instructorGroup)}}>
             {{instructorGroup.title}}
             <FaIcon @icon="times" class="remove" />
           </li>

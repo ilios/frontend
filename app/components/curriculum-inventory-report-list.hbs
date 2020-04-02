@@ -53,6 +53,7 @@
           <td
             class="text-center hide-from-small-screen"
             colspan="2"
+            role="button"
             data-test-program
             {{action "edit" report}}
           >
@@ -61,6 +62,7 @@
           <td
             class="text-center hide-from-small-screen"
             colspan="2"
+            role="button"
             data-test-year
             {{action "edit" report}}
           >
@@ -69,6 +71,7 @@
           <td
             class="text-center hide-from-small-screen"
             colspan="2"
+            role="button"
             data-test-start-date
             {{action "edit" report}}
           >
@@ -77,6 +80,7 @@
           <td
             class="text-center hide-from-small-screen"
             colspan="2"
+            role="button"
             data-test-end-date
             {{action "edit" report}}
           >
@@ -85,6 +89,7 @@
           <td
             class="text-center"
             colspan="2"
+            role="button"
             data-test-status
             {{action "edit" report}}
           >
@@ -108,7 +113,7 @@
               </a>
             </span>
             {{#if (await report.userCanDelete)}}
-              <span class="clickable remove" {{action "confirmRemove" report}}>
+              <span class="clickable remove" role="button" {{action "confirmRemove" report}}>
                 <FaIcon @icon="trash" class="enabled" />
               </span>
             {{else}}

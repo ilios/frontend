@@ -7,13 +7,13 @@
     {{t "general.calendar"}}
   </h2>
   <ul class="calendar-time-picker">
-    <li class="clickable" {{on "click" this.goBack}}  data-test-go-back>
+    <li class="clickable" {{on "click" this.goBack}} role="button" data-test-go-back>
       <FaIcon @icon="backward" />
     </li>
-    <li class="clickable" {{on "click" this.gotoToday}} data-test-go-today>
+    <li class="clickable" {{on "click" this.gotoToday}} role="button" data-test-go-today>
       {{t "general.today"}}
     </li>
-    <li class="clickable" {{on "click" this.goForward}} data-test-go-forward>
+    <li class="clickable" {{on "click" this.goForward}} role="button" data-test-go-forward>
       <FaIcon @icon="forward" />
     </li>
   </ul>

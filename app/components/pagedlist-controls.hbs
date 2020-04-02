@@ -1,6 +1,6 @@
 <div class="pagedlist-controls" ...attributes>
   {{#unless firstPage}}
-    <span class="clickable link backward" {{action "goBack"}}>
+    <span class="clickable link backward" role="button" {{action "goBack"}}>
       <FaIcon @icon="backward" />
     </span>
   {{/unless}}
@@ -17,7 +17,7 @@
     {{t "general.pagedResultsCount" start=start end=end total=total}}
   {{/if}}
   {{#unless lastPage}}
-    <span class="clickable link forward" {{action "goForward"}}>
+    <span class="clickable link forward" role="button" {{action "goForward"}}>
       <FaIcon @icon="forward" />
     </span>
   {{/unless}}

@@ -1,13 +1,13 @@
 {{#if (is-fulfilled allParents)}}
   <div class="breadcrumbs" data-test-breadcrumbs>
-    <span data-test-all {{action "clearVocabAndTerm"}}>
+    <span role="button" data-test-all {{action "clearVocabAndTerm"}}>
       {{t "general.allVocabularies"}}
     </span>
-    <span data-test-vocabulary {{action manageTerm null}}>
+    <span role="button" data-test-vocabulary {{action manageTerm null}}>
       {{@vocabulary.title}}
     </span>
     {{#each (await allParents) as |parent|}}
-      <span data-test-term {{action manageTerm parent.id}}>
+      <span role="button" data-test-term {{action manageTerm parent.id}}>
         {{parent.title}}
       </span>
     {{/each}}
@@ -109,7 +109,7 @@
 <div class="terms" data-test-sub-terms>
   {{#if newTerm}}
     <div class="saved-result">
-      <span class="clickable link" {{action manageTerm newTerm.id}}>
+      <span class="clickable link" role="button" {{action manageTerm newTerm.id}}>
         <FaIcon @icon="external-link-square-alt" />
         {{this.newTerm.title}}
       </span>
@@ -146,7 +146,7 @@
   {{#if (is-fulfilled sortedTerms)}}
     <ul data-test-term-list>
       {{#each (await sortedTerms) as |term|}}
-        <li data-test-term {{action manageTerm term.id}}>
+        <li role="button" data-test-term {{action manageTerm term.id}}>
           {{term.title}}
           {{#unless term.active}}
             <em>

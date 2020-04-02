@@ -5,7 +5,7 @@
     </header>
     <ul class="tree-list removable">
       {{#each (await sortedLearnerGroups) as |learnerGroup|}}
-        <li {{action "removeLearnerGroup" learnerGroup.group}}>
+        <li role="button" {{action "removeLearnerGroup" learnerGroup.group}}>
           <div class="selected-subgroup-style">
             {{learnerGroup.sortName}}
           </div>
@@ -23,7 +23,7 @@
     </header>
     <ul class="tree-list selectable">
       {{#each cohort.filteredAvailableLearnerGroups as |learnerGroup|}}
-        <li {{action "addLearnerGroup" learnerGroup}}>
+        <li role="button" {{action "addLearnerGroup" learnerGroup}}>
           {{#if (await learnerGroup.allParentTitles)}}
             <div class="available-subgroup-style">
               <SeparatedList

@@ -21,13 +21,17 @@
     <label>
       {{t "general.populateGroup"}}:
     </label>
-    <div class="clickable" onclick={{toggle "fillWithCohort" this}}>
-      <input checked={{fillWithCohort}} type="radio">
-      {{t "general.yesPopulateGroup"}}
+    <div>
+      <label class="clickable">
+        <input checked={{fillWithCohort}} type="radio" {{on "click" (toggle "fillWithCohort" this)}}>
+        {{t "general.yesPopulateGroup"}}
+      </label>
     </div>
-    <div class="clickable" onclick={{toggle "fillWithCohort" this}}>
-      <input checked={{not fillWithCohort}} type="radio">
-      {{t "general.noPopulateGroup"}}
+    <div>
+      <label class="clickable">
+        <input checked={{not fillWithCohort}} type="radio" {{on "click" (toggle "fillWithCohort" this)}}>
+        {{t "general.noPopulateGroup"}}
+      </label>
     </div>
   </div>
 {{/if}}

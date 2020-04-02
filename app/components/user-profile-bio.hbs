@@ -402,6 +402,7 @@
           {{/if}}
           <span
             class="cancel-password-field clickable link"
+            role="button"
             onclick={{action "cancelChangeUserPassword"}}
           >
             {{t "general.cancel"}}
@@ -409,6 +410,7 @@
         {{else}}
           <span
             class="clickable link activate-password-field"
+            role="button"
             onclick={{action (mut changeUserPassword) true}}
           >
             {{t "general.modifyUserPassword"}}

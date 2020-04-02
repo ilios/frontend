@@ -98,7 +98,7 @@
           <label>{{t "general.start"}}:</label>
           {{#if canUpdate}}
             <span class="editinplace">
-              <span {{action "editDatesAndDuration"}} class="editable">
+              <span {{action "editDatesAndDuration"}} class="editable" role="button">
                 {{#if sequenceBlock.startDate}}
                   {{moment-format sequenceBlock.startDate "L"}}
                 {{else}}
@@ -120,7 +120,7 @@
           <label>{{t "general.end"}}:</label>
           {{#if canUpdate}}
             <span class="editinplace">
-              <span {{action "editDatesAndDuration"}} class="editable">
+              <span {{action "editDatesAndDuration"}} class="editable" role="button">
                 {{#if sequenceBlock.endDate}}
                   {{moment-format sequenceBlock.endDate "L"}}
                 {{else}}
@@ -142,7 +142,7 @@
           <label>{{t "general.durationInDays"}}:</label>
           {{#if canUpdate}}
             <span class="editinplace">
-              <span {{action "editDatesAndDuration"}} class="editable">{{@sequenceBlock.duration}}</span>
+              <span {{action "editDatesAndDuration"}} class="editable" role="button">{{@sequenceBlock.duration}}</span>
             </span>
           {{else}}
             <span>{{@sequenceBlock.duration}}</span>
@@ -208,7 +208,7 @@
           <label>{{t "general.minimum"}}:</label>
           {{#if (and canUpdate (not isElective))}}
             <span class="editinplace">
-              <span {{action "editMinMax"}} class="editable">{{this.minimum}}</span>
+              <span {{action "editMinMax"}} class="editable" role="button">{{this.minimum}}</span>
             </span>
           {{else}}
             <span>{{this.minimum}}</span>
@@ -218,7 +218,7 @@
           <label>{{t "general.maximum"}}:</label>
           {{#if canUpdate}}
             <span class="editinplace">
-              <span {{action "editMinMax"}} class="editable">{{this.maximum}}</span>
+              <span {{action "editMinMax"}} class="editable" role="button">{{this.maximum}}</span>
             </span>
           {{else}}
             <span>{{this.maximum}}</span>

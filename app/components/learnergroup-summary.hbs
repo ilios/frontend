@@ -104,6 +104,7 @@
           {{else}}
             <span
               class={{if canUpdate "clickable link"}}
+              role="button"
               {{action "manageInstructors"}}
             >
               {{#if (get (await learnerGroup.allInstructors) "length")}}
