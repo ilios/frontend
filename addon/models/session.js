@@ -1,17 +1,14 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { isPresent, isEmpty } from '@ember/utils';
-import RSVP from 'rsvp';
+import { all } from 'rsvp';
 import moment from 'moment';
-import PublishableModel from 'ilios-common/mixins/publishable-model';
 import CategorizableModel from 'ilios-common/mixins/categorizable-model';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 
+const { alias, collect, mapBy, sum, oneWay, not } = computed;
 
-const { alias, mapBy, sum } = computed;
-const { all } = RSVP;
-
-export default Model.extend(PublishableModel, CategorizableModel, {
+export default Model.extend(CategorizableModel, {
   title: attr('string'),
   attireRequired: attr('boolean'),
   equipmentRequired: attr('boolean'),
@@ -19,6 +16,8 @@ export default Model.extend(PublishableModel, CategorizableModel, {
   attendanceRequired: attr('boolean'),
   instructionalNotes: attr('string'),
   updatedAt: attr('date'),
+  publishedAsTbd: attr('boolean'),
+  published: attr('boolean'),
   sessionType: belongsTo('session-type', { async: true }),
   course: belongsTo('course', { async: true }),
   ilmSession: belongsTo('ilm-session', { async: true }),
@@ -299,5 +298,52 @@ export default Model.extend(PublishableModel, CategorizableModel, {
   init() {
     this._super(...arguments);
     this.set('optionalPublicationLengthFields', ['terms', 'objectives', 'meshDescriptors']);
+    this.set('requiredPublicationSetFields', []);
+    this.set('requiredPublicationLengthFields', []);
+    this.set('optionalPublicationSetFields', []);
+  },
+  isPublished: alias('published'),
+  isNotPublished: not('isPublished'),
+  isScheduled: oneWay('publishedAsTbd'),
+  isPublishedOrScheduled: computed('publishTarget.isPublished', 'publishTarget.isScheduled', function(){
+    return this.get('publishedAsTbd') || this.get('isPublished');
+  }),
+  allPublicationIssuesCollection: collect('requiredPublicationIssues.length', 'optionalPublicationIssues.length'),
+  allPublicationIssuesLength: sum('allPublicationIssuesCollection'),
+  requiredPublicationSetFields: null,
+  requiredPublicationLengthFields: null,
+  optionalPublicationSetFields: null,
+  optionalPublicationLengthFields: null,
+  getRequiredPublicationIssues(){
+    const issues = [];
+    this.requiredPublicationSetFields.forEach(val => {
+      if(!this.get(val)){
+        issues.push(val);
+      }
+    });
+
+    this.requiredPublicationLengthFields.forEach(val => {
+      if(this.get(val + '.length') === 0){
+        issues.push(val);
+      }
+    });
+
+    return issues;
+  },
+  getOptionalPublicationIssues(){
+    const issues = [];
+    this.optionalPublicationSetFields.forEach(val => {
+      if(!this.get(val)){
+        issues.push(val);
+      }
+    });
+
+    this.optionalPublicationLengthFields.forEach(val => {
+      if(this.get(val + '.length') === 0){
+        issues.push(val);
+      }
+    });
+
+    return issues;
   },
 });

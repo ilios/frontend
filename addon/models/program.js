@@ -1,14 +1,15 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
-import RSVP from 'rsvp';
-import PublishableModel from 'ilios-common/mixins/publishable-model';
+import { all } from 'rsvp';
 
-const { all } = RSVP;
+const { alias, oneWay, collect, sum, not } = computed;
 
-export default Model.extend(PublishableModel,{
+export default Model.extend({
   title: attr('string'),
   shortTitle: attr('string'),
   duration: attr('number', { defaultValue: 1 }),
+  publishedAsTbd: attr('boolean'),
+  published: attr('boolean'),
   school: belongsTo('school', {async: true}),
   programYears: hasMany('program-year', { async: true, inverse: 'program' }),
   directors: hasMany('user', { async: true, inverse: 'directedPrograms' }),
@@ -58,5 +59,51 @@ export default Model.extend(PublishableModel,{
     this._super(...arguments);
     this.set('requiredPublicationSetFields', ['title', 'shortTitle', 'duration']);
     this.set('optionalPublicationLengthFields', ['programYears']);
+    this.set('requiredPublicationLengthFields', []);
+    this.set('optionalPublicationSetFields', []);
+  },
+  isPublished: alias('published'),
+  isNotPublished: not('isPublished'),
+  isScheduled: oneWay('publishedAsTbd'),
+  isPublishedOrScheduled: computed('publishTarget.isPublished', 'publishTarget.isScheduled', function(){
+    return this.get('publishedAsTbd') || this.get('isPublished');
+  }),
+  allPublicationIssuesCollection: collect('requiredPublicationIssues.length', 'optionalPublicationIssues.length'),
+  allPublicationIssuesLength: sum('allPublicationIssuesCollection'),
+  requiredPublicationSetFields: null,
+  requiredPublicationLengthFields: null,
+  optionalPublicationSetFields: null,
+  optionalPublicationLengthFields: null,
+  getRequiredPublicationIssues(){
+    const issues = [];
+    this.requiredPublicationSetFields.forEach(val => {
+      if(!this.get(val)){
+        issues.push(val);
+      }
+    });
+
+    this.requiredPublicationLengthFields.forEach(val => {
+      if(this.get(val + '.length') === 0){
+        issues.push(val);
+      }
+    });
+
+    return issues;
+  },
+  getOptionalPublicationIssues(){
+    const issues = [];
+    this.optionalPublicationSetFields.forEach(val => {
+      if(!this.get(val)){
+        issues.push(val);
+      }
+    });
+
+    this.optionalPublicationLengthFields.forEach(val => {
+      if(this.get(val + '.length') === 0){
+        issues.push(val);
+      }
+    });
+
+    return issues;
   },
 });

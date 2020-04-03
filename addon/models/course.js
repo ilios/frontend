@@ -1,17 +1,15 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
-import RSVP from 'rsvp';
+import { all, map } from 'rsvp';
 import { isEmpty } from '@ember/utils';
 import moment from 'moment';
-import PublishableModel from 'ilios-common/mixins/publishable-model';
 import CategorizableModel from 'ilios-common/mixins/categorizable-model';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 
-const { filterBy, mapBy, sum } = computed;
-const { all, map } = RSVP;
+const { alias, filterBy, mapBy, sum, oneWay, not, collect } = computed;
 
-export default Model.extend(PublishableModel, CategorizableModel, {
+export default Model.extend(CategorizableModel, {
   title: attr('string'),
   level: attr('number'),
   year: attr('number'),
@@ -20,6 +18,8 @@ export default Model.extend(PublishableModel, CategorizableModel, {
   externalId: attr('string'),
   locked: attr('boolean'),
   archived: attr('boolean'),
+  publishedAsTbd: attr('boolean'),
+  published: attr('boolean'),
   clerkshipType: belongsTo('course-clerkship-type', {async: true}),
   school: belongsTo('school', {async: true}),
   directors: hasMany('user', {
@@ -166,6 +166,7 @@ export default Model.extend(PublishableModel, CategorizableModel, {
     this._super(...arguments);
     this.set('requiredPublicationSetFields', ['startDate', 'endDate']);
     this.set('requiredPublicationLengthFields', ['cohorts']);
+    this.set('optionalPublicationSetFields', []);
     this.set('optionalPublicationLengthFields', ['terms', 'objectives', 'meshDescriptors']);
   },
 
@@ -176,5 +177,50 @@ export default Model.extend(PublishableModel, CategorizableModel, {
     const endDate = moment(startDate).add('8', 'weeks');
     this.set('startDate', startDate.toDate());
     this.set('endDate', endDate.toDate());
+  },
+
+  isPublished: alias('published'),
+  isNotPublished: not('isPublished'),
+  isScheduled: oneWay('publishedAsTbd'),
+  isPublishedOrScheduled: computed('publishTarget.isPublished', 'publishTarget.isScheduled', function(){
+    return this.get('publishedAsTbd') || this.get('isPublished');
+  }),
+  allPublicationIssuesCollection: collect('requiredPublicationIssues.length', 'optionalPublicationIssues.length'),
+  allPublicationIssuesLength: sum('allPublicationIssuesCollection'),
+  requiredPublicationSetFields: null,
+  requiredPublicationLengthFields: null,
+  optionalPublicationSetFields: null,
+  optionalPublicationLengthFields: null,
+  getRequiredPublicationIssues(){
+    const issues = [];
+    this.requiredPublicationSetFields.forEach(val => {
+      if(!this.get(val)){
+        issues.push(val);
+      }
+    });
+
+    this.requiredPublicationLengthFields.forEach(val => {
+      if(this.get(val + '.length') === 0){
+        issues.push(val);
+      }
+    });
+
+    return issues;
+  },
+  getOptionalPublicationIssues(){
+    const issues = [];
+    this.optionalPublicationSetFields.forEach(val => {
+      if(!this.get(val)){
+        issues.push(val);
+      }
+    });
+
+    this.optionalPublicationLengthFields.forEach(val => {
+      if(this.get(val + '.length') === 0){
+        issues.push(val);
+      }
+    });
+
+    return issues;
   },
 });
