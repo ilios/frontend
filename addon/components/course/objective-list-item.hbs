@@ -3,7 +3,7 @@
   class="grid-row objective-row {{if this.showRemoveConfirmation "confirm-removal"}} {{if this.highlightSave.isRunning "highlight-ok"}} {{if this.isManaging "is-managing"}}"
   data-test-course-objective-list-item
 >
-  <div class="grid-item" data-test-description>
+  <div class="description grid-item" data-test-description>
     {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
       <EditableField
         @value={{this.title}}

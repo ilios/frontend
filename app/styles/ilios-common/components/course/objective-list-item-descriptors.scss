@@ -5,6 +5,7 @@
 
   .link-button {
     @include ilios-link-button;
+    text-align: left;
   }
   .bigadd {
     background-color: $ilios-green;
