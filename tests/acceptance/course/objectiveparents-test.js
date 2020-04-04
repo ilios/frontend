@@ -55,20 +55,18 @@ module('Acceptance | Course - Objective Parents', function(hooks) {
 
   test('list parent objectives by competency', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(19);
+    assert.expect(18);
 
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 2);
 
     assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'objective 0');
 
+    await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    const m = page.objectives.objectiveList.objectives[0].parentManager;
 
-    await page.objectives.objectiveList.objectives[0].manageParents();
-    const m = page.objectives.manageObjectiveParents;
-
-    assert.equal(m.objectiveTitle, 'objective 3');
     assert.equal(m.selectedCohortTitle, 'program 0 cohort 0');
     assert.equal(m.competencies.length, 2);
     assert.equal(m.competencies[0].title, 'competency 0');
@@ -88,54 +86,51 @@ module('Acceptance | Course - Objective Parents', function(hooks) {
 
   test('save changes', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(11);
+    assert.expect(10);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 2);
 
     assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'objective 0');
 
+    await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    const m = page.objectives.objectiveList.objectives[0].parentManager;
 
-    await page.objectives.objectiveList.objectives[0].manageParents();
-    const m = page.objectives.manageObjectiveParents;
-
-    assert.equal(m.objectiveTitle, 'objective 3');
     assert.equal(m.selectedCohortTitle, 'program 0 cohort 0');
     await m.competencies[1].objectives[0].add();
     assert.ok(m.competencies[0].objectives[0].notSelected);
     assert.ok(m.competencies[1].objectives[0].selected);
-    await page.objectives.save();
+    await page.objectives.objectiveList.objectives[0].parents.save();
 
     assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'objective 1');
 
   });
 
   test('cancel changes', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(11);
+    assert.expect(10);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 2);
 
     assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'objective 0');
 
 
-    await page.objectives.objectiveList.objectives[0].manageParents();
-    const m = page.objectives.manageObjectiveParents;
+    await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    const m = page.objectives.objectiveList.objectives[0].parentManager;
 
-    assert.equal(m.objectiveTitle, 'objective 3');
     assert.equal(m.selectedCohortTitle, 'program 0 cohort 0');
     await m.competencies[1].objectives[0].add();
     assert.ok(m.competencies[0].objectives[0].notSelected);
     assert.ok(m.competencies[1].objectives[0].selected);
-    await page.objectives.cancel();
+    await page.objectives.objectiveList.objectives[0].parents.cancel();
 
     assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 3');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'objective 0');
   });
 });

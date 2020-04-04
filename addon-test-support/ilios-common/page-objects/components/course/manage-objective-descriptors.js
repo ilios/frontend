@@ -1,12 +1,10 @@
 import {
   create,
-  text,
 } from 'ember-cli-page-object';
 import meshManager from '../mesh-manager';
 
 const definition = {
   scope: '[data-test-course-manage-objective-descriptors]',
-  objectiveTitle: text('[data-test-objective-title]'),
   meshManager,
 };
 

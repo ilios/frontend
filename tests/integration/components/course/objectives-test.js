@@ -49,13 +49,13 @@ module('Integration | Component | course/objectives', function(hooks) {
 
     assert.equal(component.objectiveList.objectives.length, 2);
     assert.equal(component.objectiveList.objectives[0].description.text, 'objective 5');
-    assert.equal(component.objectiveList.objectives[0].parents.length, 1);
-    assert.equal(component.objectiveList.objectives[0].parents[0].description, 'objective 0');
-    assert.equal(component.objectiveList.objectives[0].meshTerms.length, 0);
+    assert.equal(component.objectiveList.objectives[0].parents.list.length, 1);
+    assert.equal(component.objectiveList.objectives[0].parents.list[0].text, 'objective 0');
+    assert.ok(component.objectiveList.objectives[0].meshDescriptors.empty);
 
     assert.equal(component.objectiveList.objectives[1].description.text, 'objective 6');
-    assert.equal(component.objectiveList.objectives[1].parents.length, 0);
-    assert.equal(component.objectiveList.objectives[1].meshTerms.length, 0);
+    assert.ok(component.objectiveList.objectives[1].parents.empty);
+    assert.ok(component.objectiveList.objectives[1].meshDescriptors.empty);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -97,11 +97,10 @@ module('Integration | Component | course/objectives', function(hooks) {
 
     assert.equal(component.objectiveList.objectives.length, 1);
     assert.equal(component.objectiveList.objectives[0].description.text, 'objective 5');
-    assert.equal(component.objectiveList.objectives[0].parents.length, 1);
-    await component.objectiveList.objectives[0].manageParents();
+    assert.equal(component.objectiveList.objectives[0].parents.list.length, 1);
+    await component.objectiveList.objectives[0].parents.list[0].manage();
 
-    const m = component.manageObjectiveParents;
-    assert.equal(m.objectiveTitle, 'objective 5');
+    const m = component.objectiveList.objectives[0].parentManager;
     assert.notOk(m.hasMultipleCohorts);
     assert.equal(m.selectedCohortTitle, 'program 0 cohort 0');
     assert.equal(m.competencies.length, 2);
@@ -169,11 +168,10 @@ module('Integration | Component | course/objectives', function(hooks) {
 
     assert.equal(component.objectiveList.objectives.length, 1);
     assert.equal(component.objectiveList.objectives[0].description.text, 'objective 4');
-    assert.equal(component.objectiveList.objectives[0].parents.length, 1);
-    await component.objectiveList.objectives[0].manageParents();
+    assert.equal(component.objectiveList.objectives[0].parents.list.length, 1);
+    await component.objectiveList.objectives[0].parents.list[0].manage();
 
-    const m = component.manageObjectiveParents;
-    assert.equal(m.objectiveTitle, 'objective 4');
+    const m = component.objectiveList.objectives[0].parentManager;
     assert.ok(m.hasMultipleCohorts);
     assert.equal(m.selectedCohortTitle, 'program 0 cohort 0 program 0 cohort 1');
     assert.equal(m.selectedCohortId, '1');
@@ -198,6 +196,32 @@ module('Integration | Component | course/objectives', function(hooks) {
     assert.ok(m.competencies[0].objectives[0].notSelected);
     assert.equal(m.competencies[0].objectives[1].title, 'objective 3');
     assert.ok(m.competencies[0].objectives[1].notSelected);
+
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('deleting objective', async function (assert) {
+    const course = this.server.create('course');
+    this.server.create('objective', {
+      courses: [course],
+    });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+
+    this.set('course', courseModel);
+    await render(hbs`<Course::Objectives
+      @course={{this.course}}
+      @editable={{true}}
+      @collapse={{noop}}
+      @expand={{noop}}
+    />`);
+
+    assert.equal(component.objectiveList.objectives.length, 1);
+    assert.equal(component.title, 'Objectives (1)');
+    await component.objectiveList.objectives[0].remove();
+    await component.objectiveList.objectives[0].confirmRemoval.confirm();
+    assert.equal(component.objectiveList.objectives.length, 0);
+    assert.equal(component.title, 'Objectives (0)');
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

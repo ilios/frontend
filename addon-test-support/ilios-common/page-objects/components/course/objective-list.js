@@ -8,8 +8,8 @@ import objectiveListItem from './objective-list-item';
 const definition = {
   scope: '[data-test-course-objective-list]',
   sortIsVisible: isVisible('[data-test-sort]'),
-  headers: collection('table thead th'),
-  objectives: collection('table tbody tr', objectiveListItem),
+  headers: collection('[data-test-headers] [data-test-header]'),
+  objectives: collection('[data-test-course-objective-list-item]', objectiveListItem),
 };
 
 export default definition;

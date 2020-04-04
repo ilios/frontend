@@ -40,15 +40,12 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
     await render(hbs`<Course::ManageObjectiveParents
       @objective={{this.objective}}
       @cohortObjectives={{this.cohortObjectives}}
-      @objective={{this.manageParentsObjective}}
-      @cohortObjectives={{this.cohortObjectives}}
       @selected={{array}}
       @add={{noop}}
       @remove={{noop}}
       @removeFromCohort={{noop}}
     />`);
 
-    assert.equal(component.objectiveTitle, objectiveModel.title);
     assert.notOk(component.hasMultipleCohorts);
     assert.equal(component.selectedCohortTitle, 'cohort 0');
 
@@ -109,15 +106,12 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
     await render(hbs`<Course::ManageObjectiveParents
       @objective={{this.objective}}
       @cohortObjectives={{this.cohortObjectives}}
-      @objective={{this.manageParentsObjective}}
-      @cohortObjectives={{this.cohortObjectives}}
       @selected={{array}}
       @add={{noop}}
       @remove={{noop}}
       @removeFromCohort={{noop}}
     />`);
 
-    assert.equal(component.objectiveTitle, objectiveModel.title);
     assert.ok(component.hasMultipleCohorts);
     assert.equal(component.selectedCohortTitle, 'cohort 0 cohort 1');
 

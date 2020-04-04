@@ -4,10 +4,6 @@
   {{did-update (fn this.chooseFirstCohort) @cohortObjectives}}
   data-test-course-manage-objective-parents
 >
-  <h3 class="objective-title" data-test-objective-title>
-    {{! template-lint-disable no-triple-curlies }}
-    {{{@objective.title}}}
-  </h3>
   {{#if @cohortObjectives.length}}
     <label>
       {{t "general.chooseCohortTitle"}}:

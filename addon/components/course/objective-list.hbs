@@ -1,100 +1,40 @@
 <div
   class="course-objective-list"
   data-test-course-objective-list
-  {{did-insert (perform this.load) @course @course.objectives}}
-  {{did-update (perform this.load) @course @course.objectives}}
+  {{did-insert (perform this.load) @course @course.objectives @course.cohorts}}
+  {{did-update (perform this.load) @course @course.objectives @course.cohorts}}
 >
-  {{#if (is-array this.objectives)}}
-    {{#if this.isSorting}}
-      <ObjectiveSortManager
-        @subject={{@course}}
-        @save={{perform this.saveSortOrder}}
-        @cancel={{set this.sorting false}}
-      />
-    {{else if this.objectives.length}}
-      {{#if (and @editable this.hasMoreThanOneObjective)}}
-        <button
-          type="button"
-          {{on "click" (fn (mut this.isSorting) true)}}
-          data-test-sort
-        >
-          {{t "general.sortObjectives"}}
-        </button>
-      {{/if}}
-      <table>
-        <thead>
-          <tr>
-            <th class="text-left" colspan="3">
-              {{t "general.description"}}
-            </th>
-            <th class="text-left" colspan="2">
-              {{t "general.parentObjectives"}}
-            </th>
-            <th class="text-left" colspan="2">
-              {{t "general.meshTerms"}}
-            </th>
-            <th class="text-left" colspan="1">
-              {{t "general.actions"}}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each this.objectives as |objective|}}
-            <Course::ObjectiveListItem
-              @objective={{objective}}
-              @editable={{@editable}}
-              @course={{this.course}}
-              @showRemoveConfirmation={{contains
-                objective.id
-                this.objectivesForRemovalConfirmation
-              }}
-              @remove={{this.confirmRemoval}}
-              @manageParents={{@manageParents}}
-              @manageDescriptors={{@manageDescriptors}}
-            />
-            {{#if (contains objective.id this.objectivesForRemovalConfirmation)}}
-              <tr class="confirm-removal">
-                <td colspan="8">
-                  <div class="confirm-message">
-                    {{t "general.confirmObjectiveRemoval"}}
-                    <br>
-                    <div class="confirm-buttons">
-                      <button
-                        class="remove text"
-                        type="button"
-                        {{on "click" (perform this.deleteObjective objective)}}
-                      >
-                        {{t "general.yes"}}
-                      </button>
-                      <button
-                        class="done text"
-                        type="button"
-                        {{on "click" (fn this.cancelRemove objective)}}
-                      >
-                        {{t "general.cancel"}}
-                      </button>
-                    </div>
-                  </div>
-                </td>
-              </tr>
-            {{/if}}
-          {{/each}}
-        </tbody>
-      </table>
+  {{#if (and (is-array this.objectives) this.isSorting)}}
+    <ObjectiveSortManager
+      @subject={{@course}}
+      @close={{set this.isSorting false}}
+    />
+  {{/if}}
+  {{#if (and (is-array this.objectives) (is-array this.cohortObjectives) (not this.isSorting))}}
+    {{#if (gt this.objectives.length 1)}}
+      <button
+        class="sort-button"
+        type="button"
+        {{on "click" (set this.isSorting true)}}
+        data-test-sort
+      >
+        {{t "general.sortObjectives"}}
+      </button>
     {{/if}}
-  {{else}}
-    {{! template-lint-disable no-unused-block-params }}
-    {{#each (repeat (has-many-length @course "objectives")) as |empty|}}
-      <div>
-        <LoadingSpinner />
+    {{#if this.objectives.length}}
+      <div class="grid-row headers" data-test-headers>
+        <span class="grid-item" data-test-header>{{t "general.description"}}</span>
+        <span class="grid-item" data-test-header>{{t "general.parentObjectives"}}</span>
+        <span class="grid-item" data-test-header>{{t "general.meshTerms"}}</span>
+        <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
       </div>
-    {{/each}}
+      {{#each this.objectives as |objective|}}
+        <Course::ObjectiveListItem
+          @objective={{objective}}
+          @editable={{@editable}}
+          @cohortObjectives={{this.cohortObjectives}}
+        />
+      {{/each}}
+    {{/if}}
   {{/if}}
 </div>
-{{#if this.saveSortOrder.isRunning}}
-  <WaitSaving
-    @showProgress={{true}}
-    @totalProgress={{this.totalObjectivesToSave}}
-    @currentProgress={{this.currentObjectivesSaved}}
-  />
-{{/if}}

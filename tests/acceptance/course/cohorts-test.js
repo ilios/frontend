@@ -97,16 +97,16 @@ module('Acceptance | Course - Cohorts', function(hooks) {
 
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents[1].description, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[1].text, 'objective 1');
 
     await page.cohorts.manage();
     await page.cohorts.selected[0].remove();
     await page.cohorts.save();
 
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'objective 1');
   });
 });

@@ -1,0 +1,62 @@
+.course-objective-list {
+  .headers {
+    font-weight: bold;
+  }
+  .grid-row {
+    display: grid;
+    grid-template-columns: 5fr 3fr 3fr 1fr;
+    grid-template-rows: auto;
+    margin-right: .5em;
+
+
+    .grid-item {
+      border-bottom: 1px solid $dark-grey;
+      padding: .5em .25em;
+    }
+  }
+  .objective-row {
+    transition: background-color 1s ease-out;
+
+    &.highlight-ok {
+      transition: none;
+      background-color: lighten($ilios-green, 60);
+    }
+
+    &.is-managing {
+      border: 2px solid $ilios-blue;
+      .grid-item {
+        background-color: $header-grey;
+        border: 0;
+      }
+    }
+
+    &.confirm-removal {
+      background-color: $remove-background-color;
+
+      .grid-item {
+        border: 0;
+      }
+
+      .confirm-message {
+        color: $ilios-remove-color;
+        grid-column: 1 / -1;
+        font-weight: bold;
+        text-align: right;
+        margin-bottom: 1em;
+      }
+
+      .remove {
+        background-color: $white;
+        color: $ilios-remove-color;
+
+        &:hover {
+          background-color: $ilios-remove-color;
+          color: white;
+        }
+      }
+    }
+  }
+  .actions {
+    text-align: right;
+  }
+}

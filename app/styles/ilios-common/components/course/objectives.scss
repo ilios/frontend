@@ -1,0 +1,42 @@
+.course-objectives {
+  @include detail-container($ilios-orange);
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .5em;
+
+    span {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .title {
+      @include detail-container-title-style;
+      button {
+        @include ilios-button-reset;
+      }
+    }
+  }
+
+  .new-objective {
+    border: 1px solid $header-grey;
+    margin: 1rem;
+    padding: .5rem;
+
+    .title {
+      margin-bottom: .25em;
+    }
+
+    .new-objective-form {
+      margin-left: .5em;
+
+      label {
+        font-weight: bold;
+        margin: .25em;
+      }
+      .buttons {
+        @include ilios-form-buttons;
+      }
+    }
+  }
+}

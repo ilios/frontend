@@ -12,7 +12,6 @@ import {
 
 const definition = {
   scope: '[data-test-course-manage-objective-parents]',
-  objectiveTitle: text('[data-test-objective-title]'),
   hasMultipleCohorts: isPresent('[data-test-cohort-selector]'),
   selectedCohortTitle: text('[data-test-selected-cohort-title]'),
   selectedCohortId: value('[data-test-cohort-selector]'),

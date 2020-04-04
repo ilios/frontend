@@ -35,7 +35,7 @@ module('Integration | Component | objective sort manager', function(hooks) {
 
     this.set('subject', subject);
 
-    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @save={{noop}} @cancel={{noop}} />`);
+    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @close={{noop}} />`);
 
     return settled().then(() => {
       assert.dom('.draggable-object').exists({ count: 2 });
@@ -64,42 +64,10 @@ module('Integration | Component | objective sort manager', function(hooks) {
     this.set('cancel', () => {
       assert.ok(true, 'Cancel action was invoked correctly.');
     });
-    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @cancel={{this.cancel}} @save={{noop}} />`);
+    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @close={{this.cancel}} />`);
 
     return settled().then(async () => {
       await click('.actions .bigcancel');
-    });
-  });
-
-  test('save', async function(assert) {
-    assert.expect(3);
-
-    const objective1 = EmberObject.create({
-      title: 'Objective1',
-      position: 0
-    });
-
-    const objective2 = EmberObject.create({
-      title: 'Objective2',
-      position: 0
-    });
-
-    const objectives = [ objective1, objective2 ];
-
-    const subject = EmberObject.create({
-      objectives: resolve(objectives),
-    });
-    this.set('subject', subject);
-    this.set('save', data => {
-      assert.equal(data.length, objectives.length);
-      assert.ok(data.includes(objective1));
-      assert.ok(data.includes(objective2));
-    });
-
-    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @save={{this.save}} @cancel={{noop}} />`);
-
-    return settled().then(async () => {
-      await click('.actions .bigadd');
     });
   });
 
