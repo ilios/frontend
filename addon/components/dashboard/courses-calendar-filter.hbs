@@ -1,0 +1,62 @@
+<div
+  class="calendar-filter-list large-filter-list dashboard-courses-calendar-filter"
+  {{did-insert (perform this.load) @school}}
+  {{did-update (perform this.load) @school}}
+  data-test-courses-calendar-filter
+>
+  <h5>
+    {{t "general.courses"}}
+    {{#if this.expandedYearWithoutTitleView}}
+      ({{this.expandedYearWithoutTitleView}} - {{inc this.expandedYearWithoutTitleView}})
+    {{/if}}
+  </h5>
+  <div class="filters">
+    {{#if this.load.isRunning}}
+      <LoadingSpinner />
+    {{else}}
+      {{#each this.courseYears as |year|}}
+        <div
+          class="year {{if (contains year.year this.expandedYears) "expanded" "collapsed"}}"
+          {{did-insert this.scrollToLastYear year.year}}
+          {{in-viewport
+            onEnter=(fn this.addYearInView year.year)
+            onExit=(fn this.removeYearInView year.year)
+          }}
+          data-test-year
+        >
+          <h6
+            class="year-title"
+            data-test-year-title
+            {{in-viewport
+              onEnter=(fn this.addTitleInView year.year)
+              onExit=(fn this.removeTitleInView year.year)
+            }}
+          >
+            <button type="button" {{on "click" (fn this.toggleYear year.year)}}>
+              {{year.academicYear}}
+            </button>
+          </h6>
+          {{#if (contains year.year this.expandedYears)}}
+            <ul class="courses">
+              {{#each (sort-by "title" year.courses) as |course|}}
+                <li data-test-course>
+                  <Dashboard::FilterCheckbox
+                    @checked={{contains course.id @selectedCourseIds}}
+                    @add={{fn @add course.id}}
+                    @remove={{fn @remove course.id}}
+                  >
+                    {{course.title}}
+                    {{#if course.externalId}}
+                      ({{course.externalId}})
+                    {{/if}}
+                  </Dashboard::FilterCheckbox>
+                </li>
+              {{/each}}
+            </ul>
+
+          {{/if}}
+        </div>
+      {{/each}}
+    {{/if}}
+  </div>
+</div>

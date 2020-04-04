@@ -1,7 +1,7 @@
 <div
   class="dashboard-calendar"
-  {{did-insert (perform this.load) this.bestSelectedSchool this.bestSelectedAcademicYear}}
-  {{did-update (perform this.load) this.bestSelectedSchool this.bestSelectedAcademicYear}}
+  {{did-insert (perform this.load) this.bestSelectedSchool}}
+  {{did-update (perform this.load) this.bestSelectedSchool}}
 >
   <section class="calendar-controls">
     <div class="calendar-options-control togglemyschedule">
@@ -59,55 +59,15 @@
         {{/if}}
       </div>
     {{/unless}}
-    {{#if (and @showFilters (is-array @allAcademicYears))}}
-      <div
-        id="calendar-year-picker"
-        class="calendar-options-control calendar-year-picker"
-      >
-        <select {{on "change" (fn this.changeAcademicYear)}}>
-          {{#each (sort-by "title" @allAcademicYears) as |year|}}
-            <option
-              value={{year.title}}
-              selected={{eq year this.bestSelectedAcademicYear}}
-            >
-              {{year.academicYearTitle}}
-            </option>
-          {{/each}}
-        </select>
-      </div>
-    {{/if}}
     <div class="calendar-filters">
       {{#if @showFilters}}
         {{#if @courseFilters}}
-          <div
-            id="calendar-coursefilter"
-            class="calendar-filter-list large-filter-list coursefilter"
-          >
-            <h5>
-              {{get this.bestSelectedAcademicYear "academicYearTitle"}}
-              {{t "general.courses"}}
-            </h5>
-            {{#if (is-array this.courses)}}
-              <ul>
-                {{#each this.courses as |course|}}
-                  <li>
-                    <Dashboard::FilterCheckbox
-                      @checked={{contains course.id @selectedCourseIds}}
-                      @add={{fn @addCourseId course.id}}
-                      @remove={{fn @removeCourseId course.id}}
-                    >
-                      {{course.title}}
-                      {{#if course.externalId}}
-                        ({{course.externalId}})
-                      {{/if}}
-                    </Dashboard::FilterCheckbox>
-                  </li>
-                {{/each}}
-              </ul>
-            {{else}}
-              <FaIcon @icon="spinner" @spin={{true}} />
-            {{/if}}
-          </div>
+          <Dashboard::CoursesCalendarFilter
+            @school={{this.bestSelectedSchool}}
+            @add={{@addCourseId}}
+            @remove={{@removeCourseId}}
+            @selectedCourseIds={{@selectedCourseIds}}
+          />
           <div
             id="calendar-sessiontypefilter"
             class="calendar-filter-list sessiontypefilter"
@@ -115,45 +75,49 @@
             <h5>
               {{t "general.sessionTypes"}}
             </h5>
-            {{#if (is-array this.sessionTypes)}}
-              <ul>
-                {{#each this.sessionTypes as |type|}}
-                  <li class="clickable">
-                    <Dashboard::FilterCheckbox
-                      @checked={{contains type.id @selectedSessionTypeIds}}
-                      @add={{fn @addSessionTypeId type.id}}
-                      @remove={{fn @removeSessionTypeId type.id}}
-                    >
-                      {{type.title}}
-                    </Dashboard::FilterCheckbox>
-                  </li>
-                {{/each}}
-              </ul>
-            {{else}}
-              <FaIcon @icon="spinner" @spin={{true}} />
-            {{/if}}
+            <div class="filters">
+              {{#if (is-array this.sessionTypes)}}
+                <ul>
+                  {{#each this.sessionTypes as |type|}}
+                    <li class="clickable">
+                      <Dashboard::FilterCheckbox
+                        @checked={{contains type.id @selectedSessionTypeIds}}
+                        @add={{fn @addSessionTypeId type.id}}
+                        @remove={{fn @removeSessionTypeId type.id}}
+                      >
+                        {{type.title}}
+                      </Dashboard::FilterCheckbox>
+                    </li>
+                  {{/each}}
+                </ul>
+              {{else}}
+                <FaIcon @icon="spinner" @spin={{true}} />
+              {{/if}}
+            </div>
           </div>
           <div class="calendar-filter-list vocabularyfilter">
             <h5>
               {{t "general.terms"}}
             </h5>
-            {{#if (is-array this.vocabularies)}}
-              <ul>
-                {{#each this.vocabularies as |vocabulary|}}
-                  <h6>
-                    {{vocabulary.title}}
-                  </h6>
-                  <Dashboard::SelectedTermTree
-                    @selectedTermIds={{@selectedTermIds}}
-                    @terms={{await vocabulary.topLevelTerms}}
-                    @add={{@addTermId}}
-                    @remove={{@removeTermId}}
-                  />
-                {{/each}}
-              </ul>
-            {{else}}
-              <FaIcon @icon="spinner" @spin={{true}} />
-            {{/if}}
+            <div class="filters">
+              {{#if (is-array this.vocabularies)}}
+                <ul>
+                  {{#each this.vocabularies as |vocabulary|}}
+                    <h6>
+                      {{vocabulary.title}}
+                    </h6>
+                    <Dashboard::SelectedTermTree
+                      @selectedTermIds={{@selectedTermIds}}
+                      @terms={{await vocabulary.topLevelTerms}}
+                      @add={{@addTermId}}
+                      @remove={{@removeTermId}}
+                    />
+                  {{/each}}
+                </ul>
+              {{else}}
+                <FaIcon @icon="spinner" @spin={{true}} />
+              {{/if}}
+            </div>
           </div>
         {{else}}
           <div
@@ -163,23 +127,25 @@
             <h5>
               {{t "general.sessionTypes"}}
             </h5>
-            {{#if (is-array this.sessionTypes)}}
-              <ul>
-                {{#each this.sessionTypes as |type|}}
-                  <li class="clickable">
-                    <Dashboard::FilterCheckbox
-                      @checked={{contains type.id @selectedSessionTypeIds}}
-                      @add={{fn @addSessionTypeId type.id}}
-                      @remove={{fn @removeSessionTypeId type.id}}
-                    >
-                      {{type.title}}
-                    </Dashboard::FilterCheckbox>
-                  </li>
-                {{/each}}
-              </ul>
-            {{else}}
-              <FaIcon @icon="spinner" @spin={{true}} />
-            {{/if}}
+            <div class="filters">
+              {{#if (is-array this.sessionTypes)}}
+                <ul>
+                  {{#each this.sessionTypes as |type|}}
+                    <li class="clickable">
+                      <Dashboard::FilterCheckbox
+                        @checked={{contains type.id @selectedSessionTypeIds}}
+                        @add={{fn @addSessionTypeId type.id}}
+                        @remove={{fn @removeSessionTypeId type.id}}
+                      >
+                        {{type.title}}
+                      </Dashboard::FilterCheckbox>
+                    </li>
+                  {{/each}}
+                </ul>
+              {{else}}
+                <FaIcon @icon="spinner" @spin={{true}} />
+              {{/if}}
+            </div>
           </div>
           <div
             id="calendar-courselevelfilter"
@@ -188,51 +154,28 @@
             <h5>
               {{t "general.courseLevels"}}
             </h5>
-            <ul>
-              {{#each this.courseLevels as |level|}}
-                <li class="clickable">
-                  <Dashboard::FilterCheckbox
-                    @checked={{contains level @selectedCourseLevels}}
-                    @add={{fn @addCourseLevel level}}
-                    @remove={{fn @removeCourseLevel level}}
-                  >
-                    {{level}}
-                  </Dashboard::FilterCheckbox>
-                </li>
-              {{/each}}
-            </ul>
-          </div>
-          <div
-            id="calendar-cohortfilter"
-            class="calendar-filter-list large-filter-list cohortfilter"
-          >
-            <h5>
-              {{get this.bestSelectedAcademicYear "academicYearTitle"}}
-              {{t "general.programAndCohort"}}
-            </h5>
-            {{#if (is-array this.cohorts)}}
+            <div class="filters">
               <ul>
-                {{#each this.cohorts as |cohort|}}
+                {{#each this.courseLevels as |level|}}
                   <li class="clickable">
                     <Dashboard::FilterCheckbox
-                      @checked={{contains cohort.id @selectedCohortIds}}
-                      @add={{fn @addCohortId cohort.id}}
-                      @remove={{fn @removeCohortId cohort.id}}
+                      @checked={{contains level @selectedCourseLevels}}
+                      @add={{fn @addCourseLevel level}}
+                      @remove={{fn @removeCourseLevel level}}
                     >
-                      {{#if cohort.title}}
-                        {{cohort.title}}
-                      {{else}}
-                        {{t "general.classOf" year=(await cohort.classOfYear)}}
-                      {{/if}}
-                      {{get (await cohort.programYear.program) "title"}}
+                      {{level}}
                     </Dashboard::FilterCheckbox>
                   </li>
                 {{/each}}
               </ul>
-            {{else}}
-              <FaIcon @icon="spinner" @spin={{true}} />
-            {{/if}}
+            </div>
           </div>
+          <Dashboard::CohortCalendarFilter
+            @cohortProxies={{this.cohortProxies}}
+            @add={{@addCohortId}}
+            @remove={{@removeCohortId}}
+            @selectedIds={{@selectedCohortIds}}
+          />
         {{/if}}
       {{/if}}
     </div>

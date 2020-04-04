@@ -1,0 +1,22 @@
+
+<div
+  class="calendar-filter-list large-filter-list dashboard-cohort-calendar-filter"
+  data-test-cohort-calendar-filter
+>
+  <h5>{{t "general.programAndCohort"}}</h5>
+  <ul class="cohorts filters">
+    {{#each (sort-by "classOfYear:desc" @cohortProxies) as |obj|}}
+      <li data-test-cohort>
+        <Dashboard::FilterCheckbox
+          @checked={{contains obj.id @selectedIds}}
+          @add={{fn @add obj.id}}
+          @remove={{fn @remove obj.id}}
+        >
+          {{obj.displayTitle}} {{obj.programTitle}}
+        </Dashboard::FilterCheckbox>
+      </li>
+    {{else}}
+      <li><LoadingSpinner /></li>
+    {{/each}}
+  </ul>
+</div>
