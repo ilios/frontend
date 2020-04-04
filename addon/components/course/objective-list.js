@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency-decorators';
-import { map } from 'rsvp';
+import { hash, map } from 'rsvp';
 import { inject as service } from '@ember/service';
 
 export default class CourseObjectiveListComponent extends Component {
@@ -11,14 +11,23 @@ export default class CourseObjectiveListComponent extends Component {
   @tracked objectives;
   @tracked isSorting = false;
   @tracked cohortObjectives;
+  @tracked objectiveCount;
 
   @restartableTask
   *load(element, [course]) {
     if (!course) {
       return;
     }
-    this.objectives = yield course.sortedObjectives;
-    this.cohortObjectives = yield this.getCohortObjectives(course);
+    this.objectiveCount = course.hasMany('objectives').ids().length;
+    const {
+      objectives,
+      cohortObjectives
+    } = yield hash({
+      objectives: course.sortedObjectives,
+      cohortObjectives: this.getCohortObjectives(course)
+    });
+    this.objectives = objectives;
+    this.cohortObjectives = cohortObjectives;
   }
 
   async getCohortObjectives(course) {
