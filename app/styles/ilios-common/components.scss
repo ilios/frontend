@@ -122,9 +122,13 @@
 @import 'components/course/objectives';
 @import 'components/course/manage-objective-descriptors';
 @import 'components/course/manage-objective-parents';
-@import 'components/session/manage-objective-parents';
-
-
 @import 'components/course/objective-list-item-descriptors';
 @import 'components/course/objective-list-item-parents';
 @import 'components/course/objective-list';
+
+@import 'components/session/objectives';
+@import 'components/session/manage-objective-descriptors';
+@import 'components/session/manage-objective-parents';
+@import 'components/session/objective-list-item-descriptors';
+@import 'components/session/objective-list-item-parents';
+@import 'components/session/objective-list';

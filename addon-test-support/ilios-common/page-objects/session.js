@@ -7,7 +7,6 @@ import {
   hasClass,
   is,
   isVisible,
-  notHasClass,
   text,
   visitable
 } from 'ember-cli-page-object';
@@ -136,17 +135,6 @@ export default create({
   meshTerms,
   taxonomies,
   collapsedTaxonomies,
-
-  objectiveParentManager: {
-    scope: '[data-test-session-objective-manager]',
-    title: text('.objectivetitle'),
-    courseTitle: text('h5'),
-    objectives: collection('.parent-picker li', {
-      title: text(),
-      selected: hasClass('selected'),
-      notSelected: notHasClass('selected'),
-    }),
-  },
 
   learnerGroups: {
     scope: '[data-test-detail-learner-groups]',

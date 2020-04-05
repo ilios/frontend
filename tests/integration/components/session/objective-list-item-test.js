@@ -18,54 +18,20 @@ module('Integration | Component | session/objective-list-item', function(hooks) 
       sessions: [session],
     });
     const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    const sessionModel = await this.owner.lookup('service:store').find('session', objective.id);
     this.set('objective', objectiveModel);
-    this.set('session', sessionModel);
 
     await render(
       hbs`<Session::ObjectiveListItem
         @objective={{this.objective}}
         @editable={{true}}
-        @session={{this.session}}
-        @showRemoveConfirmation={{false}}
-        @remove={{noop}}
-        @manageParents={{noop}}
-        @manageDescriptors={{noop}}
+        @courseObjectives={{array}}
       />`
     );
     assert.notOk(component.hasRemoveConfirmation);
     assert.equal(component.description.text, 'objective 0');
-    assert.equal(component.parentsText, 'Add New');
-    assert.equal(component.meshText, 'Add New');
+    assert.equal(component.parents.text, 'Add New');
+    assert.equal(component.meshDescriptors.text, 'Add New');
     assert.ok(component.hasTrashCan);
-    await a11yAudit(this.element);
-    assert.ok(true, 'no a11y errors found!');
-  });
-
-  test('renders removable', async function (assert) {
-    assert.expect(2);
-    const session = this.server.create('session');
-
-    const objective = this.server.create('objective', {
-      sessions: [session],
-    });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    const sessionModel = await this.owner.lookup('service:store').find('session', objective.id);
-    this.set('objective', objectiveModel);
-    this.set('session', sessionModel);
-
-    await render(
-      hbs`<Session::ObjectiveListItem
-        @objective={{this.objective}}
-        @editable={{true}}
-        @session={{this.session}}
-        @showRemoveConfirmation={{true}}
-        @remove={{noop}}
-        @manageParents={{noop}}
-        @manageDescriptors={{noop}}
-      />`
-    );
-    assert.ok(component.hasRemoveConfirmation);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -77,19 +43,13 @@ module('Integration | Component | session/objective-list-item', function(hooks) 
       sessions: [session],
     });
     const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    const sessionModel = await this.owner.lookup('service:store').find('session', objective.id);
     this.set('objective', objectiveModel);
-    this.set('session', sessionModel);
 
     await render(
       hbs`<Session::ObjectiveListItem
         @objective={{this.objective}}
         @editable={{true}}
-        @session={{this.session}}
-        @showRemoveConfirmation={{false}}
-        @remove={{noop}}
-        @manageParents={{noop}}
-        @manageDescriptors={{noop}}
+        @courseObjectives={{array}}
       />`
     );
     const newDescription = 'Pluto Visits Earth';
@@ -106,9 +66,7 @@ module('Integration | Component | session/objective-list-item', function(hooks) 
       sessions: [session],
     });
     const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    const sessionModel = await this.owner.lookup('service:store').find('session', objective.id);
     this.set('objective', objectiveModel);
-    this.set('session', sessionModel);
     this.set('manageParents', () => {
       assert.ok(true);
     });
@@ -117,14 +75,11 @@ module('Integration | Component | session/objective-list-item', function(hooks) 
       hbs`<Session::ObjectiveListItem
         @objective={{this.objective}}
         @editable={{true}}
-        @session={{this.session}}
-        @showRemoveConfirmation={{false}}
-        @remove={{noop}}
-        @manageParents={{this.manageParents}}
-        @manageDescriptors={{noop}}
+        @courseObjectives={{array}}
       />`
     );
-    await component.manageParents();
+    await component.parents.list[0].manage();
+    assert.ok(component.parentManager.isPresent);
   });
 
   test('can manage descriptors', async function (assert) {
@@ -133,25 +88,17 @@ module('Integration | Component | session/objective-list-item', function(hooks) 
       sessions: [session],
     });
     const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    const sessionModel = await this.owner.lookup('service:store').find('session', objective.id);
     this.set('objective', objectiveModel);
-    this.set('session', sessionModel);
-    this.set('manageDescriptors', () => {
-      assert.ok(true);
-    });
 
     await render(
       hbs`<Session::ObjectiveListItem
         @objective={{this.objective}}
         @editable={{true}}
-        @session={{this.session}}
-        @showRemoveConfirmation={{false}}
-        @remove={{noop}}
-        @manageParents={{noop}}
-        @manageDescriptors={{this.manageDescriptors}}
+        @courseObjectives={{array}}
       />`
     );
-    await component.manageMesh();
+    await component.meshDescriptors.list[0].manage();
+    assert.ok(component.meshManager.isPresent);
   });
 
   test('can trigger removal', async function (assert) {
@@ -160,24 +107,16 @@ module('Integration | Component | session/objective-list-item', function(hooks) 
       sessions: [session],
     });
     const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    const sessionModel = await this.owner.lookup('service:store').find('session', objective.id);
     this.set('objective', objectiveModel);
-    this.set('session', sessionModel);
-    this.set('remove', () => {
-      assert.ok(true);
-    });
 
     await render(
       hbs`<Session::ObjectiveListItem
         @objective={{this.objective}}
         @editable={{true}}
-        @session={{this.session}}
-        @showRemoveConfirmation={{false}}
-        @remove={{this.remove}}
-        @manageParents={{noop}}
-        @manageDescriptors={{noop}}
+        @courseObjectives={{array}}
       />`
     );
     await component.remove();
+    assert.ok(component.hasRemoveConfirmation);
   });
 });

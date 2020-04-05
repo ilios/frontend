@@ -36,9 +36,7 @@ module('Integration | Component | session/manage-objective-parents', function(ho
       @remove={{noop}}
     />`);
 
-    assert.equal(component.objectiveTitle, objectiveModel.title);
     assert.equal(component.courseTitle, course.title);
-
     assert.equal(component.objectives.length, 1);
     assert.equal(component.objectives[0].title, 'objective 0');
     assert.ok(component.objectives[0].notSelected);

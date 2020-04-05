@@ -10,9 +10,8 @@ import {
 
 const definition = {
   scope: '[data-test-session-manage-objective-parents]',
-  objectiveTitle: text('[data-test-objective-title]'),
   courseTitle: text('[data-test-course-title]'),
-  objectives: collection('ul li', {
+  objectives: collection('[data-test-parent-picker] li', {
     title: text(),
     selected: hasClass('selected', 'label'),
     notSelected: notHasClass('selected', 'label'),

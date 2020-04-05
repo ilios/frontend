@@ -12,7 +12,8 @@ module('Integration | Component | session/objective-list', function(hooks) {
 
   test('it renders and is accessible', async function(assert) {
     assert.expect(9);
-    const session = this.server.create('session');
+    const course = this.server.create('course');
+    const session = this.server.create('session', { course });
 
     this.server.create('objective', {
       title: 'Objective A',
@@ -32,8 +33,6 @@ module('Integration | Component | session/objective-list', function(hooks) {
       hbs`<Session::ObjectiveList
         @editable={{true}}
         @session={{this.session}}
-        @manageParents={{noop}}
-        @manageDescriptors={{noop}}
       />`
     );
     assert.ok(component.sortIsVisible, 'Sort Objectives button is visible');
@@ -52,7 +51,8 @@ module('Integration | Component | session/objective-list', function(hooks) {
 
   test('empty list', async function(assert) {
     assert.expect(2);
-    const session = this.server.create('session');
+    const course = this.server.create('course');
+    const session = this.server.create('session', { course });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
 
@@ -60,8 +60,6 @@ module('Integration | Component | session/objective-list', function(hooks) {
       hbs`<Session::ObjectiveList
         @editable={{true}}
         @session={{this.session}}
-        @manageParents={{noop}}
-        @manageDescriptors={{noop}}
       />`
     );
     assert.notOk(component.sortIsVisible);
@@ -70,7 +68,8 @@ module('Integration | Component | session/objective-list', function(hooks) {
 
   test('no "sort objectives" button in list with one item', async function(assert) {
     assert.expect(3);
-    const session = this.server.create('session');
+    const course = this.server.create('course');
+    const session = this.server.create('session', { course });
 
     this.server.create('objective', {
       position: 0,
@@ -83,8 +82,6 @@ module('Integration | Component | session/objective-list', function(hooks) {
       hbs`<Session::ObjectiveList
         @editable={{true}}
         @session={{this.session}}
-        @manageParents={{noop}}
-        @manageDescriptors={{noop}}
       />`
     );
     assert.notOk(component.sortIsVisible, 'Sort Objectives button is visible');

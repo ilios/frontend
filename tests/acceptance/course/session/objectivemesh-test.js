@@ -49,15 +49,15 @@ module('Acceptance | Session - Objective Mesh Descriptors', function(hooks) {
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
 
     assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'objective 1');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms.length, 5);
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[0].title, 'descriptor 1');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[1].title, 'descriptor 2');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[2].title, 'descriptor 3');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[3].title, 'descriptor 4');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[4].title, 'descriptor 5');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title, 'descriptor 1');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title, 'descriptor 2');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[2].title, 'descriptor 3');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[3].title, 'descriptor 4');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[4].title, 'descriptor 5');
 
-    await page.objectives.objectiveList.objectives[1].manageMesh();
-    const m = page.objectives.manageObjectiveDescriptors.meshManager;
+    await page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
+    const m = page.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.equal(m.selectedTerms.length, 5);
     assert.equal(m.selectedTerms[0].title, 'descriptor 1');
     assert.equal(m.selectedTerms[1].title, 'descriptor 2');
@@ -97,10 +97,10 @@ module('Acceptance | Session - Objective Mesh Descriptors', function(hooks) {
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
 
     assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'objective 1');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms.length, 5);
-    await page.objectives.objectiveList.objectives[1].manageMesh();
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
+    await page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
 
-    const m = page.objectives.manageObjectiveDescriptors.meshManager;
+    const m = page.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.equal(m.selectedTerms.length, 5);
     await m.search('descriptor');
     await m.runSearch();
@@ -115,13 +115,13 @@ module('Acceptance | Session - Objective Mesh Descriptors', function(hooks) {
     assert.equal(m.selectedTerms[3].title, 'descriptor 4');
     assert.equal(m.selectedTerms[4].title, 'descriptor 5');
 
-    await page.objectives.save();
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms.length, 5);
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[0].title, 'descriptor 0');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[1].title, 'descriptor 2');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[2].title, 'descriptor 3');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[3].title, 'descriptor 4');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[4].title, 'descriptor 5');
+    await page.objectives.objectiveList.objectives[1].meshDescriptors.save();
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title, 'descriptor 0');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title, 'descriptor 2');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[2].title, 'descriptor 3');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[3].title, 'descriptor 4');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[4].title, 'descriptor 5');
   });
 
   test('cancel changes', async function(assert) {
@@ -130,10 +130,10 @@ module('Acceptance | Session - Objective Mesh Descriptors', function(hooks) {
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
 
     assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'objective 1');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms.length, 5);
-    await page.objectives.objectiveList.objectives[1].manageMesh();
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
+    await page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
 
-    const m = page.objectives.manageObjectiveDescriptors.meshManager;
+    const m = page.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.equal(m.selectedTerms.length, 5);
     await m.search('descriptor');
     await m.runSearch();
@@ -148,12 +148,12 @@ module('Acceptance | Session - Objective Mesh Descriptors', function(hooks) {
     assert.equal(m.selectedTerms[3].title, 'descriptor 4');
     assert.equal(m.selectedTerms[4].title, 'descriptor 5');
 
-    await page.objectives.cancel();
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms.length, 5);
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[0].title, 'descriptor 1');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[1].title, 'descriptor 2');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[2].title, 'descriptor 3');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[3].title, 'descriptor 4');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[4].title, 'descriptor 5');
+    await page.objectives.objectiveList.objectives[1].meshDescriptors.cancel();
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title, 'descriptor 1');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title, 'descriptor 2');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[2].title, 'descriptor 3');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[3].title, 'descriptor 4');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[4].title, 'descriptor 5');
   });
 });

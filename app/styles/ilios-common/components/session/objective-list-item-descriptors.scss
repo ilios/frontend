@@ -1,0 +1,20 @@
+.session-objective-list-item-descriptors {
+  ul {
+    @include ilios-list-reset;
+  }
+
+  .link-button {
+    @include ilios-link-button;
+    text-align: left;
+  }
+  .bigadd {
+    background-color: $ilios-green;
+    color: $white;
+  }
+
+  .bigcancel {
+    background-color: $ilios-red;
+    color: $white;
+    margin-left: .5em;
+  }
+}
