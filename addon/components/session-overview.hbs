@@ -3,7 +3,7 @@
   {{did-insert (perform this.load) @session @sessionTypes}}
   {{did-update (perform this.load) @session @sessionTypes}}
 >
-  {{#unless this.load.isRunning}}
+  {{#if this.load.performCount}}
     <div class="session-header">
       <span class="title">
         {{#if @editable}}
@@ -372,5 +372,5 @@
         {{/unless}}
       </div>
     </section>
-  {{/unless}}
+  {{/if}}
 </div>

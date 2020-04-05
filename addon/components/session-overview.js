@@ -6,6 +6,7 @@ import { isEmpty } from '@ember/utils';
 import { task, restartableTask, dropTask } from 'ember-concurrency-decorators';
 import moment from 'moment';
 import { validatable, Length, Gte, NotBlank } from 'ilios-common/decorators/validation';
+import { hash } from 'rsvp';
 
 @validatable
 export default class SessionOverview extends Component {
@@ -33,6 +34,7 @@ export default class SessionOverview extends Component {
   @tracked showSpecialAttireRequired = false;
   @tracked showSpecialEquipmentRequired = false;
   @tracked isIndependentLearning = false;
+  @tracked description;
 
   get filteredSessionTypes() {
     const selectedSessionTypeId = isEmpty(this.sessionType) ? -1 : this.sessionType.id;
@@ -47,17 +49,35 @@ export default class SessionOverview extends Component {
 
   @restartableTask
   *load(element, [session, sessionTypes]) {
-    this.showCopy = yield this.getShowCopy.perform(session);
     const course = yield session.course;
     const school = yield course.school;
-    const ilmSession = yield session.ilmSession;
-    const sessionDescription = yield session.sessionDescription;
+    const {
+      ilmSession,
+      sessionDescription,
+      sessionType,
+      showCopy,
+      showSessionAttendanceRequired,
+      showSessionSupplemental,
+      showSessionSpecialAttireRequired,
+      showSessionSpecialEquipmentRequired,
+    } = yield hash({
+      course: session.course,
+      ilmSession: session.ilmSession,
+      sessionDescription: session.sessionDescription,
+      sessionType: session.sessionType,
+      showCopy: this.getShowCopy(session),
+      showSessionAttendanceRequired: school.getConfigValue('showSessionAttendanceRequired'),
+      showSessionSupplemental: school.getConfigValue('showSessionSupplemental'),
+      showSessionSpecialAttireRequired: school.getConfigValue('showSessionSpecialAttireRequired'),
+      showSessionSpecialEquipmentRequired: school.getConfigValue('showSessionSpecialEquipmentRequired'),
+    });
+    this.showCopy = showCopy;
 
-    this.showAttendanceRequired = yield school.getConfigValue('showSessionAttendanceRequired');
-    this.showSupplemental = yield  school.getConfigValue('showSessionSupplemental');
-    this.showSpecialAttireRequired = yield school.getConfigValue('showSessionSpecialAttireRequired');
-    this.showSpecialEquipmentRequired = yield school.getConfigValue('showSessionSpecialEquipmentRequired');
-    this.sessionType = yield session.sessionType;
+    this.showAttendanceRequired = showSessionAttendanceRequired;
+    this.showSupplemental = showSessionSupplemental;
+    this.showSpecialAttireRequired = showSessionSpecialAttireRequired;
+    this.showSpecialEquipmentRequired = showSessionSpecialEquipmentRequired;
+    this.sessionType = sessionType;
 
     this.title = session.title;
     this.instructionalNotes = session.instructionalNotes;
@@ -71,7 +91,7 @@ export default class SessionOverview extends Component {
     this.updatedAt = moment(session.updatedAt).format("L LT");
     this.sessionTypes = sessionTypes || [];
     if (sessionDescription) {
-      this.description  = sessionDescription.description;
+      this.description = sessionDescription.description;
     }
   }
 
@@ -80,29 +100,28 @@ export default class SessionOverview extends Component {
    * Try and do this by loading as little data as possible, but in the
    * end we do need to check every course in the school.
    */
-  @restartableTask
-  *getShowCopy(session) {
+  async getShowCopy(session) {
     if (this.router.currentRouteName === 'session.copy') {
       return false;
     }
 
-    const course = yield session.course;
-    if (yield this.permissionChecker.canCreateSession(course)) {
+    const course = await session.course;
+    if (await this.permissionChecker.canCreateSession(course)) {
       return true;
     }
-    const user = yield this.currentUser.getModel();
-    const allRelatedCourses = yield user.allRelatedCourses;
+    const user = await this.currentUser.getModel();
+    const allRelatedCourses = await user.allRelatedCourses;
     let relatedCourse;
     for (relatedCourse of allRelatedCourses) {
-      if (yield this.permissionChecker.canCreateSession(relatedCourse)) {
+      if (await this.permissionChecker.canCreateSession(relatedCourse)) {
         return true;
       }
     }
-    const school = yield course.school;
-    const schoolCourses = (yield school.courses).toArray();
+    const school = await course.school;
+    const schoolCourses = (await school.courses).toArray();
     let schoolCourse;
     for (schoolCourse of schoolCourses) {
-      if (yield this.permissionChecker.canCreateSession(schoolCourse)) {
+      if (await this.permissionChecker.canCreateSession(schoolCourse)) {
         return true;
       }
     }
