@@ -1,29 +1,20 @@
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { computed, action } from '@ember/object';
-import { isEmpty } from '@ember/utils';
-
+import { action } from '@ember/object';
 import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 
-const { oneWay } = computed;
+export default class SessionOfferingsListComponent extends Component {
+  @service store;
+  @tracked offeringBlocks;
 
-export default Component.extend({
-  store: service(),
-  classNames: ['session-offerings-list'],
-  session: null,
-  editable: true,
-  'data-test-session-offerings-list': true,
-
-  offerings: oneWay('session.offerings'),
-  /**
-   * @property offeringBlocks
-   * @type {Ember.computed}
-   * @public
-   */
-  offeringBlocks: computed('offerings.@each.{startDate,endDate,room,learnerGroups,instructorGroups}', async function() {
-    const offerings = await this.get('offerings');
-    if (isEmpty(offerings)) {
-      return [];
+  @restartableTask
+  *load(element, [session]){
+    const offerings = (yield session.offerings).toArray();
+    if (!offerings) {
+      this.offeringBlocks = [];
+      return;
     }
     const dateBlocks = {};
     offerings.forEach(offering => {
@@ -41,16 +32,12 @@ export default Component.extend({
     for (key in dateBlocks) {
       dateBlockArray.pushObject(dateBlocks[key]);
     }
-    return dateBlockArray.sortBy('dateStamp');
-  }),
+    this.offeringBlocks = dateBlockArray.sortBy('dateStamp');
+  }
 
   @action
   removeOffering(offering) {
-    const session = this.get('session');
-    session.get('offerings').then(offerings => {
-      offerings.removeObject(offering);
-      offering.deleteRecord();
-      offering.save();
-    });
-  },
-});
+    offering.deleteRecord();
+    offering.save();
+  }
+}
