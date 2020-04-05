@@ -1,43 +1,50 @@
-<div class="session-leadership-expanded-header">
-  <div class="title collapsible clickable" role="button" {{on "click" @collapse}}>
-    {{t "general.sessionAdministration"}}
+<div
+ class="session-leadership-expanded"
+ {{did-insert (perform this.load) @session @session.administrators}}
+ {{did-update (perform this.load) @session @session.administrators}}
+ data-test-session-leadership-expanded
+>
+  <div class="session-leadership-expanded-header">
+    <div class="title collapsible clickable" role="button" {{on "click" @collapse}}>
+      {{t "general.sessionAdministration"}}
+    </div>
+    <div class="actions">
+      {{#if @isManaging}}
+        <button class="bigadd" type="button" {{on "click" (perform this.save)}}>
+          <FaIcon
+            @icon={{if this.save.isRunning "spinner" "check"}}
+            @spin={{if this.isSaving true false}}
+          />
+        </button>
+        <button class="bigcancel" type="button" {{on "click" this.cancel}}>
+          <FaIcon @icon="undo" />
+        </button>
+      {{else if @canUpdate}}
+        <button type="button" {{on "click" (perform this.manage)}}>
+          {{t "general.manageLeadership"}}
+        </button>
+      {{/if}}
+    </div>
   </div>
-  <div class="actions">
-    {{#if @isManaging}}
-      <button class="bigadd" type="button" {{on "click" (perform this.save)}}>
-        <FaIcon
-          @icon={{if this.save.isRunning "spinner" "check"}}
-          @spin={{if this.isSaving true false}}
+  <div class="session-leadership-expanded-content">
+    {{#if (is-array this.administrators)}}
+      {{#if @isManaging}}
+        <LeadershipManager
+          @showAdministrators={{true}}
+          @showDirectors={{false}}
+          @administrators={{this.administratorBuffer}}
+          @removeAdministrator={{this.removeAdministrator}}
+          @addAdministrator={{this.addAdministrator}}
         />
-      </button>
-      <button class="bigcancel" type="button" {{on "click" (fn @setIsManaging false)}}>
-        <FaIcon @icon="undo" />
-      </button>
-    {{else if @canUpdate}}
-      <button type="button" {{on "click" (fn @setIsManaging true)}}>
-        {{t "general.manageLeadership"}}
-      </button>
+      {{else}}
+        <LeadershipList
+          @showAdministrators={{true}}
+          @showDirectors={{false}}
+          @administrators={{this.administrators}}
+        />
+      {{/if}}
+    {{else}}
+      <LoadingSpinner />
     {{/if}}
   </div>
-</div>
-<div class="session-leadership-expanded-content">
-  {{#if (is-array this.administrators)}}
-    {{#if @isManaging}}
-      <LeadershipManager
-        @showAdministrators={{true}}
-        @showDirectors={{false}}
-        @administrators={{this.administrators}}
-        @removeAdministrator={{this.removeAdministrator}}
-        @addAdministrator={{this.addAdministrator}}
-      />
-    {{else}}
-      <LeadershipList
-        @showAdministrators={{true}}
-        @showDirectors={{false}}
-        @administrators={{this.administrators}}
-      />
-    {{/if}}
-  {{else}}
-    <LoadingSpinner @tagName="h3" />
-  {{/if}}
 </div>
