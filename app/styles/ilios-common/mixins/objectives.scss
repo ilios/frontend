@@ -1,0 +1,181 @@
+@mixin objectives () {
+  .header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: .5em;
+
+    span {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .expand-collapse-button {
+        margin: 0 .5em;
+      }
+
+      .visualizer-course-objectives  {
+        width: 2rem;
+        height: 2rem;
+      }
+    }
+
+    .title {
+      @include ilios-heading-h5;
+      button {
+        @include ilios-button-reset;
+      }
+
+      &.collapsible {
+        button::after {
+          content: '\25BC';
+        }
+      }
+    }
+  }
+
+  .new-objective {
+    border: 1px solid $header-grey;
+    margin: 1rem;
+    padding: .5rem;
+
+    .title {
+      margin-bottom: .25em;
+    }
+
+    .new-objective-form {
+      margin-left: .5em;
+
+      label {
+        font-weight: bold;
+        margin: .25em;
+      }
+      .buttons {
+        @include ilios-form-buttons;
+      }
+    }
+  }
+}
+
+@mixin objective-list () {
+  .headers {
+    font-weight: bold;
+  }
+  .grid-row {
+    display: grid;
+    grid-template-columns: 5fr 3fr 3fr 1fr;
+    grid-template-rows: auto;
+    margin-right: .5em;
+
+    .grid-item {
+      border-bottom: 1px solid $dark-grey;
+      padding: .5em .25em;
+    }
+
+    &:last-of-type {
+      .grid-item {
+        border-bottom: 0;
+      }
+    }
+
+    &.is-loading {
+      @keyframes shimmer {
+        0% {
+          background-position: -1000px 0;
+        }
+        100% {
+          background-position: 1000px 0;
+        }
+      }
+
+      animation : shimmer 2s infinite;
+      background: linear-gradient(to right, #eff1f3 4%, #e2e2e2 25%, #eff1f3 36%);
+      background-size: 1000px 100%;
+
+      .grid-item {
+        color: transparent;
+        text-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px;
+      }
+    }
+  }
+  .objective-row {
+    transition: background-color 1s ease-out;
+
+    &.highlight-ok {
+      transition: none;
+      background-color: lighten($ilios-green, 60);
+    }
+
+    &.is-managing {
+      border: 2px solid $ilios-blue;
+      .grid-item {
+        background-color: $header-grey;
+        border: 0;
+      }
+    }
+
+    .description {
+      p {
+        margin: 0;
+      }
+    }
+
+    &.confirm-removal {
+      background-color: $remove-background-color;
+
+      .grid-item {
+        border: 0;
+      }
+
+      .confirm-message {
+        color: $ilios-remove-color;
+        grid-column: 1 / -1;
+        font-weight: bold;
+        text-align: right;
+        margin-bottom: 1em;
+      }
+
+      .remove {
+        background-color: $white;
+        color: $ilios-remove-color;
+
+        &:hover {
+          background-color: $ilios-remove-color;
+          color: white;
+        }
+      }
+    }
+  }
+  .actions {
+    text-align: right;
+  }
+}
+
+@mixin objective-list-item($space) {
+  ul {
+    @include ilios-list-reset;
+
+    li {
+      margin-bottom: $space;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .link-button {
+    @include ilios-link-button;
+    text-align: left;
+  }
+
+  .bigadd {
+    background-color: $ilios-green;
+    color: $white;
+  }
+
+  .bigcancel {
+    background-color: $ilios-red;
+    color: $white;
+    margin-left: .5em;
+  }
+}
