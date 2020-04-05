@@ -1,6 +1,14 @@
 .session-objective-list-item-parents {
   ul {
     @include ilios-list-reset;
+
+    li {
+      margin-bottom: .5em;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
   }
 
   .link-button {

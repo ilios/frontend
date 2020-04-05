@@ -1,6 +1,14 @@
 .session-objective-list-item-descriptors {
   ul {
     @include ilios-list-reset;
+
+    li {
+      margin-bottom: .25em;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
   }
 
   .link-button {
