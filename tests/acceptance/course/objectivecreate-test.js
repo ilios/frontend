@@ -38,11 +38,11 @@ module('Acceptance | Course - Objective Create', function(hooks) {
 
     assert.equal(page.objectives.objectiveList.objectives.length, 2);
     assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 0);
-    assert.equal(page.objectives.objectiveList.objectives[0].meshTerms.length, 0);
+    assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
+    assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
     assert.equal(page.objectives.objectiveList.objectives[1].description.text, newObjectiveDescription);
-    assert.equal(page.objectives.objectiveList.objectives[1].parents.length, 0);
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms.length, 0);
+    assert.ok(page.objectives.objectiveList.objectives[1].parents.empty);
+    assert.ok(page.objectives.objectiveList.objectives[1].meshDescriptors.empty);
   });
 
   test('cancel new objective', async function(assert) {
@@ -63,8 +63,8 @@ module('Acceptance | Course - Objective Create', function(hooks) {
 
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
     assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 0);
-    assert.equal(page.objectives.objectiveList.objectives[0].meshTerms.length, 0);
+    assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
+    assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
   });
 
   test('empty objective title can not be created', async function(assert) {
@@ -104,7 +104,7 @@ module('Acceptance | Course - Objective Create', function(hooks) {
 
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
     assert.equal(page.objectives.objectiveList.objectives[0].description.text, newObjectiveDescription);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 0);
-    assert.equal(page.objectives.objectiveList.objectives[0].meshTerms.length, 0);
+    assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
+    assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
   });
 });

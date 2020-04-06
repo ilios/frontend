@@ -44,22 +44,22 @@ module('Acceptance | Course - Objective List', function(hooks) {
     assert.equal(page.objectives.objectiveList.objectives.length, 13);
 
     assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 2');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents[0].description, 'objective 0');
-    assert.equal(page.objectives.objectiveList.objectives[0].meshTerms.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].meshTerms[0].title, 'descriptor 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].title, 'descriptor 0');
 
     assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'objective 3');
-    assert.equal(page.objectives.objectiveList.objectives[1].parents.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[1].parents[0].description, 'objective 1');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[0].title, 'descriptor 0');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshTerms[1].title, 'descriptor 1');
+    assert.equal(page.objectives.objectiveList.objectives[1].parents.list.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[1].parents.list[0].text, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 2);
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title, 'descriptor 0');
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title, 'descriptor 1');
 
     for (let i=2; i <= 12; i++) {
       assert.equal(page.objectives.objectiveList.objectives[i].description.text, `objective ${i + 2}`);
-      assert.equal(page.objectives.objectiveList.objectives[i].parents.length, 0);
-      assert.equal(page.objectives.objectiveList.objectives[i].meshTerms.length, 0);
+      assert.ok(page.objectives.objectiveList.objectives[i].parents.empty);
+      assert.ok(page.objectives.objectiveList.objectives[i].meshDescriptors.empty);
     }
   });
 

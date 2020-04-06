@@ -1,0 +1,4 @@
+.course-objectives {
+  @include detail-container($ilios-orange);
+  @include objectives;
+}

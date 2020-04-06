@@ -1,60 +1,34 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { enqueueTask, dropTask, restartableTask } from 'ember-concurrency-decorators';
-import { action } from '@ember/object';
-import { all } from 'rsvp';
+import { restartableTask } from 'ember-concurrency-decorators';
+import { hash } from 'rsvp';
+import { inject as service } from '@ember/service';
 
 export default class SessionObjectiveListComponent extends Component {
+  @service store;
+  @service intl;
+
   @tracked objectives;
-  @tracked objectivesForRemovalConfirmation = [];
-  @tracked totalObjectivesToSave;
-  @tracked currentObjectivesSaved;
   @tracked isSorting = false;
+  @tracked courseObjectives;
+  @tracked course;
+  @tracked objectiveCount;
 
   @restartableTask
   *load(element, [session]) {
     if (!session) {
       return;
     }
-    this.objectives = yield session.sortedObjectives;
-  }
-
-  get hasMoreThanOneObjective() {
-    return this.objectives?.length > 1;
-  }
-
-  async saveSomeObjectives(arr){
-    const chunk = arr.splice(0, 5);
-    await all(chunk.invoke('save'));
-    if (arr.length){
-      this.currentObjectivesSaved += chunk.length;
-      await this.saveSomeObjectives(arr);
-    }
-  }
-
-  @dropTask
-  *saveSortOrder(objectives){
-    for (let i = 0, n = objectives.length; i < n; i++) {
-      objectives[i].set('position', i + 1);
-    }
-
-    this.totalObjectivesToSave = objectives.length;
-    this.currentObjectivesSaved = 0;
-
-    yield this.saveSomeObjectives(objectives);
-    this.isSorting = false;
-  }
-
-  @enqueueTask
-  *deleteObjective(objective) {
-    yield objective.destroyRecord();
-  }
-  @action
-  confirmRemoval(objective) {
-    this.objectivesForRemovalConfirmation = [...this.objectivesForRemovalConfirmation, objective.id];
-  }
-  @action
-  cancelRemove(objective){
-    this.objectivesForRemovalConfirmation = this.objectivesForRemovalConfirmation.filter(id => id !== objective.id);
+    this.objectiveCount = session.hasMany('objectives').ids().length;
+    this.course = yield session.course;
+    const {
+      objectives,
+      courseObjectives
+    } = yield hash({
+      objectives: session.sortedObjectives,
+      courseObjectives: this.course.objectives
+    });
+    this.objectives = objectives;
+    this.courseObjectives = courseObjectives;
   }
 }

@@ -14,13 +14,11 @@ module('Integration | Component | session/manage-objective-descriptors', functio
     const descriptorModel = await this.owner.lookup('service:store').find('meshDescriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
     await render(hbs`<Session::ManageObjectiveDescriptors
-      @objectiveTitle="Jayden Rules!"
       @selected={{this.selected}}
       @add={{noop}}
       @remove={{noop}}
       @editable={{true}}
     />`);
-    assert.equal(component.objectiveTitle, 'Jayden Rules!');
     const m = component.meshManager;
 
     assert.equal(m.selectedTerms.length, 1);
@@ -39,7 +37,7 @@ module('Integration | Component | session/manage-objective-descriptors', functio
   });
 
   test('add works', async function (assert) {
-    assert.expect(17);
+    assert.expect(16);
     const descriptors = this.server.createList('meshDescriptor', 2);
     const descriptorModel = await this.owner.lookup('service:store').find('meshDescriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
@@ -48,13 +46,11 @@ module('Integration | Component | session/manage-objective-descriptors', functio
       assert.ok(true);
     });
     await render(hbs`<Session::ManageObjectiveDescriptors
-      @objectiveTitle="Jayden Rules!"
       @selected={{this.selected}}
       @add={{this.add}}
       @remove={{noop}}
       @editable={{true}}
     />`);
-    assert.equal(component.objectiveTitle, 'Jayden Rules!');
     const m = component.meshManager;
 
     assert.equal(m.selectedTerms.length, 1);
@@ -79,7 +75,7 @@ module('Integration | Component | session/manage-objective-descriptors', functio
   });
 
   test('remove works', async function(assert) {
-    assert.expect(16);
+    assert.expect(15);
     const descriptors = this.server.createList('meshDescriptor', 2);
     const descriptorModel = await this.owner.lookup('service:store').find('meshDescriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
@@ -89,13 +85,11 @@ module('Integration | Component | session/manage-objective-descriptors', functio
       assert.ok(true);
     });
     await render(hbs`<Session::ManageObjectiveDescriptors
-      @objectiveTitle="Jayden Rules!"
       @selected={{this.selected}}
       @add={{noop}}
       @remove={{this.remove}}
       @editable={{true}}
     />`);
-    assert.equal(component.objectiveTitle, 'Jayden Rules!');
     const m = component.meshManager;
 
     assert.equal(m.selectedTerms.length, 1);

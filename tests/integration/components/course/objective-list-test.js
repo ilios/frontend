@@ -32,8 +32,6 @@ module('Integration | Component | course/objective-list', function(hooks) {
       hbs`<Course::ObjectiveList
         @editable={{true}}
         @course={{this.course}}
-        @manageParents={{noop}}
-        @manageDescriptors={{noop}}
       />`
     );
     assert.ok(component.sortIsVisible, 'Sort Objectives button is visible');
@@ -60,8 +58,6 @@ module('Integration | Component | course/objective-list', function(hooks) {
       hbs`<Course::ObjectiveList
         @editable={{true}}
         @course={{this.course}}
-        @manageParents={{noop}}
-        @manageDescriptors={{noop}}
       />`
     );
     assert.notOk(component.sortIsVisible);
@@ -83,8 +79,6 @@ module('Integration | Component | course/objective-list', function(hooks) {
       hbs`<Course::ObjectiveList
         @editable={{true}}
         @course={{this.course}}
-        @manageParents={{noop}}
-        @manageDescriptors={{noop}}
       />`
     );
     assert.notOk(component.sortIsVisible, 'Sort Objectives button is visible');

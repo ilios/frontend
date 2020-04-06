@@ -1,53 +1,17 @@
 <section
-  class="detail-objectives {{if this.showCollapsible "collapsible"}}"
+  class="course-objectives {{if this.showCollapsible "collapsible"}}"
+  {{did-insert this.load @course}}
+  {{did-update this.load @course @course.objectives}}
   data-test-course-objectives
-  {{did-insert (perform this.load) @course @course.cohorts}}
-  {{did-update (perform this.load) @course @course.cohorts}}
 >
-  <div class="detail-objectives-header">
-    {{#if this.isManaging}}
-      <div class="title">
-        {{#if this.isManagingParents}}
-          <span class="specific-title">
-            {{t "general.objectiveParentTitleSingular"}}
-          </span>
-        {{/if}}
-        {{#if this.isManagingDescriptors}}
-          <span class="specific-title">
-            {{t "general.objectiveDescriptorTitle"}}
-          </span>
-        {{/if}}
-      </div>
-    {{else}}
-      <div
-        class="title {{if this.showCollapsible "clickable collapsible"}}"
-        role="button"
-        {{on "click" this.collapse}}
-      >
-        {{t "general.objectives"}} ({{@course.objectives.length}})
-      </div>
-    {{/if}}
-    <div class="detail-objectives-actions" data-test-actions>
-      {{#if this.isManaging}}
-        <button
-          type="button"
-          class="bigadd"
-          {{on "click" (perform this.save)}}
-          aria-label={{t "general.save"}}
-          data-test-save
-        >
-          <FaIcon @icon="check" />
-        </button>
-        <button
-          type="button"
-          class="bigcancel"
-          {{on "click" this.cancel}}
-          aria-label={{t "general.cancel"}}
-          data-test-cancel
-        >
-          <FaIcon @icon="undo" />
-        </button>
-      {{else if @editable}}
+  <div class="header">
+    <h3 class="title {{if this.showCollapsible "clickable collapsible"}}" data-test-title>
+      <button type="button" {{on "click" this.collapse}}>
+        {{t "general.objectives"}} ({{this.objectiveCount}})
+      </button>
+    </h3>
+    {{#if @editable}}
+      <span data-test-actions>
         <LinkTo @route="course-visualize-objectives" @model={{@course}}>
           <VisualizerCourseObjectives
             @course={{@course}}
@@ -61,43 +25,19 @@
           @action={{this.toggleNewObjectiveEditor}}
           @expandButtonLabel={{t "general.addNew"}}
         />
-      {{/if}}
-    </div>
+      </span>
+    {{/if}}
   </div>
-  <div class="detail-objectives-content">
-    {{#if this.newObjectiveEditorOn class="vertical"}}
+  <div class="content">
+    {{#if this.newObjectiveEditorOn}}
       <NewObjective
         @save={{perform this.saveNewObjective}}
         @cancel={{this.toggleNewObjectiveEditor}}
       />
     {{/if}}
-    {{#unless this.isManaging}}
-      <Course::ObjectiveList
-        @course={{@course}}
-        @editable={{@editable}}
-        @manageParents={{perform this.manageParents}}
-        @manageDescriptors={{perform this.manageDescriptors}}
-      />
-    {{else}}
-      {{#if this.isManagingParents}}
-        <Course::ManageObjectiveParents
-          @objective={{this.manageParentsObjective}}
-          @cohortObjectives={{this.cohortObjectives}}
-          @selected={{this.parentsBuffer}}
-          @add={{this.addParentToBuffer}}
-          @remove={{this.removeParentFromBuffer}}
-          @removeFromCohort={{this.removeParentsWithCohortFromBuffer}}
-        />
-      {{/if}}
-      {{#if this.isManagingDescriptors}}
-        <Course::ManageObjectiveDescriptors
-          @objectiveTitle={{this.manageDescriptorsObjective.title}}
-          @selected={{this.descriptorsBuffer}}
-          @add={{this.addDescriptorToBuffer}}
-          @remove={{this.removeDescriptorFromBuffer}}
-          @editable={{@editable}}
-        />
-      {{/if}}
-    {{/unless}}
+    <Course::ObjectiveList
+      @course={{@course}}
+      @editable={{@editable}}
+    />
   </div>
 </section>

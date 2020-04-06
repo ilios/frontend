@@ -31,17 +31,16 @@ module('Acceptance | Course with no cohorts - Objective Parents', function(hooks
 
   test('add and remove a new cohort', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(15);
+    assert.expect(14);
 
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
 
     assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 1');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.length, 0);
-    await page.objectives.objectiveList.objectives[0].manageParents();
-    const m = page.objectives.manageObjectiveParents;
+    assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
+    await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    const m = page.objectives.objectiveList.objectives[0].parentManager;
 
-    assert.equal(m.objectiveTitle, 'objective 1');
     assert.ok(m.hasNoCohortWarning);
 
     await page.cohorts.manage();

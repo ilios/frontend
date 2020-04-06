@@ -5,27 +5,43 @@
 >
   {{#if (is-array this.sortableObjectList)}}
     <div class="actions">
-      <button class="bigadd" type="button" {{on "click" (fn @save this.sortableObjectList)}}>
-        <FaIcon @icon="check" />
+      <button
+        class="bigadd"
+        type="button"
+        disabled={{this.saveSortOrder.isRunning}}
+        {{on "click" (perform this.saveSortOrder)}}
+      >
+        {{#if this.saveSortOrder.isRunning}}
+          <FaIcon @icon="spinner" @spin={{true}} /> {{this.saveProgress}}%
+        {{else}}
+          <FaIcon @icon="check" />
+        {{/if}}
       </button>
-      <button class="bigcancel" type="button" {{on "click" @cancel}}>
+      <button
+        class="bigcancel"
+        type="button"
+        disabled={{this.saveSortOrder.isRunning}}
+        {{on "click" @close}}
+      >
         <FaIcon @icon="undo" />
       </button>
     </div>
     <div class="content">
       <SortableObjects
         @sortableObjectList={{this.sortableObjectList}}
-        @enableSort={{true}}
+        @enableSort={{not this.saveSortOrder.isRunning}}
         @useSwap={{true}}
         @sortingScope="sortingGroup"
       >
         {{#each this.sortableObjectList as |item|}}
           <DraggableObject
             @content={{item}}
-            @isSortable={{true}}
+            @isSortable={{not this.saveSortOrder.isRunning}}
             @sortingScope="sortingGroup"
           >
-            <FaIcon @icon="arrows-alt" />
+            {{#unless this.saveSortOrder.isRunning}}
+              <FaIcon @icon="arrows-alt" />
+            {{/unless}}
             <span class="draggable-object-content">
               <span>
                 <TruncateText @text={{item.title}} />

@@ -1,10 +1,6 @@
 .session-manage-objective-parents {
-  .objective-title {
-    @include ilios-browser-defaults;
-    background-color: $background-grey;
-    margin-bottom: 1rem;
-    padding: .5rem;
-  }
+  margin: 1em 2em;
+  grid-column: 1 / -1;
 
   .parent-picker {
     @include ilios-list-reset;

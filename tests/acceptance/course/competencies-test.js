@@ -64,12 +64,12 @@ module('Acceptance | Course - Competencies', function(hooks) {
   test('changing objective parent changes summary', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    await page.objectives.objectiveList.objectives[1].manageParents();
-    const m = page.objectives.manageObjectiveParents;
+    await page.objectives.objectiveList.objectives[1].parents.list[0].manage();
+    const m = page.objectives.objectiveList.objectives[1].parentManager;
     await m.competencies[1].objectives[0].add();
     assert.ok(m.competencies[0].objectives[0].notSelected);
     assert.ok(m.competencies[1].objectives[0].selected);
-    await page.objectives.save();
+    await page.objectives.objectiveList.objectives[1].parents.save();
 
     assert.equal(page.collapsedCompetencies.title, 'Competencies (2)');
     assert.equal(page.collapsedCompetencies.headers[0].text, 'School');

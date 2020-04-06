@@ -1,7 +1,6 @@
 import {
   clickable,
   create,
-  collection,
   hasClass,
   isVisible,
   text,
@@ -10,6 +9,10 @@ import {
   pageObjectFillInFroalaEditor,
   pageObjectFroalaEditorValue
 } from 'ilios-common';
+import meshManager from './manage-objective-descriptors';
+import parentManager from './manage-objective-parents';
+import meshDescriptors from './objective-list-item-descriptors';
+import parents from './objective-list-item-parents';
 
 const definition = {
   scope: '[data-test-course-objective-list-item]',
@@ -23,18 +26,17 @@ const definition = {
     validationError: text('.validation-error-message'),
     hasValidationError: isVisible('.validation-error-message'),
   },
-  parentsText: text('[data-test-parents]'),
-  parents: collection('[data-test-parents] [data-test-parent]', {
-    description: text(),
-  }, { at: 1 }),
-  manageParents: clickable('[data-test-manage-parents]', { scope: '[data-test-parents]' }),
-  meshText: text('[data-test-mesh-descriptors]'),
-  meshTerms: collection('[data-test-mesh-descriptors] [data-test-term]', {
-    title: text(),
-  }, { at: 1 }),
-  manageMesh: clickable('[data-test-manage]', { scope: '[data-test-mesh-descriptors]' }),
+  parents,
+  meshDescriptors,
   remove: clickable('[data-icon="trash"]', { scope: '[data-test-actions]'}),
-  hasTrashCan: isVisible('[data-icon="trash"]', { scope: '[data-test-actions]'}),
+  hasTrashCan: isVisible('[data-icon="trash"]', { scope: '[data-test-actions]' }),
+  confirmRemoval: {
+    scope: '[data-test-confirm-removal]',
+    confirm: clickable('[data-test-confirm]'),
+    cancel: clickable('[data-test-cancel]'),
+  },
+  meshManager,
+  parentManager,
 };
 
 export default definition;
