@@ -4,12 +4,11 @@ import ObjectProxy from '@ember/object/proxy';
 import { all, map } from 'rsvp';
 import { isEmpty } from '@ember/utils';
 import moment from 'moment';
-import CategorizableModel from 'ilios-common/mixins/categorizable-model';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 
 const { alias, filterBy, mapBy, sum, oneWay, not, collect } = computed;
 
-export default Model.extend(CategorizableModel, {
+export default Model.extend({
   title: attr('string'),
   level: attr('number'),
   year: attr('number'),
@@ -43,6 +42,7 @@ export default Model.extend(CategorizableModel, {
     inverse: 'ancestor',
     async: true
   }),
+  terms: hasMany('term', {async: true}),
 
   publishedSessions: filterBy('sessions', 'isPublished'),
   publishedSessionOfferings: mapBy('publishedSessions', 'offerings'),
@@ -160,6 +160,44 @@ export default Model.extend(CategorizableModel, {
     const ids = meta.ids();
 
     return ids.length > 1;
+  }),
+
+  /**
+   * A list of all vocabularies that are associated via terms.
+   * @property associatedVocabularies
+   * @type {Ember.computed}
+   * @public
+   */
+  associatedVocabularies: computed('terms.@each.vocabulary', async function () {
+    const terms = await this.get('terms');
+    const vocabularies = await all(terms.toArray().mapBy('vocabulary'));
+    return vocabularies.uniq().sortBy('title');
+  }),
+
+  /**
+   * A list containing all associated terms and their parent terms.
+   * @property termsWithAllParents
+   * @type {Ember.computed}
+   * @public
+   */
+  termsWithAllParents: computed('terms.[]', async function () {
+    const terms = await this.get('terms');
+    const allTerms = await all(terms.toArray().mapBy('termWithAllParents'));
+    return (allTerms.reduce((array, set) => {
+      array.pushObjects(set);
+      return array;
+    }, [])).uniq();
+  }),
+
+  /**
+   * The number of terms attached to this model
+   * @property termCount
+   * @type {Ember.computed}
+   * @public
+   */
+  termCount: computed('terms.[]', function(){
+    const termIds = this.hasMany('terms').ids();
+    return termIds.length;
   }),
 
   init() {

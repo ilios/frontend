@@ -3,12 +3,11 @@ import { computed } from '@ember/object';
 import { isPresent, isEmpty } from '@ember/utils';
 import { all } from 'rsvp';
 import moment from 'moment';
-import CategorizableModel from 'ilios-common/mixins/categorizable-model';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 
 const { alias, collect, mapBy, sum, oneWay, not } = computed;
 
-export default Model.extend(CategorizableModel, {
+export default Model.extend({
   title: attr('string'),
   attireRequired: attr('boolean'),
   equipmentRequired: attr('boolean'),
@@ -38,6 +37,7 @@ export default Model.extend(CategorizableModel, {
     inverse: 'postrequisite',
     async: true
   }),
+  terms: hasMany('term', {async: true}),
   offeringLearnerGroups: mapBy('offerings', 'learnerGroups'),
   offeringLearnerGroupsLength: mapBy('offeringLearnerGroups', 'length'),
   learnerGroupCount: sum('offeringLearnerGroupsLength'),
@@ -188,6 +188,44 @@ export default Model.extend(CategorizableModel, {
       return this.getOptionalPublicationIssues();
     }
   ),
+
+  /**
+   * A list of all vocabularies that are associated via terms.
+   * @property associatedVocabularies
+   * @type {Ember.computed}
+   * @public
+   */
+  associatedVocabularies: computed('terms.@each.vocabulary', async function () {
+    const terms = await this.get('terms');
+    const vocabularies = await all(terms.toArray().mapBy('vocabulary'));
+    return vocabularies.uniq().sortBy('title');
+  }),
+
+  /**
+   * A list containing all associated terms and their parent terms.
+   * @property termsWithAllParents
+   * @type {Ember.computed}
+   * @public
+   */
+  termsWithAllParents: computed('terms.[]', async function () {
+    const terms = await this.get('terms');
+    const allTerms = await all(terms.toArray().mapBy('termWithAllParents'));
+    return (allTerms.reduce((array, set) => {
+      array.pushObjects(set);
+      return array;
+    }, [])).uniq();
+  }),
+
+  /**
+   * The number of terms attached to this model
+   * @property termCount
+   * @type {Ember.computed}
+   * @public
+   */
+  termCount: computed('terms.[]', function(){
+    const termIds = this.hasMany('terms').ids();
+    return termIds.length;
+  }),
 
   /**
    * Learner-groups associated with this session via its offerings.
