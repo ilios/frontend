@@ -1,0 +1,20 @@
+<section class="course-visualize-term">
+  <div class="backtolink">
+    <LinkTo @route="course-visualizations" @model={{@model.course}}>
+      {{t "general.otherVisualizations"}}
+    </LinkTo>
+  </div>
+  <h2>
+    {{t
+      "general.sessionTypesFor"
+      subject=(concat @model.term.vocabulary.title " - " @model.term.title)
+    }}
+  </h2>
+  <h3 class="clickable">
+    <LinkTo @route="course" @model={{@model.course}}>
+      {{@model.course.title}}
+      {{@model.course.academicYear}}
+    </LinkTo>
+  </h3>
+  <VisualizerCourseTerm @course={{@model.course}} @term={{@model.term}} />
+</section>

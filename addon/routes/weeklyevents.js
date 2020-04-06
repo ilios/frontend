@@ -1,9 +1,10 @@
 import Route from '@ember/routing/route';
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Route.extend({
-  queryParams: {
+export default class WeeklyeventsRoute extends Route.extend(AuthenticatedRouteMixin) {
+  queryParams = {
     expanded: {
       replace: true
     }
-  }
-});
+  };
+}
