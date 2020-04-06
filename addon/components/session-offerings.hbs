@@ -1,51 +1,50 @@
-{{#liquid-if this.saving class="crossFade"}}
-  <WaitSaving />
-{{/liquid-if}}
-<div class="offering-section-top">
-  <div class="title">
-    {{t "general.offerings"}} ({{this.offerings.length}})
+<section class="session-offerings" data-test-session-offerings>
+  <div class="offering-section-top">
+    <div class="title">
+      {{t "general.offerings"}} ({{@session.offerings.length}})
+    </div>
+    <div class="actions">
+      {{#if @editable}}
+        <ExpandCollapseButton
+          @value={{@showNewOfferingForm}}
+          @action={{@toggleShowNewOfferingForm}}
+        />
+      {{/if}}
+    </div>
   </div>
-  <div class="actions">
-    {{#if @editable}}
-      <ExpandCollapseButton
-        @value={{@showNewOfferingForm}}
-        @action={{@toggleShowNewOfferingForm}}
-      />
+  {{#if @showNewOfferingForm}}
+    <NewOffering
+      @session={{@session}}
+      @cohorts={{await @session.course.cohorts}}
+      @courseStartDate={{await @session.course.startDate}}
+      @courseEndDate={{await @session.course.endDate}}
+      @close={{@toggleShowNewOfferingForm}}
+    />
+  {{/if}}
+  <div class="session-offerings-content">
+    {{#if @session.offerings}}
+      <div class="session-offerings-header">
+        <div>
+          {{t "general.dateTime"}}
+        </div>
+        <div>
+          {{t "general.groupName"}}
+        </div>
+        <div>
+          {{t "general.location"}}
+        </div>
+        <div>
+          {{t "general.instructors"}}
+        </div>
+        <div>
+          {{t "general.actions"}}
+        </div>
+      </div>
+      <SessionOfferingsList @session={{@session}} @editable={{@editable}} />
+    {{else}}
+      <p>
+        {{t "general.noOfferings"}}
+      </p>
     {{/if}}
   </div>
-</div>
-{{#if @showNewOfferingForm}}
-  <NewOffering
-    @session={{@session}}
-    @cohorts={{await @session.course.cohorts}}
-    @courseStartDate={{await @session.course.startDate}}
-    @courseEndDate={{await @session.course.endDate}}
-    @close={{@toggleShowNewOfferingForm}}
-  />
-{{/if}}
-<div class="session-offerings-content">
-  {{#if this.offerings.length}}
-    <div class="session-offerings-header">
-      <div>
-        {{t "general.dateTime"}}
-      </div>
-      <div>
-        {{t "general.groupName"}}
-      </div>
-      <div>
-        {{t "general.location"}}
-      </div>
-      <div>
-        {{t "general.instructors"}}
-      </div>
-      <div>
-        {{t "general.actions"}}
-      </div>
-    </div>
-    <SessionOfferingsList @session={{@session}} @editable={{@editable}} />
-  {{else}}
-    <p>
-      {{t "general.noOfferings"}}
-    </p>
-  {{/if}}
-</div>
+</section>

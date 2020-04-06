@@ -1,58 +1,65 @@
-{{#if (is-pending this.offeringBlocks)}}
-  <LoadingSpinner />
-{{/if}}
-{{#each (await this.offeringBlocks) as |block|}}
-  <div class="offering-block">
-    <div class="offering-block-date">
-      <span class="offering-block-date-dayofweek">
-        {{block.dayOfWeek}}
-      </span>
-      <span class="offering-block-date-dayofmonth">
-        {{block.dayOfMonth}}
-      </span>
-    </div>
-    {{#each block.offeringTimeBlocks as |offeringTimeBlock|}}
-      <div class="offering-block-time">
-        {{#if offeringTimeBlock.isMultiDay}}
-          <div class="multiday-offering-block-time-time">
-            <span class="multiday-offering-block-time-time-description">
-              {{t "general.multiday"}}
-            </span>
-            <span class="multiday-offering-block-time-time-starts">
-              {{t "general.starts"}}
-              {{offeringTimeBlock.longStartText}}
-            </span>
-            <span class="multiday-offering-block-time-time-ends">
-              {{t "general.ends"}}
-              {{offeringTimeBlock.longEndText}}
-            </span>
-          </div>
-        {{else}}
-          <div class="offering-block-time-time">
-            <span class="offering-block-time-time-starttime">
-              <label class="offering-block-time-time-starttime-label">
-                {{t "general.starts"}}:
-              </label>
-              {{offeringTimeBlock.startTime}}
-            </span>
-            <span class="offering-block-time-time-endtime">
-              <label class="offering-block-time-time-endtime-label">
-                {{t "general.ends"}}:
-              </label>
-              {{offeringTimeBlock.endTime}}
-            </span>
-          </div>
-        {{/if}}
-        <div class="offering-block-time-offerings" data-test-offerings>
-          {{#each offeringTimeBlock.sortedOfferings as |offering|}}
-            <OfferingManager
-              @offering={{offering}}
-              @remove={{this.removeOffering}}
-              @editable={{@editable}}
-            />
-          {{/each}}
-        </div>
+<div
+  class="session-offerings-list"
+  {{did-insert (perform this.load) @session @session.offerings}}
+  {{did-update (perform this.load) @session @session.offerings}}
+  data-test-session-offerings-list
+>
+  {{#each (await this.offeringBlocks) as |block|}}
+    <div class="offering-block">
+      <div class="offering-block-date">
+        <span class="offering-block-date-dayofweek">
+          {{block.dayOfWeek}}
+        </span>
+        <span class="offering-block-date-dayofmonth">
+          {{block.dayOfMonth}}
+        </span>
       </div>
-    {{/each}}
-  </div>
-{{/each}}
+      {{#each block.offeringTimeBlocks as |offeringTimeBlock|}}
+        <div class="offering-block-time">
+          {{#if offeringTimeBlock.isMultiDay}}
+            <div class="multiday-offering-block-time-time">
+              <span class="multiday-offering-block-time-time-description">
+                {{t "general.multiday"}}
+              </span>
+              <span class="multiday-offering-block-time-time-starts">
+                {{t "general.starts"}}
+                {{offeringTimeBlock.longStartText}}
+              </span>
+              <span class="multiday-offering-block-time-time-ends">
+                {{t "general.ends"}}
+                {{offeringTimeBlock.longEndText}}
+              </span>
+            </div>
+          {{else}}
+            <div class="offering-block-time-time">
+              <span class="offering-block-time-time-starttime">
+                <label class="offering-block-time-time-starttime-label">
+                  {{t "general.starts"}}:
+                </label>
+                {{offeringTimeBlock.startTime}}
+              </span>
+              <span class="offering-block-time-time-endtime">
+                <label class="offering-block-time-time-endtime-label">
+                  {{t "general.ends"}}:
+                </label>
+                {{offeringTimeBlock.endTime}}
+              </span>
+            </div>
+          {{/if}}
+          <div class="offering-block-time-offerings" data-test-offerings>
+            {{#each offeringTimeBlock.sortedOfferings as |offering|}}
+              <OfferingManager
+                @offering={{offering}}
+                @remove={{this.removeOffering}}
+                @editable={{@editable}}
+              />
+            {{/each}}
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{/each}}
+  {{#unless (is-array this.offeringBlocks)}}
+    <LoadingSpinner />
+  {{/unless}}
+</div>

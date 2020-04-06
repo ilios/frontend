@@ -1,32 +1,25 @@
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { computed, action } from '@ember/object';
-import { isEmpty } from '@ember/utils';
-
+import { action } from '@ember/object';
 import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 
-const { oneWay } = computed;
+export default class SessionOfferingsListComponent extends Component {
+  @service store;
+  @tracked offerings;
 
-export default Component.extend({
-  store: service(),
-  classNames: ['session-offerings-list'],
-  session: null,
-  editable: true,
-  'data-test-session-offerings-list': true,
+  @restartableTask
+  *load(element, [session]){
+    this.offerings = (yield session.offerings).toArray();
+  }
 
-  offerings: oneWay('session.offerings'),
-  /**
-   * @property offeringBlocks
-   * @type {Ember.computed}
-   * @public
-   */
-  offeringBlocks: computed('offerings.@each.{startDate,endDate,room,learnerGroups,instructorGroups}', async function() {
-    const offerings = await this.get('offerings');
-    if (isEmpty(offerings)) {
+  get offeringBlocks() {
+    if (!this.offerings) {
       return [];
     }
     const dateBlocks = {};
-    offerings.forEach(offering => {
+    this.offerings.forEach(offering => {
       const key = offering.get('dateKey');
       if (!(key in dateBlocks)) {
         dateBlocks[key] = OfferingDateBlock.create({
@@ -42,15 +35,11 @@ export default Component.extend({
       dateBlockArray.pushObject(dateBlocks[key]);
     }
     return dateBlockArray.sortBy('dateStamp');
-  }),
+  }
 
   @action
   removeOffering(offering) {
-    const session = this.get('session');
-    session.get('offerings').then(offerings => {
-      offerings.removeObject(offering);
-      offering.deleteRecord();
-      offering.save();
-    });
-  },
-});
+    offering.deleteRecord();
+    offering.save();
+  }
+}

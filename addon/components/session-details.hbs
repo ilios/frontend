@@ -1,90 +1,96 @@
-<SessionOverview
-  @session={{@session}}
-  @sessionTypes={{@sessionTypes}}
-  @editable={{@editable}}
-/>
-{{#if @sessionLeadershipDetails}}
-  <SessionLeadershipExpanded
+<section
+  class="session-details"
+  {{scroll-into-view}}
+  data-test-session-details
+>
+  <SessionOverview
     @session={{@session}}
-    @canUpdate={{@editable}}
-    @collapse={{fn @setSessionLeadershipDetails false}}
-    @expand={{fn @setSessionLeadershipDetails true}}
-    @isManaging={{@sessionManageLeadership}}
-    @setIsManaging={{@setSessionManageLeadership}}
+    @sessionTypes={{@sessionTypes}}
+    @editable={{@editable}}
   />
-{{else}}
-  <LeadershipCollapsed
-    @title={{t "general.sessionAdministration"}}
-    @showDirectors={{false}}
-    @showAdministrators={{true}}
-    @administratorsCount={{has-many-length @session "administrators"}}
-    @expand={{fn @setSessionLeadershipDetails true}}
-  />
-{{/if}}
-{{#if @session.isIndependentLearning}}
-  {{#if
-    (or
-      (eq (get (await @session.ilmSession.learnerGroups) "length") 0)
-      @sessionLearnergroupDetails
-    )
-  }}
-    <DetailLearnergroups
-      @ilmSession={{await @session.ilmSession}}
-      @cohorts={{await @session.course.cohorts}}
-      @isIlmSession={{true}}
-      @editable={{@editable}}
-      @isManaging={{@isManagingLearnerGroups}}
-      @setIsManaging={{fn @setIsManagingLearnerGroups}}
-      @collapse={{fn @setSessionLearnergroupDetails false}}
-      @expand={{fn @setSessionLearnergroupDetails true}}
+  {{#if @sessionLeadershipDetails}}
+    <SessionLeadershipExpanded
+      @session={{@session}}
+      @canUpdate={{@editable}}
+      @collapse={{fn @setSessionLeadershipDetails false}}
+      @expand={{fn @setSessionLeadershipDetails true}}
+      @isManaging={{@sessionManageLeadership}}
+      @setIsManaging={{@setSessionManageLeadership}}
     />
   {{else}}
-    <CollapsedLearnergroups
-      @subject={{await @session.ilmSession}}
-      @expand={{fn @setSessionLearnergroupDetails true}}
+    <LeadershipCollapsed
+      @title={{t "general.sessionAdministration"}}
+      @showDirectors={{false}}
+      @showAdministrators={{true}}
+      @administratorsCount={{has-many-length @session "administrators"}}
+      @expand={{fn @setSessionLeadershipDetails true}}
     />
   {{/if}}
-  <DetailInstructors
-    @ilmSession={{await @session.ilmSession}}
+  {{#if @session.isIndependentLearning}}
+    {{#if
+      (or
+        (eq (get (await @session.ilmSession.learnerGroups) "length") 0)
+        @sessionLearnergroupDetails
+      )
+    }}
+      <DetailLearnergroups
+        @ilmSession={{await @session.ilmSession}}
+        @cohorts={{await @session.course.cohorts}}
+        @isIlmSession={{true}}
+        @editable={{@editable}}
+        @isManaging={{@isManagingLearnerGroups}}
+        @setIsManaging={{fn @setIsManagingLearnerGroups}}
+        @collapse={{fn @setSessionLearnergroupDetails false}}
+        @expand={{fn @setSessionLearnergroupDetails true}}
+      />
+    {{else}}
+      <CollapsedLearnergroups
+        @subject={{await @session.ilmSession}}
+        @expand={{fn @setSessionLearnergroupDetails true}}
+      />
+    {{/if}}
+    <DetailInstructors
+      @ilmSession={{await @session.ilmSession}}
+      @editable={{@editable}}
+    />
+  {{/if}}
+  {{#if (or (eq @session.objectives.length 0) @sessionObjectiveDetails)}}
+    <Session::Objectives
+      @session={{@session}}
+      @editable={{@editable}}
+      @collapse={{fn @setSessionObjectiveDetails false}}
+      @expand={{fn @setSessionObjectiveDetails true}}
+    />
+  {{else}}
+    <CollapsedObjectives
+      @subject={{@session}}
+      @editable={{@editable}}
+      @expand={{fn @setSessionObjectiveDetails true}}
+    />
+  {{/if}}
+  <DetailLearningMaterials
+    @subject={{@session}}
+    @isCourse={{false}}
     @editable={{@editable}}
   />
-{{/if}}
-{{#if (or (eq @session.objectives.length 0) @sessionObjectiveDetails)}}
-  <Session::Objectives
+  {{#if (or (eq @session.terms.length 0) @sessionTaxonomyDetails)}}
+    <DetailTaxonomies
+      @subject={{@session}}
+      @editable={{@editable}}
+      @collapse={{fn @setSessionTaxonomyDetails false}}
+      @expand={{fn @setSessionTaxonomyDetails true}}
+    />
+  {{else}}
+    <CollapsedTaxonomies
+      @subject={{@session}}
+      @expand={{fn @setSessionTaxonomyDetails true}}
+    />
+  {{/if}}
+  <DetailMesh @subject={{@session}} @isSession={{true}} @editable={{@editable}} />
+  <SessionOfferings
     @session={{@session}}
     @editable={{@editable}}
-    @collapse={{fn @setSessionObjectiveDetails false}}
-    @expand={{fn @setSessionObjectiveDetails true}}
+    @showNewOfferingForm={{@showNewOfferingForm}}
+    @toggleShowNewOfferingForm={{@toggleShowNewOfferingForm}}
   />
-{{else}}
-  <CollapsedObjectives
-    @subject={{@session}}
-    @editable={{@editable}}
-    @expand={{fn @setSessionObjectiveDetails true}}
-  />
-{{/if}}
-<DetailLearningMaterials
-  @subject={{@session}}
-  @isCourse={{false}}
-  @editable={{@editable}}
-/>
-{{#if (or (eq @session.terms.length 0) @sessionTaxonomyDetails)}}
-  <DetailTaxonomies
-    @subject={{@session}}
-    @editable={{@editable}}
-    @collapse={{fn @setSessionTaxonomyDetails false}}
-    @expand={{fn @setSessionTaxonomyDetails true}}
-  />
-{{else}}
-  <CollapsedTaxonomies
-    @subject={{@session}}
-    @expand={{fn @setSessionTaxonomyDetails true}}
-  />
-{{/if}}
-<DetailMesh @subject={{@session}} @isSession={{true}} @editable={{@editable}} />
-<SessionOfferings
-  @session={{@session}}
-  @editable={{@editable}}
-  @showNewOfferingForm={{@showNewOfferingForm}}
-  @toggleShowNewOfferingForm={{@toggleShowNewOfferingForm}}
-/>
+</section>
