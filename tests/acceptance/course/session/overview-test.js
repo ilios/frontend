@@ -588,7 +588,7 @@ module('Acceptance | Session - Overview', function(hooks) {
     const session = this.server.create('session', {
       course: this.course,
     });
-    const postRequisite = this.server.create('session', {});
+    const postRequisite = this.server.create('session', { course: this.course });
     session.update('postrequisite', postRequisite);
     await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
     assert.equal(page.overview.postrequisite.text, 'Due prior to: session 1');

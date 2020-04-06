@@ -17,7 +17,7 @@ module('Acceptance | Session - Independent Learning', function(hooks) {
     this.user = await setupAuthentication({ school: this.school });
     this.server.createList('user', 6);
     this.server.create('academicYear');
-    const course = this.server.create('course', { school: this.school });
+    this.course = this.server.create('course', { school: this.school });
     this.server.createList('instructorGroup', 5, { school: this.school });
     this.server.createList('user', 2, {instructorGroupIds: [ 1 ]});
     this.server.createList('user', 3, {instructorGroupIds: [ 2 ]});
@@ -28,7 +28,7 @@ module('Acceptance | Session - Independent Learning', function(hooks) {
       instructorIds: [2,3,4]
     });
     this.ilmSession = this.server.create('session', {
-      course,
+      course: this.course,
       ilmSession
     });
   });
@@ -297,8 +297,8 @@ module('Acceptance | Session - Independent Learning', function(hooks) {
     assert.ok(page.overview.ilmDueDate.isVisible);
   });
 
-  test('ilm due date should not be visible if session has post-requisite', async function(assert) {
-    const postRequisite = this.server.create('session', {});
+  test('ilm due date should not be visible if session has post-requisite', async function (assert) {
+    const postRequisite = this.server.create('session', { course: this.course });
     this.ilmSession.update('postrequisite', postRequisite);
     await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
     assert.ok(page.overview.ilmDueDate.isPresent);
