@@ -64,7 +64,7 @@
     "ember-intl": "^4.0.0",
     "ember-lifeline": "^5.0.0",
     "ember-math-helpers": "^2.9.0",
-    "ember-modal-dialog": "^3.0.0",
+    "ember-modal-dialog": "3.0.0-beta.4",
     "ember-modifier": "^1.0.2",
     "ember-moment": "^8.0.0",
     "ember-on-helper": "^0.1.0",
