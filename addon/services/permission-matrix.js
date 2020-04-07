@@ -1,9 +1,11 @@
 import Service, { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
+import { deprecate } from '@ember/debug';
 
 export default Service.extend({
   store: service(),
   permissionMatrix: computed(async function(){
+    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     return this.getPermissionMatrix();
   }),
   async getPermissionMatrix() {

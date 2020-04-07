@@ -1,6 +1,7 @@
 import Service, { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
+import { deprecate } from '@ember/debug';
 
 export default Service.extend({
   fetch: service(),
@@ -8,6 +9,7 @@ export default Service.extend({
   _configPromise: null,
 
   config: computed('apiHost', function () {
+    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     return this.getConfig();
   }),
   async getConfig() {
@@ -25,6 +27,7 @@ export default Service.extend({
   },
 
   userSearchType: computed('config.userSearchType', function(){
+    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     return this.getUserSearchType();
   }),
   async getUserSearchType() {
@@ -32,6 +35,7 @@ export default Service.extend({
   },
 
   authenticationType: computed('config.type', function(){
+    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     return this.getAuthenticationType();
   }),
   async getAuthenticationType() {
@@ -39,6 +43,7 @@ export default Service.extend({
   },
 
   maxUploadSize: computed('config.maxUploadSize', function(){
+    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     return this.getMaxUploadSize();
   }),
   async getMaxUploadSize() {
@@ -46,6 +51,7 @@ export default Service.extend({
   },
 
   apiVersion: computed('config.apiVersion', function(){
+    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     return this.getApiVersion();
   }),
   async getApiVersion() {
@@ -53,6 +59,7 @@ export default Service.extend({
   },
 
   trackingEnabled: computed('config.trackingEnabled', function(){
+    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     return this.getTrackingEnabled();
   }),
   async getTrackingEnabled() {
@@ -60,6 +67,7 @@ export default Service.extend({
   },
 
   trackingCode: computed('config.trackingCode', function(){
+    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     return this.getTrackingCode();
   }),
   async getTrackingCode() {
@@ -67,6 +75,7 @@ export default Service.extend({
   },
 
   loginUrl: computed('config.loginUrl', function(){
+    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     return this.getLoginUrl();
   }),
   async getLoginUrl() {
@@ -74,6 +83,7 @@ export default Service.extend({
   },
 
   casLoginUrl: computed('config.casLoginUrl', function(){
+    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     return this.getCasLoginUrl();
   }),
   async getCasLoginUrl() {
@@ -111,6 +121,7 @@ export default Service.extend({
   }),
 
   searchEnabled: computed('config.searchEnabled', async function(){
+    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     return this.getSearchEnabled();
   }),
   async getSearchEnabled() {

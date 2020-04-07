@@ -1,6 +1,7 @@
 import Service, { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { getOwner } from '@ember/application';
+import { deprecate } from '@ember/debug';
 
 export default Service.extend({
   iliosConfig: service(),
@@ -12,6 +13,7 @@ export default Service.extend({
   }),
 
   isMismatched: computed('iliosConfig.apiVersion', 'version', async function () {
+    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     const serverApiVersion = await this.iliosConfig.getApiVersion();
     return serverApiVersion !== this.version;
   }),

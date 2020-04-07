@@ -3,6 +3,7 @@ import { get, computed } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
 import moment from 'moment';
 import jwtDecode from '../utils/jwt-decode';
+import { deprecate } from '@ember/debug';
 
 export default Service.extend({
   store: service(),
@@ -18,6 +19,7 @@ export default Service.extend({
   }),
 
   model: computed('currentUserId', async function(){
+    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     return this.getModel();
   }),
   async getModel() {
@@ -37,6 +39,7 @@ export default Service.extend({
   },
 
   userRoleTitles: computed('model.roles.[]', async function(){
+    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     return this.getUserRoleTitles();
   }),
   async getUserRoleTitles() {
@@ -49,6 +52,7 @@ export default Service.extend({
   },
 
   userIsStudent: computed('useRoleTitles.[]', async function(){
+    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     return this.getIsStudent();
   }),
   async getIsStudent() {
@@ -57,6 +61,7 @@ export default Service.extend({
   },
 
   userIsFormerStudent: computed('useRoleTitles.[]', async function(){
+    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     return this.isFormerStudent();
   }),
   async isFormerStudent() {
@@ -73,6 +78,7 @@ export default Service.extend({
     'model.administeredCourses.[]',
     'model.instructorIlmSessions.[]',
     async function(){
+      deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
       return this.getActiveRelatedCoursesInThisYearAndLastYear();
     }
   ),
