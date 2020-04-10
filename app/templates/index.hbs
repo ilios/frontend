@@ -1,20 +1,17 @@
 <CommonDashboard
   @allSchools={{this.model.schools}}
-  @allAcademicYears={{this.model.academicYears}}
   @show={{this.show}}
   @setShow={{set this.show}}
   @selectedDate={{this.selectedDate}}
   @selectedView={{this.selectedView}}
   @mySchedule={{this.mySchedule}}
   @showFilters={{this.showFilters}}
-  @changeDate={{fn this.changeDate}}
+  @changeDate={{this.changeDate}}
   @changeView={{set this.view}}
-  @selectEvent={{fn this.selectEvent}}
-  @toggleMySchedule={{fn this.toggleMySchedule}}
-  @toggleShowFilters={{fn this.toggleShowFilters}}
-  @selectedAcademicYear={{this.selectedAcademicYear}}
+  @selectEvent={{this.selectEvent}}
+  @toggleMySchedule={{this.toggleMySchedule}}
+  @toggleShowFilters={{this.toggleShowFilters}}
   @selectedSchool={{this.selectedSchool}}
-  @changeAcademicYear={{set this.academicYear}}
   @changeSchool={{set this.school}}
   @courseFilters={{this.courseFilters}}
   @toggleCourseFilters={{fn (set this.courseFilters) (not this.courseFilters)}}
@@ -39,5 +36,5 @@
   @addTermId={{fn this.add "terms"}}
   @removeTermId={{fn this.remove "terms"}}
 
-  @clearFilters={{fn this.clearFilters}}
+  @clearFilters={{this.clearFilters}}
 />
