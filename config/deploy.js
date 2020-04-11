@@ -37,6 +37,8 @@ module.exports = function (deployTarget) {
         jsonBlueprint.meta.attributes.push('http-equiv');
         jsonBlueprint.link.attributes.push('sizes');
         jsonBlueprint.link.attributes.push('type');
+        jsonBlueprint.link.attributes.push('as');
+        jsonBlueprint.link.attributes.push('crossorigin');
         jsonBlueprint.style = {
           selector: 'style',
           attributes: ['type'],
