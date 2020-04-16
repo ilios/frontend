@@ -17,7 +17,7 @@
     </div>
   </div>
   <div class="school-session-types-expanded-content">
-    {{#liquid-if schoolNewSessionType class="vertical"}}
+    {{#if schoolNewSessionType}}
       <SchoolSessionTypeForm
         @title={{null}}
         @calendarColor="#ffffff"
@@ -33,8 +33,8 @@
         @save={{perform save}}
         @close={{action setSchoolNewSessionType false}}
       />
-    {{/liquid-if}}
-    {{#liquid-if managedSessionTypeId class="horizontal"}}
+    {{/if}}
+    {{#if managedSessionTypeId}}
       <SchoolSessionTypeManager
         @sessionType={{await managedSessionType}}
         @close={{action setSchoolManagedSessionType null}}
@@ -46,6 +46,6 @@
         @manageSessionType={{setSchoolManagedSessionType}}
         @canDelete={{canDelete}}
       />
-    {{/liquid-if}}
+    {{/if}}
   </div>
 </section>

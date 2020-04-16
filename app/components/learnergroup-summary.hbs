@@ -95,7 +95,7 @@
       </label>
       <div>
         {{#if (is-fulfilled learnerGroup.allInstructors)}}
-          {{#liquid-if manageInstructors class="crossFade"}}
+          {{#if manageInstructors}}
             <LearnergroupInstructorManager
               @learnerGroup={{@learnerGroup}}
               @save={{action "saveInstructors"}}
@@ -119,7 +119,7 @@
                 {{t "general.none"}}
               {{/if}}
             </span>
-          {{/liquid-if}}
+          {{/if}}
         {{else}}
           <LoadingSpinner />
         {{/if}}

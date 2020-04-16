@@ -41,7 +41,7 @@
       </div>
     </div>
     <section class="new">
-      {{#if showNewUserForm class="vertical"}}
+      {{#if showNewUserForm}}
         {{#if (is-fulfilled newUserComponent)}}
           {{component
             (await newUserComponent)
@@ -54,7 +54,7 @@
           <LoadingSpinner />
         {{/if}}
       {{/if}}
-      {{#if showBulkNewUserForm class="vertical"}}
+      {{#if showBulkNewUserForm}}
         {{#if (is-fulfilled newBulkUserComponent)}}
           <BulkNewUsers @close={{action setShowNewUserForm false}} />
         {{else}}

@@ -1,5 +1,5 @@
 <div class="programyear-details" data-test-program-year-details ...attributes>
-  {{#liquid-if (or (eq programYear.competencies.length 0) pyCompetencyDetails)}}
+  {{#if (or (eq programYear.competencies.length 0) pyCompetencyDetails)}}
     <ProgramyearCompetencies
       @programYear={{programYear}}
       @canUpdate={{canUpdate}}
@@ -13,8 +13,8 @@
       @subject={{programYear}}
       @expand={{action setPyCompetencyDetails true}}
     />
-  {{/liquid-if}}
-  {{#liquid-if (or (eq programYear.objectives.length 0) pyObjectiveDetails)}}
+  {{/if}}
+  {{#if (or (eq programYear.objectives.length 0) pyObjectiveDetails)}}
     <ProgramYear::Objectives
       @programYear={{@programYear}}
       @editable={{@canUpdate}}
@@ -26,8 +26,8 @@
       @subject={{programYear}}
       @expand={{action setPyObjectiveDetails true}}
     />
-  {{/liquid-if}}
-  {{#liquid-if (or (eq programYear.terms.length 0) pyTaxonomyDetails)}}
+  {{/if}}
+  {{#if (or (eq programYear.terms.length 0) pyTaxonomyDetails)}}
     <DetailTaxonomies
       @subject={{programYear}}
       @editable={{canUpdate}}
@@ -39,8 +39,8 @@
       @subject={{programYear}}
       @expand={{action setPyTaxonomyDetails true}}
     />
-  {{/liquid-if}}
-  {{#liquid-if (or (eq programYear.stewards.length 0) pyStewardDetails)}}
+  {{/if}}
+  {{#if (or (eq programYear.stewards.length 0) pyStewardDetails)}}
     <DetailStewards
       @programYear={{programYear}}
       @editable={{canUpdate}}
@@ -52,5 +52,5 @@
       @programYear={{programYear}}
       @expand={{action setPyStewardDetails true}}
     />
-  {{/liquid-if}}
+  {{/if}}
 </div>

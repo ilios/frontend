@@ -5,7 +5,7 @@
         {{t "general.myReports"}}
       </h3>
       <div class="dashboard-block-actions">
-        {{#liquid-if @selectedReport class="crossFade"}}
+        {{#if @selectedReport}}
           <button type="button" onclick={{action @onReportSelect null}}>
             {{t "general.allReports"}}
           </button>
@@ -30,10 +30,10 @@
             @expandButtonLabel={{t "general.add"}}
             @collapseButtonLabel={{t "general.close"}}
           />
-        {{/liquid-if}}
+        {{/if}}
       </div>
     </div>
-    {{#liquid-if @selectedReport class="crossFade"}}
+    {{#if @selectedReport}}
       <div class="dashboard-block-body" data-test-selected-report>
         <h3 data-test-report-title>
           {{await selectedReportTitle}}
@@ -97,9 +97,9 @@
       </div>
     {{else}}
       <div class="dashboard-block-body">
-        {{#liquid-if myReportEditorOn class="vertical"}}
+        {{#if myReportEditorOn}}
           <NewMyreport @close={{action "toggleEditor"}} />
-        {{/liquid-if}}
+        {{/if}}
         {{#if (is-fulfilled sortedReports)}}
           <ul class="saved-reports" data-test-saved-reports>
             {{#each (await sortedReports) as |report|}}
@@ -124,6 +124,6 @@
           <LoadingSpinner @tagName="h1" />
         {{/if}}
       </div>
-    {{/liquid-if}}
+    {{/if}}
   {{/unless}}
 </div>

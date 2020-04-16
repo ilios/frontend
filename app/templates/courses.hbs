@@ -64,14 +64,14 @@
       </div>
     </div>
     <section class="new">
-      {{#liquid-if (and (is-fulfilled this.sessionTypes) this.showNewCourseForm)}}
+      {{#if (and (is-fulfilled this.sessionTypes) this.showNewCourseForm)}}
         <NewCourse
           @currentSchool={{this.selectedSchool}}
           @currentYear={{this.selectedYear}}
           @save={{action "saveNewCourse"}}
           @cancel={{action "toggleNewCourseForm"}}
         />
-      {{/liquid-if}}
+      {{/if}}
       {{#if this.newCourse}}
         <div class="saved-result" data-test-new-course>
           <LinkTo @route="course" @model={{this.newCourse}}>

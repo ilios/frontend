@@ -57,7 +57,7 @@
     </div>
   </div>
   <div class="detail-objectives-content">
-    {{#if this.newObjectiveEditorOn class="vertical"}}
+    {{#if this.newObjectiveEditorOn}}
       <NewObjective
         @save={{perform this.saveNewObjective}}
         @cancel={{this.toggleNewObjectiveEditor}}

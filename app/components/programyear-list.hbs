@@ -250,12 +250,12 @@
         </span>
       {{/if}}
     </div>
-    {{#liquid-if save.isRunning class="crossFade"}}
+    {{#if save.isRunning}}
       <WaitSaving
         @showProgress={{true}}
         @totalProgress={{itemsToSave}}
         @currentProgress={{savedItems}}
       />
-    {{/liquid-if}}
+    {{/if}}
   </section>
 </div>

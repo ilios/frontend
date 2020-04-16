@@ -79,7 +79,7 @@
       {{/each}}
     </select>
   </p>
-  {{#if this.currentPrepositionalObject class="crossFade"}}
+  {{#if this.currentPrepositionalObject}}
     {{#if (contains this.currentPrepositionalObject (w "course session"))}}
       <select
         data-test-report-year-filter
@@ -138,7 +138,7 @@
         {{else}}
           <MeshManager @add={{action "chooseMeshTerm"}} @editable={{true}} @terms={{array}} />
         {{/if}}
-      {{else if (is-fulfilled filteredPrepositionalObjectIdList) class="crossFade"}}
+      {{else if (is-fulfilled filteredPrepositionalObjectIdList)}}
         <select
           data-test-report-object
           onchange={{action "changePrepositionalObjectId" value="target.value"}}

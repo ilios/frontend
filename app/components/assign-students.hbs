@@ -110,11 +110,11 @@
       </tbody>
     </table>
   </div>
-  {{#liquid-if this.isSaving class="crossFade"}}
+  {{#if this.isSaving}}
     <WaitSaving
       @currentProgress={{this.savedUserIds.length}}
       @showProgress={{true}}
       @totalProgress={{this.selectedUserIds.length}}
     />
-  {{/liquid-if}}
+  {{/if}}
 </div>

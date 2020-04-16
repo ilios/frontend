@@ -1,11 +1,11 @@
 <section class="learnergroup-subgroup-list" data-test-learnergroup-subgroup-list ...attributes>
-  {{#liquid-if isSaving class="crossFade"}}
+  {{#if isSaving}}
     <WaitSaving
       @showProgress={{true}}
       @totalProgress={{totalGroupsToSave}}
       @currentProgress={{currentGroupsSaved}}
     />
-  {{/liquid-if}}
+  {{/if}}
   <div class="learnergroup-subgroup-list-header">
     <div class="title">
       {{t "general.subgroups"}}
@@ -22,14 +22,14 @@
   </div>
   <div class="learnergroup-subgroup-list-content">
     <section class="learnergroup-subgroup-list-new">
-      {{#liquid-if showNewLearnerGroupForm class="vertical"}}
+      {{#if showNewLearnerGroupForm}}
         <NewLearnergroup
           @save={{action "saveNewLearnerGroup"}}
           @cancel={{action (toggle "showNewLearnerGroupForm" this)}}
           @generateNewLearnerGroups={{action "generateNewLearnerGroups"}}
           @multiModeSupported={{true}}
         />
-      {{/liquid-if}}
+      {{/if}}
     </section>
     {{#if saved}}
       <div class="saved-result">
