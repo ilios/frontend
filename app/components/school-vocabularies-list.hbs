@@ -9,7 +9,7 @@
   </div>
 {{/if}}
 <section class="school-vocabularies-list-new">
-  {{#liquid-if showNewVocabularyForm class="vertical"}}
+  {{#if showNewVocabularyForm}}
     <div class="form">
       <div class="item">
         <label>
@@ -49,7 +49,7 @@
         </button>
       </div>
     </div>
-  {{/liquid-if}}
+  {{/if}}
   {{#if newVocabulary}}
     <div class="savedvocabulary">
       <span class="clickable link" role="button" {{action manageVocabulary newVocabulary.id}}>

@@ -95,13 +95,13 @@
       </div>
     </div>
     <section class="new">
-      {{#liquid-if this.showNewLearnerGroupForm class="vertical"}}
+      {{#if this.showNewLearnerGroupForm}}
         <NewLearnergroup
           @save={{action "saveNewLearnerGroup"}}
           @cancel={{action "cancel"}}
           @fillModeSupported={{true}}
         />
-      {{/liquid-if}}
+      {{/if}}
       {{#if this.newGroup}}
         <div class="saved-result">
           <LinkTo @route="learnerGroup" @model={{this.newGroup}}>
@@ -131,10 +131,10 @@
     </div>
   </section>
 </section>
-{{#liquid-if this.copyGroup.isRunning class="crossFade"}}
+{{#if this.copyGroup.isRunning}}
   <WaitSaving
     @showProgress={{true}}
     @totalProgress={{this.totalGroupsToSave}}
     @currentProgress={{this.currentGroupsSaved}}
   />
-{{/liquid-if}}
+{{/if}}

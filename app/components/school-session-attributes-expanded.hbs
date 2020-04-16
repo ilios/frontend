@@ -28,7 +28,7 @@
     </div>
   </div>
   <div class="school-session-attributes-expanded-content">
-    {{#liquid-if isManaging class="horizontal"}}
+    {{#if isManaging}}
       <SchoolSessionAttributesManager
         @showSessionAttendanceRequired={{bufferedShowSessionAttendanceRequired}}
         @showSessionSupplemental={{bufferedShowSessionSupplemental}}
@@ -98,6 +98,6 @@
           </tr>
         </tbody>
       </table>
-    {{/liquid-if}}
+    {{/if}}
   </div>
 </section>

@@ -247,7 +247,7 @@
         <div class="block sessions"><LoadingSpinner /></div>
       {{else}}
         {{#if (get (await sessions) "length")}}
-          {{#liquid-if isManagingSessions class="horizontal sessions-list"}}
+          {{#if isManagingSessions}}
             <CurriculumInventorySequenceBlockSessionManager
               @sequenceBlock={{sequenceBlock}}
               @sessions={{await sessions}}
@@ -271,7 +271,7 @@
               @sortBy={{sortBy}}
               @setSortBy={{setSortBy}}
             />
-          {{/liquid-if}}
+          {{/if}}
         {{/if}}
       {{/if}}
     {{/if}}

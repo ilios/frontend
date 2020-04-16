@@ -1,4 +1,4 @@
-{{#liquid-if unableToReconnect class="crossFade"}}
+{{#if unableToReconnect}}
   <span>
     <FaIcon @icon="exclamation-triangle" />
     {{t "general.unableToReconnect"}}
@@ -21,4 +21,4 @@
       </button>
     {{/unless}}
   </div>
-{{/liquid-if}}
+{{/if}}

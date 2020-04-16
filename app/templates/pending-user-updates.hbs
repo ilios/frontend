@@ -31,7 +31,7 @@
     </div>
   </div>
   <div class="updates">
-    {{#liquid-if (is-fulfilled this.allUpdates)}}
+    {{#if (is-fulfilled this.allUpdates)}}
       <div class="list">
         <table>
           <thead>
@@ -121,6 +121,6 @@
       </div>
     {{else}}
       <LoadingSpinner />
-    {{/liquid-if}}
+    {{/if}}
   </div>
 </section>

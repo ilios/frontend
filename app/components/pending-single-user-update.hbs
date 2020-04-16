@@ -1,5 +1,5 @@
 <div class="pending-single-user-updates" ...attributes>
-  {{#liquid-if updates.isFulfilled class="crossFade"}}
+  {{#if updates.isFulfilled}}
     {{#if isSaving}}
       <LoadingSpinner @tagName="h2" />
     {{else}}
@@ -58,5 +58,5 @@
         </div>
       {{/each}}
     {{/if}}
-  {{/liquid-if}}
+  {{/if}}
 </div>

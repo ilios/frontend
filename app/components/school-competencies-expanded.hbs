@@ -33,7 +33,7 @@
     </div>
   </div>
   <div class="school-competencies-expanded-content">
-    {{#liquid-if isManaging class="horizontal"}}
+    {{#if isManaging}}
       <SchoolCompetenciesManager
         @canUpdate={{canUpdate}}
         @canDelete={{canDelete}}
@@ -44,6 +44,6 @@
       />
     {{else}}
       <SchoolCompetenciesList @domains={{await domains}} />
-    {{/liquid-if}}
+    {{/if}}
   </div>
 </section>

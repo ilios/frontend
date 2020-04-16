@@ -194,10 +194,7 @@
       <LoadingSpinner />
     {{/if}}
   </div>
-  {{#if
-    (and (not nonStudentMode) (is-fulfilled bestSelectedSchool))
-    class="vertical"
-  }}
+  {{#if (and (not nonStudentMode) (is-fulfilled bestSelectedSchool))}}
     <div class="item last" data-test-cohort>
       <label>
         {{t "general.primaryCohort"}}:

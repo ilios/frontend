@@ -42,12 +42,12 @@
       @expand={{action setLeadershipDetails true}}
     />
   {{/if}}
-  {{#liquid-if isFinalizing class="crossFade"}}
+  {{#if isFinalizing}}
     <ModalDialog @translucentOverlay={{true}} @animatable={{false}}>
       <PulseLoader />
       <h2 class="page-title">
         {{t "general.finalizingReport"}}
       </h2>
     </ModalDialog>
-  {{/liquid-if}}
+  {{/if}}
 </div>

@@ -14,7 +14,7 @@
       </div>
     {{/if}}
   </div>
-  {{#if showNewSchoolForm class="vertical"}}
+  {{#if showNewSchoolForm}}
     <section class="new">
       <div class="new-result-title">
         {{t "general.newSchool"}}
@@ -75,11 +75,11 @@
         </div>
         <div class="buttons">
           <button type="button" class="done text" {{action "createNewSchool"}}>
-            {{#liquid-if isSavingNewSchool "crossFade"}}
+            {{#if isSavingNewSchool}}
               <LoadingSpinner />
             {{else}}
               {{t "general.done"}}
-            {{/liquid-if}}
+            {{/if}}
           </button>
           <button type="button" class="cancel text" {{action "hideNewSchoolForm"}}>
             {{t "general.cancel"}}
