@@ -16,7 +16,7 @@
       {{t "general.weekAtAGlance"}}
     {{/if}}
   </h2>
-  {{#liquid-unless @collapsed class="vertical"}}
+  {{#unless @collapsed}}
     {{#unless this.load.isRunning}}
       <div class="ilm-pre-work">
         {{#if (gt this.ilmPreWork.length 0)}}
@@ -43,5 +43,5 @@
         {{t "general.loadingEvents"}}
       </p>
     {{/unless}}
-  {{/liquid-unless}}
+  {{/unless}}
 </div>
