@@ -79,7 +79,6 @@
     "ember-test-selectors": "^4.0.0",
     "ember-truth-helpers": "^2.0.0",
     "froala-editor": "^3.0.6",
-    "liquid-fire": "^0.31.0",
     "normalize.css": "^8.0.1",
     "@popperjs/core": "^2.1.1",
     "query-string": "^6.8.3",
