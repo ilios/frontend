@@ -1,15 +1,16 @@
-import { findElementWithAssert } from 'ember-cli-page-object/extend';
-import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
+import { findOne } from 'ember-cli-page-object/extend';
+import { click } from '@ember/test-helpers';
+import { Interactor as Pikaday } from 'ember-pikaday/test-support';
 
 export function datePicker(selector, options = {}) {
   return {
     isDescriptor: true,
 
     get() {
-      return function (newDate) {
-        const elements = findElementWithAssert(this, selector, options);
-        const interactor = openDatepicker(elements[0]);
-        interactor.selectDate(newDate);
+      return async function (newDate) {
+        const element = findOne(this, selector, options);
+        await click(element);
+        await Pikaday.selectDate(newDate);
       };
     }
   };
