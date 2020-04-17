@@ -4,13 +4,19 @@ import { deprecate } from '@ember/debug';
 
 export default Service.extend({
   store: service(),
+  _permissionMatrixPromise: null,
   permissionMatrix: computed(async function(){
     deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
     return this.getPermissionMatrix();
   }),
   async getPermissionMatrix() {
-    const store = this.get('store');
-    const schools = await store.findAll('school');
+    if (!this._permissionMatrixPromise) {
+      this._permissionMatrixPromise = this._fillMatrix();
+    }
+    return await this._permissionMatrixPromise;
+  },
+  async _fillMatrix() {
+    const schools = await this.store.findAll('school');
     const schoolIds = schools.mapBy('id');
     const matrix = {};
     schoolIds.forEach(id => {
