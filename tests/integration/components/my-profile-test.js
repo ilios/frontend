@@ -6,7 +6,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
+import { Interactor as Pikaday } from 'ember-pikaday/test-support';
 
 const { resolve } = RSVP;
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -172,8 +172,8 @@ module('Integration | Component | my profile', function(hooks) {
     />`);
 
     const m = moment().add(41, 'days');
-    const interactor = openDatepicker(find(datePicker));
-    interactor.selectDate(m.toDate());
+    await click(datePicker);
+    await Pikaday.selectDate(m.toDate());
     await click(go);
   });
 
