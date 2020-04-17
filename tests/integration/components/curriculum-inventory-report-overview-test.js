@@ -6,14 +6,13 @@ import {
   render,
   settled,
   click,
-  find,
   fillIn
 } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { setupIntl } from 'ember-intl/test-support';
-import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
+import { Interactor as Pikaday } from 'ember-pikaday/test-support';
 
 const {resolve} = RSVP;
 
@@ -234,25 +233,19 @@ module('Integration | Component | curriculum inventory report overview', functio
     this.set('report', report);
 
     await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{true}} />`);
-    return settled().then(async () => {
-      await click('.start-date .editinplace .editable');
-      return settled().then(async () => {
-        const interactor = openDatepicker(find('.start-date input'));
-        assert.dom('.start-date input').hasValue(
-          moment(report.get('startDate')).format('L'),
-          "The report's current start date is pre-selected in date picker."
-        );
-        const newVal = moment('2015-04-01');
-        interactor.selectDate(newVal.toDate());
-        await click('.start-date .actions .done');
-        return settled().then(() => {
-          assert.dom('.start-date .editinplace').hasText(newVal.format('L'), 'Edit link shown new start date post-update.');
-          assert.equal(moment(report.get('startDate')).format('YYYY-MM-DD'), newVal.format('YYYY-MM-DD'),
-            "The report's start date was updated."
-          );
-        });
-      });
-    });
+    await click('.start-date .editinplace .editable');
+    assert.dom('.start-date input').hasValue(
+      moment(report.get('startDate')).format('L'),
+      "The report's current start date is pre-selected in date picker."
+    );
+    const newVal = moment('2015-04-01');
+    await click('.start-date input');
+    await Pikaday.selectDate(newVal.toDate());
+    await click('.start-date .actions .done');
+    assert.dom('.start-date .editinplace').hasText(newVal.format('L'), 'Edit link shown new start date post-update.');
+    assert.equal(moment(report.get('startDate')).format('YYYY-MM-DD'), newVal.format('YYYY-MM-DD'),
+      "The report's start date was updated."
+    );
   });
 
   test('validation fails if given start date follows end date', async function(assert) {
@@ -296,16 +289,12 @@ module('Integration | Component | curriculum inventory report overview', functio
     await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{true}} />`);
     return settled().then(async () => {
       await click('.start-date .editinplace .editable');
-      return settled().then(async () => {
-        const interactor = openDatepicker(find('.start-date input'));
-        const newVal = moment(report.get('endDate')).add(1, 'day');
-        interactor.selectDate(newVal.toDate());
-        assert.dom('.start-date .validation-error-message').doesNotExist('Initially, no validation error is visible.');
-        await click('.start-date .actions .done');
-        return settled().then(() => {
-          assert.dom('.start-date .validation-error-message').exists({ count: 1 }, 'Validation failed, error message is visible.');
-        });
-      });
+      await click('.start-date input');
+      const newVal = moment(report.get('endDate')).add(1, 'day');
+      await Pikaday.selectDate(newVal.toDate());
+      assert.dom('.start-date .validation-error-message').doesNotExist('Initially, no validation error is visible.');
+      await click('.start-date .actions .done');
+      assert.dom('.start-date .validation-error-message').exists({ count: 1 }, 'Validation failed, error message is visible.');
     });
   });
 
@@ -351,25 +340,19 @@ module('Integration | Component | curriculum inventory report overview', functio
     this.set('report', report);
 
     await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{true}} />`);
-    return settled().then(async () => {
-      await click('.end-date .editinplace .editable');
-      return settled().then(async () => {
-        const interactor = openDatepicker(find('.end-date input'));
-        assert.dom('.end-date input').hasValue(
-          moment(report.get('endDate')).format('L'),
-          "The report's current end date is pre-selected in date picker."
-        );
-        const newVal = moment('2016-05-01');
-        interactor.selectDate(newVal.toDate());
-        await click('.end-date .actions .done');
-        return settled().then(() => {
-          assert.dom('.end-date .editinplace').hasText(newVal.format('L'), 'Edit link shown new end date post-update.');
-          assert.equal(moment(report.get('endDate')).format('YYYY-MM-DD'), newVal.format('YYYY-MM-DD'),
-            "The report's end date was updated."
-          );
-        });
-      });
-    });
+    await click('.end-date .editinplace .editable');
+    await click('.end-date input');
+    assert.dom('.end-date input').hasValue(
+      moment(report.get('endDate')).format('L'),
+      "The report's current end date is pre-selected in date picker."
+    );
+    const newVal = moment('2016-05-01');
+    await Pikaday.selectDate(newVal.toDate());
+    await click('.end-date .actions .done');
+    assert.dom('.end-date .editinplace').hasText(newVal.format('L'), 'Edit link shown new end date post-update.');
+    assert.equal(moment(report.get('endDate')).format('YYYY-MM-DD'), newVal.format('YYYY-MM-DD'),
+      "The report's end date was updated."
+    );
   });
 
   test('validation fails if given end date precedes end date', async function(assert) {
@@ -411,19 +394,13 @@ module('Integration | Component | curriculum inventory report overview', functio
     this.set('report', report);
 
     await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{true}} />`);
-    return settled().then(async () => {
-      await click('.end-date .editinplace .editable');
-      return settled().then(async () => {
-        const interactor = openDatepicker(find('.end-date input'));
-        const newVal = moment(report.get('startDate')).subtract(1, 'day');
-        interactor.selectDate(newVal.toDate());
-        assert.dom('.end-date .validation-error-message').doesNotExist('Initially, no validation error is visible.');
-        await click('.end-date .actions .done');
-        return settled().then(() => {
-          assert.dom('.end-date .validation-error-message').exists({ count: 1 }, 'Validation failed, error message is visible.');
-        });
-      });
-    });
+    await click('.end-date .editinplace .editable');
+    await click('.end-date input');
+    const newVal = moment(report.get('startDate')).subtract(1, 'day');
+    await Pikaday.selectDate(newVal.toDate());
+    assert.dom('.end-date .validation-error-message').doesNotExist('Initially, no validation error is visible.');
+    await click('.end-date .actions .done');
+    assert.dom('.end-date .validation-error-message').exists({ count: 1 }, 'Validation failed, error message is visible.');
   });
 
   test('change academic year', async function(assert) {

@@ -6,11 +6,11 @@ import {
   click,
   find,
   findAll,
-  fillIn
+  fillIn,
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
+import { Interactor as Pikaday, close as closePikaday } from 'ember-pikaday/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | new curriculum inventory sequence block', function(hooks) {
@@ -189,10 +189,11 @@ module('Integration | Component | new curriculum inventory sequence block', func
 
     await fillIn('.title input', newTitle);
     await fillIn('.description textarea', newDescription);
-    let interactor = openDatepicker(find('.start-date input'));
-    interactor.selectDate(newStartDate.toDate());
-    interactor = openDatepicker(find('.end-date input'));
-    interactor.selectDate(newEndDate.toDate());
+    await click('.start-date input');
+    await Pikaday.selectDate(newStartDate.toDate());
+    await closePikaday();
+    await click('.end-date input');
+    await Pikaday.selectDate(newEndDate.toDate());
     await click('button.done');
 
     const blocks = await this.owner.lookup('service:store').findAll('curriculum-inventory-sequence-block');
@@ -361,10 +362,11 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     const startDateInput = find('.start-date input');
     const endDateInput = find('.end-date input');
-    let interactor = openDatepicker(startDateInput);
-    interactor.selectDate(newStartDate.toDate());
-    interactor = openDatepicker(endDateInput);
-    interactor.selectDate(newEndDate.toDate());
+    await click(startDateInput);
+    await Pikaday.selectDate(newStartDate.toDate());
+    await closePikaday();
+    await click(endDateInput);
+    await Pikaday.selectDate(newEndDate.toDate());
     assert.equal(newStartDate.format('M/D/YYYY'), startDateInput.value, 'Start date is set');
     assert.equal(newEndDate.format('M/D/YYYY'), endDateInput.value, 'End date is set');
     await click('.clear-dates button');
@@ -389,10 +391,11 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await fillIn('.description textarea', 'Lorem Ipsum');
     const startDateInput = find('.start-date input');
     const endDateInput = find('.end-date input');
-    let interactor = openDatepicker(startDateInput);
-    interactor.selectDate(moment('2016-11-12').toDate());
-    interactor = openDatepicker(endDateInput);
-    interactor.selectDate(moment('2016-12-30').toDate());
+    await click(startDateInput);
+    await Pikaday.selectDate(moment('2016-11-12').toDate());
+    await closePikaday();
+    await click(endDateInput);
+    await Pikaday.selectDate(moment('2016-12-30').toDate());
     assert.dom('.validation-error-message').doesNotExist('Initially, no validation error is shown.');
     await fillIn('.maximum input', '5');
     await fillIn('.minimum input', '10');
@@ -416,10 +419,11 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await fillIn('.description textarea', 'Lorem Ipsum');
     const startDateInput = find('.start-date input');
     const endDateInput = find('.end-date input');
-    let interactor = openDatepicker(startDateInput);
-    interactor.selectDate(moment('2016-11-12').toDate());
-    interactor = openDatepicker(endDateInput);
-    interactor.selectDate(moment('2016-12-30').toDate());
+    await click(startDateInput);
+    await Pikaday.selectDate(moment('2016-11-12').toDate());
+    await closePikaday();
+    await click(endDateInput);
+    await Pikaday.selectDate(moment('2016-12-30').toDate());
     assert.dom('.validation-error-message').doesNotExist('Initially, no validation error is shown.');
     await fillIn('.minimum input', '-1');
     await click('button.done');
@@ -443,10 +447,11 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await fillIn('.description textarea', 'Lorem Ipsum');
     const startDateInput = find('.start-date input');
     const endDateInput = find('.end-date input');
-    let interactor = openDatepicker(startDateInput);
-    interactor.selectDate(moment('2016-11-12').toDate());
-    interactor = openDatepicker(endDateInput);
-    interactor.selectDate(moment('2016-12-30').toDate());
+    await click(startDateInput);
+    await Pikaday.selectDate(moment('2016-11-12').toDate());
+    await closePikaday();
+    await click(endDateInput);
+    await Pikaday.selectDate(moment('2016-12-30').toDate());
     assert.dom('.validation-error-message').doesNotExist('Initially, no validation error is shown.');
     await fillIn('.minimum input', '');
     await click('button.done');
@@ -470,10 +475,11 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await fillIn('.description textarea', 'Lorem Ipsum');
     const startDateInput = find('.start-date input');
     const endDateInput = find('.end-date input');
-    let interactor = openDatepicker(startDateInput);
-    interactor.selectDate(moment('2016-11-12').toDate());
-    interactor = openDatepicker(endDateInput);
-    interactor.selectDate(moment('2016-12-30').toDate());
+    await click(startDateInput);
+    await Pikaday.selectDate(moment('2016-11-12').toDate());
+    await closePikaday();
+    await click(endDateInput);
+    await Pikaday.selectDate(moment('2016-12-30').toDate());
     assert.dom('.validation-error-message').doesNotExist('Initially, no validation error is shown.');
     await fillIn('.maximum input', '-1');
     await click('button.done');
@@ -500,10 +506,11 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await fillIn('.description textarea', 'Lorem Ipsum');
     const startDateInput = find('.start-date input');
     const endDateInput = find('.end-date input');
-    let interactor = openDatepicker(startDateInput);
-    interactor.selectDate(moment('2016-11-12').toDate());
-    interactor = openDatepicker(endDateInput);
-    interactor.selectDate(moment('2016-12-30').toDate());
+    await click(startDateInput);
+    await Pikaday.selectDate(moment('2016-11-12').toDate());
+    await closePikaday();
+    await click(endDateInput);
+    await Pikaday.selectDate(moment('2016-12-30').toDate());
     await fillIn('.duration input', '0');
     await click('button.done');
 
@@ -556,12 +563,13 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await fillIn('.description textarea', 'Lorem Ipsum');
     const startDateInput = find('.start-date input');
     const endDateInput = find('.end-date input');
-    let interactor = openDatepicker(startDateInput);
-    interactor.selectDate(moment('2016-11-12').toDate());
-    interactor = openDatepicker(endDateInput);
-    interactor.selectDate(moment('2016-12-30').toDate());
+    await click(startDateInput);
+    await Pikaday.selectDate(moment('2016-11-12').toDate());
+    await closePikaday();
+    await click(endDateInput);
+    await Pikaday.selectDate(moment('2016-12-30').toDate());
     assert.dom('.validation-error-message').doesNotExist('Initially, no validation error is shown.');
-    interactor.selectDate(moment('2011-12-30').toDate());
+    await Pikaday.selectDate(moment('2011-12-30').toDate());
     await click('button.done');
     assert.dom('.validation-error-message').exists({ count: 1 }, 'Validation error shows.');
   });
@@ -582,10 +590,11 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await fillIn('.description textarea', 'Lorem Ipsum');
     const startDateInput = find('.start-date input');
     const endDateInput = find('.end-date input');
-    let interactor = openDatepicker(startDateInput);
-    interactor.selectDate(moment('2016-11-12').toDate());
-    interactor = openDatepicker(endDateInput);
-    interactor.selectDate(moment('2016-12-30').toDate());
+    await click(startDateInput);
+    await Pikaday.selectDate(moment('2016-11-12').toDate());
+    await closePikaday();
+    await click(endDateInput);
+    await Pikaday.selectDate(moment('2016-12-30').toDate());
     assert.dom('.validation-error-message').doesNotExist('Initially, no validation error is shown.');
     await fillIn('.duration input', '');
     await click('button.done');
@@ -608,10 +617,11 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await fillIn('.description textarea', 'Lorem Ipsum');
     const startDateInput = find('.start-date input');
     const endDateInput = find('.end-date input');
-    let interactor = openDatepicker(startDateInput);
-    interactor.selectDate(moment('2016-11-12').toDate());
-    interactor = openDatepicker(endDateInput);
-    interactor.selectDate(moment('2016-12-30').toDate());
+    await click(startDateInput);
+    await Pikaday.selectDate(moment('2016-11-12').toDate());
+    await closePikaday();
+    await click(endDateInput);
+    await Pikaday.selectDate(moment('2016-12-30').toDate());
     assert.dom('.validation-error-message').doesNotExist('Initially, no validation error is shown.');
     await fillIn('.duration input', 'WRONG');
     await click('button.done');
@@ -650,9 +660,8 @@ module('Integration | Component | new curriculum inventory sequence block', func
     await render(hbs`<NewCurriculumInventorySequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
-    const startDateInput = find('.start-date input');
-    const interactor = openDatepicker(startDateInput);
-    interactor.selectDate(moment('2016-11-12').toDate());
+    await click('.start-date input');
+    await Pikaday.selectDate(moment('2016-11-12').toDate());
     await click('button.done');
     assert.dom('.validation-error-message').exists({ count: 1 }, 'Validation errors show.');
   });
