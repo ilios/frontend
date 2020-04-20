@@ -55,7 +55,7 @@ module('Integration | Component | session copy', function(hooks) {
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
 
-    await render(hbs`{{session-copy session=session}}`);
+    await render(hbs`<SessionCopy @session={{this.session}} />`);
 
     const yearSelect = '.year-select select';
     const courseSelect = '.course-select select';
@@ -134,7 +134,7 @@ module('Integration | Component | session copy', function(hooks) {
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 2);
     });
-    await render(hbs`{{session-copy session=session visit=(action visit)}}`);
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
 
     await click('.done');
 
@@ -170,7 +170,7 @@ module('Integration | Component | session copy', function(hooks) {
     assert.equal(objective.position, newObjective.position);
   });
 
-  test('errors do not show up initially and save cannot be clicked', async function(assert) {
+  test('save cannot be clicked when there is no year or course', async function(assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', {
       school,
@@ -194,10 +194,8 @@ module('Integration | Component | session copy', function(hooks) {
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
 
-    await render(hbs`{{session-copy session=session}}`);
-    const save = '.done';
-    assert.dom('.validation-error-message').doesNotExist();
-    assert.dom(save).isDisabled();
+    await render(hbs`<SessionCopy @session={{this.session}} />`);
+    assert.dom('[data-test-save]').isDisabled();
   });
 
   test('changing the year looks for new matching courses', async function(assert) {
@@ -239,7 +237,7 @@ module('Integration | Component | session copy', function(hooks) {
     this.owner.register('service:permissionChecker', permissionCheckerMock);
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
-    await render(hbs`{{session-copy session=session}}`);
+    await render(hbs`<SessionCopy @session={{this.session}} />`);
     const yearSelect = '.year-select select';
     const courseSelect = '.course-select select';
 
@@ -299,7 +297,8 @@ module('Integration | Component | session copy', function(hooks) {
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 2);
     });
-    await render(hbs`{{session-copy session=session visit=(action visit)}}`);
+
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
     const yearSelect = '.year-select select';
     const courseSelect = '.course-select select';
 
@@ -352,7 +351,8 @@ module('Integration | Component | session copy', function(hooks) {
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 3);
     });
-    await render(hbs`{{session-copy session=session visit=(action visit)}}`);
+
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
 
     await click('.done');
 
@@ -408,7 +408,8 @@ module('Integration | Component | session copy', function(hooks) {
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 3);
     });
-    await render(hbs`{{session-copy session=session visit=(action visit)}}`);
+
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
     const courseSelect = '.course-select select';
     await fillIn(courseSelect, secondCourse.id);
     await click('.done');
@@ -465,7 +466,8 @@ module('Integration | Component | session copy', function(hooks) {
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 4);
     });
-    await render(hbs`{{session-copy session=session visit=(action visit)}}`);
+
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
 
     await click('.done');
 
@@ -528,7 +530,8 @@ module('Integration | Component | session copy', function(hooks) {
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 4);
     });
-    await render(hbs`{{session-copy session=session visit=(action visit)}}`);
+
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
 
     const courseSelect = '.course-select select';
     await fillIn(courseSelect, secondCourse.id);

@@ -17,6 +17,13 @@
 
     .buttons {
       @include ilios-form-buttons;
+
+      button:disabled {
+        background-color: $dark-grey;
+        border-color: $dark-grey;
+        color: $white;
+        cursor: default;
+      }
     }
   }
 
