@@ -11,12 +11,6 @@ export default RESTAdapter.extend({
   host: reads('iliosConfig.apiHost'),
   namespace: reads('iliosConfig.apiNameSpace'),
 
-  /**
-   * Force Fetch since we're still using jQuery
-   * https://github.com/emberjs/data/issues/6759
-   */
-  useFetch: true,
-
   init() {
     this._super(...arguments);
 
