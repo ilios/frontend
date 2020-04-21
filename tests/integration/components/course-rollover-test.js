@@ -5,7 +5,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
   render,
-  settled,
   click,
   find,
   findAll,
@@ -22,71 +21,78 @@ module('Integration | Component | course rollover', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
-    const course = EmberObject.create({
-      id: 1,
-      title: 'old course'
+  test('it renders', async function (assert) {
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      title: 'old course',
+      school
     });
-    this.set('course', course);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
 
     await render(hbs`<CourseRollover @course={{this.course}} />`);
 
-    const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
+    const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));
     const yearSelect = '.year-select select';
     const title = '.title input';
 
-    return settled().then(()=>{
-      for (let i=0; i<6; i++){
-        assert.dom(`${yearSelect} option:nth-of-type(${i+1})`).hasText(`${lastYear + i} - ${lastYear + 1 + i}`);
-      }
-      assert.dom(title).exists({ count: 1 });
-      assert.equal(find(title).value.trim(), course.get('title'));
-    });
+    for (let i=0; i<6; i++){
+      assert.dom(`${yearSelect} option:nth-of-type(${i+1})`).hasText(`${lastYear + i} - ${lastYear + 1 + i}`);
+    }
+    assert.dom(title).exists({ count: 1 });
+    assert.equal(find(title).value.trim(), course.title);
 
   });
 
   test('rollover course', async function(assert) {
     assert.expect(5);
-    const course = EmberObject.create({
-      id: 1,
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
       title: 'old title',
+      school,
       startDate: moment().hour(0).minute(0).second(0).toDate()
     });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
+
     this.server.post(`/api/courses/${course.id}/rollover`, (schema, request) => {
-      const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
+      const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));
       const data = queryString.parse(request.requestBody);
       assert.ok('year' in data);
       assert.equal(data.year, lastYear);
       assert.equal(data.newCourseTitle, course.title);
       assert.ok('newStartDate' in data);
       return {
-        courses: [
-          {
-            id: 14
-          }
-        ]
+        courses: [schema.courses.create({
+          id: 14,
+          title: data.newCourseTitle,
+          startDate: data.newStartDate,
+          year: data.year
+        })]
       };
     });
-    this.set('course', course);
     this.set('visit', (newCourse) => {
       assert.equal(newCourse.id, 14);
     });
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{action this.visit}}
+      @visit={{this.visit}}
     />`);
     await click('.done');
   });
 
   test('rollover course with new title', async function(assert) {
     assert.expect(1);
-    const course = EmberObject.create({
-      id: 1,
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
       title: 'old title',
-      startDate: moment().hour(0).minute(0).second(0).toDate()
+      school,
+      startDate: moment().hour(0).minute(0).second(0).toDate(),
     });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
 
-    const newTitle = course.get('title') + '2';
+    const newTitle = course.title + '2';
 
     this.server.post(`/api/courses/${course.id}/rollover`, (schema, request) => {
       const data = queryString.parse(request.requestBody);
@@ -99,13 +105,9 @@ module('Integration | Component | course rollover', function(hooks) {
         ]
       };
     });
-
-    this.set('course', course);
-    this.set('visit', () => {});
-
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{action this.visit}}
+      @visit={{noop}}
     />`);
     const title = '.title';
     const input = `${title} input`;
@@ -115,11 +117,14 @@ module('Integration | Component | course rollover', function(hooks) {
 
   test('rollover course to selected year', async function(assert) {
     assert.expect(5);
-    const course = EmberObject.create({
-      id: 1,
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
       title: 'old title',
-      startDate: moment().hour(0).minute(0).second(0).toDate()
+      school,
+      startDate: moment().hour(0).minute(0).second(0).toDate(),
     });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
     const selectedYear = parseInt(moment().add(2, 'years').format('YYYY'), 10);
     this.server.post(`/api/courses/${course.id}/rollover`, (schema, request) => {
       const data = queryString.parse(request.requestBody);
@@ -135,13 +140,12 @@ module('Integration | Component | course rollover', function(hooks) {
         ]
       };
     });
-    this.set('course', course);
     this.set('visit', (newCourse) => {
       assert.equal(newCourse.id, 14);
     });
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{action this.visit}}
+      @visit={{this.visit}}
     />`);
     await fillIn('[data-test-year]', selectedYear);
 
@@ -150,27 +154,31 @@ module('Integration | Component | course rollover', function(hooks) {
 
   test('disable years when title already exists', async function(assert) {
     assert.expect(5);
-    const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
+    const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      title: 'to be rolled',
+      school,
+      year: lastYear - 1,
+    });
     this.server.create('course', {
       id: 2,
+      school,
       title: 'to be rolled',
       year: lastYear
     });
     this.server.create('course', {
       id: 3,
+      school,
       title: 'to be rolled',
       year: lastYear+2
     });
 
-    const course = EmberObject.create({
-      id: 1,
-      title: 'to be rolled',
-    });
-    this.set('course', course);
-    this.set('nothing', parseInt);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{action this.nothing}}
+      @visit={{noop}}
     />`);
 
     const options = findAll('select:nth-of-type(1) option');
@@ -179,6 +187,26 @@ module('Integration | Component | course rollover', function(hooks) {
     assert.ok(options[2].disabled);
     assert.notOk(options[3].disabled);
     assert.notOk(options[4].disabled);
+  });
+
+  test('rollover into same year with title changed #1342', async function(assert) {
+    assert.expect(2);
+    const thisYear = Number(moment().format('YYYY'));
+    const school = this.server.create('school');
+    this.server.create('course', {
+      id: 2,
+      school,
+      year: thisYear
+    });
+    const courseModel = await this.owner.lookup('service:store').find('course', 2);
+    this.set('course', courseModel);
+    await render(hbs`<CourseRollover
+      @course={{this.course}}
+      @visit={{noop}}
+    />`);
+    assert.dom('[data-test-year] option:disabled').exists({ count: 1 });
+    await fillIn('[data-test-title]', 'new title');
+    assert.dom('[data-test-year] option:disabled').doesNotExist();
   });
 
   test('rollover course with new start date', async function(assert) {
@@ -193,11 +221,14 @@ module('Integration | Component | course rollover', function(hooks) {
 
     const rolloverDate = moment(courseStartDate).add(1, 'week');
 
-    const course = EmberObject.create({
-      id: 1,
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      title: 'old course',
+      school,
       startDate: courseStartDate.toDate(),
-      title: 'old course'
     });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
 
     this.server.post(`/api/courses/${course.id}/rollover`, (schema, request) => {
       const data = queryString.parse(request.requestBody);
@@ -216,12 +247,9 @@ module('Integration | Component | course rollover', function(hooks) {
         ]
       };
     });
-
-    this.set('course', course);
-    this.set('nothing', parseInt);
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{action this.nothing}}
+      @visit={{noop}}
     />`);
     const advancedOptions = '.advanced-options';
     const startDate = `${advancedOptions} input:nth-of-type(1)`;
@@ -272,11 +300,15 @@ module('Integration | Component | course rollover', function(hooks) {
     }
     const rolloverDate = moment(courseStartDate).add(1, 'week').day(3);
 
-    const course = EmberObject.create({
-      id: 1,
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
       title: 'test title',
-      startDate: courseStartDate.toDate()
+      school,
+      startDate: courseStartDate.toDate(),
     });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
+
 
     this.server.post(`/api/courses/${course.id}/rollover`, (schema, request) => {
       const data = queryString.parse(request.requestBody);
@@ -296,11 +328,9 @@ module('Integration | Component | course rollover', function(hooks) {
       };
     });
 
-    this.set('course', course);
-    this.set('nothing', parseInt);
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{action this.nothing}}
+      @visit={{noop}}
     />`);
     const advancedOptions = '.advanced-options';
     const yearSelect = '.year-select select';
@@ -343,17 +373,17 @@ module('Integration | Component | course rollover', function(hooks) {
       .isoWeek(courseStartDate.isoWeek())
       .isoWeekday(courseStartDate.isoWeekday());
 
-    const course = EmberObject.create({
-      id: 1,
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      title: 'old course',
+      school,
       startDate: courseStartDate.toDate(),
-      title: 'old course'
     });
-
-    this.set('course', course);
-    this.set('nothing', parseInt);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{action this.nothing}}
+      @visit={{noop}}
     />`);
     const advancedOptions = '.advanced-options';
     const yearSelect = '.year-select select';
@@ -406,10 +436,9 @@ module('Integration | Component | course rollover', function(hooks) {
     });
 
     this.set('course', course);
-    this.set('nothing', parseInt);
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{action this.nothing}}
+      @visit={{noop}}
     />`);
     const advancedOptions = '.advanced-options';
     const offerings = `${advancedOptions} [data-test-skip-offerings]`;
@@ -421,20 +450,24 @@ module('Integration | Component | course rollover', function(hooks) {
   });
 
   test('errors do not show up initially', async function(assert) {
-    const course = EmberObject.create({
-      id: 1
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      school,
     });
-    this.set('course', course);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
 
     await render(hbs`<CourseRollover @course={{this.course}} />`);
     assert.dom('.validation-error-message').doesNotExist();
   });
 
   test('errors show up', async function(assert) {
-    const course = EmberObject.create({
-      id: 1
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      school,
     });
-    this.set('course', course);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
 
     await render(hbs`<CourseRollover @course={{this.course}} />`);
 
@@ -491,10 +524,9 @@ module('Integration | Component | course rollover', function(hooks) {
     this.owner.register('service:currentUser', currentUserMock);
 
     this.set('course', course);
-    this.set('nothing', parseInt);
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{action this.nothing}}
+      @visit={{noop}}
     />`);
     const advancedOptions = '.advanced-options';
     const firstCohort = `${advancedOptions} .selectable-cohorts li:nth-of-type(1)`;

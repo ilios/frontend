@@ -23,6 +23,7 @@
         @input={{fn this.addErrorDisplayFor "title"}}
         disabled={{this.save.isRunning}}
         placeholder={{t "general.courseTitlePlaceholder"}}
+        data-test-title
       />
       {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
         <span class="validation-error-message">
@@ -34,10 +35,8 @@
       <label>
         {{t "general.year"}}:
       </label>
-      {{#if this.loadUnavailableYears.isRunning}}
-        <LoadingSpinner />
-      {{else}}
-        <select {{on "change" (perform this.setSelectedYear)}} data-test-year>
+      {{#if (is-array this.allCourses)}}
+        <select {{on "change" this.setSelectedYear}} data-test-year>
           {{#each this.years as |year|}}
             <option
               disabled={{contains year this.unavailableYears}}
@@ -51,17 +50,14 @@
             </option>
           {{/each}}
         </select>
+      {{else}}
+        <LoadingSpinner />
       {{/if}}
-      {{#if
-        (and
-          (v-get this "selectedYear" "isInvalid")
-          (contains "selectedYear" this.showErrorsFor)
-        )
-      }}
+      {{#each (await (compute (fn this.getErrorsFor) "selectedYear")) as |message|}}
         <span class="validation-error-message">
-          {{v-get this "selectedYear" "message"}}
+          {{message}}
         </span>
-      {{/if}}
+      {{/each}}
     </div>
     <div class="advanced-options">
       <div class="item">
