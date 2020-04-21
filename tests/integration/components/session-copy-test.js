@@ -73,7 +73,7 @@ module('Integration | Component | session copy', function(hooks) {
   });
 
   test('copy session', async function(assert) {
-    assert.expect(20);
+    assert.expect(21);
 
     const thisYear = parseInt(moment().format('YYYY'), 10);
     this.server.create('academic-year', {
@@ -114,6 +114,7 @@ module('Integration | Component | session copy', function(hooks) {
       attireRequired: true,
       equipmentRequired: false,
       supplemental: true,
+      attendanceRequired: true,
       instructionalNotes: 'old session notes',
       sessionType,
       sessionDescription,
@@ -144,6 +145,7 @@ module('Integration | Component | session copy', function(hooks) {
     assert.equal(session.attireRequired, newSession.attireRequired);
     assert.equal(session.equipmentRequired, newSession.equipmentRequired);
     assert.equal(session.supplemental, newSession.supplemental);
+    assert.equal(session.attendanceRequired, newSession.attendanceRequired);
     assert.equal(session.title, newSession.title);
     assert.equal(session.instructionalNotes, newSession.instructionalNotes);
 
@@ -182,6 +184,7 @@ module('Integration | Component | session copy', function(hooks) {
       attireRequired: true,
       equipmentRequired: false,
       supplemental: true,
+      attendanceRequired: true,
       sessionType,
     });
 
@@ -226,6 +229,7 @@ module('Integration | Component | session copy', function(hooks) {
       attireRequired: true,
       equipmentRequired: false,
       supplemental: true,
+      attendanceRequired: true,
       sessionType,
     });
 
@@ -283,6 +287,7 @@ module('Integration | Component | session copy', function(hooks) {
       attireRequired: true,
       equipmentRequired: false,
       supplemental: true,
+      attendanceRequired: true,
       sessionType,
     });
 
