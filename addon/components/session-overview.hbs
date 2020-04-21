@@ -298,22 +298,17 @@
               <EditableField
                 @value={{this.description}}
                 @renderHtml={{true}}
-                @isSaveDisabled={{and
-                  (v-get this "description" "isInvalid")
-                  (contains "description" this.showErrorsFor)
-                }}
+                @isSaveDisabled={{await (compute (fn this.hasErrorFor) "description")}}
                 @save={{this.saveDescription}}
                 @close={{perform this.revertDescriptionChanges}}
                 @clickPrompt={{t "general.clickToEdit"}}
-
               >
                 <HtmlEditor @content={{this.description}} @update={{this.changeDescription}} />
-                {{#if (and (v-get this "description" "isInvalid") (contains "description" this.showErrorsFor))
-                }}
+                {{#each (await (compute (fn this.getErrorsFor) "description")) as |message|}}
                   <span class="validation-error-message">
-                    {{v-get this "description" "message"}}
+                    {{message}}
                   </span>
-                {{/if}}
+                {{/each}}
               </EditableField>
             {{else}}
               {{! template-lint-disable no-triple-curlies}}
@@ -328,22 +323,17 @@
               <EditableField
                 @value={{@session.instructionalNotes}}
                 @renderHtml={{true}}
-                @isSaveDisabled={{and
-                  (v-get this "instructionalNotes" "isInvalid")
-                  (contains "instructionalNotes" this.showErrorsFor)
-                }}
+                @isSaveDisabled={{await (compute (fn this.hasErrorFor) "instructionalNotes")}}
                 @save={{perform this.saveInstructionalNotes}}
                 @close={{this.revertInstructionalNotesChanges}}
                 @clickPrompt={{t "general.clickToEdit"}}
-
               >
                 <HtmlEditor @content={{this.instructionalNotes}} @update={{this.changeInstructionalNotes}} />
-                {{#if (and (v-get this "instructionalNotes" "isInvalid") (contains "instructionalNotes" this.showErrorsFor))
-                }}
+                {{#each (await (compute (fn this.getErrorsFor) "instructionalNotes")) as |message|}}
                   <span class="validation-error-message">
-                    {{v-get this "instructionalNotes" "message"}}
+                    {{message}}
                   </span>
-                {{/if}}
+                {{/each}}
               </EditableField>
             {{else}}
               {{! template-lint-disable no-triple-curlies}}
