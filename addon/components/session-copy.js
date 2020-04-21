@@ -1,115 +1,93 @@
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
 import { hash, all, filter } from 'rsvp';
+import { timeout } from 'ember-concurrency';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 import moment from 'moment';
-import { task, timeout } from 'ember-concurrency';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { action, computed } from '@ember/object';
 
-const Validations = buildValidations({
-  bestSelectedCourse: [
-    validator('presence', true)
-  ],
-  bestSelectedYear: [
-    validator('presence', true)
-  ],
-});
+export default class SessionCopyComponent extends Component {
+  @service store;
+  @service flashMessages;
+  @service permissionChecker;
 
-export default Component.extend(ValidationErrorDisplay, Validations, {
-  store: service(),
-  flashMessages: service(),
-  permissionChecker: service(),
-  classNames: ['session-copy'],
-  selectedYear: null,
-  session: null,
-  selectedCourseId: null,
+  @tracked selectedYear;
+  @tracked selectedCourseId;
+  @tracked years;
+  @tracked allCourses;
 
-  years: computed(async function () {
+  @restartableTask
+  *setup(element, [session]) {
+    if (!session) {
+      return;
+    }
+    const course = yield session.course;
+    const school = yield course.school;
+    const {
+      years,
+      schoolCourses
+    } = yield hash({
+      years: this.store.findAll('academicYear'),
+      schoolCourses: this.store.query('course', {
+        filters: {
+          school: school.id
+        }
+      })
+    });
     const now = moment();
     const thisYear = now.year();
-    const store = this.get('store');
+    this.years = years.map(year => Number(year.id)).filter(year => year >= thisYear - 1).sort();
+    this.allCourses = yield filter(schoolCourses.toArray(), async co => {
+      return this.permissionChecker.canCreateSession(co);
+    });
+  }
 
-    const years = await store.findAll('academicYear');
-    const academicYears = years.map(year => parseInt(year.get('id'), 10)).filter(year => year >= thisYear - 1).sort();
-
-    return academicYears;
-  }),
-
-  bestSelectedYear: computed('years.[]', 'selectedYear', async function () {
-    const selectedYear = this.get('selectedYear');
-    if (selectedYear) {
-      return selectedYear;
+  get bestSelectedYear() {
+    if (this.selectedYear) {
+      return this.selectedYear;
     }
 
-    const years = await this.get('years');
-    return years.get('firstObject');
-  }),
+    return this.years.get('firstObject');
+  }
 
-  courses: computed('selectedYear', 'session.course.school', async function(){
-    const store = this.get('store');
-    const permissionChecker = this.get('permissionChecker');
-    const session = this.get('session');
-    if (!session) {
-      return [];
+  get courses() {
+    if (!this.allCourses) {
+      return null;
     }
-    const selectedYear = await this.get('bestSelectedYear');
-    const course = await session.get('course');
-    const school = await course.get('school');
-    const courses = await store.query('course', {
-      filters: {
-        year: selectedYear,
-        school: school.get('id')
-      }
-    });
+    return this.allCourses.filterBy('year', this.bestSelectedYear).sortBy('title');
+  }
 
-    const filteredCourses = await filter(courses.toArray(), async co => {
-      return permissionChecker.canCreateSession(co);
-    });
-
-    return filteredCourses.sortBy('title');
-  }),
-
-  bestSelectedCourse: computed('courses.[]', 'selectedCourseId', async function () {
-    const courses = await this.get('courses');
-    const selectedCourseId = this.get('selectedCourseId');
-    if (selectedCourseId) {
-      const course = courses.findBy('id', selectedCourseId);
+  get bestSelectedCourse() {
+    if (this.selectedCourseId) {
+      const course = this.courses.findBy('id', this.selectedCourseId);
       if (course) {
         return course;
       }
     }
 
-    return courses.get('firstObject');
-  }),
+    return this.courses.get('firstObject');
+  }
 
   @action
-  changeSelectedYear(event){
-    this.set('selectedCourseId', null);
-    this.set('selectedYear', parseInt(event.target.value, 10));
-  },
+  changeSelectedYear(event) {
+    this.selectedCourseId = null;
+    this.selectedYear = Number(event.target.value);
+  }
 
   @action
   changeSelectedCourseId(event) {
-    this.set('selectedCourseId', event.target.value);
-  },
+    this.selectedCourseId = event.target.value;
+  }
 
-  save: task(function * (){
+  @dropTask
+  *save() {
     yield timeout(10);
-    this.send('addErrorDisplaysFor', ['selectedCourse', 'selectedYear']);
-    const {validations} = yield this.validate();
-
-    if (validations.get('isInvalid')) {
-      return;
-    }
-    const flashMessages = this.get('flashMessages');
-    const store = this.get('store');
-
-    const sessionToCopy = this.get('session');
-    const newCourse = yield this.get('bestSelectedCourse');
+    const sessionToCopy = this.args.session;
+    const newCourse = this.bestSelectedCourse;
     const toSave = [];
 
-    const session = store.createRecord(
+    const session = this.store.createRecord(
       'session',
       sessionToCopy.getProperties('title', 'attireRequired', 'equipmentRequired', 'supplemental', 'instructionalNotes')
     );
@@ -117,25 +95,25 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const props = yield hash(sessionToCopy.getProperties('meshDescriptors', 'terms', 'sessionType'));
     session.setProperties(props);
 
-    const ilmToCopy = yield sessionToCopy.get('ilmSession');
+    const ilmToCopy = yield sessionToCopy.ilmSession;
     if (ilmToCopy) {
-      const ilm = store.createRecord('ilmSession', ilmToCopy.getProperties('hours', 'dueDate'));
+      const ilm = this.store.createRecord('ilmSession', ilmToCopy.getProperties('hours', 'dueDate'));
       ilm.set('session', session);
       toSave.pushObject(ilm);
     }
 
-    const sessionDescriptionToCopy = yield sessionToCopy.get('sessionDescription');
+    const sessionDescriptionToCopy = yield sessionToCopy.sessionDescription;
     if (sessionDescriptionToCopy) {
-      const sessionDescription = store.createRecord('sessionDescription', sessionDescriptionToCopy.getProperties('description'));
+      const sessionDescription = this.store.createRecord('sessionDescription', sessionDescriptionToCopy.getProperties('description'));
       sessionDescription.set('session', session);
       toSave.pushObject(sessionDescription);
     }
 
-    const learningMaterialsToCopy = yield sessionToCopy.get('learningMaterials');
+    const learningMaterialsToCopy = yield sessionToCopy.learningMaterials;
     for (let i = 0; i < learningMaterialsToCopy.length; i++){
       const learningMaterialToCopy = learningMaterialsToCopy.toArray()[i];
-      const lm = yield learningMaterialToCopy.get('learningMaterial');
-      const learningMaterial = store.createRecord(
+      const lm = yield learningMaterialToCopy.learningMaterial;
+      const learningMaterial = this.store.createRecord(
         'sessionLearningMaterial',
         learningMaterialToCopy.getProperties('notes', 'required', 'publicNotes', 'position')
       );
@@ -159,12 +137,12 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     //parse objectives last because it is a many2many relationship
     //and ember data tries to save it too soon
-    const relatedObjectives = yield sessionToCopy.get('objectives');
+    const relatedObjectives = yield sessionToCopy.objectives;
     const objectivesToCopy = relatedObjectives.sortBy('id');
     for (let i = 0; i < objectivesToCopy.length; i++){
       const objectiveToCopy = objectivesToCopy.toArray()[i];
-      const meshDescriptors = yield objectiveToCopy.get('meshDescriptors');
-      const objective = store.createRecord(
+      const meshDescriptors = yield objectiveToCopy.meshDescriptors;
+      const objective = this.store.createRecord(
         'objective',
         objectiveToCopy.getProperties('title', 'position')
       );
@@ -173,8 +151,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       //save each objective as it is created to preserve to sequence order of objectives by id
       yield objective.save();
     }
-    flashMessages.success('general.copySuccess');
-    return this.get('visit')(session);
-  }).drop(),
-
-});
+    this.flashMessages.success('general.copySuccess');
+    return this.args.visit(session);
+  }
+}
