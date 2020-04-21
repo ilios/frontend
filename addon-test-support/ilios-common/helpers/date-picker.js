@@ -1,6 +1,6 @@
 import { findOne } from 'ember-cli-page-object/extend';
 import { click } from '@ember/test-helpers';
-import { Interactor as Pikaday } from 'ember-pikaday/test-support';
+import { Interactor as Pikaday, close as closePikaday } from 'ember-pikaday/test-support';
 
 export function datePicker(selector, options = {}) {
   return {
@@ -11,6 +11,7 @@ export function datePicker(selector, options = {}) {
         const element = findOne(this, selector, options);
         await click(element);
         await Pikaday.selectDate(newDate);
+        await closePikaday();
       };
     }
   };
