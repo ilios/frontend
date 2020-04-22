@@ -22,25 +22,28 @@ export default class SessionObjectivesComponent extends Component {
 
   @action
   load(element, [session]) {
-    this.objectiveCount = session.hasMany('objectives').ids().length;
+    this.objectiveCount = session.hasMany('sessionObjectives').ids().length;
   }
 
   @dropTask
   *saveNewObjective(title) {
     const newObjective = this.store.createRecord('objective');
+    const newSessionObjective = this.store.createRecord('session-objective');
     newObjective.set('title', title);
     let position = 0;
-
-    const objectives = yield this.args.session.objectives;
-
-    if (objectives.length) {
-      position = objectives.sortBy('position').lastObject.position + 1;
+    const sessionObjectives = yield this.args.session.sessionObjectives;
+    if (sessionObjectives.length) {
+      position = sessionObjectives.sortBy('position').lastObject.position + 1;
     }
 
-    newObjective.set('position', position);
-    newObjective.set('sessions', [this.args.session]);
-
     yield newObjective.save();
+
+    newSessionObjective.set('position', position);
+    newSessionObjective.set('objective', newObjective);
+    newSessionObjective.set('session', this.args.session);
+
+    yield newSessionObjective.save();
+
     this.newObjectiveEditorOn = false;
     this.flashMessages.success('general.newObjectiveSaved');
   }
