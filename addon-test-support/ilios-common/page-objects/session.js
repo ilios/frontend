@@ -5,8 +5,8 @@ import {
   create,
   fillable,
   hasClass,
-  is,
   isVisible,
+  property,
   text,
   visitable
 } from 'ember-cli-page-object';
@@ -88,22 +88,22 @@ export default create({
     },
     supplemental: {
       scope: '.sessionsupplemental',
-      isActive: is(':checked', 'input'),
+      isActive: property('checked', 'input'),
       click: clickable('[data-test-toggle-yesno] [data-test-handle]'),
     },
     specialAttire: {
       scope: '.sessionspecialattire',
-      isActive: is(':checked', 'input'),
+      isActive: property('checked', 'input'),
       click: clickable('[data-test-toggle-yesno] [data-test-handle]'),
     },
     specialEquipment: {
       scope: '.sessionspecialequipment',
-      isActive: is(':checked', 'input'),
+      isActive: property('checked', 'input'),
       click: clickable('[data-test-toggle-yesno] [data-test-handle]'),
     },
     attendanceRequired: {
       scope: '.sessionattendancerequired',
-      isActive: is(':checked', 'input'),
+      isActive: property('checked', 'input'),
       click: clickable('[data-test-toggle-yesno] [data-test-handle]'),
     },
     toggleIlm: clickable('[data-test-toggle-yesno] [data-test-handle]', { scope: '.independentlearningcontrol' }),

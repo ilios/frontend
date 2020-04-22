@@ -1,4 +1,4 @@
-import { findElementWithAssert } from 'ember-cli-page-object/extend';
+import { findOne } from 'ember-cli-page-object/extend';
 import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
 import { later } from '@ember/runloop';
 
@@ -18,8 +18,8 @@ export function pageObjectFillInFroalaEditor(selector, options = {}) {
 
     get() {
       return async function (html) {
-        const elements = findElementWithAssert(this, selector, options);
-        return fillInFroalaEditor(elements[0], html);
+        const element = findOne(this, selector, options);
+        return fillInFroalaEditor(element, html);
       };
     }
   };
@@ -31,8 +31,8 @@ export function pageObjectFroalaEditorValue(selector, options = {}) {
 
     get() {
       return async function () {
-        const elements = findElementWithAssert(this, selector, options);
-        return froalaEditorValue(elements[0]);
+        const element = findOne(this, selector, options);
+        return froalaEditorValue(element);
       };
     }
   };

@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import moment from 'moment';
 import { tracked } from '@glimmer/tracking';
-import { copy } from '@ember/object/internals';
 import { action } from '@ember/object';
 
 export default class IliosCalendarComponent extends Component {
@@ -19,7 +18,7 @@ export default class IliosCalendarComponent extends Component {
           hashedEvents[hash] = [];
         }
         //clone our event so we don't trample on the original when we change location
-        hashedEvents[hash].pushObject(copy(event));
+        hashedEvents[hash].pushObject(Object.assign({}, event));
       });
       const compiledEvents = [];
       let hash;

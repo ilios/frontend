@@ -132,7 +132,6 @@ module('Integration | Service | Current User', function(hooks) {
 
       return schema.courses.all();
     });
-    this.server.logging = true;
     const subject = this.owner.lookup('service:current-user');
     const activeRelatedCourses = await subject.get('activeRelatedCoursesInThisYearAndLastYear');
     assert.ok(activeRelatedCourses.mapBy('id').includes(courses[0].id));
