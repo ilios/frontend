@@ -2,6 +2,8 @@
   id="objective-{{@objective.id}}"
   class="grid-row objective-row {{if this.showRemoveConfirmation "confirm-removal"}} {{if this.highlightSave.isRunning "highlight-ok"}} {{if this.isManaging "is-managing"}}"
   data-test-session-objective-list-item
+  {{did-insert (perform this.load) @sessionObjective}}
+  {{did-update (perform this.load) @sessionObjective}}
 >
   <div class="description grid-item" data-test-description>
     {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
@@ -21,7 +23,7 @@
       </EditableField>
     {{else}}
       {{! template-lint-disable no-triple-curlies }}
-      {{{@objective.title}}}
+      {{{this.objective.title}}}
     {{/if}}
   </div>
   <Session::ObjectiveListItemParents
@@ -35,7 +37,7 @@
   />
 
   <Session::ObjectiveListItemDescriptors
-    @objective={{@objective}}
+    @sessionObjective={{@sessionObjective}}
     @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
     @manage={{perform this.manageDescriptors}}
     @isManaging={{this.isManagingDescriptors}}
