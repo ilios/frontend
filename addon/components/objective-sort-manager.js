@@ -11,7 +11,7 @@ export default class ObjectiveSortManagerComponent extends Component {
 
   @restartableTask
   *load(element, [subject]) {
-    const objectives = (yield subject.objectives).toArray();
+    const objectives = (yield subject.xObjectives).toArray();
     this.sortableObjectList = objectives.sort(sortableByPosition);
   }
 

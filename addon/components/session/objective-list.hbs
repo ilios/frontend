@@ -1,10 +1,10 @@
 <div
   class="session-objective-list"
   data-test-session-objective-list
-  {{did-insert (perform this.load) @session @session.sessionObjectives @session.course.courseObjectives}}
-  {{did-update (perform this.load) @session @session.sessionObjectives @session.course.courseObjectives}}
+  {{did-insert (perform this.load) @session @session.sortedSessionObjectives @session.course.courseObjectives}}
+  {{did-update (perform this.load) @session @session.sortedSessionObjectives @session.course.courseObjectives}}
 >
-  {{#if (and (is-array this.objectives) this.isSorting)}}
+  {{#if (and (is-array this.sessionObjectives) this.isSorting)}}
     <ObjectiveSortManager
       @subject={{@session}}
       @close={{set this.isSorting false}}
