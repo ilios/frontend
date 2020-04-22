@@ -41,7 +41,7 @@ export default Model.extend({
     'directors.length',
     'competencies.length',
     'terms.length',
-    'objectives.length',
+    'programYearObjectives.length',
     function(){
       return this.getOptionalPublicationIssues();
     }
@@ -49,12 +49,12 @@ export default Model.extend({
 
   /**
    * A list of program-year objectives, sorted by position and title.
-   * @property sortedObjectives
+   * @property sortedProgramYearObjectives
    * @type {Ember.computed}
    * @public
    */
-  sortedObjectives: computed('objectives.@each.position', 'objectives.@each.title', async function() {
-    const objectives = await this.get('objectives');
+  sortedProgramYearObjectives: computed('programYearObjectives.@each.position', async function() {
+    const objectives = await this.get('programYearObjectives');
     return objectives.toArray().sort(sortableByPosition);
   }),
 
@@ -99,7 +99,7 @@ export default Model.extend({
   init() {
     this._super(...arguments);
     this.set('requiredPublicationSetFields', ['startYear', 'cohort', 'program']);
-    this.set('optionalPublicationLengthFields', ['directors', 'competencies', 'terms', 'objectives']);
+    this.set('optionalPublicationLengthFields', ['directors', 'competencies', 'terms', 'sessionObjectives']);
     this.set('requiredPublicationLengthFields', []);
     this.set('optionalPublicationSetFields', []);
   },

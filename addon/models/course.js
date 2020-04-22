@@ -109,7 +109,7 @@ export default Model.extend({
   }),
   optionalPublicationIssues: computed(
     'terms.length',
-    'objectives.length',
+    'sessionObjectives.length',
     'meshDescriptors.length',
     function(){
       return this.getOptionalPublicationIssues();
@@ -153,11 +153,11 @@ export default Model.extend({
 
   /**
    * A list of course objectives, sorted by position (asc) and then id (desc).
-   * @property sortedObjectives
+   * @property sortedCourseObjectives
    * @type {Ember.computed}
    */
-  sortedObjectives: computed('objectives.@each.position', async function() {
-    const objectives = await this.get('objectives');
+  sortedCourseObjectives: computed('courseObjectives.@each.position', async function() {
+    const objectives = await this.get('courseObjectives');
     return objectives.toArray().sort(sortableByPosition);
   }),
 
@@ -211,7 +211,7 @@ export default Model.extend({
     this.set('requiredPublicationSetFields', ['startDate', 'endDate']);
     this.set('requiredPublicationLengthFields', ['cohorts']);
     this.set('optionalPublicationSetFields', []);
-    this.set('optionalPublicationLengthFields', ['terms', 'objectives', 'meshDescriptors']);
+    this.set('optionalPublicationLengthFields', ['terms', 'sessionObjectives', 'meshDescriptors']);
   },
 
   setDatesBasedOnYear: function(){

@@ -277,11 +277,11 @@ export default Model.extend({
 
   /**
    * A list of session objectives, sorted by position (asc) and then id (desc).
-   * @property sortedObjectives
+   * @property sortedSessionObjectives
    * @type {Ember.computed}
    */
-  sortedObjectives: computed('objectives.@each.position', async function() {
-    const objectives = await this.get('objectives');
+  sortedSessionObjectives: computed('sessionObjectives.@each.position', async function() {
+    const objectives = await this.get('sessionObjectives');
     return objectives.toArray().sort(sortableByPosition);
   }),
 
@@ -341,7 +341,7 @@ export default Model.extend({
 
   init() {
     this._super(...arguments);
-    this.set('optionalPublicationLengthFields', ['terms', 'objectives', 'meshDescriptors']);
+    this.set('optionalPublicationLengthFields', ['terms', 'sessionObjectives', 'meshDescriptors']);
     this.set('requiredPublicationSetFields', []);
     this.set('requiredPublicationLengthFields', []);
     this.set('optionalPublicationSetFields', []);
