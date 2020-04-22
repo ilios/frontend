@@ -27,7 +27,7 @@
     {{/if}}
   </div>
   <Session::ObjectiveListItemParents
-    @objective={{@objective}}
+    @sessionObjective={{@sessionObjective}}
     @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
     @manage={{perform this.manageParents}}
     @isManaging={{this.isManagingParents}}

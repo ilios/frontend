@@ -1,11 +1,13 @@
 <section
   class="session-manage-objective-parents"
+  {{did-insert (perform this.load) @courseObjectives}}
+  {{did-update (perform this.load) @courseObjectives}}
   data-test-session-manage-objective-parents
 >
   {{#if @courseObjectives.length}}
     <h4 data-test-course-title>{{@courseTitle}}</h4>
     <ul class="parent-picker" data-test-parent-picker>
-      {{#each @courseObjectives as |objective|}}
+      {{#each this.courseObjectives as |objective|}}
         <li>
           <Session::ManageObjectiveParentsItem
             @title={{objective.textTitle}}
