@@ -59,6 +59,9 @@
     &.was-updated {
       background-color: lighten($ilios-green, 30%);
     }
+    .room {
+      overflow-wrap: anywhere;
+    }
   }
 
   .first-row td {

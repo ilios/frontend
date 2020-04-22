@@ -38,7 +38,7 @@
         </span>
       </td>
     {{/if}}
-    <td>
+    <td class="room">
       {{#if @canUpdate}}
         <EditableField
           @value={{this.room}}
@@ -61,7 +61,7 @@
           {{/each}}
         </EditableField>
       {{else}}
-        {{this.room}}
+        <TruncateText @text={{this.room}} @length={{10}} />
       {{/if}}
     </td>
     <td class="text-center">
