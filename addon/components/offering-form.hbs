@@ -257,21 +257,18 @@
         {{/each}}
       </div>
       <div class="buttons" {{ref this "scrollTo"}}>
-        <button
+        <SaveButton
           class="done text"
-          type="button"
-          disabled={{or this.saveOffering.isRunning}}
-          {{on "click" (perform this.validateThenSaveOffering)}}
+          @isSaving={{this.saveOffering.isRunning}}
+          @saveProgressPercent={{this.saveProgressPercent}}
+          {{on "click" (perform this.saveOffering)}}
         >
-          {{#if this.saveOffering.isRunning}}
-            <LoadingSpinner />
-          {{else}}
-            {{t "general.done"}}
-          {{/if}}
-        </button>
+          {{t "general.save"}}
+        </SaveButton>
         <button
           class="cancel text"
           type="button"
+          disabled={{this.saveOffering.isRunning}}
           {{on "click" @close}}
         >
           {{t "general.cancel"}}
@@ -279,11 +276,4 @@
       </div>
     </div>
   {{/unless}}
-  {{#if this.saveOffering.isRunning}}
-    <WaitSaving
-      @showProgress={{true}}
-      @totalProgress={{this.offeringsToSave}}
-      @currentProgress={{this.savedOfferings}}
-    />
-  {{/if}}
 </div>

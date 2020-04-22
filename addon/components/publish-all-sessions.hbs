@@ -314,17 +314,12 @@
         ignoreCount=this.ignoreCount
       }}
     </p>
-    <button type="button" {{on "click" (perform this.save)}}>
+    <SaveButton
+      @isSaving={{this.save.isRunning}}
+      @saveProgressPercent={{this.saveProgressPercent}}
+      {{on "click" (perform this.save)}}
+    >
       {{t "general.go"}}
-    </button>
+    </SaveButton>
   </div>
 </div>
-
-
-{{#if this.save.isRunning}}
-  <WaitSaving
-    @showProgress={{true}}
-    @totalProgress={{this.totalSessionsToSave}}
-    @currentProgress={{this.currentSessionsSaved}}
-  />
-{{/if}}

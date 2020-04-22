@@ -4,6 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { all } from 'rsvp';
 import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { timeout } from 'ember-concurrency';
 
 export default class PublishAllSessionsComponent extends Component {
   @service router;
@@ -14,11 +15,22 @@ export default class PublishAllSessionsComponent extends Component {
   @tracked publishableCollapsed = true;
   @tracked unPublishableCollapsed = true;
   @tracked showWarning = false;
-  @tracked totalSessionsToSave = [];
-  @tracked currentSessionsSaved = [];
+  @tracked totalSessionsToSave;
+  @tracked currentSessionsSaved;
 
   get noSessionsAsIs() {
     return this.sessionsToOverride.length === 0;
+  }
+
+  get saveProgressPercent(){
+    const total = this.totalSessionsToSave || 1;
+    const current = this.currentSessionsSaved || 0;
+    const floor = Math.floor(current / total * 100);
+    if (!floor && this.save.isRunning) {
+      return 1;
+    }
+
+    return floor;
   }
 
   @restartableTask
@@ -87,8 +99,8 @@ export default class PublishAllSessionsComponent extends Component {
     const chunk = sessions.splice(0, 6);
 
     await all(chunk.invoke('save'));
+    this.currentSessionsSaved += chunk.length;
     if (sessions.length) {
-      this.currentSessionsSaved += chunk.length;
       await this.saveSomeSessions(sessions);
     }
   }
@@ -112,6 +124,7 @@ export default class PublishAllSessionsComponent extends Component {
 
     yield this.saveSomeSessions(sessionsToSave);
     this.flashMessages.success('general.savedSuccessfully');
+    yield timeout(500);
     this.args.saved();
   }
 
