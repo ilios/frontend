@@ -6,7 +6,7 @@ import { isEmpty, isPresent } from '@ember/utils';
 import { filter, hash, map } from 'rsvp';
 import moment from 'moment';
 import { timeout } from 'ember-concurrency';
-import {dropTask, restartableTask, task} from "ember-concurrency-decorators";
+import { dropTask, restartableTask } from "ember-concurrency-decorators";
 import { ArrayNotEmpty, IsInt, Lte, Gte, Gt, NotBlank, Length, validatable } from 'ilios-common/decorators/validation';
 import { ValidateIf } from "class-validator";
 import scrollIntoView from "scroll-into-view";
@@ -38,6 +38,7 @@ export default class OfferingForm extends Component {
   @tracked recurringDayOptions = null;
   @tracked availableInstructorGroups = [];
   @tracked loaded = false;
+  @tracked saveProgressPercent;
 
   constructor() {
     super(...arguments);
@@ -298,19 +299,18 @@ export default class OfferingForm extends Component {
     this.loaded = true;
   }
 
-  @task
+  @dropTask
   * saveOffering() {
-    this.offeringsToSave = 0;
-    this.savedOfferings = 0;
     this.addErrorDisplaysFor(['room', 'numberOfWeeks', 'durationHours', 'durationMinutes', 'learnerGroups']);
 
-    yield timeout(10);
     const isValid = yield this.isValid();
     if (!isValid) {
       return false;
     }
-    let offerings = yield this.makeRecurringOfferingObjects.perform();
-    offerings = yield this.makeSmallGroupOfferingObjects.perform(offerings);
+    this.saveProgressPercent = 1;
+    yield timeout(1);
+    let offerings = yield this.makeRecurringOfferingObjects();
+    offerings = yield this.makeSmallGroupOfferingObjects(offerings);
 
     // adjust timezone
     offerings.forEach(offering => {
@@ -320,7 +320,8 @@ export default class OfferingForm extends Component {
         moment(offering.endDate).format('Y-MM-DD HH:mm:ss'), this.currentTimezone).toDate();
     });
 
-    this.offeringsToSave = offerings.length;
+    const totalOfferings = offerings.length;
+    let savedOfferings = 0;
     //save offerings in sets of 5
     let parts;
     while (offerings.length > 0) {
@@ -328,16 +329,18 @@ export default class OfferingForm extends Component {
       yield map(parts, ({startDate, endDate, room, learnerGroups, learners, instructorGroups, instructors}) => {
         return this.args.save(startDate, endDate, room, learnerGroups, learners, instructorGroups, instructors);
       });
-      this.savedOfferings = this.savedOfferings + parts.length;
+      savedOfferings = savedOfferings + parts.length;
+      this.saveProgressPercent = Math.floor(savedOfferings / totalOfferings * 100);
     }
+    this.saveProgressPercent = 100;
+    yield timeout(500);
     this.clearErrorDisplay();
     this.args.close();
   }
 
-  @task
-  * makeRecurringOfferingObjects() {
+  async makeRecurringOfferingObjects() {
     const makeRecurring = this.makeRecurring;
-    const learnerGroups = yield this.lowestLearnerGroupLeaves(this.learnerGroups);
+    const learnerGroups = await this.lowestLearnerGroupLeaves(this.learnerGroups);
     const offerings = [];
     offerings.push({
       startDate: this.startDate,
@@ -395,8 +398,7 @@ export default class OfferingForm extends Component {
     return offerings;
   }
 
-  @task
-  * makeSmallGroupOfferingObjects(offerings) {
+  async makeSmallGroupOfferingObjects(offerings) {
     const smallGroupMode = this.args.smallGroupMode;
     if (!smallGroupMode) {
       return offerings;
@@ -413,8 +415,8 @@ export default class OfferingForm extends Component {
         if (isPresent(defaultLocation)) {
           room = defaultLocation;
         }
-        const instructors = yield learnerGroup.get('instructors');
-        const instructorGroups = yield learnerGroup.get('instructorGroups');
+        const instructors = await learnerGroup.instructors;
+        const instructorGroups = await learnerGroup.instructorGroups;
         const offering = {startDate, endDate, room, instructorGroups, instructors, learners};
         offering.learnerGroups = [learnerGroup];
 
@@ -423,16 +425,6 @@ export default class OfferingForm extends Component {
     }
 
     return smallGroupOfferings;
-  }
-
-  @restartableTask
-  * validateThenSaveOffering() {
-    this.addErrorDisplaysFor(['room', 'numberOfWeeks', 'durationHours', 'durationMinutes', 'learnerGroups']);
-    const isValid = yield this.isValid();
-    if (!isValid) {
-      return;
-    }
-    yield this.saveOffering.perform();
   }
 
   @restartableTask
