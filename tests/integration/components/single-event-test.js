@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { find, render } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -132,7 +132,6 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     assert.dom('.single-event-summary').containsText('test description', 'session description is displayed');
 
     const firstSessionLm = '.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(1)';
-    console.log(find(firstSessionLm));
     assert.dom(`${firstSessionLm} .lm-type-icon .fa-file-pdf`).exists('PDF file type icon is visible');
     assert.dom(`${firstSessionLm} .single-event-learningmaterial-item-notes`).hasText(learningMaterials[0].publicNotes);
     assert.dom(`${firstSessionLm} .single-event-learningmaterial-item-description`).hasText(learningMaterials[0].description);

@@ -221,7 +221,6 @@ module('Integration | Component | detail learning materials', function(hooks) {
       @editable={{true}}
     />`);
     await component.sort();
-    this.server.logging = true;
     await component.sortManager.save();
   });
 });
