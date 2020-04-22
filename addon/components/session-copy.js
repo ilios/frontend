@@ -89,8 +89,16 @@ export default class SessionCopyComponent extends Component {
 
     const session = this.store.createRecord(
       'session',
-      sessionToCopy.getProperties('title', 'attireRequired', 'equipmentRequired', 'supplemental', 'instructionalNotes')
+      sessionToCopy.getProperties(
+        'title',
+        'attireRequired',
+        'equipmentRequired',
+        'supplemental',
+        'attendanceRequired',
+        'instructionalNotes'
+      )
     );
+
     session.set('course', newCourse);
     const props = yield hash(sessionToCopy.getProperties('meshDescriptors', 'terms', 'sessionType'));
     session.setProperties(props);
