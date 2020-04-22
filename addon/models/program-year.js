@@ -15,11 +15,17 @@ export default Model.extend({
   cohort: belongsTo('cohort', {async: true}),
   directors: hasMany('user', {async: true}),
   competencies: hasMany('competency', {async: true}),
-  objectives: hasMany('objective', {async: true}),
+  programYearObjectives: hasMany('program-year-objective', {async: true}),
   stewards: hasMany('program-year-steward', {async: true}),
   terms: hasMany('term', {async: true}),
 
   assignableVocabularies: alias('program.school.vocabularies'),
+
+  objectives: computed('programYearObjectives.[]', async function(){
+    const programYearObjectives = await this.get('programYearObjectives');
+    const objectives = await all(programYearObjectives.toArray().mapBy('objective'));
+    return objectives.uniq();
+  }),
 
   academicYear: computed('startYear', function(){
     return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'), 10) + 1);

@@ -20,7 +20,7 @@ export default Model.extend({
   sessionType: belongsTo('session-type', { async: true }),
   course: belongsTo('course', { async: true }),
   ilmSession: belongsTo('ilm-session', { async: true }),
-  objectives: hasMany('objective', { async: true }),
+  sessionObjectives: hasMany('session-objective', { async: true }),
   meshDescriptors: hasMany('mesh-descriptor', { async: true }),
   sessionDescription: belongsTo('session-description', { async: true }),
   learningMaterials: hasMany('session-learning-material', { async: true }),
@@ -42,6 +42,12 @@ export default Model.extend({
   offeringLearnerGroupsLength: mapBy('offeringLearnerGroups', 'length'),
   learnerGroupCount: sum('offeringLearnerGroupsLength'),
   assignableVocabularies: alias('course.assignableVocabularies'),
+
+  objectives: computed('sessionObjectives.[]', async function(){
+    const sessionObjectives = await this.get('sessionObjectives');
+    const objectives = await all(sessionObjectives.toArray().mapBy('objective'));
+    return objectives.uniq();
+  }),
 
   isIndependentLearning: computed('ilmSession.session', function () {
     return !!this.belongsTo('ilmSession').id();

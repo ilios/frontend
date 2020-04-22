@@ -18,6 +18,9 @@ export default Model.extend({
   totalAssociations: sum('associatedLengths'),
   hasAssociations: gte('totalAssociations', 1),
   active: attr('boolean'),
+  courseObjectives: hasMany('course-objective', {async: true}),
+  programYearObjective: hasMany('program-year-objective', {async: true}),
+  sessionObjectives: hasMany('session-objective', {async: true}),
 
   isTopLevel: computed('parent', function() {
     return isEmpty(this.belongsTo('parent').id());

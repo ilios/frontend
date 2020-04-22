@@ -30,7 +30,7 @@ export default Model.extend({
     inverse: 'administeredCourses'
   }),
   cohorts: hasMany('cohort', {async: true}),
-  objectives: hasMany('objective', {async: true}),
+  courseObjectives: hasMany('course-objective', {async: true}),
   meshDescriptors: hasMany('mesh-descriptor', {async: true}),
   learningMaterials: hasMany('course-learning-material', {async: true}),
   sessions: hasMany('session', {async: true}),
@@ -48,6 +48,12 @@ export default Model.extend({
   publishedSessionOfferings: mapBy('publishedSessions', 'offerings'),
   publishedSessionOfferingCounts: mapBy('publishedSessionOfferings', 'length'),
   publishedOfferingCount: sum('publishedSessionOfferingCounts'),
+
+  objectives: computed('courseObjectives.[]', async function(){
+    const courseObjectives = await this.get('courseObjectives');
+    const objectives = await all(courseObjectives.toArray().mapBy('objective'));
+    return objectives.uniq();
+  }),
 
   academicYear: computed('year', function(){
     return this.get('year') + ' - ' + (parseInt(this.get('year'), 10) + 1);
