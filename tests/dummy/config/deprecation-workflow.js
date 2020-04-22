@@ -6,7 +6,5 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchId: "computed-property.override"}, //ember-modal
     { handler: "silence", matchId: "computed-property.volatile"},
     { handler: "silence", matchId: "common.async-computed"},
-    { handler: "silence", matchId: "ember-cli-page-object.old-finders"},
-    { handler: "silence", matchId: "ember-cli-page-object.is-property"},
   ]
 };
