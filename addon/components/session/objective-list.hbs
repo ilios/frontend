@@ -1,8 +1,8 @@
 <div
   class="session-objective-list"
   data-test-session-objective-list
-  {{did-insert (perform this.load) @session @session.objectives @session.course.objectives}}
-  {{did-update (perform this.load) @session @session.objectives @session.course.objectives}}
+  {{did-insert (perform this.load) @session @session.sessionObjectives @session.course.courseObjectives}}
+  {{did-update (perform this.load) @session @session.sessionObjectives @session.course.courseObjectives}}
 >
   {{#if (and (is-array this.objectives) this.isSorting)}}
     <ObjectiveSortManager
@@ -11,8 +11,8 @@
     />
   {{/if}}
 
-  {{#if (and this.objectiveCount (not this.isSorting))}}
-    {{#if (gt this.objectiveCount 1)}}
+  {{#if (and this.sessionObjectiveCount (not this.isSorting))}}
+    {{#if (gt this.sessionObjectiveCount 1)}}
       <button
         class="sort-button"
         type="button"
@@ -28,17 +28,17 @@
       <span class="grid-item" data-test-header>{{t "general.meshTerms"}}</span>
       <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
     </div>
-    {{#if (and (is-array this.objectives) (is-array this.courseObjectives))}}
-      {{#each this.objectives as |objective|}}
+    {{#if (and (is-array this.sessionObjectives) (is-array this.courseObjectives))}}
+      {{#each this.sessionObjectives as |sessionObjective|}}
         <Session::ObjectiveListItem
-          @objective={{objective}}
+          @sessionObjective={{sessionObjective}}
           @editable={{@editable}}
           @courseObjectives={{this.courseObjectives}}
           @courseTitle={{this.course.title}}
         />
       {{/each}}
     {{else}}
-      <Session::ObjectiveListLoading @count={{this.objectiveCount}} />
+      <Session::ObjectiveListLoading @count={{this.sessionObjectiveCount}} />
     {{/if}}
   {{/if}}
 </div>
