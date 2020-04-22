@@ -19,6 +19,7 @@ export default Model.extend({
   stewards: hasMany('program-year-steward', {async: true}),
   terms: hasMany('term', {async: true}),
 
+  xObjectives: alias('sessionObjectives'),
   assignableVocabularies: alias('program.school.vocabularies'),
 
   objectives: computed('programYearObjectives.[]', async function(){

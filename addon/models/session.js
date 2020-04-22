@@ -42,6 +42,7 @@ export default Model.extend({
   offeringLearnerGroupsLength: mapBy('offeringLearnerGroups', 'length'),
   learnerGroupCount: sum('offeringLearnerGroupsLength'),
   assignableVocabularies: alias('course.assignableVocabularies'),
+  xObjectives: alias('sessionObjectives'),
 
   objectives: computed('sessionObjectives.[]', async function(){
     const sessionObjectives = await this.get('sessionObjectives');

@@ -223,6 +223,7 @@ export default Model.extend({
     this.set('endDate', endDate.toDate());
   },
 
+  xObjectives: alias('sessionObjectives'),
   isPublished: alias('published'),
   isNotPublished: not('isPublished'),
   isScheduled: oneWay('publishedAsTbd'),
