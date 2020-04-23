@@ -22,7 +22,7 @@ export default class SessionPublicationCheckComponent extends Component {
       this.objectives = [];
       return;
     }
-    this.objectives = objectives.toArray();
+    this.objectives = objectives;
   }
 
   @action

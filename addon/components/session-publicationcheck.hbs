@@ -65,9 +65,9 @@
                 {{t "general.no"}}
               </td>
             {{/if}}
-            {{#if @session.objectives.length}}
+            {{#if (await @session.objectives)}}
               <td class="yes">
-                {{t "general.yes"}} ({{@session.objectives.length}})
+                {{t "general.yes"}} ({{get (await @session.objectives) "length"}})
                 {{#if this.showUnlinkIcon}}
                   <FaIcon
                     @icon="unlink"
