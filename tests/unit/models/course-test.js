@@ -23,12 +23,14 @@ module('Unit | Model | Course', function(hooks) {
   });
 
   test('check optional publication items', function(assert) {
-    const model = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
+    const model = store.createRecord('course');
     assert.equal(model.get('optionalPublicationIssues').length, 3);
     model.get('terms').addObject(store.createRecord('term'));
     assert.equal(model.get('optionalPublicationIssues').length, 2);
-    model.get('objectives').addObject(store.createRecord('objective'));
+    const objective = store.createRecord('objective');
+    const courseObjective = store.createRecord('course-objective', { objective, course: model });
+    model.get('courseObjectives').addObject(courseObjective);
     assert.equal(model.get('optionalPublicationIssues').length, 1);
     model.get('meshDescriptors').addObject(store.createRecord('meshDescriptor'));
     assert.equal(model.get('optionalPublicationIssues').length, 0);
@@ -53,11 +55,13 @@ module('Unit | Model | Course', function(hooks) {
 
     const objective1 = store.createRecord('objective', {competency: competency1});
     const objective2 = store.createRecord('objective', {competency: competency2});
-    const objective3 = store.createRecord('objective', {competency: competency3, courses: [course], parents: [objective1]});
-    const objective4 = store.createRecord('objective', {courses: [course], parents: [objective2]});
+    const objective3 = store.createRecord('objective', {competency: competency3, parents: [objective1]});
+    const objective4 = store.createRecord('objective', {parents: [objective2]});
     objective1.get('children').pushObject(objective3);
     objective2.get('children').pushObject(objective4);
-    course.get('objectives').pushObjects([objective3, objective4]);
+
+    store.createRecord('course-objective', { course, objective: objective3 });
+    store.createRecord('course-objective', { course, objective: objective4 });
 
     const competencies = await course.get('competencies');
 
@@ -113,7 +117,10 @@ module('Unit | Model | Course', function(hooks) {
     const objective3 = store.createRecord('objective', { competency: competency3 });
     const objective4 = store.createRecord('objective', { competency: domain3 });
 
-    course.get('objectives').pushObjects([ objective1, objective2, objective3, objective4 ]);
+    store.createRecord('course-objective', { course, objective: objective1 });
+    store.createRecord('course-objective', { course, objective: objective2 });
+    store.createRecord('course-objective', { course, objective: objective3 });
+    store.createRecord('course-objective', { course, objective: objective4 });
 
     const domainProxies = await course.get('domains');
     assert.equal(domainProxies.length, 3);
@@ -213,13 +220,14 @@ module('Unit | Model | Course', function(hooks) {
 
   test('sortedObjectives', async function(assert) {
     assert.expect(4);
-    const course = this.owner.lookup('service:store').createRecord('course');
     const store = this.owner.lookup('service:store');
-    const objective1 = store.createRecord('objective', { id: 1, position: 3, title: 'Aardvark'});
-    const objective2 = store.createRecord('objective', { id: 2, position: 2, title: 'Bar' });
-    const objective3 = store.createRecord('objective', { id: 3, position: 2, title: 'Foo' });
-    course.get('objectives').pushObjects([ objective1, objective2, objective3 ]);
-
+    const course = store.createRecord('course');
+    const objective1 = store.createRecord('objective', { title: 'Aardvark'});
+    const objective2 = store.createRecord('objective', { title: 'Bar' });
+    const objective3 = store.createRecord('objective', { title: 'Foo' });
+    store.createRecord('course-objective', { id: 1, course, objective: objective1, position: 3 });
+    store.createRecord('course-objective', { id: 2, course, objective: objective2, position: 2 });
+    store.createRecord('course-objective', { id: 3, course, objective: objective3, position: 2 });
     const objectives = await course.get('sortedObjectives');
     assert.equal(objectives.length, 3);
     assert.equal(objectives[0], objective3);
