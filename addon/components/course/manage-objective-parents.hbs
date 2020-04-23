@@ -41,19 +41,21 @@
             </h4>
             <ul>
               {{#each (sort-by "title" competency.objectives) as |objective|}}
-                <li>
-                  <Course::ManageObjectiveParentsItem
-                    @title={{objective.title}}
-                    @allowMultipleParents={{this.selectedCohort.allowMultipleParents}}
-                    @isSelected={{contains objective @selected}}
-                    @add={{
-                      pipe
-                        (unless this.selectedCohort.allowMultipleParents (fn @removeFromCohort this.selectedCohort))
-                        (fn @add objective)
-                      }}
-                    @remove={{fn @remove objective}}
-                  />
-                </li>
+                {{#if (or (contains objective @selected) objective.active)}}
+                  <li>
+                    <Course::ManageObjectiveParentsItem
+                      @title={{objective.title}}
+                      @allowMultipleParents={{this.selectedCohort.allowMultipleParents}}
+                      @isSelected={{contains objective @selected}}
+                      @add={{
+                        pipe
+                          (unless this.selectedCohort.allowMultipleParents (fn @removeFromCohort this.selectedCohort))
+                          (fn @add objective)
+                        }}
+                      @remove={{fn @remove objective}}
+                    />
+                  </li>
+                {{/if}}
               {{/each}}
             </ul>
           </li>

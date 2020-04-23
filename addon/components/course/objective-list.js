@@ -55,6 +55,7 @@ export default class CourseObjectiveListComponent extends Component {
         return {
           id: objective.id,
           title: objective.textTitle,
+          active: objective.active,
           competencyId,
           competencyTitle,
           cohortId: cohort.id,
