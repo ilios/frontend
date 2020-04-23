@@ -189,7 +189,7 @@ export default Model.extend({
   ),
   optionalPublicationIssues: computed(
     'terms.length',
-    'objectives.length',
+    'sessionObjectives.length',
     'meshDescriptors.length',
     function(){
       return this.getOptionalPublicationIssues();
@@ -284,6 +284,14 @@ export default Model.extend({
   sortedSessionObjectives: computed('sessionObjectives.@each.position', async function() {
     const objectives = await this.get('sessionObjectives');
     return objectives.toArray().sort(sortableByPosition);
+  }),
+
+  /**
+   * A list of objectives linked to this session, sorted by position.
+   */
+  sortedObjectives: computed('sortedSessionObjectives.[]', async function() {
+    const sessionObjectives = await this.get('sortedSessionObjectives');
+    return all(sessionObjectives.mapBy('objective'));
   }),
 
   /**

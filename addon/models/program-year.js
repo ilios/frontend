@@ -19,7 +19,7 @@ export default Model.extend({
   stewards: hasMany('program-year-steward', {async: true}),
   terms: hasMany('term', {async: true}),
 
-  xObjectives: alias('sessionObjectives'),
+  xObjectives: alias('programYearObjectives'),
   assignableVocabularies: alias('program.school.vocabularies'),
 
   objectives: computed('programYearObjectives.[]', async function(){
@@ -49,7 +49,7 @@ export default Model.extend({
   ),
 
   /**
-   * A list of program-year objectives, sorted by position and title.
+   * A list of program-year objectives, sorted by position.
    * @property sortedProgramYearObjectives
    * @type {Ember.computed}
    * @public
@@ -57,6 +57,14 @@ export default Model.extend({
   sortedProgramYearObjectives: computed('programYearObjectives.@each.position', async function() {
     const objectives = await this.get('programYearObjectives');
     return objectives.toArray().sort(sortableByPosition);
+  }),
+
+  /**
+   * A list of objectives linked to this program year, sorted by position.
+   */
+  sortedObjectives: computed('sortedProgramYearObjectives.[]', async function() {
+    const programYearObjectives = await this.get('sortedProgramYearObjectives');
+    return all(programYearObjectives.mapBy('objective'));
   }),
 
   /**
@@ -100,7 +108,7 @@ export default Model.extend({
   init() {
     this._super(...arguments);
     this.set('requiredPublicationSetFields', ['startYear', 'cohort', 'program']);
-    this.set('optionalPublicationLengthFields', ['directors', 'competencies', 'terms', 'sessionObjectives']);
+    this.set('optionalPublicationLengthFields', ['directors', 'competencies', 'terms', 'programYearObjectives']);
     this.set('requiredPublicationLengthFields', []);
     this.set('optionalPublicationSetFields', []);
   },

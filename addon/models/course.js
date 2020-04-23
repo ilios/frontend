@@ -109,7 +109,7 @@ export default Model.extend({
   }),
   optionalPublicationIssues: computed(
     'terms.length',
-    'sessionObjectives.length',
+    'courseObjectives.length',
     'meshDescriptors.length',
     function(){
       return this.getOptionalPublicationIssues();
@@ -159,6 +159,14 @@ export default Model.extend({
   sortedCourseObjectives: computed('courseObjectives.@each.position', async function() {
     const objectives = await this.get('courseObjectives');
     return objectives.toArray().sort(sortableByPosition);
+  }),
+
+  /**
+   * A list of objectives linked to this course, sorted by position.
+   */
+  sortedObjectives: computed('sortedCourseObjectives.[]', async function() {
+    const courseObjectives = await this.get('sortedCourseObjectives');
+    return all(courseObjectives.mapBy('objective'));
   }),
 
   hasMultipleCohorts: computed('cohorts.[]', function(){
@@ -211,7 +219,7 @@ export default Model.extend({
     this.set('requiredPublicationSetFields', ['startDate', 'endDate']);
     this.set('requiredPublicationLengthFields', ['cohorts']);
     this.set('optionalPublicationSetFields', []);
-    this.set('optionalPublicationLengthFields', ['terms', 'sessionObjectives', 'meshDescriptors']);
+    this.set('optionalPublicationLengthFields', ['terms', 'courseObjectives', 'meshDescriptors']);
   },
 
   setDatesBasedOnYear: function(){
@@ -223,7 +231,7 @@ export default Model.extend({
     this.set('endDate', endDate.toDate());
   },
 
-  xObjectives: alias('sessionObjectives'),
+  xObjectives: alias('courseObjectives'),
   isPublished: alias('published'),
   isNotPublished: not('isPublished'),
   isScheduled: oneWay('publishedAsTbd'),
