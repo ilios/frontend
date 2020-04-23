@@ -6,8 +6,8 @@ import {
 } from 'ember-cli-page-object';
 
 const definition = {
-  headers: collection('[data-test-program-year-objective-list-item-expanded-heading] td'),
-  courses: collection('[data-test-program-year-objective-list-item-expanded-course]', {
+  headers: collection('thead th'),
+  courses: collection('tbody tr', {
     title: text('[data-test-title]'),
     objectives: collection('[data-test-course-objective]'),
   }),
