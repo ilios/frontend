@@ -1,5 +1,5 @@
 <div
-  id="objective-{{@objective.id}}"
+  id="objective-{{@sessionObjective.id}}"
   class="grid-row objective-row {{if this.showRemoveConfirmation "confirm-removal"}} {{if this.highlightSave.isRunning "highlight-ok"}} {{if this.isManaging "is-managing"}}"
   data-test-session-objective-list-item
   {{did-insert (perform this.load) @sessionObjective}}
@@ -84,7 +84,6 @@
 
   {{#if this.isManagingParents}}
     <Session::ManageObjectiveParents
-      @objective={{@objective}}
       @courseObjectives={{@courseObjectives}}
       @courseTitle={{@courseTitle}}
       @selected={{this.parentsBuffer}}
