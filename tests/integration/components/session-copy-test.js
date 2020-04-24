@@ -73,7 +73,7 @@ module('Integration | Component | session copy', function(hooks) {
   });
 
   test('copy session', async function(assert) {
-    assert.expect(21);
+    assert.expect(26);
 
     const thisYear = parseInt(moment().format('YYYY'), 10);
     this.server.create('academic-year', {
@@ -99,8 +99,8 @@ module('Integration | Component | session copy', function(hooks) {
     const objective = this.server.create('objective', {
       title: 'session objective title',
       parents: [parentObjective],
-      position: 3,
     });
+
     const meshDescriptor = this.server.create('mesh-descriptor');
     const term = this.server.create('term');
     const sessionType = this.server.create('session-type');
@@ -118,10 +118,17 @@ module('Integration | Component | session copy', function(hooks) {
       instructionalNotes: 'old session notes',
       sessionType,
       sessionDescription,
-      objectives: [objective],
       meshDescriptors: [meshDescriptor],
       terms: [term],
       learningMaterials: [sessionLearningMaterial],
+    });
+
+    const objectiveTerm = this.server.create('term');
+    const sessionObjective = this.server.create('session-objective', {
+      session,
+      objective,
+      terms: [ objectiveTerm ],
+      position: 3,
     });
 
     const permissionCheckerMock = Service.extend({
@@ -169,7 +176,17 @@ module('Integration | Component | session copy', function(hooks) {
     assert.equal(objectives.length, 3);
     const newObjective = objectives.findBy('id', '3');
     assert.equal(objective.title, newObjective.title);
-    assert.equal(objective.position, newObjective.position);
+
+    const sessionObjectives = await this.owner.lookup('service:store').findAll('session-objective');
+    assert.equal(sessionObjectives.length, 2);
+    const newSessionObjective = sessionObjectives.findBy('id', '2');
+    assert.equal(sessionObjective.position, newSessionObjective.position);
+    assert.equal(newSessionObjective.belongsTo('session').id(), newSession.id);
+    assert.equal(newSessionObjective.belongsTo('objective').id(), newObjective.id);
+    const objectiveTermModel = await this.owner.lookup('service:store').find('term', objectiveTerm.id);
+    const copiedSessionObjectiveTerms = (await newSessionObjective.terms);
+    assert.equal(copiedSessionObjectiveTerms.length, 1);
+    assert.ok(copiedSessionObjectiveTerms.includes(objectiveTermModel));
   });
 
   test('save cannot be clicked when there is no year or course', async function(assert) {
