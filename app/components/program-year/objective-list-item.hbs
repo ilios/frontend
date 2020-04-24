@@ -1,6 +1,6 @@
 <div
   id="objective-{{@objective.id}}"
-  class="grid-row objective-row {{if this.showRemoveConfirmation "confirm-removal"}} {{if this.highlightSave.isRunning "highlight-ok"}} {{if this.isManaging "is-managing"}}"
+  class="grid-row objective-row {{if this.showRemoveConfirmation "confirm-removal"}} {{if this.highlightSave.isRunning "highlight-ok"}} {{if this.isManaging "is-managing"}}  {{unless @objective.active "is-inactive"}}"
   data-test-program-year-objective-list-item
 >
   <button
@@ -57,7 +57,28 @@
   />
 
   <div class="actions grid-item" data-test-actions>
-    {{#if (and this.canDelete @editable (not this.isManaging) (not this.showRemoveConfirmation) (not this.showRemoveConfirmation))}}
+    {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
+      {{#if this.saveIsActive.isRunning}}
+        <LoadingSpinner />
+      {{else}}
+        {{#if @objective.active}}
+          <button class="active" type="button" {{on "click" (perform this.saveIsActive false)}} data-test-deactivate>
+            <FaIcon @prefix="fas" @icon="lightbulb-on" @title={{t "general.deactivate"}} />
+          </button>
+        {{else}}
+          <button class="active" type="button" {{on "click" (perform this.saveIsActive true)}} data-test-activate>
+            <FaIcon @prefix="fal" @icon="lightbulb-slash" @title={{t "general.activate"}}/>
+          </button>
+        {{/if}}
+      {{/if}}
+    {{else}}
+      {{#if @objective.active}}
+        <FaIcon @prefix="fas" @icon="lightbulb-on" @title={{t "general.active"}} />
+      {{else}}
+        <FaIcon @prefix="fal" @icon="lightbulb-slash" @title={{t "general.inactive"}} />
+      {{/if}}
+    {{/if}}
+    {{#if (and this.canDelete @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
       <span class="clickable remove icon" role="button" {{on "click" (set this.showRemoveConfirmation true)}} aria-label={{t "general.remove"}}>
         <FaIcon @icon="trash" class="enabled" />
       </span>

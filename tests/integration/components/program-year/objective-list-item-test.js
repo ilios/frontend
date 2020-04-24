@@ -11,7 +11,7 @@ module('Integration | Component | program-year/objective-list-item', function(ho
   setupMirage(hooks);
 
   test('it renders and is accessible', async function(assert) {
-    assert.expect(6);
+    assert.expect(7);
     const programYear = this.server.create('programYear');
 
     const objective = this.server.create('objective', {
@@ -32,6 +32,7 @@ module('Integration | Component | program-year/objective-list-item', function(ho
     assert.equal(component.description.text, 'objective 0');
     assert.equal(component.competency.text, 'Add New');
     assert.equal(component.meshDescriptors.text, 'Add New');
+    assert.ok(component.isActive);
     assert.ok(component.hasTrashCan);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -123,5 +124,51 @@ module('Integration | Component | program-year/objective-list-item', function(ho
     );
     await component.remove();
     assert.ok(component.hasRemoveConfirmation);
+  });
+
+  test('can de-activate', async function(assert) {
+    const programYear = this.server.create('programYear');
+
+    const objective = this.server.create('objective', {
+      active: true,
+      programYears: [programYear],
+    });
+    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
+    this.set('objective', objectiveModel);
+
+    await render(
+      hbs`<ProgramYear::ObjectiveListItem
+        @objective={{this.objective}}
+        @editable={{true}}
+        @schoolCompetencies={{array}}
+        @schoolDomains={{array}}
+      />`
+    );
+    assert.ok(component.isActive);
+    await component.deactivate();
+    assert.ok(component.isInactive);
+  });
+
+  test('can activate', async function(assert) {
+    const programYear = this.server.create('programYear');
+
+    const objective = this.server.create('objective', {
+      active: false,
+      programYears: [programYear],
+    });
+    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
+    this.set('objective', objectiveModel);
+
+    await render(
+      hbs`<ProgramYear::ObjectiveListItem
+        @objective={{this.objective}}
+        @editable={{true}}
+        @schoolCompetencies={{array}}
+        @schoolDomains={{array}}
+      />`
+    );
+    assert.ok(component.isInactive);
+    await component.activate();
+    assert.ok(component.isActive);
   });
 });

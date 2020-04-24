@@ -90,6 +90,7 @@ general:
   curriculumInventoryReportRolloverSuccess: "Roulement achevée avec succès"
   curriculumInventoryReports: "Rapports d'inventaire des programmes d'études"
   dashboard: "Tableau de Bord"
+  deactivate: Désactiver
   defaultInstructors: "Instructeurs par Défaut"
   defaultLocation: "Localisation par Défaut"
   departments: "Facultés"

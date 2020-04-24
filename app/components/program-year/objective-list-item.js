@@ -40,6 +40,14 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     this.removeErrorDisplayFor('title');
     this.args.objective.set('title', this.title);
     yield this.args.objective.save();
+    this.highlightSave.perform();
+  }
+
+  @dropTask
+  *saveIsActive(active) {
+    this.args.objective.set('active', active);
+    yield this.args.objective.save();
+    this.highlightSave.perform();
   }
 
   @dropTask

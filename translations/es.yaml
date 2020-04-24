@@ -90,6 +90,7 @@ general:
   curriculumInventoryReportRolloverSuccess: "Inventario Copiado con Éxito"
   curriculumInventoryReports: "Informes de Inventario de Plan de Estudios"
   dashboard: Tablero
+  deactivate: Desactivar
   defaultInstructors: "Instructores Predeterminados"
   defaultLocation: "Ubicación Predeterminada"
   departments: Departmentos

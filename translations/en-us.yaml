@@ -90,6 +90,7 @@ general:
   curriculumInventoryReportRolloverSuccess: "Report-Rollover Completed Successfully"
   curriculumInventoryReports: "Curriculum Inventory Reports"
   dashboard: Dashboard
+  deactivate: Deactivate
   defaultInstructors: "Default Instructors"
   defaultLocation: "Default Location"
   departments: Departments

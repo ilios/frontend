@@ -52,7 +52,8 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     });
     this.server.create('objective', {
       programYears: [programYear],
-      competency: competency4
+      competency: competency4,
+      active: false,
     });
     this.server.create('objective', {
       programYears: [programYear]
@@ -347,5 +348,22 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.equal(page.objectives.objectiveList.expanded[0].courseTitle, 'course 0');
     assert.equal(page.objectives.objectiveList.expanded[0].objectives.length, 1);
     assert.equal(page.objectives.objectiveList.expanded[0].objectives[0].text, 'objective 3');
+  });
+
+  test('activate and deactivate', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
+    assert.equal(page.objectives.objectiveList.objectives.length, 3);
+
+    assert.ok(page.objectives.objectiveList.objectives[0].isActive);
+    assert.ok(page.objectives.objectiveList.objectives[1].isInactive);
+    assert.ok(page.objectives.objectiveList.objectives[2].isActive);
+
+    await page.objectives.objectiveList.objectives[0].deactivate();
+    await page.objectives.objectiveList.objectives[1].activate();
+
+    assert.ok(page.objectives.objectiveList.objectives[0].isInactive);
+    assert.ok(page.objectives.objectiveList.objectives[1].isActive);
+    assert.ok(page.objectives.objectiveList.objectives[2].isActive);
   });
 });
