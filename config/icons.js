@@ -2,6 +2,10 @@ module.exports = function() {
   return {
     'pro-light-svg-icons': [
       'clipboard-list',
+      'lightbulb-slash',
+    ],
+    'pro-solid-svg-icons': [
+      'lightbulb-on',
     ],
     'free-brands-svg-icons': [
       'black-tie',

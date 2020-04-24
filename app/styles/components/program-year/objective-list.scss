@@ -11,4 +11,30 @@
       padding: .5em .25em;
     }
   }
+
+  .objective-row {
+
+    &.is-inactive {
+      .grid-item {
+        background-color: $header-grey;
+      }
+    }
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      button {
+        @include ilios-button-reset;
+        height: 1rem;
+        width: 1rem;
+
+        &.active {
+          color: $base-link-color;
+        }
+      }
+
+      & > *{
+        margin-left: .5em;
+      }
+    }
+  }
 }
