@@ -4,7 +4,6 @@ import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
-import sha256 from 'crypto-js/sha256';
 
 export default Component.extend({
   iliosConfig: service(),
@@ -51,20 +50,24 @@ export default Component.extend({
 
   /**
    * Generate a random token from a combination of
-   * the userid, a random string and the curent time
+   * the user id, a random string and the current time
+   * Implementation lifted from https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/digest
    * @param String userId
    * @return String
    */
-  randomToken(userId) {
+  async randomToken(userId) {
     const now = Date.now();
     const randomValue = Math.random().toString(36).substr(2);
-    const hash = sha256(userId + randomValue + now).toString();
-    return hash;
+    const msgUint8 = new TextEncoder().encode(userId + randomValue + now); // encode as (utf-8) Uint8Array
+    const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8); // hash the message
+    const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
+    const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
+    return hashHex;
   },
 
   refreshKey: task(function* () {
     const user = this.user;
-    const token = this.randomToken(user.get('id'));
+    const token = yield this.randomToken(user.get('id'));
     user.set('icsFeedKey', token);
     yield user.save();
     this.setIsManaging(false);
