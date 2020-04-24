@@ -10,7 +10,7 @@ module('Integration | Component | program-year/objectives', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders and is accessible with a single cohort', async function (assert) {
+  test('it renders and is accessible', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const programYear = this.server.create('program-year', { program });
@@ -38,14 +38,14 @@ module('Integration | Component | program-year/objectives', function(hooks) {
 
     assert.equal(component.objectiveList.objectives.length, 2);
     assert.equal(component.objectiveList.objectives[0].description.text, 'objective 0');
-    assert.ok(component.objectiveList.objectives[0].hasCompetency);
-    assert.equal(component.objectiveList.objectives[0].competencyTitle, 'competency 2');
-    assert.equal(component.objectiveList.objectives[0].domainTitle, '(competency 0)');
-    assert.equal(component.objectiveList.objectives[0].meshTerms.length, 0);
+    assert.ok(component.objectiveList.objectives[0].competency.hasCompetency);
+    assert.equal(component.objectiveList.objectives[0].competency.competencyTitle, 'competency 2');
+    assert.equal(component.objectiveList.objectives[0].competency.domainTitle, '(competency 0)');
+    assert.ok(component.objectiveList.objectives[0].meshDescriptors.isEmpty);
 
     assert.equal(component.objectiveList.objectives[1].description.text, 'objective 1');
-    assert.notOk(component.objectiveList.objectives[1].hasCompetency);
-    assert.equal(component.objectiveList.objectives[1].meshTerms.length, 0);
+    assert.notOk(component.objectiveList.objectives[1].competency.hasCompetency);
+    assert.ok(component.objectiveList.objectives[1].meshDescriptors.isEmpty);
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -76,11 +76,9 @@ module('Integration | Component | program-year/objectives', function(hooks) {
 
     assert.equal(component.objectiveList.objectives.length, 1);
     assert.equal(component.objectiveList.objectives[0].description.text, 'objective 0');
-    assert.ok(component.objectiveList.objectives[0].hasCompetency);
-    await component.objectiveList.objectives[0].manageCompetency();
-    const m = component.manageObjectiveCompetency;
-    assert.equal(m.objectiveTitle, 'objective 0');
-
+    assert.ok(component.objectiveList.objectives[0].competency.hasCompetency);
+    await component.objectiveList.objectives[0].competency.manage();
+    const m = component.objectiveList.objectives[0].competencyManager;
     assert.equal(m.domains.length, 2);
 
     assert.equal(m.domains[0].title, 'competency 0');

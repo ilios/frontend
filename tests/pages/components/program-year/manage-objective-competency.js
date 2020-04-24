@@ -10,7 +10,6 @@ import {
 
 const definition = {
   scope: '[data-test-program-year-manage-objective-competency]',
-  objectiveTitle: text('[data-test-objective-title]'),
   domains: collection('.parent-picker [data-test-domain]', {
     title: text('.domain-title'),
     selected: hasClass('selected'),

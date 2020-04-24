@@ -1,21 +1,56 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { enqueueTask, dropTask, restartableTask } from 'ember-concurrency-decorators';
-import { action } from '@ember/object';
-import { all } from 'rsvp';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { hash, map } from 'rsvp';
+import { inject as service } from '@ember/service';
 
 export default class ProgramYearObjectiveListComponent extends Component {
-  @service ajax;
   @service iliosConfig;
   @service session;
 
   @tracked objectives;
-  @tracked objectivesForRemovalConfirmation = [];
-  @tracked totalObjectivesToSave;
-  @tracked currentObjectivesSaved;
   @tracked isSorting = false;
-  @tracked expandedObjectiveIds = [];
+  @tracked schoolDomains;
+  @tracked schoolCompetencies;
+  @tracked course;
+  @tracked objectiveCount;
+
+  @restartableTask
+  *load(element, [programYear]) {
+    if (!programYear) {
+      return;
+    }
+    this.objectiveCount = programYear.hasMany('objectives').ids().length;
+    const program = yield programYear.program;
+    const school = yield program.school;
+    const {
+      objectives,
+      schoolCompetencies
+    } = yield hash({
+      objectives: programYear.sortedObjectives,
+      schoolCompetencies: school.competencies
+    });
+    this.objectives = objectives;
+    this.schoolCompetencies = schoolCompetencies.toArray();
+    this.schoolDomains = yield this.getSchoolDomains(this.schoolCompetencies);
+  }
+
+  async getSchoolDomains(schoolCompetencies) {
+    const domains = schoolCompetencies.filterBy('isDomain').toArray();
+    return await map(domains, async domain => {
+      const competencies = (await domain.children).map(competency => {
+        return {
+          id: competency.id,
+          title: competency.title
+        };
+      });
+      return {
+        id: domain.id,
+        title: domain.title,
+        competencies
+      };
+    });
+  }
 
   get authHeaders(){
     const { jwt } = this.session?.data?.authenticated;
@@ -25,61 +60,6 @@ export default class ProgramYearObjectiveListComponent extends Component {
     }
 
     return new Headers(headers);
-  }
-
-  @restartableTask
-  *load(element, [programYear]) {
-    if (!programYear) {
-      return;
-    }
-    this.objectives = yield programYear.sortedObjectives;
-  }
-
-  get hasMoreThanOneObjective() {
-    return this.objectives?.length > 1;
-  }
-
-  async saveSomeObjectives(arr){
-    const chunk = arr.splice(0, 5);
-    await all(chunk.invoke('save'));
-    if (arr.length){
-      this.currentObjectivesSaved += chunk.length;
-      await this.saveSomeObjectives(arr);
-    }
-  }
-
-  @dropTask
-  *saveSortOrder(objectives){
-    for (let i = 0, n = objectives.length; i < n; i++) {
-      objectives[i].set('position', i + 1);
-    }
-
-    this.totalObjectivesToSave = objectives.length;
-    this.currentObjectivesSaved = 0;
-
-    yield this.saveSomeObjectives(objectives);
-    this.isSorting = false;
-  }
-
-  @enqueueTask
-  *deleteObjective(objective) {
-    yield objective.destroyRecord();
-  }
-  @action
-  confirmRemoval(objective) {
-    this.objectivesForRemovalConfirmation = [...this.objectivesForRemovalConfirmation, objective.id];
-  }
-  @action
-  cancelRemove(objective){
-    this.objectivesForRemovalConfirmation = this.objectivesForRemovalConfirmation.filter(id => id !== objective.id);
-  }
-  @action
-  toggleExpand(objectiveId) {
-    if (this.expandedObjectiveIds.includes(objectiveId)) {
-      this.expandedObjectiveIds = this.expandedObjectiveIds.filter(id => id !== objectiveId);
-    } else {
-      this.expandedObjectiveIds = [...this.expandedObjectiveIds, objectiveId];
-    }
   }
 
   @dropTask

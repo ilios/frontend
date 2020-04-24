@@ -25,8 +25,8 @@ module('Integration | Component | program-year/objective-list-item-expanded', fu
     await render(
       hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{objective}} />`
     );
-    assert.equal(component.headers[1].text, "Courses");
-    assert.equal(component.headers[2].text, "Objectives");
+    assert.equal(component.headers[0].text, "Courses");
+    assert.equal(component.headers[1].text, "Objectives");
 
     assert.equal(component.courses.length, 2);
     assert.equal(component.courses[0].title, 'course 0');
@@ -54,8 +54,8 @@ module('Integration | Component | program-year/objective-list-item-expanded', fu
     await render(
       hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{objective}} />`
     );
-    assert.equal(component.headers[1].text, "Courses");
-    assert.equal(component.headers[2].text, "Objectives");
+    assert.equal(component.headers[0].text, "Courses");
+    assert.equal(component.headers[1].text, "Objectives");
     assert.ok(component.hasNone);
 
     await a11yAudit(this.element);

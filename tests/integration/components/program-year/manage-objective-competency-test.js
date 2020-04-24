@@ -38,14 +38,11 @@ module('Integration | Component | program-year/manage-objective-competency', fun
     this.set('objectiveTitle', this.objectiveModel.title);
     this.set('domains', domains);
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
-      @objectiveTitle={{this.objectiveTitle}}
       @domains={{this.domains}}
       @selected={{null}}
       @add={{noop}}
       @remove={{noop}}
     />`);
-
-    assert.equal(component.objectiveTitle, this.objectiveModel.title);
 
     assert.equal(component.domains.length, 1);
     assert.equal(component.domains[0].title, this.domainModel.title);
@@ -73,7 +70,6 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       assert.ok(true); // input doesn't matter, we just need to confirm this fired.
     });
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
-      @objectiveTitle={{string}}
       @domains={{this.domains}}
       @selected={{this.selected}}
       @add={{noop}}
@@ -97,7 +93,6 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       assert.equal(id, this.domainModel.id);
     });
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
-      @objectiveTitle={{string}}
       @domains={{this.domains}}
       @selected={{null}}
       @add={{this.add}}

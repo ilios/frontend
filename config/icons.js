@@ -17,6 +17,8 @@ module.exports = function() {
       'bold',
       'book',
       'calendar',
+      'caret-right',
+      'caret-down',
       'check',
       'clock',
       'cloud',

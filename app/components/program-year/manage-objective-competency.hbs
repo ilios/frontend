@@ -2,10 +2,6 @@
   class="program-year-manage-objective-competency"
   data-test-program-year-manage-objective-competency
 >
-  <h3 class="objective-title" data-test-objective-title>
-    {{! template-lint-disable no-triple-curlies }}
-    {{{@objectiveTitle}}}
-  </h3>
   {{#if @domains.length}}
     <ul class="parent-picker" data-test-parent-picker>
       {{#each @domains as |domain|}}

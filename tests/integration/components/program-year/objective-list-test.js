@@ -11,8 +11,10 @@ module('Integration | Component | program-year/objective-list', function(hooks) 
   setupMirage(hooks);
 
   test('it renders and is accessible', async function(assert) {
-    assert.expect(8);
-    const programYear = this.server.create('program-year');
+    assert.expect(9);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const programYear = this.server.create('program-year', { program });
 
     this.server.create('objective', {
       title: 'Objective A',
@@ -32,14 +34,13 @@ module('Integration | Component | program-year/objective-list', function(hooks) 
       hbs`<ProgramYear::ObjectiveList
         @editable={{true}}
         @programYear={{this.programYear}}
-        @manageCompetency={{noop}}
-        @manageDescriptors={{noop}}
       />`
     );
     assert.ok(component.sortIsVisible, 'Sort Objectives button is visible');
-    assert.equal(component.headers[1].text, 'Description');
-    assert.equal(component.headers[2].text, 'Competency');
-    assert.equal(component.headers[3].text, 'MeSH Terms');
+    assert.equal(component.headers[0].text, 'Description');
+    assert.equal(component.headers[1].text, 'Competency');
+    assert.equal(component.headers[2].text, 'MeSH Terms');
+    assert.equal(component.headers[3].text, 'Actions');
 
     assert.equal(component.objectives.length, 2);
     assert.equal(component.objectives[0].description.text, 'Objective B');
@@ -51,16 +52,16 @@ module('Integration | Component | program-year/objective-list', function(hooks) 
 
   test('empty list', async function(assert) {
     assert.expect(2);
-    const programYear = this.server.create('programYear');
-    const programYearModel = await this.owner.lookup('service:store').find('programYear', programYear.id);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const programYear = this.server.create('program-year', { program });
+    const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
     this.set('programYear', programYearModel);
 
     await render(
       hbs`<ProgramYear::ObjectiveList
         @editable={{true}}
         @programYear={{this.programYear}}
-        @manageCompetency={{noop}}
-        @manageDescriptors={{noop}}
       />`
     );
     assert.notOk(component.sortIsVisible);
@@ -69,21 +70,21 @@ module('Integration | Component | program-year/objective-list', function(hooks) 
 
   test('no "sort objectives" button in list with one item', async function(assert) {
     assert.expect(3);
-    const programYear = this.server.create('programYear');
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const programYear = this.server.create('program-year', { program });
 
     this.server.create('objective', {
       position: 0,
       programYears: [programYear],
     });
-    const programYearModel = await this.owner.lookup('service:store').find('programYear', programYear.id);
+    const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
     this.set('programYear', programYearModel);
 
     await render(
       hbs`<ProgramYear::ObjectiveList
         @editable={{true}}
         @programYear={{this.programYear}}
-        @manageCompetency={{noop}}
-        @manageDescriptors={{noop}}
       />`
     );
     assert.notOk(component.sortIsVisible, 'Sort Objectives button is visible');

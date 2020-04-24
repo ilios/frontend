@@ -111,7 +111,6 @@
 @import 'components/pending-single-user-updates';
 @import 'components/pending-user-updates';
 @import 'components/program-details';
-@import 'components/programyear-objective-list-item-expanded';
 @import 'components/program-year-visualizations';
 @import 'components/update-notification';
 @import 'components/user-menu';
@@ -127,5 +126,10 @@
 @import 'components/visualizer-session-type-terms';
 @import 'components/visualizer-session-type-vocabularies';
 
+@import 'components/program-year/objectives';
+@import 'components/program-year/manage-objective-descriptors';
 @import 'components/program-year/manage-objective-competency';
-@import 'components/program-year/programyear-objective-list-item';
+@import 'components/program-year/objective-list-item-descriptors';
+@import 'components/program-year/objective-list-item-competency';
+@import 'components/program-year/objective-list-item-expanded';
+@import 'components/program-year/objective-list';

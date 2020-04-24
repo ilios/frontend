@@ -18,54 +18,21 @@ module('Integration | Component | program-year/objective-list-item', function(ho
       programYears: [programYear],
     });
     const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    const programYearModel = await this.owner.lookup('service:store').find('programYear', objective.id);
     this.set('objective', objectiveModel);
-    this.set('programYear', programYearModel);
 
     await render(
       hbs`<ProgramYear::ObjectiveListItem
         @objective={{this.objective}}
         @editable={{true}}
-        @showRemoveConfirmation={{false}}
-        @remove={{noop}}
-        @manageCompetency={{noop}}
-        @manageDescriptors={{noop}}
-        @toggleExpand={{noop}}
+        @schoolCompetencies={{array}}
+        @schoolDomains={{array}}
       />`
     );
     assert.notOk(component.hasRemoveConfirmation);
     assert.equal(component.description.text, 'objective 0');
-    assert.notOk(component.hasCompetency);
-    assert.equal(component.meshText, 'Add New');
+    assert.equal(component.competency.text, 'Add New');
+    assert.equal(component.meshDescriptors.text, 'Add New');
     assert.ok(component.hasTrashCan);
-    await a11yAudit(this.element);
-    assert.ok(true, 'no a11y errors found!');
-  });
-
-  test('renders removable', async function (assert) {
-    assert.expect(2);
-    const programYear = this.server.create('programYear');
-
-    const objective = this.server.create('objective', {
-      programYears: [programYear],
-    });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    const programYearModel = await this.owner.lookup('service:store').find('programYear', objective.id);
-    this.set('objective', objectiveModel);
-    this.set('programYear', programYearModel);
-
-    await render(
-      hbs`<ProgramYear::ObjectiveListItem
-        @objective={{this.objective}}
-        @editable={{true}}
-        @showRemoveConfirmation={{true}}
-        @remove={{noop}}
-        @manageCompetency={{noop}}
-        @manageDescriptors={{noop}}
-        @toggleExpand={{noop}}
-      />`
-    );
-    assert.ok(component.hasRemoveConfirmation);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -77,19 +44,14 @@ module('Integration | Component | program-year/objective-list-item', function(ho
       programYears: [programYear],
     });
     const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    const programYearModel = await this.owner.lookup('service:store').find('programYear', objective.id);
     this.set('objective', objectiveModel);
-    this.set('programYear', programYearModel);
 
     await render(
       hbs`<ProgramYear::ObjectiveListItem
         @objective={{this.objective}}
         @editable={{true}}
-        @showRemoveConfirmation={{false}}
-        @remove={{noop}}
-        @manageCompetency={{noop}}
-        @manageDescriptors={{noop}}
-        @toggleExpand={{noop}}
+        @schoolCompetencies={{array}}
+        @schoolDomains={{array}}
       />`
     );
     const newDescription = 'Pluto Visits Earth';
@@ -106,9 +68,7 @@ module('Integration | Component | program-year/objective-list-item', function(ho
       programYears: [programYear],
     });
     const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    const programYearModel = await this.owner.lookup('service:store').find('programYear', objective.id);
     this.set('objective', objectiveModel);
-    this.set('programYear', programYearModel);
     this.set('manageCompetency', () => {
       assert.ok(true);
     });
@@ -117,14 +77,12 @@ module('Integration | Component | program-year/objective-list-item', function(ho
       hbs`<ProgramYear::ObjectiveListItem
         @objective={{this.objective}}
         @editable={{true}}
-        @showRemoveConfirmation={{false}}
-        @remove={{noop}}
-        @manageCompetency={{this.manageCompetency}}
-        @manageDescriptors={{noop}}
-        @toggleExpand={{noop}}
+        @schoolCompetencies={{array}}
+        @schoolDomains={{array}}
       />`
     );
-    await component.manageCompetency();
+    await component.competency.manage();
+    assert.ok(component.competencyManager.isPresent);
   });
 
   test('can manage descriptors', async function (assert) {
@@ -133,25 +91,18 @@ module('Integration | Component | program-year/objective-list-item', function(ho
       programYears: [programYear],
     });
     const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    const programYearModel = await this.owner.lookup('service:store').find('programYear', objective.id);
     this.set('objective', objectiveModel);
-    this.set('programYear', programYearModel);
-    this.set('manageDescriptors', () => {
-      assert.ok(true);
-    });
 
     await render(
       hbs`<ProgramYear::ObjectiveListItem
         @objective={{this.objective}}
         @editable={{true}}
-        @showRemoveConfirmation={{false}}
-        @remove={{noop}}
-        @manageCompetency={{noop}}
-        @manageDescriptors={{this.manageDescriptors}}
-        @toggleExpand={{noop}}
+        @schoolCompetencies={{array}}
+        @schoolDomains={{array}}
       />`
     );
-    await component.manageMesh();
+    await component.meshDescriptors.list[0].manage();
+    assert.ok(component.meshManager.isPresent);
   });
 
   test('can trigger removal', async function (assert) {
@@ -160,24 +111,17 @@ module('Integration | Component | program-year/objective-list-item', function(ho
       programYears: [programYear],
     });
     const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    const programYearModel = await this.owner.lookup('service:store').find('programYear', objective.id);
     this.set('objective', objectiveModel);
-    this.set('programYear', programYearModel);
-    this.set('remove', () => {
-      assert.ok(true);
-    });
 
     await render(
       hbs`<ProgramYear::ObjectiveListItem
         @objective={{this.objective}}
         @editable={{true}}
-        @showRemoveConfirmation={{false}}
-        @remove={{this.remove}}
-        @manageCompetency={{noop}}
-        @manageDescriptors={{noop}}
-        @toggleExpand={{noop}}
+        @schoolCompetencies={{array}}
+        @schoolDomains={{array}}
       />`
     );
     await component.remove();
+    assert.ok(component.hasRemoveConfirmation);
   });
 });

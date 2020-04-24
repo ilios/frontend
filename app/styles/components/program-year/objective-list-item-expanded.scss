@@ -1,0 +1,32 @@
+.program-year-objective-list-item-expanded {
+  @include ilios-table-structure;
+  margin: 1em 2em;
+  grid-column: 1 / -1;
+
+  thead {
+    background-color: $grey;
+  }
+
+  tbody tr {
+    &:nth-of-type(even) {
+      background-color: $grey;
+    }
+    ul {
+      @include ilios-list-reset;
+
+      p {
+        margin: 0;
+      }
+
+      li {
+        border-top: 1px solid $dark-grey;
+        padding-top: 1rem;
+      }
+
+      li:nth-of-type(1) {
+        border: 0;
+        padding: 0
+      }
+    }
+  }
+}
