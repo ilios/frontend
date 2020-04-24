@@ -12,15 +12,15 @@ module('Integration | Component | session/objectives', function(hooks) {
 
   test('it renders and is accessible', async function (assert) {
     const course = this.server.create('course');
-    const courseObjective = this.server.create('objective', {
-      courses: [course],
-    });
+    const objectiveInCourse = this.server.create('objective');
+    this.server.create('course-objective', { course, objective: objectiveInCourse });
     const session = this.server.create('session', { course });
-    this.server.createList('objective', 2, { sessions: [session] });
-    this.server.create('objective', {
-      sessions: [session],
-      parents: [ courseObjective ],
-    });
+    const objectiveInSession1 = this.server.create('objective');
+    const objectiveInSession2 = this.server.create('objective');
+    const objectiveInSession3 = this.server.create('objective', { parents: [ objectiveInCourse ]});
+    this.server.create('session-objective', { session, objective: objectiveInSession1 });
+    this.server.create('session-objective', { session, objective: objectiveInSession2 });
+    this.server.create('session-objective', { session, objective: objectiveInSession3 });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
 
     this.set('session', sessionModel);
@@ -52,9 +52,8 @@ module('Integration | Component | session/objectives', function(hooks) {
   test('deleting objective', async function (assert) {
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
-    this.server.create('objective', {
-      sessions: [session],
-    });
+    const objective = this.server.create('objective');
+    this.server.create('session-objective', { session, objective });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
 
     this.set('session', sessionModel);

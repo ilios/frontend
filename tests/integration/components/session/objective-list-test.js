@@ -14,18 +14,10 @@ module('Integration | Component | session/objective-list', function(hooks) {
     assert.expect(9);
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
-
-    this.server.create('objective', {
-      title: 'Objective A',
-      position: 0,
-      sessions: [session],
-    });
-
-    this.server.create('objective', {
-      title: 'Objective B',
-      position: 0,
-      sessions: [session],
-    });
+    const objective1 = this.server.create('objective', { title: 'Objective A' });
+    const objective2 = this.server.create('objective', { title: 'Objective B' });
+    this.server.create('session-objective', { session, objective: objective1, position: 0 });
+    this.server.create('session-objective', { session, objective: objective2, position: 0 });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
 
@@ -70,11 +62,8 @@ module('Integration | Component | session/objective-list', function(hooks) {
     assert.expect(3);
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
-
-    this.server.create('objective', {
-      position: 0,
-      sessions: [session],
-    });
+    const objective = this.server.create('objective');
+    this.server.create('session-objective', { objective, session });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
 
