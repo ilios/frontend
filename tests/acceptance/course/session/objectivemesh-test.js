@@ -37,9 +37,9 @@ module('Acceptance | Session - Objective Mesh Descriptors', function(hooks) {
       year: 2013,
       school: this.school,
     });
-    this.server.create('session', {
-      course,
-      objectiveIds: [1, 2, 3]
+    const session = this.server.create('session', { course });
+    [1, 2, 3].forEach(objectiveId => {
+      this.server.create('session-objective', { session, objectiveId });
     });
   });
 

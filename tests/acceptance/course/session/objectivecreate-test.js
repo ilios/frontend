@@ -23,10 +23,10 @@ module('Acceptance | Session - Objective Create', function(hooks) {
       year: 2013,
       school: this.school,
     });
-    this.server.create('session', {
+    const session  = this.server.create('session', {
       course: this.course,
-      objectiveIds: [1]
     });
+    this.server.create('session-objective', { session, objective: this.objective });
   });
 
   test('save new objective', async function (assert) {
