@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency-decorators';
 import { all } from 'rsvp';
 
-export default class SessionMeshObjectiveParents extends Component {
+export default class SessionManageObjectiveParents extends Component {
 
   @tracked courseObjectives = [];
 
