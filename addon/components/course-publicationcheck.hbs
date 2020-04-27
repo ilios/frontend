@@ -50,9 +50,9 @@
               {{t "general.no"}}
             </td>
           {{/if}}
-          {{#if @course.objectives.length}}
+          {{#if (await @course.objectives)}}
             <td class="yes">
-              {{t "general.yes"}} ({{@course.objectives.length}})
+              {{t "general.yes"}} ({{get (await @course.objectives) "length"}})
               {{#if this.showUnlinkIcon}}
                 <LinkTo
                   @route="course"

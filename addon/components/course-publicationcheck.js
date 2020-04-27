@@ -22,6 +22,6 @@ export default class CoursePublicationCheckComponent extends Component {
       this.objectives = [];
       return;
     }
-    this.objectives = objectives.toArray();
+    this.objectives = objectives;
   }
 }
