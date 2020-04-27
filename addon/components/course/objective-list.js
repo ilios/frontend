@@ -8,25 +8,25 @@ export default class CourseObjectiveListComponent extends Component {
   @service store;
   @service intl;
 
-  @tracked objectives;
+  @tracked courseObjectives;
   @tracked isSorting = false;
   @tracked cohortObjectives;
-  @tracked objectiveCount;
+  @tracked courseObjectiveCount;
 
   @restartableTask
   *load(element, [course]) {
     if (!course) {
       return;
     }
-    this.objectiveCount = course.hasMany('objectives').ids().length;
+    this.courseObjectiveCount = course.hasMany('courseObjectives').ids().length;
     const {
-      objectives,
+      courseObjectives,
       cohortObjectives
     } = yield hash({
-      objectives: course.sortedObjectives,
+      courseObjectives: course.sortedCourseObjectives,
       cohortObjectives: this.getCohortObjectives(course)
     });
-    this.objectives = objectives;
+    this.courseObjectives = courseObjectives;
     this.cohortObjectives = cohortObjectives;
   }
 
@@ -43,7 +43,7 @@ export default class CourseObjectiveListComponent extends Component {
     return await map(cohorts, async cohort => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;
-      const objectives = (await programYear.objectives).toArray();
+      const objectives = await programYear.objectives;
       const objectiveObjects = await map(objectives, async objective => {
         let competencyId = 0;
         let competencyTitle = this.intl.t('general.noAssociatedCompetency');

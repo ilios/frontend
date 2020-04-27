@@ -22,25 +22,28 @@ export default class CourseObjectivesComponent extends Component {
 
   @action
   load(element, [course]) {
-    this.objectiveCount = course.hasMany('objectives').ids().length;
+    this.objectiveCount = course.hasMany('courseObjectives').ids().length;
   }
 
   @dropTask
   *saveNewObjective(title) {
     const newObjective = this.store.createRecord('objective');
+    const newCourseObjective = this.store.createRecord('course-objective');
     newObjective.set('title', title);
     let position = 0;
-
-    const objectives = yield this.args.course.objectives;
-
-    if (objectives.length) {
-      position = objectives.sortBy('position').lastObject.position + 1;
+    const courseObjectives = yield this.args.course.courseObjectives;
+    if (courseObjectives.length) {
+      position = courseObjectives.sortBy('position').lastObject.position + 1;
     }
 
-    newObjective.set('position', position);
-    newObjective.set('courses', [this.args.course]);
-
     yield newObjective.save();
+
+    newCourseObjective.set('position', position);
+    newCourseObjective.set('objective', newObjective);
+    newCourseObjective.set('course', this.args.course);
+
+    yield newCourseObjective.save();
+
     this.newObjectiveEditorOn = false;
     this.flashMessages.success('general.newObjectiveSaved');
   }

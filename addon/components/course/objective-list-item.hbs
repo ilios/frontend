@@ -1,7 +1,9 @@
 <div
-  id="objective-{{@objective.id}}"
+  id="objective-{{@courseObjective.id}}"
   class="grid-row objective-row {{if this.showRemoveConfirmation "confirm-removal"}} {{if this.highlightSave.isRunning "highlight-ok"}} {{if this.isManaging "is-managing"}}"
   data-test-course-objective-list-item
+  {{did-insert (perform this.load) @courseObjective}}
+  {{did-update (perform this.load) @courseObjective}}
 >
   <div class="description grid-item" data-test-description>
     {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
@@ -21,11 +23,11 @@
       </EditableField>
     {{else}}
       {{! template-lint-disable no-triple-curlies }}
-      {{{@objective.title}}}
+      {{{this.objective.title}}}
     {{/if}}
   </div>
   <Course::ObjectiveListItemParents
-    @objective={{@objective}}
+    @courseObjective={{@courseObjective}}
     @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
     @manage={{perform this.manageParents}}
     @isManaging={{this.isManagingParents}}
@@ -35,7 +37,7 @@
   />
 
   <Course::ObjectiveListItemDescriptors
-    @objective={{@objective}}
+    @courseObjective={{@courseObjective}}
     @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
     @manage={{perform this.manageDescriptors}}
     @isManaging={{this.isManagingDescriptors}}
@@ -82,7 +84,6 @@
 
   {{#if this.isManagingParents}}
     <Course::ManageObjectiveParents
-      @objective={{@objective}}
       @cohortObjectives={{@cohortObjectives}}
       @selected={{this.parentsBuffer}}
       @add={{this.addParentToBuffer}}
