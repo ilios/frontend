@@ -14,7 +14,7 @@ export default Model.extend({
     async: true
   }),
   courseObjectives: hasMany('course-objective', {async: true}),
-  programYearObjective: hasMany('program-year-objective', {async: true}),
+  programYearObjectives: hasMany('program-year-objective', {async: true}),
   sessionObjectives: hasMany('session-objective', {async: true}),
   parents: hasMany('objective', {
     inverse: 'children',
@@ -47,19 +47,19 @@ export default Model.extend({
 
   sessions: computed('sessionObjectives', async function(){
     const sessionObjectives = await this.get('sessionObjectives');
-    const sessions = await all(sessionObjectives.get('session'));
+    const sessions = await all(sessionObjectives.toArray().mapBy('session'));
     return sessions.uniq();
   }),
 
   courses: computed('courseObjectives', async function(){
     const courseObjectives = await this.get('courseObjectives');
-    const courses = await all(courseObjectives.get('course'));
+    const courses = await all(courseObjectives.toArray().mapBy('course'));
     return courses.uniq();
   }),
 
   programYears: computed('programYearObjectives', async function(){
     const programYearObjectives = await this.get('programYearObjectives');
-    const programYears = await all(programYearObjectives.get('programYear'));
+    const programYears = await all(programYearObjectives.toArray().mapBy('programYear'));
     return programYears.uniq();
   }),
 
