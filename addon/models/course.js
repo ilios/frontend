@@ -65,9 +65,9 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  competencies: computed('objectives.@each.treeCompetencies', async function(){
-    const objectives = await this.get('objectives');
-    const trees = await all(objectives.mapBy('treeCompetencies'));
+  competencies: computed('courseObjectives.@each.treeCompetencies', async function() {
+    const courseObjectives = await this.get('courseObjectives');
+    const trees = await all(courseObjectives.mapBy('treeCompetencies'));
     const competencies = trees.reduce((array, set) => {
       return array.pushObjects(set);
     }, []);
