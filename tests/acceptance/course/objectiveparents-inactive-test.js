@@ -26,31 +26,33 @@ module('Acceptance | Course - Objective Inactive Parents', function(hooks) {
       school: this.school,
       programYears: [programYear],
     });
-    this.server.create('objective', {
+    const objectiveInProgramYear1 = this.server.create('objective', {
       title: 'active',
-      programYears: [programYear],
       competency,
       active: true,
     });
-    this.server.create('objective', {
+    const objectiveInProgramYear2 = this.server.create('objective', {
       title: 'inactive',
-      programYears: [programYear],
       competency,
       active: false,
     });
     const parent = this.server.create('objective', {
       title: 'inactive selected',
-      programYears: [programYear],
       competency,
       active: false,
     });
-    const objective = this.server.create('objective', { parents: [parent] });
-    this.server.create('course', {
+
+    this.server.create('program-year-objective', {programYear, objective: objectiveInProgramYear1 });
+    this.server.create('program-year-objective', {programYear, objective: objectiveInProgramYear2 });
+    this.server.create('program-year-objective', {programYear, objective: parent });
+
+    const objectiveInCourse = this.server.create('objective', { parents: [parent] });
+    const course = this.server.create('course', {
       year: 2013,
       school: this.school,
-      objectives: [objective],
       cohorts: [cohort]
     });
+    this.server.create('course-objective', {course, objective: objectiveInCourse });
 
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });

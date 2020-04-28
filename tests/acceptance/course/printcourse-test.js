@@ -175,25 +175,25 @@ module('Acceptance | Course - Print Course', function(hooks) {
     assert.expect(7);
     await setupAuthentication( { school: this.school });
 
-    this.server.create('session', {
+    const session = this.server.create('session', {
       courseId: 1,
       published: true,
       publishedAsTbd: false,
     });
 
-    this.server.create('objective', {
+    const objectiveInCourse = this.server.create('objective', {
       schoolId: 1,
-      courseIds: [1],
       title: 'Course Objective 1',
       parentIds: []
     });
+    this.server.create('course-objective', { course: this.course, objective: objectiveInCourse });
 
-    this.server.create('objective', {
+    const objectiveInSession = this.server.create('objective', {
       schoolId: 1,
-      sessionIds: [1],
       parentIds: [1],
       title: 'Session Objective 1',
     });
+    this.server.create('session-objective', { session, objective: objectiveInSession });
 
     this.server.create('meshDescriptor', {
       objectiveIds: [2],
@@ -239,18 +239,18 @@ module('Acceptance | Course - Print Course', function(hooks) {
       title: 'Competency 1',
     });
 
-    this.server.create('objective', {
+    const parentObjective = this.server.create('objective', {
       schoolId: 1,
       competencyId: 1,
       title: 'Program Year Objective 1',
     });
 
-    this.server.create('objective', {
+    const objectiveInCourse = this.server.create('objective', {
       schoolId: 1,
-      courseIds: [1],
-      parentIds: [1],
+      parents: [ parentObjective ],
       title: 'Course Objective 1',
     });
+    this.server.create('course-objective', { course: this.course, objective: objectiveInCourse });
 
     this.server.create('meshDescriptor', {
       objectiveIds: [2],

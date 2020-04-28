@@ -18,9 +18,9 @@ module('Acceptance | Course - Publish All Sessions', function(hooks) {
   });
 
   test('published sessions do not appear in the cannot publish list #1658', async function(assert) {
-    this.server.create('objective');
-    this.server.create('objective');
-    this.server.create('objective');
+    const objectiveInSession1 = this.server.create('objective');
+    const objectiveInSession2 = this.server.create('objective');
+    const objectiveInSession3 = this.server.create('objective');
     this.server.create('meshDescriptor');
     this.server.create('term');
 
@@ -30,33 +30,35 @@ module('Acceptance | Course - Publish All Sessions', function(hooks) {
       published: true,
       cohortIds: [1],
     });
-    this.server.create('session', {
+    const session1 = this.server.create('session', {
       courseId: 1,
       published: true,
       publishedAsTbd: false,
-      objectiveIds: [1],
       meshDescriptorIds: [1],
       termIds: [1],
     });
+    this.server.create('session-objective', { session: session1, objective: objectiveInSession1 });
     this.server.create('offering', {sessionId: 1});
-    this.server.create('session', {
+    const session2 = this.server.create('session', {
       courseId: 1,
       published: true,
       publishedAsTbd: false,
-      objectiveIds: [2],
       meshDescriptorIds: [1],
       termIds: [1],
     });
+    this.server.create('session-objective', { session: session2, objective: objectiveInSession2 });
+
     this.server.create('offering', {sessionId: 2});
     this.server.create('ilmSession', { sessionId: 2});
-    this.server.create('session', {
+    const session3 = this.server.create('session', {
       courseId: 1,
       published: true,
       publishedAsTbd: true,
-      objectiveIds: [3],
       meshDescriptorIds: [1],
       termIds: [1],
     });
+    this.server.create('session-objective', { session: session3, objective: objectiveInSession3 });
+
     this.server.create('offering', {sessionId: 3});
     await visit('/courses/1/publishall');
 
@@ -67,7 +69,7 @@ module('Acceptance | Course - Publish All Sessions', function(hooks) {
   });
 
   test('After publishing user is returned to the courses route #4099', async function(assert) {
-    const objectives = this.server.createList('objective', 1);
+    const objective = this.server.create('objective');
     const meshDescriptors = this.server.createList('meshDescriptor', 1);
     const terms = this.server.createList('term', 1);
 
@@ -81,10 +83,10 @@ module('Acceptance | Course - Publish All Sessions', function(hooks) {
       course,
       published: false,
       publishedAsTbd: false,
-      objectives,
       meshDescriptors,
-      terms,
+      terms
     });
+    this.server.create('session-objective', { session, objective });
     this.server.create('sessionType', {
       sessions: [session]
     });

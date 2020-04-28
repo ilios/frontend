@@ -40,10 +40,10 @@ module('Acceptance | Course - Publication Check', function(hooks) {
       year: 2013,
       school,
       cohorts: [cohort],
-      objectives: [objective],
       terms: [term],
       meshDescriptors: [meshDescriptor],
     });
+    this.server.create('course-objective', { objective, course: this.fullCourse });
     this.emptyCourse = this.server.create('course', {
       year: 2013,
       schoolId: 1

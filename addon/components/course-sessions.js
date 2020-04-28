@@ -70,7 +70,7 @@ export default class CourseSessionsComponent extends Component {
       }
       const offerings = await session.offerings;
       sessionObject.offeringCount = offerings.length;
-      sessionObject.objectiveCount = session.hasMany('objectives').ids().length;
+      sessionObject.objectiveCount = session.hasMany('sessionObjectives').ids().length;
       sessionObject.termCount = session.hasMany('terms').ids().length;
       sessionObject.prerequisiteCount = session.hasMany('prerequisites').ids().length;
       const offeringLearnerGroupCount = offerings.reduce((total, offering) => {
