@@ -12,10 +12,8 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
 
   test('it renders and is accessible with a single cohort', async function (assert) {
     const course = this.server.create('course');
-    const objective = this.server.create('objective', {
-      courses: [course],
-    });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
+    const objective = this.server.create('objective');
+    this.server.create('course-objective', { course, objective });
 
     const cohortObjectives = [
       {
@@ -36,10 +34,8 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
         ]
       }
     ];
-    this.set('objective', objectiveModel);
     this.set('cohortObjectives', cohortObjectives);
     await render(hbs`<Course::ManageObjectiveParents
-      @objective={{this.objective}}
       @cohortObjectives={{this.cohortObjectives}}
       @selected={{array}}
       @add={{noop}}
@@ -63,10 +59,8 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
 
   test('it renders and is accessible with multiple cohorts', async function (assert) {
     const course = this.server.create('course');
-    const objective = this.server.create('objective', {
-      courses: [course],
-    });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
+    const objective = this.server.create('objective');
+    this.server.create('course-objective', { course, objective });
 
     const cohortObjectives = [
       {
@@ -104,10 +98,8 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
         ]
       }
     ];
-    this.set('objective', objectiveModel);
     this.set('cohortObjectives', cohortObjectives);
     await render(hbs`<Course::ManageObjectiveParents
-      @objective={{this.objective}}
       @cohortObjectives={{this.cohortObjectives}}
       @selected={{array}}
       @add={{noop}}
@@ -135,10 +127,9 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
     const inactiveObjective = this.server.create('objective', { active: false });
     const inactiveSelectedObjective = this.server.create('objective', { active: false });
     const objective = this.server.create('objective', {
-      courses: [course],
       parents: [inactiveSelectedObjective]
     });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
+    this.server.create('course-objective', { course, objective });
 
     const obj1 = {
       id: activeObjective.id,
@@ -171,11 +162,9 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
         ]
       }
     ];
-    this.set('objective', objectiveModel);
     this.set('cohortObjectives', cohortObjectives);
     this.set('selected', [obj3]);
     await render(hbs`<Course::ManageObjectiveParents
-      @objective={{this.objective}}
       @cohortObjectives={{this.cohortObjectives}}
       @selected={{this.selected}}
       @add={{noop}}

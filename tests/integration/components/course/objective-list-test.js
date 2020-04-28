@@ -13,18 +13,11 @@ module('Integration | Component | course/objective-list', function(hooks) {
   test('it renders and is accessible', async function(assert) {
     assert.expect(9);
     const course = this.server.create('course');
+    const objective1 = this.server.create('objective', { title: 'Objective A' });
+    const objective2 = this.server.create('objective', { title: 'Objective B' });
+    this.server.create('course-objective', { course, objective: objective1, position: 0 });
+    this.server.create('course-objective', { course, objective: objective2, position: 0 });
 
-    this.server.create('objective', {
-      title: 'Objective A',
-      position: 0,
-      courses: [course],
-    });
-
-    this.server.create('objective', {
-      title: 'Objective B',
-      position: 0,
-      courses: [course],
-    });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
 
@@ -68,10 +61,8 @@ module('Integration | Component | course/objective-list', function(hooks) {
     assert.expect(3);
     const course = this.server.create('course');
 
-    this.server.create('objective', {
-      position: 0,
-      courses: [course],
-    });
+    const objective = this.server.create('objective');
+    this.server.create('course-objective', { course, objective, position: 0 });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
 
