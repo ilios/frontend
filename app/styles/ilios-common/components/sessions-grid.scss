@@ -19,7 +19,8 @@
       display: flex;
       justify-content: flex-end;
 
-      .instructional-notes {
+      .instructional-notes,
+      .prerequisites {
         color: $ilios-green;
         margin-right: .25rem;
       }
