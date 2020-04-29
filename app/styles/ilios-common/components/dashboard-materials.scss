@@ -16,6 +16,20 @@
     @include ilios-table-colors;
   }
 
+  .all-materials {
+    display: flex;
+    justify-content: flex-end;
+
+    @include for-tablet-and-up {
+      float: right;
+    }
+
+    a {
+      @include ilios-link;
+      margin-left: .25rem;
+    }
+  }
+
   .lm-type-icon {
     color: $dark-grey;
   }

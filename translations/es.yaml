@@ -173,6 +173,7 @@ general:
   multidayEvents: "Eventos de Varios Días"
   multiple: "Múltiple "
   mustBeSameDayOfWeekAsCurrentStartDate: "Debe ser el mismo día de la semana en curso como fecha de inicio"
+  myMaterials: "Mis Materiales"
   mySchedule: "Mi Horario"
   newObjective: "Nuevo Objetivo"
   newObjectiveSaved: "Nuevo Objetivo Guardado"

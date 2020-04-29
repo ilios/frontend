@@ -3,6 +3,12 @@
   {{did-insert (perform this.load)}}
   {{did-update (perform this.load)}}
 >
+  <div class="all-materials" data-test-all-materials-link>
+    {{t "general.view"}}:
+    <LinkTo @route="mymaterials">
+      {{t "general.myMaterials"}}
+    </LinkTo>
+  </div>
   <h3>
     {{t "general.upcomingMaterials" days=this.daysInAdvance}}
   </h3>
