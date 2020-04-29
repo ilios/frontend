@@ -8,7 +8,6 @@ env:
   SW_DISABLED: true
   COVERAGE: true
   CC_TEST_REPORTER_ID: 8c510ad3aa4b1a2a3d504dfdbcc5605e7966c019dc1e9b68a815de50b946ebc6
-  CI: true
 
 jobs:
   test:

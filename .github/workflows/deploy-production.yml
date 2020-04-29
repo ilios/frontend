@@ -9,7 +9,6 @@ env:
   COVERAGE: false
   SENTRY_ORG: ilios
   SENTRY_PROJECT: frontend
-  CI: true
 
 jobs:
   test:

@@ -7,7 +7,6 @@ on:
 
 env:
   COVERAGE: false
-  CI: true
 
 jobs:
   test:
