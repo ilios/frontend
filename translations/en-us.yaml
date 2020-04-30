@@ -173,6 +173,7 @@ general:
   multidayEvents: "Multiday Events"
   multiple: Multiple
   mustBeSameDayOfWeekAsCurrentStartDate: "Must be same day of week as current start date"
+  myMaterials: "My Materials"
   mySchedule: "My Schedule"
   newObjective: "New Objective"
   newObjectiveSaved: "New Objective Saved"

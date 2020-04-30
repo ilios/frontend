@@ -71,7 +71,7 @@ module('Integration | Component | dashboard materials', function(hooks) {
 
 
   test('it renders with materials', async function(assert) {
-    assert.expect(41);
+    assert.expect(42);
     const currentUserMock = Service.extend({
       currentUserId: 11
     });
@@ -143,6 +143,7 @@ module('Integration | Component | dashboard materials', function(hooks) {
     const fifthFirstOffering = `${materials}:nth-of-type(5) td:nth-of-type(5)`;
 
     assert.dom(this.element.querySelector(title)).hasText('My Learning Materials for the next 60 days');
+    assert.dom('[data-test-all-materials-link]').hasText('View: My Materials');
 
     assert.ok(find(firstLmTitle).textContent.includes('title1'));
     assert.equal(find(firstLmLink).href, 'http://myhost.com/url1?inline');
@@ -185,7 +186,7 @@ module('Integration | Component | dashboard materials', function(hooks) {
   });
 
   test('it renders blank', async function(assert) {
-    assert.expect(8);
+    assert.expect(9);
     const currentUserMock = Service.extend({
       currentUserId: 11
     });
@@ -213,6 +214,7 @@ module('Integration | Component | dashboard materials', function(hooks) {
     const body = 'p';
 
     await render(hbs`<DashboardMaterials />`);
+    assert.dom('[data-test-all-materials-link]').hasText('View: My Materials');
     assert.dom(this.element.querySelector(title)).hasText('My Learning Materials for the next 60 days');
     assert.dom(this.element.querySelector(body)).hasText('None');
   });
