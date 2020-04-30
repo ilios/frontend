@@ -8,14 +8,13 @@ env:
   SW_DISABLED: true
   COVERAGE: true
   CC_TEST_REPORTER_ID: 8c510ad3aa4b1a2a3d504dfdbcc5605e7966c019dc1e9b68a815de50b946ebc6
-  CI: true
 
 jobs:
   test:
     name: Test and Calculate Coverage
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
     - name: Use Node.js 12
       uses: actions/setup-node@v1
       with:
@@ -23,6 +22,6 @@ jobs:
     - name: install dependencies
       run: npm ci
     - name: calculate
-      uses: paambaati/codeclimate-action@v2.4.0
+      uses: paambaati/codeclimate-action@v2.6.0
       with:
         coverageCommand: npm run test:ember
