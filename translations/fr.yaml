@@ -320,6 +320,7 @@ general:
   visibleToStudents: "Visible pour les étudiants"
   vocabularies: Vocabulaires
   vocabulary: Vocabulaire
+  vocabularyTerms: "Termes Vocabulaire"
   vocabularyTermsFor: "Termes Vocabulaire par {subject}"
   waitSaving: "Travaille dessus... un moment..."
   wednesday: Mercredi

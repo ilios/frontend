@@ -7,15 +7,7 @@ export default class ObjectiveListItemTerms extends Component {
   @tracked sortedTerms;
 
   @dropTask
-  *load(event, [terms]) {
-    if (! terms) {
-      this.sortedTerms = [];
-      return;
-    }
-    const filteredTerms = terms.filter(term => {
-      const vocabId = term.belongsTo('vocabulary').id();
-      return vocabId === this.args.vocabulary.id;
-    });
+  *load(event, [filteredTerms]) {
     const proxies = yield all(filteredTerms.map(async term => {
       const title = await term.titleWithParentTitles;
       return { term, title };
@@ -27,5 +19,15 @@ export default class ObjectiveListItemTerms extends Component {
     });
 
     this.sortedTerms = sortedProxies.mapBy('term');
+  }
+
+  get filteredTerms() {
+    if (!this.args.terms) {
+      return [];
+    }
+    return this.args.terms.filter(term => {
+      const vocabId = term.belongsTo('vocabulary').id();
+      return vocabId === this.args.vocabulary.id;
+    });
   }
 }

@@ -15,11 +15,5 @@
 
   .content {
     @include detail-container-content;
-
-    .selected-taxonomy-terms {
-      .muted {
-        color: lighten($text-grey, 50%);
-      }
-    }
   }
 }

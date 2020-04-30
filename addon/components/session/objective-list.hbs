@@ -25,6 +25,7 @@
     <div class="grid-row headers" data-test-headers>
       <span class="grid-item" data-test-header>{{t "general.description"}}</span>
       <span class="grid-item" data-test-header>{{t "general.parentObjectives"}}</span>
+      <span class="grid-item" data-test-header>{{t "general.vocabularyTerms"}}</span>
       <span class="grid-item" data-test-header>{{t "general.meshTerms"}}</span>
       <span class="actions grid-item" data-test-header>{{t "general.actions"}}</span>
     </div>
@@ -35,6 +36,7 @@
           @editable={{@editable}}
           @courseObjectives={{this.courseObjectives}}
           @courseTitle={{this.course.title}}
+          @session={{@session}}
         />
       {{/each}}
     {{else}}

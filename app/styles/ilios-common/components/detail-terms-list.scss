@@ -12,5 +12,9 @@
     &.removable-list {
       @include ilios-removable-list;
     }
+
+    .muted {
+      color: lighten($text-grey, 50%);
+    }
   }
 }

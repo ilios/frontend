@@ -1,11 +1,16 @@
 <div
   class="detail-terms-list"
-  {{did-insert (perform this.load) this.filteredTerms}}
-  {{did-update (perform this.load) this.filteredTerms}}
+  {{did-insert (perform this.load) @terms}}
+  {{did-update (perform this.load) @terms}}
 >
   {{#if (is-array this.sortedTerms)}}
     <div data-test-title>
-      <strong>
+      {{! template-lint-disable no-invalid-interactive }}
+      <strong
+        class={{if @manage "link-button"}}
+        role={{if @canEdit "button"}}
+        {{on "click" (if @manage @manage (noop))}}
+      >
         {{@vocabulary.title}}
       </strong> ({{@vocabulary.school.title}})
       {{#if (and @canEdit (not @vocabulary.active))}}

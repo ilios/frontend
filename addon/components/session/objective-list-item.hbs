@@ -36,6 +36,16 @@
     @cancel={{this.cancel}}
   />
 
+  <Session::ObjectiveListItemTerms
+      @sessionObjective={{@sessionObjective}}
+      @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
+      @manage={{perform this.manageTerms}}
+      @isManaging={{this.isManagingTerms}}
+      @save={{perform this.saveTerms}}
+      @isSaving={{this.saveTerms.isRunning}}
+      @cancel={{this.cancel}}
+  />
+
   <Session::ObjectiveListItemDescriptors
     @sessionObjective={{@sessionObjective}}
     @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
@@ -98,6 +108,17 @@
       @remove={{this.removeDescriptorFromBuffer}}
       @editable={{@editable}}
       @save={{perform this.saveDescriptors}}
+      @cancel={{this.cancel}}
+    />
+  {{/if}}
+  {{#if this.isManagingTerms}}
+    <TaxonomyManager
+      @vocabularies={{await @session.assignableVocabularies}}
+      @selectedTerms={{this.termsBuffer}}
+      @add={{this.addTermToBuffer}}
+      @remove={{this.removeTermFromBuffer}}
+      @editable={{@editable}}
+      @save={{perform this.saveTerms}}
       @cancel={{this.cancel}}
     />
   {{/if}}
