@@ -10,7 +10,7 @@
   data-test-weekly-calendar-event
 >
   {{#if (and this.theElement this.showTooltip)}}
-    <IliosTooltip @target={{this.theElement}}>
+    <IliosTooltip @target={{this.theElement}} data-test-ilios-calendar-event-tooltip>
       {{this.tooltipContent}}
     </IliosTooltip>
   {{/if}}
