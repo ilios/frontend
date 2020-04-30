@@ -6,17 +6,15 @@
   data-test-ilios-calendar-event
   data-test-ilios-calendar-event-month
   {{on "click" (if this.clickable @selectEvent (noop))}}
+  {{ref this "theElement"}}
+  {{mouse-hover-toggle (set this.showTooltip)}}
 >
   {{#if @event}}
-    <AttachTooltip
-      @lazyRender={{true}}
-      @placement="left"
-      @interactive={{true}}
-      @animation="shift"
-      @class="ilios-calendar-event-tooltip"
-    >
-      {{this.tooltipContent}}
-    </AttachTooltip>
+    {{#if (and this.theElement this.showTooltip)}}
+      <IliosTooltip @target={{this.theElement}}>
+        {{this.tooltipContent}}
+      </IliosTooltip>
+    {{/if}}
     {{#if this.recentlyUpdated}}
       <FaIcon
         @icon="exclamation"
