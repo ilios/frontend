@@ -17,7 +17,6 @@ import { setupAuthentication, getElementText, getText } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { map } from 'rsvp';
-import { isVisible } from 'ember-attacher';
 import page from 'ilios-common/page-objects/dashboard';
 
 module('Acceptance | Dashboard Calendar', function(hooks) {
@@ -827,8 +826,8 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       offering: 1,
     });
     await page.visit({ show: 'calendar', view: 'week' });
-    await triggerEvent('[data-test-weekly-calendar-event]', 'mouseenter');
-    assert.ok(isVisible('.ilios-calendar-event-tooltip'), 'Now shown');
+    await triggerEvent('[data-test-weekly-calendar-event]', 'mouseover');
+    assert.dom('[data-test-ilios-calendar-event-tooltip]').exists();
   });
 
   test('visit with course filters open #5098', async function(assert) {

@@ -21,7 +21,10 @@
     <div class="offering-manager-learner-groups">
       <ul>
         {{#each (await @offering.learnerGroups) as |learnerGroup|}}
-          <li>
+          <li
+            {{ref this (concat "learnerGroupElement" learnerGroup.id)}}
+            {{mouse-hover-toggle (fn this.toggleHover learnerGroup.id)}}
+          >
             {{learnerGroup.title}}
             {{#if
               (and
@@ -29,9 +32,14 @@
                 (is-fulfilled learnerGroup.allParents)
               )
             }}
-              <AttachTooltip @lazyRender={{true}} @animation="shift">
-                {{join " > " (map-by "title" (await learnerGroup.allParents))}}
-              </AttachTooltip>
+              {{#if (and
+                (get this (concat "learnerGroupElement" learnerGroup.id))
+                (contains learnerGroup.id this.hoveredGroups)
+              )}}
+                <IliosTooltip @target={{get this (concat "learnerGroupElement" learnerGroup.id)}}>
+                  {{join " > " (map-by "title" (await learnerGroup.allParents))}}
+                </IliosTooltip>
+              {{/if}}
             {{/if}}
           </li>
         {{else}}

@@ -3,11 +3,10 @@
   class="detail-terms-list-item"
   role={{if @canEdit "button"}}
   {{on "click" (if @canEdit (fn @remove @term) (noop))}}
-  {{on "mouseover" (fn (set this.isHovering) true)}}
-  {{on "mouseout" (fn (set this.isHovering) false)}}
+  {{mouse-hover-toggle (set this.isHovering)}}
   {{ref this "theElement"}}
 >
-  {{#if this.showTooltip}}
+  {{#if (and this.theElement this.showTooltip)}}
     <IliosTooltip @target={{this.theElement}}>
       {{@term.description}}
     </IliosTooltip>
