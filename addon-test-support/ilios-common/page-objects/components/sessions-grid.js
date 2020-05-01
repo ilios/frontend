@@ -27,6 +27,7 @@ export default {
     trash: clickable('[data-test-actions] .remove'),
     confirm: clickable('[data-test-confirm-removal] [data-test-yes]'),
     hasInstructionalNotes: isPresent('[data-test-status] .instructional-notes'),
+    hasPrerequisites: isPresent('[data-test-status] [data-test-prerequisites]'),
   }),
   expandedSessions: collection('[data-test-expanded-session]', {
     lastUpdated: text('.sessions-grid-last-updated'),

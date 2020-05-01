@@ -77,5 +77,8 @@ module.exports = function() {
     'pro-light-svg-icons': [
       'clipboard-list',
     ],
+    'pro-duotone-svg-icons': [
+      'sign-in',
+    ],
   };
 };
