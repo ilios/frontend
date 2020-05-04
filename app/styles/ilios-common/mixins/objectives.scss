@@ -183,4 +183,11 @@
     color: $white;
     margin-left: .5em;
   }
+
+  .detail-terms-list {
+    // override the generic rule specified in this mixin above,
+    li:last-of-type {
+      margin-bottom: inherit;
+    }
+  }
 }
