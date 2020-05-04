@@ -169,4 +169,25 @@ module('Integration | Component | detail terms list', function(hooks) {
     await settled();
     assert.dom('[data-test-title] .inactive').hasText('(inactive)');
   });
+
+  test('click vocabulary title to manage', async function(assert) {
+    assert.expect(1);
+    const school = this.server.create( 'school' );
+    const vocabulary = this.server.create('vocabulary', { school });
+    this.server.create('term', { vocabulary });
+    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    this.set('vocabulary', vocabularyModel);
+    this.set('terms', []);
+    this.set('manage', vocabulary => {
+      assert.equal(vocabulary, vocabularyModel);
+    });
+    await render(hbs`<DetailTermsList
+      @vocabulary={{this.vocabulary}}
+      @terms={{this.terms}}
+      @canEdit={{true}}
+      @manage={{this.manage}}
+      @canManage={{true}}
+    />`);
+    await click('[data-test-title] strong');
+  });
 });
