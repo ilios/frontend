@@ -40,7 +40,7 @@
       {{else}}
         <li>
           {{#if @editable}}
-            <button type="button" {{on "click" @manage}} data-test-manage>
+            <button type="button" {{on "click" (fn @manage null)}} data-test-manage>
               {{t "general.addNew"}}
             </button>
           {{else}}
