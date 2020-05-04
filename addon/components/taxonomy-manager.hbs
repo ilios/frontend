@@ -1,4 +1,7 @@
-<section class="taxonomy-manager">
+<section
+  class="taxonomy-manager"
+  {{did-insert this.load @vocabulary}}
+>
 
   {{#if @selectedTerms}}
     <div class="selected-terms">
@@ -20,7 +23,7 @@
         </label>
         <select {{on "change" (fn this.changeSelectedVocabulary)}}>
           {{#each this.assignableVocabularies as |vocab|}}
-            <option value={{vocab.id}}>
+            <option value={{vocab.id}} selected={{if (eq vocab.id this.vocabId) "selected"}}>
               {{vocab.title}} ({{vocab.school.title}})
             </option>
           {{/each}}

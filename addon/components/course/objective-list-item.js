@@ -18,6 +18,7 @@ export default class CourseObjectiveListItemComponent extends Component {
   @tracked isManagingTerms;
   @tracked termsBuffer = [];
   @tracked objective;
+  @tracked selectedVocabulary;
 
   @restartableTask
   *load(element, [courseObjective]) {
@@ -64,7 +65,8 @@ export default class CourseObjectiveListItemComponent extends Component {
     this.isManagingDescriptors = true;
   }
   @dropTask
-  *manageTerms() {
+  *manageTerms(vocabulary) {
+    this.selectedVocabulary = vocabulary;
     const terms = yield this.args.courseObjective.terms;
     this.termsBuffer = terms.toArray();
     this.isManagingTerms = true;
@@ -155,6 +157,7 @@ export default class CourseObjectiveListItemComponent extends Component {
     this.isManagingParents = false;
     this.isManagingDescriptors = false;
     this.isManagingTerms = false;
+    this.selectedVocabulary = null;
   }
   @dropTask
   *deleteObjective() {

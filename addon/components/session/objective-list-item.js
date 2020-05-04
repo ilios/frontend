@@ -18,6 +18,7 @@ export default class SessionObjectiveListItemComponent extends Component {
   @tracked isManagingTerms;
   @tracked termsBuffer = [];
   @tracked objective;
+  @tracked selectedVocabulary;
 
   @restartableTask
   *load(element, [sessionObjective]) {
@@ -57,7 +58,8 @@ export default class SessionObjectiveListItemComponent extends Component {
     this.isManagingDescriptors = true;
   }
   @dropTask
-  *manageTerms() {
+  *manageTerms(vocabulary) {
+    this.selectedVocabulary = vocabulary;
     const terms = yield this.args.sessionObjective.terms;
     this.termsBuffer = terms.toArray();
     this.isManagingTerms = true;
@@ -140,6 +142,7 @@ export default class SessionObjectiveListItemComponent extends Component {
     this.isManagingParents = false;
     this.isManagingDescriptors = false;
     this.isManagingTerms = false;
+    this.selectedVocabulary = null;
   }
 
   @dropTask
