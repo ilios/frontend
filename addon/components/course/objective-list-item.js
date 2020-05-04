@@ -15,6 +15,8 @@ export default class CourseObjectiveListItemComponent extends Component {
   @tracked parentsBuffer = [];
   @tracked isManagingDescriptors;
   @tracked descriptorsBuffer = [];
+  @tracked isManagingTerms;
+  @tracked termsBuffer = [];
   @tracked objective;
 
   @restartableTask
@@ -28,7 +30,7 @@ export default class CourseObjectiveListItemComponent extends Component {
 
 
   get isManaging() {
-    return this.isManagingParents || this.isManagingDescriptors;
+    return this.isManagingParents || this.isManagingDescriptors || this.isManagingTerms;
   }
 
   @dropTask
@@ -61,6 +63,12 @@ export default class CourseObjectiveListItemComponent extends Component {
     this.descriptorsBuffer = meshDescriptors.toArray();
     this.isManagingDescriptors = true;
   }
+  @dropTask
+  *manageTerms() {
+    const terms = yield this.args.courseObjective.terms;
+    this.termsBuffer = terms.toArray();
+    this.isManagingTerms = true;
+  }
 
   @restartableTask
   *highlightSave() {
@@ -85,6 +93,15 @@ export default class CourseObjectiveListItemComponent extends Component {
     yield this.objective.save();
     this.descriptorsBuffer = [];
     this.isManagingDescriptors = false;
+    this.highlightSave.perform();
+  }
+
+  @dropTask
+  *saveTerms() {
+    this.args.courseObjective.set('terms', this.termsBuffer);
+    yield this.args.courseObjective.save();
+    this.termsBuffer = [];
+    this.isManagingTerms = false;
     this.highlightSave.perform();
   }
 
@@ -123,11 +140,21 @@ export default class CourseObjectiveListItemComponent extends Component {
     this.descriptorsBuffer = this.descriptorsBuffer.filter(obj => obj.id !== descriptor.id);
   }
   @action
+  addTermToBuffer(term) {
+    this.termsBuffer = [...this.termsBuffer, term];
+  }
+  @action
+  removeTermFromBuffer(term) {
+    this.termsBuffer = this.termsBuffer.filter(obj => obj.id !== term.id);
+  }
+  @action
   cancel() {
     this.parentsBuffer = [];
     this.descriptorsBuffer = [];
+    this.termsBuffer = [];
     this.isManagingParents = false;
     this.isManagingDescriptors = false;
+    this.isManagingTerms = false;
   }
   @dropTask
   *deleteObjective() {

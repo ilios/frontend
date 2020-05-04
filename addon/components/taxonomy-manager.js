@@ -15,6 +15,7 @@ export default class TaxonomyManager extends Component {
   @tracked vocabId = null;
 
   get nonEmptyVocabularies() {
+    console.log(this.args.vocabularies);
     if (!this.args.vocabularies) {
       return [];
     } else {

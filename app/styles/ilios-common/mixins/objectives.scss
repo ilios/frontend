@@ -62,7 +62,7 @@
   }
   .grid-row {
     display: grid;
-    grid-template-columns: 5fr 3fr 3fr 1fr;
+    grid-template-columns: 5fr 3fr 3fr 3fr 1fr;
     grid-template-rows: auto;
     margin-right: .5em;
 
@@ -147,6 +147,11 @@
   }
   .actions {
     text-align: right;
+  }
+
+  .taxonomy-manager {
+    margin: 1em 2em;
+    grid-column: 1 / -1;
   }
 }
 
