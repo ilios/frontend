@@ -36,8 +36,8 @@
     @cancel={{this.cancel}}
   />
 
-  <Session::ObjectiveListItemTerms
-      @sessionObjective={{@sessionObjective}}
+  <ObjectiveListItemTerms
+      @subject={{@sessionObjective}}
       @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
       @manage={{perform this.manageTerms}}
       @isManaging={{this.isManagingTerms}}

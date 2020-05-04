@@ -1,6 +1,6 @@
 <div
-  class="session-objective-list-item-terms grid-item"
-  data-test-session-objective-list-item-terms
+  class="objective-list-item-terms grid-item"
+  data-test-objective-list-item-terms
 >
   {{#if @isManaging}}
     <button
@@ -28,11 +28,11 @@
     </button>
   {{else}}
     <ul>
-      {{#each (await @sessionObjective.associatedVocabularies) as |vocab|}}
+      {{#each (await @subject.associatedVocabularies) as |vocab|}}
         {{#if vocab.termCount}}
           <DetailTermsList
               @vocabulary={{vocab}}
-              @terms={{await @sessionObjective.terms}}
+              @terms={{await @subject.terms}}
               @canEdit={{false}}
               @manage={{@manage}}
           />
