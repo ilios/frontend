@@ -15,7 +15,7 @@ general:
   apiVersionMismatchDetails: "This is usually a temporary error in your browser; Ilios is in read-only mode until it resolved. If updating does not help, please notify an administrator or technical owner of the system regarding this error. You may also wish to try a different browser."
   assignedTerms: "Assigned Terms"
   associatedGroups: "Associated Groups"
-  attendanceIs_Required_: "Attendance is <strong><em>required</em></strong>"
+  attendanceIs_Required_: "Attendance is '<strong>''<em>'required'</em>''</strong>'"
   attendanceIsRequired: "Attendance is required"
   attendanceRequired: "Attendance Required"
   author: Author
@@ -91,7 +91,7 @@ general:
   done: Done
   download: Download
   dueBefore: "Due Before {name} ({date})"
-  dueBeforeLink: "Due Before <a href='{link}'>{name}</a> ({date})"
+  dueBeforeLink: "Due Before '<a href=\"{link}\">'{name}'</a>' ({date})"
   dueBy: "Due By"
   duePriorTo: "Due prior to"
   dueThisDay: "Due this day"
@@ -194,7 +194,7 @@ general:
   noSessionLearningMaterialsAvailable: "No Session Learning Materials Available"
   notAClerkship: "Not a Clerkship"
   notes: Notes
-  notFoundMessage: "Rats! I couldn't find that. Please check your page address, and try again."
+  notFoundMessage: "Rats! I couldn''t find that. Please check your page address, and try again."
   notPublished: "Not Published"
   objectiveCompetencyManagerTitle: "Select Parent Competency for Objective"
   objectiveCount: "There {count, plural, =1 {is 1 objective} other {are # objectives}}"
@@ -264,15 +264,15 @@ general:
   showLearnerGroupEvents: "Show all events for assigned learner groups"
   showMore: "Show more"
   showNotesToStudents: "Show Notes to Students"
-  showSessionEvents: "Show all other <em>{sessionTitle}</em> events"
-  smallGroupMessage: "Please select at least one learner group to attach to your small group offering. If you wish to schedule this offering without groups, please select the 'offering' button above."
+  showSessionEvents: "Show all other '<em>'{sessionTitle}'</em>' events"
+  smallGroupMessage: "Please select at least one learner group to attach to your small group offering. If you wish to schedule this offering without groups, please select the \"offering\" button above."
   smallGroups: "Small Groups"
   sortMaterials: "Sort Materials"
   sortObjectives: "Sort Objectives"
-  specialAttireIs_Required_: "Special Attire is <strong><em>required</em></strong>"
+  specialAttireIs_Required_: "Special Attire is '<strong>''<em>'required'</em>''</strong>'"
   specialAttireRequired: "Special Attire Required"
   specialEquipment: "Special Equipment"
-  specialEquipmentIs_Required_: "Special Equipment is <strong><em>required</em></strong>"
+  specialEquipmentIs_Required_: "Special Equipment is '<strong>''<em>'required'</em>''</strong>'"
   specialEquipmentRequired: "Special Equipment Required"
   start: Start
   startDate: "Start Date"
