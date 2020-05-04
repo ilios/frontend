@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency-decorators';
 import { all } from 'rsvp';
 
-export default class ObjectiveListItemTerms extends Component {
+export default class DetailTermsList extends Component {
   @tracked sortedTerms;
 
   @dropTask
