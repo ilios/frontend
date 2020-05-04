@@ -16,7 +16,6 @@ export default class TaxonomyManager extends Component {
 
   @action
   load(element, [vocabulary]) {
-    console.log(vocabulary);
     if (vocabulary) {
       this.vocabId = vocabulary.id;
     }
