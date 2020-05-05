@@ -6,13 +6,11 @@
       </LinkTo>
     </span>
     <span class="date" data-test-date>
-      {{t
-        "general.dueBeforeLink"
-        name=@events.firstObject.postrequisiteName
-        date=(format-date @events.firstObject.startDate)
-        link=(concat "#event" @events.firstObject.postrequisiteSlug)
-        htmlSafe=true
-      }}
+      {{t "general.dueBefore"}}
+      <a href={{concat "#event" @events.firstObject.postrequisiteSlug}}>
+        {{@events.firstObject.postrequisiteName}}
+      </a>
+      ({{format-date @events.firstObject.startDate}})
     </span>
     {{#if (gt @events.length 1)}}
       <span data-test-more>

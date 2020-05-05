@@ -18,16 +18,9 @@
       <div class="single-event-offered-at" data-test-offered-at>
         {{#if (gt @event.postrequisites.length 0)}}
           <p>
-            {{t
-              "general.dueBeforeLink"
-              name=(get (object-at 0 @event.postrequisites) "name")
-              date=(moment-format
-                (get (object-at 0 @event.postrequisites) "startDate")
-                "dddd, MMMM Do YYYY, h:mm a"
-              )
-              link=this.postrequisiteLink
-              htmlSafe=true
-            }}
+            {{t "general.dueBefore"}}
+            <a href={{this.postrequisiteLink}}>{{get (object-at 0 @event.postrequisites) "name"}}</a>
+            ({{moment-format (get (object-at 0 @event.postrequisites) "startDate") "dddd, MMMM Do YYYY, h:mm a"}})
           </p>
         {{/if}}
         {{#unless @event.ilmSession}}
