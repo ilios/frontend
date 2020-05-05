@@ -12,7 +12,7 @@
   {{/if}}
 
   {{#if (and this.courseObjectiveCount (not this.isSorting))}}
-    {{#if (gt this.courseObjectiveCount 1)}}
+    {{#if (and @editable (gt this.courseObjectiveCount 1))}}
       <button
         class="sort-button"
         type="button"
