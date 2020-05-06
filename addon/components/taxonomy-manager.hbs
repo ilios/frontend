@@ -1,6 +1,7 @@
 <section
   class="taxonomy-manager"
   {{did-insert this.load @vocabulary}}
+  data-test-taxonomy-manager
 >
 
   {{#if @selectedTerms}}
@@ -34,6 +35,7 @@
         value={{this.termFilter}}
         placeholder={{t "general.filterPlaceholder"}}
         {{on "input" (perform this.setTermFilter value="target.value")}}
+        data-test-filter
       >
     </div>
     <div class="terms-picker tag-tree">

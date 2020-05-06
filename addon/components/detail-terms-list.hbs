@@ -2,6 +2,7 @@
   class="detail-terms-list"
   {{did-insert (perform this.load) @terms}}
   {{did-update (perform this.load) @terms}}
+  data-test-detail-terms-list
 >
   {{#if (is-array this.sortedTerms)}}
     <div data-test-title>

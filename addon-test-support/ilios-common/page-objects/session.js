@@ -13,7 +13,7 @@ import {
 import objectives from './components/session/objectives';
 import learningMaterials from './components/learning-materials';
 import meshTerms from './components/mesh-terms';
-import taxonomies from './components/taxonomies';
+import taxonomies from './components/detail-taxonomies';
 import collapsedTaxonomies from './components/collapsed-taxonomies';
 import learnerGroupManager from './components/learner-group-manager';
 import instructorSelectionManager from './components/instructor-selection-manager';
