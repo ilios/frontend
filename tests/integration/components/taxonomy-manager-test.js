@@ -1,9 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, fillIn,find, render } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { resolve } from 'rsvp';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/taxonomy-manager';
 
 module('Integration | Component | taxonomy manager', function(hooks) {
   setupRenderingTest(hooks);
@@ -40,33 +41,29 @@ module('Integration | Component | taxonomy manager', function(hooks) {
       @remove={{action this.nothing}}
     />`);
 
-    assert.dom('.detail-terms-list').exists({ count: 2 });
-    assert.dom('.detail-terms-list:nth-of-type(1) [data-test-title]').hasText('Foo (Medicine)');
-    assert.dom('.detail-terms-list:nth-of-type(1) .detail-terms-list-item:nth-of-type(2)').hasText('Beta');
-    assert.dom('.detail-terms-list:nth-of-type(2) [data-test-title]').hasText('Bar (Medicine) (inactive)');
-    assert.dom('.detail-terms-list:nth-of-type(2) .detail-terms-list-item').hasText('Gamma');
+    assert.equal(component.selectedTerms.length, 2);
+    assert.equal(component.selectedTerms[0].title, 'Foo (Medicine)');
+    assert.equal(component.selectedTerms[0].terms[0].name, 'Alpha');
+    assert.equal(component.selectedTerms[0].terms[1].name, 'Beta');
+    assert.equal(component.selectedTerms[1].title, 'Bar (Medicine) (inactive)');
+    assert.equal(component.selectedTerms[1].terms[0].name, 'Gamma');
 
-    assert.dom('.vocabulary-picker option').exists({ count: 1 });
-    assert.dom('.vocabulary-picker option:nth-of-type(1)').hasValue('1');
-    assert.dom('.vocabulary-picker option:nth-of-type(1)').hasText('Foo (Medicine)');
-    assert.dom('.vocabulary-picker option:checked').exists( { count: 1 });
-    assert.dom('.vocabulary-picker option:checked').hasText( 'Foo (Medicine)');
+    assert.equal(component.vocabulary.options.length, 1);
+    assert.equal(component.vocabulary.options[0].value, '1');
+    assert.equal(component.vocabulary.options[0].text, 'Foo (Medicine)');
+    assert.ok(component.vocabulary.options[0].isSelected);
 
-    assert.dom('.selectable-terms-list-item').exists({ count: 2 });
-    assert.dom('.top-level:nth-of-type(1) .selectable-terms-list-item:nth-of-type(1)')
-      .hasText('Alpha');
-    assert.dom('.top-level:nth-of-type(1) .selectable-terms-list-item:nth-of-type(1)')
-      .hasClass('selected');
-    assert.dom('.top-level:nth-of-type(2) .selectable-terms-list-item:nth-of-type(1)')
-      .hasText('Beta');
-    assert.dom('.top-level:nth-of-type(2) .selectable-terms-list-item:nth-of-type(1)')
-      .hasClass('selected');
+    assert.equal(component.availableTerms.length, 2);
+    assert.equal(component.availableTerms[0].name, 'Alpha');
+    assert.ok(component.availableTerms[0].isSelected);
+    assert.equal(component.availableTerms[1].name, 'Beta');
+    assert.ok(component.availableTerms[1].isSelected);
   });
 
   test('select/deselect term', async function(assert) {
-    assert.expect(11);
+    assert.expect(14);
     this.set('assignableVocabularies', resolve([ this.vocabModel1 ]));
-    this.set('selectedTerms', [ this.termModel1, this.termModel2 ]);
+    this.set('selectedTerms', [ this.termModel1 ]);
     this.set('add', (term) => {
       assert.equal(term, this.termModel2);
       this.selectedTerms.pushObject(term);
@@ -83,26 +80,28 @@ module('Integration | Component | taxonomy manager', function(hooks) {
       @remove={{action this.remove}}
     />`);
 
-    const termInDetailsTagList = '.detail-terms-list:nth-of-type(1) .detail-terms-list-item:nth-of-type(2)';
-    const termInSelectableTermsList = '.top-level:nth-of-type(2) .selectable-terms-list-item:nth-of-type(1)';
+    assert.notOk(component.selectedTerms[0].terms[1].isPresent);
+    assert.notOk(component.availableTerms[1].isSelected);
 
-    assert.dom(termInDetailsTagList).exists();
-    assert.dom(termInSelectableTermsList).hasClass('selected');
+    await component.availableTerms[1].toggle();
 
-    await click(find(termInSelectableTermsList));
+    assert.ok(component.selectedTerms[0].terms[1].isPresent);
+    assert.ok(component.availableTerms[1].isSelected);
 
-    assert.dom(termInDetailsTagList).doesNotExist();
-    assert.dom(termInSelectableTermsList).hasNoClass('selected');
+    await component.availableTerms[1].toggle();
 
-    await click(find(termInSelectableTermsList));
+    assert.notOk(component.selectedTerms[0].terms[1].isPresent);
+    assert.notOk(component.availableTerms[1].isSelected);
 
-    assert.dom(termInDetailsTagList).exists();
-    assert.dom(termInSelectableTermsList).hasClass('selected');
+    await component.availableTerms[1].toggle();
 
-    await click(find(termInDetailsTagList));
+    assert.ok(component.selectedTerms[0].terms[1].isPresent);
+    assert.ok(component.availableTerms[1].isSelected);
 
-    assert.dom(termInDetailsTagList).doesNotExist();
-    assert.dom(termInSelectableTermsList).hasNoClass('selected');
+    await component.selectedTerms[0].terms[1].remove();
+
+    assert.notOk(component.selectedTerms[0].terms[1].isPresent);
+    assert.notOk(component.availableTerms[1].isSelected);
   });
 
   test('switch vocabularies', async function(assert) {
@@ -119,47 +118,42 @@ module('Integration | Component | taxonomy manager', function(hooks) {
       @remove={{action this.nothing}}
     />`);
 
-    assert.dom('.vocabulary-picker option').exists({ count: 2 });
-    assert.dom('.vocabulary-picker option:nth-of-type(1)').hasValue('1');
-    assert.dom('.vocabulary-picker option:nth-of-type(1)').hasText('Foo (Medicine)');
-    assert.dom('.vocabulary-picker option:nth-of-type(2)').hasValue('2');
-    assert.dom('.vocabulary-picker option:nth-of-type(2)').hasText('Bar (Medicine)');
+    assert.equal(component.vocabulary.options.length, 2);
+    assert.equal(component.vocabulary.options[0].value, '1');
+    assert.equal(component.vocabulary.options[0].text, 'Foo (Medicine)');
+    assert.equal(component.vocabulary.options[1].value, '2');
+    assert.equal(component.vocabulary.options[1].text, 'Bar (Medicine)');
 
-    assert.dom('.selectable-terms-list-item').exists({ count: 2 });
-    assert.dom('.top-level:nth-of-type(1) .selectable-terms-list-item:nth-of-type(1)')
-      .hasText('Alpha');
-    assert.dom('.top-level:nth-of-type(2) .selectable-terms-list-item:nth-of-type(1)')
-      .hasText('Beta');
+    assert.ok(component.availableTerms.length, 2);
+    assert.equal(component.availableTerms[0].name, 'Alpha');
+    assert.equal(component.availableTerms[1].name, 'Beta');
 
-    await fillIn('.vocabulary-picker select', '2');
+    await component.vocabulary.set('2');
 
-    assert.dom('.selectable-terms-list-item').exists({ count: 1 });
-    assert.dom('.top-level:nth-of-type(1) .selectable-terms-list-item:nth-of-type(1)').hasText('Gamma');
+    assert.ok(component.availableTerms.length, 1);
+    assert.equal(component.availableTerms[0].name, 'Gamma');
   });
 
   test('filter terms', async function(assert) {
-    //assert.expect(10);
+    assert.expect(5);
     this.set('assignableVocabularies', resolve([ this.vocabModel1, this.vocabModel2]));
     this.set('selectedTerms', [ this.termModel1, this.termModel2, this.termModel3 ]);
-    this.set('nothing', () => {});
 
     await render(hbs`<TaxonomyManager
       @vocabularies={{await this.assignableVocabularies}}
       @selectedTerms={{this.selectedTerms}}
-      @add={{action this.nothing}}
-      @remove={{action this.nothing}}
+      @add={{noop}}
+      @remove={{noop}}
     />`);
 
-    assert.dom('.selectable-terms-list-item').exists({ count: 2 });
-    assert.dom('.top-level:nth-of-type(1) .selectable-terms-list-item:nth-of-type(1)')
-      .hasText('Alpha');
-    assert.dom('.top-level:nth-of-type(2) .selectable-terms-list-item:nth-of-type(1)')
-      .hasText('Beta');
+    assert.ok(component.availableTerms.length, 2);
+    assert.equal(component.availableTerms[0].name, 'Alpha');
+    assert.equal(component.availableTerms[1].name, 'Beta');
 
-    await fillIn('.vocabulary-picker input', 'Beta');
+    await component.filter.set('Beta');
 
-    assert.dom('.selectable-terms-list-item').exists({ count: 1 });
-    assert.dom('.top-level:nth-of-type(1) .selectable-terms-list-item:nth-of-type(1)').hasText('Beta');
+    assert.ok(component.availableTerms.length, 1);
+    assert.equal(component.availableTerms[0].name, 'Beta');
   });
 
   test('given vocabulary is selected', async function(assert) {
@@ -179,10 +173,10 @@ module('Integration | Component | taxonomy manager', function(hooks) {
       @remove={{action this.nothing}}
     />`);
 
-    assert.dom('.vocabulary-picker option').exists({ count: 2 });
-    assert.dom('.vocabulary-picker option:checked').exists( { count: 1 });
-    assert.dom('.vocabulary-picker option:checked').hasText( 'Bar (Medicine)');
-    assert.dom('.selectable-terms-list-item').exists({ count: 1 });
-    assert.dom('.top-level:nth-of-type(1) .selectable-terms-list-item:nth-of-type(1)').hasText('Gamma');
+    assert.equal(component.vocabulary.options.length, 2);
+    assert.notOk(component.vocabulary.options[0].isSelected);
+    assert.ok(component.vocabulary.options[1].isSelected);
+    assert.ok(component.availableTerms.length, 1);
+    assert.equal(component.availableTerms[0].name, 'Gamma');
   });
 });

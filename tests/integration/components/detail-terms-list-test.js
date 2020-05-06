@@ -1,21 +1,16 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  settled,
-  find,
-  click,
-  findAll
-} from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/detail-terms-list';
 
 module('Integration | Component | detail terms list', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   test('list with terms', async function(assert) {
-    assert.expect(4);
+    assert.expect(5);
     const school = this.server.create('school', {
       title: 'Medicine'
     });
@@ -58,10 +53,11 @@ module('Integration | Component | detail terms list', function(hooks) {
       @terms={{terms}}
       @canEdit={{false}}
     />`);
-    assert.dom('[data-test-title]').hasText('Topics (Medicine)');
-    assert.dom('li').exists({ count: 2 });
-    assert.dom('li').hasText('bar');
-    assert.dom(findAll('li')[1]).hasText('foo');
+    assert.equal(component.title, 'Topics (Medicine)');
+    assert.equal(component.vocabularyName, 'Topics');
+    assert.equal(component.terms.length, 2);
+    assert.equal(component.terms[0].name, 'bar');
+    assert.equal(component.terms[1].name, 'foo');
   });
 
   test('empty list', async function(assert) {
@@ -107,9 +103,8 @@ module('Integration | Component | detail terms list', function(hooks) {
       @terms={{terms}}
       @canEdit={{false}}
     />`);
-    await settled();
-    assert.dom('[data-test-title]').hasText('Topics (Medicine)');
-    assert.dom('li').doesNotExist();
+    assert.equal(component.title, 'Topics (Medicine)');
+    assert.equal(component.terms.length, 0);
   });
 
   test('remove term', async function(assert) {
@@ -142,8 +137,8 @@ module('Integration | Component | detail terms list', function(hooks) {
       @remove={{action remove}}
       @canEdit={{true}}
     />`);
-    assert.dom('li:nth-of-type(1) .fa-times').exists({ count: 1 });
-    await click(find('li'));
+    assert.ok(component.terms[0].hasDeleteIcon);
+    await component.terms[0].remove();
   });
 
   test('inactive vocabulary labeled as such in edit mode', async function(assert) {
@@ -166,7 +161,6 @@ module('Integration | Component | detail terms list', function(hooks) {
       @terms={{terms}}
       @canEdit={{true}}
     />`);
-    await settled();
     assert.dom('[data-test-title] .inactive').hasText('(inactive)');
   });
 
@@ -188,6 +182,6 @@ module('Integration | Component | detail terms list', function(hooks) {
       @manage={{this.manage}}
       @canManage={{true}}
     />`);
-    await click('[data-test-title] strong');
+    await component.manage();
   });
 });
