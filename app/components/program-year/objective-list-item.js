@@ -16,18 +16,33 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   @tracked isManagingDescriptors;
   @tracked descriptorsBuffer = [];
   @tracked isExpanded = false;
+  @tracked isManagingTerms;
+  @tracked termsBuffer = [];
+  @tracked objective;
+  @tracked selectedVocabulary;
+  @tracked assignableVocabularies;
 
-  constructor() {
-    super(...arguments);
-    this.title = this.args.objective.title;
+  @restartableTask
+  *load(element, [programYearObjective]) {
+    if (!programYearObjective) {
+      return;
+    }
+    const programYear = yield programYearObjective.programYear;
+    const program = yield programYear.program;
+    const school = yield program.school;
+    const vocabularies = yield school.vocabularies;
+    this.assignableVocabularies = vocabularies.toArray();
+    this.objective = yield programYearObjective.objective;
+    this.title = this.objective.title;
   }
 
+
   get isManaging() {
-    return this.isManagingCompetency || this.isManagingDescriptors || this.isExpanded;
+    return this.isManagingCompetency || this.isManagingDescriptors || this.isManagingTerms || this.isExpanded;
   }
 
   get canDelete() {
-    return this.args.objective.hasMany('children').ids().length === 0;
+    return this.objective?.hasMany('children').ids().length === 0;
   }
 
   @dropTask
@@ -38,29 +53,38 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
       return false;
     }
     this.removeErrorDisplayFor('title');
-    this.args.objective.set('title', this.title);
-    yield this.args.objective.save();
+    this.objective.set('title', this.title);
+    yield this.objective.save();
     this.highlightSave.perform();
   }
 
   @dropTask
   *saveIsActive(active) {
-    this.args.objective.set('active', active);
-    yield this.args.objective.save();
+    this.objective.set('active', active);
+    yield this.objective.save();
     this.highlightSave.perform();
   }
 
   @dropTask
   *manageCompetency() {
-    this.competencyBuffer = yield this.args.objective.competency;
+    this.competencyBuffer = yield this.objective.competency;
     this.isManagingCompetency = true;
   }
   @dropTask
   *manageDescriptors() {
-    const meshDescriptors = yield this.args.objective.meshDescriptors;
+    const meshDescriptors = yield this.objective.meshDescriptors;
     this.descriptorsBuffer = meshDescriptors.toArray();
     this.isManagingDescriptors = true;
   }
+
+  @dropTask
+  *manageTerms(vocabulary) {
+    this.selectedVocabulary = vocabulary;
+    const terms = yield this.args.programYearObjective.terms;
+    this.termsBuffer = terms.toArray();
+    this.isManagingTerms = true;
+  }
+
 
   @restartableTask
   *highlightSave() {
@@ -69,8 +93,8 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
 
   @dropTask
   *saveCompetency() {
-    this.args.objective.set('competency', this.competencyBuffer);
-    yield this.args.objective.save();
+    this.objective.set('competency', this.competencyBuffer);
+    yield this.objective.save();
     this.competencyBuffer = null;
     this.isManagingCompetency = false;
     this.highlightSave.perform();
@@ -78,16 +102,26 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
 
   @dropTask
   *saveDescriptors() {
-    this.args.objective.set('meshDescriptors', this.descriptorsBuffer);
-    yield this.args.objective.save();
+    this.objective.set('meshDescriptors', this.descriptorsBuffer);
+    yield this.objective.save();
     this.descriptorsBuffer = [];
     this.isManagingDescriptors = false;
     this.highlightSave.perform();
   }
 
+  @dropTask
+  *saveTerms() {
+    this.args.programYearObjective.set('terms', this.termsBuffer);
+    yield this.args.programYearObjective.save();
+    this.termsBuffer = [];
+    this.isManagingTerms = false;
+    this.highlightSave.perform();
+  }
+
+
   @action
   revertTitleChanges() {
-    this.title = this.args.objective.title;
+    this.title = this.objective.title;
     this.removeErrorDisplayFor('title');
   }
   @action
@@ -108,14 +142,26 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
     this.descriptorsBuffer = this.descriptorsBuffer.filter(obj => obj.id !== descriptor.id);
   }
   @action
+  addTermToBuffer(term) {
+    this.termsBuffer = [...this.termsBuffer, term];
+  }
+  @action
+  removeTermFromBuffer(term) {
+    this.termsBuffer = this.termsBuffer.filter(obj => obj.id !== term.id);
+  }
+  @action
   cancel() {
     this.competencyBuffer = null;
     this.descriptorsBuffer = [];
+    this.termsBuffer = [];
     this.isManagingCompetency = false;
     this.isManagingDescriptors = false;
+    this.isManagingTerms = false;
+    this.selectedVocabulary = null;
   }
   @dropTask
   *deleteObjective() {
-    yield this.args.objective.destroyRecord();
+    yield this.args.programYearObjective.destroyRecord();
+    yield this.objective.destroyRecord();
   }
 }
