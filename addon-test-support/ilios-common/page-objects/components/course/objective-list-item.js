@@ -13,6 +13,8 @@ import meshManager from './manage-objective-descriptors';
 import parentManager from './manage-objective-parents';
 import meshDescriptors from './objective-list-item-descriptors';
 import parents from './objective-list-item-parents';
+import selectedTerms from '../objective-list-item-terms';
+import taxonomyManager from '../taxonomy-manager';
 
 const definition = {
   scope: '[data-test-course-objective-list-item]',
@@ -37,6 +39,8 @@ const definition = {
   },
   meshManager,
   parentManager,
+  selectedTerms,
+  taxonomyManager,
 };
 
 export default definition;

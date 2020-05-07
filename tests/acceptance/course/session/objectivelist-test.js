@@ -23,31 +23,36 @@ module('Acceptance | Session - Objective List', function(hooks) {
   });
 
   test('list objectives', async function(assert) {
+    assert.expect(53);
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(45);
     this.server.createList('competency', 2);
     this.server.create('objective', {
       competencyId: 1
     });
     this.server.create('objective');
     this.server.createList('meshDescriptor', 3);
-    this.server.create('objective', {
+    const objectiveInSession1 = this.server.create('objective', {
       parentIds: [1],
       meshDescriptorIds: [1]
     });
-    this.server.create('objective', {
+    const objectiveInSession2 = this.server.create('objective', {
       parentIds: [2],
       meshDescriptorIds: [1,2]
     });
-    this.server.createList('objective', 11);
+    const objectivesInSession = this.server.createList('objective', 11);
     const course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
     });
     const session = this.server.create('session', { course });
+    const vocabulary = this.server.create('vocabulary', { school: this.school });
+    const term1 = this.server.create('term', { vocabulary });
+    const term2 = this.server.create('term', { vocabulary });
+    this.server.create('session-objective', { session, objective: objectiveInSession1, terms: [ term1 ] });
+    this.server.create('session-objective', { session, objective: objectiveInSession2, terms: [ term2 ] });
 
-    [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].forEach(objectiveId => {
-      this.server.create('session-objective', { session, objectiveId });
+    objectivesInSession.forEach(objective => {
+      this.server.create('session-objective', { session, objective });
     });
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 13);
@@ -58,6 +63,10 @@ module('Acceptance | Session - Objective List', function(hooks) {
     assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'objective 0');
     assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list.length, 1);
     assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].title, 'descriptor 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].title, 'Vocabulary 1 (school 0)');
+    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name, 'term 0');
 
     assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'objective 3');
     assert.equal(page.objectives.objectiveList.objectives[1].parents.list.length, 1);
@@ -65,6 +74,10 @@ module('Acceptance | Session - Objective List', function(hooks) {
     assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 2);
     assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title, 'descriptor 0');
     assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title, 'descriptor 1');
+    assert.equal(page.objectives.objectiveList.objectives[1].selectedTerms.list.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[1].selectedTerms.list[0].title, 'Vocabulary 1 (school 0)');
+    assert.equal(page.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms[0].name, 'term 1');
 
     for (let i=2; i <= 12; i++) {
       assert.equal(page.objectives.objectiveList.objectives[i].description.text, `objective ${i + 2}`);

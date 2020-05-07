@@ -14,7 +14,7 @@ module('Acceptance | Course - Objective List', function(hooks) {
   });
 
   test('list objectives', async function(assert) {
-    assert.expect(45);
+    assert.expect(53);
     this.user.update({ administeredSchools: [this.school] });
     this.server.createList('competency', 2, { school: this.school });
     this.server.create('objective', {
@@ -30,15 +30,18 @@ module('Acceptance | Course - Objective List', function(hooks) {
       parentIds: [2],
       meshDescriptorIds: [1,2]
     });
-    const courseObjectives = this.server.createList('objective', 11);
+    const vocabulary = this.server.create('vocabulary', { school: this.school });
+    const term1 = this.server.create('term', { vocabulary });
+    const term2 = this.server.create('term', { vocabulary });
+    const objectivesInCourse = this.server.createList('objective', 11);
     const course = this.server.create('course', {
       year: 2013,
       school: this.school
     });
-    this.server.create('course-objective', { course, objective: objectiveInCourse1 });
-    this.server.create('course-objective', { course, objective: objectiveInCourse2 });
+    this.server.create('course-objective', { course, objective: objectiveInCourse1, terms: [ term1 ] });
+    this.server.create('course-objective', { course, objective: objectiveInCourse2, terms: [ term2 ] });
 
-    courseObjectives.forEach(objective => {
+    objectivesInCourse.forEach(objective => {
       this.server.create('course-objective', { course, objective });
     });
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
@@ -49,6 +52,10 @@ module('Acceptance | Course - Objective List', function(hooks) {
     assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'objective 0');
     assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list.length, 1);
     assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].title, 'descriptor 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].title, 'Vocabulary 1 (school 0)');
+    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name, 'term 0');
 
     assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'objective 3');
     assert.equal(page.objectives.objectiveList.objectives[1].parents.list.length, 1);
@@ -56,6 +63,10 @@ module('Acceptance | Course - Objective List', function(hooks) {
     assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 2);
     assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title, 'descriptor 0');
     assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title, 'descriptor 1');
+    assert.equal(page.objectives.objectiveList.objectives[1].selectedTerms.list.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[1].selectedTerms.list[0].title, 'Vocabulary 1 (school 0)');
+    assert.equal(page.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms[0].name, 'term 1');
 
     for (let i=2; i <= 12; i++) {
       assert.equal(page.objectives.objectiveList.objectives[i].description.text, `objective ${i + 2}`);
