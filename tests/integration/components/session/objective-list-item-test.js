@@ -91,6 +91,25 @@ module('Integration | Component | session/objective-list-item', function(hooks) 
     assert.ok(component.meshManager.isPresent);
   });
 
+  test('can manage terms', async function (assert) {
+    assert.expect(2);
+    const session = this.server.create('session');
+    const objective = this.server.create('objective');
+    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
+    this.set('sessionObjective', sessionObjectiveModel);
+    await render(
+      hbs`<Session::ObjectiveListItem
+        @sessionObjective={{this.sessionObjective}}
+        @editable={{true}}
+        @courseObjectives={{array}}
+      />`
+    );
+    assert.notOk(component.taxonomyManager.isPresent);
+    await component.selectedTerms.manage();
+    assert.ok(component.taxonomyManager.isPresent);
+  });
+
   test('can trigger removal', async function (assert) {
     const session = this.server.create('session');
     const objective = this.server.create('objective');
