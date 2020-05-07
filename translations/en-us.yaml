@@ -201,7 +201,6 @@ general:
   multipleUsersFoundWithCampusId: "Multiple users found with the campusId {campusId}"
   myCalendar: "My Calendar"
   myCourses: "My Courses"
-  myMaterials: "My Materials"
   myProfile: "My Profile"
   myReports: "My Reports"
   name: Name
