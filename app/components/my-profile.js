@@ -24,11 +24,11 @@ export default Component.extend({
   host: reads('iliosConfig.apiHost'),
   namespace: reads('iliosConfig.apiNameSpace'),
 
-  apiDocsUrl: computed('host', 'namespace', function() {
+  apiDocsLink: computed('host', 'namespace', function() {
     const apiPath = '/' + this.namespace;
     const host = this.host?this.host:window.location.protocol + '//' + window.location.host;
     const docPath = host + apiPath.replace('v1', 'doc');
-    return docPath;
+    return `<a href="${docPath}">${docPath}</a>`;
   }),
 
   init() {
