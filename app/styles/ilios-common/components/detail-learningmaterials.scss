@@ -96,9 +96,12 @@
       }
     }
 
-
-    .fa-trash {
-      @include icon;
+    .icon-button {
+      @include ilios-button-reset;
+      color: $ilios-blue;
+      &.remove {
+        color: $ilios-remove-color;
+      }
     }
   }
 

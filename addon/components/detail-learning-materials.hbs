@@ -169,13 +169,12 @@
               </td>
               <td class="text-left text-center" colspan="1">
                 {{#if @editable}}
-                  <span
-                    class="clickable remove"
-                    role="button"
-                    {{on "click" (fn this.confirmRemoval lmProxy)}}
-                  >
-                    <FaIcon @icon="trash" class="enabled" />
-                  </span>
+                  <button type="button" class="icon-button" {{on "click" (fn (set this.managingMaterial lmProxy.content))}}>
+                    <FaIcon @icon="edit" />
+                  </button>
+                  <button type="button" class="icon-button remove" {{on "click" (fn this.confirmRemoval lmProxy)}}>
+                    <FaIcon @icon="trash" />
+                  </button>
                 {{else}}
                   <FaIcon @icon="trash" class="disabled" />
                 {{/if}}
