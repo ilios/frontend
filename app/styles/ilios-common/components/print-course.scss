@@ -39,12 +39,6 @@
       @include detail-container-content;
     }
 
-    ul {
-      list-style-position: outside;
-      list-style-type: disc;
-      margin-left: 1rem;
-    }
-
     .static-list {
       @include ilios-static-list;
     }
