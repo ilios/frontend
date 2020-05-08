@@ -179,23 +179,32 @@ export default Component.extend({
     this.incrementSavedItems();
 
     if (latestProgramYear) {
-      const relatedObjectives = yield latestProgramYear.get('objectives');
-      const objectives = relatedObjectives.sortBy('id').toArray();
-      itemsToSave += objectives.length;
+      const relatedObjectives = yield latestProgramYear.get('programYearObjectives');
+      const programYearObjectives = relatedObjectives.sortBy('id').toArray();
+      itemsToSave += programYearObjectives.length;
       this.set('itemsToSave', itemsToSave);
 
-      for (let i = 0; i < objectives.length; i++) {
-        const objectiveToCopy = objectives[i];
+      for (let i = 0; i < programYearObjectives.length; i++) {
+        const programYearObjectiveToCopy = programYearObjectives[i];
+        const objectiveToCopy = yield programYearObjectiveToCopy.objective;
+        const terms = yield programYearObjectiveToCopy.terms;
         let ancestor = yield objectiveToCopy.get('ancestor');
         if (isEmpty(ancestor)) {
           ancestor = objectiveToCopy;
         }
-        const newObjective = store.createRecord('objective', objectiveToCopy.getProperties(['title', 'position']));
+
+        const newObjective = store.createRecord('objective', objectiveToCopy.getProperties(['title']));
         const props = yield hash(objectiveToCopy.getProperties('meshDescriptors', 'competency'));
         newObjective.setProperties(props);
-        newObjective.set('programYears', [savedProgramYear]);
         newObjective.set('ancestor', ancestor);
         yield newObjective.save();
+        const newProgramYearObjective = store.createRecord('program-year-objective', {
+          position: programYearObjectiveToCopy.position,
+          objective: newObjective,
+          programYear: savedProgramYear,
+          terms
+        });
+        yield newProgramYearObjective.save();
         this.incrementSavedItems();
       }
     }
