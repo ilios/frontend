@@ -1,3 +1,4 @@
+
 import {
   click,
   fillIn,
@@ -79,16 +80,13 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
   });
 
   test('check objectives', async function(assert) {
-    this.server.create('program', {
-      schoolId: 1,
+    const program = this.server.create('program', { school: this.school });
+    const programYear = this.server.create('programYear', { program });
+    const objectivesInProgramYear = this.server.createList('objective', 5);
+    objectivesInProgramYear.forEach(objective => {
+      this.server.create('program-year-objective', { objective, programYear });
     });
-    this.server.create('programYear', {
-      programId: 1,
-    });
-    this.server.createList('objective', 5, {
-      programYearIds: [1]
-    });
-    this.server.create('cohort', { programYearId: 1});
+    this.server.create('cohort', { programYear });
     await visit(url);
     assert.equal(await getElementText(find(findAll('.programyear-list tbody tr:nth-of-type(1) td')[3])), 5);
   });
