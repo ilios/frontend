@@ -65,10 +65,10 @@
                 {{t "general.no"}}
               </td>
             {{/if}}
-            {{#if @model.objectives.length}}
+            {{#if (get (await @model.objectives) "length")}}
               <td class="yes">
                 {{t "general.yes"}}
-                ({{@model.objectives.length}})
+                ({{get (await @model.objectives) "length"}})
               </td>
             {{else}}
               <td class="no">
