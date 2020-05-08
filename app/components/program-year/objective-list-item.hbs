@@ -59,7 +59,7 @@
   />
 
   <ProgramYear::ObjectiveListItemDescriptors
-    @programYearObjective={{@programYearObjective}}
+    @objective={{this.objective}}
     @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
     @manage={{perform this.manageDescriptors}}
     @isManaging={{this.isManagingDescriptors}}
