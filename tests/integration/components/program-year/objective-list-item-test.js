@@ -10,19 +10,22 @@ module('Integration | Component | program-year/objective-list-item', function(ho
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(async function() {
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const programYear = this.server.create('programYear', { program });
+    const objective = this.server.create('objective');
+    const programYearObjective = this.server.create('program-year-objective', { programYear, objective });
+    this.objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
+    this.model = await this.owner.lookup('service:store').find('program-year-objective', programYearObjective.id);
+  });
+
   test('it renders and is accessible', async function(assert) {
     assert.expect(7);
-    const programYear = this.server.create('programYear');
-
-    const objective = this.server.create('objective', {
-      programYears: [programYear],
-    });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    this.set('objective', objectiveModel);
-
+    this.set('programYearObjective', this.model);
     await render(
       hbs`<ProgramYear::ObjectiveListItem
-        @objective={{this.objective}}
+        @programYearObjective={{this.programYearObjective}}
         @editable={{true}}
         @schoolCompetencies={{array}}
         @schoolDomains={{array}}
@@ -39,17 +42,11 @@ module('Integration | Component | program-year/objective-list-item', function(ho
   });
 
   test('can change title', async function(assert) {
-    const programYear = this.server.create('programYear');
-
-    const objective = this.server.create('objective', {
-      programYears: [programYear],
-    });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    this.set('objective', objectiveModel);
-
+    assert.expect(2);
+    this.set('programYearObjective', this.model);
     await render(
       hbs`<ProgramYear::ObjectiveListItem
-        @objective={{this.objective}}
+        @programYearObjective={{this.programYearObjective}}
         @editable={{true}}
         @schoolCompetencies={{array}}
         @schoolDomains={{array}}
@@ -64,19 +61,11 @@ module('Integration | Component | program-year/objective-list-item', function(ho
   });
 
   test('can manage competency', async function (assert) {
-    const programYear = this.server.create('programYear');
-    const objective = this.server.create('objective', {
-      programYears: [programYear],
-    });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    this.set('objective', objectiveModel);
-    this.set('manageCompetency', () => {
-      assert.ok(true);
-    });
-
+    assert.expect(1);
+    this.set('programYearObjective', this.model);
     await render(
       hbs`<ProgramYear::ObjectiveListItem
-        @objective={{this.objective}}
+        @programYearObjective={{this.programYearObjective}}
         @editable={{true}}
         @schoolCompetencies={{array}}
         @schoolDomains={{array}}
@@ -87,16 +76,11 @@ module('Integration | Component | program-year/objective-list-item', function(ho
   });
 
   test('can manage descriptors', async function (assert) {
-    const programYear = this.server.create('programYear');
-    const objective = this.server.create('objective', {
-      programYears: [programYear],
-    });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    this.set('objective', objectiveModel);
-
+    assert.expect(1);
+    this.set('programYearObjective', this.model);
     await render(
       hbs`<ProgramYear::ObjectiveListItem
-        @objective={{this.objective}}
+        @programYearObjective={{this.programYearObjective}}
         @editable={{true}}
         @schoolCompetencies={{array}}
         @schoolDomains={{array}}
@@ -106,17 +90,28 @@ module('Integration | Component | program-year/objective-list-item', function(ho
     assert.ok(component.meshManager.isPresent);
   });
 
-  test('can trigger removal', async function (assert) {
-    const programYear = this.server.create('programYear');
-    const objective = this.server.create('objective', {
-      programYears: [programYear],
-    });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    this.set('objective', objectiveModel);
-
+  test('can manage terms', async function (assert) {
+    assert.expect(2);
+    this.set('programYearObjective', this.model);
     await render(
       hbs`<ProgramYear::ObjectiveListItem
-        @objective={{this.objective}}
+        @programYearObjective={{this.programYearObjective}}
+        @editable={{true}}
+        @schoolCompetencies={{array}}
+        @schoolDomains={{array}}
+      />`
+    );
+    assert.notOk(component.taxonomyManager.isPresent);
+    await component.selectedTerms.manage();
+    assert.ok(component.taxonomyManager.isPresent);
+  });
+
+  test('can trigger removal', async function (assert) {
+    assert.expect(1);
+    this.set('programYearObjective', this.model);
+    await render(
+      hbs`<ProgramYear::ObjectiveListItem
+        @programYearObjective={{this.programYearObjective}}
         @editable={{true}}
         @schoolCompetencies={{array}}
         @schoolDomains={{array}}
@@ -127,18 +122,11 @@ module('Integration | Component | program-year/objective-list-item', function(ho
   });
 
   test('can de-activate', async function(assert) {
-    const programYear = this.server.create('programYear');
-
-    const objective = this.server.create('objective', {
-      active: true,
-      programYears: [programYear],
-    });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    this.set('objective', objectiveModel);
-
+    assert.expect(2);
+    this.set('programYearObjective', this.model);
     await render(
       hbs`<ProgramYear::ObjectiveListItem
-        @objective={{this.objective}}
+        @programYearObjective={{this.programYearObjective}}
         @editable={{true}}
         @schoolCompetencies={{array}}
         @schoolDomains={{array}}
@@ -150,18 +138,12 @@ module('Integration | Component | program-year/objective-list-item', function(ho
   });
 
   test('can activate', async function(assert) {
-    const programYear = this.server.create('programYear');
-
-    const objective = this.server.create('objective', {
-      active: false,
-      programYears: [programYear],
-    });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    this.set('objective', objectiveModel);
-
+    assert.expect(2);
+    this.objectiveModel.set('active', false);
+    this.set('programYearObjective', this.model);
     await render(
       hbs`<ProgramYear::ObjectiveListItem
-        @objective={{this.objective}}
+        @programYearObjective={{this.programYearObjective}}
         @editable={{true}}
         @schoolCompetencies={{array}}
         @schoolDomains={{array}}
