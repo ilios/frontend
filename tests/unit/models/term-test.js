@@ -144,4 +144,42 @@ module('Unit | Model | term', function(hooks) {
     const titleWithDescendantTitles = await model.get('titleWithDescendantTitles');
     assert.equal(titleWithDescendantTitles, 'first > second > third > top');
   });
+
+  test('no associations', async function(assert) {
+    assert.expect(9);
+    const store = this.owner.lookup('service:store');
+    const model = store.createRecord('term');
+    assert.notOk(model.hasAssociations);
+    assert.equal(model.totalAssociations, 0);
+    assert.equal(model.associatedLengths.length, 6);
+    model.associatedLengths.forEach(length => {
+      assert.equal(length, 0);
+    });
+  });
+
+  test('associations', async function (assert) {
+    assert.expect(9);
+    const store = this.owner.lookup('service:store');
+    const objective = store.createRecord('objective');
+    const programYear = store.createRecord('programYear');
+    const course = store.createRecord('course');
+    const session = store.createRecord('session');
+    const programYearObjective = store.createRecord('program-year-objective', { programYear, objective });
+    const courseObjective = store.createRecord('course-objective', { course, objective });
+    const sessionObjective = store.createRecord('session-objective', { session, objective});
+    const model = store.createRecord('term', {
+      programYears: [ programYear ],
+      courses: [ course ],
+      sessions: [ session ],
+      programYearObjectives: [ programYearObjective ],
+      courseObjectives: [ courseObjective ],
+      sessionObjectives: [ sessionObjective ]
+    });
+    assert.ok(model.hasAssociations);
+    assert.equal(model.totalAssociations, 6);
+    assert.equal(model.associatedLengths.length, 6);
+    model.associatedLengths.forEach(length => {
+      assert.equal(length, 1);
+    });
+  });
 });
