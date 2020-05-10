@@ -6,13 +6,14 @@ import {
 } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupAuthentication } from 'ilios-common';
-
+import { setupIntl, t } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/course';
 
 module('Acceptance | Course - Overview', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+  setupIntl(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     this.school =  this.server.create('school');
@@ -39,20 +40,20 @@ module('Acceptance | Course - Overview', function(hooks) {
 
     test('collapsed', async function (assert) {
       await page.visit({ courseId: 1 });
-      assert.equal(page.overview.startDate.value, moment.utc(this.course.startDate).format('L'));
+      assert.equal(page.overview.startDate.value, this.intl.formatDate(this.course.startDate));
       assert.equal(page.overview.externalId.value, '123');
       assert.equal(page.overview.level.value, '3');
-      assert.equal(page.overview.endDate.value, moment.utc(this.course.endDate).format('L'));
+      assert.equal(page.overview.endDate.value, this.intl.formatDate(this.course.endDate));
       assert.equal(page.overview.universalLocator, 'ILIOS' + this.course.id);
       assert.equal(page.overview.clerkshipType.value, this.clerkshipType.title);
     });
 
     test('expanded', async function (assert) {
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.overview.startDate.value, moment.utc(this.course.startDate).format('L'));
+      assert.equal(page.overview.startDate.value, this.intl.formatDate(this.course.startDate));
       assert.equal(page.overview.externalId.value, '123');
       assert.equal(page.overview.level.value, '3');
-      assert.equal(page.overview.endDate.value, moment.utc(this.course.endDate).format('L'));
+      assert.equal(page.overview.endDate.value, this.intl.formatDate(this.course.endDate));
       assert.equal(page.overview.universalLocator, 'ILIOS' + this.course.id);
       assert.equal(page.overview.clerkshipType.value, this.clerkshipType.title);
     });
@@ -77,7 +78,7 @@ module('Acceptance | Course - Overview', function(hooks) {
       schoolId: 1,
     });
     await page.visit({ courseId: 1, details: true });
-    assert.equal(page.overview.clerkshipType.value, 'Not a Clerkship');
+    assert.equal(page.overview.clerkshipType.value, t('general.notAClerkship'));
     await page.overview.clerkshipType.edit();
     await page.overview.clerkshipType.set(2);
     await page.overview.clerkshipType.save();
@@ -97,7 +98,7 @@ module('Acceptance | Course - Overview', function(hooks) {
     await page.overview.clerkshipType.edit();
     await page.overview.clerkshipType.set(0);
     await page.overview.clerkshipType.save();
-    assert.equal(page.overview.clerkshipType.value, 'Not a Clerkship');
+    assert.equal(page.overview.clerkshipType.value, t('general.notAClerkship'));
   });
 
 
@@ -119,19 +120,18 @@ module('Acceptance | Course - Overview', function(hooks) {
     this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
-      startDate: new Date('2013-04-23'),
-      endDate: new Date('2015-05-22'),
+      startDate: moment('2013-04-23').toDate(),
+      endDate: moment('2015-05-22').toDate(),
       schoolId: 1,
     });
     await page.visit({ courseId: 1, details: true });
-    const startDate = moment.utc(course.startDate).format('L');
     const newDate = moment(course.startDate).add(1, 'year').add(1, 'month');
-    assert.equal(page.overview.startDate.value, startDate);
+    assert.equal(page.overview.startDate.value, this.intl.formatDate(course.startDate));
 
     await page.overview.startDate.edit();
     await page.overview.startDate.set(newDate.toDate());
     await page.overview.startDate.save();
-    assert.equal(page.overview.startDate.value, newDate.format('L'));
+    assert.equal(page.overview.startDate.value, this.intl.formatDate(newDate));
   });
 
   test('start date validation', async function(assert) {
@@ -139,12 +139,12 @@ module('Acceptance | Course - Overview', function(hooks) {
     assert.expect(3);
     const course = this.server.create('course', {
       year: 2013,
-      startDate: new Date('2013-04-23'),
-      endDate: new Date('2013-05-22'),
+      startDate: moment('2013-04-23').toDate(),
+      endDate: moment('2013-05-22').toDate(),
       schoolId: 1,
     });
     await page.visit({ courseId: 1, details: true });
-    const startDate = moment.utc(course.startDate).format('L');
+    const startDate = this.intl.formatDate(course.startDate);
     const newDate = moment(course.startDate).add(1, 'year');
     assert.equal(page.overview.startDate.value, startDate);
     assert.notOk(page.overview.startDate.hasError);
@@ -159,19 +159,19 @@ module('Acceptance | Course - Overview', function(hooks) {
     this.user.update({ administeredSchools: [this.school] });
     const course = this.server.create('course', {
       year: 2013,
-      startDate: new Date('2013-04-23'),
-      endDate: new Date('2015-05-22'),
+      startDate: moment('2013-04-23').toDate(),
+      endDate: moment('2015-05-22').toDate(),
       schoolId: 1,
     });
     await page.visit({ courseId: 1, details: true });
-    const endDate = moment.utc(course.endDate).format('L');
+    const endDate = this.intl.formatDate(course.endDate);
     const newDate = moment(course.endDate).add(1, 'year').add(1, 'month');
     assert.equal(page.overview.endDate.value, endDate);
 
     await page.overview.endDate.edit();
     await page.overview.endDate.set(newDate.toDate());
     await page.overview.endDate.save();
-    assert.equal(page.overview.endDate.value, newDate.format('L'));
+    assert.equal(page.overview.endDate.value, this.intl.formatDate(newDate));
   });
 
   test('end date validation', async function(assert) {
@@ -179,12 +179,12 @@ module('Acceptance | Course - Overview', function(hooks) {
     assert.expect(3);
     const course = this.server.create('course', {
       year: 2013,
-      startDate: new Date('2013-04-23'),
-      endDate: new Date('2013-05-22'),
+      startDate: moment('2013-04-23').toDate(),
+      endDate: moment('2013-05-22').toDate(),
       schoolId: 1,
     });
     await page.visit({ courseId: 1, details: true });
-    const endDate = moment.utc(course.endDate).format('L');
+    const endDate = this.intl.formatDate(course.endDate);
     const newDate = moment(course.endDate).subtract(1, 'year');
     assert.equal(page.overview.endDate.value, endDate);
     assert.notOk(page.overview.endDate.hasError);
@@ -225,7 +225,7 @@ module('Acceptance | Course - Overview', function(hooks) {
     await page.overview.externalId.edit();
     await page.overview.externalId.set('');
     await page.overview.externalId.save();
-    assert.equal(page.overview.externalId.value, 'Click to edit');
+    assert.equal(page.overview.externalId.value, t('general.clickToEdit'));
   });
 
   test('renders with empty externalId', async function (assert) {
@@ -235,7 +235,7 @@ module('Acceptance | Course - Overview', function(hooks) {
       schoolId: 1
     });
     await page.visit({ courseId: 1, details: true });
-    assert.equal(page.overview.externalId.value, 'Click to edit');
+    assert.equal(page.overview.externalId.value, t('general.clickToEdit'));
   });
 
   test('change level', async function (assert) {

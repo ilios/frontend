@@ -78,6 +78,7 @@
     "ember-simple-set-helper": "^0.1.0",
     "ember-test-selectors": "^4.0.0",
     "ember-truth-helpers": "^2.0.0",
+    "flatpickr": "^4.6.3",
     "froala-editor": "^3.0.6",
     "is-url": "^1.2.4",
     "normalize.css": "^8.0.1",
