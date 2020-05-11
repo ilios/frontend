@@ -1,10 +1,9 @@
-import { clickable, create, collection, isHidden, isPresent } from 'ember-cli-page-object';
+import { clickable, create, collection, isPresent } from 'ember-cli-page-object';
 import selectedTerms from './detail-terms-list';
 
 const definition = {
   scope: '[data-test-objective-list-item-terms]',
   list: collection('[data-test-detail-terms-list]', selectedTerms),
-  empty: isHidden('[data-test-parent]'),
   save: clickable('[data-test-save]'),
   cancel: clickable('[data-test-cancel]'),
   canSave: isPresent('[data-test-save]'),
