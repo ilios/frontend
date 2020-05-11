@@ -5,7 +5,7 @@ import { all } from 'rsvp';
 
 export default class SessionManageObjectiveParents extends Component {
 
-  @tracked courseObjectives = [];
+  @tracked objectivesInCourse = [];
 
   @restartableTask
   *load(element, [courseObjectives]) {
@@ -13,6 +13,6 @@ export default class SessionManageObjectiveParents extends Component {
       this.courseObjectives = [];
       return;
     }
-    this.courseObjectives = yield all(courseObjectives.toArray().mapBy('objective'));
+    this.objectivesInCourse = yield all(courseObjectives.toArray().mapBy('objective'));
   }
 }
