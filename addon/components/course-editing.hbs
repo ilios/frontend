@@ -23,7 +23,7 @@
       @showDirectors={{true}}
     />
   {{/if}}
-  {{#if (or (eq @course.objectives.length 0) @courseObjectiveDetails)}}
+  {{#if (or (not (has-many-length @course "courseObjectives")) @courseObjectiveDetails)}}
     <Course::Objectives
       @course={{@course}}
       @editable={{@editable}}
