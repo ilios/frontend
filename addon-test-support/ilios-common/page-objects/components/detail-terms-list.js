@@ -4,7 +4,7 @@ const definition = {
   scope: '[data-test-detail-terms-list]',
   vocabularyName: text('strong'),
   title: text('[data-test-title]'),
-  manage: clickable('strong'),
+  manage: clickable('[data-test-manage]'),
   terms: collection('.selected-taxonomy-terms li', {
     name: text(),
     remove: clickable(),

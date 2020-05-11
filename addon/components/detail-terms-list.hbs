@@ -7,9 +7,9 @@
   {{#if (is-array this.sortedTerms)}}
     <div data-test-title>
       {{#if @manage}}
-      <strong class="link-button" role="button" {{on "click" (fn @manage @vocabulary)}}>
-        {{@vocabulary.title}}
-      </strong>
+        <button class="link-button" type="button" {{on "click" (fn @manage @vocabulary)}} data-test-manage>
+          <strong>{{@vocabulary.title}}</strong>
+        </button>
       {{else}}
         <strong>{{@vocabulary.title}}</strong>
       {{/if}}
