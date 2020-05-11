@@ -1,0 +1,23 @@
+.flatpickr-months {
+  .flatpickr-month,
+  .flatpickr-next-month,
+  .flatpickr-prev-month {
+    color: $white;
+    background: $ilios-orange;
+
+    svg {
+      fill: $white;
+    }
+  }
+}
+
+.flatpickr-weekdays,
+span.flatpickr-weekday,
+.flatpickr-day.selected {
+  color: $white;
+  background: $ilios-orange;
+}
+
+.flatpickr-day.selected {
+  border-color: $ilios-orange;
+}
