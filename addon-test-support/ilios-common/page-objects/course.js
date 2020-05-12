@@ -11,7 +11,7 @@ import {
 import objectives from './components/course/objectives';
 import learningMaterials from './components/learning-materials';
 import meshTerms from './components/mesh-terms';
-import taxonomies from './components/taxonomies';
+import taxonomies from './components/detail-taxonomies';
 import collapsedTaxonomies from './components/collapsed-taxonomies';
 import leadershipCollapsed from './components/leadership-collapsed';
 import leadershipExpanded from './components/course-leadership-expanded';

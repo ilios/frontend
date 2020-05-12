@@ -30,7 +30,7 @@ export default Model.extend({
     inverse: 'administeredCourses'
   }),
   cohorts: hasMany('cohort', {async: true}),
-  objectives: hasMany('objective', {async: true}),
+  courseObjectives: hasMany('course-objective', {async: true}),
   meshDescriptors: hasMany('mesh-descriptor', {async: true}),
   learningMaterials: hasMany('course-learning-material', {async: true}),
   sessions: hasMany('session', {async: true}),
@@ -49,6 +49,12 @@ export default Model.extend({
   publishedSessionOfferingCounts: mapBy('publishedSessionOfferings', 'length'),
   publishedOfferingCount: sum('publishedSessionOfferingCounts'),
 
+  objectives: computed('courseObjectives.[]', async function(){
+    const courseObjectives = await this.get('courseObjectives');
+    const objectives = await all(courseObjectives.toArray().mapBy('objective'));
+    return objectives.uniq();
+  }),
+
   academicYear: computed('year', function(){
     return this.get('year') + ' - ' + (parseInt(this.get('year'), 10) + 1);
   }),
@@ -59,9 +65,9 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  competencies: computed('objectives.@each.treeCompetencies', async function(){
-    const objectives = await this.get('objectives');
-    const trees = await all(objectives.mapBy('treeCompetencies'));
+  competencies: computed('courseObjectives.@each.treeCompetencies', async function() {
+    const courseObjectives = await this.get('courseObjectives');
+    const trees = await all(courseObjectives.mapBy('treeCompetencies'));
     const competencies = trees.reduce((array, set) => {
       return array.pushObjects(set);
     }, []);
@@ -103,7 +109,7 @@ export default Model.extend({
   }),
   optionalPublicationIssues: computed(
     'terms.length',
-    'objectives.length',
+    'courseObjectives.length',
     'meshDescriptors.length',
     function(){
       return this.getOptionalPublicationIssues();
@@ -147,12 +153,20 @@ export default Model.extend({
 
   /**
    * A list of course objectives, sorted by position (asc) and then id (desc).
-   * @property sortedObjectives
+   * @property sortedCourseObjectives
    * @type {Ember.computed}
    */
-  sortedObjectives: computed('objectives.@each.position', async function() {
-    const objectives = await this.get('objectives');
+  sortedCourseObjectives: computed('courseObjectives.@each.position', async function() {
+    const objectives = await this.get('courseObjectives');
     return objectives.toArray().sort(sortableByPosition);
+  }),
+
+  /**
+   * A list of objectives linked to this course, sorted by position.
+   */
+  sortedObjectives: computed('sortedCourseObjectives.[]', async function() {
+    const courseObjectives = await this.get('sortedCourseObjectives');
+    return all(courseObjectives.mapBy('objective'));
   }),
 
   hasMultipleCohorts: computed('cohorts.[]', function(){
@@ -205,7 +219,7 @@ export default Model.extend({
     this.set('requiredPublicationSetFields', ['startDate', 'endDate']);
     this.set('requiredPublicationLengthFields', ['cohorts']);
     this.set('optionalPublicationSetFields', []);
-    this.set('optionalPublicationLengthFields', ['terms', 'objectives', 'meshDescriptors']);
+    this.set('optionalPublicationLengthFields', ['terms', 'courseObjectives', 'meshDescriptors']);
   },
 
   setDatesBasedOnYear: function(){
@@ -217,6 +231,7 @@ export default Model.extend({
     this.set('endDate', endDate.toDate());
   },
 
+  xObjectives: alias('courseObjectives'),
   isPublished: alias('published'),
   isNotPublished: not('isPublished'),
   isScheduled: oneWay('publishedAsTbd'),

@@ -12,23 +12,12 @@ module('Integration | Component | session/manage-objective-parents', function(ho
 
   test('it renders and is accessible', async function (assert) {
     const course = this.server.create('course');
-    this.server.create('objective', {
-      courses: [course],
-    });
-    const session = this.server.create('session', {
-      course
-    });
-    const objective = this.server.create('objective', {
-      sessions: [session],
-    });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
+    const objectiveInCourse = this.server.create('objective');
+    this.server.create('course-objective', { course, objective: objectiveInCourse });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-
-    this.set('objective', objectiveModel);
-    this.set('courseObjectives', await courseModel.sortedObjectives);
+    this.set('courseObjectives', await courseModel.sortedCourseObjectives);
     this.set('courseTitle', course.title);
     await render(hbs`<Session::ManageObjectiveParents
-      @objective={{this.objective}}
       @courseTitle={{this.courseTitle}}
       @courseObjectives={{this.courseObjectives}}
       @selected={{array}}

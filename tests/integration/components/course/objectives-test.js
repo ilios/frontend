@@ -19,22 +19,22 @@ module('Integration | Component | course/objectives', function(hooks) {
     const course = this.server.create('course', {
       cohorts: [cohort]
     });
-    const programYearObjectives = this.server.createList('objective', 3, {
-      competency: competencies[0],
-      programYears: [programYear]
-    });
-    this.server.createList('objective', 2, {
-      competency: competencies[1],
-      programYears: [programYear]
+    const objectivesInProgramYear1 = this.server.createList('objective', 3, { competency: competencies[0] });
+    const objectivesInProgramYear2 = this.server.createList('objective', 2, { competency: competencies[1] });
+
+    objectivesInProgramYear1.forEach(objective => {
+      this.server.create('program-year-objective', { objective, programYear });
     });
 
-    this.server.create('objective', {
-      parents: [programYearObjectives[0]],
-      courses: [course],
+    objectivesInProgramYear2.forEach(objective => {
+      this.server.create('program-year-objective', { objective, programYear });
     });
-    this.server.create('objective', {
-      courses: [course],
-    });
+
+    const objectiveInCourse1 = this.server.create('objective', { parents: [objectivesInProgramYear1[0]] });
+    this.server.create('course-objective', { course, objective: objectiveInCourse1 });
+
+    const objectiveInCourse2 = this.server.create('objective');
+    this.server.create('course-objective', { course, objective: objectiveInCourse2 });
     this.server.createList('objective', 2, { competency: competencies[0] });
     this.server.createList('objective', 4, { competency: competencies[1] });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
@@ -70,19 +70,19 @@ module('Integration | Component | course/objectives', function(hooks) {
     const course = this.server.create('course', {
       cohorts: [cohort]
     });
-    const programYearObjectives = this.server.createList('objective', 3, {
-      competency: competencies[0],
-      programYears: [programYear]
-    });
-    this.server.createList('objective', 2, {
-      competency: competencies[1],
-      programYears: [programYear]
+    const objectivesInProgramYear1 = this.server.createList('objective', 3, { competency: competencies[0] });
+    const objectivesInProgramYear2 = this.server.createList('objective', 2, { competency: competencies[1] });
+
+    objectivesInProgramYear1.forEach(objective => {
+      this.server.create('program-year-objective', { objective, programYear });
     });
 
-    this.server.create('objective', {
-      parents: [programYearObjectives[0]],
-      courses: [course],
+    objectivesInProgramYear2.forEach(objective => {
+      this.server.create('program-year-objective', { objective, programYear });
     });
+
+    const objectiveInCourse = this.server.create('objective', { parents: [objectivesInProgramYear1[0]] });
+    this.server.create('course-objective', { course, objective: objectiveInCourse });
     this.server.createList('objective', 2, { competency: competencies[0] });
     this.server.createList('objective', 4, { competency: competencies[1] });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
@@ -141,19 +141,21 @@ module('Integration | Component | course/objectives', function(hooks) {
     const course = this.server.create('course', {
       cohorts: [cohort1, cohort2]
     });
-    const programYearObjectives = this.server.createList('objective', 2, {
-      competency: competencies[0],
-      programYears: [programYear1]
-    });
-    this.server.createList('objective', 2, {
-      competency: competencies[1],
-      programYears: [programYear2]
+
+    const objectivesInProgramYear1 = this.server.createList('objective', 2, { competency: competencies[0] });
+    const objectivesInProgramYear2 = this.server.createList('objective', 2, { competency: competencies[1] });
+
+    objectivesInProgramYear1.forEach(objective => {
+      this.server.create('program-year-objective', { objective, programYear: programYear1 });
     });
 
-    this.server.create('objective', {
-      parents: [programYearObjectives[0]],
-      courses: [course],
+    objectivesInProgramYear2.forEach(objective => {
+      this.server.create('program-year-objective', { objective, programYear: programYear2 });
     });
+
+    const objectiveInCourse = this.server.create('objective', { parents: [objectivesInProgramYear1[0]] });
+    this.server.create('course-objective', { course, objective: objectiveInCourse });
+
     this.server.createList('objective', 2, { competency: competencies[0] });
     this.server.createList('objective', 4, { competency: competencies[1] });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
@@ -203,9 +205,8 @@ module('Integration | Component | course/objectives', function(hooks) {
 
   test('deleting objective', async function (assert) {
     const course = this.server.create('course');
-    this.server.create('objective', {
-      courses: [course],
-    });
+    const objective = this.server.create('objective');
+    this.server.create('course-objective', { course, objective });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('course', courseModel);

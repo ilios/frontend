@@ -7,7 +7,15 @@ export default class DetailTermsListComponent extends Component {
   @tracked sortedTerms;
 
   @dropTask
-  *load(event, [filteredTerms]) {
+  *load(event, [terms]) {
+    if (! terms) {
+      this.sortedTerms = [];
+      return;
+    }
+    const filteredTerms = terms.filter(term => {
+      const vocabId = term.belongsTo('vocabulary').id();
+      return vocabId === this.args.vocabulary.id;
+    });
     const proxies = yield all(filteredTerms.map(async term => {
       const title = await term.titleWithParentTitles;
       return { term, title };
@@ -19,15 +27,5 @@ export default class DetailTermsListComponent extends Component {
     });
 
     this.sortedTerms = sortedProxies.mapBy('term');
-  }
-
-  get filteredTerms() {
-    if (!this.args.terms) {
-      return [];
-    }
-    return this.args.terms.filter(term => {
-      const vocabId = term.belongsTo('vocabulary').id();
-      return vocabId === this.args.vocabulary.id;
-    });
   }
 }

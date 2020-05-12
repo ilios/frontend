@@ -25,12 +25,10 @@ module('Acceptance | Course - Cohorts', function(hooks) {
       program,
       cohort: cohort2,
     });
-    const parentObjective1 = this.server.create('objective', {
-      programYears: [programYear1],
-    });
-    const parentObjective2 = this.server.create('objective', {
-      programYears: [programYear2],
-    });
+    const parentObjective1 = this.server.create('objective');
+    const parentObjective2 = this.server.create('objective');
+    this.server.create('program-year-objective', { programYear: programYear1, objective: parentObjective1 });
+    this.server.create('program-year-objective', { programYear: programYear2, objective: parentObjective2 });
 
     const course = this.server.create('course', {
       year: 2013,
@@ -38,10 +36,10 @@ module('Acceptance | Course - Cohorts', function(hooks) {
       cohorts: [programYear1.cohort], //instead of just cohort1 otherwise the relationship gets munged
     });
 
-    this.server.create('objective', {
-      courses: [course],
+    const objectiveInCourse = this.server.create('objective', {
       parents: [parentObjective1, parentObjective2]
     });
+    this.server.create('course-objective', { course, objective: objectiveInCourse });
   });
 
   test('list cohorts', async function (assert) {

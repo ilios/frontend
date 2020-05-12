@@ -11,9 +11,12 @@ module('Integration | Component | visualizer-course-objectives', function(hooks)
   test('it renders', async function(assert) {
     assert.expect(4);
     const course = this.server.create('course');
-    const courseObjective1 = this.server.create('objective', { title: 'Course Objective 1', courses: [course] });
-    const courseObjective2 = this.server.create('objective', { title: 'Course Objective 2', courses: [course] });
-    const courseObjective3 = this.server.create('objective', { title: 'Course Objective 3', courses: [course] });
+    const objectiveInCourse1 = this.server.create('objective', { title: 'Course Objective 1' });
+    const objectiveInCourse2 = this.server.create('objective', { title: 'Course Objective 2' });
+    const objectiveInCourse3 = this.server.create('objective', { title: 'Course Objective 3' });
+    this.server.create('course-objective', { course, objective: objectiveInCourse1 });
+    this.server.create('course-objective', { course, objective: objectiveInCourse2 });
+    this.server.create('course-objective', { course, objective: objectiveInCourse3 });
 
     const session1 = this.server.create('session', {
       title: 'Berkeley Investigations',
@@ -27,23 +30,12 @@ module('Integration | Component | visualizer-course-objectives', function(hooks)
       title: 'Empty Session',
       course,
     });
-    this.server.create('objective', {
-      title: 'Session Objective 1',
-      sessions: [session1],
-      parents: [courseObjective1],
-    });
-
-    this.server.create('objective', {
-      title: 'Session Objective 2',
-      sessions: [session2],
-      parents: [courseObjective2],
-    });
-
-    this.server.create('objective', {
-      title: 'Session Objective 3',
-      sessions: [session3],
-      parents: [courseObjective3],
-    });
+    const objectiveInSession1 = this.server.create('objective', { title: 'Session Objective 1', parents: [objectiveInCourse1] });
+    const objectiveInSession2 = this.server.create('objective', { title: 'Session Objective 2', parents: [objectiveInCourse2] });
+    const objectiveInSession3 = this.server.create('objective', { title: 'Session Objective 3', parents: [objectiveInCourse3] });
+    this.server.create('session-objective', { session: session1, objective: objectiveInSession1 });
+    this.server.create('session-objective', { session: session2, objective: objectiveInSession2 });
+    this.server.create('session-objective', { session: session3, objective: objectiveInSession3 });
 
     this.server.create('offering', {
       session:session1,

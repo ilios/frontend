@@ -20,23 +20,25 @@ module('Acceptance | Course - Objective Mesh Descriptors', function(hooks) {
     this.server.createList('cohort', 2);
 
     this.server.createList('meshDescriptor', 6);
-    this.server.create('objective', {
+    const objective1 = this.server.create('objective', {
       meshDescriptorIds: [1]
     });
-    this.server.create('objective', {
+    const objective2 = this.server.create('objective', {
       meshDescriptorIds: [2, 3, 4, 5, 6]
     });
-    this.server.create('objective');
+    const objective3 = this.server.create('objective');
     //create some other objectives not in this course
     this.server.createList('objective', 2);
 
     //create some extra descriptors that shouldn't be found in search
     this.server.createList('meshDescriptor', 10, {name: 'nope', annotation: 'nope'});
 
-    this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
       school: this.school,
-      objectiveIds: [1,2,3]
+    });
+    [objective1, objective2, objective3].forEach(objective => {
+      this.server.create('course-objective', { course, objective });
     });
   });
 

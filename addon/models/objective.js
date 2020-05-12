@@ -13,9 +13,9 @@ export default Model.extend({
     inverse: 'descendants',
     async: true
   }),
-  courses: hasMany('course', {async: true}),
-  programYears: hasMany('program-year', {async: true}),
-  sessions: hasMany('session', {async: true}),
+  courseObjectives: hasMany('course-objective', {async: true}),
+  programYearObjectives: hasMany('program-year-objective', {async: true}),
+  sessionObjectives: hasMany('session-objective', {async: true}),
   parents: hasMany('objective', {
     inverse: 'children',
     async: true
@@ -44,6 +44,24 @@ export default Model.extend({
   hasMultipleParents: gt('parents.length', 1),
   hasParents: gte('parents.length', 1),
   hasMesh: gte('meshDescriptors.length', 1),
+
+  sessions: computed('sessionObjectives', async function(){
+    const sessionObjectives = await this.get('sessionObjectives');
+    const sessions = await all(sessionObjectives.toArray().mapBy('session'));
+    return sessions.uniq();
+  }),
+
+  courses: computed('courseObjectives', async function(){
+    const courseObjectives = await this.get('courseObjectives');
+    const courses = await all(courseObjectives.toArray().mapBy('course'));
+    return courses.uniq();
+  }),
+
+  programYears: computed('programYearObjectives', async function(){
+    const programYearObjectives = await this.get('programYearObjectives');
+    const programYears = await all(programYearObjectives.toArray().mapBy('programYear'));
+    return programYears.uniq();
+  }),
 
   /**
    * All competencies associated with any objectives in the parentage tree, and this objective itself.

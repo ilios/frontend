@@ -28,7 +28,7 @@ module('Acceptance | Session - Publication Check', function(hooks) {
       school
     });
     this.server.create('sessionDescription');
-    this.server.create('objective');
+    this.objective = this.server.create('objective');
     this.server.create('term', {
       vocabularyId: 1,
     });
@@ -36,14 +36,14 @@ module('Acceptance | Session - Publication Check', function(hooks) {
   });
 
   test('full session count', async function (assert) {
-    this.server.create('session', {
+    const session = this.server.create('session', {
       courseId: 1,
-      objectiveIds: [1],
       termIds: [1],
       meshDescriptorIds: [1],
       sessionTypeId: 1,
       sessionDescriptionId: 1
     });
+    this.server.create('session-objective', { session, objective: this.objective });
     this.server.create('offering', {
       sessionId: 1
     });
@@ -74,7 +74,8 @@ module('Acceptance | Session - Publication Check', function(hooks) {
   });
 
   test('unlink icon transitions properly', async function(assert) {
-    this.server.create('session', { courseId: 1, objectiveIds: [1] });
+    const session = this.server.create('session', { courseId: 1 });
+    this.server.create('session-objective', { session, objective: this.objective });
     await visit(url);
     await click('.fa-unlink');
     assert.equal(currentURL(), '/courses/1/sessions/1?addOffering=false&courseCompetencyDetails=false&courseLeadershipDetails=false&courseManageLeadership=false&courseObjectiveDetails=false&courseTaxonomyDetails=false&details=false&isManagingLearnerGroups=false&sessionLeadershipDetails=false&sessionLearnergroupDetails=false&sessionManageLeadership=false&sessionObjectiveDetails=true&sessionTaxonomyDetails=false');

@@ -20,7 +20,7 @@ export default Model.extend({
   sessionType: belongsTo('session-type', { async: true }),
   course: belongsTo('course', { async: true }),
   ilmSession: belongsTo('ilm-session', { async: true }),
-  objectives: hasMany('objective', { async: true }),
+  sessionObjectives: hasMany('session-objective', { async: true }),
   meshDescriptors: hasMany('mesh-descriptor', { async: true }),
   sessionDescription: belongsTo('session-description', { async: true }),
   learningMaterials: hasMany('session-learning-material', { async: true }),
@@ -42,6 +42,13 @@ export default Model.extend({
   offeringLearnerGroupsLength: mapBy('offeringLearnerGroups', 'length'),
   learnerGroupCount: sum('offeringLearnerGroupsLength'),
   assignableVocabularies: alias('course.assignableVocabularies'),
+  xObjectives: alias('sessionObjectives'),
+
+  objectives: computed('sessionObjectives.[]', async function(){
+    const sessionObjectives = await this.get('sessionObjectives');
+    const objectives = await all(sessionObjectives.toArray().mapBy('objective'));
+    return objectives.uniq();
+  }),
 
   isIndependentLearning: computed('ilmSession.session', function () {
     return !!this.belongsTo('ilmSession').id();
@@ -182,7 +189,7 @@ export default Model.extend({
   ),
   optionalPublicationIssues: computed(
     'terms.length',
-    'objectives.length',
+    'sessionObjectives.length',
     'meshDescriptors.length',
     function(){
       return this.getOptionalPublicationIssues();
@@ -271,12 +278,20 @@ export default Model.extend({
 
   /**
    * A list of session objectives, sorted by position (asc) and then id (desc).
-   * @property sortedObjectives
+   * @property sortedSessionObjectives
    * @type {Ember.computed}
    */
-  sortedObjectives: computed('objectives.@each.position', async function() {
-    const objectives = await this.get('objectives');
+  sortedSessionObjectives: computed('sessionObjectives.@each.position', async function() {
+    const objectives = await this.get('sessionObjectives');
     return objectives.toArray().sort(sortableByPosition);
+  }),
+
+  /**
+   * A list of objectives linked to this session, sorted by position.
+   */
+  sortedObjectives: computed('sortedSessionObjectives.[]', async function() {
+    const sessionObjectives = await this.get('sortedSessionObjectives');
+    return all(sessionObjectives.mapBy('objective'));
   }),
 
   /**
@@ -335,7 +350,7 @@ export default Model.extend({
 
   init() {
     this._super(...arguments);
-    this.set('optionalPublicationLengthFields', ['terms', 'objectives', 'meshDescriptors']);
+    this.set('optionalPublicationLengthFields', ['terms', 'sessionObjectives', 'meshDescriptors']);
     this.set('requiredPublicationSetFields', []);
     this.set('requiredPublicationLengthFields', []);
     this.set('optionalPublicationSetFields', []);

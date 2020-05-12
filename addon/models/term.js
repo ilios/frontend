@@ -14,10 +14,20 @@ export default Model.extend({
   sessions: hasMany('session', { async: true }),
   courses: hasMany('course', { async: true }),
   aamcResourceTypes: hasMany('aamcResourceType', { async: true }),
-  associatedLengths: collect('programYears.length', 'courses.length', 'sessions.length'),
+  associatedLengths: collect(
+    'programYears.length',
+    'courses.length',
+    'sessions.length',
+    'programYearObjectives.length',
+    'courseObjectives.length',
+    'sessionObjectives.length'
+  ),
   totalAssociations: sum('associatedLengths'),
   hasAssociations: gte('totalAssociations', 1),
   active: attr('boolean'),
+  courseObjectives: hasMany('course-objective', {async: true}),
+  programYearObjectives: hasMany('program-year-objective', {async: true}),
+  sessionObjectives: hasMany('session-objective', {async: true}),
 
   isTopLevel: computed('parent', function() {
     return isEmpty(this.belongsTo('parent').id());

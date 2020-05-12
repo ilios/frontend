@@ -12,9 +12,9 @@ module('Integration | Component | course-publicationcheck', function(hooks) {
     const parent = this.server.create('objective');
     const objectiveWithParent = this.server.create('objective', { parents: [parent] });
     const objectiveWithoutParent = this.server.create('objective');
-    const course = this.server.create('course', {
-      objectives: [objectiveWithParent, objectiveWithoutParent]
-    });
+    const course = this.server.create('course');
+    this.server.create('course-objective', { course, objective: objectiveWithParent });
+    this.server.create('course-objective', { course, objective: objectiveWithoutParent });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('model', courseModel);
     await render(hbs`<CoursePublicationcheck @course={{model}} />`);
@@ -24,7 +24,9 @@ module('Integration | Component | course-publicationcheck', function(hooks) {
   test('it does not shows unlink icon', async function(assert) {
     const parent = this.server.create('objective');
     const objectives = this.server.createList('objective', 2, { parents: [parent] });
-    const course = this.server.create('course', { objectives });
+    const course = this.server.create('course');
+    this.server.create('course-objective', { course, objective: objectives[0] });
+    this.server.create('course-objective', { course, objective: objectives[1] });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('model', courseModel);
     await render(hbs`<CoursePublicationcheck @course={{model}} />`);

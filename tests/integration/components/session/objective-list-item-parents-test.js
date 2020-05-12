@@ -12,7 +12,7 @@ module('Integration | Component | session/objective-list-item-parents', function
 
   test('it renders and is accessible when managing', async function(assert) {
     await render(hbs`<Session::ObjectiveListItemParents
-      @objective={{null}}
+      @sessionObjective={{null}}
       @editable={{false}}
       @manage={{noop}}
       @isManaging={{true}}
@@ -27,11 +27,13 @@ module('Integration | Component | session/objective-list-item-parents', function
   });
 
   test('it renders and is accessible empty and un-editable', async function(assert) {
+    const session = this.server.create('session');
     const objective = this.server.create('objective');
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    this.set('objective', objectiveModel);
+    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
+    this.set('sessionObjective', sessionObjectiveModel);
     await render(hbs`<Session::ObjectiveListItemParents
-      @objective={{this.objective}}
+      @sessionObjective={{this.sessionObjective}}
       @editable={{false}}
       @manage={{noop}}
       @isManaging={{false}}
@@ -45,14 +47,17 @@ module('Integration | Component | session/objective-list-item-parents', function
   });
 
   test('it renders and is accessible un-editable', async function (assert) {
+
+    const session = this.server.create('session');
     const parents = this.server.createList('objective', 2);
     const objective = this.server.create('objective', {
       parents,
     });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    this.set('objective', objectiveModel);
+    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
+    this.set('sessionObjective', sessionObjectiveModel);
     await render(hbs`<Session::ObjectiveListItemParents
-      @objective={{this.objective}}
+      @sessionObjective={{this.sessionObjective}}
       @editable={{false}}
       @manage={{noop}}
       @isManaging={{false}}
@@ -68,14 +73,16 @@ module('Integration | Component | session/objective-list-item-parents', function
   });
 
   test('it renders and is accessible editable', async function (assert) {
+    const session = this.server.create('session');
     const parents = this.server.createList('objective', 2);
     const objective = this.server.create('objective', {
       parents,
     });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    this.set('objective', objectiveModel);
+    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
+    this.set('sessionObjective', sessionObjectiveModel);
     await render(hbs`<Session::ObjectiveListItemParents
-      @objective={{this.objective}}
+      @sessionObjective={{this.sessionObjective}}
       @editable={{true}}
       @manage={{noop}}
       @isManaging={{false}}
@@ -92,17 +99,19 @@ module('Integration | Component | session/objective-list-item-parents', function
 
   test('clicking save fires save', async function (assert) {
     assert.expect(1);
+    const session = this.server.create('session');
     const parents = this.server.createList('objective', 2);
     const objective = this.server.create('objective', {
       parents,
     });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    this.set('objective', objectiveModel);
+    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
+    this.set('sessionObjective', sessionObjectiveModel);
     this.set('save', () => {
       assert.ok(true);
     });
     await render(hbs`<Session::ObjectiveListItemParents
-      @objective={{this.objective}}
+      @sessionObjective={{this.sessionObjective}}
       @editable={{true}}
       @manage={{noop}}
       @isManaging={{true}}
@@ -115,17 +124,19 @@ module('Integration | Component | session/objective-list-item-parents', function
 
   test('clicking cancel fires cancel', async function (assert) {
     assert.expect(1);
+    const session = this.server.create('session');
     const parents = this.server.createList('objective', 2);
     const objective = this.server.create('objective', {
       parents,
     });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    this.set('objective', objectiveModel);
+    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
+    this.set('sessionObjective', sessionObjectiveModel);
     this.set('cancel', () => {
       assert.ok(true);
     });
     await render(hbs`<Session::ObjectiveListItemParents
-      @objective={{this.objective}}
+      @sessionObjective={{this.sessionObjective}}
       @editable={{true}}
       @manage={{noop}}
       @isManaging={{true}}
@@ -138,17 +149,19 @@ module('Integration | Component | session/objective-list-item-parents', function
 
   test('clicking objective fires manage', async function (assert) {
     assert.expect(1);
+    const session = this.server.create('session');
     const parents = this.server.createList('objective', 2);
     const objective = this.server.create('objective', {
       parents,
     });
-    const objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
-    this.set('objective', objectiveModel);
+    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
+    this.set('sessionObjective', sessionObjectiveModel);
     this.set('manage', () => {
       assert.ok(true);
     });
     await render(hbs`<Session::ObjectiveListItemParents
-      @objective={{this.objective}}
+      @sessionObjective={{this.sessionObjective}}
       @editable={{true}}
       @manage={{this.manage}}
       @isManaging={{false}}

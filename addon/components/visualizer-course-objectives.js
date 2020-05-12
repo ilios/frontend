@@ -22,11 +22,11 @@ export default class VisualizerCourseObjectives extends Component {
       const hours = await session.get('totalSumDuration');
       const minutes = Math.round(hours * 60);
       const sessionObjectives = await session.get('objectives');
-      const sessionObjectivesWithParents = await filter(sessionObjectives.toArray(), async sessionObjective => {
+      const sessionObjectivesWithParents = await filter(sessionObjectives, async sessionObjective => {
         const parents = await sessionObjective.get('parents');
         return isPresent(parents);
       });
-      const courseSessionObjectives = await map(sessionObjectivesWithParents.toArray(), async sessionObjective => {
+      const courseSessionObjectives = await map(sessionObjectivesWithParents, async sessionObjective => {
         const parents = await sessionObjective.get('parents');
         return parents.mapBy('id');
       });

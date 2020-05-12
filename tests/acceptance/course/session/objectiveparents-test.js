@@ -18,16 +18,17 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
-      objectives,
+    });
+    objectives.forEach(objective => {
+      this.server.create('course-objective', { course, objective });
     });
     const objective1 = this.server.create('objective', {
       parents: [objectives[0], objectives[1]]
     });
     const objective2 = this.server.create('objective');
-    this.server.create('session', {
-      course,
-      objectives: [objective1, objective2],
-    });
+    const session = this.server.create('session', { course });
+    this.server.create('session-objective', { session, objective: objective1 });
+    this.server.create('session-objective', { session, objective: objective2 });
   });
 
   test('list parent objectives', async function(assert) {

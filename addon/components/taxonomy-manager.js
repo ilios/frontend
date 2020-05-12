@@ -14,6 +14,13 @@ export default class TaxonomyManager extends Component {
   @tracked termFilter = '';
   @tracked vocabId = null;
 
+  @action
+  load(element, [vocabulary]) {
+    if (vocabulary) {
+      this.vocabId = vocabulary.id;
+    }
+  }
+
   get nonEmptyVocabularies() {
     if (!this.args.vocabularies) {
       return [];

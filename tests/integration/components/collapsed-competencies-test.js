@@ -18,9 +18,9 @@ module('Integration | Component | collapsed competencies', function(hooks) {
     const objectiveA = this.server.create('objective', { competency: competencyA });
     const objectiveB = this.server.create('objective', { competency: competencyB });
 
-    const course = this.server.create('course', {
-      objectives: [objectiveA, objectiveB]
-    });
+    const course = this.server.create('course');
+    this.server.create('course-objective', { course, objective: objectiveA });
+    this.server.create('course-objective', { course, objective: objectiveB });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('course', courseModel);
@@ -42,9 +42,9 @@ module('Integration | Component | collapsed competencies', function(hooks) {
     const objectiveA = this.server.create('objective', { competency: competencyA });
     const objectiveB = this.server.create('objective', { competency: competencyB });
 
-    const course = this.server.create('course', {
-      objectives: [objectiveA, objectiveB]
-    });
+    const course = this.server.create('course');
+    this.server.create('course-objective', { course, objective: objectiveA });
+    this.server.create('course-objective', { course, objective: objectiveB });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('course', courseModel);

@@ -8,27 +8,27 @@ export default class SessionObjectiveListComponent extends Component {
   @service store;
   @service intl;
 
-  @tracked objectives;
+  @tracked sessionObjectives;
   @tracked isSorting = false;
   @tracked courseObjectives;
   @tracked course;
-  @tracked objectiveCount;
+  @tracked sessionObjectiveCount;
 
   @restartableTask
   *load(element, [session]) {
     if (!session) {
       return;
     }
-    this.objectiveCount = session.hasMany('objectives').ids().length;
+    this.sessionObjectiveCount = session.hasMany('sessionObjectives').ids().length;
     this.course = yield session.course;
     const {
-      objectives,
+      sessionObjectives,
       courseObjectives
     } = yield hash({
-      objectives: session.sortedObjectives,
-      courseObjectives: this.course.objectives
+      sessionObjectives: session.sortedSessionObjectives,
+      courseObjectives: this.course.courseObjectives
     });
-    this.objectives = objectives;
+    this.sessionObjectives = sessionObjectives;
     this.courseObjectives = courseObjectives;
   }
 }

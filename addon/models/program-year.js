@@ -15,11 +15,18 @@ export default Model.extend({
   cohort: belongsTo('cohort', {async: true}),
   directors: hasMany('user', {async: true}),
   competencies: hasMany('competency', {async: true}),
-  objectives: hasMany('objective', {async: true}),
+  programYearObjectives: hasMany('program-year-objective', {async: true}),
   stewards: hasMany('program-year-steward', {async: true}),
   terms: hasMany('term', {async: true}),
 
+  xObjectives: alias('programYearObjectives'),
   assignableVocabularies: alias('program.school.vocabularies'),
+
+  objectives: computed('programYearObjectives.[]', async function(){
+    const programYearObjectives = await this.get('programYearObjectives');
+    const objectives = await all(programYearObjectives.toArray().mapBy('objective'));
+    return objectives.uniq();
+  }),
 
   academicYear: computed('startYear', function(){
     return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'), 10) + 1);
@@ -35,21 +42,29 @@ export default Model.extend({
     'directors.length',
     'competencies.length',
     'terms.length',
-    'objectives.length',
+    'programYearObjectives.length',
     function(){
       return this.getOptionalPublicationIssues();
     }
   ),
 
   /**
-   * A list of program-year objectives, sorted by position and title.
-   * @property sortedObjectives
+   * A list of program-year objectives, sorted by position.
+   * @property sortedProgramYearObjectives
    * @type {Ember.computed}
    * @public
    */
-  sortedObjectives: computed('objectives.@each.position', 'objectives.@each.title', async function() {
-    const objectives = await this.get('objectives');
+  sortedProgramYearObjectives: computed('programYearObjectives.@each.position', async function() {
+    const objectives = await this.get('programYearObjectives');
     return objectives.toArray().sort(sortableByPosition);
+  }),
+
+  /**
+   * A list of objectives linked to this program year, sorted by position.
+   */
+  sortedObjectives: computed('sortedProgramYearObjectives.[]', async function() {
+    const programYearObjectives = await this.get('sortedProgramYearObjectives');
+    return all(programYearObjectives.mapBy('objective'));
   }),
 
   /**
@@ -93,7 +108,7 @@ export default Model.extend({
   init() {
     this._super(...arguments);
     this.set('requiredPublicationSetFields', ['startYear', 'cohort', 'program']);
-    this.set('optionalPublicationLengthFields', ['directors', 'competencies', 'terms', 'objectives']);
+    this.set('optionalPublicationLengthFields', ['directors', 'competencies', 'terms', 'programYearObjectives']);
     this.set('requiredPublicationLengthFields', []);
     this.set('optionalPublicationSetFields', []);
   },

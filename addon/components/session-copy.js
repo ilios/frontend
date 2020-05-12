@@ -145,19 +145,26 @@ export default class SessionCopyComponent extends Component {
 
     //parse objectives last because it is a many2many relationship
     //and ember data tries to save it too soon
-    const relatedObjectives = yield sessionToCopy.objectives;
-    const objectivesToCopy = relatedObjectives.sortBy('id');
-    for (let i = 0; i < objectivesToCopy.length; i++){
-      const objectiveToCopy = objectivesToCopy.toArray()[i];
+    const relatedSessionObjectives = yield sessionToCopy.sessionObjectives;
+    const sessionObjectivesToCopy = relatedSessionObjectives.sortBy('id').toArray();
+    for (let i = 0, n = sessionObjectivesToCopy.length; i < n; i++){
+      const sessionObjectiveToCopy = sessionObjectivesToCopy[i];
+      const objectiveToCopy = yield sessionObjectiveToCopy.objective;
       const meshDescriptors = yield objectiveToCopy.meshDescriptors;
-      const objective = this.store.createRecord(
-        'objective',
-        objectiveToCopy.getProperties('title', 'position')
-      );
+      const objective = this.store.createRecord('objective', { title: objectiveToCopy.title });
       objective.set('meshDescriptors', meshDescriptors);
-      objective.set('sessions', [session]);
       //save each objective as it is created to preserve to sequence order of objectives by id
       yield objective.save();
+      // link objective to session
+      const sessionObjective = this.store.createRecord('session-objective', {
+        session,
+        objective,
+        position: sessionObjectiveToCopy.position
+      });
+      const terms = yield sessionObjectiveToCopy.terms;
+      sessionObjective.set('terms', terms);
+      yield sessionObjective.save();
+
     }
     this.flashMessages.success('general.copySuccess');
     return this.args.visit(session);

@@ -1,9 +1,5 @@
 import { find, findAll, visit } from '@ember/test-helpers';
-import {
-  module,
-  skip,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
@@ -14,8 +10,10 @@ module('Acceptance | Course - Print Course', function(hooks) {
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
+    const program = this.server.create('program', { school: this.school });
+    const programYear = this.server.create('program-year', { program });
     this.server.create('academicYear');
-    this.server.create('cohort');
+    this.server.create('cohort', { programYear });
     this.server.create('learning-material-user-role');
     this.server.create('learning-material-status');
     this.course = this.server.create('course', {
@@ -172,28 +170,30 @@ module('Acceptance | Course - Print Course', function(hooks) {
   });
 
   test('test print session objectives', async function(assert) {
-    assert.expect(7);
+    assert.expect(9);
     await setupAuthentication( { school: this.school });
 
-    this.server.create('session', {
+    const session = this.server.create('session', {
       courseId: 1,
       published: true,
       publishedAsTbd: false,
     });
 
-    this.server.create('objective', {
+    const objectiveInCourse = this.server.create('objective', {
       schoolId: 1,
-      courseIds: [1],
       title: 'Course Objective 1',
       parentIds: []
     });
+    this.server.create('course-objective', { course: this.course, objective: objectiveInCourse });
 
-    this.server.create('objective', {
+    const objectiveInSession = this.server.create('objective', {
       schoolId: 1,
-      sessionIds: [1],
       parentIds: [1],
       title: 'Session Objective 1',
     });
+    const vocabulary = this.server.create('vocabulary', { school: this.school });
+    const term = this.server.create('term', { vocabulary });
+    this.server.create('session-objective', { session, objective: objectiveInSession, terms: [ term ] });
 
     this.server.create('meshDescriptor', {
       objectiveIds: [2],
@@ -207,31 +207,21 @@ module('Acceptance | Course - Print Course', function(hooks) {
 
     await visit('/course/1/print');
 
-    const labels = await findAll('[data-test-session-objectives] th');
-    const values = await findAll('[data-test-session-objectives] td');
-
-    assert.dom(labels[0]).hasText('Objectives');
+    const labels = await findAll('[data-test-session-objectives] [data-test-header]');
+    const values = await findAll('[data-test-session-objectives] [data-test-session-objective-list-item] .grid-item');
+    assert.dom(labels[0]).hasText('Description');
     assert.dom(labels[1]).hasText('Parent Objectives');
-    assert.dom(labels[2]).hasText('MeSH Terms');
+    assert.dom(labels[2]).hasText('Vocabulary Terms');
+    assert.dom(labels[3]).hasText('MeSH Terms');
     assert.dom(values[0]).hasText('Session Objective 1');
     assert.dom(values[1]).hasText('Course Objective 1');
-    assert.ok(values[2].textContent.trim().startsWith('MeSH Descriptor 1'));
-    assert.ok(values[2].textContent.trim().endsWith('MeSH Descriptor 2'));
+    assert.dom(values[2]).hasText('Vocabulary 2 (school 0) term 1');
+    assert.ok(values[3].textContent.trim().startsWith('MeSH Descriptor 1'));
+    assert.ok(values[3].textContent.trim().endsWith('MeSH Descriptor 2'));
   });
 
-  /**
-   * Commented out due to consistent failure.
-   * Error message:
-   * "You have turned on testing mode, which disabled the run-loop's autorun.
-   * You will need to wrap any code with asynchronous side-effects in a run"
-   *
-   * I've been unable to fix this, the failure occurs in the Objective::treeCompetencies() CP
-   * when attempting to access the `parents` attribute of that model.
-   *
-   * @todo have another stab at this [ST 2018/08/01]
-   */
-  skip('test print course objectives', async function(assert) {
-    assert.expect(8);
+  test('test print course objectives', async function(assert) {
+    assert.expect(9);
     await setupAuthentication( { school: this.school });
 
     this.server.create('competency', {
@@ -239,18 +229,20 @@ module('Acceptance | Course - Print Course', function(hooks) {
       title: 'Competency 1',
     });
 
-    this.server.create('objective', {
+    const parentObjective = this.server.create('objective', {
       schoolId: 1,
       competencyId: 1,
       title: 'Program Year Objective 1',
     });
 
-    this.server.create('objective', {
+    const objectiveInCourse = this.server.create('objective', {
       schoolId: 1,
-      courseIds: [1],
-      parentIds: [1],
+      parents: [ parentObjective ],
       title: 'Course Objective 1',
     });
+    const vocabulary = this.server.create('vocabulary', { school: this.school });
+    const term = this.server.create('term', { vocabulary });
+    this.server.create('course-objective', { course: this.course, objective: objectiveInCourse, terms: [ term ] });
 
     this.server.create('meshDescriptor', {
       objectiveIds: [2],
@@ -264,16 +256,16 @@ module('Acceptance | Course - Print Course', function(hooks) {
 
     await visit('/course/1/print');
 
-    const labels = await findAll('[data-test-course-objectives] th');
-    const values = await findAll('[data-test-course-objectives] td');
-
-    assert.dom(labels[0]).hasText('Objectives');
+    const labels = await findAll('[data-test-course-objectives] [data-test-header]');
+    const values = await findAll('[data-test-course-objectives] [data-test-course-objective-list-item] .grid-item');
+    assert.dom(labels[0]).hasText('Description');
     assert.dom(labels[1]).hasText('Parent Objectives');
-    assert.dom(labels[2]).hasText('MeSH Terms');
+    assert.dom(labels[2]).hasText('Vocabulary Terms');
+    assert.dom(labels[3]).hasText('MeSH Terms');
     assert.dom(values[0]).hasText('Course Objective 1');
-    assert.ok(values[1].textContent.trim().startsWith('Program Year Objective 1'));
-    assert.ok(values[1].textContent.trim().endsWith('(Competency 1)'));
-    assert.ok(values[2].textContent.trim().startsWith('MeSH Descriptor 1'));
-    assert.ok(values[2].textContent.trim().endsWith('MeSH Descriptor 2'));
+    assert.dom(values[1]).hasText('Program Year Objective 1');
+    assert.dom(values[2]).hasText('Vocabulary 2 (school 0) term 1');
+    assert.ok(values[3].textContent.trim().startsWith('MeSH Descriptor 1'));
+    assert.ok(values[3].textContent.trim().endsWith('MeSH Descriptor 2'));
   });
 });

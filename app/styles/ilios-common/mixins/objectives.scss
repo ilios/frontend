@@ -62,7 +62,7 @@
   }
   .grid-row {
     display: grid;
-    grid-template-columns: 5fr 3fr 3fr 1fr;
+    grid-template-columns: 5fr 3fr 3fr 3fr 1fr;
     grid-template-rows: auto;
     margin-right: .5em;
 
@@ -148,6 +148,11 @@
   .actions {
     text-align: right;
   }
+
+  .taxonomy-manager {
+    margin: 1em 2em;
+    grid-column: 1 / -1;
+  }
 }
 
 @mixin objective-list-item($space) {
@@ -177,5 +182,12 @@
     background-color: $ilios-red;
     color: $white;
     margin-left: .5em;
+  }
+
+  .detail-terms-list {
+    // override the generic rule specified in this mixin above,
+    li:last-of-type {
+      margin-bottom: inherit;
+    }
   }
 }

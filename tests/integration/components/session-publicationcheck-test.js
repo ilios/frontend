@@ -15,10 +15,10 @@ module('Integration | Component | session-publicationcheck', function(hooks) {
     const objective2 = this.server.create('objective');
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
-    const session = this.server.create('session', {
-      objectives: [ objective1, objective2 ],
-      course
-    });
+    const session = this.server.create('session', { course });
+    this.server.create('session-objective', { session, objective: objective1 });
+    this.server.create('session-objective', { session, objective: objective2 });
+
     await setupAuthentication({ school, administeredSchools: [ school ]});
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('model', sessionModel);
@@ -32,10 +32,9 @@ module('Integration | Component | session-publicationcheck', function(hooks) {
     const objective2 = this.server.create('objective', { parents: [ parent ] });
     const school = this.server.create('school');
     const course  = this.server.create('course', { school });
-    const session = this.server.create('session', {
-      objectives: [ objective1, objective2 ],
-      course
-    });
+    const session = this.server.create('session', { course });
+    this.server.create('session-objective', { session, objective: objective1 });
+    this.server.create('session-objective', { session, objective: objective2 });
     await setupAuthentication({ school, administeredSchools: [ school ]});
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('model', sessionModel);

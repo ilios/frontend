@@ -1,13 +1,19 @@
 <div
   class="detail-terms-list"
-  {{did-insert (perform this.load) this.filteredTerms}}
-  {{did-update (perform this.load) this.filteredTerms}}
+  {{did-insert (perform this.load) @terms}}
+  {{did-update (perform this.load) @terms}}
+  data-test-detail-terms-list
 >
   {{#if (is-array this.sortedTerms)}}
     <div data-test-title>
-      <strong>
-        {{@vocabulary.title}}
-      </strong> ({{@vocabulary.school.title}})
+      {{#if @manage}}
+        <button class="link-button" type="button" {{on "click" (fn @manage @vocabulary)}} data-test-manage>
+          <strong>{{@vocabulary.title}}</strong>
+        </button>
+      {{else}}
+        <strong>{{@vocabulary.title}}</strong>
+      {{/if}}
+      ({{@vocabulary.school.title}})
       {{#if (and @canEdit (not @vocabulary.active))}}
         <span class="inactive">
           ({{t "general.inactive"}})

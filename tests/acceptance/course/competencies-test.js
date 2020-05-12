@@ -29,26 +29,28 @@ module('Acceptance | Course - Competencies', function(hooks) {
       school: this.school,
       programYears: [programYear],
     });
-    const programYearObjective1 = this.server.create('objective', {
-      programYears: [programYear],
+    const objectiveInProgramYear1 = this.server.create('objective', {
       competency: competency1,
     });
-    this.server.create('objective', {
-      programYears: [programYear],
+    const objectiveInProgramYear2 = this.server.create('objective', {
       competency: competency2,
     });
+    this.server.create('program-year-objective', { objective: objectiveInProgramYear1, programYear });
+    this.server.create('program-year-objective', { objective: objectiveInProgramYear2, programYear });
+
     const objective1 = this.server.create('objective', {
-      parents: [programYearObjective1],
+      parents: [objectiveInProgramYear1],
     });
     const objective2 = this.server.create('objective', {
-      parents: [programYearObjective1],
+      parents: [objectiveInProgramYear1],
     });
-    this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
       school: this.school,
-      objectives: [objective1, objective2],
       cohorts: [cohort]
     });
+    this.server.create('course-objective', { objective: objective1, course });
+    this.server.create('course-objective', { objective: objective2, course });
   });
 
   test('collapsed competencies renders', async function(assert) {
