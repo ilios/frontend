@@ -59,12 +59,12 @@ module.exports = function (deployTarget) {
       }
     },
     gzip: {
-      filePattern: '**/*.{js,css,json,ico,map,xml,txt,svg,eot,ttf,woff,woff2,webmanifest}',
+      filePattern: '**/*.{js,css,json,ico,map,xml,txt,svg,eot,ttf,webmanifest}',
       ignorePattern: 'index.json',
       keep: true,
     },
     brotli: {
-      filePattern: '**/*.{js,css,json,ico,map,xml,txt,svg,eot,ttf,woff,woff2,webmanifest}',
+      filePattern: '**/*.{js,css,json,ico,map,xml,txt,svg,eot,ttf,webmanifest}',
       ignorePattern: 'index.json',
       keep: true,
     },
