@@ -13,17 +13,24 @@ module('Integration | Component | program-year/objective-list-item-expanded', fu
   test('it renders and is accessible', async function(assert) {
     assert.expect(14);
     const programYear = this.server.create('program-year');
-    const programYearObjective = this.server.create('objective', { programYears: [programYear] });
+    const objective = this.server.create('objective');
+    this.server.create('program-year-objective', { objective, programYear });
     const course1 = this.server.create('course');
     const course2 = this.server.create('course');
-    this.server.createList('objective', 3, { courses: [course1], parents: [programYearObjective] });
-    this.server.createList('objective', 3, { courses: [course2], parents: [programYearObjective] });
+    const objectivesInCourse1 = this.server.createList('objective', 3, { parents: [objective] });
+    const objectivesInCourse2 = this.server.createList('objective', 3, { parents: [objective] });
+    objectivesInCourse1.forEach(objective => {
+      this.server.create('course-objective', { course: course1, objective });
+    });
+    objectivesInCourse2.forEach(objective => {
+      this.server.create('course-objective', { course: course2, objective });
+    });
 
-    const model = await this.owner.lookup('service:store').find('objective', programYearObjective.id);
+    const model = await this.owner.lookup('service:store').find('objective', objective.id);
     this.set('objective', model);
 
     await render(
-      hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{objective}} />`
+      hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{this.objective}} />`
     );
     assert.equal(component.headers[0].text, "Courses");
     assert.equal(component.headers[1].text, "Objectives");
@@ -47,12 +54,12 @@ module('Integration | Component | program-year/objective-list-item-expanded', fu
   test('it renders empty and is accessible', async function(assert) {
     assert.expect(4);
     const programYear = this.server.create('program-year');
-    const programYearObjective = this.server.create('objective', { programYears: [programYear] });
-    const model = await this.owner.lookup('service:store').find('objective', programYearObjective.id);
+    const objective = this.server.create('objective');
+    this.server.create('program-year-objective', { objective, programYear });
+    const model = await this.owner.lookup('service:store').find('objective', objective.id);
     this.set('objective', model);
-
     await render(
-      hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{objective}} />`
+      hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{this.objective}} />`
     );
     assert.equal(component.headers[0].text, "Courses");
     assert.equal(component.headers[1].text, "Objectives");

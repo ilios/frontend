@@ -22,25 +22,30 @@ export default class ProgramYearObjectivesComponent extends Component {
 
   @action
   load(element, [programYear]) {
-    this.objectiveCount = programYear.hasMany('objectives').ids().length;
+    this.objectiveCount = programYear.hasMany('programYearObjectives').ids().length;
   }
 
   @dropTask
   *saveNewObjective(title) {
     const newObjective = this.store.createRecord('objective');
+    const newProgramYearObjective = this.store.createRecord('program-year-objective');
     newObjective.set('title', title);
     let position = 0;
 
-    const objectives = yield this.args.programYear.objectives;
+    const programYearObjectives = yield this.args.programYear.programYearObjectives;
 
-    if (objectives.length) {
-      position = objectives.sortBy('position').lastObject.position + 1;
+    if (programYearObjectives.length) {
+      position = programYearObjectives.sortBy('position').lastObject.position + 1;
     }
 
-    newObjective.set('position', position);
-    newObjective.set('programYears', [this.args.programYear]);
-
     yield newObjective.save();
+
+    newProgramYearObjective.set('position', position);
+    newProgramYearObjective.set('objective', newObjective);
+    newProgramYearObjective.set('programYear', this.args.programYear);
+
+    yield newProgramYearObjective.save();
+
     this.newObjectiveEditorOn = false;
     this.flashMessages.success('general.newObjectiveSaved');
   }

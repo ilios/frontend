@@ -1,7 +1,7 @@
 .program-year-objective-list {
   @include objective-list;
   .grid-row {
-    grid-template-columns: 1fr 10fr 6fr 6fr 1fr;
+    grid-template-columns: 1fr 10fr 6fr 6fr 6fr 1fr;
 
     .expand-row {
       @include ilios-button-reset;

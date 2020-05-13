@@ -12,9 +12,8 @@ module('Integration | Component | program-year/manage-objective-competency', fun
 
   hooks.beforeEach(async function () {
     const course = this.server.create('course');
-    const objective = this.server.create('objective', {
-      courses: [course],
-    });
+    const objective = this.server.create('objective');
+    this.server.create('course-objective', { course, objective });
     const domain = this.server.create('competency', { title: "domain 0" });
     const competency = this.server.create('competency', { title: "competency 0", parent: domain });
     this.objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);

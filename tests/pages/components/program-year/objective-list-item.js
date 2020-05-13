@@ -13,6 +13,8 @@ import meshManager from './manage-objective-descriptors';
 import competencyManager from './manage-objective-competency';
 import meshDescriptors from './objective-list-item-descriptors';
 import competency from './objective-list-item-competency';
+import taxonomyManager from 'ilios-common/page-objects/components/taxonomy-manager';
+import selectedTerms from 'ilios-common/page-objects/components/objective-list-item-terms';
 
 const definition = {
   scope: '[data-test-program-year-objective-list-item]',
@@ -42,6 +44,8 @@ const definition = {
   },
   meshManager,
   competencyManager,
+  selectedTerms,
+  taxonomyManager,
 };
 
 export default definition;

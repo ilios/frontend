@@ -16,7 +16,7 @@ module('Acceptance | Program - Publication Check', function(hooks) {
     const school = this.server.create('school');
     const user = await setupAuthentication({ school });
     this.server.create('school');
-    this.server.create('objective');
+    const objective = this.server.create('objective');
     this.server.create('term');
     this.server.create('competency', { school });
     this.server.create('program', { school });
@@ -24,10 +24,10 @@ module('Acceptance | Program - Publication Check', function(hooks) {
       startYear: 2013,
       programId: 1,
       directors: [user],
-      objectiveIds: [1],
       termIds: [1],
       competencyIds: [1],
     });
+    this.server.create('program-year-objective', { objective, programYear: this.fullProgramYear });
     this.emptyProgramYear = this.server.create('programYear', {
       startYear: 2013,
       programId: 1

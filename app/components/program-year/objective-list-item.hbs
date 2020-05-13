@@ -1,7 +1,9 @@
 <div
-  id="objective-{{@objective.id}}"
-  class="grid-row objective-row {{if this.showRemoveConfirmation "confirm-removal"}} {{if this.highlightSave.isRunning "highlight-ok"}} {{if this.isManaging "is-managing"}}  {{unless @objective.active "is-inactive"}}"
+  id="objective-{{@programYearObjective.id}}"
+  class="grid-row objective-row {{if this.showRemoveConfirmation "confirm-removal"}} {{if this.highlightSave.isRunning "highlight-ok"}} {{if this.isManaging "is-managing"}}  {{unless this.objective.active "is-inactive"}}"
   data-test-program-year-objective-list-item
+  {{did-insert (perform this.load) @programYearObjective}}
+  {{did-update (perform this.load) @programYearObjective}}
 >
   <button
     class="expand-row grid-item"
@@ -10,7 +12,7 @@
     data-test-toggle-expand
   >
     {{#if this.isExpanded}}
-      <FaIcon @icon="caret-down" @title={{t "general.collapse"}} />
+      <FaIcon @icon="caret-down" @title={{t "general.collapseDetail"}} />
     {{else}}
       <FaIcon @icon="caret-right" @title={{t "general.expand"}} />
     {{/if}}
@@ -33,11 +35,11 @@
       </EditableField>
     {{else}}
       {{! template-lint-disable no-triple-curlies }}
-      {{{@objective.title}}}
+      {{{this.objective.title}}}
     {{/if}}
   </div>
   <ProgramYear::ObjectiveListItemCompetency
-    @objective={{@objective}}
+    @objective={{this.objective}}
     @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
     @manage={{perform this.manageCompetency}}
     @isManaging={{this.isManagingCompetency}}
@@ -46,8 +48,18 @@
     @cancel={{this.cancel}}
   />
 
+  <ObjectiveListItemTerms
+    @subject={{@programYearObjective}}
+    @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
+    @manage={{perform this.manageTerms}}
+    @isManaging={{this.isManagingTerms}}
+    @save={{perform this.saveTerms}}
+    @isSaving={{this.saveTerms.isRunning}}
+    @cancel={{this.cancel}}
+  />
+
   <ProgramYear::ObjectiveListItemDescriptors
-    @objective={{@objective}}
+    @objective={{this.objective}}
     @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
     @manage={{perform this.manageDescriptors}}
     @isManaging={{this.isManagingDescriptors}}
@@ -61,7 +73,7 @@
       {{#if this.saveIsActive.isRunning}}
         <LoadingSpinner />
       {{else}}
-        {{#if @objective.active}}
+        {{#if this.objective.active}}
           <button class="active" type="button" {{on "click" (perform this.saveIsActive false)}} data-test-deactivate>
             <FaIcon @prefix="fas" @icon="lightbulb-on" @title={{t "general.deactivate"}} />
           </button>
@@ -72,7 +84,7 @@
         {{/if}}
       {{/if}}
     {{else}}
-      {{#if @objective.active}}
+      {{#if this.objective.active}}
         <FaIcon @prefix="fas" @icon="lightbulb-on" @title={{t "general.active"}} />
       {{else}}
         <FaIcon @prefix="fal" @icon="lightbulb-slash" @title={{t "general.inactive"}} />
@@ -115,7 +127,7 @@
 
   {{#if this.isManagingCompetency}}
     <ProgramYear::ManageObjectiveCompetency
-      @objective={{@objective}}
+      @objective={{this.objective}}
       @domains={{@schoolDomains}}
       @selected={{this.competencyBuffer}}
       @add={{this.setCompetencyBuffer}}
@@ -133,6 +145,18 @@
     />
   {{/if}}
   {{#if this.isExpanded}}
-    <ProgramYear::ObjectiveListItemExpanded @objective={{@objective}} />
+    <ProgramYear::ObjectiveListItemExpanded @objective={{this.objective}} />
+  {{/if}}
+  {{#if this.isManagingTerms}}
+    <TaxonomyManager
+      @vocabularies={{await this.assignableVocabularies}}
+      @vocabulary={{this.selectedVocabulary}}
+      @selectedTerms={{this.termsBuffer}}
+      @add={{this.addTermToBuffer}}
+      @remove={{this.removeTermFromBuffer}}
+      @editable={{@editable}}
+      @save={{perform this.saveTerms}}
+      @cancel={{this.cancel}}
+    />
   {{/if}}
 </div>

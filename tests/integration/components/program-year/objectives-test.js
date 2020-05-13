@@ -19,13 +19,11 @@ module('Integration | Component | program-year/objectives', function(hooks) {
     const competencies = this.server.createList('competency', 2, { school, parent: domains[0] });
     this.server.createList('competency', 2, { school, parent: domains[1] });
 
-    this.server.create('objective', {
-      competency: competencies[0],
-      programYears: [programYear]
-    });
-    this.server.create('objective', {
-      programYears: [programYear]
-    });
+    const objective1 = this.server.create('objective', { competency: competencies[0] });
+    this.server.create('program-year-objective', { programYear, objective: objective1 });
+    const objective2 = this.server.create('objective');
+    this.server.create('program-year-objective', { programYear, objective: objective2 });
+
     const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
@@ -60,10 +58,10 @@ module('Integration | Component | program-year/objectives', function(hooks) {
     const competencies = this.server.createList('competency', 3, { school, parent: domains[0] });
     this.server.createList('competency', 2, { school, parent: domains[1] });
 
-    this.server.create('objective', {
+    const objective = this.server.create('objective', {
       competency: competencies[0],
-      programYears: [programYear]
     });
+    this.server.create('program-year-objective', { programYear, objective });
     const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
 
     this.set('programYear', programYearModel);

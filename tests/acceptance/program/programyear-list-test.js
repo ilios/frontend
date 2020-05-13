@@ -79,16 +79,13 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
   });
 
   test('check objectives', async function(assert) {
-    this.server.create('program', {
-      schoolId: 1,
+    const program = this.server.create('program', { school: this.school });
+    const programYear = this.server.create('programYear', { program });
+    const objectivesInProgramYear = this.server.createList('objective', 5);
+    objectivesInProgramYear.forEach(objective => {
+      this.server.create('program-year-objective', { objective, programYear });
     });
-    this.server.create('programYear', {
-      programId: 1,
-    });
-    this.server.createList('objective', 5, {
-      programYearIds: [1]
-    });
-    this.server.create('cohort', { programYearId: 1});
+    this.server.create('cohort', { programYear });
     await visit(url);
     assert.equal(await getElementText(find(findAll('.programyear-list tbody tr:nth-of-type(1) td')[3])), 5);
   });
@@ -237,43 +234,31 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
   test('can add a program-year (with pre-existing program-year)', async function(assert) {
     assert.expect(12);
     this.user.update({ administeredSchools: [this.school] });
-    this.server.createList('user', 3, {
-      directedProgramYearIds: [1]
-    });
-    this.server.create('school');
-    this.server.createList('competency', 3);
-    this.server.create('program', {
-      schoolId: 1,
-    });
-    this.server.create('vocabulary', {
-      schoolId: 1,
-    });
-    this.server.createList('term', 3, {
-      vocabularyId: 1
-    });
-    this.server.create('objective');
-    this.server.createList('objective', 2);
-    this.server.create('objective', {
-      ancestorId: 1,
-    });
-    this.server.create('department');
-    this.server.create('programYearSteward', {
-      departmentId: 1,
-    });
+    const directors = this.server.createList('user', 3);
+    const competencies = this.server.createList('competency', 3);
+    const program = this.server.create('program', { school: this.school });
+    const vocabulary = this.server.create('vocabulary', { school: this.school });
+    const terms = this.server.createList('term', 3, { vocabulary });
+    const ancestor = this.server.create('objective');
+    const objectives = this.server.createList('objective', 2);
+    const objectiveWithAncestor = this.server.create('objective', { ancestor });
+    const department = this.server.create('department');
+    const steward = this.server.create('programYearSteward', { department });
     const currentYear = parseInt(moment().format('YYYY'), 10);
-    this.server.create('programYear', {
-      programId: 1,
+    const programYear = this.server.create('programYear', {
+      program,
       startYear: currentYear,
-      directorIds: [2,3,4],
-      competencyIds: [1,2,3],
-      termIds: [1,2,3],
-      objectiveIds: [2,3,4],
-      stewardIds: [1],
+      directors,
+      competencies,
+      terms,
+      stewards: [ steward ],
       published: false
     });
-    this.server.create('cohort', {
-      programYearId: 1
+    this.server.create('cohort', { programYear });
+    objectives.forEach(objective => {
+      this.server.create('program-year-objective', { programYear, objective });
     });
+    this.server.create('program-year-objective', { programYear, objective: objectiveWithAncestor });
 
     const expandButton = '.expand-collapse-button button';
     const selectField = '.startyear-select select';

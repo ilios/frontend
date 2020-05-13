@@ -16,6 +16,9 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     const program = this.server.create('program', {
       school: this.school,
     });
+    const vocabulary = this.server.create('vocabulary', { school: this.school });
+    const term1 = this.server.create('term', { vocabulary });
+    const term2 = this.server.create('term', { vocabulary });
     const programYear = this.server.create('programYear', {
       program,
     });
@@ -46,26 +49,28 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     const meshDescriptors = this.server.createList('meshDescriptor', 4);
 
     const objective1 = this.server.create('objective', {
-      programYears: [programYear],
       competency: competency1,
-      meshDescriptors: [meshDescriptors[0], meshDescriptors[1]]
+      meshDescriptors: [meshDescriptors[0], meshDescriptors[1]],
     });
-    this.server.create('objective', {
-      programYears: [programYear],
+    this.server.create('program-year-objective', { programYear, objective: objective1, terms: [ term1 ] });
+    const objective2 = this.server.create('objective', {
       competency: competency4,
       active: false,
     });
-    this.server.create('objective', {
-      programYears: [programYear]
-    });
+    this.server.create('program-year-objective', { programYear, objective: objective2, terms: [ term2 ] });
+
+    const objective3 = this.server.create('objective');
+    this.server.create('program-year-objective', { programYear, objective: objective3 });
+
     const course = this.server.create('course');
-    this.server.create('objective', {
-      courses: [course],
+    const objective4 = this.server.create('objective', {
       parents: [objective1]
     });
+    this.server.create('course-objective', { course, objective: objective4 });
   });
 
   test('list editable', async function(assert) {
+    assert.expect(25);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
@@ -77,17 +82,24 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list.length, 2);
     assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].text, 'descriptor 0');
     assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list[1].text, 'descriptor 1');
+    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].title, 'Vocabulary 1 (school 0)');
+    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name, 'term 0');
 
     assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'objective 1');
     assert.ok(page.objectives.objectiveList.objectives[1].competency.hasCompetency);
     assert.equal(page.objectives.objectiveList.objectives[1].competency.competencyTitle, 'competency 3');
     assert.notOk(page.objectives.objectiveList.objectives[1].competency.hasDomain);
     assert.ok(page.objectives.objectiveList.objectives[1].meshDescriptors.isEmpty);
+    assert.equal(page.objectives.objectiveList.objectives[1].selectedTerms.list.length, 1);
+    assert.equal(page.objectives.objectiveList.objectives[1].selectedTerms.list[0].title, 'Vocabulary 1 (school 0)');
+    assert.equal(page.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms[0].name, 'term 1');
 
     assert.equal(page.objectives.objectiveList.objectives[2].description.text, 'objective 2');
     assert.notOk(page.objectives.objectiveList.objectives[2].competency.hasCompetency);
     assert.notOk(page.objectives.objectiveList.objectives[2].competency.hasDomain);
     assert.ok(page.objectives.objectiveList.objectives[2].meshDescriptors.isEmpty);
+    assert.notOk(page.objectives.objectiveList.objectives[2].selectedTerms.list.isPresent);
   });
 
   test('list not editable', async function (assert) {
@@ -114,7 +126,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.ok(page.objectives.objectiveList.objectives[2].meshDescriptors.isEmpty);
   });
 
-  test('manage terms', async function(assert) {
+  test('manage MeSH terms', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
@@ -152,7 +164,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.equal(m.selectedTerms[1].title, 'descriptor 2');
   });
 
-  test('save terms', async function(assert) {
+  test('save MeSH terms', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 3);

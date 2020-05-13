@@ -8,29 +8,29 @@ export default class ProgramYearObjectiveListComponent extends Component {
   @service iliosConfig;
   @service session;
 
-  @tracked objectives;
+  @tracked programYearObjectives;
   @tracked isSorting = false;
   @tracked schoolDomains;
   @tracked schoolCompetencies;
   @tracked course;
-  @tracked objectiveCount;
+  @tracked programYearObjectiveCount;
 
   @restartableTask
   *load(element, [programYear]) {
     if (!programYear) {
       return;
     }
-    this.objectiveCount = programYear.hasMany('objectives').ids().length;
+    this.programYearObjectiveCount = programYear.hasMany('programYearObjectives').ids().length;
     const program = yield programYear.program;
     const school = yield program.school;
     const {
-      objectives,
+      programYearObjectives,
       schoolCompetencies
     } = yield hash({
-      objectives: programYear.sortedObjectives,
+      programYearObjectives: programYear.sortedProgramYearObjectives,
       schoolCompetencies: school.competencies
     });
-    this.objectives = objectives;
+    this.programYearObjectives = programYearObjectives;
     this.schoolCompetencies = schoolCompetencies.toArray();
     this.schoolDomains = yield this.getSchoolDomains(this.schoolCompetencies);
   }
