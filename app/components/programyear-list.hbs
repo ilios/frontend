@@ -102,8 +102,8 @@
                     {{/if}}
                   </td>
                   <td class="text-left hide-from-small-screen">
-                    {{#if (has-many-length programYearProxy.content "programYearObjectives")}}
-                      {{has-many-length programYearProxy.content "programYearObjectives"}}
+                    {{#if programYearProxy.programYearObjectives.length}}
+                      {{programYearProxy.programYearObjectives.length}}
                     {{else}}
                       <FaIcon @icon="exclamation-triangle" class="warning" />
                     {{/if}}
