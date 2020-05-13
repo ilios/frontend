@@ -6,7 +6,7 @@ module.exports = function (deployTarget) {
     build: {},
     pipeline: {
       runOrder: {
-        'archive': { after: 'gzip' },
+        'archive': { after: ['gzip', 'brotli'] },
       },
     },
     's3-index': {
@@ -31,7 +31,7 @@ module.exports = function (deployTarget) {
     },
     'json-config': {
       jsonBlueprint(context, pluginHelper) {
-        var jsonBlueprint = pluginHelper.readConfigDefault('jsonBlueprint');
+        const jsonBlueprint = pluginHelper.readConfigDefault('jsonBlueprint');
         jsonBlueprint.meta.selector = 'meta';
         jsonBlueprint.meta.attributes.push('charset');
         jsonBlueprint.meta.attributes.push('http-equiv');
@@ -61,7 +61,13 @@ module.exports = function (deployTarget) {
     gzip: {
       filePattern: '**/*.{js,css,json,ico,map,xml,txt,svg,eot,ttf,woff,woff2,webmanifest}',
       ignorePattern: 'index.json',
-    }
+      keep: true,
+    },
+    brotli: {
+      filePattern: '**/*.{js,css,json,ico,map,xml,txt,svg,eot,ttf,woff,woff2,webmanifest}',
+      ignorePattern: 'index.json',
+      keep: true,
+    },
   };
 
   if (deployTarget === 'staging') {
