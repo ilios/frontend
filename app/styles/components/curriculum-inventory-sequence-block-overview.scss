@@ -1,26 +1,54 @@
 .curriculum-inventory-sequence-block-overview {
   @include ilios-overview($ilios-orange);
 
-  .academic-level {
-    padding-top: .5rem;
-  }
-
   .block {
     @include ilios-overview-block;
-  }
 
-  .course {
-    align-items: flex-start;
-    display: flex;
-    flex-direction: column;
-    grid-column: 1 / -1;
-
-    span {
-      display: flex;
+    &.academic-level {
+      padding-top: .5rem;
     }
 
-    .details {
-      font-size: smaller;
+    &.course {
+      align-items: flex-start;
+      display: flex;
+      flex-direction: column;
+      grid-column: 1 / -1;
+
+      span {
+        display: flex;
+      }
+
+      .details {
+        font-size: smaller;
+      }
+    }
+
+    &.description {
+      align-items: flex-start;
+      grid-column: 1 / -1;
+      margin-bottom: 1rem;
+
+      textarea {
+        @include ilios-textarea;
+      }
+    }
+
+    &.is-selective {
+      font-style: italic;
+      grid-column: 1 / -1;
+      padding-top: .5rem;
+
+      &.hidden {
+        visibility: hidden;
+      }
+    }
+
+    &.sessions {
+      grid-column: 1 / -1;
+    }
+
+    &.title {
+      @include ilios-overview-title;
     }
   }
 
@@ -28,43 +56,26 @@
     @include ilios-overview-content;
   }
 
-  .description {
-    align-items: flex-start;
-    grid-column: 1 / -1;
-    margin-bottom: 1rem;
-
-    textarea {
-      @include ilios-textarea;
-    }
-  }
-
-  .is-selective {
-    font-style: italic;
-    grid-column: 1 / -1;
-    padding-top: .5rem;
-
-    &.hidden {
-      visibility: hidden;
-    }
-  }
-
-  .sessions-list {
+  .curriculum-inventory-sequence-block-session-list {
     grid-column: 1 / -1;
     padding-top: 1rem;
 
-    .sessions {
-      display: flex;
-      justify-content: space-between;
-    }
+    .sessions-list {
+      .sessions {
+        display: flex;
+        justify-content: space-between;
+      }
 
-    table {
-      @include ilios-table-structure;
-      @include ilios-table-colors;
-      @include ilios-zebra-table;
+      table {
+        @include ilios-table-structure;
+        @include ilios-table-colors;
+        @include ilios-zebra-table;
+      }
     }
   }
 
-  .title {
-    @include ilios-overview-title;
+  .curriculum-inventory-sequence-block-session-manager {
+    grid-column: 1 / -1;
+
   }
 }
