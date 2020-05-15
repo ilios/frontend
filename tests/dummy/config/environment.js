@@ -30,7 +30,7 @@ module.exports = function(environment) {
       tagPrefix: 'iliosconfig',
       vars: ['api-host', 'api-name-space'],
       defaults: {
-        'api-name-space': process.env.ILIOS_FRONTEND_API_NAMESPACE || 'api/v1',
+        'api-name-space': process.env.ILIOS_FRONTEND_API_NAMESPACE || 'api/v2',
         'api-host': process.env.ILIOS_FRONTEND_API_HOST || null,
       }
     },
