@@ -1,140 +1,97 @@
-import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  settled,
-  click,
-  findAll,
-  fillIn,
-  triggerEvent
-} from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory-sequence-block-header';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-const { resolve } = RSVP;
-
-module('Integration | Component | curriculum inventory sequence block header', function(hooks) {
+module('Integration | Component | Curriculum Inventory Sequence Block Header', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    const block = EmberObject.create({
-      title: 'Block title'
-    });
+    const block = this.server.create('curriculum-inventory-sequence-block', { title: 'Block title' });
     this.set('sequenceBlock', block);
-    await render(hbs`<CurriculumInventorySequenceBlockHeader
-      @sequenceBlock={{sequenceBlock}}
-      @canUpdate={{true}}
-    />`);
-    assert.dom('.title').hasText(block.title, 'Block title is visible');
-    assert.dom('.editable').exists({ count: 1 }, 'Block title is editable.');
+    await render(
+      hbs`<CurriculumInventorySequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`
+    );
+    assert.ok(component.title.isVisible);
+    assert.equal(component.title.value, block.title);
+    assert.ok(component.title.isEditable);
   });
 
   test('read-only mode for block in when it can not be updated', async function(assert) {
-    const block = EmberObject.create({
-      title: 'Block title',
-      report: {
-      }
-    });
+    const block = this.server.create('curriculum-inventory-sequence-block', { title: 'Block title' });
     this.set('sequenceBlock', block);
-    await render(hbs`<CurriculumInventorySequenceBlockHeader
-      @sequenceBlock={{sequenceBlock}}
-      @canUpdate={{false}}
-    />`);
-    assert.dom('.editable').doesNotExist('Block title is not editable.');
+    await render(
+      hbs`<CurriculumInventorySequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{false}} />`
+    );
+    assert.notOk(component.title.isEditable, 'Block title is not editable.');
   });
 
   test('change title', async function(assert) {
-    assert.expect(3);
     const newTitle = 'new title';
-    const block = EmberObject.create({
-      title: 'block title',
-      save(){
-        assert.equal(this.get('title'), newTitle);
-        return resolve(this);
-      }
-    });
+    const block = this.server.create('curriculum-inventory-sequence-block', { title: 'Block title' });
     this.set('sequenceBlock', block);
-    await render(hbs`<CurriculumInventorySequenceBlockHeader
-      @sequenceBlock={{sequenceBlock}}
-      @canUpdate={{true}}
-    />`);
-    assert.dom('.editinplace').hasText(block.title);
-    await click('.editable');
-    await fillIn('.editinplace input', newTitle);
-    await triggerEvent('.editinplace input', 'input');
-    await click('.editinplace .done');
-    return settled().then(() => {
-      assert.dom('.editinplace').hasText(newTitle);
-    });
+    await render(
+      hbs`<CurriculumInventorySequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`
+    );
+    await component.title.edit();
+    assert.notOk(component.title.hasError);
+    await component.title.set(newTitle);
+    await component.title.save();
+    assert.notOk(component.title.hasError);
+    assert.equal(component.title.value, newTitle);
   });
 
   test('change title fails on empty value', async function(assert) {
-    assert.expect(2);
-    const block = EmberObject.create({
-      title: 'block title',
-      save(){
-        assert.ok(false, 'Save action should not have been invoked.');
-      }
-    });
+    const block = this.server.create('curriculum-inventory-sequence-block', { title: 'Block title' });
     this.set('sequenceBlock', block);
-    await render(hbs`<CurriculumInventorySequenceBlockHeader
-      @sequenceBlock={{sequenceBlock}}
-      @canUpdate={{true}}
-    />`);
-    await click('.editable');
-    assert.dom('.validation-error-message').doesNotExist('No validation error shown initially.');
-    await fillIn('.editinplace input', '');
-    await triggerEvent('.editinplace input', 'input');
-    await click('.editinplace .done');
-    return settled().then(() => {
-      assert.ok(findAll('.validation-error-message').length, 1, 'Validation error shows.');
-    });
+    await render(
+      hbs`<CurriculumInventorySequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`
+    );
+    await component.title.edit();
+    assert.notOk(component.title.hasError);
+    await component.title.set('');
+    await component.title.save();
+    assert.ok(component.title.hasError);
   });
 
   test('change title fails on too-short value', async function(assert) {
-    assert.expect(2);
-    const block = EmberObject.create({
-      title: 'block title',
-      save(){
-        assert.ok(false, 'Save action should not have been invoked.');
-      }
-    });
+    const block = this.server.create('curriculum-inventory-sequence-block', { title: 'Block title' });
     this.set('sequenceBlock', block);
-    await render(hbs`<CurriculumInventorySequenceBlockHeader
-      @sequenceBlock={{sequenceBlock}}
-      @canUpdate={{true}}
-    />`);
-    await click('.editable');
-    assert.dom('.validation-error-message').doesNotExist('No validation error shown initially.');
-    await fillIn('.editinplace input', 'ab');
-    await triggerEvent('.editinplace input', 'input');
-    await click('.editinplace .done');
-    return settled().then(() => {
-      assert.ok(findAll('.validation-error-message').length, 1, 'Validation error shows.');
-    });
+    await render(
+      hbs`<CurriculumInventorySequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`
+    );
+    await component.title.edit();
+    assert.notOk(component.title.hasError);
+    await component.title.set('ab');
+    await component.title.save();
+    assert.ok(component.title.hasError);
   });
 
   test('change title fails on overlong value', async function(assert) {
-    assert.expect(2);
-    const block = EmberObject.create({
-      title: 'block title',
-      save(){
-        assert.ok(false, 'Save action should not have been invoked.');
-      }
-    });
+    const block = this.server.create('curriculum-inventory-sequence-block', { title: 'Block title' });
     this.set('sequenceBlock', block);
-    await render(hbs`<CurriculumInventorySequenceBlockHeader
-      @sequenceBlock={{sequenceBlock}}
-      @canUpdate={{true}}
-    />`);
-    await click('.editable');
-    assert.dom('.validation-error-message').doesNotExist('No validation error shown initially.');
-    await fillIn('.editinplace input', '0123456789'.repeat(21));
-    await triggerEvent('.editinplace input', 'input');
-    await click('.editinplace .done');
-    return settled().then(() => {
-      assert.ok(findAll('.validation-error-message').length, 1, 'Validation error shows.');
-    });
+    await render(
+      hbs`<CurriculumInventorySequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`
+    );
+    await component.title.edit();
+    assert.notOk(component.title.hasError);
+    await component.title.set('0123456789'.repeat(21));
+    await component.title.save();
+    assert.ok(component.title.hasError);
+  });
+
+  test('cancel title changes', async function(assert) {
+    const block = this.server.create('curriculum-inventory-sequence-block', { title: 'Block title' });
+    this.set('sequenceBlock', block);
+    await render(
+      hbs`<CurriculumInventorySequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`
+    );
+    await component.title.edit();
+    await component.title.set('some other title');
+    await component.title.cancel();
+    assert.equal(component.title.value, block.title);
   });
 });

@@ -1,37 +1,36 @@
-<div class="curriculum-inventory-sequence-block-header" ...attributes>
-  <div class="title">
-    {{#if canUpdate}}
+<div
+  class="curriculum-inventory-sequence-block-header"
+  ...attributes
+  data-test-curriculum-inventory-sequence-block-header
+  {{did-insert this.load @sequenceBlock}}
+  {{did-update this.load @sequenceBlock}}
+>
+  <div class="title" data-test-title>
+    {{#if @canUpdate}}
       <EditableField
-        @tagName="h2"
-        @value={{blockTitle}}
-        @save={{action "changeTitle"}}
-        @close={{action "revertTitleChanges"}}
+        @value={{this.title}}
+        @save={{perform this.changeTitle}}
+        @close={{this.revertTitleChanges}}
         @saveOnEnter={{true}}
         @closeOnEscape={{true}} as |isSaving|
       >
-        <input
+        <Input
           type="text"
-          value={{blockTitle}}
-          oninput={{action (mut blockTitle) value="target.value"}}
+          @value={{this.title}}
+          @key-press={{fn this.addErrorDisplayFor "title"}}
           disabled={{isSaving}}
-          onkeyup={{action "addErrorDisplayFor" "blockTitle"}}
-        >
-        {{#if
-          (and
-            (v-get this "blockTitle" "isInvalid")
-            (contains "blockTitle" showErrorsFor)
-          )
-        }}
+        />
+        {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
           <span class="validation-error-message">
-            {{v-get this "blockTitle" "message"}}
+            {{message}}
           </span>
-        {{/if}}
+        {{/each}}
       </EditableField>
     {{else}}
-      <h2>
+      <span class="h2">
         <FaIcon @icon="lock" />
         {{@sequenceBlock.title}}
-      </h2>
+      </span>
     {{/if}}
   </div>
 </div>

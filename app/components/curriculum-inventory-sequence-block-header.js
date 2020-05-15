@@ -1,56 +1,36 @@
-import Component from '@ember/component';
-import { alias } from '@ember/object/computed';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { reject } from 'rsvp';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import { restartableTask } from 'ember-concurrency-decorators';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 
-const Validations = buildValidations({
-  blockTitle: [
-    validator('presence', true),
-    validator('length', {
-      min: 3,
-      max: 200
-    })
-  ]
-});
+@validatable
+export default class CurriculumInventorySequenceBlockHeader extends Component {
+  @service store;
+  @tracked @NotBlank() @Length(3, 200) title;
 
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: service(),
-
-  tagName: "",
-  canUpdate: false,
-  report: null,
-  reportName: null,
-
-  publishTarget: alias('sequenceBlock'),
-
-  didReceiveAttrs(){
-    this._super(...arguments);
-    this.set('blockTitle', this.get('sequenceBlock.title'));
-  },
-
-  actions: {
-    async changeTitle() {
-      const block = this.sequenceBlock;
-      const newTitle = this.blockTitle;
-      this.send('addErrorDisplayFor', 'blockTitle');
-      const { validations } = await this.validate();
-
-      if (validations.isValid) {
-        this.send('removeErrorDisplayFor', 'blockTitle');
-        block.set('title', newTitle);
-        const newBlock = await block.save();
-        this.set('blockTitle', newBlock.get('title'));
-        this.set('sequenceBlock', newBlock);
-      } else {
-        await reject();
-      }
-    },
-
-    revertTitleChanges() {
-      const block = this.sequenceBlock;
-      this.set('blockTitle', block.get('title'));
-    }
+  @action
+  load(element, [ sequenceBlock ]) {
+    this.title = sequenceBlock.title;
   }
-});
+
+  @action
+  revertTitleChanges() {
+    const block = this.args.sequenceBlock;
+    this.title = block.title;
+  }
+
+  @restartableTask
+  *changeTitle() {
+    this.addErrorDisplayFor('title');
+    const isValid = yield this.isValid('title');
+    if (!isValid) {
+      return false;
+    }
+    this.removeErrorDisplayFor('title');
+    this.args.sequenceBlock.title = this.title;
+    yield this.args.sequenceBlock.save();
+  }
+}
+
