@@ -43,6 +43,8 @@ export default class CourseObjectiveListComponent extends Component {
     return await map(cohorts, async cohort => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;
+      const school = await program.school;
+      const allowMultipleCourseObjectiveParents = await school.getConfigValue('allowMultipleCourseObjectiveParents');
       const objectives = await programYear.objectives;
       const objectiveObjects = await map(objectives, async objective => {
         let competencyId = 0;
@@ -78,6 +80,7 @@ export default class CourseObjectiveListComponent extends Component {
       return {
         title: `${program.title} ${cohort.title}`,
         id: cohort.id,
+        allowMultipleParents: allowMultipleCourseObjectiveParents,
         competencies,
       };
     });

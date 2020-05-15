@@ -47,11 +47,10 @@
                       @title={{objective.title}}
                       @allowMultipleParents={{this.selectedCohort.allowMultipleParents}}
                       @isSelected={{contains objective @selected}}
-                      @add={{
-                        pipe
-                          (unless this.selectedCohort.allowMultipleParents (fn @removeFromCohort this.selectedCohort))
-                          (fn @add objective)
-                        }}
+                      @add={{pipe
+                        (if this.selectedCohort.allowMultipleParents (noop) (fn @removeFromCohort this.selectedCohort))
+                        (fn @add objective)
+                      }}
                       @remove={{fn @remove objective}}
                     />
                   </li>
