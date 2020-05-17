@@ -9,20 +9,23 @@ module('Integration | Component | Curriculum Inventory Sequence Block Header', f
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  hooks.beforeEach(async function() {
     const block = this.server.create('curriculum-inventory-sequence-block', { title: 'Block title' });
-    this.set('sequenceBlock', block);
+    this.blockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', block.id);
+  });
+
+  test('it renders', async function(assert) {
+    this.set('sequenceBlock', this.blockModel);
     await render(
       hbs`<CurriculumInventorySequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`
     );
     assert.ok(component.title.isVisible);
-    assert.equal(component.title.value, block.title);
+    assert.equal(component.title.value, this.blockModel.title);
     assert.ok(component.title.isEditable);
   });
 
   test('read-only mode for block in when it can not be updated', async function(assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', { title: 'Block title' });
-    this.set('sequenceBlock', block);
+    this.set('sequenceBlock', this.blockModel);
     await render(
       hbs`<CurriculumInventorySequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{false}} />`
     );
@@ -31,8 +34,7 @@ module('Integration | Component | Curriculum Inventory Sequence Block Header', f
 
   test('change title', async function(assert) {
     const newTitle = 'new title';
-    const block = this.server.create('curriculum-inventory-sequence-block', { title: 'Block title' });
-    this.set('sequenceBlock', block);
+    this.set('sequenceBlock', this.blockModel);
     await render(
       hbs`<CurriculumInventorySequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`
     );
@@ -45,8 +47,7 @@ module('Integration | Component | Curriculum Inventory Sequence Block Header', f
   });
 
   test('change title fails on empty value', async function(assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', { title: 'Block title' });
-    this.set('sequenceBlock', block);
+    this.set('sequenceBlock', this.blockModel);
     await render(
       hbs`<CurriculumInventorySequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`
     );
@@ -58,8 +59,7 @@ module('Integration | Component | Curriculum Inventory Sequence Block Header', f
   });
 
   test('change title fails on too-short value', async function(assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', { title: 'Block title' });
-    this.set('sequenceBlock', block);
+    this.set('sequenceBlock', this.blockModel);
     await render(
       hbs`<CurriculumInventorySequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`
     );
@@ -71,8 +71,7 @@ module('Integration | Component | Curriculum Inventory Sequence Block Header', f
   });
 
   test('change title fails on overlong value', async function(assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', { title: 'Block title' });
-    this.set('sequenceBlock', block);
+    this.set('sequenceBlock', this.blockModel);
     await render(
       hbs`<CurriculumInventorySequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`
     );
@@ -84,14 +83,13 @@ module('Integration | Component | Curriculum Inventory Sequence Block Header', f
   });
 
   test('cancel title changes', async function(assert) {
-    const block = this.server.create('curriculum-inventory-sequence-block', { title: 'Block title' });
-    this.set('sequenceBlock', block);
+    this.set('sequenceBlock', this.blockModel);
     await render(
       hbs`<CurriculumInventorySequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`
     );
     await component.title.edit();
     await component.title.set('some other title');
     await component.title.cancel();
-    assert.equal(component.title.value, block.title);
+    assert.equal(component.title.value, this.blockModel.title);
   });
 });
