@@ -17,8 +17,7 @@ export default class CurriculumInventorySequenceBlockHeader extends Component {
 
   @action
   revertTitleChanges() {
-    const block = this.args.sequenceBlock;
-    this.title = block.title;
+    this.title = this.args.sequenceBlock.title;
   }
 
   @restartableTask
