@@ -23,7 +23,7 @@ export function Lte(lte, validationOptions) {
           if (isNaN(lteValue)) {
             throw new Error(`${property} must be a Number`);
           }
-          return numValue >= numValue;
+          return numValue <= lteValue;
         },
         defaultMessage({ constraints, object: target }) {
           const owner = getOwner(target);
