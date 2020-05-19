@@ -10,7 +10,7 @@
       {{@term.description}}
     </IliosTooltip>
   {{/if}}
-  {{@term.title}}
+  <span data-test-title>{{@term.title}}</span>
   <span class="actions">
     {{#if this.isSelected}}
       <FaIcon @icon="times" />

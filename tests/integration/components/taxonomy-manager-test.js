@@ -15,8 +15,22 @@ module('Integration | Component | taxonomy manager', function(hooks) {
     const vocab1 = this.server.create('vocabulary', { active: true, title: 'Foo', school });
     const vocab2 = this.server.create('vocabulary', { active: false, title: 'Bar', school });
     const vocab3 = this.server.create('vocabulary', { active: true, title: 'Baz', school });
-    const term1 = this.server.create('term', { active: true, title: 'Alpha', vocabulary: vocab1 });
-    const term2 = this.server.create('term', { active: true, title: 'Beta',  vocabulary: vocab1 });
+    const subTerm1 = this.server.create('term', { active: true, title: 'Palo Alto', vocabulary: vocab1 });
+    const subTerm2 = this.server.create('term', { active: true, title: 'Schnitzelwirt', vocabulary: vocab1 });
+    const subTerm3 = this.server.create('term', { active: true, title: 'Rainjacket', vocabulary: vocab1 });
+
+    const term1 = this.server.create('term', {
+      active: true,
+      title: 'Alpha',
+      vocabulary: vocab1,
+      children: [ subTerm2 ]
+    });
+    const term2 = this.server.create('term', {
+      active: true,
+      title: 'Beta',
+      vocabulary: vocab1,
+      children: [ subTerm1, subTerm3 ]
+    });
     const term3 = this.server.create('term', { active: true, title: 'Gamma', vocabulary: vocab2 });
 
     this.vocabModel1 = await this.owner.lookup('service:store').find('vocabulary', vocab1.id);
@@ -28,8 +42,7 @@ module('Integration | Component | taxonomy manager', function(hooks) {
   });
 
   test('it renders', async function(assert) {
-    assert.expect(15);
-
+    assert.expect(20);
     this.set('assignableVocabularies', resolve([ this.vocabModel1, this.vocabModel2, this.vocabModel3 ]));
     this.set('selectedTerms', [ this.termModel1, this.termModel2, this.termModel3 ]);
     this.set('nothing', () => {});
@@ -56,8 +69,13 @@ module('Integration | Component | taxonomy manager', function(hooks) {
     assert.equal(component.availableTerms.length, 2);
     assert.equal(component.availableTerms[0].name, 'Alpha');
     assert.ok(component.availableTerms[0].isSelected);
+    assert.equal(component.availableTerms[0].children.length, 1);
+    assert.equal(component.availableTerms[0].children[0].name, 'Schnitzelwirt');
     assert.equal(component.availableTerms[1].name, 'Beta');
     assert.ok(component.availableTerms[1].isSelected);
+    assert.equal(component.availableTerms[1].children.length, 2);
+    assert.equal(component.availableTerms[1].children[0].name, 'Palo Alto');
+    assert.equal(component.availableTerms[1].children[1].name, 'Rainjacket');
   });
 
   test('select/deselect term', async function(assert) {
@@ -135,7 +153,7 @@ module('Integration | Component | taxonomy manager', function(hooks) {
   });
 
   test('filter terms', async function(assert) {
-    assert.expect(5);
+    assert.expect(14);
     this.set('assignableVocabularies', resolve([ this.vocabModel1, this.vocabModel2]));
     this.set('selectedTerms', [ this.termModel1, this.termModel2, this.termModel3 ]);
 
@@ -146,14 +164,23 @@ module('Integration | Component | taxonomy manager', function(hooks) {
       @remove={{noop}}
     />`);
 
-    assert.ok(component.availableTerms.length, 2);
+    assert.equal(component.availableTerms.length, 2);
     assert.equal(component.availableTerms[0].name, 'Alpha');
+    assert.equal(component.availableTerms[0].children.length, 1);
+    assert.equal(component.availableTerms[0].children[0].name, 'Schnitzelwirt');
     assert.equal(component.availableTerms[1].name, 'Beta');
+    assert.equal(component.availableTerms[1].children.length, 2);
+    assert.equal(component.availableTerms[1].children[0].name, 'Palo Alto');
+    assert.equal(component.availableTerms[1].children[1].name, 'Rainjacket');
 
-    await component.filter.set('Beta');
+    await component.filter.set('Al');
 
-    assert.ok(component.availableTerms.length, 1);
-    assert.equal(component.availableTerms[0].name, 'Beta');
+    assert.equal(component.availableTerms.length, 2);
+    assert.equal(component.availableTerms[0].name, 'Alpha');
+    assert.equal(component.availableTerms[0].children.length, 0);
+    assert.equal(component.availableTerms[1].name, 'Beta');
+    assert.equal(component.availableTerms[1].children.length, 1);
+    assert.equal(component.availableTerms[1].children[0].name, 'Palo Alto');
   });
 
   test('given vocabulary is selected', async function(assert) {

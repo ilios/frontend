@@ -22,7 +22,15 @@ export default class SelectableTermsList extends Component {
         });
       }
     } else if (terms) {
-      this.terms = terms.toArray();
+      if (isEmpty(termFilter)) {
+        this.terms = terms.toArray();
+      } else {
+        const exp = new RegExp(termFilter, 'gi');
+        this.terms = yield filter(terms.toArray(), async term => {
+          const searchString = await term.get('titleWithDescendantTitles');
+          return searchString.match(exp);
+        });
+      }
     } else {
       this.terms = [];
     }

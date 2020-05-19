@@ -15,11 +15,17 @@ const definition = {
     scope: '[data-test-filter]',
     set: fillable(),
   },
-  availableTerms: collection('.selectable-terms-list li', {
-    name: text(),
-    notSelected: notHasClass('selected', 'div'),
-    isSelected: hasClass('selected', 'div'),
-    toggle: clickable('div'),
+  availableTerms: collection('.selectable-terms-list li.top-level', {
+    name: text('[data-test-title]', { at: 0 }),
+    notSelected: notHasClass('selected', 'div', { at: 0}),
+    isSelected: hasClass('selected', 'div', { at: 0}),
+    toggle: clickable('div', {at: 0}),
+    children: collection('.selectable-terms-list li.nested', {
+      name: text('[data-test-title]'),
+      notSelected: notHasClass('selected', 'div'),
+      isSelected: hasClass('selected', 'div'),
+      toggle: clickable('div'),
+    })
   }),
 };
 
