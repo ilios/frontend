@@ -1,9 +1,10 @@
 'use strict';
+/* eslint camelcase: 0 */
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
-const broccoliAssetRevDefaults = require( 'broccoli-asset-rev/lib/default-options' );
+const broccoliAssetRevDefaults = require('broccoli-asset-rev/lib/default-options');
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   const env = EmberApp.env() || 'development';
   const isProductionLikeBuild = ['production', 'staging', 'preview'].indexOf(env) > -1;
   const isTestBuild = env === 'test';
@@ -23,7 +24,7 @@ module.exports = function(defaults) {
     tests: env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
     hinting: isTestBuild,
     babel: {
-      plugins: [ require('ember-auto-import/babel-plugin') ],
+      plugins: [require('ember-auto-import/babel-plugin')],
     },
     'ember-cli-uglify': {
       uglify: {
