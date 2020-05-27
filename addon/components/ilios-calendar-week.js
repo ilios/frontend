@@ -11,7 +11,9 @@ export default class IliosCalendarWeekComponent extends Component {
       return arr.pushObjects(eventObject.prerequisites);
     }, []);
 
-    return preWork.filter(ev => ev.ilmSession);
+    return preWork.filter(ev => ev.ilmSession).filter(ev => {
+      return !ev.isBlanked && ev.isPublished && !ev.isScheduled;
+    });
   }
 
   get nonIlmPreWorkEvents() {
