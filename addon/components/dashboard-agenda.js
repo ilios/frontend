@@ -23,9 +23,9 @@ export default class DashboardAgendaComponent extends Component {
   get ilmPreWorkEvents() {
     const preWork = this.weeksEvents.reduce((arr, eventObject) => {
       return arr.pushObjects(eventObject.prerequisites);
-    }, []);
-
-    preWork.filter(ev => ev.ilmSession);
+    }, []).filter(ev => ev.ilmSession).filter(ev => {
+      return !ev.isBlanked && ev.isPublished && !ev.isScheduled;
+    });
 
     const hashes = [];
     const uniques = [];
