@@ -7,7 +7,7 @@ import fetch from 'fetch';
 export default Route.extend({
   serverVariables: service(),
   session: service(),
-  async model({token}){
+  async model({ token }) {
     const tokenData = jwtDecode(token);
     const audience = tokenData.aud;
     const apiHost = tokenData.apiHost;
@@ -24,8 +24,8 @@ export default Route.extend({
     const jwt = await this.getNewToken(token, apiHost);
 
     const session = this.get('session');
-    let authenticator = 'authenticator:ilios-jwt';
-    session.authenticate(authenticator, {jwt});
+    const authenticator = 'authenticator:ilios-jwt';
+    session.authenticate(authenticator, { jwt });
     session.set('data.apiHost', apiHost);
     session.set('data.apiNameSpace', apiNameSpace);
 
