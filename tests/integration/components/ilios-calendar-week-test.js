@@ -3,6 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { component as weeklyCalendarComponent } from 'ilios-common/page-objects/components/weekly-calendar';
+import moment from 'moment';
 
 module('Integration | Component | ilios calendar week', function(hooks) {
   setupRenderingTest(hooks);
@@ -61,4 +62,112 @@ module('Integration | Component | ilios calendar week', function(hooks) {
     />`);
     await weeklyCalendarComponent.dayHeadings[0].selectDay();
   });
+
+  test('prework', async function(assert) {
+    assert.expect(3);
+
+    const date = moment(new Date('2015-09-30T12:00:00'));
+
+    const event = createUserEventObject();
+    event.startDate = date.clone();
+    event.endDate = date.clone().add(1, 'hour');
+    event.prerequisites = [
+      {
+        name: 'prework 1',
+        startDate: moment().format(),
+        endDate: moment().format(),
+        ilmSession: true,
+        slug: 'whatever',
+        postrequisiteSlug: 'something',
+        postrequisiteName: 'third',
+        isPublished: true,
+        isScheduled: false,
+        isBlanked: false,
+      },
+      {
+        name: 'prework 2',
+        startDate: moment().format(),
+        endDate: moment().format(),
+        location: "room 111",
+        ilmSession: true,
+        slug: 'whatever',
+        postrequisiteSlug: 'something',
+        postrequisiteName: 'first',
+        isPublished: true,
+        isScheduled: false,
+        isBlanked: false,
+      },
+      {
+        name: 'blanked prework',
+        startDate: moment().format(),
+        endDate: moment().format(),
+        location: "room 111",
+        ilmSession: true,
+        slug: 'whatever',
+        postrequisiteSlug: 'something',
+        postrequisiteName: 'first',
+        isPublished: true,
+        isScheduled: false,
+        isBlanked: true,
+      },
+      {
+        name: 'scheduled prework',
+        startDate: moment().format(),
+        endDate: moment().format(),
+        location: "room 111",
+        ilmSession: true,
+        slug: 'whatever',
+        postrequisiteSlug: 'something',
+        postrequisiteName: 'first',
+        isPublished: true,
+        isScheduled: true,
+        isBlanked: false,
+      },
+      {
+        name: 'unpublished prework',
+        startDate: moment().format(),
+        endDate: moment().format(),
+        location: "room 111",
+        ilmSession: true,
+        slug: 'whatever',
+        postrequisiteSlug: 'something',
+        postrequisiteName: 'first',
+        isPublished: true,
+        isScheduled: true,
+        isBlanked: false,
+      },
+    ];
+    this.set('date', date.toDate());
+    this.set('events', [event]);
+    await render(hbs`<IliosCalendarWeek
+      @date={{this.date}}
+      @calendarEvents={{this.events}}
+      @areDaysSelectable={{false}}
+      @changeDate={{noop}}
+      @changeView={{noop}}
+    />`);
+    const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
+    const preworkElements = this.element.querySelectorAll(preworkSelector);
+    assert.equal(preworkElements.length, 2);
+    assert.ok(preworkElements[0].textContent.includes('prework 1'));
+    assert.ok(preworkElements[1].textContent.includes('prework 2'));
+  });
+
+  const createUserEventObject = function () {
+
+    return {
+      user: 1,
+      name: '',
+      offering: 1,
+      startDate: null,
+      endDate: null,
+      calendarColor: '#32edfc',
+      location: 'Rm. 160',
+      lastModified: new Date(),
+      isPublished: true,
+      isScheduled: false,
+      prerequisites: [],
+      postrequisites: [],
+    };
+  };
 });
