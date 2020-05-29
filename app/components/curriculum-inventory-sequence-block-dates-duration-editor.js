@@ -1,106 +1,54 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { gt, reads } from '@ember/object/computed';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { restartableTask } from 'ember-concurrency-decorators';
+import { ValidateIf } from "class-validator";
+import { validatable, IsInt, Gte, Lte, NotBlank, AfterDate } from 'ilios-common/decorators/validation';
 
-const Validations = buildValidations({
-  duration: [
-    validator('number', {
-      allowString: true,
-      integer: true,
-      gte: 0,
-      lte: 1200
-    })
-  ],
-  startDate: [
-    validator('presence', {
-      presence: true,
-      dependentKeys: ['model.duration'],
-      disabled: gt('model.duration', 0)
-    })
-  ],
-  endDate: [
-    validator('date', {
-      dependentKeys: ['model.startDate', 'model.duration'],
-      after: reads('model.startDate'),
-      disabled: computed('model.duration', 'model.startDate', function(){
-        return this.get('model.duration') > 0 && !this.get('model.startDate');
-      })
-    }),
-    validator('presence', {
-      presence: true,
-      dependentKeys: ['model.startDate', 'model.duration'],
-      disabled: computed('model.duration', 'model.startDate', function(){
-        return this.get('model.duration') > 0 && !this.get('model.startDate');
-      })
-    })
-  ]
-});
+@validatable
+export default class CurriculumInventorySequenceBlockDatesDurationEditor extends Component
+{
+  @tracked @NotBlank() @IsInt() @Gte(0) @Lte(1200) duration = null;
+  @tracked @ValidateIf(o => o.hasZeroDuration) @NotBlank() startDate = null;
+  @tracked
+  @ValidateIf(o => o.hasZeroDuration || o.startDate)
+  @NotBlank()
+  @AfterDate('startDate', { granularity: 'day'})
+  endDate = null;
+  @tracked isSaving = null;
 
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  classNames: ['curriculum-inventory-sequence-block-dates-duration-editor'],
-  tagName: 'section',
-
-  duration: null,
-  endDate: null,
-  isSaving: false,
-  sequenceBlock: null,
-  startDate: null,
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    const sequenceBlock = this.sequenceBlock;
-    const startDate =  sequenceBlock.get('startDate');
-    const endDate = sequenceBlock.get('endDate');
-    const duration = sequenceBlock.get('duration');
-    this.setProperties({ startDate, endDate, duration });
-  },
-
-  actions: {
-    changeStartDate(startDate) {
-      this.set('startDate', startDate);
-    },
-
-    changeEndDate(endDate) {
-      this.set('endDate', endDate);
-    },
-
-    save() {
-      this.set('isSaving', true);
-      this.send('addErrorDisplaysFor', ['duration', 'startDate', 'endDate']);
-      this.validate().then(({validations}) => {
-        if (validations.get('isValid')) {
-          const startDate = this.startDate;
-          const endDate = this.endDate;
-          const duration = this.duration;
-          this.save(startDate, endDate, duration);
-        } else {
-          this.set('isSaving', false);
-        }
-      });
-    },
-
-    cancel() {
-      this.cancel();
+  get hasZeroDuration() {
+    const num = Number(this.duration);
+    if (Number.isNaN(num)) {
+      return false;
     }
-  },
-
-  keyUp(event) {
-    const keyCode = event.keyCode;
-    const target = event.target;
-
-    if ('text' !== target.type) {
-      return;
-    }
-
-    if (13 === keyCode) {
-      this.send('save');
-      return;
-    }
-
-    if (27 === keyCode) {
-      this.send('cancel');
-    }
+    return (0 === num);
   }
-});
+
+  @action
+  load(element, [ sequenceBlock ]) {
+    this.startDate = sequenceBlock.startDate;
+    this.endDate = sequenceBlock.endDate;
+    this.duration = sequenceBlock.duration;
+  }
+
+  @action
+  changeStartDate(startDate) {
+    this.startDate = startDate;
+  }
+
+  @action
+  changeEndDate(endDate) {
+    this.endDate = endDate;
+  }
+
+  @restartableTask
+  *save() {
+    this.addErrorDisplayForAllFields();
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
+    }
+    yield this.args.save(this.startDate, this.endDate, this.duration);
+  }
+}
