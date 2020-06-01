@@ -115,6 +115,9 @@ module('Integration | Component | dashboard agenda', function (hooks) {
           preWork[4],
           preWork[5],
         ],
+        isPublished: true,
+        isScheduled: false,
+        isBlanked: false,
       },
       {
         name: 'second',
@@ -125,6 +128,9 @@ module('Integration | Component | dashboard agenda', function (hooks) {
         equipmentRequired: false,
         attireRequired: false,
         postrequisites: [],
+        isPublished: true,
+        isScheduled: false,
+        isBlanked: false,
       },
       {
         name: 'third',
@@ -138,6 +144,9 @@ module('Integration | Component | dashboard agenda', function (hooks) {
         prerequisites: [
           preWork[0],
         ],
+        isPublished: true,
+        isScheduled: false,
+        isBlanked: false,
       },
     ];
 
