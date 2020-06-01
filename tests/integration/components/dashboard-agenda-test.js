@@ -148,6 +148,54 @@ module('Integration | Component | dashboard agenda', function (hooks) {
         isScheduled: false,
         isBlanked: false,
       },
+      {
+        name: 'blanked event with published prework',
+        startDate: today.format(),
+        location: 789,
+        lastModified: today.format(),
+        attendanceRequired: false,
+        equipmentRequired: false,
+        attireRequired: false,
+        postrequisites: [],
+        prerequisites: [
+          preWork[0],
+        ],
+        isPublished: true,
+        isScheduled: false,
+        isBlanked: true,
+      },
+      {
+        name: 'scheduled event with published prework',
+        startDate: today.format(),
+        location: 789,
+        lastModified: today.format(),
+        attendanceRequired: false,
+        equipmentRequired: false,
+        attireRequired: false,
+        postrequisites: [],
+        prerequisites: [
+          preWork[0],
+        ],
+        isPublished: false,
+        isScheduled: true,
+        isBlanked: false,
+      },
+      {
+        name: 'unpublished event with published prework',
+        startDate: today.format(),
+        location: 789,
+        lastModified: today.format(),
+        attendanceRequired: false,
+        equipmentRequired: false,
+        attireRequired: false,
+        postrequisites: [],
+        prerequisites: [
+          preWork[0],
+        ],
+        isPublished: false,
+        isScheduled: false,
+        isBlanked: false,
+      },
     ];
 
     preWork[0].postrequisites = [mockEvents[2]];
@@ -168,7 +216,7 @@ module('Integration | Component | dashboard agenda', function (hooks) {
   });
 
   test('it renders with events', async function (assert) {
-    assert.expect(11);
+    assert.expect(17);
     this.owner.register('service:user-events', userEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
@@ -176,8 +224,8 @@ module('Integration | Component | dashboard agenda', function (hooks) {
     const title = 'h3';
 
     assert.dom(this.element.querySelector(title)).hasText('My Activities for the next 60 days');
-    assert.equal(this.element.querySelectorAll('table tr').length, 3);
-    for (let i = 0; i < 3; i++) {
+    assert.equal(this.element.querySelectorAll('table tr').length, 6);
+    for (let i = 0; i < 6; i++) {
       const tds = this.element.querySelectorAll(`table tr:nth-of-type(${i + 1}) td`);
       assert.dom(tds[0]).hasText(moment(mockEvents[i].startDate).format('dddd, MMMM Do, YYYY h:mma'));
       assert.dom(tds[1]).hasText(mockEvents[i].name);

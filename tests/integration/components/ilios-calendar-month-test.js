@@ -195,6 +195,59 @@ module('Integration | Component | ilios calendar month', function(hooks) {
     assert.ok(preworkElements[1].textContent.includes('prework 2'));
   });
 
+  test('prework to unpublished/scheduled/blanked events is not visible', async function(assert) {
+    assert.expect(1);
+
+    const date = moment(new Date('2015-09-30T12:00:00'));
+    const publishedPrework = {
+      name: 'published prework',
+      startDate: moment().format(),
+      endDate: moment().format(),
+      ilmSession: true,
+      slug: 'whatever',
+      postrequisiteSlug: 'something',
+      postrequisiteName: 'third',
+      isPublished: true,
+      isScheduled: false,
+      isBlanked: false,
+    };
+    const unpublishedEvent = createUserEventObject();
+    unpublishedEvent.isPublished = false;
+    unpublishedEvent.isScheduled = false;
+    unpublishedEvent.isBlanked = false;
+
+    const scheduledEvent = createUserEventObject();
+    scheduledEvent.isPublished = true;
+    scheduledEvent.isScheduled = true;
+    scheduledEvent.isBlanked = false;
+
+    const blankedEvent = createUserEventObject();
+    blankedEvent.isPublished = true;
+    blankedEvent.isScheduled = false;
+    blankedEvent.isBlanked = true;
+
+    const events = [unpublishedEvent, scheduledEvent, blankedEvent];
+
+    events.forEach(event => {
+      event.startDate = date.clone();
+      event.endDate = date.clone().add(1, 'hour');
+      event.prerequisites = [
+        publishedPrework
+      ];
+    });
+
+    this.set('date', date.toDate());
+    this.set('events', events);
+    await render(hbs`<IliosCalendarMonth
+      @date={{this.date}}
+      @calendarEvents={{this.events}}
+      @selectEvent={{noop}}
+    />`);
+    const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
+    const preworkElements = this.element.querySelectorAll(preworkSelector);
+    assert.equal(preworkElements.length, 0);
+  });
+
   const createUserEventObject = function () {
 
     return {
