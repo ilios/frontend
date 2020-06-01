@@ -7,8 +7,11 @@ export default class IliosCalendarWeekComponent extends Component {
     return moment(this.args.date).startOf('week').format('MMMM Do YYYY');
   }
   get ilmPreWorkEvents() {
-    const preWork =  this.args.calendarEvents.reduce((arr, eventObject) => {
-      return arr.pushObjects(eventObject.prerequisites);
+    const preWork =  this.args.calendarEvents.reduce((arr, ev) => {
+      if (!ev.isBlanked && ev.isPublished && !ev.isScheduled) {
+        arr.pushObjects(ev.prerequisites);
+      }
+      return arr;
     }, []);
 
     return preWork.filter(ev => ev.ilmSession).filter(ev => {
