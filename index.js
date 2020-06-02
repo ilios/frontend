@@ -104,9 +104,16 @@ module.exports = {
         return `<link rel="preload" href="${rootUrl}/assets/fonts/${font}" as="font" type="font/woff2" crossorigin="anonymous">`;
       });
       const linkText = links.join("\n");
+      let polyfillIoScript = '';
+
+      if (env.environment === "production") {
+        //provides polyfills based on the users browser, Safari 12 requires Intl.PluralRules and Intl.RelativeTimeFormat for each locale we support
+        polyfillIoScript = '<script src="https://polyfill.io/v3/polyfill.min.js?version=3.52.1&features=Intl.PluralRules%252CIntl.PluralRules.%257Elocale.en%252CIntl.PluralRules.%257Elocale.es%252CIntl.PluralRules.%257Elocale.fr%252CIntl.RelativeTimeFormat%252CIntl.RelativeTimeFormat.%257Elocale.en%252CIntl.RelativeTimeFormat.%257Elocale.fr%252CIntl.RelativeTimeFormat.%257Elocale.es"></script>';
+      }
 
       return `
         <title>Ilios</title>
+        ${polyfillIoScript}
         ${linkText}
       `;
     }
