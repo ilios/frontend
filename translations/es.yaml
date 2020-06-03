@@ -10,6 +10,7 @@ general:
   advancedOptions: "Opciones Avanzadas"
   allCourses: "Todos Los Cursos"
   allEvents: "Todos los Eventos"
+  allMaterials: "Todos los Materiales"
   allWeeks: "Todas las Semanas"
   apiVersionMismatch: "Incompatibilidad de versión de API"
   apiVersionMismatchDetails: "Este interfaz de usuario no corresponde a la versión del API con el cual se comunica. Por favor notifique a un administrador o el dueño técnico del sistema con respecto a este error '<em>'inmediatamente'</em>', no puede trabajar con Ilios hasta que esto ha sido resuelto"

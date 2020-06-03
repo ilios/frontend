@@ -10,6 +10,7 @@ general:
   advancedOptions: "Options avancées"
   allCourses: "Tous les Cours"
   allEvents: "Tous les Événements"
+  allMaterials: "Tous les matériaux"
   allWeeks: "Toutes les Semaines"
   apiVersionMismatch: "API  conflit de version"
   apiVersionMismatchDetails: "Il s'agit généralement d'une erreur temporaire dans votre navigateur; Ilios est en mode lecture seule jusqu'à ce qu'il soit résolu. Si la mise à jour ne vous aide pas, veuillez aviser un administrateur ou le propriétaire de la technologie du système de cette erreur. Vous pouvez également essayer un autre navigateur."
