@@ -139,6 +139,7 @@ general:
   learnerGroups: "Groupes d'Étudiants"
   learnerGroupsManageTitle: "Manager groupes d'apprenants"
   learners: "Étudiants"
+  learnersAndLearnerGroups: "Étudiants et Groupes d'Étudiants"
   learningMaterialManageTitle: "Manager Matériels d'Étude"
   learningMaterials: "Matériels d'Étude"
   learningMaterialsSummary: "Résumé Matériels d'Étude"
@@ -153,6 +154,7 @@ general:
   login: Login
   makeRecurring: "Activité Récurrente"
   manageLeadership: "Gérer Dirigeants"
+  manageLearners: "Manager Étudiants"
   markAsScheduled: "Faire à prévu"
   materials: "Matériels"
   mesh: MeSH

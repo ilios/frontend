@@ -5,7 +5,6 @@ export default class SessionIndexController extends Controller {
     'sessionObjectiveDetails',
     'sessionTaxonomyDetails',
     'isManagingLearnerGroups',
-    'sessionLearnergroupDetails',
     'sessionLeadershipDetails',
     'sessionManageLeadership',
     'addOffering',
@@ -13,7 +12,6 @@ export default class SessionIndexController extends Controller {
   sessionObjectiveDetails = false;
   sessionTaxonomyDetails = false;
   isManagingLearnerGroups = false;
-  sessionLearnergroupDetails = false;
   sessionLeadershipDetails = false;
   sessionManageLeadership = false;
   showNewOfferingForm = false;

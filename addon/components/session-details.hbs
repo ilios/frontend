@@ -27,28 +27,11 @@
     />
   {{/if}}
   {{#if @session.isIndependentLearning}}
-    {{#if
-      (or
-        (eq (get (await @session.ilmSession.learnerGroups) "length") 0)
-        @sessionLearnergroupDetails
-      )
-    }}
-      <DetailLearnergroups
-        @ilmSession={{await @session.ilmSession}}
-        @cohorts={{await @session.course.cohorts}}
-        @isIlmSession={{true}}
-        @editable={{@editable}}
-        @isManaging={{@isManagingLearnerGroups}}
-        @setIsManaging={{fn @setIsManagingLearnerGroups}}
-        @collapse={{fn @setSessionLearnergroupDetails false}}
-        @expand={{fn @setSessionLearnergroupDetails true}}
-      />
-    {{else}}
-      <CollapsedLearnergroups
-        @subject={{await @session.ilmSession}}
-        @expand={{fn @setSessionLearnergroupDetails true}}
-      />
-    {{/if}}
+    <DetailLearnersAndLearnerGroups
+      @ilmSession={{await @session.ilmSession}}
+      @editable={{@editable}}
+      @cohorts={{await @session.course.cohorts}}
+    />
     <DetailInstructors
       @ilmSession={{await @session.ilmSession}}
       @editable={{@editable}}
