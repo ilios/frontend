@@ -1,6 +1,8 @@
 export async function loadPolyfills() {
-  await intlPluralRules();
-  await intlRelativeTimeFormat();
+  await Promise.all([
+    intlPluralRules(),
+    intlRelativeTimeFormat(),
+  ]);
 }
 
 async function intlPluralRules() {
@@ -9,17 +11,22 @@ async function intlPluralRules() {
   }
 
   await import('@formatjs/intl-pluralrules/polyfill');
-  await import('@formatjs/intl-pluralrules/dist/locale-data/en');
-  await import('@formatjs/intl-pluralrules/dist/locale-data/es');
-  await import('@formatjs/intl-pluralrules/dist/locale-data/fr');
+  await Promise.all([
+    import('@formatjs/intl-pluralrules/dist/locale-data/en'),
+    import('@formatjs/intl-pluralrules/dist/locale-data/es'),
+    import('@formatjs/intl-pluralrules/dist/locale-data/fr'),
+  ]);
 }
 
 async function intlRelativeTimeFormat() {
   if ('Intl' in window && 'RelativeTimeFormat' in Intl) {
     return;
   }
-  import('@formatjs/intl-relativetimeformat/polyfill');
-  import('@formatjs/intl-relativetimeformat/dist/locale-data/en');
-  import('@formatjs/intl-relativetimeformat/dist/locale-data/es');
-  import('@formatjs/intl-relativetimeformat/dist/locale-data/fr');
+
+  await import('@formatjs/intl-relativetimeformat/polyfill');
+  await Promise.all([
+    import('@formatjs/intl-relativetimeformat/dist/locale-data/en'),
+    import('@formatjs/intl-relativetimeformat/dist/locale-data/es'),
+    import('@formatjs/intl-relativetimeformat/dist/locale-data/fr'),
+  ]);
 }
