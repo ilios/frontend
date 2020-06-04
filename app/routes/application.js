@@ -4,6 +4,7 @@ import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mi
 import config from 'ilios/config/environment';
 import { all } from 'rsvp';
 import * as Sentry from '@sentry/browser';
+import { loadPolyfills } from 'ilios-common/utils/load-polyfills';
 
 export default Route.extend(ApplicationRouteMixin, {
   currentUser: service(),
@@ -22,7 +23,8 @@ export default Route.extend(ApplicationRouteMixin, {
     });
   },
 
-  beforeModel() {
+  async beforeModel() {
+    await loadPolyfills();
     const intl = this.intl;
     const moment = this.moment;
     const locale = intl.get('locale');

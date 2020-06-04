@@ -12,7 +12,8 @@ const isProductionLikeBuild = ['production', 'preview'].includes(process.env.EMB
 if (isCI || isProductionLikeBuild) {
   browsers.push('last 1 edge versions');
   browsers.push('firefox esr'); //sometimes points to the last 2 ESR releases when they overlap
-  browsers.push('last 1 ios versions');
+  browsers.push('last 4 ios versions');
+  browsers.push('last 3 safari versions');
 }
 
 module.exports = {
