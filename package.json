@@ -25,8 +25,10 @@
   },
   "dependencies": {
     "@ember/render-modifiers": "^1.0.2",
-    "@formatjs/intl-pluralrules": "^2.2.1",
-    "@formatjs/intl-relativetimeformat": "^5.2.1",
+    "@formatjs/intl-numberformat": "4.2.2",
+    "@formatjs/intl-pluralrules": "2.2.2",
+    "@formatjs/intl-relativetimeformat": "5.2.2",
+    "@formatjs/intl-utils": "3.2.0",
     "@fortawesome/ember-fontawesome": "^0.2.0",
     "@fortawesome/free-brands-svg-icons": "^5.6.1",
     "@fortawesome/free-regular-svg-icons": "^5.6.1",
