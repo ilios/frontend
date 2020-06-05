@@ -143,7 +143,7 @@ module('Integration | Component | dashboard materials', function(hooks) {
     const fifthFirstOffering = `${materials}:nth-of-type(5) td:nth-of-type(5)`;
 
     assert.dom(this.element.querySelector(title)).hasText('My Learning Materials for the next 60 days');
-    assert.dom('[data-test-all-materials-link]').hasText('View: My Materials');
+    assert.dom('[data-test-all-materials-link]').hasText('View: All Materials');
 
     assert.ok(find(firstLmTitle).textContent.includes('title1'));
     assert.equal(find(firstLmLink).href, 'http://myhost.com/url1?inline');
@@ -214,7 +214,7 @@ module('Integration | Component | dashboard materials', function(hooks) {
     const body = 'p';
 
     await render(hbs`<DashboardMaterials />`);
-    assert.dom('[data-test-all-materials-link]').hasText('View: My Materials');
+    assert.dom('[data-test-all-materials-link]').hasText('View: All Materials');
     assert.dom(this.element.querySelector(title)).hasText('My Learning Materials for the next 60 days');
     assert.dom(this.element.querySelector(body)).hasText('None');
   });

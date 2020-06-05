@@ -10,6 +10,7 @@ general:
   advancedOptions: "Advanced Options"
   allCourses: "All Courses"
   allEvents: "All Events"
+  allMaterials: "All Materials"
   allWeeks: "All Weeks"
   apiVersionMismatch: "API Version Mismatch"
   apiVersionMismatchDetails: "This is usually a temporary error in your browser; Ilios is in read-only mode until it resolved. If updating does not help, please notify an administrator or technical owner of the system regarding this error. You may also wish to try a different browser."
