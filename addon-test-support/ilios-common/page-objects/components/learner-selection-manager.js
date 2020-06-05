@@ -1,7 +1,6 @@
 import {clickable, collection, create, fillable, hasClass, isVisible, notHasClass, text} from 'ember-cli-page-object';
 import detailLearnerList from './detail-learner-list';
 
-
 const definition = {
   scope: '[data-test-learner-selection-manager]',
   selectedLearners: {

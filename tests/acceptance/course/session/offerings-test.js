@@ -197,8 +197,8 @@ module('Acceptance | Session - Offerings', function(hooks) {
     await form.duration.minutes.set(15);
     await form.location.set('Rm. 111');
 
-    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[0].add();
-    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[1].add();
+    await form.learnerGroups.manager.availableGroups.cohorts[0].trees[0].add();
+    await form.learnerGroups.manager.availableGroups.cohorts[0].trees[1].add();
     await form.instructors.manager.search('guy');
     await form.instructors.manager.searchResults[0].add();
     await form.save();
@@ -238,8 +238,8 @@ module('Acceptance | Session - Offerings', function(hooks) {
     await form.duration.minutes.set(15);
     await form.location.set('Rm. 111');
 
-    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[0].add();
-    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[1].add();
+    await form.learnerGroups.manager.availableGroups.cohorts[0].trees[0].add();
+    await form.learnerGroups.manager.availableGroups.cohorts[0].trees[1].add();
     await form.instructors.manager.search('guy');
     await form.instructors.manager.searchResults[0].add();
     await form.save();
@@ -280,8 +280,8 @@ module('Acceptance | Session - Offerings', function(hooks) {
     await form.duration.hours.set(15);
     await form.duration.minutes.set(15);
 
-    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[0].add();
-    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[1].add();
+    await form.learnerGroups.manager.availableGroups.cohorts[0].trees[0].add();
+    await form.learnerGroups.manager.availableGroups.cohorts[0].trees[1].add();
     await form.save();
 
     const block = page.offerings.dateBlocks[0];
@@ -327,7 +327,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
     await form.duration.minutes.set(10);
     await form.location.set('Rm. 111');
 
-    await form.learnerGroups.manager.selectedLearnerGroups[0].removeAll();
+    await form.learnerGroups.manager.selectedGroups.list.trees[0].removeAllSubgroups();
     await form.instructors.manager.instructors[0].remove();
     await form.instructors.manager.instructorGroups[0].remove();
 
@@ -376,8 +376,8 @@ module('Acceptance | Session - Offerings', function(hooks) {
     await form.recurring.toggle();
     await form.recurring.setWeeks(4);
 
-    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[0].add();
-    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[1].add();
+    await form.learnerGroups.manager.availableGroups.cohorts[0].trees[0].add();
+    await form.learnerGroups.manager.availableGroups.cohorts[0].trees[1].add();
 
     await form.save();
 
@@ -431,8 +431,8 @@ module('Acceptance | Session - Offerings', function(hooks) {
     await form.recurring.toggle();
     await form.recurring.setWeeks(4);
 
-    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[0].add();
-    await form.learnerGroups.manager.availableLearnerGroups.cohorts[0].topLevelGroups[1].add();
+    await form.learnerGroups.manager.availableGroups.cohorts[0].trees[0].add();
+    await form.learnerGroups.manager.availableGroups.cohorts[0].trees[1].add();
 
     await form.save();
 

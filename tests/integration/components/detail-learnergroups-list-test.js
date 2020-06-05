@@ -1,24 +1,15 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios-common/page-objects/components/detail-learnergroups-list';
 
 module('Integration | Component | detail learnergroups list', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
-    const set1 = 'fieldset:nth-of-type(1)';
-    const set1Legend = set1 + ' legend';
-    const set1Group1 = set1 + ' li:nth-of-type(1)';
-    const set1Group2 = set1 + ' li:nth-of-type(2)';
-    const set1Group3 = set1 + ' li:nth-of-type(3)';
-
-    const set2 = 'fieldset:nth-of-type(2)';
-    const set2Legend = set2 + ' legend';
-    const set2Group1 = set2 + ' li:nth-of-type(1)';
-    const set2Group2 = set2 + ' li:nth-of-type(2)';
+  hooks.beforeEach(async function() {
     const users = this.server.createList('user', 5);
 
     const tlg1 = this.server.create('learner-group', {
@@ -44,27 +35,58 @@ module('Integration | Component | detail learnergroups list', function(hooks) {
       title: 'sub group 2',
       parent: tlg2,
     });
+
     const store = this.owner.lookup('service:store');
-    const tlg1Model = await store.find('learner-group', tlg1.id);
-    const subGroup1Model = await store.find('learner-group', subGroup1.id);
-    const subSubGroupModel = await store.find('learner-group', subSubGroup1.id);
-    const subGroup2Model = await store.find('learner-group', subGroup2.id);
+    this.tlg1 = await store.find('learner-group', tlg1.id);
+    this.subGroup1 = await store.find('learner-group', subGroup1.id);
+    this.subSubGroup = await store.find('learner-group', subSubGroup1.id);
+    this.subGroup2 = await store.find('learner-group', subGroup2.id);
+  });
 
-    this.set('learnerGroups', [ tlg1Model, subGroup1Model, subSubGroupModel, subGroup2Model ]);
-    this.set('nothing', () => {});
-
+  test('it renders', async function(assert) {
+    this.set('learnerGroups', [ this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2 ]);
     await render(hbs`<DetailLearnergroupsList
-      @learnerGroups={{learnerGroups}}
-      @remove={{action nothing}}
+      @learnerGroups={{this.learnerGroups}}
+      @remove={{noop}}
     />`);
 
-    assert.dom(set1Legend).hasText('tlg1 ( )');
-    assert.dom(set1Group1).hasText('tlg1 (2)');
-    assert.dom(set1Group2).hasText('sub group 1 (3)');
-    assert.equal(find(set1Group3).textContent.trim().replace(/[\n\s]+/g, ''), 'subsubgroup1(1)');
+    assert.equal(component.trees.length, 2);
+    assert.ok(component.trees[0].title, 'tlg1 ( )');
+    assert.equal(component.trees[0].subgroups.length, 3);
+    assert.ok(component.trees[0].subgroups[0].title, 'tlg1 (2)');
+    assert.ok(component.trees[0].subgroups[1].title, 'sub group 1 (3)');
+    assert.ok(component.trees[0].subgroups[2].title, 'subsubgroup1(1)');
+    assert.equal(component.trees[1].subgroups.length, 2);
+    assert.ok(component.trees[1].title, 'tlg2 ( )');
+    assert.ok(component.trees[1].subgroups[0].title, 'tlg2 (2)');
+    assert.ok(component.trees[1].subgroups[1].title, 'sub group 2 (0)');
+  });
 
-    assert.dom(set2Legend).hasText('tlg2 ( )');
-    assert.dom(set2Group1).hasText('tlg2 (2)');
-    assert.dom(set2Group2).hasText('sub group 2 (0)');
+  test('remove', async function(assert) {
+    assert.expect(1);
+    this.set('learnerGroups', [ this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2 ]);
+    this.set('remove', learnerGroup => {
+      assert.equal(this.subGroup2, learnerGroup);
+    });
+    await render(hbs`<DetailLearnergroupsList
+      @learnerGroups={{this.learnerGroups}}
+      @remove={{this.remove}}
+      @isManaging={{true}}
+    />`);
+    await component.trees[1].subgroups[1].remove();
+  });
+
+  test('remove-all', async function(assert) {
+    assert.expect(1);
+    this.set('learnerGroups', [ this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2 ]);
+    this.set('remove', learnerGroup => {
+      assert.equal(this.tlg1, learnerGroup);
+    });
+    await render(hbs`<DetailLearnergroupsList
+      @learnerGroups={{this.learnerGroups}}
+      @remove={{this.remove}}
+      @isManaging={{true}}
+    />`);
+    await component.trees[0].removeAllSubgroups();
   });
 });

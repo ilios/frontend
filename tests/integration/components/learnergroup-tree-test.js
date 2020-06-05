@@ -1,9 +1,9 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import ENV from 'dummy/config/environment';
+import { component } from 'ilios-common/page-objects/components/learnergroup-tree';
 
 module('Integration | Component | learnergroup-tree', function(hooks) {
   setupRenderingTest(hooks);
@@ -13,6 +13,7 @@ module('Integration | Component | learnergroup-tree', function(hooks) {
     const thirdLevelLearnerGroup1 = this.server.create('learner-group', { title: 'Third 1' });
     const thirdLevelLearnerGroup2 = this.server.create('learner-group', { title: 'Third 2' });
     const thirdLevelLearnerGroup3 = this.server.create('learner-group', { title: 'Third 3' });
+
     const secondLevelLearnerGroup1 = this.server.create('learner-group', {
       title: 'Second 1',
       children: [ thirdLevelLearnerGroup1, thirdLevelLearnerGroup2 ]
@@ -44,102 +45,60 @@ module('Integration | Component | learnergroup-tree', function(hooks) {
   });
 
   test('the group tree renders', async function(assert) {
-    assert.expect(8);
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', []);
-    this.set('nothing', parseInt);
-
-    await render(hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{action this.nothing}} />`);
-    // feels kludgly, but i can't figure out a different/better way
-    // to correctly anchor this element tree otherwise for CSS selectors below.
-    // [ST 2020/02/03]
-    const rootElem = ENV.APP.rootElement;
-    const testSelector = '[data-test-learnergroup-tree]';
-    assert.dom(`${testSelector}`).exists({ count: 7 });
-    assert.dom(`${rootElem} > ${testSelector}:nth-of-type(1) > span`).hasText('Top Group');
-    assert.dom(`${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1) > span`).hasText('Second 1');
-    assert.dom(`${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(2) > span`).hasText('Second 2');
-    assert.dom(`${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(3) > span`).hasText('Second 3');
-    assert.dom(
-      `${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1) > span`
-    ).hasText('Third 1');
-    assert.dom(
-      `${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(2) > span`
-    ).hasText('Third 2');
-    assert.dom(
-      `${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(2) > ul > ${testSelector}:nth-of-type(1) > span`
-    ).hasText('Third 3');
+    await render(hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{noop}} />`);
+    assert.equal(component.title, 'Top Group');
+    assert.equal(component.subgroups.length, 3);
+    assert.equal(component.subgroups[0].title, 'Second 1');
+    assert.equal(component.subgroups[0].subgroups.length, 2);
+    assert.equal(component.subgroups[0].subgroups[0].title, 'Third 1');
+    assert.equal(component.subgroups[0].subgroups[1].title, 'Third 2');
+    assert.equal(component.subgroups[0].subgroups.length, 2);
+    assert.equal(component.subgroups[1].subgroups[0].title, 'Third 3');
+    assert.equal(component.subgroups[1].title, 'Second 2');
+    assert.equal(component.subgroups[2].title, 'Second 3');
   });
 
   test('branches and leaves are styled accordingly', async function(assert) {
-    assert.expect(7);
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', []);
-    this.set('nothing', parseInt);
-
-    await render(hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{action this.nothing}} />`);
-    const rootElem = ENV.APP.rootElement;
-    const testSelector = '[data-test-learnergroup-tree]';
-    assert.dom(`${rootElem} > ${testSelector}:nth-of-type(1)`).hasClass('strong');
-    assert.dom(`${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1)`).hasClass('strong');
-    assert.dom(`${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(2)`).hasClass('strong');
-    assert.dom(`${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(3)`).hasClass('em');
-    assert.dom(
-      `${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1)`
-    ).hasClass('em');
-    assert.dom(
-      `${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(2)`
-    ).hasClass('em');
-    assert.dom(
-      `${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(2) > ul > ${testSelector}:nth-of-type(1)`
-    ).hasClass('em');
+    await render(hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{noop}} />`);
+    assert.ok(component.isStyledAsBranch);
+    assert.notOk(component.isStyledAsLeaf);
+    assert.ok(component.subgroups[0].isStyledAsBranch);
+    assert.notOk(component.subgroups[0].isStyledAsLeaf);
+    assert.ok(component.subgroups[1].isStyledAsBranch);
+    assert.notOk(component.subgroups[1].isStyledAsLeaf);
+    assert.notOk(component.subgroups[2].isStyledAsBranch);
+    assert.ok(component.subgroups[2].isStyledAsLeaf);
   });
 
   test('selected groups are hidden from view', async function(assert) {
-    assert.expect(7);
     this.set('learnerGroup', this.topLevelLearnerGroup);
-    this.set('selectedGroups', [this.thirdLevelLearnerGroup2, this.thirdLevelLearnerGroup3, this.secondLevelLearnerGroup2]);
-    this.set('nothing', parseInt);
-    await render(hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{action this.nothing}} />`);
-    const rootElem = ENV.APP.rootElement;
-    const testSelector = '[data-test-learnergroup-tree]';
-    assert.dom(`${rootElem} > ${testSelector}:nth-of-type(1)`).hasNoAttribute('hidden');
-    assert.dom(`${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1)`).hasNoAttribute('hidden');
-    assert.dom(`${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(2)`).hasAttribute('hidden');
-    assert.dom(`${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(3)`).hasNoAttribute('hidden');
-    assert.dom(
-      `${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1)`
-    ).hasNoAttribute('hidden');
-    assert.dom(
-      `${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(2)`
-    ).hasAttribute('hidden');
-    assert.dom(
-      `${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(2) > ul > ${testSelector}:nth-of-type(1)`
-    ).hasAttribute('hidden');
+    this.set('selectedGroups', [ this.thirdLevelLearnerGroup2, this.thirdLevelLearnerGroup3, this.secondLevelLearnerGroup2 ]);
+    await render(hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{noop}} />`);
+    assert.notOk(component.isHidden);
+    assert.notOk(component.subgroups[0].isHidden);
+    assert.notOk(component.subgroups[0].subgroups[0].isHidden);
+    assert.ok(component.subgroups[0].subgroups[1].isHidden);
+    assert.ok(component.subgroups[1].isHidden);
+    assert.ok(component.subgroups[1].subgroups[0].isHidden);
+    assert.notOk(component.subgroups[2].isHidden);
   });
 
   test('filter by learner group title', async function(assert) {
-    assert.expect(7);
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups');
     this.set('filter', 'Second 2');
-    this.set('nothing', parseInt);
-    await render(hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @filter={{this.filter}} @add={{action this.nothing}} />`);
-    const rootElem = ENV.APP.rootElement;
-    const testSelector = '[data-test-learnergroup-tree]';
-    assert.dom(`${rootElem} > ${testSelector}:nth-of-type(1)`).hasNoAttribute('hidden');
-    assert.dom(`${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1)`).hasAttribute('hidden');
-    assert.dom(`${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(2)`).hasNoAttribute('hidden');
-    assert.dom(`${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(3)`).hasAttribute('hidden');
-    assert.dom(
-      `${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1)`
-    ).hasAttribute('hidden');
-    assert.dom(
-      `${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(2)`
-    ).hasAttribute('hidden');
-    assert.dom(
-      `${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(2) > ul > ${testSelector}:nth-of-type(1)`
-    ).hasNoAttribute('hidden');
+    await render(hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @filter={{this.filter}} @add={{noop}} />`);
+    assert.notOk(component.isHidden);
+    assert.ok(component.subgroups[0].isHidden);
+    assert.ok(component.subgroups[0].subgroups[0].isHidden);
+    assert.ok(component.subgroups[0].subgroups[1].isHidden);
+    assert.notOk(component.subgroups[1].isHidden);
+    assert.notOk(component.subgroups[1].subgroups[0].isHidden);
+    assert.ok(component.subgroups[2].isHidden);
   });
 
   test('add action fires', async function(assert) {
@@ -149,9 +108,7 @@ module('Integration | Component | learnergroup-tree', function(hooks) {
     this.set('add', (learnerGroup) => {
       assert.equal(learnerGroup, this.thirdLevelLearnerGroup2);
     });
-    await render(hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{action this.add}} />`);
-    const rootElem = ENV.APP.rootElement;
-    const testSelector = '[data-test-learnergroup-tree]';
-    await click(`${rootElem} > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(1) > ul > ${testSelector}:nth-of-type(2) > span`);
+    await render(hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{this.add}} />`);
+    await component.subgroups[0].subgroups[1].add();
   });
 });

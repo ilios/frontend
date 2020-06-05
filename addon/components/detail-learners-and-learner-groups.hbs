@@ -3,7 +3,7 @@
     data-test-detail-learners-and-learner-groups
 >
   <div class="detail-learners-and-learner-groups-header">
-    <div class="title">
+    <div class="title" data-test-title>
       {{#if this.isManaging}}
         <span class="detail-specific-title">
           {{t "general.manageLearners"}}
@@ -15,14 +15,14 @@
     </div>
     <div class="actions">
       {{#if this.isManaging}}
-        <button class="bigadd" type="button" {{on "click" (perform this.save)}}>
+        <button class="bigadd" type="button" {{on "click" (perform this.save)}} data-test-save>
           <FaIcon @icon="check" />
         </button>
-        <button class="bigcancel" type="button" {{on "click" this.cancel}}>
+        <button class="bigcancel" type="button" {{on "click" this.cancel}} data-test-cancel>
           <FaIcon @icon="undo" />
         </button>
       {{else if @editable}}
-        <button type="button" {{on "click" (perform this.manage)}}>
+        <button type="button" {{on "click" (perform this.manage)}} data-test-manage>
           {{t "general.manageLearners"}}
         </button>
       {{/if}}
@@ -43,11 +43,11 @@
       />
     {{else}}
       {{#if this.learnerCount}}
-        <h4>{{t "general.learners"}} ({{this.learnerCount}})</h4>
+        <h4 data-test-learners-title>{{t "general.learners"}} ({{this.learnerCount}})</h4>
         <DetailLearnerList @learners={{await @ilmSession.learners}} @isManaging={{false}} />
       {{/if}}
       {{#if this.learnerGroupCount}}
-        <h4>{{t "general.learnerGroups"}} ({{this.learnerGroupCount}})</h4>
+        <h4 data-test-learnergroups-title>{{t "general.learnerGroups"}} ({{this.learnerGroupCount}})</h4>
         <DetailLearnergroupsList @learnerGroups={{await @ilmSession.learnerGroups}} />
       {{/if}}
     {{/if}}

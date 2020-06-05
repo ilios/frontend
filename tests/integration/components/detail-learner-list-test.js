@@ -18,12 +18,25 @@ module('Integration | Component | detail learner list', function(hooks) {
 
 
   test('it renders', async function(assert) {
-    assert.expect(3);
+    assert.expect(5);
     this.set('learners', [this.learnerModel1, this.learnerModel2]);
-    await render(hbs`<DetailLearnerList @learners={{this.learners}} @remove={{noop}} />`);
+    await render(hbs`<DetailLearnerList @learners={{this.learners}} @isManaging={{false}} />`);
     assert.equal(component.learners.length, 2);
     assert.equal(component.learners[0].userName, "Jane A. Doe");
+    assert.notOk(component.learners[0].isRemovable);
     assert.equal(component.learners[1].userName, "Joe M. Doe");
+    assert.notOk(component.learners[1].isRemovable);
+  });
+
+  test('it renders in managing mode', async function(assert) {
+    assert.expect(5);
+    this.set('learners', [this.learnerModel1, this.learnerModel2]);
+    await render(hbs`<DetailLearnerList @learners={{this.learners}} @isManaging={{true}} @remove={{noop}} />`);
+    assert.equal(component.learners.length, 2);
+    assert.equal(component.learners[0].userName, "Jane A. Doe");
+    assert.ok(component.learners[0].isRemovable);
+    assert.equal(component.learners[1].userName, "Joe M. Doe");
+    assert.ok(component.learners[1].isRemovable);
   });
 
   test('remove learner from list', async function(assert) {
@@ -32,7 +45,7 @@ module('Integration | Component | detail learner list', function(hooks) {
     this.set('remove', (user) => {
       assert.equal(user.id, this.learnerModel2.id);
     });
-    await render(hbs`<DetailLearnerList @learners={{this.learners}} @remove={{this.remove}} @isManaging={{true}} />`);
+    await render(hbs`<DetailLearnerList @learners={{this.learners}} @isManaging={{true}} @remove={{this.remove}}/>`);
     assert.equal(component.learners.length, 2);
     assert.equal(component.learners[0].userName, "Jane A. Doe");
     await component.learners[0].remove();

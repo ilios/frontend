@@ -15,7 +15,6 @@ import learningMaterials from './components/learning-materials';
 import meshTerms from './components/mesh-terms';
 import taxonomies from './components/detail-taxonomies';
 import collapsedTaxonomies from './components/collapsed-taxonomies';
-import learnerGroupManager from './components/learner-group-manager';
 import instructorSelectionManager from './components/instructor-selection-manager';
 import offeringForm from './components/offering-form';
 import { datePicker, pageObjectFillInFroalaEditor } from 'ilios-common';
@@ -23,6 +22,7 @@ import leadershipCollapsed from './components/leadership-collapsed';
 import leadershipList from './components/leadership-list';
 import leadershipManager from './components/leadership-manager';
 import postrequisiteEditor from './components/session/postrequisite-editor';
+import detailLearnersAndLearnerGroups from './components/detail-learners-and-learner-groups';
 
 export default create({
   scope: '[data-test-session-details]',
@@ -135,21 +135,7 @@ export default create({
   meshTerms,
   taxonomies,
   collapsedTaxonomies,
-
-  learnerGroups: {
-    scope: '[data-test-detail-learner-groups]',
-    manage: clickable('.actions button'),
-    save: clickable('.actions button.bigadd'),
-    cancel: clickable('.actions button.bigcancel'),
-    current: collection('.trees fieldset', {
-      title: text('legend'),
-      groups: collection('ul li', {
-        title: text(),
-        isTopLevelGroup: hasClass('top-level-group')
-      })
-    }),
-    manager: learnerGroupManager,
-  },
+  detailLearnersAndLearnerGroups,
 
   instructors: {
     scope: '[data-test-detail-instructors]',
@@ -167,18 +153,6 @@ export default create({
       title: text(),
     }),
     manager: instructorSelectionManager,
-  },
-
-  collapseLearnerGroups: {
-    scope: '[data-test-collapsed-learnergroups]',
-    title: text('.title'),
-    headers: collection('thead th', {
-      title: text(),
-    }),
-    cohorts: collection('tbody tr', {
-      name: text('td', { at: 0 }),
-      learnerGroups: text('td', { at: 1 }),
-    }),
   },
 
   offerings: {
