@@ -58,7 +58,7 @@ export default function (server) {
   models.forEach(obj => {
     server.get(`api/${obj.route}`, getAll);
     server.get(`api/${obj.route}/:id`, obj.name);
-    server.put(`api/${obj.route}/:id`, obj.name);
+    server.patch(`api/${obj.route}/:id`, obj.name);
     server.del(`api/${obj.route}/:id`, obj.name);
     server.post(`api/${obj.route}`, obj.name);
   });
