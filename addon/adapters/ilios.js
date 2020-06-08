@@ -28,6 +28,10 @@ export default class IliosAdapter extends JSONAPIAdapter {
     return this.iliosConfig.apiNameSpace;
   }
 
+  shouldReloadAll() {
+    return true;
+  }
+
   findMany(store, type, ids, snapshots) {
     const url = this.urlForFindMany(ids, type.modelName, snapshots);
 
