@@ -40,7 +40,7 @@
         />
       {{else}}
         <ul class="selected-mesh-terms">
-          {{#each (sort-by "title" this.meshDescriptors) as |term|}}
+          {{#each (sort-by "name" this.meshDescriptors) as |term|}}
             <li>
               <span class="term-title">
                 {{term.name}}
