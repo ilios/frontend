@@ -1,10 +1,9 @@
-import RESTSerializer from '@ember-data/serializer/rest';
+import IliosSerializer from './ilios';
 import moment from 'moment';
 
-export default RESTSerializer.extend({
-  isNewSerializerAPI: true,
+export default class CurriculumInventorySequenceBlockSerializer extends IliosSerializer {
   serialize(snapshot, options) {
-    var json = this._super(snapshot, options);
+    const json = super.serialize(snapshot, options);
     if (json.startDate) {
       json.startDate = moment.utc(json.startDate).local().format('YYYY-MM-DD');
     }
@@ -12,7 +11,7 @@ export default RESTSerializer.extend({
       json.endDate = moment.utc(json.endDate).local().format('YYYY-MM-DD');
     }
     return json;
-  },
+  }
   normalize(modelClass, resourceHash, prop) {
     if (resourceHash.startDate) {
       const startDate = moment.utc(resourceHash.startDate).format('YYYY-MM-DD');
@@ -24,6 +23,6 @@ export default RESTSerializer.extend({
       const localEndDate = moment(endDate, 'YYYY-MM-DD');
       resourceHash.endDate = localEndDate.format();
     }
-    return this._super(modelClass, resourceHash, prop);
+    return super.normalize(modelClass, resourceHash, prop);
   }
-});
+}

@@ -1,11 +1,9 @@
-import RESTSerializer from '@ember-data/serializer/rest';
+import IliosSerializer from './ilios';
 import moment from 'moment';
 
-export default RESTSerializer.extend({
-  isNewSerializerAPI: true,
+export default class IlmSessionSerializer extends IliosSerializer {
   serialize(snapshot, options) {
-    const json = this._super(snapshot, options);
-
+    const json = super.serialize(snapshot, options);
     // set time to 5pm, always.
     const dueDate = moment(json.dueDate);
     dueDate.hour('17');
@@ -16,4 +14,4 @@ export default RESTSerializer.extend({
     delete json.updatedAt;
     return json;
   }
-});
+}
