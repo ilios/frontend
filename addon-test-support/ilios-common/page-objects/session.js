@@ -136,7 +136,8 @@ export default create({
   taxonomies,
   collapsedTaxonomies,
   detailLearnersAndLearnerGroups,
-
+  learnersAreVisible: isVisible('[data-test-detail-learners-and-learner-groups]'),
+  instructorsAreVisible: isVisible('[data-test-detail-instructors]'),
   instructors: {
     scope: '[data-test-detail-instructors]',
     manage: clickable('.actions button'),

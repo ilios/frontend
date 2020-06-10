@@ -304,4 +304,23 @@ module('Acceptance | Session - Independent Learning', function(hooks) {
     assert.ok(page.overview.ilmDueDate.isPresent);
     assert.ok(page.overview.ilmDueDate.isHidden);
   });
+
+  test('ilm-only subcomponents disappear/reappear if ilm gets toggled off/on', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    assert.equal(currentRouteName(), 'session.index');
+
+    assert.ok(page.learnersAreVisible);
+    assert.ok(page.instructorsAreVisible);
+
+    await page.overview.toggleIlm();
+
+    assert.notOk(page.learnersAreVisible);
+    assert.notOk(page.instructorsAreVisible);
+
+    await page.overview.toggleIlm();
+
+    assert.ok(page.learnersAreVisible);
+    assert.ok(page.instructorsAreVisible);
+  });
 });

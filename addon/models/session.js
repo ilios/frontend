@@ -50,7 +50,7 @@ export default Model.extend({
     return objectives.uniq();
   }),
 
-  isIndependentLearning: computed('ilmSession.session', function () {
+  isIndependentLearning: computed('ilmSession.id', function () {
     return !!this.belongsTo('ilmSession').id();
   }),
 
