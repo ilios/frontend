@@ -40,6 +40,7 @@ export default class Fetch extends Service {
     const url = this.apiHostUrlFromPath(relativePath);
     const headers = this.authHeaders;
     headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    headers['Accept'] = 'application/vnd.api+json';
     const body = queryString.stringify(data, {
       arrayFormat: 'bracket',
     });
