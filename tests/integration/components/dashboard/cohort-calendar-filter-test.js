@@ -34,9 +34,9 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function(ho
   test('selected cohorts are checked', async function (assert) {
     this.set('cohortProxies', [
       {id: 1, programTitle: 'program 1', displayTitle: 'name 1', classOfYear: 2015},
-      {id: 2, programTitle: 'program 2', displayTitle: 'name 2', classOfYear: 2015},
-      {id: 3, programTitle: 'program 3', displayTitle: 'name 3', classOfYear: 2015},
-      {id: 4, programTitle: 'program 4', displayTitle: 'name 4', classOfYear: 2015},
+      {id: 2, programTitle: 'program 2', displayTitle: 'name 2', classOfYear: 2014},
+      {id: 3, programTitle: 'program 3', displayTitle: 'name 3', classOfYear: 2013},
+      {id: 4, programTitle: 'program 4', displayTitle: 'name 4', classOfYear: 2012},
     ]);
     await render(hbs`<Dashboard::CohortCalendarFilter
       @cohortProxies={{this.cohortProxies}}
