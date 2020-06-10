@@ -78,6 +78,6 @@ module('Acceptance | Session - Publication Check', function(hooks) {
     this.server.create('session-objective', { session, objective: this.objective });
     await visit(url);
     await click('.fa-unlink');
-    assert.equal(currentURL(), '/courses/1/sessions/1?addOffering=false&courseCompetencyDetails=false&courseLeadershipDetails=false&courseManageLeadership=false&courseObjectiveDetails=false&courseTaxonomyDetails=false&details=false&isManagingLearnerGroups=false&sessionLeadershipDetails=false&sessionLearnergroupDetails=false&sessionManageLeadership=false&sessionObjectiveDetails=true&sessionTaxonomyDetails=false');
+    assert.equal(currentURL(), '/courses/1/sessions/1?addOffering=false&courseCompetencyDetails=false&courseLeadershipDetails=false&courseManageLeadership=false&courseObjectiveDetails=false&courseTaxonomyDetails=false&details=false&sessionLeadershipDetails=false&sessionManageLeadership=false&sessionObjectiveDetails=true&sessionTaxonomyDetails=false');
   });
 });

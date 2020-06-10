@@ -2,13 +2,17 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { filter } from 'rsvp';
-import { isEmpty } from '@ember/utils';
+import { isEmpty, isPresent } from '@ember/utils';
 import {restartableTask} from "ember-concurrency-decorators";
 
 export default class LearnergroupTree extends Component {
   @tracked isHidden = true;
   @tracked selectable = false;
   @tracked hasChildren = false;
+
+  get isRoot() {
+    return isPresent(this.args.isRoot) ? this.args.isRoot : true;
+  }
 
   @restartableTask
   *load(element, [learnerGroup, selectedGroups, filter]) {

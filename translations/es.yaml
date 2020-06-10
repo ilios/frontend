@@ -140,6 +140,7 @@ general:
   learnerGroups: "Grupos de Aprendedores"
   learnerGroupsManageTitle: "Administrar Grupos de Aprendedores"
   learners: Aprendedores
+  learnersAndLearnerGroups: "Aprendedores y Grupos de Aprendedores"
   learningMaterialManageTitle: "Administrar Materiales de Aprendizaje"
   learningMaterials: "Materiales de Aprendizaje"
   learningMaterialsSummary: "Resumen de Materiales de Aprendizaje"
@@ -154,6 +155,7 @@ general:
   login: Inicio
   makeRecurring: "Hacer Recurrente"
   manageLeadership: "Maneje el Liderazgo"
+  manageLearners: "Administrar Aprendedores"
   markAsScheduled: "Marque Como Programado"
   materials: Materiales
   mesh: MeSH

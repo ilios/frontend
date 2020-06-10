@@ -1,8 +1,7 @@
 import {clickable, collection, create, fillable, isVisible, property, text, value} from 'ember-cli-page-object';
 import { datePicker } from 'ilios-common';
-import learnerGroupManager from './learner-group-manager';
 import learnerSelectionManager from './learner-selection-manager';
-
+import learnergroupSelectionManager from './learnergroup-selection-manager';
 import instructorSelectionManager from './instructor-selection-manager';
 
 const definition = {
@@ -80,7 +79,7 @@ const definition = {
   },
   learnerGroups: {
     scope: '.learner-groups',
-    manager: learnerGroupManager,
+    manager: learnergroupSelectionManager,
     hasError: isVisible('.validation-error-message')
   },
   save: clickable('.done'),
