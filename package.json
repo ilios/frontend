@@ -110,7 +110,7 @@
     "stylelint": "^13.6.0",
     "stylelint-config-recommended-scss": "^4.2.0",
     "stylelint-scss": "^3.17.2",
-    "validator": "^13.1.0",
+    "validator": "^13.1.1",
     "zxcvbn": "^4.4.2"
   },
   "engines": {
