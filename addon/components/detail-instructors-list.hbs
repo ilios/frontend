@@ -7,7 +7,7 @@
       ({{@instructors.length}})
     </h4>
     <ul class="instructors-list" data-test-instructors>
-      {{#each (sort-by "title" @instructors) as |user|}}
+      {{#each (sort-by "fullName" @instructors) as |user|}}
         <li>
           {{user.fullName}}
         </li>

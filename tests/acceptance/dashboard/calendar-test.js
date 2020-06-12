@@ -35,7 +35,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     });
     const programYear2 = this.server.create('programYear', {
       program,
-      startYear: 2015,
+      startYear: 2016,
     });
     const cohort1 = this.server.create('cohort', {
       programYear: programYear1,
@@ -422,7 +422,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     await showFilters();
     await chooseDetailFilter();
     assert.equal(page.weeklyCalendar.events.length, 2);
-    await pickCohort(1);
+    await pickCohort(2);
     assert.equal(page.weeklyCalendar.events.length, 2);
 
     await pickCohort(1);
@@ -602,7 +602,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
   test('filter tags work properly', async function(assert) {
     const sessiontype = '.sessiontypefilter li:nth-of-type(1) [data-test-target]';
     const courselevel = '.courselevelfilter li:nth-of-type(1) [data-test-target]';
-    const cohort = '[data-test-cohort-calendar-filter] li:nth-of-type(1) [data-test-target]';
+    const cohort = '[data-test-cohort-calendar-filter] li:nth-of-type(2) [data-test-target]';
 
     const filtersList = '.filters-list';
     const clearFilter = '.filters-clear-filters';
@@ -701,16 +701,16 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     await click('.courselevelfilter ul li:nth-child(1) input');
     assert.equal(currentURL(), '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
-    await click('[data-test-cohort-calendar-filter] ul li:nth-child(1) input');
+    await click('[data-test-cohort-calendar-filter] ul li:nth-child(2) input');
     assert.equal(currentURL(), '/dashboard?cohorts=1&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
-    await click('[data-test-cohort-calendar-filter] ul li:nth-child(2) input');
+    await click('[data-test-cohort-calendar-filter] ul li:nth-child(1) input');
     assert.equal(currentURL(), '/dashboard?cohorts=1-2&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
-    await click('[data-test-cohort-calendar-filter] ul li:nth-child(2) input');
+    await click('[data-test-cohort-calendar-filter] ul li:nth-child(1) input');
     assert.equal(currentURL(), '/dashboard?cohorts=1&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
 
-    await click('[data-test-cohort-calendar-filter] ul li:nth-child(1) input');
+    await click('[data-test-cohort-calendar-filter] ul li:nth-child(2) input');
     assert.equal(currentURL(), '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
   });
 
