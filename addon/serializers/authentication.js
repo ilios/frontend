@@ -6,12 +6,12 @@ export default class AuthenticationSerializer extends IliosSerializer {
     const json = super.serialize(snapshot, options);
 
     //don't persist empty passwords
-    if (!json.password) {
+    if (!json.data.attributes.password) {
       delete json.password;
     }
 
     //don't persist empty usernames
-    if (!json.username) {
+    if (!json.data.attributes.username) {
       delete json.username;
     }
 

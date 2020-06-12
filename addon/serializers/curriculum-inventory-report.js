@@ -1,21 +1,17 @@
 import IliosSerializer from './ilios';
-import moment from 'moment';
+import { jsonApiUtcSerializeDate, jsonApiUtcNormalizeDate } from '../utils/json-api-utc-date';
 
 export default class CurriculumInventoryReportSerializer extends IliosSerializer {
   serialize(snapshot, options) {
     const json = super.serialize(snapshot, options);
-    json.startDate = moment.utc(json.startDate).local().format('YYYY-MM-DD');
-    json.endDate = moment.utc(json.endDate).local().format('YYYY-MM-DD');
-    delete json.absoluteFileUri;
+    jsonApiUtcSerializeDate(json, 'startDate');
+    jsonApiUtcSerializeDate(json, 'endDate');
+    delete json.data.attributes.absoluteFileUri;
     return json;
   }
   normalize(modelClass, resourceHash, prop) {
-    const startDate = moment.utc(resourceHash.startDate).format('YYYY-MM-DD');
-    const localStartDate = moment(startDate, 'YYYY-MM-DD');
-    resourceHash.startDate = localStartDate.format();
-    const endDate = moment.utc(resourceHash.endDate).format('YYYY-MM-DD');
-    const localEndDate = moment(endDate, 'YYYY-MM-DD');
-    resourceHash.endDate = localEndDate.format();
+    jsonApiUtcNormalizeDate(resourceHash, 'startDate');
+    jsonApiUtcNormalizeDate(resourceHash, 'endDate');
     return super.normalize(modelClass, resourceHash, prop);
   }
 }

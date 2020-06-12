@@ -25,8 +25,8 @@ module('Unit | Serializer | curriculum inventory export', function(hooks) {
       assert.equal(user, creator);
     });
     var serializedRecord = record.serialize();
-    assert.ok(!('createdAt' in serializedRecord));
-    assert.ok(!('createdBy' in serializedRecord));
-    assert.ok(!('document' in serializedRecord));
+    assert.ok(!('createdAt' in serializedRecord.data.attributes));
+    assert.ok(!('createdBy' in serializedRecord.data.attributes));
+    assert.ok(!('document' in serializedRecord.data.attributes));
   });
 });

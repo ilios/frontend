@@ -5,9 +5,9 @@ export default class CurriculumInventoryExportSerializer extends IliosSerializer
     const json = super.serialize(snapshot, options);
 
     //don't persist this, it is handled by the server
-    delete json.createdAt;
-    delete json.createdBy;
-    delete json.document;
+    delete json.data.attributes.createdAt;
+    delete json.data.attributes.createdBy;
+    delete json.data.attributes.document;
     return json;
   }
 }
