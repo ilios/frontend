@@ -1,4 +1,4 @@
-{{title (t "general.admin")}}
+{{page-title (t "general.admin")}}
 <div class="admin-dashboard">
   <ManageUsersSummary @canCreate={{@model.canCreate}} />
   {{#if (gt @model.schoolsWithUpdateUserPermission.length 0)}}
