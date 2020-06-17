@@ -1,4 +1,4 @@
-{{title (t "general.admin")}}
+{{page-title (t "general.admin")}}
 {{#if (and this.isLoading (is-fulfilled this.canCreate))}}
   <UserProfileLoading @canCreate={{await this.canCreate}} />
 {{else if (is-fulfilled this.canCreate)}}
