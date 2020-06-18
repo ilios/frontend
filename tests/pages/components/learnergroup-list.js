@@ -2,6 +2,7 @@ import {
   clickable,
   create,
   collection,
+  hasClass,
   isPresent,
   text,
 } from 'ember-cli-page-object';
@@ -14,9 +15,11 @@ const definition = {
   }),
   groups: collection('tbody tr', {
     title: text('td', { at: 0 }),
+    visit: clickable('td:nth-of-type(1) a'),
     members: text('td', { at: 1 }),
     subgroups: text('td', { at: 2 }),
     courses: text('td', { at: 3 }),
+    hasRemoveStyle: hasClass('confirm-removal'),
     actions: {
       scope: '[data-test-actions]',
       canRemove: isPresent('[data-test-remove]'),
@@ -28,6 +31,7 @@ const definition = {
   confirmRemoval: {
     scope: '[data-test-confirm-removal]',
     confirm: clickable('[data-test-confirm]'),
+    cancel: clickable('[data-test-cancel]'),
     confirmation: text('[data-test-confirmation]'),
   },
   confirmCopy: {

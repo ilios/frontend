@@ -4,10 +4,7 @@
   .filters {
     @include main-list-filters;
 
-    .schoolsfilter,
-    .programsfilter,
-    .programyearsfilter,
-    .titlefilter {
+    .filter {
       @include main-list-filter;
     }
 
