@@ -1,7 +1,7 @@
 {{page-title (t "general.learnerGroups")}}
-<section class="learnergroups-list">
+<section class="learnergroups-list" data-test-learner-groups-list>
   <div class="filters">
-    <div class="schoolsfilter">
+    <div class="filter" data-test-school-filter>
       <FaIcon @icon="university" @fixedWidth={{true}} />
       {{#if (get (await this.sortedSchools) "length")}}
         {{#if (gt (get (await this.sortedSchools) "length") 1)}}
@@ -24,7 +24,7 @@
         {{t "general.none"}}
       {{/if}}
     </div>
-    <div class="programsfilter">
+    <div class="filter" data-test-program-filter>
       <FaIcon @icon="users" @fixedWidth={{true}} />
       {{#if (get (await this.sortedPrograms) "length")}}
         {{#if (gt (get (await this.sortedPrograms) "length") 1)}}
@@ -47,7 +47,7 @@
         {{t "general.none"}}
       {{/if}}
     </div>
-    <div class="programyearsfilter">
+    <div class="filter" data-test-program-year-filter>
       <FaIcon @icon="calendar" @fixedWidth={{true}} />
       {{#if (get (await this.sortedProgramYears) "length")}}
         {{#if (gt (get (await this.sortedProgramYears) "length") 1)}}
@@ -70,11 +70,12 @@
         {{t "general.none"}}
       {{/if}}
     </div>
-    <div class="titlefilter">
+    <div class="filter">
       <input
         value={{this.titleFilter}}
         oninput={{action (perform this.changeTitleFilter) value="target.value"}}
         placeholder={{t "general.learnerGroupTitleFilterPlaceholder"}}
+        data-test-title-filter
       >
     </div>
   </div>
