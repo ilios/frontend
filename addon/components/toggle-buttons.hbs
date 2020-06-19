@@ -1,4 +1,4 @@
-<span class="toggle-buttons">
+<span class="toggle-buttons" data-test-toggle-buttons ...attributes>
   <input
     type="radio"
     id={{concat "first-toggle-" this.uniqueId}}
@@ -6,7 +6,11 @@
     checked={{eq @firstOptionSelected true}}
     {{on "click" (fn this.firstChoice)}}
   >
-  <label for={{concat "first-toggle-" this.uniqueId}}>
+  <label
+    for={{concat "first-toggle-" this.uniqueId}}
+    data-test-first
+    data-test-selected={{@firstOptionSelected}}
+  >
     {{@firstLabel}}
   </label>
   <input
@@ -16,7 +20,11 @@
     checked={{eq @firstOptionSelected false}}
     {{on "click" (fn this.secondChoice)}}
   >
-  <label for={{concat "second-toggle-" this.uniqueId}}>
+  <label
+    for={{concat "second-toggle-" this.uniqueId}}
+    data-test-second
+    data-test-selected={{not @firstOptionSelected}}
+  >
     {{@secondLabel}}
   </label>
 </span>
