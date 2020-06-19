@@ -7,30 +7,29 @@ module('Integration | Component | toggle buttons', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(6);
+    assert.expect(8);
 
-    const firstLabel = 'label:nth-of-type(1)';
     const firstRadio = 'input:nth-of-type(1)';
-    const secondLabel = 'label:nth-of-type(2)';
     const secondRadio = 'input:nth-of-type(2)';
 
     this.set('nothing', parseInt);
     await render(hbs`<ToggleButtons
-      @action={{action nothing}}
+      @action={{noop}}
       @firstOptionSelected={{true}}
       @firstLabel="First"
       @firstIcon="user"
       @secondLabel="Second"
       @secondIcon="expand"
     />`);
-    assert.dom(firstLabel).hasText('First', 'first label has correct text');
+    assert.dom('[data-test-first]').hasText('First', 'first label has correct text');
     assert.dom(firstRadio).isChecked('first radio is checked');
-    assert.dom(firstLabel).hasAttribute('for', find(firstRadio).id, 'first label is linked to radio correctly');
+    assert.dom('[data-test-first][data-test-selected]').exists();
+    assert.dom('[data-test-first]').hasAttribute('for', find(firstRadio).id, 'first label is linked to radio correctly');
 
-    assert.dom(secondLabel).hasText('Second', 'second label has correct text');
+    assert.dom('[data-test-second]').hasText('Second', 'second label has correct text');
     assert.dom(secondRadio).isNotChecked('second radio is not checked');
-    assert.dom(secondLabel).hasAttribute('for', find(secondRadio).id, 'second label is linked to radio correctly');
-
+    assert.dom('[data-test-second][data-test-selected]').doesNotExist();
+    assert.dom('[data-test-second]').hasAttribute('for', find(secondRadio).id, 'second label is linked to radio correctly');
   });
 
   test('clicking radio fires toggle action', async function(assert) {
@@ -59,6 +58,31 @@ module('Integration | Component | toggle buttons', function(hooks) {
 
     await click(second);
     await click(first);
+  });
+
+  test('clicking label fires toggle action', async function(assert) {
+    assert.expect(2);
+
+    this.set('firstOptionSelected', true);
+    let called = 0;
+    this.set('toggle', (newValue) => {
+      if (called === 0) {
+        assert.notOk(newValue, 'has not been toggled yet');
+      } else {
+        assert.ok(newValue, 'has been toggled');
+      }
+      this.set('firstOptionSelected', newValue);
+      called ++;
+    });
+    await render(hbs`<ToggleButtons
+      @toggle={{this.toggle}}
+      @firstOptionSelected={{this.firstOptionSelected}}
+      @firstLabel="Left"
+      @secondLabel="Right"
+    />`);
+
+    await click('[data-test-second]');
+    await click('[data-test-first]');
   });
 
   test('clicking selected radio does not fire toggle action', async function(assert) {
