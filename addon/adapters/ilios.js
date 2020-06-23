@@ -1,33 +1,36 @@
-import RESTAdapter from '@ember-data/adapter/rest';
+import JSONAPIAdapter from '@ember-data/adapter/json-api';
 import { inject as service } from '@ember/service';
-import { reads } from '@ember/object/computed';
 import { pluralize } from 'ember-inflector';
 import { camelize } from '@ember/string';
 
-export default RESTAdapter.extend({
-  iliosConfig: service(),
-  session: service(),
+export default class IliosAdapter extends JSONAPIAdapter {
+  @service iliosConfig;
+  @service session;
+  coalesceFindRequests = true;
+  sortQueryParams = false;
 
-  host: reads('iliosConfig.apiHost'),
-  namespace: reads('iliosConfig.apiNameSpace'),
-
-  init() {
-    this._super(...arguments);
-
-    const headers = {};
+  constructor() {
+    super(...arguments);
+    this.headers = {};
     if (this.session && this.session.isAuthenticated) {
       const { jwt } = this.session.data.authenticated;
       if (jwt) {
-        headers['X-JWT-Authorization'] = `Token ${jwt}`;
+        this.headers['X-JWT-Authorization'] = `Token ${jwt}`;
       }
     }
+  }
 
-    this.set('headers', headers);
-  },
+  get host() {
+    return this.iliosConfig.apiHost;
+  }
 
-  coalesceFindRequests: true,
+  get namespace() {
+    return this.iliosConfig.apiNameSpace;
+  }
 
-  shouldReloadAll() { return true; },
+  shouldReloadAll() {
+    return true;
+  }
 
   findMany(store, type, ids, snapshots) {
     const url = this.urlForFindMany(ids, type.modelName, snapshots);
@@ -37,13 +40,11 @@ export default RESTAdapter.extend({
         filters: { id: ids },
       }
     });
-  },
+  }
 
   pathForType(type) {
     return pluralize(camelize(type).toLowerCase());
-  },
-
-  sortQueryParams: false,
+  }
 
   /**
    * Don't send cookies with API requests
@@ -60,5 +61,5 @@ export default RESTAdapter.extend({
   //     ...this._super(...arguments),
   //     credentials: 'omit'
   //   };
-  // },
-});
+  // }
+}

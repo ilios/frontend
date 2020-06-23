@@ -1,21 +1,19 @@
-import RESTSerializer from '@ember-data/serializer/rest';
+import IliosSerializer from './ilios';
 import { get } from '@ember/object';
 
-export default RESTSerializer.extend({
-  isNewSerializerAPI: true,
+export default class LearningMaterialSerializer extends IliosSerializer {
   serialize(snapshot, options) {
-    var json = this._super(snapshot, options);
-
+    const json = super.serialize(snapshot, options);
     //When POSTing new file learningMaterials we need to include the file hash
     const fileHash = get(snapshot.record, 'fileHash');
     if (fileHash) {
-      json.fileHash = fileHash;
+      json.data.attributes.fileHash = fileHash;
     }
 
     //don't persist this, it is handled by the server
-    delete json.absoluteFileUri;
-    delete json.uploadDate;
+    delete json.data.attributes.absoluteFileUri;
+    delete json.data.attributes.uploadDate;
 
     return json;
   }
-});
+}

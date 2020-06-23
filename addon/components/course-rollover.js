@@ -92,7 +92,7 @@ export default class CourseRolloverComponent extends Component {
 
     this.flashMessages.success('general.courseRolloverSuccess');
     this.store.pushPayload(newCoursesObj);
-    const newCourse = this.store.peekRecord('course', newCoursesObj.courses[0].id);
+    const newCourse = this.store.peekRecord('course', newCoursesObj.data.id);
 
     return this.args.visit(newCourse);
   }

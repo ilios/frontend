@@ -2,12 +2,9 @@ import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import RSVP from 'rsvp';
-import Inflector from 'ember-inflector';
 
 const { not } = computed;
 const { all } = RSVP;
-
-Inflector.inflector.uncountable('aamc-pcrs');
 
 export default Model.extend({
   active: attr('boolean'),

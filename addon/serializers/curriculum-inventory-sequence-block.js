@@ -1,29 +1,24 @@
-import RESTSerializer from '@ember-data/serializer/rest';
-import moment from 'moment';
+import IliosSerializer from './ilios';
+import { jsonApiUtcSerializeDate, jsonApiUtcNormalizeDate } from '../utils/json-api-utc-date';
 
-export default RESTSerializer.extend({
-  isNewSerializerAPI: true,
+export default class CurriculumInventorySequenceBlockSerializer extends IliosSerializer {
   serialize(snapshot, options) {
-    var json = this._super(snapshot, options);
-    if (json.startDate) {
-      json.startDate = moment.utc(json.startDate).local().format('YYYY-MM-DD');
+    const json = super.serialize(snapshot, options);
+    if (json.data.attributes.startDate) {
+      jsonApiUtcSerializeDate(json, 'startDate');
     }
-    if (json.endDate) {
-      json.endDate = moment.utc(json.endDate).local().format('YYYY-MM-DD');
+    if (json.data.attributes.endDate) {
+      jsonApiUtcSerializeDate(json, 'endDate');
     }
     return json;
-  },
-  normalize(modelClass, resourceHash, prop) {
-    if (resourceHash.startDate) {
-      const startDate = moment.utc(resourceHash.startDate).format('YYYY-MM-DD');
-      const localStartDate = moment(startDate, 'YYYY-MM-DD');
-      resourceHash.startDate = localStartDate.format();
-    }
-    if (resourceHash.endDate) {
-      const endDate = moment.utc(resourceHash.endDate).format('YYYY-MM-DD');
-      const localEndDate = moment(endDate, 'YYYY-MM-DD');
-      resourceHash.endDate = localEndDate.format();
-    }
-    return this._super(modelClass, resourceHash, prop);
   }
-});
+  normalize(modelClass, resourceHash, prop) {
+    if (resourceHash.attributes.startDate) {
+      jsonApiUtcNormalizeDate(resourceHash, 'startDate');
+    }
+    if (resourceHash.attributes.endDate) {
+      jsonApiUtcNormalizeDate(resourceHash, 'endDate');
+    }
+    return super.normalize(modelClass, resourceHash, prop);
+  }
+}

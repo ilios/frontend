@@ -10,8 +10,8 @@ module('Unit | Serializer | curriculum inventory sequence block', function(hooks
     record.set('endDate', new Date());
     const serializedRecord = record.serialize();
     const pattern = /\d{4}-\d{2}-\d{2}/;
-    assert.ok(serializedRecord.startDate.match(pattern));
-    assert.ok(serializedRecord.endDate.match(pattern));
+    assert.ok(serializedRecord.data.attributes.startDate.match(pattern));
+    assert.ok(serializedRecord.data.attributes.endDate.match(pattern));
   });
 
   test('empty start and end date are not formatted during serialization', function(assert) {
@@ -19,7 +19,7 @@ module('Unit | Serializer | curriculum inventory sequence block', function(hooks
     record.set('startDate', null);
     record.set('endDate', null);
     const serializedRecord = record.serialize();
-    assert.equal(serializedRecord.startDate, null);
-    assert.equal(serializedRecord.endDate, null);
+    assert.equal(serializedRecord.data.attributes.startDate, null);
+    assert.equal(serializedRecord.data.attributes.endDate, null);
   });
 });

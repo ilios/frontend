@@ -1,1 +1,1 @@
-export { default } from '@ember-data/serializer/rest';
+export { default } from 'ilios-common/serializers/ilios';

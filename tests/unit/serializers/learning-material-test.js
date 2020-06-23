@@ -9,8 +9,8 @@ module('Unit | Serializer | learning material', function(hooks) {
 
     var serializedRecord = record.serialize();
 
-    assert.ok(!("uploadDate" in serializedRecord));
-    assert.ok(!("absoluteFileUri" in serializedRecord));
+    assert.ok(!("uploadDate" in serializedRecord.data.attributes));
+    assert.ok(!("absoluteFileUri" in serializedRecord.data.attributes));
   });
 
   test('no filehash usually', function(assert) {
@@ -18,7 +18,7 @@ module('Unit | Serializer | learning material', function(hooks) {
 
     var serializedRecord = record.serialize();
 
-    assert.ok(!("fileHash" in serializedRecord));
+    assert.ok(!("fileHash" in serializedRecord.data.attributes));
   });
 
   test('filehash when it is added', function(assert) {
@@ -26,7 +26,7 @@ module('Unit | Serializer | learning material', function(hooks) {
     record.set('fileHash', 'BigPhatBass');
     var serializedRecord = record.serialize();
 
-    assert.ok(("fileHash" in serializedRecord));
-    assert.equal(serializedRecord.fileHash, 'BigPhatBass');
+    assert.ok(("fileHash" in serializedRecord.data.attributes));
+    assert.equal(serializedRecord.data.attributes.fileHash, 'BigPhatBass');
   });
 });

@@ -1,22 +1,20 @@
-import RESTSerializer from '@ember-data/serializer/rest';
-import { isEmpty } from '@ember/utils';
+import IliosSerializer from './ilios';
 
-export default RESTSerializer.extend({
-  isNewSerializerAPI: true,
-  primaryKey: 'user',
+export default class AuthenticationSerializer extends IliosSerializer {
+  // primaryKey = 'user';
   serialize(snapshot, options) {
-    var json = this._super(snapshot, options);
+    const json = super.serialize(snapshot, options);
 
     //don't persist empty passwords
-    if (isEmpty(json.password)) {
+    if (!json.data.attributes.password) {
       delete json.password;
     }
 
     //don't persist empty usernames
-    if (isEmpty(json.username)) {
+    if (!json.data.attributes.username) {
       delete json.username;
     }
 
     return json;
   }
-});
+}

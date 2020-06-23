@@ -208,11 +208,13 @@ module('Integration | Component | detail learning materials', function(hooks) {
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('subject', courseModel);
-    this.server.put('/api/courselearningmaterials/1', () => {
+    this.server.patch('/api/courselearningmaterials/1', (schema) => {
       assert.ok(true);
+      return schema.courseLearningMaterials.find(1);
     });
-    this.server.put('/api/courselearningmaterials/2', () => {
+    this.server.patch('/api/courselearningmaterials/2', (schema) => {
       assert.ok(true);
+      return schema.courseLearningMaterials.find(2);
     });
 
     await render(hbs`<DetailLearningMaterials
