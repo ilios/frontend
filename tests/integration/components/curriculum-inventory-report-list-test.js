@@ -54,25 +54,25 @@ module('Integration | Component | curriculum inventory report list', function(ho
     assert.equal(findAll('tbody tr').length, reports.length, 'All reports are shown in list.');
 
     assert.dom('tbody tr').exists({ count: 2 });
-    assert.dom(`[data-test-report="0"] [data-test-name]`).hasText(report1.name, 'Report name shows.');
+    assert.dom(`[data-test-report="0"] [data-test-name]`).hasText(report2.name, 'Report name shows.');
     assert.dom(`[data-test-report="0"] [data-test-program]`).hasText(program.title, 'Program title shows.');
-    assert.dom(`[data-test-report="0"] [data-test-year]`).hasText('2017 - 2018', 'Academic year shows.');
-    assert.dom(`[data-test-report="0"] [data-test-start-date]`).hasText(moment(report1.startDate).format('L'), 'Start date shows.');
-    assert.dom(`[data-test-report="0"] [data-test-end-date]`).hasText(moment(report1.endDate).format('L'), 'End date shows.');
-    assert.dom(`[data-test-report="0"] [data-test-status]`).hasText('Draft', 'Status shows.');
+    assert.dom(`[data-test-report="0"] [data-test-year]`).hasText('2016 - 2017', 'Academic year shows.');
+    assert.dom(`[data-test-report="0"] [data-test-start-date]`).hasText(moment(report2.startDate).format('L'), 'Start date shows.');
+    assert.dom(`[data-test-report="0"] [data-test-end-date]`).hasText(moment(report2.endDate).format('L'), 'End date shows.');
+    assert.dom(`[data-test-report="0"] [data-test-status]`).hasText('Finalized', 'Status shows.');
     assert.dom(`[data-test-report="0"] [data-test-actions] .fa-edit`).exists({ count: 1 }, 'Edit button shows.');
     assert.dom(`[data-test-report="0"] [data-test-actions] .fa-download`).exists({ count: 1 }, 'Download button shows.');
-    assert.dom(`[data-test-report="0"] [data-test-actions] .fa-trash`).exists({ count: 1 }, 'Delete button shows for reports in draft.');
+    assert.dom(`[data-test-report="0"] [data-test-actions] .fa-trash.disabled`).exists({ count: 1}, 'Delete button disabled for finalized reports.');
 
-    assert.dom(`[data-test-report="1"] [data-test-name]`).hasText(report2.name, 'Report name shows.');
+    assert.dom(`[data-test-report="1"] [data-test-name]`).hasText(report1.name, 'Report name shows.');
     assert.dom(`[data-test-report="1"] [data-test-program]`).hasText(program.title, 'Program title shows.');
-    assert.dom(`[data-test-report="1"] [data-test-year]`).hasText('2016 - 2017', 'Academic year shows.');
-    assert.dom(`[data-test-report="1"] [data-test-start-date]`).hasText(moment(report2.startDate).format('L'), 'Start date shows.');
-    assert.dom(`[data-test-report="1"] [data-test-end-date]`).hasText(moment(report2.endDate).format('L'), 'End date shows.');
-    assert.dom(`[data-test-report="1"] [data-test-status]`).hasText('Finalized', 'Status shows.');
+    assert.dom(`[data-test-report="1"] [data-test-year]`).hasText('2017 - 2018', 'Academic year shows.');
+    assert.dom(`[data-test-report="1"] [data-test-start-date]`).hasText(moment(report1.startDate).format('L'), 'Start date shows.');
+    assert.dom(`[data-test-report="1"] [data-test-end-date]`).hasText(moment(report1.endDate).format('L'), 'End date shows.');
+    assert.dom(`[data-test-report="1"] [data-test-status]`).hasText('Draft', 'Status shows.');
     assert.dom(`[data-test-report="1"] [data-test-actions] .fa-edit`).exists({ count: 1 }, 'Edit button shows.');
     assert.dom(`[data-test-report="1"] [data-test-actions] .fa-download`).exists({ count: 1 }, 'Download button shows.');
-    assert.dom(`[data-test-report="1"] [data-test-actions] .fa-trash.disabled`).exists({ count: 1}, 'Delete button disabled for finalized reports.');
+    assert.dom(`[data-test-report="1"] [data-test-actions] .fa-trash`).exists({ count: 1 }, 'Delete button shows for reports in draft.');
   });
 
   test('empty list', async function (assert) {

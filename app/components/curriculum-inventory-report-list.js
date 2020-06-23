@@ -31,7 +31,7 @@ export default Component.extend({
   permissionChecker: service(),
   tagName: "",
   program: null,
-  sortBy: 'title',
+  sortBy: 'name',
   edit() {},
   remove() {},
   setSortBy() {},
