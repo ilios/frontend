@@ -13,6 +13,7 @@ export default class DashboardCalendarComponent extends Component {
   @service store;
   @service intl;
   @service iliosConfig;
+  @service dataLoader;
 
   @tracked cohortProxies = null;
   @tracked sessionTypes = null;
@@ -61,6 +62,10 @@ export default class DashboardCalendarComponent extends Component {
     if (!school) {
       return;
     }
+    this.cohortProxies = null;
+    this.sessionTypes = null;
+    this.vocabularies = null;
+    yield this.dataLoader.loadSchoolForCalendar(school.id);
     const promises = {
       cohortProxies: this.getCohortProxies(school),
       sessionTypes: this.getSessionTypes(school),
@@ -85,12 +90,8 @@ export default class DashboardCalendarComponent extends Component {
   }
 
   async getCohortProxies(school) {
-    const cohorts = await this.store.query('cohort', {
-      filters: {
-        schools: [school.id],
-      },
-    });
-    const cohortProxies = await map(cohorts.toArray(), async cohort => {
+    const cohorts = await this.getSchoolCohorts(school);
+    const cohortProxies = await map(cohorts, async cohort => {
       let displayTitle = cohort.get('title');
       if (!displayTitle) {
         const intl = this.get('intl');
@@ -113,13 +114,23 @@ export default class DashboardCalendarComponent extends Component {
     return cohortProxies.sortBy('displayTitle');
   }
 
+  async getSchoolCohorts(school) {
+    const programs = await school.programs;
+    const programYears = await map(programs.toArray(), async program => {
+      const programYears = await program.programYears;
+      return programYears.toArray();
+    });
+    const cohorts = await all(programYears.flat().mapBy('cohort'));
+    return cohorts.filter(Boolean);
+  }
+
   async getSessionTypes(school) {
     const types = await school.sessionTypes;
     return types.toArray().sortBy('title');
   }
 
   async getVocabularies(school) {
-    const vocabularies = await school.get('vocabularies');
+    const vocabularies = await school.vocabularies;
     await all(vocabularies.mapBy('terms'));
     return vocabularies.toArray().sortBy('title');
   }

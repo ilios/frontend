@@ -25,7 +25,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication( { school: this.school } );
+    this.user = await setupAuthentication({ school: this.school });
     const program = this.server.create('program', {
       school: this.school,
     });

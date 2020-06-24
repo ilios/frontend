@@ -6,7 +6,7 @@ import { inject as service } from '@ember/service';
 import moment from 'moment';
 
 export default class DashboardCoursesCalendarFilterComponent extends Component {
-  @service store;
+  @service dataLoader;
   @tracked courseYears = [];
   @tracked expandedYears = [];
   @tracked el;
@@ -41,11 +41,8 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
     if (!school) {
       return;
     }
-    const courses = yield this.store.query('course', {
-      filters: {
-        school: school.id,
-      },
-    });
+    yield this.dataLoader.loadSchoolForCalendar(school.id);
+    const courses = yield school.courses;
     this.courseYears = courses.reduce((acc, course) => {
       let year = acc.find(({ year }) => year === course.year);
       if (!year) {
