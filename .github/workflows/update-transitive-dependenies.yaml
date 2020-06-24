@@ -31,4 +31,4 @@ jobs:
 
             [1]: https://github.com/peter-evans/create-pull-request
           branch: auto-update-dependencies
-          labels: dependencies
+          labels: dependencies,autoupdate
