@@ -2,7 +2,7 @@ name: Update Transitive Dependencies
 
 on:
   schedule:
-    - cron: '15 11 * * 3' # weekly, on Monday morning (UTC)
+    - cron: '15 11 * * 1' # weekly, on Monday morning (UTC)
 
 jobs:
   update:
