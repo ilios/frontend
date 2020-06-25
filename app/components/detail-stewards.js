@@ -32,10 +32,10 @@ export default Component.extend({
     const stewardObjects = await map(stewards.toArray(), async steward => {
       const school = await steward.get('school');
       const schoolId = isPresent(school)?school.get('id'):0;
-      const schoolTitle = isPresent(school)?school.get('title'):null;
+      const schoolTitle = isPresent(school)?school.get('title'):undefined;
       const department = await steward.get('department');
       const departmentId = isPresent(department)?department.get('id'):0;
-      const departmentTitle = isPresent(department)?department.get('title'):null;
+      const departmentTitle = isPresent(department)?department.get('title'):undefined;
       return {
         schoolId,
         schoolTitle,

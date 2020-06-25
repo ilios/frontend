@@ -1,94 +1,79 @@
-import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
 import { setupRenderingTest } from 'ember-qunit';
 import { findAll, click, find } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { setupIntl } from 'ember-intl/test-support';
-
-const { resolve } = RSVP;
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import moment from 'moment';
 
 module('Integration | Component | curriculum inventory sequence block session list', function(hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
     assert.expect(31);
+    const now = moment().toDate();
+    const in15Hours = moment().add(15, 'hours').toDate();
+    const in30Hours = moment().add(30, 'hours').toDate();
 
-    const offering1 = EmberObject.create({id: 1});
-    const offering2 = EmberObject.create({id: 2});
-    const offering3 = EmberObject.create({id: 3});
+    const offering1 = this.server.create('offering', {
+      startDate: now,
+      endDate: in30Hours
+    });
+    const offering2 = this.server.create('offering', {
+      startDate: now,
+      endDate: in15Hours
+    });
+    const offering3 = this.server.create('offering', {
+      startDate: now,
+      endDate: in15Hours
+    });
 
-    const offerings1 = [ offering1, offering2 ];
-    const offerings2 = [ offering3 ];
-    const offerings3 = [];
-    const offerings4 = [];
+    const sessionType1 = this.server.create('session-type', { title: 'Lecture'});
+    const sessionType2 = this.server.create('session-type', { title: 'Ceremony'});
+    const sessionType3 = this.server.create('session-type', { title: 'Small Group'});
+    const sessionType4 = this.server.create('session-type', { title: 'Rocket Surgery'});
 
-
-    const sessionType1 = EmberObject.create({ title: 'Lecture'});
-    const sessionType2 = EmberObject.create({ title: 'Ceremony'});
-    const sessionType3 = EmberObject.create({ title: 'Small Group'});
-    const sessionType4 = EmberObject.create({ title: 'Rocket Surgery'});
-
-
-    const totalTime1 = (30).toFixed(2);
-    const totalTime2 = (15).toFixed(2);
-    const totalTime3 = (0).toFixed(2);
-    const totalTime4 = (0).toFixed(2);
-
-
-    const session1 = EmberObject.create({
-      id: 1,
+    const session1 = this.server.create('session', {
       title: 'Aardvark',
-      offerings: resolve(offerings1),
-      sessionType: resolve(sessionType1),
-      isIndependentLearning: false,
-      maxDuration: resolve(totalTime1)
+      offerings: [offering1, offering2],
+      sessionType: sessionType1,
     });
 
-    const session2 = EmberObject.create({
-      id: 2,
+    const session2 = this.server.create('session', {
       title: 'Bluebird',
-      offerings: resolve(offerings2),
-      sessionType: resolve(sessionType2),
-      isIndependentLearning: false,
-      totalSumDuration: resolve(totalTime2)
+      offerings: [offering3],
+      sessionType: sessionType2,
     });
 
-    const session3 = EmberObject.create({
-      id: 3,
+    const session3 = this.server.create('session', {
       title: 'Zeppelin',
-      offerings: resolve(offerings3),
-      sessionType: resolve(sessionType3),
-      isIndependentLearning: false,
-      maxDuration: resolve(totalTime3)
+      sessionType: sessionType3,
     });
-
-    const session4 = EmberObject.create({
-      id: 4,
+    const ilmSession = this.server.create('ilm-session', {
+      hours: 0,
+    });
+    const session4 = this.server.create('session', {
       title: 'Zwickzange',
-      offerings: resolve(offerings4),
-      sessionType: resolve(sessionType4),
-      isIndependentLearning: true,
-      totalSumDuration: resolve(totalTime4)
+      sessionType: sessionType4,
+      ilmSession,
     });
 
-    const sessions = [session1, session2, session3, session4];
-
-    const block = EmberObject.create({
-      id: 1,
-      sessions: resolve([session1, session3]),
-      excludedSessions: resolve([session2]),
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      sessions: [session1, session3],
+      excludedSessions: [session2],
     });
+    const blockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', block.id);
+    const sessionModels = await this.owner.lookup('service:store').findAll('session');
 
-    this.set('sessions', resolve(sessions));
-    this.set('sequenceBlock', block);
+    this.set('sessions', sessionModels);
+    this.set('sequenceBlock', blockModel);
     this.set('sortBy', 'title');
-    this.set('setSortBy', function(){});
     await this.render(hbs`<CurriculumInventorySequenceBlockSessionList
-      @sessions={{await sessions}}
+      @sessions={{sessions}}
       @sequenceBlock={{sequenceBlock}}
-      @sortBy={{sortBy}}
+      @sortBy={{noop}}
       @setSortBy={{setSortBy}}
     />`);
     assert.dom('thead th').hasText('Count as one offering', 'Column header is labeled correctly.');
@@ -100,44 +85,43 @@ module('Integration | Component | curriculum inventory sequence block session li
 
     assert.dom('tbody tr:nth-of-type(1) td').hasText('Yes', 'All offerings in session are counted as one.');
     assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText('No', 'Excluded value is shown.');
-    assert.dom(findAll('tbody tr:nth-of-type(1) td')[2]).hasText(session1.get('title'), 'Session title is shown.');
-    assert.dom(findAll('tbody tr:nth-of-type(1) td')[3]).hasText(sessionType1.get('title'), 'Session type title is shown.');
-    assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(totalTime1, 'Total time is shown.');
-    assert.dom(findAll('tbody tr:nth-of-type(1) td')[5]).hasText(offerings1.length.toString(), 'Number of offerings is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[2]).hasText(session1.title, 'Session title is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[3]).hasText(sessionType1.title, 'Session type title is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText('30.00', 'Total time is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[5]).hasText('2', 'Number of offerings is shown.');
 
     assert.dom('tbody tr:nth-of-type(2) td').hasText('No', 'All offerings are counted individually.');
     assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText('Yes', 'Excluded value is shown.');
-    assert.dom(findAll('tbody tr:nth-of-type(2) td')[2]).hasText(session2.get('title'), 'Title is visible.');
-    assert.dom(findAll('tbody tr:nth-of-type(2) td')[3]).hasText(sessionType2.get('title'), 'Session type is visible.');
-    assert.dom(findAll('tbody tr:nth-of-type(2) td')[4]).hasText(totalTime2, 'Total time is shown.');
-    assert.dom(findAll('tbody tr:nth-of-type(2) td')[5]).hasText(offerings2.length.toString(), 'Number of offerings is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[2]).hasText(session2.title, 'Title is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[3]).hasText(sessionType2.title, 'Session type is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[4]).hasText('15.00', 'Total time is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[5]).hasText('1', 'Number of offerings is shown.');
 
     assert.dom('tbody tr:nth-of-type(3) td').hasText('Yes', 'All offerings in session are counted as one.');
     assert.dom(findAll('tbody tr:nth-of-type(3) td')[1]).hasText('No', 'Excluded value is shown.');
-    assert.dom(findAll('tbody tr:nth-of-type(3) td')[2]).hasText(session3.get('title'), 'Title is visible.');
-    assert.dom(findAll('tbody tr:nth-of-type(3) td')[3]).hasText(sessionType3.get('title'), 'Session type is visible.');
-    assert.dom(findAll('tbody tr:nth-of-type(3) td')[4]).hasText(totalTime3, 'Total time is shown.');
-    assert.dom(findAll('tbody tr:nth-of-type(3) td')[5]).hasText(offerings3.length.toString(), 'Number of offerings is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(3) td')[2]).hasText(session3.title, 'Title is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(3) td')[3]).hasText(sessionType3.title, 'Session type is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(3) td')[4]).hasText('0', 'Total time is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(3) td')[5]).hasText('0', 'Number of offerings is shown.');
 
     assert.dom('tbody tr:nth-of-type(4) td').hasText('No', 'All offerings are counted individually.');
     assert.dom(findAll('tbody tr:nth-of-type(4) td')[1]).hasText('No', 'Excluded value is shown.');
     assert.ok(find(findAll('tbody tr:nth-of-type(4) td')[2]).textContent.trim().startsWith('(ILM)'), 'ILMs is labeled as such.');
-    assert.ok(find(findAll('tbody tr:nth-of-type(4) td')[2]).textContent.trim().endsWith(session4.get('title')), 'Title is visible.');
-    assert.dom(findAll('tbody tr:nth-of-type(4) td')[3]).hasText(sessionType4.get('title'), 'Session type is visible.');
-    assert.dom(findAll('tbody tr:nth-of-type(4) td')[4]).hasText(totalTime4, 'Total time is shown.');
-    assert.dom(findAll('tbody tr:nth-of-type(4) td')[5]).hasText(offerings4.length.toString(), 'Number of offerings is shown.');
+    assert.ok(find(findAll('tbody tr:nth-of-type(4) td')[2]).textContent.trim().endsWith(session4.title), 'Title is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(4) td')[3]).hasText(sessionType4.title, 'Session type is visible.');
+    assert.dom(findAll('tbody tr:nth-of-type(4) td')[4]).hasText('0', 'Total time is shown.');
+    assert.dom(findAll('tbody tr:nth-of-type(4) td')[5]).hasText('0', 'Number of offerings is shown.');
   });
 
   test('empty list', async function(assert) {
     assert.expect(2);
 
-    const block = EmberObject.create({
-      id: 1,
-      sessions: resolve([]),
-    });
+    const block = this.server.create('curriculum-inventory-sequence-block');
+    const blockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', block.id);
+    const sessionModels = await this.owner.lookup('service:store').findAll('session');
 
-    this.set('sessions', resolve([]));
-    this.set('sequenceBlock', block);
+    this.set('sessions', sessionModels);
+    this.set('sequenceBlock', blockModel);
     this.set('sortBy', 'title');
     this.set('setSortBy', function(){});
     await this.render(hbs`<CurriculumInventorySequenceBlockSessionList
@@ -152,21 +136,19 @@ module('Integration | Component | curriculum inventory sequence block session li
 
   test('sort by title', async function(assert) {
     assert.expect(1);
-    const session = EmberObject.create({
-      id: 1,
+
+    const session = this.server.create('session', {
       title: 'Zeppelin',
-      offerings: resolve([]),
-      sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
-      maxDuration: resolve(0)
+      sessionType: this.server.create('session-type', { title: 'Lecture'}),
     });
-
-    const block = EmberObject.create({
-      id: 1,
-      sessions: resolve([ session ]),
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      sessions: [session],
     });
+    const blockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', block.id);
+    const sessionModels = await this.owner.lookup('service:store').findAll('session');
 
-    this.set('sessions', resolve([ session ]));
-    this.set('sequenceBlock', block);
+    this.set('sessions', sessionModels);
+    this.set('sequenceBlock', blockModel);
     this.set('sortBy', 'id');
     this.set('setSortBy', function(what){
       assert.equal(what, 'title', "Sorting callback gets called for session titles.");
@@ -182,21 +164,18 @@ module('Integration | Component | curriculum inventory sequence block session li
 
   test('sort by session type', async function(assert) {
     assert.expect(1);
-    const session = EmberObject.create({
-      id: 1,
+    const session = this.server.create('session', {
       title: 'Zeppelin',
-      offerings: resolve([]),
-      sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
-      maxDuration: resolve(0)
+      sessionType: this.server.create('session-type', { title: 'Lecture'}),
     });
-
-    const block = EmberObject.create({
-      id: 1,
-      sessions: resolve([ session ]),
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      sessions: [session],
     });
+    const blockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', block.id);
+    const sessionModels = await this.owner.lookup('service:store').findAll('session');
 
-    this.set('sessions', resolve([ session ]));
-    this.set('sequenceBlock', block);
+    this.set('sessions', sessionModels);
+    this.set('sequenceBlock', blockModel);
     this.set('sortBy', 'id');
     this.set('setSortBy', function(what){
       assert.equal(what, 'sessionType.title', "Sorting callback gets called for session type titles.");
@@ -212,21 +191,18 @@ module('Integration | Component | curriculum inventory sequence block session li
 
   test('sort by offerings total', async function(assert) {
     assert.expect(1);
-    const session = EmberObject.create({
-      id: 1,
+    const session = this.server.create('session', {
       title: 'Zeppelin',
-      offerings: resolve([]),
-      sessionType: resolve(EmberObject.create({ title: 'Lecture'})),
-      maxDuration: resolve(0)
+      sessionType: this.server.create('session-type', { title: 'Lecture'}),
     });
-
-    const block = EmberObject.create({
-      id: 1,
-      sessions: resolve([ session ]),
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      sessions: [session],
     });
+    const blockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', block.id);
+    const sessionModels = await this.owner.lookup('service:store').findAll('session');
 
-    this.set('sessions', resolve([ session ]));
-    this.set('sequenceBlock', block);
+    this.set('sessions', sessionModels);
+    this.set('sequenceBlock', blockModel);
     this.set('sortBy', 'id');
     this.set('setSortBy', function(what){
       assert.equal(what, 'offerings.length', "Sorting callback gets called for offerings length.");

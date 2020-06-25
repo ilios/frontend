@@ -18,20 +18,18 @@ module('Acceptance | Program Year - Stewards', function(hooks) {
     this.user = await setupAuthentication({ school: this.school });
     const school2 = this.server.create('school');
     const school3 = this.server.create('school');
-    this.server.create('program', {
+    const program = this.server.create('program', {
       school: this.school,
     });
-    this.server.create('programYear', {
-      programId: 1,
-    });
-    this.server.create('cohort', { programYearId: 1});
-    this.server.create('department', {
-      school: this.school,
-    });
-    this.server.create('department', {
+    const programYear = this.server.create('programYear', { program });
+    this.server.create('cohort', { programYear });
+    const department1 = this.server.create('department', {
       school: this.school,
     });
     this.server.create('department', {
+      school: this.school,
+    });
+    const department3 = this.server.create('department', {
       school: school2,
     });
     this.server.create('department', {
@@ -41,17 +39,17 @@ module('Acceptance | Program Year - Stewards', function(hooks) {
       school: this.school,
     });
     this.server.create('programYearSteward', {
-      programYearId: 1,
+      programYear,
       school: this.school,
-      departmentId: 1
+      department: department1
     });
     this.server.create('programYearSteward', {
-      programYearId: 1,
+      programYear,
       school: school2,
-      departmentId: 3
+      department: department3
     });
     this.server.create('programYearSteward', {
-      programYearId: 1,
+      programYear,
       school: school3
     });
   });
