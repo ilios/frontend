@@ -15,7 +15,7 @@
       {{#if canCreate}}
         <ExpandCollapseButton
           @value={{showNewLearnerGroupForm}}
-          @action={{toggle "showNewLearnerGroupForm" this}}
+          @action={{set this.showNewLearnerGroupForm (not this.showNewLearnerGroupForm)}}
         />
       {{/if}}
     </div>

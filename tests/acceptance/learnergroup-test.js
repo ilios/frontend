@@ -1,19 +1,12 @@
-import {
-  click,
-  fillIn,
-  findAll,
-  currentURL,
-  find,
-  visit
-} from '@ember/test-helpers';
+import { currentURL } from '@ember/test-helpers';
 import { test, module } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import moment from 'moment';
 
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { getElementText, getText } from 'ilios-common';
 import page from '../pages/learner-group';
+import learnerGroupsPage from '../pages/learner-groups';
 
 module('Acceptance | Learnergroup', function(hooks) {
   setupApplicationTest(hooks);
@@ -34,17 +27,17 @@ module('Acceptance | Learnergroup', function(hooks) {
 
     assert.expect(8);
 
-    await visit('/learnergroups/1');
+    await page.visit({ learnerGroupId: 1 });
     await page.overview.manage();
-    assert.equal(page.overview.list.length, 0);
+    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup.length, 0);
     assert.equal(page.usersInCohort.list.length, 2);
     assert.equal(page.usersInCohort.list[0].firstName, '1 guy');
     assert.equal(page.usersInCohort.list[1].firstName, '2 guy');
 
     await page.usersInCohort.list[0].add();
 
-    assert.equal(page.overview.list.length, 1);
-    assert.equal(page.overview.list[0].firstName, '1 guy');
+    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup.length, 1);
+    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup[0].firstName, '1 guy');
     assert.equal(page.usersInCohort.list.length, 1);
     assert.equal(page.usersInCohort.list[0].firstName, '2 guy');
   });
@@ -58,84 +51,87 @@ module('Acceptance | Learnergroup', function(hooks) {
 
     assert.expect(8);
 
-    await visit('/learnergroups/1');
+    await page.visit({ learnerGroupId: 1 });
     await page.overview.manage();
-    assert.equal(page.overview.list.length, 2);
-    assert.equal(page.overview.list[0].firstName, '1 guy');
-    assert.equal(page.overview.list[1].firstName, '2 guy');
+    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup.length, 2);
+    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup[0].firstName, '1 guy');
+    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup[1].firstName, '2 guy');
     assert.equal(page.usersInCohort.list.length, 0);
 
-    await page.overview.list[0].remove();
+    await page.overview.learnerGroupUserManager.usersInCurrentGroup[0].remove();
 
-    assert.equal(page.overview.list.length, 1);
-    assert.equal(page.overview.list[0].firstName, '2 guy');
+    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup.length, 1);
+    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup[0].firstName, '2 guy');
     assert.equal(page.usersInCohort.list.length, 1);
     assert.equal(page.usersInCohort.list[0].firstName, '1 guy');
   });
 
-
   test('generate new subgroups', async function(assert) {
+    assert.expect(23);
     this.user.update({ administeredSchools: [this.school] });
-    this.server.create('programYear', { program: this.program });
-    this.server.create('cohort', { programYearId: 1 });
+    const programYear = this.server.create('programYear', { program: this.program });
+    const cohort = this.server.create('cohort', { programYear });
     this.server.createList('user', 2);
-    this.server.create('learnerGroup', {
-      cohortId: 1,
+    const parent = this.server.create('learnerGroup', {
+      cohort,
     });
-    this.server.create('learnerGroup', {
-      cohortId: 1,
-      parentId: 1,
+    const parent2 = this.server.create('learnerGroup', {
+      cohort,
+      parent,
       userIds: [2,3]
     });
     this.server.create('learnerGroup', {
-      cohortId: 1,
-      parentId: 1
+      cohort,
+      parent
     });
     this.server.createList('learnerGroup', 2, {
-      cohortId: 1,
-      parentId: 2
+      cohort,
+      parent: parent2
     });
 
+    await page.visit({ learnerGroupId: 1 });
+    assert.equal(page.subgroups.groups.length, 2);
+    assert.equal(page.subgroups.groups[0].title, 'learner group 1');
+    assert.equal(page.subgroups.groups[1].title, 'learner group 2');
 
-    assert.expect(11);
+    await page.subgroups.toggleNewForm();
+    assert.ok(page.subgroups.newForm.singleGroupSelected);
+    assert.notOk(page.subgroups.newForm.multipleGroupSelected);
+    await page.subgroups.newForm.chooseMultipleGroups();
+    await page.subgroups.newForm.setNumberOfGroups(5);
+    await page.subgroups.newForm.save();
 
-    const subgroupList = '.learnergroup-subgroup-list';
-    const expandButton = `${subgroupList} .expand-button`;
-    const input = `${subgroupList} .new-learnergroup input`;
-    const done = `${subgroupList} .new-learnergroup .done`;
-    const multiGroupsButton = `${subgroupList} .second-button`;
-    const parentLearnergroupTitle = `learner group 0`;
-    const table = `${subgroupList} .learnergroup-subgroup-list-list table tbody`;
-
-    await visit('/learnergroups/1');
-    // add five subgroups
-    await click(expandButton);
-    await click(multiGroupsButton);
-    await fillIn(input, '5');
-    await click(done);
-    function getCellData(row, cell) {
-      return find(`${table} tr:nth-of-type(${row + 1}) td:nth-of-type(${cell + 1})`).textContent.trim();
-    }
-    assert.dom(`${table} tr`).exists({ count: 7 }, 'all subgroups are displayed.');
-    for (let i = 0; i < 5; i++) {
-      assert.equal(getCellData(i, 0), `${parentLearnergroupTitle} ${i + 1}`, 'new learnergroup title is ok.');
-    }
-    assert.equal(getCellData(5, 0), 'learner group 1');
-    assert.equal(getCellData(6, 0), 'learner group 2');
+    assert.equal(page.subgroups.groups.length, 7);
+    assert.equal(page.subgroups.groups[0].title, 'learner group 0 1');
+    assert.equal(page.subgroups.groups[1].title, 'learner group 0 2');
+    assert.equal(page.subgroups.groups[2].title, 'learner group 0 3');
+    assert.equal(page.subgroups.groups[3].title, 'learner group 0 4');
+    assert.equal(page.subgroups.groups[4].title, 'learner group 0 5');
+    assert.equal(page.subgroups.groups[5].title, 'learner group 1');
+    assert.equal(page.subgroups.groups[6].title, 'learner group 2');
 
     // add two more subgroups
-    await click(expandButton);
-    await click(multiGroupsButton);
-    await fillIn(input, '2');
-    await click(done);
-    assert.dom(`${table} tr`).exists({ count: 9 }, 'all subgroups are still displayed.');
-    assert.equal(getCellData(5, 0), `${parentLearnergroupTitle} 6`, 'consecutively new learnergroup title is ok.');
-    assert.equal(getCellData(6, 0), `${parentLearnergroupTitle} 7`, 'consecutively new learnergroup title is ok.');
+    await page.subgroups.toggleNewForm();
+    await page.subgroups.newForm.chooseMultipleGroups();
+    await page.subgroups.newForm.setNumberOfGroups(2);
+    await page.subgroups.newForm.save();
+
+    assert.equal(page.subgroups.groups.length, 9);
+    assert.equal(page.subgroups.groups[0].title, 'learner group 0 1');
+    assert.equal(page.subgroups.groups[1].title, 'learner group 0 2');
+    assert.equal(page.subgroups.groups[2].title, 'learner group 0 3');
+    assert.equal(page.subgroups.groups[3].title, 'learner group 0 4');
+    assert.equal(page.subgroups.groups[4].title, 'learner group 0 5');
+    assert.equal(page.subgroups.groups[5].title, 'learner group 0 6');
+    assert.equal(page.subgroups.groups[6].title, 'learner group 0 7');
+
+    assert.equal(page.subgroups.groups[7].title, 'learner group 1');
+    assert.equal(page.subgroups.groups[8].title, 'learner group 2');
   });
 
   test('copy learnergroup without learners', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(20);
+    assert.expect(26);
     const programYear = this.server.create('programYear', { program: this.program });
     const cohort = this.server.create('cohort', {
       programYear,
@@ -152,51 +148,41 @@ module('Acceptance | Learnergroup', function(hooks) {
       parent: subGroup
     });
 
-    const groups = '[data-test-learnergroup-subgroup-list] [data-test-learnergroup-list] table tbody tr';
-    const firstGroup = `${groups}:nth-of-type(1)`;
-    const firstTitle = `${firstGroup} td:nth-of-type(1)`;
-    const firstMembers = `${firstGroup} td:nth-of-type(2)`;
-    const firstSubgroups = `${firstGroup} td:nth-of-type(3)`;
-    const firstGroupCopy = `${firstGroup} td:nth-of-type(5) .fa-copy`;
-    const firstGroupCopyConfirmation = `${groups}:nth-of-type(2) .done:nth-of-type(1)`;
-    const firstGroupCopyOptions = `${groups}:nth-of-type(2) .done`;
-    const secondGroup = `${groups}:nth-of-type(2)`;
-    const secondTitle = `${secondGroup} td:nth-of-type(1)`;
-    const secondLink = `${secondTitle} a`;
-    const secondMembers = `${secondGroup} td:nth-of-type(2)`;
-    const secondSubgroups = `${secondGroup} td:nth-of-type(3)`;
+    await page.visit({ learnerGroupId: 1 });
 
-    await visit('/learnergroups/1');
+    assert.equal(page.subgroups.groups.length, 1);
+    assert.equal(page.subgroups.groups[0].title, 'learner group 1');
+    assert.equal(page.subgroups.groups[0].members, '0');
+    assert.equal(page.subgroups.groups[0].subgroups, '2');
+    await page.subgroups.groups[0].actions.copy();
+    await page.subgroups.confirmCopy.confirmWithoutLearners();
 
-    assert.equal(findAll(groups).length, 1);
+    assert.equal(page.subgroups.groups.length, 2);
+    assert.equal(page.subgroups.groups[0].title, 'learner group 1');
+    assert.equal(page.subgroups.groups[0].members, '0');
+    assert.equal(page.subgroups.groups[0].subgroups, '2');
+    assert.equal(page.subgroups.groups[1].title, 'learner group 1 (Copy)');
+    assert.equal(page.subgroups.groups[1].members, '0');
+    assert.equal(page.subgroups.groups[1].subgroups, '2');
 
-    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 1'));
-    assert.equal(await getElementText(find(firstMembers)), getText('0'));
-    assert.equal(await getElementText(find(firstSubgroups)), getText('2'));
+    await page.visit({ learnerGroupId: 1 });
+    assert.equal(page.subgroups.groups.length, 2);
+    assert.equal(page.subgroups.groups[0].title, 'learner group 1');
+    assert.equal(page.subgroups.groups[0].members, '0');
+    assert.equal(page.subgroups.groups[0].subgroups, '2');
+    assert.equal(page.subgroups.groups[1].title, 'learner group 1 (Copy)');
+    assert.equal(page.subgroups.groups[1].members, '0');
+    assert.equal(page.subgroups.groups[1].subgroups, '2');
 
-    await click(firstGroupCopy);
-    assert.equal(findAll(firstGroupCopyOptions).length, 1);
-    assert.equal(find(firstGroupCopyConfirmation).textContent.trim(), 'Copy');
-    await click(firstGroupCopyConfirmation);
-    await visit('/learnergroups/1');
-    assert.equal(findAll(groups).length, 2);
-
-    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 1'));
-    assert.equal(await getElementText(find(firstMembers)), getText('0'));
-    assert.equal(await getElementText(find(firstSubgroups)), getText('2'));
-    assert.equal(await getElementText(find(secondTitle)), getText('learnergroup 1 (Copy)'));
-    assert.equal(await getElementText(find(secondMembers)), getText('0'));
-    assert.equal(await getElementText(find(secondSubgroups)), getText('2'));
-
-    await click(secondLink);
+    await page.subgroups.groups[1].visit();
     assert.equal(currentURL(), '/learnergroups/5');
-
-    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 2'));
-    assert.equal(await getElementText(find(firstMembers)), getText('0'));
-    assert.equal(await getElementText(find(firstSubgroups)), getText('0'));
-    assert.equal(await getElementText(find(secondTitle)), getText('learnergroup 3'));
-    assert.equal(await getElementText(find(secondMembers)), getText('0'));
-    assert.equal(await getElementText(find(secondSubgroups)), getText('0'));
+    assert.equal(page.subgroups.groups.length, 2);
+    assert.equal(page.subgroups.groups[0].title, 'learner group 2');
+    assert.equal(page.subgroups.groups[0].members, '0');
+    assert.equal(page.subgroups.groups[0].subgroups, '0');
+    assert.equal(page.subgroups.groups[1].title, 'learner group 3');
+    assert.equal(page.subgroups.groups[1].members, '0');
+    assert.equal(page.subgroups.groups[1].subgroups, '0');
   });
 
   test('cannot copy learnergroup with learners', async function(assert) {
@@ -220,23 +206,14 @@ module('Acceptance | Learnergroup', function(hooks) {
       parent: subGroup
     });
 
-    const groups = '[data-test-learnergroup-subgroup-list] [data-test-learnergroup-list] table tbody tr';
-    const firstGroup = `${groups}:nth-of-type(1)`;
-    const firstTitle = `${firstGroup} td:nth-of-type(1)`;
-    const firstMembers = `${firstGroup} td:nth-of-type(2)`;
-    const firstSubgroups = `${firstGroup} td:nth-of-type(3)`;
-    const firstGroupCopy = `${firstGroup} td:nth-of-type(5) .fa-copy`;
-    const firstGroupCopyConfirmation = `${groups}:nth-of-type(2) .done:nth-of-type(1)`;
-    const copyOptions = `${groups}:nth-of-type(2) .done`;
-
-    await visit('/learnergroups/1');
-    assert.equal(1, findAll(groups).length);
-    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 1'));
-    assert.equal(await getElementText(find(firstMembers)), getText('3'));
-    assert.equal(await getElementText(find(firstSubgroups)), getText('2'));
-    await click(firstGroupCopy);
-    assert.equal(findAll(copyOptions).length, 1);
-    assert.equal(find(firstGroupCopyConfirmation).textContent.trim(), 'Copy');
+    await page.visit({ learnerGroupId: 1 });
+    assert.equal(page.subgroups.groups.length, 1);
+    assert.equal(page.subgroups.groups[0].title, 'learner group 1');
+    assert.equal(page.subgroups.groups[0].members, '3');
+    assert.equal(page.subgroups.groups[0].subgroups, '2');
+    await page.subgroups.groups[0].actions.copy();
+    assert.notOk(page.subgroups.confirmCopy.canCopyWithLearners);
+    assert.ok(page.subgroups.confirmCopy.canCopyWithoutLearners);
   });
 
   test('cannot copy learnergroup with learners in subgroup', async function(assert) {
@@ -264,33 +241,18 @@ module('Acceptance | Learnergroup', function(hooks) {
       parent: subGroup,
     });
 
-    const groups = '[data-test-learnergroup-subgroup-list] [data-test-learnergroup-list] table tbody tr';
-    const firstGroup = `${groups}:nth-of-type(1)`;
-    const firstTitle = `${firstGroup} td:nth-of-type(1)`;
-    const firstMembers = `${firstGroup} td:nth-of-type(2)`;
-    const firstSubgroups = `${firstGroup} td:nth-of-type(3)`;
-    const firstGroupCopy = `${firstGroup} td:nth-of-type(5) .fa-copy`;
-    const firstGroupCopyConfirmation = `${groups}:nth-of-type(2) .done:nth-of-type(1)`;
-    const copyOptions = `${groups}:nth-of-type(2) .done`;
-
-    await visit('/learnergroups/1');
-    assert.equal(1, findAll(groups).length);
-    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 1'));
-    assert.equal(await getElementText(find(firstMembers)), getText('0'));
-    assert.equal(await getElementText(find(firstSubgroups)), getText('2'));
-    await click(firstGroupCopy);
-    assert.equal(findAll(copyOptions).length, 1);
-    assert.equal(find(firstGroupCopyConfirmation).textContent.trim(), 'Copy');
+    await page.visit({ learnerGroupId: 1 });
+    assert.equal(page.subgroups.groups.length, 1);
+    assert.equal(page.subgroups.groups[0].title, 'learner group 1');
+    assert.equal(page.subgroups.groups[0].members, '0');
+    assert.equal(page.subgroups.groups[0].subgroups, '2');
+    await page.subgroups.groups[0].actions.copy();
+    assert.notOk(page.subgroups.confirmCopy.canCopyWithLearners);
+    assert.ok(page.subgroups.confirmCopy.canCopyWithoutLearners);
   });
 
 
   test('Cohort members not in learner group appear after navigating to learner group #3428', async function (assert) {
-    const groups = '.list tbody tr';
-    const firstGroup = `${groups}:nth-of-type(1)`;
-    const firstTitle = `${firstGroup} td:nth-of-type(1)`;
-    const firstLink = `${firstTitle} a`;
-    const members = '.learnergroup-overview-content table:nth-of-type(2) tbody tr';
-    const cohortMembers = `.cohortmembers tbody tr`;
     assert.expect(5);
     this.server.create('programYear', { program: this.program });
     const cohort = this.server.create('cohort', {
@@ -309,17 +271,17 @@ module('Acceptance | Learnergroup', function(hooks) {
       learnerGroups: [learnerGroup]
     });
 
-    await visit('/learnergroups');
-    assert.equal(1, findAll(groups).length);
-    assert.equal(await getElementText(find(firstTitle)), getText('learnergroup 0'));
-    await click(firstLink);
+    await learnerGroupsPage.visit();
+    assert.equal(learnerGroupsPage.learnerGroupList.groups.length, 1);
+    assert.equal(learnerGroupsPage.learnerGroupList.groups[0].title, 'learner group 0');
+    await learnerGroupsPage.learnerGroupList.groups[0].visit();
     assert.equal(currentURL(), '/learnergroups/1');
-    assert.dom(members).exists({ count: 5 }, 'lists members');
-    assert.dom(cohortMembers).exists({ count: 5 }, 'lists cohort non members');
+    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup.length, 5);
+    assert.equal(page.usersInCohort.list.length, 5);
   });
 
   test('learner group calendar', async function(assert) {
-    assert.expect(2);
+    assert.expect(9);
     const programYear = this.server.create('programYear', { program: this.program });
     const cohort = this.server.create('cohort', { programYear });
     const learnerGroup = this.server.create('learnerGroup', { cohort });
@@ -334,13 +296,21 @@ module('Acceptance | Learnergroup', function(hooks) {
 
     this.server.create('offering');
 
-    const calendarToggle = '[data-test-toggle-learnergroup-calendar] label:nth-of-type(2)';
-    const event = '[data-test-calendar-event]';
+    await page.visit({ learnerGroupId: 1 });
+    assert.ok(page.overview.calendarToggledHidden);
+    assert.notOk(page.overview.calendar.isVisible);
+    assert.equal(page.overview.calendar.events.length, 0);
 
-    await visit('/learnergroups/1');
-    assert.dom(event).doesNotExist();
-    await click(calendarToggle);
-    assert.dom(event).exists({ count: 1 });
+    await page.overview.showCalendar();
+    assert.ok(page.overview.calendarToggledVisible);
+    assert.ok(page.overview.calendar.isVisible);
+    assert.equal(page.overview.calendar.events.length, 1);
+
+    await page.overview.hideCalendar();
+    assert.ok(page.overview.calendarToggledHidden);
+    assert.notOk(page.overview.calendar.isVisible);
+    assert.equal(page.overview.calendar.events.length, 0);
+
   });
 
   test('learner group calendar with subgroup events', async function(assert) {
@@ -369,26 +339,16 @@ module('Acceptance | Learnergroup', function(hooks) {
 
     this.server.create('offering');
 
-    const calendarToggle = '[data-test-toggle-learnergroup-calendar] label:nth-of-type(2)';
-    const subgroupEventsToggle = '[data-test-learnergroup-calendar-toggle-subgroup-events] [data-test-toggle-yesno] .switch-handle';
-    const event = '[data-test-calendar-event]';
-
-    await visit('/learnergroups/1');
-    assert.dom(event).doesNotExist();
-    await click(calendarToggle);
-    assert.dom(event).exists({ count: 1 });
-    await click(subgroupEventsToggle);
-    assert.dom(event).exists({ count: 2 });
+    await page.visit({ learnerGroupId: 1 });
+    assert.equal(page.overview.calendar.events.length, 0);
+    await page.overview.showCalendar();
+    assert.equal(page.overview.calendar.events.length, 1);
+    await page.overview.calendar.toggleSubgroupEvents();
+    assert.equal(page.overview.calendar.events.length, 2);
   });
-
 
   test('Learners with missing parent group affiliation still appear in subgroup manager #3476', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    const members = '.learnergroup-overview-content table:nth-of-type(2) tbody tr';
-    const manage = '.learnergroup-overview-actions button:nth-of-type(2)';
-    const manager = '.learnergroup-user-manager-content';
-    const membersOfGroup = `${manager} table:nth-of-type(2) tr`;
-    const membersOfTree = `${manager} table:nth-of-type(3) tr`;
     assert.expect(4);
     this.server.create('programYear', { program: this.program });
     const cohort = this.server.create('cohort', {
@@ -410,12 +370,12 @@ module('Acceptance | Learnergroup', function(hooks) {
       learnerGroups: [subGroup]
     });
 
-    await visit('/learnergroups/2');
+    await page.visit({ learnerGroupId: 2 });
     assert.equal(currentURL(), '/learnergroups/2');
-    assert.dom(members).exists({ count: 1 }, 'lists members');
-    await click(manage);
-    assert.dom(membersOfGroup).exists({ count: 1 }, 'displays all group members');
-    assert.dom(membersOfTree).exists({ count: 2 }, 'lists all tree members');
+    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup.length, 1);
+    await page.overview.manage();
+    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup.length, 1);
+    assert.equal(page.overview.learnerGroupUserManager.usersNotInCurrentGroup.length, 2);
   });
 
   test('moving learners to group updates count #3570', async function (assert) {
@@ -430,15 +390,15 @@ module('Acceptance | Learnergroup', function(hooks) {
     });
     this.server.createList('user', 2, { cohorts: [cohort] });
 
-    await visit('/learnergroups/1');
+    await page.visit({ learnerGroupId: 1 });
     await page.overview.manage();
-    assert.equal(page.overview.list.length, 2);
+    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup.length, 2);
     assert.equal(page.usersInCohort.list.length, 2);
     assert.equal(page.header.members, 'Members: 2 / 4');
 
     await page.usersInCohort.list[0].add();
 
-    assert.equal(page.overview.list.length, 3);
+    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup.length, 3);
     assert.equal(page.usersInCohort.list.length, 1);
     assert.equal(page.header.members, 'Members: 3 / 4');
   });
@@ -455,15 +415,15 @@ module('Acceptance | Learnergroup', function(hooks) {
     });
     this.server.createList('user', 2, { cohorts: [cohort] });
 
-    await visit('/learnergroups/1');
+    await page.visit({ learnerGroupId: 1 });
     await page.overview.manage();
-    assert.equal(page.overview.list.length, 2);
+    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup.length, 2);
     assert.equal(page.usersInCohort.list.length, 2);
     assert.equal(page.header.members, 'Members: 2 / 4');
 
-    await page.overview.list[0].remove();
+    await page.overview.learnerGroupUserManager.usersInCurrentGroup[0].remove();
 
-    assert.equal(page.overview.list.length, 1);
+    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup.length, 1);
     assert.equal(page.usersInCohort.list.length, 3);
     assert.equal(page.header.members, 'Members: 1 / 4');
   });

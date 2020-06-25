@@ -2,6 +2,7 @@
   class="learnergroup-calendar"
   {{did-insert (perform this.load) @learnerGroup this.showSubgroupEvents}}
   {{did-update (perform this.load) @learnerGroup this.showSubgroupEvents}}
+  data-test-learnergroup-calendar
 >
   <p class="learnergroup-calendar-filter-options">
     <span class="filter" data-test-learnergroup-calendar-toggle-subgroup-events>
