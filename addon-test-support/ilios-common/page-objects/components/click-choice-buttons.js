@@ -1,17 +1,20 @@
 import {
   create,
   hasClass,
+  is,
 } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-click-choice-buttons]',
   firstButton: {
     scope: '[data-test-first-button]',
-    isActive: hasClass('active')
+    hasActiveStyle: hasClass('active'),
+    isActive: is('[data-test-active]'),
   },
   secondButton: {
     scope: '[data-test-second-button]',
-    isActive: hasClass('active')
+    hasActiveStyle: hasClass('active'),
+    isActive: is('[data-test-active]'),
   },
 };
 

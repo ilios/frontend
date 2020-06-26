@@ -8,10 +8,9 @@ module('Integration | Component | click choice buttons', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(4);
-    this.set('nothing', parseInt);
+    assert.expect(6);
     await render(hbs`<ClickChoiceButtons
-      @toggle={{action this.nothing}}
+      @toggle={{noop}}
       @firstChoicePicked={{true}}
       @buttonContent1="Left Button"
       @buttonContent2="Right Button"
@@ -20,6 +19,24 @@ module('Integration | Component | click choice buttons', function(hooks) {
     assert.equal(component.secondButton.text, 'Right Button', 'second button has correct text');
     assert.ok(component.firstButton.isActive);
     assert.notOk(component.secondButton.isActive);
+    assert.ok(component.firstButton.hasActiveStyle);
+    assert.notOk(component.secondButton.hasActiveStyle);
+  });
+
+  test('it renders second choice picked', async function(assert) {
+    assert.expect(6);
+    await render(hbs`<ClickChoiceButtons
+      @toggle={{noop}}
+      @firstChoicePicked={{false}}
+      @buttonContent1="Left Button"
+      @buttonContent2="Right Button"
+    />`);
+    assert.equal(component.firstButton.text, 'Left Button', 'first button has correct text');
+    assert.equal(component.secondButton.text, 'Right Button', 'second button has correct text');
+    assert.notOk(component.firstButton.isActive);
+    assert.ok(component.secondButton.isActive);
+    assert.notOk(component.firstButton.hasActiveStyle);
+    assert.ok(component.secondButton.hasActiveStyle);
   });
 
   test('click fires toggle action', async function(assert) {
@@ -61,7 +78,7 @@ module('Integration | Component | click choice buttons', function(hooks) {
       assert.ok(false, 'this should not be fired');
     });
     await render(hbs`<ClickChoiceButtons
-      @toggle={{action this.toggle}}
+      @toggle={{this.toggle}}
       @firstChoicePicked={{true}}
       @buttonContent1="Left Button"
       @buttonContent2="Right Button"

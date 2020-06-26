@@ -3,6 +3,7 @@
     class="first-button {{if @firstChoicePicked "active"}}"
     type="button"
     data-test-first-button
+    data-test-active={{@firstChoicePicked}}
     {{on "click" (if @firstChoicePicked (noop) (fn @toggle true))}}
   >
     {{@buttonContent1}}
@@ -11,6 +12,7 @@
     class="second-button {{unless @firstChoicePicked "active"}}"
     type="button"
     data-test-second-button
+    data-test-active={{not @firstChoicePicked}}
     {{on "click" (if @firstChoicePicked (fn @toggle false) (noop))}}
   >
     {{@buttonContent2}}
