@@ -50,7 +50,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
     });
     const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
 
-    this.server.post(`/api/curriculuminventoryreports/:id/rollover`, (scheme, { params, requestBody}) => {
+    this.server.post(`/api/curriculuminventoryreports/:id/rollover`, function(schema, { params, requestBody}) {
       assert.ok('id' in params);
       assert.equal(params.id, report.id);
       const data = queryString.parse(requestBody);
@@ -58,13 +58,9 @@ module('Integration | Component | curriculum inventory report rollover', functio
       assert.equal(data.name, report.get('name'));
       assert.equal(data.description, report.get('description'));
 
-      return {
-        curriculumInventoryReports: [
-          {
-            id: 14
-          }
-        ]
-      };
+      return this.serialize(schema.curriculumInventoryReports.create({
+        id: 14,
+      }));
     });
     this.set('report', report);
     this.set('visit', (newReport) => {
@@ -87,7 +83,7 @@ module('Integration | Component | curriculum inventory report rollover', functio
     const newDescription = 'new description';
     const newYear = thisYear + 4;
 
-    this.server.post(`/api/curriculuminventoryreports/:id/rollover`, (scheme, { params, requestBody}) => {
+    this.server.post(`/api/curriculuminventoryreports/:id/rollover`, function (schema, { params, requestBody}) {
       assert.ok('id' in params);
       assert.equal(params.id, report.id);
       const data = queryString.parse(requestBody);
@@ -95,13 +91,9 @@ module('Integration | Component | curriculum inventory report rollover', functio
       assert.equal(data.description, newDescription, 'The new description gets passed.');
       assert.equal(data.year, newYear, 'The new year gets passed.');
 
-      return {
-        curriculumInventoryReports: [
-          {
-            id: 14
-          }
-        ]
-      };
+      return this.serialize(schema.curriculumInventoryReports.create({
+        id: 14,
+      }));
     });
 
     this.set('report', report);

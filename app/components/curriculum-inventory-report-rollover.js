@@ -99,7 +99,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const store = this.store;
     flashMessages.success('general.curriculumInventoryReportRolloverSuccess');
     store.pushPayload(newReportObj);
-    const newReport = store.peekRecord('curriculum-inventory-report', newReportObj.curriculumInventoryReports[0].id);
+    const newReport = store.peekRecord('curriculum-inventory-report', newReportObj.data.id);
 
     return this.visit(newReport);
   }).drop(),
