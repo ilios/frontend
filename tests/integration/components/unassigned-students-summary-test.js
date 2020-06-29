@@ -41,14 +41,11 @@ module('Integration | Component | unassigned students summary', function(hooks) 
       roles: [studentRole]
     });
 
-    this.server.get('api/users', ({ db }, { queryParams }) => {
+    this.server.get('api/users', (schema, { queryParams }) => {
       assert.equal(queryParams['filters[school]'], 1);
       assert.deepEqual(queryParams['filters[roles]'], ['4']);
       assert.equal(queryParams['filters[cohorts]'], '');
-
-      const users = db.users.find([2, 3, 4, 5, 6]);
-
-      return { users };
+      return schema.users.find([2, 3, 4, 5, 6]);
     });
 
     this.owner.register('service:currentUser', currentUserMock);

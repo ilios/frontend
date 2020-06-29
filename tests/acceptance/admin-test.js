@@ -68,13 +68,13 @@ module('Acceptance | Admin', function(hooks) {
     const userSearch = '.user-search input';
     await visit(url);
 
-    this.server.get('api/users', ({ db }, { queryParams }) => {
+    this.server.get('api/users', (schema, { queryParams }) => {
       assert.ok('order_by[lastName]' in queryParams);
       assert.ok('order_by[firstName]' in queryParams);
       assert.equal(queryParams['order_by[lastName]'], 'ASC');
       assert.equal(queryParams['order_by[firstName]'], 'ASC');
 
-      return { users: db.users };
+      return schema.users.all();
     });
 
     await fillIn(userSearch, 'son');
