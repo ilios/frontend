@@ -51,5 +51,4 @@ export default create({
   emptyListRowIsVisible: isVisible('[data-test-empty-list]'),
   savedResult: text('.saved-result'),
   toggleNewLearnerGroupForm: clickable('[data-test-expand-collapse-button] button'),
-  hasNewGroupToggle: isPresent('[data-test-expand-collapse-button]'),
 });

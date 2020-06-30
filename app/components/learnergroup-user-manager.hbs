@@ -1,4 +1,4 @@
-<div class="learnergroup-user-manager" ...attributes>
+<div class="learnergroup-user-manager" ...attributes data-test-learnergroup-user-manager>
   <div class="title">
     {{#unless @isEditing}}
       {{t "general.members"}}
@@ -81,7 +81,7 @@
           </div>
         {{/if}}
         <table>
-          <tbody>
+          <tbody data-test-users-in-current-group>
             {{#each (sort-by @sortBy this.usersInCurrentGroup) as |user|}}
               <tr class={{unless user.enabled "disabled-user-account" ""}}>
                 <td class="text-left" colspan="1">
@@ -153,7 +153,7 @@
             ({{this.usersNotInCurrentGroup.length}})
           </div>
           <table>
-            <tbody>
+            <tbody data-test-users-not-in-current-group>
               {{#each (sort-by @sortBy this.usersNotInCurrentGroup) as |user|}}
                 <tr class={{unless user.enabled "disabled-user-account" ""}}>
                   <td class="text-left" colspan="1">

@@ -9,6 +9,7 @@ import {
   text,
   visitable
 } from 'ember-cli-page-object';
+import learnerGroupUserManager from './components/learnergroup-user-manager';
 
 export default create({
   visit: visitable('/learnergroups/:learnerGroupId'),
@@ -17,15 +18,18 @@ export default create({
     members: text('[data-test-members]'),
   },
   overview: {
-    scope: '.learnergroup-overview',
+    scope: '[data-test-overview]',
     manage: clickable('[data-test-manage]'),
-    list: collection('.list table:nth-of-type(2) tr', {
-      firstName: text('td', {at: 1}),
-      lastName: text('td', {at: 2}),
-      campusId: text('td', {at: 3}),
-      email: text('td', {at: 4}),
-      remove: clickable('.no.clickable'),
-    }),
+    learnerGroupUserManager,
+    calendarToggledHidden: isVisible('[data-test-toggle-learnergroup-calendar] [data-test-first][data-test-selected]'),
+    calendarToggledVisible: isVisible('[data-test-toggle-learnergroup-calendar] [data-test-second][data-test-selected]'),
+    hideCalendar: clickable('[data-test-toggle-learnergroup-calendar] [data-test-first]'),
+    showCalendar: clickable('[data-test-toggle-learnergroup-calendar] [data-test-second]'),
+    calendar: {
+      scope: '[data-test-learnergroup-calendar]',
+      toggleSubgroupEvents: clickable('[data-test-learnergroup-calendar-toggle-subgroup-events] [data-test-toggle-yesno] [data-test-handle]'),
+      events: collection('[data-test-calendar-event]'),
+    },
   },
   activateBulkAssign: clickable('[data-test-activate-bulk-assign]'),
   bulkAssign: {
@@ -103,20 +107,36 @@ export default create({
         canCopy: isPresent('[data-test-copy]'),
         copy: clickable('[data-test-copy]'),
       },
-      confirmRemoval: {
-        scope: '[data-test-confirm-removal]',
-        confirm: clickable('[data-test-confirm]'),
-        cancel: clickable('[data-test-cancel]'),
-        confirmation: text('[data-test-confirmation]'),
-      },
-      confirmCopy: {
-        scope: '[data-test-confirm-copy]',
-        confirmWithLearners: clickable('[data-test-confirm-with-learners]'),
-        confirmWithoutLearners: clickable('[data-test-confirm-without-learners]'),
-        canCopyWithLearners: isPresent('[data-test-confirm-with-learners]'),
-        canCopyWithoutLearners: isPresent('[data-test-confirm-without-learners]'),
-      },
     }),
+    confirmRemoval: {
+      scope: '[data-test-confirm-removal]',
+      confirm: clickable('[data-test-confirm]'),
+      cancel: clickable('[data-test-cancel]'),
+      confirmation: text('[data-test-confirmation]'),
+    },
+    confirmCopy: {
+      scope: '[data-test-confirm-copy]',
+      confirmWithLearners: clickable('[data-test-confirm-with-learners]'),
+      confirmWithoutLearners: clickable('[data-test-confirm-without-learners]'),
+      canCopyWithLearners: isPresent('[data-test-confirm-with-learners]'),
+      canCopyWithoutLearners: isPresent('[data-test-confirm-without-learners]'),
+    },
+    newForm: {
+      scope: '[data-test-new-learner-group]',
+      title: fillable('[data-test-title]'),
+      save: clickable('.done'),
+      cancel: clickable('.cancel'),
+      isVisible: isVisible(),
+      singleGroupSelected: isPresent('[data-test-first-button][data-test-active]'),
+      multipleGroupSelected: isPresent('[data-test-second-button][data-test-active]'),
+      chooseSingleGroups: clickable('[data-test-first-button]'),
+      chooseMultipleGroups: clickable('[data-test-second-button]'),
+      setNumberOfGroups: fillable('[data-test-number-of-groups]'),
+    },
+    emptyListRowIsVisible: isVisible('[data-test-empty-list]'),
+    savedResult: text('.saved-result'),
+    toggleNewForm: clickable('[data-test-expand-collapse-button] button'),
+    hasNewGroupToggle: isPresent('[data-test-expand-collapse-button]'),
   },
   usersInCohort: {
     scope: '.cohortmembers',

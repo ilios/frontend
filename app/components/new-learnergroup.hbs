@@ -8,8 +8,8 @@
         <ClickChoiceButtons
           @buttonContent1={{t "general.singleGroup"}}
           @buttonContent2={{t "general.multipleGroups"}}
-          @firstChoicePicked={{singleMode}}
-          @toggle={{action (mut singleMode)}}
+          @firstChoicePicked={{this.singleMode}}
+          @toggle={{set this.singleMode}}
         />
       </div>
     {{else}}
@@ -17,7 +17,7 @@
         {{t "general.newLearnerGroup"}}
       </h4>
     {{/if}}
-    {{#if singleMode}}
+    {{#if this.singleMode}}
       <NewLearnergroupSingle
         @save={{save}}
         @cancel={{cancel}}
