@@ -1,10 +1,9 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import { defer } from 'rsvp';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
 export default Route.extend(AuthenticatedRouteMixin, {
-  store: service(),
+  dataLoader: service(),
 
   queryParams: {
     titleFilter: {
@@ -13,13 +12,7 @@ export default Route.extend(AuthenticatedRouteMixin, {
   },
 
   model() {
-    const rsvpDefer = defer();
-    const model = {};
-    this.store.findAll('school').then(schools => {
-      model.schools = schools;
-      rsvpDefer.resolve(model);
-    });
-    return rsvpDefer.promise;
+    return this.dataLoader.loadSchoolsForLearnerGroups();
   },
 
   actions: {

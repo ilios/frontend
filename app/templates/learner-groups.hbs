@@ -3,12 +3,12 @@
   <div class="filters">
     <div class="filter" data-test-school-filter>
       <FaIcon @icon="university" @fixedWidth={{true}} />
-      {{#if (get (await this.sortedSchools) "length")}}
-        {{#if (gt (get (await this.sortedSchools) "length") 1)}}
+      {{#if (get @model "length")}}
+        {{#if (gt (get @model "length") 1)}}
           <select
             onchange={{action "changeSelectedSchool" value="target.value"}}
           >
-            {{#each (await this.sortedSchools) as |school|}}
+            {{#each (sort-by "title" @model) as |school|}}
               <option
                 value={{school.id}}
                 selected={{is-equal school (await this.selectedSchool)}}
@@ -26,12 +26,12 @@
     </div>
     <div class="filter" data-test-program-filter>
       <FaIcon @icon="users" @fixedWidth={{true}} />
-      {{#if (get (await this.sortedPrograms) "length")}}
-        {{#if (gt (get (await this.sortedPrograms) "length") 1)}}
+      {{#if (get (await this.programs) "length")}}
+        {{#if (gt (get (await this.programs) "length") 1)}}
           <select
             onchange={{action "changeSelectedProgram" value="target.value"}}
           >
-            {{#each (await this.sortedPrograms) as |program|}}
+            {{#each (sort-by "title" (await this.programs)) as |program|}}
               <option
                 value={{program.id}}
                 selected={{is-equal program (await this.selectedProgram)}}
@@ -49,12 +49,12 @@
     </div>
     <div class="filter" data-test-program-year-filter>
       <FaIcon @icon="calendar" @fixedWidth={{true}} />
-      {{#if (get (await this.sortedProgramYears) "length")}}
-        {{#if (gt (get (await this.sortedProgramYears) "length") 1)}}
+      {{#if (get (await this.programYears) "length")}}
+        {{#if (gt (get (await this.programYears) "length") 1)}}
           <select
             onchange={{action "changeSelectedProgramYear" value="target.value"}}
           >
-            {{#each (await this.sortedProgramYears) as |programYear|}}
+            {{#each (sort-by "startYear:desc" (await this.programYears)) as |programYear|}}
               <option
                 value={{programYear.id}}
                 selected={{is-equal programYear (await this.selectedProgramYear)}}

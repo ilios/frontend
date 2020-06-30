@@ -10,6 +10,7 @@ export default Controller.extend({
   intl: service(),
   permissionChecker: service(),
   store: service(),
+  dataLoader: service(),
 
   queryParams: {
     programId: 'program',
@@ -30,27 +31,13 @@ export default Controller.extend({
   titleFilter: null,
   totalGroupsToSave: 0,
 
-  sortedSchools: computed('model.schools', async function() {
-    const schools = await this.get('model.schools');
-    return schools.sortBy('title');
-  }),
-
   programs: computed('selectedSchool', async function() {
     const school = await this.selectedSchool;
     if(isEmpty(school)){
       return [];
     }
-    return await this.store.query('program', {
-      filters: {
-        school: school.get('id'),
-        published: true
-      }
-    });
-  }),
-
-  sortedPrograms: computed('programs', async function() {
-    const programs = await this.programs;
-    return programs.sortBy('title');
+    const programs = await school.programs;
+    return programs.filterBy('published');
   }),
 
   programYears: computed('selectedProgram', 'selectedProgram.programYears.[]', async function() {
@@ -58,17 +45,8 @@ export default Controller.extend({
     if(isEmpty(program)){
       return [];
     }
-    return await this.store.query('programYear', {
-      filters: {
-        program: program.get('id'),
-        published: true
-      }
-    });
-  }),
-
-  sortedProgramYears: computed('programYears.[]', async function() {
-    const programYears = await this.programYears;
-    return programYears.sortBy('startYear').reverse();
+    const programYears = await program.programYears;
+    return programYears.filterBy('published');
   }),
 
   learnerGroups: computed('selectedProgramYear.cohort.rootLevelLearnerGroups.[]', 'newGroup', 'deletedGroup', async function() {
@@ -76,7 +54,7 @@ export default Controller.extend({
     if(isEmpty(programYear)) {
       return [];
     }
-    const cohort = await programYear.get('cohort');
+    const cohort = await programYear.cohort;
     return await cohort.get('rootLevelLearnerGroups');
   }),
 
@@ -96,30 +74,20 @@ export default Controller.extend({
     return filteredGroups.sortBy('title');
   }),
 
-  selectedSchool: computed('model.schools.[]', 'schoolId', async function() {
-    const schools = await this.get('model.schools');
-    const schoolId = this.schoolId;
-    if(isPresent(schoolId)){
-      const school = schools.findBy('id', schoolId);
-      if(school){
-        return school;
-      }
-    }
+  selectedSchool: computed('model.[]', 'schoolId', async function() {
+    const user = await this.currentUser.getModel();
+    const schoolId = this.schoolId ?? user.belongsTo('school').id();
 
-    const user = await this.currentUser.get('model');
-    return await user.get('school');
+    return this.model.findBy('id', schoolId);
   }),
 
   selectedProgram: computed('programs.[]', 'programId', async function() {
     const programs = await this.programs;
-    let program;
-    const programId = this.programId;
-    if(isPresent(programId)){
-      program = programs.findBy('id', programId);
-    }
-
-    if(program){
-      return program;
+    if(isPresent(this.programId)){
+      const program = programs.findBy('id', this.programId);
+      if(program){
+        return program;
+      }
     }
 
     if(isEmpty(programs)) {
@@ -131,15 +99,19 @@ export default Controller.extend({
 
   selectedProgramYear: computed('programYears.[]', 'programYearId', async function() {
     const programYears = await this.programYears;
-    let programYear;
     const programYearId = this.programYearId;
-    if(isPresent(programYearId)){
-      programYear = programYears.findBy('id', programYearId);
+    if (isPresent(programYearId)) {
+      const programYear = programYears.findBy('id', programYearId);
+      if (programYear) {
+        await this.dataLoader.loadCohortForLearnerGroups(programYear.belongsTo('cohort').id());
+        return programYear;
+      }
     }
-    if(programYear) {
-      return programYear;
-    }
-    return programYears.sortBy('startYear').get('lastObject');
+
+    const latestYear = programYears.sortBy('startYear').get('lastObject');
+    await this.dataLoader.loadCohortForLearnerGroups(latestYear.belongsTo('cohort').id());
+
+    return latestYear;
   }),
 
   canCreate: computed('selectedSchool', async function() {
