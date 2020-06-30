@@ -29,9 +29,6 @@
         >
           {{t "general.subgroups"}}
         </SortableTh>
-        <th class="text-center hide-from-small-screen">
-          {{t "general.courses"}}
-        </th>
         <th class="text-right">
           {{t "general.actions"}}
         </th>
@@ -57,16 +54,12 @@
           <td class="text-center hide-from-small-screen">
             {{learnerGroup.childrenCount}}
           </td>
-          <td class="text-center hide-from-small-screen">
-            {{get (await learnerGroup.courses) "length"}}
-          </td>
           <td class="text-right" data-test-actions>
             {{#if (is-fulfilled learnerGroup.hasLearnersInGroupOrSubgroups)}}
               {{#if
                 (and
                   @canDelete
                   (not (await learnerGroup.hasLearnersInGroupOrSubgroups))
-                  (eq (get (await learnerGroup.courses) "length") 0)
                 )
               }}
                 <span
@@ -98,31 +91,52 @@
         </tr>
         {{#if (contains learnerGroup this.learnerGroupsForRemovalConfirmation)}}
           <tr class="confirm-removal" data-test-confirm-removal>
-            <td colspan={{if (media "isLaptopAndUp") "6" "3"}}>
+            <td colspan={{if (media "isLaptopAndUp") "5" "3"}}>
               <div class="confirm-message" data-test-confirmation>
-                {{t
-                  "general.confirmRemoveLearnerGroup"
-                  subgroupCount=learnerGroup.children.length
-                }}
-                <br>
-                <div class="confirm-buttons">
-                  <button
-                    type="button"
-                    class="remove text"
-                    onclick={{action @remove learnerGroup}}
-                    data-test-confirm
-                  >
-                    {{t "general.yes"}}
-                  </button>
-                  <button
-                    type="button"
-                    class="done text"
-                    onclick={{action "cancelRemove" learnerGroup}}
-                    data-test-cancel
-                  >
-                    {{t "general.cancel"}}
-                  </button>
-                </div>
+                {{#if (is-fulfilled learnerGroup.courses)}}
+                  {{#if (gt (get (await learnerGroup.courses) "length") 0)}}
+                    {{t "general.canNotDeleteLearnerGroupWithAssociatedCourses" courseCount=(get (await learnerGroup.courses) "length")}}
+                    <ul class="course-list">
+                      {{#each (sort-by "year" "title" (await learnerGroup.courses)) as |course|}}
+                        <li>{{course.academicYear}} {{course.title}}</li>
+                      {{/each}}
+                    </ul>
+                    <button
+                        type="button"
+                        class="done text"
+                        onclick={{action "cancelRemove" learnerGroup}}
+                        data-test-cancel
+                      >
+                        {{t "general.cancel"}}
+                      </button>
+                  {{else}}
+                    {{t
+                      "general.confirmRemoveLearnerGroup"
+                      subgroupCount=learnerGroup.children.length
+                    }}
+                    <br>
+                    <div class="confirm-buttons">
+                      <button
+                        type="button"
+                        class="remove text"
+                        onclick={{action @remove learnerGroup}}
+                        data-test-confirm
+                      >
+                        {{t "general.yes"}}
+                      </button>
+                      <button
+                        type="button"
+                        class="done text"
+                        onclick={{action "cancelRemove" learnerGroup}}
+                        data-test-cancel
+                      >
+                        {{t "general.cancel"}}
+                      </button>
+                    </div>
+                  {{/if}}
+                {{else}}
+                  <LoadingSpinner />
+                {{/if}}
               </div>
             </td>
           </tr>

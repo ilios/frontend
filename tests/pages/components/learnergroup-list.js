@@ -32,6 +32,8 @@ const definition = {
     scope: '[data-test-confirm-removal]',
     confirm: clickable('[data-test-confirm]'),
     cancel: clickable('[data-test-cancel]'),
+    canConfirm: isPresent('[data-test-confirm]'),
+    canCancel: isPresent('[data-test-cancel]'),
     confirmation: text('[data-test-confirmation]'),
   },
   confirmCopy: {
