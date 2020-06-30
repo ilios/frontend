@@ -13,7 +13,7 @@
       <FaIcon @icon="university" @fixedWidth={{true}} />
       {{#if this.hasMoreThanOneSchool}}
         <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-          {{#each this.sortedSchools as |school|}}
+          {{#each (sort-by "title" @model.schools) as |school|}}
             <option
               value={{school.id}}
               selected={{is-equal school this.selectedSchool}}
@@ -32,7 +32,7 @@
         onchange={{action "changeSelectedYear" value="target.value"}}
         data-test-year-filter
       >
-        {{#each this.sortedYears as |year|}}
+        {{#each (sort-by "title:desc" @model.years) as |year|}}
           <option value={{year.year}} selected={{is-equal year this.selectedYear}}>
             {{year.academicYearTitle}}
           </option>
