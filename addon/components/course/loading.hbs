@@ -1,0 +1,15 @@
+{{#if (has-route "courses")}}
+  <div class="back-to-courses-list">
+    <LinkTo @route="courses">
+      {{t "general.backToCourses"}}
+    </LinkTo>
+  </div>
+{{/if}}
+
+{{! template-lint-disable no-bare-strings}}
+<div aria-hidden="true" class="course-loading">
+  <h2>
+    {{join "" (repeat (random 1 5) "ilios rocks")}}
+    2000 - 2030
+  </h2>
+</div>

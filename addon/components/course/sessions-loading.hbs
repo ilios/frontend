@@ -1,0 +1,27 @@
+<section
+  class="course-sessions"
+>
+  <div class="course-sessions-header">
+    <div class="title" data-test-title>
+      {{t "general.sessions"}} ({{@sessionsCount}})
+    </div>
+    <div class="actions">
+    </div>
+  </div>
+   <div class="filter">
+    <input
+      value=""
+      disabled
+    >
+  </div>
+  <section>
+    <SessionsGridHeader
+      @showExpandAll={{false}}
+      @setSortBy={{noop}}
+      @sortBy=""
+      @allSessionsExpanded={{false}}
+      @toggleExpandAll={{noop}}
+    />
+    <SessionsGridLoading @count={{@sessionsCount}} />
+  </section>
+</section>
