@@ -10,6 +10,7 @@ const DEBOUNCE_DELAY = 250;
 export default class CourseSessionsComponent extends Component {
   @service intl;
   @service permissionChecker;
+  @service dataLoader;
 
   @tracked sessions = [];
   @tracked expandedSessionIds = [];
@@ -19,13 +20,15 @@ export default class CourseSessionsComponent extends Component {
   @tracked showNewSessionForm = false;
 
   @restartableTask
-  *load(event, [sessions, school]) {
-    if (!sessions) {
-      return;
-    }
-    this.sessions = sessions.toArray();
-    this.sessionObjects = yield this.buildSessionObjects();
-    this.sessionTypes = yield school.sessionTypes;
+  *load(event, [course]) {
+    const school = yield course.school;
+    this.sessions = (yield course.sessions).toArray();
+    const [sessionObjects, sessionTypes] = yield Promise.all([
+      this.buildSessionObjects(),
+      school.sessionTypes
+    ]);
+    this.sessionObjects = sessionObjects;
+    this.sessionTypes = sessionTypes;
   }
 
   get sessionsCount(){

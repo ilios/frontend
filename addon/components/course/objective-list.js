@@ -7,6 +7,7 @@ import { inject as service } from '@ember/service';
 export default class CourseObjectiveListComponent extends Component {
   @service store;
   @service intl;
+  @service dataLoader;
 
   @tracked courseObjectives;
   @tracked isSorting = false;
@@ -18,6 +19,8 @@ export default class CourseObjectiveListComponent extends Component {
     if (!course) {
       return;
     }
+    //pre-load all session data as well to get access to child objectives
+    yield this.dataLoader.loadCourseSessions(course.id);
     this.courseObjectiveCount = course.hasMany('courseObjectives').ids().length;
     const {
       courseObjectives,
@@ -32,14 +35,6 @@ export default class CourseObjectiveListComponent extends Component {
 
   async getCohortObjectives(course) {
     const cohorts = (await course.cohorts).toArray();
-    const programYears = cohorts.map(c => c.belongsTo('programYear').id());
-    if (programYears.length) {
-      await this.store.query('objective', {
-        filters: {
-          programYears,
-        },
-      });
-    }
     return await map(cohorts, async cohort => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;

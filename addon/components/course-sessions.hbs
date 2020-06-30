@@ -1,8 +1,8 @@
 <section
   class="course-sessions"
   data-test-course-sessions
-  {{did-insert (perform this.load) (await @course.sessions) (await @course.school)}}
-  {{did-update (perform this.load) (await @course.sessions) (await @course.school)}}
+  {{did-insert (perform this.load) @course @course.sessions}}
+  {{did-update (perform this.load) @course @course.sessions}}
 >
   <div class="course-sessions-header">
     <div class="title">
@@ -74,7 +74,7 @@
         @expandSession={{perform this.expandSession}}
       />
     {{else}}
-      <SessionsGridLoading @count={{has-many-length @course "sessions"}} />
+      <SessionsGridLoading @count={{this.sessionsCount}} />
     {{/if}}
   </section>
 </section>
