@@ -48,7 +48,7 @@
     "ember-cli-htmlbars": "^4.3.1",
     "ember-cli-mirage": "^1.0.0",
     "ember-cli-moment-shim": "^3.8.0",
-    "ember-cli-page-object": "1.17.2",
+    "ember-cli-page-object": "1.17.3",
     "ember-cli-string-helpers": "^5.0.0",
     "ember-click-outside": "^1.2.0",
     "ember-composable-helpers": "4.2.1",
