@@ -259,6 +259,7 @@ general:
   objectiveParentsTitle: "Select Parent Objectives"
   objectiveTitle: "Session Objective"
   off: Off
+  ok: OK
   on: On
   openSmallGroupGenerator: "Open Offering Small Group Generator"
   optional: Optional

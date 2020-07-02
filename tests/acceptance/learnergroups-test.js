@@ -328,7 +328,7 @@ module('Acceptance | Learner Groups', function(hooks) {
     assert.ok(page.learnerGroupList.groups[0].actions.canRemove);
 
     await page.learnerGroupList.groups[0].actions.remove();
-    assert.equal(page.learnerGroupList.confirmRemoval.confirmation, 'This group is attached to one course and cannot be deleted. 2013 - 2014 course 0 Cancel');
+    assert.equal(page.learnerGroupList.confirmRemoval.confirmation, 'This group is attached to one course and cannot be deleted. 2013 - 2014 course 0 OK');
     assert.notOk(page.learnerGroupList.confirmRemoval.canConfirm);
     assert.ok(page.learnerGroupList.confirmRemoval.canCancel);
     await page.learnerGroupList.confirmRemoval.cancel();
