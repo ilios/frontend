@@ -5,7 +5,7 @@
         <SortableTh
           @colspan={{2}}
           @sortedAscending={{this.sortedAscending}}
-          @click={{action "sortBy" "title"}}
+          @click={{fn this.setSortBy "title"}}
         >
           {{t "general.learnerGroupTitle"}}
         </SortableTh>
@@ -15,7 +15,7 @@
           @hideFromSmallScreen={{true}}
           @sortedAscending={{this.sortedAscending}}
           @sortType="numeric"
-          @click={{action "sortBy" "usersCount"}}
+          @click={{fn this.setSortBy "usersCount"}}
         >
           {{t "general.members"}}
         </SortableTh>
@@ -25,7 +25,7 @@
           @hideFromSmallScreen={{true}}
           @sortedAscending={{this.sortedAscending}}
           @sortType="numeric"
-          @click={{action "sortBy" "childrenCount"}}
+          @click={{fn this.setSortBy "childrenCount"}}
         >
           {{t "general.subgroups"}}
         </SortableTh>
@@ -35,7 +35,7 @@
       </tr>
     </thead>
     <tbody>
-      {{#each this.sortedLearnerGroups as |learnerGroup|}}
+      {{#each (sort-by this.sortBy @learnerGroups) as |learnerGroup|}}
         <tr
           class={{if
             (contains learnerGroup this.learnerGroupsForRemovalConfirmation)
@@ -66,7 +66,7 @@
                   class="clickable remove"
                   role="button"
                   data-test-remove
-                  {{action "confirmRemove" learnerGroup}}
+                  {{on "click" (fn this.confirmRemove learnerGroup)}}
                 >
                   <FaIcon @icon="trash" class="enabled" />
                 </span>
@@ -81,7 +81,7 @@
                 @icon="copy"
                 class="clickable enabled"
                 @title={{t "general.copy"}}
-                @click={{action "startCopy" learnerGroup}}
+                @click={{fn this.startCopy learnerGroup}}
                 data-test-copy={{true}}
               />
             {{else}}
@@ -104,7 +104,7 @@
                     <button
                         type="button"
                         class="done text"
-                        onclick={{action "cancelRemove" learnerGroup}}
+                        onclick={{fn this.cancelRemove learnerGroup}}
                         data-test-cancel
                       >
                         {{t "general.ok"}}
@@ -119,7 +119,7 @@
                       <button
                         type="button"
                         class="remove text"
-                        onclick={{action @remove learnerGroup}}
+                        onclick={{fn @remove learnerGroup}}
                         data-test-confirm
                       >
                         {{t "general.yes"}}
@@ -127,7 +127,7 @@
                       <button
                         type="button"
                         class="done text"
-                        onclick={{action "cancelRemove" learnerGroup}}
+                        onclick={{fn this.cancelRemove learnerGroup}}
                         data-test-cancel
                       >
                         {{t "general.cancel"}}
@@ -149,7 +149,7 @@
                   <button
                     type="button"
                     class="done text"
-                    onclick={{action "copy" true learnerGroup}}
+                    onclick={{perform this.copy true learnerGroup}}
                     data-test-confirm-with-learners
                   >
                     {{t "general.copyWithLearners"}}
@@ -157,7 +157,7 @@
                   <button
                     type="button"
                     class="done text"
-                    onclick={{action "copy" false learnerGroup}}
+                    onclick={{perform this.copy false learnerGroup}}
                     data-test-confirm-without-learners
                   >
                     {{t "general.copyWithoutLearners"}}
@@ -166,7 +166,7 @@
                   <button
                     type="button"
                     class="done text"
-                    onclick={{action "copy" false learnerGroup}}
+                    onclick={{perform this.copy false learnerGroup}}
                     data-test-confirm-without-learners
                   >
                     {{t "general.copy"}}
@@ -175,7 +175,7 @@
                 <button
                   type="button"
                   class="cancel text"
-                  onclick={{action "cancelCopy" learnerGroup}}
+                  onclick={{fn this.cancelCopy learnerGroup}}
                 >
                   {{t "general.cancel"}}
                 </button>
