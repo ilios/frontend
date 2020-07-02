@@ -202,6 +202,24 @@
             </span>
           {{/each}}
         </div>
+        <div class="item url" data-test-url>
+          <label>
+            {{t "general.url"}}:
+          </label>
+          {{! template-lint-disable no-bare-strings}}
+          <input
+            type="text"
+            placeholder="https://example.com"
+            value={{this.bestUrl}}
+            {{on "input" (pick "target.value" this.changeURL)}}
+            {{on "keyup" (fn this.addErrorDisplayFor "url")}}
+          >
+          {{#each (await (compute (fn this.getErrorsFor) "url")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
+        </div>
       {{/if}}
       {{#if @showInstructors}}
         <div class="instructors item">

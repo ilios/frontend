@@ -176,7 +176,8 @@ export default create({
         learnerGroups: collection('.offering-manager-learner-groups li', {
           title: text()
         }),
-        location: text('.offering-manager-location'),
+        location: text('[data-test-location]'),
+        url: property('href', '[data-test-url] a'),
         instructors: collection('.offering-manager-instructors [data-test-instructor]', {
           title: text()
         }),

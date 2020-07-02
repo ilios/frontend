@@ -8,11 +8,12 @@ export default class NewObjectiveComponent extends Component {
   @tracked smallGroupMode = true;
 
   @action
-  async save(startDate, endDate, room, learnerGroups, learners, instructorGroups, instructors){
+  async save(startDate, endDate, room, url, learnerGroups, learners, instructorGroups, instructors){
     const offering = this.store.createRecord('offering', {
       startDate,
       endDate,
       room,
+      url,
       learnerGroups,
       learners,
       instructorGroups,

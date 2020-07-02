@@ -80,6 +80,7 @@
     "ember-test-selectors": "^4.0.0",
     "ember-truth-helpers": "^2.0.0",
     "froala-editor": "^3.0.6",
+    "is-url": "^1.2.4",
     "normalize.css": "^8.0.1",
     "query-string": "^6.8.3",
     "scroll-into-view": "^1.9.3",

@@ -8,6 +8,7 @@ import { Gt } from './validation/gt';
 import { Lte } from './validation/lte';
 import { IsInt } from './validation/is-int';
 import { IsTrue } from './validation/is-true';
+import { IsURL } from './validation/is-url';
 import { validatable } from './validation/validatable';
 import { ArrayNotEmpty } from './validation/array-not-empty';
 
@@ -18,6 +19,7 @@ export {
   Lte,
   IsInt,
   IsTrue,
+  IsURL,
   AfterDate,
   BeforeDate,
   Length,

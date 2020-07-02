@@ -54,6 +54,12 @@ const definition = {
     value: value('input'),
     hasError: isVisible('.validation-error-message')
   },
+  url: {
+    scope: '[data-test-url]',
+    set: fillable('input'),
+    value: value('input'),
+    hasError: isVisible('.validation-error-message')
+  },
   recurring: {
     scope: '.make-recurring',
     toggle: clickable('[data-test-toggle-yesno] [data-test-handle]'),

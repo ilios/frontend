@@ -10,6 +10,7 @@ const { all } = RSVP;
 export default Model.extend({
   room: attr('string'),
   site: attr('string'),
+  url: attr('string'),
   startDate: attr('date'),
   endDate: attr('date'),
   updatedAt: attr('date'),
