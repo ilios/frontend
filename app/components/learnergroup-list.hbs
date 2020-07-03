@@ -38,7 +38,7 @@
       {{#each (sort-by this.sortBy @learnerGroups) as |learnerGroup|}}
         <tr
           class={{if
-            (contains learnerGroup this.learnerGroupsForRemovalConfirmation)
+            (contains learnerGroup.id (map-by "id" this.toRemove))
             "confirm-removal"
           }}
           data-test-active-row
@@ -66,9 +66,13 @@
                   class="clickable remove"
                   role="button"
                   data-test-remove
-                  {{on "click" (fn this.confirmRemove learnerGroup)}}
+                  {{on "click" (perform this.confirmRemove learnerGroup)}}
                 >
-                  <FaIcon @icon="trash" class="enabled" />
+                  {{#if (contains learnerGroup this.preparingToRemove)}}
+                    <FaIcon @icon="spinner" @spin={{true}} />
+                  {{else}}
+                    <FaIcon @icon="trash" class="enabled" />
+                  {{/if}}
                 </span>
               {{else}}
                 <FaIcon @icon="trash" class="disabled" />
@@ -89,15 +93,15 @@
             {{/if}}
           </td>
         </tr>
-        {{#if (contains learnerGroup this.learnerGroupsForRemovalConfirmation)}}
-          <tr class="confirm-removal" data-test-confirm-removal>
-            <td colspan={{if (media "isLaptopAndUp") "5" "3"}}>
-              <div class="confirm-message" data-test-confirmation>
-                {{#if (is-fulfilled learnerGroup.courses)}}
-                  {{#if (gt (get (await learnerGroup.courses) "length") 0)}}
-                    {{t "general.canNotDeleteLearnerGroupWithAssociatedCourses" courseCount=(get (await learnerGroup.courses) "length")}}
+        {{#if (contains learnerGroup.id (map-by "id" this.toRemove))}}
+          {{#let (find-by "id" learnerGroup.id this.toRemove) as |removableGroup|}}
+            <tr class="confirm-removal" data-test-confirm-removal>
+              <td colspan={{if (media "isLaptopAndUp") "5" "3"}}>
+                <div class="confirm-message" data-test-confirmation>
+                  {{#if (gt removableGroup.courses.length 0)}}
+                    {{t "general.canNotDeleteLearnerGroupWithAssociatedCourses" courseCount=removableGroup.courses.length}}
                     <ul class="course-list">
-                      {{#each (sort-by "year" "title" (await learnerGroup.courses)) as |course|}}
+                      {{#each (sort-by "year" "title" removableGroup.courses) as |course|}}
                         <li>{{course.academicYear}} {{course.title}}</li>
                       {{/each}}
                     </ul>
@@ -134,14 +138,12 @@
                       </button>
                     </div>
                   {{/if}}
-                {{else}}
-                  <LoadingSpinner />
-                {{/if}}
-              </div>
-            </td>
-          </tr>
+                </div>
+              </td>
+            </tr>
+          {{/let}}
         {{/if}}
-        {{#if (contains learnerGroup this.learnerGroupsForCopy)}}
+        {{#if (contains learnerGroup this.toCopy)}}
           <tr class="confirm-copy" data-test-confirm-copy>
             <td colspan={{if (media "isLaptopAndUp") "6" "3"}}>
               <div class="confirm-buttons">

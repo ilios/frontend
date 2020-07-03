@@ -2,10 +2,12 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { task } from 'ember-concurrency-decorators';
+import { map } from 'rsvp';
 
 export default class LearnerGroupListComponent extends Component {
-  @tracked learnerGroupsForCopy = [];
-  @tracked learnerGroupsForRemovalConfirmation = [];
+  @tracked toCopy = [];
+  @tracked toRemove = [];
+  @tracked preparingToRemove = [];
   @tracked localSortBy = 'title';
 
   get sortBy() {
@@ -18,24 +20,27 @@ export default class LearnerGroupListComponent extends Component {
 
   @action
   cancelRemove(learnerGroup) {
-    this.learnerGroupsForRemovalConfirmation = this.learnerGroupsForRemovalConfirmation.filter(lg => lg !== learnerGroup);
+    this.toRemove = this.toRemove.filter(({ id }) => id !== learnerGroup.id);
   }
 
-  @action
-  confirmRemove(learnerGroup) {
+  @task
+  *confirmRemove(learnerGroup) {
     if (this.args.canDelete) {
-      this.learnerGroupsForRemovalConfirmation = [...this.learnerGroupsForRemovalConfirmation, learnerGroup];
+      this.preparingToRemove = [...this.preparingToRemove, learnerGroup];
+      const deletableGroup = yield this.createDeletableGroup(learnerGroup);
+      this.toRemove = [...this.toRemove, deletableGroup];
+      this.preparingToRemove = this.preparingToRemove.filter(lg => lg !== learnerGroup);
     }
   }
 
   @action
   cancelCopy(learnerGroup) {
-    this.learnerGroupsForCopy = this.learnerGroupsForCopy.filter(lg => lg !== learnerGroup);
+    this.toCopy = this.toCopy.filter(lg => lg !== learnerGroup);
   }
 
   @action
   startCopy(learnerGroup) {
-    this.learnerGroupsForCopy = [...this.learnerGroupsForCopy, learnerGroup];
+    this.toCopy = [...this.toCopy, learnerGroup];
   }
 
   @task
@@ -53,5 +58,27 @@ export default class LearnerGroupListComponent extends Component {
       this.args.setSortBy(what);
     }
     this.localSortBy = what;
+  }
+
+  async getCoursesForGroup(learnerGroup) {
+    const offerings = (await learnerGroup.offerings).toArray();
+    const ilms = (await learnerGroup.ilmSessions).toArray();
+    const arr = [].concat(offerings, ilms);
+
+    const sessions = await Promise.all(arr.mapBy('session'));
+    const filteredSessions = sessions.filter(Boolean).uniq();
+    const courses = await Promise.all(filteredSessions.mapBy('course'));
+    const children = (await learnerGroup.children).toArray();
+    const childCourses = await map(children, async (child) => {
+      return await this.getCoursesForGroup(child);
+    });
+
+    return [].concat(courses, childCourses.flat()).uniq();
+  }
+
+  async createDeletableGroup(learnerGroup) {
+    const courses = await this.getCoursesForGroup(learnerGroup);
+
+    return { id: learnerGroup.id, courses };
   }
 }
