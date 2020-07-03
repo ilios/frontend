@@ -25,12 +25,10 @@ export default class LearnerGroupListComponent extends Component {
 
   @task
   *confirmRemove(learnerGroup) {
-    if (this.args.canDelete) {
-      this.preparingToRemove = [...this.preparingToRemove, learnerGroup];
-      const deletableGroup = yield this.createDeletableGroup(learnerGroup);
-      this.toRemove = [...this.toRemove, deletableGroup];
-      this.preparingToRemove = this.preparingToRemove.filter(lg => lg !== learnerGroup);
-    }
+    this.preparingToRemove = [...this.preparingToRemove, learnerGroup];
+    const deletableGroup = yield this.createDeletableGroup(learnerGroup);
+    this.toRemove = [...this.toRemove, deletableGroup];
+    this.preparingToRemove = this.preparingToRemove.filter(lg => lg !== learnerGroup);
   }
 
   @action
