@@ -45,6 +45,7 @@ general:
   calendarOn: "Calendrier Allumé"
   campusId: "Campus ID"
   canNotContinueWithInvalidRecords: "Ne peut pas continuer avec ces rapports invalides, fixez s'il vous plaît et retéléchargez le fichier."
+  canNotDeleteLearnerGroupWithAssociatedCourses: "Ce groupe est rattaché à {courseCount}  cours et ne peut être supprimé."
   childSequenceOrder: "Ordre séquentiel des enfants"
   city: Ville
   clearDates: "Supprimer dates"
@@ -258,6 +259,7 @@ general:
   objectiveParentsTitle: "Affichez objectifs mères"
   objectiveTitle: "Objectif de Séance"
   off: "Éteindre"
+  ok: OK
   on: Allumer
   openSmallGroupGenerator: "Générateur des petites groupes"
   optional: Optionnel
