@@ -17,6 +17,7 @@ module('Integration | Component | week-glance-event', function(hooks) {
       name: 'Learn to Learn',
       startDate: today.format(),
       location: 'Room 123',
+      url: 'https://zoom.example.com/123?p=456',
       sessionTypeTitle: 'Lecture',
       courseExternalId: 'C1',
       sessionDescription: 'Best <strong>Session</strong> For Sure' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
@@ -59,6 +60,8 @@ module('Integration | Component | week-glance-event', function(hooks) {
     assert.equal(component.title, 'Learn to Learn');
     assert.equal(component.sessionType, 'Lecture');
     assert.equal(component.location, '- Room 123');
+    assert.equal(component.link, 'Virtual Session Link');
+    assert.equal(component.url, 'https://zoom.example.com/123?p=456');
     assert.ok(component.hasDescription);
     assert.equal(component.description, 'Best Session For SureLorem ipsum dolor sit amet, c');
     assert.equal(component.learningMaterials.length, 3);
