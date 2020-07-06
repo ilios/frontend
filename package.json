@@ -53,7 +53,7 @@
     "ember-click-outside": "^1.2.0",
     "ember-composable-helpers": "4.2.1",
     "ember-concurrency": "^1.0.0",
-    "ember-concurrency-decorators": "^1.0.0",
+    "ember-concurrency-decorators": "^2.0.0",
     "ember-data": "3.19.0",
     "ember-drag-drop": "^0.7.0",
     "ember-event-helpers": "^0.1.0",
