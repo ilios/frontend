@@ -60,13 +60,13 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       @isBulkAssigning={{false}}
     />`);
 
-    const defaultLocation = '.learnergroup-overview .defaultlocation span:nth-of-type(1)';
-    const instructors = '.learnergroup-overview .defaultinstructors span';
-    const coursesList = '.learnergroup-overview .associatedcourses div';
+    const defaultLocation = '[data-test-overview] .defaultlocation span:nth-of-type(1)';
+    const instructors = '[data-test-overview] .defaultinstructors span';
+    const coursesList = '[data-test-overview] .associatedcourses ul';
 
     assert.dom(defaultLocation).hasText('test location');
     assert.dom(instructors).hasText('4 guy M. Mc4son; 5 guy M. Mc5son');
-    assert.dom(coursesList).hasText('course 0; course 1');
+    assert.dom(coursesList).hasText('course 0 course 1');
   });
 
   test('Update location', async function(assert) {
@@ -90,7 +90,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       @isBulkAssigning={{false}}
     />`);
 
-    const defaultLocation = '.learnergroup-overview .defaultlocation span:nth-of-type(1)';
+    const defaultLocation = '[data-test-overview] .defaultlocation span:nth-of-type(1)';
     const editLocation = `${defaultLocation} .editable`;
     const input =  `${defaultLocation} input`;
     const save =  `${defaultLocation} .done`;
