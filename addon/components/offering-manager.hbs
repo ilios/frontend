@@ -51,24 +51,7 @@
     </div>
     <div class="offering-manager-location">
       <TruncateText @text={{@offering.room}} @length={{10}} data-test-location />
-      {{#if @offering.url}}
-        <span data-test-url>
-          <a href={{@offering.url}}>{{t "general.virtualSessionLink"}}</a>
-          <CopyButton
-            title={{@offering.url}}
-            @clipboardText={{@offering.url}}
-            @success={{perform this.textCopied}}
-            class={{if this.textCopied.isRunning "copying"}}
-            data-test-url
-          >
-            {{#if this.textCopied.isRunning}}
-              <FaIcon @icon="check" />
-            {{else}}
-              <FaIcon @icon="copy" />
-            {{/if}}
-          </CopyButton>
-        </span>
-      {{/if}}
+      <OfferingUrlDisplay @url={{@offering.url}} data-test-url />
     </div>
     <div class="offering-manager-instructors">
       <ul>
