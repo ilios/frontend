@@ -7,11 +7,12 @@ import { filter, hash, map } from 'rsvp';
 import moment from 'moment';
 import { timeout } from 'ember-concurrency';
 import { dropTask, restartableTask } from "ember-concurrency-decorators";
-import { ArrayNotEmpty, IsInt, Lte, Gte, Gt, NotBlank, Length, validatable } from 'ilios-common/decorators/validation';
+import { ArrayNotEmpty, IsInt, Lte, Gte, Gt, NotBlank, Length, IsURL, validatable } from 'ilios-common/decorators/validation';
 import { ValidateIf } from "class-validator";
 import scrollIntoView from "scroll-into-view";
 
 const DEBOUNCE_DELAY = 600;
+const DEFAULT_URL_VALUE = 'https://';
 
 @validatable
 export default class OfferingForm extends Component {
@@ -25,6 +26,7 @@ export default class OfferingForm extends Component {
   @tracked startDate = null;
   @tracked endDate = null;
   @NotBlank() @Length(1, 255) @tracked room = 'TBD';
+  @IsURL() @Length(1, 2000) @tracked url = null;
   @ValidateIf(o => o.args.smallGroupMode) @ArrayNotEmpty() @tracked learnerGroups = [];
   @tracked learners = [];
   @tracked showOfferingCalendar = false;
@@ -39,6 +41,7 @@ export default class OfferingForm extends Component {
   @tracked availableInstructorGroups = [];
   @tracked loaded = false;
   @tracked saveProgressPercent;
+  @tracked urlChanged = false;
 
   constructor() {
     super(...arguments);
@@ -113,6 +116,14 @@ export default class OfferingForm extends Component {
 
   get formattedCurrentTimezone() {
     return this.timezone.formatTimezone(this.currentTimezone);
+  }
+
+  get bestUrl() {
+    if (this.url || this.urlChanged) {
+      return this.url;
+    }
+
+    return DEFAULT_URL_VALUE;
   }
 
   @restartableTask
@@ -233,6 +244,23 @@ export default class OfferingForm extends Component {
     this.room = event.target.value;
   }
 
+  @action
+  changeURL(value) {
+    const regex = RegExp('https://http[s]?:');
+    if (regex.test(value)) {
+      value = value.substring(8);
+    }
+    this.url = value;
+    this.urlChanged = true;
+  }
+
+  @action
+  selectAllText({ target }) {
+    if (target.value === DEFAULT_URL_VALUE) {
+      target.select();
+    }
+  }
+
   async loadAvailableInstructorGroups(cohorts) {
     let associatedSchools;
     if (isEmpty(cohorts)) {
@@ -285,6 +313,7 @@ export default class OfferingForm extends Component {
     this.startDate = offering.get('startDate');
     this.endDate = offering.get('endDate');
     this.room = offering.get('room');
+    this.url = offering.get('url');
     this.recurringDays = [];
     const obj = yield hash({
       learnerGroups: offering.get('learnerGroups'),
@@ -301,7 +330,7 @@ export default class OfferingForm extends Component {
 
   @dropTask
   * saveOffering() {
-    this.addErrorDisplaysFor(['room', 'numberOfWeeks', 'durationHours', 'durationMinutes', 'learnerGroups']);
+    this.addErrorDisplaysFor(['room', 'url', 'numberOfWeeks', 'durationHours', 'durationMinutes', 'learnerGroups']);
 
     const isValid = yield this.isValid();
     if (!isValid) {
@@ -326,8 +355,8 @@ export default class OfferingForm extends Component {
     let parts;
     while (offerings.length > 0) {
       parts = offerings.splice(0, 5);
-      yield map(parts, ({startDate, endDate, room, learnerGroups, learners, instructorGroups, instructors}) => {
-        return this.args.save(startDate, endDate, room, learnerGroups, learners, instructorGroups, instructors);
+      yield map(parts, ({startDate, endDate, room, url, learnerGroups, learners, instructorGroups, instructors}) => {
+        return this.args.save(startDate, endDate, room, url, learnerGroups, learners, instructorGroups, instructors);
       });
       savedOfferings = savedOfferings + parts.length;
       this.saveProgressPercent = Math.floor(savedOfferings / totalOfferings * 100);
@@ -346,6 +375,7 @@ export default class OfferingForm extends Component {
       startDate: this.startDate,
       endDate: this.endDate,
       room: this.room,
+      url: this.url,
       learnerGroups,
       learners: this.learners,
       instructorGroups: this.instructorGroups,
@@ -366,6 +396,7 @@ export default class OfferingForm extends Component {
       if (day > userPickedDay) {
         const obj = {
           room: this.room,
+          url: this.url,
           learnerGroups,
           learners: this.learners,
           instructorGroups: this.instructorGroups,
@@ -384,6 +415,7 @@ export default class OfferingForm extends Component {
       recurringDayInts.forEach(day => {
         const obj = {
           room: this.room,
+          url: this.url,
           learnerGroups,
           learners: this.learners,
           instructorGroups: this.instructorGroups,

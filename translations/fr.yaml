@@ -320,6 +320,7 @@ general:
   url: URL
   userRole: "Rôle d'utilisateur"
   view: Vue
+  virtualSessionLink: Lien de Séance Virtuelle
   visibleToStudents: "Visible pour les étudiants"
   vocabularies: Vocabulaires
   vocabulary: Vocabulaire

@@ -56,6 +56,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
       learnerGroups: [learnerGroup1, learnerGroup2],
       startDate: this.today.format(),
       endDate: this.today.clone().add(1, 'hour').format(),
+      url: 'https://ucsf.edu/',
     });
 
     this.offering2 = this.server.create('offering', {
@@ -73,6 +74,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
       instructors: [],
       startDate: this.today.clone().add(2, 'days').format(),
       endDate: this.today.clone().add(3, 'days').add(1, 'hour').format(),
+      url: 'https://example.edu/',
     });
   });
 
@@ -127,6 +129,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
     assert.equal(blocks[0].offerings[0].learnerGroups[0].title, 'learner group 0');
     assert.equal(blocks[0].offerings[0].learnerGroups[1].title, 'learner group 1');
     assert.equal(blocks[0].offerings[0].location, this.offering1.room);
+    assert.equal(blocks[0].offerings[0].url, this.offering1.url);
     assert.equal(blocks[0].offerings[0].instructors.length, 8);
     assert.equal(blocks[0].offerings[0].instructors[0].title, '1 guy M. Mc1son');
     assert.equal(blocks[0].offerings[0].instructors[1].title, '2 guy M. Mc2son');
@@ -149,6 +152,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
     assert.equal(blocks[2].offerings[0].learnerGroups.length, 1);
     assert.equal(blocks[2].offerings[0].learnerGroups[0].title, 'learner group 1');
     assert.equal(blocks[2].offerings[0].location, this.offering3.room);
+    assert.equal(blocks[2].offerings[0].url, this.offering3.url);
     assert.equal(blocks[2].offerings[0].instructors.length, 2);
     assert.equal(blocks[2].offerings[0].instructors[0].title, '3 guy M. Mc3son');
     assert.equal(blocks[2].offerings[0].instructors[1].title, '4 guy M. Mc4son');
@@ -312,7 +316,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
 
   test('users can edit existing offerings', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(17);
+    assert.expect(18);
 
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.offerings.dateBlocks[0].offerings[0].edit();
@@ -326,6 +330,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
     await form.duration.hours.set(6);
     await form.duration.minutes.set(10);
     await form.location.set('Rm. 111');
+    await form.url.set('https://example.org');
 
     await form.learnerGroups.manager.selectedGroups.list.trees[0].removeAllSubgroups();
     await form.instructors.manager.instructors[0].remove();
@@ -355,6 +360,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
     assert.equal(offering.instructors[3].title, '7 guy M. Mc7son');
     assert.equal(offering.instructors[4].title, '8 guy M. Mc8son');
     assert.equal(offering.location, 'Rm. 111');
+    assert.equal(offering.url, 'https://example.org/');
   });
 
   test('users can create recurring small groups', async function(assert) {
@@ -414,7 +420,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
 
   test('users can create recurring single offerings', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(53);
+    assert.expect(57);
 
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.offerings.header.createNew();
@@ -427,6 +433,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
     await form.duration.hours.set(13);
     await form.duration.minutes.set(8);
     await form.location.set('Scottsdale Stadium');
+    await form.url.set('https://zoom.example.edu');
 
     await form.recurring.toggle();
     await form.recurring.setWeeks(4);
@@ -453,6 +460,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
       assert.equal(block.offerings.length, 1);
       assert.equal(block.offerings[0].learnerGroups.length, 2);
       assert.equal(block.offerings[0].location, 'Scottsdale Stadium');
+      assert.equal(block.offerings[0].url, 'https://zoom.example.edu/');
       assert.equal(block.offerings[0].learnerGroups[0].title, 'learner group 0');
       assert.equal(block.offerings[0].learnerGroups[1].title, 'learner group 1');
 

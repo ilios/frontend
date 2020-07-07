@@ -11,14 +11,16 @@ module('Integration | Component | offering form', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('room input does not show by default', async function(assert) {
+  test('room and url input do not show by default', async function(assert) {
     await render(hbs`<OfferingForm @close={{noop}} />`);
     assert.notOk(component.location.isPresent);
+    assert.notOk(component.url.isPresent);
   });
 
-  test('room input shows up when requested', async function(assert) {
+  test('room and url input shows up when requested', async function(assert) {
     await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
     assert.ok(component.location.isPresent);
+    assert.ok(component.url.isPresent);
   });
 
   test('room validation errors do not show up initially', async function(assert) {
@@ -31,6 +33,18 @@ module('Integration | Component | offering form', function(hooks) {
     await component.location.set(padStart('a', 300, 'a'));
     await component.save();
     assert.ok(component.location.hasError);
+  });
+
+  test('url validation errors do not show up initially', async function(assert) {
+    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    assert.notOk(component.url.hasError);
+  });
+
+  test('url validation errors show up when typing', async function(assert) {
+    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    await component.url.set('not a url');
+    await component.save();
+    assert.ok(component.url.hasError);
   });
 
   test('recurring options does not show by default', async function(assert) {
@@ -182,11 +196,12 @@ module('Integration | Component | offering form', function(hooks) {
   });
 
   test('save not recurring', async function(assert) {
-    assert.expect(7);
-    this.set('save', async (startDate, endDate, room, learners, learnerGroups, instructorGroups, instructors) => {
+    assert.expect(8);
+    this.set('save', async (startDate, endDate, room, url, learners, learnerGroups, instructorGroups, instructors) => {
       assert.equal(moment(startDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
       assert.equal(moment(endDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
       assert.equal(room, 'TBD');
+      assert.equal(url, null);
       assert.equal(learnerGroups.length, 0);
       assert.equal(learners.length, 0);
       assert.equal(instructorGroups.length, 0);
@@ -412,5 +427,13 @@ module('Integration | Component | offering form', function(hooks) {
     assert.notOk(component.timezoneEditor.picker.isPresent);
     assert.equal(component.currentTimezone.text, timezoneService.formatTimezone(newTimezone));
     await component.save();
+  });
+
+  test('removes double https from start of URL when input', async function(assert) {
+    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    await component.url.set('https://http://example.com');
+    assert.equal('http://example.com', component.url.value);
+    await component.url.set('https://https://example.edu');
+    assert.equal('https://example.edu', component.url.value);
   });
 });

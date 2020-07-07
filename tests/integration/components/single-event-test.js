@@ -16,7 +16,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
   });
 
   test('it renders', async function(assert) {
-    assert.expect(23);
+    assert.expect(24);
 
     const now = moment().hour(8).minute(0).second(0);
     const course = this.server.create('course', {
@@ -59,6 +59,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       startDate: now,
       endDate: now.clone().add(1, 'hour'),
       location: 'here',
+      url: 'https://example.edu',
       instructors: ['Great Teacher'],
       session: 1,
       learningMaterials,
@@ -126,7 +127,8 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
 
     assert.dom('.single-event-summary').containsText('test course', 'course title is displayed');
     assert.dom('.single-event-summary').containsText('test session', 'session title is displayed');
-    assert.dom('.single-event-location').containsText('here', 'location is displayed');
+    assert.dom('.single-event-location').containsText('Session Link here', 'location is displayed');
+    assert.dom('.single-event-location a').hasProperty('href', 'https://example.edu/');
     assert.dom('.single-event-instructors').containsText('Taught By Great Teacher', 'instructors are displayed');
     assert.dom('.single-event-session-is').containsText('Session Type: test type', 'session type is displayed');
     assert.dom('.single-event-summary').containsText('test description', 'session description is displayed');

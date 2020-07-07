@@ -4,6 +4,7 @@ import {
   create,
   hasClass,
   isPresent,
+  property,
   text
 } from 'ember-cli-page-object';
 
@@ -13,6 +14,8 @@ const definition = {
   date: text('[data-test-date]'),
   sessionType: text('[data-test-session-type]'),
   location: text('[data-test-location]'),
+  link: text('[data-test-url]'),
+  url: property('href', '[data-test-url] a'),
   hasDescription: isPresent('[data-test-description]'),
   description: text('[data-test-description]'),
   sessionAttributes: collection('[data-test-session-attributes] svg', {

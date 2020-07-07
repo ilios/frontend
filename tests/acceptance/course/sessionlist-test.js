@@ -365,4 +365,19 @@ module('Acceptance | Course - Session List', function(hooks) {
     }
 
   });
+
+  test('edit offering URL', async function (assert) {
+    await page.visit({ courseId: 1, details: true });
+    const { sessions } = page.sessionsList;
+    const { offerings } = sessions[0].offerings;
+
+    assert.equal(sessions.length, 4);
+    assert.equal(sessions[0].firstOffering, today.format('L LT'));
+    await sessions[0].expandCollapse();
+    await offerings[0].edit();
+    const { offeringForm: form } = offerings[0];
+    await form.url.set('https://zoom.example.edu');
+    await form.save();
+    assert.equal(this.server.schema.offerings.find(1).url, 'https://zoom.example.edu');
+  });
 });

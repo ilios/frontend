@@ -48,6 +48,7 @@
         - {{@event.location}}
       </span>
     {{/if}}
+    <OfferingUrlDisplay @url={{@event.url}} class="url" data-test-url />
     <span class="session-attributes" data-test-session-attributes>
       {{#if @event.attireRequired}}
         <FaIcon

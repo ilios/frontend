@@ -30,6 +30,7 @@
         {{/unless}}
       </div>
       <div class="single-event-location">
+        <OfferingUrlDisplay @url={{@event.url}} />
         {{@event.location}}
       </div>
       {{#if this.taughtBy}}

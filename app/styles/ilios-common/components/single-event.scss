@@ -54,6 +54,14 @@
         color: $updated-color;
       }
     }
+
+    .single-event-location {
+      display: flex;
+
+      .offering-url-display {
+        margin-right: 1rem;
+      }
+    }
   }
 
   .single-event-offered-at {

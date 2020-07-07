@@ -7,7 +7,7 @@ export default class TooltipComponent extends Component {
 
   @action
   setup(element) {
-    this._popper = createPopper(this.args.target, element);
+    this._popper = createPopper(this.args.target, element, this.args.options ?? {});
   }
 
   get applicationElement() {

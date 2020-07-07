@@ -1,0 +1,22 @@
+.offering-url-display {
+  .copy-btn {
+    @include ilios-link-button;
+    margin-left: .25em;
+
+    &.copying {
+      color: $ilios-green;
+    }
+  }
+}
+
+// tooltips are outside the document flow so have to be styled outside the component
+.offering-url-display-success-message-tooltip {
+  padding: 0;
+  .arrow {
+    display: none;
+  }
+  .content {
+    background-color: $ilios-green;
+    color: $white;
+  }
+}
