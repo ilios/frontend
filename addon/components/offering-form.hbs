@@ -211,8 +211,10 @@
             type="text"
             placeholder="https://example.com"
             value={{this.bestUrl}}
+            inputmode="url"
             {{on "input" (pick "target.value" this.changeURL)}}
             {{on "keyup" (fn this.addErrorDisplayFor "url")}}
+            {{on "focus" (fn this.selectAllText)}}
           >
           {{#each (await (compute (fn this.getErrorsFor) "url")) as |message|}}
             <span class="validation-error-message">

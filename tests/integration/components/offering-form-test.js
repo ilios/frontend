@@ -428,4 +428,12 @@ module('Integration | Component | offering form', function(hooks) {
     assert.equal(component.currentTimezone.text, timezoneService.formatTimezone(newTimezone));
     await component.save();
   });
+
+  test('removes double https from start of URL when input', async function(assert) {
+    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    await component.url.set('https://http://example.com');
+    assert.equal('http://example.com', component.url.value);
+    await component.url.set('https://https://example.edu');
+    assert.equal('https://example.edu', component.url.value);
+  });
 });

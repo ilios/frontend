@@ -12,6 +12,7 @@ import { ValidateIf } from "class-validator";
 import scrollIntoView from "scroll-into-view";
 
 const DEBOUNCE_DELAY = 600;
+const DEFAULT_URL_VALUE = 'https://';
 
 @validatable
 export default class OfferingForm extends Component {
@@ -122,7 +123,7 @@ export default class OfferingForm extends Component {
       return this.url;
     }
 
-    return 'https://';
+    return DEFAULT_URL_VALUE;
   }
 
   @restartableTask
@@ -245,8 +246,19 @@ export default class OfferingForm extends Component {
 
   @action
   changeURL(value) {
+    const regex = RegExp('https://http[s]?:');
+    if (regex.test(value)) {
+      value = value.substring(8);
+    }
     this.url = value;
     this.urlChanged = true;
+  }
+
+  @action
+  selectAllText({ target }) {
+    if (target.value === DEFAULT_URL_VALUE) {
+      target.select();
+    }
   }
 
   async loadAvailableInstructorGroups(cohorts) {
