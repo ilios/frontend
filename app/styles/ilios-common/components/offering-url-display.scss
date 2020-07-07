@@ -1,6 +1,7 @@
 .offering-url-display {
   .copy-btn {
     @include ilios-link-button;
+    margin-left: .25em;
 
     &.copying {
       color: $ilios-green;
