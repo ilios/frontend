@@ -81,11 +81,16 @@
     </div>
     <div class="associatedcourses">
       <label>
-        {{t "general.associatedCourses"}} ({{get (await learnerGroup.courses) "length"}}):
+        {{t "general.associatedCourses"}} ({{get (await this.courses) "length"}}):
       </label>
       <ul>
-        {{#each (sort-by "title" (await learnerGroup.courses)) as |course|}}
-          <li>{{course.title}}</li>
+        {{#each (sort-by "courseTitle" (await this.courses)) as |obj|}}
+          <li>
+            {{obj.courseTitle}}
+            {{#if obj.groups}}
+              ({{obj.groups.length}} {{t "general.subgroups"}})
+            {{/if}}
+          </li>
         {{/each}}
       </ul>
     </div>

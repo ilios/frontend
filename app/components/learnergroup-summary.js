@@ -44,6 +44,10 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return treeGroups;
   }),
 
+  courses: computed('learnerGroup.allDescendants.@each.{offerings,ilmSessions}', async function () {
+    return await this.getCoursesForGroupWithSubgroupName(null, this.learnerGroup);
+  }),
+
   didReceiveAttrs() {
     this._super(...arguments);
     const learnerGroup = this.learnerGroup;
@@ -182,5 +186,47 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       user => !currentUsers.includes(user)
     );
     return filteredUsers;
-  })
+  }),
+
+  async getCoursesForGroupWithSubgroupName(prefix, learnerGroup) {
+    const offerings = (await learnerGroup.offerings).toArray();
+    const ilms = (await learnerGroup.ilmSessions).toArray();
+    const arr = [].concat(offerings, ilms);
+
+    const sessions = await Promise.all(arr.mapBy('session'));
+    const filteredSessions = sessions.filter(Boolean).uniq();
+    const courses = await Promise.all(filteredSessions.mapBy('course'));
+    const courseObjects = courses.map(course => {
+      const obj = {
+        id: course.id,
+        courseTitle: course.title,
+        groups: [],
+      };
+      if (prefix) {
+        obj.groups.push(`${prefix}>${learnerGroup.title}`);
+      }
+      return obj;
+    });
+
+    const children = (await learnerGroup.children).toArray();
+    const childCourses = await map(children, async (child) => {
+      return await this.getCoursesForGroupWithSubgroupName(learnerGroup.title, child);
+    });
+    const comb = [...courseObjects, ...childCourses.flat()];
+    return comb.reduce((arr, obj) => {
+      let courseObj = arr.findBy('id', obj.id);
+      if (!courseObj) {
+        courseObj = {
+          id: obj.id,
+          courseTitle: obj.courseTitle,
+          groups: []
+        };
+        arr.push(courseObj);
+      }
+      courseObj.groups.pushObjects(obj.groups);
+      courseObj.groups.uniq();
+
+      return arr;
+    }, []);
+  },
 });
