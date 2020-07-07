@@ -5,7 +5,7 @@
   >
     <a title={{@url}} href={{@url}}>{{t "general.virtualSessionLink"}}</a>
     <CopyButton
-      title={{@url}}
+      title={{t "general.copyLink"}}
       @clipboardText={{@url}}
       @success={{perform this.copy}}
       class={{if this.copy.isRunning "copying"}}

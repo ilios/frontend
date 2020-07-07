@@ -12,6 +12,7 @@ module('Integration | Component | offering-url-display', function(hooks) {
     assert.equal(this.element.textContent.trim(), 'Virtual Session Link');
     assert.dom('a').hasAttribute('href', 'https://example.edu');
     assert.dom('a').hasAttribute('title', 'https://example.edu');
+    assert.dom('button').hasAttribute('title', 'Copy link');
   });
 
   test('it renders nothing when no URL sent', async function(assert) {
