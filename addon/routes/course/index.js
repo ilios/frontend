@@ -47,9 +47,8 @@ export default class CourseIndexRoute extends Route.extend(AuthenticatedRouteMix
 
   @action
   willTransition(transition) {
-    this.preserveScroll.set('isListenerOn', false);
     if (transition.targetName !== 'session.index') {
-      this.preserveScroll.set('yPos', null);
+      this.preserveScroll.clearPosition('session-list');
     }
   }
 }
