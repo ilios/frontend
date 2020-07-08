@@ -10,7 +10,6 @@ export default Model.extend({
   active: attr('boolean'),
   title: attr('string'),
   school: belongsTo('school', {async: true}),
-  objectives: hasMany('objective', {async: true}),
   parent: belongsTo('competency', {async: true, inverse: 'children'}),
   children: hasMany('competency', {async: true, inverse: 'parent'}),
   aamcPcrses: hasMany('aamc-pcrs', {async: true}),

@@ -13,11 +13,6 @@ export default Model.extend({
     return await programYear.get('competencies');
   }),
 
-  objectives: computed('programYear.objectives.[]', async function() {
-    const programYear = await this.get('programYear');
-    return await programYear.get('objectives');
-  }),
-
   /**
    * All top-level learner groups associated with this cohort.
    *
@@ -39,10 +34,6 @@ export default Model.extend({
     return await program.get('school');
   }),
 
-  sortedObjectives: computed('programYear.sortedObjectives.[]', async function() {
-    const programYear = await this.get('programYear');
-    return await programYear.get('sortedObjectives');
-  }),
   classOfYear: computed('programYear.classOfYear', async function(){
     const programYear = await this.get('programYear');
     return await programYear.get('classOfYear');
