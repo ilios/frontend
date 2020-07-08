@@ -7,7 +7,6 @@ export default Model.extend({
   updatedAt: attr('date'),
   deleted: attr('boolean'),
   courses: hasMany('course', {async: true}),
-  objectives: hasMany('objectives', {async: true}),
   sessions: hasMany('session', {async: true}),
   concepts: hasMany('mesh-concept', {async: true}),
   qualifiers: hasMany('mesh-qualifier', {async: true}),
@@ -15,4 +14,7 @@ export default Model.extend({
   sessionLearningMaterials: hasMany('session-learning-material', {async: true}),
   courseLearningMaterials: hasMany('course-learning-material', {async: true}),
   previousIndexing: belongsTo('mesh-previous-indexing', {async: true}),
+  sessionObjectives: hasMany('session-objective', {async: true}),
+  courseObjectives: hasMany('course-objective', {async: true}),
+  programYearObjectives: hasMany('program-year-objective', {async:true})
 });

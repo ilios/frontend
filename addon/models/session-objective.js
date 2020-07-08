@@ -3,10 +3,24 @@ import { computed } from '@ember/object';
 import { all } from 'rsvp';
 
 export default Model.extend({
-  objective: belongsTo('objective', { async: true }),
+  title: attr('string'),
   position: attr('number', { defaultValue: 0 }),
+  active: attr('boolean', { defaultValue: true }),
   session: belongsTo('session', { async: true }),
   terms: hasMany('term', { async: true }),
+  meshDescriptors: hasMany('mesh-descriptor', {async: true}),
+  ancestor: belongsTo('session-objective', {
+    inverse: 'descendants',
+    async: true
+  }),
+  descendants: hasMany('session-objective', {
+    inverse: 'ancestor',
+    async: true
+  }),
+  courseObjectives: hasMany('course-objective', {
+    inverse: 'sessionObjectives',
+    async: true
+  }),
 
   /**
    * A list of all vocabularies that are associated via terms.
@@ -33,5 +47,24 @@ export default Model.extend({
       array.pushObjects(set);
       return array;
     }, [])).uniq();
+  }),
+
+  /**
+   * @todo check if this method is obsolete, if so remove it [ST 2020/07/08]
+   */
+  shortTitle: computed('title', function(){
+    const title = this.get('title');
+    if(title === undefined){
+      return '';
+    }
+    return title.substr(0,200);
+  }),
+
+  textTitle: computed('title', function(){
+    const title = this.get('title');
+    if(title === undefined){
+      return '';
+    }
+    return title.replace(/(<([^>]+)>)/ig,"");
   }),
 });
