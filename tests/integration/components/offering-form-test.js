@@ -436,4 +436,10 @@ module('Integration | Component | offering form', function(hooks) {
     await component.url.set('https://https://example.edu');
     assert.equal('https://example.edu', component.url.value);
   });
+
+  test('trims whitespace from URL input #1500', async function(assert) {
+    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    await component.url.set('  http://example.com  ');
+    assert.equal('http://example.com', component.url.value);
+  });
 });

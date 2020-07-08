@@ -246,6 +246,7 @@ export default class OfferingForm extends Component {
 
   @action
   changeURL(value) {
+    value = value.trim();
     const regex = RegExp('https://http[s]?:');
     if (regex.test(value)) {
       value = value.substring(8);
