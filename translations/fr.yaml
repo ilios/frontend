@@ -221,6 +221,8 @@ general:
   program: "Diplôme"
   programAndCohort: "Diplôme et Cohortes"
   programCohorts: Cohortes
+  programYearObjectives: "Objectifs de l'Année de Programme"
+  programYearObjectivesCount: "{count, plural, =1 {1 a un objectif de l'année de programme} other {# ont des objectifs de l'année de programme}}"
   publicationStatus: "Statut de Publication"
   publishAllConfirmation: "Publier {publishCount}, réserver {scheduleCount}, et ignorer des {ignoreCount} séances"
   publishAllSessions: "Publier {sessionCount} des séances"
