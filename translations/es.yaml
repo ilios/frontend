@@ -221,8 +221,6 @@ general:
   program: Programa
   programAndCohort: "Programa/Clase de La Graduación"
   programCohorts: "Clases de La Graduación"
-  programYearObjectives: "Objetivos del Año del Programa"
-  programYearObjectivesCount: "{count, plural, =1 {1 tiene un Objetivo del Año del Programa} other {# tienen Objetivos del Año del Programa}}"
   publicationStatus: "Estado de Publicación"
   publishAllConfirmation: "Publique {publishCount}, Programe {scheduleCount}, y ignore {ignoreCount} sesiónes"
   publishAllSessions: "Publique {sessionCount} sesiónes"

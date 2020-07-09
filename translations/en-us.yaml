@@ -221,8 +221,6 @@ general:
   program: Program
   programAndCohort: "Program/Cohort"
   programCohorts: "Program Cohorts"
-  programYearObjectives: "Program Year Objectives"
-  programYearObjectivesCount: "{count, plural, =1 {1 has a program year objective} other {# have program year objectives}}"
   publicationStatus: "Publication Status"
   publishAllConfirmation: "Publish {publishCount}, schedule {scheduleCount}, and ignore {ignoreCount} sessions"
   publishAllSessions: "Publish {sessionCount} sessions"

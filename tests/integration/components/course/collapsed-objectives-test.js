@@ -30,7 +30,7 @@ module('Integration | Component | course/collapsed-objectives', function(hooks) 
 
     assert.equal(component.title, 'Objectives (3)');
     assert.equal(component.objectiveCount, 'There are 3 objectives');
-    assert.equal(component.parentCount, '1 has a program year objective');
+    assert.equal(component.parentCount, '1 has a parent');
     assert.equal(component.meshCount, '1 has MeSH');
     assert.ok(component.parentStatus.partial);
     assert.ok(component.meshStatus.partial);
