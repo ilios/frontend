@@ -1,7 +1,7 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
-import { get, action } from '@ember/object';
+import { action } from '@ember/object';
 import preloadCourse from 'ilios-common/utils/preload-course';
 
 export default class CourseIndexRoute extends Route.extend(AuthenticatedRouteMixin) {
@@ -11,11 +11,6 @@ export default class CourseIndexRoute extends Route.extend(AuthenticatedRouteMix
 
   canCreateSession = false;
   canUpdateCourse = false;
-
-  beforeModel(transition) {
-    const isFromSessionIndex = get(transition, 'from.name') === 'session.index';
-    this.preserveScroll.set('shouldScrollDown', isFromSessionIndex);
-  }
 
   /**
    * Prefetch related data to limit network requests
@@ -43,13 +38,14 @@ export default class CourseIndexRoute extends Route.extend(AuthenticatedRouteMix
     filterSessionsBy: {
       replace: true
     },
-  };
+  }
 
   @action
   willTransition(transition) {
-    this.preserveScroll.set('isListenerOn', false);
-    if (transition.targetName !== 'session.index') {
-      this.preserveScroll.set('yPos', null);
+    if (transition.targetName === 'session.index') {
+      this.preserveScroll.savePosition('session-list', window.scrollY);
+    } else {
+      this.preserveScroll.clearPosition('session-list');
     }
   }
 }
