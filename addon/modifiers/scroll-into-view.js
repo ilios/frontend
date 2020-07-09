@@ -1,5 +1,10 @@
 import { modifier } from 'ember-modifier';
+import { next } from '@ember/runloop';
 
 export default modifier(function scrollIntoView(element, [block = "start"]) {
-  element.scrollIntoView({ block });
+  next(() => {
+    if (element) {
+      element.scrollIntoView({ block });
+    }
+  });
 });
