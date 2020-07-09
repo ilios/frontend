@@ -2,13 +2,14 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { task, timeout } from 'ember-concurrency';
-import DomMixin from 'ember-lifeline/mixins/dom';
 import ReportTitleMixin from 'ilios/mixins/report-title';
 import PapaParse from 'papaparse';
 import createDownloadFile from '../utils/create-download-file';
-import { runDisposables } from 'ember-lifeline';
+import { later } from '@ember/runloop';
 
-export default Component.extend(DomMixin, ReportTitleMixin, {
+const SCROLL_KEY = 'dashboard-my-reports';
+
+export default Component.extend(ReportTitleMixin, {
   currentUser: service(),
   preserveScroll: service(),
   reporting: service(),
@@ -65,22 +66,6 @@ export default Component.extend(DomMixin, ReportTitleMixin, {
     this.loadAttr.perform();
   },
 
-  didRender() {
-    this._super(...arguments);
-    const element = document.querySelector('.dashboard-block-body');
-    const yPos = this.preserveScroll[this.scrollKey];
-
-    if (yPos > 0) {
-      element.scrollTop = yPos;
-    }
-
-    if (element) {
-      this.addEventListener(element, 'scroll', () => {
-        this.preserveScroll.set(this.scrollKey, element.scrollTop);
-      });
-    }
-  },
-
   actions: {
     toggleEditor() {
       this.set('myReportEditorOn', !this.myReportEditorOn);
@@ -93,12 +78,25 @@ export default Component.extend(DomMixin, ReportTitleMixin, {
     deleteReport(report) {
       report.deleteRecord();
       report.save();
-    }
+    },
   },
 
-  destroy() {
-    runDisposables(this);
-    this._super(...arguments);
+  setScroll({ target }) {
+    this.preserveScroll.savePosition(SCROLL_KEY, target.scrollTop);
+  },
+
+  scrollDown() {
+    const position = this.preserveScroll.getPosition(SCROLL_KEY);
+    later(() => {
+      if (position && this.scrollTarget) {
+        this.scrollTarget.scrollTop = position;
+      }
+    });
+  },
+
+  clearReport() {
+    this.preserveScroll.clearPosition(SCROLL_KEY);
+    this.onReportSelect(null);
   },
 
   downloadReport: task(function* () {

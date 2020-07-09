@@ -6,7 +6,7 @@
       </h3>
       <div class="dashboard-block-actions">
         {{#if @selectedReport}}
-          <button type="button" onclick={{action @onReportSelect null}}>
+          <button type="button" {{on "click" (action this.clearReport)}}>
             {{t "general.allReports"}}
           </button>
           <button
@@ -34,7 +34,13 @@
       </div>
     </div>
     {{#if @selectedReport}}
-      <div class="dashboard-block-body" data-test-selected-report>
+      <div
+        class="dashboard-block-body"
+        data-test-selected-report
+        {{did-insert (set this.scrollTarget)}}
+        {{! template-lint-disable no-invalid-interactive }}
+        {{on "scroll" (action this.setScroll)}}
+      >
         <h3 data-test-report-title>
           {{await selectedReportTitle}}
         </h3>
@@ -64,7 +70,7 @@
         {{/if}}
         {{#if (is-fulfilled reportResultsList)}}
           {{#if (get (await reportResultsList) "length")}}
-            <ul data-test-results>
+            <ul data-test-results {{did-insert (action this.scrollDown)}}>
               {{#each (await reportResultsList) as |item|}}
                 {{#if item.model2}}
                   <li>
