@@ -1,16 +1,9 @@
-import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  click,
-  find,
-  fillIn,
-  findAll,
-  triggerEvent
-} from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios/tests/pages/components/learnergroup-subgroup-list';
 
 module('Integration | Component | learnergroup subgroup list', function(hooks) {
   setupRenderingTest(hooks);
@@ -33,74 +26,63 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
 
     this.set('parentGroup', parentGroup);
     await render(hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} />`);
-    assert.dom('th').hasText('Learner Group Title');
-    assert.dom(findAll('th')[1]).hasText('Members');
-    assert.dom(findAll('th')[2]).hasText('Subgroups');
-    assert.dom(findAll('th')[3]).hasText('Courses');
-    assert.dom(findAll('th')[4]).hasText('Actions');
-    assert.dom('tbody tr:nth-of-type(1) td').hasText('first');
-    assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText('2');
-    assert.dom(findAll('tbody tr:nth-of-type(1) td')[2]).hasText('0');
-    assert.dom('tbody tr:nth-of-type(2) td').hasText('second');
-    assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText('0');
-    assert.dom(findAll('tbody tr:nth-of-type(2) td')[2]).hasText('2');
-    assert.dom(findAll('tbody tr:nth-of-type(1) td')[3]).hasText('0');
-    assert.dom(findAll('tbody tr:nth-of-type(2) td')[3]).hasText('0');
+
+    assert.equal(component.headings[0].text, 'Learner Group Title');
+    assert.equal(component.headings[1].text, 'Members');
+    assert.equal(component.headings[2].text, 'Subgroups');
+    assert.equal(component.headings[3].text, 'Actions');
+
+    assert.equal(component.groups.length, 2);
+
+    assert.equal(component.groups[0].title, 'first');
+    assert.equal(component.groups[0].members, '2');
+    assert.equal(component.groups[0].subgroups, '0');
+
+    assert.equal(component.groups[1].title, 'second');
+    assert.equal(component.groups[1].members, '0');
+    assert.equal(component.groups[1].subgroups, '2');
   });
 
-  test('can remove group', async function(assert) {
-    const subGroup1 = {
+  test('can remove group', async function (assert) {
+    const parent = this.server.create('learner-group');
+    this.server.create('learner-group', {
       title: 'first',
-      courses: resolve([]),
-      users: [1,2],
-      children: [],
-      destroyRecord(){
-        assert.ok(true);
-      }
-    };
-    const parentGroup = {
-      children: resolve([subGroup1])
-    };
+      parent
+    });
+    const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
 
     this.set('parentGroup', parentGroup);
     await render(hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{parentGroup}} />`);
-    await click('tbody td:nth-of-type(5) .remove');
-    await click('tbody tr:nth-of-type(2) .remove');
+    assert.equal(this.server.schema.learnerGroups.all().length, 2);
+    assert.equal(component.groups.length, 1);
+    assert.ok(component.groups[0].actions.canRemove);
+    await component.groups[0].actions.remove();
+    assert.ok(component.confirmRemoval.confirmation.includes('Are you sure'));
+    await component.confirmRemoval.confirm();
+
+    assert.equal(this.server.schema.learnerGroups.all().length, 1);
   });
 
-  test('cannot remove group (has 1+ courses)', async function(assert) {
-    const subGroup1 = {
-      title: 'first',
-      courses: resolve([1]),
-      users: [1,2],
-      children: [],
-      destroyRecord(){
-        assert.ok(true);
-      }
-    };
-    const parentGroup = { children: resolve([subGroup1]) };
+  test('cannot remove group (has 1+ courses)', async function (assert) {
+    const course = this.server.create('course');
+    const session = this.server.create('session', { course });
+    const offering = this.server.create('offering', { session });
 
-    this.set('parentGroup', parentGroup);
-    await render(hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{parentGroup}} />`);
-    assert.dom('tbody td:nth-of-type(5) .remove').doesNotExist();
-  });
+    const parent = this.server.create('learner-group');
 
-  test('removal confirmation', async function(assert) {
-    const subGroup1 = {
-      title: 'first',
-      courses: resolve([]),
-      users: [1,2],
-      children: [],
-    };
-    const parentGroup = {
-      children: resolve([subGroup1])
-    };
+    this.server.create('learner-group', { parent, offerings: [offering] });
+    const model = await this.owner.lookup('service:store').find('learner-group', parent.id);
+    this.set('parentGroup', model);
 
-    this.set('parentGroup', parentGroup);
-    await render(hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{parentGroup}} />`);
-    await click('tbody td:nth-of-type(5) .remove');
-    assert.dom('tbody tr').hasClass('confirm-removal');
-    assert.equal(find(findAll('tbody tr')[1]).textContent.trim().search(/Are you sure/), 0);
+    await render(hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{this.parentGroup}} />`);
+    assert.equal(component.groups.length, 1);
+    assert.ok(component.groups[0].actions.canRemove);
+    await component.groups[0].actions.remove();
+    assert.equal(component.confirmRemoval.confirmation, 'This group is attached to one course and cannot be deleted. 2013 - 2014 course 0 OK');
+    assert.notOk(component.confirmRemoval.canConfirm);
+    assert.ok(component.confirmRemoval.canCancel);
+    await component.confirmRemoval.cancel();
+    assert.equal(component.groups.length, 1);
   });
 
   test('add new group', async function (assert) {
@@ -116,28 +98,27 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     });
 
     const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
+    const newTitle = 'new group';
 
     this.set('parentGroup', parentGroup);
     await render(hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`);
 
-    assert.dom('tbody tr:nth-of-type(1) td').hasText('first');
+    assert.equal(component.groups.length, 1);
+    assert.equal(component.groups[0].title, 'first');
+    await component.toggleNewForm();
+    await component.newForm.title(newTitle);
+    await component.newForm.save();
+    assert.equal(component.savedResult, newTitle + ' Saved Successfully');
 
-    await click('.expand-button');
-
-    const newTitle = 'new group';
-    await fillIn('input', newTitle);
-    await triggerEvent('input', 'input');
-    await click('.done');
-    assert.equal(find('.saved-result').textContent.trim().replace(/[\t\n\s]+/g, ''),
-      (newTitle + ' Saved Successfully').replace(/[\t\n\s]+/g, '')
-    );
+    assert.equal(component.groups.length, 2);
+    assert.equal(component.groups[1].title, newTitle);
     const newGroup = await this.owner.lookup('service:store').find('learner-group', 3);
     assert.equal(newGroup.belongsTo('cohort').id(), cohort.id);
     assert.equal(newGroup.belongsTo('parent').id(), parent.id);
   });
 
   test('add multiple new groups', async function(assert) {
-    assert.expect(4);
+    assert.expect(6);
     const cohort = this.server.create('cohort');
     const users = this.server.createList('user', 2);
     const parent = this.server.create('learner-group', {
@@ -153,32 +134,25 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
     this.set('parentGroup', parentGroup);
 
-    const groups = 'table tbody tr';
-    const firstGroupTitle = `${groups}:nth-of-type(1) td:nth-of-type(1)`;
-    const secondGroupTitle = `${groups}:nth-of-type(2) td:nth-of-type(1)`;
-    const expandButton = '.expand-button';
-    const multiSelector = '.click-choice-buttons';
-    const multiGroupButton = `${multiSelector} button:nth-of-type(2)`;
-    const multiGroupCount = 'input';
-    const done = '.done';
-
     await render(hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`);
-    assert.dom(firstGroupTitle).hasText('group 1');
-    await click(expandButton);
-    await click(multiGroupButton);
 
-    await fillIn(multiGroupCount, 1);
-    await click(done);
+    assert.equal(component.groups.length, 1);
+    assert.equal(component.groups[0].title, 'group 1');
+    await component.toggleNewForm();
+    await component.newForm.chooseMultipleGroups();
+    await component.newForm.setNumberOfGroups(1);
+    await component.newForm.save();
 
-    assert.dom(secondGroupTitle).hasText('group 2');
+    assert.equal(component.groups.length, 2);
+    assert.equal(component.groups[1].title, 'group 2');
+
     const newGroup = await this.owner.lookup('service:store').find('learner-group', 3);
     assert.equal(newGroup.belongsTo('cohort').id(), cohort.id);
     assert.equal(newGroup.belongsTo('parent').id(), parent.id);
-
   });
 
   test('truncates multiple group with long name', async function(assert) {
-    assert.expect(4);
+    assert.expect(6);
     const longTitle = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit ames';
     const expectedGroupTitle = longTitle.substring(0, 58) + ' 1';
 
@@ -191,21 +165,17 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
     this.set('parentGroup', parentGroup);
 
-    const groups = 'table tbody tr';
-    const firstGroupTitle = `${groups}:nth-of-type(1) td:nth-of-type(1)`;
-    const expandButton = '.expand-button';
-    const multiSelector = '.click-choice-buttons';
-    const multiGroupButton = `${multiSelector} button:nth-of-type(2)`;
-    const multiGroupCount = 'input';
-    const done = '.done';
-
     await render(hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`);
-    await click(expandButton);
-    await click(multiGroupButton);
-    await fillIn(multiGroupCount, 1);
-    await click(done);
 
-    assert.dom(firstGroupTitle).hasText(expectedGroupTitle);
+    assert.equal(component.groups.length, 0);
+    await component.toggleNewForm();
+    await component.newForm.chooseMultipleGroups();
+    await component.newForm.setNumberOfGroups(1);
+    await component.newForm.save();
+
+    assert.equal(component.groups.length, 1);
+    assert.equal(component.groups[0].title, expectedGroupTitle);
+
     const newGroup = await this.owner.lookup('service:store').find('learner-group', 2);
     assert.equal(newGroup.belongsTo('cohort').id(), cohort.id);
     assert.equal(newGroup.belongsTo('parent').id(), parent.id);

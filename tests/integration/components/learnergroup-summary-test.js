@@ -60,13 +60,13 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       @isBulkAssigning={{false}}
     />`);
 
-    const defaultLocation = '.learnergroup-overview .defaultlocation span:nth-of-type(1)';
-    const instructors = '.learnergroup-overview .defaultinstructors span';
-    const coursesList = '.learnergroup-overview .associatedcourses div';
+    const defaultLocation = '[data-test-overview] .defaultlocation span:nth-of-type(1)';
+    const instructors = '[data-test-overview] .defaultinstructors span';
+    const coursesList = '[data-test-overview] .associatedcourses ul';
 
     assert.dom(defaultLocation).hasText('test location');
     assert.dom(instructors).hasText('4 guy M. Mc4son; 5 guy M. Mc5son');
-    assert.dom(coursesList).hasText('course 0; course 1');
+    assert.dom(coursesList).hasText('course 0 course 1');
   });
 
   test('Update location', async function(assert) {
@@ -90,7 +90,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       @isBulkAssigning={{false}}
     />`);
 
-    const defaultLocation = '.learnergroup-overview .defaultlocation span:nth-of-type(1)';
+    const defaultLocation = '[data-test-overview] .defaultlocation span:nth-of-type(1)';
     const editLocation = `${defaultLocation} .editable`;
     const input =  `${defaultLocation} input`;
     const save =  `${defaultLocation} .done`;
@@ -99,5 +99,46 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     await fillIn(input, 'new location name');
     await click(save);
     assert.dom(defaultLocation).hasText('new location name');
+  });
+
+  test('each course is only shown once', async function (assert) {
+    const cohort = this.server.create('cohort', {
+      title: 'this cohort',
+    });
+    const course = this.server.create('course');
+    const session = this.server.create('session', { course });
+    const offerings = this.server.createList('offering', 5, { session });
+    const session2 = this.server.create('session', { course });
+    const session3 = this.server.create('session', { course });
+    const offering1 = this.server.create('offering', { session: session2 });
+    const offering2 = this.server.create('offering', { session: session3 });
+    const learnerGroup = this.server.create('learner-group', {
+      cohort,
+      offerings: [offering1, offering2]
+    });
+    for (let i = 0; i < 3; i++) {
+      this.server.create('learner-group', {
+        offerings: [offerings[i]],
+        parent: learnerGroup
+      });
+    }
+
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnergroupSummary
+      @setIsEditing={{noop}}
+      @setSortUsersBy={{noop}}
+      @setIsBulkAssigning={{noop}}
+      @sortUsersBy="firstName"
+      @learnerGroup={{learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+    />`);
+
+    const coursesList = '[data-test-overview] .associatedcourses ul';
+
+    assert.dom(coursesList).hasText('course 0 (3 Subgroups)');
   });
 });

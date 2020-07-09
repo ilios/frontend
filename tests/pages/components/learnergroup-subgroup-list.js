@@ -3,12 +3,14 @@ import {
   create,
   collection,
   hasClass,
+  fillable,
   isPresent,
+  isVisible,
   text,
 } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-learnergroup-list]',
+  scope: '[data-test-learnergroup-subgroup-list]',
   title: text('[data-test-title]'),
   headings: collection('thead th', {
     title: text(),
@@ -18,7 +20,6 @@ const definition = {
     visit: clickable('td:nth-of-type(1) a'),
     members: text('td', { at: 1 }),
     subgroups: text('td', { at: 2 }),
-    courses: text('td', { at: 3 }),
     hasRemoveStyle: hasClass('confirm-removal'),
     actions: {
       scope: '[data-test-actions]',
@@ -43,7 +44,22 @@ const definition = {
     canCopyWithLearners: isPresent('[data-test-confirm-with-learners]'),
     canCopyWithoutLearners: isPresent('[data-test-confirm-without-learners]'),
   },
-
+  newForm: {
+    scope: '[data-test-new-learner-group]',
+    title: fillable('[data-test-title]'),
+    save: clickable('.done'),
+    cancel: clickable('.cancel'),
+    isVisible: isVisible(),
+    singleGroupSelected: isPresent('[data-test-first-button][data-test-active]'),
+    multipleGroupSelected: isPresent('[data-test-second-button][data-test-active]'),
+    chooseSingleGroups: clickable('[data-test-first-button]'),
+    chooseMultipleGroups: clickable('[data-test-second-button]'),
+    setNumberOfGroups: fillable('[data-test-number-of-groups]'),
+  },
+  emptyListRowIsVisible: isVisible('[data-test-empty-list]'),
+  savedResult: text('.saved-result'),
+  toggleNewForm: clickable('[data-test-expand-collapse-button] button'),
+  hasNewGroupToggle: isPresent('[data-test-expand-collapse-button]'),
 };
 
 export default definition;

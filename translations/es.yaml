@@ -45,6 +45,7 @@ general:
   calendarOn: "Calendario en Uso"
   campusId: "Campus ID"
   canNotContinueWithInvalidRecords: "No se puede continuar con estos registros no válidos, por favor, corrija y vuelva a subir el archivo."
+  canNotDeleteLearnerGroupWithAssociatedCourses: "Este grupo está unido a {courseCount, plural, one {un curso} other {# cursos}} y no se puede eliminar."
   childSequenceOrder: "Orden de Secuencia de Los Hijos"
   city: Ciudad
   clearDates: "Borrar Fechas"
@@ -259,6 +260,7 @@ general:
   objectiveTitle: "Objetivos de la Sesión"
   off: Apagado
   on: Encendido
+  ok: OK
   openSmallGroupGenerator: "Abrir el Generador de Ofrecimientos para Grupos Pequeños"
   optional: Opcional
   optionalElective: "Opcional (electiva)"

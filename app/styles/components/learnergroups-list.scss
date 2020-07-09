@@ -42,6 +42,10 @@
 
   .list {
     @include main-list-box-table;
+
+    .confirm-removal .course-list {
+      list-style-type: none;
+    }
   }
 
   .fa-copy, .fa-trash {

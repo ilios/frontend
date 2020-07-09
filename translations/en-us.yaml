@@ -45,6 +45,7 @@ general:
   calendarOn: "Calendar On"
   campusId: "Campus ID"
   canNotContinueWithInvalidRecords: "Cannot continue with these invalid records, please fix and re-upload the file."
+  canNotDeleteLearnerGroupWithAssociatedCourses: "This group is attached to {courseCount, plural, one {one course} other {# courses}} and cannot be deleted."
   childSequenceOrder: "Child Sequence Order"
   city: City
   clearDates: "Clear Dates"
@@ -258,6 +259,7 @@ general:
   objectiveParentsTitle: "Select Parent Objectives"
   objectiveTitle: "Session Objective"
   off: Off
+  ok: OK
   on: On
   openSmallGroupGenerator: "Open Offering Small Group Generator"
   optional: Optional
