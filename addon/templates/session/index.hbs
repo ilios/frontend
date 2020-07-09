@@ -1,4 +1,4 @@
-<div class="backtolink backtosessionlink" data-test-back-to-sessions>
+<div class="backtolink backtosessionlink" data-test-back-to-sessions {{scroll-into-view}}>
   {{! template-lint-disable no-implicit-this }}
   <LinkTo @route="course" @model={{await @model.course}} @query={{hash}}>
     {{t "general.backToSessionList"}}
