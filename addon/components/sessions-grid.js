@@ -54,16 +54,6 @@ export default class SessionsGrid extends Component {
   }
 
   @action
-  setScroll() {
-    if (!this.isDestroying && !this.isDestroyed) {
-      const isCourseRoute = this.router.currentRouteName === 'course.index';
-      if (isCourseRoute) {
-        this.preserveScroll.savePosition('session-list', window.scrollY);
-      }
-    }
-  }
-
-  @action
   scrollDown() {
     const position = this.preserveScroll.getPosition('session-list');
     next(() => {
