@@ -12,9 +12,9 @@ async function intlPluralRules() {
 
   await import('@formatjs/intl-pluralrules/polyfill');
   await Promise.all([
-    import('@formatjs/intl-pluralrules/dist/locale-data/en'),
-    import('@formatjs/intl-pluralrules/dist/locale-data/es'),
-    import('@formatjs/intl-pluralrules/dist/locale-data/fr'),
+    import('@formatjs/intl-pluralrules/locale-data/en'),
+    import('@formatjs/intl-pluralrules/locale-data/es'),
+    import('@formatjs/intl-pluralrules/locale-data/fr'),
   ]);
 }
 
@@ -25,8 +25,8 @@ async function intlRelativeTimeFormat() {
 
   await import('@formatjs/intl-relativetimeformat/polyfill');
   await Promise.all([
-    import('@formatjs/intl-relativetimeformat/dist/locale-data/en'),
-    import('@formatjs/intl-relativetimeformat/dist/locale-data/es'),
-    import('@formatjs/intl-relativetimeformat/dist/locale-data/fr'),
+    import('@formatjs/intl-relativetimeformat/locale-data/en'),
+    import('@formatjs/intl-relativetimeformat/locale-data/es'),
+    import('@formatjs/intl-relativetimeformat/locale-data/fr'),
   ]);
 }
