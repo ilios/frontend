@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { map } from 'rsvp';
 import { timeout } from 'ember-concurrency';
-import { action } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { task, restartableTask } from 'ember-concurrency-decorators';
 const DEBOUNCE_DELAY = 250;
@@ -10,6 +10,7 @@ const DEBOUNCE_DELAY = 250;
 export default class CourseSessionsComponent extends Component {
   @service intl;
   @service permissionChecker;
+  @service dataLoader;
 
   @tracked sessions = [];
   @tracked expandedSessionIds = [];
@@ -19,15 +20,19 @@ export default class CourseSessionsComponent extends Component {
   @tracked showNewSessionForm = false;
 
   @restartableTask
-  *load(event, [sessions, school]) {
-    if (!sessions) {
-      return;
-    }
-    this.sessions = sessions.toArray();
-    this.sessionObjects = yield this.buildSessionObjects();
-    this.sessionTypes = yield school.sessionTypes;
+  *load(event, [course]) {
+    yield this.dataLoader.loadCourseSessions(course.id);
+    const school = yield course.school;
+    this.sessions = (yield course.sessions).toArray();
+    const [sessionObjects, sessionTypes] = yield Promise.all([
+      this.buildSessionObjects(),
+      school.sessionTypes
+    ]);
+    this.sessionObjects = sessionObjects;
+    this.sessionTypes = sessionTypes;
   }
 
+  @computed('args.course.sessions.[]')
   get sessionsCount(){
     const sessionIds = this.args.course.hasMany('sessions').ids();
     return sessionIds.length;

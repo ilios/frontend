@@ -2,33 +2,25 @@ import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { action } from '@ember/object';
-import preloadCourse from 'ilios-common/utils/preload-course';
 
 export default class CourseIndexRoute extends Route.extend(AuthenticatedRouteMixin) {
   @service permissionChecker;
   @service preserveScroll;
   @service store;
+  @service dataLoader;
 
   canCreateSession = false;
   canUpdateCourse = false;
 
-  /**
-   * Prefetch related data to limit network requests
-   */
-  async afterModel(model) {
-    await preloadCourse(this.store, model);
-    return this.fillPermissions(model);
+  async afterModel(course) {
+    this.canUpdateCourse = await this.permissionChecker.canUpdateCourse(course);
+    this.canCreateSession = await this.permissionChecker.canCreateSession(course);
   }
 
   setupController(controller, model) {
     super.setupController(controller, model);
     controller.set('canUpdateCourse', this.canUpdateCourse);
     controller.set('canCreateSession', this.canCreateSession);
-  }
-
-  async fillPermissions(course) {
-    this.canUpdateCourse = await this.permissionChecker.canUpdateCourse(course);
-    this.canCreateSession = await this.permissionChecker.canCreateSession(course);
   }
 
   queryParams = {

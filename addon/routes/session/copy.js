@@ -7,14 +7,7 @@ export default class SessionCopyRoute extends Route.extend(AuthenticatedRouteMix
 
   canUpdate = false;
 
-  /**
-   * Preload the school configurations
-   * to avoid a pop in later
-   */
   async afterModel(session) {
-    const course = await session.get('course');
-    const school = await course.get('school');
-    await school.get('configurations');
     this.canUpdate = await this.permissionChecker.canUpdateSession(session);
   }
 

@@ -38,7 +38,7 @@ export default class CourseOverview extends Component {
 
   @restartableTask
   *load() {
-    this.clerkshipTypeOptions = yield this.store.findAll('course-clerkship-type');
+    this.clerkshipTypeOptions = yield this.store.peekAll('course-clerkship-type');
     this.externalId = this.args.course.externalId;
     this.startDate = this.args.course.startDate;
     this.endDate = this.args.course.endDate;

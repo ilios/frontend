@@ -36,8 +36,8 @@ export default class DetailCohortsComponent extends Component {
       return await lm.get('learningMaterial');
     });
 
-    this.learningMaterialStatuses = yield this.store.findAll('learning-material-status');
-    this.learningMaterialUserRoles = yield this.store.findAll('learning-material-user-role');
+    this.learningMaterialStatuses = yield this.store.peekAll('learning-material-status');
+    this.learningMaterialUserRoles = yield this.store.peekAll('learning-material-user-role');
   }
 
   get proxyMaterials() {
