@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { map } from 'rsvp';
 import { timeout } from 'ember-concurrency';
-import { action } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { task, restartableTask } from 'ember-concurrency-decorators';
 const DEBOUNCE_DELAY = 250;
@@ -21,6 +21,7 @@ export default class CourseSessionsComponent extends Component {
 
   @restartableTask
   *load(event, [course]) {
+    yield this.dataLoader.loadCourseSessions(course.id);
     const school = yield course.school;
     this.sessions = (yield course.sessions).toArray();
     const [sessionObjects, sessionTypes] = yield Promise.all([
@@ -31,6 +32,7 @@ export default class CourseSessionsComponent extends Component {
     this.sessionTypes = sessionTypes;
   }
 
+  @computed('args.course.sessions.[]')
   get sessionsCount(){
     const sessionIds = this.args.course.hasMany('sessions').ids();
     return sessionIds.length;

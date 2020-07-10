@@ -12,11 +12,6 @@ export default class CourseIndexRoute extends Route.extend(AuthenticatedRouteMix
   canCreateSession = false;
   canUpdateCourse = false;
 
-  async model() {
-    const { id } = this.modelFor('course');
-    return this.dataLoader.loadCourseSessions(id);
-  }
-
   async afterModel(course) {
     this.canUpdateCourse = await this.permissionChecker.canUpdateCourse(course);
     this.canCreateSession = await this.permissionChecker.canCreateSession(course);
