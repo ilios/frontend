@@ -14,24 +14,20 @@ module('Acceptance | Course - Objective Parents', function(hooks) {
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     this.school =  this.server.create('school');
-    this.server.create('program', { school: this.school });
-    const programYear = this.server.create('programYear', {
-      programId: 1,
-    });
-    this.server.create('cohort', {
-      programYearId: 1
-    });
-    this.server.create('competency', {
+    const program = this.server.create('program', { school: this.school });
+    const programYear = this.server.create('programYear', { program });
+    this.server.create('cohort', { programYear });
+    const competency1 = this.server.create('competency', {
       school: this.school,
-      programYearIds: [1],
+      programYears: [programYear],
     });
-    this.server.create('competency', {
+    const competency2 = this.server.create('competency', {
       school: this.school,
-      programYearIds: [1],
+      programYears: [programYear],
     });
-    const objectiveInProgramYear1 = this.server.create('objective', { competencyId: 1 });
-    const objectiveInProgramYear2 = this.server.create('objective', { competencyId: 2 });
-    const objectiveInProgramYear3 = this.server.create('objective', { competencyId: 2 });
+    const objectiveInProgramYear1 = this.server.create('objective', { competency: competency1 });
+    const objectiveInProgramYear2 = this.server.create('objective', { competency: competency2 });
+    const objectiveInProgramYear3 = this.server.create('objective', { competency: competency2 });
     [objectiveInProgramYear1, objectiveInProgramYear2, objectiveInProgramYear3].forEach(objective => {
       this.server.create('program-year-objective', { programYear, objective});
     });
