@@ -2,19 +2,19 @@
   id="objective-{{@sessionObjective.id}}"
   class="grid-row objective-row {{if this.showRemoveConfirmation "confirm-removal"}} {{if this.highlightSave.isRunning "highlight-ok"}} {{if this.isManaging "is-managing"}}"
   data-test-session-objective-list-item
-  {{did-insert (perform this.load) @sessionObjective}}
-  {{did-update (perform this.load) @sessionObjective}}
+  {{did-insert this.load @sessionObjective}}
+  {{did-update this.load @sessionObjective}}
 >
   <div class="description grid-item" data-test-description>
     {{#if (and @editable (not this.isManaging) (not this.showRemoveConfirmation))}}
       <EditableField
-        @value={{this.title}}
+        @value={{@sessionObjective.title}}
         @renderHtml={{true}}
         @isSaveDisabled={{await (compute (fn this.hasErrorFor) "title")}}
         @save={{perform this.saveTitleChanges}}
         @close={{this.revertTitleChanges}}
       >
-        <HtmlEditor @content={{this.title}} @update={{this.changeTitle}} />
+        <HtmlEditor @content={{@sessionObjective.title}} @update={{this.changeTitle}} />
         {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
           <span class="validation-error-message">
             {{message}}
@@ -23,7 +23,7 @@
       </EditableField>
     {{else}}
       {{! template-lint-disable no-triple-curlies }}
-      {{{this.objective.title}}}
+      {{{@sessionObjective.title}}}
     {{/if}}
   </div>
   <Session::ObjectiveListItemParents

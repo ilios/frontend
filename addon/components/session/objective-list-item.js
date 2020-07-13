@@ -17,16 +17,14 @@ export default class SessionObjectiveListItemComponent extends Component {
   @tracked descriptorsBuffer = [];
   @tracked isManagingTerms;
   @tracked termsBuffer = [];
-  @tracked objective;
   @tracked selectedVocabulary;
 
-  @restartableTask
-  *load(element, [sessionObjective]) {
+  @action
+  load(element, [sessionObjective]) {
     if (!sessionObjective) {
       return;
     }
-    this.objective = yield sessionObjective.objective;
-    this.title = this.objective.title;
+    this.title = this.args.sessionObjective.title;
   }
 
   get isManaging() {
@@ -41,19 +39,19 @@ export default class SessionObjectiveListItemComponent extends Component {
       return false;
     }
     this.removeErrorDisplayFor('title');
-    this.objective.set('title', this.title);
-    yield this.objective.save();
+    this.args.sessionObjective.set('title', this.title);
+    yield this.args.sessionObjective.save();
   }
 
   @dropTask
   *manageParents() {
-    const parents = yield this.objective.parents;
+    const parents = yield this.args.sessionObjective.courseObjectives;
     this.parentsBuffer = parents.toArray();
     this.isManagingParents = true;
   }
   @dropTask
   *manageDescriptors() {
-    const meshDescriptors = yield this.objective.meshDescriptors;
+    const meshDescriptors = yield this.args.sessionObjective.meshDescriptors;
     this.descriptorsBuffer = meshDescriptors.toArray();
     this.isManagingDescriptors = true;
   }
@@ -73,10 +71,10 @@ export default class SessionObjectiveListItemComponent extends Component {
   @dropTask
   *saveParents() {
     const newParents = this.parentsBuffer.map(obj => {
-      return this.store.peekRecord('objective', obj.id);
+      return this.store.peekRecord('course-objective', obj.id);
     });
-    this.objective.set('parents', newParents);
-    yield this.objective.save();
+    this.args.sessionObjective.set('courseObjectives', newParents);
+    yield this.args.sessionObjective.save();
     this.parentsBuffer = [];
     this.isManagingParents = false;
     this.highlightSave.perform();
@@ -84,8 +82,8 @@ export default class SessionObjectiveListItemComponent extends Component {
 
   @dropTask
   *saveDescriptors() {
-    this.objective.set('meshDescriptors', this.descriptorsBuffer);
-    yield this.objective.save();
+    this.args.sessionObjective.set('meshDescriptors', this.descriptorsBuffer);
+    yield this.args.sessionObjective.save();
     this.descriptorsBuffer = [];
     this.isManagingDescriptors = false;
     this.highlightSave.perform();
@@ -102,7 +100,7 @@ export default class SessionObjectiveListItemComponent extends Component {
 
   @action
   revertTitleChanges() {
-    this.title = this.objective.title;
+    this.title = this.args.sessionObjective.title;
     this.removeErrorDisplayFor('title');
   }
   @action
@@ -148,6 +146,5 @@ export default class SessionObjectiveListItemComponent extends Component {
   @dropTask
   *deleteObjective() {
     yield this.args.sessionObjective.destroyRecord();
-    yield this.objective.destroyRecord();
   }
 }
