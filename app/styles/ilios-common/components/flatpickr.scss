@@ -10,12 +10,32 @@
     }
   }
 
-  .flatpickr-monthDropdown-months {
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    text-align-last: right;
+  .flatpickr-current-month {
+    display: flex;
+    font-size: 1.2rem;
+    justify-content: center;
+    .flatpickr-monthDropdown-months {
+      appearance: none;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+      font-weight: 400;
+      margin: 0;
+      text-align-last: right;
+
+      option {
+        color: $text-grey;
+      }
+    }
+
+    .numInputWrapper {
+      width: 40%;
+      input {
+        font-weight: 400;
+      }
+    }
   }
+
+
 }
 
 .flatpickr-weekdays,
