@@ -4,20 +4,8 @@ on:
   pull_request:
     types:
       - labeled
-      - unlabeled
       - synchronize
-      - opened
-      - edited
-      - ready_for_review
       - reopened
-      - unlocked
-  pull_request_review:
-    types:
-      - submitted
-  check_suite:
-    types:
-      - completed
-  status: {}
 jobs:
   automerge:
     runs-on: ubuntu-latest
@@ -30,3 +18,4 @@ jobs:
           MERGE_FILTER_AUTHOR: "zorgbort"
           MERGE_FORKS: "false"
           MERGE_DELETE_BRANCH: "true"
+          MERGE_RETRY_SLEEP: 90000
