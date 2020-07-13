@@ -1,4 +1,5 @@
 <input
-  {{did-insert (perform this.showPicker)}}
+  {{did-insert (perform this.setupPicker)}}
+  {{did-update (perform this.updatePicker) @value}}
   ...attributes
 />

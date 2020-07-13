@@ -1,5 +1,5 @@
 import {clickable, collection, create, fillable, isVisible, property, text, value} from 'ember-cli-page-object';
-import { datePicker } from 'ilios-common';
+import { flatpickrDatePicker } from 'ilios-common';
 import learnerSelectionManager from './learner-selection-manager';
 import learnergroupSelectionManager from './learnergroup-selection-manager';
 import instructorSelectionManager from './instructor-selection-manager';
@@ -8,7 +8,7 @@ const definition = {
   scope: '[data-test-offering-form]',
   startDate: {
     scope: '.start-date',
-    set: datePicker('input'),
+    set: flatpickrDatePicker('input'),
     value: value('input'),
   },
   endDate: {

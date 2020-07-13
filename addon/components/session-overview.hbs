@@ -211,11 +211,9 @@
                     @save={{this.changeIlmDueDate}}
                     @close={{this.revertIlmDueDateChanges}}
                   >
-                    <PikadayInput
+                    <DatePicker
                       @value={{this.dueDate}}
-                      @format="L"
-                      @onSelection={{fn (set this.dueDate)}}
-                      @focusOut={{fn this.addErrorDisplayFor "dueDate"}}
+                      @change={{pipe (set this.dueDate) (fn this.addErrorDisplayFor "dueDate")}}
                     />
                     {{#each (await (compute (fn this.getErrorsFor) "dueDate")) as |message|}}
                       <span class="validation-error-message">

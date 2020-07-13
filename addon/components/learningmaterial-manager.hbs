@@ -223,10 +223,9 @@
             {{t "general.startDate"}}:
           </label>
           {{#if @editable}}
-            <PikadayInput
+            <DatePicker
               @value={{this.startDate}}
-              @onSelection={{fn this.updateDate "startDate"}}
-              @format="M/D/YYYY"
+              @change={{fn this.updateDate "startDate"}}
             />
           {{else}}
             {{moment-format this.startDate "L"}}
@@ -268,10 +267,9 @@
             {{t "general.endDate"}}:
           </label>
           {{#if @editable}}
-            <PikadayInput
+            <DatePicker
               @value={{this.endDate}}
-              @onSelection={{fn this.updateDate "endDate"}}
-              @format="M/D/YYYY"
+              @change={{fn this.updateDate "endDate"}}
             />
           {{else}}
             {{moment-format this.endDate "L"}}

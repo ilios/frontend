@@ -1,15 +1,25 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { dropTask } from 'ember-concurrency-decorators';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { waitForProperty } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
 import flatpickr from "flatpickr";
 
 export default class DatePickerComponent extends Component {
   @service intl;
 
-  #flatPickerInstance;
+  @tracked _flatPickerInstance;
+
+  @restartableTask
+  *updatePicker(element, [value]) {
+    yield waitForProperty(this, '_flatPickerInstance');
+    if (this._flatPickerInstance.selectedDates[0] != value) {
+      this._flatPickerInstance.setDate(value);
+    }
+  }
 
   @dropTask
-  *showPicker(element) {
+  *setupPicker(element) {
     const currentLocale = this.intl.locale[0];
     let locale;
     switch (currentLocale) {
@@ -26,16 +36,17 @@ export default class DatePickerComponent extends Component {
     default:
       locale = 'en';
     }
-    this.#flatPickerInstance = flatpickr(element, {
+    this._flatPickerInstance = flatpickr(element, {
       locale,
       defaultDate: this.args.value,
       formatDate: dateObj => dateObj.toLocaleDateString(currentLocale),
       onChange: selectedDates => this.args.change(selectedDates[0])
     });
-    this.#flatPickerInstance.open();
   }
 
   willDestroy() {
-    this.#flatPickerInstance.destroy();
+    if (this._flatPickerInstance) {
+      this._flatPickerInstance.destroy();
+    }
   }
 }

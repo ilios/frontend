@@ -26,10 +26,9 @@
         <label>
           {{t "general.startDate"}}:
         </label>
-        <PikadayInput
-          @format="M/D/YYYY"
+        <DatePicker
           @value={{this.startDate}}
-          @onSelection={{this.updateStartDate}}
+          @change={{this.updateStartDate}}
         />
       </div>
       <div class="item start-time">
