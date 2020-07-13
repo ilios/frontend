@@ -40,7 +40,9 @@ export default class DatePickerComponent extends Component {
       locale,
       defaultDate: this.args.value,
       formatDate: dateObj => dateObj.toLocaleDateString(currentLocale),
-      onChange: selectedDates => this.args.change(selectedDates[0])
+      onChange: selectedDates => this.args.change(selectedDates[0]),
+      maxDate: this.args.maxDate ?? null,
+      minDate: this.args.minDate ?? null,
     });
   }
 
