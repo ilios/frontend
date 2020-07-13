@@ -1,5 +1,6 @@
 <input
   {{did-insert (perform this.setupPicker)}}
   {{did-update (perform this.updatePicker) @value @maxDate @minDate}}
+  {{on "click" (if this.isOpen this.close (noop))}}
   ...attributes
 />

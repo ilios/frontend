@@ -1,10 +1,14 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { dropTask } from 'ember-concurrency-decorators';
-import flatpickr from "flatpickr";
+import flatpickr from 'flatpickr';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { later } from '@ember/runloop';
 
 export default class CourseRolloverDatePickerComponent extends Component {
   @service intl;
+  @tracked isOpen;
 
   #flatPickerInstance;
 
@@ -44,12 +48,25 @@ export default class CourseRolloverDatePickerComponent extends Component {
         }
         this.args.change(selectedDate);
       },
+      onOpen: () => {
+        later(() => {
+          this.isOpen = true;
+        }, 250);
+      },
+      onClose: () => {
+        this.isOpen = false;
+      },
       "disable": [
         function (date) {
           return course.startDate.getUTCDay() !== date.getUTCDay();
         }
       ],
     });
+  }
+
+  @action
+  close() {
+    this?.#flatPickerInstance.close();
   }
 
   willDestroy() {
