@@ -13,7 +13,6 @@ import {
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
-import { Interactor as Pikaday } from 'ember-pikaday/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import queryString from 'query-string';
 
@@ -204,7 +203,7 @@ module('Integration | Component | course rollover', function(hooks) {
   });
 
   test('rollover course with new start date', async function(assert) {
-    assert.expect(8);
+    assert.expect(7);
     // ensure that rollover date and course start date fall on the same day of the week.
     let courseStartDate = moment().hour(0).minute(0).subtract(1, 'week').day(1);
     // Also, make sure that we're not crossing year boundaries here.
@@ -243,36 +242,33 @@ module('Integration | Component | course rollover', function(hooks) {
     />`);
     const advancedOptions = '.advanced-options';
     const startDate = `${advancedOptions} input:nth-of-type(1)`;
+    await fillIn('[data-test-year]', Number(courseStartDate.format('YYYY')));
 
     await click(startDate);
+    const picker = find('[data-test-course-rollover-picker]')._flatpickr;
     assert.equal(
-      Pikaday.selectedYear(),
+      picker.currentYear,
       courseStartDate.year(),
       'Selected year initialized to course start date year.'
     );
     assert.equal(
-      Pikaday.selectedMonth(),
+      picker.currentMonth,
       courseStartDate.month(),
       'Selected month initialized to course start date month.'
     );
+    picker.setDate(rolloverDate.toDate(), true);
     assert.equal(
-      Pikaday.selectedDay(),
-      courseStartDate.date(),
-      'Selected day initialized to course start date day.'
-    );
-    await Pikaday.selectDate(rolloverDate.toDate());
-    assert.equal(
-      Pikaday.selectedYear(),
+      picker.currentYear,
       rolloverDate.year(),
       'Selected year changed to rollover date year.'
     );
     assert.equal(
-      Pikaday.selectedMonth(),
+      picker.currentMonth,
       rolloverDate.month(),
       'Selected month changed to rollover date month.'
     );
     assert.equal(
-      Pikaday.selectedDay(),
+      picker.selectedDates[0].getDate(),
       rolloverDate.date(),
       'Selected day changed to rollover date day.'
     );
@@ -280,7 +276,7 @@ module('Integration | Component | course rollover', function(hooks) {
   });
 
   test('rollover course prohibit non-matching day-of-week date selection', async function(assert) {
-    assert.expect(5);
+    assert.expect(4);
     // rollover date and course start date don't fall on the same day of the week.
     let courseStartDate = moment().hour(0).minute(0).subtract(1, 'week').day(1);
     // Make sure that we're not crossing year boundaries here.
@@ -326,22 +322,18 @@ module('Integration | Component | course rollover', function(hooks) {
     await emberBlur(yearSelect);
 
     await click(startDate);
+    const picker = find('[data-test-course-rollover-picker]')._flatpickr;
+    picker.setDate(rolloverDate.toDate(), true);
     assert.equal(
-      Pikaday.selectedYear(),
+      picker.currentYear,
       courseStartDate.year(),
       'Selected year initialized to course start date year.'
     );
     assert.equal(
-      Pikaday.selectedMonth(),
+      picker.currentMonth,
       courseStartDate.month(),
       'Selected month initialized to course start date month.'
     );
-    assert.equal(
-      Pikaday.selectedDay(),
-      courseStartDate.date(),
-      'Selected day initialized to course start date day.'
-    );
-    await Pikaday.selectDate(rolloverDate.toDate());
     await click('.done');
   });
 
@@ -350,7 +342,7 @@ module('Integration | Component | course rollover', function(hooks) {
    * if the given course has a start date in a former year.
    */
   test('rollover start date adjustment with former year course start date', async function(assert) {
-    assert.expect(3);
+    assert.expect(2);
 
     const courseStartDate = moment('2019-01-15').hour(0).minute(0).subtract(2, 'year').day(1);
     const rolloverDate = moment()
@@ -379,20 +371,16 @@ module('Integration | Component | course rollover', function(hooks) {
     await emberBlur(yearSelect);
 
     await click(startDate);
+    const picker = find('[data-test-course-rollover-picker]')._flatpickr;
     assert.equal(
-      Pikaday.selectedYear(),
+      picker.currentYear,
       rolloverDate.year(),
       'Selected year initialized to this year.'
     );
     assert.equal(
-      Pikaday.selectedMonth(),
+      picker.currentMonth,
       rolloverDate.month(),
       "Selected month initialized to this year's equivalent of course's start month."
-    );
-    assert.equal(
-      Pikaday.selectedDay(),
-      rolloverDate.date(),
-      "Selected month initialized to this year's equivalent of course's start day."
     );
   });
 

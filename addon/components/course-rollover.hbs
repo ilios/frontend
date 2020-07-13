@@ -68,13 +68,10 @@
             ({{t "general.mustBeSameDayOfWeekAsCurrentStartDate"}})
           </small>
         </label>
-        <PikadayInput
-          @size={{10}}
+        <Course::RolloverDatePicker
+          @course={{@course}}
           @value={{this.startDate}}
-          @minDate={{@course.startDate}}
-          @format="YYYY-MM-DD"
-          @onSelection={{set this.startDate}}
-          @options={{hash disableDayFn=this.disableDayFn course=@course}}
+          @change={{set this.startDate}}
         />
       </div>
       <div class="included">
