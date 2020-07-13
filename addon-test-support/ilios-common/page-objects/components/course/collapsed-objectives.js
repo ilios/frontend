@@ -7,7 +7,7 @@ import {
 } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-collapsed-objectives]',
+  scope: '[data-test-course-collapsed-objectives]',
   title: text('[data-test-title]'),
   expand: clickable('[data-test-title]'),
   headers: collection('thead th'),
