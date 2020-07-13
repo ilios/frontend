@@ -9,6 +9,12 @@
       fill: $white;
     }
   }
+
+  .flatpickr-monthDropdown-months {
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+  }
 }
 
 .flatpickr-weekdays,
