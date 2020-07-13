@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency-decorators';
 
-export default class CourseCollapsedObjectivesComponent extends Component {
+export default class SessionCollapsedObjectivesComponent extends Component {
   @tracked objectives;
   @tracked objectivesWithParents;
   @tracked objectivesWithMesh;
