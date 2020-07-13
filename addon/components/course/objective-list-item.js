@@ -17,18 +17,15 @@ export default class CourseObjectiveListItemComponent extends Component {
   @tracked descriptorsBuffer = [];
   @tracked isManagingTerms;
   @tracked termsBuffer = [];
-  @tracked objective;
   @tracked selectedVocabulary;
 
-  @restartableTask
-  *load(element, [courseObjective]) {
+  @action
+  load(element, [courseObjective]) {
     if (!courseObjective) {
       return;
     }
-    this.objective = yield courseObjective.objective;
-    this.title = this.objective.title;
+    this.title = courseObjective.title;
   }
-
 
   get isManaging() {
     return this.isManagingParents || this.isManagingDescriptors || this.isManagingTerms;
@@ -42,8 +39,8 @@ export default class CourseObjectiveListItemComponent extends Component {
       return false;
     }
     this.removeErrorDisplayFor('title');
-    this.objective.set('title', this.title);
-    yield this.objective.save();
+    this.args.courseObjective.set('title', this.title);
+    yield this.args.courseObjective.save();
   }
 
   @dropTask
@@ -52,15 +49,15 @@ export default class CourseObjectiveListItemComponent extends Component {
       const cohortObjectives = cohortObject.competencies.mapBy('objectives');
       return [...set, ...cohortObjectives.flat()];
     }, []);
-    const parents = yield this.objective.parents;
-    this.parentsBuffer = parents.map(objective => {
+    const parents = yield this.args.courseObjective.programYearObjectives;
+    this.parentsBuffer = parents.toArray().map(objective => {
       return objectives.findBy('id', objective.id);
     });
     this.isManagingParents = true;
   }
   @dropTask
   *manageDescriptors() {
-    const meshDescriptors = yield this.objective.meshDescriptors;
+    const meshDescriptors = yield this.args.courseObjective.meshDescriptors;
     this.descriptorsBuffer = meshDescriptors.toArray();
     this.isManagingDescriptors = true;
   }
@@ -80,10 +77,10 @@ export default class CourseObjectiveListItemComponent extends Component {
   @dropTask
   *saveParents() {
     const newParents = this.parentsBuffer.map(obj => {
-      return this.store.peekRecord('objective', obj.id);
+      return this.store.peekRecord('program-year-objective', obj.id);
     });
-    this.objective.set('parents', newParents);
-    yield this.objective.save();
+    this.args.courseObjective.set('programYearObjectives', newParents);
+    yield this.args.courseObjective.save();
     this.parentsBuffer = [];
     this.isManagingParents = false;
     this.highlightSave.perform();
@@ -91,8 +88,8 @@ export default class CourseObjectiveListItemComponent extends Component {
 
   @dropTask
   *saveDescriptors() {
-    this.objective.set('meshDescriptors', this.descriptorsBuffer);
-    yield this.objective.save();
+    this.args.courseObjective.set('meshDescriptors', this.descriptorsBuffer);
+    yield this.args.courseObjective.save();
     this.descriptorsBuffer = [];
     this.isManagingDescriptors = false;
     this.highlightSave.perform();
@@ -109,7 +106,7 @@ export default class CourseObjectiveListItemComponent extends Component {
 
   @action
   revertTitleChanges() {
-    this.title = this.objective.title;
+    this.title = this.args.courseObjective.title;
     this.removeErrorDisplayFor('title');
   }
   @action
@@ -162,6 +159,5 @@ export default class CourseObjectiveListItemComponent extends Component {
   @dropTask
   *deleteObjective() {
     yield this.args.courseObjective.destroyRecord();
-    yield this.objective.destroyRecord();
   }
 }
