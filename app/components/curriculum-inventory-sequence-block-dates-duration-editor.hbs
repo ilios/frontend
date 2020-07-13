@@ -8,10 +8,9 @@
     <label>
       {{t "general.start"}}:
     </label>
-    <PikadayInput
+    <DatePicker
       @value={{this.startDate}}
-      @onSelection={{this.changeStartDate}}
-      @format="M/D/YYYY"
+      @change={{this.changeStartDate}}
     />
     {{#each (await (compute (fn this.getErrorsFor) "startDate")) as |message|}}
       <span class="validation-error-message">
@@ -23,10 +22,9 @@
     <label>
       {{t "general.end"}}:
     </label>
-    <PikadayInput
+    <DatePicker
       @value={{this.endDate}}
-      @onSelection={{this.changeEndDate}}
-      @format="M/D/YYYY"
+      @change={{this.changeEndDate}}
     />
     {{#each (await (compute (fn this.getErrorsFor) "endDate")) as |message|}}
       <span class="validation-error-message">

@@ -6,13 +6,13 @@ import {
   render,
   settled,
   click,
-  fillIn
+  fillIn,
+  find,
 } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { setupIntl } from 'ember-intl/test-support';
-import { Interactor as Pikaday } from 'ember-pikaday/test-support';
 
 const {resolve} = RSVP;
 
@@ -64,28 +64,26 @@ module('Integration | Component | curriculum inventory report overview', functio
     this.set('report', report);
 
     await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{true}} />`);
-    return settled().then(() => {
-      assert.dom('.title').hasText('Overview', 'Component title is visible.');
-      assert.dom('.report-overview-actions .verification-preview').exists({ count: 1 }, 'Rollover course button is visible.');
-      assert.dom('.report-overview-actions .rollover').exists({ count: 1 }, 'Verification preview link is visible.');
-      assert.dom('.start-date label').hasText('Start:', 'Start date label is correct.');
-      assert.dom('.start-date .editinplace').hasText(moment(report.get('startDate')).format('L'), 'Start date is visible.');
-      assert.dom('.end-date label').hasText('End:', 'End date label is correct.');
-      assert.dom('.end-date .editinplace').hasText(moment(report.get('endDate')).format('L'), 'End date is visible.');
-      assert.dom('.academic-year label').hasText('Academic Year:', 'Academic year label is correct.');
-      assert.dom('.academic-year .editinplace').hasText(
-        report.get('year') + ' - ' + (parseInt(report.get('year'), 10) + 1),
-        'Academic year is visible.'
-      );
-      assert.dom('.program label').hasText('Program:', 'Program label is correct.');
-      assert.dom('.program > span').hasText(
-        `${program.get('title')} (${program.get('shortTitle')})`,
-        'Program is visible.'
-      );
+    assert.dom('.title').hasText('Overview', 'Component title is visible.');
+    assert.dom('.report-overview-actions .verification-preview').exists({ count: 1 }, 'Rollover course button is visible.');
+    assert.dom('.report-overview-actions .rollover').exists({ count: 1 }, 'Verification preview link is visible.');
+    assert.dom('.start-date label').hasText('Start:', 'Start date label is correct.');
+    assert.dom('.start-date .editinplace').hasText(this.intl.formatDate(report.startDate), 'Start date is visible.');
+    assert.dom('.end-date label').hasText('End:', 'End date label is correct.');
+    assert.dom('.end-date .editinplace').hasText(this.intl.formatDate(report.endDate), 'End date is visible.');
+    assert.dom('.academic-year label').hasText('Academic Year:', 'Academic year label is correct.');
+    assert.dom('.academic-year .editinplace').hasText(
+      report.get('year') + ' - ' + (parseInt(report.get('year'), 10) + 1),
+      'Academic year is visible.'
+    );
+    assert.dom('.program label').hasText('Program:', 'Program label is correct.');
+    assert.dom('.program > span').hasText(
+      `${program.get('title')} (${program.get('shortTitle')})`,
+      'Program is visible.'
+    );
 
-      assert.dom('.description label').hasText('Description:', 'Description label is correct.');
-      assert.dom('.description .editinplace').hasText(report.get('description'), 'Description is visible.');
-    });
+    assert.dom('.description label').hasText('Description:', 'Description label is correct.');
+    assert.dom('.description .editinplace').hasText(report.get('description'), 'Description is visible.');
   });
 
   test('read-only', async function(assert) {
@@ -127,8 +125,8 @@ module('Integration | Component | curriculum inventory report overview', functio
     await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{false}} />`);
 
     return settled().then(() => {
-      assert.dom('.start-date > span').hasText(moment(report.get('startDate')).format('L'), 'Start date is visible.');
-      assert.dom('.end-date > span').hasText(moment(report.get('endDate')).format('L'), 'End date is visible.');
+      assert.dom('.start-date > span').hasText(this.intl.formatDate(report.startDate), 'Start date is visible.');
+      assert.dom('.end-date > span').hasText(this.intl.formatDate(report.endDate), 'End date is visible.');
       assert.dom('.academic-year > span').hasText(
         report.get('year') + ' - ' + (parseInt(report.get('year'), 10) + 1),
         'Academic year is visible.'
@@ -235,15 +233,16 @@ module('Integration | Component | curriculum inventory report overview', functio
     await render(hbs`<CurriculumInventoryReportOverview @report={{report}} @canUpdate={{true}} />`);
     await click('.start-date .editinplace .editable');
     assert.dom('.start-date input').hasValue(
-      moment(report.get('startDate')).format('L'),
+      this.intl.formatDate(report.startDate),
       "The report's current start date is pre-selected in date picker."
     );
     const newVal = moment('2015-04-01');
     await click('.start-date input');
-    await Pikaday.selectDate(newVal.toDate());
+    const picker = find('[data-test-start-date-picker]')._flatpickr;
+    picker.setDate(newVal.toDate(), true);
     await click('.start-date .actions .done');
-    assert.dom('.start-date .editinplace').hasText(newVal.format('L'), 'Edit link shown new start date post-update.');
-    assert.equal(moment(report.get('startDate')).format('YYYY-MM-DD'), newVal.format('YYYY-MM-DD'),
+    assert.dom('.start-date .editinplace').hasText(this.intl.formatDate(newVal), 'Edit link shown new start date post-update.');
+    assert.equal(this.intl.formatDate(report.startDate), this.intl.formatDate(newVal),
       "The report's start date was updated."
     );
   });
@@ -291,7 +290,8 @@ module('Integration | Component | curriculum inventory report overview', functio
       await click('.start-date .editinplace .editable');
       await click('.start-date input');
       const newVal = moment(report.get('endDate')).add(1, 'day');
-      await Pikaday.selectDate(newVal.toDate());
+      const picker = find('[data-test-start-date-picker]')._flatpickr;
+      picker.setDate(newVal.toDate(), true);
       assert.dom('.start-date .validation-error-message').doesNotExist('Initially, no validation error is visible.');
       await click('.start-date .actions .done');
       assert.dom('.start-date .validation-error-message').exists({ count: 1 }, 'Validation failed, error message is visible.');
@@ -343,13 +343,14 @@ module('Integration | Component | curriculum inventory report overview', functio
     await click('.end-date .editinplace .editable');
     await click('.end-date input');
     assert.dom('.end-date input').hasValue(
-      moment(report.get('endDate')).format('L'),
+      this.intl.formatDate(report.endDate),
       "The report's current end date is pre-selected in date picker."
     );
     const newVal = moment('2016-05-01');
-    await Pikaday.selectDate(newVal.toDate());
+    const picker = find('[data-test-end-date-picker]')._flatpickr;
+    picker.setDate(newVal.toDate(), true);
     await click('.end-date .actions .done');
-    assert.dom('.end-date .editinplace').hasText(newVal.format('L'), 'Edit link shown new end date post-update.');
+    assert.dom('.end-date .editinplace').hasText(this.intl.formatDate(newVal), 'Edit link shown new end date post-update.');
     assert.equal(moment(report.get('endDate')).format('YYYY-MM-DD'), newVal.format('YYYY-MM-DD'),
       "The report's end date was updated."
     );
@@ -397,7 +398,8 @@ module('Integration | Component | curriculum inventory report overview', functio
     await click('.end-date .editinplace .editable');
     await click('.end-date input');
     const newVal = moment(report.get('startDate')).subtract(1, 'day');
-    await Pikaday.selectDate(newVal.toDate());
+    const picker = find('[data-test-end-date-picker]')._flatpickr;
+    picker.setDate(newVal.toDate(), true);
     assert.dom('.end-date .validation-error-message').doesNotExist('Initially, no validation error is visible.');
     await click('.end-date .actions .done');
     assert.dom('.end-date .validation-error-message').exists({ count: 1 }, 'Validation failed, error message is visible.');

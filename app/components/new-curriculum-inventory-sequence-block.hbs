@@ -80,10 +80,10 @@
       <label>
         {{t "general.startDate"}}:
       </label>
-      <PikadayInput
-        @value={{startDate}}
-        @onSelection={{action "changeStartDate"}}
-        @format="M/D/YYYY"
+      <DatePicker
+        @value={{this.startDate}}
+        @change={{action "changeStartDate"}}
+        data-test-start-date-picker
       />
       {{#if
         (and
@@ -99,10 +99,10 @@
       <label>
         {{t "general.endDate"}}:
       </label>
-      <PikadayInput
-        @value={{endDate}}
-        @onSelection={{action "changeEndDate"}}
-        @format="M/D/YYYY"
+      <DatePicker
+        @value={{this.endDate}}
+        @change={{action "changeEndDate"}}
+        data-test-end-date-picker
       />
       {{#if
         (and (v-get this "endDate" "isInvalid") (contains "endDate" showErrorsFor))
