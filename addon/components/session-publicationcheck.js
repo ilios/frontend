@@ -10,7 +10,7 @@ export default class SessionPublicationCheckComponent extends Component {
   @computed('objectives.@each.parents')
   get showUnlinkIcon() {
     const objectivesWithoutParents = this.objectives.filter(objective => {
-      const parentIds = objective.hasMany('parents').ids();
+      const parentIds = objective.hasMany('courseObjectives').ids();
       return parentIds.length === 0;
     });
 
@@ -22,7 +22,7 @@ export default class SessionPublicationCheckComponent extends Component {
       this.objectives = [];
       return;
     }
-    this.objectives = objectives;
+    this.objectives = objectives.toArray();
   }
 
   @action

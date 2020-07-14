@@ -35,8 +35,8 @@ export default class PublishAllSessionsComponent extends Component {
 
   @restartableTask
   *load() {
-    const objectives = yield this.args.course.objectives;
-    this.showWarning = objectives.any((objective) => !objective.parents.length);
+    const objectives = yield this.args.course.courseObjectives;
+    this.showWarning = objectives.toArray().any(objective => ! objective.programYearObjectives.length);
   }
 
   get allSessionsAsIs(){
