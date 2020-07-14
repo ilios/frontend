@@ -1,5 +1,5 @@
 export { default as setupAuthentication } from './helpers/setup-authentication';
-export { datePicker } from './helpers/date-picker';
+export { flatpickrDatePicker } from './helpers/flatpickr-date-picker';
 export {
   fillInFroalaEditor,
   froalaEditorValue,

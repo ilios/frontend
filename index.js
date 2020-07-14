@@ -32,6 +32,8 @@ module.exports = {
     this.import(path.join(froalaPath, 'css', 'froala_style.css'));
     this.import(path.join(froalaPath, 'css', 'themes', 'gray.css'));
     this.import(path.join(froalaPath, 'css', 'plugins', 'code_view.css'));
+
+    this.import(path.join('node_modules', 'flatpickr', 'dist', 'flatpickr.css'));
   },
 
   setupPreprocessorRegistry: function(type, registry) {

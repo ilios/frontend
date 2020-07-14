@@ -17,7 +17,7 @@ import taxonomies from './components/detail-taxonomies';
 import collapsedTaxonomies from './components/collapsed-taxonomies';
 import instructorSelectionManager from './components/instructor-selection-manager';
 import offeringForm from './components/offering-form';
-import { datePicker, pageObjectFillInFroalaEditor } from 'ilios-common';
+import { flatpickrDatePicker, pageObjectFillInFroalaEditor } from 'ilios-common';
 import leadershipCollapsed from './components/leadership-collapsed';
 import leadershipList from './components/leadership-list';
 import leadershipManager from './components/leadership-manager';
@@ -82,7 +82,7 @@ export default create({
       scope: '.sessionilmduedate',
       value: text('span', { at: 0}),
       edit: clickable('[data-test-edit]'),
-      set: datePicker('input'),
+      set: flatpickrDatePicker('input'),
       save: clickable('.done'),
       hasError: isVisible('.validation-error-message'),
     },

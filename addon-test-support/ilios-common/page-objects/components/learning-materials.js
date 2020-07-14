@@ -12,7 +12,7 @@ import {
 import meshManager from './mesh-manager';
 import search from './learningmaterial-search';
 import {
-  datePicker,
+  flatpickrDatePicker,
   pageObjectFillInFroalaEditor,
   pageObjectFroalaEditorValue
 } from 'ilios-common';
@@ -96,14 +96,14 @@ const definition = {
     save: clickable('.done'),
     cancel: clickable('.cancel'),
     meshManager,
-    startDate: datePicker('.start-date input'),
+    startDate: flatpickrDatePicker('.start-date input'),
     startTime: {
       scope: '.start-time',
       hour: fillable('select', { at: 0 }),
       minute: fillable('select', { at: 1 }),
       ampm: fillable('select', { at: 2 }),
     },
-    endDate: datePicker('.end-date input'),
+    endDate: flatpickrDatePicker('.end-date input'),
     endTime: {
       scope: '.end-time',
       hour: fillable('select', { at: 0 }),

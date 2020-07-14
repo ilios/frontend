@@ -120,15 +120,13 @@
       <span>
         {{#if @editable}}
           <EditableField
-            @value={{moment-format @course.startDate "L"}}
+            @value={{format-date @course.startDate}}
             @save={{perform this.changeStartDate}}
             @close={{this.revertStartDateChanges}}
           >
-            <PikadayInput
+            <DatePicker
               @value={{this.startDate}}
-              @format="L"
-              @onSelection={{fn (set this.startDate)}}
-              @focusOut={{fn this.addErrorDisplayFor "startDate"}}
+              @change={{pipe (set this.startDate) (fn this.addErrorDisplayFor "startDate")}}
             />
             {{#each (await (compute (fn this.getErrorsFor) "startDate")) as |message|}}
               <span class="validation-error-message">
@@ -137,7 +135,7 @@
             {{/each}}
           </EditableField>
         {{else}}
-          {{moment-format @course.startDate "L"}}&nbsp;
+          {{format-date @course.startDate}}&nbsp;
         {{/if}}
       </span>
     </div>
@@ -146,15 +144,13 @@
       <span>
         {{#if @editable}}
           <EditableField
-            @value={{moment-format @course.endDate "L"}}
+            @value={{format-date @course.endDate}}
             @save={{perform this.changeEndDate}}
             @close={{this.revertEndDateChanges}}
           >
-            <PikadayInput
+            <DatePicker
               @value={{this.endDate}}
-              @format="L"
-              @onSelection={{fn (set this.endDate)}}
-              @focusOut={{fn this.addErrorDisplayFor "endDate"}}
+              @change={{pipe (set this.endDate) (fn this.addErrorDisplayFor "endDate")}}
             />
             {{#each (await (compute (fn this.getErrorsFor) "endDate")) as |message|}}
               <span class="validation-error-message">
@@ -163,7 +159,7 @@
             {{/each}}
           </EditableField>
         {{else}}
-          {{moment-format @course.endDate "L"}}&nbsp;
+          {{format-date @course.endDate}}&nbsp;
         {{/if}}
       </span>
     </div>
