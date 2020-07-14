@@ -13,30 +13,17 @@ module('Integration | Component | course/objectives', function(hooks) {
   test('it renders and is accessible with a single cohort', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
+    const programYear = this.server.create('programYear', { program });
     const cohort = this.server.create('cohort', { programYear });
     const competencies = this.server.createList('competency', 2);
-    const course = this.server.create('course', {
-      cohorts: [cohort]
+    const course = this.server.create('course', { cohorts: [cohort] });
+    const pyObjectives = this.server.createList('programYearObjective', 3, {
+      programYear,
+      competency: competencies[0]
     });
-    const objectivesInProgramYear1 = this.server.createList('objective', 3, { competency: competencies[0] });
-    const objectivesInProgramYear2 = this.server.createList('objective', 2, { competency: competencies[1] });
-
-    objectivesInProgramYear1.forEach(objective => {
-      this.server.create('program-year-objective', { objective, programYear });
-    });
-
-    objectivesInProgramYear2.forEach(objective => {
-      this.server.create('program-year-objective', { objective, programYear });
-    });
-
-    const objectiveInCourse1 = this.server.create('objective', { parents: [objectivesInProgramYear1[0]] });
-    this.server.create('course-objective', { course, objective: objectiveInCourse1 });
-
-    const objectiveInCourse2 = this.server.create('objective');
-    this.server.create('course-objective', { course, objective: objectiveInCourse2 });
-    this.server.createList('objective', 2, { competency: competencies[0] });
-    this.server.createList('objective', 4, { competency: competencies[1] });
+    this.server.createList('programYearObjective', 2, { programYear, competency: competencies[1] });
+    this.server.create('courseObjective', { course, programYearObjectives: [ pyObjectives[0] ] });
+    this.server.create('courseObjective', { course });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('course', courseModel);
@@ -48,12 +35,12 @@ module('Integration | Component | course/objectives', function(hooks) {
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 2);
-    assert.equal(component.objectiveList.objectives[0].description.text, 'objective 5');
+    assert.equal(component.objectiveList.objectives[0].description.text, 'course objective 0');
     assert.equal(component.objectiveList.objectives[0].parents.list.length, 1);
-    assert.equal(component.objectiveList.objectives[0].parents.list[0].text, 'objective 0');
+    assert.equal(component.objectiveList.objectives[0].parents.list[0].text, 'program-year objective 0');
     assert.ok(component.objectiveList.objectives[0].meshDescriptors.empty);
 
-    assert.equal(component.objectiveList.objectives[1].description.text, 'objective 6');
+    assert.equal(component.objectiveList.objectives[1].description.text, 'course objective 1');
     assert.ok(component.objectiveList.objectives[1].parents.empty);
     assert.ok(component.objectiveList.objectives[1].meshDescriptors.empty);
 
@@ -64,27 +51,16 @@ module('Integration | Component | course/objectives', function(hooks) {
   test('it loads data for a single cohort', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
+    const programYear = this.server.create('programYear', { program });
     const cohort = this.server.create('cohort', { programYear });
     const competencies = this.server.createList('competency', 2);
-    const course = this.server.create('course', {
-      cohorts: [cohort]
+    const course = this.server.create('course', { cohorts: [cohort] });
+    const pyObjectives = this.server.createList('programYearObjective', 3, {
+      programYear,
+      competency: competencies[0]
     });
-    const objectivesInProgramYear1 = this.server.createList('objective', 3, { competency: competencies[0] });
-    const objectivesInProgramYear2 = this.server.createList('objective', 2, { competency: competencies[1] });
-
-    objectivesInProgramYear1.forEach(objective => {
-      this.server.create('program-year-objective', { objective, programYear });
-    });
-
-    objectivesInProgramYear2.forEach(objective => {
-      this.server.create('program-year-objective', { objective, programYear });
-    });
-
-    const objectiveInCourse = this.server.create('objective', { parents: [objectivesInProgramYear1[0]] });
-    this.server.create('course-objective', { course, objective: objectiveInCourse });
-    this.server.createList('objective', 2, { competency: competencies[0] });
-    this.server.createList('objective', 4, { competency: competencies[1] });
+    this.server.createList('programYearObjective', 2, { programYear, competency: competencies[1] });
+    this.server.create('courseObjective', { course, programYearObjectives: [ pyObjectives[0] ] });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('course', courseModel);
@@ -96,7 +72,7 @@ module('Integration | Component | course/objectives', function(hooks) {
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 1);
-    assert.equal(component.objectiveList.objectives[0].description.text, 'objective 5');
+    assert.equal(component.objectiveList.objectives[0].description.text, 'course objective 0');
     assert.equal(component.objectiveList.objectives[0].parents.list.length, 1);
     await component.objectiveList.objectives[0].parents.list[0].manage();
 
@@ -108,20 +84,20 @@ module('Integration | Component | course/objectives', function(hooks) {
     assert.ok(m.competencies[0].selected);
 
     assert.equal(m.competencies[0].objectives.length, 3);
-    assert.equal(m.competencies[0].objectives[0].title, 'objective 0');
+    assert.equal(m.competencies[0].objectives[0].title, 'program-year objective 0');
     assert.ok(m.competencies[0].objectives[0].selected);
-    assert.equal(m.competencies[0].objectives[1].title, 'objective 1');
+    assert.equal(m.competencies[0].objectives[1].title, 'program-year objective 1');
     assert.ok(m.competencies[0].objectives[1].notSelected);
-    assert.equal(m.competencies[0].objectives[2].title, 'objective 2');
+    assert.equal(m.competencies[0].objectives[2].title, 'program-year objective 2');
     assert.ok(m.competencies[0].objectives[2].notSelected);
 
     assert.equal(m.competencies[1].title, 'competency 1');
     assert.ok(m.competencies[1].notSelected);
 
     assert.equal(m.competencies[1].objectives.length, 2);
-    assert.equal(m.competencies[1].objectives[0].title, 'objective 3');
+    assert.equal(m.competencies[1].objectives[0].title, 'program-year objective 3');
     assert.ok(m.competencies[1].objectives[0].notSelected);
-    assert.equal(m.competencies[1].objectives[1].title, 'objective 4');
+    assert.equal(m.competencies[1].objectives[1].title, 'program-year objective 4');
     assert.ok(m.competencies[1].objectives[1].notSelected);
 
     await a11yAudit(this.element);
@@ -131,33 +107,25 @@ module('Integration | Component | course/objectives', function(hooks) {
   test('it loads data for multiple cohorts', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear1 = this.server.create('program-year', { program });
+    const programYear1 = this.server.create('programYear', { program });
     const cohort1 = this.server.create('cohort', { programYear: programYear1 });
-
-    const programYear2 = this.server.create('program-year', { program });
+    const programYear2 = this.server.create('programYear', { program });
     const cohort2 = this.server.create('cohort', { programYear: programYear2 });
-
     const competencies = this.server.createList('competency', 2);
     const course = this.server.create('course', {
       cohorts: [cohort1, cohort2]
     });
-
-    const objectivesInProgramYear1 = this.server.createList('objective', 2, { competency: competencies[0] });
-    const objectivesInProgramYear2 = this.server.createList('objective', 2, { competency: competencies[1] });
-
-    objectivesInProgramYear1.forEach(objective => {
-      this.server.create('program-year-objective', { objective, programYear: programYear1 });
+    const pyObjectives1 = this.server.createList('programYearObjective', 2, {
+      competency: competencies[0],
+      programYear: programYear1
     });
-
-    objectivesInProgramYear2.forEach(objective => {
-      this.server.create('program-year-objective', { objective, programYear: programYear2 });
+    this.server.createList('programYearObjective', 2, {
+      competency: competencies[1],
+      programYear: programYear2
     });
-
-    const objectiveInCourse = this.server.create('objective', { parents: [objectivesInProgramYear1[0]] });
-    this.server.create('course-objective', { course, objective: objectiveInCourse });
-
-    this.server.createList('objective', 2, { competency: competencies[0] });
-    this.server.createList('objective', 4, { competency: competencies[1] });
+    this.server.create('courseObjective', { course, programYearObjectives: [ pyObjectives1[0] ] });
+    this.server.createList('programYearObjective', 2, { competency: competencies[0] });
+    this.server.createList('programYearObjective', 4, { competency: competencies[1] });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('course', courseModel);
@@ -169,7 +137,7 @@ module('Integration | Component | course/objectives', function(hooks) {
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 1);
-    assert.equal(component.objectiveList.objectives[0].description.text, 'objective 4');
+    assert.equal(component.objectiveList.objectives[0].description.text, 'course objective 0');
     assert.equal(component.objectiveList.objectives[0].parents.list.length, 1);
     await component.objectiveList.objectives[0].parents.list[0].manage();
 
@@ -183,9 +151,9 @@ module('Integration | Component | course/objectives', function(hooks) {
     assert.ok(m.competencies[0].selected);
 
     assert.equal(m.competencies[0].objectives.length, 2);
-    assert.equal(m.competencies[0].objectives[0].title, 'objective 0');
+    assert.equal(m.competencies[0].objectives[0].title, 'program-year objective 0');
     assert.ok(m.competencies[0].objectives[0].selected);
-    assert.equal(m.competencies[0].objectives[1].title, 'objective 1');
+    assert.equal(m.competencies[0].objectives[1].title, 'program-year objective 1');
     assert.ok(m.competencies[0].objectives[1].notSelected);
 
     await m.selectCohort(2);
@@ -194,9 +162,9 @@ module('Integration | Component | course/objectives', function(hooks) {
     assert.ok(m.competencies[0].notSelected);
 
     assert.equal(m.competencies[0].objectives.length, 2);
-    assert.equal(m.competencies[0].objectives[0].title, 'objective 2');
+    assert.equal(m.competencies[0].objectives[0].title, 'program-year objective 2');
     assert.ok(m.competencies[0].objectives[0].notSelected);
-    assert.equal(m.competencies[0].objectives[1].title, 'objective 3');
+    assert.equal(m.competencies[0].objectives[1].title, 'program-year objective 3');
     assert.ok(m.competencies[0].objectives[1].notSelected);
 
     await a11yAudit(this.element);
@@ -205,8 +173,7 @@ module('Integration | Component | course/objectives', function(hooks) {
 
   test('deleting objective', async function (assert) {
     const course = this.server.create('course');
-    const objective = this.server.create('objective');
-    this.server.create('course-objective', { course, objective });
+    this.server.create('courseObjective', { course });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('course', courseModel);

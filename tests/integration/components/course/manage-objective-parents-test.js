@@ -11,10 +11,7 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
   setupMirage(hooks);
 
   test('it renders and is accessible with a single cohort', async function (assert) {
-    const course = this.server.create('course');
-    const objective = this.server.create('objective');
-    this.server.create('course-objective', { course, objective });
-
+    const programYearObjective = this.server.create('programYearObjective');
     const cohortObjectives = [
       {
         title: 'cohort 0',
@@ -25,9 +22,9 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
             title: 'competency 0',
             objectives: [
               {
-                id: 2,
-                title: 'objective 1',
-                active: true,
+                id: programYearObjective.id,
+                title: programYearObjective.title,
+                active: programYearObjective.active
               }
             ]
           }
@@ -51,17 +48,14 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
     assert.ok(component.competencies[0].notSelected);
 
     assert.equal(component.competencies[0].objectives.length, 1);
-    assert.equal(component.competencies[0].objectives[0].title, 'objective 1');
+    assert.equal(component.competencies[0].objectives[0].title, programYearObjective.title);
     assert.ok(component.competencies[0].objectives[0].notSelected);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders and is accessible with multiple cohorts', async function (assert) {
-    const course = this.server.create('course');
-    const objective = this.server.create('objective');
-    this.server.create('course-objective', { course, objective });
-
+    const programYearObjective = this.server.create('programYearObjective');
     const cohortObjectives = [
       {
         title: 'cohort 0',
@@ -72,9 +66,9 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
             title: 'competency 0',
             objectives: [
               {
-                id: 2,
-                title: 'objective 1',
-                active: true,
+                id: programYearObjective.title,
+                title: programYearObjective.title,
+                active: programYearObjective.active,
               }
             ]
           }
@@ -89,9 +83,9 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
             title: 'competency 0',
             objectives: [
               {
-                id: 2,
-                title: 'objective 1',
-                active: true,
+                id: programYearObjective.id,
+                title: programYearObjective.title,
+                active: programYearObjective.active,
               }
             ]
           }
@@ -115,38 +109,33 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
     assert.ok(component.competencies[0].notSelected);
 
     assert.equal(component.competencies[0].objectives.length, 1);
-    assert.equal(component.competencies[0].objectives[0].title, 'objective 1');
+    assert.equal(component.competencies[0].objectives[0].title, programYearObjective.title);
     assert.ok(component.competencies[0].objectives[0].notSelected);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
   test('inactive parents are hidden unless they are selected', async function (assert) {
-    const course = this.server.create('course');
-    const activeObjective = this.server.create('objective');
-    const inactiveObjective = this.server.create('objective', { active: false });
-    const inactiveSelectedObjective = this.server.create('objective', { active: false });
-    const objective = this.server.create('objective', {
-      parents: [inactiveSelectedObjective]
-    });
-    this.server.create('course-objective', { course, objective });
+    const activeProgramYearObjective = this.server.create('programYearObjective');
+    const inactiveProgramYearObjective = this.server.create('programYearObjective', { active: false });
+    const inactiveSelectedProgramYearObjective = this.server.create('programYearObjective', { active: false });
 
     const obj1 = {
-      id: activeObjective.id,
-      title: activeObjective.title,
-      active: activeObjective.active,
+      id: activeProgramYearObjective.id,
+      title: activeProgramYearObjective.title,
+      active: activeProgramYearObjective.active,
       cohortId: 1,
     };
     const obj2 = {
-      id: inactiveObjective.id,
-      title: inactiveObjective.title,
-      active: inactiveObjective.active,
+      id: inactiveProgramYearObjective.id,
+      title: inactiveProgramYearObjective.title,
+      active: inactiveProgramYearObjective.active,
       cohortId: 1,
     };
     const obj3 = {
-      id: inactiveSelectedObjective.id,
-      title: inactiveSelectedObjective.title,
-      active: inactiveSelectedObjective.active,
+      id: inactiveSelectedProgramYearObjective.id,
+      title: inactiveSelectedProgramYearObjective.title,
+      active: inactiveSelectedProgramYearObjective.active,
       cohortId: 1,
     };
     const cohortObjectives = [
@@ -177,9 +166,9 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
     assert.ok(component.competencies[0].selected);
 
     assert.equal(component.competencies[0].objectives.length, 2);
-    assert.equal(component.competencies[0].objectives[0].title, 'objective 0');
+    assert.equal(component.competencies[0].objectives[0].title, 'program-year objective 0');
     assert.ok(component.competencies[0].objectives[0].notSelected);
-    assert.equal(component.competencies[0].objectives[1].title, 'objective 2');
+    assert.equal(component.competencies[0].objectives[1].title, 'program-year objective 2');
     assert.ok(component.competencies[0].objectives[1].selected);
 
     await a11yAudit(this.element);

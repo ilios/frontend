@@ -13,9 +13,8 @@ module('Integration | Component | course/objective-list-item', function(hooks) {
   test('it renders and is accessible', async function(assert) {
     assert.expect(6);
     const course = this.server.create('course');
-    const objective = this.server.create('objective');
-    const courseObjective = this.server.create('course-objective', { course, objective });
-    const courseObjectiveModel = await this.owner.lookup('service:store').find('course-objective', courseObjective.id);
+    const courseObjective = this.server.create('courseObjective', { course });
+    const courseObjectiveModel = await this.owner.lookup('service:store').find('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(
       hbs`<Course::ObjectiveListItem
@@ -25,7 +24,7 @@ module('Integration | Component | course/objective-list-item', function(hooks) {
       />`
     );
     assert.notOk(component.hasRemoveConfirmation);
-    assert.equal(component.description.text, 'objective 0');
+    assert.equal(component.description.text, 'course objective 0');
     assert.equal(component.parents.text, 'Add New');
     assert.equal(component.meshDescriptors.text, 'Add New');
     assert.ok(component.hasTrashCan);
@@ -35,9 +34,8 @@ module('Integration | Component | course/objective-list-item', function(hooks) {
 
   test('can change title', async function(assert) {
     const course = this.server.create('course');
-    const objective = this.server.create('objective');
-    const courseObjective = this.server.create('course-objective', { course, objective });
-    const courseObjectiveModel = await this.owner.lookup('service:store').find('course-objective', courseObjective.id);
+    const courseObjective = this.server.create('courseObjective', { course });
+    const courseObjectiveModel = await this.owner.lookup('service:store').find('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(
       hbs`<Course::ObjectiveListItem
@@ -47,7 +45,7 @@ module('Integration | Component | course/objective-list-item', function(hooks) {
       />`
     );
     const newDescription = 'Pluto Visits Earth';
-    assert.equal(component.description.text, 'objective 0');
+    assert.equal(component.description.text, 'course objective 0');
     await component.description.openEditor();
     await component.description.edit(newDescription);
     await component.description.save();
@@ -56,9 +54,8 @@ module('Integration | Component | course/objective-list-item', function(hooks) {
 
   test('can manage parents', async function (assert) {
     const course = this.server.create('course');
-    const objective = this.server.create('objective');
-    const courseObjective = this.server.create('course-objective', { course, objective });
-    const courseObjectiveModel = await this.owner.lookup('service:store').find('course-objective', courseObjective.id);
+    const courseObjective = this.server.create('courseObjective', { course });
+    const courseObjectiveModel = await this.owner.lookup('service:store').find('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     this.set('manageParents', () => {
       assert.ok(true);
@@ -76,9 +73,8 @@ module('Integration | Component | course/objective-list-item', function(hooks) {
 
   test('can manage descriptors', async function (assert) {
     const course = this.server.create('course');
-    const objective = this.server.create('objective');
-    const courseObjective = this.server.create('course-objective', { course, objective });
-    const courseObjectiveModel = await this.owner.lookup('service:store').find('course-objective', courseObjective.id);
+    const courseObjective = this.server.create('courseObjective', { course });
+    const courseObjectiveModel = await this.owner.lookup('service:store').find('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(
       hbs`<Course::ObjectiveListItem
@@ -94,9 +90,8 @@ module('Integration | Component | course/objective-list-item', function(hooks) {
   test('can manage terms', async function (assert) {
     assert.expect(2);
     const course = this.server.create('course');
-    const objective = this.server.create('objective');
-    const courseObjective = this.server.create('course-objective', { course, objective });
-    const courseObjectiveModel = await this.owner.lookup('service:store').find('course-objective', courseObjective.id);
+    const courseObjective = this.server.create('courseObjective', { course });
+    const courseObjectiveModel = await this.owner.lookup('service:store').find('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(
       hbs`<Course::ObjectiveListItem
@@ -112,9 +107,8 @@ module('Integration | Component | course/objective-list-item', function(hooks) {
 
   test('can trigger removal', async function (assert) {
     const course = this.server.create('course');
-    const objective = this.server.create('objective');
-    const courseObjective = this.server.create('course-objective', { course, objective });
-    const courseObjectiveModel = await this.owner.lookup('service:store').find('course-objective', courseObjective.id);
+    const courseObjective = this.server.create('courseObjective', { course });
+    const courseObjectiveModel = await this.owner.lookup('service:store').find('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(
       hbs`<Course::ObjectiveListItem
