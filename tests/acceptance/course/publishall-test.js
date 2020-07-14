@@ -18,48 +18,45 @@ module('Acceptance | Course - Publish All Sessions', function(hooks) {
   });
 
   test('published sessions do not appear in the cannot publish list #1658', async function(assert) {
-    const objectiveInSession1 = this.server.create('objective');
-    const objectiveInSession2 = this.server.create('objective');
-    const objectiveInSession3 = this.server.create('objective');
-    this.server.create('meshDescriptor');
-    this.server.create('term');
+    const meshDescriptor = this.server.create('meshDescriptor');
+    const term = this.server.create('term');
 
-    this.server.create('course', {
+    const course = this.server.create('course', {
       year: 2013,
-      schoolId: 1,
+      school: this.school,
       published: true,
-      cohortIds: [1],
+      cohorts: [ this.cohort ],
     });
     const session1 = this.server.create('session', {
-      courseId: 1,
+      course,
       published: true,
       publishedAsTbd: false,
-      meshDescriptorIds: [1],
-      termIds: [1],
+      meshDescriptors: [ meshDescriptor ],
+      terms: [ term ],
     });
-    this.server.create('session-objective', { session: session1, objective: objectiveInSession1 });
+    this.server.create('sessionObjective', { session: session1 });
     this.server.create('offering', {sessionId: 1});
     const session2 = this.server.create('session', {
-      courseId: 1,
+      course,
       published: true,
       publishedAsTbd: false,
-      meshDescriptorIds: [1],
-      termIds: [1],
+      meshDescriptors: [ meshDescriptor ],
+      terms: [ term ],
     });
-    this.server.create('session-objective', { session: session2, objective: objectiveInSession2 });
+    this.server.create('sessionObjective', { session: session2 });
 
-    this.server.create('offering', {sessionId: 2});
-    this.server.create('ilmSession', { sessionId: 2});
+    this.server.create('offering', { session: session2 });
+    this.server.create('ilmSession', { session: session2 });
     const session3 = this.server.create('session', {
-      courseId: 1,
+      course,
       published: true,
       publishedAsTbd: true,
-      meshDescriptorIds: [1],
-      termIds: [1],
+      meshDescriptors: [ meshDescriptor ],
+      terms: [ term ],
     });
-    this.server.create('session-objective', { session: session3, objective: objectiveInSession3 });
+    this.server.create('sessionObjective', { session: session3 });
 
-    this.server.create('offering', {sessionId: 3});
+    this.server.create('offering', { session: session3 });
     await visit('/courses/1/publishall');
 
     await click('.publish-all-sessions-publishable .title');
@@ -69,7 +66,6 @@ module('Acceptance | Course - Publish All Sessions', function(hooks) {
   });
 
   test('After publishing user is returned to the courses route #4099', async function(assert) {
-    const objective = this.server.create('objective');
     const meshDescriptors = this.server.createList('meshDescriptor', 1);
     const terms = this.server.createList('term', 1);
 
@@ -86,7 +82,7 @@ module('Acceptance | Course - Publish All Sessions', function(hooks) {
       meshDescriptors,
       terms
     });
-    this.server.create('session-objective', { session, objective });
+    this.server.create('sessionObjective', { session });
     this.server.create('sessionType', {
       sessions: [session]
     });

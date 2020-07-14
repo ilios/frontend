@@ -171,37 +171,30 @@ module('Acceptance | Course - Print Course', function(hooks) {
 
   test('test print session objectives', async function(assert) {
     assert.expect(9);
-    await setupAuthentication( { school: this.school });
+    await setupAuthentication({school: this.school});
 
     const session = this.server.create('session', {
       courseId: 1,
       published: true,
       publishedAsTbd: false,
     });
-
-    const objectiveInCourse = this.server.create('objective', {
-      schoolId: 1,
-      title: 'Course Objective 1',
-      parentIds: []
-    });
-    this.server.create('course-objective', { course: this.course, objective: objectiveInCourse });
-
-    const objectiveInSession = this.server.create('objective', {
-      schoolId: 1,
-      parentIds: [1],
+    const courseObjective = this.server.create('courseObjective', {course: this.course, title: 'Course Objective 1'});
+    const vocabulary = this.server.create('vocabulary', {school: this.school});
+    const term = this.server.create('term', {vocabulary});
+    const sessionObjective = this.server.create('sessionObjective', {
+      session,
       title: 'Session Objective 1',
+      courseObjectives: [courseObjective],
+      terms: [term]
     });
-    const vocabulary = this.server.create('vocabulary', { school: this.school });
-    const term = this.server.create('term', { vocabulary });
-    this.server.create('session-objective', { session, objective: objectiveInSession, terms: [ term ] });
 
     this.server.create('meshDescriptor', {
-      objectiveIds: [2],
+      sessionObjectives: [ sessionObjective ],
       name: "MeSH Descriptor 1",
     });
 
     this.server.create('meshDescriptor', {
-      objectiveIds: [2],
+      sessionObjectives: [ sessionObjective ],
       name: "MeSH Descriptor 2",
     });
 
@@ -224,33 +217,30 @@ module('Acceptance | Course - Print Course', function(hooks) {
     assert.expect(9);
     await setupAuthentication( { school: this.school });
 
-    this.server.create('competency', {
-      schoolId: 1,
+    const competency = this.server.create('competency', {
+      school: this.school,
       title: 'Competency 1',
     });
-
-    const parentObjective = this.server.create('objective', {
-      schoolId: 1,
-      competencyId: 1,
+    const programYearObjective = this.server.create('programYearObjective', {
+      competency,
       title: 'Program Year Objective 1',
-    });
-
-    const objectiveInCourse = this.server.create('objective', {
-      schoolId: 1,
-      parents: [ parentObjective ],
-      title: 'Course Objective 1',
     });
     const vocabulary = this.server.create('vocabulary', { school: this.school });
     const term = this.server.create('term', { vocabulary });
-    this.server.create('course-objective', { course: this.course, objective: objectiveInCourse, terms: [ term ] });
+    const courseObjective = this.server.create('courseObjective', {
+      course: this.course,
+      title: 'Course Objective 1',
+      programYearObjectives: [ programYearObjective ],
+      terms: [ term ]
+    });
 
     this.server.create('meshDescriptor', {
-      objectiveIds: [2],
+      courseObjectives: [ courseObjective ],
       name: "MeSH Descriptor 1",
     });
 
     this.server.create('meshDescriptor', {
-      objectiveIds: [2],
+      courseObjectives: [ courseObjective ],
       name: "MeSH Descriptor 2",
     });
 

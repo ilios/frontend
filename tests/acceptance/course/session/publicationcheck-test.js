@@ -20,33 +20,28 @@ module('Acceptance | Session - Publication Check', function(hooks) {
   hooks.beforeEach(async function () {
     await setupAuthentication();
     const school = this.server.create('school');
-    this.server.create('course', { school });
-    this.server.create('vocabulary', {
+    const vocabulary = this.server.create('vocabulary', {
       school,
     });
-    this.server.createList('sessionType', 2, {
+    this.course = this.server.create('course', { school });
+    this.sessionTypes = this.server.createList('sessionType', 2, {
       school
     });
-    this.server.create('sessionDescription');
-    this.objective = this.server.create('objective');
-    this.server.create('term', {
-      vocabularyId: 1,
-    });
-    this.server.create('meshDescriptor');
+    this.sessionDescription = this.server.create('sessionDescription');
+    this.term = this.server.create('term', { vocabulary });
+    this.meshDescriptor = this.server.create('meshDescriptor');
   });
 
   test('full session count', async function (assert) {
     const session = this.server.create('session', {
-      courseId: 1,
-      termIds: [1],
-      meshDescriptorIds: [1],
-      sessionTypeId: 1,
-      sessionDescriptionId: 1
+      course: this.course,
+      terms: [ this.term ],
+      meshDescriptors: [ this.meshDescriptor ],
+      sessionType: this.sessionTypes[0],
+      sessionDescription: this.sessionDescription
     });
-    this.server.create('session-objective', { session, objective: this.objective });
-    this.server.create('offering', {
-      sessionId: 1
-    });
+    this.server.create('sessionObjective', { session });
+    this.server.create('offering', { session });
     await visit(url);
     assert.equal(currentRouteName(), 'session.publication_check');
     const items = findAll('.session-publicationcheck table tbody td');
@@ -60,9 +55,9 @@ module('Acceptance | Session - Publication Check', function(hooks) {
   test('empty session count', async function(assert) {
     //create 2 because the second one is empty
     this.server.createList('session', 2, {
-      courseId: 1
+      course: this.course
     });
-    this.server.db.courses.update(1, {sessionIds: [1, 2]});
+    this.server.db.courses.update(1, { sessionIds: [1, 2] });
     await visit('/courses/1/sessions/2/publicationcheck');
     assert.equal(currentRouteName(), 'session.publication_check');
     const items = findAll('.session-publicationcheck table tbody td');
@@ -74,8 +69,8 @@ module('Acceptance | Session - Publication Check', function(hooks) {
   });
 
   test('unlink icon transitions properly', async function(assert) {
-    const session = this.server.create('session', { courseId: 1 });
-    this.server.create('session-objective', { session, objective: this.objective });
+    const session = this.server.create('session', { course: this.course });
+    this.server.create('sessionObjective', { session });
     await visit(url);
     await click('.fa-unlink');
     assert.equal(currentURL(), '/courses/1/sessions/1?addOffering=false&courseCompetencyDetails=false&courseLeadershipDetails=false&courseManageLeadership=false&courseObjectiveDetails=false&courseTaxonomyDetails=false&details=false&sessionLeadershipDetails=false&sessionManageLeadership=false&sessionObjectiveDetails=true&sessionTaxonomyDetails=false');

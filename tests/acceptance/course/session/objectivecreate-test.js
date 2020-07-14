@@ -18,7 +18,6 @@ module('Acceptance | Session - Objective Create', function(hooks) {
     this.server.createList('program', 2);
     this.server.createList('programYear', 2);
     this.server.createList('cohort', 2);
-    this.objective = this.server.create('objective');
     this.course = this.server.create('course', {
       year: 2013,
       school: this.school,
@@ -26,7 +25,7 @@ module('Acceptance | Session - Objective Create', function(hooks) {
     const session  = this.server.create('session', {
       course: this.course,
     });
-    this.server.create('session-objective', { session, objective: this.objective });
+    this.server.create('session-objective', { session });
   });
 
   test('save new objective', async function (assert) {
@@ -36,13 +35,13 @@ module('Acceptance | Session - Objective Create', function(hooks) {
 
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'session objective 0');
     await page.objectives.createNew();
     await page.objectives.newObjective.description(newObjectiveDescription);
     await page.objectives.newObjective.save();
 
     assert.equal(page.objectives.objectiveList.objectives.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'session objective 0');
     assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
     assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
     assert.equal(page.objectives.objectiveList.objectives[1].description.text, newObjectiveDescription);
@@ -55,13 +54,13 @@ module('Acceptance | Session - Objective Create', function(hooks) {
     assert.expect(6);
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'session objective 0');
     await page.objectives.createNew();
     await page.objectives.newObjective.description('junk');
     await page.objectives.newObjective.cancel();
 
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'session objective 0');
     assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
     assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
   });
@@ -71,7 +70,7 @@ module('Acceptance | Session - Objective Create', function(hooks) {
     assert.expect(5);
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'session objective 0');
     await page.objectives.createNew();
     assert.notOk(page.objectives.newObjective.hasValidationError);
     await page.objectives.newObjective.description('<p>&nbsp</p><div></div><span>  </span>');

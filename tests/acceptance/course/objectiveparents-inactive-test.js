@@ -26,40 +26,29 @@ module('Acceptance | Course - Objective Inactive Parents', function(hooks) {
       school: this.school,
       programYears: [programYear],
     });
-    const objectiveInProgramYear1 = this.server.create('objective', {
-      title: 'active',
+
+    this.server.create('program-year-objective', { programYear, competency, title: 'active', active: true });
+    this.server.create('program-year-objective', { programYear, competency, title: 'inactive', active: false });
+    const parent = this.server.create('program-year-objective', {
+      programYear,
       competency,
-      active: true,
-    });
-    const objectiveInProgramYear2 = this.server.create('objective', {
-      title: 'inactive',
-      competency,
-      active: false,
-    });
-    const parent = this.server.create('objective', {
       title: 'inactive selected',
-      competency,
-      active: false,
+      active: false
     });
 
-    this.server.create('program-year-objective', {programYear, objective: objectiveInProgramYear1 });
-    this.server.create('program-year-objective', {programYear, objective: objectiveInProgramYear2 });
-    this.server.create('program-year-objective', {programYear, objective: parent });
-
-    const objectiveInCourse = this.server.create('objective', { parents: [parent] });
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
       cohorts: [cohort]
     });
-    this.server.create('course-objective', {course, objective: objectiveInCourse });
+    this.server.create('course-objective', { course, programYearObjectives: [ parent ] });
 
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     const { objectives } = page.objectives.objectiveList;
     assert.equal(objectives.length, 1);
 
-    assert.equal(objectives[0].description.text, 'objective 3');
+    assert.equal(objectives[0].description.text, 'course objective 0');
     assert.equal(objectives[0].parents.list.length, 1);
     assert.equal(objectives[0].parents.list[0].text, 'inactive selected');
 

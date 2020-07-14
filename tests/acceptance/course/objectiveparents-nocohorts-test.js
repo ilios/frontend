@@ -19,11 +19,9 @@ module('Acceptance | Course with no cohorts - Objective Parents', function(hooks
     const programYear = this.server.create('programYear', { program });
     this.server.create('cohort', { programYear });
     const competency = this.server.create('competency', { school: this.school, programYears: [programYear] });
-    const objectiveInProgramYear = this.server.create('objective', { competency });
-    this.server.create('program-year-objective', { programYear, objective: objectiveInProgramYear });
-    const objectiveInCourse = this.server.create('objective');
+    this.server.create('programYearObjective', { programYear, competency });
     const course = this.server.create('course', { year: 2013, school: this.school });
-    this.server.create('course-objective', { course, objective: objectiveInCourse });
+    this.server.create('courseObjective', { course });
   });
 
   test('add and remove a new cohort', async function(assert) {
@@ -33,7 +31,7 @@ module('Acceptance | Course with no cohorts - Objective Parents', function(hooks
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'course objective 0');
     assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
     await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
     const m = page.objectives.objectiveList.objectives[0].parentManager;
@@ -50,7 +48,7 @@ module('Acceptance | Course with no cohorts - Objective Parents', function(hooks
     assert.equal(m.competencies[0].title, 'competency 0');
     assert.ok(m.competencies[0].notSelected);
     assert.equal(m.competencies[0].objectives.length, 1);
-    assert.equal(m.competencies[0].objectives[0].title, 'objective 0');
+    assert.equal(m.competencies[0].objectives[0].title, 'program-year objective 0');
     assert.ok(m.competencies[0].objectives[0].notSelected);
 
     await page.cohorts.manage();
@@ -58,7 +56,5 @@ module('Acceptance | Course with no cohorts - Objective Parents', function(hooks
     await page.cohorts.save();
     assert.equal(page.cohorts.current.length, 0);
     assert.ok(m.hasNoCohortWarning);
-
-
   });
 });

@@ -31,7 +31,6 @@ module('Acceptance | Course - Publication Check', function(hooks) {
     const cohort = this.server.create('cohort', {
       programYear
     });
-    const objective = this.server.create('objective');
     const term = this.server.create('term', {
       vocabulary,
     });
@@ -43,7 +42,7 @@ module('Acceptance | Course - Publication Check', function(hooks) {
       terms: [term],
       meshDescriptors: [meshDescriptor],
     });
-    this.server.create('course-objective', { objective, course: this.fullCourse });
+    this.server.create('courseObjective', { course: this.fullCourse });
     this.emptyCourse = this.server.create('course', {
       year: 2013,
       schoolId: 1
