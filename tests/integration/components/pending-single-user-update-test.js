@@ -4,6 +4,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+// eslint-disable-next-line ember/use-ember-data-rfc-395-imports
 import DS from 'ember-data';
 
 const { PromiseArray } = DS;
