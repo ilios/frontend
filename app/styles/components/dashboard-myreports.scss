@@ -9,7 +9,8 @@
       display: flex;
       justify-content: space-between;
 
-      .myreports-list-item {
+      button {
+        @include ilios-link-button;
         margin-right: .5rem;
       }
     }

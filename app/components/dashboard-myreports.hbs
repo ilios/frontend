@@ -1,22 +1,28 @@
-<div class="dashboard-myreports" data-test-dashboard-myreports ...attributes>
-  {{#unless loadAttr.isRunning}}
+<div
+  class="dashboard-myreports"
+  {{did-insert (perform this.load) (await this.user.reports) @selectedReport @selectedYear}}
+  {{did-update (perform this.load) (await this.user.reports) @selectedReport @selectedYear}}
+  data-test-dashboard-myreports
+  ...attributes
+>
+  {{#if this.load.lastSuccessful}}
     <div class="dashboard-block-header">
       <h3 data-test-title>
         {{t "general.myReports"}}
       </h3>
       <div class="dashboard-block-actions">
         {{#if @selectedReport}}
-          <button type="button" {{on "click" (action this.clearReport)}}>
+          <button type="button" {{on "click" this.clearReport}}>
             {{t "general.allReports"}}
           </button>
           <button
             type="button"
-            disabled={{downloadReport.isRunning}}
-            {{action (perform downloadReport)}}
+            disabled={{this.downloadReport.isRunning}}
+            {{action (perform this.downloadReport)}}
           >
-            {{#if finishedBuildingReport}}
+            {{#if this.finishedBuildingReport}}
               <FaIcon @icon="check" />
-            {{else if downloadReport.isRunning}}
+            {{else if this.downloadReport.isRunning}}
               <LoadingSpinner />
             {{else}}
               <FaIcon @icon="download" />
@@ -25,8 +31,8 @@
           </button>
         {{else}}
           <ExpandCollapseButton
-            @value={{myReportEditorOn}}
-            @action={{action "toggleEditor"}}
+            @value={{this.myReportEditorOn}}
+            @action={{fn (set this.myReportEditorOn) (not this.myReportEditorOn)}}
             @expandButtonLabel={{t "general.add"}}
             @collapseButtonLabel={{t "general.close"}}
           />
@@ -39,23 +45,23 @@
         data-test-selected-report
         {{did-insert (set this.scrollTarget)}}
         {{! template-lint-disable no-invalid-interactive }}
-        {{on "scroll" (action this.setScroll)}}
+        {{on "scroll" this.setScroll}}
       >
         <h3 data-test-report-title>
-          {{await selectedReportTitle}}
+          {{this.selectedReportTitle}}
         </h3>
-        {{#if showAcademicYearFilter}}
+        {{#if this.showAcademicYearFilter}}
           <div class="years-filter">
             <select
               data-test-year-filter
-              onchange={{action @onReportYearSelect value="target.value"}}
+              {{on "change" (pick "target.value" @onReportYearSelect)}}
             >
               <option selected={{is-empty @selectedYear}} value="">
                 {{t "general.allAcademicYears"}}
               </option>
               {{#each
                 (sort-by
-                  "academicYearTitle:desc" (await allAcademicYears)
+                  "academicYearTitle:desc" this.allAcademicYears
                 ) as |year|
               }}
                 <option
@@ -68,10 +74,10 @@
             </select>
           </div>
         {{/if}}
-        {{#if (is-fulfilled reportResultsList)}}
-          {{#if (get (await reportResultsList) "length")}}
+        {{#if (is-array this.reportResultsList)}}
+          {{#if this.reportResultsList.length}}
             <ul data-test-results {{did-insert (action this.scrollDown)}}>
-              {{#each (await reportResultsList) as |item|}}
+              {{#each this.reportResultsList as |item|}}
                 {{#if item.model2}}
                   <li>
                     <LinkTo
@@ -98,26 +104,26 @@
             {{t "general.none"}}
           {{/if}}
         {{else}}
-          <LoadingSpinner @tagName="h1" />
+          <LoadingSpinner />
         {{/if}}
       </div>
     {{else}}
       <div class="dashboard-block-body">
-        {{#if myReportEditorOn}}
-          <NewMyreport @close={{action "toggleEditor"}} />
+        {{#if this.myReportEditorOn}}
+          <NewMyreport @close={{fn (set this.myReportEditorOn) false}} />
         {{/if}}
-        {{#if (is-fulfilled sortedReports)}}
+        {{#if (is-array this.reports)}}
           <ul class="saved-reports" data-test-saved-reports>
-            {{#each (await sortedReports) as |report|}}
+            {{#each (sort-by "title" this.reports) as |obj|}}
               <li>
-                <MyreportsListItem
-                  @report={{report}}
-                  @onReportSelect={{@onReportSelect}}
-                />
+                <button type="button" {{on "click" (fn @onReportSelect obj.report.id)}}>
+                    <FaIcon @icon="external-link-square-alt" />
+                    {{obj.title}}
+                </button>
                 <FaIcon
                   @icon="trash"
                   class="clickable remove enabled"
-                  @click={{action "deleteReport" report}}
+                  @click={{fn this.deleteReport obj.report}}
                 />
               </li>
             {{else}}
@@ -127,9 +133,9 @@
             {{/each}}
           </ul>
         {{else}}
-          <LoadingSpinner @tagName="h1" />
+          <LoadingSpinner />
         {{/if}}
       </div>
     {{/if}}
-  {{/unless}}
+  {{/if}}
 </div>

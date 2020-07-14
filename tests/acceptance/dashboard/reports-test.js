@@ -150,7 +150,7 @@ module('Acceptance | Dashboard Reports', function(hooks) {
     await page.myReports.newReport.save();
 
     assert.equal(page.myReports.reports.length, 3);
-    await page.myReports.reports[1].select();
+    await page.myReports.reports[0].select();
 
     assert.equal(page.myReports.selectedReport.title, 'All Sessions for course 1 in school 0');
     assert.equal(page.myReports.selectedReport.results.length, 1);
@@ -199,7 +199,7 @@ module('Acceptance | Dashboard Reports', function(hooks) {
     await page.myReports.newReport.save();
 
     assert.equal(page.myReports.reports.length, 3);
-    await page.myReports.reports[1].select();
+    await page.myReports.reports[0].select();
 
     assert.equal(page.myReports.selectedReport.title, 'All Courses for descriptor 0 in school 0');
     assert.equal(page.myReports.selectedReport.results.length, 2);
@@ -257,7 +257,7 @@ module('Acceptance | Dashboard Reports', function(hooks) {
     await page.myReports.newReport.save();
 
     assert.equal(page.myReports.reports.length, 3);
-    await page.myReports.reports[1].select();
+    await page.myReports.reports[0].select();
 
     assert.equal(page.myReports.selectedReport.title, 'All Courses in All Schools');
     assert.equal(page.myReports.selectedReport.results.length, 2);
