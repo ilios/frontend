@@ -5,7 +5,7 @@ export default class DataLoaderService extends Service {
   @service store;
   #calendarSchools = {};
   #coursesSchools = {};
-  #learnerGroupSchools = {};
+  #learnerGroupSchools = null;
   #learnerGroupCohorts = {};
   #courses = {};
   #courseSessions = {};
@@ -18,6 +18,38 @@ export default class DataLoaderService extends Service {
     }
 
     return this.#calendarSchools[id];
+  }
+  async loadSchoolForCourses(id) {
+    // more comprehensive so if we already have it then use it.
+    if (id in this.#calendarSchools) {
+      return this.#calendarSchools[id];
+    }
+    if (!(id in this.#coursesSchools)) {
+      this.#coursesSchools[id] = this.store.findRecord('school', id, {
+        include: 'courses',
+        reload: true,
+      });
+    }
+    return this.#coursesSchools[id];
+  }
+  async loadSchoolsForLearnerGroups() {
+    if (!this.#learnerGroupSchools) {
+      this.#learnerGroupSchools = this.store.findAll('school', {
+        include: 'programs.programYears.cohort',
+        reload: true,
+      });
+    }
+    return this.#learnerGroupSchools;
+  }
+  async loadCohortForLearnerGroups(id) {
+    if (!(id in this.#learnerGroupCohorts)) {
+      this.#learnerGroupCohorts[id] = this.store.findRecord('cohort', id, {
+        include: 'learnerGroups,users',
+        reload: true,
+      });
+    }
+
+    return this.#learnerGroupCohorts[id];
   }
   async loadCourse(id) {
     if (!(id in this.#courses)) {
