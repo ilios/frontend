@@ -30,7 +30,7 @@
     "@glimmer/component": "^1.0.0",
     "@glimmer/tracking": "^1.0.0",
     "@ilios/ember-template-lint-plugin": "^2.0.1",
-    "@ilios/eslint-config-ember": "^2.3.0",
+    "@ilios/eslint-config-ember": "^2.5.0",
     "@sentry/browser": "^5.19.2",
     "@sentry/integrations": "^5.19.2",
     "autoprefixer": "^9.7.6",
