@@ -1,5 +1,3 @@
-import EmberObject from '@ember/object';
-import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
@@ -35,23 +33,20 @@ module('Integration | Component | assign students', function(hooks) {
       title: 'test cohort',
       programYear
     });
+    this.server.create('user', {
+      id: 1,
+      email: 'tstemail',
+      campusId: 'id123',
+    });
+    this.server.create('user', {
+      id: 2,
+      email: '2nd@.com',
+      campusId: '123ID',
+    });
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const students = await this.owner.lookup('service:store').findAll('user');
 
-    const students = [
-      EmberObject.create({
-        id: 1,
-        fullName: 'test person',
-        email: 'tstemail',
-        campusId: 'id123'
-      }),
-      EmberObject.create({
-        id: 2,
-        fullName: 'second person',
-        email: '2nd@.com',
-        campusId: '123ID'
-      })
-    ];
-
-    this.set('school', EmberObject.create(this.server.db.schools[0]));
+    this.set('school', schoolModel);
     this.set('students', students);
     this.set('setOffset', ()=>{});
     this.set('setLimit', ()=>{});
@@ -70,25 +65,21 @@ module('Integration | Component | assign students', function(hooks) {
     assert.dom(cohortOptions[0]).hasText('program title test cohort');
 
     assert.dom('tbody tr').exists({ count: 2 });
-    assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText('test person');
-    assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText('second person');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText('0 guy M. Mc0son');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText('1 guy M. Mc1son');
   });
 
   test('check all checks all', async function(assert) {
-    const school = EmberObject.create({
+    const school = this.server.create('school');
+    this.server.create('user', {
       id: 1,
-      cohorts: resolve([])
+      email: 'tstemail',
+      campusId: 'id123',
     });
-    const students = [
-      EmberObject.create({
-        id: 1,
-        fullName: 'test person',
-        email: 'tstemail',
-        campusId: 'id123'
-      })
-    ];
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const students = await this.owner.lookup('service:store').findAll('user');
 
-    this.set('school', school);
+    this.set('school', schoolModel);
     this.set('students', students);
     this.set('setOffset', ()=>{});
     this.set('setLimit', ()=>{});
@@ -111,26 +102,21 @@ module('Integration | Component | assign students', function(hooks) {
   });
 
   test('check some sets indeterminate state', async function(assert) {
-    const school = EmberObject.create({
+    const school = this.server.create('school');
+    this.server.create('user', {
       id: 1,
-      cohorts: resolve([])
+      email: 'tstemail',
+      campusId: 'id123',
     });
-    const students = [
-      EmberObject.create({
-        id: 1,
-        fullName: 'test person',
-        email: 'tstemail',
-        campusId: 'id123'
-      }),
-      EmberObject.create({
-        id: 2,
-        fullName: 'test person2',
-        email: 'tstemail2',
-        campusId: 'id1232'
-      }),
-    ];
+    this.server.create('user', {
+      id: 2,
+      email: '2nd@.com',
+      campusId: '123ID',
+    });
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const students = await this.owner.lookup('service:store').findAll('user');
 
-    this.set('school', school);
+    this.set('school', schoolModel);
     this.set('students', students);
     this.set('setOffset', ()=>{});
     this.set('setLimit', ()=>{});
@@ -160,26 +146,21 @@ module('Integration | Component | assign students', function(hooks) {
   });
 
   test('when some are selected check all checks all', async function(assert) {
-    const school = EmberObject.create({
+    const school = this.server.create('school');
+    this.server.create('user', {
       id: 1,
-      cohorts: resolve([])
+      email: 'tstemail',
+      campusId: 'id123',
     });
-    const students = [
-      EmberObject.create({
-        id: 1,
-        fullName: 'test person',
-        email: 'tstemail',
-        campusId: 'id123'
-      }),
-      EmberObject.create({
-        id: 2,
-        fullName: 'test person2',
-        email: 'tstemail2',
-        campusId: 'id1232'
-      }),
-    ];
+    this.server.create('user', {
+      id: 2,
+      email: '2nd@.com',
+      campusId: '123ID',
+    });
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const students = await this.owner.lookup('service:store').findAll('user');
 
-    this.set('school', school);
+    this.set('school', schoolModel);
     this.set('students', students);
     this.set('setOffset', ()=>{});
     this.set('setLimit', ()=>{});
@@ -223,19 +204,15 @@ module('Integration | Component | assign students', function(hooks) {
       programYear
     });
 
-    const students = [
-      EmberObject.create({
-        id: 1,
-        fullName: 'test person',
-        email: 'tstemail',
-        campusId: 'id123',
-        save() {
-          assert.equal(this.primaryCohort.id, 1);
-        }
-      })
-    ];
+    this.server.create('user', {
+      id: 1,
+      email: 'tstemail',
+      campusId: 'id123',
+    });
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    const students = await this.owner.lookup('service:store').findAll('user');
 
-    this.set('school', EmberObject.create(this.server.db.schools[0]));
+    this.set('school', schoolModel);
     this.set('students', students);
     this.set('setOffset', ()=>{});
     this.set('setLimit', ()=>{});
@@ -249,7 +226,9 @@ module('Integration | Component | assign students', function(hooks) {
       @setLimit={{action setLimit}}
     />`);
 
+    assert.equal(this.server.db.users[0].primaryCohortId, null);
     await click('thead th input');
     await click('button.done');
+    assert.equal(this.server.db.users[0].primaryCohortId, 1);
   });
 });
