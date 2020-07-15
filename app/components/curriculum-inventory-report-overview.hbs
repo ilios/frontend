@@ -39,15 +39,14 @@
         <span>
           {{#if canUpdate}}
             <EditableField
-              @value={{moment-format report.startDate "L"}}
+              @value={{format-date report.startDate}}
               @save={{action "changeStartDate"}}
               @close={{action "revertStartDateChanges"}}
             >
-              <PikadayInput
-                @value={{startDate}}
-                @format="L"
-                @onSelection={{action (mut startDate)}}
-                @focusOut={{action "addErrorDisplayFor" "startDate"}}
+              <DatePicker
+                @value={{this.startDate}}
+                @change={{queue (set this.startDate) (fn (action "addErrorDisplayFor") "startDate")}}
+                data-test-start-date-picker
               />
               {{#if
                 (and
@@ -61,7 +60,7 @@
               {{/if}}
             </EditableField>
           {{else}}
-            {{moment-format report.startDate "L"}}
+            {{format-date report.startDate}}
           {{/if}}
         </span>
       </div>
@@ -72,15 +71,14 @@
         <span>
           {{#if canUpdate}}
             <EditableField
-              @value={{moment-format report.endDate "L"}}
+              @value={{format-date report.endDate}}
               @save={{action "changeEndDate"}}
               @close={{action "revertEndDateChanges"}}
             >
-              <PikadayInput
-                @value={{endDate}}
-                @format="L"
-                @onSelection={{action (mut endDate)}}
-                @focusOut={{action "addErrorDisplayFor" "endDate"}}
+              <DatePicker
+                @value={{this.endDate}}
+                @change={{queue (set this.endDate) (fn (action "addErrorDisplayFor") "endDate")}}
+                data-test-end-date-picker
               />
               {{#if
                 (and
@@ -94,7 +92,7 @@
               {{/if}}
             </EditableField>
           {{else}}
-            {{moment-format report.endDate "L"}}
+            {{format-date report.endDate}}
           {{/if}}
         </span>
       </div>

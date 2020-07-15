@@ -93,13 +93,11 @@
             <label>
               {{t "general.validUntil"}}
             </label>
-            <PikadayInput
-              @size={{10}}
-              @value={{expiresAt}}
-              @maxDate={{maxDate}}
-              @minDate={{minDate}}
-              @format="YYYY-MM-DD"
-              @onSelection={{action "selectExpiresAtDate"}}
+            <DatePicker
+              @value={{this.expiresAt}}
+              @maxDate={{this.maxDate}}
+              @minDate={{this.minDate}}
+              @change={{action "selectExpiresAtDate"}}
             />
             <button
               type="button"

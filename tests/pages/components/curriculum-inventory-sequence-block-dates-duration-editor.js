@@ -1,5 +1,5 @@
 import { create, clickable, fillable, text, value, isVisible } from 'ember-cli-page-object';
-import { datePicker } from 'ilios-common';
+import { flatpickrDatePicker } from 'ilios-common';
 
 const definition = {
   scope: '[data-test-curriculum-inventory-sequence-block-dates-duration-editor]',
@@ -14,14 +14,14 @@ const definition = {
     scope: '[data-test-startdate]',
     label: text('label'),
     value: value('input'),
-    set: datePicker('input'),
+    set: flatpickrDatePicker('input'),
     hasError: isVisible('.validation-error-message')
   },
   endDate: {
     scope: '[data-test-enddate]',
     label: text('label'),
     value: value('input'),
-    set: datePicker('input'),
+    set: flatpickrDatePicker('input'),
     hasError: isVisible('.validation-error-message', { multiple: true })
   },
   save: clickable('.done'),
