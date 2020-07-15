@@ -1,52 +1,29 @@
-import EmberObject from '@ember/object';
-import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | curriculum inventory leadership expanded', function(hooks) {
   setupRenderingTest(hooks);
-
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
     assert.expect(4);
+    const users = this.server.createList('user', 2);
+    const report = this.server.create('curriculum-inventory-report', {
+      administrators: users,
+    });
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
 
-    const user1 = EmberObject.create({
-      firstName: 'a',
-      lastName: 'person',
-      fullName: 'a b person',
-      enabled: true,
-    });
-    const user2 = EmberObject.create({
-      firstName: 'b',
-      lastName: 'person',
-      fullName: 'b a person',
-      enabled: true,
-    });
-    const report = EmberObject.create({
-      administrators: resolve([user1, user2]),
-      hasMany(what){
-        if (what === 'administrators') {
-          return {
-            ids(){
-              return [1, 2];
-            }
-          };
-        }
-        assert.ok(false);
-      }
-    });
-
-    this.set('report', report);
-    this.set('nothing', parseInt);
+    this.set('report', reportModel);
     await render(hbs`<CurriculumInventoryLeadershipExpanded
-      @report={{report}}
+      @report={{this.report}}
       @canUpdate={{true}}
-      @collapse={{action nothing}}
-      @expand={{action nothing}}
+      @collapse={{noop}}
+      @expand={{noop}}
       @isManaging={{false}}
-      @setIsManaging={{action nothing}}
+      @setIsManaging={{noop}}
     />`);
     const title = '.title';
     const table = 'table';
@@ -56,37 +33,26 @@ module('Integration | Component | curriculum inventory leadership expanded', fun
 
     assert.dom(title).hasText('Curriculum Inventory Report Leadership');
     assert.dom(administrators).exists({ count: 2 });
-    assert.dom(firstAdministrator).hasText('a b person');
-    assert.dom(secondAdministrator).hasText('b a person');
+    assert.dom(firstAdministrator).hasText('0 guy M. Mc0son');
+    assert.dom(secondAdministrator).hasText('1 guy M. Mc1son');
   });
 
   test('clicking the header collapses', async function(assert) {
     assert.expect(1);
-    const report = EmberObject.create({
-      administrators: resolve([]),
-      hasMany(what){
-        if (what === 'administrators') {
-          return {
-            ids(){
-              return [];
-            }
-          };
-        }
-      }
-    });
+    const report = this.server.create('curriculum-inventory-report');
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
 
-    this.set('report', report);
+    this.set('report', reportModel);
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    this.set('nothing', parseInt);
     await render(hbs`<CurriculumInventoryLeadershipExpanded
-      @report={{report}}
+      @report={{this.report}}
       @canUpdate={{true}}
       @collapse={{action click}}
-      @expand={{action nothing}}
+      @expand={{noop}}
       @isManaging={{false}}
-      @setIsManaging={{action nothing}}
+      @setIsManaging={{noop}}
     />`);
     const title = '.title';
 
@@ -95,29 +61,18 @@ module('Integration | Component | curriculum inventory leadership expanded', fun
 
   test('clicking manage fires action', async function(assert) {
     assert.expect(1);
-    const report = EmberObject.create({
-      administrators: resolve([]),
-      hasMany(what){
-        if (what === 'administrators') {
-          return {
-            ids(){
-              return [];
-            }
-          };
-        }
-      }
-    });
+    const report = this.server.create('curriculum-inventory-report');
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
 
-    this.set('report', report);
+    this.set('report', reportModel);
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    this.set('nothing', parseInt);
     await render(hbs`<CurriculumInventoryLeadershipExpanded
-      @report={{report}}
+      @report={{this.report}}
       @canUpdate={{true}}
-      @collapse={{action nothing}}
-      @expand={{action nothing}}
+      @collapse={{noop}}
+      @expand={{noop}}
       @isManaging={{false}}
       @setIsManaging={{action click}}
     />`);
