@@ -149,19 +149,14 @@ export default class SessionCopyComponent extends Component {
     const sessionObjectivesToCopy = relatedSessionObjectives.sortBy('id').toArray();
     for (let i = 0, n = sessionObjectivesToCopy.length; i < n; i++){
       const sessionObjectiveToCopy = sessionObjectivesToCopy[i];
-      const objectiveToCopy = yield sessionObjectiveToCopy.objective;
-      const meshDescriptors = yield objectiveToCopy.meshDescriptors;
-      const objective = this.store.createRecord('objective', { title: objectiveToCopy.title });
-      objective.set('meshDescriptors', meshDescriptors);
-      //save each objective as it is created to preserve to sequence order of objectives by id
-      yield objective.save();
-      // link objective to session
+      const meshDescriptors = yield sessionObjectiveToCopy.meshDescriptors;
+      const terms = yield sessionObjectiveToCopy.terms;
       const sessionObjective = this.store.createRecord('session-objective', {
         session,
-        objective,
-        position: sessionObjectiveToCopy.position
+        position: sessionObjectiveToCopy.position,
+        title: sessionObjectiveToCopy.title
       });
-      const terms = yield sessionObjectiveToCopy.terms;
+      sessionObjective.set('meshDescriptors', meshDescriptors);
       sessionObjective.set('terms', terms);
       yield sessionObjective.save();
 
