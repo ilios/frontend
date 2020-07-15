@@ -1,60 +1,52 @@
-import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | publish all sessions', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-  const parent = EmberObject.create();
-  const objective1 = EmberObject.create({ parents: [parent] });
-  const objective2 = EmberObject.create({ parents: [] });
-  const course = EmberObject.create({
-    objectives: [objective1, objective2]
-  });
-  const unpublishableSession = EmberObject.create({
-    id: 1,
-    title: 'session 1',
-    requiredPublicationIssues: EmberObject.create({
-      length: 1
-    }),
-    optionalPublicationIssues: EmberObject.create({
-      length: 1
-    }),
-    published: false,
-    course
-  });
-  const completeSession = EmberObject.create({
-    id: 2,
-    title: 'session 2',
-    requiredPublicationIssues: EmberObject.create({
-      length: 0
-    }),
-    optionalPublicationIssues: EmberObject.create({
-      length: 0
-    }),
-    allPublicationIssuesLength: 0,
-    published: true
-  });
-  const publishableSession = EmberObject.create({
-    id: 3,
-    title: 'session 3',
-    requiredPublicationIssues: EmberObject.create({
-      length: 0
-    }),
-    optionalPublicationIssues: EmberObject.create({
-      length: 1
-    }),
-    published: false
+  hooks.beforeEach(async function() {
+    const programYearObjective = this.server.create('programYearObjective');
+    const course = this.server.create('course');
+    const term = this.server.create('term');
+    const meshDescriptor = this.server.create('meshDescriptor');
+    this.server.create('courseObjective', { course, programYearObjectives: [ programYearObjective ] });
+    this.server.create('courseObjective', { course });
+    const unpublishableSession = this.server.create('session', {
+      title: 'session 1',
+      published: false,
+      course,
+      meshDescriptors: [ meshDescriptor ],
+      terms: [ term ],
+    });
+    const completeSession = this.server.create('session', {
+      title: 'session 2',
+      published: true,
+      meshDescriptors: [ meshDescriptor ],
+      terms: [ term ],
+    });
+    const publishableSession = this.server.create('session', {
+      title: 'session 3',
+      published: false,
+    });
+    this.server.create('offering', { session: publishableSession });
+    this.server.create('offering', { session: completeSession });
+    this.server.create('sessionObjective', { session: completeSession });
+    this.publishableSession = await this.owner.lookup('service:store').find('session', publishableSession.id);
+    this.unpublishableSession = await this.owner.lookup('service:store').find('session', unpublishableSession.id);
+    this.completeSession = await this.owner.lookup('service:store').find('session', completeSession.id);
+    this.course = await this.owner.lookup('service:store').find('course', course.id);
   });
 
   test('it renders', async function(assert) {
     assert.expect(4);
 
-    const sessions = [unpublishableSession, completeSession, publishableSession];
+    const sessions = [this.unpublishableSession, this.completeSession, this.publishableSession];
     this.set('sessions', sessions);
-    this.set('course', course);
+    this.set('course', this.course);
 
     await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />`);
 
@@ -69,7 +61,7 @@ module('Integration | Component | publish all sessions', function(hooks) {
 
     const reviewButtons = '.publish-all-sessions-overridable button';
     const reviewTable = '.publish-all-sessions-overridable table';
-    this.set('course', course);
+    this.set('course', this.course);
 
     await render(hbs`<PublishAllSessions @sessions={{array}} @course={{this.course}} />`);
 
@@ -87,9 +79,9 @@ module('Integration | Component | publish all sessions', function(hooks) {
   test('shows course objective warning', async function(assert) {
     assert.expect(3);
 
-    const sessions = [unpublishableSession];
+    const sessions = [this.unpublishableSession];
     this.set('sessions', sessions);
-    this.set('course', course);
+    this.set('course', this.course);
     await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />`);
     assert.dom('[data-test-unlinked-warning]').hasText('This course has unlinked objective(s)');
     assert.dom('.fa-unlink').exists();
