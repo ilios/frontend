@@ -12,7 +12,6 @@ module('Integration | Component | objective-list-item-terms', function(hooks) {
 
   hooks.beforeEach(async function () {
     const course = this.server.create('course');
-    const objective = this.server.create('objective');
     const school1 = this.server.create('school');
     const school2 = this.server.create('school');
     const vocabulary1 = this.server.create('vocabulary', {school: school1});
@@ -20,9 +19,8 @@ module('Integration | Component | objective-list-item-terms', function(hooks) {
     const term1 = this.server.create('term', {vocabulary: vocabulary1});
     const term2 = this.server.create('term', {vocabulary: vocabulary1});
     const term3 = this.server.create('term', {vocabulary: vocabulary2});
-    const courseObjective = this.server.create('course-objective', {
+    const courseObjective = this.server.create('courseObjective', {
       course,
-      objective,
       terms: [term1, term2, term3]
     });
     this.subject = await this.owner.lookup('service:store').find('course-objective', courseObjective.id);

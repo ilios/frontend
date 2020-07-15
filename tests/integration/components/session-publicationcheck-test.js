@@ -10,14 +10,12 @@ module('Integration | Component | session-publicationcheck', function(hooks) {
   setupMirage(hooks);
 
   test('it shows unlink icon', async function(assert) {
-    const parent = this.server.create('objective');
-    const objective1 = this.server.create('objective', { parents: [ parent ] });
-    const objective2 = this.server.create('objective');
+    const courseObjective = this.server.create('courseObjective');
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
     const session = this.server.create('session', { course });
-    this.server.create('session-objective', { session, objective: objective1 });
-    this.server.create('session-objective', { session, objective: objective2 });
+    this.server.create('session-objective', { session, courseObjectives: [ courseObjective ] });
+    this.server.create('session-objective', { session });
 
     await setupAuthentication({ school, administeredSchools: [ school ]});
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
@@ -27,14 +25,12 @@ module('Integration | Component | session-publicationcheck', function(hooks) {
   });
 
   test('it does not shows unlink icon', async function(assert) {
-    const parent = this.server.create('objective');
-    const objective1 = this.server.create('objective', { parents: [ parent ] });
-    const objective2 = this.server.create('objective', { parents: [ parent ] });
+    const courseObjective = this.server.create('courseObjective');
     const school = this.server.create('school');
     const course  = this.server.create('course', { school });
     const session = this.server.create('session', { course });
-    this.server.create('session-objective', { session, objective: objective1 });
-    this.server.create('session-objective', { session, objective: objective2 });
+    this.server.create('session-objective', { session, courseObjectives: [ courseObjective ] });
+    this.server.create('session-objective', { session, courseObjectives: [ courseObjective ] });
     await setupAuthentication({ school, administeredSchools: [ school ]});
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('model', sessionModel);

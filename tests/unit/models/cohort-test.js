@@ -41,28 +41,6 @@ module('Unit | Model | Cohort', function(hooks) {
     assert.ok(competencies.includes(competency2));
   });
 
-  test('objectives', async function(assert){
-    assert.expect(3);
-    const store = this.owner.lookup('service:store');
-    const model = store.createRecord('cohort');
-    const objective1 = store.createRecord('objective');
-    const objective2 = store.createRecord('objective');
-    const programYear = store.createRecord('program-year');
-    store.createRecord('program-year-objective', {
-      objective: objective1,
-      programYear: programYear
-    });
-    store.createRecord('program-year-objective', {
-      objective: objective2,
-      programYear: programYear
-    });
-    model.set('programYear', programYear);
-    const objectives = await model.get('objectives');
-    assert.equal(objectives.length, 2);
-    assert.ok(objectives.includes(objective1));
-    assert.ok(objectives.includes(objective2));
-  });
-
   test('program', async function(assert){
     assert.expect(1);
     const model = this.owner.lookup('service:store').createRecord('cohort');
@@ -84,30 +62,6 @@ module('Unit | Model | Cohort', function(hooks) {
     model.set('programYear', programYear);
     const school = await model.get('school');
     assert.equal(school, school1);
-  });
-
-  test('sorted objectives', async function(assert){
-    assert.expect(3);
-    const model = this.owner.lookup('service:store').createRecord('cohort');
-    const store = this.owner.lookup('service:store');
-    const objective1 = store.createRecord('objective', { title: 'Aardvark' });
-    const objective2 = store.createRecord('objective', { title: 'Zeppelin' });
-    const programYear = store.createRecord('program-year');
-    store.createRecord('program-year-objective', {
-      objective: objective1,
-      programYear: programYear,
-      position: 10,
-    });
-    store.createRecord('program-year-objective', {
-      objective: objective2,
-      programYear: programYear,
-      position: 1,
-    });
-    model.set('programYear', programYear);
-    const objectives = await model.get('sortedObjectives');
-    assert.equal(objectives.length, 2);
-    assert.equal(objectives[0], objective2);
-    assert.equal(objectives[1], objective1);
   });
 
   test('classOfYear', async function(assert){

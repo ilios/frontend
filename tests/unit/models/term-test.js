@@ -160,13 +160,12 @@ module('Unit | Model | term', function(hooks) {
   test('associations', async function (assert) {
     assert.expect(9);
     const store = this.owner.lookup('service:store');
-    const objective = store.createRecord('objective');
     const programYear = store.createRecord('programYear');
     const course = store.createRecord('course');
     const session = store.createRecord('session');
-    const programYearObjective = store.createRecord('program-year-objective', { programYear, objective });
-    const courseObjective = store.createRecord('course-objective', { course, objective });
-    const sessionObjective = store.createRecord('session-objective', { session, objective});
+    const programYearObjective = store.createRecord('program-year-objective');
+    const courseObjective = store.createRecord('course-objective');
+    const sessionObjective = store.createRecord('session-objective');
     const model = store.createRecord('term', {
       programYears: [ programYear ],
       courses: [ course ],

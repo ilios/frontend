@@ -12,8 +12,7 @@ module('Integration | Component | session/manage-objective-parents', function(ho
 
   test('it renders and is accessible', async function (assert) {
     const course = this.server.create('course');
-    const objectiveInCourse = this.server.create('objective');
-    this.server.create('course-objective', { course, objective: objectiveInCourse });
+    this.server.create('courseObjective', { course });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('courseObjectives', await courseModel.sortedCourseObjectives);
     this.set('courseTitle', course.title);
@@ -27,7 +26,7 @@ module('Integration | Component | session/manage-objective-parents', function(ho
 
     assert.equal(component.courseTitle, course.title);
     assert.equal(component.objectives.length, 1);
-    assert.equal(component.objectives[0].title, 'objective 0');
+    assert.equal(component.objectives[0].title, 'course objective 0');
     assert.ok(component.objectives[0].notSelected);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
