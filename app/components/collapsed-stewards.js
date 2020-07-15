@@ -1,38 +1,35 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { isEmpty, isPresent } from '@ember/utils';
+import Component from '@glimmer/component';
 import { map } from 'rsvp';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  tagName: "",
-  programYear: null,
+export default class CollapsedStewardsComponent extends Component {
+  @tracked schoolData;
 
-  schoolData: computed('programYear.stewards.[]', async function(){
-    const programYear = this.programYear;
-    if (isEmpty(programYear)) {
-      return [];
+  @restartableTask
+  *load(element, [programYear]) {
+    if (!programYear) {
+      return false;
     }
 
-    const stewards = await programYear.get('stewards');
-    const stewardObjects = await map(stewards.toArray(), async steward => {
+    const stewards = (yield programYear.stewards).toArray();
+    const stewardObjects = yield map(stewards, async steward => {
       const school = await steward.get('school');
       const department = await steward.get('department');
-      const departmentId = isPresent(department)?department.get('id'):0;
+      const departmentId = department ? department.id : 0;
       return {
-        schoolId: school.get('id'),
-        schoolTitle: school.get('title'),
+        schoolId: school.id,
+        schoolTitle: school.title,
         departmentId
       };
     });
     const schools = stewardObjects.uniqBy('schoolId');
-    const schoolData = schools.map(obj => {
+    this.schoolData = schools.map(obj => {
       const departments = stewardObjects.filterBy('schoolId', obj.schoolId);
       delete obj.departmentId;
       obj.departmentCount = departments.length;
 
       return obj;
     });
-
-    return schoolData;
-  })
-});
+  }
+}

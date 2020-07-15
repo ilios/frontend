@@ -1,67 +1,53 @@
-import EmberObject from '@ember/object';
-import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, settled, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | collapsed stewards', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
     assert.expect(5);
-    const school1 = EmberObject.create({
-      id: 1,
+    const school1 = this.server.create('school', {
       title: 'school1'
     });
-    const school2 = EmberObject.create({
-      id: 2,
+    const school2 = this.server.create('school', {
       title: 'school2'
     });
-    const department1 = EmberObject.create({
-      id: 1,
-      school: resolve(school1)
+    const department1 = this.server.create('department', {
+      school: school1
     });
-    const department2 = EmberObject.create({
-      id: 2,
-      school: resolve(school1)
+    const department2 = this.server.create('department', {
+      school: school1
     });
-    school1.set('departments', resolve([department1, department2]));
-    const department3 = EmberObject.create({
-      id: 3,
-      school: resolve(school2)
+    const department3 = this.server.create('department', {
+      school: school2
     });
-    school2.set('departments', resolve([department3]));
 
-    const programYear = EmberObject.create();
-    const steward1 = EmberObject.create({
-      programYear: resolve(programYear),
-      school: resolve(school1),
-      department: resolve(department1)
+    const programYear = this.server.create('program-year');
+    this.server.create('program-year-steward', {
+      programYear,
+      school: school1,
+      department: department1
     });
-    department1.set('stewards', resolve([steward1]));
 
-    const steward2 = EmberObject.create({
-      programYear: resolve(programYear),
-      school: resolve(school1),
-      department: resolve(department2)
+    this.server.create('program-year-steward', {
+      programYear,
+      school: school1,
+      department: department2
     });
-    department2.set('stewards', resolve([steward2]));
-    school1.set('stewards', resolve([steward1, steward2]));
 
-    const steward3 = EmberObject.create({
-      programYear: resolve(programYear),
-      school: resolve(school2),
-      department: resolve(department3)
+    this.server.create('program-year-steward', {
+      programYear,
+      school: school2,
+      department: department3
     });
-    department3.set('stewards', resolve([steward2]));
-    programYear.set('stewards', resolve([steward1, steward2, steward3]));
-    school2.set('stewards', resolve([steward3]));
 
-
-    this.set('programYear', programYear);
-    this.set('nothing', () => { });
-    await render(hbs`<CollapsedStewards @programYear={{programYear}} @expand={{action nothing}} />`);
+    const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
+    this.set('programYear', programYearModel);
+    await render(hbs`<CollapsedStewards @programYear={{programYear}} @expand={{noop}} />`);
 
     const title = '.title';
     const table = 'table';
@@ -82,10 +68,9 @@ module('Integration | Component | collapsed stewards', function(hooks) {
 
   test('clicking the header expands the list', async function(assert) {
     assert.expect(1);
-    const programYear = EmberObject.create({
-      stewards: resolve([])
-    });
-    this.set('programYear', programYear);
+    const programYear = this.server.create('program-year');
+    const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
+    this.set('programYear', programYearModel);
 
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
