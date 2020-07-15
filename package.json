@@ -95,7 +95,7 @@
     "ember-service-worker-cache-first": "^0.6.2",
     "ember-simple-set-helper": "^0.1.2",
     "ember-source": "~3.19.0",
-    "ember-template-lint": "^2.9.0",
+    "ember-template-lint": "^2.9.1",
     "ember-truth-helpers": "^2.0.0",
     "ember-web-app": "^4.0.0",
     "eslint": "^7.4.0",
