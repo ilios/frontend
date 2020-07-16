@@ -81,10 +81,7 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
   test('check objectives', async function(assert) {
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
-    const objectivesInProgramYear = this.server.createList('objective', 5);
-    objectivesInProgramYear.forEach(objective => {
-      this.server.create('program-year-objective', { objective, programYear });
-    });
+    this.server.createList('programYearObjective', 5, { programYear });
     this.server.create('cohort', { programYear });
     await visit(url);
     assert.equal(await getElementText(find(findAll('.programyear-list tbody tr:nth-of-type(1) td')[3])), 5);
@@ -239,9 +236,6 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     const program = this.server.create('program', { school: this.school });
     const vocabulary = this.server.create('vocabulary', { school: this.school });
     const terms = this.server.createList('term', 3, { vocabulary });
-    const ancestor = this.server.create('objective');
-    const objectives = this.server.createList('objective', 2);
-    const objectiveWithAncestor = this.server.create('objective', { ancestor });
     const department = this.server.create('department');
     const steward = this.server.create('programYearSteward', { department });
     const currentYear = parseInt(moment().format('YYYY'), 10);
@@ -255,10 +249,9 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
       published: false
     });
     this.server.create('cohort', { programYear });
-    objectives.forEach(objective => {
-      this.server.create('program-year-objective', { programYear, objective });
-    });
-    this.server.create('program-year-objective', { programYear, objective: objectiveWithAncestor });
+    this.server.createList('programYearObjective', 2, { programYear });
+    const ancestor = this.server.create('programYearObjective');
+    this.server.create('programYearObjective', { programYear, ancestor });
 
     const expandButton = '.expand-collapse-button button';
     const selectField = '.startyear-select select';

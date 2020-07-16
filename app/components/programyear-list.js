@@ -5,7 +5,6 @@ import ObjectProxy from '@ember/object/proxy';
 import { run } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
-import { hash } from 'rsvp';
 import { task } from 'ember-concurrency';
 import moment from 'moment';
 
@@ -186,22 +185,21 @@ export default Component.extend({
 
       for (let i = 0; i < programYearObjectives.length; i++) {
         const programYearObjectiveToCopy = programYearObjectives[i];
-        const objectiveToCopy = yield programYearObjectiveToCopy.objective;
         const terms = yield programYearObjectiveToCopy.terms;
-        let ancestor = yield objectiveToCopy.get('ancestor');
+        const meshDescriptors = yield programYearObjectiveToCopy.meshDescriptors;
+        const competency = yield programYearObjectiveToCopy.competency;
+        let ancestor = yield programYearObjectiveToCopy.ancestor;
+
         if (isEmpty(ancestor)) {
-          ancestor = objectiveToCopy;
+          ancestor = programYearObjectiveToCopy;
         }
 
-        const newObjective = store.createRecord('objective', objectiveToCopy.getProperties(['title']));
-        const props = yield hash(objectiveToCopy.getProperties('meshDescriptors', 'competency'));
-        newObjective.setProperties(props);
-        newObjective.set('ancestor', ancestor);
-        yield newObjective.save();
         const newProgramYearObjective = store.createRecord('program-year-objective', {
           position: programYearObjectiveToCopy.position,
-          objective: newObjective,
           programYear: savedProgramYear,
+          ancestor,
+          meshDescriptors,
+          competency,
           terms
         });
         yield newProgramYearObjective.save();

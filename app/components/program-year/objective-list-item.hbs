@@ -1,6 +1,6 @@
 <div
   id="objective-{{@programYearObjective.id}}"
-  class="grid-row objective-row {{if this.showRemoveConfirmation "confirm-removal"}} {{if this.highlightSave.isRunning "highlight-ok"}} {{if this.isManaging "is-managing"}}  {{unless this.objective.active "is-inactive"}}"
+  class="grid-row objective-row {{if this.showRemoveConfirmation "confirm-removal"}} {{if this.highlightSave.isRunning "highlight-ok"}} {{if this.isManaging "is-managing"}}  {{unless @programYearObjective.active "is-inactive"}}"
   data-test-program-year-objective-list-item
   {{did-insert (perform this.load) @programYearObjective}}
   {{did-update (perform this.load) @programYearObjective}}
@@ -35,11 +35,11 @@
       </EditableField>
     {{else}}
       {{! template-lint-disable no-triple-curlies }}
-      {{{this.objective.title}}}
+      {{{@programYearObjective.title}}}
     {{/if}}
   </div>
   <ProgramYear::ObjectiveListItemCompetency
-    @objective={{this.objective}}
+    @objective={{@programYearObjective}}
     @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
     @manage={{perform this.manageCompetency}}
     @isManaging={{this.isManagingCompetency}}
@@ -59,7 +59,7 @@
   />
 
   <ProgramYear::ObjectiveListItemDescriptors
-    @objective={{this.objective}}
+    @objective={{@programYearObjective}}
     @editable={{and @editable (not this.isManaging) (not this.showRemoveConfirmation)}}
     @manage={{perform this.manageDescriptors}}
     @isManaging={{this.isManagingDescriptors}}
@@ -73,7 +73,7 @@
       {{#if this.saveIsActive.isRunning}}
         <LoadingSpinner />
       {{else}}
-        {{#if this.objective.active}}
+        {{#if @programYearObjective.active}}
           <button class="active" type="button" {{on "click" (perform this.saveIsActive false)}} data-test-deactivate>
             <FaIcon @prefix="fas" @icon="lightbulb-on" @title={{t "general.deactivate"}} />
           </button>
@@ -84,7 +84,7 @@
         {{/if}}
       {{/if}}
     {{else}}
-      {{#if this.objective.active}}
+      {{#if @programYearObjective.active}}
         <FaIcon @prefix="fas" @icon="lightbulb-on" @title={{t "general.active"}} />
       {{else}}
         <FaIcon @prefix="fal" @icon="lightbulb-slash" @title={{t "general.inactive"}} />
@@ -127,7 +127,7 @@
 
   {{#if this.isManagingCompetency}}
     <ProgramYear::ManageObjectiveCompetency
-      @objective={{this.objective}}
+      @objective={{@programYearObjective}}
       @domains={{@schoolDomains}}
       @selected={{this.competencyBuffer}}
       @add={{this.setCompetencyBuffer}}
@@ -145,7 +145,7 @@
     />
   {{/if}}
   {{#if this.isExpanded}}
-    <ProgramYear::ObjectiveListItemExpanded @objective={{this.objective}} />
+    <ProgramYear::ObjectiveListItemExpanded @objective={{@programYearObjective}} />
   {{/if}}
   {{#if this.isManagingTerms}}
     <TaxonomyManager
