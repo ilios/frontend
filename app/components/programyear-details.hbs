@@ -14,7 +14,7 @@
       @expand={{action setPyCompetencyDetails true}}
     />
   {{/if}}
-  {{#if (or (eq programYear.objectives.length 0) pyObjectiveDetails)}}
+  {{#if (or (eq programYear.programYearObjectives.length 0) pyObjectiveDetails)}}
     <ProgramYear::Objectives
       @programYear={{@programYear}}
       @editable={{@canUpdate}}
