@@ -22,9 +22,9 @@
       @expand={{fn @setPyObjectiveDetails true}}
     />
   {{else}}
-    <CollapsedObjectivesProgramYears
-      @subject={{programYear}}
-      @expand={{action setPyObjectiveDetails true}}
+    <ProgramYear::CollapsedObjectives
+      @programYear={{@programYear}}
+      @expand={{action @setPyObjectiveDetails true}}
     />
   {{/if}}
   {{#if (or (eq programYear.terms.length 0) pyTaxonomyDetails)}}

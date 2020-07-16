@@ -3,7 +3,6 @@
 @import 'components/assign-students';
 @import 'components/bulk-new-users';
 @import 'components/breadcrumbs';
-@import 'components/collapsed-objectives-program-years';
 @import 'components/collapsed-stewards';
 @import 'components/connection-status';
 @import 'components/course-director-manager';
@@ -126,6 +125,7 @@
 @import 'components/visualizer-session-type-terms';
 @import 'components/visualizer-session-type-vocabularies';
 
+@import 'components/program-year/collapsed-objectives';
 @import 'components/program-year/objectives';
 @import 'components/program-year/manage-objective-descriptors';
 @import 'components/program-year/manage-objective-competency';
