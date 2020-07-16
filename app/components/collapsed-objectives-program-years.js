@@ -11,7 +11,7 @@ export default Component.extend({
     return await this.subject.objectives;
   }),
 
-  objectivesWithCompentency: computed('objectives.[]', async function() {
+  objectivesWithCompetency: computed('objectives.[]', async function() {
     const objectives = await this.objectives;
     const promises = objectives.mapBy('competency');
     const competencyArray = await all(promises);
