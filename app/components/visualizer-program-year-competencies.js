@@ -17,7 +17,7 @@ export default Component.extend({
   tooltipSessions: null,
   tooltipTitle: null,
 
-  programYearName: computed('programYear.acdemicYear', 'programYear.cohort.{title,classOfYear}', async function() {
+  programYearName: computed('programYear.academicYear', 'programYear.cohort.{title,classOfYear}', async function() {
     const intl = this.intl;
     const programYear = this.programYear;
     const cohort = await programYear.get('cohort');
