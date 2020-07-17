@@ -1,6 +1,6 @@
 import Controller from '@ember/controller';
 import { computed } from '@ember/object';
-import { gt, sort } from '@ember/object/computed';
+import { gt } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isBlank, isEmpty, isPresent } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
@@ -10,6 +10,7 @@ export default Controller.extend({
   currentUser: service(),
   intl: service(),
   permissionChecker: service(),
+  dataLoader: service(),
 
   queryParams: {
     schoolId: 'school',
@@ -31,8 +32,6 @@ export default Controller.extend({
   yearTitle: null,
 
   hasMoreThanOneSchool: gt('model.schools.length', 1),
-  sortedSchools: sort('model.schools', 'sortSchoolsBy'),
-  sortedYears: sort('model.years', 'sortYearsBy'),
 
   courses: computed('selectedSchool', 'selectedYear', 'deletedCourse', 'newCourse', async function() {
     const selectedSchool = this.selectedSchool;
@@ -41,14 +40,11 @@ export default Controller.extend({
       return [];
     }
 
-    const schoolId = selectedSchool.get('id');
-    const yearTitle = selectedYear.get('title');
-    return await this.store.query('course', {
-      filters: {
-        school: schoolId,
-        year: yearTitle,
-        archived: false
-      }
+    const yearTitle = selectedYear.title;
+    await this.dataLoader.loadSchoolForCourses(selectedSchool.id);
+    const courses = await selectedSchool.courses;
+    return courses.filter(course => {
+      return course.year === yearTitle && !course.archived;
     });
   }),
 
