@@ -15,7 +15,7 @@ const definition = {
   addNewReport: clickable('[data-test-expand-collapse-button] button'),
   reports: collection('[data-test-saved-reports] li', {
     title: text(),
-    select: clickable('.clickable')
+    select: clickable('button')
   }),
   selectedReport: {
     scope: '[data-test-selected-report]',
