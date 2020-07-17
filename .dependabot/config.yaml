@@ -73,6 +73,15 @@ update_configs:
         dependency_name: "ember-test-selectors"
     - match:
         update_type: "semver:minor"
+        dependency_name: "@formatjs/intl-relativetimeformat"
+    - match:
+        update_type: "semver:minor"
+        dependency_name: "@formatjs/intl-pluralrules"
+    - match:
+        update_type: "semver:minor"
+        dependency_name: "@fortawesome/pro-duotone-svg-icons"
+    - match:
+        update_type: "semver:minor"
         dependency_name: "@fortawesome/pro-light-svg-icons"
     - match:
         update_type: "semver:minor"
