@@ -12,6 +12,11 @@
             {{t "general.administrators"}}
           </th>
         {{/if}}
+        {{#if @showStudentAdvisors}}
+          <th>
+            {{t "general.studentAdvisors"}}
+          </th>
+        {{/if}}
       </tr>
     </thead>
     <tbody>
@@ -49,6 +54,35 @@
             <ul>
               {{#if (is-array @administrators)}}
                 {{#each (sort-by "lastName" "firstName" @administrators) as |user|
+                }}
+                  <li>
+                    {{#unless user.enabled}}
+                      <FaIcon
+                        @icon="user-times"
+                        @title={{t "general.disabled"}}
+                        class="error"
+                      />
+                    {{/unless}}
+                    <span data-test-name>
+                      {{user.fullName}}
+                    </span>
+                  </li>
+                {{else}}
+                  <li>
+                    {{t "general.none"}}
+                  </li>
+                {{/each}}
+              {{else}}
+                <LoadingSpinner />
+              {{/if}}
+            </ul>
+          </td>
+        {{/if}}
+        {{#if @showStudentAdvisors}}
+          <td class="text-top" data-test-student-advisors>
+            <ul>
+              {{#if (is-array @studentAdvisors)}}
+                {{#each (sort-by "lastName" "firstName" @studentAdvisors) as |user|
                 }}
                   <li>
                     {{#unless user.enabled}}

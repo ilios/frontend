@@ -32,6 +32,16 @@
             </td>
           </tr>
         {{/if}}
+        {{#if @showStudentAdvisors}}
+          <tr>
+            <td>
+              {{t "general.studentAdvisors"}}
+            </td>
+            <td>
+              {{t "general.studentAdvisorCount" count=@studentAdvisorsCount}}
+            </td>
+          </tr>
+        {{/if}}
       </tbody>
     </table>
   </div>

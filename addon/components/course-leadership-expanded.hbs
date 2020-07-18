@@ -30,30 +30,36 @@
     </div>
   </div>
   <div class="course-leadership-expanded-content">
-    {{#if (and (is-fulfilled @course.directors) (is-fulfilled @course.administrators))}}
+    {{#if (and (is-fulfilled @course.directors) (is-fulfilled @course.administrators) (is-fulfilled @course.studentAdvisors))}}
       {{#if @isManaging}}
         {{#unless this.manage.isRunning}}
           <LeadershipManager
             @directors={{this.directors}}
-            @administrators={{this.administrators}}
-            @showAdministrators={{true}}
             @showDirectors={{true}}
             @removeDirector={{this.removeDirector}}
             @addDirector={{this.addDirector}}
+            @administrators={{this.administrators}}
+            @showAdministrators={{true}}
             @removeAdministrator={{this.removeAdministrator}}
             @addAdministrator={{this.addAdministrator}}
+            @studentAdvisors={{this.studentAdvisors}}
+            @showStudentAdvisors={{true}}
+            @removeStudentAdvisor={{this.removeStudentAdvisor}}
+            @addStudentAdvisor={{this.addStudentAdvisor}}
           />
         {{/unless}}
       {{else}}
         <LeadershipList
           @directors={{await @course.directors}}
           @administrators={{await @course.administrators}}
+          @studentAdvisors={{await @course.studentAdvisors}}
           @showAdministrators={{true}}
           @showDirectors={{true}}
+          @showStudentAdvisors={{true}}
         />
       {{/if}}
     {{else}}
-      <LoadingSpinner @tagName="h3" />
+      <LoadingSpinner />
     {{/if}}
   </div>
 </div>

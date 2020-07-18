@@ -34,6 +34,14 @@ export default Model.extend({
     async: true,
     inverse: 'administrators'
   }),
+  studentAdvisedCourses: hasMany('course', {
+    async: true,
+    inverse: 'studentAdvisors'
+  }),
+  studentAdvisedSessions: hasMany('session', {
+    async: true,
+    inverse: 'studentAdvisors'
+  }),
   learnerGroups: hasMany('learner-group', {
     async: true,
     inverse: 'users'

@@ -281,6 +281,8 @@ general:
   starts: Empieza
   startTime: "Hora de Iniciar"
   status: Estado
+  studentAdvisorCount: "Hay {count, plural, =1 {1 consejero estudiantil} other {# consejeros estudiantiles}}"
+  studentAdvisors: Consejeros Estudiantiles
   summary: Resumen
   sunday: Domingo
   supplementalCurriculum: "Plan de Estudios No Requerido"

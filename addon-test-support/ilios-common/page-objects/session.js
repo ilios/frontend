@@ -19,8 +19,7 @@ import instructorSelectionManager from './components/instructor-selection-manage
 import offeringForm from './components/offering-form';
 import { flatpickrDatePicker, pageObjectFillInFroalaEditor } from 'ilios-common';
 import leadershipCollapsed from './components/leadership-collapsed';
-import leadershipList from './components/leadership-list';
-import leadershipManager from './components/leadership-manager';
+import leadershipExpanded from './components/session-leadership-expanded';
 import postrequisiteEditor from './components/session/postrequisite-editor';
 import detailLearnersAndLearnerGroups from './components/detail-learners-and-learner-groups';
 
@@ -120,15 +119,7 @@ export default create({
   },
 
   leadershipCollapsed,
-  leadershipExpanded: {
-    scope: '[data-test-session-leadership-expanded]',
-    title: text('.title'),
-    manage: clickable('.actions button'),
-    save: clickable('.actions button.bigadd'),
-    cancel: clickable('.actions button.bigcancel'),
-    leadershipList,
-    leadershipManager,
-  },
+  leadershipExpanded,
 
   objectives,
   learningMaterials,

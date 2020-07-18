@@ -29,6 +29,10 @@ export default Model.extend({
     async: true,
     inverse: 'administeredCourses'
   }),
+  studentAdvisors: hasMany('user', {
+    async: true,
+    inverse: 'studentAdvisedCourses'
+  }),
   cohorts: hasMany('cohort', {async: true}),
   courseObjectives: hasMany('course-objective', {async: true}),
   meshDescriptors: hasMany('mesh-descriptor', {async: true}),

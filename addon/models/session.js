@@ -29,6 +29,10 @@ export default Model.extend({
     async: true,
     inverse: 'administeredSessions'
   }),
+  studentAdvisors: hasMany('user', {
+    async: true,
+    inverse: 'studentAdvisedSessions'
+  }),
   postrequisite: belongsTo('session', {
     inverse: 'prerequisites',
     async: true

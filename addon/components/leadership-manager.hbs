@@ -12,6 +12,11 @@
             {{t "general.administrators"}}
           </th>
         {{/if}}
+        {{#if @showStudentAdvisors}}
+          <th>
+            {{t "general.studentAdvisors"}}
+          </th>
+        {{/if}}
       </tr>
     </thead>
     <tbody>
@@ -70,6 +75,33 @@
             </ul>
           </td>
         {{/if}}
+        {{#if @showStudentAdvisors}}
+          <td class="text-top" data-test-student-advisors>
+            <ul>
+              {{#each (sort-by "lastName" "firstName" @studentAdvisors) as |user|}}
+                <li>
+                  <FaIcon
+                    @icon="times"
+                    class="clickable remove"
+                    @click={{fn @removeStudentAdvisor user}}
+                  />
+                  {{#unless user.enabled}}
+                    <FaIcon
+                      @icon="user-times"
+                      @title={{t "general.disabled"}}
+                      class="disabled-user"
+                    />
+                  {{/unless}}
+                  <span data-test-name>
+                    {{user.fullName}}
+                  </span>
+                </li>
+              {{else}}
+                {{t "general.none"}}
+              {{/each}}
+            </ul>
+          </td>
+        {{/if}}
       </tr>
       <tr>
         {{#if @showDirectors}}
@@ -85,6 +117,14 @@
             <LeadershipSearch
               @existingUsers={{@administrators}}
               @selectUser={{@addAdministrator}}
+            />
+          </td>
+        {{/if}}
+        {{#if @showStudentAdvisors}}
+          <td data-test-student-advisor-search>
+            <LeadershipSearch
+              @existingUsers={{@studentAdvisors}}
+              @selectUser={{@addStudentAdvisor}}
             />
           </td>
         {{/if}}
