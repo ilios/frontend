@@ -55,8 +55,8 @@ export default class DataLoaderService extends Service {
     if (!(id in this.#courses)) {
       const relationships = [
         'clerkshipType',
-        'courseObjectives.objective.parents',
-        'courseObjectives.objective.meshDescriptors',
+        'courseObjectives.programYearObjectives',
+        'courseObjectives.meshDescriptors',
         'courseObjectives.terms.vocabulary',
         'learningMaterials.learningMaterial.owningUser',
         'directors',
@@ -67,7 +67,7 @@ export default class DataLoaderService extends Service {
         'directors',
         'meshDescriptors.trees',
         'cohorts.programYear.program',
-        'cohorts.programYear.programYearObjectives.objective',
+        'cohorts.programYear.programYearObjectives',
         'cohorts.learnerGroups',
         'ancestor',
         'descendants',
@@ -86,8 +86,8 @@ export default class DataLoaderService extends Service {
     if (!(id in this.#courseSessions)) {
       const sessionRelationships = [
         'learningMaterials.learningMaterial.owningUser',
-        'sessionObjectives.objective.parents',
-        'sessionObjectives.objective.meshDescriptors',
+        'sessionObjectives.courseObjectives',
+        'sessionObjectives.meshDescriptors',
         'sessionObjectives.terms.vocabulary',
         'offerings.learners',
         'offerings.instructors',
