@@ -49,11 +49,6 @@ export default Model.extend({
   publishedSessionOfferingCounts: mapBy('publishedSessionOfferings', 'length'),
   publishedOfferingCount: sum('publishedSessionOfferingCounts'),
 
-  objectives: computed('courseObjectives.[]', async function(){
-    const courseObjectives = await this.get('courseObjectives');
-    const objectives = await all(courseObjectives.toArray().mapBy('objective'));
-    return objectives.uniq();
-  }),
 
   academicYear: computed('year', function(){
     return this.get('year') + ' - ' + (parseInt(this.get('year'), 10) + 1);
@@ -159,14 +154,6 @@ export default Model.extend({
   sortedCourseObjectives: computed('courseObjectives.@each.position', async function() {
     const objectives = await this.get('courseObjectives');
     return objectives.toArray().sort(sortableByPosition);
-  }),
-
-  /**
-   * A list of objectives linked to this course, sorted by position.
-   */
-  sortedObjectives: computed('sortedCourseObjectives.[]', async function() {
-    const courseObjectives = await this.get('sortedCourseObjectives');
-    return all(courseObjectives.mapBy('objective'));
   }),
 
   hasMultipleCohorts: computed('cohorts.[]', function(){

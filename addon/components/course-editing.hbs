@@ -31,8 +31,8 @@
       @expand={{fn @setCourseObjectiveDetails true}}
     />
   {{else}}
-    <CollapsedObjectives
-      @subject={{@course}}
+    <Course::CollapsedObjectives
+      @course={{@course}}
       @expand={{fn @setCourseObjectiveDetails true}}
     />
   {{/if}}

@@ -44,12 +44,6 @@ export default Model.extend({
   assignableVocabularies: alias('course.assignableVocabularies'),
   xObjectives: alias('sessionObjectives'),
 
-  objectives: computed('sessionObjectives.[]', async function(){
-    const sessionObjectives = await this.get('sessionObjectives');
-    const objectives = await all(sessionObjectives.toArray().mapBy('objective'));
-    return objectives.uniq();
-  }),
-
   isIndependentLearning: computed('ilmSession.id', function () {
     return !!this.belongsTo('ilmSession').id();
   }),
@@ -287,14 +281,6 @@ export default Model.extend({
   }),
 
   /**
-   * A list of objectives linked to this session, sorted by position.
-   */
-  sortedObjectives: computed('sortedSessionObjectives.[]', async function() {
-    const sessionObjectives = await this.get('sortedSessionObjectives');
-    return all(sessionObjectives.mapBy('objective'));
-  }),
-
-  /**
    * Every instructor associated with the session
    * @property allInstructors
    * @type {Ember.computed}
@@ -343,9 +329,10 @@ export default Model.extend({
     return !!this.belongsTo('postrequisite').id();
   }),
 
-  showUnlinkIcon: computed('objectives.[]', function() {
-    const objectives = this.objectives;
-    return objectives.any((objective) => isEmpty(objective.parents));
+  showUnlinkIcon: computed('sessionObjectives.[]', async function() {
+    const sessionObjectives = await this.get("sessionObjectives");
+    const collectionOfCourseObjectives = await all(sessionObjectives.mapBy('courseObjectives'));
+    return collectionOfCourseObjectives.any((courseObjectives) => isEmpty(courseObjectives.toArray()));
   }),
 
   init() {

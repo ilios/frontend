@@ -28,8 +28,7 @@ module('Integration | Component | session/objective-list-item-descriptors', func
 
   test('it renders and is accessible empty and un-editable', async function(assert) {
     const session = this.server.create('session');
-    const objective = this.server.create('objective');
-    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjective = this.server.create('sessionObjective', { session });
     const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     await render(hbs`<Session::ObjectiveListItemDescriptors
@@ -47,12 +46,9 @@ module('Integration | Component | session/objective-list-item-descriptors', func
   });
 
   test('it renders and is accessible un-editable', async function (assert) {
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
+    const meshDescriptors = this.server.createList('meshDescriptor', 2);
     const session = this.server.create('session');
-    const objective = this.server.create('objective', {
-      meshDescriptors,
-    });
-    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjective = this.server.create('sessionObjective', { session, meshDescriptors });
     const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     await render(hbs`<Session::ObjectiveListItemDescriptors
@@ -72,12 +68,9 @@ module('Integration | Component | session/objective-list-item-descriptors', func
   });
 
   test('it renders and is accessible editable', async function (assert) {
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
+    const meshDescriptors = this.server.createList('meshDescriptor', 2);
     const session = this.server.create('session');
-    const objective = this.server.create('objective', {
-      meshDescriptors,
-    });
-    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjective = this.server.create('sessionObjective', { session, meshDescriptors });
     const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     await render(hbs`<Session::ObjectiveListItemDescriptors
@@ -98,12 +91,9 @@ module('Integration | Component | session/objective-list-item-descriptors', func
 
   test('clicking save fires save', async function (assert) {
     assert.expect(1);
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
+    const meshDescriptors = this.server.createList('meshDescriptor', 2);
     const session = this.server.create('session');
-    const objective = this.server.create('objective', {
-      meshDescriptors,
-    });
-    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjective = this.server.create('sessionObjective', { session, meshDescriptors });
     const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     this.set('save', () => {
@@ -123,12 +113,9 @@ module('Integration | Component | session/objective-list-item-descriptors', func
 
   test('clicking cancel fires cancel', async function (assert) {
     assert.expect(1);
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
+    const meshDescriptors = this.server.createList('meshDescriptor', 2);
     const session = this.server.create('session');
-    const objective = this.server.create('objective', {
-      meshDescriptors,
-    });
-    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjective = this.server.create('sessionObjective', { session, meshDescriptors });
     const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     this.set('cancel', () => {
@@ -148,12 +135,9 @@ module('Integration | Component | session/objective-list-item-descriptors', func
 
   test('clicking descriptor fires manage', async function (assert) {
     assert.expect(1);
-    const meshDescriptors = this.server.createList('mesh-descriptor', 2);
+    const meshDescriptors = this.server.createList('meshDescriptor', 2);
     const session = this.server.create('session');
-    const objective = this.server.create('objective', {
-      meshDescriptors,
-    });
-    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjective = this.server.create('sessionObjective', { session, meshDescriptors });
     const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     this.set('manage', () => {

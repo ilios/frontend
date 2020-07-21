@@ -28,17 +28,17 @@ export default class CourseVisualizationsRoute extends Route.extend(Authenticate
       this.store.query('session', { filters: { course } }),
       this.store.query('offering', { filters: { courses } }),
       this.store.query('ilm-session', { filters: { courses } }),
-      this.store.query('objective', { filters: { courses } }),
+      this.store.query('course-objective', { filters: { courses } }),
     ];
     const maximumSessionLoad = 100;
     if (sessions.length < maximumSessionLoad) {
-      promises.pushObject(this.store.query('objective', { filters: { sessions } }));
+      promises.pushObject(this.store.query('session-objective', { filters: { sessions } }));
       promises.pushObject(this.store.query('session-type', { filters: { sessions } }));
       promises.pushObject(this.store.query('term', { filters: { sessions } }));
     } else {
       for (let i = 0; i < sessions.length; i += maximumSessionLoad) {
         const slice = sessions.slice(i, i + maximumSessionLoad);
-        promises.pushObject(this.store.query('objective', { filters: { sessions: slice } }));
+        promises.pushObject(this.store.query('session-objective', { filters: { sessions: slice } }));
         promises.pushObject(this.store.query('session-type', { filters: { sessions: slice } }));
         promises.pushObject(this.store.query('term', { filters: { sessions: slice } }));
       }

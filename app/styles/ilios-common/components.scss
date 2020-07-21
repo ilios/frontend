@@ -4,7 +4,6 @@
 @import 'components/choose-material-type';
 @import 'components/click-choice-buttons';
 @import 'components/collapsed-competencies';
-@import 'components/collapsed-objectives';
 @import 'components/collapsed-taxonomies';
 @import 'components/common-dashboard';
 @import 'components/course-details';
@@ -122,6 +121,7 @@
 @import 'components/weekly-calendar-event';
 @import 'components/weekly-events';
 
+@import 'components/course/collapsed-objectives';
 @import 'components/course/objectives';
 @import 'components/course/manage-objective-descriptors';
 @import 'components/course/manage-objective-parents';
@@ -129,6 +129,7 @@
 @import 'components/course/objective-list-item-parents';
 @import 'components/course/objective-list';
 
+@import 'components/session/collapsed-objectives';
 @import 'components/session/objectives';
 @import 'components/session/manage-objective-descriptors';
 @import 'components/session/manage-objective-parents';

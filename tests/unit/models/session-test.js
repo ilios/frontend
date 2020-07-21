@@ -31,8 +31,7 @@ module('Unit | Model | Session', function(hooks) {
     assert.equal(model.get('optionalPublicationIssues').length, 3);
     model.get('terms').addObject(store.createRecord('term'));
     assert.equal(model.get('optionalPublicationIssues').length, 2);
-    const objective = store.createRecord('objective');
-    store.createRecord('session-objective', { objective, session: model });
+    store.createRecord('session-objective', { session: model });
     assert.equal(model.get('optionalPublicationIssues').length, 1);
     model.get('meshDescriptors').addObject(store.createRecord('meshDescriptor'));
     assert.equal(model.get('optionalPublicationIssues').length, 0);
@@ -233,24 +232,20 @@ module('Unit | Model | Session', function(hooks) {
     assert.equal(subject.get('termCount'), 2);
   });
 
-  test('sortedObjectives', async function(assert){
+  test('sortedSessionObjectives', async function(assert){
     assert.expect(5);
     const store = this.owner.lookup('service:store');
     const session = store.createRecord('session');
-    const objective1 = store.createRecord('objective');
-    const objective2 = store.createRecord('objective');
-    const objective3 = store.createRecord('objective');
-    const objective4 = store.createRecord('objective');
-    store.createRecord('session-objective', { id: 1, position: 10, objective: objective1, session });
-    store.createRecord('session-objective', { id: 2, position: 5, objective: objective2, session });
-    store.createRecord('session-objective', { id: 3, position: 5, objective: objective3, session });
-    store.createRecord('session-objective', { id: 4, position: 0, objective: objective4, session });
-    const sortedObjectives = await session.get('sortedObjectives');
+    const sessionObjective1 = store.createRecord('session-objective', { id: 1, position: 10, session });
+    const sessionObjective2 = store.createRecord('session-objective', { id: 2, position: 5, session });
+    const sessionObjective3 = store.createRecord('session-objective', { id: 3, position: 5, session });
+    const sessionObjective4 = store.createRecord('session-objective', { id: 4, position: 0, session });
+    const sortedObjectives = await session.get('sortedSessionObjectives');
     assert.equal(sortedObjectives.length, 4);
-    assert.equal(sortedObjectives[0], objective4);
-    assert.equal(sortedObjectives[1], objective3);
-    assert.equal(sortedObjectives[2], objective2);
-    assert.equal(sortedObjectives[3], objective1);
+    assert.equal(sortedObjectives[0], sessionObjective4);
+    assert.equal(sortedObjectives[1], sessionObjective3);
+    assert.equal(sortedObjectives[2], sessionObjective2);
+    assert.equal(sortedObjectives[3], sessionObjective1);
   });
 
   test('totalSumOfferingsDuration', async function(assert){

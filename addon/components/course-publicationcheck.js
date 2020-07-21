@@ -7,21 +7,22 @@ export default class CoursePublicationCheckComponent extends Component {
   @service router;
   @tracked objectives = [];
 
-  @computed('objectives.@each.parents')
+  @computed('objectives.@each.programYearObjectives')
   get showUnlinkIcon() {
     const objectivesWithoutParents = this.objectives.filter(objective => {
-      const parentIds = objective.hasMany('parents').ids();
+      const parentIds = objective.hasMany('programYearObjectives').ids();
       return parentIds.length === 0;
     });
 
     return objectivesWithoutParents.length > 0;
   }
+
   @action
   load(event, [objectives]) {
     if (!objectives) {
       this.objectives = [];
       return;
     }
-    this.objectives = objectives;
+    this.objectives = objectives.toArray();
   }
 }

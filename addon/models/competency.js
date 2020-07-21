@@ -9,18 +9,18 @@ const { all } = RSVP;
 export default Model.extend({
   active: attr('boolean'),
   title: attr('string'),
-  school: belongsTo('school', {async: true}),
-  objectives: hasMany('objective', {async: true}),
-  parent: belongsTo('competency', {async: true, inverse: 'children'}),
-  children: hasMany('competency', {async: true, inverse: 'parent'}),
-  aamcPcrses: hasMany('aamc-pcrs', {async: true}),
-  programYears: hasMany('program-year', {async: true}),
+  school: belongsTo('school', { async: true }),
+  parent: belongsTo('competency', { async: true, inverse: 'children' }),
+  children: hasMany('competency', { async: true, inverse: 'parent' }),
+  aamcPcrses: hasMany('aamc-pcrs', { async: true }),
+  programYears: hasMany('program-year', { async: true }),
+  programYearObjectives: hasMany('program-year-objectives', { async: true }),
   isNotDomain: not('isDomain'),
-  isDomain: computed('parent', function(){
+  isDomain: computed('parent', function () {
     return !this.belongsTo('parent').id();
   }),
 
-  domain: computed('parent', 'parent.domain', async function() {
+  domain: computed('parent', 'parent.domain', async function () {
     const parent = await this.get('parent');
     if (!parent) {
       return this;
@@ -28,7 +28,7 @@ export default Model.extend({
     return await parent.get('domain');
   }),
 
-  treeChildren: computed('children.[]', async function(){
+  treeChildren: computed('children.[]', async function () {
     const rhett = [];
     const children = await this.get('children');
     rhett.pushObjects(children.toArray());
@@ -43,7 +43,7 @@ export default Model.extend({
     });
   }),
 
-  childCount: computed('children.[]', function(){
+  childCount: computed('children.[]', function () {
     const childrenIds = this.hasMany('children').ids();
     return childrenIds.length;
   }),

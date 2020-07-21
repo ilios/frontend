@@ -24,7 +24,7 @@ export default class DetailCohortsComponent extends Component {
     });
     if (removedCohorts.length) {
       const programYearsToRemove = yield map(removedCohorts, async cohort => cohort.programYear);
-      const objectives = yield course.objectives;
+      const objectives = yield course.courseObjectives;
       yield all(objectives.invoke('removeParentWithProgramYears', programYearsToRemove));
     }
     course.set('cohorts', this.bufferedCohorts);

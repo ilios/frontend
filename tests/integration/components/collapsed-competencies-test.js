@@ -9,23 +9,24 @@ module('Integration | Component | collapsed competencies', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
-    assert.expect(5);
-    const schoolA = this.server.create('school', {title: 'Medicine'});
+  hooks.beforeEach(async function() {
+    const schoolA = this.server.create('school', { title: 'Medicine' });
     const schoolB = this.server.create('school', { title: 'Pharmacy' });
     const competencyA = this.server.create('competency', { school: schoolA });
     const competencyB = this.server.create('competency', { school: schoolB });
-    const objectiveA = this.server.create('objective', { competency: competencyA });
-    const objectiveB = this.server.create('objective', { competency: competencyB });
-
+    const programYear = this.server.create('programYear');
+    const pyObjectiveA = this.server.create('programYearObjective', { programYear, competency: competencyA });
+    const pyObjectiveB = this.server.create('programYearObjective', { programYear, competency: competencyB });
     const course = this.server.create('course');
-    this.server.create('course-objective', { course, objective: objectiveA });
-    this.server.create('course-objective', { course, objective: objectiveB });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.server.create('courseObjective', { course, programYearObjectives: [ pyObjectiveA ]});
+    this.server.create('courseObjective', { course, programYearObjectives: [ pyObjectiveB ]});
+    this.course = await this.owner.lookup('service:store').find('course', course.id);
+  });
 
-    this.set('course', courseModel);
-    this.set('click', () => {});
-    await render(hbs`<CollapsedCompetencies @subject={{this.course}} @expand={{this.click}} />`);
+  test('it renders', async function(assert) {
+    assert.expect(5);
+    this.set('subject', this.course);
+    await render(hbs`<CollapsedCompetencies @subject={{this.subject}} @expand={{noop}} />`);
     assert.equal(component.title, 'Competencies (2)');
     assert.equal(component.headers[0].text, 'School');
     assert.equal(component.headers[1].text, 'Competencies');
@@ -35,23 +36,11 @@ module('Integration | Component | collapsed competencies', function(hooks) {
 
   test('clicking the header expands the list', async function(assert) {
     assert.expect(2);
-    const schoolA = this.server.create('school', {title: 'Medicine'});
-    const schoolB = this.server.create('school', { title: 'Pharmacy' });
-    const competencyA = this.server.create('competency', { school: schoolA });
-    const competencyB = this.server.create('competency', { school: schoolB });
-    const objectiveA = this.server.create('objective', { competency: competencyA });
-    const objectiveB = this.server.create('objective', { competency: competencyB });
-
-    const course = this.server.create('course');
-    this.server.create('course-objective', { course, objective: objectiveA });
-    this.server.create('course-objective', { course, objective: objectiveB });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-
-    this.set('course', courseModel);
+    this.set('subject', this.course);
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`<CollapsedCompetencies @subject={{this.course}} @expand={{this.click}} />`);
+    await render(hbs`<CollapsedCompetencies @subject={{this.subject}} @expand={{this.click}} />`);
     assert.equal(component.title, 'Competencies (2)');
     await component.expand();
   });

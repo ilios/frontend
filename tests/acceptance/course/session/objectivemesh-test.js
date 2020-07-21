@@ -18,29 +18,18 @@ module('Acceptance | Session - Objective Mesh Descriptors', function(hooks) {
     this.server.createList('program', 2);
     this.server.createList('programYear', 2);
     this.server.createList('cohort', 2);
-
-    this.server.createList('meshDescriptor', 6);
-    this.server.create('objective', {
-      meshDescriptorIds: [1]
-    });
-    this.server.create('objective', {
-      meshDescriptorIds: [2, 3, 4, 5, 6]
-    });
-    this.server.create('objective');
-    //create some other objectives not in this course
-    this.server.createList('objective', 2);
-
-    //create some extra descriptors that shouldn't be found in search
-    this.server.createList('meshDescriptor', 10, {name: 'nope', annotation: 'nope'});
-
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
     });
     const session = this.server.create('session', { course });
-    [1, 2, 3].forEach(objectiveId => {
-      this.server.create('session-objective', { session, objectiveId });
-    });
+    const meshDescriptors = this.server.createList('meshDescriptor', 6);
+    this.server.create('sessionObjective', { session, meshDescriptors: [ meshDescriptors.shift() ] });
+    this.server.create('sessionObjective', { session, meshDescriptors });
+    this.server.create('sessionObjective', { session });
+
+    //create some extra descriptors that shouldn't be found in search
+    this.server.createList('meshDescriptor', 10, {name: 'nope', annotation: 'nope'});
   });
 
   test('manage terms', async function(assert) {
@@ -48,7 +37,7 @@ module('Acceptance | Session - Objective Mesh Descriptors', function(hooks) {
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
 
-    assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'session objective 1');
     assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
     assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title, 'descriptor 1');
     assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title, 'descriptor 2');
@@ -96,7 +85,7 @@ module('Acceptance | Session - Objective Mesh Descriptors', function(hooks) {
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
 
-    assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'session objective 1');
     assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
     await page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
 
@@ -129,7 +118,7 @@ module('Acceptance | Session - Objective Mesh Descriptors', function(hooks) {
     await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
 
-    assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'session objective 1');
     assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
     await page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
 

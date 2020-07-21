@@ -13,8 +13,7 @@ module('Integration | Component | session/objective-list-item', function(hooks) 
   test('it renders and is accessible', async function(assert) {
     assert.expect(6);
     const session = this.server.create('session');
-    const objective = this.server.create('objective');
-    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjective = this.server.create('sessionObjective', { session });
     const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     await render(
@@ -25,7 +24,7 @@ module('Integration | Component | session/objective-list-item', function(hooks) 
       />`
     );
     assert.notOk(component.hasRemoveConfirmation);
-    assert.equal(component.description.text, 'objective 0');
+    assert.equal(component.description.text, 'session objective 0');
     assert.equal(component.parents.text, 'Add New');
     assert.equal(component.meshDescriptors.text, 'Add New');
     assert.ok(component.hasTrashCan);
@@ -35,8 +34,7 @@ module('Integration | Component | session/objective-list-item', function(hooks) 
 
   test('can change title', async function(assert) {
     const session = this.server.create('session');
-    const objective = this.server.create('objective');
-    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjective = this.server.create('sessionObjective', { session });
     const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     await render(
@@ -47,7 +45,7 @@ module('Integration | Component | session/objective-list-item', function(hooks) 
       />`
     );
     const newDescription = 'Pluto Visits Earth';
-    assert.equal(component.description.text, 'objective 0');
+    assert.equal(component.description.text, 'session objective 0');
     await component.description.openEditor();
     await component.description.edit(newDescription);
     await component.description.save();
@@ -56,8 +54,7 @@ module('Integration | Component | session/objective-list-item', function(hooks) 
 
   test('can manage parents', async function (assert) {
     const session = this.server.create('session');
-    const objective = this.server.create('objective');
-    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjective = this.server.create('sessionObjective', { session });
     const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     this.set('manageParents', () => {
@@ -76,8 +73,7 @@ module('Integration | Component | session/objective-list-item', function(hooks) 
 
   test('can manage descriptors', async function (assert) {
     const session = this.server.create('session');
-    const objective = this.server.create('objective');
-    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjective = this.server.create('sessionObjective', { session });
     const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     await render(
@@ -94,8 +90,7 @@ module('Integration | Component | session/objective-list-item', function(hooks) 
   test('can manage terms', async function (assert) {
     assert.expect(2);
     const session = this.server.create('session');
-    const objective = this.server.create('objective');
-    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjective = this.server.create('sessionObjective', { session });
     const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     await render(
@@ -112,8 +107,7 @@ module('Integration | Component | session/objective-list-item', function(hooks) 
 
   test('can trigger removal', async function (assert) {
     const session = this.server.create('session');
-    const objective = this.server.create('objective');
-    const sessionObjective = this.server.create('session-objective', { session, objective });
+    const sessionObjective = this.server.create('sessionObjective', { session });
     const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     await render(

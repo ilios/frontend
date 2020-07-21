@@ -22,12 +22,6 @@ export default Model.extend({
   xObjectives: alias('programYearObjectives'),
   assignableVocabularies: alias('program.school.vocabularies'),
 
-  objectives: computed('programYearObjectives.[]', async function(){
-    const programYearObjectives = await this.get('programYearObjectives');
-    const objectives = await all(programYearObjectives.toArray().mapBy('objective'));
-    return objectives.uniq();
-  }),
-
   academicYear: computed('startYear', function(){
     return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'), 10) + 1);
   }),
@@ -57,14 +51,6 @@ export default Model.extend({
   sortedProgramYearObjectives: computed('programYearObjectives.@each.position', async function() {
     const objectives = await this.get('programYearObjectives');
     return objectives.toArray().sort(sortableByPosition);
-  }),
-
-  /**
-   * A list of objectives linked to this program year, sorted by position.
-   */
-  sortedObjectives: computed('sortedProgramYearObjectives.[]', async function() {
-    const programYearObjectives = await this.get('sortedProgramYearObjectives');
-    return all(programYearObjectives.mapBy('objective'));
   }),
 
   /**

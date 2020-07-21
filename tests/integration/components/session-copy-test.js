@@ -73,7 +73,7 @@ module('Integration | Component | session copy', function(hooks) {
   });
 
   test('copy session', async function(assert) {
-    assert.expect(26);
+    assert.expect(24);
 
     const thisYear = parseInt(moment().format('YYYY'), 10);
     this.server.create('academic-year', {
@@ -95,12 +95,6 @@ module('Integration | Component | session copy', function(hooks) {
       learningMaterial,
       position: 3,
     });
-    const parentObjective = this.server.create('objective');
-    const objective = this.server.create('objective', {
-      title: 'session objective title',
-      parents: [parentObjective],
-    });
-
     const meshDescriptor = this.server.create('mesh-descriptor');
     const term = this.server.create('term');
     const sessionType = this.server.create('session-type');
@@ -123,10 +117,12 @@ module('Integration | Component | session copy', function(hooks) {
       learningMaterials: [sessionLearningMaterial],
     });
 
+    const courseObjective = this.server.create('courseObjective');
     const objectiveTerm = this.server.create('term');
-    const sessionObjective = this.server.create('session-objective', {
+    const sessionObjective = this.server.create('sessionObjective', {
       session,
-      objective,
+      title: 'session objective title',
+      courseObjectives: [ courseObjective ],
       terms: [ objectiveTerm ],
       position: 3,
     });
@@ -172,17 +168,12 @@ module('Integration | Component | session copy', function(hooks) {
     assert.equal(sessionDescription.description, newSessionDescription.description);
     assert.equal(newSessionDescription.belongsTo('session').id(), newSession.id);
 
-    const objectives = await this.owner.lookup('service:store').findAll('objective');
-    assert.equal(objectives.length, 3);
-    const newObjective = objectives.findBy('id', '3');
-    assert.equal(objective.title, newObjective.title);
-
     const sessionObjectives = await this.owner.lookup('service:store').findAll('session-objective');
     assert.equal(sessionObjectives.length, 2);
     const newSessionObjective = sessionObjectives.findBy('id', '2');
+    assert.equal(newSessionObjective.title, sessionObjective.title);
     assert.equal(sessionObjective.position, newSessionObjective.position);
     assert.equal(newSessionObjective.belongsTo('session').id(), newSession.id);
-    assert.equal(newSessionObjective.belongsTo('objective').id(), newObjective.id);
     const objectiveTermModel = await this.owner.lookup('service:store').find('term', objectiveTerm.id);
     const copiedSessionObjectiveTerms = (await newSessionObjective.terms);
     assert.equal(copiedSessionObjectiveTerms.length, 1);

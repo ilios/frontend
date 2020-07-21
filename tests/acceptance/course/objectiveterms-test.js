@@ -19,8 +19,7 @@ module('Acceptance | Course - Objective Vocabulary Terms', function(hooks) {
     const term = this.server.create('term', { vocabulary, active: true });
     this.server.createList('term', 3, { vocabulary, active: true });
     const course = this.server.create('course', { school });
-    const objective = this.server.create('objective');
-    this.server.create('course-objective', { course, objective, terms: [ term ] });
+    this.server.create('course-objective', { course, terms: [ term ] });
     this.school = school;
   });
 
@@ -29,7 +28,7 @@ module('Acceptance | Course - Objective Vocabulary Terms', function(hooks) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'course objective 0');
     assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
     assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].title, 'Vocabulary 1 (school 0)');
     assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length, 1);
@@ -69,7 +68,7 @@ module('Acceptance | Course - Objective Vocabulary Terms', function(hooks) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'course objective 0');
     assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
     assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].title, 'Vocabulary 1 (school 0)');
     assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length, 1);

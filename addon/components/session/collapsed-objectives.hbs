@@ -1,8 +1,8 @@
 <section
-  class="collapsed-objectives"
-  data-test-collapsed-objectives
-  {{did-insert (perform this.load) @subject.objectives}}
-  {{did-update (perform this.load) @subject.objectives}}
+  class="session-collapsed-objectives"
+  data-test-session-collapsed-objectives
+  {{did-insert (perform this.load) @session.sessionObjectives}}
+  {{did-update (perform this.load) @session.sessionObjectives}}
 >
   <div class="title" role="button" {{on "click" @expand}} data-test-title>
     {{t "general.objectives"}} ({{get this.objectives "length"}})
@@ -61,8 +61,8 @@
             <td data-test-parent-count>
               &nbsp;&nbsp;
               {{t
-                "general.parentCount"
-                count=(get this.objectivesWithParents "length")
+                  "general.parentCount"
+                  count=(get this.objectivesWithParents "length")
               }}
             </td>
           </tr>

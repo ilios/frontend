@@ -19,25 +19,24 @@ module('Acceptance | Course - Objective Create', function(hooks) {
   });
 
   test('save new objective', async function (assert) {
-    const objective = this.server.create('objective');
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
     });
-    this.server.create('course-objective', { course, objective });
+    this.server.create('course-objective', { course });
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(9);
     const newObjectiveDescription = 'Test junk 123';
 
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'course objective 0');
     await page.objectives.createNew();
     await page.objectives.newObjective.description(newObjectiveDescription);
     await page.objectives.newObjective.save();
 
     assert.equal(page.objectives.objectiveList.objectives.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'course objective 0');
     assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
     assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
     assert.equal(page.objectives.objectiveList.objectives[1].description.text, newObjectiveDescription);
@@ -46,39 +45,37 @@ module('Acceptance | Course - Objective Create', function(hooks) {
   });
 
   test('cancel new objective', async function(assert) {
-    const objective = this.server.create('objective');
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
     });
-    this.server.create('course-objective', { course, objective });
+    this.server.create('course-objective', { course });
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(6);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'course objective 0');
     await page.objectives.createNew();
     await page.objectives.newObjective.description('junk');
     await page.objectives.newObjective.cancel();
 
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'course objective 0');
     assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
     assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
   });
 
   test('empty objective title can not be created', async function(assert) {
-    const objective = this.server.create('objective');
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
     });
-    this.server.create('course-objective', { course, objective });
+    this.server.create('course-objective', { course });
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'course objective 0');
     await page.objectives.createNew();
     assert.notOk(page.objectives.newObjective.hasValidationError);
     await page.objectives.newObjective.description('<p>&nbsp</p><div></div><span>  </span>');

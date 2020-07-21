@@ -25,10 +25,9 @@ module('Acceptance | Course - Cohorts', function(hooks) {
       program,
       cohort: cohort2,
     });
-    const parentObjective1 = this.server.create('objective');
-    const parentObjective2 = this.server.create('objective');
-    this.server.create('program-year-objective', { programYear: programYear1, objective: parentObjective1 });
-    this.server.create('program-year-objective', { programYear: programYear2, objective: parentObjective2 });
+
+    const programYearObjective1 = this.server.create('programYearObjective', { programYear: programYear1 });
+    const programYearObjective2 = this.server.create('programYearObjective', { programYear: programYear2 });
 
     const course = this.server.create('course', {
       year: 2013,
@@ -36,10 +35,10 @@ module('Acceptance | Course - Cohorts', function(hooks) {
       cohorts: [programYear1.cohort], //instead of just cohort1 otherwise the relationship gets munged
     });
 
-    const objectiveInCourse = this.server.create('objective', {
-      parents: [parentObjective1, parentObjective2]
+    this.server.create('courseObjective', {
+      course,
+      programYearObjectives: [ programYearObjective1, programYearObjective2 ]
     });
-    this.server.create('course-objective', { course, objective: objectiveInCourse });
   });
 
   test('list cohorts', async function (assert) {
@@ -96,8 +95,8 @@ module('Acceptance | Course - Cohorts', function(hooks) {
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
     assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'objective 0');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[1].text, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'program-year objective 0');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[1].text, 'program-year objective 1');
 
     await page.cohorts.manage();
     await page.cohorts.selected[0].remove();
@@ -105,6 +104,6 @@ module('Acceptance | Course - Cohorts', function(hooks) {
 
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
     assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'objective 1');
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'program-year objective 1');
   });
 });

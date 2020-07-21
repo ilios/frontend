@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency-decorators';
 
-export default class CollapsedObjectivesComponent extends Component {
+export default class SessionCollapsedObjectivesComponent extends Component {
   @tracked objectives;
   @tracked objectivesWithParents;
   @tracked objectivesWithMesh;
@@ -15,7 +15,7 @@ export default class CollapsedObjectivesComponent extends Component {
     this.objectives = yield objectivePromise;
 
     this.objectivesWithParents = this.objectives.filter(objective => {
-      const parentIds = objective.hasMany('parents').ids();
+      const parentIds = objective.hasMany('courseObjectives').ids();
 
       return parentIds.length > 0;
     });

@@ -27,19 +27,15 @@ export default class CourseObjectivesComponent extends Component {
 
   @dropTask
   *saveNewObjective(title) {
-    const newObjective = this.store.createRecord('objective');
     const newCourseObjective = this.store.createRecord('course-objective');
-    newObjective.set('title', title);
     let position = 0;
     const courseObjectives = yield this.args.course.courseObjectives;
     if (courseObjectives.length) {
       position = courseObjectives.sortBy('position').lastObject.position + 1;
     }
 
-    yield newObjective.save();
-
+    newCourseObjective.set('title', title);
     newCourseObjective.set('position', position);
-    newCourseObjective.set('objective', newObjective);
     newCourseObjective.set('course', this.args.course);
 
     yield newCourseObjective.save();
