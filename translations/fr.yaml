@@ -281,6 +281,8 @@ general:
   starts: Commencer
   startTime: "Heure Commencer"
   status: Statut
+  studentAdvisorCount: "Il y a {count, plural, =1 {une camarade-conseil} other {# camarades-conseil}}"
+  studentAdvisors: Camarades-Conseil
   summary: "Résumé"
   sunday: Dimanche
   supplementalCurriculum: "Supplemental Curriculum"

@@ -281,6 +281,8 @@ general:
   starts: Starts
   startTime: "Start Time"
   status: Status
+  studentAdvisorCount: "There {count, plural, =1 {is 1 student advisor} other {are # student advisors}}"
+  studentAdvisors: Student Advisors
   summary: Summary
   sunday: Sunday
   supplementalCurriculum: "Supplemental Curriculum"

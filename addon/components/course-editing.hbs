@@ -18,9 +18,11 @@
       @title={{t "general.courseLeadership"}}
       @directorsCount={{has-many-length @course "directors"}}
       @administratorsCount={{has-many-length @course "administrators"}}
+      @studentAdvisorsCount={{has-many-length @course "studentAdvisors"}}
       @expand={{fn @setCourseLeadershipDetails true}}
       @showAdministrators={{true}}
       @showDirectors={{true}}
+      @showStudentAdvisors={{true}}
     />
   {{/if}}
   {{#if (or (not (has-many-length @course "courseObjectives")) @courseObjectiveDetails)}}

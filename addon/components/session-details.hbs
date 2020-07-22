@@ -21,7 +21,9 @@
       @title={{t "general.sessionAdministration"}}
       @showDirectors={{false}}
       @showAdministrators={{true}}
+      @showStudentAdvisors={{true}}
       @administratorsCount={{has-many-length @session "administrators"}}
+      @studentAdvisorsCount={{has-many-length @session "studentAdvisors"}}
       @expand={{fn @setSessionLeadershipDetails true}}
     />
   {{/if}}

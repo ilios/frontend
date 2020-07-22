@@ -32,4 +32,16 @@ export default {
   selectedAdministrators: collection('[data-test-administrators] ul li', {
     remove: clickable('.remove'),
   }),
+  studentAdvisorSearch: {
+    scope: '[data-test-student-advisor-search] [data-test-leadership-search]',
+    search: fillable('input[type=search]'),
+    results: collection('.results [data-test-result]', {
+      add: clickable(),
+      isSelectable: hasClass('clickable'),
+      isSelected: notHasClass('clickable'),
+    }),
+  },
+  selectedStudentAdvisors: collection('[data-test-student-advisors] ul li', {
+    remove: clickable('.remove'),
+  }),
 };

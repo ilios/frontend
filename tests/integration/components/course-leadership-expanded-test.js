@@ -10,22 +10,22 @@ module('Integration | Component | course leadership expanded', function(hooks) {
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(6);
+    assert.expect(8);
     const users = this.server.createList('user', 2);
     const course = this.server.create('course', {
       directors: [users[0]],
       administrators: users,
+      studentAdvisors: [users[0]],
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
-    this.set('nothing', () => {});
     await render(hbs`<CourseLeadershipExpanded
-      @course={{course}}
+      @course={{this.course}}
       @editable={{true}}
-      @collapse={{this.nothing}}
-      @expand={{this.nothing}}
+      @collapse={{noop}}
+      @expand={{noop}}
       @isManaging={{false}}
-      @setIsManaging={{this.nothing}}
+      @setIsManaging={{noop}}
     />`);
 
     assert.equal(component.title, 'Course Leadership');
@@ -34,6 +34,8 @@ module('Integration | Component | course leadership expanded', function(hooks) {
     assert.equal(component.leadershipList.administrators.length, 2);
     assert.equal(component.leadershipList.administrators[0].text, '0 guy M. Mc0son');
     assert.equal(component.leadershipList.administrators[1].text, '1 guy M. Mc1son');
+    assert.equal(component.leadershipList.studentAdvisors.length, 1);
+    assert.equal(component.leadershipList.studentAdvisors[0].text, '0 guy M. Mc0son');
   });
 
   test('clicking the header collapses when there are administrators', async function(assert) {
@@ -47,14 +49,13 @@ module('Integration | Component | course leadership expanded', function(hooks) {
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    this.set('nothing', () => {});
     await render(hbs`<CourseLeadershipExpanded
-      @course={{course}}
+      @course={{this.course}}
       @editable={{true}}
-      @collapse={{action click}}
-      @expand={{this.nothing}}
+      @collapse={{this.click}}
+      @expand={{noop}}
       @isManaging={{false}}
-      @setIsManaging={{this.nothing}}
+      @setIsManaging={{noop}}
     />`);
     await component.collapse();
   });
@@ -70,14 +71,35 @@ module('Integration | Component | course leadership expanded', function(hooks) {
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    this.set('nothing', () => {});
     await render(hbs`<CourseLeadershipExpanded
-      @course={{course}}
+      @course={{this.course}}
       @editable={{true}}
-      @collapse={{action click}}
-      @expand={{this.nothing}}
+      @collapse={{this.click}}
+      @expand={{noop}}
       @isManaging={{false}}
-      @setIsManaging={{this.nothing}}
+      @setIsManaging={{noop}}
+    />`);
+    await component.collapse();
+  });
+
+  test('clicking the header collapses when there are student advisors', async function(assert) {
+    assert.expect(1);
+    const studentAdvisors = this.server.createList('user', 1);
+    const course = this.server.create('course', {
+      studentAdvisors
+    });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
+    this.set('click', () => {
+      assert.ok(true, 'Action was fired');
+    });
+    await render(hbs`<CourseLeadershipExpanded
+      @course={{this.course}}
+      @editable={{true}}
+      @collapse={{this.click}}
+      @expand={{noop}}
+      @isManaging={{false}}
+      @setIsManaging={{noop}}
     />`);
     await component.collapse();
   });
@@ -90,14 +112,13 @@ module('Integration | Component | course leadership expanded', function(hooks) {
     this.set('click', () => {
       assert.ok(false);
     });
-    this.set('nothing', () => {});
     await render(hbs`<CourseLeadershipExpanded
-      @course={{course}}
+      @course={{this.course}}
       @editable={{true}}
-      @collapse={{action click}}
-      @expand={{this.nothing}}
+      @collapse={{this.click}}
+      @expand={{noop}}
       @isManaging={{false}}
-      @setIsManaging={{this.nothing}}
+      @setIsManaging={{noop}}
     />`);
     await component.collapse();
   });
@@ -110,14 +131,13 @@ module('Integration | Component | course leadership expanded', function(hooks) {
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    this.set('nothing', () => {});
     await render(hbs`<CourseLeadershipExpanded
-      @course={{course}}
+      @course={{this.course}}
       @editable={{true}}
       @collapse={{this.nothing}}
       @expand={{this.nothing}}
       @isManaging={{false}}
-      @setIsManaging={{action click}}
+      @setIsManaging={{this.click}}
     />`);
     await component.manage();
   });
