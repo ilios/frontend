@@ -1,62 +1,37 @@
-import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
-import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
-const { resolve } = RSVP;
-
-const mockCourses = [
-  EmberObject.create({
-    title: 'first',
-    level: 4,
-    academicYear: '2012-2013',
-    locked: false,
-    archived: false,
-    externalId: 'ABC123'
-  }),
-  EmberObject.create({
-    title: 'second',
-    level: 1,
-    academicYear: '2013-2014',
-    locked: false,
-    archived: false,
-    externalId: null
-  }),
-  EmberObject.create({
-    title: 'third',
-    level: 1,
-    academicYear: '2012-2013',
-    locked: false,
-    archived: false,
-    externalId: null
-
-  }),
-];
-
-const currentUserMock = Service.extend({
-  performsNonLearnerFunction: true,
-  activeRelatedCoursesInThisYearAndLastYear: resolve(mockCourses),
-});
-
-const currentUserMockNoCourses = Service.extend({
-  performsNonLearnerFunction: true,
-  activeRelatedCoursesInThisYearAndLastYear: resolve([]),
-});
-
-const currentUserMockUnprivileged = Service.extend({
-  performsNonLearnerFunction: false,
-  activeRelatedCoursesInThisYearAndLastYear: resolve(mockCourses),
-});
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { authenticateSession } from 'ember-simple-auth/test-support';
 
 module('Integration | Component | dashboard mycourses', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('list courses for privileged users', async function(assert) {
     assert.expect(10);
-    this.owner.register('service:currentUser', currentUserMock);
+    const user = this.server.create('user');
+    const jwtObject = {
+      'user_id': user.id,
+      'performs_non_learner_function': true,
+    };
+    const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
+    await authenticateSession({
+      jwt: encodedData
+    });
+
+    this.server.create('course', {
+      directors: [user],
+      externalId: 'ABC123',
+    });
+    this.server.createList('course', 2, {
+      directors: [user]
+    });
+    this.server.get('/api/courses', (schema, { queryParams }) => {
+      assert.ok('my' in queryParams);
+      return schema.courses.all();
+    });
     await render(hbs`<DashboardMycourses />`);
 
     const header = '.dashboard-block-header';
@@ -76,21 +51,40 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
     assert.dom(allLinks).exists({ count: 6 });
     assert.dom(courses).exists({ count: 3 });
 
-    assert.dom(firstCourseYear).hasText(mockCourses[0].academicYear);
-    assert.ok(find(firstCourseTitle).textContent.includes(mockCourses[0].title));
-    assert.ok(find(firstCourseTitle).textContent.includes(mockCourses[0].externalId));
+    assert.dom(firstCourseYear).hasText('2013 - 2014');
+    assert.dom(firstCourseTitle).hasText('course 0 (ABC123)');
 
-    assert.dom(secondCourseYear).hasText(mockCourses[1].academicYear);
-    assert.dom(secondCourseTitle).hasText(mockCourses[1].title);
+    assert.dom(secondCourseYear).hasText('2013 - 2014');
+    assert.dom(secondCourseTitle).hasText('course 1');
 
-    assert.dom(thirdCourseYear).hasText(mockCourses[2].academicYear);
-    assert.dom(thirdCourseTitle).hasText(mockCourses[2].title);
+    assert.dom(thirdCourseYear).hasText('2013 - 2014');
+    assert.dom(thirdCourseTitle).hasText('course 2');
   });
-
 
   test('list courses for un-privileged users', async function(assert) {
     assert.expect(10);
-    this.owner.register('service:currentUser', currentUserMockUnprivileged);
+    const user = this.server.create('user');
+    const jwtObject = {
+      'user_id': user.id,
+      'performs_non_learner_function': false,
+    };
+    const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
+    await authenticateSession({
+      jwt: encodedData
+    });
+
+    this.server.create('course', {
+      directors: [user],
+      externalId: 'ABC123',
+    });
+    this.server.createList('course', 2, {
+      directors: [user]
+    });
+    this.server.get('/api/courses', (schema, { queryParams }) => {
+      assert.ok('my' in queryParams);
+      return schema.courses.all();
+    });
+
     await render(hbs`<DashboardMycourses />`);
 
     const header = '.dashboard-block-header';
@@ -110,20 +104,24 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
     assert.dom(allLinks).doesNotExist();
     assert.dom(courses).exists({ count: 3 });
 
-    assert.dom(firstCourseYear).hasText(mockCourses[0].academicYear);
-    assert.ok(find(firstCourseTitle).textContent.includes(mockCourses[0].title));
-    assert.notOk(find(firstCourseTitle).textContent.includes(mockCourses[0].externalId));
+    assert.dom(firstCourseYear).hasText('2013 - 2014');
+    assert.dom(firstCourseTitle).hasText('course 0');
 
-    assert.dom(secondCourseYear).hasText(mockCourses[1].academicYear);
-    assert.dom(secondCourseTitle).hasText(mockCourses[1].title);
+    assert.dom(secondCourseYear).hasText('2013 - 2014');
+    assert.dom(secondCourseTitle).hasText('course 1');
 
-    assert.dom(thirdCourseYear).hasText(mockCourses[2].academicYear);
-    assert.dom(thirdCourseTitle).hasText(mockCourses[2].title);
+    assert.dom(thirdCourseYear).hasText('2013 - 2014');
+    assert.dom(thirdCourseTitle).hasText('course 2');
   });
 
   test('display none when no courses', async function(assert) {
     assert.expect(2);
-    this.owner.register('service:currentUser', currentUserMockNoCourses);
+    await authenticateSession();
+    this.server.get('/api/courses', (schema, { queryParams }) => {
+      assert.ok('my' in queryParams);
+      return schema.courses.all();
+    });
+
     await render(hbs`<DashboardMycourses />`);
     assert.dom('.dashboard-block-header').hasText('My Courses');
 

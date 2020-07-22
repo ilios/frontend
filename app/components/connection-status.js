@@ -1,80 +1,71 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { task, timeout } from 'ember-concurrency';
-import DomMixin from 'ember-lifeline/mixins/dom';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
+import { timeout } from 'ember-concurrency';
+import { action } from '@ember/object';
+import { addEventListener, runDisposables } from 'ember-lifeline';
 
-export default Component.extend(DomMixin, {
-  attributeBindings: ['ariaHidden:aria-hidden'],
-  classNameBindings: [':connection-status', 'isOnline::offline'],
+export default class ConnectionStatusComponent extends Component {
+  @tracked isOnline = true;
+  @tracked multiplier = 1;
+  @tracked stopAttemptingToReconnect = false;
+  @tracked timer = 5;
+  @tracked unableToReconnect = false;
 
-  isOnline: true,
-  multiplier: 1,
-  stopAttemptingToReconnect: false,
-  timer: 5,
-  unableToReconnect: false,
-
-  ariaHidden: computed('isOnline', function() {
-    const isOnline = this.isOnline;
-    return isOnline?'true':false;
-  }),
-
-  ariaRole: computed('isOnline', function() {
-    const isOnline = this.isOnline;
-    return isOnline?false:'alert';
-  }),
-
-  didInsertElement() {
-    this._super(...arguments);
+  @action
+  setup() {
     if (!navigator.onLine) {
       this.changeConnectionState.perform(false);
     }
-    this.addEventListener(window, 'online', () => {
+    addEventListener(this, window, 'online', () => {
       this.changeConnectionState.perform(true);
     });
-    this.addEventListener(window, 'offline', () => {
+    addEventListener(this, window, 'offline', () => {
       this.changeConnectionState.perform(false);
     });
-  },
+  }
 
-  changeConnectionState: task(function* (isOnline) {
-    this.set('timer', 5);
-    this.set('multiplier', 1);
-    this.set('stopAttemptingToReconnect', false);
-    this.set('isOnline', isOnline);
-    const reconnect = this.reconnect;
+  willDestroy() {
+    runDisposables(this);
+  }
+
+  @restartableTask
+  * changeConnectionState(isOnline) {
+    this.timer = 5;
+    this.multiplier = 1;
+    this.stopAttemptingToReconnect = false;
+    this.isOnline = isOnline;
     if (!isOnline) {
-      yield reconnect.perform();
+      yield this.reconnect.perform();
     } else {
-      reconnect.cancelAll();
+      this.reconnect.cancelAll();
     }
-  }).restartable(),
+  }
 
-  reconnect: task(function* (force) {
+  @restartableTask
+  * reconnect(force) {
     if (navigator.onLine) {
       this.changeConnectionState.perform(true);
     }
-    const timer = this.timer;
     if (force) {
-      this.set('unableToReconnect', true);
-      this.set('timer', 5);
+      this.unableToReconnect = true;
+      this.timer = 5;
       yield timeout(2000);
-      this.set('unableToReconnect', false);
-    } else if (timer > 1) {
-      this.set('unableToReconnect', false);
-      this.set('timer', timer - 1);
+      this.unableToReconnect = false;
+    } else if (this.timer > 1) {
+      this.unableToReconnect = false;
+      this.timer = this.timer - 1;
     } else {
-      const stopAttemptingToReconnect = this.stopAttemptingToReconnect;
-      if (!stopAttemptingToReconnect) {
-        this.set('unableToReconnect', true);
+      if (!this.stopAttemptingToReconnect) {
+        this.unableToReconnect = true;
         yield timeout(2000);
       }
-      const multiplier = this.multiplier;
-      const newMultiplier = multiplier < 8?multiplier * 2:10;
-      this.set('multiplier', newMultiplier);
-      this.set('timer', 5 * newMultiplier);
+      const newMultiplier = this.multiplier < 8 ? this.multiplier * 2 : 10;
+      this.multiplier = newMultiplier;
+      this.timer = 5 * newMultiplier;
     }
 
     yield timeout(1000);
     this.reconnect.perform();
-  }).restartable()
-});
+  }
+}
