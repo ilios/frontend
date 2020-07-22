@@ -1,42 +1,15 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { isPresent } from '@ember/utils';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 
-export default Component.extend({
-  tagName: "",
+export default class ErrorDisplayComponent extends Component {
+  @tracked isOffline = !navigator.onLine;
+  @tracked showDetails = true;
+  now = new Date();
 
-  errors: null,
-  isOffline: false,
-  now: null,
-  showDetails: true,
-
-  is404: computed('errors.[]', function() {
-    const errors = this.errors;
-    if (isPresent(errors)) {
-      const firstError = errors.get('firstObject');
-      if (isPresent(firstError)) {
-        return firstError.statusCode === '404';
-      }
-    }
-
-    return false;
-  }),
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.set('now', new Date());
-    if (!navigator.onLine) {
-      this.set('isOffline', true);
-    }
-  },
-
-  actions: {
-    toggleDetails() {
-      this.set('showDetails', !this.showDetails);
-    },
-
-    refresh() {
-      window.location.reload();
-    }
+  get is404() {
+    return this.args.errors?.firstObject?.statusCode === '404';
   }
-});
+  refresh() {
+    window.location.reload();
+  }
+}

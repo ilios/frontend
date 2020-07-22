@@ -1,38 +1,53 @@
 <div class="error-display" ...attributes>
   <div class="error-main">
-    {{#if isOffline}}
+    {{#if this.isOffline}}
       <h2>
         {{t "general.connectionLost"}}
       </h2>
       <p class="clear-errors">
-        <button type="button" {{action "refresh"}}>
+        <button type="button" {{on "click" this.refresh}}>
           <FaIcon @icon="sync-alt" />
           {{t "general.reconnectNow"}}
         </button>
       </p>
-    {{else if is404}}
+    {{else if this.is404}}
       <NotFound />
     {{else}}
       <h2>
         {{t "general.errorDisplayMessage"}}
       </h2>
       <p class="clear-errors">
-        <button type="button" {{action clearErrors}}>
+        <button type="button" {{on "click" @clearErrors}}>
           {{t "general.clearErrors"}}
         </button>
+        <button
+          type="button"
+          class="error-detail-action"
+          role="button"
+          {{on "click" (set this.showDetails (not this.showDetails))}}
+        >
+          {{t (if this.showDetails "general.collapseDetail" "general.expandDetail")}}
+        </button>
       </p>
-      <span class="error-detail-action" role="button" {{action "toggleDetails"}}>
-        {{t (if showDetails "general.collapseDetail" "general.expandDetail")}}
-      </span>
-      {{#if showDetails}}
+
+      {{#if this.showDetails}}
         <div class="timestamp">
-          {{moment-format now moment.ISO_8601}}
+          {{format-time
+            this.now
+            year="numeric"
+            month="numeric"
+            day="numeric"
+            hour="numeric"
+            second="numeric"
+            minute="numeric"
+            timeZoneName="short"
+          }}
         </div>
         <div class="error-detail">
           <h3 class="error-total">
-            {{t "general.totalErrors" count=(get errors "length")}}
+            {{t "general.totalErrors" count=@errors.length}}
           </h3>
-          {{#each errors as |error|}}
+          {{#each @errors as |error|}}
             <div class="error-details">
               <h5 class="error-main-message">
                 {{error.mainMessage}}

@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | error display', function(hooks) {
@@ -14,17 +14,27 @@ module('Integration | Component | error display', function(hooks) {
     }];
 
     this.set('errors', errors);
-    this.set('nothing', parseInt);
-    await render(hbs`<ErrorDisplay @errors={{errors}} @clearErrors={{action nothing}} />`);
+    await render(hbs`<ErrorDisplay @errors={{this.errors}} @clearErrors={{noop}} />`);
 
     assert.dom('.error-detail-action').hasText('Hide Details');
-
-    const iso8601 = new RegExp(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})[+-](\d{2}):(\d{2})/);
-    assert.ok(find('.timestamp').textContent.trim().match(iso8601), 'Current datetime is visible');
+    assert.dom('.timestamp').includesText(new Intl.DateTimeFormat('en-US').format(new Date()));
 
     await click('.error-detail-action');
 
     assert.dom('.error-detail-action').hasText('Show Details');
+  });
+
+  test('404 error works', async function(assert) {
+    assert.expect(1);
+
+    const errors = [{
+      statusCode: '404'
+    }];
+
+    this.set('errors', errors);
+    await render(hbs`<ErrorDisplay @errors={{this.errors}} @clearErrors={{noop}} />`);
+
+    assert.dom('.error-main').includesText('Rats!');
   });
 
   test('clicking clear button fires action', async function(assert) {
@@ -41,4 +51,5 @@ module('Integration | Component | error display', function(hooks) {
     await render(hbs`<ErrorDisplay @errors={{errors}} @clearErrors={{action clearErrors}} />`);
     await click('.clear-errors button');
   });
+
 });
