@@ -17,7 +17,6 @@ export default Model.extend({
   instructorGroups: hasMany('instructor-group', {async: true}),
   curriculumInventoryInstitution: belongsTo('curriculum-inventory-institution', {async: true}),
   sessionTypes: hasMany('session-type', {async: true}),
-  stewards: hasMany('program-year-steward', {async: true}),
   directors: hasMany('user', {async: true, inverse: 'directedSchools'}),
   administrators: hasMany('user', {async: true, inverse: 'administeredSchools'}),
   configurations: hasMany('school-config', {async: true}),
