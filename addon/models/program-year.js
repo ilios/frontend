@@ -16,7 +16,6 @@ export default Model.extend({
   directors: hasMany('user', {async: true}),
   competencies: hasMany('competency', {async: true}),
   programYearObjectives: hasMany('program-year-objective', {async: true}),
-  stewards: hasMany('program-year-steward', {async: true}),
   terms: hasMany('term', {async: true}),
 
   xObjectives: alias('programYearObjectives'),
