@@ -3,14 +3,12 @@ import { computed } from '@ember/object';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 import { all } from 'rsvp';
 
-const { alias, oneWay, collect, sum, not } = computed;
+const { alias } = computed;
 
 export default Model.extend({
   startYear: attr('string'),
   locked: attr('boolean'),
   archived: attr('boolean'),
-  publishedAsTbd: attr('boolean'),
-  published: attr('boolean'),
   program: belongsTo('program', {async: true}),
   cohort: belongsTo('cohort', {async: true}),
   directors: hasMany('user', {async: true}),
@@ -89,56 +87,4 @@ export default Model.extend({
     const termIds = this.hasMany('terms').ids();
     return termIds.length;
   }),
-
-  init() {
-    this._super(...arguments);
-    this.set('requiredPublicationSetFields', ['startYear', 'cohort', 'program']);
-    this.set('optionalPublicationLengthFields', ['directors', 'competencies', 'terms', 'programYearObjectives']);
-    this.set('requiredPublicationLengthFields', []);
-    this.set('optionalPublicationSetFields', []);
-  },
-  isPublished: alias('published'),
-  isNotPublished: not('isPublished'),
-  isScheduled: oneWay('publishedAsTbd'),
-  isPublishedOrScheduled: computed('publishTarget.isPublished', 'publishTarget.isScheduled', function(){
-    return this.get('publishedAsTbd') || this.get('isPublished');
-  }),
-  allPublicationIssuesCollection: collect('requiredPublicationIssues.length', 'optionalPublicationIssues.length'),
-  allPublicationIssuesLength: sum('allPublicationIssuesCollection'),
-  requiredPublicationSetFields: null,
-  requiredPublicationLengthFields: null,
-  optionalPublicationSetFields: null,
-  optionalPublicationLengthFields: null,
-  getRequiredPublicationIssues(){
-    const issues = [];
-    this.requiredPublicationSetFields.forEach(val => {
-      if(!this.get(val)){
-        issues.push(val);
-      }
-    });
-
-    this.requiredPublicationLengthFields.forEach(val => {
-      if(this.get(val + '.length') === 0){
-        issues.push(val);
-      }
-    });
-
-    return issues;
-  },
-  getOptionalPublicationIssues(){
-    const issues = [];
-    this.optionalPublicationSetFields.forEach(val => {
-      if(!this.get(val)){
-        issues.push(val);
-      }
-    });
-
-    this.optionalPublicationLengthFields.forEach(val => {
-      if(this.get(val + '.length') === 0){
-        issues.push(val);
-      }
-    });
-
-    return issues;
-  },
 });
