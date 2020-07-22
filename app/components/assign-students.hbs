@@ -1,4 +1,9 @@
-<div class="students" ...attributes>
+<div
+  class="students"
+  {{did-insert (perform this.load) @school}}
+  {{did-update (perform this.load) @school}}
+  ...attributes
+>
   <div class="header">
     <h2>
       {{t "general.unassignedStudentsSummaryTitle"}}
@@ -8,13 +13,13 @@
     <label>
       {{t "general.unassignedStudentsConfirmation" count=this.selectedUserIds.length}}:
     </label>
-    {{#if this.isLoading}}
+    {{#if (not (is-array this.cohorts))}}
       <LoadingSpinner />
     {{else if (and this.bestSelectedCohort (gt this.cohorts.length 0))}}
-      <select onchange={{action (mut this.primaryCohortId) value="target.value"}}>
+      <select {{on "change" (pick "target.value" (set this.primaryCohortId))}}>
         {{#each (sort-by "title" this.cohorts) as |cohort|}}
           <option
-            selected={{eq cohort.id (get (await this.bestSelectedCohort) "id")}}
+            selected={{eq cohort.id this.bestSelectedCohort.id}}
             value={{cohort.id}}
           >
             {{cohort.title}}
@@ -25,14 +30,13 @@
         type="button"
         class="done text"
         disabled={{or
-          this.isSaving
-          (is-pending this.bestSelectedCohort)
+          this.save.isRunning
           (lt this.cohorts.length 1)
           (eq this.selectedUserIds.length 0)
         }}
-        onclick={{perform this.save}}
+        {{on "click" (perform this.save)}}
       >
-        {{#if this.isSaving}}
+        {{#if this.save.isRunning}}
           <LoadingSpinner />
         {{else}}
           {{t "general.save"}}
@@ -44,11 +48,7 @@
     <table>
       <thead>
         <tr>
-          <th
-            class="text-left clickable"
-            colspan="1"
-
-          >
+          <th class="text-left clickable" colspan="1">
             <label>
               <input
                 checked={{eq
@@ -79,10 +79,7 @@
       <tbody>
         {{#each this.filteredStudents as |user|}}
           <tr class={{if (contains user.id this.selectedUserIds) "highlighted"}}>
-            <td
-              class="text-left"
-              colspan="1"
-            >
+            <td class="text-left" colspan="1">
               <input type="checkbox"
                 checked={{if (contains user.id this.selectedUserIds) "checked"}}
                 {{on "click" (action "toggleUserSelection" user.id)}}
@@ -110,7 +107,7 @@
       </tbody>
     </table>
   </div>
-  {{#if this.isSaving}}
+  {{#if this.save.isRunning}}
     <WaitSaving
       @currentProgress={{this.savedUserIds.length}}
       @showProgress={{true}}

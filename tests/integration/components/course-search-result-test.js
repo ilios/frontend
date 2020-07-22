@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios/tests/pages/components/course-search-result';
-import EmberObject from '@ember/object';
 
 module('Integration | Component | course-search-result', function(hooks) {
   setupRenderingTest(hooks);
@@ -11,7 +10,7 @@ module('Integration | Component | course-search-result', function(hooks) {
   test('it display course and session info properly', async function(assert) {
     assert.expect(9);
 
-    const course = EmberObject.create({
+    const course = {
       id: 1,
       title: 'Course 1',
       school: 'Medicine',
@@ -25,7 +24,7 @@ module('Integration | Component | course-search-result', function(hooks) {
       }, {
         id: 4, title: 'Session 4'
       }]
-    });
+    };
     this.set('course', course);
     await render(hbs`<CourseSearchResult @course={{course}} />`);
     assert.equal(component.courseTitle, '1980 Course 1');

@@ -9,7 +9,7 @@
   <span class="course-flag">
     {{t "general.course"}}
   </span>
-  <GlobalSearchTags @tags={{this.courseTags}} />
+  <GlobalSearchTags @tags={{@course.matchedIn}} />
   <ul>
     <li class="sessions">
       {{t "general.sessions"}}:
@@ -30,7 +30,7 @@
       <span
         class="show-more clickable link"
         role="button"
-        {{action (mut this.showMore) true}}
+        {{action (set this.showMore) true}}
       >
         <FaIcon @icon="angle-down" />
         {{t "general.showMore"}}

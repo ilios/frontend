@@ -1,12 +1,14 @@
-<section class="collapsed-stewards" ...attributes>
-  <div class="title" role="button" {{action (action expand)}}>
+<section
+  class="collapsed-stewards"
+  {{did-insert (perform this.load) @programYear}}
+  {{did-update (perform this.load) @programYear}}
+  ...attributes
+>
+  <div class="title" role="button" {{on "click" @expand}}>
     {{t "general.stewardingSchoolsAndDepartments"}}
-    ({{get (await programYear.stewards) "length"}})
+    ({{get (await @programYear.stewards) "length"}})
   </div>
-  {{#if (is-pending schoolData)}}
-    <LoadingSpinner @tagName="h3" />
-  {{/if}}
-  {{#if (is-fulfilled schoolData)}}
+  {{#if (is-array this.schoolData)}}
     <div class="content">
       <table class="condensed">
         <thead>
@@ -20,7 +22,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each (sort-by "schoolTitle" (await schoolData)) as |obj|}}
+          {{#each (sort-by "schoolTitle" this.schoolData) as |obj|}}
             <tr>
               <td class="text-left">
                 {{obj.schoolTitle}}
@@ -33,5 +35,7 @@
         </tbody>
       </table>
     </div>
+  {{else}}
+    <LoadingSpinner />
   {{/if}}
 </section>

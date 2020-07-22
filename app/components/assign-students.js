@@ -1,125 +1,104 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { isEmpty, isPresent } from '@ember/utils';
-import RSVP from 'rsvp';
-import { task } from 'ember-concurrency';
+import { all } from 'rsvp';
 import moment from 'moment';
+import { tracked } from '@glimmer/tracking';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  flashMessages: service(),
-  store: service(),
-  tagName: "",
+export default class AssignStudentsComponent extends Component {
+  @service flashMessages;
+  @service store;
 
-  school: null,
-  students: null,
+  @tracked primaryCohortId = null;
+  @tracked savedUserIds = [];
+  @tracked selectedUserIds = [];
+  @tracked cohorts;
 
-  isSaving: false,
-  primaryCohortId: null,
-  savedUserIds: null,
-  selectedUserIds: null,
-
-  cohorts: reads('loadCohorts.lastSuccessful.value'),
-  isLoading: reads('loadCohorts.isRunning'),
-
-  bestSelectedCohort: computed('cohorts.[]', 'primaryCohortId', function() {
-    const cohorts = this.cohorts;
-    const primaryCohortId = this.primaryCohortId;
-
-    if (isEmpty(cohorts)) {
+  get bestSelectedCohort() {
+    if (!this.cohorts) {
       return false;
     }
 
-    if (primaryCohortId) {
-      const currentCohort = cohorts.find((cohort) => cohort.id === primaryCohortId);
-      return currentCohort ? currentCohort : false;
+    if (this.primaryCohortId) {
+      const currentCohort = this.cohorts.findBy('id', this.primaryCohortId);
+      return currentCohort ?? false;
     } else {
-      return cohorts.lastObject;
+      return this.cohorts.lastObject;
     }
-  }),
+  }
 
-  filteredStudents: computed('savedUserIds.[]', 'students.[]', function(){
-    const savedUserIds = this.savedUserIds;
-    const students = this.students;
-    return isPresent(students)
-      ? students.filter((user) => !savedUserIds.includes(user.id))
+  get filteredStudents(){
+    return this.args.students
+      ? this.args.students.filter((user) => !this.savedUserIds.includes(user.id))
       : [];
-  }),
+  }
 
-  totalUnassignedStudents: computed('students.length', 'savedUserIds.length', function(){
-    const students = this.get('students.length');
-    const saved = this.get('savedUserIds.length');
-    return students - saved;
-  }),
+  get totalUnassignedStudents(){
+    return this.args.students.length - this.savedUserIds.length;
+  }
 
-  loadCohorts: task(function * () {
-    const school = this.school;
+  @restartableTask
+  *load(element, [school]) {
     let cohorts = yield this.store.query('cohort', {
       filters: {
-        schools: [school.get('id')],
+        schools: [school.id],
       },
     });
 
     //prefetch programYears and programs so that ember data will coalesce these requests.
-    const programYears = yield RSVP.all(cohorts.getEach('programYear'));
-    yield RSVP.all(programYears.getEach('program'));
+    const programYears = yield all(cohorts.getEach('programYear'));
+    yield all(programYears.getEach('program'));
 
     cohorts = cohorts.toArray();
-    const all = [];
+    const allCohorts = [];
 
     for(let i = 0; i < cohorts.length; i++){
       const cohort = cohorts[i];
       const obj = {
-        id: cohort.get('id'),
+        id: cohort.id,
         model: cohort
       };
-      const programYear = yield cohort.get('programYear');
-      const program = yield programYear.get('program');
-      obj.title = program.get('title') + ' ' + cohort.get('title');
-      obj.startYear = programYear.get('startYear');
-      obj.duration = program.get('duration');
+      const programYear = yield cohort.programYear;
+      const program = yield programYear.program;
+      obj.title = program.title + ' ' + cohort.title;
+      obj.startYear = programYear.startYear;
+      obj.duration = program.duration;
 
-      all.pushObject(obj);
+      allCohorts.pushObject(obj);
     }
 
-    const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
-    return all.filter(obj=> {
-      const finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
+    const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));
+    this.cohorts = allCohorts.filter(obj=> {
+      const finalYear = Number(obj.startYear) + Number(obj.duration);
       return finalYear > lastYear;
     });
-  }).restartable().on('didReceiveAttrs'),
+  }
 
-  init() {
-    this._super(...arguments);
-    this.setProperties({ savedUserIds: [], selectedUserIds: [] });
-  },
+  @action
+  toggleCheck() {
+    const currentlySelected = this.selectedUserIds.length;
+    const totalDisplayed = this.filteredStudents.length;
+    this.selectedUserIds = currentlySelected < totalDisplayed
+      ? this.filteredStudents.mapBy('id')
+      : [];
+  }
 
-  actions: {
-    toggleCheck() {
-      const currentlySelected = this.selectedUserIds.length;
-      const totalDisplayed = this.filteredStudents.length;
-      const selectedUserIds = currentlySelected < totalDisplayed
-        ? this.filteredStudents.mapBy('id')
-        : [];
-      this.set('selectedUserIds', selectedUserIds);
-    },
-
-    toggleUserSelection(userId){
-      if (this.selectedUserIds.includes(userId)) {
-        this.selectedUserIds.removeObject(userId);
-      } else {
-        this.selectedUserIds.pushObject(userId);
-      }
+  @action
+  toggleUserSelection(userId){
+    if (this.selectedUserIds.includes(userId)) {
+      this.selectedUserIds = this.selectedUserIds.filter(id => id !== userId);
+    } else {
+      this.selectedUserIds = [...this.selectedUserIds, userId];
     }
-  },
+  }
 
-  save: task(function * () {
-    this.set('savedUserIds', []);
-    this.set('isSaving', true);
+  @dropTask
+  *save() {
+    this.savedUserIds = [];
     const ids = this.selectedUserIds;
-    const cohort = yield this.bestSelectedCohort;
-    const students = this.students;
+    const cohort = this.bestSelectedCohort;
+    const students = this.args.students;
     const studentsToModify = students.filter(user => {
       return ids.includes(user.get('id'));
     });
@@ -130,12 +109,11 @@ export default Component.extend({
 
     while (studentsToModify.get('length') > 0){
       const parts = studentsToModify.splice(0, 3);
-      yield RSVP.all(parts.invoke('save'));
+      yield all(parts.invoke('save'));
       this.savedUserIds.pushObjects(parts.mapBy('id'));
     }
-    this.set('isSaving', false);
-    this.set('selectedUserIds', []);
+    this.selectedUserIds = [];
 
     this.flashMessages.success('general.savedSuccessfully');
-  }).drop()
-});
+  }
+}
