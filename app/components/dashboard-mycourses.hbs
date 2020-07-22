@@ -5,12 +5,12 @@
     </h3>
   </div>
   <div class="dashboard-block-body">
-    {{#if (is-fulfilled listOfCourses)}}
-      {{#if (get (await listOfCourses) "length")}}
+    {{#if (is-array this.listOfCourses)}}
+      {{#if this.listOfCourses.length}}
         <table>
           <tbody>
-            {{#each (await listOfCourses) as |course|}}
-              {{#if (await canEditCourses)}}
+            {{#each (sort-by "year" "title" this.listOfCourses) as |course|}}
+              {{#if this.canEditCourses}}
                 <tr class="clickable">
                   <td>
                     <LinkTo @route="course" @model={{course}}>
@@ -44,7 +44,7 @@
         {{t "general.none"}}
       {{/if}}
     {{else}}
-      <LoadingSpinner @tagName="h1" />
+      <LoadingSpinner />
     {{/if}}
   </div>
 </div>

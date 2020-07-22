@@ -1,18 +1,21 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  currentUser: service(),
-  tagName: "",
+export default class DashboardMyCoursesComponent extends Component {
+  @service currentUser;
+  @tracked listOfCourses;
+  @tracked canEditCourses;
 
-  listOfCourses: computed('currentUser.activeRelatedCoursesInThisYearAndLastYear.[]', function() {
-    return this.currentUser.get('activeRelatedCoursesInThisYearAndLastYear').then(courses => {
-      return courses.sortBy('startDate');
-    });
-  }),
+  constructor(){
+    super(...arguments);
+    this.setup.perform();
+  }
 
-  canEditCourses: computed('currentUser.performsNonLearnerFunction', async function() {
-    return this.currentUser.get('performsNonLearnerFunction');
-  })
-});
+  @restartableTask
+  * setup() {
+    this.canEditCourses = this.currentUser.performsNonLearnerFunction;
+    this.listOfCourses = yield this.currentUser.getActiveRelatedCoursesInThisYearAndLastYear();
+  }
+}
