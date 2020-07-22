@@ -240,18 +240,6 @@ export default Service.extend({
         'CAN_DELETE_USERS': [
           'SCHOOL_ADMINISTRATOR',
         ],
-        'CAN_CREATE_DEPARTMENTS': [
-          'SCHOOL_ADMINISTRATOR',
-          'SCHOOL_DIRECTOR',
-        ],
-        'CAN_UPDATE_DEPARTMENTS': [
-          'SCHOOL_ADMINISTRATOR',
-          'SCHOOL_DIRECTOR',
-        ],
-        'CAN_DELETE_DEPARTMENTS': [
-          'SCHOOL_ADMINISTRATOR',
-          'SCHOOL_DIRECTOR',
-        ],
       };
     });
 

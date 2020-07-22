@@ -12,7 +12,6 @@ export default Model.extend({
   competencies: hasMany('competencies', {async: true}),
   courses: hasMany('course', {async: true}),
   programs: hasMany('program', {async: true}),
-  departments: hasMany('department', {async: true}),
   vocabularies: hasMany('vocabulary', {async: true}),
   instructorGroups: hasMany('instructor-group', {async: true}),
   curriculumInventoryInstitution: belongsTo('curriculum-inventory-institution', {async: true}),
