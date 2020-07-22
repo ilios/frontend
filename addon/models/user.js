@@ -22,7 +22,6 @@ export default Model.extend({
   userSyncIgnore:  attr('boolean'),
   icsFeedKey:  attr('string'),
   root: attr('boolean'),
-  reminders: hasMany('user-made-reminder', {async: true}),
   reports: hasMany('report', {async: true}),
   school: belongsTo('school', {async: true}),
   authentication: belongsTo('authentication', {async: true}),
