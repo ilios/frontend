@@ -139,23 +139,6 @@ export default Service.extend({
   async canCreateSessionType(school) {
     return this.canChangeInSchool(school, 'CAN_CREATE_SESSION_TYPES');
   },
-  async canUpdateDepartment(department) {
-    const school = await department.get('school');
-    return this.canChangeInSchool(school, 'CAN_UPDATE_DEPARTMENTS');
-  },
-  async canDeleteDepartment(department) {
-    const school = await department.get('school');
-    return this.canChangeInSchool(school, 'CAN_DELETE_DEPARTMENTS');
-  },
-  async canUpdateDepartmentInSchool(school) {
-    return this.canChangeInSchool(school, 'CAN_UPDATE_DEPARTMENTS');
-  },
-  async canDeleteDepartmentInSchool(school) {
-    return this.canChangeInSchool(school, 'CAN_DELETE_DEPARTMENTS');
-  },
-  async canCreateDepartment(school) {
-    return this.canChangeInSchool(school, 'CAN_CREATE_DEPARTMENTS');
-  },
   async canUpdateProgram(program) {
     const school = await program.get('school');
     if (await this.canChangeInSchool(school, 'CAN_UPDATE_ALL_PROGRAMS')) {
