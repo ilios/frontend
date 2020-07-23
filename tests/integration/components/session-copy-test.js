@@ -73,7 +73,7 @@ module('Integration | Component | session copy', function(hooks) {
   });
 
   test('copy session', async function(assert) {
-    assert.expect(24);
+    assert.expect(22);
 
     const thisYear = parseInt(moment().format('YYYY'), 10);
     this.server.create('academic-year', {
@@ -98,12 +98,10 @@ module('Integration | Component | session copy', function(hooks) {
     const meshDescriptor = this.server.create('mesh-descriptor');
     const term = this.server.create('term');
     const sessionType = this.server.create('session-type');
-    const sessionDescription = this.server.create('session-description', {
-      description: 'test description'
-    });
 
     const session = this.server.create('session', {
       title: 'old session',
+      description: 'test description',
       course,
       attireRequired: true,
       equipmentRequired: false,
@@ -111,7 +109,6 @@ module('Integration | Component | session copy', function(hooks) {
       attendanceRequired: true,
       instructionalNotes: 'old session notes',
       sessionType,
-      sessionDescription,
       meshDescriptors: [meshDescriptor],
       terms: [term],
       learningMaterials: [sessionLearningMaterial],
@@ -150,6 +147,7 @@ module('Integration | Component | session copy', function(hooks) {
     assert.equal(session.supplemental, newSession.supplemental);
     assert.equal(session.attendanceRequired, newSession.attendanceRequired);
     assert.equal(session.title, newSession.title);
+    assert.equal(session.description, newSession.description);
     assert.equal(session.instructionalNotes, newSession.instructionalNotes);
 
     const sessionLearningMaterials = await this.owner.lookup('service:store').findAll('session-learning-material');
@@ -161,12 +159,6 @@ module('Integration | Component | session copy', function(hooks) {
     assert.equal(sessionLearningMaterial.position, newSessionLm.position);
     assert.equal(newSessionLm.belongsTo('session').id(), newSession.id);
     assert.equal(newSessionLm.belongsTo('learningMaterial').id(), learningMaterial.id);
-
-    const sessionDescriptions = await this.owner.lookup('service:store').findAll('session-description');
-    assert.equal(sessionLearningMaterials.length, 2);
-    const newSessionDescription = sessionDescriptions.findBy('id', '2');
-    assert.equal(sessionDescription.description, newSessionDescription.description);
-    assert.equal(newSessionDescription.belongsTo('session').id(), newSession.id);
 
     const sessionObjectives = await this.owner.lookup('service:store').findAll('session-objective');
     assert.equal(sessionObjectives.length, 2);
