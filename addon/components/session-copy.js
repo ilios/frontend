@@ -91,6 +91,7 @@ export default class SessionCopyComponent extends Component {
       'session',
       sessionToCopy.getProperties(
         'title',
+        'description',
         'attireRequired',
         'equipmentRequired',
         'supplemental',
@@ -108,13 +109,6 @@ export default class SessionCopyComponent extends Component {
       const ilm = this.store.createRecord('ilmSession', ilmToCopy.getProperties('hours', 'dueDate'));
       ilm.set('session', session);
       toSave.pushObject(ilm);
-    }
-
-    const sessionDescriptionToCopy = yield sessionToCopy.sessionDescription;
-    if (sessionDescriptionToCopy) {
-      const sessionDescription = this.store.createRecord('sessionDescription', sessionDescriptionToCopy.getProperties('description'));
-      sessionDescription.set('session', session);
-      toSave.pushObject(sessionDescription);
     }
 
     const learningMaterialsToCopy = yield sessionToCopy.learningMaterials;

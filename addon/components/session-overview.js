@@ -34,7 +34,6 @@ export default class SessionOverview extends Component {
   @tracked showSpecialAttireRequired = false;
   @tracked showSpecialEquipmentRequired = false;
   @tracked isIndependentLearning = false;
-  @tracked description;
 
   get filteredSessionTypes() {
     const selectedSessionTypeId = isEmpty(this.sessionType) ? -1 : this.sessionType.id;
@@ -53,7 +52,6 @@ export default class SessionOverview extends Component {
     const school = yield course.school;
     const {
       ilmSession,
-      sessionDescription,
       sessionType,
       showCopy,
       showSessionAttendanceRequired,
@@ -63,7 +61,6 @@ export default class SessionOverview extends Component {
     } = yield hash({
       course: session.course,
       ilmSession: session.ilmSession,
-      sessionDescription: session.sessionDescription,
       sessionType: session.sessionType,
       showCopy: this.getShowCopy(session),
       showSessionAttendanceRequired: school.getConfigValue('showSessionAttendanceRequired'),
@@ -90,9 +87,7 @@ export default class SessionOverview extends Component {
     }
     this.updatedAt = moment(session.updatedAt).format("L LT");
     this.sessionTypes = sessionTypes || [];
-    if (sessionDescription) {
-      this.description = sessionDescription.description;
-    }
+    this.description = session.description;
   }
 
   /**
@@ -263,31 +258,18 @@ export default class SessionOverview extends Component {
     }
   }
 
-  @action
-  async saveDescription() {
+  @task
+  *saveDescription() {
     this.addErrorDisplayFor('description');
-    const isValid = await this.isValid('description');
+    const isValid = yield this.isValid('description');
 
     if (! isValid) {
       return false;
     }
 
     this.removeErrorDisplayFor('description');
-    let sessionDescription = await this.args.session.sessionDescription;
-    if (isEmpty(this.description) && sessionDescription){
-      await sessionDescription.deleteRecord();
-    } else {
-      if (! sessionDescription) {
-        sessionDescription = this.store.createRecord('session-description');
-        sessionDescription.session = this.args.session;
-      }
-
-      sessionDescription.description = this.description;
-    }
-
-    if (sessionDescription) {
-      await sessionDescription.save();
-    }
+    this.args.session.description = this.description;
+    yield this.args.session.save();
   }
 
   @action
@@ -305,6 +287,11 @@ export default class SessionOverview extends Component {
   }
 
   @action
+  revertDescriptionChanges() {
+    this.description = this.args.session.description;
+  }
+
+  @action
   changeInstructionalNotes(html){
     this.addErrorDisplayFor('instructionalNotes');
     const noTagsText = html.replace(/(<([^>]+)>)/ig,"");
@@ -315,16 +302,6 @@ export default class SessionOverview extends Component {
       html = null;
     }
     this.instructionalNotes = html;
-  }
-
-  @task
-  *revertDescriptionChanges(){
-    const sessionDescription = yield this.args.session.sessionDescription;
-    if (sessionDescription) {
-      this.description = sessionDescription.description;
-    } else {
-      this.description = null;
-    }
   }
 
   @task
