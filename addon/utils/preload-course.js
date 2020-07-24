@@ -29,7 +29,6 @@ export default async function preloadCourse(store, courseModel) {
     promises.push(store.query('session-type', { filters: { sessions } }));
     promises.push(store.query('term', { filters: { sessions } }));
     promises.push(store.query('session-learning-material', { filters: { session: sessions } }));
-    promises.push(store.query('session-description', { filters: { session: sessions } }));
     promises.push(store.query('session-objective', { filters: { session: sessions } }));
   } else {
     for (let i = 0; i < sessions.length; i += maximumSessionLoad) {
@@ -37,7 +36,6 @@ export default async function preloadCourse(store, courseModel) {
       promises.push(store.query('session-type', { filters: { sessions: slice } }));
       promises.push(store.query('term', { filters: { sessions: slice } }));
       promises.push(store.query('session-learning-material', { filters: { session: slice } }));
-      promises.push(store.query('session-description', { filters: { session: slice } }));
       promises.push(store.query('session-objective', { filters: { session: slice } }));
     }
   }

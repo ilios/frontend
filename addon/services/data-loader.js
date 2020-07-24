@@ -97,7 +97,6 @@ export default class DataLoaderService extends Service {
         'ilmSession.instructors',
         'ilmSession.instructorGroups.users',
         'ilmSession.learnerGroups.users',
-        'sessionDescription',
         'terms.vocabulary',
         'terms.parent.parent.parent',
         'meshDescriptors.trees',

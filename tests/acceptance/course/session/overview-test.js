@@ -24,7 +24,6 @@ module('Acceptance | Session - Overview', function(hooks) {
     this.sessionTypes = this.server.createList('sessionType', 2, {
       school: this.school
     });
-    this.sessionDescription = this.server.create('sessionDescription');
   });
 
   test('check fields', async function(assert) {
@@ -32,15 +31,14 @@ module('Acceptance | Session - Overview', function(hooks) {
       school: this.school,
       administeredSchools: [this.school]
     });
-    this.server.create('session', {
+    const session = this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
-      sessionDescription: this.sessionDescription,
       instructionalNotes: 'session notes',
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(page.overview.sessionType.value, 'session type 0');
-    assert.equal(page.overview.sessionDescription.value, this.sessionDescription.description);
+    assert.equal(page.overview.sessionDescription.value, session.description);
     assert.equal(page.overview.instructionalNotes.value, 'session notes');
     assert.notOk(page.overview.ilmHours.isVisible);
   });
@@ -336,15 +334,14 @@ module('Acceptance | Session - Overview', function(hooks) {
 
   test('change description', async function(assert) {
     await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
-    this.server.create('session', {
+    const session = this.server.create('session', {
       course: this.course,
-      sessionDescription: this.sessionDescription
     });
     const newDescription = 'some new thing';
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.equal(currentRouteName(), 'session.index');
-    assert.equal(page.overview.sessionDescription.value, this.sessionDescription.description);
+    assert.equal(page.overview.sessionDescription.value, session.description);
     await page.overview.sessionDescription.edit();
     await page.overview.sessionDescription.set(newDescription);
     await page.overview.sessionDescription.save();
@@ -355,6 +352,7 @@ module('Acceptance | Session - Overview', function(hooks) {
     await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
     this.server.create('session', {
       course: this.course,
+      description: null,
     });
     const newDescription = 'some new thing';
     await page.visit({ courseId: 1, sessionId: 1 });
@@ -371,6 +369,7 @@ module('Acceptance | Session - Overview', function(hooks) {
     await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
     this.server.create('session', {
       course: this.course,
+      description: null,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
 
@@ -384,14 +383,13 @@ module('Acceptance | Session - Overview', function(hooks) {
 
   test('remove description', async function(assert) {
     await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
-    this.server.create('session', {
+    const session = this.server.create('session', {
       course: this.course,
-      sessionDescription: this.sessionDescription
     });
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.equal(currentRouteName(), 'session.index');
-    assert.equal(page.overview.sessionDescription.value, this.sessionDescription.description);
+    assert.equal(page.overview.sessionDescription.value, session.description);
     await page.overview.sessionDescription.edit();
     await page.overview.sessionDescription.set('<p>&nbsp</p><div></div><span>  </span>');
     await page.overview.sessionDescription.save();
@@ -402,6 +400,7 @@ module('Acceptance | Session - Overview', function(hooks) {
     await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
     this.server.create('session', {
       course: this.course,
+      description: null,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
 

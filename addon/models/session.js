@@ -9,6 +9,7 @@ const { alias, collect, mapBy, sum, oneWay, not } = computed;
 
 export default Model.extend({
   title: attr('string'),
+  description: attr('string'),
   attireRequired: attr('boolean'),
   equipmentRequired: attr('boolean'),
   supplemental: attr('boolean'),
@@ -22,7 +23,6 @@ export default Model.extend({
   ilmSession: belongsTo('ilm-session', { async: true }),
   sessionObjectives: hasMany('session-objective', { async: true }),
   meshDescriptors: hasMany('mesh-descriptor', { async: true }),
-  sessionDescription: belongsTo('session-description', { async: true }),
   learningMaterials: hasMany('session-learning-material', { async: true }),
   offerings: hasMany('offering', { async: true }),
   administrators: hasMany('user', {
@@ -390,4 +390,12 @@ export default Model.extend({
 
     return issues;
   },
+
+  textDescription: computed('description', function(){
+    var title = this.get('description');
+    if(title === undefined){
+      return '';
+    }
+    return title.replace(/(<([^>]+)>)/ig,"");
+  }),
 });

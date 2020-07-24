@@ -297,8 +297,8 @@
                 @value={{this.description}}
                 @renderHtml={{true}}
                 @isSaveDisabled={{await (compute (fn this.hasErrorFor) "description")}}
-                @save={{this.saveDescription}}
-                @close={{perform this.revertDescriptionChanges}}
+                @save={{perform this.saveDescription}}
+                @close={{this.revertDescriptionChanges}}
                 @clickPrompt={{t "general.clickToEdit"}}
               >
                 <HtmlEditor @content={{this.description}} @update={{this.changeDescription}} />

@@ -27,7 +27,6 @@ module('Acceptance | Session - Publication Check', function(hooks) {
     this.sessionTypes = this.server.createList('sessionType', 2, {
       school
     });
-    this.sessionDescription = this.server.create('sessionDescription');
     this.term = this.server.create('term', { vocabulary });
     this.meshDescriptor = this.server.create('meshDescriptor');
   });
@@ -38,7 +37,6 @@ module('Acceptance | Session - Publication Check', function(hooks) {
       terms: [ this.term ],
       meshDescriptors: [ this.meshDescriptor ],
       sessionType: this.sessionTypes[0],
-      sessionDescription: this.sessionDescription
     });
     this.server.create('sessionObjective', { session });
     this.server.create('offering', { session });
