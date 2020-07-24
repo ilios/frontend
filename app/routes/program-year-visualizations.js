@@ -17,10 +17,11 @@ export default Route.extend(AuthenticatedRouteMixin, {
     const promises = [
       model.get('program'),
       model.get('competencies'),
-      model.get('objectives'),
+      model.get('programYearObjectives'),
     ];
     if (courses.length) {
-      promises.push(store.query('objective', { filters: { fullCourses: courses } }));
+      promises.push(store.query('course-objective', { filters: { courses } }));
+      promises.push(store.query('session-objective', { filters: { courses } }));
     }
 
     return all(promises);

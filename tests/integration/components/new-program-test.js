@@ -81,12 +81,10 @@ module('Integration | Component | new program', function(hooks) {
   });
 
   test('save', async function (assert) {
-    assert.expect(5);
+    assert.expect(3);
     this.set('cancel', () => {});
     this.set('save', async (program) => {
       assert.equal(program.get('title'), 'foobar');
-      assert.equal(program.get('published'), true);
-      assert.equal(program.get('publishedAsTbd'), false);
     });
 
     await render(hbs`<NewProgram @save={{action save}} @cancel={{action cancel}} />`);

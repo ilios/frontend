@@ -13,16 +13,14 @@ module('Integration | Component | program-year/objectives', function(hooks) {
   test('it renders and is accessible', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
+    const programYear = this.server.create('programYear', { program });
     const domains = this.server.createList('competency', 2, { school });
 
     const competencies = this.server.createList('competency', 2, { school, parent: domains[0] });
     this.server.createList('competency', 2, { school, parent: domains[1] });
 
-    const objective1 = this.server.create('objective', { competency: competencies[0] });
-    this.server.create('program-year-objective', { programYear, objective: objective1 });
-    const objective2 = this.server.create('objective');
-    this.server.create('program-year-objective', { programYear, objective: objective2 });
+    this.server.create('programYearObjective', { programYear, competency: competencies[0] });
+    this.server.create('programYearObjective', { programYear });
 
     const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
 
@@ -35,13 +33,13 @@ module('Integration | Component | program-year/objectives', function(hooks) {
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 2);
-    assert.equal(component.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.equal(component.objectiveList.objectives[0].description.text, 'program-year objective 0');
     assert.ok(component.objectiveList.objectives[0].competency.hasCompetency);
     assert.equal(component.objectiveList.objectives[0].competency.competencyTitle, 'competency 2');
     assert.equal(component.objectiveList.objectives[0].competency.domainTitle, '(competency 0)');
     assert.ok(component.objectiveList.objectives[0].meshDescriptors.isEmpty);
 
-    assert.equal(component.objectiveList.objectives[1].description.text, 'objective 1');
+    assert.equal(component.objectiveList.objectives[1].description.text, 'program-year objective 1');
     assert.notOk(component.objectiveList.objectives[1].competency.hasCompetency);
     assert.ok(component.objectiveList.objectives[1].meshDescriptors.isEmpty);
 
@@ -52,16 +50,12 @@ module('Integration | Component | program-year/objectives', function(hooks) {
   test('it loads data for a school domains', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
+    const programYear = this.server.create('programYear', { program });
     const domains = this.server.createList('competency', 2, { school });
 
     const competencies = this.server.createList('competency', 3, { school, parent: domains[0] });
     this.server.createList('competency', 2, { school, parent: domains[1] });
-
-    const objective = this.server.create('objective', {
-      competency: competencies[0],
-    });
-    this.server.create('program-year-objective', { programYear, objective });
+    this.server.create('program-year-objective', { programYear, competency: competencies[0] });
     const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
@@ -73,7 +67,7 @@ module('Integration | Component | program-year/objectives', function(hooks) {
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 1);
-    assert.equal(component.objectiveList.objectives[0].description.text, 'objective 0');
+    assert.equal(component.objectiveList.objectives[0].description.text, 'program-year objective 0');
     assert.ok(component.objectiveList.objectives[0].competency.hasCompetency);
     await component.objectiveList.objectives[0].competency.manage();
     const m = component.objectiveList.objectives[0].competencyManager;

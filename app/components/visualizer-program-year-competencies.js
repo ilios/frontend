@@ -17,82 +17,80 @@ export default Component.extend({
   tooltipSessions: null,
   tooltipTitle: null,
 
-  programYearName: computed('programYear.acdemicYear', 'programYear.cohort.{title,classOfYear}', async function() {
+  programYearName: computed('programYear.academicYear', 'programYear.cohort.{title,classOfYear}', async function() {
     const intl = this.intl;
     const programYear = this.programYear;
-    const cohort = await programYear.get('cohort');
-    const title = cohort.get('title');
-    const year = await cohort.get('classOfYear');
-    const classOfYear = intl.t('classOfYear', { year });
+    const cohort = await programYear.cohort;
+    const title = cohort.title;
+    const year = await cohort.classOfYear;
+    const classOfYear = intl.t('general.classOf', { year });
     return title ? title : classOfYear;
   }),
 
-  objectiveObjects: computed('programYear.objectives.[]', async function() {
+  objectiveObjects: computed('programYear.programYearObjectives.[]', async function() {
     const programYear = this.programYear;
-    const buildTree = async function (parent) {
-      const children = await parent.get('children');
-      const childrenTree = await map(children.toArray(), buildTree);
-      const courses = await parent.get('courses');
-      const sessions = await parent.get('sessions');
-      const courseTitles = courses.mapBy('title');
-      const sessionTitles = sessions.mapBy('title');
-
-      const rhett = {
-        name: parent.get('title'),
+    const buildTreeLevel = async function (parent, childrenTree, sessionTitle, courseTitle) {
+      return  {
+        name: parent.title,
         children: childrenTree,
         meta: {
-          courseTitles,
-          sessionTitles
+          courseTitle,
+          sessionTitle
         }
       };
-
-      return rhett;
     };
-    const objectives = await programYear.get('objectives');
+    const buildTree = async function (programYearObjective) {
+      const courseObjectives = await programYearObjective.courseObjectives;
+      const courseObjectivesTree = await map(courseObjectives.toArray(), async courseObjective => {
+        const sessionObjectives = await courseObjective.sessionObjectives;
+        const sessionObjectivesTree = await map(sessionObjectives.toArray(), async sessionObjective => {
+          const session = await sessionObjective.session;
+          return buildTreeLevel(sessionObjective, [], session.title, null);
+        });
+        const course = await courseObjective.course;
+        return buildTreeLevel(courseObjective, sessionObjectivesTree, null, course.title);
+      });
+      return buildTreeLevel(programYearObjective, courseObjectivesTree, null, null);
+    };
+    const objectives = await programYear.programYearObjectives;
     const objectivesWithCompetency = await filter(objectives.toArray(), async objective => {
-      const competency = await objective.get('competency');
+      const competency = await objective.competency;
       return !!competency;
     });
-    const objectiveObjects = await map(objectivesWithCompetency, async objective => {
+    return await map(objectivesWithCompetency, async objective => {
       const obj = await buildTree(objective);
-      const competency = await objective.get('competency');
-      obj.competencyId = competency.get('id');
-
+      const competency = await objective.competency;
+      obj.competencyId = competency.id;
       return obj;
     });
-
-    return objectiveObjects;
   }),
 
   competencyObjects: computed('programYear.competencies.[]', 'objectiveObjects.[]', async function() {
     const programYear = this.programYear;
     const objectiveObjects = await this.objectiveObjects;
-    const competencies = await programYear.get('competencies');
-    const competencyObjects = await map(competencies.toArray(), async competency => {
-      const domain = await competency.get('domain');
+    const competencies = await programYear.competencies;
+    return await map(competencies.toArray(), async competency => {
+      const domain = await competency.domain;
 
-      const domainId = domain.get('id');
-      const competencyId = competency.get('id');
-      const competencyTitle = competency.get('title');
+      const domainId = domain.id;
+      const competencyId = competency.id;
+      const competencyTitle = competency.title;
       return {
         domainId,
         name: competencyTitle,
         children: objectiveObjects.filterBy('competencyId', competencyId)
       };
     });
-
-    return competencyObjects;
   }),
 
   domainObjects: computed('programYear.competencies.[]', 'competencyObjects.[]', async function() {
     const programYear = this.programYear;
-    const competencies = await programYear.get('competencies');
+    const competencies = await programYear.competencies;
     const competencyObjects = await this.competencyObjects;
-    const domains = await map(competencies.toArray(), async competency => competency.get('domain'));
-
-    const domainObjects = domains.uniq().map(domain => {
-      const id = domain.get('id');
-      const name = domain.get('title');
+    const domains = await map(competencies.toArray(), async competency => competency.domain);
+    return domains.uniq().map(domain => {
+      const id = domain.id;
+      const name = domain.title;
       const domainCompetencyObjects = competencyObjects.filterBy('domainId', id);
 
       const children = domainCompetencyObjects.reduce((arr, { domainId, name, children }) => {
@@ -111,14 +109,11 @@ export default Component.extend({
         meta: {}
       };
     });
-
-    return domainObjects;
   }),
 
   data: computed('domainObjects.[]', async function() {
     const name = await this.programYearName;
     const children = await this.domainObjects;
-
     return {
       name,
       children,
@@ -138,14 +133,16 @@ export default Component.extend({
     const { name, children, meta } = obj;
 
     const getCourseTitles = (courseTitles, {children, meta}) => {
-      courseTitles.pushObjects(meta.courseTitles || []);
-
+      if (meta.courseTitle) {
+        courseTitles.pushObject(meta.courseTitle);
+      }
       return children.reduce(getCourseTitles, courseTitles);
     };
     const allCourseTitles = children.reduce(getCourseTitles, meta.courseTitles || []);
     const getSessionTitles = (sessionTitles, {children, meta}) => {
-      sessionTitles.pushObjects(meta.sessionTitles || []);
-
+      if (meta.sessionTitle) {
+        sessionTitles.pushObject(meta.sessionTitle);
+      }
       return children.reduce(getSessionTitles, sessionTitles);
     };
     const allSessionTitles = children.reduce(getSessionTitles, meta.sessionTitles || []);

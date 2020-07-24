@@ -9,13 +9,11 @@ module('Integration | Component | program header', function(hooks) {
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(3);
+    assert.expect(2);
     const school = this.server.create('school', {} );
     const program = this.server.create('program', {
       school,
       title: 'Aardvark',
-      published: false,
-      publishedAsTbd: false
     });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
@@ -25,7 +23,6 @@ module('Integration | Component | program header', function(hooks) {
     await render(hbs`<ProgramHeader @program={{program}} @canUpdate={{canUpdate}} />`);
     assert.dom('.title h4').hasText('Aardvark');
     assert.dom('.title h4 .clickable').exists();
-    assert.dom('.program-publication button').exists();
   });
 
   test('read-only', async function(assert) {
@@ -34,8 +31,6 @@ module('Integration | Component | program header', function(hooks) {
     const program = this.server.create('program', {
       school,
       title: 'Aardvark',
-      published: false,
-      publishedAsTbd: false
     });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
@@ -48,32 +43,12 @@ module('Integration | Component | program header', function(hooks) {
     assert.dom('.program-publication button').doesNotExist();
   });
 
-  test('no activation button on fully published program', async function(assert) {
-    assert.expect(1);
-    const school = this.server.create('school', {} );
-    const program = this.server.create('program', {
-      school,
-      title: 'Aardvark',
-      published: true,
-      publishedAsTbd: false
-    });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
-
-    this.set('program', programModel);
-    this.set('canUpdate', false);
-
-    await render(hbs`<ProgramHeader @program={{program}} @canUpdate={{canUpdate}} />`);
-    assert.dom('.program-publication button').doesNotExist();
-  });
-
   test('update title fails - title too short', async function(assert) {
     assert.expect(2);
     const school = this.server.create('school', {} );
     const program = this.server.create('program', {
       school,
       title: 'Aardvark',
-      published: true,
-      publishedAsTbd: false
     });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
@@ -94,8 +69,6 @@ module('Integration | Component | program header', function(hooks) {
     const program = this.server.create('program', {
       school,
       title: 'Aardvark',
-      published: true,
-      publishedAsTbd: false
     });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
@@ -116,8 +89,6 @@ module('Integration | Component | program header', function(hooks) {
     const program = this.server.create('program', {
       school,
       title: 'Aardvark',
-      published: true,
-      publishedAsTbd: false
     });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
@@ -138,8 +109,6 @@ module('Integration | Component | program header', function(hooks) {
     const program = this.server.create('program', {
       school,
       title: 'Aardvark',
-      published: true,
-      publishedAsTbd: false
     });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
@@ -161,8 +130,6 @@ module('Integration | Component | program header', function(hooks) {
     const program = this.server.create('program', {
       school,
       title: 'Aardvark',
-      published: true,
-      publishedAsTbd: false
     });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
@@ -176,29 +143,5 @@ module('Integration | Component | program header', function(hooks) {
     await click('.title h4 .cancel');
     assert.dom('.title h4 ').hasText('Aardvark');
     assert.equal(programModel.get('title'), 'Aardvark');
-  });
-
-  test('activate', async function(assert) {
-    assert.expect(5);
-    const school = this.server.create('school', {} );
-    const program = this.server.create('program', {
-      school,
-      title: 'Aardvark',
-      published: false,
-      publishedAsTbd: true
-    });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
-
-    this.set('program', programModel);
-    this.set('canUpdate', true);
-
-    const activationBtn = '.program-publication button';
-    await render(hbs`<ProgramHeader @program={{program}} @canUpdate={{canUpdate}} />`);
-    assert.equal(programModel.get('published'), false);
-    assert.equal(programModel.get('publishedAsTbd'), true);
-    await click(activationBtn);
-    assert.dom(activationBtn).doesNotExist();
-    assert.equal(programModel.get('published'), true);
-    assert.equal(programModel.get('publishedAsTbd'), false);
   });
 });

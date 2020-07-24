@@ -8,26 +8,19 @@ export default class ProgramYearObjectiveListItemExpandedComponent extends Compo
   @tracked courseObjects;
 
   @restartableTask
-  *load(elemement, [objective]) {
-    if (!objective) {
+  *load(element, [programYearObjective]) {
+    if (!programYearObjective) {
       return;
     }
-    const children = (yield objective.children).toArray();
-    const objectiveObjects = yield map(children, async courseObjective => {
-      const courses = await courseObjective.courses;
-      const obj = {
+    const courseObjectives = (yield programYearObjective.courseObjectives).toArray();
+    const objectiveObjects = yield map(courseObjectives, async courseObjective => {
+      const course = await courseObjective.course;
+      return {
         title: courseObjective.title,
-        courseId: null,
-        courseTitle: null,
-        courseExternalId: null
+        courseId: course.id,
+        courseTitle: course.title,
+        courseExternalId: course.externalId
       };
-      if (courses.length) {
-        const course = courses.firstObject;
-        obj.courseId = course.id;
-        obj.courseTitle = course.title;
-        obj.courseExternalId = course.externalId;
-      }
-      return obj;
     });
     this.courseObjects = objectiveObjects.reduce((set, obj) => {
       let existing = set.findBy('id', obj.courseId);

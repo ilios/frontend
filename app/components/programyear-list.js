@@ -5,7 +5,6 @@ import ObjectProxy from '@ember/object/proxy';
 import { run } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
-import { hash } from 'rsvp';
 import { task } from 'ember-concurrency';
 import moment from 'moment';
 
@@ -117,17 +116,6 @@ export default Component.extend({
         }
       });
     },
-
-    async activateProgramYear(programYearProxy) {
-      const permission = await programYearProxy.get('userCanActivate');
-      if (permission) {
-        run(()=>{
-          programYearProxy.set('isSaving', true);
-        });
-        await this.activate(programYearProxy.get('content'));
-        programYearProxy.set('isSaving', false);
-      }
-    }
   },
 
   resetSaveItems() {
@@ -150,8 +138,6 @@ export default Component.extend({
     const newProgramYear = store.createRecord('program-year', {
       program,
       startYear,
-      published: true,
-      publishedAsTbd: false,
     });
     this.incrementSavedItems();
 
@@ -165,14 +151,10 @@ export default Component.extend({
       const terms = yield latestProgramYear.get('terms');
       itemsToSave++;
       this.incrementSavedItems();
-      const stewards = yield latestProgramYear.get('stewards');
-      itemsToSave++;
-      this.incrementSavedItems();
 
       newProgramYear.get('directors').pushObjects(directors.toArray());
       newProgramYear.get('competencies').pushObjects(competencies.toArray());
       newProgramYear.get('terms').pushObjects(terms.toArray());
-      newProgramYear.get('stewards').pushObjects(stewards.toArray());
     }
     const savedProgramYear = yield newProgramYear.save();
     itemsToSave++;
@@ -186,22 +168,21 @@ export default Component.extend({
 
       for (let i = 0; i < programYearObjectives.length; i++) {
         const programYearObjectiveToCopy = programYearObjectives[i];
-        const objectiveToCopy = yield programYearObjectiveToCopy.objective;
         const terms = yield programYearObjectiveToCopy.terms;
-        let ancestor = yield objectiveToCopy.get('ancestor');
+        const meshDescriptors = yield programYearObjectiveToCopy.meshDescriptors;
+        const competency = yield programYearObjectiveToCopy.competency;
+        let ancestor = yield programYearObjectiveToCopy.ancestor;
+
         if (isEmpty(ancestor)) {
-          ancestor = objectiveToCopy;
+          ancestor = programYearObjectiveToCopy;
         }
 
-        const newObjective = store.createRecord('objective', objectiveToCopy.getProperties(['title']));
-        const props = yield hash(objectiveToCopy.getProperties('meshDescriptors', 'competency'));
-        newObjective.setProperties(props);
-        newObjective.set('ancestor', ancestor);
-        yield newObjective.save();
         const newProgramYearObjective = store.createRecord('program-year-objective', {
           position: programYearObjectiveToCopy.position,
-          objective: newObjective,
           programYear: savedProgramYear,
+          ancestor,
+          meshDescriptors,
+          competency,
           terms
         });
         yield newProgramYearObjective.save();
@@ -243,17 +224,4 @@ const ProgramYearProxy = ObjectProxy.extend({
     const permissionChecker = this.permissionChecker;
     return permissionChecker.canUnlockProgramYear(programYear);
   }),
-
-  userCanActivate: computed(
-    'content.locked',
-    'content.archived',
-    'content.isScheduled',
-    'content.isPublished',
-    async function() {
-      const programYear = this.content;
-      const permissionChecker = this.permissionChecker;
-      const canBeUpdated = await permissionChecker.canUpdateProgramYear(programYear);
-      const isNotFullyPublished = (programYear.get('isScheduled') || ! programYear.get('isPublished'));
-      return (isNotFullyPublished && canBeUpdated);
-    })
 });

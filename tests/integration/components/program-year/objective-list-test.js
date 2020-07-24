@@ -14,25 +14,19 @@ module('Integration | Component | program-year/objective-list', function(hooks) 
     assert.expect(14);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
+    const programYear = this.server.create('programYear', { program });
     const vocabulary = this.server.create('vocabulary', { school });
     const term1 = this.server.create('term', { vocabulary });
     const term2 = this.server.create('term', { vocabulary });
-    const objective1 = this.server.create('objective', {
-      title: 'Objective A',
-    });
-    this.server.create('program-year-objective', {
+    this.server.create('programYearObjective', {
       programYear,
-      objective: objective1,
+      title: 'Objective A',
       position: 0,
       terms: [ term1 ]
     });
-    const objective2 = this.server.create('objective', {
-      title: 'Objective B',
-    });
-    this.server.create('program-year-objective', {
+    this.server.create('programYearObjective', {
       programYear,
-      objective: objective2,
+      title: 'Objective B',
       position: 0,
       terms: [ term2 ]
     });
@@ -68,7 +62,7 @@ module('Integration | Component | program-year/objective-list', function(hooks) 
     assert.expect(2);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
+    const programYear = this.server.create('programYear', { program });
     const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
     this.set('programYear', programYearModel);
 
@@ -86,9 +80,8 @@ module('Integration | Component | program-year/objective-list', function(hooks) 
     assert.expect(3);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    const programYear = this.server.create('program-year', { program });
-    const objective = this.server.create('objective');
-    this.server.create('program-year-objective', { programYear, objective, position: 0 });
+    const programYear = this.server.create('programYear', { program });
+    this.server.create('programYearObjective', { programYear, position: 0 });
     const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
     this.set('programYear', programYearModel);
 

@@ -52,7 +52,7 @@ export default Controller.extend({
     if (isEmpty(school)){
       return [];
     } else {
-      const filters = { published: true, school: school.id };
+      const filters = { school: school.id };
       const programs = await this.store.query('program', { filters });
       return programs.toArray();
     }

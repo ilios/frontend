@@ -36,8 +36,7 @@ export default Controller.extend({
     if(isEmpty(school)){
       return [];
     }
-    const programs = await school.programs;
-    return programs.filterBy('published');
+    return school.programs;
   }),
 
   programYears: computed('selectedProgram', 'selectedProgram.programYears.[]', async function() {
@@ -45,8 +44,7 @@ export default Controller.extend({
     if(isEmpty(program)){
       return [];
     }
-    const programYears = await program.programYears;
-    return programYears.filterBy('published');
+    return program.programYears;
   }),
 
   learnerGroups: computed('selectedProgramYear.cohort.rootLevelLearnerGroups.[]', 'newGroup', 'deletedGroup', async function() {

@@ -7,9 +7,11 @@ module('Integration | Component | program-year/manage-objective-competency-item'
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
+    const title = 'lorem ipsum';
     this.set('isSelected', true);
+    this.set('title', title);
     await render(hbs`<ProgramYear::ManageObjectiveCompetencyItem
-      @title="objective"
+      @title={{this.title}}
       @isSelected={{this.isSelected}}
       @add={{noop}}
       @remove={{noop}}
@@ -18,12 +20,12 @@ module('Integration | Component | program-year/manage-objective-competency-item'
     assert.dom('input[type="radio"]').exists();
     assert.dom('input').isChecked();
     assert.dom('label').hasClass('selected');
-    assert.dom('label').hasText('objective');
+    assert.dom('label').hasText(title);
 
     this.set('isSelected', false);
     assert.dom('input[type="radio"]').exists();
     assert.dom('input').isNotChecked();
     assert.dom('label').doesNotHaveClass('selected');
-    assert.dom('label').hasText('objective');
+    assert.dom('label').hasText(title);
   });
 });

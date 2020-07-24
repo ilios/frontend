@@ -5,12 +5,4 @@ export default Component.extend({
 
   canUpdate: false,
   programYear: null,
-
-  actions: {
-    async activate(programYear) {
-      programYear.set('published', true);
-      programYear.set('publishedAsTbd', false);
-      await programYear.save();
-    }
-  }
 });

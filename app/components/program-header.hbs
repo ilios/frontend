@@ -32,11 +32,4 @@
       {{/if}}
     </h4>
   </div>
-  <div class="program-publication">
-    {{#if (and canUpdate (or program.isScheduled (not program.isPublished)))}}
-      <button type="button" {{action "activate" program}}>
-        {{t "general.activate"}}
-      </button>
-    {{/if}}
-  </div>
 </div>

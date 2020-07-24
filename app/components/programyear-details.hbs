@@ -14,7 +14,7 @@
       @expand={{action setPyCompetencyDetails true}}
     />
   {{/if}}
-  {{#if (or (eq programYear.objectives.length 0) pyObjectiveDetails)}}
+  {{#if (or (eq programYear.programYearObjectives.length 0) pyObjectiveDetails)}}
     <ProgramYear::Objectives
       @programYear={{@programYear}}
       @editable={{@canUpdate}}
@@ -22,9 +22,9 @@
       @expand={{fn @setPyObjectiveDetails true}}
     />
   {{else}}
-    <CollapsedObjectivesProgramYears
-      @subject={{programYear}}
-      @expand={{action setPyObjectiveDetails true}}
+    <ProgramYear::CollapsedObjectives
+      @programYear={{@programYear}}
+      @expand={{action @setPyObjectiveDetails true}}
     />
   {{/if}}
   {{#if (or (eq programYear.terms.length 0) pyTaxonomyDetails)}}
@@ -38,19 +38,6 @@
     <CollapsedTaxonomies
       @subject={{programYear}}
       @expand={{action setPyTaxonomyDetails true}}
-    />
-  {{/if}}
-  {{#if (or (eq programYear.stewards.length 0) pyStewardDetails)}}
-    <DetailStewards
-      @programYear={{programYear}}
-      @editable={{canUpdate}}
-      @collapse={{action setPyStewardDetails false}}
-      @expand={{action setPyStewardDetails true}}
-    />
-  {{else}}
-    <CollapsedStewards
-      @programYear={{programYear}}
-      @expand={{action setPyStewardDetails true}}
     />
   {{/if}}
 </div>

@@ -81,10 +81,7 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
   test('check objectives', async function(assert) {
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
-    const objectivesInProgramYear = this.server.createList('objective', 5);
-    objectivesInProgramYear.forEach(objective => {
-      this.server.create('program-year-objective', { objective, programYear });
-    });
+    this.server.createList('programYearObjective', 5, { programYear });
     this.server.create('cohort', { programYear });
     await visit(url);
     assert.equal(await getElementText(find(findAll('.programyear-list tbody tr:nth-of-type(1) td')[3])), 5);
@@ -163,7 +160,6 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     });
     this.server.create('programYear', {
       programId: 1,
-      published: false,
     });
     this.server.create('cohort', { programYearId: 1});
 
@@ -239,11 +235,6 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     const program = this.server.create('program', { school: this.school });
     const vocabulary = this.server.create('vocabulary', { school: this.school });
     const terms = this.server.createList('term', 3, { vocabulary });
-    const ancestor = this.server.create('objective');
-    const objectives = this.server.createList('objective', 2);
-    const objectiveWithAncestor = this.server.create('objective', { ancestor });
-    const department = this.server.create('department');
-    const steward = this.server.create('programYearSteward', { department });
     const currentYear = parseInt(moment().format('YYYY'), 10);
     const programYear = this.server.create('programYear', {
       program,
@@ -251,14 +242,11 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
       directors,
       competencies,
       terms,
-      stewards: [ steward ],
-      published: false
     });
     this.server.create('cohort', { programYear });
-    objectives.forEach(objective => {
-      this.server.create('program-year-objective', { programYear, objective });
-    });
-    this.server.create('program-year-objective', { programYear, objective: objectiveWithAncestor });
+    this.server.createList('programYearObjective', 2, { programYear });
+    const ancestor = this.server.create('programYearObjective');
+    this.server.create('programYearObjective', { programYear, ancestor });
 
     const expandButton = '.expand-collapse-button button';
     const selectField = '.startyear-select select';
@@ -331,7 +319,6 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     });
     const programYear = this.server.create('programYear', {
       program,
-      published: false,
     });
     const cohort = this.server.create('cohort', {
       programYear,
@@ -347,66 +334,5 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     await visit(url);
     assert.ok(isPresent(find(firstProgramYearRow)), 'program year is visible');
     assert.ok(isEmpty(find(deleteButtonOnFirstRow)), 'no delete-button is visible');
-  });
-
-  test('activation status and activation button', async function(assert) {
-    assert.expect(6);
-    this.user.update({ administeredSchools: [this.school] });
-    const program = this.server.create('program', {
-      school: this.school
-    });
-    this.server.create('programYear', {
-      program,
-      published: true,
-      publishedAsTbd: true
-    });
-    this.server.create('programYear', {
-      program,
-      published: false,
-      publishedAsTbd: false
-    });
-    this.server.create('programYear', {
-      program,
-      published: true,
-      publishedAsTbd: false
-    });
-
-    await visit(url);
-    const firstProgramYearStatus = '.list tbody tr:nth-of-type(1) td:nth-of-type(7) .warning';
-    const secondProgramYearStatus = '.list tbody tr:nth-of-type(2) td:nth-of-type(7) .warning';
-    const thirdProgramYearStatus = '.list tbody tr:nth-of-type(3) td:nth-of-type(7) .yes';
-
-    const firstProgramYearActivationButton =  '.list tbody tr:nth-of-type(1) td:nth-of-type(8) button';
-    const secondProgramYearActivationButton =  '.list tbody tr:nth-of-type(2) td:nth-of-type(8) button';
-    const thirdProgramYearActivationButton =  '.list tbody tr:nth-of-type(3) td:nth-of-type(8) button';
-
-    await visit(url);
-    assert.ok(isPresent(find(firstProgramYearStatus)));
-    assert.ok(isPresent(find(secondProgramYearStatus)));
-    assert.ok(isPresent(find(thirdProgramYearStatus)));
-    assert.ok(isPresent(find(firstProgramYearActivationButton)));
-    assert.ok(isPresent(find(secondProgramYearActivationButton)));
-    assert.notOk(isPresent(find(thirdProgramYearActivationButton)));
-  });
-
-  test('activate!', async function(assert) {
-    assert.expect(4);
-    this.user.update({ administeredSchools: [this.school] });
-    const program = this.server.create('program', {
-      school: this.school
-    });
-    this.server.create('programYear', {
-      program,
-      published: false,
-      publishedAsTbd: true
-    });
-
-    await visit(url);
-    const programYearActivationButton =  '.list tbody tr:nth-of-type(1) td:nth-of-type(8) button';
-    assert.dom('.list tbody tr:nth-of-type(1) td:nth-of-type(7) .warning').exists();
-    assert.ok(isPresent(find(programYearActivationButton)));
-    await click(programYearActivationButton);
-    assert.dom('.list tbody tr:nth-of-type(1) td:nth-of-type(7) .yes').exists();
-    assert.notOk(isPresent(find(programYearActivationButton)));
   });
 });

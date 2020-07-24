@@ -70,7 +70,6 @@
         <ProgramList
           @programs={{await this.filteredPrograms}}
           @query={{this.titleFilter}}
-          @activate={{action "activateProgram"}}
           @edit={{action "editProgram"}}
           @remove={{action "removeProgram"}}
         />

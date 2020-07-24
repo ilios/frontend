@@ -27,21 +27,12 @@ export default class ProgramYearObjectivesComponent extends Component {
 
   @dropTask
   *saveNewObjective(title) {
-    const newObjective = this.store.createRecord('objective');
-    const newProgramYearObjective = this.store.createRecord('program-year-objective');
-    newObjective.set('title', title);
-    let position = 0;
-
     const programYearObjectives = yield this.args.programYear.programYearObjectives;
+    const position = programYearObjectives.length ? programYearObjectives.sortBy('position').lastObject.position + 1 : 0;
 
-    if (programYearObjectives.length) {
-      position = programYearObjectives.sortBy('position').lastObject.position + 1;
-    }
-
-    yield newObjective.save();
-
+    const newProgramYearObjective = this.store.createRecord('program-year-objective');
+    newProgramYearObjective.set('title', title);
     newProgramYearObjective.set('position', position);
-    newProgramYearObjective.set('objective', newObjective);
     newProgramYearObjective.set('programYear', this.args.programYear);
 
     yield newProgramYearObjective.save();

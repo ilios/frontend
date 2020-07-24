@@ -1,73 +1,32 @@
-import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  click,
-  render,
-  find,
-  fillIn
-} from '@ember/test-helpers';
+import { click, render, find, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
-const Competency = EmberObject.extend({
-  id: null,
-  title: null,
-  parent: null,
-  children: null,
-  isDomain: false,
-  objectives: null,
-  belongsTo(){
-    const self = this;
-    return {
-      id(){
-        const parentCompetency = self.parent;
-        if (parentCompetency) {
-          return parentCompetency.id;
-        }
-
-        return null;
-      }
-    };
-  }
-});
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | school competencies manager', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    const domain1 = Competency.create({
-      id: 1,
-      title: 'domain1',
-      isDomain: true,
-      objectives: [],
-      children: [],
-    });
-    const competency1 = Competency.create({
-      id: 2,
-      title: 'competency1',
-      parent: domain1,
-      objectives: [1, 2, 3],
-      children: [],
-    });
-    const competency2 = Competency.create({
-      id: 3,
-      title: 'competency2',
-      parent: domain1,
-      objectives: [],
-      children: [],
-    });
-    domain1.set('children', [competency1, competency2]);
 
-    const competencies = [domain1, competency1, competency2];
+    const programYearObjectives = this.server.createList('programYearObjective', 3);
+    const competency1 = this.server.create('competency', { title: 'competency1', programYearObjectives });
+    const competency2 = this.server.create('competency', { title: 'competency2' });
+    const domain = this.server.create('competency', { title: 'domain1', children: [ competency1, competency2] });
+    const domainModel = await this.owner.lookup('service:store').find('competency', domain.id);
+    const competencyModel1 = await this.owner.lookup('service:store').find('competency', competency1.id);
+    const competencyModel2 = await this.owner.lookup('service:store').find('competency', competency2.id);
+    const competencies = [domainModel, competencyModel1, competencyModel2];
+
     this.set('competencies', competencies);
-    this.set('nothing', parseInt);
     await render(hbs`<SchoolCompetenciesManager
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @add={{action nothing}}
-      @remove={{action nothing}}
-      @competencies={{competencies}}
+      @add={{noop}}
+      @remove={{noop}}
+      @competencies={{this.competencies}}
     />`);
 
     const title = 'h5';
@@ -78,7 +37,6 @@ module('Integration | Component | school competencies manager', function(hooks) 
     const comp1Delete = `${domains}:nth-of-type(1) li:nth-of-type(1) svg.disabled`;
     const comp2Title = `${domains}:nth-of-type(1) li:nth-of-type(2)`;
     const comp2Delete = `${domains}:nth-of-type(1) li:nth-of-type(2) svg.enabled`;
-
 
     assert.dom(title).hasText('New Domain');
     assert.dom(input).exists({ count: 2 });
@@ -91,25 +49,22 @@ module('Integration | Component | school competencies manager', function(hooks) 
   });
 
   test('delete fires delete', async function(assert) {
-    const domain1 = Competency.create({
-      id: 1,
-      title: 'domain1',
-      isDomain: true,
-    });
+    assert.expect(1);
+    const domain = this.server.create('competency', { title: 'domain1' });
+    const domainModel = await this.owner.lookup('service:store').find('competency', domain.id);
+    const competencies = [ domainModel ];
 
-    const competencies = [domain1];
     this.set('competencies', competencies);
-    this.set('nothing', parseInt);
     this.set('remove', (what) => {
-      assert.equal(what, domain1);
+      assert.equal(what, domainModel);
     });
     await render(hbs`<SchoolCompetenciesManager
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @add={{action nothing}}
-      @remove={{action remove}}
-      @competencies={{competencies}}
+      @add={{noop}}
+      @remove={{this.remove}}
+      @competencies={{this.competencies}}
     />`);
 
     const domains = '.domain';
@@ -119,26 +74,23 @@ module('Integration | Component | school competencies manager', function(hooks) 
   });
 
   test('add fires add', async function(assert) {
-    const domain1 = Competency.create({
-      id: 1,
-      title: 'domain1',
-      isDomain: true,
-    });
+    assert.expect(2);
+    const domain = this.server.create('competency', { title: 'domain1' });
+    const domainModel = await this.owner.lookup('service:store').find('competency', domain.id);
+    const competencies = [ domainModel ];
 
-    const competencies = [domain1];
     this.set('competencies', competencies);
-    this.set('nothing', parseInt);
     this.set('add', (what, title) => {
-      assert.equal(what, domain1);
+      assert.equal(what, domainModel);
       assert.equal(title, 'new c');
     });
     await render(hbs`<SchoolCompetenciesManager
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @add={{action add}}
-      @remove={{action nothing}}
-      @competencies={{competencies}}
+      @add={{this.add}}
+      @remove={{noop}}
+      @competencies={{this.competencies}}
     />`);
 
     const domains = '.domain';

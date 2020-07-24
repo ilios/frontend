@@ -14,9 +14,7 @@ module('Integration | Component | program-year/objective-list-item', function(ho
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const programYear = this.server.create('programYear', { program });
-    const objective = this.server.create('objective');
-    const programYearObjective = this.server.create('program-year-objective', { programYear, objective });
-    this.objectiveModel = await this.owner.lookup('service:store').find('objective', objective.id);
+    const programYearObjective = this.server.create('programYearObjective', { programYear });
     this.model = await this.owner.lookup('service:store').find('program-year-objective', programYearObjective.id);
   });
 
@@ -32,7 +30,7 @@ module('Integration | Component | program-year/objective-list-item', function(ho
       />`
     );
     assert.notOk(component.hasRemoveConfirmation);
-    assert.equal(component.description.text, 'objective 0');
+    assert.equal(component.description.text, 'program-year objective 0');
     assert.equal(component.competency.text, 'Add New');
     assert.equal(component.meshDescriptors.text, 'Add New');
     assert.ok(component.isActive);
@@ -53,7 +51,7 @@ module('Integration | Component | program-year/objective-list-item', function(ho
       />`
     );
     const newDescription = 'Pluto Visits Earth';
-    assert.equal(component.description.text, 'objective 0');
+    assert.equal(component.description.text, 'program-year objective 0');
     await component.description.openEditor();
     await component.description.edit(newDescription);
     await component.description.save();
@@ -139,7 +137,7 @@ module('Integration | Component | program-year/objective-list-item', function(ho
 
   test('can activate', async function(assert) {
     assert.expect(2);
-    this.objectiveModel.set('active', false);
+    this.model.set('active', false);
     this.set('programYearObjective', this.model);
     await render(
       hbs`<ProgramYear::ObjectiveListItem

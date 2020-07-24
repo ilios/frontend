@@ -16,7 +16,7 @@ module('Integration | Component | program list', function(hooks) {
   setupMirage(hooks);
 
   test('it renders', async function(assert){
-    assert.expect(16);
+    assert.expect(11);
     const som = this.server.create('school', {
       title: 'Medicine'
     });
@@ -26,8 +26,6 @@ module('Integration | Component | program list', function(hooks) {
     const program1 = this.server.create('program', {
       school: som,
       title: 'Aardvark',
-      published: true,
-      publishedAsTbd: true
     });
 
     this.server.create('programYear', {
@@ -36,8 +34,6 @@ module('Integration | Component | program list', function(hooks) {
     const program2 = this.server.create('program', {
       school: sod,
       title: 'Zeppelin',
-      published: true,
-      publishedAsTbd: false,
     });
 
     const permissionCheckerMock = Service.extend({
@@ -59,22 +55,17 @@ module('Integration | Component | program list', function(hooks) {
     await settled();
     assert.dom('thead tr:nth-of-type(1) th').hasText('Program Title');
     assert.dom(findAll('thead tr:nth-of-type(1) th')[1]).hasText('School');
-    assert.dom(findAll('thead tr:nth-of-type(1) th')[2]).hasText('Status');
-    assert.dom(findAll('thead tr:nth-of-type(1) th')[3]).hasText('Actions');
+    assert.dom(findAll('thead tr:nth-of-type(1) th')[2]).hasText('Actions');
 
     assert.dom('tbody tr:nth-of-type(1) td').hasText('Aardvark');
     assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText('Medicine');
-    assert.dom('tbody tr:nth-of-type(1) td .warning').exists();
-    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(4) button').exists();
-    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(4) a .fa-edit').exists({ count: 1 });
-    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(4) .fa-trash.disabled').exists({ count: 1 });
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(3) a .fa-edit').exists({ count: 1 });
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(3) .fa-trash.disabled').exists({ count: 1 });
 
     assert.dom('tbody tr:nth-of-type(2) td').hasText('Zeppelin');
     assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText('Dentistry');
-    assert.dom('tbody tr:nth-of-type(2) td .yes').exists();
-    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(4) button').doesNotExist();
-    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(4) a .fa-edit').exists({ count: 1 });
-    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(4) .remove .fa-trash').exists({ count: 1 });
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(3) a .fa-edit').exists({ count: 1 });
+    assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(3) .remove .fa-trash').exists({ count: 1 });
   });
 
   test('empty list', async function(assert){
@@ -135,7 +126,7 @@ module('Integration | Component | program list', function(hooks) {
     await render(hbs`<ProgramList @programs={{programs}} @remove={{removeAction}} />`);
     await settled();
     assert.dom('tbody tr').exists({ count: 1 });
-    await click('tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
+    await click('tbody tr:nth-of-type(1) td:nth-of-type(3) .remove');
     await settled();
     assert.dom('tbody tr').exists({ count: 2 });
     assert.ok(find('tbody tr:nth-of-type(2) td').textContent.includes('Are you sure you want to delete this program?'));
@@ -169,7 +160,7 @@ module('Integration | Component | program list', function(hooks) {
     await render(hbs`<ProgramList @programs={{programs}} @remove={{removeAction}} />`);
     await settled();
     assert.dom('tbody tr').exists({ count: 1 });
-    await click('tbody tr:nth-of-type(1) td:nth-of-type(4) .remove');
+    await click('tbody tr:nth-of-type(1) td:nth-of-type(3) .remove');
     await settled();
     assert.dom('tbody tr').exists({ count: 2 });
     assert.ok(find('tbody tr:nth-of-type(2) td').textContent.includes('Are you sure you want to delete this program?'));
@@ -198,36 +189,6 @@ module('Integration | Component | program list', function(hooks) {
     await render(hbs`<ProgramList @programs={{programs}} />`);
     await settled();
     assert.dom('tbody tr').exists({ count: 1 });
-    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(4) .fa-trash.disabled').exists({ count: 1 });
-  });
-
-  test('activate!', async function(assert) {
-    assert.expect(1);
-    const school = this.server.create('school', {
-      title: 'Medicine'
-    });
-    const program = this.server.create('program', {
-      school,
-      title: 'Aardvark',
-      published: false,
-      publishedAsTbd: true,
-    });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
-    const permissionCheckerMock = Service.extend({
-      async canUpdateProgram() {
-        return true;
-      }
-    });
-
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
-    this.set('programs', [ programModel ]);
-    this.set('activate', (program) => {
-      assert.equal(program, programModel);
-    });
-
-    await render(hbs`<ProgramList @programs={{programs}} @activate={{activate}} />`);
-    await settled();
-    await click('tbody tr:nth-of-type(1) td:nth-of-type(4) button');
-    await settled();
+    assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(3) .fa-trash.disabled').exists({ count: 1 });
   });
 });

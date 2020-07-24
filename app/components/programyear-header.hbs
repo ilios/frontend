@@ -25,14 +25,5 @@
         </h5>
       {{/if}}
     </div>
-    <div class="programyear-publication">
-      {{#if
-        (and canUpdate (or programYear.isScheduled (not programYear.isPublished)))
-      }}
-        <button type="button" {{action "activate" programYear}}>
-          {{t "general.activate"}}
-        </button>
-      {{/if}}
-    </div>
   </header>
 </div>

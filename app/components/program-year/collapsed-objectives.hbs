@@ -1,0 +1,91 @@
+<section
+  class="program-year-collapsed-objectives"
+  data-test-program-year-collapsed-objectives
+  ...attributes
+  {{did-insert (perform this.load) @programYear.programYearObjectives}}
+  {{did-update (perform this.load) @programYear.programYearObjectives}}
+>
+  <div class="title" role="button" {{on "click" @expand}} data-test-title>
+    {{t "general.objectives"}}
+    ({{get this.objectives "length"}})
+  </div>
+  {{#if this.load.lastSuccessful.value}}
+    <div class="content">
+      <table>
+        <thead>
+        <tr>
+          <th class="text-left">
+            {{t "general.summary"}}
+          </th>
+          <th class="text-center">
+            {{t "general.linkedCompetencies"}}
+          </th>
+          <th class="text-center">
+            {{t "general.meshTerms"}}
+          </th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td data-test-objective-count>
+            {{t
+              "general.objectiveCount"
+              count=(get this.objectives "length")
+            }}
+          </td>
+          <td class="text-middle text-center" rowspan="3" data-test-parent-status>
+            {{#if
+              (eq
+                (get this.objectivesWithCompetency "length")
+                (get this.objectives "length")
+              )
+            }}
+              <FaIcon @icon="circle" class="yes" />
+            {{else if (gte (get this.objectivesWithCompetency "length") 1)}}
+              <FaIcon @icon="circle" class="maybe" />
+            {{else}}
+              <FaIcon @icon="ban" class="no" />
+            {{/if}}
+          </td>
+          <td class="text-middle text-center" rowspan="3" data-test-mesh-status>
+            {{#if
+              (eq
+                (get this.objectivesWithMesh "length")
+                (get this.objectives "length")
+              )
+            }}
+              <FaIcon @icon="circle" class="yes" />
+            {{else if (gte (get this.objectivesWithMesh "length") 1)}}
+              <FaIcon @icon="circle" class="maybe" />
+            {{else}}
+              <FaIcon @icon="ban" class="no" />
+            {{/if}}
+          </td>
+        </tr>
+        <tr>
+          <td data-test-parent-count>
+            &nbsp;
+            &nbsp;
+            {{t
+              "general.linkedCompetencyCount"
+              count=(get this.objectivesWithCompetency "length")
+            }}
+          </td>
+        </tr>
+        <tr>
+          <td data-test-mesh-count>
+            &nbsp;
+            &nbsp;
+            {{t
+              "general.meshCount"
+              count=(get this.objectivesWithMesh "length")
+            }}
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  {{else}}
+    <LoadingSpinner @tagName="h3" />
+  {{/if}}
+</section>
