@@ -170,8 +170,7 @@ export default Service.extend({
     const sortedResults = filteredResults.sortBy('title');
     const mappedResults = await map(sortedResults, async session => {
       const course = await session.get('course');
-      const sessionDescription = await session.get('sessionDescription');
-      const sessionDescriptionText = sessionDescription ? sessionDescription.get('textDescription') : '';
+      const sessionDescriptionText = session.get('textDescription');
       const objectives = await session.get('objectives');
       return  [session.get('title'), course.get('title'), course.get('academicYear'), sessionDescriptionText, objectives.mapBy('textTitle').join()];
     });
