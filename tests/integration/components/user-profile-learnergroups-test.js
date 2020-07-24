@@ -29,12 +29,10 @@ module('Integration | Component | user profile learnergroups', function(hooks) {
   sod.set('programs', resolve([program2]));
   const programYear1 = EmberObject.create({
     program: resolve(program1),
-    published: true,
     archived: false,
   });
   const programYear2 = EmberObject.create({
     program: resolve(program2),
-    published: true,
     archived: false,
   });
   program1.set('programYears', resolve([programYear1]));

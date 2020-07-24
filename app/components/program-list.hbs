@@ -8,9 +8,6 @@
         <th class="text-center hide-from-small-screen" colspan="2">
           {{t "general.school"}}
         </th>
-        <th class="text-center hide-from-small-screen">
-          {{t "general.status"}}
-        </th>
         <th class="text-right" colspan="2">
           {{t "general.actions"}}
         </th>
@@ -35,21 +32,6 @@
           >
             {{program.school.title}}
           </td>
-          <td class="text-center hide-from-small-screen">
-            {{#if (and program.isPublished (not program.isScheduled))}}
-              <FaIcon
-                @icon="circle"
-                class="yes"
-                @title={{capitalize (t "general.active")}}
-              />
-            {{else}}
-              <FaIcon
-                @icon="circle"
-                class="warning"
-                @title={{capitalize (t "general.inactive")}}
-              />
-            {{/if}}
-          </td>
           <td class="text-right" colspan="2">
             <LinkTo @route="program" @model={{program.content}} class="edit">
               <FaIcon @icon="edit" class="enabled" />
@@ -65,7 +47,7 @@
         </tr>
         {{#if program.showRemoveConfirmation}}
           <tr class="confirm-removal">
-            <td class="hide-from-small-screen" colspan="8">
+            <td class="hide-from-small-screen" colspan="7">
               <div class="confirm-message">
                 {{#if (is-fulfilled program.courses)}}
                   {{t

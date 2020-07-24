@@ -160,7 +160,6 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     });
     this.server.create('programYear', {
       programId: 1,
-      published: false,
     });
     this.server.create('cohort', { programYearId: 1});
 
@@ -243,7 +242,6 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
       directors,
       competencies,
       terms,
-      published: false
     });
     this.server.create('cohort', { programYear });
     this.server.createList('programYearObjective', 2, { programYear });
@@ -321,7 +319,6 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     });
     const programYear = this.server.create('programYear', {
       program,
-      published: false,
     });
     const cohort = this.server.create('cohort', {
       programYear,
@@ -337,66 +334,5 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     await visit(url);
     assert.ok(isPresent(find(firstProgramYearRow)), 'program year is visible');
     assert.ok(isEmpty(find(deleteButtonOnFirstRow)), 'no delete-button is visible');
-  });
-
-  test('activation status and activation button', async function(assert) {
-    assert.expect(6);
-    this.user.update({ administeredSchools: [this.school] });
-    const program = this.server.create('program', {
-      school: this.school
-    });
-    this.server.create('programYear', {
-      program,
-      published: true,
-      publishedAsTbd: true
-    });
-    this.server.create('programYear', {
-      program,
-      published: false,
-      publishedAsTbd: false
-    });
-    this.server.create('programYear', {
-      program,
-      published: true,
-      publishedAsTbd: false
-    });
-
-    await visit(url);
-    const firstProgramYearStatus = '.list tbody tr:nth-of-type(1) td:nth-of-type(7) .warning';
-    const secondProgramYearStatus = '.list tbody tr:nth-of-type(2) td:nth-of-type(7) .warning';
-    const thirdProgramYearStatus = '.list tbody tr:nth-of-type(3) td:nth-of-type(7) .yes';
-
-    const firstProgramYearActivationButton =  '.list tbody tr:nth-of-type(1) td:nth-of-type(8) button';
-    const secondProgramYearActivationButton =  '.list tbody tr:nth-of-type(2) td:nth-of-type(8) button';
-    const thirdProgramYearActivationButton =  '.list tbody tr:nth-of-type(3) td:nth-of-type(8) button';
-
-    await visit(url);
-    assert.ok(isPresent(find(firstProgramYearStatus)));
-    assert.ok(isPresent(find(secondProgramYearStatus)));
-    assert.ok(isPresent(find(thirdProgramYearStatus)));
-    assert.ok(isPresent(find(firstProgramYearActivationButton)));
-    assert.ok(isPresent(find(secondProgramYearActivationButton)));
-    assert.notOk(isPresent(find(thirdProgramYearActivationButton)));
-  });
-
-  test('activate!', async function(assert) {
-    assert.expect(4);
-    this.user.update({ administeredSchools: [this.school] });
-    const program = this.server.create('program', {
-      school: this.school
-    });
-    this.server.create('programYear', {
-      program,
-      published: false,
-      publishedAsTbd: true
-    });
-
-    await visit(url);
-    const programYearActivationButton =  '.list tbody tr:nth-of-type(1) td:nth-of-type(8) button';
-    assert.dom('.list tbody tr:nth-of-type(1) td:nth-of-type(7) .warning').exists();
-    assert.ok(isPresent(find(programYearActivationButton)));
-    await click(programYearActivationButton);
-    assert.dom('.list tbody tr:nth-of-type(1) td:nth-of-type(7) .yes').exists();
-    assert.notOk(isPresent(find(programYearActivationButton)));
   });
 });
