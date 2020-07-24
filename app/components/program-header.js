@@ -45,12 +45,5 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       const program = this.program;
       this.set('programTitle', program.get('title'));
     },
-
-    async activate() {
-      const program = this.program;
-      program.set('published', true);
-      program.set('publishedAsTbd', false);
-      await program.save();
-    }
   }
 });

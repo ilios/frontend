@@ -146,15 +146,6 @@
                     {{#if programYearProxy.isSaving}}
                       <LoadingSpinner />
                     {{else}}
-                      {{#if (await programYearProxy.userCanActivate)}}
-                        <button
-                          type="button"
-                          class="text"
-                          {{action "activateProgramYear" programYearProxy}}
-                        >
-                          {{t "general.activate"}}
-                        </button>
-                      {{/if}}
                       {{#if programYearProxy.locked}}
                         {{#if (await programYearProxy.userCanUnLock)}}
                           <FaIcon

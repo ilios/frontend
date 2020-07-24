@@ -51,11 +51,6 @@
             {{/if}}
           </td>
           <td class="text-right" colspan="2">
-            {{#if (await program.canActivate)}}
-              <button type="button" class="text" onclick={{action "activate" program}}>
-                {{t "general.activate"}}
-              </button>
-            {{/if}}
             <LinkTo @route="program" @model={{program.content}} class="edit">
               <FaIcon @icon="edit" class="enabled" />
             </LinkTo>

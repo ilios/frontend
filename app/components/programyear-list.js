@@ -116,17 +116,6 @@ export default Component.extend({
         }
       });
     },
-
-    async activateProgramYear(programYearProxy) {
-      const permission = await programYearProxy.get('userCanActivate');
-      if (permission) {
-        run(()=>{
-          programYearProxy.set('isSaving', true);
-        });
-        await this.activate(programYearProxy.get('content'));
-        programYearProxy.set('isSaving', false);
-      }
-    }
   },
 
   resetSaveItems() {
@@ -149,8 +138,6 @@ export default Component.extend({
     const newProgramYear = store.createRecord('program-year', {
       program,
       startYear,
-      published: true,
-      publishedAsTbd: false,
     });
     this.incrementSavedItems();
 
@@ -241,17 +228,4 @@ const ProgramYearProxy = ObjectProxy.extend({
     const permissionChecker = this.permissionChecker;
     return permissionChecker.canUnlockProgramYear(programYear);
   }),
-
-  userCanActivate: computed(
-    'content.locked',
-    'content.archived',
-    'content.isScheduled',
-    'content.isPublished',
-    async function() {
-      const programYear = this.content;
-      const permissionChecker = this.permissionChecker;
-      const canBeUpdated = await permissionChecker.canUpdateProgramYear(programYear);
-      const isNotFullyPublished = (programYear.get('isScheduled') || ! programYear.get('isPublished'));
-      return (isNotFullyPublished && canBeUpdated);
-    })
 });
