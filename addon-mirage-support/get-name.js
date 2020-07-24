@@ -27,7 +27,6 @@ var models = [
   'pendingUserUpdates',
   'programYears',
   'programYearObjectives',
-  'programYearStewards',
   'recurringEvents',
   'schoolConfigs',
   'sessionDescriptions',
