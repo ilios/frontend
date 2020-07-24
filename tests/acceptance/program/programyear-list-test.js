@@ -236,8 +236,6 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     const program = this.server.create('program', { school: this.school });
     const vocabulary = this.server.create('vocabulary', { school: this.school });
     const terms = this.server.createList('term', 3, { vocabulary });
-    const department = this.server.create('department');
-    const steward = this.server.create('programYearSteward', { department });
     const currentYear = parseInt(moment().format('YYYY'), 10);
     const programYear = this.server.create('programYear', {
       program,
@@ -245,7 +243,6 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
       directors,
       competencies,
       terms,
-      stewards: [ steward ],
       published: false
     });
     this.server.create('cohort', { programYear });

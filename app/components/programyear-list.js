@@ -151,14 +151,10 @@ export default Component.extend({
       const terms = yield latestProgramYear.get('terms');
       itemsToSave++;
       this.incrementSavedItems();
-      const stewards = yield latestProgramYear.get('stewards');
-      itemsToSave++;
-      this.incrementSavedItems();
 
       newProgramYear.get('directors').pushObjects(directors.toArray());
       newProgramYear.get('competencies').pushObjects(competencies.toArray());
       newProgramYear.get('terms').pushObjects(terms.toArray());
-      newProgramYear.get('stewards').pushObjects(stewards.toArray());
     }
     const savedProgramYear = yield newProgramYear.save();
     itemsToSave++;

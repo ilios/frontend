@@ -40,17 +40,4 @@
       @expand={{action setPyTaxonomyDetails true}}
     />
   {{/if}}
-  {{#if (or (eq programYear.stewards.length 0) pyStewardDetails)}}
-    <DetailStewards
-      @programYear={{programYear}}
-      @editable={{canUpdate}}
-      @collapse={{action setPyStewardDetails false}}
-      @expand={{action setPyStewardDetails true}}
-    />
-  {{else}}
-    <CollapsedStewards
-      @programYear={{programYear}}
-      @expand={{action setPyStewardDetails true}}
-    />
-  {{/if}}
 </div>
