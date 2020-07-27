@@ -23,11 +23,10 @@ export default Route.extend({
     }
     const jwt = await this.getNewToken(token, apiHost);
 
-    const session = this.get('session');
     const authenticator = 'authenticator:ilios-jwt';
-    session.authenticate(authenticator, { jwt });
-    session.set('data.apiHost', apiHost);
-    session.set('data.apiNameSpace', apiNameSpace);
+    this.session.authenticate(authenticator, { jwt });
+    this.session.set('data.apiHost', apiHost);
+    this.session.set('data.apiNameSpace', apiNameSpace);
 
     this.transitionTo('index');
   },
