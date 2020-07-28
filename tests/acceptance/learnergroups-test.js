@@ -47,10 +47,10 @@ module('Acceptance | Learner Groups', function(hooks) {
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
     const cohort = this.server.create('cohort', { programYear });
-    const programYear2 = this.server.create('programYear', { program });
-    this.server.create('cohort', { programYear: programYear2 });
     const program2 = this.server.create('program', { school: this.school });
     const programYear3 = this.server.create('programYear', { program: program2 });
+    const programYear2 = this.server.create('programYear', { program });
+    this.server.create('cohort', { programYear: programYear2 });
     const cohort3 = this.server.create('cohort', { programYear: programYear3 });
     this.server.create('learnerGroup', { cohort });
     this.server.create('learnerGroup', { cohort: cohort3 });
@@ -76,10 +76,10 @@ module('Acceptance | Learner Groups', function(hooks) {
     assert.ok(page.programYearFilter.hasMany);
     assert.equal(page.programYearFilter.list.length, 2);
     assert.equal(page.programYearFilter.list[0].text, 'cohort 1');
-    assert.equal(page.programYearFilter.list[0].value, '2');
+    assert.equal(page.programYearFilter.list[0].value, '3');
     assert.equal(page.programYearFilter.list[1].text, 'cohort 0');
     assert.equal(page.programYearFilter.list[1].value, '1');
-    assert.equal(page.programYearFilter.filterValue, '2');
+    assert.equal(page.programYearFilter.filterValue, '3');
 
     assert.equal(page.learnerGroupList.groups.length, 1);
     assert.equal(page.learnerGroupList.groups[0].title, 'None');
