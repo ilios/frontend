@@ -129,7 +129,7 @@ export default class ProgramYearObjectiveListItemComponent extends Component {
   }
   @action
   setCompetencyBuffer(competencyId) {
-    this.competencyBuffer = this.args.schoolCompetencies.findBy('id', competencyId);
+    this.competencyBuffer = this.args.programYearCompetencies.findBy('id', competencyId);
   }
   @action
   addDescriptorToBuffer(descriptor) {

@@ -27,6 +27,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     });
     const parent = this.server.create('competency', {
       school: this.school,
+      programYears: [programYear],
     });
     const competency1 = this.server.create('competency', {
       parent,
@@ -46,6 +47,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
       school: this.school,
       programYears: [programYear],
     });
+    this.server.createList('competency', 3, { school: this.school });
     const meshDescriptors = this.server.createList('meshDescriptor', 4);
     const programYearObjective = this.server.create('programYearObjective', {
       programYear,
