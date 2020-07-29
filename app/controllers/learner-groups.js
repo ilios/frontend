@@ -4,6 +4,7 @@ import { inject as service } from '@ember/service';
 import { isBlank, isEmpty, isPresent } from '@ember/utils';
 import { task, timeout } from 'ember-concurrency';
 import cloneLearnerGroup from '../utils/clone-learner-group';
+import { map } from 'rsvp';
 
 export default Controller.extend({
   currentUser: service(),
@@ -80,7 +81,7 @@ export default Controller.extend({
   }),
 
   selectedProgram: computed('programs.[]', 'programId', async function() {
-    const programs = await this.programs;
+    const programs = (await this.programs).toArray();
     if(isPresent(this.programId)){
       const program = programs.findBy('id', this.programId);
       if(program){
@@ -88,11 +89,7 @@ export default Controller.extend({
       }
     }
 
-    if(isEmpty(programs)) {
-      return null;
-    }
-
-    return programs.sortBy('title').get('firstObject');
+    return this.findBestDefaultProgram(programs);
   }),
 
   selectedProgramYear: computed('programYears.[]', 'programYearId', async function() {
@@ -107,9 +104,12 @@ export default Controller.extend({
     }
 
     const latestYear = programYears.sortBy('startYear').get('lastObject');
-    await this.dataLoader.loadCohortForLearnerGroups(latestYear.belongsTo('cohort').id());
+    if (latestYear) {
+      await this.dataLoader.loadCohortForLearnerGroups(latestYear.belongsTo('cohort').id());
+      return latestYear;
+    }
 
-    return latestYear;
+    return null;
   }),
 
   canCreate: computed('selectedSchool', async function() {
@@ -218,5 +218,45 @@ export default Controller.extend({
       this.set('currentGroupsSaved', i + 1);
     }
     this.set('newGroup', newGroups[0]);
-  })
+  }),
+  async findBestDefaultProgram(programs) {
+    if (!programs) {
+      return null;
+    }
+    const sortingPrograms = await map(programs, async (program) => {
+      const thisYear = new Date().getFullYear();
+      const programYears = (await program.programYears).toArray();
+      const sorters = await map(programYears, async (programYear) => {
+        const groupCount = (await programYear.cohort).hasMany('learnerGroups').ids().length;
+        return {
+          distanceFromThisYear: thisYear - Number(programYear.startYear),
+          groupCount,
+        };
+      });
+      return sorters.reduce((obj, sorter) => {
+        if (sorter.distanceFromThisYear < obj.distance) {
+          obj.distance = sorter.distanceFromThisYear;
+        }
+        obj.totalGroups += sorter.groupCount;
+        return obj;
+      }, {
+        title: program.title,
+        program,
+        totalGroups: 0,
+        distance: 100,
+      });
+    });
+    const sorted = sortingPrograms.sort((a, b) => {
+      if (a.distance !== b.distance) {
+        return a.distance - b.distance;
+      }
+      if (a.totalGroups !== b.totalGroups) {
+        return b.totalGroups - a.totalGroups;
+      }
+
+      return a.title.localeCompare(b.title);
+    });
+
+    return sorted[0].program;
+  }
 });
