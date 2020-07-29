@@ -10,8 +10,8 @@ export default class ProgramYearObjectiveListComponent extends Component {
 
   @tracked programYearObjectives;
   @tracked isSorting = false;
-  @tracked schoolDomains;
-  @tracked schoolCompetencies;
+  @tracked programYearDomains;
+  @tracked programYearCompetencies;
   @tracked course;
   @tracked programYearObjectiveCount;
 
@@ -21,22 +21,20 @@ export default class ProgramYearObjectiveListComponent extends Component {
       return;
     }
     this.programYearObjectiveCount = programYear.hasMany('programYearObjectives').ids().length;
-    const program = yield programYear.program;
-    const school = yield program.school;
     const {
       programYearObjectives,
-      schoolCompetencies
+      programYearCompetencies
     } = yield hash({
       programYearObjectives: programYear.sortedProgramYearObjectives,
-      schoolCompetencies: school.competencies
+      programYearCompetencies: programYear.competencies
     });
     this.programYearObjectives = programYearObjectives;
-    this.schoolCompetencies = schoolCompetencies.toArray();
-    this.schoolDomains = yield this.getSchoolDomains(this.schoolCompetencies);
+    this.programYearCompetencies = programYearCompetencies.toArray();
+    this.programYearDomains = yield this.getProgramYearDomains(this.programYearCompetencies);
   }
 
-  async getSchoolDomains(schoolCompetencies) {
-    const domains = schoolCompetencies.filterBy('isDomain').toArray();
+  async getProgramYearDomains(programYearCompetencies) {
+    const domains = programYearCompetencies.filterBy('isDomain').toArray();
     return await map(domains, async domain => {
       const competencies = (await domain.children).map(competency => {
         return {

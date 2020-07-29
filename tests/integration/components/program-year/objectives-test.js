@@ -47,14 +47,37 @@ module('Integration | Component | program-year/objectives', function(hooks) {
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('it loads data for a school domains', async function (assert) {
+  test('it loads data for program year domains', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const programYear = this.server.create('programYear', { program });
-    const domains = this.server.createList('competency', 2, { school });
+    const domain1 = this.server.create('competency', {
+      school,
+      programYears: [programYear],
+    });
+    const domain2 = this.server.create('competency', {
+      school,
+      programYears: [programYear],
+    });
 
-    const competencies = this.server.createList('competency', 3, { school, parent: domains[0] });
-    this.server.createList('competency', 2, { school, parent: domains[1] });
+    const competencies = this.server.createList('competency', 3, {
+      school,
+      parent: domain1,
+      programYears: [programYear],
+    });
+    this.server.createList('competency', 2, {
+      school,
+      parent: domain2,
+      programYears: [programYear],
+    });
+
+    const domain3 = this.server.create('competency', {
+      school,
+    });
+    this.server.createList('competency', 2, {
+      school,
+      parent: domain3,
+    });
     this.server.create('program-year-objective', { programYear, competency: competencies[0] });
     const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
 
