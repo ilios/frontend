@@ -1,19 +1,19 @@
 <div class="curriculum-inventory-report-details" data-test-curriculum-inventory-report-details ...attributes>
   <CurriculumInventoryReportHeader
-    @report={{report}}
-    @finalize={{action "confirmFinalization"}}
-    @canUpdate={{canUpdate}}
+    @report={{@report}}
+    @finalize={{set this.showFinalizeConfirmation true}}
+    @canUpdate={{@canUpdate}}
   />
-  {{#if showFinalizeConfirmation}}
+  {{#if this.showFinalizeConfirmation}}
     <div class="confirm-finalize">
       <div class="confirm-message">
         {{t "general.finalizeReportConfirmation"}}
         <br>
         <div class="confirm-buttons">
-          <button type="button" class="finalize text" {{action "finalize"}}>
+          <button type="button" class="finalize text" {{on "click" (perform this.finalize)}}>
             {{t "general.yes"}}
           </button>
-          <button type="button" class="done text" {{action "cancelFinalization"}}>
+          <button type="button" class="done text" {{on "click" (set this.showFinalizeConfirmation false)}}>
             {{t "general.cancel"}}
           </button>
         </div>
@@ -21,28 +21,28 @@
     </div>
   {{/if}}
   <CurriculumInventoryReportOverview
-    @report={{report}}
-    @canUpdate={{canUpdate}}
+    @report={{@report}}
+    @canUpdate={{@canUpdate}}
   />
-  {{#if leadershipDetails}}
+  {{#if @leadershipDetails}}
     <CurriculumInventoryLeadershipExpanded
-      @report={{report}}
-      @canUpdate={{canUpdate}}
-      @collapse={{action setLeadershipDetails false}}
-      @expand={{action setLeadershipDetails true}}
-      @isManaging={{manageLeadership}}
-      @setIsManaging={{setManageLeadership}}
+      @report={{@report}}
+      @canUpdate={{@canUpdate}}
+      @collapse={{fn @setLeadershipDetails false}}
+      @expand={{fn @setLeadershipDetails true}}
+      @isManaging={{@manageLeadership}}
+      @setIsManaging={{@setManageLeadership}}
     />
   {{else}}
     <LeadershipCollapsed
       @title={{t "general.curriculumInventoryReportLeadership"}}
       @showAdministrators={{true}}
       @showDirectors={{false}}
-      @administratorsCount={{has-many-length report "administrators"}}
-      @expand={{action setLeadershipDetails true}}
+      @administratorsCount={{has-many-length @report "administrators"}}
+      @expand={{fn @setLeadershipDetails true}}
     />
   {{/if}}
-  {{#if isFinalizing}}
+  {{#if this.finalize.isRunning}}
     <ModalDialog @translucentOverlay={{true}} @animatable={{false}}>
       <PulseLoader />
       <h2 class="page-title">

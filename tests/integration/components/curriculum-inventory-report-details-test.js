@@ -1,10 +1,5 @@
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  settled,
-  click,
-  find
-} from '@ember/test-helpers';
+import { render, settled, click, find } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
@@ -34,13 +29,12 @@ module('Integration | Component | curriculum inventory report details', function
     const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
 
     this.set('report', report);
-    this.set('nothing', () =>{});
 
     await render(hbs`<CurriculumInventoryReportDetails
-      @report={{report}}
+      @report={{this.report}}
       @canUpdate={{true}}
-      @setLeadershipDetails={{action nothing}}
-      @setManageLeadership={{action nothing}}
+      @setLeadershipDetails={{noop}}
+      @setManageLeadership={{noop}}
     />`);
 
     return settled().then(() => {
@@ -68,14 +62,13 @@ module('Integration | Component | curriculum inventory report details', function
     });
     const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
     this.set('report', report);
-    this.set('nothing', () => { });
     this.set('canUpdate', true);
 
     await render(hbs`<CurriculumInventoryReportDetails
-      @report={{report}}
-      @canUpdate={{canUpdate}}
-      @setLeadershipDetails={{action nothing}}
-      @setManageLeadership={{action nothing}}
+      @report={{this.report}}
+      @canUpdate={{this.canUpdate}}
+      @setLeadershipDetails={{noop}}
+      @setManageLeadership={{noop}}
     />`);
 
     assert.dom('.confirm-finalize').doesNotExist('Confirmation dialog is initially not visible.');
@@ -112,13 +105,12 @@ module('Integration | Component | curriculum inventory report details', function
     const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
 
     this.set('report', report);
-    this.set('nothing', () =>{});
 
     await render(hbs`<CurriculumInventoryReportDetails
-      @report={{report}}
+      @report={{this.report}}
       @canUpdate={{true}}
-      @setLeadershipDetails={{action nothing}}
-      @setManageLeadership={{action nothing}}
+      @setLeadershipDetails={{noop}}
+      @setManageLeadership={{noop}}
     />`);
 
     await click('.curriculum-inventory-report-header .finalize');
