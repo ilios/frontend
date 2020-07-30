@@ -6,7 +6,7 @@ const browsers = [
   'last 1 Safari versions'
 ];
 
-const isCI = !!process.env.CI;
+const isCI = Boolean(process.env.CI);
 const isProductionLikeBuild = ['production', 'preview'].includes(process.env.EMBER_ENV);
 
 if (isCI || isProductionLikeBuild) {
