@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { dropTask } from 'ember-concurrency-decorators';
 import { hash } from 'rsvp';
@@ -35,12 +35,14 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
     this.isManaging = false;
   }
 
+  @computed('args.ilmSession.learners.length')
   get learnerCount() {
     if (! this.args.ilmSession) {
       return 0;
     }
     return this.args.ilmSession.hasMany('learners').ids().length;
   }
+  @computed('args.ilmSession.learnerGroups.length')
   get learnerGroupCount() {
     if (! this.args.ilmSession) {
       return 0;
