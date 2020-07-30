@@ -267,4 +267,22 @@ module('Integration | Component | detail-learners-and-learner-groups', function(
     assert.equal(component.detailLearnerList.learners.length, 2);
     assert.equal(component.detailLearnergroupsList.trees.length, 3);
   });
+
+  test('it updates when relationships change #1550', async function(assert) {
+    this.set('ilmSession', this.ilmSession);
+    await render(hbs`<DetailLearnersAndLearnerGroups
+      @editable={{true}}
+      @ilmSession={{this.ilmSession}}
+      @cohorts={{array}}
+    />`);
+    assert.equal(component.title, 'Learners and Learner Groups (3/3)');
+    assert.equal(component.detailLearnerList.learners.length, 3);
+    assert.equal(component.detailLearnergroupsList.trees.length, 2);
+    this.ilmSession.set('learners', []);
+    this.ilmSession.set('learnerGroups', []);
+    await this.ilmSession.save();
+    assert.equal(component.title, 'Learners and Learner Groups (0/0)');
+    assert.equal(component.detailLearnerList.learners.length, 0);
+    assert.equal(component.detailLearnergroupsList.trees.length, 0);
+  });
 });
