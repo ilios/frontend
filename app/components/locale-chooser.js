@@ -8,6 +8,7 @@ export default class LocaleChooserComponent extends Component {
   @service intl;
   @service moment;
   @tracked isOpen = false;
+  @tracked menuElement;
 
   get locale() {
     const locale = this.intl.get('locale');
@@ -24,7 +25,9 @@ export default class LocaleChooserComponent extends Component {
     return guidFor(this);
   }
 
+  @action
   focusOnFirstItem(menuElement) {
+    this.menuElement = menuElement;
     menuElement.querySelector('button:first-of-type').focus();
   }
 
