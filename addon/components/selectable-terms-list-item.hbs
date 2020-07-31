@@ -3,7 +3,7 @@
   role="button"
   {{on "click" this.click}}
   {{mouse-hover-toggle (set this.isHovering)}}
-  {{ref this "theElement"}}
+  {{did-insert (set this.theElement)}}
 >
   {{#if (and this.theElement this.showTooltip)}}
     <IliosTooltip @target={{this.theElement}}>

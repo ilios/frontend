@@ -9,6 +9,7 @@ const DEBOUNCE_TIMEOUT = 250;
 
 export default class SearchBox extends Component {
   @tracked value = '';
+  @tracked searchInput;
 
   get liveSearch() {
     return isNone(this.args.liveSearch) ? true : this.args.liveSearch;
@@ -31,9 +32,9 @@ export default class SearchBox extends Component {
   }
 
   @action
-  moveFocus(searchInput) {
+  moveFocus() {
     // place focus into the search box when search icon is clicked
-    searchInput.focus();
+    this?.searchInput.focus();
   }
 
   @action

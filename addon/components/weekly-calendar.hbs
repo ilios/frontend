@@ -19,7 +19,7 @@
   >
     <div class="hours">
       {{#each this.hours as |hour|}}
-        <span aria-hidden="true" class="hour hour-{{hour.hour}}" {{ref this (concat "hour" hour.hour)}}>
+        <span aria-hidden="true" class="hour hour-{{hour.hour}}" {{did-insert this.setHour hour.hour}}>
           <span class="long">{{hour.longName}}</span>
           <span class="short">{{hour.shortName}}</span>
         </span>

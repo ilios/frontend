@@ -6,12 +6,12 @@
     placeholder={{@placeholder}}
     {{on "input" (fn this.update)}}
     {{on "keyup" (fn this.keyUp)}}
-    {{ref this "searchInput"}}
+    {{did-insert (set this.searchInput)}}
   >
   <span
     class="search-icon"
     role="button"
-    {{on "click" (pipe-action (fn this.moveFocus this.searchInput) (perform this.searchTask))}}
+    {{on "click" (pipe-action (fn this.moveFocus) (perform this.searchTask))}}
   >
     <FaIcon @icon="search" />
   </span>

@@ -1,7 +1,7 @@
 <section
   class="course-details"
   data-test-ilios-course-details
-  {{ref this "topSection"}}
+  {{did-insert (set this.topSection)}}
 >
   {{#if (has-route "courses")}}
     <div class="back-to-courses-list">
