@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { action } from '@ember/object';
+import { action, set } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { timeout } from 'ember-concurrency';
 import { task } from 'ember-concurrency-decorators';
@@ -29,4 +29,9 @@ export default class OfferingManagerComponent extends Component {
   *textCopied(){
     yield timeout(3000);
   }
+  @action
+  setLearnerGroupElement(element, [id]) {
+    set(this, `learnerGroupElement${id}`, element);
+  }
+
 }

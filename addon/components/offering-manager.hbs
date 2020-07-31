@@ -22,7 +22,7 @@
       <ul>
         {{#each (await @offering.learnerGroups) as |learnerGroup|}}
           <li
-            {{ref this (concat "learnerGroupElement" learnerGroup.id)}}
+            {{did-insert this.setLearnerGroupElement learnerGroup.id}}
             {{mouse-hover-toggle (fn this.toggleHover learnerGroup.id)}}
           >
             {{learnerGroup.title}}

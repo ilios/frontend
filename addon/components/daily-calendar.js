@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import moment from 'moment';
 import { restartableTask } from 'ember-concurrency-decorators';
 import { timeout } from 'ember-concurrency';
+import { action, set } from '@ember/object';
 
 export default class DailyCalendarComponent extends Component {
   @service intl;
@@ -10,7 +11,7 @@ export default class DailyCalendarComponent extends Component {
 
   @restartableTask
   *scrollView(calendarElement, [earliestHour]) {
-    //waiting ensures that {{ref}} modifier has time to setup hour elements
+    //waiting ensures that setHour has time to setup hour elements
     yield timeout(1);
     // all of the hour elements are registered in the template as hour0, hour1, etc
     let hourElement = this.hour6;
@@ -53,5 +54,10 @@ export default class DailyCalendarComponent extends Component {
         shortName: time.format('hA'),
       };
     });
+  }
+
+  @action
+  setHour(element, [hour]) {
+    set(this, `hour${hour}`, element);
   }
 }

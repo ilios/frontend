@@ -4,7 +4,7 @@
   class="weekly-calendar-event day-{{@day}} {{if this.isIlm "ilm"}} {{if this.clickable "clickable"}}"
   type="button"
   {{on "click" (if this.clickable @selectEvent (noop))}}
-  {{ref this "theElement"}}
+  {{did-insert (set this.theElement)}}
   {{mouse-hover-toggle (set this.showTooltip)}}
   data-test-calendar-event
   data-test-weekly-calendar-event

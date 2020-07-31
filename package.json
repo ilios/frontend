@@ -71,7 +71,6 @@
     "ember-pad": "^1.2.3",
     "ember-page-title": "^5.0.1",
     "ember-promise-helpers": "1.0.9",
-    "ember-ref-modifier": "^1.0.0",
     "ember-simple-auth-token": "^5.0.0",
     "ember-simple-charts": "^3.0.0",
     "ember-simple-set-helper": "^0.1.0",

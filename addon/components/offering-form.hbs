@@ -275,7 +275,7 @@
           </p>
         {{/each}}
       </div>
-      <div class="buttons" {{ref this "scrollTo"}}>
+      <div class="buttons" {{did-insert (set this.scrollTo)}}>
         <SaveButton
           class="done text"
           @isSaving={{this.saveOffering.isRunning}}
