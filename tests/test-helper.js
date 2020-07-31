@@ -1,5 +1,5 @@
-import Application from '../app';
-import config from '../config/environment';
+import Application from 'ilios/app';
+import config from 'ilios/config/environment';
 import { setApplication } from '@ember/test-helpers';
 import { start } from 'ember-qunit';
 
