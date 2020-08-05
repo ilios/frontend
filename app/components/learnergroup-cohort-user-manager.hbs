@@ -28,20 +28,12 @@
               />
             </th>
             <SortableTh
-              @colspan={{2}}
-              @click={{fn this.setSortBy "firstName"}}
-              @sortedBy={{or (eq @sortBy "firstName") (eq @sortBy "firstName:desc")}}
+              @colspan={{4}}
+              @click={{fn this.setSortBy "fullName"}}
+              @sortedBy={{or (eq @sortBy "fullName") (eq @sortBy "fullName:desc")}}
               @sortedAscending={{this.sortedAscending}}
             >
-              {{t "general.firstName"}}
-            </SortableTh>
-            <SortableTh
-              @colspan={{2}}
-              @click={{fn this.setSortBy "lastName"}}
-              @sortedBy={{or (eq @sortBy "lastName") (eq @sortBy "lastName:desc")}}
-              @sortedAscending={{this.sortedAscending}}
-            >
-              {{t "general.lastName"}}
+              {{t "general.name"}}
             </SortableTh>
             <th class="text-left" colspan="2">
               {{t "general.campusId"}}
@@ -75,11 +67,8 @@
                   />
                 {{/unless}}
               </td>
-              <td class="text-left" colspan="2">
-                {{user.firstName}}
-              </td>
-              <td class="text-left" colspan="2">
-                {{user.lastName}}
+              <td class="text-left" colspan="4">
+                {{user.fullName}}
               </td>
               <td class="text-left" colspan="2">
                 {{user.campusId}}
