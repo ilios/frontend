@@ -38,20 +38,18 @@ export default create({
       item: {
         isValid: hasClass('fa-check', 'svg', { scope: 'td:nth-of-type(1)'}),
         hasWarning: hasClass('fa-exclamation-triangle', 'svg', { scope: 'td:nth-of-type(1)'}),
-        firstName: text('td', { at: 1 }),
-        lastName: text('td', { at: 2 }),
-        campusId: text('td', { at: 3 }),
-        smallGroupName: text('td', { at: 4 }),
+        fullName: text('td', { at: 1 }),
+        campusId: text('td', { at: 2 }),
+        smallGroupName: text('td', { at: 3 }),
       }
     }),
     invalidUploadedUsers: collection({
       itemScope: '[data-test-upload-data-invalid-users] tbody tr',
       item: {
-        firstName: text('td', { at: 0 }),
-        lastName: text('td', { at: 1 }),
-        campusId: text('td', { at: 2 }),
-        smallGroupName: text('td', { at: 3 }),
-        errors: text('td', { at: 4 }),
+        fullName: text('td', { at: 0 }),
+        campusId: text('td', { at: 1 }),
+        smallGroupName: text('td', { at: 2 }),
+        errors: text('td', { at: 3 }),
       }
     }),
     showConfirmUploadButton: isVisible('[data-test-upload-data-confirm]'),
@@ -92,10 +90,9 @@ export default create({
     scope: '.cohortmembers',
     list: collection('tbody tr', {
       scope: '.list',
-      firstName: text('td', {at: 1}),
-      lastName: text('td', {at: 2}),
-      campusId: text('td', { at: 3 }),
-      email: text('td', { at: 4 }),
+      fullName: text('td', {at: 1 }),
+      campusId: text('td', { at: 2 }),
+      email: text('td', { at: 3 }),
       add: clickable('.yes.clickable'),
     }),
   }
