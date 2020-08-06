@@ -154,10 +154,11 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     assert.dom(user2Email).hasText('testemail2');
   });
 
-  test('sort by fullName', async function(assert) {
+  test('sort by full name', async function(assert) {
     const userList = 'tbody tr';
     const user1FullName = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
     const user2FullName = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
+    const user3FullName = 'tbody tr:nth-of-type(3) td:nth-of-type(2)';
 
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user1 = this.server.create('user', {
@@ -168,8 +169,14 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       firstName: 'Jackson',
       learnerGroups: [ learnerGroup ],
     });
+    const user3 = this.server.create('user', {
+      firstName: 'Jayden',
+      displayName: 'Captain J',
+      learnerGroups: [ learnerGroup ],
+    });
     const userModel1 = await this.owner.lookup('service:store').find('user', user1.id);
     const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const userModel3 = await this.owner.lookup('service:store').find('user', user3.id);
     const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
     const userModelProxy1 = ObjectProxy.create({
       content: userModel1,
@@ -181,8 +188,13 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       lowestGroupInTree: learnerGroupModel,
       lowestGroupInTreeTitle: learnerGroupModel.title
     });
+    const userModelProxy3 = ObjectProxy.create({
+      content: userModel3,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
+    });
 
-    this.set('users', [ userModelProxy1, userModelProxy2 ]);
+    this.set('users', [ userModelProxy1, userModelProxy2, userModelProxy3 ]);
     this.set('learnerGroup', learnerGroupModel );
     await render(hbs`<LearnergroupUserManager
       @learnerGroupId={{this.learnerGroup.Id}}
@@ -199,9 +211,10 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       @removeUsersFromGroup={{noop}}
     />`);
 
-    assert.dom(userList).exists({ count: 2 });
-    assert.dom(user1FullName).hasText('Jackson M. Mc1son');
-    assert.dom(user2FullName).hasText('Jasper M. Mc0son');
+    assert.dom(userList).exists({ count: 3 });
+    assert.dom(user1FullName).hasText('Captain J');
+    assert.dom(user2FullName).hasText('Jackson M. Mc1son');
+    assert.dom(user3FullName).hasText('Jasper M. Mc0son');
   });
 
   test('add multiple users', async function(assert) {
