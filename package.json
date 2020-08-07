@@ -58,7 +58,7 @@
     "ember-resolver": "^7.0.0",
     "ember-simple-set-helper": "^0.1.2",
     "ember-source": "~3.17.0",
-    "ember-template-lint": "^2.9.1",
+    "ember-template-lint": "^2.10.0",
     "ember-web-app": "^4.0.0",
     "eslint": "^7.6.0",
     "ilios-common": "^49.0.2",
