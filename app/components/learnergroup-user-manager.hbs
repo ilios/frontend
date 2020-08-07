@@ -33,11 +33,8 @@
               <SortableTh
                 @colspan={{4}}
                 @click={{fn this.setSortBy "fullName"}}
-                @sortedBy={{or
-                  (eq sortBy "fullName")
-                  (eq sortBy "fullName:desc")
-                }}
-                @sortedAscending={{sortedAscending}}
+                @sortedBy={{or (eq @sortBy "fullName") (eq @sortBy "fullName:desc")}}
+                @sortedAscending={{this.sortedAscending}}
               >
                 {{t "general.name"}}
               </SortableTh>
@@ -51,11 +48,8 @@
                 <SortableTh
                   @colspan={{2}}
                   @click={{fn this.setSortBy "lowestGroupInTreeTitle"}}
-                  @sortedBy={{or
-                    (eq sortBy "lowestGroupInTreeTitle")
-                    (eq sortBy "lowestGroupInTreeTitle:desc")
-                  }}
-                  @sortedAscending={{sortedAscending}}
+                  @sortedBy={{or (eq @sortBy "lowestGroupInTreeTitle") (eq @sortBy "lowestGroupInTreeTitle:desc")}}
+                  @sortedAscending={{this.sortedAscending}}
                 >
                   {{t "general.groupName"}}
                 </SortableTh>
