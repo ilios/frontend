@@ -26,8 +26,10 @@ export default class LearnergroupCohortUserManagerComponent extends Component {
       return this.args.users;
     }
 
-    return this.args.users.filter((user) => {
-      return user.get('fullName').toLowerCase().includes(filter) ||
+    return this.args.users.filter(user => {
+      return user.get('firstName').toLowerCase().includes(filter) ||
+        user.get('lastName').toLowerCase().includes(filter) ||
+        user.get('fullName').toLowerCase().includes(filter) ||
         user.get('email').toLowerCase().includes(filter);
     });
   }
