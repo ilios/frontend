@@ -8,7 +8,7 @@ export default Controller.extend({
   },
   isEditing: false,
   isBulkAssigning: false,
-  sortUsersBy: 'firstName',
+  sortUsersBy: 'fullName',
   canCreate: false,
   canUpdate: false,
   canDelete: false,
