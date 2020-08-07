@@ -11,7 +11,7 @@ export default class SortableTh extends Component {
   }
 
   get sortedAscending() {
-    return this.args.sortedAscending || true;
+    return this.args.sortedAscending ?? true;
   }
 
   get sortedBy() {

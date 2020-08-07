@@ -27,7 +27,7 @@ module('Integration | Component | sortable th', function(hooks) {
     this.set('hideFromSmallScreen', true);
     this.set('align', 'right');
     this.set('sortedBy', true);
-    this.set('sortedAscending', false);
+    this.set('sortedAscending', true);
     this.set('sortType', 'numeric');
     await render(
       hbs`<SortableTh
@@ -48,6 +48,29 @@ module('Integration | Component | sortable th', function(hooks) {
     assert.dom('th').hasClass('hide-from-small-screen');
     assert.dom('th').hasAttribute('colspan', colspan);
     assert.dom('th').hasAttribute('title', title);
+    assert.dom('svg').hasClass('fa-sort-numeric-down');
+  });
+
+  test('sorted descending', async function(assert) {
+    this.set('sortedBy', true);
+    this.set('sortedAscending', false);
+    this.set('sortType', 'numeric');
+    await render(
+      hbs`<SortableTh
+            @sortedBy={{this.sortedBy}}
+            @sortedAscending={{this.sortedAscending}}
+            @sortType={{this.sortType}}
+          >
+            Foo
+          </SortableTh>`
+    );
+    assert.dom('svg').hasClass('fa-sort-numeric-down-alt');
+  });
+
+  test('no sort order specified defaults to ascending sort', async function(assert) {
+    this.set('sortedBy', true);
+    this.set('sortType', 'numeric');
+    await render(hbs`<SortableTh @sortedBy={{this.sortedBy}} @sortType={{this.sortType}}>Foo</SortableTh>`);
     assert.dom('svg').hasClass('fa-sort-numeric-down');
   });
 
