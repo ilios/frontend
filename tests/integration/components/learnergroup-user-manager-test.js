@@ -1,75 +1,81 @@
-import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import ObjectProxy from '@ember/object/proxy';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  settled,
-  click,
-  findAll,
-  find
-} from '@ember/test-helpers';
+import { render, settled, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | learnergroup user manager', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
     const userList = 'tbody tr';
-    const user1FirstName = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
-    const user1LastName = 'tbody tr:nth-of-type(1) td:nth-of-type(3)';
-    const user1CampusId = 'tbody tr:nth-of-type(1) td:nth-of-type(4)';
-    const user1Email = 'tbody tr:nth-of-type(1) td:nth-of-type(5)';
+    const user1FullName = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
+    const user1CampusId = 'tbody tr:nth-of-type(1) td:nth-of-type(3)';
+    const user1Email = 'tbody tr:nth-of-type(1) td:nth-of-type(4)';
     const user2Disabled = 'tbody tr:nth-of-type(2) td:nth-of-type(1) svg';
-    const user2FirstName = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
-    const user2LastName = 'tbody tr:nth-of-type(2) td:nth-of-type(3)';
-    const user2CampusId = 'tbody tr:nth-of-type(2) td:nth-of-type(4)';
-    const user2Email = 'tbody tr:nth-of-type(2) td:nth-of-type(5)';
+    const user2FullName = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
+    const user2CampusId = 'tbody tr:nth-of-type(2) td:nth-of-type(3)';
+    const user2Email = 'tbody tr:nth-of-type(2) td:nth-of-type(4)';
 
-    const user1 = EmberObject.create({
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const user1 = this.server.create('user', {
       firstName: 'Jasper',
       lastName: 'Dog',
       campusId: '1234',
       email: 'testemail',
       enabled: true,
+      learnerGroups: [ learnerGroup ],
+
     });
-    const user2 = EmberObject.create({
+    const user2 = this.server.create('user', {
       firstName: 'Jackson',
       lastName: 'Doggy',
       campusId: '123',
       email: 'testemail2',
       enabled: false,
+      learnerGroups: [ learnerGroup ],
     });
-
-    this.set('users', [user1, user2]);
-    this.set('nothing', parseInt);
-
+    const userModel1 = await this.owner.lookup('service:store').find('user', user1.id);
+    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    // @todo gross! see if proxy can be eliminated in upstream component <LearnergroupSummary> [ ST 2020/08/07 ]
+    const userModelProxy1 = ObjectProxy.create({
+      content: userModel1,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
+    });
+    const userModelProxy2 = ObjectProxy.create({
+      content: userModel2,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
+    });
+    this.set('users', [ userModelProxy1, userModelProxy2 ]);
+    this.set('learnerGroup', learnerGroupModel );
     await render(hbs`<LearnergroupUserManager
-      @learnerGroupId={{1}}
+      @learnerGroupId={{this.learnerGroup.id}}
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top group"
       @cohortTitle="this cohort"
-      @users={{users}}
-      @sortBy="lastName"
-      @setSortBy={{action nothing}}
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{noop}}
       @isEditing={{false}}
-      @addUserToGroup={{action nothing}}
-      @removeUserFromGroup={{action nothing}}
-      @addUsersToGroup={{action nothing}}
-      @removeUsersFromGroup={{action nothing}}
+      @addUserToGroup={{noop}}
+      @removeUserFromGroup={{noop}}
+      @addUsersToGroup={{noop}}
+      @removeUsersFromGroup={{noop}}
     />`);
 
     assert.dom('.title').hasText('Members (2)');
     assert.dom(userList).exists({ count: 2 });
-    assert.dom(user1FirstName).hasText('Jasper');
-    assert.dom(user1LastName).hasText('Dog');
+    assert.dom(user1FullName).hasText('Jasper M. Dog');
     assert.dom(user1CampusId).hasText('1234');
     assert.dom(user1Email).hasText('testemail');
-
     assert.dom(user2Disabled).exists({ count: 1 });
-    assert.dom(user2FirstName).hasText('Jackson');
-    assert.dom(user2LastName).hasText('Doggy');
+    assert.dom(user2FullName).hasText('Jackson M. Doggy');
     assert.dom(user2CampusId).hasText('123');
     assert.dom(user2Email).hasText('testemail2');
   });
@@ -77,53 +83,60 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
   test('it renders when editing', async function(assert) {
     const userList = 'tbody tr';
     const user1CheckBox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const user1FirstName = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
-    const user1LastName = 'tbody tr:nth-of-type(1) td:nth-of-type(3)';
-    const user1CampusId = 'tbody tr:nth-of-type(1) td:nth-of-type(4)';
-    const user1Email = 'tbody tr:nth-of-type(1) td:nth-of-type(5)';
+    const user1FullName = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
+    const user1CampusId = 'tbody tr:nth-of-type(1) td:nth-of-type(3)';
+    const user1Email = 'tbody tr:nth-of-type(1) td:nth-of-type(4)';
     const user2Disabled = 'tbody tr:nth-of-type(2) td:nth-of-type(1) svg';
-    const user2FirstName = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
-    const user2LastName = 'tbody tr:nth-of-type(2) td:nth-of-type(3)';
-    const user2CampusId = 'tbody tr:nth-of-type(2) td:nth-of-type(4)';
-    const user2Email = 'tbody tr:nth-of-type(2) td:nth-of-type(5)';
+    const user2FullName = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
+    const user2CampusId = 'tbody tr:nth-of-type(2) td:nth-of-type(3)';
+    const user2Email = 'tbody tr:nth-of-type(2) td:nth-of-type(4)';
 
-    const user1 = EmberObject.create({
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const user1 = this.server.create('user', {
       firstName: 'Jasper',
       lastName: 'Dog',
       campusId: '1234',
       email: 'testemail',
       enabled: true,
-      lowestGroupInTree: EmberObject.create({
-        id: 1
-      }),
+      learnerGroups: [ learnerGroup ],
     });
-    const user2 = EmberObject.create({
+    const user2 = this.server.create('user', {
       firstName: 'Jackson',
       lastName: 'Doggy',
       campusId: '123',
       email: 'testemail2',
       enabled: false,
-      lowestGroupInTree: EmberObject.create({
-        id: 1
-      }),
+      learnerGroups: [ learnerGroup ],
+    });
+    const userModel1 = await this.owner.lookup('service:store').find('user', user1.id);
+    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const userModelProxy1 = ObjectProxy.create({
+      content: userModel1,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
+    });
+    const userModelProxy2 = ObjectProxy.create({
+      content: userModel2,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
     });
 
-    this.set('users', [user1, user2]);
-    this.set('nothing', parseInt);
-
+    this.set('users', [ userModelProxy1, userModelProxy2 ]);
+    this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupUserManager
-      @learnerGroupId={{1}}
+      @learnerGroupId={{this.learnerGroup.id}}
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top group"
       @cohortTitle="this cohort"
-      @users={{users}}
-      @sortBy="lastName"
-      @setSortBy={{action nothing}}
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{noop}}
       @isEditing={{true}}
-      @addUserToGroup={{action nothing}}
-      @removeUserFromGroup={{action nothing}}
-      @addUsersToGroup={{action nothing}}
-      @removeUsersFromGroup={{action nothing}}
+      @addUserToGroup={{noop}}
+      @removeUserFromGroup={{noop}}
+      @addUsersToGroup={{noop}}
+      @removeUsersFromGroup={{noop}}
     />`);
 
     assert.dom('[data-test-group-members]').hasText('Members of current group (2)');
@@ -131,57 +144,77 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     assert.dom(userList).exists({ count: 2 });
     assert.dom(user1CheckBox).exists({ count: 1 });
     assert.dom(user1CheckBox).isNotChecked();
-    assert.dom(user1FirstName).hasText('Jasper');
-    assert.dom(user1LastName).hasText('Dog');
+    assert.dom(user1FullName).hasText('Jasper M. Dog');
     assert.dom(user1CampusId).hasText('1234');
     assert.dom(user1Email).hasText('testemail');
 
     assert.dom(user2Disabled).exists({ count: 1 });
-    assert.dom(user2FirstName).hasText('Jackson');
-    assert.dom(user2LastName).hasText('Doggy');
+    assert.dom(user2FullName).hasText('Jackson M. Doggy');
     assert.dom(user2CampusId).hasText('123');
     assert.dom(user2Email).hasText('testemail2');
   });
 
-  test('sort by firstName', async function(assert) {
+  test('sort by full name', async function(assert) {
     const userList = 'tbody tr';
-    const user1FirstName = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
-    const user2FirstName = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
+    const user1FullName = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
+    const user2FullName = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
+    const user3FullName = 'tbody tr:nth-of-type(3) td:nth-of-type(2)';
 
-    const user1 = EmberObject.create({
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const user1 = this.server.create('user', {
       firstName: 'Jasper',
-      lowestGroupInTree: EmberObject.create({
-        id: 1
-      }),
+      learnerGroups: [ learnerGroup ],
     });
-    const user2 = EmberObject.create({
+    const user2 = this.server.create('user', {
       firstName: 'Jackson',
-      lowestGroupInTree: EmberObject.create({
-        id: 1
-      }),
+      learnerGroups: [ learnerGroup ],
+    });
+    const user3 = this.server.create('user', {
+      firstName: 'Jayden',
+      displayName: 'Captain J',
+      learnerGroups: [ learnerGroup ],
+    });
+    const userModel1 = await this.owner.lookup('service:store').find('user', user1.id);
+    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const userModel3 = await this.owner.lookup('service:store').find('user', user3.id);
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const userModelProxy1 = ObjectProxy.create({
+      content: userModel1,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
+    });
+    const userModelProxy2 = ObjectProxy.create({
+      content: userModel2,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
+    });
+    const userModelProxy3 = ObjectProxy.create({
+      content: userModel3,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
     });
 
-    this.set('users', [user1, user2]);
-    this.set('nothing', parseInt);
-
+    this.set('users', [ userModelProxy1, userModelProxy2, userModelProxy3 ]);
+    this.set('learnerGroup', learnerGroupModel );
     await render(hbs`<LearnergroupUserManager
-      @learnerGroupId={{1}}
+      @learnerGroupId={{this.learnerGroup.Id}}
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top group"
       @cohortTitle="this cohort"
-      @users={{users}}
-      @sortBy="firstName"
-      @setSortBy={{action nothing}}
+      @users={{this.users}}
+      @sortBy="fullName"
+      @setSortBy={{noop}}
       @isEditing={{true}}
-      @addUserToGroup={{action nothing}}
-      @removeUserFromGroup={{action nothing}}
-      @addUsersToGroup={{action nothing}}
-      @removeUsersFromGroup={{action nothing}}
+      @addUserToGroup={{noop}}
+      @removeUserFromGroup={{noop}}
+      @addUsersToGroup={{noop}}
+      @removeUsersFromGroup={{noop}}
     />`);
 
-    assert.dom(userList).exists({ count: 2 });
-    assert.dom(user1FirstName).hasText('Jackson');
-    assert.dom(user2FirstName).hasText('Jasper');
+    assert.dom(userList).exists({ count: 3 });
+    assert.dom(user1FullName).hasText('Captain J');
+    assert.dom(user2FullName).hasText('Jackson M. Mc1son');
+    assert.dom(user3FullName).hasText('Jasper M. Mc0son');
   });
 
   test('add multiple users', async function(assert) {
@@ -189,32 +222,34 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     const user1CheckBox = 'table:nth-of-type(2) tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
     const button = 'button.done';
 
-    const user1 = EmberObject.create({
-      enabled: true,
-      lowestGroupInTree: EmberObject.create({
-        id: 1
-      }),
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const user = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup ] });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const userModelProxy = ObjectProxy.create({
+      content: userModel,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
     });
 
-    this.set('users', [ObjectProxy.create({content: user1})]);
-    this.set('nothing', parseInt);
-    this.set('addMany', ([user]) => {
-      assert.equal(user, user1);
+    this.set('users', [ userModelProxy ]);
+    this.set('learnerGroup', learnerGroupModel);
+    this.set('addMany', ([ user ]) => {
+      assert.equal(userModel, user);
     });
-
     await render(hbs`<LearnergroupUserManager
-      @learnerGroupId={{1}}
+      @learnerGroupId={{this.learnerGroup.id}}
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top group"
       @cohortTitle="this cohort"
-      @users={{users}}
-      @sortBy="lastName"
-      @setSortBy={{action nothing}}
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{noop}}
       @isEditing={{true}}
-      @addUserToGroup={{action nothing}}
-      @removeUserFromGroup={{action nothing}}
-      @addUsersToGroup={{action addMany}}
-      @removeUsersFromGroup={{action nothing}}
+      @addUserToGroup={{noop}}
+      @removeUserFromGroup={{noop}}
+      @addUsersToGroup={{this.addMany}}
+      @removeUsersFromGroup={{noop}}
     />`);
 
     assert.dom(button).doesNotExist();
@@ -232,32 +267,34 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     const user1CheckBox = 'table:nth-of-type(2) tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
     const button = 'button.cancel';
 
-    const user1 = EmberObject.create({
-      enabled: true,
-      lowestGroupInTree: EmberObject.create({
-        id: 1
-      }),
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const user = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup ] });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const userModelProxy = ObjectProxy.create({
+      content: userModel,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
     });
 
-    this.set('users', [ObjectProxy.create({content: user1})]);
-    this.set('nothing', parseInt);
-    this.set('removeMany', ([user]) => {
-      assert.equal(user, user1);
+    this.set('users', [ userModelProxy ]);
+    this.set('learnerGroup', learnerGroupModel);
+    this.set('removeMany', ([ user ]) => {
+      assert.equal(userModel, user);
     });
-
     await render(hbs`<LearnergroupUserManager
-      @learnerGroupId={{1}}
+      @learnerGroupId={{this.learnerGroup.id}}
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top group"
       @cohortTitle="this cohort"
-      @users={{users}}
-      @sortBy="lastName"
-      @setSortBy={{action nothing}}
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{noop}}
       @isEditing={{true}}
-      @addUserToGroup={{action nothing}}
-      @removeUserFromGroup={{action nothing}}
-      @addUsersToGroup={{action nothing}}
-      @removeUsersFromGroup={{action removeMany}}
+      @addUserToGroup={{noop}}
+      @removeUserFromGroup={{noop}}
+      @addUsersToGroup={{noop}}
+      @removeUsersFromGroup={{this.removeMany}}
     />`);
 
     assert.dom(button).doesNotExist();
@@ -271,34 +308,37 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
 
   test('remove single user', async function(assert) {
     assert.expect(1);
-    const action = 'table:nth-of-type(2) tbody tr:nth-of-type(1) td:nth-of-type(7) .clickable';
+    const action = 'table:nth-of-type(2) tbody tr:nth-of-type(1) td:nth-of-type(6) .clickable';
 
-    const user1 = EmberObject.create({
-      enabled: true,
-      lowestGroupInTree: EmberObject.create({
-        id: 1
-      }),
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const user = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup ] });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const userModelProxy = ObjectProxy.create({
+      content: userModel,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
     });
 
-    this.set('users', [ObjectProxy.create({content: user1})]);
-    this.set('nothing', parseInt);
-    this.set('removeOne', (user) => {
-      assert.equal(user1, user);
+    this.set('users', [ userModelProxy ]);
+    this.set('learnerGroup', learnerGroupModel);
+    this.set('removeOne', user => {
+      assert.equal(userModel, user);
     });
 
     await render(hbs`<LearnergroupUserManager
-      @learnerGroupId={{1}}
+      @learnerGroupId={{this.learnerGroup.id}}
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top group"
       @cohortTitle="this cohort"
-      @users={{users}}
-      @sortBy="lastName"
-      @setSortBy={{action nothing}}
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{noop}}
       @isEditing={{true}}
-      @addUserToGroup={{action nothing}}
-      @removeUserFromGroup={{action removeOne}}
-      @addUsersToGroup={{action nothing}}
-      @removeUsersFromGroup={{action nothing}}
+      @addUserToGroup={{noop}}
+      @removeUserFromGroup={{this.removeOne}}
+      @addUsersToGroup={{noop}}
+      @removeUsersFromGroup={{noop}}
     />`);
 
     await click(action);
@@ -307,76 +347,83 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
 
   test('add single user', async function(assert) {
     assert.expect(1);
-    const action = 'table:nth-of-type(3) tbody tr:nth-of-type(1) td:nth-of-type(7) .clickable';
+    const action = 'table:nth-of-type(3) tbody tr:nth-of-type(1) td:nth-of-type(6) .clickable';
 
-    const user1 = EmberObject.create({
-      enabled: true,
-      lowestGroupInTree: EmberObject.create({
-        id: 2
-      }),
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const learnerGroup2 = this.server.create('learnerGroup', { id: 2 });
+    const user = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup2 ] });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const learnerGroupModel2 = await this.owner.lookup('service:store').find('learner-group', learnerGroup2.id);
+    const userModelProxy = ObjectProxy.create({
+      content: userModel,
+      lowestGroupInTree: learnerGroupModel2,
+      lowestGroupInTreeTitle: learnerGroupModel2.title
     });
 
-    this.set('users', [ObjectProxy.create({content: user1})]);
-    this.set('nothing', parseInt);
-    this.set('addOne', (user) => {
-      assert.equal(user1, user);
+    this.set('users', [ userModelProxy ]);
+    this.set('learnerGroup', learnerGroupModel);
+    this.set('addOne', user => {
+      assert.equal(userModel, user);
     });
 
     await render(hbs`<LearnergroupUserManager
-      @learnerGroupId={{1}}
+      @learnerGroupId={{this.learnerGroupModel.id}}
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top group"
       @cohortTitle="this cohort"
-      @users={{users}}
-      @sortBy="lastName"
-      @setSortBy={{action nothing}}
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{noop}}
       @isEditing={{true}}
-      @addUserToGroup={{action addOne}}
-      @removeUserFromGroup={{action nothing}}
-      @addUsersToGroup={{action nothing}}
-      @removeUsersFromGroup={{action nothing}}
+      @addUserToGroup={{this.addOne}}
+      @removeUserFromGroup={{noop}}
+      @addUsersToGroup={{noop}}
+      @removeUsersFromGroup={{noop}}
     />`);
-
     await click(action);
-
   });
 
   test('when users are selected single action is disabled', async function(assert) {
     assert.expect(2);
     const user1CheckBox = 'table:nth-of-type(2) tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const action1 = 'table:nth-of-type(2) tbody tr:nth-of-type(1) td:nth-of-type(7) .clickable';
-    const action2 = 'table:nth-of-type(3) tbody tr:nth-of-type(1) td:nth-of-type(7) .clickable';
+    const action1 = 'table:nth-of-type(2) tbody tr:nth-of-type(1) td:nth-of-type(6) .clickable';
+    const action2 = 'table:nth-of-type(3) tbody tr:nth-of-type(1) td:nth-of-type(6) .clickable';
 
-    const user1 = EmberObject.create({
-      enabled: true,
-      lowestGroupInTree: EmberObject.create({
-        id: 1
-      }),
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const learnerGroup2 = this.server.create('learnerGroup', { id: 2 });
+    const user = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup ] });
+    const user2 = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup2 ] });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const learnerGroupModel2 = await this.owner.lookup('service:store').find('learner-group', learnerGroup2.id);
+    const userModelProxy = ObjectProxy.create({
+      content: userModel,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
+    });
+    const userModelProxy2 = ObjectProxy.create({
+      content: userModel2,
+      lowestGroupInTree: learnerGroupModel2,
+      lowestGroupInTreeTitle: learnerGroupModel2.title
     });
 
-    const user2 = EmberObject.create({
-      enabled: true,
-      lowestGroupInTree: EmberObject.create({
-        id: 2
-      }),
-    });
-
-    this.set('users', [ObjectProxy.create({content: user1}), ObjectProxy.create({content: user2})]);
-    this.set('nothing', parseInt);
-
+    this.set('users', [ userModelProxy, userModelProxy2 ]);
+    this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupUserManager
-      @learnerGroupId={{1}}
+      @learnerGroupId={{this.learnerGroup.id}}
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top group"
       @cohortTitle="this cohort"
-      @users={{users}}
-      @sortBy="lastName"
-      @setSortBy={{action nothing}}
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{noop}}
       @isEditing={{true}}
-      @addUserToGroup={{action nothing}}
-      @removeUserFromGroup={{action nothing}}
-      @addUsersToGroup={{action nothing}}
-      @removeUsersFromGroup={{action nothing}}
+      @addUserToGroup={{noop}}
+      @removeUserFromGroup={{noop}}
+      @addUsersToGroup={{noop}}
+      @removeUsersFromGroup={{noop}}
     />`);
 
     await click(user1CheckBox);
@@ -392,39 +439,43 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     const user2CheckBox = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input[type=checkbox]';
     const button = 'button.done';
 
-    const user1 = EmberObject.create({
-      enabled: true,
-      lowestGroupInTree: EmberObject.create({
-        id: 1
-      }),
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const user = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup ] });
+    const user2 = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup ] });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const userModelProxy = ObjectProxy.create({
+      content: userModel,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
     });
-    const user2 = EmberObject.create({
-      enabled: true,
-      lowestGroupInTree: EmberObject.create({
-        id: 1
-      }),
+    const userModelProxy2 = ObjectProxy.create({
+      content: userModel2,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
     });
 
-    this.set('users', [ObjectProxy.create({content: user1}), ObjectProxy.create({content: user2})]);
-    this.set('nothing', parseInt);
+    this.set('users', [ userModelProxy, userModelProxy2 ]);
     this.set('addMany', ([userA, userB]) => {
-      assert.equal(user1, userA);
-      assert.equal(user2, userB);
+      assert.equal(userModel, userA);
+      assert.equal(userModel2, userB);
     });
+    this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnergroupUserManager
-      @learnerGroupId={{1}}
+      @learnerGroupId={{this.learnerGroup.id}}
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top group"
       @cohortTitle="this cohort"
-      @users={{users}}
-      @sortBy="lastName"
-      @setSortBy={{action nothing}}
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{noop}}
       @isEditing={{true}}
-      @addUserToGroup={{action nothing}}
-      @removeUserFromGroup={{action nothing}}
-      @addUsersToGroup={{action addMany}}
-      @removeUsersFromGroup={{action nothing}}
+      @addUserToGroup={{noop}}
+      @removeUserFromGroup={{noop}}
+      @addUsersToGroup={{this.addMany}}
+      @removeUsersFromGroup={{noop}}
     />`);
 
     await click(checkAllBox);
@@ -441,35 +492,39 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     const user1CheckBox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
     const user2CheckBox = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input[type=checkbox]';
 
-    const user1 = EmberObject.create({
-      enabled: true,
-      lowestGroupInTree: EmberObject.create({
-        id: 1
-      }),
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const user = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup ] });
+    const user2 = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup ] });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const userModelProxy = ObjectProxy.create({
+      content: userModel,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
     });
-    const user2 = EmberObject.create({
-      enabled: true,
-      lowestGroupInTree: EmberObject.create({
-        id: 1
-      }),
+    const userModelProxy2 = ObjectProxy.create({
+      content: userModel2,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
     });
 
-    this.set('users', [ObjectProxy.create({content: user1}), ObjectProxy.create({content: user2})]);
-    this.set('nothing', parseInt);
+    this.set('users', [ userModelProxy, userModelProxy2 ]);
+    this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnergroupUserManager
-      @learnerGroupId={{1}}
+      @learnerGroupId={{this.learnerGroup.id}}
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top group"
       @cohortTitle="this cohort"
-      @users={{users}}
-      @sortBy="lastName"
-      @setSortBy={{action nothing}}
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{noop}}
       @isEditing={{true}}
-      @addUserToGroup={{action nothing}}
-      @removeUserFromGroup={{action nothing}}
-      @addUsersToGroup={{action nothing}}
-      @removeUsersFromGroup={{action nothing}}
+      @addUserToGroup={{noop}}
+      @removeUserFromGroup={{noop}}
+      @addUsersToGroup={{noop}}
+      @removeUsersFromGroup={{noop}}
     />`);
 
     await click(user1CheckBox);
@@ -491,29 +546,31 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     const userCheckbox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
     const userDisabledIcon = 'tbody tr:nth-of-type(1) td:nth-of-type(1) .fa-user-times';
 
-    const user1 = EmberObject.create({
-      enabled: false,
-      lowestGroupInTree: EmberObject.create({
-        id: 1
-      }),
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const user = this.server.create('user', { enabled: false, learnerGroups: [ learnerGroup ] });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const userModelProxy = ObjectProxy.create({
+      content: userModel,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
     });
 
-    this.set('users', [ObjectProxy.create({content: user1})]);
-    this.set('nothing', parseInt);
-
+    this.set('users', [ userModelProxy ]);
+    this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupUserManager
-      @learnerGroupId={{1}}
+      @learnerGroupId={{this.learnerGroup.id}}
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top group"
       @cohortTitle="this cohort"
-      @users={{users}}
-      @sortBy="lastName"
-      @setSortBy={{action nothing}}
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{noop}}
       @isEditing={{true}}
-      @addUserToGroup={{action nothing}}
-      @removeUserFromGroup={{action nothing}}
-      @addUsersToGroup={{action nothing}}
-      @removeUsersFromGroup={{action nothing}}
+      @addUserToGroup={{noop}}
+      @removeUserFromGroup={{noop}}
+      @addUsersToGroup={{noop}}
+      @removeUsersFromGroup={{noop}}
     />`);
 
     assert.equal(1, findAll(userCheckbox).length, 'Checkbox visible');
@@ -530,29 +587,31 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     const userCheckbox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
     const userDisabledIcon = 'tbody tr:nth-of-type(1) td:nth-of-type(1) .fa-user-times';
 
-    const user1 = EmberObject.create({
-      enabled: false,
-      lowestGroupInTree: EmberObject.create({
-        id: 1
-      }),
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const user = this.server.create('user', { enabled: false, learnerGroups: [ learnerGroup ] });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const userModelProxy = ObjectProxy.create({
+      content: userModel,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
     });
 
-    this.set('users', [ObjectProxy.create({content: user1})]);
-    this.set('nothing', parseInt);
-
+    this.set('users', [ userModelProxy ]);
+    this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupUserManager
-      @learnerGroupId={{1}}
+      @learnerGroupId={{this.learnerGroup.id}}
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top group"
       @cohortTitle="this cohort"
-      @users={{users}}
-      @sortBy="lastName"
-      @setSortBy={{action nothing}}
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{noop}}
       @isEditing={{true}}
-      @addUserToGroup={{action nothing}}
-      @removeUserFromGroup={{action nothing}}
-      @addUsersToGroup={{action nothing}}
-      @removeUsersFromGroup={{action nothing}}
+      @addUserToGroup={{noop}}
+      @removeUserFromGroup={{noop}}
+      @addUsersToGroup={{noop}}
+      @removeUsersFromGroup={{noop}}
     />`);
 
     assert.equal(0, findAll(userCheckbox).length, 'Checkbox is not visible');
