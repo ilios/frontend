@@ -4,6 +4,7 @@ const Funnel = require('broccoli-funnel');
 const MergeTrees = require('broccoli-merge-trees');
 const path = require('path');
 const WriteFile = require('broccoli-file-creator');
+const SetTransform = require('./lib/set-transform');
 
 module.exports = {
   name: require('./package').name,
@@ -49,6 +50,7 @@ module.exports = {
         cpValidationsAddon.setupPreprocessorRegistry(type, registry);
       }
     }
+    registry.add('htmlbars-ast-plugin', SetTransform.instantiate());
   },
 
   treeForApp(appTree) {
