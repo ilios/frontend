@@ -1,6 +1,6 @@
-<div class="user-profile-permissions large-component" ...attributes>
+<div class="user-profile-permissions large-component" data-test-user-profile-permissions ...attributes>
   {{! template-lint-disable no-bare-strings }}
-  <h3 class="title">
+  <h3 class="title" data-test-title>
     {{t "general.permissions"}}
     {{#if (is-pending isLoaded)}}
       <LoadingSpinner />
@@ -8,7 +8,7 @@
   </h3>
   <span>
     <FaIcon @icon="university" @fixedWidth={{true}} />
-    <select onchange={{action (mut selectedSchoolId) value="target.value"}}>
+    <select onchange={{action (mut selectedSchoolId) value="target.value"}} data-test-select-school>
       {{#each (sort-by "title" (await schools)) as |school|}}
         <option
           value={{school.id}}
@@ -21,7 +21,7 @@
   </span>
   <span>
     <FaIcon @icon="calendar" @fixedWidth={{true}} />
-    <select onchange={{action (mut selectedYearId) value="target.value"}}>
+    <select onchange={{action (mut selectedYearId) value="target.value"}} data-test-select-year>
       {{#each (sort-by "title" (await academicYears)) as |year|}}
         <option value={{year.id}} selected={{is-equal year (await selectedYear)}}>
           {{year.academicYearTitle}}
@@ -30,19 +30,19 @@
     </select>
   </span>
   {{#if (is-fulfilled isLoaded)}}
-    <p>
-      <h5>
+    <p data-test-school-permissions>
+      <h5 data-test-title>
         {{t "general.school"}}
         ({{get (await selectedSchool) "title"}})
       </h5>
-      <span class="hide-on-collapse">
+      <span class="hide-on-collapse" data-test-director>
         <strong>
           {{t "general.director"}}:
         </strong>
         <YesNo @value={{await isDirectingSchool}} />
         <br>
       </span>
-      <span class="hide-on-collapse">
+      <span class="hide-on-collapse" data-test-administrator>
         <strong>
           {{t "general.administrator"}}:
         </strong>
@@ -50,71 +50,71 @@
         <br>
       </span>
     </p>
-    <p class={{if programCollapsed "collapsed" "expanded"}}>
-      <h5 {{action (toggle "programCollapsed" this)}} role="button">
+    <p class={{if programCollapsed "collapsed" "expanded"}} data-test-program-permissions>
+      <h5 {{action (toggle "programCollapsed" this)}} role="button" data-test-title>
         {{t "general.programs"}}
         ({{get (await directedPrograms) "length"}})
       </h5>
       <h6>
         {{t "general.director"}}
       </h6>
-      <ul>
+      <ul data-test-directors>
         {{#each (sort-by "title" (await directedPrograms)) as |program|}}
-          <li>
+          <li data-test-program>
             {{program.title}}
           </li>
         {{else}}
-          <li>
+          <li data-test-none>
             {{t "general.none"}}
           </li>
         {{/each}}
       </ul>
     </p>
-    <p class={{if programYearCollapsed "collapsed" "expanded"}}>
-      <h5 {{action (toggle "programYearCollapsed" this)}} role="button">
+    <p class={{if programYearCollapsed "collapsed" "expanded"}} data-test-program-year-permissions>
+      <h5 {{action (toggle "programYearCollapsed" this)}} role="button" data-test-title>
         {{t "general.programYears"}}
         ({{get (await directedProgramYears) "length"}})
       </h5>
       <h6>
         {{t "general.director"}}
       </h6>
-      <ul>
+      <ul data-test-directors>
         {{#each
           (sort-by
             "program.title" "title" (await directedProgramYears)
           ) as |programYear|
         }}
-          <li>
+          <li data-test-program>
             {{programYear.program.title}}
             <strong>
               {{programYear.cohort.title}}
             </strong>
           </li>
         {{else}}
-          <li>
+          <li data-test-none>
             {{t "general.none"}}
           </li>
         {{/each}}
       </ul>
     </p>
-    <p class={{if courseCollapsed "collapsed" "expanded"}}>
-      <h5 {{action (toggle "courseCollapsed" this)}} role="button">
+    <p class={{if courseCollapsed "collapsed" "expanded"}} data-test-course-permissions>
+      <h5 {{action (toggle "courseCollapsed" this)}} role="button" data-test-title>
         {{t "general.courses"}}
         ({{await courseCount}})
       </h5>
       <h6>
         {{t "general.director"}}
       </h6>
-      <ul>
+      <ul data-test-directors>
         {{#each (sort-by "title" (await directedCourses)) as |course|}}
-          <li>
+          <li data-test-course>
             {{course.academicYear}}
             <LinkTo @route="course" @model={{course}}>
               {{course.title}}
             </LinkTo>
           </li>
         {{else}}
-          <li>
+          <li data-test-none>
             {{t "general.none"}}
           </li>
         {{/each}}
@@ -122,16 +122,16 @@
       <h6>
         {{t "general.administrator"}}
       </h6>
-      <ul>
+      <ul data-test-administrators>
         {{#each (sort-by "title" (await administeredCourses)) as |course|}}
-          <li>
+          <li data-test-course>
             {{course.academicYear}}
             <LinkTo @route="course" @model={{course}}>
               {{course.title}}
             </LinkTo>
           </li>
         {{else}}
-          <li>
+          <li data-test-none>
             {{t "general.none"}}
           </li>
         {{/each}}
@@ -139,32 +139,32 @@
       <h6>
         {{t "general.instructor"}}
       </h6>
-      <ul>
+      <ul data-test-instructors>
         {{#each (sort-by "title" (await instructedCourses)) as |course|}}
-          <li>
+          <li data-test-course>
             {{course.academicYear}}
             <LinkTo @route="course" @model={{course}}>
               {{course.title}}
             </LinkTo>
           </li>
         {{else}}
-          <li>
+          <li data-test-none>
             {{t "general.none"}}
           </li>
         {{/each}}
       </ul>
     </p>
-    <p class={{if sessionCollapsed "collapsed" "expanded"}}>
-      <h5 {{action (toggle "sessionCollapsed" this)}} role="button">
+    <p class={{if sessionCollapsed "collapsed" "expanded"}} data-test-session-permissions>
+      <h5 {{action (toggle "sessionCollapsed" this)}} role="button" data-test-title>
         {{t "general.sessions"}}
         ({{await sessionCount}})
       </h5>
       <h6>
         {{t "general.administrator"}}
       </h6>
-      <ul>
+      <ul data-test-administrators="">
         {{#each (await administeredSessions) as |session|}}
-          <li>
+          <li data-test-session>
             {{session.course.academicYear}}
             {{session.course.title}}
             &raquo;
@@ -173,7 +173,7 @@
             </LinkTo>
           </li>
         {{else}}
-          <li>
+          <li data-test-none>
             {{t "general.none"}}
           </li>
         {{/each}}
@@ -181,13 +181,13 @@
       <h6>
         {{t "general.instructor"}}
       </h6>
-      <ul>
+      <ul data-test-instructors>
         {{#each
           (sort-by
             "course.year:desc" "course.title" "title" (await instructedSessions)
           ) as |session|
         }}
-          <li>
+          <li data-test-session>
             {{session.course.academicYear}}
             {{session.course.title}}
             &raquo;
@@ -196,7 +196,7 @@
             </LinkTo>
           </li>
         {{else}}
-          <li>
+          <li data-test-none>
             {{t "general.none"}}
           </li>
         {{/each}}
