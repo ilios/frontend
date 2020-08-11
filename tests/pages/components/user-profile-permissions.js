@@ -43,6 +43,8 @@ const definition = {
     notAdministrating: isPresent('[data-test-administrators] [data-test-none]'),
     instructors: collection('[data-test-instructors] [data-test-course]'),
     notInstructing: isPresent('[data-test-instructors] [data-test-none]'),
+    studentAdvisors: collection('[data-test-student-advisors] [data-test-course]'),
+    notStudentAdvising: isPresent('[data-test-student-advisors] [data-test-none]'),
   },
   sessions: {
     scope: '[data-test-session-permissions]',
@@ -51,6 +53,8 @@ const definition = {
     notAdministrating: isPresent('[data-test-administrators] [data-test-none]'),
     instructors: collection('[data-test-instructors] [data-test-course]'),
     notInstructing: isPresent('[data-test-instructors] [data-test-none]'),
+    studentAdvisors: collection('[data-test-student-advisors] [data-test-course]'),
+    notStudentAdvising: isPresent('[data-test-student-advisors] [data-test-none]'),
   },
 };
 

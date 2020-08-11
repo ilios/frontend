@@ -24,8 +24,10 @@ export default class UserProfilePermissionsComponent extends Component {
   @tracked directedCourses = [];
   @tracked administeredCourses = [];
   @tracked instructedCourses = [];
+  @tracked studentAdvisedCourses = [];
   @tracked administeredSessions = [];
   @tracked instructedSessions = [];
+  @tracked studentAdvisedSessions = [];
 
   @restartableTask
   *load() {
@@ -63,16 +65,20 @@ export default class UserProfilePermissionsComponent extends Component {
       directedCourses: this.getDirectedCourses(this.selectedSchool),
       administeredCourses: this.getAdministeredCourses(this.selectedSchool),
       instructedCourses: this.getInstructedCourses(this.selectedSchool),
+      studentAdvisedCourses: this.getStudentAdvisedCourses(this.selectedSchool),
       administeredSessions: this.getAdministeredSessions(this.selectedSchool),
       instructedSessions: this.getInstructedSessions(this.selectedSchool),
+      studentAdvisedSessions: this.getInstructedSessions(this.selectedSchool),
     });
     this.directedPrograms = map.directedPrograms;
     this.directedProgramYears = map.directedProgramYears;
     this.directedCourses = map.directedCourses;
     this.administeredCourses = map.administeredCourses;
     this.instructedCourses = map.instructedCourses;
+    this.studentAdvisedCourses = map.studentAdvisedCourses;
     this.administeredSessions = map.administeredSessions;
     this.instructedSessions = map.instructedSessions;
+    this.studentAdvisedSessions = map.studentAdvisedSessions;
   }
 
   get selectedYear(){
@@ -125,6 +131,15 @@ export default class UserProfilePermissionsComponent extends Component {
     });
   }
 
+  async getStudentAdvisedCourses(selectedSchool) {
+    const studentAdvisedCourses = (await this.args.user.studentAdvisedCourses).toArray();
+
+    return filter(studentAdvisedCourses, async course => {
+      const school = await course.school;
+      return (school === selectedSchool && this.selectedYear.id == course.year);
+    });
+  }
+
   async getAdministeredSessions(selectedSchool) {
     const administeredSessions = (await this.args.user.administeredSessions).toArray();
 
@@ -145,11 +160,24 @@ export default class UserProfilePermissionsComponent extends Component {
     });
   }
 
+  async getStudentAdvisedSessions(selectedSchool) {
+    const studentAdvisedSessions = (await this.args.user.studentAdvisedSessions).toArray();
+
+    return filter(studentAdvisedSessions, async session => {
+      const course = await session.course;
+      const school = await course.school;
+      return (school === selectedSchool && this.selectedYear.id == course.year);
+    });
+  }
+
   get courseCount() {
-    return this.directedCourses.length + this.administeredCourses.length + this.instructedCourses.length;
+    return  this.directedCourses.length +
+            this.administeredCourses.length +
+            this.instructedCourses.length +
+            this.studentAdvisedCourses.length;
   }
 
   get sessionCount() {
-    return this.administeredSessions.length + this.instructedSessions.length;
+    return this.administeredSessions.length + this.instructedSessions.length + this.studentAdvisedSessions.length;
   }
 }

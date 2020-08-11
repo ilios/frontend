@@ -52,10 +52,12 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     assert.ok(component.courses.notDirecting);
     assert.ok(component.courses.notAdministrating);
     assert.ok(component.courses.notInstructing);
+    assert.ok(component.courses.notStudentAdvising);
 
     assert.equal(component.sessions.title, 'Sessions (0)');
     assert.ok(component.sessions.notAdministrating);
     assert.ok(component.sessions.notInstructing);
+    assert.ok(component.sessions.notStudentAdvising);
   });
 
   test('change school', async function (assert) {
@@ -174,11 +176,13 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
       school,
       directors: [user],
       administrators: [user],
+      studentAdvisors: [user],
       year: this.thisYear,
     });
     const session = this.server.create('session', {
       course,
       administrators: [user],
+      studentAdvisors: [user],
     });
     this.server.create('ilmSession', {
       session,
@@ -193,17 +197,21 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     assert.ok(component.programs.notDirecting);
     assert.ok(component.programYears.notDirecting);
 
-    assert.equal(component.courses.title, 'Courses (3)');
+    assert.equal(component.courses.title, 'Courses (4)');
     assert.ok(component.courses.directors.length, 1);
     assert.ok(component.courses.directors[0].text, 'course 0');
     assert.ok(component.courses.administrators.length, 1);
     assert.ok(component.courses.administrators[0].text, 'course 0');
     assert.ok(component.courses.instructors.length, 1);
     assert.ok(component.courses.instructors[0].text, 'course 0');
-    assert.equal(component.sessions.title, 'Sessions (2)');
+    assert.ok(component.courses.studentAdvisors.length, 1);
+    assert.ok(component.courses.studentAdvisors[0].text, 'course 0');
+    assert.equal(component.sessions.title, 'Sessions (3)');
     assert.ok(component.sessions.administrators.length, 1);
     assert.ok(component.sessions.administrators[0].text, 'course 0');
     assert.ok(component.sessions.instructors.length, 1);
     assert.ok(component.sessions.instructors[0].text, 'course 0');
+    assert.ok(component.sessions.studentAdvisors.length, 1);
+    assert.ok(component.sessions.studentAdvisors[0].text, 'course 0');
   });
 });

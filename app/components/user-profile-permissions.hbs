@@ -157,6 +157,23 @@
           </li>
         {{/each}}
       </ul>
+      <h6>
+        {{t "general.studentAdvisors"}}
+      </h6>
+      <ul data-test-student-advisors>
+        {{#each this.studentAdvisedCourses as |course|}}
+          <li data-test-course>
+            {{course.academicYear}}
+            <LinkTo @route="course" @model={{course}}>
+              {{course.title}}
+            </LinkTo>
+          </li>
+        {{else}}
+          <li data-test-none>
+            {{t "general.none"}}
+          </li>
+        {{/each}}
+      </ul>
     </p>
     <p class={{if sessionCollapsed "collapsed" "expanded"}} data-test-session-permissions>
       <h5 {{action (toggle "sessionCollapsed" this)}} role="button" data-test-title>
@@ -192,6 +209,25 @@
             "course.year:desc" "course.title" "title" this.instructedSessions
           ) as |session|
         }}
+          <li data-test-course>
+            {{session.course.academicYear}}
+            {{session.course.title}}
+            &raquo;
+            <LinkTo @route="session" @models={{array session.course session}}>
+              {{session.title}}
+            </LinkTo>
+          </li>
+        {{else}}
+          <li data-test-none>
+            {{t "general.none"}}
+          </li>
+        {{/each}}
+      </ul>
+      <h6>
+        {{t "general.studentAdvisors"}}
+      </h6>
+      <ul data-test-student-advisors>
+        {{#each this.studentAdvisedSessions as |session|}}
           <li data-test-course>
             {{session.course.academicYear}}
             {{session.course.title}}
