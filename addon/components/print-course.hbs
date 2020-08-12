@@ -58,7 +58,7 @@
         </label>
         <div>
           <span>
-            {{#each (sort-by "lastName" "firstName" (await @course.directors)) as |user|}}
+            {{#each (sort-by "fullName" (await @course.directors)) as |user|}}
               {{user.fullName}},
             {{/each}}
           </span>
