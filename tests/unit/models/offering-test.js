@@ -6,16 +6,16 @@ module('Unit | Model | Offering', function(hooks) {
   setupTest(hooks);
 
   test('check allInstructors', async function(assert) {
-    assert.expect(8);
+    assert.expect(11);
     const offering = this.owner.lookup('service:store').createRecord('offering');
     const store = this.owner.lookup('service:store');
 
     let allInstructors = await offering.get('allInstructors');
     assert.equal(allInstructors.length, 0);
 
-    const user1 = store.createRecord('user');
-    const user2 = store.createRecord('user');
-    const user3 = store.createRecord('user');
+    const user1 = store.createRecord('user', { displayName: 'Beta' });
+    const user2 = store.createRecord('user', { displayName: 'Alpha' });
+    const user3 = store.createRecord('user', { displayName: 'Omega' });
     offering.get('instructors').pushObject(user1);
     const instructorGroup1 = store.createRecord('instructor-group', {users: [user2]});
     const instructorGroup2 = store.createRecord('instructor-group', {users: [user3]});
@@ -28,8 +28,8 @@ module('Unit | Model | Offering', function(hooks) {
     assert.ok(allInstructors.includes(user2));
     assert.ok(allInstructors.includes(user3));
 
-    const user4 = store.createRecord('user');
-    const user5 = store.createRecord('user');
+    const user4 = store.createRecord('user', { firstName: 'Larry', lastName: 'Lazy'});
+    const user5 = store.createRecord('user', { displayName: 'Gamma'});
     offering.get('instructors').pushObject(user4);
     const instructorGroup3 = store.createRecord('instructor-group', {users: [user5]});
     offering.get('instructorGroups').pushObject(instructorGroup3);
@@ -37,8 +37,11 @@ module('Unit | Model | Offering', function(hooks) {
     allInstructors = await offering.get('allInstructors');
 
     assert.equal(allInstructors.length, 5);
-    assert.ok(allInstructors.includes(user4));
-    assert.ok(allInstructors.includes(user5));
+    assert.equal(allInstructors[0].fullName, 'Alpha');
+    assert.equal(allInstructors[1].fullName, 'Beta');
+    assert.equal(allInstructors[2].fullName, 'Gamma');
+    assert.equal(allInstructors[3].fullName, 'Larry Lazy');
+    assert.equal(allInstructors[4].fullName, 'Omega');
   });
 
   test('duration', function(assert) {
@@ -66,16 +69,16 @@ module('Unit | Model | Offering', function(hooks) {
   });
 
   test('check allLearners', async function(assert) {
-    assert.expect(8);
+    assert.expect(11);
     const offering = this.owner.lookup('service:store').createRecord('offering');
     const store = this.owner.lookup('service:store');
 
     let allLearners = await offering.get('allLearners');
     assert.equal(allLearners.length, 0);
 
-    const user1 = store.createRecord('user');
-    const user2 = store.createRecord('user');
-    const user3 = store.createRecord('user');
+    const user1 = store.createRecord('user', { displayName: 'Beta' });
+    const user2 = store.createRecord('user', { displayName: 'Alpha' });
+    const user3 = store.createRecord('user', { displayName: 'Omega' });
     offering.get('learners').pushObject(user1);
     const learnerGroup1 = store.createRecord('learner-group', {users: [user2]});
     const learnerGroup2 = store.createRecord('learner-group', {users: [user3]});
@@ -88,8 +91,8 @@ module('Unit | Model | Offering', function(hooks) {
     assert.ok(allLearners.includes(user2));
     assert.ok(allLearners.includes(user3));
 
-    const user4 = store.createRecord('user');
-    const user5 = store.createRecord('user');
+    const user4 = store.createRecord('user', { firstName: 'Larry', lastName: 'Lazy'});
+    const user5 = store.createRecord('user', { displayName: 'Gamma'});
     offering.get('learners').pushObject(user4);
     const learnerGroup3 = store.createRecord('learner-group', {users: [user5]});
     offering.get('learnerGroups').pushObject(learnerGroup3);
@@ -97,7 +100,10 @@ module('Unit | Model | Offering', function(hooks) {
     allLearners = await offering.get('allLearners');
 
     assert.equal(allLearners.length, 5);
-    assert.ok(allLearners.includes(user4));
-    assert.ok(allLearners.includes(user5));
+    assert.equal(allLearners[0].fullName, 'Alpha');
+    assert.equal(allLearners[1].fullName, 'Beta');
+    assert.equal(allLearners[2].fullName, 'Gamma');
+    assert.equal(allLearners[3].fullName, 'Larry Lazy');
+    assert.equal(allLearners[4].fullName, 'Omega');
   });
 });
