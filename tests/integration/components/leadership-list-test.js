@@ -20,16 +20,25 @@ module('Integration | Component | leadership list', function(hooks) {
       lastName: 'person',
     });
 
+    const user3 = this.server.create('user', {
+      firstName: 'stuart',
+      middleName: 'leslie',
+      lastName: 'goddard',
+      displayName: 'adam ant'
+    });
+
     this.user1 = await this.owner.lookup('service:store').find('user', user1.id);
     this.user2 = await this.owner.lookup('service:store').find('user', user2.id);
+    this.user3 = await this.owner.lookup('service:store').find('user', user3.id);
+
   });
 
   test('it renders with data', async function(assert) {
-    assert.expect(7);
+    assert.expect(10);
 
-    this.set('directors', [this.user1]);
-    this.set('administrators', [this.user2, this.user1]);
-    this.set('studentAdvisors', [this.user2]);
+    this.set('directors', [this.user1, this.user3]);
+    this.set('administrators', [this.user1, this.user2, this.user3]);
+    this.set('studentAdvisors', [this.user2, this.user3]);
 
     await render(hbs`<LeadershipList
       @directors={{this.directors}}
@@ -43,13 +52,16 @@ module('Integration | Component | leadership list', function(hooks) {
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li [data-test-name]';
     const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li [data-test-name]';
 
-    assert.dom(directors).exists({ count: 1 });
+    assert.dom(directors).exists({ count: 2 });
     assert.dom(findAll(directors)[0]).hasText('a b. person');
-    assert.dom(administrators).exists({ count: 2 });
+    assert.dom(findAll(directors)[1]).hasText('adam ant');
+    assert.dom(administrators).exists({ count: 3 });
     assert.dom(findAll(administrators)[0]).hasText('a b. person');
-    assert.dom(findAll(administrators)[1]).hasText('b a. person');
-    assert.dom(studentAdvisors).exists({ count: 1 });
-    assert.dom(findAll(studentAdvisors)[0]).hasText('b a. person');
+    assert.dom(findAll(administrators)[1]).hasText('adam ant');
+    assert.dom(findAll(administrators)[2]).hasText('b a. person');
+    assert.dom(studentAdvisors).exists({ count: 2 });
+    assert.dom(findAll(studentAdvisors)[0]).hasText('adam ant');
+    assert.dom(findAll(studentAdvisors)[1]).hasText('b a. person');
   });
 
   test('it renders without directors', async function(assert) {
