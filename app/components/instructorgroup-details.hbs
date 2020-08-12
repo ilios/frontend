@@ -22,7 +22,7 @@
         <ul class="instructorgroup-users">
           {{#each
             (sort-by
-              "lastName" "firstName" (await instructorGroup.users)
+              "fullName" (await instructorGroup.users)
             ) as |user|
           }}
             {{#if canUpdate}}

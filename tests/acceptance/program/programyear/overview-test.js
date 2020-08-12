@@ -1,15 +1,5 @@
-import {
-  click,
-  fillIn,
-  find,
-  findAll,
-  currentRouteName,
-  visit
-} from '@ember/test-helpers';
-import {
-  module,
-  test
-} from 'qunit';
+import { click, fillIn, find, findAll, currentRouteName, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 import { setupApplicationTest } from 'ember-qunit';
@@ -20,10 +10,13 @@ const url = '/programs/1/programyears/1';
 module('Acceptance | Program Year - Overview', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
-    this.server.createList('user', 5);
+    this.server.create('user');
+    this.server.create('user', { displayName: 'Zeppelin' });
+    this.server.createList('user', 3);
     this.server.create('program', { school: this.school });
     this.server.create('programYear', {
       programId: 1,
@@ -36,13 +29,12 @@ module('Acceptance | Program Year - Overview', function(hooks) {
 
   test('list directors', async function(assert) {
     await visit(url);
-
     assert.equal(currentRouteName(), 'programYear.index');
     var items = findAll('.programyear-overview .directors li');
     assert.equal(items.length, 3);
     assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
-    assert.equal(await getElementText(items[1]), getText('2 guy M. Mc2son'));
-    assert.equal(await getElementText(items[2]), getText('3 guy M. Mc3son'));
+    assert.equal(await getElementText(items[1]), getText('3 guy M. Mc3son'));
+    assert.equal(await getElementText(items[2]), getText('Zeppelin'));
   });
 
   test('list directors with privileges', async function(assert) {
@@ -53,8 +45,8 @@ module('Acceptance | Program Year - Overview', function(hooks) {
     var items = findAll('.programyear-overview .removable-directors li');
     assert.equal(items.length, 3);
     assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
-    assert.equal(await getElementText(items[1]), getText('2 guy M. Mc2son'));
-    assert.equal(await getElementText(items[2]), getText('3 guy M. Mc3son'));
+    assert.equal(await getElementText(items[1]), getText('3 guy M. Mc3son'));
+    assert.equal(await getElementText(items[2]), getText('Zeppelin'));
   });
 
   test('search directors', async function(assert) {
@@ -70,14 +62,14 @@ module('Acceptance | Program Year - Overview', function(hooks) {
     assert.dom(searchResults[1]).hasClass('active');
     assert.equal(await getElementText(searchResults[2]), getText('1 guy M. Mc1son user@example.edu'));
     assert.dom(searchResults[2]).hasClass('inactive');
-    assert.equal(await getElementText(searchResults[3]), getText('2 guy M. Mc2son user@example.edu'));
+    assert.equal(await getElementText(searchResults[3]), getText('3 guy M. Mc3son user@example.edu'));
     assert.dom(searchResults[3]).hasClass('inactive');
-    assert.equal(await getElementText(searchResults[4]), getText('3 guy M. Mc3son user@example.edu'));
-    assert.dom(searchResults[4]).hasClass('inactive');
-    assert.equal(await getElementText(searchResults[5]), getText('4 guy M. Mc4son user@example.edu'));
+    assert.equal(await getElementText(searchResults[4]), getText('4 guy M. Mc4son user@example.edu'));
+    assert.dom(searchResults[4]).hasClass('active');
+    assert.equal(await getElementText(searchResults[5]), getText('5 guy M. Mc5son user@example.edu'));
     assert.dom(searchResults[5]).hasClass('active');
-    assert.equal(await getElementText(searchResults[6]), getText('5 guy M. Mc5son user@example.edu'));
-    assert.dom(searchResults[6]).hasClass('active');
+    assert.equal(await getElementText(searchResults[6]), getText('Zeppelin user@example.edu'));
+    assert.dom(searchResults[6]).hasClass('inactive');
   });
 
   test('add director', async function(assert) {
@@ -88,17 +80,19 @@ module('Acceptance | Program Year - Overview', function(hooks) {
     let items = findAll('.programyear-overview .removable-directors li');
     assert.equal(items.length, 3);
     assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
-    assert.equal(await getElementText(items[1]), getText('2 guy M. Mc2son'));
-    assert.equal(await getElementText(items[2]), getText('3 guy M. Mc3son'));
+    assert.equal(await getElementText(items[1]), getText('3 guy M. Mc3son'));
+    assert.equal(await getElementText(items[2]), getText('Zeppelin'));
+
 
     await fillIn(find('.programyear-overview .search-box input'), 'guy');
-    await click(findAll('.programyear-overview .results li')[6]);
+    await click(findAll('.programyear-overview .results li')[5]);
     items = findAll('.programyear-overview .removable-directors li');
     assert.equal(items.length, 4);
     assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
-    assert.equal(await getElementText(items[1]), getText('2 guy M. Mc2son'));
-    assert.equal(await getElementText(items[2]), getText('3 guy M. Mc3son'));
-    assert.equal(await getElementText(items[3]), getText('5 guy M. Mc5son'));
+    assert.equal(await getElementText(items[1]), getText('3 guy M. Mc3son'));
+    assert.equal(await getElementText(items[2]), getText('5 guy M. Mc5son'));
+    assert.equal(await getElementText(items[3]), getText('Zeppelin'));
+
   });
 
   test('remove director', async function(assert) {
@@ -109,8 +103,8 @@ module('Acceptance | Program Year - Overview', function(hooks) {
     await click(find('.programyear-overview .removable-directors li'));
     var items = findAll('.programyear-overview .removable-directors li');
     assert.equal(items.length, 2);
-    assert.equal(await getElementText(items[0]), getText('2 guy M. Mc2son'));
-    assert.equal(await getElementText(items[1]), getText('3 guy M. Mc3son'));
+    assert.equal(await getElementText(items[0]), getText('3 guy M. Mc3son'));
+    assert.equal(await getElementText(items[1]), getText('Zeppelin'));
   });
 
   test('first director added is disabled #2770', async function(assert) {
