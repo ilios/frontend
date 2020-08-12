@@ -16,7 +16,7 @@
           {{#if @canUpdate}}
             <EditableField
               @value={{this.course.title}}
-              @save={{this.saveCourse}}
+              @save={{perform this.saveCourse}}
               @close={{this.revertCourseChanges}}
               @clickPrompt={{t "general.selectCourse"}}
             >
@@ -72,7 +72,7 @@
         {{#if @canUpdate}}
           <EditableField
             @value={{this.requiredLabel}}
-            @save={{this.changeRequired}}
+            @save={{perform this.changeRequired}}
             @close={{this.revertRequiredChanges}}
           >
             <select onchange={{action "setRequired" value="target.value"}}>
@@ -88,7 +88,7 @@
       <div class="block track">
         <label>{{t "general.isTrack"}}:</label>
         {{#if @canUpdate}}
-          <ToggleYesno @yes={{@sequenceBlock.track}} @toggle={{this.changeTrack}} />
+          <ToggleYesno @yes={{@sequenceBlock.track}} @toggle={{perform this.changeTrack}} />
         {{else}}
           <span>{{if @sequenceBlock.track (t "general.yes") (t "general.no")}}</span>
         {{/if}}
@@ -96,7 +96,7 @@
       {{#if isEditingDatesAndDuration}}
         <CurriculumInventorySequenceBlockDatesDurationEditor
           @sequenceBlock={{@sequenceBlock}}
-          @save={{this.changeDatesAndDuration}}
+          @save={{perform this.changeDatesAndDuration}}
           @cancel={{this.cancelDateAndDurationEditing}}
         />
       {{else}}
@@ -160,7 +160,7 @@
         {{#if @canUpdate}}
           <EditableField
             @value={{this.childSequenceOrderLabel}}
-            @save={{this.changeChildSequenceOrder}}
+            @save={{perform this.changeChildSequenceOrder}}
             @close={{this.revertChildSequenceOrderChanges}}
           >
             <select onchange={{action (mut childSequenceOrder) value="target.value"}}>
@@ -181,7 +181,7 @@
             {{#if @canUpdate}}
               <EditableField
                 @value={{this.orderInSequence}}
-                @save={{this.changeOrderInSequence}}
+                @save={{perform this.changeOrderInSequence}}
                 @close={{this.revertOrderInSequenceChanges}}
               >
                 <select {{on "change" this.updateOrderInSequence}}>
@@ -205,7 +205,7 @@
         <CurriculumInventorySequenceBlockMinMaxEditor
           @minimum={{this.minimum}}
           @maximum={{this.maximum}}
-          @save={{this.changeMinMax}}
+          @save={{perform this.changeMinMax}}
           @cancel={{this.cancelMinMaxEditing}}
           @isElective={{this.isElective}}
         />
@@ -236,7 +236,7 @@
         {{#if @canUpdate}}
           <EditableField
             @value={{this.academicLevel.name}}
-            @save={{this.changeAcademicLevel}}
+            @save={{perform this.changeAcademicLevel}}
             @close={{this.revertAcademicLevelChanges}}
           >
             <select {{on "change" this.setAcademicLevel}}>
@@ -255,7 +255,7 @@
             @sequenceBlock={{@sequenceBlock}}
             @sessions={{this.sessions}}
             @cancel={{this.cancelManagingSessions}}
-            @save={{this.changeSessions}}
+            @save={{perform this.changeSessions}}
             @sortBy={{@sortBy}}
             @setSortBy={{@setSortBy}}
           />

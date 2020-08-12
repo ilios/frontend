@@ -150,13 +150,13 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     return sessions.toArray();
   }
 
-  @action
-  changeRequired() {
+  @dropTask
+  *changeRequired() {
     this.args.sequenceBlock.set('required', parseInt(this.required, 10));
     if ('2' === this.required) {
       this.args.sequenceBlock.set('minimum', 0);
     }
-    this.args.sequenceBlock.save();
+    yield this.args.sequenceBlock.save();
   }
 
   @action
@@ -175,15 +175,15 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.minimum = this.args.sequenceBlock.get('minimum');
   }
 
-  @action
-  async saveCourse() {
-    const oldCourse = await this.args.sequenceBlock.course;
+  @dropTask
+  *saveCourse() {
+    const oldCourse = yield this.args.sequenceBlock.course;
     if (oldCourse !== this.course) {
       this.args.sequenceBlock.set('sessions', []);
       this.args.sequenceBlock.set('excludedSessions', []);
     }
     this.args.sequenceBlock.set('course', this.course);
-    await this.args.sequenceBlock.save();
+    yield this.args.sequenceBlock.save();
   }
 
   @action
@@ -191,10 +191,10 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.course = await this.args.sequenceBlock.get('course');
   }
 
-  @action
-  changeTrack(value) {
+  @dropTask()
+  *changeTrack(value) {
     this.args.sequenceBlock.set('track', value);
-    this.args.sequenceBlock.save();
+    yield this.args.sequenceBlock.save();
   }
 
   @dropTask()
@@ -208,12 +208,12 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.description = this.args.sequenceBlock.get('description');
   }
 
-  @action
-  async changeChildSequenceOrder() {
+  @dropTask
+  *changeChildSequenceOrder() {
     this.args.sequenceBlock.set('childSequenceOrder', parseInt(this.childSequenceOrder, 10));
-    const savedBlock = await this.args.sequenceBlock.save();
-    const children = await savedBlock.get('children');
-    children.invoke('reload');
+    const savedBlock = yield this.args.sequenceBlock.save();
+    const children = yield savedBlock.get('children');
+    yield children.invoke('reload');
   }
 
   @action
@@ -221,10 +221,10 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.childSequenceOrder = this.args.sequenceBlock.get('childSequenceOrder').toString();
   }
 
-  @action
-  changeAcademicLevel() {
+  @dropTask
+  *changeAcademicLevel() {
     this.args.sequenceBlock.set('academicLevel', this.academicLevel);
-    this.args.sequenceBlock.save();
+    yield this.args.sequenceBlock.save();
   }
 
   @action
@@ -238,13 +238,13 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.academicLevel = this.args.sequenceBlock.academicLevel;
   }
 
-  @action
-  async changeOrderInSequence() {
+  @dropTask
+  *changeOrderInSequence() {
     this.args.sequenceBlock.set('orderInSequence', this.orderInSequence);
-    const savedBlock = await this.args.sequenceBlock.save();
-    const parent = await savedBlock.get('parent');
-    const children = await parent.get('children');
-    children.invoke('reload');
+    const savedBlock = yield this.args.sequenceBlock.save();
+    const parent = yield savedBlock.get('parent');
+    const children = yield parent.get('children');
+    yield children.invoke('reload');
   }
 
   @action
@@ -252,12 +252,12 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.orderInSequence = this.args.sequenceBlock.get('orderInSequence');
   }
 
-  @action
-  async changeDatesAndDuration(start, end, duration) {
+  @dropTask
+  *changeDatesAndDuration(start, end, duration) {
     this.args.sequenceBlock.set('startDate', start);
     this.args.sequenceBlock.set('endDate', end);
     this.args.sequenceBlock.set('duration', duration);
-    await this.args.sequenceBlock.save();
+    yield this.args.sequenceBlock.save();
     this.isEditingDatesAndDuration = false;
   }
 
@@ -271,11 +271,11 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.isEditingDatesAndDuration = false;
   }
 
-  @action
-  async changeMinMax(minimum, maximum) {
+  @dropTask
+  *changeMinMax(minimum, maximum) {
     this.args.sequenceBlock.set('minimum', minimum);
     this.args.sequenceBlock.set('maximum', maximum);
-    await this.args.sequenceBlock.save();
+    yield this.args.sequenceBlock.save();
     this.isEditingMinMax = false;
   }
 
@@ -301,11 +301,11 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.isManagingSessions = false;
   }
 
-  @action
-  async changeSessions(sessions, excludedSessions) {
+  @dropTask
+  *changeSessions(sessions, excludedSessions) {
     this.args.sequenceBlock.set('sessions', sessions);
     this.args.sequenceBlock.set('excludedSessions', excludedSessions);
-    await this.args.sequenceBlock.save();
+    yield this.args.sequenceBlock.save();
     this.isManagingSessions = false;
   }
 
