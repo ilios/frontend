@@ -1,5 +1,3 @@
-import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
@@ -7,7 +5,6 @@ import { render, click, find, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
-const { resolve } = RSVP;
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | my profile', function(hooks) {
@@ -15,54 +12,67 @@ module('Integration | Component | my profile', function(hooks) {
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    const user = EmberObject.create({
-      fullName: 'test name',
-      isStudent: true,
-      school: resolve(EmberObject.create({title: 'test school'})),
-      primaryCohort: resolve(EmberObject.create({title: 'test cohort'})),
-      secondaryCohorts: resolve([
-        EmberObject.create({title: 'second cohort'}),
-        EmberObject.create({title: 'a third cohort'}),
-      ]),
+    const school = this.server.create('school');
+    const program1 = this.server.create('program', { school });
+    const program2 = this.server.create('program', { school });
+    const programYear1 = this.server.create('program-year', { program: program1 });
+    const programYear2 = this.server.create('program-year', { program: program1 });
+    const programYear3 = this.server.create('program-year', { program: program2 });
+    const cohort1 = this.server.create('cohort', {
+      title: 'test cohort',
+      programYear: programYear1
     });
+    const cohort2 = this.server.create('cohort', {
+      title: 'second cohort',
+      programYear: programYear2
+    });
+    const cohort3 = this.server.create('cohort', {
+      title: 'a third cohort',
+      programYear: programYear3
+    });
+    const studentRole = this.server.create('user-role', {
+      title: 'Student',
+    });
+    const user = this.server.create('user', {
+      displayName: 'test name',
+      roles: [ studentRole ],
+      school,
+      primaryCohort: cohort1,
+      cohorts: [cohort1, cohort2, cohort3],
+    });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
-    this.set('user', user);
-    this.set('nothing', parseInt);
+    this.set('user', userModel);
 
     await render(hbs`<MyProfile
       @user={{user}}
-      @toggleShowCreateNewToken={{action nothing}}
-      @toggleShowInvalidateTokens={{action nothing}}
+      @toggleShowCreateNewToken={{noop}}
+      @toggleShowInvalidateTokens={{noop}}
     />`);
 
     assert.dom('.name').hasText('test name');
     assert.dom('.is-student').hasText('Student');
 
-    assert.equal(find('[data-test-info] div').textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary School:test school');
+    assert.equal(find('[data-test-info] div').textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary School:school 0');
     assert.equal(findAll('[data-test-info] div')[1].textContent.replace(/[\n]+/g, '').replace(/\s\s/g, '').trim(), 'Primary Cohort:test cohort');
-    assert.dom('[data-test-info] div:nth-of-type(3) li').hasText('a third cohort');
-    assert.dom(findAll('[data-test-info] div:nth-of-type(3) li')[1]).hasText('second cohort');
+    assert.dom('[data-test-info] div:nth-of-type(3) li').hasText('a third cohort program 1');
+    assert.dom(findAll('[data-test-info] div:nth-of-type(3) li')[1]).hasText('second cohort program 0');
 
   });
 
   test('it renders all no', async function(assert) {
-    const user = EmberObject.create({
-      fullName: 'test name',
-      isStudent: false,
-      roles: resolve([]),
+    const user = this.server.create('user', {
+      displayName: 'test name',
       userSyncIgnore: false,
-      school: resolve(),
-      primaryCohort: resolve(),
-      secondaryCohorts: resolve([]),
     });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
-    this.set('user', user);
-    this.set('nothing', parseInt);
+    this.set('user', userModel);
 
     await render(hbs`<MyProfile
       @user={{user}}
-      @toggleShowCreateNewToken={{action nothing}}
-      @toggleShowInvalidateTokens={{action nothing}}
+      @toggleShowCreateNewToken={{noop}}
+      @toggleShowInvalidateTokens={{noop}}
     />`);
 
     assert.dom('.name').hasText('test name');
@@ -91,11 +101,16 @@ module('Integration | Component | my profile', function(hooks) {
         jwt: 'new token'
       };
     });
-    this.set('nothing', parseInt);
+    const school = this.server.create('school');
+    const user = this.server.create('user', { school });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+
+    this.set('user', userModel);
     await render(hbs`<MyProfile
+      @user={{this.user}}
       @showCreateNewToken={{true}}
-      @toggleShowCreateNewToken={{action nothing}}
-      @toggleShowInvalidateTokens={{action nothing}}
+      @toggleShowCreateNewToken={{noop}}
+      @toggleShowInvalidateTokens={{noop}}
     />`);
 
     await click(go);
@@ -115,10 +130,16 @@ module('Integration | Component | my profile', function(hooks) {
       };
     });
 
+    const school = this.server.create('school');
+    const user = this.server.create('user', { school });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+
+    this.set('user', userModel);
     this.set('toggle', () => {
       assert.ok(true);
     });
     await render(hbs`<MyProfile
+      @user={{this.user}}
       @showCreateNewToken={{true}}
       @toggleShowCreateNewToken={{action toggle}}
     />`);
@@ -134,13 +155,18 @@ module('Integration | Component | my profile', function(hooks) {
     const newTokenButton = '[data-test-show-create-new-token]';
 
     assert.expect(1);
+    const school = this.server.create('school');
+    const user = this.server.create('user', { school });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+
+    this.set('user', userModel);
     this.set('toggle', ()=> {
       assert.ok(true);
     });
-    this.set('nothing', parseInt);
     await render(hbs`<MyProfile
+      @user={{this.user}}
       @toggleShowCreateNewToken={{action toggle}}
-      @toggleShowInvalidateTokens={{action nothing}}
+      @toggleShowInvalidateTokens={{noop}}
     />`);
 
     await click(newTokenButton);
@@ -163,11 +189,17 @@ module('Integration | Component | my profile', function(hooks) {
         jwt: 'new token'
       };
     });
-    this.set('nothing', () => {});
+
+    const school = this.server.create('school');
+    const user = this.server.create('user', { school });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+
+    this.set('user', userModel);
     await render(hbs`<MyProfile
+      @user={{this.user}}
       @showCreateNewToken={{true}}
-      @toggleShowCreateNewToken={{action nothing}}
-      @toggleShowInvalidateTokens={{action nothing}}
+      @toggleShowCreateNewToken={{noop}}
+      @toggleShowInvalidateTokens={{noop}}
     />`);
 
     const m = moment().add(41, 'days');
@@ -181,12 +213,17 @@ module('Integration | Component | my profile', function(hooks) {
     const invalidateTokensButton = 'button.invalidate-tokens';
 
     assert.expect(1);
+    const school = this.server.create('school');
+    const user = this.server.create('user', { school });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+
+    this.set('user', userModel);
     this.set('toggle', ()=> {
       assert.ok(true);
     });
-    this.set('nothing', parseInt);
     await render(hbs`<MyProfile
-      @toggleShowCreateNewToken={{action nothing}}
+      @user={{this.user}}
+      @toggleShowCreateNewToken={{noop}}
       @toggleShowInvalidateTokens={{action toggle}}
     />`);
 
@@ -213,11 +250,16 @@ module('Integration | Component | my profile', function(hooks) {
     this.owner.register('service:session', sessionMock);
     this.session = this.owner.lookup('service:session');
     this.flashMessages = this.owner.lookup('service:flashMessages');
-    this.set('nothing', parseInt);
+    const school = this.server.create('school');
+    const user = this.server.create('user', { school });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+
+    this.set('user', userModel);
     await render(hbs`<MyProfile
+      @user={{this.user}}
       @showInvalidateTokens={{true}}
-      @toggleShowCreateNewToken={{action nothing}}
-      @toggleShowInvalidateTokens={{action nothing}}
+      @toggleShowCreateNewToken={{noop}}
+      @toggleShowInvalidateTokens={{noop}}
     />`);
 
     await click(go);
