@@ -50,7 +50,11 @@ export default class UserProfilePermissionsComponent extends Component {
       selectedYear = this.academicYears.get('lastObject');
     }
     this.selectedYearId = selectedYear?.id;
-    yield this.changeSchool.perform(map.defaultSchool.id);
+    if (map.defaultSchool) {
+      yield this.changeSchool.perform(map.defaultSchool.id);
+    } else if (this.schools.length) {
+      yield this.changeSchool.perform(this.schools.sortBy('title')[0].id);
+    }
   }
 
   @restartableTask
