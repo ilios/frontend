@@ -11,6 +11,7 @@ import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
+// @todo use page objects here [ST 2020/08/11]
 module('Integration | Component | curriculum inventory sequence block overview', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
@@ -30,7 +31,8 @@ module('Integration | Component | curriculum inventory sequence block overview',
       startDate: new Date('2015-02-02'),
       endDate: new Date('2015-03-30'),
       clerkshipType,
-      level: 4
+      level: 4,
+      school
     });
 
     const report = this.server.create('curriculum-inventory-report', {
@@ -699,7 +701,8 @@ module('Integration | Component | curriculum inventory sequence block overview',
       startDate: new Date('2015-02-02'),
       endDate: new Date('2015-03-30'),
       clerkshipType,
-      level: 4
+      level: 4,
+      school
     });
 
     const report = this.server.create('curriculum-inventory-report', {
@@ -785,7 +788,8 @@ module('Integration | Component | curriculum inventory sequence block overview',
       startDate: new Date('2015-02-02'),
       endDate: new Date('2015-03-30'),
       clerkshipType,
-      level: 4
+      level: 4,
+      school
     });
 
     const report = this.server.create('curriculum-inventory-report', {
