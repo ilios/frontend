@@ -8,7 +8,7 @@ module('Integration | Component | ilios calendar single event learningmaterial l
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(11);
+    assert.expect(10);
 
     this.set('learningMaterials', [
       {title: 'first one', mimetype: 'application/pdf', absoluteFileUri: 'http://firstlink'},
@@ -26,7 +26,6 @@ module('Integration | Component | ilios calendar single event learningmaterial l
     assert.dom('li:nth-of-type(2) .fa-file-audio').exists('LM type icon is present.');
     assert.dom('li:nth-of-type(2) a').hasAttribute('href','http://secondlink');
     assert.dom('li:nth-of-type(3) .single-event-learningmaterial-item-title').hasText('third one');
-    assert.dom('li:nth-of-type(3) .fa-clock').exists('LM type icon is present.');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });

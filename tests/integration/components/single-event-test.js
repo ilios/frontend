@@ -16,7 +16,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
   });
 
   test('it renders', async function(assert) {
-    assert.expect(24);
+    assert.expect(23);
 
     const now = moment().hour(8).minute(0).second(0);
     const course = this.server.create('course', {
@@ -140,7 +140,6 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     assert.dom(`${firstSessionLm} .single-event-learningmaterial-item-title`).containsText(learningMaterials[0].title);
 
     const secondSessionLm = '.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(2)';
-    assert.dom(`${secondSessionLm} .lm-type-icon .fa-clock`).exists('Timed release icon is visible');
     assert.dom(`${secondSessionLm} .single-event-learningmaterial-item-title`).containsText(learningMaterials[1].title);
 
     const sessionObjectivesSelector = '.single-event-objective-list > .single-event-objective-list:nth-of-type(1)';

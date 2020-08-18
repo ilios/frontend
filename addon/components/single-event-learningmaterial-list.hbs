@@ -4,9 +4,6 @@
       {{#each @learningMaterials as |lm|}}
         <li class="single-event-learningmaterial-item">
           {{#if lm.isBlanked}}
-            <span class="lm-type-icon">
-              <FaIcon @icon="clock" @title={{t "general.timedRelease"}} />
-            </span>
             <div class="single-event-learningmaterial-item-title">
               {{lm.title}}
             </div>
