@@ -17,7 +17,7 @@ export default Component.extend({
 
   init() {
     this._super(...arguments);
-    this.set('directorsSort', ['lastName', 'firstName']);
+    this.set('directorsSort', ['fullName']);
   },
 
   actions: {

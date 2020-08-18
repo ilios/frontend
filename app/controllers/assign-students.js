@@ -45,7 +45,7 @@ export default Controller.extend({
     'query', 'unassignedStudents', async function() {
       const query = this.query;
       const students = await this.unassignedStudents;
-      const sortedStudents = students.sortBy('lastName', 'firstName');
+      const sortedStudents = students.sortBy('fullName');
       return isPresent(query)
         ? this.filterStudents(sortedStudents, query)
         : sortedStudents;

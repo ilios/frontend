@@ -48,7 +48,7 @@ export default Controller.extend({
     const end = limit + offset;
     const allUpdates = await this.allUpdates;
     return allUpdates
-      .sortBy('user.lastName', 'user.firstName')
+      .sortBy('user.fullName')
       .slice(offset, end)
       .filter((update) => {
         const isNotDeleted = !this.deletedUpdates.includes(update);
