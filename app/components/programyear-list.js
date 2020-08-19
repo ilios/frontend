@@ -180,6 +180,7 @@ export default Component.extend({
         const newProgramYearObjective = store.createRecord('program-year-objective', {
           position: programYearObjectiveToCopy.position,
           programYear: savedProgramYear,
+          title: programYearObjectiveToCopy.title,
           ancestor,
           meshDescriptors,
           competency,
