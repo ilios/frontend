@@ -24,7 +24,7 @@
         {{#if @showDirectors}}
           <td class="text-top" data-test-directors>
             <ul>
-              {{#each (sort-by "lastName" "firstName" @directors) as |user|}}
+              {{#each (sort-by "fullName" @directors) as |user|}}
                 <li>
                   <FaIcon
                     @icon="times"
@@ -51,7 +51,7 @@
         {{#if @showAdministrators}}
           <td class="text-top" data-test-administrators>
             <ul>
-              {{#each (sort-by "lastName" "firstName" @administrators) as |user|}}
+              {{#each (sort-by "fullName" @administrators) as |user|}}
                 <li>
                   <FaIcon
                     @icon="times"
@@ -78,7 +78,7 @@
         {{#if @showStudentAdvisors}}
           <td class="text-top" data-test-student-advisors>
             <ul>
-              {{#each (sort-by "lastName" "firstName" @studentAdvisors) as |user|}}
+              {{#each (sort-by "fullName" @studentAdvisors) as |user|}}
                 <li>
                   <FaIcon
                     @icon="times"

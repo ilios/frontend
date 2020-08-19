@@ -79,7 +79,7 @@ export default Model.extend({
 
     allInstructors.pushObjects(instructors.toArray());
 
-    return allInstructors.uniq().sortBy('lastName', 'firstName');
+    return allInstructors.uniq().sortBy('fullName');
   }),
   /**
    * All learners associated with this offering, either directly or indirectly via learner groups.
@@ -96,7 +96,7 @@ export default Model.extend({
 
     allLearners.pushObjects(learners.toArray());
 
-    return allLearners.uniq().sortBy('lastName', 'firstName');
+    return allLearners.uniq().sortBy('fullName');
   }),
 
   durationHours: computed('startDate', 'endDate', function(){

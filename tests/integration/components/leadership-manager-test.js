@@ -1,12 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  fillIn,
-  click,
-  findAll,
-  find
-} from '@ember/test-helpers';
+import { render, fillIn, click, findAll, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -348,5 +342,44 @@ module('Integration | Component | leadership manager', function(hooks) {
     assert.dom(disabledAdministrators).exists({ count: 1 });
     assert.dom(firstAdministratorName).hasText('0 guy M. Mc0son');
     assert.dom(secondAdministratorName).hasText('1 guy M. Mc1son');
+  });
+
+  test('users are sorted by full name', async function(assert) {
+    assert.expect(12);
+
+    this.server.create('user', { firstName: 'Aaron', lastName: 'Aardvark' });
+    this.server.create('user', { firstName: 'Ursula', middleName: 'Undine', lastName: 'Unbekannt' });
+    this.server.create('user', { firstName: 'Zeb', lastName: 'Zoober', displayName: 'The Bane of Iowa' });
+    const users = await this.owner.lookup('service:store').findAll('user');
+
+    this.set('directors', users);
+    this.set('administrators', users);
+    this.set('studentAdvisors', users);
+
+    await render(hbs`<LeadershipManager
+      @showAdministrators={{true}}
+      @showDirectors={{true}}
+      @showStudentAdvisors={{true}}
+      @directors={{this.directors}}
+      @administrators={{this.administrators}}
+      @studentAdvisors={{this.studentAdvisors}}
+      @removeDirector={{noop}}
+      @addDirector={{noop}}
+      @removeAdministrator={{noop}}
+      @addAdministrator={{noop}}
+      @removeStudentAdvisor={{noop}}
+      @addStudentAdvisor={{noop}}
+    />`);
+
+    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
+    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
+    const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
+
+    [directors, administrators, studentAdvisors].forEach(users => {
+      assert.dom(users).exists({ count: 3 });
+      assert.dom(`${users}:nth-of-type(1) [data-test-name]`).hasText('Aaron M. Aardvark');
+      assert.dom(`${users}:nth-of-type(2) [data-test-name]`).hasText('The Bane of Iowa');
+      assert.dom(`${users}:nth-of-type(3) [data-test-name]`).hasText('Ursula U. Unbekannt');
+    });
   });
 });
