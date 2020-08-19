@@ -1,4 +1,4 @@
-import { module, test } from 'qunit';
+import { module, test, todo } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { render } from '@ember/test-helpers';
@@ -441,5 +441,12 @@ module('Integration | Component | offering form', function(hooks) {
     await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
     await component.url.set('  http://example.com  ');
     assert.equal('http://example.com', component.url.value);
+  });
+
+  todo('rejects query param with trailing slash ilios/ilios#3050', async function(assert) {
+    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    assert.notOk(component.url.hasError);
+    await component.url.set('http://example.com?jayden=awesome/');
+    assert.ok(component.url.hasError);
   });
 });

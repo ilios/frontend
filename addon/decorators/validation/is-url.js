@@ -1,6 +1,6 @@
 import { registerDecorator } from "class-validator";
 import { getOwner } from '@ember/application';
-import testURL from "is-url";
+import URLValidator from 'validator/es/lib/isURL';
 
 export function IsURL(validationOptions) {
   return function (object, propertyName) {
@@ -14,7 +14,10 @@ export function IsURL(validationOptions) {
           if (!value) {
             return true;
           }
-          return testURL(value);
+          return URLValidator(value, {
+            // eslint-disable-next-line camelcase
+            require_protocol: true,
+          });
         },
         defaultMessage({ object: target }) {
           const owner = getOwner(target);
