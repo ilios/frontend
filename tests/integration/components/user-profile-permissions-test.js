@@ -167,7 +167,7 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     assert.ok(component.sessions.notInstructing);
   });
 
-  test('it renders with course and session data', async function (assert) {
+  test('it renders with course data', async function (assert) {
     const school = this.schools[0];
     const user = this.server.create('user', {
       school,
@@ -181,8 +181,6 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     });
     const session = this.server.create('session', {
       course,
-      administrators: [user],
-      studentAdvisors: [user],
     });
     this.server.create('ilmSession', {
       session,
@@ -206,6 +204,47 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     assert.ok(component.courses.instructors[0].text, 'course 0');
     assert.ok(component.courses.studentAdvisors.length, 1);
     assert.ok(component.courses.studentAdvisors[0].text, 'course 0');
+
+    assert.equal(component.sessions.title, 'Sessions (1)');
+    assert.ok(component.sessions.notAdministrating);
+    assert.ok(component.sessions.instructors.length, 1);
+    assert.ok(component.sessions.instructors[0].text, 'course 0');
+    assert.ok(component.sessions.notStudentAdvising);
+  });
+
+  test('it renders with session data', async function (assert) {
+    const school = this.schools[0];
+    const user = this.server.create('user', {
+      school,
+    });
+    const course = this.server.create('course', {
+      school,
+      year: this.thisYear,
+    });
+    const session = this.server.create('session', {
+      course,
+      administrators: [user],
+      studentAdvisors: [user],
+    });
+    this.server.create('ilmSession', {
+      session,
+      instructors: [user]
+    });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    this.set('user', userModel);
+    await render(hbs`<UserProfilePermissions @user={{this.user}} />`);
+
+    assert.equal(component.school.director, 'No');
+    assert.equal(component.school.administrator, 'No');
+    assert.ok(component.programs.notDirecting);
+    assert.ok(component.programYears.notDirecting);
+
+    assert.equal(component.courses.title, 'Courses (1)');
+    assert.ok(component.courses.notDirecting);
+    assert.ok(component.courses.notAdministrating);
+    assert.ok(component.courses.instructors.length, 1);
+    assert.ok(component.courses.instructors[0].text, 'course 0');
+    assert.ok(component.courses.notStudentAdvising);
     assert.equal(component.sessions.title, 'Sessions (3)');
     assert.ok(component.sessions.administrators.length, 1);
     assert.ok(component.sessions.administrators[0].text, 'course 0');

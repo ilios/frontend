@@ -72,7 +72,7 @@ export default class UserProfilePermissionsComponent extends Component {
       studentAdvisedCourses: this.getStudentAdvisedCourses(this.selectedSchool),
       administeredSessions: this.getAdministeredSessions(this.selectedSchool),
       instructedSessions: this.getInstructedSessions(this.selectedSchool),
-      studentAdvisedSessions: this.getInstructedSessions(this.selectedSchool),
+      studentAdvisedSessions: this.getStudentAdvisedSessions(this.selectedSchool),
     });
     this.directedPrograms = map.directedPrograms;
     this.directedProgramYears = map.directedProgramYears;
