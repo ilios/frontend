@@ -1,5 +1,6 @@
 <div
   class="detail-instructors-list"
+  data-test-instructors-list
 >
   {{#if @instructors.length}}
     <h4>
@@ -9,7 +10,7 @@
     <ul class="instructors-list" data-test-instructors>
       {{#each (sort-by "fullName" @instructors) as |user|}}
         <li>
-          {{user.fullName}}
+          <UserNameInfo @user={{user}} />
         </li>
       {{/each}}
     </ul>
@@ -29,9 +30,9 @@
           </span>
           <br>
           <ul class="instructorgroup-members-list" data-test-instructor-group-members>
-            {{#each (sort-by "fullName" (await instructorGroup.users)) as |instructorGroupMember|}}
+            {{#each (sort-by "fullName" (await instructorGroup.users)) as |user|}}
               <li>
-                {{instructorGroupMember.fullName}}
+                <UserNameInfo @user={{user}} />
               </li>
             {{/each}}
           </ul>

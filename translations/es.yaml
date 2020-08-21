@@ -29,6 +29,7 @@ general:
   backToSessionList: "Atrás a La Lista de Sesiones"
   backToTitle: "Atrás a {title}"
   calendar: Calendario
+  campusNameOfRecord: "Nombre de registro del registrador"
   cancel: Cancelar
   chooseCohortTitle: "Seleccione Matriz Para"
   chooseFile: "Seleccione Archivo"

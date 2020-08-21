@@ -33,5 +33,4 @@ export default class OfferingManagerComponent extends Component {
   setLearnerGroupElement(element, [id]) {
     set(this, `learnerGroupElement${id}`, element);
   }
-
 }

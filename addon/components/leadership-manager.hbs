@@ -38,9 +38,7 @@
                       class="disabled-user"
                     />
                   {{/unless}}
-                  <span data-test-name>
-                    {{user.fullName}}
-                  </span>
+                  <UserNameInfo @user={{user}} />
                 </li>
               {{else}}
                 {{t "general.none"}}
@@ -65,9 +63,7 @@
                       class="disabled-user"
                     />
                   {{/unless}}
-                  <span data-test-name>
-                    {{user.fullName}}
-                  </span>
+                  <UserNameInfo @user={{user}} />
                 </li>
               {{else}}
                 {{t "general.none"}}
@@ -92,9 +88,7 @@
                       class="disabled-user"
                     />
                   {{/unless}}
-                  <span data-test-name>
-                    {{user.fullName}}
-                  </span>
+                  <UserNameInfo @user={{user}} />
                 </li>
               {{else}}
                 {{t "general.none"}}

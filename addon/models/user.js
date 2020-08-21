@@ -164,16 +164,16 @@ export default Model.extend({
     }
   ),
 
-  fullName: computed('firstName', 'middleName', 'lastName', 'displayName', function() {
-    if (this.displayName) {
-      return this.displayName;
-    }
+  fullName: computed('fullNameFromFirstMiddleInitialLastName', 'displayName', function() {
+    return this.displayName ? this.displayName : this.get('fullNameFromFirstMiddleInitialLastName');
+  }),
 
+  fullNameFromFirstMiddleInitialLastName: computed('firstName', 'middleName', 'lastName', function() {
     if (!this.firstName || !this.lastName) {
       return '';
     }
 
-    const middleInitial = this.middleName?this.middleName.charAt(0):false;
+    const middleInitial = this.middleName ? this.middleName.charAt(0) : false;
 
     if (middleInitial) {
       return `${this.firstName} ${middleInitial}. ${this.lastName}`;
@@ -181,6 +181,43 @@ export default Model.extend({
       return `${this.firstName} ${this.lastName}`;
     }
   }),
+
+  fullNameFromFirstMiddleLastName: computed('firstName', 'middleName', 'lastName', function() {
+    if (!this.firstName || !this.lastName) {
+      return '';
+    }
+
+    if (this.middleName) {
+      return `${this.firstName} ${this.middleName} ${this.lastName}`;
+    } else {
+      return `${this.firstName} ${this.lastName}`;
+    }
+  }),
+
+  fullNameFromFirstLastName: computed('firstName', 'lastName', function() {
+    if (!this.firstName || !this.lastName) {
+      return '';
+    }
+    return `${this.firstName} ${this.lastName}`;
+  }),
+
+  hasDifferentDisplayName: computed(
+    'displayName',
+    'fullNameFromFirstMiddleInitialLastName',
+    'fullNameFromFirstMiddleLastName',
+    'fullNameFromFirstLastName',
+    function() {
+      const displayName = this.displayName?.trim().toLowerCase();
+      // no display name? nothing to compare then.
+      if (! displayName) {
+        return false;
+      }
+      // compare the display name to 'first last', then to 'first middle last' and 'first m. last' as a fallbacks.
+      return !(displayName === this.get('fullNameFromFirstLastName').trim().toLowerCase()
+        || displayName === this.get('fullNameFromFirstMiddleLastName').trim().toLowerCase()
+        || displayName === this.get('fullNameFromFirstMiddleInitialLastName').trim().toLowerCase());
+    }
+  ),
 
   /**
    * A list of all courses that this user is instructing in.

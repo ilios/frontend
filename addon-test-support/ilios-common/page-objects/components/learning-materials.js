@@ -11,6 +11,8 @@ import {
 } from 'ember-cli-page-object';
 import meshManager from './mesh-manager';
 import search from './learningmaterial-search';
+import userNameInfo from './user-name-info';
+import newLearningMaterial from './new-learningmaterial';
 import {
   flatpickrDatePicker,
   pageObjectFillInFroalaEditor,
@@ -31,7 +33,10 @@ const definition = {
   current: collection('.detail-learningmaterials-content table tbody tr', {
     title: text('td [data-test-title]', { at: 0 }),
     type: text( 'td [data-test-lm-type-icon] title'),
-    owner: text('td', { at: 1 }),
+    owner: {
+      scope: 'td:nth-of-type(2)',
+      userNameInfo
+    },
     required: text('td', { at: 2 }),
     notes: text('td:eq(3) > span'),
     mesh: text('td', { at: 4 }),
@@ -40,22 +45,7 @@ const definition = {
     isTimedRelease: isVisible('.fa-clock'),
     details: clickable('.link', { at: 0 }),
   }),
-  newLearningMaterial: {
-    scope: '.new-learningmaterial',
-    name: fillable('input', { at: 0 }),
-    author: fillable('input', { at: 1 }),
-    url: fillable('input', { at: 2 }),
-    citation: fillable('textarea'),
-    userName: text('.owninguser'),
-    status: fillable('select', { at: 0 }),
-    role: fillable('select', { at: 1 }),
-    description: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
-    rationale: fillable('[data-test-copyright-rationale]'),
-    agreement: clickable('[data-test-copyright-agreement]'),
-    save: clickable('.done'),
-    cancel: clickable('.cancel'),
-    hasAgreementValidationError: isVisible('[data-test-agreement-validation-error-message]'),
-  },
+  newLearningMaterial,
   manager: {
     scope: '.learningmaterial-manager',
     name: {

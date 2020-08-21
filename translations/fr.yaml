@@ -29,6 +29,7 @@ general:
   backToSessionList: "Retour à Liste du Séances"
   backToTitle: "Retour à {title}"
   calendar: Calendrier
+  campusNameOfRecord: "Nombre de registro del campus"
   cancel: Annul
   chooseCohortTitle: "Choisi objectif mère pour"
   chooseFile: "Choisir un Fichier"

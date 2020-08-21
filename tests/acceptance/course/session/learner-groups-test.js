@@ -60,8 +60,8 @@ module('Acceptance | Session - Learner Groups', function(hooks) {
 
       const { detailLearnerList, detailLearnergroupsList } = page.detailLearnersAndLearnerGroups;
       assert.equal(detailLearnerList.learners.length, 2);
-      assert.equal(detailLearnerList.learners[0].userName, '1 guy M. Mc1son');
-      assert.equal(detailLearnerList.learners[1].userName, '2 guy M. Mc2son');
+      assert.equal(detailLearnerList.learners[0].userNameInfo.fullName, '1 guy M. Mc1son');
+      assert.equal(detailLearnerList.learners[1].userNameInfo.fullName, '2 guy M. Mc2son');
       assert.equal(detailLearnergroupsList.trees.length, 3);
       assert.equal(detailLearnergroupsList.trees[0].title, 'learner group 0 (program 0 cohort 0)');
       assert.equal(detailLearnergroupsList.trees[1].title, 'learner group 1 (program 0 cohort 0)');
@@ -90,8 +90,14 @@ module('Acceptance | Session - Learner Groups', function(hooks) {
 
       const { learnerSelectionManager, learnergroupSelectionManager } = page.detailLearnersAndLearnerGroups;
       assert.equal(learnerSelectionManager.selectedLearners.detailLearnerList.learners.length, 2);
-      assert.equal(learnerSelectionManager.selectedLearners.detailLearnerList.learners[0].userName, '1 guy M. Mc1son');
-      assert.equal(learnerSelectionManager.selectedLearners.detailLearnerList.learners[1].userName, '2 guy M. Mc2son');
+      assert.equal(
+        learnerSelectionManager.selectedLearners.detailLearnerList.learners[0].userNameInfo.fullName,
+        '1 guy M. Mc1son'
+      );
+      assert.equal(
+        learnerSelectionManager.selectedLearners.detailLearnerList.learners[1].userNameInfo.fullName,
+        '2 guy M. Mc2son'
+      );
       assert.equal(learnergroupSelectionManager.selectedGroups.list.trees.length, 3);
       assert.equal(
         learnergroupSelectionManager.selectedGroups.list.trees[0].title,
@@ -537,9 +543,9 @@ module('Acceptance | Session - Learner Groups', function(hooks) {
       await page.detailLearnersAndLearnerGroups.save();
 
       assert.equal(page.detailLearnersAndLearnerGroups.detailLearnerList.learners.length, 3);
-      assert.equal(page.detailLearnersAndLearnerGroups.detailLearnerList.learners[0].userName, '1 guy M. Mc1son');
-      assert.equal(page.detailLearnersAndLearnerGroups.detailLearnerList.learners[1].userName, '2 guy M. Mc2son');
-      assert.equal(page.detailLearnersAndLearnerGroups.detailLearnerList.learners[2].userName, 'joe u. shmoe');
+      assert.equal(page.detailLearnersAndLearnerGroups.detailLearnerList.learners[0].userNameInfo.fullName, '1 guy M. Mc1son');
+      assert.equal(page.detailLearnersAndLearnerGroups.detailLearnerList.learners[1].userNameInfo.fullName, '2 guy M. Mc2son');
+      assert.equal(page.detailLearnersAndLearnerGroups.detailLearnerList.learners[2].userNameInfo.fullName, 'joe u. shmoe');
 
     });
 

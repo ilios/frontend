@@ -24,6 +24,63 @@ module('Unit | Model | User', function(hooks) {
     assert.equal(model.get('fullName'), 'first last');
   });
 
+  test('fullNameFromFirstMiddleLastName', function(assert) {
+    const model = this.owner.lookup('service:store').createRecord('user');
+    model.set('firstName', 'first');
+    model.set('lastName', 'last');
+    model.set('middleName', 'middle');
+    assert.equal(model.get('fullNameFromFirstMiddleLastName'), 'first middle last');
+  });
+
+  test('fullNameFromFirstMiddleInitialLastName', function(assert) {
+    const model = this.owner.lookup('service:store').createRecord('user');
+    model.set('firstName', 'first');
+    model.set('lastName', 'last');
+    model.set('middleName', 'middle');
+    assert.equal(model.get('fullNameFromFirstMiddleInitialLastName'), 'first m. last');
+  });
+
+  test('fullNameFromFirstLastName', function(assert) {
+    const model = this.owner.lookup('service:store').createRecord('user');
+    model.set('firstName', 'first');
+    model.set('lastName', 'last');
+    model.set('middleName', 'middle');
+    assert.equal(model.get('fullNameFromFirstLastName'), 'first last');
+  });
+
+  test('does not have different display name', function(assert) {
+    const fixtures = [
+      { firstName: 'first', lastName: 'last', middleName: null, displayName: 'first last' },
+      { firstName: '  first', lastName: ' last ', middleName: null, displayName: 'first last    ' },
+      { firstName: 'First', lastName: 'LAST', middleName: null, displayName: 'FiRsT LasT' },
+      { firstName: 'first', lastName: 'last', middleName: 'middle', displayName: 'first last' },
+      { firstName: 'first', lastName: 'last', middleName: 'middle', displayName: 'first middle last' },
+      { firstName: 'first', lastName: 'last', middleName: 'middle', displayName: 'first m. last' },
+      { firstName: 'first', lastName: 'last', middleName: null, displayName: null },
+    ];
+    fixtures.forEach(fixture => {
+      const model = this.owner.lookup('service:store').createRecord('user');
+      model.set('firstName', fixture.firstName);
+      model.set('lastName',  fixture.lastName);
+      model.set('middleName', fixture.middleName);
+      assert.notOk(model.get('hasDifferentDisplayName'));
+    });
+  });
+
+  test('has different display name', function(assert) {
+    const fixtures = [
+      { firstName: 'first', lastName: 'last', middleName: null, displayName: 'clem chowder' },
+      { firstName: 'first', lastName: 'last', middleName: 'n', displayName: 'first m. last' },
+    ];
+    fixtures.forEach(fixture => {
+      const model = this.owner.lookup('service:store').createRecord('user');
+      model.set('firstName', fixture.firstName);
+      model.set('lastName',  fixture.lastName);
+      model.set('middleName', fixture.middleName);
+      assert.notOk(model.get('hasDifferentDisplayName'));
+    });
+  });
+
   test('full name with displayName', function(assert) {
     const model = this.owner.lookup('service:store').createRecord('user');
     model.set('displayName', 'something else');

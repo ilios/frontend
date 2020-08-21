@@ -29,6 +29,7 @@ general:
   backToSessionList: "Back to Session List"
   backToTitle: "Back to {title}"
   calendar: Calendar
+  campusNameOfRecord: "Campus name of record"
   cancel: Cancel
   chooseCohortTitle: "Select Parent For"
   chooseFile: "Choose File"
