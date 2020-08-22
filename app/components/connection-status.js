@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency-decorators';
 import { timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
-import { addEventListener, runDisposables } from 'ember-lifeline';
+import { addEventListener } from 'ember-lifeline';
 
 export default class ConnectionStatusComponent extends Component {
   @tracked isOnline = true;
@@ -23,10 +23,6 @@ export default class ConnectionStatusComponent extends Component {
     addEventListener(this, window, 'offline', () => {
       this.changeConnectionState.perform(false);
     });
-  }
-
-  willDestroy() {
-    runDisposables(this);
   }
 
   @restartableTask
