@@ -10,7 +10,6 @@ import { validatable, Length, AfterDate, NotBlank } from 'ilios-common/decorator
 export default class LearningMaterialManagerComponent extends Component {
   @service store;
 
-  @tracked statusId;
   @tracked notes;
   @tracked learningMaterial;
 
@@ -20,7 +19,6 @@ export default class LearningMaterialManagerComponent extends Component {
   @tracked type;
   @tracked owningUserName;
   @tracked originalAuthor;
-  @tracked userRoleTitle;
   @tracked description;
   @tracked copyrightPermission;
   @tracked copyrightRationale;
