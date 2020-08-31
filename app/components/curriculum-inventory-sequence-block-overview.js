@@ -60,12 +60,6 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.linkableCourses = yield this.getLinkableCourses(this.report, this.course);
   }
 
-  @restartableTask
-  *reload() {
-    this.sessions = yield this.getSessions(this.course);
-    this.linkableCourses = yield this.getLinkableCourses(this.report, this.course);
-  }
-
   get requiredLabel() {
     switch (this.required) {
     case '1':

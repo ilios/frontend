@@ -2,7 +2,7 @@
   class="curriculum-inventory-sequence-block-overview"
   data-test-curriculum-inventory-sequence-block-overview
   {{did-insert (perform this.load) (await @sequenceBlock)}}
-  {{did-update (perform this.reload) (await @sequenceBlock.course)}}
+  {{did-update (perform this.load) (await @sequenceBlock) (await @sequenceBlock.course)}}
   ...attributes
 >
   <div class="title">{{t "general.overview"}}</div>
