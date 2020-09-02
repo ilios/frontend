@@ -98,7 +98,7 @@
     "ember-template-lint": "^2.11.0",
     "ember-truth-helpers": "^2.0.0",
     "ember-web-app": "^4.0.0",
-    "eslint": "^7.7.0",
+    "eslint": "^7.8.1",
     "file-saver": "^2.0.2",
     "ilios-common": "^49.1.0",
     "loader.js": "^4.7.0",
