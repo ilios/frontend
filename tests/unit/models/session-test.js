@@ -435,4 +435,10 @@ module('Unit | Model | Session', function(hooks) {
     assert.ok(allInstructors.includes(user1));
     assert.ok(allInstructors.includes(user2));
   });
+
+  test('text only empty description', async function(assert){
+    assert.expect(1);
+    const subject = this.owner.lookup('service:store').createRecord('session');
+    assert.equal('', subject.textDescription);
+  });
 });
