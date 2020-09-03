@@ -4,6 +4,7 @@ import { isPresent, isEmpty } from '@ember/utils';
 import { all } from 'rsvp';
 import moment from 'moment';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
+import striptags from 'striptags';
 
 const { alias, collect, mapBy, sum, oneWay, not } = computed;
 
@@ -392,10 +393,6 @@ export default Model.extend({
   },
 
   textDescription: computed('description', function(){
-    var title = this.get('description');
-    if(title === undefined){
-      return '';
-    }
-    return title.replace(/(<([^>]+)>)/ig,"");
+    return striptags(this.description);
   }),
 });
