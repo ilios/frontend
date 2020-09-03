@@ -121,13 +121,13 @@ export default Service.extend({
       return rhett;
     });
 
-    return mappedResults.filter(obj => isEmpty(year) || parseInt(obj.course.get('year'), 10) === parseInt(year, 10));
+    return mappedResults.filter(obj => isEmpty(year) || parseInt(obj.course.year, 10) === parseInt(year, 10));
   },
 
   async coursesArrayResults(results, year) {
     const intl = this.intl;
     const filteredResults = results.filter( course => {
-      const academicYear = course.get('year');
+      const academicYear = course.year;
       return isEmpty(year) || parseInt(academicYear, 10) === parseInt(year, 10);
     });
     const sortedResults = filteredResults.sortBy('title');
@@ -157,21 +157,21 @@ export default Service.extend({
       return rhett;
     });
 
-    return mappedResults.filter(obj => isEmpty(year) || parseInt(obj.course.get('year'), 10) === parseInt(year, 10));
+    return mappedResults.filter(obj => isEmpty(year) || parseInt(obj.course.year, 10) === parseInt(year, 10));
   },
 
   async sessionsArrayResults(results, year) {
     const intl = this.intl;
     const filteredResults = await filter(results.toArray(), async session => {
-      const course = await session.get('course');
-      const academicYear = course.get('year');
+      const course = await session.course;
+      const academicYear = course.year;
       return isEmpty(year) || parseInt(academicYear, 10) === parseInt(year, 10);
     });
     const sortedResults = filteredResults.sortBy('title');
     const mappedResults = await map(sortedResults, async session => {
-      const course = await session.get('course');
-      const sessionDescriptionText = session.get('textDescription');
-      const objectives = await session.get('objectives');
+      const course = await session.course;
+      const sessionDescriptionText = session.textDescription;
+      const objectives = await session.sessionObjectives;
       return  [session.get('title'), course.get('title'), course.get('academicYear'), sessionDescriptionText, objectives.mapBy('textTitle').join()];
     });
 
