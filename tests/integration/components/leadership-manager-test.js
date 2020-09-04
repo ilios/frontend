@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, fillIn, click, findAll, find } from '@ember/test-helpers';
+import { render, fillIn, click, findAll, find, triggerEvent } from '@ember/test-helpers';
+import { map } from 'rsvp';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -332,8 +333,8 @@ module('Integration | Component | leadership manager', function(hooks) {
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
     const disabledDirectors = `${directors} .fa-user-times`;
     const disabledAdministrators = `${administrators} .fa-user-times`;
-    const firstAdministratorName = `${administrators}:nth-of-type(1) [data-test-name]`;
-    const secondAdministratorName = `${administrators}:nth-of-type(2) [data-test-name]`;
+    const firstAdministratorName = `${administrators}:nth-of-type(1) [data-test-fullname]`;
+    const secondAdministratorName = `${administrators}:nth-of-type(2) [data-test-fullname]`;
 
     assert.dom(directors).exists({ count: 1 });
     assert.dom(disabledDirectors).doesNotExist();
@@ -377,9 +378,54 @@ module('Integration | Component | leadership manager', function(hooks) {
 
     [directors, administrators, studentAdvisors].forEach(users => {
       assert.dom(users).exists({ count: 3 });
-      assert.dom(`${users}:nth-of-type(1) [data-test-name]`).hasText('Aaron M. Aardvark');
-      assert.dom(`${users}:nth-of-type(2) [data-test-name]`).hasText('The Bane of Iowa');
-      assert.dom(`${users}:nth-of-type(3) [data-test-name]`).hasText('Ursula U. Unbekannt');
+      assert.dom(`${users}:nth-of-type(1) [data-test-fullname]`).hasText('Aaron M. Aardvark');
+      assert.dom(`${users}:nth-of-type(2) [data-test-fullname]`).hasText('The Bane of Iowa');
+      assert.dom(`${users}:nth-of-type(3) [data-test-fullname]`).hasText('Ursula U. Unbekannt');
+    });
+  });
+
+  test('username info tooltip shows as applicable', async function(assert) {
+    this.server.create('user', { firstName: 'Aaron', lastName: 'Aardvark' });
+    this.server.create('user', { firstName: 'Ursula', middleName: 'Undine', lastName: 'Unbekannt' });
+    this.server.create('user', { firstName: 'Zeb', lastName: 'Zoober', displayName: 'The Bane of Iowa' });
+    const users = await this.owner.lookup('service:store').findAll('user');
+
+    this.set('directors', users);
+    this.set('administrators', users);
+    this.set('studentAdvisors', users);
+
+    await render(hbs`<LeadershipManager
+      @showAdministrators={{true}}
+      @showDirectors={{true}}
+      @showStudentAdvisors={{true}}
+      @directors={{this.directors}}
+      @administrators={{this.administrators}}
+      @studentAdvisors={{this.studentAdvisors}}
+      @removeDirector={{noop}}
+      @addDirector={{noop}}
+      @removeAdministrator={{noop}}
+      @addAdministrator={{noop}}
+      @removeStudentAdvisor={{noop}}
+      @addStudentAdvisor={{noop}}
+    />`);
+
+    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
+    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
+    const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
+
+    await map([directors, administrators, studentAdvisors], async users => {
+      assert.dom(users).exists({ count: 3 });
+      assert.dom(`${users}:nth-of-type(1) [data-test-fullname]`).hasText('Aaron M. Aardvark');
+      assert.dom(`${users}:nth-of-type(1) [data-test-info]`).doesNotExist();
+      assert.dom(`${users}:nth-of-type(2) [data-test-fullname]`).hasText('The Bane of Iowa');
+      assert.dom(`${users}:nth-of-type(2) [data-test-info]`).hasText('Campus name of record');
+      assert.dom(find('.ilios-tooltip')).doesNotExist();
+      await triggerEvent(find(`${users}:nth-of-type(2) [data-test-info]`), 'mouseover');
+      assert.dom(find('.ilios-tooltip')).hasText('Zeb M, Zoober');
+      await triggerEvent(find(`${users}:nth-of-type(2) [data-test-info]`), 'mouseout');
+      assert.dom(find('.ilios-tooltip')).doesNotExist();
+      assert.dom(`${users}:nth-of-type(3) [data-test-fullname]`).hasText('Ursula U. Unbekannt');
+      assert.dom(`${users}:nth-of-type(3) [data-test-info]`).doesNotExist();
     });
   });
 });

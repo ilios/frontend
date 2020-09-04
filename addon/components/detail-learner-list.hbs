@@ -2,12 +2,12 @@
   {{#each (sort-by "fullName" @learners) as |user|}}
     {{#if @isManaging}}
       <li role="button" {{on "click" (fn @remove user)}}>
-        <span data-test-user-name>{{user.fullName}}</span>
+        <UserNameInfo @user={{user}} />
         <FaIcon @icon="times" class="remove" />
       </li>
     {{else}}
       <li role="button">
-        <span data-test-user-name>{{user.fullName}}</span>
+        <UserNameInfo @user={{user}} />
       </li>
     {{/if}}
   {{/each}}

@@ -10,20 +10,35 @@ module('Integration | Component | learner selection manager', function(hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function() {
-    const learner1 = this.server.create('user', {firstName: 'Joe', lastName: 'Doe', middleName: 'Michael'});
-    const learner2 = this.server.create('user', {firstName: 'Jane', lastName: 'Doe', middleName: 'Anette'});
+    const learner1 = this.server.create('user', { firstName: 'Joe', lastName: 'Doe', middleName: 'Michael' });
+    const learner2 = this.server.create('user', { firstName: 'Jane', lastName: 'Doe', middleName: 'Anette' });
+    const learner3 = this.server.create('user', { displayName: 'Clem Chowder' });
+
     this.learnerModel1 =  await this.owner.lookup('service:store').find('user', learner1.id);
     this.learnerModel2 =  await this.owner.lookup('service:store').find('user', learner2.id);
+    this.learnerModel3 =  await this.owner.lookup('service:store').find('user', learner3.id);
   });
 
   test('selected learners', async function(assert) {
-    assert.expect(4);
-    this.set('learners', [this.learnerModel1,  this.learnerModel2]);
+    this.set('learners', [ this.learnerModel1,  this.learnerModel2, this.learnerModel3 ]);
     await render(hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{noop}} @remove={{noop}}/>`);
     assert.equal(component.selectedLearners.heading, 'Selected Learners');
-    assert.equal(component.selectedLearners.detailLearnerList.learners.length, 2);
-    assert.equal(component.selectedLearners.detailLearnerList.learners[0].userName, "Jane A. Doe");
-    assert.equal(component.selectedLearners.detailLearnerList.learners[1].userName, "Joe M. Doe");
+    assert.equal(component.selectedLearners.detailLearnerList.learners.length, 3);
+    assert.equal(component.selectedLearners.detailLearnerList.learners[0].userNameInfo.fullName, "Clem Chowder");
+    assert.ok(component.selectedLearners.detailLearnerList.learners[0].userNameInfo.hasAdditionalInfo);
+    assert.notOk(component.selectedLearners.detailLearnerList.learners[0].userNameInfo.isTooltipVisible);
+    await component.selectedLearners.detailLearnerList.learners[0].userNameInfo.expandTooltip();
+    assert.ok(component.selectedLearners.detailLearnerList.learners[0].userNameInfo.isTooltipVisible);
+    assert.equal(
+      component.selectedLearners.detailLearnerList.learners[0].userNameInfo.tooltipContents,
+      '2 guy M, Mc2son'
+    );
+    await component.selectedLearners.detailLearnerList.learners[0].userNameInfo.closeTooltip();
+    assert.notOk(component.selectedLearners.detailLearnerList.learners[0].userNameInfo.isTooltipVisible);
+    assert.equal(component.selectedLearners.detailLearnerList.learners[1].userNameInfo.fullName, "Jane A. Doe");
+    assert.notOk(component.selectedLearners.detailLearnerList.learners[1].userNameInfo.hasAdditionalInfo);
+    assert.equal(component.selectedLearners.detailLearnerList.learners[2].userNameInfo.fullName, "Joe M. Doe");
+    assert.notOk(component.selectedLearners.detailLearnerList.learners[2].userNameInfo.hasAdditionalInfo);
   });
 
   test('no selected learners', async function(assert) {
@@ -44,7 +59,7 @@ module('Integration | Component | learner selection manager', function(hooks) {
     await render(hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{noop}} @remove={{remove}}/>`);
     assert.equal(component.selectedLearners.heading, 'Selected Learners');
     assert.equal(component.selectedLearners.detailLearnerList.learners.length, 2);
-    assert.equal(component.selectedLearners.detailLearnerList.learners[1].userName, "Joe M. Doe");
+    assert.equal(component.selectedLearners.detailLearnerList.learners[1].userNameInfo.fullName, "Joe M. Doe");
     await component.selectedLearners.detailLearnerList.learners[1].remove();
   });
 

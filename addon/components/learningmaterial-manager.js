@@ -17,7 +17,7 @@ export default class LearningMaterialManagerComponent extends Component {
   @AfterDate('startDate', { granularity: 'minute'}) @tracked endDate;
 
   @tracked type;
-  @tracked owningUserName;
+  @tracked owningUser;
   @tracked originalAuthor;
   @tracked description;
   @tracked copyrightPermission;
@@ -36,6 +36,7 @@ export default class LearningMaterialManagerComponent extends Component {
   @tracked userRoleTitle;
   @tracked publicNotes;
   @tracked required;
+
 
   get isFile() {
     return this.type === 'file';
@@ -150,8 +151,7 @@ export default class LearningMaterialManagerComponent extends Component {
 
     const status = yield parentMaterial.get('status');
     this.statusId = status.id;
-    const owningUser = yield parentMaterial.get('owningUser');
-    this.owningUserName = owningUser.fullName;
+    this.owningUser = yield parentMaterial.get('owningUser');
     const userRole = yield parentMaterial.get('userRole');
     this.userRoleTitle = userRole.title;
   }

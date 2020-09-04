@@ -1,7 +1,4 @@
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -10,6 +7,7 @@ import page from 'ilios-common/page-objects/session';
 module('Acceptance | Session - Offering Management', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
@@ -67,15 +65,38 @@ module('Acceptance | Session - Offering Management', function(hooks) {
     assert.equal(form.instructors.manager.searchResults.length, 1);
     await form.instructors.manager.searchResults[0].add();
     assert.equal(form.instructors.manager.instructors.length, 1);
-    assert.equal(form.instructors.manager.instructors[0].text, '2 guy M. Mc2son');
+    assert.equal(form.instructors.manager.instructors[0].userNameInfo.fullName, '2 guy M. Mc2son');
 
     await form.instructors.manager.search('guy 3');
     assert.equal(form.instructors.manager.instructors.length, 1);
-    assert.equal(form.instructors.manager.instructors[0].text, '2 guy M. Mc2son');
+    assert.equal(form.instructors.manager.instructors[0].userNameInfo.fullName, '2 guy M. Mc2son');
     assert.equal(form.instructors.manager.searchResults.length, 1);
     await form.instructors.manager.searchResults[0].add();
     assert.equal(form.instructors.manager.instructors.length, 2);
-    assert.equal(form.instructors.manager.instructors[0].text, '2 guy M. Mc2son');
-    assert.equal(form.instructors.manager.instructors[1].text, '3 guy M. Mc3son');
+    assert.equal(form.instructors.manager.instructors[0].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.equal(form.instructors.manager.instructors[1].userNameInfo.fullName, '3 guy M. Mc3son');
+  });
+
+  test('Instructors additional name info is displayed if applicable', async function(assert) {
+    const course = this.server.create('course', { school: this.school });
+    const session = this.server.create('session', { course });
+    const instructor1 = this.server.create('user');
+    const instructor2 = this.server.create('user', { displayName: 'Clem Chowder'});
+    this.server.create('offering', { session, instructors: [ instructor1, instructor2 ]});
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.offerings.dateBlocks[0].offerings[0].instructors.length, 2);
+    assert.equal(page.offerings.dateBlocks[0].offerings[0].instructors[0].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.notOk(page.offerings.dateBlocks[0].offerings[0].instructors[0].userNameInfo.hasAdditionalInfo);
+    assert.equal(page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.fullName, 'Clem Chowder');
+    assert.ok(page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.hasAdditionalInfo);
+    assert.notOk(page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.isTooltipVisible);
+    await page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.expandTooltip();
+    assert.ok(page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.isTooltipVisible);
+    assert.equal(
+      page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.tooltipContents,
+      '2 guy M, Mc2son'
+    );
+    await page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.closeTooltip();
+    assert.notOk(page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.isTooltipVisible);
   });
 });

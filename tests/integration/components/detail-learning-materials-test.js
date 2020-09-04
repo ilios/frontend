@@ -48,13 +48,52 @@ module('Integration | Component | detail learning materials', function(hooks) {
     assert.equal(component.current.length, 1);
     assert.equal(component.current[0].type, 'Citation');
     assert.equal(component.current[0].title, 'test title');
-    assert.equal(component.current[0].owner, '0 guy M. Mc0son');
+    assert.equal(component.current[0].owner.userNameInfo.fullName, '0 guy M. Mc0son');
     assert.equal(component.current[0].required, 'Yes');
     assert.equal(component.current[0].notes, 'Yes');
     assert.equal(component.current[0].mesh, 'None');
     assert.equal(component.current[0].status, 'status 1');
     assert.ok(component.current[0].isNotePublic);
     assert.notOk(component.current[0].isTimedRelease);
+  });
+
+  test('custom user display name', async function(assert) {
+    const user = this.server.create('user', { displayName: 'Clem Chowder' });
+
+    const learningMaterial = this.server.create('learning-material', {
+      title: 'test title',
+      citation: 'some text',
+      owningUser: user,
+      status: this.status[1],
+      userRole: this.roles[0],
+    });
+
+    const clm = this.server.create('course-learning-material', {
+      learningMaterial,
+      required: true,
+      notes: 'notes',
+    });
+
+    const course = this.server.create('course', {
+      learningMaterials: [clm]
+    });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+
+    this.set('subject', courseModel);
+
+    await render(hbs`<DetailLearningMaterials
+      @subject={{this.subject}}
+      @isCourse={{true}}
+      @isCourse={{true}}
+      @editable={{true}}
+    />`);
+    assert.equal(component.current[0].owner.userNameInfo.fullName, 'Clem Chowder');
+    assert.notOk(component.current[0].owner.userNameInfo.isTooltipVisible);
+    await component.current[0].owner.userNameInfo.expandTooltip();
+    assert.ok(component.current[0].owner.userNameInfo.isTooltipVisible);
+    assert.equal(component.current[0].owner.userNameInfo.tooltipContents, '1 guy M, Mc1son');
+    await component.current[0].owner.userNameInfo.closeTooltip();
+    assert.notOk(component.current[0].owner.userNameInfo.isTooltipVisible);
   });
 
   test('sort button visible when lm list has 2+ items and editing is allowed', async function(assert) {

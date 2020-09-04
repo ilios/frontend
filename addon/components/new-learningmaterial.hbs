@@ -1,4 +1,4 @@
-<div class="new-learningmaterial">
+<div class="new-learningmaterial" data-test-new-learningmaterial>
   <div class="item">
     <label>
       {{t "general.displayName"}}:
@@ -34,12 +34,12 @@
       </select>
     </span>
   </div>
-  <div class="item">
+  <div class="item" data-test-owninguser>
     <label>
       {{t "general.owner"}}:
     </label>
     <span class="owninguser">
-      {{get (await this.currentUser.model) "fullName"}}
+      <UserNameInfo @user={{await this.currentUser.model}} />
     </span>
   </div>
   <div class="item">

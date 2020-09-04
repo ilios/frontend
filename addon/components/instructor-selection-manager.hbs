@@ -7,7 +7,7 @@
     <ul class="instructors-list" data-test-instructors>
       {{#each (sort-by "fullName" (await @instructors)) as |user|}}
         <li role="button" {{on "click" (fn @removeInstructor user)}}>
-          {{user.fullName}}
+          <UserNameInfo @user={{user}} />
           <FaIcon @icon="times" class="remove" />
         </li>
       {{/each}}
@@ -29,9 +29,9 @@
           </span>
           <br>
           <ul class="instructorgroup-members-list" data-test-instructor-group-members>
-            {{#each (sort-by "fullName" (await instructorGroup.users)) as |instructorGroupMember|}}
+            {{#each (sort-by "fullName" (await instructorGroup.users)) as |user|}}
               <li>
-                {{instructorGroupMember.fullName}}
+                <UserNameInfo @user={{user}} />
               </li>
             {{/each}}
           </ul>

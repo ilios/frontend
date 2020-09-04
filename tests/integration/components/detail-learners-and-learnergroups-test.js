@@ -64,9 +64,9 @@ module('Integration | Component | detail-learners-and-learner-groups', function(
     />`);
     assert.equal(component.title, 'Learners and Learner Groups (3/3)');
     assert.equal(component.detailLearnerList.learners.length, 3);
-    assert.equal(component.detailLearnerList.learners[0].userName, '0 guy M. Mc0son');
-    assert.equal(component.detailLearnerList.learners[1].userName, '1 guy M. Mc1son');
-    assert.equal(component.detailLearnerList.learners[2].userName, '2 guy M. Mc2son');
+    assert.equal(component.detailLearnerList.learners[0].userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.equal(component.detailLearnerList.learners[1].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.equal(component.detailLearnerList.learners[2].userNameInfo.fullName, '2 guy M. Mc2son');
     assert.equal(component.detailLearnergroupsList.trees.length, 2);
     assert.equal(component.detailLearnergroupsList.trees[0].subgroups.length, 3);
     assert.equal(component.detailLearnergroupsList.trees[0].subgroups[0].title, 'Top Group 1 (0)');
@@ -93,15 +93,15 @@ module('Integration | Component | detail-learners-and-learner-groups', function(
     assert.ok(component.hasCancelButton);
     assert.equal(component.learnerSelectionManager.selectedLearners.detailLearnerList.learners.length, 3);
     assert.equal(
-      component.learnerSelectionManager.selectedLearners.detailLearnerList.learners[0].userName,
+      component.learnerSelectionManager.selectedLearners.detailLearnerList.learners[0].userNameInfo.fullName,
       '0 guy M. Mc0son'
     );
     assert.equal(
-      component.learnerSelectionManager.selectedLearners.detailLearnerList.learners[1].userName,
+      component.learnerSelectionManager.selectedLearners.detailLearnerList.learners[1].userNameInfo.fullName,
       '1 guy M. Mc1son'
     );
     assert.equal(
-      component.learnerSelectionManager.selectedLearners.detailLearnerList.learners[2].userName,
+      component.learnerSelectionManager.selectedLearners.detailLearnerList.learners[2].userNameInfo.fullName,
       '2 guy M. Mc2son'
     );
     assert.equal(component.learnergroupSelectionManager.selectedGroups.list.trees.length, 2);

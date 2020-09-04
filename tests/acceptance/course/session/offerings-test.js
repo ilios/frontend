@@ -1,8 +1,5 @@
 import moment from 'moment';
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -131,31 +128,31 @@ module('Acceptance | Session - Offerings', function(hooks) {
     assert.equal(blocks[0].offerings[0].location, this.offering1.room);
     assert.equal(blocks[0].offerings[0].url, this.offering1.url);
     assert.equal(blocks[0].offerings[0].instructors.length, 8);
-    assert.equal(blocks[0].offerings[0].instructors[0].title, '1 guy M. Mc1son');
-    assert.equal(blocks[0].offerings[0].instructors[1].title, '2 guy M. Mc2son');
-    assert.equal(blocks[0].offerings[0].instructors[2].title, '3 guy M. Mc3son');
-    assert.equal(blocks[0].offerings[0].instructors[3].title, '4 guy M. Mc4son');
-    assert.equal(blocks[0].offerings[0].instructors[4].title, '5 guy M. Mc5son');
-    assert.equal(blocks[0].offerings[0].instructors[5].title, '6 guy M. Mc6son');
-    assert.equal(blocks[0].offerings[0].instructors[6].title, '7 guy M. Mc7son');
-    assert.equal(blocks[0].offerings[0].instructors[7].title, '8 guy M. Mc8son');
+    assert.equal(blocks[0].offerings[0].instructors[0].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.equal(blocks[0].offerings[0].instructors[1].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.equal(blocks[0].offerings[0].instructors[2].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.equal(blocks[0].offerings[0].instructors[3].userNameInfo.fullName, '4 guy M. Mc4son');
+    assert.equal(blocks[0].offerings[0].instructors[4].userNameInfo.fullName, '5 guy M. Mc5son');
+    assert.equal(blocks[0].offerings[0].instructors[5].userNameInfo.fullName, '6 guy M. Mc6son');
+    assert.equal(blocks[0].offerings[0].instructors[6].userNameInfo.fullName, '7 guy M. Mc7son');
+    assert.equal(blocks[0].offerings[0].instructors[7].userNameInfo.fullName, '8 guy M. Mc8son');
 
     assert.equal(blocks[1].offerings[0].learnerGroups.length, 1);
     assert.equal(blocks[1].offerings[0].learnerGroups[0].title, 'learner group 1');
     assert.equal(blocks[1].offerings[0].location, this.offering2.room);
     assert.equal(blocks[1].offerings[0].instructors.length, 4);
-    assert.equal(blocks[1].offerings[0].instructors[0].title, '3 guy M. Mc3son');
-    assert.equal(blocks[1].offerings[0].instructors[1].title, '4 guy M. Mc4son');
-    assert.equal(blocks[1].offerings[0].instructors[2].title, '7 guy M. Mc7son');
-    assert.equal(blocks[1].offerings[0].instructors[3].title, '8 guy M. Mc8son');
+    assert.equal(blocks[1].offerings[0].instructors[0].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.equal(blocks[1].offerings[0].instructors[1].userNameInfo.fullName, '4 guy M. Mc4son');
+    assert.equal(blocks[1].offerings[0].instructors[2].userNameInfo.fullName, '7 guy M. Mc7son');
+    assert.equal(blocks[1].offerings[0].instructors[3].userNameInfo.fullName, '8 guy M. Mc8son');
 
     assert.equal(blocks[2].offerings[0].learnerGroups.length, 1);
     assert.equal(blocks[2].offerings[0].learnerGroups[0].title, 'learner group 1');
     assert.equal(blocks[2].offerings[0].location, this.offering3.room);
     assert.equal(blocks[2].offerings[0].url, this.offering3.url);
     assert.equal(blocks[2].offerings[0].instructors.length, 2);
-    assert.equal(blocks[2].offerings[0].instructors[0].title, '3 guy M. Mc3son');
-    assert.equal(blocks[2].offerings[0].instructors[1].title, '4 guy M. Mc4son');
+    assert.equal(blocks[2].offerings[0].instructors[0].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.equal(blocks[2].offerings[0].instructors[1].userNameInfo.fullName, '4 guy M. Mc4son');
   });
 
   test('confirm removal message', async function(assert) {
@@ -223,7 +220,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
     assert.equal(block.offerings[0].learnerGroups[1].title, 'learner group 1');
     assert.equal(block.offerings[0].location, 'Rm. 111');
     assert.equal(block.offerings[0].instructors.length, 1);
-    assert.equal(block.offerings[0].instructors[0].title, '0 guy M. Mc0son');
+    assert.equal(block.offerings[0].instructors[0].userNameInfo.fullName, '0 guy M. Mc0son');
   });
 
 
@@ -266,7 +263,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
     assert.equal(block.offerings[0].learnerGroups[1].title, 'learner group 1');
     assert.equal(block.offerings[0].location, 'Rm. 111');
     assert.equal(block.offerings[0].instructors.length, 1);
-    assert.equal(block.offerings[0].instructors[0].title, '0 guy M. Mc0son');
+    assert.equal(block.offerings[0].instructors[0].userNameInfo.fullName, '0 guy M. Mc0son');
   });
 
   test('users can create a new small group offering', async function(assert) {
@@ -302,15 +299,15 @@ module('Acceptance | Session - Offerings', function(hooks) {
     assert.equal(block.offerings[0].learnerGroups.length, 1);
     assert.equal(block.offerings[0].learnerGroups[0].title, 'learner group 0');
     assert.equal(block.offerings[0].instructors.length, 1);
-    assert.equal(block.offerings[0].instructors[0].title, '0 guy M. Mc0son');
+    assert.equal(block.offerings[0].instructors[0].userNameInfo.fullName, '0 guy M. Mc0son');
 
     assert.equal(block.offerings[1].learnerGroups.length, 1);
     assert.equal(block.offerings[1].learnerGroups[0].title, 'learner group 1');
     assert.equal(block.offerings[1].instructors.length, 4);
-    assert.equal(block.offerings[1].instructors[0].title, '1 guy M. Mc1son');
-    assert.equal(block.offerings[1].instructors[1].title, '2 guy M. Mc2son');
-    assert.equal(block.offerings[1].instructors[2].title, '5 guy M. Mc5son');
-    assert.equal(block.offerings[1].instructors[3].title, '6 guy M. Mc6son');
+    assert.equal(block.offerings[1].instructors[0].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.equal(block.offerings[1].instructors[1].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.equal(block.offerings[1].instructors[2].userNameInfo.fullName, '5 guy M. Mc5son');
+    assert.equal(block.offerings[1].instructors[3].userNameInfo.fullName, '6 guy M. Mc6son');
   });
 
 
@@ -354,11 +351,11 @@ module('Acceptance | Session - Offerings', function(hooks) {
     assert.equal(offering.learnerGroups.length, 1);
     assert.equal(offering.learnerGroups[0].title, 'learner group 1');
     assert.equal(offering.instructors.length, 5);
-    assert.equal(offering.instructors[0].title, '3 guy M. Mc3son');
-    assert.equal(offering.instructors[1].title, '4 guy M. Mc4son');
-    assert.equal(offering.instructors[2].title, '6 guy M. Mc6son');
-    assert.equal(offering.instructors[3].title, '7 guy M. Mc7son');
-    assert.equal(offering.instructors[4].title, '8 guy M. Mc8son');
+    assert.equal(offering.instructors[0].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.equal(offering.instructors[1].userNameInfo.fullName, '4 guy M. Mc4son');
+    assert.equal(offering.instructors[2].userNameInfo.fullName, '6 guy M. Mc6son');
+    assert.equal(offering.instructors[3].userNameInfo.fullName, '7 guy M. Mc7son');
+    assert.equal(offering.instructors[4].userNameInfo.fullName, '8 guy M. Mc8son');
     assert.equal(offering.location, 'Rm. 111');
     assert.equal(offering.url, 'https://example.org/');
   });
@@ -406,15 +403,15 @@ module('Acceptance | Session - Offerings', function(hooks) {
       assert.equal(block.offerings[0].learnerGroups[0].title, 'learner group 0');
 
       assert.equal(block.offerings[0].instructors.length, 1);
-      assert.equal(block.offerings[0].instructors[0].title, '0 guy M. Mc0son');
+      assert.equal(block.offerings[0].instructors[0].userNameInfo.fullName, '0 guy M. Mc0son');
 
       assert.equal(block.offerings[1].learnerGroups.length, 1);
       assert.equal(block.offerings[1].learnerGroups[0].title, 'learner group 1');
       assert.equal(block.offerings[1].instructors.length, 4);
-      assert.equal(block.offerings[1].instructors[0].title, '1 guy M. Mc1son');
-      assert.equal(block.offerings[1].instructors[1].title, '2 guy M. Mc2son');
-      assert.equal(block.offerings[1].instructors[2].title, '5 guy M. Mc5son');
-      assert.equal(block.offerings[1].instructors[3].title, '6 guy M. Mc6son');
+      assert.equal(block.offerings[1].instructors[0].userNameInfo.fullName, '1 guy M. Mc1son');
+      assert.equal(block.offerings[1].instructors[1].userNameInfo.fullName, '2 guy M. Mc2son');
+      assert.equal(block.offerings[1].instructors[2].userNameInfo.fullName, '5 guy M. Mc5son');
+      assert.equal(block.offerings[1].instructors[3].userNameInfo.fullName, '6 guy M. Mc6son');
     }
   });
 

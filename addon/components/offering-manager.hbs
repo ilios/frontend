@@ -55,9 +55,9 @@
     </div>
     <div class="offering-manager-instructors">
       <ul>
-        {{#each (await @offering.allInstructors) as |instructor|}}
+        {{#each (await @offering.allInstructors) as |user|}}
           <li data-test-instructor>
-            {{instructor.fullName}}
+            <UserNameInfo @user={{user}} />
           </li>
         {{else}}
           <li>

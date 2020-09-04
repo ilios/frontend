@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll } from '@ember/test-helpers';
+import { render, find, findAll, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -34,8 +34,6 @@ module('Integration | Component | leadership list', function(hooks) {
   });
 
   test('it renders with data', async function(assert) {
-    assert.expect(10);
-
     this.set('directors', [this.user1, this.user3]);
     this.set('administrators', [this.user1, this.user2, this.user3]);
     this.set('studentAdvisors', [this.user2, this.user3]);
@@ -48,18 +46,42 @@ module('Integration | Component | leadership list', function(hooks) {
       @showDirectors={{true}}
       @showStudentAdvisors={{true}}
     />`);
-    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-name]';
-    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li [data-test-name]';
-    const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li [data-test-name]';
+    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-fullname]';
+    const directorsUsernameInfo = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-info]';
+    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li [data-test-fullname]';
+    const administratorsUsernameInfo = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li [data-test-info]';
+    const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li [data-test-fullname]';
+    const studentAdvisorsUsernameInfo = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li [data-test-info]';
 
     assert.dom(directors).exists({ count: 2 });
+    assert.dom(directorsUsernameInfo).exists({ count: 1 });
+    assert.dom(findAll(directorsUsernameInfo)[0]).hasText('Campus name of record');
+    assert.dom(find('.ilios-tooltip')).doesNotExist();
+    await triggerEvent(findAll(directorsUsernameInfo)[0], 'mouseover');
+    assert.dom(find('.ilios-tooltip')).hasText('stuart leslie goddard');
+    await triggerEvent(findAll(directorsUsernameInfo)[0], 'mouseout');
+    assert.dom(find('.ilios-tooltip')).doesNotExist();
     assert.dom(findAll(directors)[0]).hasText('a b. person');
     assert.dom(findAll(directors)[1]).hasText('adam ant');
     assert.dom(administrators).exists({ count: 3 });
+    assert.dom(administratorsUsernameInfo).exists({ count: 1 });
+    assert.dom(findAll(administratorsUsernameInfo)[0]).hasText('Campus name of record');
+    assert.dom(find('.ilios-tooltip')).doesNotExist();
+    await triggerEvent(findAll(administratorsUsernameInfo)[0], 'mouseover');
+    assert.dom(find('.ilios-tooltip')).hasText('stuart leslie goddard');
+    await triggerEvent(findAll(administratorsUsernameInfo)[0], 'mouseout');
+    assert.dom(find('.ilios-tooltip')).doesNotExist();
     assert.dom(findAll(administrators)[0]).hasText('a b. person');
     assert.dom(findAll(administrators)[1]).hasText('adam ant');
     assert.dom(findAll(administrators)[2]).hasText('b a. person');
     assert.dom(studentAdvisors).exists({ count: 2 });
+    assert.dom(studentAdvisorsUsernameInfo).exists({ count: 1 });
+    assert.dom(findAll(studentAdvisorsUsernameInfo)[0]).hasText('Campus name of record');
+    assert.dom(find('.ilios-tooltip')).doesNotExist();
+    await triggerEvent(findAll(studentAdvisorsUsernameInfo)[0], 'mouseover');
+    assert.dom(find('.ilios-tooltip')).hasText('stuart leslie goddard');
+    await triggerEvent(findAll(studentAdvisorsUsernameInfo)[0], 'mouseout');
+    assert.dom(find('.ilios-tooltip')).doesNotExist();
     assert.dom(findAll(studentAdvisors)[0]).hasText('adam ant');
     assert.dom(findAll(studentAdvisors)[1]).hasText('b a. person');
   });
@@ -77,8 +99,8 @@ module('Integration | Component | leadership list', function(hooks) {
       @showStudentAdvisors={{true}}
       @studentAdvisors={{this.studentAdvisors}}
     />`);
-    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-name]';
-    const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li [data-test-name]';
+    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-fullname]';
+    const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li [data-test-fullname]';
 
     assert.dom(administrators).exists({ count: 1 });
     assert.dom(findAll(administrators)[0]).hasText('a b. person');
@@ -99,8 +121,8 @@ module('Integration | Component | leadership list', function(hooks) {
       @showStudentAdvisors={{true}}
       @studentAdvisors={{this.studentAdvisors}}
     />`);
-    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-name]';
-    const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li [data-test-name]';
+    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-fullname]';
+    const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li [data-test-fullname]';
 
     assert.dom(directors).exists({ count: 1 });
     assert.dom(findAll(directors)[0]).hasText('a b. person');
@@ -121,8 +143,8 @@ module('Integration | Component | leadership list', function(hooks) {
       @administrators={{this.administrators}}
       @showStudentAdvisors={{false}}
     />`);
-    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-name]';
-    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li [data-test-name]';
+    const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li [data-test-fullname]';
+    const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li [data-test-fullname]';
 
     assert.dom(directors).exists({ count: 1 });
     assert.dom(findAll(directors)[0]).hasText('a b. person');
@@ -177,11 +199,11 @@ module('Integration | Component | leadership list', function(hooks) {
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
     const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
-    const directorNames = `${directors} [data-test-name]`;
+    const directorNames = `${directors} [data-test-fullname]`;
     const disabledDirectors = `${directors} .fa-user-times`;
-    const administratorNames = `${administrators} [data-test-name]`;
+    const administratorNames = `${administrators} [data-test-fullname]`;
     const disabledAdministrators = `${administrators} .fa-user-times`;
-    const studentAdvisorNames = `${studentAdvisors} [data-test-name]`;
+    const studentAdvisorNames = `${studentAdvisors} [data-test-fullname]`;
     const disabledStudentAdvisors = `${studentAdvisors} .fa-user-times`;
 
     assert.dom(directors).exists({ count: 1 });

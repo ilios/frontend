@@ -22,6 +22,7 @@ import leadershipCollapsed from './components/leadership-collapsed';
 import leadershipExpanded from './components/session-leadership-expanded';
 import postrequisiteEditor from './components/session/postrequisite-editor';
 import detailLearnersAndLearnerGroups from './components/detail-learners-and-learner-groups';
+import userNameInfo from './components/user-name-info';
 
 export default create({
   scope: '[data-test-session-details]',
@@ -117,10 +118,8 @@ export default create({
     },
     lastUpdated: text('.last-update'),
   },
-
   leadershipCollapsed,
   leadershipExpanded,
-
   objectives,
   learningMaterials,
   meshTerms,
@@ -138,7 +137,7 @@ export default create({
     currentGroups: collection('[data-test-instructor-group]', {
       title: text('[data-test-instructor-group-title]'),
       members: collection('[data-test-instructor-group-members] li', {
-        text: text(),
+        userNameInfo
       }),
     }),
     currentInstructors: collection('[data-test-instructors] li', {
@@ -170,7 +169,7 @@ export default create({
         location: text('[data-test-location]'),
         url: property('href', '[data-test-url] a'),
         instructors: collection('.offering-manager-instructors [data-test-instructor]', {
-          title: text()
+          userNameInfo
         }),
         edit: clickable('.edit'),
         remove: clickable('.remove'),

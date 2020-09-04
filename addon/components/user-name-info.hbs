@@ -1,0 +1,26 @@
+<span
+  class="user-name-info"
+  data-test-user-name-info
+  {{did-insert this.load (await @user)}}
+  {{did-update this.load (await @user)}}
+>
+  <span data-test-fullname>{{this.fullName}}</span>
+  {{#if this.hasDifferentCampusNameOfRecord}}
+    <span
+      data-test-info
+      {{did-insert (set this.theElement)}}
+      {{mouse-hover-toggle (fn this.toggleUsernameInfoHover)}}
+    >
+      <FaIcon
+        @icon="info-circle"
+        @title={{t "general.campusNameOfRecord"}}
+        class="info"
+      />
+      {{#if this.isHoveringOverUsernameInfo}}
+        <IliosTooltip @target={{this.theElement}}>
+          {{this.campusNameOfRecord}}
+        </IliosTooltip>
+      {{/if}}
+    </span>
+  {{/if}}
+</span>
