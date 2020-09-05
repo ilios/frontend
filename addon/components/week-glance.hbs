@@ -18,7 +18,7 @@
   </h2>
   {{#unless @collapsed}}
     {{#unless this.load.isRunning}}
-      <div class="ilm-pre-work">
+      <div class="ilm-pre-work" data-test-ilm-pre-work>
         {{#if (gt this.ilmPreWork.length 0)}}
           <h3 class="pre-work-title">
             {{t "general.preWork"}}

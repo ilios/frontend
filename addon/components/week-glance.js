@@ -20,10 +20,10 @@ export default class WeeklyGlance extends Component {
     thursdayOfTheWeek.year(year);
     thursdayOfTheWeek.day(4);
     thursdayOfTheWeek.isoWeek(week);
-    thursdayOfTheWeek.hour(0).minute(0);
+    thursdayOfTheWeek.hour(0).minute(0).second(0);
 
     this.midnightAtTheStartOfThisWeek = thursdayOfTheWeek.clone().subtract(4, 'days');
-    this.midnightAtTheEndOfThisWeek = thursdayOfTheWeek.clone().add(2, 'days').hour(23).minute(59);
+    this.midnightAtTheEndOfThisWeek = thursdayOfTheWeek.clone().add(2, 'days').hour(23).minute(59).second(59);
 
     const weekEvents =  yield this.userEvents.getEvents(
       this.midnightAtTheStartOfThisWeek.unix(),
