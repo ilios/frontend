@@ -4,18 +4,29 @@
   {{did-insert (perform this.load) @week @year}}
   {{did-update (perform this.load) @week @year}}
 >
-  <h2 class="title" {{! template-lint-disable}}
-    class="{{if @collapsible "clickable collapsible"}}
-    {{if @collapsed "collapsed" "expanded"}}"
-    role={{if @collapsible "button"}}
-    data-test-week-title
-    {{on "click" (fn (optional @toggleCollapsed) @collapsed)}}
-  >
-    {{this.title}}
-    {{#if @showFullTitle}}
-      {{t "general.weekAtAGlance"}}
-    {{/if}}
-  </h2>
+  {{#if @collapsible}}
+    <button
+      type="button"
+      class="title collapsible {{if @collapsed "collapsed" "expanded"}}"
+      data-test-week-title
+      {{on "click" (fn (optional @toggleCollapsed) @collapsed)}}
+    >
+      {{this.title}}
+      {{#if @showFullTitle}}
+        {{t "general.weekAtAGlance"}}
+      {{/if}}
+    </button>
+  {{else}}
+    <h2 class="title"
+      role={{if @collapsible "button"}}
+      data-test-week-title
+    >
+      {{this.title}}
+      {{#if @showFullTitle}}
+        {{t "general.weekAtAGlance"}}
+      {{/if}}
+    </h2>
+  {{/if}}
   {{#unless @collapsed}}
     {{#unless this.load.isRunning}}
       <div class="ilm-pre-work" data-test-ilm-pre-work>

@@ -1,10 +1,8 @@
 <div class="week-glance-pre-work" data-test-week-glance-pre-work>
   <h4>
-    <span class="title" data-test-event-title>
-      <LinkTo @route="events" @model={{@events.firstObject.slug}}>
-        {{@events.firstObject.name}}
-      </LinkTo>
-    </span>
+    <LinkTo data-test-event-title @route="events" @model={{@events.firstObject.slug}}>
+      {{@events.firstObject.name}}
+    </LinkTo>
     <span class="date" data-test-date>
       {{t "general.dueBefore"}}
       <a href={{concat "#event" @events.firstObject.postrequisiteSlug}}>

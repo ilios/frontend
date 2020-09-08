@@ -6,6 +6,7 @@ import { render, settled, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/week-glance';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | week glance', function(hooks) {
   setupRenderingTest(hooks);
@@ -20,6 +21,7 @@ module('Integration | Component | week glance', function(hooks) {
       isPublished: true,
       isScheduled: false,
       offering: 1,
+      slug: 'a',
     });
     this.server.create('userevent', {
       name: 'Finding the Point in Life',
@@ -28,6 +30,7 @@ module('Integration | Component | week glance', function(hooks) {
       isPublished: true,
       isScheduled: false,
       ilmSession: 1,
+      slug: 'b',
     });
     this.server.create('userevent', {
       name: 'Blank',
@@ -53,6 +56,7 @@ module('Integration | Component | week glance', function(hooks) {
       isPublished: true,
       isScheduled: false,
       offering: 1,
+      slug: 'c',
     });
     const events = this.server.db.userevents;
 
@@ -90,15 +94,15 @@ module('Integration | Component | week glance', function(hooks) {
   });
 
   test('it renders with events', async function(assert) {
-    assert.expect(5);
+    assert.expect(6);
     this.owner.register('service:user-events', this.userEventsMock);
     this.set('today', testDate);
     await render(hbs`<WeekGlance
       @collapsible={{false}}
       @collapsed={{false}}
       @showFullTitle={{true}}
-      @year={{moment-format today "YYYY"}}
-      @week={{moment-format today "W"}}
+      @year={{moment-format this.today "YYYY"}}
+      @week={{moment-format this.today "W"}}
     />`);
 
     assert.equal(component.title, this.getTitle(true));
@@ -107,6 +111,9 @@ module('Integration | Component | week glance', function(hooks) {
     assert.equal(component.offeringEvents[0].title, 'Learn to Learn');
     assert.equal(component.offeringEvents[1].title, 'Finding the Point in Life');
     assert.equal(component.offeringEvents[2].title, 'Schedule some materials');
+
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders blank', async function(assert) {
@@ -119,8 +126,8 @@ module('Integration | Component | week glance', function(hooks) {
       @collapsible={{false}}
       @collapsed={{false}}
       @showFullTitle={{true}}
-      @year={{moment-format today "YYYY"}}
-      @week={{moment-format today "W"}}
+      @year={{moment-format this.today "YYYY"}}
+      @week={{moment-format this.today "W"}}
     />`);
     const title = '[data-test-week-title]';
     const body = 'p';
@@ -143,8 +150,8 @@ module('Integration | Component | week glance', function(hooks) {
       @collapsible={{false}}
       @collapsed={{false}}
       @showFullTitle={{false}}
-      @year={{moment-format today "YYYY"}}
-      @week={{moment-format today "W"}}
+      @year={{moment-format this.today "YYYY"}}
+      @week={{moment-format this.today "W"}}
     />`);
     const title = '[data-test-week-title]';
     const expectedTitle = this.getTitle(false);
@@ -154,7 +161,7 @@ module('Integration | Component | week glance', function(hooks) {
   });
 
   test('it renders collapsed', async function(assert) {
-    assert.expect(2);
+    assert.expect(3);
     this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
@@ -163,8 +170,8 @@ module('Integration | Component | week glance', function(hooks) {
       @collapsible={{true}}
       @collapsed={{true}}
       @showFullTitle={{false}}
-      @year={{moment-format today "YYYY"}}
-      @week={{moment-format today "W"}}
+      @year={{moment-format this.today "YYYY"}}
+      @week={{moment-format this.today "W"}}
     />`);
     const title = '[data-test-week-title]';
     const body = 'p';
@@ -175,6 +182,8 @@ module('Integration | Component | week glance', function(hooks) {
     assert.equal(this.element.querySelector(title).textContent.replace(/[\t\n\s]+/g, ""), expectedTitle.replace(/[\t\n\s]+/g, ""));
     assert.equal(this.element.querySelectorAll(body).length, 0);
 
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('click to expend', async function(assert) {
@@ -190,8 +199,8 @@ module('Integration | Component | week glance', function(hooks) {
       @collapsible={{true}}
       @collapsed={{true}}
       @showFullTitle={{false}}
-      @year={{moment-format today "YYYY"}}
-      @week={{moment-format today "W"}}
+      @year={{moment-format this.today "YYYY"}}
+      @week={{moment-format this.today "W"}}
       @toggleCollapsed={{action toggle}}
     />`);
     const title = '[data-test-week-title]';
@@ -212,8 +221,8 @@ module('Integration | Component | week glance', function(hooks) {
       @collapsible={{true}}
       @collapsed={{false}}
       @showFullTitle={{false}}
-      @year={{moment-format today "YYYY"}}
-      @week={{moment-format today "W"}}
+      @year={{moment-format this.today "YYYY"}}
+      @week={{moment-format this.today "W"}}
       @toggleCollapsed={{action toggle}}
     />`);
     const title = '[data-test-week-title]';
@@ -262,7 +271,7 @@ module('Integration | Component | week glance', function(hooks) {
       @collapsed={{false}}
       @showFullTitle={{true}}
       @year={{year}}
-      @week={{moment-format today "W"}}
+      @week={{moment-format this.today "W"}}
     />`);
     const title = '[data-test-week-title]';
     const body = 'p';
