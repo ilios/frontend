@@ -36,6 +36,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
       cohort,
       location: 'default 1',
       instructors: [this.user],
+      url: 'https://iliosproject.org/'
     });
     const learnerGroup2 = this.server.create('learner-group', {
       users: [users[2], users[3]],
@@ -268,7 +269,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
 
   test('users can create a new small group offering', async function(assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(19);
+    assert.expect(21);
 
     await page.visit({ courseId: 1, sessionId: 1 });
     await page.offerings.header.createNew();
@@ -300,6 +301,7 @@ module('Acceptance | Session - Offerings', function(hooks) {
     assert.equal(block.offerings[0].learnerGroups[0].title, 'learner group 0');
     assert.equal(block.offerings[0].instructors.length, 1);
     assert.equal(block.offerings[0].instructors[0].userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.equal(block.offerings[0].url, 'https://iliosproject.org/');
 
     assert.equal(block.offerings[1].learnerGroups.length, 1);
     assert.equal(block.offerings[1].learnerGroups[0].title, 'learner group 1');
@@ -308,6 +310,8 @@ module('Acceptance | Session - Offerings', function(hooks) {
     assert.equal(block.offerings[1].instructors[1].userNameInfo.fullName, '2 guy M. Mc2son');
     assert.equal(block.offerings[1].instructors[2].userNameInfo.fullName, '5 guy M. Mc5son');
     assert.equal(block.offerings[1].instructors[3].userNameInfo.fullName, '6 guy M. Mc6son');
+    assert.notOk(block.offerings[1].hasUrl);
+
   });
 
 

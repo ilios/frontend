@@ -168,6 +168,7 @@ export default create({
         }),
         location: text('[data-test-location]'),
         url: property('href', '[data-test-url] a'),
+        hasUrl: isVisible('[data-test-url]'),
         instructors: collection('.offering-manager-instructors [data-test-instructor]', {
           userNameInfo
         }),
