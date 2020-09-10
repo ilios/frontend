@@ -9,7 +9,7 @@
   {{#each this.weeksInYear as |week|}}
     <WeekGlance
       @collapsible={{true}}
-      @collapsed={{not (contains week @expandedWeeks)}}
+      @collapsed={{not (includes week @expandedWeeks)}}
       @year={{@year}}
       @week={{week}}
       @toggleCollapsed={{fn @toggleOpenWeek week}}

@@ -39,12 +39,12 @@
         <select {{on "change" this.setSelectedYear}} data-test-year>
           {{#each this.years as |year|}}
             <option
-              disabled={{contains year this.unavailableYears}}
+              disabled={{includes year this.unavailableYears}}
               value={{year}}
               selected={{is-equal year this.selectedYear}}
             >
               {{year}} - {{inc year}}
-              {{#if (contains year this.unavailableYears)}}
+              {{#if (includes year this.unavailableYears)}}
                 ({{t "general.courseRolloverYearUnavailable"}})
               {{/if}}
             </option>
@@ -109,7 +109,7 @@
           (or
             this.isSaving
             (not this.selectedYear)
-            (contains this.selectedYear this.unavailableYears)
+            (includes this.selectedYear this.unavailableYears)
           )
           true
         }}

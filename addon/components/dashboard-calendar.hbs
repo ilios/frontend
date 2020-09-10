@@ -81,7 +81,7 @@
                   {{#each this.sessionTypes as |type|}}
                     <li class="clickable">
                       <Dashboard::FilterCheckbox
-                        @checked={{contains type.id @selectedSessionTypeIds}}
+                        @checked={{includes type.id @selectedSessionTypeIds}}
                         @add={{fn @addSessionTypeId type.id}}
                         @remove={{fn @removeSessionTypeId type.id}}
                       >
@@ -133,7 +133,7 @@
                   {{#each this.sessionTypes as |type|}}
                     <li class="clickable">
                       <Dashboard::FilterCheckbox
-                        @checked={{contains type.id @selectedSessionTypeIds}}
+                        @checked={{includes type.id @selectedSessionTypeIds}}
                         @add={{fn @addSessionTypeId type.id}}
                         @remove={{fn @removeSessionTypeId type.id}}
                       >
@@ -159,7 +159,7 @@
                 {{#each this.courseLevels as |level|}}
                   <li class="clickable">
                     <Dashboard::FilterCheckbox
-                      @checked={{contains level @selectedCourseLevels}}
+                      @checked={{includes level @selectedCourseLevels}}
                       @add={{fn @addCourseLevel level}}
                       @remove={{fn @removeCourseLevel level}}
                     >

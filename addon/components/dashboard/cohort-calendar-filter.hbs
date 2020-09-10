@@ -8,7 +8,7 @@
     {{#each (sort-by "classOfYear:desc" @cohortProxies) as |obj|}}
       <li data-test-cohort>
         <Dashboard::FilterCheckbox
-          @checked={{contains obj.id @selectedIds}}
+          @checked={{includes obj.id @selectedIds}}
           @add={{fn @add obj.id}}
           @remove={{fn @remove obj.id}}
         >

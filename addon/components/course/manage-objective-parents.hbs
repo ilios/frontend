@@ -29,7 +29,7 @@
       <ul class="parent-picker" data-test-parent-picker>
         {{#each this.competenciesFromSelectedCohort as |competency|}}
           <li class="competency {{if
-                (contains competency.id this.selectedCompetencyIdsInSelectedCohort)
+                (includes competency.id this.selectedCompetencyIdsInSelectedCohort)
                 "selected"
               }}"
               data-test-competency
@@ -41,12 +41,12 @@
             </h4>
             <ul>
               {{#each (sort-by "title" competency.objectives) as |objective|}}
-                {{#if (or (contains objective @selected) objective.active)}}
+                {{#if (or (includes objective @selected) objective.active)}}
                   <li>
                     <Course::ManageObjectiveParentsItem
                       @title={{objective.title}}
                       @allowMultipleParents={{this.selectedCohort.allowMultipleParents}}
-                      @isSelected={{contains objective @selected}}
+                      @isSelected={{includes objective @selected}}
                       @add={{pipe
                         (if this.selectedCohort.allowMultipleParents (noop) (fn @removeFromCohort this.selectedCohort))
                         (fn @add objective)

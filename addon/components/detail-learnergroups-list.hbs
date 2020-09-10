@@ -33,7 +33,7 @@
               {{! template-lint-disable no-invalid-interactive}}
               <li
                 class="{{if
-                    (contains learnerGroup (await this.lowestLeaves))
+                    (includes learnerGroup (await this.lowestLeaves))
                     "lowest-leaf"
                   }}
                   {{if @isManaging "clickable"}}"

@@ -16,7 +16,7 @@
       {{#each this.searchResults as |learningMaterial|}}
         <li
           class={{if
-            (contains learningMaterial (await @currentMaterials))
+            (includes learningMaterial (await @currentMaterials))
             "disabled"
             ""
           }}

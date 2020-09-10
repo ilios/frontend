@@ -219,7 +219,7 @@
                       <label>
                         <input
                           type="checkbox"
-                          checked={{contains session.id (map-by "id" this.sessionsToOverride)}}
+                          checked={{includes session.id (map-by "id" this.sessionsToOverride)}}
                           {{on "click" (fn this.toggleSession session)}}
                         >
                         {{t "general.publishAsIs"}}
@@ -229,7 +229,7 @@
                       <label>
                         <input
                           type="checkbox"
-                          checked={{not (contains session.id (map-by "id" this.sessionsToOverride))}}
+                          checked={{not (includes session.id (map-by "id" this.sessionsToOverride))}}
                           {{on "click" (fn this.toggleSession session)}}
                         >
                           {{t "general.markAsScheduled"}}
