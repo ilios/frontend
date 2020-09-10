@@ -8,7 +8,7 @@
         <li class="domain {{if
               (or
                 (eq @selected.id domain.id)
-                (contains @selected.id (map-by "id" domain.competencies))
+                (includes @selected.id (map-by "id" domain.competencies))
               )
               "selected"
             }}"

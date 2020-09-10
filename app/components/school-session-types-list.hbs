@@ -74,7 +74,7 @@
               @click={{action manageSessionType sessionType.id}}
             />
             {{#if (eq sessionType.sessionCount 0)}}
-              {{#if (contains sessionType.id deletedSessionTypes)}}
+              {{#if (includes sessionType.id deletedSessionTypes)}}
                 <LoadingSpinner />
               {{else if canDelete}}
                 <FaIcon

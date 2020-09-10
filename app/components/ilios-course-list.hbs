@@ -62,7 +62,7 @@
     <tbody data-test-courses>
       {{#each (sort-by (if this.sortingByStatus (fn this.sortCoursesByStatus) @sortBy) @courses) as |course|}}
         <tr
-          class={{if (contains course.id this.coursesForRemovalConfirmation) "confirm-removal"}}
+          class={{if (includes course.id this.coursesForRemovalConfirmation) "confirm-removal"}}
           data-test-active-row
         >
           <td class="text-left" colspan="3">
@@ -89,7 +89,7 @@
             {{moment-format course.endDate "L"}}
           </td>
           <td class="text-left" colspan="3">
-            {{#if (contains course.id this.savingCourseIds)}}
+            {{#if (includes course.id this.savingCourseIds)}}
               <LoadingSpinner />
             {{else}}
               <PublicationStatus @item={{course}} @showText={{true}} @showIcon={{false}} />
@@ -122,7 +122,7 @@
             {{/if}}
           </td>
         </tr>
-        {{#if (contains course.id this.coursesForRemovalConfirmation)}}
+        {{#if (includes course.id this.coursesForRemovalConfirmation)}}
           <tr class="confirm-removal">
             <td colspan="15">
               <div class="confirm-message">

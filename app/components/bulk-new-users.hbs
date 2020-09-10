@@ -118,7 +118,7 @@
                     type="checkbox"
                     checked={{and
                       (v-get obj "isValid")
-                      (contains obj selectedUsers)
+                      (includes obj selectedUsers)
                     }}
                     onclick={{action "toggleUserSelection" obj}}
                     disabled={{v-get obj "isInvalid"}}

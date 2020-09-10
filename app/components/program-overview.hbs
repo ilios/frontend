@@ -27,7 +27,7 @@
             {{#if
               (and
                 (v-get this "shortTitle" "isInvalid")
-                (contains "shortTitle" showErrorsFor)
+                (includes "shortTitle" showErrorsFor)
               )
             }}
               <span class="validation-error-message">

@@ -35,7 +35,7 @@
           oninput={{action (mut this.name) value="target.value"}}
           onkeyup={{action "addErrorDisplayFor" "name"}}
         >
-        {{#if (and (v-get this "name" "isInvalid") (contains "name" showErrorsFor))}}
+        {{#if (and (v-get this "name" "isInvalid") (includes "name" showErrorsFor))}}
           <span class="validation-error-message">
             {{v-get this "name" "message"}}
           </span>
@@ -54,7 +54,7 @@
         >
         {{#if
           (and
-            (v-get this "aamcCode" "isInvalid") (contains "aamcCode" showErrorsFor)
+            (v-get this "aamcCode" "isInvalid") (includes "aamcCode" showErrorsFor)
           )
         }}
           <span class="validation-error-message">
@@ -75,7 +75,7 @@
         {{#if
           (and
             (v-get this "addressStreet" "isInvalid")
-            (contains "addressStreet" showErrorsFor)
+            (includes "addressStreet" showErrorsFor)
           )
         }}
           <span class="validation-error-message">
@@ -96,7 +96,7 @@
         {{#if
           (and
             (v-get this "addressCity" "isInvalid")
-            (contains "addressCity" showErrorsFor)
+            (includes "addressCity" showErrorsFor)
           )
         }}
           <span class="validation-error-message">
@@ -118,7 +118,7 @@
         {{#if
           (and
             (v-get this "addressStateOrProvince" "isInvalid")
-            (contains "addressStateOrProvince" showErrorsFor)
+            (includes "addressStateOrProvince" showErrorsFor)
           )
         }}
           <span class="validation-error-message">
@@ -139,7 +139,7 @@
         {{#if
           (and
             (v-get this "addressZipCode" "isInvalid")
-            (contains "addressZipCode" showErrorsFor)
+            (includes "addressZipCode" showErrorsFor)
           )
         }}
           <span class="validation-error-message">
@@ -161,7 +161,7 @@
         {{#if
           (and
             (v-get this "addressCountryCode" "isInvalid")
-            (contains "addressCountryCode" showErrorsFor)
+            (includes "addressCountryCode" showErrorsFor)
           )
         }}
           <span class="validation-error-message">

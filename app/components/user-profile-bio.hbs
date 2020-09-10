@@ -34,7 +34,7 @@
 <div class="form">
   <div
     class="item
-      {{if (contains "firstName" updatedFieldsFromSync) "synced-from-directory"
+      {{if (includes "firstName" updatedFieldsFromSync) "synced-from-directory"
       }}"
   >
     <label>
@@ -50,7 +50,7 @@
       >
       {{#if
         (and
-          (v-get this "firstName" "isInvalid") (contains "firstName" showErrorsFor)
+          (v-get this "firstName" "isInvalid") (includes "firstName" showErrorsFor)
         )
       }}
         <span class="message error">
@@ -78,7 +78,7 @@
       {{#if
         (and
           (v-get this "middleName" "isInvalid")
-          (contains "middleName" showErrorsFor)
+          (includes "middleName" showErrorsFor)
         )
       }}
         <span class="message error">
@@ -93,7 +93,7 @@
   </div>
   <div
     class="item
-      {{if (contains "lastName" updatedFieldsFromSync) "synced-from-directory"
+      {{if (includes "lastName" updatedFieldsFromSync) "synced-from-directory"
       }}"
   >
     <label>
@@ -109,7 +109,7 @@
       >
       {{#if
         (and
-          (v-get this "lastName" "isInvalid") (contains "lastName" showErrorsFor)
+          (v-get this "lastName" "isInvalid") (includes "lastName" showErrorsFor)
         )
       }}
         <span class="message error">
@@ -124,7 +124,7 @@
   </div>
   <div
     class="item
-      {{if (contains "campusId" updatedFieldsFromSync) "synced-from-directory"}}
+      {{if (includes "campusId" updatedFieldsFromSync) "synced-from-directory"}}
        campus-id"
   >
     <label>
@@ -160,7 +160,7 @@
         </button>
         {{#if
           (and
-            (v-get this "campusId" "isInvalid") (contains "campusId" showErrorsFor)
+            (v-get this "campusId" "isInvalid") (includes "campusId" showErrorsFor)
           )
         }}
           <span class="message error">
@@ -192,7 +192,7 @@
         data-test-other-id-input
       >
       {{#if
-        (and (v-get this "otherId" "isInvalid") (contains "otherId" showErrorsFor))
+        (and (v-get this "otherId" "isInvalid") (includes "otherId" showErrorsFor))
       }}
         <span class="message error">
           {{v-get this "otherId" "message"}}
@@ -206,7 +206,7 @@
   </div>
   <div
     class="item
-      {{if (contains "email" updatedFieldsFromSync) "synced-from-directory"}}"
+      {{if (includes "email" updatedFieldsFromSync) "synced-from-directory"}}"
   >
     <label>
       {{t "general.email"}}:
@@ -219,7 +219,7 @@
         onkeyup={{action "addErrorDisplayFor" "email"}}
         data-test-email-input
       >
-      {{#if (and (v-get this "email" "isInvalid") (contains "email" showErrorsFor))
+      {{#if (and (v-get this "email" "isInvalid") (includes "email" showErrorsFor))
       }}
         <span class="message error">
           {{v-get this "email" "message"}}
@@ -234,7 +234,7 @@
   <div
     class="item
       {{if
-        (contains "displayName" updatedFieldsFromSync)
+        (includes "displayName" updatedFieldsFromSync)
         "synced-from-directory"
       }}"
   >
@@ -252,7 +252,7 @@
       {{#if
         (and
           (v-get this "displayName" "isInvalid")
-          (contains "displayName" showErrorsFor)
+          (includes "displayName" showErrorsFor)
         )
       }}
         <span class="message error">
@@ -268,7 +268,7 @@
   <div
     class="item
       {{if
-        (contains "preferredEmail" updatedFieldsFromSync)
+        (includes "preferredEmail" updatedFieldsFromSync)
         "synced-from-directory"
       }}"
   >
@@ -286,7 +286,7 @@
       {{#if
         (and
           (v-get this "preferredEmail" "isInvalid")
-          (contains "preferredEmail" showErrorsFor)
+          (includes "preferredEmail" showErrorsFor)
         )
       }}
         <span class="message error">
@@ -301,7 +301,7 @@
   </div>
   <div
     class="item
-      {{if (contains "phone" updatedFieldsFromSync) "synced-from-directory"}}"
+      {{if (includes "phone" updatedFieldsFromSync) "synced-from-directory"}}"
   >
     <label>
       {{t "general.phone"}}:
@@ -314,7 +314,7 @@
         onkeyup={{action "addErrorDisplayFor" "phone"}}
         data-test-phone-input
       >
-      {{#if (and (v-get this "phone" "isInvalid") (contains "phone" showErrorsFor))
+      {{#if (and (v-get this "phone" "isInvalid") (includes "phone" showErrorsFor))
       }}
         <span class="message error">
           {{v-get this "phone" "message"}}
@@ -328,7 +328,7 @@
   </div>
   <div
     class="item
-      {{if (contains "username" updatedFieldsFromSync) "synced-from-directory"
+      {{if (includes "username" updatedFieldsFromSync) "synced-from-directory"
       }}"
   >
     <label>
@@ -345,7 +345,7 @@
       >
       {{#if
         (and
-          (v-get this "username" "isInvalid") (contains "username" showErrorsFor)
+          (v-get this "username" "isInvalid") (includes "username" showErrorsFor)
         )
       }}
         <span class="message error">
@@ -372,7 +372,7 @@
             onkeyup={{action "addErrorDisplayFor" "password"}}
             data-test-password-input
           >
-          {{#if (and (v-get this "password" "isInvalid") (contains "password" showErrorsFor))}}
+          {{#if (and (v-get this "password" "isInvalid") (includes "password" showErrorsFor))}}
             <span class="message error">
               {{v-get this "password" "message"}}
             </span>

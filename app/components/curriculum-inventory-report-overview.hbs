@@ -51,7 +51,7 @@
               {{#if
                 (and
                   (v-get this "startDate" "isInvalid")
-                  (contains "startDate" showErrorsFor)
+                  (includes "startDate" showErrorsFor)
                 )
               }}
                 <span class="validation-error-message">
@@ -83,7 +83,7 @@
               {{#if
                 (and
                   (v-get this "endDate" "isInvalid")
-                  (contains "endDate" showErrorsFor)
+                  (includes "endDate" showErrorsFor)
                 )
               }}
                 <span class="validation-error-message">
@@ -152,7 +152,7 @@
               {{#if
                 (and
                   (v-get this "description" "isInvalid")
-                  (contains "description" showErrorsFor)
+                  (includes "description" showErrorsFor)
                 )
               }}
                 <span class="validation-error-message">

@@ -38,7 +38,7 @@
       {{#each (sort-by this.sortBy @learnerGroups) as |learnerGroup|}}
         <tr
           class={{if
-            (contains learnerGroup.id (map-by "id" this.toRemove))
+            (includes learnerGroup.id (map-by "id" this.toRemove))
             "confirm-removal"
           }}
           data-test-active-row
@@ -68,7 +68,7 @@
                   data-test-remove
                   {{on "click" (perform this.confirmRemove learnerGroup)}}
                 >
-                  {{#if (contains learnerGroup this.preparingToRemove)}}
+                  {{#if (includes learnerGroup this.preparingToRemove)}}
                     <FaIcon @icon="spinner" @spin={{true}} />
                   {{else}}
                     <FaIcon @icon="trash" class="enabled" />
@@ -93,7 +93,7 @@
             {{/if}}
           </td>
         </tr>
-        {{#if (contains learnerGroup.id (map-by "id" this.toRemove))}}
+        {{#if (includes learnerGroup.id (map-by "id" this.toRemove))}}
           {{#let (find-by "id" learnerGroup.id this.toRemove) as |removableGroup|}}
             <tr class="confirm-removal" data-test-confirm-removal>
               <td colspan={{if (media "isLaptopAndUp") "5" "3"}}>
@@ -143,7 +143,7 @@
             </tr>
           {{/let}}
         {{/if}}
-        {{#if (contains learnerGroup this.toCopy)}}
+        {{#if (includes learnerGroup this.toCopy)}}
           <tr class="confirm-copy" data-test-confirm-copy>
             <td colspan={{if (media "isLaptopAndUp") "6" "3"}}>
               <div class="confirm-buttons">

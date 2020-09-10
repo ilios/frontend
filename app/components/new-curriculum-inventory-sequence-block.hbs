@@ -15,7 +15,7 @@
         onkeyup={{action "addErrorDisplayFor" "title"}}
         placeholder={{t "general.sequenceBlockTitlePlaceholder"}}
       >
-      {{#if (and (v-get this "title" "isInvalid") (contains "title" showErrorsFor))
+      {{#if (and (v-get this "title" "isInvalid") (includes "title" showErrorsFor))
       }}
         <span class="validation-error-message">
           {{v-get this "title" "message"}}
@@ -87,7 +87,7 @@
       />
       {{#if
         (and
-          (v-get this "startDate" "isInvalid") (contains "startDate" showErrorsFor)
+          (v-get this "startDate" "isInvalid") (includes "startDate" showErrorsFor)
         )
       }}
         <span class="validation-error-message">
@@ -105,7 +105,7 @@
         data-test-end-date-picker
       />
       {{#if
-        (and (v-get this "endDate" "isInvalid") (contains "endDate" showErrorsFor))
+        (and (v-get this "endDate" "isInvalid") (includes "endDate" showErrorsFor))
       }}
         <span class="validation-error-message">
           {{v-get this "endDate" "message"}}
@@ -125,7 +125,7 @@
       >
       {{#if
         (and
-          (v-get this "duration" "isInvalid") (contains "duration" showErrorsFor)
+          (v-get this "duration" "isInvalid") (includes "duration" showErrorsFor)
         )
       }}
         <span class="validation-error-message">
@@ -156,7 +156,7 @@
         onkeyup={{action "addErrorDisplayFor" "minimum"}}
       >
       {{#if
-        (and (v-get this "minimum" "isInvalid") (contains "minimum" showErrorsFor))
+        (and (v-get this "minimum" "isInvalid") (includes "minimum" showErrorsFor))
       }}
         <span class="validation-error-message">
           {{v-get this "minimum" "message"}}
@@ -175,7 +175,7 @@
         onkeyup={{action "addErrorDisplayFor" "maximum"}}
       >
       {{#if
-        (and (v-get this "maximum" "isInvalid") (contains "maximum" showErrorsFor))
+        (and (v-get this "maximum" "isInvalid") (includes "maximum" showErrorsFor))
       }}
         <span class="validation-error-message">
           {{v-get this "maximum" "message"}}
