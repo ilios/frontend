@@ -79,6 +79,44 @@
         {{/if}}
       </div>
     </div>
+    <div class="block defaulturl">
+      <label>
+        {{t "general.defaultUrl"}}:
+      </label>
+      <span>
+        {{#if this.canUpdate}}
+          <EditableField
+            @value={{if this.url this.url (t "general.clickToEdit")}}
+            @save={{action "changeUrl"}}
+            @close={{action "revertUrlChanges"}}
+            @saveOnEnter={{true}}
+            @closeOnEscape={{true}} as |isSaving|
+          >
+            <input
+              type="text"
+              value={{this.url}}
+              oninput={{action (mut this.url) value="target.value"}}
+              disabled={{this.isSaving}}
+              onkeyup={{action "addErrorDisplayFor" "url"}}
+            >
+            {{#if
+              (and
+                (v-get this "url" "isInvalid")
+                (contains "url" this.showErrorsFor)
+              )
+            }}
+              <span class="validation-error-message">
+                {{v-get this "url" "message"}}
+              </span>
+            {{/if}}
+          </EditableField>
+        {{else if this.url}}
+          {{this.url}}
+        {{else}}
+          {{t "general.none"}}
+        {{/if}}
+      </span>
+    </div>
     <div class="associatedcourses">
       <label>
         {{t "general.associatedCourses"}} ({{get (await this.courses) "length"}}):

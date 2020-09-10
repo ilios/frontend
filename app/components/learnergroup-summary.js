@@ -14,6 +14,17 @@ const Validations = buildValidations({
       min: 2,
       max: 100
     })
+  ],
+  url: [
+    validator('length', {
+      allowBlank: true,
+      min: 2,
+      max: 2000
+    }),
+    validator('format', {
+      allowBlank: true,
+      type: 'url'
+    })
   ]
 });
 
@@ -31,6 +42,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   learnerGroupId: null,
   learnerGroupTitle: null,
   location: null,
+  url: null,
   manageInstructors: false,
   sortUsersBy: '',
   topLevelGroupTitle: null,
@@ -53,6 +65,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const learnerGroup = this.learnerGroup;
     if (isPresent(learnerGroup)) {
       this.set('location', learnerGroup.get('location'));
+      this.set('url', learnerGroup.get('url'));
       this.set('learnerGroupId', learnerGroup.get('id'));
       this.set('learnerGroupTitle', learnerGroup.get('title'));
       learnerGroup.get('cohort').then(cohort => {
@@ -87,6 +100,28 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     revertLocationChanges() {
       const learnerGroup = this.learnerGroup;
       this.set('location', learnerGroup.get('location'));
+    },
+
+    async changeUrl() {
+      const learnerGroup = this.learnerGroup;
+      const newUrl = this.url;
+      this.send('addErrorDisplayFor', 'url');
+      const { validations } = await this.validate();
+
+      if (validations.isValid) {
+        this.send('removeErrorDisplayFor', 'url');
+        learnerGroup.set('url', newUrl);
+        const newLearnerGroup = await learnerGroup.save();
+        this.set('url', newLearnerGroup.url);
+        this.set('learnerGroup', newLearnerGroup);
+      } else {
+        await reject();
+      }
+    },
+
+    revertUrlChanges() {
+      const learnerGroup = this.learnerGroup;
+      this.set('url', learnerGroup.get('url'));
     },
 
     saveInstructors(newInstructors, newInstructorGroups) {
