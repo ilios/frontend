@@ -54,6 +54,11 @@ h6 {
   @include ilios-heading-h6;
 }
 
+select {
+  color: $text-grey;
+  font-family: 'Nunito Sans', sans-serif;
+}
+
 .add,
 .yes {
   color: $ilios-green;
