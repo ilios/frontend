@@ -9,6 +9,8 @@ const { map, all } = RSVP;
 export default Model.extend({
   title: attr('string'),
   location: attr('string'),
+  url: attr('string'),
+  needsAccommodation: attr('boolean'),
   cohort: belongsTo('cohort', { async: true }),
   parent: belongsTo('learner-group', { async: true, inverse: 'children' }),
   children: hasMany('learner-group', { async: true, inverse: 'parent' }),
