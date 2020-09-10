@@ -55,7 +55,7 @@
                   type="checkbox"
                   checked={{or
                     (eq obj.results 0)
-                    (not (contains obj.id ignoredSchoolIds))
+                    (not (includes obj.id ignoredSchoolIds))
                   }}
                   onclick={{action "toggleSchoolSelection" obj.id}}
                   disabled={{eq obj.results 0}}

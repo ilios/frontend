@@ -75,14 +75,14 @@
               <td class="text-center" colspan="2">
                 <Input
                   @type="checkbox"
-                  @checked={{contains session linkedSessionsBuffer}}
+                  @checked={{includes session linkedSessionsBuffer}}
                   @change={{action "changeSession" session}}
                 />
               </td>
               <td class="text-center" colspan="2">
                 <Input
                   @type="checkbox"
-                  @checked={{contains session excludedSessionsBuffer}}
+                  @checked={{includes session excludedSessionsBuffer}}
                   @change={{action "excludeSession" session}}
                 />
               </td>
@@ -98,7 +98,7 @@
                 {{get (await session.sessionType) "title"}}
               </td>
               <td class="text-center" colspan="1">
-                {{#if (contains session linkedSessionsBuffer)}}
+                {{#if (includes session linkedSessionsBuffer)}}
                   {{#if (is-pending session.maxDuration)}}
                     <LoadingSpinner />
                   {{else}}

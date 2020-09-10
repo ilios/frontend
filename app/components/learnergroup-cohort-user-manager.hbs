@@ -54,7 +54,7 @@
                   {{#if @canUpdate}}
                     <input
                       type="checkbox"
-                      checked={{contains user selectedUsers}}
+                      checked={{includes user selectedUsers}}
                       {{on "click" (fn this.toggleUserSelection user)}}
                     >
                   {{/if}}
@@ -78,7 +78,7 @@
               </td>
               <td class="text-left" colspan="1">
                 {{#if user.enabled}}
-                  {{#if (contains user this.usersBeingMoved)}}
+                  {{#if (includes user this.usersBeingMoved)}}
                     <LoadingSpinner />
                   {{else if (and @canUpdate (eq this.selectedUsers.length 0))}}
                     <FaIcon

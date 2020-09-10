@@ -19,7 +19,7 @@
           {{#if
             (and
               (v-get this "programTitle" "isInvalid")
-              (contains "programTitle" showErrorsFor)
+              (includes "programTitle" showErrorsFor)
             )
           }}
             <span class="validation-error-message">

@@ -75,7 +75,7 @@
                     {{#if @isEditing}}
                       <input
                         type="checkbox"
-                        checked={{contains user.content this.selectedUsers}}
+                        checked={{includes user.content this.selectedUsers}}
                         onclick={{fn this.toggleUserSelection user.content}}
                       >
                     {{/if}}
@@ -108,7 +108,7 @@
                     </LinkTo>
                   </td>
                   <td>
-                    {{#if (contains user.content this.usersBeingMoved)}}
+                    {{#if (includes user.content this.usersBeingMoved)}}
                       <LoadingSpinner />
                     {{else if user.enabled}}
                       {{#if (eq this.selectedUsers.length 0)}}
@@ -144,7 +144,7 @@
                       {{#if @isEditing}}
                         <input
                           type="checkbox"
-                          checked={{contains user.content this.selectedUsers}}
+                          checked={{includes user.content this.selectedUsers}}
                           {{on "click" (fn this.toggleUserSelection user.content)}}
                         >
                       {{/if}}
@@ -177,7 +177,7 @@
                       </LinkTo>
                     </td>
                     <td>
-                      {{#if (contains user.content this.usersBeingMoved)}}
+                      {{#if (includes user.content this.usersBeingMoved)}}
                         <LoadingSpinner />
                       {{else if user.enabled}}
                         {{#if (eq this.selectedUsers.length 0)}}

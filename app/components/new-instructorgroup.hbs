@@ -15,7 +15,7 @@
       placeholder={{t "general.instructorGroupTitlePlaceholder"}}
       data-test-title
     >
-    {{#if (and (v-get this "title" "isInvalid") (contains "title" showErrorsFor))}}
+    {{#if (and (v-get this "title" "isInvalid") (includes "title" showErrorsFor))}}
       <span class="validation-error-message">
         {{v-get this "title" "message"}}
       </span>

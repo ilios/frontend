@@ -24,7 +24,7 @@
         {{#if
           (and
             (v-get this "newVocabularyTitle" "isInvalid")
-            (contains "newVocabularyTitle" showErrorsFor)
+            (includes "newVocabularyTitle" showErrorsFor)
           )
         }}
           <span class="validation-error-message">
