@@ -34,7 +34,7 @@
             }}
               {{#if (and
                 (get this (concat "learnerGroupElement" learnerGroup.id))
-                (contains learnerGroup.id this.hoveredGroups)
+                (includes learnerGroup.id this.hoveredGroups)
               )}}
                 <IliosTooltip @target={{get this (concat "learnerGroupElement" learnerGroup.id)}}>
                   {{join " > " (map-by "title" (await learnerGroup.allParents))}}

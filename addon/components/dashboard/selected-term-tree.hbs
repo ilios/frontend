@@ -2,7 +2,7 @@
   {{#each (sort-by "title" @terms) as |term|}}
     <li class="clickable">
       <Dashboard::FilterCheckbox
-        @checked={{contains term.id @selectedTermIds}}
+        @checked={{includes term.id @selectedTermIds}}
         @add={{fn @add term.id}}
         @remove={{fn @remove term.id}}
       >

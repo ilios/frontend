@@ -16,7 +16,7 @@
     {{else}}
       {{#each this.courseYears as |year|}}
         <div
-          class="year {{if (contains year.year this.expandedYears) "expanded" "collapsed"}}"
+          class="year {{if (includes year.year this.expandedYears) "expanded" "collapsed"}}"
           {{did-insert this.scrollToLastYear year.year}}
           {{in-viewport
             onEnter=(fn this.addYearInView year.year)
@@ -36,12 +36,12 @@
               {{year.academicYear}}
             </button>
           </h6>
-          {{#if (contains year.year this.expandedYears)}}
+          {{#if (includes year.year this.expandedYears)}}
             <ul class="courses">
               {{#each (sort-by "title" year.courses) as |course|}}
                 <li data-test-course>
                   <Dashboard::FilterCheckbox
-                    @checked={{contains course.id @selectedCourseIds}}
+                    @checked={{includes course.id @selectedCourseIds}}
                     @add={{fn @add course.id}}
                     @remove={{fn @remove course.id}}
                   >

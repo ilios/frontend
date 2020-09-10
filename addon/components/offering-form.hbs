@@ -144,7 +144,7 @@
                     <input id="make-recurring-day-input-{{i}}"
                       type="checkbox"
                       checked={{or
-                        (contains obj.day this.recurringDays)
+                        (includes obj.day this.recurringDays)
                         (eq (moment-format this.startDate "d") obj.day)
                       }}
                       disabled={{eq (moment-format this.startDate "d") obj.day}}

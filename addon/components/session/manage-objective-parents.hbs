@@ -9,7 +9,7 @@
         <li>
           <Session::ManageObjectiveParentsItem
             @title={{objective.textTitle}}
-            @isSelected={{contains objective @selected}}
+            @isSelected={{includes objective @selected}}
             @add={{fn @add objective}}
             @remove={{fn @remove objective}}
           />
