@@ -448,10 +448,9 @@ export default class OfferingForm extends Component {
         if (isPresent(defaultLocation)) {
           room = defaultLocation;
         }
-        const url = learnerGroup.get('url') ;
         const instructors = await learnerGroup.instructors;
         const instructorGroups = await learnerGroup.instructorGroups;
-        const offering = {startDate, endDate, room, url, instructorGroups, instructors, learners};
+        const offering = {startDate, endDate, room, url: learnerGroup.url, instructorGroups, instructors, learners};
         offering.learnerGroups = [learnerGroup];
 
         smallGroupOfferings.pushObject(offering);
