@@ -4,8 +4,6 @@ import { inject as service } from '@ember/service';
 import { reject } from 'rsvp';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { task } from 'ember-concurrency';
-import fetch from 'fetch';
 
 const Validations = buildValidations({
   reportName: [
@@ -24,7 +22,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   tagName: "",
   canUpdate: false,
-  isDownloading: false,
   report: null,
   reportName: null,
 
@@ -61,13 +58,4 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       this.finalize();
     }
   },
-
-  downloadReport: task(function* (report) {
-    this.set('isDownloading', true);
-    const { saveAs } = yield import('file-saver');
-    const response = yield fetch(report.absoluteFileUri);
-    const blob = yield response.blob();
-    saveAs(blob, 'report.xml');
-    this.set('isDownloading', false);
-  }).drop()
 });
