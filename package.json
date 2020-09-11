@@ -66,7 +66,7 @@
     "ember-cli-deploy-s3-index": "1.2.0",
     "ember-cli-deprecation-workflow": "1.0.1",
     "ember-cli-flash": "1.9.0",
-    "ember-cli-head": "0.4.1",
+    "ember-cli-head": "1.0.0",
     "ember-cli-htmlbars": "^5.2.0",
     "ember-cli-image-transformer": "^4.0.2",
     "ember-cli-inject-live-reload": "^2.0.2",
