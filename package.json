@@ -90,7 +90,7 @@
     "ember-qunit": "^4.6.0",
     "ember-qunit-nice-errors": "^1.2.0",
     "ember-resolver": "^8.0.0",
-    "ember-responsive": "^4.0.0",
+    "ember-responsive": "^4.0.1",
     "ember-service-worker": "^0.8.4",
     "ember-service-worker-cache-first": "^0.6.2",
     "ember-simple-set-helper": "^0.1.2",
