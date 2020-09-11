@@ -18,7 +18,7 @@ module('Integration | Component | curriculum inventory report header', function(
 
   test('it renders', async function(assert) {
     const report = EmberObject.create({
-      absoluteFileUri: 'foo/bar',
+      absoluteFileUri: 'https://iliosinstance.com/foo/bar',
       name: 'Report name'
     });
     this.set('report', report);
@@ -26,7 +26,12 @@ module('Integration | Component | curriculum inventory report header', function(
     assert.dom('.title').hasText(report.name, 'Report name shows.');
     assert.dom('.editable').exists({ count: 1 }, 'Report name is editable.');
     assert.dom(`.actions .finalize`).exists({ count: 1 }, 'Finalize button shows.');
-    assert.dom(`.actions .download`).exists({ count: 1 }, 'Download button shows.');
+    assert.dom(`.actions .download`).exists({ count: 1 }, 'Download link shows.');
+    assert.dom(`.actions .download`).hasProperty(
+      'href',
+      'https://iliosinstance.com/foo/bar',
+      'Download link target is correct'
+    );
   });
 
   test('non updatable reports render in read-only mode.', async function(assert) {
