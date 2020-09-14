@@ -275,6 +275,39 @@ export default Model.extend({
   }),
 
   /**
+   * Recursively checks if any of this group's subgroups and their subgroups need accommodation.
+   * @property hasSubgroupsInNeedOfAccommodation
+   * @type {Ember.computed}
+   * @public
+   */
+  hasSubgroupsInNeedOfAccommodation: computed(
+    'children.@each.needsAccommodation',
+    'children.@each.hasSubgroupsInNeedOfAccommodation',
+    async function() {
+      const children = await this.get('children');
+      // no subgroups? no needs.
+      if(! children.get('length')) {
+        return false;
+      }
+
+      // check direct subgroups for their needs.
+      const subgroupsNeeds = children.mapBy('needsAccommodation').reduce((acc, val) => {
+        return (acc || val);
+      }, false);
+
+      if (subgroupsNeeds) {
+        return true;
+      }
+
+      // if we don't know the needs yet, then recursively check subgroups of subgroups for their needs.
+      const subgroupsRecursiveNeeds = await all(children.mapBy('hasSubgroupsInNeedOfAccommodation'));
+      return subgroupsRecursiveNeeds.reduce((acc, val) => {
+        return (acc || val);
+      }, false);
+    }
+  ),
+
+  /**
    * Returns the number of users in this group
    * @property usersCount
    * @type {Ember.computed}

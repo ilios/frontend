@@ -489,4 +489,77 @@ module('Unit | Model | LearnerGroup', function(hooks) {
     learnerGroup.get('children').pushObjects([group1, group2 ]);
     assert.equal(learnerGroup.get('childrenCount'), 2);
   });
+
+  test('has no needs in group without subgroups', async function(assert) {
+    assert.expect(1);
+    const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
+    const hasNeeds = await learnerGroup.get('hasSubgroupsInNeedOfAccommodation');
+    assert.notOk(hasNeeds);
+  });
+
+  test('has no needs in group with subgroups without needs', async function(assert) {
+    assert.expect(1);
+    const store = this.owner.lookup('service:store');
+    const learnerGroup = store.createRecord('learner-group');
+    const subGroup1 = store.createRecord('learner-group', { parent: learnerGroup });
+    const subGroup2 = store.createRecord('learner-group', { parent: learnerGroup });
+    learnerGroup.get('children').pushObject(subGroup1);
+    learnerGroup.get('children').pushObject(subGroup2);
+
+    const hasNeeds = await learnerGroup.get('hasSubgroupsInNeedOfAccommodation');
+    assert.notOk(hasNeeds);
+  });
+
+  test('has needs in group with subgroups with needs', async function(assert) {
+    assert.expect(1);
+    const store = this.owner.lookup('service:store');
+    const learnerGroup = store.createRecord('learner-group');
+    const subGroup1 = store.createRecord('learner-group', { parent: learnerGroup });
+    const subGroup2 = store.createRecord('learner-group', { parent: learnerGroup, needsAccommodation: true });
+    learnerGroup.get('children').pushObject(subGroup1);
+    learnerGroup.get('children').pushObject(subGroup2);
+    const hasNeeds = await learnerGroup.get('hasSubgroupsInNeedOfAccommodation');
+    assert.ok(hasNeeds);
+  });
+
+
+  test('has no needs in deeply nested subgroups without needs', async function(assert) {
+    assert.expect(1);
+    const store = this.owner.lookup('service:store');
+    const learnerGroup = store.createRecord('learner-group');
+    const subGroup1 = store.createRecord('learner-group', { parent: learnerGroup });
+    const subGroup2 = store.createRecord('learner-group', { parent: learnerGroup });
+    learnerGroup.get('children').pushObject(subGroup1);
+    learnerGroup.get('children').pushObject(subGroup2);
+    const subSubGroup1 = store.createRecord('learner-group', { parent: subGroup1 });
+    const subSubGroup2 = store.createRecord('learner-group', { parent: subGroup1 });
+    subGroup1.get('children').pushObject(subSubGroup1);
+    subGroup1.get('children').pushObject(subSubGroup2);
+    const subSubGroup3 = store.createRecord('learner-group', { parent: subGroup2 });
+    const subSubGroup4 = store.createRecord('learner-group', { parent: subGroup2 });
+    subGroup2.get('children').pushObject(subSubGroup3);
+    subGroup2.get('children').pushObject(subSubGroup4);
+    const hasNeeds = await learnerGroup.get('hasSubgroupsInNeedOfAccommodation');
+    assert.notOk(hasNeeds);
+  });
+
+  test('has needs in deeply nested subgroups with needs', async function(assert) {
+    assert.expect(1);
+    const store = this.owner.lookup('service:store');
+    const learnerGroup = store.createRecord('learner-group');
+    const subGroup1 = store.createRecord('learner-group', { parent: learnerGroup });
+    const subGroup2 = store.createRecord('learner-group', { parent: learnerGroup });
+    learnerGroup.get('children').pushObject(subGroup1);
+    learnerGroup.get('children').pushObject(subGroup2);
+    const subSubGroup1 = store.createRecord('learner-group', { parent: subGroup1 });
+    const subSubGroup2 = store.createRecord('learner-group', { parent: subGroup1 });
+    subGroup1.get('children').pushObject(subSubGroup1);
+    subGroup1.get('children').pushObject(subSubGroup2);
+    const subSubGroup3 = store.createRecord('learner-group', { parent: subGroup2 });
+    const subSubGroup4 = store.createRecord('learner-group', { parent: subGroup2, needsAccommodation: true });
+    subGroup2.get('children').pushObject(subSubGroup3);
+    subGroup2.get('children').pushObject(subSubGroup4);
+    const hasNeeds = await learnerGroup.get('hasSubgroupsInNeedOfAccommodation');
+    assert.ok(hasNeeds);
+  });
 });
