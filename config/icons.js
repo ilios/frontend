@@ -66,6 +66,7 @@ module.exports = function() {
       'times',
       'trash',
       'undo',
+      'universal-access',
       'university',
       'unlink',
       'user',
