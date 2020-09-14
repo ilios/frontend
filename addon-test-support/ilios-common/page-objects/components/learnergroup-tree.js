@@ -3,6 +3,7 @@ import {
   collection,
   create,
   hasClass,
+  isVisible,
   property,
   text
 } from 'ember-cli-page-object';
@@ -10,6 +11,7 @@ import {
 const definition = {
   scope: '[data-test-learnergroup-tree-root=true]',
   title: text(' > [data-test-title]'),
+  needsAccommodation: isVisible('> [data-icon="universal-access"]'),
   add: clickable(' > [data-test-title]'),
   isStyledAsLeaf: hasClass( 'em'),
   isStyledAsBranch: hasClass('strong'),
@@ -17,6 +19,7 @@ const definition = {
   isDisabled: hasClass('disabled'),
   subgroups: collection('> [data-test-subgroups] > [data-test-learnergroup-tree]' , {
     title: text('[data-test-title]', { at: 0 }),
+    needsAccommodation: isVisible(' > [data-icon="universal-access"]'),
     add: clickable('[data-test-title]', { at: 0 }),
     isStyledAsLeaf: hasClass( 'em' ),
     isStyledAsBranch: hasClass('strong'),
@@ -24,6 +27,7 @@ const definition = {
     isDisabled: property('disabled'),
     subgroups: collection('> [data-test-subgroups] > [data-test-learnergroup-tree]' , {
       title: text('[data-test-title]', {at: 0}),
+      needsAccommodation: isVisible('[data-icon="universal-access"]'),
       add: clickable('[data-test-title]', {at: 0}),
       isStyledAsLeaf: hasClass('em'),
       isStyledAsBranch: hasClass('strong'),

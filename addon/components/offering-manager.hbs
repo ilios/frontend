@@ -26,13 +26,16 @@
             {{mouse-hover-toggle (fn this.toggleHover learnerGroup.id)}}
           >
             {{learnerGroup.title}}
+            {{#if learnerGroup.needsAccommodation}}
+              <FaIcon @icon="universal-access" title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
+            {{/if}}
             {{#if
               (and
                 (not learnerGroup.isTopLevelGroup)
                 (is-fulfilled learnerGroup.allParents)
               )
             }}
-              {{#if (and
+              {{#if (and false
                 (get this (concat "learnerGroupElement" learnerGroup.id))
                 (includes learnerGroup.id this.hoveredGroups)
               )}}

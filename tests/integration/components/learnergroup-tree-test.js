@@ -12,7 +12,7 @@ module('Integration | Component | learnergroup-tree', function(hooks) {
   hooks.beforeEach(async function() {
     const thirdLevelLearnerGroup1 = this.server.create('learner-group', { title: 'Third 1' });
     const thirdLevelLearnerGroup2 = this.server.create('learner-group', { title: 'Third 2' });
-    const thirdLevelLearnerGroup3 = this.server.create('learner-group', { title: 'Third 3' });
+    const thirdLevelLearnerGroup3 = this.server.create('learner-group', { title: 'Third 3', needsAccommodation: true });
 
     const secondLevelLearnerGroup1 = this.server.create('learner-group', {
       title: 'Second 1',
@@ -25,7 +25,8 @@ module('Integration | Component | learnergroup-tree', function(hooks) {
     const secondLevelLearnerGroup3 = this.server.create('learner-group', { title: 'Second 3' });
     const topLevelLearnerGroup = this.server.create('learner-group', {
       title: 'Top Group',
-      children: [ secondLevelLearnerGroup1, secondLevelLearnerGroup2, secondLevelLearnerGroup3 ]
+      children: [ secondLevelLearnerGroup1, secondLevelLearnerGroup2, secondLevelLearnerGroup3 ],
+      needsAccommodation: true
     });
 
     this.topLevelLearnerGroup =
@@ -49,15 +50,22 @@ module('Integration | Component | learnergroup-tree', function(hooks) {
     this.set('selectedGroups', []);
     await render(hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{noop}} />`);
     assert.equal(component.title, 'Top Group');
+    assert.ok(component.needsAccommodation);
     assert.equal(component.subgroups.length, 3);
     assert.equal(component.subgroups[0].title, 'Second 1');
+    assert.notOk(component.subgroups[0].needsAccommodation);
     assert.equal(component.subgroups[0].subgroups.length, 2);
     assert.equal(component.subgroups[0].subgroups[0].title, 'Third 1');
+    assert.notOk(component.subgroups[0].subgroups[0].needsAccommodation);
     assert.equal(component.subgroups[0].subgroups[1].title, 'Third 2');
+    assert.notOk(component.subgroups[0].subgroups[1].needsAccommodation);
     assert.equal(component.subgroups[0].subgroups.length, 2);
     assert.equal(component.subgroups[1].subgroups[0].title, 'Third 3');
+    assert.ok(component.subgroups[1].subgroups[0].needsAccommodation);
     assert.equal(component.subgroups[1].title, 'Second 2');
+    assert.notOk(component.subgroups[1].needsAccommodation);
     assert.equal(component.subgroups[2].title, 'Second 3');
+    assert.notOk(component.subgroups[2].needsAccommodation);
   });
 
   test('branches and leaves are styled accordingly', async function(assert) {

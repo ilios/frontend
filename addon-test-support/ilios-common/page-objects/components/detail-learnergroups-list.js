@@ -4,7 +4,8 @@ import {
   create,
   hasClass,
   isHidden,
-  text
+  isVisible,
+  text,
 } from 'ember-cli-page-object';
 
 const definition = {
@@ -15,6 +16,7 @@ const definition = {
     removeAllSubgroups: clickable('[data-test-remove-all]'),
     subgroups: collection('[data-test-subgroup]', {
       title: text(),
+      needsAccommodation: isVisible('> [data-icon="universal-access"]'),
       isTopLevel: hasClass('top-level-group'),
       isRemovable: hasClass('.clickable'),
       remove: clickable(),
