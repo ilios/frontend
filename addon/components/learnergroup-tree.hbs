@@ -18,6 +18,9 @@
   {{else}}
     <span data-test-title>{{@learnerGroup.title}}</span>
   {{/if}}
+  {{#if @learnerGroup.needsAccommodation}}
+    <FaIcon @icon="universal-access" title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
+  {{/if}}
   {{#if @learnerGroup.children.length}}
     <ul data-test-subgroups>
       {{#if (is-fulfilled @learnerGroup.children)}}

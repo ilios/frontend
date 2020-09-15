@@ -159,6 +159,7 @@ general:
   manageLearners: "Manage Learners"
   markAsScheduled: "Mark as Scheduled"
   materials: Materials
+  membersOfThisGroupRequireAccommodation: "members of this group require accommodation"
   mesh: MeSH
   meshCount: "{count, plural, =1 {1 has MeSH} other {# have MesH}}"
   meshManageTitle: "Manage MeSH"
