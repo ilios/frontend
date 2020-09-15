@@ -94,6 +94,7 @@ general:
   deactivate: Deactivate
   defaultInstructors: "Default Instructors"
   defaultLocation: "Default Location"
+  defaultVirtualLearningLink: "Default Virtual Learning Link"
   departments: Departments
   details: "Course Details"
   developer: Developer

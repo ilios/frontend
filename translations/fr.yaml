@@ -94,6 +94,7 @@ general:
   deactivate: Désactiver
   defaultInstructors: "Instructeurs par Défaut"
   defaultLocation: "Localisation par Défaut"
+  defaultVirtualLearningLink: "Address d’Étude Virtuel par Défaut"
   departments: "Facultés"
   details: "Détails de Cours"
   developer: Administrateur

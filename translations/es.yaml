@@ -94,6 +94,7 @@ general:
   deactivate: Desactivar
   defaultInstructors: "Instructores Predeterminados"
   defaultLocation: "Ubicación Predeterminada"
+  defaultVirtualLearningLink: "Enlace de Aprendizaje Virtual Predeterminado"
   departments: Departmentos
   details: "Detalles de Curso"
   developer: Desarrollador
