@@ -93,6 +93,7 @@ general:
   dashboard: Dashboard
   deactivate: Deactivate
   defaultInstructors: "Default Instructors"
+  defaultVirtualLearningLink: "Default Virtual Learning Link"
   defaultLocation: "Default Location"
   departments: Departments
   details: "Course Details"

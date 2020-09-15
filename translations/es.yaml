@@ -93,6 +93,7 @@ general:
   dashboard: Tablero
   deactivate: Desactivar
   defaultInstructors: "Instructores Predeterminados"
+  defaultVirtualLearningLink: "Enlace de Aprendizaje Virtual Predeterminado"
   defaultLocation: "Ubicación Predeterminada"
   departments: Departmentos
   details: "Detalles de Curso"
