@@ -1,10 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  click,
-  fillIn
-} from '@ember/test-helpers';
+import { render, click, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -55,7 +51,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       @setSortUsersBy={{noop}}
       @setIsBulkAssigning={{noop}}
       @sortUsersBy="firstName"
-      @learnerGroup={{learnerGroup}}
+      @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
     />`);
@@ -85,7 +81,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       @setIsEditing={{noop}}
       @setSortUsersBy={{noop}}
       @setIsBulkAssigning={{noop}}
-      @learnerGroup={{learnerGroup}}
+      @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
     />`);
@@ -132,7 +128,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       @setSortUsersBy={{noop}}
       @setIsBulkAssigning={{noop}}
       @sortUsersBy="firstName"
-      @learnerGroup={{learnerGroup}}
+      @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
     />`);
@@ -158,7 +154,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       @setIsEditing={{noop}}
       @setSortUsersBy={{noop}}
       @setIsBulkAssigning={{noop}}
-      @learnerGroup={{learnerGroup}}
+      @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
     />`);
@@ -187,7 +183,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       @setIsEditing={{noop}}
       @setSortUsersBy={{noop}}
       @setIsBulkAssigning={{noop}}
-      @learnerGroup={{learnerGroup}}
+      @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
     />`);
@@ -201,6 +197,9 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     await click(editUrl);
     await fillIn(input, 'thisisnotanurl');
     await click(save);
+    assert.dom(errors).hasText('This field must be a valid url');
+    await click(save);
+    await fillIn(input, 'www.stillnotavalidurlwithoutprotocol.com');
     assert.dom(errors).hasText('This field must be a valid url');
     await fillIn(input, 'h');
     await click(save);
