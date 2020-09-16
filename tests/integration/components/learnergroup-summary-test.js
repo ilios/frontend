@@ -65,6 +65,95 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     assert.dom(coursesList).hasText('course 0 course 1');
   });
 
+  test('Needs accommodation', async function(assert) {
+    const cohort = this.server.create('cohort');
+    const learnerGroup = this.server.create('learner-group', { needsAccommodation: true, cohort });
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnergroupSummary
+      @setIsEditing={{noop}}
+      @setSortUsersBy={{noop}}
+      @setIsBulkAssigning={{noop}}
+      @learnerGroup={{this.learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+      @canUpdate={{true}}
+    />`);
+    assert.dom('[data-test-needs-accommodation] input').isChecked();
+  });
+
+  test('Does not need accommodation', async function(assert) {
+    const cohort = this.server.create('cohort');
+    const learnerGroup = this.server.create('learner-group', { needsAccommodation: false, cohort });
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnergroupSummary
+      @setIsEditing={{noop}}
+      @setSortUsersBy={{noop}}
+      @setIsBulkAssigning={{noop}}
+      @learnerGroup={{this.learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+      @canUpdate={{true}}
+    />`);
+    assert.dom('[data-test-needs-accommodation] input').isNotChecked();
+  });
+
+  test('Read-only: Needs accommodation', async function(assert) {
+    const cohort = this.server.create('cohort');
+    const learnerGroup = this.server.create('learner-group', { needsAccommodation: true, cohort });
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnergroupSummary
+      @setIsEditing={{noop}}
+      @setSortUsersBy={{noop}}
+      @setIsBulkAssigning={{noop}}
+      @learnerGroup={{this.learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+      @canUpdate={{false}}
+    />`);
+    assert.dom('[data-test-needs-accommodation]').hasText('Accommodation is required for learners in this group: Yes');
+  });
+
+  test('Read-only: Does not need accommodation', async function(assert) {
+    const cohort = this.server.create('cohort');
+    const learnerGroup = this.server.create('learner-group', { needsAccommodation: false, cohort });
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnergroupSummary
+      @setIsEditing={{noop}}
+      @setSortUsersBy={{noop}}
+      @setIsBulkAssigning={{noop}}
+      @learnerGroup={{this.learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+      @canUpdate={{false}}
+    />`);
+    assert.dom('[data-test-needs-accommodation]').hasText('Accommodation is required for learners in this group: No');
+  });
+
+  test('Toggle needs accommodations', async function(assert) {
+    const cohort = this.server.create('cohort');
+    const learnerGroup = this.server.create('learner-group', { needsAccommodation: false, cohort });
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+    await render(hbs`<LearnergroupSummary
+      @setIsEditing={{noop}}
+      @setSortUsersBy={{noop}}
+      @setIsBulkAssigning={{noop}}
+      @learnerGroup={{this.learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+      @canUpdate={{true}}
+    />`);
+    assert.dom('[data-test-needs-accommodation] input').isNotChecked();
+    assert.notOk(learnerGroupModel.needsAccommodation);
+    await click('[data-test-needs-accommodation] .switch-handle');
+    assert.ok(learnerGroupModel.needsAccommodation);
+    assert.dom('[data-test-needs-accommodation] input').isChecked();
+  });
+
   test('Update location', async function(assert) {
     assert.expect(2);
 

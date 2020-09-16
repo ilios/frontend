@@ -210,6 +210,12 @@ export default class LearnergroupSummaryComponent extends Component {
     );
   }
 
+  @restartableTask
+  *changeNeedsAccommodation(value) {
+    this.args.learnerGroup.set('needsAccommodation', value);
+    yield this.args.learnerGroup.save();
+  }
+
   async getCoursesForGroupWithSubgroupName(prefix, learnerGroup) {
     const offerings = (await learnerGroup.offerings).toArray();
     const ilms = (await learnerGroup.ilmSessions).toArray();

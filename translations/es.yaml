@@ -4,6 +4,7 @@ general:
   academicLevel: "Nivel Académico"
   academicLevels: "Niveles Académicos"
   academicYear: "Año Academico"
+  accommodationIsRequiredForLearnersInThisGroup: "Se requiere alojamiento para los estudiantes de este grupo"
   accountEnabled: "Cuenta Activa"
   activate: Activar
   active: Activo
