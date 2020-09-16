@@ -59,7 +59,7 @@
     "ember-simple-set-helper": "^0.1.2",
     "ember-source": "~3.17.0",
     "ember-template-lint": "^2.12.1",
-    "ember-web-app": "^4.0.0",
+    "ember-web-app": "^5.0.0",
     "eslint": "^7.8.1",
     "ilios-common": "^50.1.0",
     "loader.js": "^4.7.0",
