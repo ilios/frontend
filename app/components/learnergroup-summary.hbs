@@ -87,19 +87,22 @@
           {{#if @canUpdate}}
             <EditableField
               @value={{if this.url this.url (t "general.clickToEdit")}}
-              @save={{perform this.changeUrl}}
+              @save={{perform this.saveUrlChanges}}
               @close={{this.revertUrlChanges}}
               @saveOnEnter={{true}}
               @closeOnEscape={{true}} as |isSaving|
             >
-              <Input
+              {{! template-lint-disable no-bare-strings}}
+              <input
                 type="text"
-                @value={{this.url}}
-                @key-press={{fn this.addErrorDisplayFor "url"}}
                 placeholder="https://example.com"
+                value={{this.bestUrl}}
                 inputmode="url"
+                {{on "input" (pick "target.value" this.changeUrl)}}
+                {{on "keyup" (fn this.addErrorDisplayFor "url")}}
+                {{on "focus" (fn this.selectAllText)}}
                 disabled={{isSaving}}
-              />
+              >
               {{#each (await (compute (fn this.getErrorsFor) "url")) as |message|}}
                 <span class="validation-error-message">
                   {{message}}

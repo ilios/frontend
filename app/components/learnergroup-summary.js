@@ -7,6 +7,8 @@ import { all, map } from 'rsvp';
 import {enqueueTask, restartableTask, task} from 'ember-concurrency-decorators';
 import { NotBlank, Length, IsURL, validatable } from 'ilios-common/decorators/validation';
 
+const DEFAULT_URL_VALUE = 'https://';
+
 @validatable
 export default class LearnergroupSummaryComponent extends Component {
   @tracked cohortTitle = null;
@@ -24,6 +26,13 @@ export default class LearnergroupSummaryComponent extends Component {
   @tracked usersToPassToManager = [];
   @tracked usersToPassToCohortManager = [];
 
+  get bestUrl() {
+    if (this.url || this.urlChanged) {
+      return this.url;
+    }
+
+    return DEFAULT_URL_VALUE;
+  }
 
   get sortUsersBy() {
     return this.args.sortUsersBy || 'fullName';
@@ -66,8 +75,15 @@ export default class LearnergroupSummaryComponent extends Component {
     this.location = this.args.learnerGroup.location;
   }
 
+  @action
+  selectAllText({ target }) {
+    if (target.value === DEFAULT_URL_VALUE) {
+      target.select();
+    }
+  }
+
   @restartableTask
-  *changeUrl() {
+  *saveUrlChanges() {
     this.addErrorDisplayFor('url');
     const isValid = yield this.isValid('url');
     if (!isValid) {
@@ -82,6 +98,17 @@ export default class LearnergroupSummaryComponent extends Component {
   @action
   revertUrlChanges() {
     this.url = this.args.learnerGroup.url;
+  }
+
+  @action
+  changeUrl(value) {
+    value = value.trim();
+    const regex = RegExp('https://http[s]?:');
+    if (regex.test(value)) {
+      value = value.substring(8);
+    }
+    this.url = value;
+    this.urlChanged = true;
   }
 
   @action
