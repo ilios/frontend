@@ -1,106 +1,91 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { htmlSafe } from '@ember/string';
-import { isPresent, isEmpty } from '@ember/utils';
 import { map } from 'rsvp';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
+import { restartableTask } from 'ember-concurrency-decorators';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  router: service(),
-  tagName: "",
-  isIcon: false,
-  sessionType: null,
-  tooltipContent: null,
-  tooltipTitle: null,
+export default class VisualizerSessionTypeVocabulariesComponent extends Component {
+  @service router;
+  @tracked tooltipContent;
+  @tracked tooltipTitle;
+  @tracked data = [];
 
-  data: computed('sessionType.sessions.[]', async function() {
-    const sessionType = this.sessionType;
-    const sessions = await sessionType.get('sessions');
-    const terms = await map(sessions.toArray(), async session => {
-      const sessionTerms = await session.get('terms');
-      const course = await session.get('course');
-      const courseTerms = await course.get('terms');
+  @restartableTask
+  * load(element, [sessionType]) {
+    const sessions = (yield sessionType.sessions).toArray();
+    const terms = yield map(sessions, async session => {
+      const sessionTerms = (await session.terms).toArray();
+      const course = await session.course;
+      const courseTerms = (await course.terms).toArray();
 
-      return [].concat(sessionTerms.toArray()).concat(courseTerms.toArray());
+      return [...sessionTerms, ...courseTerms];
     });
 
-    const flat = terms.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.toArray());
-    }, []);
-    await terms.mapBy('vocabulary');
+    const termsWithVocabularies = yield map(terms.flat(), async term => {
+      const vocabulary = await term.vocabulary;
+      return { term, vocabulary };
+    });
 
-    const vocabularyObjects = {};
-    for (let i = 0; i < flat.length; i++) {
-      const term = flat[i];
-      const vocabulary = await term.get('vocabulary');
-      const id = vocabulary.get('id');
-      if (typeof vocabularyObjects[id] !== "undefined") {
-        vocabularyObjects[id].data++;
-      } else {
-        vocabularyObjects[id] = {
-          data: 1,
-          meta: {
-            vocabulary
-          }
+    const vocabularyObjects = termsWithVocabularies.reduce((vocabularies, { vocabulary }) => {
+      const id = vocabulary.id;
+      if (!(id in vocabularies)) {
+        vocabularies[id] = {
+          data: 0,
+          meta: { vocabulary }
         };
       }
-    }
-    const vocabularyData = [];
-    Object.keys(vocabularyObjects).forEach(key => {
-      vocabularyData.push(vocabularyObjects[key]);
-    });
+      vocabularies[id].data++;
+      return vocabularies;
+    }, {});
+
+    const vocabularyData = Object.values(vocabularyObjects);
     const totalTerms = vocabularyData.mapBy('data').reduce((total, count) => total + count, 0);
-    const data = vocabularyData.map(obj => {
+    this.data = vocabularyData.map(obj => {
       const percent = (obj.data / totalTerms * 100).toFixed(1);
       obj.label = `${percent}%`;
 
       return obj;
     });
+  }
 
-    return data;
-  }),
+  get vocabulariesWithLinkedTerms() {
+    return this.data.filter(obj => obj.data !== 0);
+  }
 
-  vocabulariesWithLinkedTerms: computed('data.[]', async function() {
-    const data = await this.data;
-    return data.filter(obj => obj.data !== 0);
-  }),
-
-  actions: {
-    donutClick(obj) {
-      const sessionType = this.sessionType;
-      const isIcon = this.isIcon;
-      const router = this.router;
-      if (isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
-        return;
-      }
-
-      router.transitionTo('session-type-visualize-terms', sessionType.get('id'), obj.meta.vocabulary.get('id'));
+  @action
+  donutClick(obj) {
+    if (this.args.isIcon || !obj || obj.empty || !obj.meta) {
+      return;
     }
-  },
 
-  async getTooltipData(obj) {
-    const isIcon = this.isIcon;
-    if (isIcon || isEmpty(obj) || obj.empty) {
+    this.router.transitionTo('session-type-visualize-terms', this.args.sessionType.id, obj.meta.vocabulary.id);
+  }
+
+  getTooltipData(obj) {
+    if (this.args.isIcon || !obj || obj.empty) {
       return '';
     }
     const { meta } = obj;
 
-    const vocabularyTitle = meta.vocabulary.get('title');
+    const vocabularyTitle = meta.vocabulary.title;
     const title = htmlSafe(vocabularyTitle);
 
     return {
       title,
       content: title
     };
-  },
+  }
 
-  donutHover: task(function* (obj) {
+  @restartableTask
+  *donutHover(obj) {
     yield timeout(100);
     const data = yield this.getTooltipData(obj);
-    if (isPresent(data)) {
-      this.set('tooltipTitle', data.title);
-      this.set('tooltipContent', data.content);
+    if (data) {
+      this.tooltipTitle = data.title;
+      this.tooltipContent = data.content;
     }
-  }).restartable()
-});
+  }
+}
