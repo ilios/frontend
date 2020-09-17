@@ -1,10 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  click,
-  fillIn
-} from '@ember/test-helpers';
+import { render, click, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -55,7 +51,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       @setSortUsersBy={{noop}}
       @setIsBulkAssigning={{noop}}
       @sortUsersBy="firstName"
-      @learnerGroup={{learnerGroup}}
+      @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
     />`);
@@ -85,7 +81,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       @setIsEditing={{noop}}
       @setSortUsersBy={{noop}}
       @setIsBulkAssigning={{noop}}
-      @learnerGroup={{learnerGroup}}
+      @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
     />`);
@@ -132,7 +128,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       @setSortUsersBy={{noop}}
       @setIsBulkAssigning={{noop}}
       @sortUsersBy="firstName"
-      @learnerGroup={{learnerGroup}}
+      @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
     />`);
@@ -140,5 +136,76 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     const coursesList = '[data-test-overview] .associatedcourses ul';
 
     assert.dom(coursesList).hasText('course 0 (3 Subgroups)');
+  });
+
+  test('Update default URL', async function(assert) {
+    assert.expect(2);
+
+    const cohort = this.server.create('cohort');
+    const learnerGroup = this.server.create('learner-group', {
+      url: 'https://iliosproject.org/',
+      cohort,
+    });
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnergroupSummary
+      @canUpdate={{true}}
+      @setIsEditing={{noop}}
+      @setSortUsersBy={{noop}}
+      @setIsBulkAssigning={{noop}}
+      @learnerGroup={{this.learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+    />`);
+
+    const defaultUrl = '[data-test-overview] .defaulturl span:nth-of-type(1)';
+    const editUrl = `${defaultUrl} .editable`;
+    const input =  `${defaultUrl} input`;
+    const save =  `${defaultUrl} .done`;
+    assert.dom(defaultUrl).hasText('https://iliosproject.org/');
+    await click(editUrl);
+    await fillIn(input, 'https://github.com/ilios/ilios');
+    await click(save);
+    assert.dom(defaultUrl).hasText('https://github.com/ilios/ilios');
+  });
+
+  test('URL input validation', async function(assert) {
+    const cohort = this.server.create('cohort');
+    const learnerGroup = this.server.create('learner-group', {
+      cohort,
+    });
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnergroupSummary
+      @canUpdate={{true}}
+      @setIsEditing={{noop}}
+      @setSortUsersBy={{noop}}
+      @setIsBulkAssigning={{noop}}
+      @learnerGroup={{this.learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+    />`);
+
+    const defaultUrl = '[data-test-overview] .defaulturl span:nth-of-type(1)';
+    const editUrl = `${defaultUrl} .editable`;
+    const input =  `${defaultUrl} input`;
+    const save =  `${defaultUrl} .done`;
+    const errors = `${defaultUrl} .validation-error-message`;
+    assert.dom(editUrl).hasText('Click to edit');
+    await click(editUrl);
+    await fillIn(input, 'thisisnotanurl');
+    await click(save);
+    assert.dom(errors).hasText('This field must be a valid url');
+    await click(save);
+    await fillIn(input, 'www.stillnotavalidurlwithoutprotocol.com');
+    assert.dom(errors).hasText('This field must be a valid url');
+    await fillIn(input, 'h');
+    await click(save);
+    assert.dom(errors).hasText('This field is too short (minimum is 2 characters)');
+    await fillIn(input, 'https://' + '01234567890'.repeat(200) + '.org');
+    await click(save);
+    assert.dom(errors).hasText('This field is too long (maximum is 2000 characters)');
   });
 });
