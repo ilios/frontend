@@ -1,27 +1,29 @@
+/* eslint-disable ember/avoid-leaking-state-in-ember-objects */
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
-
-const { all, map } = RSVP;
 
 export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
+  _loadedSessionTypes: {},
   async model(params) {
-    const store = this.store;
-    const sessionType = await store.find('session-type', params.session_type_id);
-    const vocabulary = await store.find('vocabulary', params.vocabulary_id);
-
-    return { sessionType, vocabulary };
+    return this.loadModel(params.session_type_id, params.vocabulary_id);
   },
-  async afterModel(model) {
-    const { sessionType, vocabulary } = model;
-    const sessions = await sessionType.get('sessions');
-    return await all([
-      sessionType.get('school'),
-      vocabulary.get('terms'),
-      map(sessions.toArray(), s => s.get('terms')),
-      map(sessions.toArray(), s => s.get('course')),
-    ]);
+  async afterModel({sessionType, vocabulary}) {
+    return this.loadModel(sessionType.id, vocabulary.id);
+  },
+  async loadModel(sessionTypeId, vocabularyId){
+    if (!( sessionTypeId in this._loadedSessionTypes)) {
+      this._loadedSessionTypes[sessionTypeId] = this.store.findRecord('session-type', sessionTypeId, {
+        include: 'school,sessions.terms.vocabulary,sessions.course.terms.vocabulary',
+        reload: true,
+      });
+    }
+
+    return {
+      sessionType: await this._loadedSessionTypes[sessionTypeId],
+      vocabulary: await this.store.findRecord('vocabulary', vocabularyId),
+    };
   }
+
 });

@@ -1,43 +1,39 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/string';
-import { isEmpty } from '@ember/utils';
 import { filter, map } from 'rsvp';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
+import { restartableTask } from 'ember-concurrency-decorators';
+import { tracked } from '@glimmer/tracking';
 
-export default Component.extend({
-  tagName: "",
-  isIcon: false,
-  sessionType: null,
-  tooltipContent: null,
-  tooltipTitle: null,
-  vocabulary: null,
+export default class VisualizerSessionTypeTermsComponent extends Component {
+  @tracked tooltipContent;
+  @tracked tooltipTitle;
+  @tracked data = [];
 
-  data: computed('sessionType.sessions.[]', 'vocabulary', async function() {
-    const sessionType = this.sessionType;
-    const vocabulary = this.vocabulary;
-    const sessions = await sessionType.get('sessions');
-    const terms = await map(sessions.toArray(), async session => {
-      const sessionTerms = await session.get('terms');
-      const course = await session.get('course');
-      const courseTerms = await course.get('terms');
+  @restartableTask
+  *load(element, [sessionType, vocabulary]) {
+    const sessions = (yield sessionType.sessions).toArray();
+    const terms = yield map(sessions, async session => {
+      const sessionTerms = (await session.terms).toArray();
+      const course = await session.course;
+      const courseTerms = (await course.terms).toArray();
 
-      const sessionTermsInThisVocabulary = await filter(sessionTerms.toArray(), async term => {
-        const termVocab = await term.get('vocabulary');
-        return termVocab.get('id') === vocabulary.get('id');
+      const sessionTermsInThisVocabulary = await filter(sessionTerms, async term => {
+        const termVocab = await term.vocabulary;
+        return termVocab.id === vocabulary.id;
       });
       const courseTermsInThisVocabulary = await filter(courseTerms.toArray(), async term => {
-        const termVocab = await term.get('vocabulary');
-        return termVocab.get('id') === vocabulary.get('id');
+        const termVocab = await term.vocabulary;
+        return termVocab.id === vocabulary.id;
       });
-      const sessionTermsObjects = await sessionTermsInThisVocabulary.map(term => {
+      const sessionTermsObjects = sessionTermsInThisVocabulary.map(term => {
         return {
           term,
           session,
           course: null
         };
       });
-      const courseTermsObjects = await courseTermsInThisVocabulary.map(term => {
+      const courseTermsObjects = courseTermsInThisVocabulary.map(term => {
         return {
           term,
           course,
@@ -45,57 +41,45 @@ export default Component.extend({
         };
       });
 
-      return [].concat(sessionTermsObjects.toArray()).concat(courseTermsObjects.toArray());
+      return [...sessionTermsObjects, ...courseTermsObjects];
     });
 
-    const flat = terms.reduce((flattened, obj) => {
-      return flattened.pushObjects(obj.toArray());
-    }, []);
-
-    const termObjects = {};
-    for (let i = 0; i < flat.length; i++) {
-      const { term, session, course } = flat[i];
-      const id = term.get('id');
-      if (typeof termObjects[id] !== "undefined") {
-        termObjects[id].data++;
-      } else {
+    const termObjects = terms.flat().reduce((termObjects, { term, session, course }) => {
+      const id = term.id;
+      if (!(id in termObjects)) {
         termObjects[id] = {
-          data: 1,
+          data: 0,
           meta: {
-            term: term.get('title'),
+            term: term.title,
             courses: [],
-            sessions: []
+            sessions: [],
           }
         };
       }
-      if (session) {
-        termObjects[id].meta.sessions.pushObject(session.get('title'));
-      }
-      if (course) {
-        termObjects[id].meta.courses.pushObject(course.get('title'));
-      }
-    }
-    const termData = [];
-    Object.keys(termObjects).forEach(key => {
-      termData.push(termObjects[key]);
-    });
+      termObjects[id].data++;
+      termObjects[id].meta.courses.push(course?.title);
+      termObjects[id].meta.sessions.push(session?.title);
+
+      return termObjects;
+    }, {});
+
+    const termData = Object.values(termObjects);
+
     const totalLinks = termData.mapBy('data').reduce((total, count) => total + count, 0);
-    const data = termData.map(obj => {
+    this.data = termData.map(obj => {
       const percent = (obj.data / totalLinks * 100).toFixed(1);
       obj.label = `${percent}%`;
 
       return obj;
     });
+  }
 
-    return data;
-  }),
-
-  donutHover: task(function* (obj) {
+  @restartableTask
+  * donutHover(obj) {
     yield timeout(100);
-    const isIcon = this.isIcon;
-    if (isIcon || isEmpty(obj) || obj.empty) {
-      this.set('tooltipTitle', null);
-      this.set('tooltipContent', null);
+    if (this.args.isIcon || !obj || obj.empty) {
+      this.tooltipTitle = null;
+      this.tooltipContent = null;
       return;
     }
     const { meta } = obj;
@@ -104,7 +88,7 @@ export default Component.extend({
     const sessions = meta.sessions.uniq().sort().join();
     const courses = meta.courses.uniq().sort().join();
 
-    this.set('tooltipTitle', title);
-    this.set('tooltipContent', { sessions, courses });
-  }).restartable()
-});
+    this.tooltipTitle = title;
+    this.tooltipContent = { sessions, courses };
+  }
+}
