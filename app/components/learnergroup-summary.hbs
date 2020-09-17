@@ -96,6 +96,8 @@
                 type="text"
                 @value={{this.url}}
                 @key-press={{fn this.addErrorDisplayFor "url"}}
+                placeholder="https://example.com"
+                inputmode="url"
                 disabled={{isSaving}}
               />
               {{#each (await (compute (fn this.getErrorsFor) "url")) as |message|}}
