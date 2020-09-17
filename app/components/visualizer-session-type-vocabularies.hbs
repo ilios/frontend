@@ -1,24 +1,31 @@
-<span class="{{unless this.isIcon "not-icon"}} visualizer-session-type-vocabularies" ...attributes>
-  {{#if (or isIcon (gt (get (await vocabulariesWithLinkedTerms) "length") 0))}}
-    <SimpleChart
-      @name="pie"
-      @isIcon={{isIcon}}
-      @data={{await vocabulariesWithLinkedTerms}}
-      @click={{action "donutClick"}}
-      @hover={{perform donutHover}}
-      @leave={{perform donutHover}} as |chart|
-    >
-      {{#if tooltipContent}}
-        <chart.tooltip @title={{tooltipTitle}}>
-          {{this.tooltipContent}}
-        </chart.tooltip>
-      {{/if}}
-    </SimpleChart>
-  {{else}}
-    <div class="with-hours">
-      <h4>
-        <FaIcon @icon="meh" class="meh-o" />
-      </h4>
-    </div>
+<span
+  class="{{unless this.isIcon "not-icon"}} visualizer-session-type-vocabularies"
+  {{did-insert (perform this.load) @sessionType}}
+  {{did-update (perform this.load) @sessionType}}
+  ...attributes
+>
+  {{#if this.load.lastSuccessful}}
+    {{#if (or @isIcon (gt this.vocabulariesWithLinkedTerms.length 0))}}
+      <SimpleChart
+        @name="pie"
+        @isIcon={{@isIcon}}
+        @data={{this.vocabulariesWithLinkedTerms}}
+        @click={{this.donutClick}}
+        @hover={{perform donutHover}}
+        @leave={{perform donutHover}} as |chart|
+      >
+        {{#if this.tooltipContent}}
+          <chart.tooltip @title={{this.tooltipTitle}}>
+            {{this.tooltipContent}}
+          </chart.tooltip>
+        {{/if}}
+      </SimpleChart>
+    {{else}}
+      <div class="with-hours">
+        <h4>
+          <FaIcon @icon="meh" class="meh-o" />
+        </h4>
+      </div>
+    {{/if}}
   {{/if}}
 </span>

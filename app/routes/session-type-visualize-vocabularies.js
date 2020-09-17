@@ -1,18 +1,24 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import RSVP from 'rsvp';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
-
-const { all, map } = RSVP;
 
 export default Route.extend(AuthenticatedRouteMixin, {
   store: service(),
-  async afterModel(sessionType){
-    const sessions = await sessionType.get('sessions');
-    return await all([
-      sessionType.get('school'),
-      map(sessions.toArray(), s => s.get('terms')),
-      map(sessions.toArray(), s => s.get('course')),
-    ]);
+  _dataLoadingPromise: null,
+  async model(params) {
+    return this.loadModel(params.session_type_id);
+  },
+  async afterModel(sessionType) {
+    return this.loadModel(sessionType.id);
+  },
+  async loadModel(sessionTypeId){
+    if (!this._dataLoadingPromise) {
+      this._dataLoadingPromise = this.store.findRecord('session-type', sessionTypeId, {
+        include: 'sessions.terms.vocabulary,sessions.course.terms.vocabulary',
+        reload: true,
+      });
+    }
+
+    return await this._dataLoadingPromise;
   }
 });
