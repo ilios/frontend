@@ -27,7 +27,7 @@
             <li class="top-level-group" data-test-subgroup>
               {{tree.topLevelGroup.title}} ({{count-related tree.topLevelGroup "users"}})
               {{#if tree.topLevelGroup.needsAccommodation}}
-                <FaIcon @icon="universal-access" title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
+                <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
               {{/if}}
             </li>
             {{#each
@@ -46,7 +46,7 @@
               >
                 {{learnerGroup.title}} ({{count-related learnerGroup "users"}})
                 {{#if learnerGroup.needsAccommodation}}
-                  <FaIcon @icon="universal-access" title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
+                  <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
                 {{/if}}
                 {{#if @isManaging}}
                   <FaIcon @icon="times" class="remove" />
