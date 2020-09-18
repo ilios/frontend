@@ -11,11 +11,12 @@ module('Integration | Component | learner group list', function(hooks) {
 
   test('it renders', async function (assert) {
     const users = this.server.createList('user', 2);
-    const firstGroup = this.server.create('learner-group');
+    const firstGroup = this.server.create('learner-group', { needsAccommodation: true });
     const secondGroup = this.server.create('learner-group', {
       users
     });
-    this.server.createList('learner-group', 2, { parent: firstGroup });
+    this.server.create('learner-group', { parent: firstGroup });
+    this.server.create('learner-group', { parent: firstGroup, needsAccommodation: true });
     const firstGroupModel = await this.owner.lookup('service:store').find('learner-group', firstGroup.id);
     const secondGroupModel = await this.owner.lookup('service:store').find('learner-group', secondGroup.id);
 
@@ -30,12 +31,17 @@ module('Integration | Component | learner group list', function(hooks) {
     assert.equal(component.groups.length, 2);
 
     assert.equal(component.groups[0].title, 'learner group 0');
+    assert.ok(component.groups[0].needsAccommodation);
     assert.equal(component.groups[0].members, '0');
     assert.equal(component.groups[0].subgroups, '2');
+    assert.ok(component.groups[0].hasSubgroupsInNeedOfAccommodation);
 
     assert.equal(component.groups[1].title, 'learner group 1');
+    assert.notOk(component.groups[1].needsAccommodation);
     assert.equal(component.groups[1].members, '2');
     assert.equal(component.groups[1].subgroups, '0');
+    assert.notOk(component.groups[1].hasSubgroupsInNeedOfAccommodation);
+
   });
 
   test('can remove group', async function (assert) {

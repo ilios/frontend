@@ -11,6 +11,20 @@
       @canUpdate={{@canUpdate}}
     />
     <section class="learnergroup-overview" data-test-overview>
+      <div class="block" data-test-needs-accommodation>
+        <label>{{t "general.accommodationIsRequiredForLearnersInThisGroup"}}:</label>
+        <span>
+          {{#if @canUpdate}}
+            <ToggleYesno @yes={{@learnerGroup.needsAccommodation}} @toggle={{perform this.changeNeedsAccommodation}}/>
+          {{else}}
+            {{#if @learnerGroup.needsAccommodation}}
+              <span class="add">{{t "general.yes"}}</span>
+            {{else}}
+              <span class="remove">{{t "general.no"}}</span>
+            {{/if}}
+          {{/if}}
+        </span>
+      </div>
       <div class="block defaultlocation">
         <label>
           {{t "general.defaultLocation"}}:
