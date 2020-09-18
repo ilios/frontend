@@ -2,15 +2,31 @@
   <table>
     <thead>
       <tr>
-        <SortableTh @colspan={{2}} @sortedAscending={{this.sortedAscending}} @click={{fn this.setSortBy "title"}}>
+        <SortableTh
+          @colspan={{2}}
+          @sortedAscending={{this.sortedAscending}}
+          @click={{fn this.setSortBy "title"}}
+        >
           {{t "general.learnerGroupTitle"}}
         </SortableTh>
-        <SortableTh @align="center" @colspan={{1}} @hideFromSmallScreen={{true}}
-          @sortedAscending={{this.sortedAscending}} @sortType="numeric" @click={{fn this.setSortBy "usersCount"}}>
+        <SortableTh
+          @align="center"
+          @colspan={{1}}
+          @hideFromSmallScreen={{true}}
+          @sortedAscending={{this.sortedAscending}}
+          @sortType="numeric"
+          @click={{fn this.setSortBy "usersCount"}}
+        >
           {{t "general.members"}}
         </SortableTh>
-        <SortableTh @align="center" @colspan={{1}} @hideFromSmallScreen={{true}}
-          @sortedAscending={{this.sortedAscending}} @sortType="numeric" @click={{fn this.setSortBy "childrenCount"}}>
+        <SortableTh
+          @align="center"
+          @colspan={{1}}
+          @hideFromSmallScreen={{true}}
+          @sortedAscending={{this.sortedAscending}}
+          @sortType="numeric"
+          @click={{fn this.setSortBy "childrenCount"}}
+        >
           {{t "general.subgroups"}}
         </SortableTh>
         <th class="text-right">
@@ -20,124 +36,167 @@
     </thead>
     <tbody>
       {{#each (sort-by this.sortBy @learnerGroups) as |learnerGroup|}}
-      <tr class={{if
+        <tr
+          class={{if
             (includes learnerGroup.id (map-by "id" this.toRemove))
             "confirm-removal"
-          }} data-test-active-row>
-        <td class="text-left" colspan="2">
-          <LinkTo @route="learnerGroup" @model={{learnerGroup}}>
-            <span data-test-title>{{learnerGroup.title}}</span>
-            {{#if learnerGroup.needsAccommodation}}
-            <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
+          }}
+          data-test-active-row
+        >
+          <td class="text-left" colspan="2">
+            <LinkTo @route="learnerGroup" @model={{learnerGroup}}>
+              <span data-test-title>{{learnerGroup.title}}</span>
+              {{#if learnerGroup.needsAccommodation}}
+                <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}} />
+              {{/if}}
+            </LinkTo>
+          </td>
+          <td class="text-center hide-from-small-screen">
+            {{learnerGroup.usersCount}}
+          </td>
+          <td class="text-center hide-from-small-screen">
+            <span data-test-children-count>{{learnerGroup.childrenCount}}</span>
+            {{#if (await learnerGroup.hasSubgroupsInNeedOfAccommodation)}}
+              <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}} />
             {{/if}}
-          </LinkTo>
-        </td>
-        <td class="text-center hide-from-small-screen">
-          {{learnerGroup.usersCount}}
-        </td>
-        <td class="text-center hide-from-small-screen">
-          <span data-test-children-count>{{learnerGroup.childrenCount}}</span>
-          {{#if (await learnerGroup.hasSubgroupsInNeedOfAccommodation)}}
-          <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
-          {{/if}}
-        </td>
-        <td class="text-right" data-test-actions>
-          {{#if (is-fulfilled learnerGroup.hasLearnersInGroupOrSubgroups)}}
-          {{#if
+          </td>
+          <td class="text-right" data-test-actions>
+            {{#if (is-fulfilled learnerGroup.hasLearnersInGroupOrSubgroups)}}
+              {{#if
                 (and
                   @canDelete
                   (not (await learnerGroup.hasLearnersInGroupOrSubgroups))
                 )
               }}
-          <span class="clickable remove" role="button" data-test-remove
-            {{on "click" (perform this.confirmRemove learnerGroup)}}>
-            {{#if (includes learnerGroup this.preparingToRemove)}}
-            <FaIcon @icon="spinner" @spin={{true}} />
+                <span
+                  class="clickable remove"
+                  role="button"
+                  data-test-remove
+                  {{on "click" (perform this.confirmRemove learnerGroup)}}
+                >
+                  {{#if (includes learnerGroup this.preparingToRemove)}}
+                    <FaIcon @icon="spinner" @spin={{true}} />
+                  {{else}}
+                    <FaIcon @icon="trash" class="enabled" />
+                  {{/if}}
+                </span>
+              {{else}}
+                <FaIcon @icon="trash" class="disabled" />
+              {{/if}}
             {{else}}
-            <FaIcon @icon="trash" class="enabled" />
+              <LoadingSpinner />
             {{/if}}
-          </span>
-          {{else}}
-          <FaIcon @icon="trash" class="disabled" />
-          {{/if}}
-          {{else}}
-          <LoadingSpinner />
-          {{/if}}
-          {{#if @canCreate}}
-          <FaIcon @icon="copy" class="clickable enabled" @title={{t "general.copy"}}
-            @click={{fn this.startCopy learnerGroup}} data-test-copy={{true}} />
-          {{else}}
-          <FaIcon @icon="copy" class="disabled" />
-          {{/if}}
-        </td>
-      </tr>
-      {{#if (includes learnerGroup.id (map-by "id" this.toRemove))}}
-      {{#let (find-by "id" learnerGroup.id this.toRemove) as |removableGroup|}}
-      <tr class="confirm-removal" data-test-confirm-removal>
-        <td colspan={{if (media "isLaptopAndUp") "5" "3"}}>
-          <div class="confirm-message" data-test-confirmation>
-            {{#if (gt removableGroup.courses.length 0)}}
-            {{t "general.canNotDeleteLearnerGroupWithAssociatedCourses" courseCount=removableGroup.courses.length}}
-            <ul class="course-list">
-              {{#each (sort-by "year" "title" removableGroup.courses) as |course|}}
-              <li>{{course.academicYear}} {{course.title}}</li>
-              {{/each}}
-            </ul>
-            <button type="button" class="done text" onclick={{fn this.cancelRemove learnerGroup}} data-test-cancel>
-              {{t "general.ok"}}
-            </button>
+            {{#if @canCreate}}
+              <FaIcon
+                @icon="copy"
+                class="clickable enabled"
+                @title={{t "general.copy"}}
+                @click={{fn this.startCopy learnerGroup}}
+                data-test-copy={{true}}
+              />
             {{else}}
-            {{t
+              <FaIcon @icon="copy" class="disabled" />
+            {{/if}}
+          </td>
+        </tr>
+        {{#if (includes learnerGroup.id (map-by "id" this.toRemove))}}
+          {{#let (find-by "id" learnerGroup.id this.toRemove) as |removableGroup|}}
+            <tr class="confirm-removal" data-test-confirm-removal>
+              <td colspan={{if (media "isLaptopAndUp") "5" "3"}}>
+                <div class="confirm-message" data-test-confirmation>
+                  {{#if (gt removableGroup.courses.length 0)}}
+                    {{t "general.canNotDeleteLearnerGroupWithAssociatedCourses" courseCount=removableGroup.courses.length}}
+                    <ul class="course-list">
+                      {{#each (sort-by "year" "title" removableGroup.courses) as |course|}}
+                        <li>{{course.academicYear}} {{course.title}}</li>
+                      {{/each}}
+                    </ul>
+                    <button
+                      type="button"
+                      class="done text"
+                      onclick={{fn this.cancelRemove learnerGroup}}
+                      data-test-cancel
+                    >
+                      {{t "general.ok"}}
+                    </button>
+                  {{else}}
+                    {{t
                       "general.confirmRemoveLearnerGroup"
                       subgroupCount=learnerGroup.children.length
                     }}
-            <br>
-            <div class="confirm-buttons">
-              <button type="button" class="remove text" onclick={{fn @remove learnerGroup}} data-test-confirm>
-                {{t "general.yes"}}
-              </button>
-              <button type="button" class="done text" onclick={{fn this.cancelRemove learnerGroup}} data-test-cancel>
-                {{t "general.cancel"}}
-              </button>
-            </div>
-            {{/if}}
-          </div>
-        </td>
-      </tr>
-      {{/let}}
-      {{/if}}
-      {{#if (includes learnerGroup this.toCopy)}}
-      <tr class="confirm-copy" data-test-confirm-copy>
-        <td colspan={{if (media "isLaptopAndUp") "6" "3"}}>
-          <div class="confirm-buttons">
-            {{#if @canCopyWithLearners}}
-            <button type="button" class="done text" onclick={{perform this.copy true learnerGroup}}
-              data-test-confirm-with-learners>
-              {{t "general.copyWithLearners"}}
-            </button>
-            <button type="button" class="done text" onclick={{perform this.copy false learnerGroup}}
-              data-test-confirm-without-learners>
-              {{t "general.copyWithoutLearners"}}
-            </button>
-            {{else}}
-            <button type="button" class="done text" onclick={{perform this.copy false learnerGroup}}
-              data-test-confirm-without-learners>
-              {{t "general.copy"}}
-            </button>
-            {{/if}}
-            <button type="button" class="cancel text" onclick={{fn this.cancelCopy learnerGroup}}>
-              {{t "general.cancel"}}
-            </button>
-          </div>
-        </td>
-      </tr>
-      {{/if}}
+                    <br>
+                    <div class="confirm-buttons">
+                      <button
+                        type="button"
+                        class="remove text"
+                        onclick={{fn @remove learnerGroup}}
+                        data-test-confirm
+                      >
+                        {{t "general.yes"}}
+                      </button>
+                      <button
+                        type="button"
+                        class="done text"
+                        onclick={{fn this.cancelRemove learnerGroup}}
+                        data-test-cancel
+                      >
+                        {{t "general.cancel"}}
+                      </button>
+                    </div>
+                  {{/if}}
+                </div>
+              </td>
+            </tr>
+          {{/let}}
+        {{/if}}
+        {{#if (includes learnerGroup this.toCopy)}}
+          <tr class="confirm-copy" data-test-confirm-copy>
+            <td colspan={{if (media "isLaptopAndUp") "6" "3"}}>
+              <div class="confirm-buttons">
+                {{#if @canCopyWithLearners}}
+                  <button
+                    type="button"
+                    class="done text"
+                    onclick={{perform this.copy true learnerGroup}}
+                    data-test-confirm-with-learners
+                  >
+                    {{t "general.copyWithLearners"}}
+                  </button>
+                  <button
+                    type="button"
+                    class="done text"
+                    onclick={{perform this.copy false learnerGroup}}
+                    data-test-confirm-without-learners
+                  >
+                    {{t "general.copyWithoutLearners"}}
+                  </button>
+                {{else}}
+                  <button
+                    type="button"
+                    class="done text"
+                    onclick={{perform this.copy false learnerGroup}}
+                    data-test-confirm-without-learners
+                  >
+                    {{t "general.copy"}}
+                  </button>
+                {{/if}}
+                <button
+                  type="button"
+                  class="cancel text"
+                  onclick={{fn this.cancelCopy learnerGroup}}
+                >
+                  {{t "general.cancel"}}
+                </button>
+              </div>
+            </td>
+          </tr>
+        {{/if}}
       {{else}}
-      <tr data-test-empty-list>
-        <td class="text-center" colspan={{if (media "isLaptopAndUp") "6" "3"}}>
-          <span data-test-title>{{if @query (t "general.noResultsFound") (t "general.none")}}</span>
-        </td>
-      </tr>
+        <tr data-test-empty-list>
+          <td class="text-center" colspan={{if (media "isLaptopAndUp") "6" "3"}}>
+            <span data-test-title>{{if @query (t "general.noResultsFound") (t "general.none")}}</span>
+          </td>
+        </tr>
       {{/each}}
     </tbody>
   </table>
