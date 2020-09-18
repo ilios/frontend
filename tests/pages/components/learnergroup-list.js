@@ -14,11 +14,11 @@ const definition = {
     title: text(),
   }),
   groups: collection('tbody tr', {
-    title: text('td', { at: 0 }),
+    title: text('td:nth-of-type(1) [data-test-title]'),
     needsAccommodation: isPresent('td:nth-of-type(1) [data-icon="universal-access"]'),
     visit: clickable('td:nth-of-type(1) a'),
     members: text('td', { at: 1 }),
-    subgroups: text('td', { at: 2 }),
+    subgroups: text('td:nth-of-type(3) [data-test-children-count]'),
     hasSubgroupsInNeedOfAccommodation: isPresent('td:nth-of-type(3) [data-icon="universal-access"]'),
     courses: text('td', { at: 3 }),
     hasRemoveStyle: hasClass('confirm-removal'),

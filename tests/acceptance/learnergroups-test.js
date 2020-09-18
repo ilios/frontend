@@ -1,8 +1,5 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 import { setupApplicationTest } from 'ember-qunit';
@@ -85,7 +82,9 @@ module('Acceptance | Learner Groups', function(hooks) {
     assert.equal(page.learnerGroupList.groups[0].title, 'None');
 
     await page.programYearFilter.filter(1);
+    //await pauseTest();
     assert.equal(page.learnerGroupList.groups.length, 1);
+
     assert.equal(page.learnerGroupList.groups[0].title, 'learner group 0');
 
     await page.programFilter.filter(2);
