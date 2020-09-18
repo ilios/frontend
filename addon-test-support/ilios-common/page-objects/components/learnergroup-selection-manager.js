@@ -6,7 +6,7 @@ const definition = {
   scope: '[data-test-learnergroup-selection-manager]',
   selectedGroups: {
     scope: '[data-test-selected-learner-groups]',
-    title: text('[data-test-title]'),
+    title: text('[data-test-title]', { at: 0 }),
     list: detailLearnergroupsList,
     noGroups: {
       scope: '[data-test-no-selected-learnergroups]'

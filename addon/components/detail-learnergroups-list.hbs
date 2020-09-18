@@ -25,9 +25,9 @@
           {{/if}}
           <ul>
             <li class="top-level-group" data-test-subgroup>
-              {{tree.topLevelGroup.title}} ({{count-related tree.topLevelGroup "users"}})
+              <span data-test-title>{{tree.topLevelGroup.title}} ({{count-related tree.topLevelGroup "users"}})</span>
               {{#if tree.topLevelGroup.needsAccommodation}}
-                <FaIcon @icon="universal-access" title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
+                <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
               {{/if}}
             </li>
             {{#each
@@ -44,9 +44,9 @@
                 {{on "click" (fn this.remove learnerGroup)}}
                 data-test-subgroup
               >
-                {{learnerGroup.title}} ({{count-related learnerGroup "users"}})
+                <span data-test-title>{{learnerGroup.title}} ({{count-related learnerGroup "users"}})</span>
                 {{#if learnerGroup.needsAccommodation}}
-                  <FaIcon @icon="universal-access" title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
+                  <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
                 {{/if}}
                 {{#if @isManaging}}
                   <FaIcon @icon="times" class="remove" />

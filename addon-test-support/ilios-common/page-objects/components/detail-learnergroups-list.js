@@ -15,7 +15,7 @@ const definition = {
     title: text('legend'),
     removeAllSubgroups: clickable('[data-test-remove-all]'),
     subgroups: collection('[data-test-subgroup]', {
-      title: text(),
+      title: text('[data-test-title]'),
       needsAccommodation: isVisible('> [data-icon="universal-access"]'),
       isTopLevel: hasClass('top-level-group'),
       isRemovable: hasClass('.clickable'),
