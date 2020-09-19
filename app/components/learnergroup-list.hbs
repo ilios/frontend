@@ -45,9 +45,9 @@
         >
           <td class="text-left" colspan="2">
             <LinkTo @route="learnerGroup" @model={{learnerGroup}}>
-              {{learnerGroup.title}}
+              <span data-test-title>{{learnerGroup.title}}</span>
               {{#if learnerGroup.needsAccommodation}}
-                <FaIcon @icon="universal-access" title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
+                <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}} />
               {{/if}}
             </LinkTo>
           </td>
@@ -55,9 +55,9 @@
             {{learnerGroup.usersCount}}
           </td>
           <td class="text-center hide-from-small-screen">
-            {{learnerGroup.childrenCount}}
+            <span data-test-children-count>{{learnerGroup.childrenCount}}</span>
             {{#if (await learnerGroup.hasSubgroupsInNeedOfAccommodation)}}
-              <FaIcon @icon="universal-access" title={{t "general.membersOfThisGroupRequireAccommodation"}}></FaIcon>
+              <FaIcon @icon="universal-access" @title={{t "general.membersOfThisGroupRequireAccommodation"}} />
             {{/if}}
           </td>
           <td class="text-right" data-test-actions>
@@ -112,13 +112,13 @@
                       {{/each}}
                     </ul>
                     <button
-                        type="button"
-                        class="done text"
-                        onclick={{fn this.cancelRemove learnerGroup}}
-                        data-test-cancel
-                      >
-                        {{t "general.ok"}}
-                      </button>
+                      type="button"
+                      class="done text"
+                      onclick={{fn this.cancelRemove learnerGroup}}
+                      data-test-cancel
+                    >
+                      {{t "general.ok"}}
+                    </button>
                   {{else}}
                     {{t
                       "general.confirmRemoveLearnerGroup"
@@ -194,7 +194,7 @@
       {{else}}
         <tr data-test-empty-list>
           <td class="text-center" colspan={{if (media "isLaptopAndUp") "6" "3"}}>
-            {{if @query (t "general.noResultsFound") (t "general.none")}}
+            <span data-test-title>{{if @query (t "general.noResultsFound") (t "general.none")}}</span>
           </td>
         </tr>
       {{/each}}
