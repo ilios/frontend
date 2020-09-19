@@ -82,7 +82,6 @@ module('Acceptance | Learner Groups', function(hooks) {
     assert.equal(page.learnerGroupList.groups[0].title, 'None');
 
     await page.programYearFilter.filter(1);
-    //await pauseTest();
     assert.equal(page.learnerGroupList.groups.length, 1);
 
     assert.equal(page.learnerGroupList.groups[0].title, 'learner group 0');
