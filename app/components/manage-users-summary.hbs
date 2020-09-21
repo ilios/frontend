@@ -80,7 +80,7 @@
               {{action (perform clickUser) result.user}}
             >
               <span class="name">
-                <UserNameInfo @user={{result.user}} />
+                {{result.user.fullName}}
                 {{#unless result.user.enabled}}
                   <FaIcon
                     @icon="user-times"
