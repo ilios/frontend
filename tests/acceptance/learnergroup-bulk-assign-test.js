@@ -223,7 +223,6 @@ module('Acceptance | learner group bulk assign', function(hooks) {
   });
 
   test('finalize and save', async function (assert) {
-    assert.expect(16);
     this.server.create('user', {
       firstName: 'jasper',
       lastName: 'johnson',
@@ -233,6 +232,7 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     this.server.create('user', {
       firstName: 'jackson',
       lastName: 'johnson',
+      displayName: 'Jackson McFly',
       campusId: '12345',
       cohortIds: [1],
     });
@@ -250,10 +250,12 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     await page.bulkAssign.groupsToMatch(0).chooseGroup('3');
 
     assert.equal(page.bulkAssign.finalData().count, 2);
-    assert.equal(page.bulkAssign.finalData(0).name, 'jasper M. johnson');
+    assert.equal(page.bulkAssign.finalData(0).user.userNameInfo.fullName, 'jasper M. johnson');
+    assert.notOk(page.bulkAssign.finalData(0).user.userNameInfo.hasAdditionalInfo);
     assert.equal(page.bulkAssign.finalData(0).campusId, '1234567890');
     assert.equal(page.bulkAssign.finalData(0).groupName, 'group 1');
-    assert.equal(page.bulkAssign.finalData(1).name, 'jackson M. johnson');
+    assert.equal(page.bulkAssign.finalData(1).user.userNameInfo.fullName, 'Jackson McFly');
+    assert.ok(page.bulkAssign.finalData(1).user.userNameInfo.hasAdditionalInfo);
     assert.equal(page.bulkAssign.finalData(1).campusId, '12345');
     assert.equal(page.bulkAssign.finalData(1).groupName, 'group 1 child 1');
     assert.ok(page.bulkAssign.canSubmitFinalData);

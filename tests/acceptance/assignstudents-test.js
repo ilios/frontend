@@ -27,7 +27,11 @@ module('Acceptance | assign students', function(hooks) {
 
   test('users are listed in full name by default', async function(assert) {
     await visit('/admin/assignstudents?schoolId=1');
-    assert.dom('.students .list tbody tr:nth-of-type(1) td:nth-of-type(2)').hasText('Aardvark');
-    assert.dom('.students .list tbody tr:nth-of-type(2) td:nth-of-type(2)').hasText('Clem M. Chowder');
+    assert.dom('.students .list tbody tr:nth-of-type(1) td:nth-of-type(2) [data-test-fullname]')
+      .hasText('Aardvark');
+    assert.dom('.students .list tbody tr:nth-of-type(1) td:nth-of-type(2) [data-test-info]').exists();
+    assert.dom('.students .list tbody tr:nth-of-type(2) td:nth-of-type(2) [data-test-fullname]')
+      .hasText('Clem M. Chowder');
+    assert.dom('.students .list tbody tr:nth-of-type(2) td:nth-of-type(2) [data-test-info]').doesNotExist();
   });
 });

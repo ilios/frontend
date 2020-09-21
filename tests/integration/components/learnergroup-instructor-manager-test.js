@@ -37,8 +37,10 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
     />`);
 
     assert.dom('.removable-instructors li').exists({ count: 3 });
-    assert.dom('.removable-instructors li:nth-of-type(1)').hasText('aardvark');
-    assert.dom('.removable-instructors li:nth-of-type(2)').hasText('test person');
+    assert.dom('.removable-instructors li:nth-of-type(1) [data-test-fullname]').hasText('aardvark');
+    assert.dom('.removable-instructors li:nth-of-type(1) [data-test-info]').exists();
+    assert.dom('.removable-instructors li:nth-of-type(2) [data-test-fullname]').hasText('test person');
+    assert.dom('.removable-instructors li:nth-of-type(2) [data-test-info]').doesNotExist();
     assert.dom('.removable-instructors li:nth-of-type(3)').hasText('test group');
   });
 

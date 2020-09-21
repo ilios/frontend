@@ -66,9 +66,12 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
 
   test('sort by full name', async function(assert) {
     const userList = 'tbody tr';
-    const user1FullName = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
-    const user2FullName = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
-    const user3FullName = 'tbody tr:nth-of-type(3) td:nth-of-type(2)';
+    const user1FullName = 'tbody tr:nth-of-type(1) td:nth-of-type(2) [data-test-fullname]';
+    const user1AdditionalNameInfo = 'tbody tr:nth-of-type(1) td:nth-of-type(2) [data-test-info]';
+    const user2FullName = 'tbody tr:nth-of-type(2) td:nth-of-type(2) [data-test-fullname]';
+    const user2AdditionalNameInfo = 'tbody tr:nth-of-type(2) td:nth-of-type(2) [data-test-info]';
+    const user3FullName = 'tbody tr:nth-of-type(3) td:nth-of-type(2) [data-test-fullname]';
+    const user3AdditionalNameInfo = 'tbody tr:nth-of-type(3) td:nth-of-type(2) [data-test-info]';
 
     const user1 = this.server.create('user', { firstName: 'Jasper' });
     const user2 = this.server.create('user', { firstName: 'Jackson' });
@@ -92,8 +95,11 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
 
     assert.dom(userList).exists({ count: 3 });
     assert.dom(user1FullName).hasText('Captain J');
+    assert.dom(user1AdditionalNameInfo).exists();
     assert.dom(user2FullName).hasText('Jackson M. Mc1son');
+    assert.dom(user2AdditionalNameInfo).doesNotExist();
     assert.dom(user3FullName).hasText('Jasper M. Mc0son');
+    assert.dom(user3AdditionalNameInfo).doesNotExist();
   });
 
   test('add multiple users', async function(assert) {

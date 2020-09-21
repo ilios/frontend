@@ -10,6 +10,7 @@ import {
 } from 'ember-cli-page-object';
 import learnerGroupUserManager from './components/learnergroup-user-manager';
 import learnergroupSubgroupList from './components/learnergroup-subgroup-list';
+import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
 
 export default create({
   visit: visitable('/learnergroups/:learnerGroupId'),
@@ -69,7 +70,10 @@ export default create({
     finalData: collection({
       itemScope: '[data-test-final-data] tbody tr',
       item: {
-        name: text('td', { at: 0 }),
+        user: {
+          scope: 'td:eq(0)',
+          userNameInfo
+        },
         campusId: text('td', { at: 1 }),
         groupName: text('td', { at: 2 }),
       }
@@ -78,7 +82,10 @@ export default create({
     finalErrorData: collection({
       itemScope: '[data-test-final-error-data] tbody tr',
       item: {
-        name: text('td', { at: 0 }),
+        user: {
+          scope: 'td:eq(0)',
+          userNameInfo
+        },
         campusId: text('td', { at: 1 }),
         error: text('td', { at: 2 }),
       }
