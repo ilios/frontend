@@ -13,8 +13,8 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     const user2 = this.server.create('user');
     const user3 = this.server.create('user');
     const user4 = this.server.create('user');
-    const user5 = this.server.create('user');
-    const user6 = this.server.create('user');
+    const user5 = this.server.create('user', { firstName: 'Walther', middleName: 'von der', lastName: 'Vogelweide' });
+    const user6 = this.server.create('user', { firstName: 'Zeb', lastName: 'Zoober', displayName: 'Aardvark' });
 
     const cohort = this.server.create('cohort', {
       title: 'this cohort',
@@ -50,7 +50,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       @setIsEditing={{noop}}
       @setSortUsersBy={{noop}}
       @setIsBulkAssigning={{noop}}
-      @sortUsersBy="firstName"
+      @sortUsersBy="fullName"
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
@@ -61,7 +61,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     const coursesList = '[data-test-overview] .associatedcourses ul';
 
     assert.dom(defaultLocation).hasText('test location');
-    assert.dom(instructors).hasText('4 guy M. Mc4son; 5 guy M. Mc5son');
+    assert.dom(instructors).hasText('Aardvark; Walther v. Vogelweide');
     assert.dom(coursesList).hasText('course 0 course 1');
   });
 

@@ -17,30 +17,29 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
   });
 
   test('it renders', async function(assert) {
-    assert.expect(3);
-    const instructor =  this.server.create('user', { firstName: 'test', lastName: 'person', middleName: '' });
+    const instructor = this.server.create('user', { firstName: 'test', lastName: 'person', middleName: '' });
+    const instructor2 = this.server.create('user', { firstName: 'zeb', lastName: 'z00ber', displayName: 'aardvark' });
     const instructorGroup = this.server.create('instructorGroup', { title: 'test group'});
     const learnerGroup = this.server.create('learnerGroup', {
       title: 'this group',
       cohort: this.cohort,
-      instructors: [ instructor ],
+      instructors: [ instructor, instructor2 ],
       instructorGroups: [ instructorGroup ]
     });
 
     const learnerGroupModel = await this.owner.lookup('service:store').find('learnerGroup', learnerGroup.id);
 
-    this.set('nothing', parseInt);
     this.set('learnerGroup', learnerGroupModel);
-
     await render(hbs`<LearnergroupInstructorManager
       @learnerGroup={{this.learnerGroup}}
-      @save={{action this.nothing}}
-      @close={{action this.nothing}}
+      @save={{noop}}
+      @close={{noop}}
     />`);
 
-    assert.dom('.removable-instructors li').exists({ count: 2 });
-    assert.dom('.removable-instructors li:nth-of-type(1)').hasText('test person');
-    assert.dom('.removable-instructors li:nth-of-type(2)').hasText('test group');
+    assert.dom('.removable-instructors li').exists({ count: 3 });
+    assert.dom('.removable-instructors li:nth-of-type(1)').hasText('aardvark');
+    assert.dom('.removable-instructors li:nth-of-type(2)').hasText('test person');
+    assert.dom('.removable-instructors li:nth-of-type(3)').hasText('test group');
   });
 
   test('can remove groups', async function(assert) {

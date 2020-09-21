@@ -80,7 +80,7 @@
                     "; "
                     (map-by
                       "fullName"
-                      (sort-by "lastName" (await @learnerGroup.allInstructors))
+                      (sort-by "fullName" (await @learnerGroup.allInstructors))
                     )
                   }}
                 {{else}}
