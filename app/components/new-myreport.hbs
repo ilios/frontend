@@ -110,7 +110,7 @@
         {{#if selectedUser}}
           <ul class="removable-list tag-list">
             <li role="button" {{action "changePrepositionalObjectId" null}}>
-              {{this.selectedUser.fullName}}
+              <UserNameInfo @user={{this.selectedUser}} />
               <FaIcon @icon="times" />
             </li>
           </ul>

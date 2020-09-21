@@ -20,7 +20,7 @@
       <ul class="removable-instructors">
         {{#each (sort-by "fullName" this.instructors) as |user|}}
           <li role="button" {{on "click" (fn this.removeInstructor user)}}>
-            {{user.fullName}}
+            <UserNameInfo @user={{user}} />
             <FaIcon @icon="times" class="remove" />
           </li>
         {{/each}}

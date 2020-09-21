@@ -53,7 +53,7 @@
               <tr>
                 <td class="text-left" colspan="2">
                   <LinkTo @route="user" @model={{update.user}}>
-                    {{update.user.fullName}}
+                    <UserNameInfo @user={{update.user}} />
                   </LinkTo>
                 </td>
                 <td class="text-left" colspan="6">
