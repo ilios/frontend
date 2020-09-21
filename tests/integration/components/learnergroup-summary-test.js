@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, fillIn } from '@ember/test-helpers';
+import { render, click, fillIn, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -57,11 +57,13 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     />`);
 
     const defaultLocation = '[data-test-overview] .defaultlocation span:nth-of-type(1)';
-    const instructors = '[data-test-overview] .defaultinstructors span';
+    const instructors = '[data-test-overview] .defaultinstructors ul li [data-test-fullname]';
     const coursesList = '[data-test-overview] .associatedcourses ul';
 
     assert.dom(defaultLocation).hasText('test location');
-    assert.dom(instructors).hasText('Aardvark; Walther v. Vogelweide');
+    assert.dom(instructors).exists({ count: 2 });
+    assert.dom(findAll(instructors)[0]).hasText('Aardvark');
+    assert.dom(findAll(instructors)[1]).hasText('Walther v. Vogelweide');
     assert.dom(coursesList).hasText('course 0 course 1');
   });
 
