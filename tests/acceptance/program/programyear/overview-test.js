@@ -30,11 +30,14 @@ module('Acceptance | Program Year - Overview', function(hooks) {
   test('list directors', async function(assert) {
     await visit(url);
     assert.equal(currentRouteName(), 'programYear.index');
-    var items = findAll('.programyear-overview .directors li');
-    assert.equal(items.length, 3);
-    assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
-    assert.equal(await getElementText(items[1]), getText('3 guy M. Mc3son'));
-    assert.equal(await getElementText(items[2]), getText('Zeppelin'));
+    const directors = '.programyear-overview .directors li';
+    assert.dom(directors).exists({ count: 3 });
+    assert.dom(`${directors}:nth-of-type(1) [data-test-fullname]`).hasText('1 guy M. Mc1son');
+    assert.dom(`${directors}:nth-of-type(1) [data-test-info]`).doesNotExist();
+    assert.dom(`${directors}:nth-of-type(2) [data-test-fullname]`).hasText('3 guy M. Mc3son');
+    assert.dom(`${directors}:nth-of-type(2) [data-test-info]`).doesNotExist();
+    assert.dom(`${directors}:nth-of-type(3) [data-test-fullname]`).hasText('Zeppelin');
+    assert.dom(`${directors}:nth-of-type(3) [data-test-info]`).exists();
   });
 
   test('list directors with privileges', async function(assert) {
@@ -42,11 +45,11 @@ module('Acceptance | Program Year - Overview', function(hooks) {
     await visit(url);
 
     assert.equal(currentRouteName(), 'programYear.index');
-    var items = findAll('.programyear-overview .removable-directors li');
-    assert.equal(items.length, 3);
-    assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
-    assert.equal(await getElementText(items[1]), getText('3 guy M. Mc3son'));
-    assert.equal(await getElementText(items[2]), getText('Zeppelin'));
+    const directors = '.programyear-overview .removable-directors li';
+    assert.dom(directors).exists({ count: 3 });
+    assert.dom(`${directors}:nth-of-type(1) [data-test-fullname]`).hasText('1 guy M. Mc1son');
+    assert.dom(`${directors}:nth-of-type(2) [data-test-fullname]`).hasText('3 guy M. Mc3son');
+    assert.dom(`${directors}:nth-of-type(3) [data-test-fullname]`).hasText('Zeppelin');
   });
 
   test('search directors', async function(assert) {
@@ -55,7 +58,7 @@ module('Acceptance | Program Year - Overview', function(hooks) {
 
     assert.equal(currentRouteName(), 'programYear.index');
     await fillIn(find('.programyear-overview .search-box input'), 'guy');
-    var searchResults = findAll('.programyear-overview .results li');
+    const searchResults = findAll('.programyear-overview .results li');
     assert.equal(searchResults.length, 7);
     assert.equal(await getElementText(searchResults[0]), getText('6 Results'));
     assert.equal(await getElementText(searchResults[1]), getText('0 guy M. Mc0son user@example.edu'));
@@ -77,22 +80,20 @@ module('Acceptance | Program Year - Overview', function(hooks) {
     await visit(url);
 
     assert.equal(currentRouteName(), 'programYear.index');
-    let items = findAll('.programyear-overview .removable-directors li');
-    assert.equal(items.length, 3);
-    assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
-    assert.equal(await getElementText(items[1]), getText('3 guy M. Mc3son'));
-    assert.equal(await getElementText(items[2]), getText('Zeppelin'));
-
+    const directors = '.programyear-overview .removable-directors li';
+    assert.dom(directors).exists({ count: 3 });
+    assert.dom(`${directors}:nth-of-type(1) [data-test-fullname]`).hasText('1 guy M. Mc1son');
+    assert.dom(`${directors}:nth-of-type(2) [data-test-fullname]`).hasText('3 guy M. Mc3son');
+    assert.dom(`${directors}:nth-of-type(3) [data-test-fullname]`).hasText('Zeppelin');
 
     await fillIn(find('.programyear-overview .search-box input'), 'guy');
     await click(findAll('.programyear-overview .results li')[5]);
-    items = findAll('.programyear-overview .removable-directors li');
-    assert.equal(items.length, 4);
-    assert.equal(await getElementText(items[0]), getText('1 guy M. Mc1son'));
-    assert.equal(await getElementText(items[1]), getText('3 guy M. Mc3son'));
-    assert.equal(await getElementText(items[2]), getText('5 guy M. Mc5son'));
-    assert.equal(await getElementText(items[3]), getText('Zeppelin'));
 
+    assert.dom(directors).exists({ count: 4 });
+    assert.dom(`${directors}:nth-of-type(1) [data-test-fullname]`).hasText('1 guy M. Mc1son');
+    assert.dom(`${directors}:nth-of-type(2) [data-test-fullname]`).hasText('3 guy M. Mc3son');
+    assert.dom(`${directors}:nth-of-type(3) [data-test-fullname]`).hasText('5 guy M. Mc5son');
+    assert.dom(`${directors}:nth-of-type(4) [data-test-fullname]`).hasText('Zeppelin');
   });
 
   test('remove director', async function(assert) {
@@ -101,10 +102,10 @@ module('Acceptance | Program Year - Overview', function(hooks) {
 
     assert.equal(currentRouteName(), 'programYear.index');
     await click(find('.programyear-overview .removable-directors li'));
-    var items = findAll('.programyear-overview .removable-directors li');
-    assert.equal(items.length, 2);
-    assert.equal(await getElementText(items[0]), getText('3 guy M. Mc3son'));
-    assert.equal(await getElementText(items[1]), getText('Zeppelin'));
+    const directors = '.programyear-overview .removable-directors li';
+    assert.dom(directors).exists({ count: 2 });
+    assert.dom(`${directors}:nth-of-type(1) [data-test-fullname]`).hasText('3 guy M. Mc3son');
+    assert.dom(`${directors}:nth-of-type(2) [data-test-fullname]`).hasText('Zeppelin');
   });
 
   test('first director added is disabled #2770', async function(assert) {

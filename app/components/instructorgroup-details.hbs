@@ -27,12 +27,12 @@
           }}
             {{#if canUpdate}}
               <li class="clickable" role="button" {{action "removeUser" user}}>
-                {{user.fullName}}
+                <UserNameInfo @user={{user}} />
                 <FaIcon @icon="times" class="remove" />
               </li>
             {{else}}
               <li>
-                {{user.fullName}}
+                <UserNameInfo @user={{user}} />
               </li>
             {{/if}}
           {{/each}}

@@ -17,7 +17,9 @@ module('Integration | Component | instructorgroup details', function(hooks) {
     this.set('group', groupModel);
     this.set('canEdit', true);
     await render(hbs`<InstructorgroupDetails @instructorGroup={{this.group}} @canEdit={{this.canEdit}} />`);
-    assert.dom('.instructorgroup-users li:nth-of-type(1)').hasText('Aardvark');
-    assert.dom('.instructorgroup-users li:nth-of-type(2)').hasText('Anton M. Alpha');
+    assert.dom('.instructorgroup-users li:nth-of-type(1) [data-test-fullname]').hasText('Aardvark');
+    assert.dom('.instructorgroup-users li:nth-of-type(1) [data-test-info]').exists();
+    assert.dom('.instructorgroup-users li:nth-of-type(2) [data-test-fullname]').hasText('Anton M. Alpha');
+    assert.dom('.instructorgroup-users li:nth-of-type(2) [data-test-info').doesNotExist();
   });
 });

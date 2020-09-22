@@ -24,7 +24,7 @@
         <ul class="removable-directors">
           {{#each sortedDirectors as |user|}}
             <li role="button" {{action "removeDirector" user}}>
-              {{user.fullName}}
+              <UserNameInfo @user={{user}} />
               <FaIcon @icon="times" class="remove" />
             </li>
           {{/each}}
@@ -33,7 +33,7 @@
         <ul class="directors">
           {{#each sortedDirectors as |user|}}
             <li>
-              {{user.fullName}}
+              <UserNameInfo @user={{user}} />
             </li>
           {{else}}
             {{t "general.none"}}

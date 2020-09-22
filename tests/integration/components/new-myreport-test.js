@@ -213,8 +213,6 @@ module('Integration | Component | new myreport', function(hooks) {
 
 
   test('can search for user #2506', async function(assert) {
-    assert.expect(3);
-
     const school = this.server.create('school', { title: 'first' });
     const mockUser = EmberObject.create({
       school: resolve(school)
@@ -228,6 +226,7 @@ module('Integration | Component | new myreport', function(hooks) {
       lastName: 'Person',
       middleName: '',
       email: 'test@example.com',
+      displayName: 'Aardvark'
     });
 
     const schoolSelect = '[data-test-school] select';
@@ -237,7 +236,7 @@ module('Integration | Component | new myreport', function(hooks) {
     const input = `${userSearch} input`;
     const results = `${userSearch} li`;
     const firstResult = `${results}:nth-of-type(2)`;
-    const selectedUser = `.removable-list`;
+    const selectedUser = `.removable-list li:nth-of-type(1)`;
 
     this.set('close', ()=>{});
     await render(hbs`<NewMyreport @close={{action close}} />`);
@@ -248,6 +247,7 @@ module('Integration | Component | new myreport', function(hooks) {
     assert.dom(userSearch).exists({ count: 1 });
     await fillIn(input, 'test');
     await click(firstResult);
-    assert.dom(selectedUser).hasText('Test Person');
+    assert.dom(`${selectedUser} [data-test-fullname]`).hasText('Aardvark');
+    assert.dom(`${selectedUser} [data-test-info]`).exists();
   });
 });

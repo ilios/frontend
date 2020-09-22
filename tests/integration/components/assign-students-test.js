@@ -42,6 +42,7 @@ module('Integration | Component | assign students', function(hooks) {
       id: 2,
       email: '2nd@.com',
       campusId: '123ID',
+      displayName: 'Aardvark'
     });
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
     const students = await this.owner.lookup('service:store').findAll('user');
@@ -65,8 +66,10 @@ module('Integration | Component | assign students', function(hooks) {
     assert.dom(cohortOptions[0]).hasText('program title test cohort');
 
     assert.dom('tbody tr').exists({ count: 2 });
-    assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText('0 guy M. Mc0son');
-    assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText('1 guy M. Mc1son');
+    assert.dom('tbody tr:nth-of-type(1) td [data-test-fullname]').hasText('0 guy M. Mc0son');
+    assert.dom('tbody tr:nth-of-type(1) td [data-test-info]').doesNotExist();
+    assert.dom('tbody tr:nth-of-type(2) td [data-test-fullname]').hasText('Aardvark');
+    assert.dom('tbody tr:nth-of-type(2) td [data-test-info]').exists();
   });
 
   test('check all checks all', async function(assert) {

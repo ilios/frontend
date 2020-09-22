@@ -87,7 +87,7 @@
             </td>
             <td class="text-left" colspan="4">
               <LinkTo @route="user" @model={{user}}>
-                {{user.fullName}}
+                <UserNameInfo @user={{user}} />
               </LinkTo>
             </td>
             <td class="text-left" colspan="4">

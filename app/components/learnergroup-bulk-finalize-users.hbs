@@ -20,7 +20,7 @@
       {{#each finalData as |obj|}}
         <tr>
           <td>
-            {{obj.user.fullName}}
+            <UserNameInfo @user={{obj.user}} />
           </td>
           <td>
             {{obj.user.campusId}}
