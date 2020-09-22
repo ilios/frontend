@@ -38,7 +38,7 @@
       @editable={{@editable}}
     />
   {{/if}}
-  {{#if (or (eq @session.objectives.length 0) @sessionObjectiveDetails)}}
+  {{#if (or (eq @session.sessionObjectives.length 0) @sessionObjectiveDetails)}}
     <Session::Objectives
       @session={{@session}}
       @editable={{@editable}}

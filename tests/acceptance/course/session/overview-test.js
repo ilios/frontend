@@ -609,4 +609,21 @@ module('Acceptance | Session - Overview', function(hooks) {
     await page.overview.postrequisite.editor.save();
     assert.equal(page.overview.postrequisite.value, 'session 2');
   });
+
+  test('shows expanded objectives if no objectives exist', async function(assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    this.server.create('session', { course: this.course });
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(currentRouteName(), 'session.index');
+    assert.notOk(page.collapsedObjectives.isPresent);
+  });
+
+  test('shows collapsed objectives if objectives exist', async function(assert) {
+    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    const session = this.server.create('session', { course: this.course });
+    this.server.create('sessionObjective', { session });
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(currentRouteName(), 'session.index');
+    assert.ok(page.collapsedObjectives.isPresent);
+  });
 });
