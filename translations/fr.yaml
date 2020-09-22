@@ -324,6 +324,7 @@ general:
   url: URL
   userRole: "Rôle d'utilisateur"
   view: Vue
+  virtualLearningLink: "Address d’Étude Virtuel"
   virtualSessionLink: Lien de Séance Virtuelle
   visibleToStudents: "Visible pour les étudiants"
   vocabularies: Vocabulaires

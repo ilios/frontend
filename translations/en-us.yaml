@@ -324,6 +324,7 @@ general:
   url: URL
   userRole: "User Role"
   view: View
+  virtualLearningLink: "Virtual Learning Link"
   virtualSessionLink: Virtual Session Link
   visibleToStudents: "Visible to Students"
   vocabularies: Vocabularies
