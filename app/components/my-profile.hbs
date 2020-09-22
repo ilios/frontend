@@ -76,7 +76,7 @@
               {{t "general.newToken"}}:
             </h3>
             <input readonly="" value={{generatedJwt}}>
-            <CopyButton @success="tokenCopied" @clipboardText={{generatedJwt}}>
+            <CopyButton @success={{action "tokenCopied"}} @clipboardText={{generatedJwt}}>
               <FaIcon @icon="copy" />
             </CopyButton>
             <button
