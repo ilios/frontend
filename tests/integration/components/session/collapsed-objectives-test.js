@@ -11,9 +11,11 @@ module('Integration | Component | session/collapsed-objectives', function(hooks)
 
   hooks.beforeEach(async function () {
     const meshDescriptor = this.server.create('mesh-descriptor');
+    const term = this.server.create('term');
     const courseObjective = this.server.create('course-objective');
     this.objective = this.server.create('session-objective');
     this.objectiveWithMesh = this.server.create('session-objective', { meshDescriptors: [ meshDescriptor ]});
+    this.objectiveWithTerms = this.server.create('session-objective', { terms: [ term ] });
     this.objectiveWithCourseObjectives = this.server.create('session-objective', {
       courseObjectives: [ courseObjective ]
     });
@@ -21,19 +23,27 @@ module('Integration | Component | session/collapsed-objectives', function(hooks)
 
   test('displays summary data', async function(assert) {
     const session = this.server.create('session', {
-      sessionObjectives: [ this.objective, this.objectiveWithMesh, this.objectiveWithCourseObjectives ]
+      sessionObjectives: [
+        this.objective,
+        this.objectiveWithMesh,
+        this.objectiveWithCourseObjectives,
+        this.objectiveWithTerms
+      ]
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
 
     this.set('session', sessionModel);
     await render(hbs`<Session::CollapsedObjectives @session={{this.session}} @expand={{noop}} />`);
 
-    assert.equal(component.title, 'Objectives (3)');
-    assert.equal(component.objectiveCount, 'There are 3 objectives');
+    assert.equal(component.title, 'Objectives (4)');
+    assert.equal(component.objectiveCount, 'There are 4 objectives');
     assert.equal(component.parentCount, '1 has a parent');
     assert.equal(component.meshCount, '1 has MeSH');
+    assert.equal(component.termCount, '1 has vocabulary terms');
+
     assert.ok(component.parentStatus.partial);
     assert.ok(component.meshStatus.partial);
+    assert.ok(component.termStatus.partial);
   });
 
   test('clicking expand icon opens full view', async function(assert) {
@@ -91,5 +101,25 @@ module('Integration | Component | session/collapsed-objectives', function(hooks)
     await render(hbs`<Session::CollapsedObjectives @session={{this.session}} @expand={{noop}} />`);
     assert.equal(component.title, 'Objectives (1)');
     assert.ok(component.meshStatus.none);
+  });
+
+  test('icons all terms correctly', async function(assert) {
+    const session = this.server.create('session', { sessionObjectives: [ this.objectiveWithTerms ]});
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+
+    this.set('session', sessionModel);
+    await render(hbs`<Session::CollapsedObjectives @session={{this.session}} @expand={{noop}} />`);
+    assert.equal(component.title, 'Objectives (1)');
+    assert.ok(component.termStatus.complete);
+  });
+
+  test('icons no terms correctly', async function(assert) {
+    const session = this.server.create('session', { sessionObjectives: [ this.objective ]});
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+
+    this.set('session', sessionModel);
+    await render(hbs`<Session::CollapsedObjectives @session={{this.session}} @expand={{noop}} />`);
+    assert.equal(component.title, 'Objectives (1)');
+    assert.ok(component.termStatus.none);
   });
 });

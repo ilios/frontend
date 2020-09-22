@@ -290,6 +290,7 @@ general:
   supplementalCurriculum: "Plan de Estudios No Requerido"
   targetCourse: "Curso de Destino"
   taughtBy: "Ènsenada Por {instructors}"
+  termCount: "{count, plural, =1 {1 tiene términos de vocabulario} other {# tienen términos de vocabulario}}"
   terms: "Términos"
   termsManageTitle: "Maneje Términos"
   thursday: Jueves
