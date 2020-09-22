@@ -290,6 +290,7 @@ general:
   supplementalCurriculum: "Supplemental Curriculum"
   targetCourse: "Cours Cible"
   taughtBy: "Dispensé à {instructors}"
+  termCount: "{count, plural, =1 {1 on a des termes de vocabulaire} other {# ont des termes de vocabulaire}}"
   terms: Termes
   termsManageTitle: "Manager des Termes"
   thursday: Jeudi

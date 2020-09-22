@@ -14,6 +14,7 @@ const definition = {
   objectiveCount: text('[data-test-objective-count]'),
   parentCount: text('[data-test-parent-count]'),
   meshCount: text('[data-test-mesh-count]'),
+  termCount: text('[data-test-term-count]'),
   parentStatus: {
     scope: '[data-test-parent-status] svg',
     complete: hasClass('yes'),
@@ -25,8 +26,13 @@ const definition = {
     complete: hasClass('yes'),
     partial: hasClass('maybe'),
     none: hasClass('no'),
+  },
+  termStatus: {
+    scope: '[data-test-term-status] svg',
+    complete: hasClass('yes'),
+    partial: hasClass('maybe'),
+    none: hasClass('no'),
   }
-
 };
 
 export default definition;

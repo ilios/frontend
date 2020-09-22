@@ -6,6 +6,7 @@ export default class CourseCollapsedObjectivesComponent extends Component {
   @tracked objectives;
   @tracked objectivesWithParents;
   @tracked objectivesWithMesh;
+  @tracked objectivesWithTerms;
 
   @restartableTask
   *load(element, [objectivePromise]) {
@@ -23,6 +24,10 @@ export default class CourseCollapsedObjectivesComponent extends Component {
       const meshDescriptorIds = objective.hasMany('meshDescriptors').ids();
 
       return meshDescriptorIds.length > 0;
+    });
+    this.objectivesWithTerms = this.objectives.filter(objective => {
+      const termIds = objective.hasMany('terms').ids();
+      return termIds.length > 0;
     });
 
     return true;
