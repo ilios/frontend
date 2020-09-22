@@ -15,6 +15,7 @@ import learningMaterials from './components/learning-materials';
 import meshTerms from './components/mesh-terms';
 import taxonomies from './components/detail-taxonomies';
 import collapsedTaxonomies from './components/collapsed-taxonomies';
+import collapsedObjectives from './components/session/collapsed-objectives';
 import instructorSelectionManager from './components/instructor-selection-manager';
 import offeringForm from './components/offering-form';
 import { flatpickrDatePicker, pageObjectFillInFroalaEditor } from 'ilios-common';
@@ -120,6 +121,7 @@ export default create({
   },
   leadershipCollapsed,
   leadershipExpanded,
+  collapsedObjectives,
   objectives,
   learningMaterials,
   meshTerms,
