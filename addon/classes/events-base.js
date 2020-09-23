@@ -110,7 +110,7 @@ export default class EventsBase extends Service {
       return rhett;
     }).sortBy('startDate', 'name');
     obj.postrequisites = obj.postrequisites.map(postreq => this.createEventFromData(postreq, isUserEvent)).sortBy('startDate', 'name');
-
+    obj.isUserEvent = isUserEvent;
     return obj;
   }
 
