@@ -1,34 +1,32 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { inject as service } from '@ember/service';
+import Component from '@glimmer/component';
 import { htmlSafe } from '@ember/string';
-import { isEmpty } from '@ember/utils';
 import { filter, map } from 'rsvp';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
+import { restartableTask } from 'ember-concurrency-decorators';
+import { tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
 
-export default Component.extend({
-  intl: service(),
+export default class VisualizerProgramYearCompetenciesComponent extends Component {
+  @service intl;
 
-  tagName: "",
+  @tracked tooltipCourses;
+  @tracked tooltipSessions;
+  @tracked tooltipTitle;
 
-  isIcon: false,
-  programYear: null,
-  tooltipCourses: null,
-  tooltipSessions: null,
-  tooltipTitle: null,
+  @tracked programYearName;
+  @tracked data;
 
-  programYearName: computed('programYear.academicYear', 'programYear.cohort.{title,classOfYear}', async function() {
-    const intl = this.intl;
-    const programYear = this.programYear;
-    const cohort = await programYear.cohort;
-    const title = cohort.title;
-    const year = await cohort.classOfYear;
-    const classOfYear = intl.t('general.classOf', { year });
-    return title ? title : classOfYear;
-  }),
+  @restartableTask
+  * load(element, [programYear]) {
+    const cohort = yield programYear.cohort;
+    const year = yield cohort.classOfYear;
+    const classOfYear = this.intl.t('general.classOf', { year });
+    this.programYearName = cohort.title ?? classOfYear;
 
-  objectiveObjects: computed('programYear.programYearObjectives.[]', async function() {
-    const programYear = this.programYear;
+    this.data = yield this.getData(programYear);
+  }
+
+  async getObjectiveObjects(programYear) {
     const buildTreeLevel = async function (parent, childrenTree, sessionTitle, courseTitle) {
       return  {
         name: parent.title,
@@ -63,11 +61,10 @@ export default Component.extend({
       obj.competencyId = competency.id;
       return obj;
     });
-  }),
+  }
 
-  competencyObjects: computed('programYear.competencies.[]', 'objectiveObjects.[]', async function() {
-    const programYear = this.programYear;
-    const objectiveObjects = await this.objectiveObjects;
+  async getCompetencyObjects(programYear) {
+    const objectiveObjects = await this.getObjectiveObjects(programYear);
     const competencies = await programYear.competencies;
     return await map(competencies.toArray(), async competency => {
       const domain = await competency.domain;
@@ -81,12 +78,11 @@ export default Component.extend({
         children: objectiveObjects.filterBy('competencyId', competencyId)
       };
     });
-  }),
+  }
 
-  domainObjects: computed('programYear.competencies.[]', 'competencyObjects.[]', async function() {
-    const programYear = this.programYear;
+  async getDomainObjects(programYear) {
     const competencies = await programYear.competencies;
-    const competencyObjects = await this.competencyObjects;
+    const competencyObjects = await this.getCompetencyObjects(programYear);
     const domains = await map(competencies.toArray(), async competency => competency.domain);
     return domains.uniq().map(domain => {
       const id = domain.id;
@@ -109,25 +105,24 @@ export default Component.extend({
         meta: {}
       };
     });
-  }),
+  }
 
-  data: computed('domainObjects.[]', async function() {
-    const name = await this.programYearName;
-    const children = await this.domainObjects;
+  async getData(programYear) {
     return {
-      name,
-      children,
+      name: this.programYearName,
+      children: await this.getDomainObjects(programYear),
       meta: {}
     };
-  }),
+  }
 
-  nodeHover: task(function* (obj) {
+  @restartableTask
+  * nodeHover(obj){
     yield timeout(100);
     const isIcon = this.isIcon;
-    if (isIcon || isEmpty(obj) || obj.empty) {
-      this.set('tooltipTitle', null);
-      this.set('tooltipCourses', null);
-      this.set('tooltipSessions', null);
+    if (isIcon || !obj || obj.empty) {
+      this.tooltipTitle = null;
+      this.tooltipCourses = null;
+      this.tooltipSessions = null;
       return;
     }
     const { name, children, meta } = obj;
@@ -147,8 +142,8 @@ export default Component.extend({
     };
     const allSessionTitles = children.reduce(getSessionTitles, meta.sessionTitles || []);
 
-    this.set('tooltipTitle', htmlSafe(name));
-    this.set('tooltipCourses', allCourseTitles.uniq());
-    this.set('tooltipSessions', allSessionTitles.uniq());
-  }).restartable()
-});
+    this.tooltipTitle = htmlSafe(name);
+    this.tooltipCourses = allCourseTitles.uniq();
+    this.tooltipSessions = allSessionTitles.uniq();
+  }
+}
