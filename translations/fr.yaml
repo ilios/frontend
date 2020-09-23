@@ -384,8 +384,8 @@ general:
   table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative: "Tableau 7: Tous les événements avec des évaluations marquées en tant que formatif ou sommatif"
   table8AllResourceTypes: "Tableau 8: Tous les types de ressources"
   term: Terme
-  termCount: "{count, plural, =1 {Il y a 1 terme} other {Il y a # termes}}"
   termsBySessionType: "Termes par Type de Seance"
+  thereAreXTerms: "{count, plural, =1 {Il y a 1 terme} other {Il y a # termes}}"
   thisReportIsNoLongerAvailable: "Ce rapport n'est plus disponsible."
   tokenInfo: "Jetons de l’API sont utilisés d’y accèder les données de Ilios.  Votre jeton comme un mot de passe: quiconque l’obtenu pouvent apporter des modifications en votre nom.  Lire plus dans les documentation à {apiDocsLink}."
   tooManyResults: "Votre recherche présente plus que les {count} resultats. Pour meilleurs de resultats, essayez votre recherche encore avec plus termes."
