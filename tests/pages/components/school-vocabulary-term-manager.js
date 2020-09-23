@@ -2,9 +2,9 @@ import {
   clickable,
   create,
   collection,
-  is,
   isPresent,
   fillable,
+  property,
   text,
 } from 'ember-cli-page-object';
 
@@ -27,7 +27,7 @@ const definition = {
   },
   isActive: {
     scope: '[data-test-is-active]',
-    active: is(':checked', 'input'),
+    active: property('checked', 'input'),
     toggle: clickable('[data-test-toggle-yesno] .switch-handle'),
   },
   subTerms: {

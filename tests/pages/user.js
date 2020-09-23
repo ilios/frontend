@@ -1,7 +1,7 @@
 import {
   clickable,
   create,
-  is,
+  property,
   text,
   visitable,
 } from 'ember-cli-page-object';
@@ -22,21 +22,21 @@ export default create({
       scope: '.item:nth-of-type(2)',
       label: text('label'),
       value: text('.value'),
-      selected: is(':checked', 'input'),
+      selected: property('checked', 'input'),
       click: clickable('input')
     },
     enabled: {
       scope: '.item:nth-of-type(3)',
       label: text('label'),
       value: text('.value'),
-      selected: is(':checked', 'input'),
+      selected: property('checked', 'input'),
       click: clickable('input')
     },
     excludeFromSync: {
       scope: '.item:nth-of-type(4)',
       label: text('label'),
       value: text('.value'),
-      selected: is(':checked', 'input'),
+      selected: property('checked', 'input'),
       click: clickable('input')
     },
   },

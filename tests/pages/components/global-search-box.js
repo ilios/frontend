@@ -4,7 +4,7 @@ import {
   collection,
   fillable,
   hasClass,
-  is,
+  property,
   triggerable,
   value,
 } from 'ember-cli-page-object';
@@ -13,7 +13,7 @@ const definition = {
   scope: '[data-test-global-search-box]',
   input: fillable('input'),
   inputValue: value('input'),
-  inputHasFocus: is(':focus', 'input'),
+  inputHasFocus: property('focus', 'input'),
   triggerInput: triggerable('keyup', 'input'),
   clickIcon: clickable('[data-test-search-icon]'),
   autocompleteResults: collection('[data-test-autocomplete] li'),
