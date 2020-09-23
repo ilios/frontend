@@ -15,6 +15,10 @@ const definition = {
     title: text(),
     hasLink: isPresent('a'),
   }),
+  sessionLearningMaterials: {
+    scope: '[data-test-session-materials]',
+    linksToAllMaterials: isPresent('[data-test-link-to-all-materials]')
+  }
 };
 
 export default definition;

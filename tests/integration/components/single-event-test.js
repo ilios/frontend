@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
+import Service from '@ember/service';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -288,5 +289,38 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     const formattedToday = today.format('dddd, MMMM Do YYYY, h:mm a');
     assert.equal(component.offeredAt, `Due Before postrequisite session (${formattedTomorrow}) ${formattedToday}`);
     assert.equal(component.offeredAtLink, `/events/1234`);
+  });
+
+  test('link to all materials if user is student and event is user-event', async function(assert) {
+    this.owner.setupRouter();
+    const MockCurrentUserService = Service.extend({ userIsStudent: true });
+    this.owner.register('service:current-user', MockCurrentUserService);
+    this.currentUser = this.owner.lookup('service:current-user');
+    this.server.create('userevent', {  isUserEvent: true });
+    this.set('evt', this.server.db.userevents[0]);
+    await render(hbs`<SingleEvent @event={{this.evt}} />`);
+    assert.ok(component.sessionLearningMaterials.linksToAllMaterials);
+  });
+
+  test('no link to all materials if user is not a student and event is user-event', async function(assert) {
+    this.owner.setupRouter();
+    const MockCurrentUserService = Service.extend({ userIsStudent: false });
+    this.owner.register('service:current-user', MockCurrentUserService);
+    this.currentUser = this.owner.lookup('service:current-user');
+    this.server.create('userevent', {  isUserEvent: true });
+    this.set('evt', this.server.db.userevents[0]);
+    await render(hbs`<SingleEvent @event={{this.evt}} />`);
+    assert.notOk(component.sessionLearningMaterials.linksToAllMaterials);
+  });
+
+  test('no link to all materials if user is student and event is school-event', async function(assert) {
+    this.owner.setupRouter();
+    const MockCurrentUserService = Service.extend({ userIsStudent: true });
+    this.owner.register('service:current-user', MockCurrentUserService);
+    this.currentUser = this.owner.lookup('service:current-user');
+    this.server.create('userevent', {  isUserEvent: false });
+    this.set('evt', this.server.db.userevents[0]);
+    await render(hbs`<SingleEvent @event={{this.evt}} />`);
+    assert.notOk(component.sessionLearningMaterials.linksToAllMaterials);
   });
 });

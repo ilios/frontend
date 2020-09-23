@@ -103,15 +103,16 @@
       {{/if}}
     </div>
     <fieldset>
-      <div class="single-event-learningmaterial-list">
+      <div class="single-event-learningmaterial-list" data-test-session-materials>
         <h2>
           {{t "general.sessionLearningMaterials"}}
-          {{#if (await this.currentUser.userIsStudent)}}
+          {{#if (and @event.isUserEvent (await this.currentUser.userIsStudent))}}
             <FaIcon
               @icon="archive"
               class="link"
               @title={{t "general.accessAllMaterialsForThisCourse"}}
               @click={{this.transitionToMyMaterials}}
+              data-test-link-to-all-materials
             />
           {{/if}}
         </h2>
