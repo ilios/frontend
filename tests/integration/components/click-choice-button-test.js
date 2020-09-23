@@ -8,7 +8,7 @@ module('Integration | Component | click choice buttons', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(6);
+    assert.expect(4);
     await render(hbs`<ClickChoiceButtons
       @toggle={{noop}}
       @firstChoicePicked={{true}}
@@ -19,12 +19,10 @@ module('Integration | Component | click choice buttons', function(hooks) {
     assert.equal(component.secondButton.text, 'Right Button', 'second button has correct text');
     assert.ok(component.firstButton.isActive);
     assert.notOk(component.secondButton.isActive);
-    assert.ok(component.firstButton.hasActiveStyle);
-    assert.notOk(component.secondButton.hasActiveStyle);
   });
 
   test('it renders second choice picked', async function(assert) {
-    assert.expect(6);
+    assert.expect(4);
     await render(hbs`<ClickChoiceButtons
       @toggle={{noop}}
       @firstChoicePicked={{false}}
@@ -35,8 +33,6 @@ module('Integration | Component | click choice buttons', function(hooks) {
     assert.equal(component.secondButton.text, 'Right Button', 'second button has correct text');
     assert.notOk(component.firstButton.isActive);
     assert.ok(component.secondButton.isActive);
-    assert.notOk(component.firstButton.hasActiveStyle);
-    assert.ok(component.secondButton.hasActiveStyle);
   });
 
   test('click fires toggle action', async function(assert) {
