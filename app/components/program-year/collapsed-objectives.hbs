@@ -23,6 +23,9 @@
           <th class="text-center">
             {{t "general.meshTerms"}}
           </th>
+          <th class="text-center">
+            {{t "general.vocabularyTerms"}}
+          </th>
         </tr>
         </thead>
         <tbody>
@@ -61,6 +64,20 @@
               <FaIcon @icon="ban" class="no" />
             {{/if}}
           </td>
+          <td class="text-middle text-center" rowspan="3" data-test-term-status>
+            {{#if
+              (eq
+                (get this.objectivesWithTerms "length")
+                (get this.objectives "length")
+              )
+            }}
+              <FaIcon @icon="circle" class="yes" />
+            {{else if (gte (get this.objectivesWithTerms "length") 1)}}
+              <FaIcon @icon="circle" class="maybe" />
+            {{else}}
+              <FaIcon @icon="ban" class="no" />
+            {{/if}}
+          </td>
         </tr>
         <tr>
           <td data-test-parent-count>
@@ -79,6 +96,15 @@
             {{t
               "general.meshCount"
               count=(get this.objectivesWithMesh "length")
+            }}
+          </td>
+        </tr>
+        <tr>
+          <td data-test-term-count>
+            &nbsp;&nbsp;
+            {{t
+              "general.termCount"
+              count=(get this.objectivesWithTerms "length")
             }}
           </td>
         </tr>

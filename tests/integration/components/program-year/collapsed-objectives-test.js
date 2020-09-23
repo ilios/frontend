@@ -11,27 +11,36 @@ module('Integration | Component | program-year/collapsed-objectives', function(h
 
   hooks.beforeEach(async function () {
     const meshDescriptor = this.server.create('meshDescriptor');
+    const term = this.server.create('term');
     const competency = this.server.create('competency');
     this.objective = this.server.create('programYearObjective');
     this.objectiveWithMesh = this.server.create('programYearObjective', { meshDescriptors: [ meshDescriptor ] });
+    this.objectiveWithTerms = this.server.create('programYearObjective', { terms: [ term ] });
     this.objectiveWithCompetency = this.server.create('programYearObjective', { competency });
   });
 
   test('displays summary data', async function(assert) {
     const programYear = this.server.create('programYear', {
-      programYearObjectives: [ this.objective, this.objectiveWithMesh, this.objectiveWithCompetency ]
+      programYearObjectives: [
+        this.objective,
+        this.objectiveWithMesh,
+        this.objectiveWithCompetency,
+        this.objectiveWithTerms
+      ]
     });
     const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{noop}} />`);
 
-    assert.equal(component.title, 'Objectives (3)');
-    assert.equal(component.objectiveCount, 'There are 3 objectives');
+    assert.equal(component.title, 'Objectives (4)');
+    assert.equal(component.objectiveCount, 'There are 4 objectives');
     assert.equal(component.parentCount, '1 has a linked competency');
     assert.equal(component.meshCount, '1 has MeSH');
+    assert.equal(component.termCount, '1 has vocabulary terms');
     assert.ok(component.parentStatus.partial);
     assert.ok(component.meshStatus.partial);
+    assert.ok(component.termStatus.partial);
   });
 
   test('clicking expand icon opens full view', async function(assert) {
@@ -89,5 +98,25 @@ module('Integration | Component | program-year/collapsed-objectives', function(h
     await render(hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{noop}} />`);
     assert.equal(component.title, 'Objectives (1)');
     assert.ok(component.meshStatus.none);
+  });
+
+  test('icons all terms correctly', async function(assert) {
+    const programYear = this.server.create('programYear', { programYearObjectives: [ this.objectiveWithTerms ]});
+    const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
+
+    this.set('programYear', programYearModel);
+    await render(hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{noop}} />`);
+    assert.equal(component.title, 'Objectives (1)');
+    assert.ok(component.termStatus.complete);
+  });
+
+  test('icons no terms correctly', async function(assert) {
+    const programYear = this.server.create('programYear', { programYearObjectives: [ this.objective ]});
+    const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
+
+    this.set('programYear', programYearModel);
+    await render(hbs`<ProgramYear::CollapsedObjectives @programYear={{this.programYear}} @expand={{noop}} />`);
+    assert.equal(component.title, 'Objectives (1)');
+    assert.ok(component.termStatus.none);
   });
 });
