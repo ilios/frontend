@@ -247,7 +247,6 @@ module('Integration | Component | new myreport', function(hooks) {
     assert.dom(userSearch).exists({ count: 1 });
     await fillIn(input, 'test');
     await click(firstResult);
-    assert.dom(`${selectedUser} [data-test-fullname]`).hasText('Aardvark');
-    assert.dom(`${selectedUser} [data-test-info]`).exists();
+    assert.dom(selectedUser).hasText('Aardvark');
   });
 });
