@@ -1,20 +1,20 @@
 <div class="programyear-details" data-test-program-year-details ...attributes>
-  {{#if (or (eq programYear.competencies.length 0) pyCompetencyDetails)}}
+  {{#if (or (eq @programYear.competencies.length 0) @pyCompetencyDetails)}}
     <ProgramyearCompetencies
-      @programYear={{programYear}}
-      @canUpdate={{canUpdate}}
-      @isManaging={{managePyCompetencies}}
-      @collapse={{action setPyCompetencyDetails false}}
-      @expand={{action setPyCompetencyDetails true}}
-      @setIsManaging={{action setManagePyCompetencies}}
+      @programYear={{@programYear}}
+      @canUpdate={{@canUpdate}}
+      @isManaging={{@managePyCompetencies}}
+      @collapse={{fn @setPyCompetencyDetails false}}
+      @expand={{fn @setPyCompetencyDetails true}}
+      @setIsManaging={{@setManagePyCompetencies}}
     />
   {{else}}
     <CollapsedCompetencies
-      @subject={{programYear}}
-      @expand={{action setPyCompetencyDetails true}}
+      @subject={{@programYear}}
+      @expand={{fn @setPyCompetencyDetails true}}
     />
   {{/if}}
-  {{#if (or (eq programYear.programYearObjectives.length 0) pyObjectiveDetails)}}
+  {{#if (or (eq @programYear.programYearObjectives.length 0) @pyObjectiveDetails)}}
     <ProgramYear::Objectives
       @programYear={{@programYear}}
       @editable={{@canUpdate}}
@@ -24,20 +24,20 @@
   {{else}}
     <ProgramYear::CollapsedObjectives
       @programYear={{@programYear}}
-      @expand={{action @setPyObjectiveDetails true}}
+      @expand={{fn @setPyObjectiveDetails true}}
     />
   {{/if}}
-  {{#if (or (eq programYear.terms.length 0) pyTaxonomyDetails)}}
+  {{#if (or (eq @programYear.terms.length 0) @pyTaxonomyDetails)}}
     <DetailTaxonomies
-      @subject={{programYear}}
-      @editable={{canUpdate}}
-      @collapse={{action setPyTaxonomyDetails false}}
-      @expand={{action setPyTaxonomyDetails true}}
+      @subject={{@programYear}}
+      @editable={{@canUpdate}}
+      @collapse={{fn @setPyTaxonomyDetails false}}
+      @expand={{fn @setPyTaxonomyDetails true}}
     />
   {{else}}
     <CollapsedTaxonomies
-      @subject={{programYear}}
-      @expand={{action setPyTaxonomyDetails true}}
+      @subject={{@programYear}}
+      @expand={{fn @setPyTaxonomyDetails true}}
     />
   {{/if}}
 </div>

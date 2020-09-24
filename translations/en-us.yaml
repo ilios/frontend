@@ -384,8 +384,8 @@ general:
   table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative: "Table 7: All Events with Assessments Tagged as Formative or Summative"
   table8AllResourceTypes: "Table 8: All Resource Types"
   term: Term
-  termCount: "{count, plural, =1 {There is 1 term} other {There are # terms}}"
   termsBySessionType: "Terms by Session Type"
+  thereAreXTerms: "{count, plural, =1 {There is 1 term} other {There are # terms}}"
   thisReportIsNoLongerAvailable: "This report is no longer available."
   tokenInfo: "API Tokens are used to programmatically access Ilios data.  Your token is like a password - anyone who has it can make changes on your behalf.  Read more in the documentation at {apiDocsLink}."
   tooManyResults: "Search returned more than {count} results.  To see better results try your search again with more terms."
