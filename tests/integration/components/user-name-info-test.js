@@ -25,10 +25,11 @@ module('Integration | Component | user-name-info', function(hooks) {
     await render(hbs`<UserNameInfo @user={{this.user}} />`);
     assert.ok(component.hasAdditionalInfo);
     assert.equal(component.fullName, 'Clem Chowder');
+    assert.equal(component.infoIconTitle, 'Campus name of record');
     assert.notOk(component.isTooltipVisible);
     await component.expandTooltip();
     assert.ok(component.isTooltipVisible);
-    assert.equal(component.tooltipContents, '0 guy M, Mc0son');
+    assert.equal(component.tooltipContents, 'Campus name of record: 0 guy M, Mc0son');
     await component.closeTooltip();
     assert.notOk(component.isTooltipVisible);
   });

@@ -42,7 +42,7 @@ module('Integration | Component | instructor selection manager', function(hooks)
     assert.notOk(component.instructors[0].userNameInfo.isTooltipVisible);
     await component.instructors[0].userNameInfo.expandTooltip();
     assert.ok(component.instructors[0].userNameInfo.isTooltipVisible);
-    assert.equal(component.instructors[0].userNameInfo.tooltipContents, '2 guy M, Mc2son');
+    assert.equal(component.instructors[0].userNameInfo.tooltipContents, 'Campus name of record: 2 guy M, Mc2son');
     await component.instructors[0].userNameInfo.closeTooltip();
     assert.equal(component.instructors[1].userNameInfo.fullName, "Jane A. Doe");
     assert.notOk(component.instructors[1].userNameInfo.isTooltipVisible);
@@ -55,7 +55,10 @@ module('Integration | Component | instructor selection manager', function(hooks)
     assert.notOk(component.instructorGroups[0].members[0].userNameInfo.isTooltipVisible);
     await component.instructorGroups[0].members[0].userNameInfo.expandTooltip();
     assert.ok(component.instructorGroups[0].members[0].userNameInfo.isTooltipVisible);
-    assert.equal(component.instructorGroups[0].members[0].userNameInfo.tooltipContents, '2 guy M, Mc2son');
+    assert.equal(
+      component.instructorGroups[0].members[0].userNameInfo.tooltipContents,
+      'Campus name of record: 2 guy M, Mc2son'
+    );
     await component.instructorGroups[0].members[0].userNameInfo.closeTooltip();
     assert.equal(component.instructorGroups[0].members[1].userNameInfo.fullName, "Jane A. Doe");
     assert.notOk(component.instructorGroups[0].members[1].userNameInfo.isTooltipVisible);

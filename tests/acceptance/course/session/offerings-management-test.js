@@ -94,7 +94,7 @@ module('Acceptance | Session - Offering Management', function(hooks) {
     assert.ok(page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.isTooltipVisible);
     assert.equal(
       page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.tooltipContents,
-      '2 guy M, Mc2son'
+      'Campus name of record: 2 guy M, Mc2son'
     );
     await page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.closeTooltip();
     assert.notOk(page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.isTooltipVisible);

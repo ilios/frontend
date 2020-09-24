@@ -31,7 +31,7 @@ module('Integration | Component | learner selection manager', function(hooks) {
     assert.ok(component.selectedLearners.detailLearnerList.learners[0].userNameInfo.isTooltipVisible);
     assert.equal(
       component.selectedLearners.detailLearnerList.learners[0].userNameInfo.tooltipContents,
-      '2 guy M, Mc2son'
+      'Campus name of record: 2 guy M, Mc2son'
     );
     await component.selectedLearners.detailLearnerList.learners[0].userNameInfo.closeTooltip();
     assert.notOk(component.selectedLearners.detailLearnerList.learners[0].userNameInfo.isTooltipVisible);

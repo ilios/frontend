@@ -29,7 +29,7 @@ module('Integration | Component | new learningmaterial', function(hooks) {
     assert.notOk(component.owningUser.userNameInfo.isTooltipVisible);
     await component.owningUser.userNameInfo.expandTooltip();
     assert.ok(component.owningUser.userNameInfo.isTooltipVisible);
-    assert.equal(component.owningUser.userNameInfo.tooltipContents, '0 guy M, Mc0son');
+    assert.equal(component.owningUser.userNameInfo.tooltipContents, 'Campus name of record: 0 guy M, Mc0son');
     await component.owningUser.userNameInfo.closeTooltip();
     assert.notOk(component.owningUser.userNameInfo.isTooltipVisible);
   });

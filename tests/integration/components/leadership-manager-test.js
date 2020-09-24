@@ -418,10 +418,9 @@ module('Integration | Component | leadership manager', function(hooks) {
       assert.dom(`${users}:nth-of-type(1) [data-test-fullname]`).hasText('Aaron M. Aardvark');
       assert.dom(`${users}:nth-of-type(1) [data-test-info]`).doesNotExist();
       assert.dom(`${users}:nth-of-type(2) [data-test-fullname]`).hasText('The Bane of Iowa');
-      assert.dom(`${users}:nth-of-type(2) [data-test-info]`).hasText('Campus name of record');
       assert.dom(find('.ilios-tooltip')).doesNotExist();
       await triggerEvent(find(`${users}:nth-of-type(2) [data-test-info]`), 'mouseover');
-      assert.dom(find('.ilios-tooltip')).hasText('Zeb M, Zoober');
+      assert.dom(find('.ilios-tooltip')).hasText('Campus name of record: Zeb M, Zoober');
       await triggerEvent(find(`${users}:nth-of-type(2) [data-test-info]`), 'mouseout');
       assert.dom(find('.ilios-tooltip')).doesNotExist();
       assert.dom(`${users}:nth-of-type(3) [data-test-fullname]`).hasText('Ursula U. Unbekannt');

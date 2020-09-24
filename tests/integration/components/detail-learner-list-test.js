@@ -27,7 +27,7 @@ module('Integration | Component | detail learner list', function(hooks) {
     assert.notOk(component.learners[0].userNameInfo.isTooltipVisible);
     await component.learners[0].userNameInfo.expandTooltip();
     assert.ok(component.learners[0].userNameInfo.isTooltipVisible);
-    assert.equal(component.learners[0].userNameInfo.tooltipContents, '2 guy M, Mc2son');
+    assert.equal(component.learners[0].userNameInfo.tooltipContents, 'Campus name of record: 2 guy M, Mc2son');
     await component.learners[0].userNameInfo.closeTooltip();
     assert.equal(component.learners[1].userNameInfo.fullName, "Jane A. Doe");
     assert.notOk(component.learners[1].isRemovable);
@@ -44,7 +44,7 @@ module('Integration | Component | detail learner list', function(hooks) {
     assert.notOk(component.learners[0].userNameInfo.isTooltipVisible);
     await component.learners[0].userNameInfo.expandTooltip();
     assert.ok(component.learners[0].userNameInfo.isTooltipVisible);
-    assert.equal(component.learners[0].userNameInfo.tooltipContents, '2 guy M, Mc2son');
+    assert.equal(component.learners[0].userNameInfo.tooltipContents, 'Campus name of record: 2 guy M, Mc2son');
     await component.learners[0].userNameInfo.closeTooltip();
     assert.equal(component.learners[1].userNameInfo.fullName, "Jane A. Doe");
     assert.ok(component.learners[1].isRemovable);

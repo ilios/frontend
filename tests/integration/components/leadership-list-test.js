@@ -55,20 +55,18 @@ module('Integration | Component | leadership list', function(hooks) {
 
     assert.dom(directors).exists({ count: 2 });
     assert.dom(directorsUsernameInfo).exists({ count: 1 });
-    assert.dom(findAll(directorsUsernameInfo)[0]).hasText('Campus name of record');
     assert.dom(find('.ilios-tooltip')).doesNotExist();
     await triggerEvent(findAll(directorsUsernameInfo)[0], 'mouseover');
-    assert.dom(find('.ilios-tooltip')).hasText('stuart leslie goddard');
+    assert.dom(find('.ilios-tooltip')).hasText('Campus name of record: stuart leslie goddard');
     await triggerEvent(findAll(directorsUsernameInfo)[0], 'mouseout');
     assert.dom(find('.ilios-tooltip')).doesNotExist();
     assert.dom(findAll(directors)[0]).hasText('a b. person');
     assert.dom(findAll(directors)[1]).hasText('adam ant');
     assert.dom(administrators).exists({ count: 3 });
     assert.dom(administratorsUsernameInfo).exists({ count: 1 });
-    assert.dom(findAll(administratorsUsernameInfo)[0]).hasText('Campus name of record');
     assert.dom(find('.ilios-tooltip')).doesNotExist();
     await triggerEvent(findAll(administratorsUsernameInfo)[0], 'mouseover');
-    assert.dom(find('.ilios-tooltip')).hasText('stuart leslie goddard');
+    assert.dom(find('.ilios-tooltip')).hasText('Campus name of record: stuart leslie goddard');
     await triggerEvent(findAll(administratorsUsernameInfo)[0], 'mouseout');
     assert.dom(find('.ilios-tooltip')).doesNotExist();
     assert.dom(findAll(administrators)[0]).hasText('a b. person');
@@ -76,10 +74,9 @@ module('Integration | Component | leadership list', function(hooks) {
     assert.dom(findAll(administrators)[2]).hasText('b a. person');
     assert.dom(studentAdvisors).exists({ count: 2 });
     assert.dom(studentAdvisorsUsernameInfo).exists({ count: 1 });
-    assert.dom(findAll(studentAdvisorsUsernameInfo)[0]).hasText('Campus name of record');
     assert.dom(find('.ilios-tooltip')).doesNotExist();
     await triggerEvent(findAll(studentAdvisorsUsernameInfo)[0], 'mouseover');
-    assert.dom(find('.ilios-tooltip')).hasText('stuart leslie goddard');
+    assert.dom(find('.ilios-tooltip')).hasText('Campus name of record: stuart leslie goddard');
     await triggerEvent(findAll(studentAdvisorsUsernameInfo)[0], 'mouseout');
     assert.dom(find('.ilios-tooltip')).doesNotExist();
     assert.dom(findAll(studentAdvisors)[0]).hasText('adam ant');
