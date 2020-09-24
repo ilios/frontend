@@ -10,7 +10,7 @@ const definition = {
   scope: '[data-test-user-name-info]',
   fullName: text('[data-test-fullname]'),
   hasAdditionalInfo: isVisible('[data-test-info]'),
-  infoIconTitle: attribute('title', '[data-test-info] svg'),
+  infoIconLabel: attribute('aria-label', '[data-test-info] svg'),
   expandTooltip: triggerable('mouseover', '[data-test-info] .info'),
   closeTooltip: triggerable('mouseout', '[data-test-info] .info'),
   tooltipContents: text('.ilios-tooltip', { resetScope: true }),
