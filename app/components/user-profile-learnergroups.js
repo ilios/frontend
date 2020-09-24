@@ -1,20 +1,19 @@
-import Component from '@ember/component';
-import EmberObject, { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
+import Component from '@glimmer/component';
 import { map } from 'rsvp';
+import { restartableTask } from 'ember-concurrency-decorators';
+import { tracked } from '@glimmer/tracking';
 
-export default Component.extend({
-  tagName: "",
+export default class UserProfileLearnergroupsComponent extends Component {
+  @tracked selectedLearnerGroups;
 
-  user: null,
+  @restartableTask
+  *load() {
+    this.selectedLearnerGroups = yield this.getSelectedLearnerGroups(this.args.user);
+  }
 
-  selectedLearnerGroups: computed('user.learnerGroups.[]', async function() {
-    const user = this.user;
-    if (isEmpty(user)) {
-      return [];
-    }
-    const learnerGroups = await user.get('learnerGroups');
-    const groupObjects = await map(learnerGroups.toArray(), async learnerGroup => {
+  async getSelectedLearnerGroups(user) {
+    const learnerGroups = (await user.learnerGroups).toArray();
+    return await map(learnerGroups, async learnerGroup => {
       const cohort = await learnerGroup.get('cohort');
       const program = await cohort.get('program');
       const school = await program.get('school');
@@ -23,15 +22,14 @@ export default Component.extend({
       const schoolTitle = school.get('title');
       const programTitle = program.get('title');
       const cohortTitle = cohort.get('title');
-      return EmberObject.create({
+      return {
         allParentsTitle,
         title,
         schoolTitle,
         programTitle,
         cohortTitle,
         sortTitle: schoolTitle + programTitle + cohortTitle + allParentsTitle + title
-      });
+      };
     });
-    return groupObjects.sortBy('sortTitle');
-  })
-});
+  }
+}
