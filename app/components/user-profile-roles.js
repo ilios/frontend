@@ -1,109 +1,78 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { isEmpty } from '@ember/utils';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  store: service(),
-  tagName: "",
-  finishedSetup: false,
-  hasSavedRecently: false,
-  isEnabledFlipped: false,
-  isFormerStudentFlipped: false,
-  isManageable: false,
-  isManaging: false,
-  isStudentFlipped: false,
-  isUserSyncIgnoredFlipped: false,
-  user: null,
+export default class UserProfileRolesComponent extends Component {
+  @service store;
+  @service currentUser;
+  @tracked hasSavedRecently = false;
+  @tracked isEnabledFlipped = false;
+  @tracked isFormerStudentFlipped = false;
+  @tracked isStudentFlipped = false;
+  @tracked isUserSyncIgnoredFlipped = false;
+  @tracked roleTitles = [];
 
-  roleTitles: computed('user.roles.[]', async function() {
-    const user = this.user;
-    if (isEmpty(user)) {
-      return [];
-    }
-    const roles = await user.get('roles');
-    return roles.map(role => role.get('title').toLowerCase());
-  }),
+  @restartableTask
+  *load() {
+    const roles = yield this.args.user.roles;
+    this.roleTitles = roles.map(role => role.title.toLowerCase());
+  }
 
-  isStudent: computed('roleTitles.[]', 'isStudentFlipped', async function() {
-    const flipped = this.isStudentFlipped;
-    const roleTitles = await this.roleTitles;
-    const originallyYes = roleTitles.includes('student');
-    return (originallyYes && !flipped) || (!originallyYes && flipped);
-  }),
+  get isStudent() {
+    const originallyYes = this.roleTitles.includes('student');
+    return (originallyYes && !this.isStudentFlipped) || (!originallyYes && this.isStudentFlipped);
+  }
 
-  isFormerStudent: computed('roleTitles.[]', 'isFormerStudentFlipped', async function() {
-    const flipped = this.isFormerStudentFlipped;
-    const roleTitles = await this.roleTitles;
-    const originallyYes = roleTitles.includes('former student');
-    return (originallyYes && !flipped) || (!originallyYes && flipped);
-  }),
+  get isFormerStudent() {
+    const originallyYes = this.roleTitles.includes('former student');
+    return (originallyYes && !this.isFormerStudentFlipped) || (!originallyYes && this.isFormerStudentFlipped);
+  }
 
-  isEnabled: computed('user.enabled', 'isEnabledFlipped', function() {
-    const flipped = this.isEnabledFlipped;
-    const user = this.user;
-    if (isEmpty(user)) {
-      return false;
-    }
-    const originallyYes = user.get('enabled');
-    return (originallyYes && !flipped) || (!originallyYes && flipped);
-  }),
+  get isEnabled() {
+    const originallyYes = this.args.user.get('enabled');
+    return (originallyYes && !this.isEnabledFlipped) || (!originallyYes && this.isEnabledFlipped);
+  }
 
-  isUserSyncIgnored: computed('user.userSyncIgnore', 'isUserSyncIgnoredFlipped', function() {
-    const flipped = this.isUserSyncIgnoredFlipped;
-    const user = this.user;
-    if (isEmpty(user)) {
-      return false;
-    }
-    const originallyYes = user.get('userSyncIgnore');
-    return (originallyYes && !flipped) || (!originallyYes && flipped);
-  }),
+  get isUserSyncIgnored() {
+    const originallyYes = this.args.user.get('userSyncIgnore');
+    return (originallyYes && !this.isUserSyncIgnoredFlipped) || (!originallyYes && this.isUserSyncIgnoredFlipped);
+  }
+  @action
+  cancel() {
+    this.resetFlipped();
+    this.args.setIsManaging(false);
+  }
 
-  actions: {
-    cancel() {
-      this.set('isStudentFlipped', false);
-      this.set('isFormerStudentFlipped', false);
-      this.set('isEnabledFlipped', false);
-      this.set('isUserSyncIgnoredFlipped', false);
-      this.setIsManaging(false);
-    }
-  },
+  resetFlipped() {
+    this.isStudentFlipped = false;
+    this.isFormerStudentFlipped = false;
+    this.isEnabledFlipped = false;
+    this.isUserSyncIgnoredFlipped = false;
+  }
 
-  save: task(function* () {
-    const store = this.store;
-    const user = this.user;
-
-    const isStudent = yield this.isStudent;
-    const isFormerStudent = yield this.isFormerStudent;
-    const isEnabled = yield this.isEnabled;
-    const isUserSyncIgnored = yield this.isUserSyncIgnored;
-
-    const roles = yield store.findAll('user-role');
+  @dropTask
+  *save() {
+    const roles = yield this.store.findAll('user-role');
     const studentRole = roles.findBy('title', 'Student');
     const formerStudentRole = roles.findBy('title', 'Former Student');
-
-    //reset flippedRoles here to prevent CP changes when we update the roles
-    this.set('isStudentFlipped', false);
-    this.set('isFormerStudentFlipped', false);
-    this.set('isEnabledFlipped', false);
-    this.set('isUserSyncIgnoredFlipped', false);
-    user.set('enabled', isEnabled);
-    user.set('userSyncIgnore', isUserSyncIgnored);
-    const userRoles = yield user.get('roles');
+    this.args.user.set('enabled', this.isEnabled);
+    this.args.user.set('userSyncIgnore', this.isUserSyncIgnored);
+    const userRoles = yield this.args.user.get('roles');
     userRoles.clear();
-    if (isStudent) {
+    if (this.isStudent) {
       userRoles.pushObject(studentRole);
     }
-    if (isFormerStudent) {
+    if (this.isFormerStudent) {
       userRoles.pushObject(formerStudentRole);
     }
-
-    yield user.save();
-    this.setIsManaging(false);
-    this.set('hasSavedRecently', true);
+    this.resetFlipped();
+    yield this.args.user.save();
+    this.args.setIsManaging(false);
+    this.hasSavedRecently = true;
     yield timeout(500);
-    this.set('hasSavedRecently', false);
-
-  }).drop()
-});
+    this.hasSavedRecently = false;
+  }
+}
