@@ -130,7 +130,10 @@ module('Acceptance | Session - Learning Materials', function(hooks) {
       assert.ok(page.learningMaterials.current[1].owner.userNameInfo.hasAdditionalInfo);
       assert.notOk(page.learningMaterials.current[1].owner.userNameInfo.isTooltipVisible);
       await page.learningMaterials.current[1].owner.userNameInfo.expandTooltip();
-      assert.equal(page.learningMaterials.current[1].owner.userNameInfo.tooltipContents, '1 guy M, Mc1son');
+      assert.equal(
+        page.learningMaterials.current[1].owner.userNameInfo.tooltipContents,
+        'Campus name of record: 1 guy M, Mc1son'
+      );
       await page.learningMaterials.current[1].owner.userNameInfo.closeTooltip();
       assert.notOk(page.learningMaterials.current[1].owner.userNameInfo.isTooltipVisible);
       assert.equal(page.learningMaterials.current[1].required, 'No');

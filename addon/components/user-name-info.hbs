@@ -13,11 +13,12 @@
     >
       <FaIcon
         @icon="info-circle"
-        @title={{t "general.campusNameOfRecord"}}
+        aria-label={{t "general.campusNameOfRecord"}}
         class="info"
       />
       {{#if this.isHoveringOverUsernameInfo}}
         <IliosTooltip @target={{this.theElement}}>
+          <strong>{{t "general.campusNameOfRecord"}}:</strong>
           {{this.campusNameOfRecord}}
         </IliosTooltip>
       {{/if}}
