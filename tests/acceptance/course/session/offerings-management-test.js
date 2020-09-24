@@ -99,4 +99,30 @@ module('Acceptance | Session - Offering Management', function(hooks) {
     await page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.closeTooltip();
     assert.notOk(page.offerings.dateBlocks[0].offerings[0].instructors[1].userNameInfo.isTooltipVisible);
   });
+
+  test('Learner Group parents are shown in tooltip if applicable', async function(assert) {
+    const course = this.server.create('course', { school: this.school });
+    const session = this.server.create('session', { course });
+    const learnerGroup = this.server.create('learnerGroup', { title: 'Top Group' });
+    const learnerGroup2 = this.server.create('learnerGroup', { title: 'Other Top Group' });
+    const subLearnerGroup = this.server.create('learnerGroup', { parent: learnerGroup, title: 'Sub-Group' });
+    const subSubLearnerGroup = this.server.create('learnerGroup', { parent: subLearnerGroup, title: 'Sub-sub Group' });
+    this.server.create('offering', { session, learnerGroups: [ subSubLearnerGroup, learnerGroup2 ] });
+    await page.visit({ courseId: 1, sessionId: 1 });
+    assert.equal(page.offerings.dateBlocks[0].offerings[0].learnerGroups.length, 2);
+    assert.equal(page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].title, 'Sub-sub Group');
+    assert.notOk(page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible);
+    await page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].expandTooltip();
+    assert.ok(page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible);
+    assert.equal(page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].tooltipContents, 'Sub-Group > Top Group');
+    await page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].closeTooltip();
+    assert.notOk(page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible);
+    assert.equal(page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].title, 'Other Top Group');
+    assert.notOk(page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].isTooltipVisible);
+    await page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].expandTooltip();
+    assert.notOk(
+      page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].isTooltipVisible,
+      'no tooltip on top-level group'
+    );
+  });
 });

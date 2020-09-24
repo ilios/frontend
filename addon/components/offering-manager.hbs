@@ -35,7 +35,7 @@
                 (is-fulfilled learnerGroup.allParents)
               )
             }}
-              {{#if (and false
+              {{#if (and
                 (get this (concat "learnerGroupElement" learnerGroup.id))
                 (includes learnerGroup.id this.hoveredGroups)
               )}}
