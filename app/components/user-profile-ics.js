@@ -1,30 +1,25 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { isEmpty, isPresent } from '@ember/utils';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  iliosConfig: service(),
+export default class UserProfileIcsComponent extends Component {
+  @service iliosConfig;
+  @tracked showCopySuccessMessage = false;
 
-  tagName: "",
+  get icsFeedKey() {
+    return this.args.user.icsFeedKey;
+  }
 
-  finishedSetup: false,
-  hasSavedRecently: false,
-  icsFeedKey: null,
-  isManageable: false,
-  isManaging: false,
-  showCopySuccessMessage: false,
-  user: null,
+  get host() {
+    return this.iliosConfig.apiHost;
+  }
 
-  host: reads('iliosConfig.apiHost'),
-
-  icsFeedUrl: computed('icsFeedKey', 'host', function() {
-    const icsFeedKey = this.icsFeedKey;
-    let host = this.host;
-    if (isPresent(icsFeedKey)) {
-      if (isEmpty(host)) {
+  get icsFeedUrl() {
+    if (this.icsFeedKey) {
+      let host = this.host;
+      if (!host) {
         host = window.location.protocol + '//' + window.location.hostname;
         const port = window.location.port;
 
@@ -32,21 +27,11 @@ export default Component.extend({
           host += ':' + port;
         }
       }
-      return host  + '/ics/' + icsFeedKey;
+      return host  + '/ics/' + this.icsFeedKey;
     }
 
     return null;
-  }),
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    const user = this.user;
-    if (isPresent(user)) {
-      this.set('icsFeedKey', user.get('icsFeedKey'));
-    } else {
-      this.set('icsFeedKey', null);
-    }
-  },
+  }
 
   /**
    * Generate a random token from a combination of
@@ -63,22 +48,23 @@ export default Component.extend({
     const hashArray = Array.from(new Uint8Array(hashBuffer)); // convert buffer to byte array
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // convert bytes to hex string
     return hashHex;
-  },
+  }
 
-  refreshKey: task(function* () {
-    const user = this.user;
-    const token = yield this.randomToken(user.get('id'));
-    user.set('icsFeedKey', token);
-    yield user.save();
-    this.setIsManaging(false);
-    this.set('hasSavedRecently', true);
+  @dropTask
+  *refreshKey() {
+    const token = yield this.randomToken(this.args.user.id);
+    this.args.user.set('icsFeedKey', token);
+    yield this.args.user.save();
+    this.args.setIsManaging(false);
+    this.hasSavedRecently = true;
     yield timeout(500);
-    this.set('hasSavedRecently', false);
-  }).drop(),
+    this.hasSavedRecently = false;
+  }
 
-  textCopied: task(function* () {
-    this.set('showCopySuccessMessage', true);
+  @restartableTask
+  *textCopied() {
+    this.showCopySuccessMessage = true;
     yield timeout(3000);
-    this.set('showCopySuccessMessage', false);
-  }).restartable()
-});
+    this.showCopySuccessMessage = false;
+  }
+}
