@@ -1,16 +1,13 @@
-import { resolve } from 'rsvp';
-import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
   render,
-  settled,
   click,
-  find,
   fillIn
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 module('Integration | Component | user profile cohorts', function(hooks) {
   setupRenderingTest(hooks);
@@ -35,21 +32,12 @@ module('Integration | Component | user profile cohorts', function(hooks) {
       primaryCohort: this.cohort1,
       cohorts: [this.cohort1, this.cohort2]
     });
-    const user2 = this.server.create('user', {
-      school: school1
+    await setupAuthentication({
+      school: school1,
+      administeredSchools: [school1, school2],
     });
 
     this.user = await this.owner.lookup('service:store').find('user', user.id);
-    const sessionUser = await this.owner.lookup('service:store').find('user', user2.id);
-
-    const currentUserMock = Service.extend({
-      model: resolve(sessionUser),
-      getRolesInSchool() {
-        return resolve(['SCHOOL_ADMINISTRATOR']);
-      },
-    });
-    this.owner.register('service:currentUser', currentUserMock);
-    await this.owner.lookup('service:store').findAll('school');
   });
 
   test('it renders', async function(assert) {
@@ -57,9 +45,8 @@ module('Integration | Component | user profile cohorts', function(hooks) {
     await render(hbs`<UserProfileCohorts @user={{user}} />`);
     const primaryCohort = '[data-test-primary-cohort]';
     const secondaryCohorts = '[data-test-secondary-cohorts] li';
-    await settled();
 
-    assert.equal(find(primaryCohort).textContent.replace(/[\n\s]+/g, " ").trim(), 'Primary Cohort: school 0 program 0 cohort 0', 'primary cohort correct');
+    assert.dom(primaryCohort).hasText('Primary Cohort: school 0 program 0 cohort 0', 'primary cohort correct');
     assert.dom(secondaryCohorts).exists({ count: 1 }, 'correct number of secondary cohorts');
     assert.dom(secondaryCohorts).hasText('school 1 program 1 cohort 1', 'cohort correct');
   });
@@ -79,7 +66,6 @@ module('Integration | Component | user profile cohorts', function(hooks) {
     assert.expect(12);
 
     this.set('user', this.user);
-    this.set('nothing', parseInt);
 
     this.server.patch('api/users/:id', (schema, request) => {
       const { data } = JSON.parse(request.requestBody);
@@ -93,7 +79,7 @@ module('Integration | Component | user profile cohorts', function(hooks) {
       return schema.users.find(data.id);
     });
 
-    await render(hbs`<UserProfileCohorts @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
+    await render(hbs`<UserProfileCohorts @isManaging={{true}} @user={{user}} @setIsManaging={{noop}} />`);
     const primaryCohort = '[data-test-primary-cohort] [data-test-title]';
     const secondaryCohorts = '[data-test-secondary-cohorts] li';
     const firstSecondaryCohortTitle = `${secondaryCohorts}:nth-of-type(1) [data-test-title]`;
@@ -104,7 +90,7 @@ module('Integration | Component | user profile cohorts', function(hooks) {
     const removeFirstSecondaryCohort = `${secondaryCohorts}:nth-of-type(1) .remove`;
     const addFirstAssignableCohort = `${assignableCohorts}:nth-of-type(1) .add`;
 
-    assert.equal(find(primaryCohort).textContent.replace(/[\n\s]+/g, " ").trim(), 'school 0 program 0 cohort 0', 'primary cohort correct');
+    assert.dom(primaryCohort).hasText('school 0 program 0 cohort 0', 'primary cohort correct');
     assert.dom(secondaryCohorts).exists({ count: 1 }, 'correct number of secondary cohorts');
     assert.dom(firstSecondaryCohortTitle).hasText('school 1 program 1 cohort 1', 'cohort correct');
 
