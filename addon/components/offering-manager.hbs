@@ -46,7 +46,7 @@
                       (t "general.parentGroups")
                     }}:
                   </strong>
-                  {{join " > " (reverse (map-by "title" (await learnerGroup.allParents)))}}
+                  {{join " » " (reverse (map-by "title" (await learnerGroup.allParents)))}}
                 </IliosTooltip>
               {{/if}}
             {{/if}}
