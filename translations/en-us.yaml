@@ -216,6 +216,8 @@ general:
   ownedBy: "owned by {owner}"
   owner: Owner
   parentCount: "{count, plural, =1 {1 has a parent} other {# have parents}}"
+  parentGroup: "Parent group"
+  parentGroups: "Parent groups"
   parentObjectives: "Parent Objectives"
   prerequisites: "Prerequisites"
   preWork: "Pre-work"

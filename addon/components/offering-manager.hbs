@@ -40,6 +40,12 @@
                 (includes learnerGroup.id this.hoveredGroups)
               )}}
                 <IliosTooltip @target={{get this (concat "learnerGroupElement" learnerGroup.id)}}>
+                  <strong>
+                    {{if (eq (get (await learnerGroup.allParents) "length") 1)
+                      (t "general.parentGroup")
+                      (t "general.parentGroups")
+                    }}:
+                  </strong>
                   {{join " > " (map-by "title" (await learnerGroup.allParents))}}
                 </IliosTooltip>
               {{/if}}
