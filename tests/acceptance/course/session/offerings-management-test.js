@@ -117,7 +117,7 @@ module('Acceptance | Session - Offering Management', function(hooks) {
     assert.ok(page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].isTooltipVisible);
     assert.equal(
       page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].tooltipContents,
-      'Parent groups: Sub-Group > Top Group'
+      'Parent groups: Top Group > Sub-Group'
     );
     await page.offerings.dateBlocks[0].offerings[0].learnerGroups[0].closeTooltip();
     assert.equal(page.offerings.dateBlocks[0].offerings[0].learnerGroups[1].title, 'Sub-Group 2');
