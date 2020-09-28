@@ -1,22 +1,21 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { restartableTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  classNames: ['update-notification'],
-
+export default class UpdateNotificationComponent extends Component {
   /**
    * send a message to update every tab attached to this worker
    * this message is caught by our sw-skip-wait in-repo addon
    */
-  async click() {
+  @restartableTask
+  *click() {
     if ('serviceWorker' in navigator) {
-      const reg = await navigator.serviceWorker.getRegistration();
+      const reg = yield navigator.serviceWorker.getRegistration();
       if (reg && reg.waiting) {
         reg.waiting.postMessage('skipWaiting');
       }
     }
-    const reload = this.reload;
-    if (reload) {
-      reload();
+    if (this.args.reload) {
+      this.args.reload();
     }
   }
-});
+}

@@ -18,7 +18,7 @@
       </tr>
     </thead>
     <tbody>
-      {{#each users as |user|}}
+      {{#each @users as |user|}}
         <tr class={{unless user.enabled "disabled-user-account" ""}}>
           <td class="text-left" colspan="1">
             {{#unless user.enabled}}

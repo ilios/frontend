@@ -1,6 +1,6 @@
-.update-notification {
+// class name prefixed with ilios to avoid conflicts with addon provided css
+.ilios-update-notification {
+  @include ilios-button-reset;
   $height: 2.5rem;
   @include critical-notice($info-color, $super-light-grey, $height);
-
-  cursor: pointer;
 }

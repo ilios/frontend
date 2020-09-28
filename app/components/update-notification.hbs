@@ -1,1 +1,8 @@
-{{t "general.iliosUpdatePending"}}
+<button
+  type="button"
+  class="ilios-update-notification"
+  {{on "click" (perform this.click)}}
+  ...attributes
+>
+  {{t "general.iliosUpdatePending"}}
+</button>

@@ -4,27 +4,22 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import component from 'ilios/tests/pages/components/user-menu';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
-import Service from '@ember/service';
-import EmberObject from '@ember/object';
-import { resolve } from 'rsvp';
+import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | user-menu', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-  hooks.beforeEach(function () {
-    const currentUserMock = Service.extend({
-      model: resolve(EmberObject.create({
-        fullName: 'Test Person'
-      }))
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+  hooks.beforeEach(async function () {
+    await setupAuthentication();
   });
 
   test('it renders and is accessible', async function(assert) {
     await render(hbs`<UserMenu />`);
 
     await a11yAudit(this.element);
-    assert.equal(component.text, 'Test Person');
+    assert.equal(component.text, '0 guy M. Mc0son');
 
     await component.toggle.click();
     await a11yAudit(this.element);

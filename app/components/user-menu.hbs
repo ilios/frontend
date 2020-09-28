@@ -1,38 +1,47 @@
-<button
-  type="button"
+<nav
+  class="{{if this.isOpen "is-open"}} user-menu"
   aria-labelledby="user-menu-title"
-  class="toggle"
-  aria-haspopup="true"
-  aria-expanded={{if isOpen "true" "false"}}
-  data-test-toggle
-  {{action "toggleMenu"}}
+  {{did-insert (set this.element)}}
+  {{! template-lint-disable no-invalid-interactive }}
+  {{on "keydown" this.keyDown}}
+  data-test-user-menu
 >
-  <FaIcon @icon="user" />
-  <span id="user-menu-title">
-    {{get (await currentUser.model) "fullName"}}
-  </span>
-</button>
-{{#if isOpen}}
-  <ClickOutside @onClickOutside={{action (mut isOpen) false}}>
-    <ul class="menu">
-      <li tabindex="-1" data-test-item>
-        <LinkTo @route="myprofile" @invokeAction={{action (mut isOpen) false}}>
-          {{t "general.myProfile"}}
-        </LinkTo>
-      </li>
-      <li tabindex="-1" data-test-item>
-        <LinkTo
-          @route="mymaterials"
-          @invokeAction={{action (mut isOpen) false}}
-        >
-          {{t "general.myMaterials"}}
-        </LinkTo>
-      </li>
-      <li tabindex="-1" data-test-item>
-        <LinkTo @route="logout" @invokeAction={{action (mut isOpen) false}}>
-          {{t "general.logout"}}
-        </LinkTo>
-      </li>
-    </ul>
-  </ClickOutside>
-{{/if}}
+  <button
+    type="button"
+    aria-labelledby="user-menu-title"
+    class="toggle"
+    aria-haspopup="true"
+    aria-expanded={{if isOpen "true" "false"}}
+    data-test-toggle
+    {{action "toggleMenu"}}
+  >
+    <FaIcon @icon="user" />
+    <span id="user-menu-title">
+      {{get (await currentUser.model) "fullName"}}
+    </span>
+  </button>
+  {{#if isOpen}}
+    <ClickOutside @onClickOutside={{action (mut isOpen) false}}>
+      <ul class="menu">
+        <li tabindex="-1" data-test-item>
+          <LinkTo @route="myprofile" @invokeAction={{action (mut isOpen) false}}>
+            {{t "general.myProfile"}}
+          </LinkTo>
+        </li>
+        <li tabindex="-1" data-test-item>
+          <LinkTo
+            @route="mymaterials"
+            @invokeAction={{action (mut isOpen) false}}
+          >
+            {{t "general.myMaterials"}}
+          </LinkTo>
+        </li>
+        <li tabindex="-1" data-test-item>
+          <LinkTo @route="logout" @invokeAction={{action (mut isOpen) false}}>
+            {{t "general.logout"}}
+          </LinkTo>
+        </li>
+      </ul>
+    </ClickOutside>
+  {{/if}}
+</nav>

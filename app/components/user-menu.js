@@ -1,47 +1,42 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import { schedule } from '@ember/runloop';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  intl: service(),
-  currentUser: service(),
-  tagName: 'nav',
-  classNameBindings: [':user-menu', 'isOpen'],
-  attributeBindings: [
-    'ariaLabelledBy:aria-labelledby',
-  ],
-  ariaLabelledBy: 'user-menu-title',
-  isOpen: false,
-  'data-test-user-menu': true,
+export default class UserMenuComponent extends Component {
+  @service intl;
+  @service currentUser;
+  @tracked isOpen = false;
+  @tracked element;
 
-  actions: {
-    toggleMenu() {
-      const isOpen = this.isOpen;
-      if (isOpen) {
-        this.set('isOpen', false);
-      } else {
-        this.openMenuAndSelectTheFirstItem();
-      }
-    },
-  },
+  @action
+  toggleMenu() {
+    if (this.isOpen) {
+      this.isOpen = false;
+    } else {
+      this.openMenuAndSelectTheFirstItem();
+    }
+  }
 
   openMenuAndSelectTheFirstItem() {
-    this.set('isOpen', true);
+    this.isOpen = true;
     schedule('afterRender', () => {
       this.element.querySelector('.menu li:nth-of-type(1) a').focus();
     });
-  },
+  }
 
-  keyDown({ originalEvent }) {
-    const button = originalEvent.target.tagName.toLowerCase() === 'button' ? originalEvent.target : null;
+  @action
+  keyDown(evt) {
+    const button = evt.target.tagName.toLowerCase() === 'button' ? evt.target : null;
     let item;
     if (!button) {
-      item = originalEvent.target.tagName.toLowerCase() === 'li' ? originalEvent.target : originalEvent.target.parentElement;
+      item = evt.target.tagName.toLowerCase() === 'li' ? evt.target : evt.target.parentElement;
     }
 
-    switch (originalEvent.key) {
+    switch (evt.key) {
     case 'ArrowDown':
-      if (originalEvent.target.tagName.toLowerCase() === 'button') {
+      if (evt.target.tagName.toLowerCase() === 'button') {
         this.openMenuAndSelectTheFirstItem();
       } else {
         if (item.nextElementSibling) {
@@ -64,10 +59,10 @@ export default Component.extend({
     case 'Tab':
     case 'ArrowRight':
     case 'ArrowLeft':
-      this.set('isOpen', false);
+      this.isOpen = false;
       break;
     }
 
     return true;
   }
-});
+}

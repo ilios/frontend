@@ -1,127 +1,95 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { isEmpty, isPresent } from '@ember/utils';
-import { all, filter } from 'rsvp';
-import { task, timeout } from 'ember-concurrency';
+import { timeout, waitForProperty } from 'ember-concurrency';
+import { action } from '@ember/object';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { filter, map } from 'rsvp';
+import { tracked } from '@glimmer/tracking';
 
-export default Component.extend({
-  currentUser: service(),
-  permissionChecker: service(),
+export default class UserProfileCohortsComponent extends Component {
+  @service currentUser;
+  @service permissionChecker;
 
-  store: service(),
+  @service store;
 
-  tagName: "",
-  cohorts: null,
-  finishedSetup: false,
-  hasSavedRecently: false,
-  isManageable: false,
-  isManaging: false,
-  primaryCohort: null,
-  schools: null,
-  selectedSchoolId: null,
-  user: null,
+  @tracked hasSavedRecently = false;
+  @tracked primaryCohort;
+  @tracked schools = [];
+  @tracked allCohortsWithRelationships = [];
+  @tracked selectedCohorts = [];
+  @tracked selectedSchoolId;
 
-  selectedSchool: computed('selectedSchoolId', 'schools.[]', function() {
-    const selectedSchoolId = this.selectedSchoolId;
-    const schools = this.schools;
-    return schools.findBy('id', selectedSchoolId);
-  }),
+  get selectedSchool() {
+    return this.schools.findBy('id', this.selectedSchoolId);
+  }
 
-  assignableCohorts: computed('allCohorts.[]', 'selectedCohorts.[]', async function() {
-    const cohorts = await this.allCohorts;
-    const selectedCohorts = this.selectedCohorts || [];
-    return cohorts.filter(cohort => !selectedCohorts.includes(cohort));
-  }),
+  get assignableCohorts() {
+    return this.allCohortsWithRelationships.filter(obj => !this.selectedCohorts.includes(obj.cohort));
+  }
 
-  assignableCohortsForSelectedSchool: computed('assignableCohorts.[]', 'selectedSchool', async function() {
-    const selectedSchool = this.selectedSchool;
-    const assignableCohorts = await this.assignableCohorts;
-    return filter(assignableCohorts, async cohort => {
-      const school = await cohort.get('school');
-      return school.get('id') === selectedSchool.get('id');
+  get assignableCohortsForSelectedSchool() {
+    return this.assignableCohorts.filter(obj => {
+      return obj.school.id === this.selectedSchoolId;
     });
-  }),
+  }
 
-  secondaryCohorts: computed('primaryCohort', 'selectedCohorts.[]', function() {
-    const primaryCohort = this.primaryCohort;
-    const selectedCohorts = this.selectedCohorts;
-    if (isEmpty(primaryCohort)) {
-      return selectedCohorts;
+  get secondaryCohorts() {
+    if (!this.primaryCohort) {
+      return this.selectedCohorts;
     }
 
-    return selectedCohorts.filter(cohort => {
-      return cohort.get('id') != primaryCohort.get('id');
+    return this.selectedCohorts.filter(cohort => {
+      return cohort.id != this.primaryCohort.id;
     });
-  }),
+  }
 
-  didReceiveAttrs(){
-    this._super(...arguments);
-    const user = this.user;
-    if (isPresent(user)) {
-      this.setup.perform(user);
-    }
-  },
+  @action
+  addSelectedCohort(cohort) {
+    this.selectedCohorts = [...this.selectedCohorts, cohort];
+  }
+  @action
+  removeSelectedCohort(cohort) {
+    this.selectedCohorts = this.selectedCohorts.filter(({id}) => id !== cohort.id);
+  }
 
-  actions: {
-    removeSelectedCohort(cohort){
-      this.selectedCohorts.removeObject(cohort);
-    },
-    addSelectedCohort(cohort){
-      this.selectedCohorts.pushObject(cohort);
-    },
-  },
+  @restartableTask
+  *load(element, [user]){
+    yield waitForProperty(user, 'isLoaded'); //wait for promise to resolve because save() task modifies this relationship
+    this.selectedCohorts = (yield user.cohorts).toArray();
+    this.primaryCohort = yield user.primaryCohort;
 
-  setup: task(function* (user) {
-    this.set('finishedSetup', false);
-    const store = this.store;
-    const currentUser = this.currentUser;
-    const permissionChecker = this.permissionChecker;
+    const sessionUser = yield this.currentUser.getModel();
+    this.selectedSchoolId = (yield sessionUser.school).id;
 
-    const cohorts = yield user.get('cohorts');
-    const selectedCohorts = cohorts.toArray();
-    const primaryCohort = yield user.get('primaryCohort');
+    const allCohorts = (yield this.store.findAll('cohort')).toArray();
+    this.allCohortsWithRelationships = yield map(allCohorts, async cohort => {
+      const programYear = await cohort.programYear;
+      const program = await programYear.program;
+      const school = await program.school;
 
-    const sessionUser = yield currentUser.get('model');
-    const primarySchool = yield sessionUser.get('school');
-
-    const allCohorts = yield store.findAll('cohort');
-    const allSchools = yield store.findAll('school');
-    const schoolsWithUpdateUserPermission = yield filter(allSchools.toArray(), async school => {
-      return permissionChecker.canUpdateUserInSchool(school);
+      return {
+        cohort,
+        programYear,
+        program,
+        school
+      };
     });
+    const allSchools = (yield this.store.findAll('school')).toArray();
+    this.schools = yield filter(allSchools, async school => {
+      return this.permissionChecker.canUpdateUserInSchool(school);
+    });
+  }
 
-    this.set('selectedCohorts', selectedCohorts);
-    this.set('primaryCohort', primaryCohort);
-    this.set('schools', schoolsWithUpdateUserPermission);
-    this.set('allCohorts', allCohorts);
-    this.set('selectedSchoolId', primarySchool.get('id'));
+  @dropTask
+  *save() {
+    yield waitForProperty(this, 'load.performCount');
+    this.args.user.set('primaryCohort', this.primaryCohort);
+    this.args.user.set('cohorts', this.selectedCohorts);
 
-    //preload relationships for cohorts to make rendering smoother
-    yield all(allCohorts.mapBy('school'));
-
-    this.set('finishedSetup', true);
-  }),
-
-  save: task(function* () {
-    const finishedSetup = this.finishedSetup;
-    if (!finishedSetup) {
-      return;
-    }
-    const user = this.user;
-    const selectedCohorts = this.selectedCohorts;
-    const primaryCohort = this.primaryCohort;
-
-    user.set('primaryCohort', primaryCohort);
-
-    const userCohorts = yield user.get('cohorts');
-    userCohorts.clear();
-    userCohorts.pushObjects(selectedCohorts);
-
-    yield user.save();
-    this.setIsManaging(false);
-    this.set('hasSavedRecently', true);
+    yield this.args.user.save();
+    this.args.setIsManaging(false);
+    this.hasSavedRecently = true;
     yield timeout(500);
-    this.set('hasSavedRecently', false);
-  }).drop()
-});
+    this.hasSavedRecently = false;
+  }
+}
