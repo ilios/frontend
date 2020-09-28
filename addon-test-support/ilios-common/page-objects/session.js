@@ -7,8 +7,8 @@ import {
   hasClass,
   isVisible,
   property,
-  text,
-  visitable
+  text, triggerable,
+  visitable,
 } from 'ember-cli-page-object';
 import objectives from './components/session/objectives';
 import learningMaterials from './components/learning-materials';
@@ -166,7 +166,11 @@ export default create({
       hasMultiDay: isVisible('.multiday-offering-block-time-time'),
       offerings: collection('[data-test-offerings] [data-test-offering-manager]', {
         learnerGroups: collection('.offering-manager-learner-groups li', {
-          title: text()
+          title: text(),
+          expandTooltip: triggerable('mouseover'),
+          closeTooltip: triggerable('mouseout'),
+          tooltipContents: text('.ilios-tooltip', { resetScope: true }),
+          isTooltipVisible: isVisible('.ilios-tooltip', { resetScope: true }),
         }),
         location: text('[data-test-location]'),
         url: property('href', '[data-test-url] a'),
