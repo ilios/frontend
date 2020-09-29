@@ -228,7 +228,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
 
     const coursesList = '[data-test-overview] .associatedcourses ul';
 
-    assert.dom(coursesList).hasText('course 0 (3 Subgroups)');
+    assert.dom(coursesList).hasText('course 0');
   });
 
   test('Update default URL', async function(assert) {

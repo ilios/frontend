@@ -139,12 +139,7 @@
         </label>
         <ul>
           {{#each (sort-by "courseTitle" this.courses) as |obj|}}
-            <li>
-              {{obj.courseTitle}}
-              {{#if obj.groups}}
-                ({{obj.groups.length}} {{t "general.subgroups"}})
-              {{/if}}
-            </li>
+            <li>{{obj.courseTitle}}</li>
           {{/each}}
         </ul>
       </div>
