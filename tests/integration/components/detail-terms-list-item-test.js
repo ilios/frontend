@@ -31,8 +31,8 @@ module('Integration | Component | detail terms list item', function(hooks) {
 
     this.set('term', term);
     await render(hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`);
-    assert.dom('.muted').hasText('Lorem »');
-    assert.dom(findAll('.muted')[1]).hasText('Ipsum »');
+    assert.dom('.muted').includesText('Lorem »');
+    assert.dom(findAll('.muted')[1]).includesText('Ipsum »');
     assert.ok(this.element.textContent.trim().indexOf('Foo') !== -1);
   });
 
