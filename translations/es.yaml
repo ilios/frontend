@@ -216,6 +216,8 @@ general:
   ownedBy: "propiedad de {owner}"
   owner: "Dueño"
   parentCount: "{count, plural, =1 {1 tiene un Principal objectivo} other {# tienen Objectivos Principales}}"
+  parentGroup: "Principal grupo"
+  parentGroups: "Grupos principales"
   parentObjectives: "Objetivos de Matriz"
   prerequisites: "Prerrequisitos"
   preWork: "Pre Trabajo"

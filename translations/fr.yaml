@@ -216,6 +216,8 @@ general:
   ownedBy: "Possédé par {owner}"
   owner: "Propriétaire"
   parentCount: "{count, plural, =1 {1 a un objectif mère} other {# ont des objectifs mères}}"
+  parentGroup: "Mère groupe"
+  parentGroups: "Mères groupes"
   parentObjectives: "Objectifs Mères"
   prerequisites: "Conditions préalables"
   preWork: "Préalable"
