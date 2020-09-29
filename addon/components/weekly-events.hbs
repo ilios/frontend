@@ -1,9 +1,21 @@
 <div class="weekly-events">
   <div class="year">
     <h2>
-      <FaIcon @icon="backward" {{on "click" this.decrementYear}}/>
+      <FaIcon
+        @icon="backward"
+        @title={{t "general.goToPreviousYear"}}
+        role="button"
+        class="clickable link"
+        {{on "click" this.decrementYear}}
+      />
       {{@year}}
-      <FaIcon @icon="forward" {{on "click" this.incrementYear}}/>
+      <FaIcon
+        @icon="forward"
+        @title={{t "general.goToNextYear"}}
+        role="button"
+        class="clickable link"
+        {{on "click" this.incrementYear}}
+      />
     </h2>
   </div>
   {{#each this.weeksInYear as |week|}}
@@ -17,9 +29,21 @@
   {{/each}}
   <div class="year">
     <h2>
-      <FaIcon @icon="backward" {{on "click" this.decrementYear}}/>
+      <FaIcon
+        @icon="backward"
+        @title={{t "general.goToPreviousYear"}}
+        role="button"
+        class="clickable link"
+        {{on "click" this.decrementYear}}
+      />
       {{@year}}
-      <FaIcon @icon="forward" {{on "click" this.incrementYear}}/>
+      <FaIcon
+        @icon="forward"
+        @title={{t "general.goToNextYear"}}
+        role="button"
+        class="clickable link"
+        {{on "click" this.incrementYear}}
+      />
     </h2>
   </div>
 </div>
