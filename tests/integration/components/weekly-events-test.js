@@ -1,85 +1,106 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { component } from 'ilios-common/page-objects/components/weekly-events';
 
 module('Integration | Component | weekly events', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
     this.set('year', 2017);
-    this.set('expandedWeeks', []);
-    this.set('nothing', parseInt);
     await render(hbs`<WeeklyEvents
-      @year={{year}}
-      @expandedWeeks={{expandedWeeks}}
-      @setYear={{action nothing}}
-      @toggleOpenWeek={{action nothing}}
+      @year={{this.year}}
+      @expandedWeeks={{array}}
+      @setYear={{noop}}
+      @toggleOpenWeek={{noop}}
     />`);
-    const yearPickers = '.year';
-    const weeks = '.week-glance';
-
-    const years = this.element.querySelectorAll(yearPickers);
-    assert.equal(years.length, 2);
-    assert.dom(years[0]).hasText('2017');
-    assert.dom(years[1]).hasText('2017');
-
-    assert.equal(this.element.querySelectorAll(weeks).length, 52);
+    assert.equal(component.topNavigation.title, '2017');
+    assert.equal(component.topNavigation.previousYear.title, 'Go to previous year');
+    assert.equal(component.topNavigation.nextYear.title, 'Go to next year');
+    assert.equal(component.bottomNavigation.title, '2017');
+    assert.equal(component.bottomNavigation.previousYear.title, 'Go to previous year');
+    assert.equal(component.bottomNavigation.nextYear.title, 'Go to next year');
+    assert.equal(component.weeks.length, 52);
   });
 
-  test('goes forward by years', async function(assert) {
+  test('top navigation - go to next year', async function(assert) {
+    assert.expect(5);
     this.set('year', 2017);
-    this.set('expandedWeeks', []);
-    this.set('nothing', parseInt);
     this.set('setYear', newYear => {
       assert.equal(2018, newYear, 'we moved forward');
       this.set('year', newYear);
     });
     await render(hbs`<WeeklyEvents
-      @year={{year}}
-      @expandedWeeks={{expandedWeeks}}
-      @setYear={{action setYear}}
-      @toggleOpenWeek={{action nothing}}
+      @year={{this.year}}
+      @expandedWeeks={{array}}
+      @setYear={{this.setYear}}
+      @toggleOpenWeek={{noop}}
     />`);
-    const yearPickers = '.year';
-    const moveForward = `${yearPickers}:nth-of-type(1) .fa-forward`;
-    const weeks = '.week-glance';
-
-    click(moveForward);
-
-    const years = this.element.querySelectorAll(yearPickers);
-    assert.equal(years.length, 2);
-    assert.dom(years[0]).hasText('2017');
-    assert.dom(years[1]).hasText('2017');
-
-    assert.equal(this.element.querySelectorAll(weeks).length, 52);
+    assert.equal(component.topNavigation.title, '2017');
+    assert.equal(component.bottomNavigation.title, '2017');
+    await component.topNavigation.nextYear.visit();
+    assert.equal(component.topNavigation.title, '2018');
+    assert.equal(component.bottomNavigation.title, '2018');
   });
 
-  test('goes backward by years', async function(assert) {
+  test('bottom navigation - go to next year', async function(assert) {
+    assert.expect(5);
     this.set('year', 2017);
-    this.set('expandedWeeks', []);
-    this.set('nothing', parseInt);
     this.set('setYear', newYear => {
-      assert.equal(2016, newYear, 'we moved backward');
+      assert.equal(2018, newYear, 'we moved forward');
       this.set('year', newYear);
     });
     await render(hbs`<WeeklyEvents
-      @year={{year}}
-      @expandedWeeks={{expandedWeeks}}
-      @setYear={{action setYear}}
-      @toggleOpenWeek={{action nothing}}
+      @year={{this.year}}
+      @expandedWeeks={{array}}
+      @setYear={{this.setYear}}
+      @toggleOpenWeek={{noop}}
     />`);
-    const yearPickers = '.year';
-    const moveBackward = `${yearPickers}:nth-of-type(1) .fa-backward`;
-    const weeks = '.week-glance';
+    assert.equal(component.topNavigation.title, '2017');
+    assert.equal(component.bottomNavigation.title, '2017');
+    await component.bottomNavigation.nextYear.visit();
+    assert.equal(component.topNavigation.title, '2018');
+    assert.equal(component.bottomNavigation.title, '2018');
+  });
 
-    click(moveBackward);
+  test('top navigation - go to previous year', async function(assert) {
+    assert.expect(5);
+    this.set('year', 2017);
+    this.set('setYear', newYear => {
+      assert.equal(2016, newYear, 'we moved backwards');
+      this.set('year', newYear);
+    });
+    await render(hbs`<WeeklyEvents
+      @year={{this.year}}
+      @expandedWeeks={{array}}
+      @setYear={{this.setYear}}
+      @toggleOpenWeek={{noop}}
+    />`);
+    assert.equal(component.topNavigation.title, '2017');
+    assert.equal(component.bottomNavigation.title, '2017');
+    await component.topNavigation.previousYear.visit();
+    assert.equal(component.topNavigation.title, '2016');
+    assert.equal(component.bottomNavigation.title, '2016');
+  });
 
-    const years = this.element.querySelectorAll(yearPickers);
-    assert.equal(years.length, 2);
-    assert.dom(years[0]).hasText('2017');
-    assert.dom(years[1]).hasText('2017');
-
-    assert.equal(this.element.querySelectorAll(weeks).length, 52);
+  test('bottom navigation - go to previous year', async function(assert) {
+    assert.expect(5);
+    this.set('year', 2017);
+    this.set('setYear', newYear => {
+      assert.equal(2016, newYear, 'we moved backwards');
+      this.set('year', newYear);
+    });
+    await render(hbs`<WeeklyEvents
+      @year={{this.year}}
+      @expandedWeeks={{array}}
+      @setYear={{this.setYear}}
+      @toggleOpenWeek={{noop}}
+    />`);
+    assert.equal(component.topNavigation.title, '2017');
+    assert.equal(component.bottomNavigation.title, '2017');
+    await component.bottomNavigation.previousYear.visit();
+    assert.equal(component.topNavigation.title, '2016');
+    assert.equal(component.bottomNavigation.title, '2016');
   });
 });

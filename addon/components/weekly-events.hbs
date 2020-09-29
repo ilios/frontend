@@ -1,5 +1,5 @@
-<div class="weekly-events">
-  <div class="year">
+<div class="weekly-events" data-test-weekly-events>
+  <div class="year" data-test-top-nav>
     <h2>
       <FaIcon
         @icon="backward"
@@ -7,14 +7,16 @@
         role="button"
         class="clickable link"
         {{on "click" this.decrementYear}}
+        data-test-previous
       />
-      {{@year}}
+      <span data-test-year>{{@year}}</span>
       <FaIcon
         @icon="forward"
         @title={{t "general.goToNextYear"}}
         role="button"
         class="clickable link"
         {{on "click" this.incrementYear}}
+        data-test-next
       />
     </h2>
   </div>
@@ -27,7 +29,7 @@
       @toggleCollapsed={{fn @toggleOpenWeek week}}
     />
   {{/each}}
-  <div class="year">
+  <div class="year" data-test-bottom-nav>
     <h2>
       <FaIcon
         @icon="backward"
@@ -35,14 +37,16 @@
         role="button"
         class="clickable link"
         {{on "click" this.decrementYear}}
+        data-test-previous
       />
-      {{@year}}
+      <span data-test-year>{{@year}}</span>
       <FaIcon
         @icon="forward"
         @title={{t "general.goToNextYear"}}
         role="button"
         class="clickable link"
         {{on "click" this.incrementYear}}
+        data-test-next
       />
     </h2>
   </div>
