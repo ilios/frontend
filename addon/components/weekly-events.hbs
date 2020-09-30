@@ -4,18 +4,18 @@
       <FaIcon
         @icon="backward"
         @title={{t "general.goToPreviousYear"}}
+        @click={{this.decrementYear}}
         role="button"
         class="clickable link"
-        {{on "click" this.decrementYear}}
         data-test-previous
       />
       <span data-test-year>{{@year}}</span>
       <FaIcon
         @icon="forward"
         @title={{t "general.goToNextYear"}}
+        @click={{this.incrementYear}}
         role="button"
         class="clickable link"
-        {{on "click" this.incrementYear}}
         data-test-next
       />
     </h2>
@@ -34,18 +34,18 @@
       <FaIcon
         @icon="backward"
         @title={{t "general.goToPreviousYear"}}
+        @click={{this.decrementYear}}
         role="button"
         class="clickable link"
-        {{on "click" this.decrementYear}}
         data-test-previous
       />
       <span data-test-year>{{@year}}</span>
       <FaIcon
         @icon="forward"
         @title={{t "general.goToNextYear"}}
+        @click={{this.incrementYear}}
         role="button"
         class="clickable link"
-        {{on "click" this.incrementYear}}
         data-test-next
       />
     </h2>
