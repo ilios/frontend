@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click } from '@ember/test-helpers';
+import { render, click, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import {
   triggerSuccess
@@ -43,6 +43,7 @@ module('Integration | Component | user profile ics', function(hooks) {
 
     await render(hbs`<UserProfileIcs @isManaging={{true}} @user={{this.user}} @setIsManaging={{noop}} />`);
     await click('.refresh-key');
+    await settled();
 
     const icsFeedKey = this.server.db.users.find(13).icsFeedKey;
     assert.notEqual(icsFeedKey, 'testkey', 'icsFeedKey is not the same');
