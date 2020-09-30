@@ -116,6 +116,8 @@ general:
   firstOffering: "Ofrecimiento Primero"
   friday: Viernes
   go: Vaya
+  goToNextYear: "Ir al año que viene"
+  goToPreviousYear: "Ir al año anterior"
   groupByCompetencies: "Agrupe por Competencias"
   groupName: "Nombre De Grupo"
   groups: Grupos
