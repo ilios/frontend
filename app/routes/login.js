@@ -25,7 +25,9 @@ export default Route.extend({
 
     const authenticator = 'authenticator:ilios-jwt';
     this.session.authenticate(authenticator, { jwt });
+    // eslint-disable-next-line ember/use-ember-get-and-set
     this.session.set('data.apiHost', apiHost);
+    // eslint-disable-next-line ember/use-ember-get-and-set
     this.session.set('data.apiNameSpace', apiNameSpace);
 
     this.transitionTo('index');
