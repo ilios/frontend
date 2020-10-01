@@ -27,8 +27,6 @@ export default Route.extend({
     this.session.authenticate(authenticator, { jwt });
     this.session.set('data.apiHost', apiHost);
     this.session.set('data.apiNameSpace', apiNameSpace);
-
-    this.transitionTo('index');
   },
   async getNewToken(ltiToken, apiHost) {
     const apiHostWithNoTrailingSlash = apiHost.replace(/\/+$/, "");
