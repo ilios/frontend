@@ -26,13 +26,6 @@ module.exports = function (defaults) {
     babel: {
       plugins: [require('ember-auto-import/babel-plugin')],
     },
-    'ember-cli-uglify': {
-      uglify: {
-        compress: {
-          collapse_vars: false
-        }
-      }
-    },
     postcssOptions: {
       compile: {
         extension: 'scss',

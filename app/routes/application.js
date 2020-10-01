@@ -11,9 +11,8 @@ export default Route.extend(ApplicationRouteMixin,{
   beforeModel() {
     const intl = this.intl;
     const moment = this.moment;
-    const locale = intl.get('locale');
-    moment.setLocale(locale);
-    window.document.querySelector('html').setAttribute('lang', locale);
+    moment.setLocale(intl.locale);
+    window.document.querySelector('html').setAttribute('lang', intl.locale);
   },
 
   /**
@@ -22,9 +21,9 @@ export default Route.extend(ApplicationRouteMixin,{
    */
   async afterModel() {
     const currentUser = this.currentUser;
-    const user = await currentUser.get('model');
+    const user = await currentUser.getModel();
     if (user) {
-      await user.get('roles');
+      await user.roles;
     }
   },
 });
