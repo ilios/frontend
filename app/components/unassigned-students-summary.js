@@ -1,63 +1,35 @@
-import Component from '@ember/component';
-import ArrayProxy from '@ember/array/proxy';
-import { computed } from '@ember/object';
-import { gt } from '@ember/object/computed';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  currentUser: service(),
-  store: service(),
+export default class UnassignedStudentsSummaryComponent extends Component {
+  @service currentUser;
+  @service store;
 
-  classNameBindings: [':unassigned-students-summary', ':small-component', 'alert'],
-  tagName: 'div',
+  @tracked schoolId;
+  @tracked selectedSchool;
+  @tracked unassignedStudents;
 
-  schoolId: null,
-  schools: null,
+  get hasUnassignedStudents() {
+    return this.unassignedStudents?.length > 0;
+  }
 
-  alert: gt('unassignedStudentsProxy.length', 0),
-
-  selectedSchool: computed('currentUser', 'schoolId', async function() {
-    const schools = this.schools;
-    const currentUser = this.currentUser;
-    const schoolId = this.schoolId;
-
+  @restartableTask
+  *load(element, [schoolId]) {
     if (schoolId) {
-      return schools.findBy('id', schoolId);
+      this.selectedSchool = this.args.schools.findBy('id', schoolId);
+    } else {
+      const user = yield this.currentUser.getModel();
+      this.selectedSchool = yield user.school;
     }
-    const user = await currentUser.get('model');
-    const school = await user.get('school');
-    const defaultSchool = schools.findBy('id', school.get('id'));
-    if (defaultSchool) {
-      return defaultSchool;
-    }
-
-    return schools.get('firstObject');
-  }),
-
-  unassignedStudents: computed('selectedSchool', async function() {
-    const school = await this.selectedSchool;
-    return await this.store.query('user', {
+    this.unassignedStudents = yield this.store.query('user', {
       filters: {
         cohorts: null,
         enabled: true,
         roles: [4],
-        school: school.id
+        school: this.selectedSchool.id
       }
     });
-  }),
-
-  //temporary solution until the classNameBindings can be promise aware
-  unassignedStudentsProxy: computed('unassignedStudents', function() {
-    const ap = ArrayProxy.extend(PromiseProxyMixin);
-    return ap.create({
-      promise: this.unassignedStudents
-    });
-  }),
-
-  actions: {
-    changeSelectedSchool(schoolId) {
-      this.set('schoolId', schoolId);
-    }
   }
-});
+}
