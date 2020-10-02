@@ -36,8 +36,10 @@ export default class ChooseMaterialTypeComponent extends Component {
   }
   @action
   clearFocus() {
-    const buttons = this.menuElement.querySelectorAll('button');
-    buttons.forEach(el => el.blur());
+    if (this.menuElement) {
+      const buttons = this.menuElement.querySelectorAll('button');
+      buttons.forEach(el => el.blur());
+    }
   }
   @action
   toggleMenu({ key }) {
