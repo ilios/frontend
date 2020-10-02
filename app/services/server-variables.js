@@ -1,6 +1,5 @@
 import Service from '@ember/service';
-import { inject } from '@ember/service';
-import { reads } from '@ember/object/computed';
+import { tracked } from '@glimmer/tracking';
 
 /**
  * In the LTI app we pull server variables out of the session instead
@@ -8,8 +7,12 @@ import { reads } from '@ember/object/computed';
  * we can provide this proxy service instead
  * They are needed in the ilios-config service
 **/
-export default Service.extend({
-  session: inject(),
-  apiHost: reads('session.data.apiHost'),
-  apiNameSpace: reads('session.data.apiNameSpace'),
-});
+export default class ServerVariablesService extends Service {
+  @tracked apiHost;
+  @tracked apiNameSpace
+
+  setApiVariables(apiHost, apiNameSpace) {
+    this.apiHost = apiHost.replace(/\/+$/, "");
+    this.apiNameSpace = apiNameSpace.replace(/\/+$/, "");
+  }
+}
