@@ -35,7 +35,7 @@
         @instructions={{@icsInstructions}}
       />
     {{/if}}
-    <h1 class={{if (or (gt this.compiledCalendarEvents.length 0) (not @isLoadingEvents)) "loaded"}}>
+    <h1 class={{unless @isLoadingEvents "loaded"}}>
       <FaIcon @icon="spinner" @spin={{true}} />
       {{t "general.loadingEvents"}}
       ...
