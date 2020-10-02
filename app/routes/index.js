@@ -5,6 +5,7 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 import { hash } from 'rsvp';
 
 export default class DashboardRoute extends Route.extend(AuthenticatedRouteMixin) {
+  authenticationRoute = 'login-error';
   @service store;
   @service currentUser;
 
