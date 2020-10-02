@@ -9,15 +9,16 @@ export default class IliosAdapter extends JSONAPIAdapter {
   coalesceFindRequests = true;
   sortQueryParams = false;
 
-  constructor() {
-    super(...arguments);
-    this.headers = {};
-    if (this.session && this.session.isAuthenticated) {
+  get headers() {
+    const headers = {};
+    if (this.session?.isAuthenticated) {
       const { jwt } = this.session.data.authenticated;
       if (jwt) {
-        this.headers['X-JWT-Authorization'] = `Token ${jwt}`;
+        headers['X-JWT-Authorization'] = `Token ${jwt}`;
       }
     }
+
+    return headers;
   }
 
   get host() {
