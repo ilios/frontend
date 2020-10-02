@@ -21,14 +21,10 @@ export default Route.extend({
       this.transitionTo('login-error');
       return;
     }
+    this.serverVariables.setApiVariables(apiHost, apiNameSpace);
     const jwt = await this.getNewToken(token, apiHost);
-
-    const authenticator = 'authenticator:ilios-jwt';
-    this.session.authenticate(authenticator, { jwt });
-    // eslint-disable-next-line ember/use-ember-get-and-set
-    this.session.set('data.apiHost', apiHost);
-    // eslint-disable-next-line ember/use-ember-get-and-set
-    this.session.set('data.apiNameSpace', apiNameSpace);
+    await this.session.authenticate('authenticator:ilios-jwt', { jwt });
+    this.transitionTo('index');
   },
   async getNewToken(ltiToken, apiHost) {
     const apiHostWithNoTrailingSlash = apiHost.replace(/\/+$/, "");
