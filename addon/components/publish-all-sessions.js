@@ -34,9 +34,15 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   @restartableTask
-  *load() {
+  *load(element, [sessions]) {
     const objectives = yield this.args.course.courseObjectives;
     this.showWarning = objectives.toArray().any(objective => ! objective.programYearObjectives.length);
+    this.sessionsToOverride = [];
+    if (sessions) {
+      this.sessionsToOverride = this.overridableSessions.filter(session => {
+        return session.published && ! session.publishedAsTbd;
+      });
+    }
   }
 
   get allSessionsAsIs(){
@@ -44,18 +50,27 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   get publishableSessions(){
+    if (! this.args.sessions) {
+      return [];
+    }
     return this.args.sessions.filter(session => {
       return (session.allPublicationIssuesLength === 0);
     });
   }
 
   get unPublishableSessions(){
+    if (! this.args.sessions) {
+      return [];
+    }
     return this.args.sessions.filter(session => {
       return (session.requiredPublicationIssues.length > 0);
     });
   }
 
   get overridableSessions(){
+    if (! this.args.sessions) {
+      return [];
+    }
     return this.args.sessions.filter(session => {
       return (
         session.requiredPublicationIssues.length === 0 &&
