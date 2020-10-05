@@ -1,24 +1,19 @@
-import Component from '@ember/component';
-import { task, timeout } from 'ember-concurrency';
+import Component from '@glimmer/component';
+import { timeout } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency-decorators';
+import { tracked } from '@glimmer/tracking';
 
-export default Component.extend({
-  tagName: "",
+export default class SchoolSessionTypesListComponent extends Component {
+  @tracked deletedSessionTypes = [];
 
-  canDelete: false,
-  deletedSessionTypes: null,
-
-  init(){
-    this._super(...arguments);
-    this.set('deletedSessionTypes', []);
-  },
-
-  deleteSessionType: task(function* (sessionType) {
+  @dropTask
+  *deleteSessionType(sessionType) {
     if (sessionType.get('sessionCount') === 0) {
-      this.deletedSessionTypes.pushObject(sessionType.get('id'));
+      this.deletedSessionTypes = [...this.deletedSessionTypes, sessionType.id];
       yield timeout(10);
       sessionType.deleteRecord();
       yield sessionType.save();
-      this.deletedSessionTypes.removeObject(sessionType.get('id'));
+      this.deletedSessionTypes = this.deletedSessionTypes.filter(id => id !== sessionType.id);
     }
-  }).drop()
-});
+  }
+}

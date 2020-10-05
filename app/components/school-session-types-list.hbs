@@ -1,5 +1,4 @@
 <div class="school-session-types-list" ...attributes>
-  {{! template-lint-disable no-inline-styles style-concatenation}}
   <table>
     <thead>
       <tr>
@@ -27,12 +26,12 @@
       </tr>
     </thead>
     <tbody>
-      {{#each (sort-by "active:desc" "title" sessionTypes) as |sessionType|}}
+      {{#each (sort-by "active:desc" "title" @sessionTypes) as |sessionType|}}
         <tr>
           <td colspan="3">
-            <span class="link clickable" role="button" onclick={{fn manageSessionType sessionType.id}}>
+            <button class="link-button" type="button" {{on "click" (fn @manageSessionType sessionType.id)}} data-test-title>
               {{sessionType.title}}
-            </span>
+            </button>
             {{#unless sessionType.active}}
               <em>
                 ({{t "general.inactive"}})
@@ -61,30 +60,30 @@
             {{/if}}
           </td>
           <td class="calendar-color hide-from-small-screen">
+            {{! template-lint-disable no-inline-styles style-concatenation}}
             <span
               class="box"
-              style={{{concat "background-color: " sessionType.safeCalendarColor
-              }}}
+              style={{{concat "background-color: " sessionType.safeCalendarColor}}}
             ></span>
           </td>
           <td>
             <FaIcon
               @icon="edit"
               class="edit clickable enabled"
-              @click={{action manageSessionType sessionType.id}}
+              @click={{fn @manageSessionType sessionType.id}}
             />
             {{#if (eq sessionType.sessionCount 0)}}
-              {{#if (includes sessionType.id deletedSessionTypes)}}
+              {{#if (includes sessionType.id this.deletedSessionTypes)}}
                 <LoadingSpinner />
-              {{else if canDelete}}
+              {{else if @canDelete}}
                 <FaIcon
                   @icon="trash"
                   class={{if
-                    deleteSessionType.isRunning
+                    this.deleteSessionType.isRunning
                     "inactive"
                     "clickable remove enabled"
                   }}
-                  @click={{perform deleteSessionType sessionType}}
+                  @click={{perform this.deleteSessionType sessionType}}
                 />
               {{/if}}
             {{else}}
