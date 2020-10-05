@@ -14,4 +14,8 @@
   .fa-chart-bar, .fa-edit, .fa-trash {
     @include icon;
   }
+
+  .link-button {
+    @include ilios-link-button;
+  }
 }

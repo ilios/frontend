@@ -1,72 +1,78 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { notEmpty } from '@ember/object/computed';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { isPresent } from '@ember/utils';
+import { restartableTask } from 'ember-concurrency-decorators';
+import { map } from 'rsvp';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
-export default Component.extend({
-  store: service(),
-  tagName: "",
-  canCreateTerm: false,
-  canCreateVocabulary: false,
-  canDeleteTerm: false,
-  canDeleteVocabulary: false,
-  canUpdateTerm: false,
-  canUpdateVocabulary: false,
-  managedTerm: null,
-  managedTermId: null,
-  managedVocabulary: null,
-  managedVocabularyId: null,
-  school: null,
-  isManaging: notEmpty('managedVocabulary'),
+export default class SchoolVocabulariesExpandedComponent extends Component {
+  @service store;
+  @tracked schoolVocabularies;
 
-  showCollapsible: computed('isManaging', 'school.vocabularies.length', function() {
-    const isManaging = this.isManaging;
-    const school = this.school;
-    const competencyIds = school.hasMany('vocabularies').ids();
-    return competencyIds.length && ! isManaging;
-  }),
+  #loadedSchools = {};
 
-  didReceiveAttrs() {
-    this._super(...arguments);
-    const managedVocabularyId = this.managedVocabularyId;
-    const managedTermId = this.managedTermId;
-    if(isPresent(managedVocabularyId)){
-      this.get('school.vocabularies').then(vocabularies => {
-        const managedVocabulary = vocabularies.findBy('id', managedVocabularyId);
-        this.set('managedVocabulary', managedVocabulary);
-        if(isPresent(managedTermId)){
-          managedVocabulary.get('terms').then(terms => {
-            const managedTerm = terms.findBy('id', managedTermId);
-            this.set('managedTerm', managedTerm);
-          });
-        } else {
-          this.set('managedTerm', null);
-        }
+  get isManaging() {
+    return !!this.args.managedVocabularyId;
+  }
+
+  get isCollapsible() {
+    return this.schoolVocabularies?.length && !this.isManaging;
+  }
+
+  async loadSchool(schoolId) {
+    if (!(schoolId in this.#loadedSchools)) {
+      this.#loadedSchools[schoolId] = this.store.findRecord('school', schoolId, {
+        include: 'vocabularies.terms',
+        reload: true,
       });
-    } else {
-      this.set('managedVocabulary', null);
     }
-  },
 
-  actions: {
-    collapse() {
-      const collapse = this.collapse;
-      const setSchoolManagedVocabulary = this.setSchoolManagedVocabulary;
-      const setSchoolManagedVocabularyTerm = this.setSchoolManagedVocabularyTerm;
-      this.get('school.vocabularies').then(vocabularies => {
-        if(vocabularies.get('length')){
-          collapse();
-          setSchoolManagedVocabulary(null);
-          setSchoolManagedVocabularyTerm(null);
-        }
-      });
-    },
+    return this.#loadedSchools[schoolId];
+  }
 
-    cancel() {
-      const setSchoolManagedVocabulary = this.setSchoolManagedVocabulary;
-      setSchoolManagedVocabulary(null);
-      this.set('bufferedTerms', []);
+  @restartableTask
+  *load(element, [school]) {
+    yield this.loadSchool(school.id);
+    const vocabularies = (yield school.vocabularies).toArray();
+    this.schoolVocabularies = yield map(vocabularies, async vocabulary => {
+      const terms = await vocabulary.terms;
+      return {
+        vocabulary,
+        terms,
+      };
+    });
+  }
+
+  get managedVocabulary() {
+    if (!this.args.managedVocabularyId || !this.schoolVocabularies) {
+      return null;
+    }
+
+    const { vocabulary } = this.schoolVocabularies.find(({ vocabulary }) => {
+      return Number(this.args.managedVocabularyId) === Number(vocabulary.id);
+    });
+
+    return vocabulary;
+  }
+
+  get managedTerm() {
+    if (!this.schoolVocabularies || !this.args.managedVocabularyId || !this.args.managedTermId) {
+      return null;
+    }
+
+    const { terms } = this.schoolVocabularies.find(({ vocabulary }) => {
+      return Number(this.args.managedVocabularyId) === Number(vocabulary.id);
+    });
+
+    return terms.findBy('id', this.args.managedTermId);
+  }
+
+  @action
+  doCollapse() {
+    if (this.isCollapsible && this.schoolVocabularies.length) {
+      this.args.collapse();
+      this.args.setSchoolManagedVocabulary(null);
+      this.args.setSchoolManagedVocabularyTerm(null);
     }
   }
-});
+}

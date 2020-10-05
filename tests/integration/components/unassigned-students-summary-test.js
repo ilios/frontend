@@ -1,13 +1,9 @@
-import EmberObject from '@ember/object';
-import Service from '@ember/service';
-import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-
-const { resolve } = RSVP;
+import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 module('Integration | Component | unassigned students summary', function(hooks) {
   setupRenderingTest(hooks);
@@ -22,16 +18,11 @@ module('Integration | Component | unassigned students summary', function(hooks) 
       id: 2,
       title: 'school 1',
     });
-    this.server.create('user', {
-      school
+    await setupAuthentication({
+      school,
     });
-    const school1Mock = EmberObject.create(this.server.db.schools[0]);
-    const school2Mock = EmberObject.create(this.server.db.schools[1]);
-    const currentUserMock = Service.extend({
-      model: resolve(EmberObject.create({
-        school: resolve(school1Mock)
-      }))
-    });
+    const schoolModels = await this.owner.lookup('service:store').findAll('school');
+
     const studentRole = this.server.create('user-role', {
       id: 4,
       title: 'Student'
@@ -48,43 +39,33 @@ module('Integration | Component | unassigned students summary', function(hooks) 
       return schema.users.find([2, 3, 4, 5, 6]);
     });
 
-    this.owner.register('service:currentUser', currentUserMock);
+    this.set('schools', schoolModels);
+    await render(hbs`<UnassignedStudentsSummary @schools={{this.schools}} />`);
 
-    this.set('schools', [school1Mock, school2Mock]);
-    await render(hbs`<UnassignedStudentsSummary @schools={{schools}} />`);
-
-    assert.equal(this.element.textContent.trim().search(/Students Requiring Cohort Assignment/), 0);
-    assert.notEqual(this.element.textContent.trim().search(/There are 5 students needing assignment to a cohort/), -1);
+    assert.dom(this.element).hasText('Students Requiring Cohort Assignment school 0 school 1 There are 5 students needing assignment to a cohort Manage');
 
     const options = findAll('option');
     assert.equal(options.length, 2);
     assert.dom(options[0]).hasText('school 0');
     assert.dom(options[1]).hasText('school 1');
 
-    assert.dom('button').exists({ count: 1 });
+    assert.dom('[data-test-manage-link]').exists({ count: 1 });
     assert.dom('div:nth-of-type(2)').hasClass('alert');
   });
 
   test('it renders empty', async function(assert) {
-    const primarySchool = EmberObject.create({
+    const school = this.server.create('school', {
       id: 1,
       title: 'school 0',
     });
-    const user = EmberObject.create({
-      school: resolve(primarySchool)
+    await setupAuthentication({
+      school,
     });
-    const currentUserMock = Service.extend({
-      model: resolve(user)
-    });
-
-    this.owner.register('service:currentUser', currentUserMock);
-
-    this.set('schools', [primarySchool]);
-    await render(hbs`<UnassignedStudentsSummary @schools={{schools}} />`);
-    assert.equal(this.element.textContent.trim().search(/Students Requiring Cohort Assignment/), 0);
-    assert.notEqual(this.element.textContent.trim().search(/There are 0 students needing assignment to a cohort/), -1);
-
+    const schoolModels = await this.owner.lookup('service:store').findAll('school');
+    this.set('schools', schoolModels);
+    await render(hbs`<UnassignedStudentsSummary @schools={{this.schools}} />`);
+    assert.dom(this.element).hasText('Students Requiring Cohort Assignment school 0 There are 0 students needing assignment to a cohort');
     assert.dom('div:nth-of-type(2)').hasNoClass('alert');
-    assert.dom('button').doesNotExist();
+    assert.dom('[data-test-manage-link]').doesNotExist();
   });
 });

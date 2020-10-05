@@ -1,45 +1,41 @@
-import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-const { resolve } = RSVP;
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | school vocabularies expanded', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
     assert.expect(1);
-    const  vocabulary1 = EmberObject.create({title: 'Vocabulary 1', termCount: 2});
-    const  vocabulary2 = EmberObject.create({title: 'Vocabulary 2', termCount: 1});
-    const term1 = EmberObject.create({ vocabulary: resolve(vocabulary1)});
-    const term2 = EmberObject.create({ vocabulary: resolve(vocabulary1)});
-    const term3 = EmberObject.create({ vocabulary: resolve(vocabulary2)});
-    vocabulary1.set('terms', resolve([term1, term2]));
-    vocabulary2.set('terms', resolve([term3]));
-
-    const school = EmberObject.create({
-      vocabularies: resolve([vocabulary1, vocabulary2]),
-      hasMany() {
-        return {
-          ids() {
-            return [1, 2];
-          }
-        };
-      }
+    const school = this.server.create('school');
+    const  vocabulary1 = this.server.create('vocabulary', {
+      title: 'Vocabulary 1',
+      school,
+    });
+    const  vocabulary2 = this.server.create('vocabulary', {
+      title: 'Vocabulary 2',
+      school,
+    });
+    this.server.createList('term', 2, {
+      vocabulary: vocabulary1,
+    });
+    this.server.create('term', {
+      vocabulary: vocabulary2,
     });
 
-    this.set('school', school);
-    this.set('click', () => {});
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+
+    this.set('school', schoolModel);
     await render(hbs`<SchoolVocabulariesExpanded
-      @school={{school}}
-      @expand={{action click}}
-      @collapse={{action click}}
+      @school={{this.school}}
+      @expand={{noop}}
+      @collapse={{noop}}
+      @setSchoolManagedVocabulary={{noop}}
+      @setSchoolManagedVocabularyTerm={{noop}}
     />`);
-    const title = '.title';
-    return settled().then(() => {
-      assert.dom(title).hasText('Vocabularies (2)');
-    });
+    assert.dom('[data-test-title]').hasText('Vocabularies (2)');
   });
 });
