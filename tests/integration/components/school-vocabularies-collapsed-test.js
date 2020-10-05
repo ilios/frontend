@@ -1,33 +1,34 @@
-import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click } from '@ember/test-helpers';
+import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
-const { resolve } = RSVP;
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | school vocabularies collapsed', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
     assert.expect(5);
-    const  vocabulary1 = EmberObject.create({title: 'Vocabulary 1', termCount: 2});
-    const  vocabulary2 = EmberObject.create({title: 'Vocabulary 2', termCount: 1});
-    const term1 = EmberObject.create({ vocabulary: resolve(vocabulary1)});
-    const term2 = EmberObject.create({ vocabulary: resolve(vocabulary1)});
-    const term3 = EmberObject.create({ vocabulary: resolve(vocabulary2)});
-    vocabulary1.set('terms', resolve([term1, term2]));
-    vocabulary2.set('terms', resolve([term3]));
-
-    const school = EmberObject.create({
-      vocabularies: resolve([vocabulary1, vocabulary2])
+    const school = this.server.create('school');
+    const  vocabulary1 = this.server.create('vocabulary', {
+      title: 'Vocabulary 1',
+      school,
     });
+    const  vocabulary2 = this.server.create('vocabulary', {
+      title: 'Vocabulary 2',
+      school,
+    });
+    this.server.createList('term', 2, {
+      vocabulary: vocabulary1,
+    });
+    this.server.create('term', {
+      vocabulary: vocabulary2,
+    });
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
 
-
-    this.set('school', school);
-    this.set('click', () => {});
-    await render(hbs`<SchoolVocabulariesCollapsed @school={{school}} @expand={{action click}} />`);
+    this.set('school', schoolModel);
+    await render(hbs`<SchoolVocabulariesCollapsed @school={{this.school}} @expand={{noop}} />`);
 
     const title = '.title';
     const vocabularies = 'table tbody tr';
@@ -36,7 +37,6 @@ module('Integration | Component | school vocabularies collapsed', function(hooks
     const vocabulary2Title = `${vocabularies}:nth-of-type(2) td:nth-of-type(1)`;
     const vocabulary2Terms = `${vocabularies}:nth-of-type(2) td:nth-of-type(2)`;
 
-    await settled();
     assert.dom(title).hasText('Vocabularies (2)');
     assert.dom(vocabulary1Title).hasText('Vocabulary 1');
     assert.dom(vocabulary1Terms).hasText('There are 2 terms');
@@ -46,20 +46,19 @@ module('Integration | Component | school vocabularies collapsed', function(hooks
 
   test('clicking the header expands the list', async function(assert) {
     assert.expect(2);
-    const  vocabulary = EmberObject.create();
-    const school = EmberObject.create({
-      vocabularies: resolve([vocabulary])
+    const school = this.server.create('school');
+    this.server.create('vocabulary', {
+      school,
     });
-    const title = '.title';
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
 
-    this.set('school', school);
+    this.set('school', schoolModel);
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`<SchoolVocabulariesCollapsed @school={{school}} @expand={{action click}} />`);
+    await render(hbs`<SchoolVocabulariesCollapsed @school={{this.school}} @expand={{this.click}} />`);
 
-    await settled();
-    assert.dom(title).hasText('Vocabularies (1)');
-    await click(title);
+    assert.dom('[data-test-title]').hasText('Vocabularies (1)');
+    await click('[data-test-title]');
   });
 });

@@ -1,12 +1,12 @@
 <section class="school-vocabularies-collapsed" ...attributes>
-  <div class="title clickable" role="button" {{action (action expand)}}>
+  <div class="title clickable" role="button" {{on "click" @expand}} data-test-title>
     {{t "general.vocabularies"}}
-    ({{get (await school.vocabularies) "length"}})
+    ({{get (await @school.vocabularies) "length"}})
   </div>
-  {{#if (is-pending school.vocabularies)}}
-    <LoadingSpinner @tagName="h3" />
+  {{#if (is-pending @school.vocabularies)}}
+    <LoadingSpinner />
   {{/if}}
-  {{#if (is-fulfilled school.vocabularies)}}
+  {{#if (is-fulfilled @school.vocabularies)}}
     <div class="content">
       <table class="condensed">
         <thead>
@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each (sort-by "title" (await school.vocabularies)) as |vocabulary|}}
+          {{#each (sort-by "title" (await @school.vocabularies)) as |vocabulary|}}
             <tr>
               <td>
                 {{vocabulary.title}}
