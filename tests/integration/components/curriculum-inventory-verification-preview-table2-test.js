@@ -32,7 +32,7 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
     };
 
     this.set('data', data);
-    await render(hbs`<CurriculumInventoryVerificationPreviewTable2 @data={{data}} />`);
+    await render(hbs`<CurriculumInventoryVerificationPreviewTable2 @data={{this.data}} />`);
     assert.equal(component.title, 'Table 2: Primary Instructional Method by Non-Clerkship Sequence Block');
     assert.equal(component.table.firstHeadings.length, 3);
     assert.equal(component.table.firstHeadings.objectAt(0).text, 'Non-Clerkship Sequence Blocks');

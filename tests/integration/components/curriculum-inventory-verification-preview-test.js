@@ -11,7 +11,6 @@ module('Integration | Component | curriculum-inventory-verification-preview', fu
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(30);
     this.server.create('curriculum-inventory-report', {
       name: 'Foo Bar 2019'
     });
@@ -37,26 +36,17 @@ module('Integration | Component | curriculum-inventory-verification-preview', fu
     });
 
     this.set('report', report);
-    await render(hbs`<CurriculumInventoryVerificationPreview @report={{report}} />`);
+    await render(hbs`<CurriculumInventoryVerificationPreview @report={{this.report}} />`);
     assert.equal(component.tableOfContents.items.length, 9);
     assert.equal(component.tableOfContents.items.objectAt(0).text, 'Table 1: Program Expectations Mapped to PCRS');
-    assert.equal(component.tableOfContents.items.objectAt(0).link, '#verification-preview-table1');
     assert.equal(component.tableOfContents.items.objectAt(1).text, 'Table 2: Primary Instructional Method by Non-Clerkship Sequence Block');
-    assert.equal(component.tableOfContents.items.objectAt(1).link, '#verification-preview-table2');
     assert.equal(component.tableOfContents.items.objectAt(2).text, 'Table 3-A: Non-Clerkship Sequence Block Instructional Time');
-    assert.equal(component.tableOfContents.items.objectAt(2).link, '#verification-preview-table3a');
     assert.equal(component.tableOfContents.items.objectAt(3).text, 'Table 3-B: Clerkship Sequence Block Instructional Time');
-    assert.equal(component.tableOfContents.items.objectAt(3).link, '#verification-preview-table3b');
     assert.equal(component.tableOfContents.items.objectAt(4).text, 'Table 4: Instructional Method Counts');
-    assert.equal(component.tableOfContents.items.objectAt(4).link, '#verification-preview-table4');
     assert.equal(component.tableOfContents.items.objectAt(5).text, 'Table 5: Non-Clerkship Sequence Block Assessment Methods');
-    assert.equal(component.tableOfContents.items.objectAt(5).link, '#verification-preview-table5');
     assert.equal(component.tableOfContents.items.objectAt(6).text, 'Table 6: Clerkship Sequence Block Assessment Methods');
-    assert.equal(component.tableOfContents.items.objectAt(6).link, '#verification-preview-table6');
     assert.equal(component.tableOfContents.items.objectAt(7).text, 'Table 7: All Events with Assessments Tagged as Formative or Summative');
-    assert.equal(component.tableOfContents.items.objectAt(7).link, '#verification-preview-table7');
     assert.equal(component.tableOfContents.items.objectAt(8).text,'Table 8: All Resource Types');
-    assert.equal(component.tableOfContents.items.objectAt(8).link, '#verification-preview-table8');
     assert.equal(component.table1.title, 'Table 1: Program Expectations Mapped to PCRS');
     assert.equal(component.table2.title, 'Table 2: Primary Instructional Method by Non-Clerkship Sequence Block');
     assert.equal(component.table3a.title, 'Table 3-A: Non-Clerkship Sequence Block Instructional Time');

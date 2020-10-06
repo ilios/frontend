@@ -16,7 +16,7 @@ module('Integration | Component | curriculum-inventory-verification-preview-head
     });
     const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
     this.set('report', report);
-    await render(hbs`<CurriculumInventoryVerificationPreviewHeader @report={{report}} />`);
+    await render(hbs`<CurriculumInventoryVerificationPreviewHeader @report={{this.report}} />`);
     assert.equal(component.title, 'Verification Preview for Foo Bar 2019');
   });
 });

@@ -14,7 +14,7 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
       {id: '003', title: 'bar', count: 5},
     ];
     this.set('data', data);
-    await render(hbs`<CurriculumInventoryVerificationPreviewTable8 @data={{data}} />`);
+    await render(hbs`<CurriculumInventoryVerificationPreviewTable8 @data={{this.data}} />`);
     assert.equal(component.title, 'Table 8: All Resource Types');
     assert.equal(component.table.headings.length, 3);
     assert.equal(component.table.headings.objectAt(0).text, 'Item Code');

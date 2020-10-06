@@ -1,18 +1,16 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName: "",
+export default class CurriculumInventoryVerificationPreviewTable4Component extends Component {
 
-  totalNumEventsPrimaryMethod: computed('data', function(){
-    return this.data.reduce((value, row) => {
+  get totalNumEventsPrimaryMethod() {
+    return this.args.data.reduce((value, row) => {
       return value + row['num_events_primary_method'];
     }, 0);
-  }),
+  }
 
-  totalNumEventsNonPrimaryMethod: computed('data', function(){
-    return this.data.reduce((value, row) => {
+  get totalNumEventsNonPrimaryMethod() {
+    return this.args.data.reduce((value, row) => {
       return value + row['num_events_non_primary_method'];
     }, 0);
-  })
-});
+  }
+}

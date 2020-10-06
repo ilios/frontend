@@ -17,7 +17,7 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
     ];
 
     this.set('data', data);
-    await render(hbs`<CurriculumInventoryVerificationPreviewTable4 @data={{data}} />`);
+    await render(hbs`<CurriculumInventoryVerificationPreviewTable4 @data={{this.data}} />`);
     assert.equal(component.title, 'Table 4: Instructional Method Counts');
     assert.equal(component.table.headings.length, 4);
     assert.equal(component.table.headings.objectAt(0).text, 'Item Code');

@@ -1,18 +1,16 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName: "",
+export default class CurriculumInventoryVerificationPreviewTable2Component extends Component {
 
-  methodTotals: computed('data.methods', function ()  {
-    return this.data.methods.map(method => {
+  get methodTotals() {
+    return this.args.data.methods.map(method => {
       return (method.total / 60).toFixed(2);
     });
-  }),
+  }
 
-  nonClerkships: computed('data.rows', 'data.methods', function ()  {
-    const methods = this.data.methods;
-    return this.data.rows.map(row => {
+  get nonClerkships() {
+    const methods = this.args.data.methods;
+    return this.args.data.rows.map(row => {
       return {
         title: row.title,
         level: row.level,
@@ -26,12 +24,12 @@ export default Component.extend({
         total: (row.total / 60).toFixed(2),
       };
     });
-  }),
+  }
 
-  sumTotal: computed('data.methods', function () {
-    const sumTotal = this.data.methods.reduce((value, method) => {
+  get sumTotal() {
+    const sumTotal = this.args.data.methods.reduce((value, method) => {
       return value + method.total;
     }, 0);
     return (sumTotal / 60).toFixed(2);
-  })
-});
+  }
+}

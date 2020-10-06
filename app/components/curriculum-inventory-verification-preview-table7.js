@@ -1,18 +1,16 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName: "",
+export default class CurriculumInventoryVerificationPreviewTable7Component extends Component{
 
-  totalNumSummativeAssessments: computed('data', function(){
-    return this.data.reduce((value, row) => {
+  get totalNumSummativeAssessments() {
+    return this.args.data.reduce((value, row) => {
       return value + row['num_summative_assessments'];
     }, 0);
-  }),
+  }
 
-  totalNumFormativeAssessments: computed('data', function(){
-    return this.data.reduce((value, row) => {
+  get totalNumFormativeAssessments() {
+    return this.args.data.reduce((value, row) => {
       return value + row['num_formative_assessments'];
     }, 0);
-  })
-});
+  }
+}
