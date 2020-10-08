@@ -5,9 +5,12 @@
 - [Ilios Frontend](https://github.com/ilios/common)
 - [Ilios LTI App](https://github.com/ilios/lti-app)
 
-## Usage
+Compatibility
+------------------------------------------------------------------------------
 
-`ember install ilios-common`
+* Ember.js v3.16 or above
+* Ember CLI v2.13 or above
+* Node.js v10 or above
 
 Open Source Heroes
 ------------------------------------------------------------------------------
