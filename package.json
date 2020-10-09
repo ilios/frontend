@@ -54,7 +54,7 @@
     "ember-composable-helpers": "4.3.0",
     "ember-concurrency": "^1.0.0",
     "ember-concurrency-decorators": "^2.0.0",
-    "ember-data": "3.21.2",
+    "ember-data": "3.22.0",
     "ember-drag-drop": "^0.8.0",
     "ember-event-helpers": "^0.1.0",
     "ember-feature-flags": "^6.0.0",
