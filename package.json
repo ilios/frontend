@@ -60,7 +60,7 @@
     "ember-source": "3.20.3",
     "ember-template-lint": "^2.12.1",
     "ember-web-app": "^5.0.0",
-    "eslint": "^7.8.1",
+    "eslint": "^7.11.0",
     "ilios-common": "^50.1.2",
     "loader.js": "^4.7.0",
     "normalize.css": "8.0.1",
