@@ -32,28 +32,41 @@ module('Integration | Component | publish all sessions', function(hooks) {
       title: 'session 3',
       published: false,
     });
+
+    const fullyPublishedByIncompleteSession = this.server.create('session', {
+      title: 'session 4',
+      published: true,
+    });
+
     this.server.create('offering', { session: publishableSession });
     this.server.create('offering', { session: completeSession });
+    this.server.create('offering', { session: fullyPublishedByIncompleteSession });
     this.server.create('sessionObjective', { session: completeSession });
     this.publishableSession = await this.owner.lookup('service:store').find('session', publishableSession.id);
     this.unpublishableSession = await this.owner.lookup('service:store').find('session', unpublishableSession.id);
     this.completeSession = await this.owner.lookup('service:store').find('session', completeSession.id);
+    this.fullyPublishedByIncompleteSession
+      = await this.owner.lookup('service:store').find('session', fullyPublishedByIncompleteSession.id);
     this.course = await this.owner.lookup('service:store').find('course', course.id);
   });
 
   test('it renders', async function(assert) {
     assert.expect(4);
 
-    const sessions = [this.unpublishableSession, this.completeSession, this.publishableSession];
+    const sessions = [
+      this.unpublishableSession,
+      this.completeSession,
+      this.publishableSession,
+      this.fullyPublishedByIncompleteSession
+    ];
     this.set('sessions', sessions);
     this.set('course', this.course);
 
     await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />`);
-
     assert.ok(this.element.textContent.search(/Sessions Incomplete: cannot publish \(1\)/) !== -1);
     assert.ok(this.element.textContent.search(/Sessions Complete: ready to publish \(1\)/) !== -1);
-    assert.ok(this.element.textContent.search(/Sessions Requiring Review \(1\)/) !== -1);
-    assert.ok(this.element.textContent.search(/Publish 1, schedule 1, and ignore 1 sessions/) !== -1);
+    assert.ok(this.element.textContent.search(/Sessions Requiring Review \(2\)/) !== -1);
+    assert.ok(this.element.textContent.search(/Publish 2, schedule 1, and ignore 1 sessions/) !== -1);
   });
 
   test('it renders empty', async function(assert) {
