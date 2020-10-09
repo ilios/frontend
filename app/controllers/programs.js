@@ -26,7 +26,7 @@ export default Controller.extend({
 
   filteredPrograms: computed('titleFilter', 'programs.[]', async function() {
     const titleFilter = this.titleFilter;
-    const title = isBlank(titleFilter) ? '' : titleFilter ;
+    const title = isBlank(titleFilter) ? '' : titleFilter.trim().toLowerCase() ;
 
     const programs = await this.programs;
     let filteredPrograms;
@@ -34,7 +34,7 @@ export default Controller.extend({
       filteredPrograms = programs;
     } else {
       filteredPrograms = programs.filter(program => {
-        return isPresent(program.get('title')) && program.get('title').toLowerCase().includes(title.toLowerCase());
+        return isPresent(program.get('title')) && program.get('title').trim().toLowerCase().includes(title);
       });
     }
     return filteredPrograms.sortBy('title');

@@ -61,7 +61,7 @@ export default Controller.extend({
     'allRelatedCourses.[]',
     async function() {
       const titleFilter = this.titleFilter;
-      const title = isBlank(titleFilter) ? '' : titleFilter ;
+      const title = isBlank(titleFilter) ? '' : titleFilter.trim().toLowerCase() ;
       const filterMyCourses = this.userCoursesOnly;
       const courses = await this.courses;
       let filteredCourses;
@@ -69,9 +69,9 @@ export default Controller.extend({
         filteredCourses = courses.sortBy('title');
       } else {
         filteredCourses = courses.filter(course => {
-          return (isPresent(course.get('title')) && course.get('title').toLowerCase().includes(title.toLowerCase())) ||
+          return (isPresent(course.get('title')) && course.get('title').trim().toLowerCase().includes(title)) ||
             (isPresent(course.get('externalId'))
-              && course.get('externalId').toLowerCase().includes(title.toLowerCase())
+              && course.get('externalId').trim().toLowerCase().includes(title)
             );
         }).sortBy('title');
       }

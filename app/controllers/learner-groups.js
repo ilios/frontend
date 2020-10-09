@@ -59,7 +59,7 @@ export default Controller.extend({
 
   filteredLearnerGroups: computed('titleFilter', 'learnerGroups.[]', async function() {
     const titleFilter = this.titleFilter;
-    const title = isBlank(titleFilter) ? '' : titleFilter;
+    const title = isBlank(titleFilter) ? '' : titleFilter.trim().toLowerCase();
     const learnerGroups = await this.learnerGroups;
     let filteredGroups;
     if (isEmpty(title)) {
@@ -67,7 +67,7 @@ export default Controller.extend({
     } else {
       filteredGroups = learnerGroups.filter(learnerGroup => {
         return isPresent(learnerGroup.get('title'))
-          && learnerGroup.get('title').toLowerCase().includes(title.toLowerCase());
+          && learnerGroup.get('title').trim().toLowerCase().includes(title);
       });
     }
     return filteredGroups.sortBy('title');
