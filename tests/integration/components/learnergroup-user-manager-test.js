@@ -2,24 +2,16 @@ import Service from '@ember/service';
 import ObjectProxy from '@ember/object/proxy';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, findAll, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from  'ilios/tests/pages/components/learnergroup-user-manager';
 
 module('Integration | Component | learnergroup user manager', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    const userList = 'tbody tr';
-    const user1Name = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
-    const user1CampusId = 'tbody tr:nth-of-type(1) td:nth-of-type(3)';
-    const user1Email = 'tbody tr:nth-of-type(1) td:nth-of-type(4)';
-    const user2Disabled = 'tbody tr:nth-of-type(2) td:nth-of-type(1) svg';
-    const user2Name = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
-    const user2CampusId = 'tbody tr:nth-of-type(2) td:nth-of-type(3)';
-    const user2Email = 'tbody tr:nth-of-type(2) td:nth-of-type(4)';
-
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user1 = this.server.create('user', {
       firstName: 'Jasper',
@@ -68,29 +60,19 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       @addUsersToGroup={{noop}}
       @removeUsersFromGroup={{noop}}
     />`);
-
-    assert.dom('.title').hasText('Members (2)');
-    assert.dom(userList).exists({ count: 2 });
-    assert.dom(`${user1Name} [data-test-fullname]`).hasText('Jasper M. Dog');
-    assert.dom(user1CampusId).hasText('1234');
-    assert.dom(user1Email).hasText('testemail');
-    assert.dom(user2Disabled).exists({ count: 1 });
-    assert.dom(`${user2Name} [data-test-fullname]`).hasText('Jackson M. Doggy');
-    assert.dom(user2CampusId).hasText('123');
-    assert.dom(user2Email).hasText('testemail2');
+    assert.equal(component.title, 'Members (2)');
+    assert.equal(component.usersInCurrentGroup.length, 2);
+    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    assert.equal(component.usersInCurrentGroup[0].campusId, '1234');
+    assert.equal(component.usersInCurrentGroup[0].email, 'testemail');
+    assert.notOk(component.usersInCurrentGroup[0].isDisabled);
+    assert.equal(component.usersInCurrentGroup[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
+    assert.equal(component.usersInCurrentGroup[1].campusId, '123');
+    assert.equal(component.usersInCurrentGroup[1].email, 'testemail2');
+    assert.ok(component.usersInCurrentGroup[1].isDisabled);
   });
 
   test('it renders when editing', async function(assert) {
-    const userList = 'tbody tr';
-    const user1CheckBox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const user1FullName = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
-    const user1CampusId = 'tbody tr:nth-of-type(1) td:nth-of-type(3)';
-    const user1Email = 'tbody tr:nth-of-type(1) td:nth-of-type(4)';
-    const user2Disabled = 'tbody tr:nth-of-type(2) td:nth-of-type(1) svg';
-    const user2FullName = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
-    const user2CampusId = 'tbody tr:nth-of-type(2) td:nth-of-type(3)';
-    const user2Email = 'tbody tr:nth-of-type(2) td:nth-of-type(4)';
-
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user1 = this.server.create('user', {
       firstName: 'Jasper',
@@ -139,27 +121,22 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       @removeUsersFromGroup={{noop}}
     />`);
 
-    assert.dom('[data-test-group-members]').hasText('Members of current group (2)');
-    assert.dom('[data-test-all-other-members]').hasText('All other members of top group (0)');
-    assert.dom(userList).exists({ count: 2 });
-    assert.dom(user1CheckBox).exists({ count: 1 });
-    assert.dom(user1CheckBox).isNotChecked();
-    assert.dom(user1FullName).hasText('Jasper M. Dog');
-    assert.dom(user1CampusId).hasText('1234');
-    assert.dom(user1Email).hasText('testemail');
-
-    assert.dom(user2Disabled).exists({ count: 1 });
-    assert.dom(user2FullName).hasText('Jackson M. Doggy');
-    assert.dom(user2CampusId).hasText('123');
-    assert.dom(user2Email).hasText('testemail2');
+    assert.equal(component.groupMembers, 'Members of current group (2)');
+    assert.equal(component.allOtherMembers, 'All other members of top group (0)');
+    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    assert.ok(component.usersInCurrentGroup[0].canBeSelected);
+    assert.notOk(component.usersInCurrentGroup[0].isSelected);
+    assert.equal(component.usersInCurrentGroup[0].campusId, '1234');
+    assert.equal(component.usersInCurrentGroup[0].email, 'testemail');
+    assert.notOk(component.usersInCurrentGroup[0].isDisabled);
+    assert.equal(component.usersInCurrentGroup[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
+    assert.notOk(component.usersInCurrentGroup[1].canBeSelected);
+    assert.equal(component.usersInCurrentGroup[1].campusId, '123');
+    assert.equal(component.usersInCurrentGroup[1].email, 'testemail2');
+    assert.ok(component.usersInCurrentGroup[1].isDisabled);
   });
 
   test('sort by full name', async function(assert) {
-    const userList = 'tbody tr';
-    const user1Name = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
-    const user2Name = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
-    const user3Name = 'tbody tr:nth-of-type(3) td:nth-of-type(2)';
-
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user1 = this.server.create('user', {
       firstName: 'Jasper',
@@ -211,21 +188,14 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       @removeUsersFromGroup={{noop}}
     />`);
 
-    assert.dom(userList).exists({ count: 3 });
-    assert.dom(`${user1Name} [data-test-fullname]`).hasText('Captain J');
-    assert.dom(`${user1Name} [data-test-info]`).exists();
-    assert.dom(`${user2Name} [data-test-fullname]`).hasText('Jackson M. Mc1son');
-    assert.dom(`${user2Name} [data-test-info]`).doesNotExist();
-    assert.dom(`${user3Name} [data-test-fullname]`).hasText('Jasper M. Mc0son');
-    assert.dom(`${user3Name} [data-test-info]`).doesNotExist();
-
+    assert.equal(component.usersNotInCurrentGroup.length, 3);
+    assert.equal(component.usersNotInCurrentGroup[0].name.userNameInfo.fullName, 'Captain J');
+    assert.equal(component.usersNotInCurrentGroup[1].name.userNameInfo.fullName, 'Jackson M. Mc1son');
+    assert.equal(component.usersNotInCurrentGroup[2].name.userNameInfo.fullName, 'Jasper M. Mc0son');
   });
 
   test('add multiple users', async function(assert) {
     assert.expect(5);
-    const user1CheckBox = 'table:nth-of-type(2) tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const button = 'button.done';
-
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup ] });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
@@ -256,21 +226,16 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       @removeUsersFromGroup={{noop}}
     />`);
 
-    assert.dom(button).doesNotExist();
-    await click(user1CheckBox);
-    assert.dom(user1CheckBox).isChecked();
-    assert.dom(button).hasText('Move learner to this group');
-    await click(button);
-    await settled();
-    assert.dom(button).doesNotExist();
-
+    assert.notOk(component.membersCanBeAdded);
+    await component.usersInCurrentGroup[0].select();
+    assert.ok(component.membersCanBeAdded);
+    assert.equal(component.addButtonText, 'Move learner to this group');
+    await component.add();
+    assert.notOk(component.membersCanBeAdded);
   });
 
   test('remove multiple users', async function(assert) {
     assert.expect(5);
-    const user1CheckBox = 'table:nth-of-type(2) tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const button = 'button.cancel';
-
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup ] });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
@@ -301,18 +266,16 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       @removeUsersFromGroup={{this.removeMany}}
     />`);
 
-    assert.dom(button).doesNotExist();
-    await click(user1CheckBox);
-    assert.dom(user1CheckBox).isChecked();
-    assert.dom(button).hasText('Remove learner to this cohort');
-    await click(button);
-    await settled();
-    assert.dom(button).doesNotExist();
+    assert.notOk(component.membersCanBeRemoved);
+    await component.usersInCurrentGroup[0].select();
+    assert.ok(component.membersCanBeRemoved);
+    assert.equal(component.removeButtonText, 'Remove learner to this cohort');
+    await component.remove();
+    assert.notOk(component.membersCanBeRemoved);
   });
 
   test('remove single user', async function(assert) {
     assert.expect(1);
-    const action = 'table:nth-of-type(2) tbody tr:nth-of-type(1) td:nth-of-type(6) .clickable';
 
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup ] });
@@ -345,13 +308,11 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       @removeUsersFromGroup={{noop}}
     />`);
 
-    await click(action);
-
+    await component.usersInCurrentGroup[0].remove();
   });
 
   test('add single user', async function(assert) {
     assert.expect(1);
-    const action = 'table:nth-of-type(3) tbody tr:nth-of-type(1) td:nth-of-type(6) .clickable';
 
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const learnerGroup2 = this.server.create('learnerGroup', { id: 2 });
@@ -385,15 +346,10 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       @addUsersToGroup={{noop}}
       @removeUsersFromGroup={{noop}}
     />`);
-    await click(action);
+    await component.usersNotInCurrentGroup[0].add();
   });
 
   test('when users are selected single action is disabled', async function(assert) {
-    assert.expect(2);
-    const user1CheckBox = 'table:nth-of-type(2) tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const action1 = 'table:nth-of-type(2) tbody tr:nth-of-type(1) td:nth-of-type(6) .clickable';
-    const action2 = 'table:nth-of-type(3) tbody tr:nth-of-type(1) td:nth-of-type(6) .clickable';
-
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const learnerGroup2 = this.server.create('learnerGroup', { id: 2 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup ] });
@@ -430,19 +386,15 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       @removeUsersFromGroup={{noop}}
     />`);
 
-    await click(user1CheckBox);
-    assert.dom(action1).doesNotExist();
-    assert.dom(action2).doesNotExist();
-
+    assert.ok(component.usersInCurrentGroup[0].canBeRemoved);
+    assert.ok(component.usersNotInCurrentGroup[0].canBeAdded);
+    await component.usersInCurrentGroup[0].select();
+    assert.notOk(component.usersInCurrentGroup[0].canBeRemoved);
+    assert.notOk(component.usersNotInCurrentGroup[0].canBeAdded);
   });
 
-  test('checkall', async function(assert) {
-    assert.expect(5);
-    const checkAllBox = 'thead tr:nth-of-type(1) th:nth-of-type(1) input[type=checkbox]';
-    const user1CheckBox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const user2CheckBox = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input[type=checkbox]';
-    const button = 'button.done';
-
+  test('check all', async function(assert) {
+    assert.expect(7);
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup ] });
     const user2 = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup ] });
@@ -481,21 +433,16 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       @addUsersToGroup={{this.addMany}}
       @removeUsersFromGroup={{noop}}
     />`);
-
-    await click(checkAllBox);
-    assert.dom(user1CheckBox).isChecked();
-    assert.dom(user2CheckBox).isChecked();
-    assert.dom(button).hasText('Move 2 learners to this group');
-    return settled(await click(button));
-
+    assert.notOk(component.usersInCurrentGroup[0].isSelected);
+    assert.notOk(component.usersInCurrentGroup[0].isSelected);
+    await component.selectAll.toggle();
+    assert.ok(component.usersInCurrentGroup[0].isSelected);
+    assert.ok(component.usersInCurrentGroup[0].isSelected);
+    assert.equal(component.addButtonText, 'Move 2 learners to this group');
+    await component.add();
   });
 
   test('checking one puts checkall box into indeterminate state', async function(assert) {
-    assert.expect(4);
-    const checkAllBox = 'thead tr:nth-of-type(1) th:nth-of-type(1) input[type=checkbox]';
-    const user1CheckBox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const user2CheckBox = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input[type=checkbox]';
-
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup ] });
     const user2 = this.server.create('user', { enabled: true, learnerGroups: [ learnerGroup ] });
@@ -531,24 +478,28 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       @removeUsersFromGroup={{noop}}
     />`);
 
-    await click(user1CheckBox);
-    assert.ok(find(checkAllBox).indeterminate);
-    await click(user2CheckBox);
-    assert.dom(checkAllBox).isChecked();
-    await click(checkAllBox);
-    assert.dom(user1CheckBox).isNotChecked();
-    assert.dom(user2CheckBox).isNotChecked();
+    assert.notOk(component.usersInCurrentGroup[0].isSelected);
+    assert.notOk(component.usersInCurrentGroup[1].isSelected);
+    assert.notOk(component.selectAll.isFullySelected);
+    assert.notOk(component.selectAll.isPartiallySelected);
+    await component.usersInCurrentGroup[0].select();
+    assert.notOk(component.selectAll.isFullySelected);
+    assert.ok(component.selectAll.isPartiallySelected);
+    await component.usersInCurrentGroup[1].select();
+    assert.ok(component.selectAll.isFullySelected);
+    assert.notOk(component.selectAll.isPartiallySelected);
+    assert.ok(component.usersInCurrentGroup[0].isSelected);
+    assert.ok(component.usersInCurrentGroup[1].isSelected);
+    await component.selectAll.toggle();
+    assert.notOk(component.usersInCurrentGroup[0].isSelected);
+    assert.notOk(component.usersInCurrentGroup[1].isSelected);
   });
 
   test('root users can manage disabled users', async function(assert) {
     assert.expect(2);
-    const currentUserMock = Service.extend({
-      isRoot: true,
-    });
-    this.owner.register('service:currentUser', currentUserMock);
 
-    const userCheckbox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const userDisabledIcon = 'tbody tr:nth-of-type(1) td:nth-of-type(1) .fa-user-times';
+    const currentUserMock = Service.extend({ isRoot: true });
+    this.owner.register('service:currentUser', currentUserMock);
 
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: false, learnerGroups: [ learnerGroup ] });
@@ -577,19 +528,15 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       @removeUsersFromGroup={{noop}}
     />`);
 
-    assert.equal(1, findAll(userCheckbox).length, 'Checkbox visible');
-    assert.equal(1, findAll(userDisabledIcon).length, 'User is labeled as disabled.');
+    assert.ok(component.usersInCurrentGroup[0].canBeSelected, 'Checkbox visible');
+    assert.ok(component.usersInCurrentGroup[0].isDisabled, 'User is labeled as disabled.');
   });
 
   test('non-root users cannot manage disabled users', async function(assert) {
     assert.expect(2);
-    const currentUserMock = Service.extend({
-      isRoot: false,
-    });
-    this.owner.register('service:currentUser', currentUserMock);
 
-    const userCheckbox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const userDisabledIcon = 'tbody tr:nth-of-type(1) td:nth-of-type(1) .fa-user-times';
+    const currentUserMock = Service.extend({ isRoot: false });
+    this.owner.register('service:currentUser', currentUserMock);
 
     const learnerGroup = this.server.create('learnerGroup', { id: 1 });
     const user = this.server.create('user', { enabled: false, learnerGroups: [ learnerGroup ] });
@@ -618,7 +565,7 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
       @removeUsersFromGroup={{noop}}
     />`);
 
-    assert.equal(0, findAll(userCheckbox).length, 'Checkbox is not visible');
-    assert.equal(1, findAll(userDisabledIcon).length, 'User is labeled as disabled.');
+    assert.notOk(component.usersInCurrentGroup[0].canBeSelected, 'Checkbox visible');
+    assert.ok(component.usersInCurrentGroup[0].isDisabled, 'User is labeled as disabled.');
   });
 });
