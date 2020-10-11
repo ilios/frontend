@@ -241,7 +241,7 @@
               @action={{fn this.updateTime "startDate"}}
             />
           {{else}}
-            {{moment-format this.startDate "h:mm a"}}
+            {{format-date this.startDate  hour12=true hour="numeric" minute="numeric"}}
           {{/if}}
         </div>
         {{#if @editable}}
@@ -285,7 +285,7 @@
               @action={{fn this.updateTime "endDate"}}
             />
           {{else}}
-            {{moment-format this.endDate "h:mm a"}}
+            {{format-date this.endDate  hour12=true hour="numeric" minute="numeric"}}
           {{/if}}
         </div>
         {{#each (await (compute (fn this.getErrorsFor) "endDate")) as |message|}}
