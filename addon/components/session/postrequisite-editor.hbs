@@ -59,7 +59,7 @@
             <td colspan="3">
               {{#if (await postrequisite.firstOfferingDate)}}
                 {{#if postrequisite.ilmSession}}
-                  <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{moment-format (await postrequisite.firstOfferingDate) "L"}}
+                  <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{format-date (await postrequisite.firstOfferingDate)}}
                 {{else}}
                   {{moment-format (await postrequisite.firstOfferingDate) "L LT"}}
                 {{/if}}

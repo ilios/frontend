@@ -23,7 +23,7 @@
           {{t "general.start"}}:
         </label>
         <div>
-          {{moment-format @course.startDate "L"}}
+          {{format-date @course.startDate}}
         </div>
       </div>
       <div class="inline-label-data-block">
@@ -47,7 +47,7 @@
           {{t "general.end"}}:
         </label>
         <div>
-          {{moment-format @course.endDate "L"}}
+          {{format-date @course.endDate}}
         </div>
       </div>
       <br>
@@ -394,7 +394,7 @@
                   {{get (await session.ilmSession) "hours"}}
                 </td>
                 <td>
-                  {{moment-format (get (await session.ilmSession) "dueDate") "L"}}
+                  {{format-date (get (await session.ilmSession) "dueDate")}}
                 </td>
               </tr>
             </tbody>

@@ -228,7 +228,7 @@
               @change={{fn this.updateDate "startDate"}}
             />
           {{else}}
-            {{moment-format this.startDate "L"}}
+            {{format-date this.startDate}}
           {{/if}}
         </div>
         <div class="item start-time">
@@ -272,7 +272,7 @@
               @change={{fn this.updateDate "endDate"}}
             />
           {{else}}
-            {{moment-format this.endDate "L"}}
+            {{format-date this.endDate}}
           {{/if}}
         </div>
         <div class="item end-time">
