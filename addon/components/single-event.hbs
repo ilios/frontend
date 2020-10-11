@@ -20,12 +20,12 @@
           <p>
             {{t "general.dueBefore"}}
             <a href={{this.postrequisiteLink}}>{{get (object-at 0 @event.postrequisites) "name"}}</a>
-            ({{moment-format (get (object-at 0 @event.postrequisites) "startDate") "dddd, MMMM Do YYYY, h:mm a"}})
+            ({{format-date (get (object-at 0 @event.postrequisites) "startDate") month="long" weekday="long" day="numeric" year="numeric" hour12=true hour="numeric" minute="numeric"}})
           </p>
         {{/if}}
         {{#unless @event.ilmSession}}
           <p>
-            {{moment-format @event.startDate "dddd, MMMM Do YYYY, h:mm a"}}
+            {{format-date @event.startDate month="long" weekday="long" day="numeric" year="numeric" hour12=true hour="numeric" minute="numeric"}}
           </p>
         {{/unless}}
       </div>
