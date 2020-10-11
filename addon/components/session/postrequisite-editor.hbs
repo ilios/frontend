@@ -61,7 +61,7 @@
                 {{#if postrequisite.ilmSession}}
                   <strong>{{t "general.ilm"}}: {{t "general.dueBy"}}</strong> {{format-date (await postrequisite.firstOfferingDate)}}
                 {{else}}
-                  {{moment-format (await postrequisite.firstOfferingDate) "L LT"}}
+                  {{format-date (await postrequisite.firstOfferingDate) month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric"}}
                 {{/if}}
               {{/if}}
             </td>

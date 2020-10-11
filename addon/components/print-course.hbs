@@ -426,9 +426,9 @@
               {{#each (await session.offerings) as |offering|}}
                 <tr>
                   <td class="text-left">
-                    {{moment-format offering.startDate "L LT"}}
+                    {{format-date offering.startDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric"}}
                     -
-                    {{moment-format offering.endDate "L LT"}}
+                    {{format-date offering.endDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric"}}
                   </td>
                   <td class="text-left">
                     {{offering.room}}
