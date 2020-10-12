@@ -101,7 +101,7 @@ module('Integration | Component | week glance', function(hooks) {
       @collapsible={{false}}
       @collapsed={{false}}
       @showFullTitle={{true}}
-      @year={{moment-format this.today "YYYY"}}
+      @year={{format-date this.today year="numeric"}}
       @week={{moment-format this.today "W"}}
     />`);
 
@@ -126,7 +126,7 @@ module('Integration | Component | week glance', function(hooks) {
       @collapsible={{false}}
       @collapsed={{false}}
       @showFullTitle={{true}}
-      @year={{moment-format this.today "YYYY"}}
+      @year={{format-date this.today year="numeric"}}
       @week={{moment-format this.today "W"}}
     />`);
     const title = '[data-test-week-title]';
@@ -150,7 +150,7 @@ module('Integration | Component | week glance', function(hooks) {
       @collapsible={{false}}
       @collapsed={{false}}
       @showFullTitle={{false}}
-      @year={{moment-format this.today "YYYY"}}
+      @year={{format-date this.today year="numeric"}}
       @week={{moment-format this.today "W"}}
     />`);
     const title = '[data-test-week-title]';
@@ -170,7 +170,7 @@ module('Integration | Component | week glance', function(hooks) {
       @collapsible={{true}}
       @collapsed={{true}}
       @showFullTitle={{false}}
-      @year={{moment-format this.today "YYYY"}}
+      @year={{format-date this.today year="numeric"}}
       @week={{moment-format this.today "W"}}
     />`);
     const title = '[data-test-week-title]';
@@ -199,7 +199,7 @@ module('Integration | Component | week glance', function(hooks) {
       @collapsible={{true}}
       @collapsed={{true}}
       @showFullTitle={{false}}
-      @year={{moment-format this.today "YYYY"}}
+      @year={{format-date this.today year="numeric"}}
       @week={{moment-format this.today "W"}}
       @toggleCollapsed={{action toggle}}
     />`);
@@ -221,7 +221,7 @@ module('Integration | Component | week glance', function(hooks) {
       @collapsible={{true}}
       @collapsed={{false}}
       @showFullTitle={{false}}
-      @year={{moment-format this.today "YYYY"}}
+      @year={{format-date this.today year="numeric"}}
       @week={{moment-format this.today "W"}}
       @toggleCollapsed={{action toggle}}
     />`);

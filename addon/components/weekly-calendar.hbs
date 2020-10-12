@@ -4,9 +4,9 @@
 >
   <h2 class="week-of-year" data-test-week-of-year>
     <span class="short" data-test-short>
-      {{moment-format this.firstDayOfWeek "M/D"}} &mdash;
-      {{moment-format this.lastDayOfWeek "M/D"}}
-      {{moment-format this.lastDayOfWeek "YYYY"}}
+      {{format-date this.firstDayOfWeek month="numeric" day="numeric"}} &mdash;
+      {{format-date this.lastDayOfWeek month="numeric" day="numeric"}}
+      {{format-date this.lastDayOfWeek year="numeric"}}
     </span>
     <span class="long" data-test-long>{{t "general.weekOf" date=(moment-format this.firstDayOfWeek "MMMM Do YYYY")}}</span>
   </h2>
