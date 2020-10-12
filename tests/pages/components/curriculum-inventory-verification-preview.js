@@ -1,5 +1,4 @@
 import {
-  attribute,
   create,
   collection,
   text,
@@ -20,7 +19,6 @@ const definition = {
     scope: '[data-test-table-of-contents]',
     items: collection('li', {
       text: text(),
-      link: attribute('href', 'a'),
     }),
   },
   table1,

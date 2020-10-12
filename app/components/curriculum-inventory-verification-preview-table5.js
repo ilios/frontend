@@ -1,12 +1,9 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 
-export default Component.extend({
-  tagName: "",
-
-  nonClerkships: computed('data.rows', 'data.methods', function ()  {
-    const methods = this.data.methods;
-    return this.data.rows.map(row => {
+export default class CurriculumInventoryVerificationPreviewTable5Component extends Component {
+  get nonClerkships()  {
+    const methods = this.args.data.methods;
+    return this.args.data.rows.map(row => {
       return {
         hasFormativeAssessments: row.has_formative_assessments ? 'Y' : '',
         hasNarrativeAssessments: row.has_narrative_assessments ? 'Y' : '',
@@ -18,5 +15,5 @@ export default Component.extend({
         title: row.title,
       };
     });
-  })
-});
+  }
+}

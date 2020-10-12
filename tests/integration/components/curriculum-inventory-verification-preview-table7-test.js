@@ -15,7 +15,7 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
       {id: 'AM003', title: 'bar', num_summative_assessments: 5, num_formative_assessments: 0},
     ];
     this.set('data', data);
-    await render(hbs`<CurriculumInventoryVerificationPreviewTable7 @data={{data}} />`);
+    await render(hbs`<CurriculumInventoryVerificationPreviewTable7 @data={{this.data}} />`);
     assert.equal(component.title, 'Table 7: All Events with Assessments Tagged as Formative or Summative');
     assert.equal(component.table.headings.length, 4);
     assert.equal(component.table.headings.objectAt(0).text, 'Item Code');

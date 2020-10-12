@@ -16,7 +16,7 @@ module('Integration | Component | curriculum-inventory-verification-preview-tabl
     ];
 
     this.set('data', data);
-    await render(hbs`<CurriculumInventoryVerificationPreviewTable3b @data={{data}} />`);
+    await render(hbs`<CurriculumInventoryVerificationPreviewTable3b @data={{this.data}} />`);
     assert.equal(component.title, 'Table 3-B: Clerkship Sequence Block Instructional Time');
     assert.equal(component.table.headings.length, 4);
     assert.equal(component.table.headings.objectAt(0).text, 'Clerkship Sequence Blocks');

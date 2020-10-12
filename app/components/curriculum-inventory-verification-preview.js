@@ -1,28 +1,30 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { reads } from '@ember/object/computed';
-import { task } from 'ember-concurrency';
+import { task } from 'ember-concurrency-decorators';
+import scrollIntoView from 'scroll-into-view';
 
+export default class CurriculumInventoryVerificationPreviewComponent extends Component {
+  @service fetch;
+  @service iliosConfig;
+  @tracked tables = null;
+  @tracked scrollTargets = {};
 
-export default Component.extend({
-  fetch: service(),
-  iliosConfig: service(),
-  tagName: "",
-  report: null,
-  tables: null,
-  tocId: 'verification-preview-toc',
-  namespace: reads('iliosConfig.apiNameSpace'),
-
-  didInsertElement() {
-    this._super(...arguments);
-    this.loadTables.perform();
-  },
-
-  loadTables: task(function* () {
-    const reportId = this.report.id;
-
-    const url = `${this.namespace}/curriculuminventoryreports/${reportId}/verificationpreview`;
+  @task
+  *load(element, [report]) {
+    const url = `${this.iliosConfig.apiNameSpace}/curriculuminventoryreports/${report.id}/verificationpreview`;
     const data = yield this.fetch.getJsonFromApiHost(url);
-    this.set('tables', data.preview);
-  })
-});
+    this.tables = data.preview;
+  }
+
+  @action
+  scrollTo(key) {
+    scrollIntoView(this.scrollTargets[key]);
+  }
+
+  @action
+  setScrollTarget(element, [key]) {
+    this.scrollTargets[key] = element;
+  }
+}
