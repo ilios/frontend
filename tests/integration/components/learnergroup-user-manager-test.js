@@ -568,4 +568,76 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     assert.notOk(component.usersInCurrentGroup[0].canBeSelected, 'Checkbox visible');
     assert.ok(component.usersInCurrentGroup[0].isDisabled, 'User is labeled as disabled.');
   });
+
+  test('filter users', async function(assert) {
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const user1 = this.server.create('user', {
+      firstName: 'Jasper',
+      lastName: 'Dog',
+      email: 'jasper.dog@example.edu',
+      learnerGroups: [ learnerGroup ],
+
+    });
+    const user2 = this.server.create('user', {
+      firstName: 'Jackson',
+      lastName: 'Doggy',
+      email: 'jackson.doggy@example.edu',
+      learnerGroups: [ learnerGroup ],
+    });
+    const user3 = this.server.create('user', {
+      firstName: 'Jayden',
+      lastName: 'Pup',
+      displayName: 'Just Jayden',
+      email: 'jayden@example.edu',
+      learnerGroups: [ learnerGroup ],
+
+    });
+    const userModel1 = await this.owner.lookup('service:store').find('user', user1.id);
+    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const userModel3 = await this.owner.lookup('service:store').find('user', user3.id);
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const userModelProxy1 = ObjectProxy.create({
+      content: userModel1,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
+    });
+    const userModelProxy2 = ObjectProxy.create({
+      content: userModel2,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
+    });
+    const userModelProxy3 = ObjectProxy.create({
+      content: userModel3,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
+    });
+
+    this.set('users', [ userModelProxy1, userModelProxy2, userModelProxy3 ]);
+    this.set('learnerGroup', learnerGroupModel );
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{this.learnerGroup.id}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{noop}}
+      @isEditing={{false}}
+      @addUserToGroup={{noop}}
+      @removeUserFromGroup={{noop}}
+      @addUsersToGroup={{noop}}
+      @removeUsersFromGroup={{noop}}
+    />`);
+
+    assert.equal(component.usersInCurrentGroup.length, 3);
+    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    assert.equal(component.usersInCurrentGroup[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
+    assert.equal(component.usersInCurrentGroup[2].name.userNameInfo.fullName, 'Just Jayden');
+    await component.filter("Just");
+    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Just Jayden');
+    await component.filter(" Just     ");
+    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Just Jayden');
+    await component.filter("JASPER.DOG@EXAMPLE.EDU");
+    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+  });
 });
