@@ -84,8 +84,7 @@
                           {{t "general.dueBy"}}:
                         </span>
                       {{/if}}
-                      {{moment-format event.startDate "dddd, MMMM Do, YYYY h:mma"
-                      }}
+                      {{format-date event.startDate month="long" weekday="long" day="numeric" year="numeric" hour12=true hour="numeric" minute="numeric"}}
                     </LinkTo>
                   </td>
                   <td colspan="4">

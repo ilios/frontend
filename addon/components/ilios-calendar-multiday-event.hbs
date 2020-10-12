@@ -1,7 +1,7 @@
 <li>
-  {{moment-format @event.startDate "M/D/YY h:mma"}}
+  {{format-date @event.startDate month="numeric" day="numeric" year="2-digit" hour="numeric" minute="numeric"}}
   &ndash;
-  {{moment-format @event.endDate "M/D/YY h:mma"}}
+  {{format-date @event.endDate month="numeric" day="numeric" year="2-digit" hour="numeric" minute="numeric"}}
   <span
     class={{if (and this.clickable @isEventSelectable) "clickable"}}
     role="button"

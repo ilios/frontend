@@ -123,7 +123,7 @@
         </label>
         {{#if this.endDate}}
           <div class="text">
-            {{moment-format this.endDate "M/D/YYYY h:mm a"}}
+            {{format-date this.endDate month="numeric" day="numeric" year="numeric" hour="numeric" minute="numeric"}}
           </div>
         {{/if}}
       </div>

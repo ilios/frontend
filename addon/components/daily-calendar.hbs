@@ -6,7 +6,7 @@
     <span class="short" data-test-short>
       {{format-date @date}}
     </span>
-    <span class="long" data-test-long>{{moment-format @date "dddd LL"}}</span>
+    <span class="long" data-test-long>{{format-date @date weekday="long" month="long" day="numeric" year="numeric"}}</span>
   </h2>
 
   <div

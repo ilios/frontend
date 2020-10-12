@@ -18,7 +18,7 @@
           {{t "general.dueBy"}}
         </span>
       {{/if}}
-      {{moment-format @event.startDate "dddd h:mma"}}
+      {{format-date @event.startDate weekday="long" hour="numeric" minute="numeric"}}
     </span>
   </h3>
   {{#if @event.prerequisites.length}}
