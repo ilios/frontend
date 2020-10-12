@@ -3,6 +3,7 @@ name: Update Transitive Dependencies
 on:
   schedule:
     - cron: '15 11 * * 1' # weekly, on Monday morning (UTC)
+  workflow_dispatch:
 
 jobs:
   update:
