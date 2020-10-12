@@ -328,5 +328,7 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
     assert.equal(component.users[0].name.userNameInfo.fullName, 'Just Jayden');
     await component.filter("JASPER.DOG@EXAMPLE.EDU");
     assert.equal(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    await component.filter("jasper d");
+    assert.equal(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
   });
 });

@@ -639,5 +639,7 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
     assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Just Jayden');
     await component.filter("JASPER.DOG@EXAMPLE.EDU");
     assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    await component.filter("jasper d");
+    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Jasper M. Dog');
   });
 });
