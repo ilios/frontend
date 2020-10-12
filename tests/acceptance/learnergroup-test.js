@@ -30,15 +30,18 @@ module('Acceptance | Learnergroup', function(hooks) {
     await page.overview.manage();
     assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup.length, 0);
     assert.equal(page.usersInCohort.list.length, 2);
-    assert.equal(page.usersInCohort.list[0].fullName, '1 guy M. Mc1son');
-    assert.equal(page.usersInCohort.list[1].fullName, '2 guy M. Mc2son');
+    assert.equal(page.usersInCohort.list[0].name.userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.equal(page.usersInCohort.list[1].name.userNameInfo.fullName, '2 guy M. Mc2son');
 
     await page.usersInCohort.list[0].add();
 
     assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup.length, 1);
-    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup[0].fullName, '1 guy M. Mc1son');
+    assert.equal(
+      page.overview.learnerGroupUserManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      '1 guy M. Mc1son'
+    );
     assert.equal(page.usersInCohort.list.length, 1);
-    assert.equal(page.usersInCohort.list[0].fullName, '2 guy M. Mc2son');
+    assert.equal(page.usersInCohort.list[0].name.userNameInfo.fullName, '2 guy M. Mc2son');
   });
 
   test('remove learners individually from group', async function(assert) {
@@ -53,16 +56,25 @@ module('Acceptance | Learnergroup', function(hooks) {
     await page.visit({ learnerGroupId: 1 });
     await page.overview.manage();
     assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup.length, 2);
-    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup[0].fullName, '1 guy M. Mc1son');
-    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup[1].fullName, '2 guy M. Mc2son');
+    assert.equal(
+      page.overview.learnerGroupUserManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      '1 guy M. Mc1son'
+    );
+    assert.equal(
+      page.overview.learnerGroupUserManager.usersInCurrentGroup[1].name.userNameInfo.fullName,
+      '2 guy M. Mc2son'
+    );
     assert.equal(page.usersInCohort.list.length, 0);
 
     await page.overview.learnerGroupUserManager.usersInCurrentGroup[0].remove();
 
     assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup.length, 1);
-    assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup[0].fullName, '2 guy M. Mc2son');
+    assert.equal(
+      page.overview.learnerGroupUserManager.usersInCurrentGroup[0].name.userNameInfo.fullName,
+      '2 guy M. Mc2son'
+    );
     assert.equal(page.usersInCohort.list.length, 1);
-    assert.equal(page.usersInCohort.list[0].fullName, '1 guy M. Mc1son');
+    assert.equal(page.usersInCohort.list[0].name.userNameInfo.fullName, '1 guy M. Mc1son');
   });
 
   test('generate new subgroups', async function(assert) {

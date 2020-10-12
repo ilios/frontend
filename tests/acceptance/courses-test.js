@@ -50,7 +50,6 @@ module('Acceptance | Courses', function(hooks) {
 
   test('filters by title', async function(assert) {
     this.server.create('academicYear', {id: 2014});
-    assert.expect(32);
     const firstCourse = this.server.create('course', {
       title: 'specialfirstcourse',
       year: 2014,
@@ -96,6 +95,10 @@ module('Acceptance | Courses', function(hooks) {
     assert.equal(page.courses(0).title, firstCourse.title);
     assert.equal(page.headerTitle, 'Courses (1)');
 
+    await page.filterByTitle('  first  ');
+    assert.equal(page.courses().count, 1);
+    assert.equal(page.courses(0).title, firstCourse.title);
+    assert.equal(page.headerTitle, 'Courses (1)');
 
     await page.filterByTitle('second');
     assert.equal(page.courses().count, 1);

@@ -55,8 +55,9 @@ export default Controller.extend({
         const noUpdateName = isEmpty(update.get('user.fullName'));
         const filterMatch = update
           .get('user.fullName')
+          .trim()
           .toLowerCase()
-          .includes(this.filter.toLowerCase());
+          .includes(this.filter.trim().toLowerCase());
         return isNotDeleted && (noUpdateName || filterMatch);
       });
   }),

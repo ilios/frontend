@@ -1,25 +1,16 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, findAll, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from  'ilios/tests/pages/components/learnergroup-cohort-user-manager';
 
 module('Integration | Component | learnergroup cohort user manager', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    const userList = 'tbody tr';
-    const user1CheckBox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const user1FullName = 'tbody tr:nth-of-type(1) td:nth-of-type(2)';
-    const user1CampusId = 'tbody tr:nth-of-type(1) td:nth-of-type(3)';
-    const user1Email = 'tbody tr:nth-of-type(1) td:nth-of-type(4)';
-    const user2Disabled = 'tbody tr:nth-of-type(2) td:nth-of-type(1) svg';
-    const user2FullName = 'tbody tr:nth-of-type(2) td:nth-of-type(2)';
-    const user2CampusId = 'tbody tr:nth-of-type(2) td:nth-of-type(3)';
-    const user2Email = 'tbody tr:nth-of-type(2) td:nth-of-type(4)';
-
     const user1 = this.server.create('user', {
       firstName: 'Jasper',
       lastName: 'Dog',
@@ -50,29 +41,19 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       @addUsersToGroup={{noop}}
     />`);
 
-    assert.dom('.title').hasText('Cohort Members NOT assigned to top level group (2)');
-    assert.dom(userList).exists({ count: 2 });
-    assert.dom(user1CheckBox).exists({ count: 1 });
-    assert.dom(user1CheckBox).isNotChecked();
-    assert.dom(user1FullName).hasText('Jasper M. Dog');
-    assert.dom(user1CampusId).hasText('1234');
-    assert.dom(user1Email).hasText('testemail');
-
-    assert.dom(user2Disabled).exists({ count: 1 });
-    assert.dom(user2FullName).hasText('Jackson M. Doggy');
-    assert.dom(user2CampusId).hasText('123');
-    assert.dom(user2Email).hasText('testemail2');
+    assert.equal(component.title, 'Cohort Members NOT assigned to top level group (2)');
+    assert.equal(component.users.length, 2);
+    assert.equal(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    assert.equal(component.users[0].campusId, '1234');
+    assert.equal(component.users[0].email, 'testemail');
+    assert.notOk(component.users[0].isDisabled);
+    assert.equal(component.users[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
+    assert.equal(component.users[1].campusId, '123');
+    assert.equal(component.users[1].email, 'testemail2');
+    assert.ok(component.users[1].isDisabled);
   });
 
   test('sort by full name', async function(assert) {
-    const userList = 'tbody tr';
-    const user1FullName = 'tbody tr:nth-of-type(1) td:nth-of-type(2) [data-test-fullname]';
-    const user1AdditionalNameInfo = 'tbody tr:nth-of-type(1) td:nth-of-type(2) [data-test-info]';
-    const user2FullName = 'tbody tr:nth-of-type(2) td:nth-of-type(2) [data-test-fullname]';
-    const user2AdditionalNameInfo = 'tbody tr:nth-of-type(2) td:nth-of-type(2) [data-test-info]';
-    const user3FullName = 'tbody tr:nth-of-type(3) td:nth-of-type(2) [data-test-fullname]';
-    const user3AdditionalNameInfo = 'tbody tr:nth-of-type(3) td:nth-of-type(2) [data-test-info]';
-
     const user1 = this.server.create('user', { firstName: 'Jasper' });
     const user2 = this.server.create('user', { firstName: 'Jackson' });
     const user3 = this.server.create('user', { firstName: 'Jayden', displayName: 'Captain J' });
@@ -93,19 +74,14 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       @addUsersToGroup={{noop}}
     />`);
 
-    assert.dom(userList).exists({ count: 3 });
-    assert.dom(user1FullName).hasText('Captain J');
-    assert.dom(user1AdditionalNameInfo).exists();
-    assert.dom(user2FullName).hasText('Jackson M. Mc1son');
-    assert.dom(user2AdditionalNameInfo).doesNotExist();
-    assert.dom(user3FullName).hasText('Jasper M. Mc0son');
-    assert.dom(user3AdditionalNameInfo).doesNotExist();
+    assert.equal(component.users.length, 3);
+    assert.equal(component.users[0].name.userNameInfo.fullName, 'Captain J');
+    assert.equal(component.users[1].name.userNameInfo.fullName, 'Jackson M. Mc1son');
+    assert.equal(component.users[2].name.userNameInfo.fullName, 'Jasper M. Mc0son');
   });
 
   test('add multiple users', async function(assert) {
-    assert.expect(4);
-    const user1CheckBox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const button = 'button.done';
+    assert.expect(5);
 
     const user = this.server.create('user', { enabled: true });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
@@ -126,17 +102,16 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       @addUsersToGroup={{this.addMany}}
     />`);
 
-    assert.dom(button).doesNotExist();
-    await click(user1CheckBox);
-    assert.dom(button).hasText('Move learner to this group');
-    await click(button);
-    await settled();
-    assert.dom(button).doesNotExist('button is hidden after save');
+    assert.notOk(component.membersCanBeAdded);
+    await component.users[0].select();
+    assert.ok(component.membersCanBeAdded);
+    assert.equal(component.addButtonText, 'Move learner to this group');
+    await component.add();
+    assert.notOk(component.membersCanBeAdded);
   });
 
   test('add single user', async function(assert) {
     assert.expect(1);
-    const action = 'tbody tr:nth-of-type(1) td:nth-of-type(5) .clickable';
 
     const user = this.server.create('user', { enabled: true });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
@@ -157,13 +132,11 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       @addUsersToGroup={{noop}}
     />`);
 
-    await click(action);
+    await component.users[0].add();
   });
 
   test('when users are selected single action is disabled', async function(assert) {
-    assert.expect(1);
-    const user1CheckBox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const action = 'tbody tr:nth-of-type(1) td:nth-of-type(5) .clickable';
+    assert.expect(2);
 
     const user = this.server.create('user', { enabled: true });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
@@ -181,17 +154,13 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       @addUsersToGroup={{noop}}
     />`);
 
-    await click(user1CheckBox);
-    assert.dom(action).doesNotExist();
-
+    assert.ok(component.users[0].canBeAdded);
+    await component.users[0].select();
+    assert.notOk(component.users[0].canBeAdded);
   });
 
   test('checkall', async function(assert) {
-    assert.expect(5);
-    const checkAllBox = 'thead tr:nth-of-type(1) th:nth-of-type(1) input[type=checkbox]';
-    const user1CheckBox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const user2CheckBox = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input[type=checkbox]';
-    const button = 'button.done';
+    assert.expect(7);
 
     const user1 = this.server.create('user', { firstName: 'Jasper' });
     const user2 = this.server.create('user', { firstName: 'Jackson' });
@@ -215,20 +184,17 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       @addUsersToGroup={{this.addMany}}
     />`);
 
-    await click(checkAllBox);
-    assert.dom(user1CheckBox).isChecked();
-    assert.dom(user2CheckBox).isChecked();
-    assert.dom(button).hasText('Move 2 learners to this group');
-    return settled(await click(button));
+    assert.notOk(component.users[0].isSelected);
+    assert.notOk(component.users[0].isSelected);
+    await component.selectAll.toggle();
+    assert.ok(component.users[0].isSelected);
+    assert.ok(component.users[0].isSelected);
+    assert.equal(component.addButtonText, 'Move 2 learners to this group');
+    await component.add();
 
   });
 
   test('checking one puts checkall box into indeterminate state', async function(assert) {
-    assert.expect(4);
-    const checkAllBox = 'thead tr:nth-of-type(1) th:nth-of-type(1) input[type=checkbox]';
-    const user1CheckBox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const user2CheckBox = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input[type=checkbox]';
-
     const user1 = this.server.create('user', { enabled: true });
     const user2 = this.server.create('user', { enabled: true });
     const userModel1 = await this.owner.lookup('service:store').find('user', user1.id);
@@ -247,25 +213,31 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       @addUsersToGroup={{noop}}
     />`);
 
-    await click(user1CheckBox);
-    assert.ok(find(checkAllBox).indeterminate);
-    await click(user2CheckBox);
-    assert.dom(checkAllBox).isChecked();
-    await click(checkAllBox);
-    assert.dom(user1CheckBox).isNotChecked();
-    assert.dom(user2CheckBox).isNotChecked();
+    assert.notOk(component.users[0].isSelected);
+    assert.notOk(component.users[1].isSelected);
+    assert.notOk(component.selectAll.isFullySelected);
+    assert.notOk(component.selectAll.isPartiallySelected);
+    await component.users[0].select();
+    assert.notOk(component.selectAll.isFullySelected);
+    assert.ok(component.selectAll.isPartiallySelected);
+    await component.users[1].select();
+    assert.ok(component.selectAll.isFullySelected);
+    assert.notOk(component.selectAll.isPartiallySelected);
+    assert.ok(component.users[0].isSelected);
+    assert.ok(component.users[1].isSelected);
+    await component.selectAll.toggle();
+    assert.notOk(component.users[0].isSelected);
+    assert.notOk(component.users[1].isSelected);
   });
 
   test('root users can manage disabled users', async function(assert) {
     assert.expect(2);
+
     const currentUserMock = Service.extend({
       isRoot: true,
     });
     this.owner.register('service:currentUser', currentUserMock);
 
-    const userCheckbox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const userDisabledIcon = 'tbody tr:nth-of-type(1) td:nth-of-type(1) .fa-user-times';
-
     const user = this.server.create('user', { enabled: false });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
@@ -281,21 +253,18 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       @addUsersToGroup={{noop}}
     />`);
 
-    assert.equal(1, findAll(userCheckbox).length, 'Checkbox visible');
-    assert.equal(1, findAll(userDisabledIcon).length, 'User is labeled as disabled.');
+    assert.ok(component.users[0].canBeSelected, 'Checkbox visible');
+    assert.ok(component.users[0].isDisabled, 'User is labeled as disabled.');
   });
 
   test('non-root users cannot manage disabled users', async function(assert) {
     assert.expect(2);
+
     const currentUserMock = Service.extend({
       isRoot: false,
     });
     this.owner.register('service:currentUser', currentUserMock);
 
-    const userCheckbox = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input[type=checkbox]';
-    const userDisabledIcon = 'tbody tr:nth-of-type(1) td:nth-of-type(1) .fa-user-times';
-
-
     const user = this.server.create('user', { enabled: false });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
@@ -312,7 +281,54 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
       @addUsersToGroup={{noop}}
     />`);
 
-    assert.equal(0, findAll(userCheckbox).length, 'Checkbox not visible');
-    assert.equal(1, findAll(userDisabledIcon).length, 'User is labeled as disabled.');
+    assert.notOk(component.users[0].canBeSelected, 'Checkbox visible');
+    assert.ok(component.users[0].isDisabled, 'User is labeled as disabled.');
+  });
+
+  test('filter users', async function(assert) {
+    const user1 = this.server.create('user', {
+      firstName: 'Jasper',
+      lastName: 'Dog',
+      email: 'jasper.dog@example.edu',
+    });
+    const user2 = this.server.create('user', {
+      firstName: 'Jackson',
+      lastName: 'Doggy',
+      email: 'jackson.doggy@example.edu',
+    });
+    const user3 = this.server.create('user', {
+      firstName: 'Jayden',
+      lastName: 'Pup',
+      displayName: 'Just Jayden',
+      email: 'jayden@example.edu',
+    });
+    const userModel1 = await this.owner.lookup('service:store').find('user', user1.id);
+    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const userModel3 = await this.owner.lookup('service:store').find('user', user3.id);
+
+    this.set('users', [ userModel1, userModel2, userModel3 ]);
+    await render(hbs`<LearnergroupCohortUserManager
+      @users={{this.users}}
+      @canUpdate={{true}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top level group"
+      @sortBy="lastName"
+      @setSortBy={{noop}}
+      @addUserToGroup={{noop}}
+      @addUsersToGroup={{noop}}
+    />`);
+
+    assert.equal(component.users.length, 3);
+    assert.equal(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    assert.equal(component.users[1].name.userNameInfo.fullName, 'Jackson M. Doggy');
+    assert.equal(component.users[2].name.userNameInfo.fullName, 'Just Jayden');
+    await component.filter("Just");
+    assert.equal(component.users[0].name.userNameInfo.fullName, 'Just Jayden');
+    await component.filter(" Just     ");
+    assert.equal(component.users[0].name.userNameInfo.fullName, 'Just Jayden');
+    await component.filter("JASPER.DOG@EXAMPLE.EDU");
+    assert.equal(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
+    await component.filter("jasper d");
+    assert.equal(component.users[0].name.userNameInfo.fullName, 'Jasper M. Dog');
   });
 });

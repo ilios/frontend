@@ -99,7 +99,10 @@ export default create({
     scope: '.cohortmembers',
     list: collection('tbody tr', {
       scope: '.list',
-      fullName: text('td', {at: 1 }),
+      name: {
+        scope: ('td:eq(1)'),
+        userNameInfo
+      },
       campusId: text('td', { at: 2 }),
       email: text('td', { at: 3 }),
       add: clickable('.yes.clickable'),

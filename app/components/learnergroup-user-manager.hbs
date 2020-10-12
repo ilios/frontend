@@ -1,5 +1,5 @@
 <div class="learnergroup-user-manager" ...attributes data-test-learnergroup-user-manager>
-  <div class="title">
+  <div class="title" data-test-title>
     {{#unless @isEditing}}
       {{t "general.members"}}
       ({{@users.length}})
@@ -10,11 +10,12 @@
       <Input
         @value={{this.filter}}
         placeholder={{t "general.filterByNameOrEmail"}}
+        data-test-filter
       />
     </div>
     <div class="learnergroup-user-manager-content">
       <div class="list">
-        <table>
+        <table data-test-headers>
           <thead>
             <tr>
               <th class="text-left" colspan="1">
@@ -85,6 +86,7 @@
                       @icon="user-times"
                       @title={{t "general.disabled"}}
                       class="error"
+                      data-test-is-disabled
                     />
                   {{/unless}}
                 </td>
@@ -154,6 +156,7 @@
                         @icon="user-times"
                         @title={{t "general.disabled"}}
                         class="error"
+                        data-test-is-disabled
                       />
                     {{/unless}}
                   </td>

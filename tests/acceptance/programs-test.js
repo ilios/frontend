@@ -33,7 +33,6 @@ module('Acceptance | Programs', function(hooks) {
     });
 
     test('filters by title', async function(assert) {
-      assert.expect(19);
       const firstProgram = this.server.create('program', {
         title: 'specialfirstprogram',
         school: this.school,
@@ -58,6 +57,9 @@ module('Acceptance | Programs', function(hooks) {
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(4) td'))),getText(secondProgram.title));
 
       await fillIn('.titlefilter input', 'first');
+      assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
+      assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText(firstProgram.title));
+      await fillIn('.titlefilter input', '   first    ');
       assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
       assert.equal(await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),getText(firstProgram.title));
       await fillIn('.titlefilter input', 'second');

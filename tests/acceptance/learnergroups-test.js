@@ -147,7 +147,6 @@ module('Acceptance | Learner Groups', function(hooks) {
       title: 'regularlearnergroup',
       cohort
     });
-    assert.expect(15);
     await page.visit();
     assert.equal(page.learnerGroupList.groups.length, 3);
     assert.equal(page.learnerGroupList.groups[0].title, regularLearnerGroup.title);
@@ -155,6 +154,10 @@ module('Acceptance | Learner Groups', function(hooks) {
     assert.equal(page.learnerGroupList.groups[2].title, secondLearnerGroup.title);
 
     await page.filterByTitle('first');
+    assert.equal(page.learnerGroupList.groups.length, 1);
+    assert.equal(page.learnerGroupList.groups[0].title, firstLearnerGroup.title);
+
+    await page.filterByTitle('   first     ');
     assert.equal(page.learnerGroupList.groups.length, 1);
     assert.equal(page.learnerGroupList.groups[0].title, firstLearnerGroup.title);
 

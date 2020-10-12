@@ -17,17 +17,16 @@ export default class LearnergroupCohortUserManagerComponent extends Component {
   }
 
   get filteredUsers() {
-    const filter = this.filter.toLowerCase();
+    const filter = this.filter.trim().toLowerCase();
 
     if (!filter){
       return this.args.users;
     }
 
     return this.args.users.filter((user) => {
-      return user.firstName.toLowerCase().includes(filter) ||
-        user.lastName.toLowerCase().includes(filter) ||
-        user.fullName.toLowerCase().includes(filter) ||
-        user.email.toLowerCase().includes(filter);
+      return user.fullNameFromFirstLastName.trim().toLowerCase().includes(filter) ||
+        user.fullName.trim().toLowerCase().includes(filter) ||
+        user.email.trim().toLowerCase().includes(filter);
     });
   }
 
