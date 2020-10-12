@@ -81,7 +81,6 @@ module('Acceptance | Instructor Groups', function(hooks) {
         title: '\\yoo hoo',
         school: this.school
       });
-      assert.expect(19);
       await page.visit();
       assert.equal(page.instructorGroups().count,  4);
       assert.equal(page.instructorGroups(0).title, regexInstructorgroup.title);
@@ -90,6 +89,10 @@ module('Acceptance | Instructor Groups', function(hooks) {
       assert.equal(page.instructorGroups(3).title, secondInstructorgroup.title);
 
       await page.filterByTitle('first');
+      assert.equal(page.instructorGroups().count,  1);
+      assert.equal(page.instructorGroups(0).title, firstInstructorgroup.title);
+
+      await page.filterByTitle('  first   ');
       assert.equal(page.instructorGroups().count,  1);
       assert.equal(page.instructorGroups(0).title, firstInstructorgroup.title);
 
