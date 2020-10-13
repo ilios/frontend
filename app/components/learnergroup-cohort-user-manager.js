@@ -16,6 +16,15 @@ export default class LearnergroupCohortUserManagerComponent extends Component {
     return this.args.sortBy.search(/desc/) === -1;
   }
 
+  get selectableUsers() {
+    if (this.currentUser.isRoot) {
+      return this.args.users;
+    }
+    return this.args.users.filter((user) => {
+      return user.enabled;
+    });
+  }
+
   get filteredUsers() {
     const filter = this.filter.trim().toLowerCase();
 
@@ -49,13 +58,11 @@ export default class LearnergroupCohortUserManagerComponent extends Component {
 
   @action
   toggleUserSelectionAllOrNone() {
-    const selectedUsers = this.selectedUsers.length;
-    const filteredUsers = this.filteredUsers.length;
-
-    if (selectedUsers >= filteredUsers) {
-      this.selectedUsers = [];
+    const unselectedFilteredUsers = this.filteredUsers.filter(user => { return ! this.selectedUsers.includes(user); });
+    if (this.filteredUsers && unselectedFilteredUsers.length) {
+      this.selectedUsers = [...this.selectedUsers, ...unselectedFilteredUsers];
     } else {
-      this.selectedUsers = [...this.selectedUsers, ...this.filteredUsers];
+      this.selectedUsers = [];
     }
   }
 
