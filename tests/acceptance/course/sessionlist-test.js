@@ -70,7 +70,13 @@ module('Acceptance | Course - Session List', function(hooks) {
     assert.equal(sessions[0].groupCount, '0');
     assert.equal(sessions[0].objectiveCount, '0');
     assert.equal(sessions[0].termCount, '0');
-    assert.equal(sessions[0].firstOffering, today.format('L LT'));
+    assert.equal(sessions[0].firstOffering, today.toDate().toLocaleString('en', {
+      month: 'numeric',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    }));
     assert.equal(sessions[0].offeringCount, '3');
     assert.notOk(sessions[0].hasInstructionalNotes);
     assert.notOk(sessions[0].hasPrerequisites);
@@ -308,7 +314,13 @@ module('Acceptance | Course - Session List', function(hooks) {
     const { offerings } = sessions[0].offerings;
 
     assert.equal(sessions.length, 4);
-    assert.equal(sessions[0].firstOffering, today.format('L LT'));
+    assert.equal(sessions[0].firstOffering, today.toDate().toLocaleString('en', {
+      month: 'numeric',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    }));
     await sessions[0].expandCollapse();
     await offerings[0].edit();
     const { offeringForm: form } = offerings[0];
@@ -319,7 +331,13 @@ module('Acceptance | Course - Session List', function(hooks) {
     await form.startTime.ampm(newDate.format('a'));
     await form.save();
 
-    assert.equal(sessions[0].firstOffering, newDate.format('L LT'));
+    assert.equal(sessions[0].firstOffering, newDate.toDate().toLocaleString('en', {
+      month: 'numeric',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    }));
 
   });
 
@@ -372,7 +390,13 @@ module('Acceptance | Course - Session List', function(hooks) {
     const { offerings } = sessions[0].offerings;
 
     assert.equal(sessions.length, 4);
-    assert.equal(sessions[0].firstOffering, today.format('L LT'));
+    assert.equal(sessions[0].firstOffering, today.toDate().toLocaleString('en', {
+      month: 'numeric',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    }));
     await sessions[0].expandCollapse();
     await offerings[0].edit();
     const { offeringForm: form } = offerings[0];

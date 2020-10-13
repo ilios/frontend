@@ -3,7 +3,6 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | course summary header', function(hooks) {
@@ -55,9 +54,9 @@ module('Integration | Component | course summary header', function(hooks) {
     assert.dom(materialsIcon).hasClass('fa-archive');
     assert.dom(printIcon).hasClass('fa-print');
     assert.dom(rolloverIcon).hasClass('fa-random');
-    assert.dom(start).hasText(moment(course.startDate).format('L'));
+    assert.dom(start).hasText((new Date(course.startDate)).toLocaleDateString());
     assert.dom(externalId).hasText('abc');
-    assert.dom(end).hasText(moment(course.endDate).format('L'));
+    assert.dom(end).hasText((new Date(course.endDate)).toLocaleDateString());
     assert.dom(level).hasText('3');
     assert.dom(status).hasText('Published');
   });

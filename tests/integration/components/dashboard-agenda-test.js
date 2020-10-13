@@ -220,25 +220,33 @@ module('Integration | Component | dashboard agenda', function (hooks) {
     this.owner.register('service:user-events', userEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
-    await render(hbs`{{dashboard-agenda}}`);
+    await render(hbs`<DashboardAgenda />`);
     const title = 'h3';
 
     assert.dom(this.element.querySelector(title)).hasText('My Activities for the next 60 days');
     assert.equal(this.element.querySelectorAll('table tr').length, 6);
     for (let i = 0; i < 6; i++) {
       const tds = this.element.querySelectorAll(`table tr:nth-of-type(${i + 1}) td`);
-      assert.dom(tds[0]).hasText(moment(mockEvents[i].startDate).format('dddd, MMMM Do, YYYY h:mma'));
+      assert.dom(tds[0]).hasText((new Date(mockEvents[i].startDate)).toLocaleString([], {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      }));
+      // moment().format('dddd, MMMM Do, YYYY h:mma'));
       assert.dom(tds[1]).hasText(mockEvents[i].name);
     }
     const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
     assert.equal(this.element.querySelectorAll(preworkSelector).length, 2);
     assert.dom(this.element.querySelector(`${preworkSelector}:nth-of-type(1)`))
       .hasText(
-        'prework 2 Due Before first (' + moment(mockEvents[0].startDate).format('M/D/YYYY') + ')'
+        'prework 2 Due Before first (' + (new Date(mockEvents[0].startDate)).toLocaleDateString() + ')'
       );
     assert.dom(this.element.querySelector(`${preworkSelector}:nth-of-type(2)`))
       .hasText(
-        'prework 1 Due Before third (' + moment(mockEvents[2].startDate).format('M/D/YYYY') + ')'
+        'prework 1 Due Before third (' + (new Date(mockEvents[2].startDate)).toLocaleDateString() + ')'
       );
   });
 
@@ -247,7 +255,7 @@ module('Integration | Component | dashboard agenda', function (hooks) {
     this.owner.register('service:user-events', userEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
-    await render(hbs`{{dashboard-agenda}}`);
+    await render(hbs`<DashboardAgenda />`);
     assert.equal(this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-black-tie').length, 1);
     assert.equal(this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-flask').length, 1);
     assert.equal(this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-calendar-check').length, 1);
@@ -261,7 +269,7 @@ module('Integration | Component | dashboard agenda', function (hooks) {
     this.owner.register('service:user-events', blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');
 
-    await render(hbs`{{dashboard-agenda}}`);
+    await render(hbs`<DashboardAgenda />`);
     const title = 'h3';
     const body = 'p';
 

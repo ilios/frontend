@@ -39,7 +39,7 @@ module('Integration | Component | daily-calendar', function(hooks) {
       @events={{array}}
     />`);
 
-    assert.equal(component.longDayOfWeek, 'Wednesday January 9, 2019');
+    assert.equal(component.longDayOfWeek, 'Wednesday, January 9, 2019');
     assert.equal(component.shortDayOfWeek, '1/9/2019');
 
     await a11yAudit(this.element);
@@ -57,7 +57,7 @@ module('Integration | Component | daily-calendar', function(hooks) {
       @events={{this.events}}
     />`);
 
-    assert.equal(component.longDayOfWeek, 'Wednesday January 9, 2019');
+    assert.equal(component.longDayOfWeek, 'Wednesday, January 9, 2019');
 
     assert.equal(component.events.length, 2);
     assert.equal(component.events[0].name, 'event 0');
@@ -130,7 +130,7 @@ module('Integration | Component | daily-calendar', function(hooks) {
       @selectEvent={{noop}}
     />`);
 
-    assert.equal(component.longDayOfWeek, 'Thursday December 11, 1980');
+    assert.equal(component.longDayOfWeek, 'Thursday, December 11, 1980');
     assert.equal(component.shortDayOfWeek, '12/11/1980');
     assert.equal(component.events.length, 1);
 
@@ -138,7 +138,7 @@ module('Integration | Component | daily-calendar', function(hooks) {
     this.owner.lookup('service:moment').setLocale('es');
     await settled();
 
-    assert.equal(component.longDayOfWeek, 'jueves 11 de diciembre de 1980');
+    assert.equal(component.longDayOfWeek, 'jueves, 11 de diciembre de 1980');
     assert.equal(component.shortDayOfWeek, '11/12/1980');
     assert.equal(component.events.length, 1);
 

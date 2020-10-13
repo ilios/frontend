@@ -115,11 +115,11 @@ module('Acceptance | Session - Overview', function(hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.equal(currentRouteName(), 'session.index');
-    assert.equal(page.overview.ilmDueDate.value, moment(ilmSession.dueDate).format('L'));
+    assert.equal(page.overview.ilmDueDate.value, new Date(ilmSession.dueDate).toLocaleDateString('en'));
     await page.overview.ilmDueDate.edit();
     await page.overview.ilmDueDate.set(newDate.toDate());
     await page.overview.ilmDueDate.save();
-    assert.equal(page.overview.ilmDueDate.value, newDate.locale('en').format('L'));
+    assert.equal(page.overview.ilmDueDate.value, newDate.toDate().toLocaleDateString('en'));
   });
 
   test('change title', async function(assert) {

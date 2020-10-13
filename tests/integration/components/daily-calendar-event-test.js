@@ -51,7 +51,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
         @allDayEvents={{array this.event}}
       />`);
       assert.dom(s).hasStyle(this.getStyle(97, 12, 50));
-      assert.dom(s).hasText('8:00am event 0');
+      assert.dom(s).hasText('8:00 AM event 0');
     });
 
     test('check event 0', async function (assert) {
@@ -63,7 +63,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(97, 12, 16));
-      assert.dom(s).hasText('8:00am event 0');
+      assert.dom(s).hasText('8:00 AM event 0');
     });
 
     test('check event 1', async function (assert) {
@@ -75,7 +75,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(97, 42, 16));
-      assert.dom(s).hasText('8:00am event 1');
+      assert.dom(s).hasText('8:00 AM event 1');
     });
 
     test('check event 2', async function (assert) {
@@ -87,7 +87,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(99, 22, 16));
-      assert.dom(s).hasText('8:10am event 2');
+      assert.dom(s).hasText('8:10 AM event 2');
     });
 
     test('check event 3', async function (assert) {
@@ -99,7 +99,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(121, 24, 16));
-      assert.dom(s).hasText('10:00am event 3');
+      assert.dom(s).hasText('10:00 AM event 3');
     });
 
     test('check event 4', async function (assert) {
@@ -111,7 +111,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(123, 22, 16));
-      assert.dom(s).hasText('10:10am event 4');
+      assert.dom(s).hasText('10:10 AM event 4');
     });
 
     test('check event 5', async function (assert) {
@@ -123,7 +123,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(145, 12, 50));
-      assert.dom(s).hasText('12:00pm event 5');
+      assert.dom(s).hasText('12:00 PM event 5');
     });
   });
 
@@ -153,7 +153,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(99, 22, 25));
-      assert.dom(s).hasText('8:10am event 0');
+      assert.dom(s).hasText('8:10 AM event 0');
     });
 
     test('check event 1', async function (assert) {
@@ -165,7 +165,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(99, 14, 25));
-      assert.dom(s).hasText('8:10am event 1');
+      assert.dom(s).hasText('8:10 AM event 1');
     });
 
     test('check event 2', async function (assert) {
@@ -177,7 +177,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(117, 10, 25));
-      assert.dom(s).hasText('9:40am event 2');
+      assert.dom(s).hasText('9:40 AM event 2');
     });
 
     test('check event 3', async function (assert) {
@@ -189,7 +189,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(123, 22, 7));
-      assert.dom(s).hasText('10:10am event 3');
+      assert.dom(s).hasText('10:10 AM event 3');
     });
 
     test('check event 4', async function (assert) {
@@ -201,7 +201,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(129, 22, 6));
-      assert.dom(s).hasText('10:40am event 4');
+      assert.dom(s).hasText('10:40 AM event 4');
     });
 
     test('check event 5', async function (assert) {
@@ -213,7 +213,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(129, 22, 6));
-      assert.dom(s).hasText('10:40am event 5');
+      assert.dom(s).hasText('10:40 AM event 5');
     });
 
     test('check event 6', async function (assert) {
@@ -225,7 +225,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(129, 22, 6));
-      assert.dom(s).hasText('10:40am event 6');
+      assert.dom(s).hasText('10:40 AM event 6');
     });
 
     test('check event 7', async function (assert) {
@@ -237,7 +237,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(129, 22, 6));
-      assert.dom(s).hasText('10:40am event 7');
+      assert.dom(s).hasText('10:40 AM event 7');
     });
 
     test('check event 8', async function (assert) {
@@ -249,7 +249,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(129, 22, 6));
-      assert.dom(s).hasText('10:40am event 8');
+      assert.dom(s).hasText('10:40 AM event 8');
     });
 
     test('check event 9', async function (assert) {
@@ -261,7 +261,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(129, 22, 6));
-      assert.dom(s).hasText('10:40am event 9');
+      assert.dom(s).hasText('10:40 AM event 9');
     });
 
     test('check event 10', async function (assert) {
@@ -273,7 +273,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
       />`);
 
       assert.dom(s).hasStyle(this.getStyle(145, 12, 7));
-      assert.dom(s).hasText('12:00pm event 10');
+      assert.dom(s).hasText('12:00 PM event 10');
     });
   });
 });

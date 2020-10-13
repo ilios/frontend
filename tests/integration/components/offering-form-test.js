@@ -294,7 +294,7 @@ module('Integration | Component | offering form', function(hooks) {
 
   test('changing start date changes end date', async function(assert) {
     await render(hbs`<OfferingForm @close={{noop}} />`);
-    const format = 'M/D/YYYY h:mm a';
+    const format = 'M/D/YYYY, h:mm A';
     const newStartDate = moment().add(1, 'day').toDate();
     assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
     await component.startDate.set(newStartDate);
@@ -303,7 +303,7 @@ module('Integration | Component | offering form', function(hooks) {
 
   test('changing start time changes end date', async function(assert) {
     await render(hbs`<OfferingForm @close={{noop}} />`);
-    const format = 'M/D/YYYY h:mm a';
+    const format = 'M/D/YYYY, h:mm A';
     assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
     await component.startTime.hour('2');
     await component.startTime.minutes('15');
@@ -313,7 +313,7 @@ module('Integration | Component | offering form', function(hooks) {
 
   test('changing duration changes end date', async function(assert) {
     await render(hbs`<OfferingForm @close={{noop}} />`);
-    const format = 'M/D/YYYY h:mm a';
+    const format = 'M/D/YYYY, h:mm A';
     assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
     await component.duration.hours.set('2');
     await component.duration.minutes.set('15');
@@ -323,7 +323,7 @@ module('Integration | Component | offering form', function(hooks) {
   // @see https://github.com/ilios/frontend/issues/1903
   test('changing duration and start time changes end date', async function(assert) {
     await render(hbs`<OfferingForm @close={{noop}} />`);
-    const format = 'M/D/YYYY h:mm a';
+    const format = 'M/D/YYYY, h:mm A';
     assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
     await component.startTime.hour('2');
     await component.startTime.minutes('10');
