@@ -27,11 +27,10 @@ module('Integration | Component | school session type manager', function(hooks) 
     });
     const sessionTypeModel = await this.owner.lookup('service:store').find('session-type', sessionType.id);
     this.set('sessionType', sessionTypeModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolSessionTypeManager
       @canUpdate={{true}}
-      @sessionType={{sessionType}}
-      @close={{action nothing}}
+      @sessionType={{this.sessionType}}
+      @close={{noop}}
     />`);
 
     const title = '[data-test-title]';
@@ -64,8 +63,8 @@ module('Integration | Component | school session type manager', function(hooks) 
     });
     await render(hbs`<SchoolSessionTypeManager
       @canUpdate={{true}}
-      @sessionType={{sessionType}}
-      @close={{action close}}
+      @sessionType={{this.sessionType}}
+      @close={{this.close}}
     />`);
 
     const button = '.cancel';
