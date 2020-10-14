@@ -1,12 +1,17 @@
-<div ...attributes>
+<div
+  data-test-curriculum-inventory-report-list
+  {{did-insert this.load (await @program.curriculumInventoryReports)}}
+  {{did-update this.load (await @program.curriculumInventoryReports)}}
+  ...attributes
+>
   <table>
     <thead>
       <tr>
         <SortableTh
           @colspan={{4}}
           @sortedAscending={{this.sortedAscending}}
-          @sortedBy={{or (eq sortBy "name") (eq sortBy "name:desc")}}
-          @click={{action "sortBy" "name"}}
+          @sortedBy={{or (eq this.sortBy "name") (eq this.sortBy "name:desc")}}
+          @click={{fn this.setSortBy "name"}}
         >
           {{t "general.reportName"}}
         </SortableTh>
@@ -18,9 +23,9 @@
           @colspan={{2}}
           @hideFromSmallScreen={{true}}
           @sortedAscending={{this.sortedAscending}}
-          @sortedBy={{or (eq sortBy "year") (eq sortBy "year:desc")}}
+          @sortedBy={{or (eq this.sortBy "year") (eq this.sortBy "year:desc")}}
           @sortType="numeric"
-          @click={{action "sortBy" "year"}}
+          @click={{fn this.setSortBy "year"}}
         >
           {{t "general.academicYear"}}
         </SortableTh>
@@ -39,7 +44,7 @@
       </tr>
     </thead>
     <tbody>
-      {{#each (sort-by sortBy (await this.proxiedReports)) as |report index|}}
+      {{#each (sort-by this.sortBy this.proxiedReports) as |report index|}}
         <tr
           class={{if report.showRemoveConfirmation "confirm-removal"}}
           data-test-active-row
@@ -55,7 +60,7 @@
             colspan="2"
             role="button"
             data-test-program
-            {{action "edit" report}}
+            {{on "click" (fn this.edit report)}}
           >
             {{report.program.title}}
           </td>
@@ -64,7 +69,7 @@
             colspan="2"
             role="button"
             data-test-year
-            {{action "edit" report}}
+            {{on "click" (fn this.edit report)}}
           >
             {{report.yearLabel}}
           </td>
@@ -73,7 +78,7 @@
             colspan="2"
             role="button"
             data-test-start-date
-            {{action "edit" report}}
+            {{on "click" (fn this.edit report)}}
           >
             {{moment-format report.startDate "L"}}
           </td>
@@ -82,7 +87,7 @@
             colspan="2"
             role="button"
             data-test-end-date
-            {{action "edit" report}}
+            {{on "click" (fn this.edit report)}}
           >
             {{moment-format report.endDate "L"}}
           </td>
@@ -91,7 +96,7 @@
             colspan="2"
             role="button"
             data-test-status
-            {{action "edit" report}}
+            {{on "click" (fn this.edit report)}}
           >
             {{#if report.isFinalized}}
               <FaIcon @icon="lock" class="enabled" />
@@ -113,7 +118,7 @@
               </a>
             </span>
             {{#if (await report.userCanDelete)}}
-              <span class="clickable remove" role="button" {{action "confirmRemove" report}}>
+              <span class="clickable remove" role="button" {{on "click" (fn this.confirmRemove report)}}>
                 <FaIcon @icon="trash" class="enabled" />
               </span>
             {{else}}
@@ -128,13 +133,14 @@
                 {{t "general.reportConfirmRemove"}}
                 <br>
                 <div class="confirm-buttons">
-                  <button type="button" class="remove text" onclick={{action "remove" report}}>
+                  <button type="button" class="remove text" {{on "click" (fn this.remove report)}} data-test-confirm>
                     {{t "general.yes"}}
                   </button>
                   <button
                     type="button"
                     class="done text"
-                    onclick={{action "cancelRemove" report}}
+                    {{on "click" (fn this.cancelRemove report)}}
+                    data-test-cancel
                   >
                     {{t "general.cancel"}}
                   </button>
