@@ -1,34 +1,28 @@
-import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
-const { resolve } = RSVP;
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | school session types collapsed', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
     assert.expect(5);
-    const instructionalMethod = EmberObject.create({
-      assessment: false
+    const school = this.server.create('school');
+    this.server.create('session-type', {
+      school,
+      assessment: true,
     });
-    const assessmentMethod = EmberObject.create({
-      assessment: true
+    this.server.create('session-type', {
+      school,
+      assessment: false,
     });
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    this.set('school', schoolModel);
+    await render(hbs`<SchoolSessionTypesCollapsed @school={{this.school}} @expand={{noop}} />`);
 
-    const school = EmberObject.create({
-      sessionTypes: resolve([instructionalMethod, assessmentMethod])
-    });
-
-
-    this.set('school', school);
-    this.set('click', () => {});
-    await render(hbs`<SchoolSessionTypesCollapsed @school={{school}} @expand={{action click}} />`);
-
-    await settled();
     const title = '.title';
     const table = 'table';
     const assessmentMethodRow = `${table} tbody tr:nth-of-type(1)`;

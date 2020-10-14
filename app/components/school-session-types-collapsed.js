@@ -1,25 +1,20 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { restartableTask } from 'ember-concurrency-decorators';
+import { tracked } from '@glimmer/tracking';
 
-export default Component.extend({
-  tagName: "",
-  school: null,
+export default class SchoolSessionTypesCollapseComponent extends Component {
+  @tracked sessionTypes = [];
 
-  sessionTypes: computed('school.sessionTypes.[]', async function() {
-    const school = this.school;
-    if (!school) {
-      return [];
-    }
-    return await school.get('sessionTypes');
-  }),
+  @restartableTask
+  *load(element, [school]) {
+    this.sessionTypes = yield school.sessionTypes;
+  }
 
-  instructionalMethods: computed('sessionTypes.[]', async function() {
-    const sessionTypes = await this.sessionTypes;
-    return sessionTypes.filterBy('assessment', false);
-  }),
+  get instructionalMethods() {
+    return this.sessionTypes.filterBy('assessment', false);
+  }
 
-  assessmentMethods: computed('sessionTypes.[]', async function() {
-    const sessionTypes = await this.sessionTypes;
-    return sessionTypes.filterBy('assessment');
-  })
-});
+  get assessmentMethods() {
+    return this.sessionTypes.filterBy('assessment');
+  }
+}
