@@ -95,7 +95,6 @@
     "ember-simple-set-helper": "^0.1.2",
     "ember-source": "3.20.3",
     "ember-template-lint": "^2.14.0",
-    "ember-truth-helpers": "^2.0.0",
     "ember-web-app": "^5.0.0",
     "eslint": "^7.11.0",
     "file-saver": "^2.0.2",
