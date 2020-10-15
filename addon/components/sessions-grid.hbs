@@ -68,10 +68,7 @@
                   {{t "general.ilm"}}:
                   {{t "general.dueBy"}}
                 </strong>
-                {{moment-format
-                  (await obj.session.firstOfferingDate) "MM/DD/YYYY"
-                  allow-empty=true
-                }}
+                {{format-date (await obj.session.firstOfferingDate)}}
               {{/if}}
             {{else if obj.postrequisite}}
               <strong>
@@ -85,7 +82,7 @@
                 {{truncate obj.postrequisite.title 18 true}}
               </LinkTo>
             {{else}}
-              {{moment-format (await obj.session.firstOfferingDate) "L LT" allow-empty=true}}
+              {{format-date (await obj.session.firstOfferingDate) month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric"}}
             {{/if}}
           {{/if}}
         </span>

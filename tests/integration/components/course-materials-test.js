@@ -108,17 +108,16 @@ module('Integration | Component | course materials', function(hooks) {
     assert.expect(29);
 
     const course = await setupPage(this);
-    this.set('nothing', parseInt);
     this.setProperties({
       course,
       courseSort: 'title',
       sessionSort: 'firstOfferingDate'
     });
     await render(hbs`<CourseMaterials
-      @course={{course}}
-      @courseSort={{courseSort}}
-      @sessionSort={{sessionSort}}
-      @onSessionSort={{action nothing}}
+      @course={{this.course}}
+      @courseSort={{this.courseSort}}
+      @sessionSort={{this.sessionSort}}
+      @onSessionSort={{noop}}
     />`);
 
     assert.equal(component.courses.length, 3);
@@ -135,7 +134,7 @@ module('Integration | Component | course materials', function(hooks) {
     assert.equal(component.sessions[0].type, 'Link');
     assert.equal(component.sessions[0].author, 'author1');
     assert.equal(component.sessions[0].sessionTitle, 'session1title');
-    assert.equal(component.sessions[0].firstOffering, '02/02/2020');
+    assert.equal(component.sessions[0].firstOffering, '2/2/2020');
 
     assert.equal(component.sessions.length, 3);
     assert.equal(component.sessions[1].title, 'title2');
@@ -144,7 +143,7 @@ module('Integration | Component | course materials', function(hooks) {
     assert.equal(component.sessions[1].type, 'File');
     assert.equal(component.sessions[1].author, 'author2');
     assert.equal(component.sessions[1].sessionTitle, 'session1title');
-    assert.equal(component.sessions[1].firstOffering, '02/02/2020');
+    assert.equal(component.sessions[1].firstOffering, '2/2/2020');
 
     assert.equal(component.sessions.length, 3);
     assert.equal(component.sessions[2].title, 'title3 citationtext');
@@ -152,7 +151,7 @@ module('Integration | Component | course materials', function(hooks) {
     assert.equal(component.sessions[2].type, 'Citation');
     assert.equal(component.sessions[2].author, 'author3');
     assert.equal(component.sessions[2].sessionTitle, 'session1title');
-    assert.equal(component.sessions[2].firstOffering, '02/02/2020');
+    assert.equal(component.sessions[2].firstOffering, '2/2/2020');
   });
 
   test('clicking sort fires action', async function(assert) {

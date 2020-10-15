@@ -69,8 +69,8 @@ module('Integration | Component | my-materials', function(hooks) {
     await render(hbs`<MyMaterials
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
-      @setCourseIdFilter={{action this.nothing}}
-      @setFilter={{action this.nothing}}
+      @setCourseIdFilter={{noop}}
+      @setFilter={{noop}}
     />`);
     assert.dom('[data-test-none]').exists();
   });
@@ -79,12 +79,11 @@ module('Integration | Component | my-materials', function(hooks) {
     assert.expect(42);
 
     this.set('materials', this.materials);
-    this.set('nothing', parseInt);
     await render(hbs`<MyMaterials
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
-      @setCourseIdFilter={{action this.nothing}}
-      @setFilter={{action this.nothing}}
+      @setCourseIdFilter={{noop}}
+      @setFilter={{noop}}
     />`);
 
     const table = 'table:nth-of-type(1)';
@@ -145,7 +144,7 @@ module('Integration | Component | my-materials', function(hooks) {
     assert.dom(firstLmSessionTitle).hasText('session1title');
     assert.dom(firstLmCourseTitle).hasText('course1title');
     assert.dom(firstLmInstructor).hasText('Instructor1name, Instructor2name');
-    assert.dom(firstLmFirstOffering).hasText('02/02/2003');
+    assert.dom(firstLmFirstOffering).hasText('2/2/2003');
     assert.equal(find(firstLmDownloadLink).href.trim(), 'http://myhost.com/url1');
 
     assert.dom(secondLmLink).hasText('title2');
@@ -154,7 +153,7 @@ module('Integration | Component | my-materials', function(hooks) {
     assert.dom(secondLmSessionTitle).hasText('session2title');
     assert.dom(secondLmCourseTitle).hasText('course2title');
     assert.dom(secondLmInstructor).hasText('Instructor1name, Instructor2name');
-    assert.dom(secondLmFirstOffering).hasText('02/02/2016');
+    assert.dom(secondLmFirstOffering).hasText('2/2/2016');
 
     assert.equal(find(thirdLmTitle).textContent.replace(/[\t\n\s]+/g, ""), 'Citationtitle3citationtext');
     assert.dom(thirdLmLink).doesNotExist();
@@ -162,7 +161,7 @@ module('Integration | Component | my-materials', function(hooks) {
     assert.dom(thirdLmSessionTitle).hasText('session3title');
     assert.dom(thirdLmCourseTitle).hasText('course3title');
     assert.dom(thirdLmInstructor).hasText('');
-    assert.dom(thirdLmFirstOffering).hasText('02/02/2020');
+    assert.dom(thirdLmFirstOffering).hasText('2/2/2020');
 
     assert.dom(fourthLmLink).hasText('title4');
     assert.equal(find(fourthLmLink).href.trim(), 'http://myhost.com/document.txt');
@@ -170,14 +169,14 @@ module('Integration | Component | my-materials', function(hooks) {
     assert.dom(fourthLmSessionTitle).hasText('session4title');
     assert.dom(fourthLmCourseTitle).hasText('course4title');
     assert.dom(fourthLmInstructor).hasText('Instructor3name, Instructor4name');
-    assert.dom(fourthLmFirstOffering).hasText('02/02/2030');
+    assert.dom(fourthLmFirstOffering).hasText('2/2/2030');
 
     assert.ok(find(fifthLmTitle).textContent.includes('title5'));
     assert.dom(fifthLmTypeIcon).exists({ count: 1 }, 'LM type icon is present.');
     assert.dom(fifthLmSessionTitle).hasText('session5title');
     assert.dom(fifthLmCourseTitle).hasText('course5title');
     assert.dom(fifthLmInstructor).hasText('');
-    assert.dom(fifthLmFirstOffering).hasText('02/02/2040');
+    assert.dom(fifthLmFirstOffering).hasText('2/2/2040');
 
     assert.dom(courseListOptions).exists({ count: 6 });
     assert.dom(allCourses).hasText('All Courses');
@@ -221,7 +220,7 @@ module('Integration | Component | my-materials', function(hooks) {
       @filter={{this.filter}}
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
-      @setCourseIdFilter={{action this.nothing}}
+      @setCourseIdFilter={{noop}}
       @setFilter={{action (mut this.filter)}}
     />`);
 
@@ -247,7 +246,7 @@ module('Integration | Component | my-materials', function(hooks) {
       @filter={{this.filter}}
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
-      @setCourseIdFilter={{action this.nothing}}
+      @setCourseIdFilter={{noop}}
       @setFilter={{action (mut this.filter)}}
     />`);
 
@@ -271,7 +270,7 @@ module('Integration | Component | my-materials', function(hooks) {
       @filter={{this.filter}}
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
-      @setCourseIdFilter={{action this.nothing}}
+      @setCourseIdFilter={{noop}}
       @setFilter={{action (mut this.filter)}}
     />`);
 
@@ -314,7 +313,6 @@ module('Integration | Component | my-materials', function(hooks) {
     assert.expect(8);
 
     this.set('materials', this.materials);
-    this.set('nothing', parseInt);
     let count = 0;
     const sortBys = ['title', 'title:desc', 'courseTitle', 'courseTitle:desc', 'sessionTitle', 'sessionTitle:desc', 'firstOfferingDate', 'firstOfferingDate:desc'];
     this.set('setSortBy', (what) => {
@@ -327,8 +325,8 @@ module('Integration | Component | my-materials', function(hooks) {
     await render(hbs`<MyMaterials
       @materials={{this.materials}}
       @sortBy={{this.sortBy}}
-      @setCourseIdFilter={{action this.nothing}}
-      @setFilter={{action this.nothing}}
+      @setCourseIdFilter={{noop}}
+      @setFilter={{noop}}
       @setSortBy={{action this.setSortBy}}
     />`);
 
@@ -352,7 +350,6 @@ module('Integration | Component | my-materials', function(hooks) {
     assert.expect(3);
 
     this.set('materials', this.materials);
-    this.set('nothing', parseInt);
     let count = 0;
     const courses = ['1', '3', ''];
     this.set('setCourseIdFilter', (what) => {
@@ -367,7 +364,7 @@ module('Integration | Component | my-materials', function(hooks) {
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
       @setCourseIdFilter={{action this.setCourseIdFilter}}
-      @setFilter={{action this.nothing}}
+      @setFilter={{noop}}
     />`);
 
     const select = '.course-filter select';
@@ -385,7 +382,7 @@ module('Integration | Component | my-materials', function(hooks) {
       @filter={{this.filter}}
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
-      @setCourseIdFilter={{action this.nothing}}
+      @setCourseIdFilter={{noop}}
       @setFilter={{action (mut this.filter)}}
     />`);
 

@@ -7,6 +7,7 @@ import moment from 'moment';
 import { currentRouteName } from '@ember/test-helpers';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { setupIntl } from 'ember-intl/test-support';
 import page from 'ilios-common/page-objects/course';
 
 const today = moment();
@@ -14,6 +15,7 @@ const today = moment();
 module('Acceptance | Course - Learning Materials', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
+  setupIntl(hooks, 'en-us');
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
@@ -290,7 +292,7 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.manager.name.value, 'learning material 1');
       assert.equal(page.learningMaterials.manager.author, 'Jennifer Johnson');
       assert.equal(await page.learningMaterials.manager.description.editorValue(), '<p>1 lm description</p>');
-      assert.equal(page.learningMaterials.manager.uploadDate, moment('2011-03-14').format('M-D-YYYY'));
+      assert.equal(page.learningMaterials.manager.uploadDate, '3/14/2011');
       assert.ok(page.learningMaterials.manager.hasFile);
       assert.equal(page.learningMaterials.manager.downloadText, 'filename');
       assert.equal(page.learningMaterials.manager.downloadUrl, 'http://example.com/file');
@@ -307,7 +309,7 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.manager.name.value, 'learning material 2');
       assert.equal(page.learningMaterials.manager.author, 'Hunter Pence');
       assert.equal(await page.learningMaterials.manager.description.editorValue(), '<p>2 lm description</p>');
-      assert.equal(page.learningMaterials.manager.uploadDate, today.format('M-D-YYYY'));
+      assert.equal(page.learningMaterials.manager.uploadDate, today.toDate().toLocaleDateString());
       assert.ok(page.learningMaterials.manager.hasLink);
       assert.equal(page.learningMaterials.manager.link, 'www.example.com');
 
@@ -326,7 +328,7 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.manager.name.value, 'learning material 3');
       assert.equal(page.learningMaterials.manager.author, 'Willie Mays');
       assert.equal(await page.learningMaterials.manager.description.editorValue(), '<p>3 lm description</p>');
-      assert.equal(page.learningMaterials.manager.uploadDate, moment('2016-12-12').format('M-D-YYYY'));
+      assert.equal(page.learningMaterials.manager.uploadDate, '12/12/2016');
       assert.ok(page.learningMaterials.manager.hasCitation);
       assert.equal(page.learningMaterials.manager.citation, 'a citation');
 
@@ -493,7 +495,7 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       assert.equal(page.learningMaterials.search.searchResults[0].properties.length, 3);
       assert.equal(page.learningMaterials.search.searchResults[0].properties[0].value, 'Owner: 0 guy M. Mc0son');
       assert.equal(page.learningMaterials.search.searchResults[0].properties[1].value, 'Content Author: ' + 'Marty McFly');
-      assert.equal(page.learningMaterials.search.searchResults[0].properties[2].value, 'Upload date: ' + moment('2016-03-03').format('M-D-YYYY'));
+      assert.equal(page.learningMaterials.search.searchResults[0].properties[2].value, 'Upload date: 3/3/2016');
       await page.learningMaterials.search.searchResults[0].add();
       assert.equal(page.learningMaterials.current.length, 5);
     });
@@ -513,7 +515,14 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       await page.learningMaterials.manager.save();
       assert.ok(page.learningMaterials.current[0].isTimedRelease);
       await page.learningMaterials.current[0].details();
-      assert.equal(page.learningMaterials.manager.timedReleaseSummary, '(Available: ' + newDate.format('L LT') + ')');
+      const formattedNewDate = newDate.toDate().toLocaleString('en-us', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      });
+      assert.equal(page.learningMaterials.manager.timedReleaseSummary, `(Available: ${formattedNewDate})`);
     });
 
     test('add timed release start and end date', async function (assert) {
@@ -540,9 +549,21 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       await page.learningMaterials.manager.save();
       assert.ok(page.learningMaterials.current[0].isTimedRelease);
       await page.learningMaterials.current[0].details();
-      const formatedStartDate = newStartDate.locale('en').format('L LT');
-      const formatedEndDate = newEndDate.locale('en').format('L LT');
-      assert.equal(page.learningMaterials.manager.timedReleaseSummary, '(Available: ' + formatedStartDate + ' and available until ' + formatedEndDate + ')');
+      const formattedStartDate = newStartDate.toDate().toLocaleString('en', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      });
+      const formattedEndDate = newEndDate.toDate().toLocaleString('en', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      });
+      assert.equal(page.learningMaterials.manager.timedReleaseSummary, `(Available: ${formattedStartDate} and available until ${formattedEndDate})`);
     });
 
     test('add timed release end date', async function (assert) {
@@ -560,7 +581,14 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       await page.learningMaterials.manager.save();
       assert.ok(page.learningMaterials.current[0].isTimedRelease);
       await page.learningMaterials.current[0].details();
-      assert.equal(page.learningMaterials.manager.timedReleaseSummary, '(Available until ' + newDate.format('L LT') + ')');
+      const formattedNewDate = newDate.toDate().toLocaleString('en-us', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      });
+      assert.equal(page.learningMaterials.manager.timedReleaseSummary, `(Available until ${formattedNewDate})`);
     });
 
     test('end date is after start date', async function (assert) {
@@ -586,8 +614,14 @@ module('Acceptance | Course - Learning Materials', function(hooks) {
       await page.learningMaterials.manager.save();
 
       assert.ok(page.learningMaterials.manager.hasEndDateValidationError);
-      const formatedDate = newDate.locale('en').format('L LT');
-      assert.equal(page.learningMaterials.manager.timedReleaseSummary, `(Available: ${formatedDate} and available until ${formatedDate})`);
+      const formattedDate = newDate.toDate().toLocaleString('en-us', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      });
+      assert.equal(page.learningMaterials.manager.timedReleaseSummary, `(Available: ${formattedDate} and available until ${formattedDate})`);
     });
 
     test('edit learning material with no other links #3617', async function (assert) {

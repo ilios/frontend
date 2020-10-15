@@ -204,7 +204,7 @@
               </td>
               <td>
                 {{#if lmObject.firstOfferingDate}}
-                  {{moment-format lmObject.firstOfferingDate "L"}}
+                  {{format-date lmObject.firstOfferingDate}}
                 {{else}}
                   {{t "general.none"}}
                 {{/if}}

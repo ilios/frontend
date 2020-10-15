@@ -19,7 +19,7 @@ module('Integration | Component | ilios calendar week', function(hooks) {
     this.set('date', date);
 
     await render(hbs`<IliosCalendarWeek @date={{this.date}} @calendarEvents={{array}} />`);
-    assert.dom().containsText('Week of September 27th 2015');
+    assert.dom().containsText('Week of September 27, 2015');
     assert.equal(weeklyCalendarComponent.events.length, 0);
   });
 

@@ -46,7 +46,7 @@
         {{t "general.startDate"}}:
       </label>
       <span>
-        {{moment-format @course.startDate "L"}}
+        {{format-date @course.startDate}}
       </span>
     </div>
     <div class="block">
@@ -62,7 +62,7 @@
         {{t "general.endDate"}}:
       </label>
       <span>
-        {{moment-format @course.endDate "L"}}
+        {{format-date @course.endDate}}
       </span>
     </div>
     <div class="block">

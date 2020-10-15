@@ -209,7 +209,7 @@
         {{t "general.uploadDate"}}:
       </label>
       <span class="upload-date">
-        {{moment-format this.uploadDate "M-D-YYYY"}}
+        {{format-date this.uploadDate}}
       </span>
     </div>
     <label>
@@ -228,7 +228,7 @@
               @change={{fn this.updateDate "startDate"}}
             />
           {{else}}
-            {{moment-format this.startDate "L"}}
+            {{format-date this.startDate}}
           {{/if}}
         </div>
         <div class="item start-time">
@@ -241,7 +241,7 @@
               @action={{fn this.updateTime "startDate"}}
             />
           {{else}}
-            {{moment-format this.startDate "h:mm a"}}
+            {{format-date this.startDate  hour12=true hour="numeric" minute="numeric"}}
           {{/if}}
         </div>
         {{#if @editable}}
@@ -272,7 +272,7 @@
               @change={{fn this.updateDate "endDate"}}
             />
           {{else}}
-            {{moment-format this.endDate "L"}}
+            {{format-date this.endDate}}
           {{/if}}
         </div>
         <div class="item end-time">
@@ -285,7 +285,7 @@
               @action={{fn this.updateTime "endDate"}}
             />
           {{else}}
-            {{moment-format this.endDate "h:mm a"}}
+            {{format-date this.endDate  hour12=true hour="numeric" minute="numeric"}}
           {{/if}}
         </div>
         {{#each (await (compute (fn this.getErrorsFor) "endDate")) as |message|}}

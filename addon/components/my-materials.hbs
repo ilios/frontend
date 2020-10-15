@@ -157,7 +157,7 @@
               </td>
               <td data-test-date>
                 {{#if lmObject.firstOfferingDate}}
-                  {{moment-format lmObject.firstOfferingDate "L"}}
+                  {{format-date lmObject.firstOfferingDate}}
                 {{else}}
                   {{t "general.none"}}
                 {{/if}}

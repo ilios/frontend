@@ -23,7 +23,7 @@
           {{t "general.start"}}:
         </label>
         <div>
-          {{moment-format @course.startDate "L"}}
+          {{format-date @course.startDate}}
         </div>
       </div>
       <div class="inline-label-data-block">
@@ -47,7 +47,7 @@
           {{t "general.end"}}:
         </label>
         <div>
-          {{moment-format @course.endDate "L"}}
+          {{format-date @course.endDate}}
         </div>
       </div>
       <br>
@@ -394,7 +394,7 @@
                   {{get (await session.ilmSession) "hours"}}
                 </td>
                 <td>
-                  {{moment-format (get (await session.ilmSession) "dueDate") "L"}}
+                  {{format-date (get (await session.ilmSession) "dueDate")}}
                 </td>
               </tr>
             </tbody>
@@ -426,9 +426,9 @@
               {{#each (await session.offerings) as |offering|}}
                 <tr>
                   <td class="text-left">
-                    {{moment-format offering.startDate "L LT"}}
+                    {{format-date offering.startDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric"}}
                     -
-                    {{moment-format offering.endDate "L LT"}}
+                    {{format-date offering.endDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric"}}
                   </td>
                   <td class="text-left">
                     {{offering.room}}

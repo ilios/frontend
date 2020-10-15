@@ -13,7 +13,7 @@ import {
   module,
   test
 } from 'qunit';
-import { setupAuthentication, getElementText, getText } from 'ilios-common';
+import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { map } from 'rsvp';
@@ -111,19 +111,27 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     });
     await visit('/dashboard?show=calendar&view=month');
     assert.equal(currentRouteName(), 'dashboard');
-    const events = findAll('[data-test-ilios-calendar-event]');
+    const events = findAll('[data-test-ilios-calendar-event');
     assert.equal(events.length, 2);
-    let eventInfo = '';
-    eventInfo += startOfMonth.format('h:mma') + '-' + startOfMonth.clone().add(1, 'hour').format('h:mma') + ': start of month';
-    eventInfo += endOfMonth.format('h:mma') + '-' + endOfMonth.clone().add(1, 'hour').format('h:mma') + ': end of month';
-    assert.equal(await getElementText(events), getText(eventInfo));
+    const startOfMonthStartFormat = startOfMonth.toDate().toLocaleTimeString([], { hour: "numeric", minute: "numeric" });
+    const startOfMonthEndFormat = startOfMonth.clone().add(1, 'hour').toDate().toLocaleTimeString([], { hour: "numeric", minute: "numeric" });
+    assert.dom(events[0]).hasText(`${startOfMonthStartFormat} - ${startOfMonthEndFormat} : start of month`);
+    const endOfMonthStartFormat = endOfMonth.toDate().toLocaleTimeString([], { hour: "numeric", minute: "numeric" });
+    const endOfMonthEndFormat = endOfMonth.clone().add(1, 'hour').toDate().toLocaleTimeString([], { hour: "numeric", minute: "numeric" });
+    assert.dom(events[1]).hasText(`${endOfMonthStartFormat} - ${endOfMonthEndFormat} : end of month`);
   });
 
   test('load week calendar', async function(assert) {
     const today = moment().hour(8);
     const startOfWeek = today.clone().startOf('week');
     const endOfWeek = today.clone().endOf('week').hour(22).minute(59);
-    const dayHeading = startOfWeek.format('MMM Do Do');
+    const longDayHeading = startOfWeek.toDate().toLocaleString([], {
+      month: 'short',
+      day: 'numeric',
+    });
+    const shortDayHeading = startOfWeek.toDate().toLocaleString([], {
+      day: 'numeric',
+    });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       name: 'start of week',
@@ -143,7 +151,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
 
     assert.equal(page.weeklyCalendar.dayHeadings.length, 7);
     assert.ok(page.weeklyCalendar.dayHeadings[0].isFirstDayOfWeek);
-    assert.equal(page.weeklyCalendar.dayHeadings[0].text, `Sunday Sun ${dayHeading}`);
+    assert.equal(page.weeklyCalendar.dayHeadings[0].text, `Sunday Sun ${longDayHeading} ${shortDayHeading}`);
 
     assert.equal(page.weeklyCalendar.events.length, 2);
     assert.ok(page.weeklyCalendar.events[0].isFirstDayOfWeek);
@@ -535,8 +543,16 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     await visit('/dashboard?show=agenda');
     const events = findAll('tr');
     assert.equal(events.length, 2);
-    assert.equal(await getElementText(events[0]), getText(today.format('dddd, MMMM Do, YYYY h:mma') + 'event 0'));
-    assert.equal(await getElementText(events[1]), getText(endOfTheWeek.format('dddd, MMMM Do, YYYY h:mma') + 'event 1'));
+    const options = {
+      weekday: 'long',
+      month: 'long',
+      day: 'numeric',
+      year: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+    assert.dom(events[0]).hasText(today.toDate().toLocaleString([], options) + ' event 0');
+    assert.dom(events[1]).hasText(endOfTheWeek.toDate().toLocaleString([], options) + ' event 1');
   });
 
   test('clear all filters', async function (assert) {
@@ -738,8 +754,13 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
 
     const eventBLocks = findAll(events);
     assert.equal(eventBLocks.length, 2);
-    assert.equal(await getElementText(eventBLocks[0]), getText('event 0' + startOfTheWeek.format('dddd h:mma')));
-    assert.equal(await getElementText(eventBLocks[1]), getText('event 1' + endOfTheWeek.format('dddd h:mma')));
+    const options = {
+      weekday: 'long',
+      hour: 'numeric',
+      minute: 'numeric',
+    };
+    assert.dom(eventBLocks[0]).hasText('event 0 ' + startOfTheWeek.toDate().toLocaleString([], options));
+    assert.dom(eventBLocks[1]).hasText('event 1 ' + endOfTheWeek.toDate().toLocaleString([], options));
   });
 
   const pickTerm = async function(i) {

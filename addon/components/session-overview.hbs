@@ -207,7 +207,7 @@
               {{#if (is-fulfilled @session.ilmSession)}}
                 {{#if @editable}}
                   <EditableField
-                    @value={{moment-format @session.ilmSession.dueDate "L"}}
+                    @value={{format-date @session.ilmSession.dueDate}}
                     @save={{this.changeIlmDueDate}}
                     @close={{this.revertIlmDueDateChanges}}
                   >
@@ -222,7 +222,7 @@
                     {{/each}}
                   </EditableField>
                 {{else}}
-                  {{moment-format @session.ilmSession.dueDate "L"}}
+                  {{format-date @session.ilmSession.dueDate}}
                 {{/if}}
               {{/if}}
             </span>

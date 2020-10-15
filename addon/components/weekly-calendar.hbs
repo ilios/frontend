@@ -4,11 +4,11 @@
 >
   <h2 class="week-of-year" data-test-week-of-year>
     <span class="short" data-test-short>
-      {{moment-format this.firstDayOfWeek "M/D"}} &mdash;
-      {{moment-format this.lastDayOfWeek "M/D"}}
-      {{moment-format this.lastDayOfWeek "YYYY"}}
+      {{format-date this.firstDayOfWeek month="numeric" day="numeric"}} &mdash;
+      {{format-date this.lastDayOfWeek month="numeric" day="numeric"}}
+      {{format-date this.lastDayOfWeek year="numeric"}}
     </span>
-    <span class="long" data-test-long>{{t "general.weekOf" date=(moment-format this.firstDayOfWeek "MMMM Do YYYY")}}</span>
+    <span class="long" data-test-long>{{t "general.weekOf" date=(format-date this.firstDayOfWeek month="long" day="numeric" year="numeric")}}</span>
   </h2>
 
   <div
@@ -32,7 +32,7 @@
             type="button"
             {{on "click" (fn @changeToDayView day.date)}}
           >
-            {{moment-format day.date "dddd"}}
+            {{format-date day.date weekday="long"}}
           </button>
         </h3>
         {{#each day.events as |event|}}
@@ -60,10 +60,10 @@
           data-test-day
           aria-label={{day.longName}}
         >
-          <span class="long">{{moment-format day.date "dddd"}}</span>
-          <span class="short">{{moment-format day.date "ddd"}}</span>
-          <span class="long">{{moment-format day.date "MMM Do"}}</span>
-          <span class="short">{{moment-format day.date "Do"}}</span>
+          <span class="long">{{format-date day.date weekday="long"}}</span>
+          <span class="short">{{format-date day.date weekday="short"}}</span>
+          <span class="long">{{format-date day.date month="short" day="numeric"}}</span>
+          <span class="short">{{format-date day.date day="numeric"}}</span>
         </button>
       </div>
     {{/each}}
