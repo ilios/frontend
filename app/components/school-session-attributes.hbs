@@ -1,37 +1,29 @@
-<div class="school-session-attributes" ...attributes>
-  {{#if
-    (and
-      (is-fulfilled showSessionAttendanceRequired)
-      (is-fulfilled showSessionSupplemental)
-      (is-fulfilled showSessionSpecialAttireRequired)
-      (is-fulfilled showSessionSpecialEquipmentRequired)
-    )
-  }}
-    {{#if details}}
+<div
+  class="school-session-attributes"
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @school}}
+  ...attributes
+>
+  {{#if this.load.lastSuccessful}}
+    {{#if @details}}
       <SchoolSessionAttributesExpanded
-        @canUpdate={{canUpdate}}
-        @showSessionAttendanceRequired={{await showSessionAttendanceRequired}}
-        @showSessionSupplemental={{await showSessionSupplemental}}
-        @showSessionSpecialAttireRequired={{await showSessionSpecialAttireRequired
-        }}
-        @showSessionSpecialEquipmentRequired={{await
-          showSessionSpecialEquipmentRequired
-        }}
-        @collapse={{collapse}}
-        @isManaging={{isManaging}}
-        @manage={{manage}}
-        @saveAll={{action "save"}}
+        @canUpdate={{@canUpdate}}
+        @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+        @showSessionSupplemental={{this.showSessionSupplemental}}
+        @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+        @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
+        @collapse={{@collapse}}
+        @isManaging={{@isManaging}}
+        @manage={{@manage}}
+        @saveAll={{perform this.save}}
       />
     {{else}}
       <SchoolSessionAttributesCollapsed
-        @showSessionAttendanceRequired={{await showSessionAttendanceRequired}}
-        @showSessionSupplemental={{await showSessionSupplemental}}
-        @showSessionSpecialAttireRequired={{await showSessionSpecialAttireRequired
-        }}
-        @showSessionSpecialEquipmentRequired={{await
-          showSessionSpecialEquipmentRequired
-        }}
-        @expand={{expand}}
+        @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+        @showSessionSupplemental={{this.showSessionSupplemental}}
+        @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+        @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
+        @expand={{@expand}}
       />
     {{/if}}
   {{/if}}
