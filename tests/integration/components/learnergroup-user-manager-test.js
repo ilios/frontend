@@ -480,19 +480,123 @@ module('Integration | Component | learnergroup user manager', function(hooks) {
 
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     assert.notOk(component.usersInCurrentGroup[1].isSelected);
-    assert.notOk(component.selectAll.isFullySelected);
-    assert.notOk(component.selectAll.isPartiallySelected);
+    assert.notOk(component.selectAll.isChecked);
+    assert.notOk(component.selectAll.isIndeterminate);
     await component.usersInCurrentGroup[0].select();
-    assert.notOk(component.selectAll.isFullySelected);
-    assert.ok(component.selectAll.isPartiallySelected);
+    assert.notOk(component.selectAll.isChecked);
+    assert.ok(component.selectAll.isIndeterminate);
     await component.usersInCurrentGroup[1].select();
-    assert.ok(component.selectAll.isFullySelected);
-    assert.notOk(component.selectAll.isPartiallySelected);
+    assert.ok(component.selectAll.isChecked);
+    assert.notOk(component.selectAll.isIndeterminate);
     assert.ok(component.usersInCurrentGroup[0].isSelected);
     assert.ok(component.usersInCurrentGroup[1].isSelected);
     await component.selectAll.toggle();
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     assert.notOk(component.usersInCurrentGroup[1].isSelected);
+  });
+
+  test('filtering and bulk-selection', async function(assert) {
+    const learnerGroup = this.server.create('learnerGroup', { id: 1 });
+    const user1 = this.server.create('user', { enabled: true, displayName: 'Alpha' });
+    const user2 = this.server.create('user', { enabled: true, displayName: 'Beta' });
+    const user3 = this.server.create('user', { enabled: true, displayName: 'Gamma' });
+    const userModel1 = await this.owner.lookup('service:store').find('user', user1.id);
+    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const userModel3 = await this.owner.lookup('service:store').find('user', user3.id);
+    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+
+    const userModelProxy = ObjectProxy.create({
+      content: userModel1,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
+    });
+    const userModelProxy2 = ObjectProxy.create({
+      content: userModel2,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
+    });
+
+    const userModelProxy3 = ObjectProxy.create({
+      content: userModel3,
+      lowestGroupInTree: learnerGroupModel,
+      lowestGroupInTreeTitle: learnerGroupModel.title
+    });
+
+    this.set('users', [ userModelProxy, userModelProxy2, userModelProxy3 ]);
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnergroupUserManager
+      @learnerGroupId={{this.learnerGroup.id}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top group"
+      @cohortTitle="this cohort"
+      @users={{this.users}}
+      @sortBy="id"
+      @setSortBy={{noop}}
+      @isEditing={{true}}
+      @addUserToGroup={{noop}}
+      @removeUserFromGroup={{noop}}
+      @addUsersToGroup={{noop}}
+      @removeUsersFromGroup={{noop}}
+    />`);
+
+    assert.equal(component.usersInCurrentGroup.length, 3);
+    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Alpha');
+    assert.equal(component.usersInCurrentGroup[1].name.userNameInfo.fullName, 'Beta');
+    assert.equal(component.usersInCurrentGroup[2].name.userNameInfo.fullName, 'Gamma');
+    assert.notOk(component.usersInCurrentGroup[0].isSelected);
+    assert.notOk(component.usersInCurrentGroup[1].isSelected);
+    assert.notOk(component.usersInCurrentGroup[2].isSelected);
+    assert.notOk(component.selectAll.isChecked);
+    assert.notOk(component.selectAll.isIndeterminate);
+
+    await component.filter('Zzzz');
+    assert.equal(component.usersInCurrentGroup.length, 0);
+    assert.notOk(component.selectAll.isChecked);
+    assert.notOk(component.selectAll.isIndeterminate);
+
+    await component.filter('');
+    assert.equal(component.usersInCurrentGroup.length, 3);
+    assert.notOk(component.selectAll.isChecked);
+    assert.notOk(component.selectAll.isIndeterminate);
+
+    await component.usersInCurrentGroup[2].select();
+    assert.notOk(component.selectAll.isChecked);
+    assert.ok(component.selectAll.isIndeterminate);
+
+    await component.filter('Alpha');
+    assert.notOk(component.selectAll.isChecked);
+    assert.ok(component.selectAll.isIndeterminate);
+    assert.equal(component.usersInCurrentGroup.length, 1);
+    assert.equal(component.usersInCurrentGroup[0].name.userNameInfo.fullName, 'Alpha');
+    assert.notOk(component.usersInCurrentGroup[0].isSelected);
+
+    await component.selectAll.toggle();
+    assert.ok(component.selectAll.isChecked);
+    assert.ok(component.selectAll.isIndeterminate);
+    assert.ok(component.usersInCurrentGroup[0].isSelected);
+
+    await component.filter('');
+    assert.equal(component.usersInCurrentGroup.length, 3);
+    assert.ok(component.selectAll.isChecked);
+    assert.ok(component.selectAll.isIndeterminate);
+    assert.ok(component.usersInCurrentGroup[0].isSelected);
+    assert.notOk(component.usersInCurrentGroup[1].isSelected);
+    assert.ok(component.usersInCurrentGroup[2].isSelected);
+
+    await component.selectAll.toggle();
+    assert.ok(component.selectAll.isChecked);
+    assert.notOk(component.selectAll.isIndeterminate);
+    assert.ok(component.usersInCurrentGroup[0].isSelected);
+    assert.ok(component.usersInCurrentGroup[1].isSelected);
+    assert.ok(component.usersInCurrentGroup[2].isSelected);
+
+    await component.selectAll.toggle();
+    assert.notOk(component.selectAll.isChecked);
+    assert.notOk(component.selectAll.isIndeterminate);
+    assert.notOk(component.usersInCurrentGroup[0].isSelected);
+    assert.notOk(component.usersInCurrentGroup[1].isSelected);
+    assert.notOk(component.usersInCurrentGroup[2].isSelected);
   });
 
   test('root users can manage disabled users', async function(assert) {

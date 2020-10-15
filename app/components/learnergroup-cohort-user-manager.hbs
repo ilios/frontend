@@ -20,10 +20,13 @@
             <th class="text-left" colspan="1">
               <Input
                 @type="checkbox"
-                @checked={{eq this.selectedUsers.length this.filteredUsers.length}}
+                @checked={{and
+                  (includes this.selectableUsers this.selectedUsers)
+                  this.selectedUsers.length
+                }}
                 @indeterminate={{and
-                  (gt this.selectedUsers.length 0)
-                  (lt this.selectedUsers.length this.filteredUsers.length)
+                  (not (includes this.selectableUsers this.selectedUsers))
+                  this.selectedUsers.length
                 }}
                 {{on "click" (fn this.toggleUserSelectionAllOrNone)}}
               />

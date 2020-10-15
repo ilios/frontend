@@ -10,8 +10,8 @@ const definition = {
   selectAll: {
     scope: '[data-test-headers] th:eq(0) input',
     toggle: clickable(),
-    isFullySelected: property('checked'),
-    isPartiallySelected: property('indeterminate'),
+    isChecked: property('checked'),
+    isIndeterminate: property('indeterminate'),
   },
   usersInCurrentGroup: collection('[data-test-users-in-current-group] tr', {
     isSelected: property('checked', 'td:eq(0) input'),

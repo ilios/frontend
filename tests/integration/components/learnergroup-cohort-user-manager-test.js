@@ -215,19 +215,99 @@ module('Integration | Component | learnergroup cohort user manager', function(ho
 
     assert.notOk(component.users[0].isSelected);
     assert.notOk(component.users[1].isSelected);
-    assert.notOk(component.selectAll.isFullySelected);
-    assert.notOk(component.selectAll.isPartiallySelected);
+    assert.notOk(component.selectAll.isChecked);
+    assert.notOk(component.selectAll.isIndeterminate);
     await component.users[0].select();
-    assert.notOk(component.selectAll.isFullySelected);
-    assert.ok(component.selectAll.isPartiallySelected);
+    assert.notOk(component.selectAll.isChecked);
+    assert.ok(component.selectAll.isIndeterminate);
     await component.users[1].select();
-    assert.ok(component.selectAll.isFullySelected);
-    assert.notOk(component.selectAll.isPartiallySelected);
+    assert.ok(component.selectAll.isChecked);
+    assert.notOk(component.selectAll.isIndeterminate);
     assert.ok(component.users[0].isSelected);
     assert.ok(component.users[1].isSelected);
     await component.selectAll.toggle();
     assert.notOk(component.users[0].isSelected);
     assert.notOk(component.users[1].isSelected);
+  });
+
+  test('filtering and bulk-selection', async function(assert) {
+    const user1 = this.server.create('user', { enabled: true, displayName: 'Alpha' });
+    const user2 = this.server.create('user', { enabled: true, displayName: 'Beta' });
+    const user3 = this.server.create('user', { enabled: true, displayName: 'Gamma' });
+    const userModel1 = await this.owner.lookup('service:store').find('user', user1.id);
+    const userModel2 = await this.owner.lookup('service:store').find('user', user2.id);
+    const userModel3 = await this.owner.lookup('service:store').find('user', user3.id);
+
+    this.set('users', [ userModel1, userModel2, userModel3 ]);
+
+    await render(hbs`<LearnergroupCohortUserManager
+      @users={{this.users}}
+      @canUpdate={{true}}
+      @learnerGroupTitle="this group"
+      @topLevelGroupTitle="top level group"
+      @sortBy="firstName"
+      @setSortBy={{noop}}
+      @addUserToGroup={{noop}}
+      @addUsersToGroup={{noop}}
+    />`);
+
+    assert.equal(component.users.length, 3);
+    assert.equal(component.users[0].name.userNameInfo.fullName, 'Alpha');
+    assert.equal(component.users[1].name.userNameInfo.fullName, 'Beta');
+    assert.equal(component.users[2].name.userNameInfo.fullName, 'Gamma');
+    assert.notOk(component.users[0].isSelected);
+    assert.notOk(component.users[1].isSelected);
+    assert.notOk(component.users[2].isSelected);
+    assert.notOk(component.selectAll.isChecked);
+    assert.notOk(component.selectAll.isIndeterminate);
+
+    await component.filter('Zzzz');
+    assert.equal(component.users.length, 0);
+    assert.notOk(component.selectAll.isChecked);
+    assert.notOk(component.selectAll.isIndeterminate);
+
+    await component.filter('');
+    assert.equal(component.users.length, 3);
+    assert.notOk(component.selectAll.isChecked);
+    assert.notOk(component.selectAll.isIndeterminate);
+
+    await component.users[2].select();
+    assert.notOk(component.selectAll.isChecked);
+    assert.ok(component.selectAll.isIndeterminate);
+
+    await component.filter('Alpha');
+    assert.notOk(component.selectAll.isChecked);
+    assert.ok(component.selectAll.isIndeterminate);
+    assert.equal(component.users.length, 1);
+    assert.equal(component.users[0].name.userNameInfo.fullName, 'Alpha');
+    assert.notOk(component.users[0].isSelected);
+
+    await component.selectAll.toggle();
+    assert.ok(component.selectAll.isChecked);
+    assert.ok(component.selectAll.isIndeterminate);
+    assert.ok(component.users[0].isSelected);
+
+    await component.filter('');
+    assert.equal(component.users.length, 3);
+    assert.ok(component.selectAll.isChecked);
+    assert.ok(component.selectAll.isIndeterminate);
+    assert.ok(component.users[0].isSelected);
+    assert.notOk(component.users[1].isSelected);
+    assert.ok(component.users[2].isSelected);
+
+    await component.selectAll.toggle();
+    assert.ok(component.selectAll.isChecked);
+    assert.notOk(component.selectAll.isIndeterminate);
+    assert.ok(component.users[0].isSelected);
+    assert.ok(component.users[1].isSelected);
+    assert.ok(component.users[2].isSelected);
+
+    await component.selectAll.toggle();
+    assert.notOk(component.selectAll.isChecked);
+    assert.notOk(component.selectAll.isIndeterminate);
+    assert.notOk(component.users[0].isSelected);
+    assert.notOk(component.users[1].isSelected);
+    assert.notOk(component.users[2].isSelected);
   });
 
   test('root users can manage disabled users', async function(assert) {

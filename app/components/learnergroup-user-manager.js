@@ -16,6 +16,15 @@ export default class LearnergroupCohortUserManagerComponent extends Component {
     return this.args.sortBy.search(/desc/) === -1;
   }
 
+  get selectableUsers() {
+    if (this.currentUser.isRoot) {
+      return this.args.users.mapBy("content");
+    }
+    return this.args.users.filter((user) => {
+      return user.get("enabled");
+    }).mapBy("content");
+  }
+
   get filteredUsers() {
     if (!this.args.users) {
       return [];
@@ -63,10 +72,12 @@ export default class LearnergroupCohortUserManagerComponent extends Component {
 
   @action
   toggleUserSelectionAllOrNone() {
-    if (this.selectedUsers.length >= this.filteredUsers.length) {
-      this.selectedUsers = [];
+    const filteredUsers = this.filteredUsers.mapBy('content');
+    const unselectedFilteredUsers = filteredUsers.filter(user => { return ! this.selectedUsers.includes(user); });
+    if (this.filteredUsers && unselectedFilteredUsers.length) {
+      this.selectedUsers = [...this.selectedUsers, ...unselectedFilteredUsers];
     } else {
-      this.selectedUsers = [...this.selectedUsers, ...this.filteredUsers.mapBy('content')];
+      this.selectedUsers = [];
     }
   }
 
