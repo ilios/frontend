@@ -1,5 +1,4 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
 import ObjectProxy from '@ember/object/proxy';
 import { action, computed } from '@ember/object';
 import { alias, not } from '@ember/object/computed';
@@ -29,15 +28,12 @@ export default class CurriculumInventoryReportListComponent extends Component {
   @service currentUser;
   @service intl;
   @service permissionChecker;
-  @tracked proxiedReports;
 
-  @action
-  load(element, [ reports ]) {
-    if (! reports) {
-      this.proxiedReports = [];
-      return;
+  get proxiedReports() {
+    if (! this.args.reports) {
+      return [];
     }
-    this.proxiedReports = reports.toArray().map(report => {
+    return this.args.reports.toArray().map(report => {
       return ReportProxy.create({
         content: report,
         intl: this.intl,
