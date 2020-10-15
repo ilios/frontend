@@ -6,6 +6,10 @@
           @colspan={{2}}
           @sortedAscending={{this.sortedAscending}}
           @click={{fn this.setSortBy "title"}}
+          @sortedBy={{or
+            (eq sortBy "title")
+            (eq sortBy "title:desc")
+          }}
         >
           {{t "general.learnerGroupTitle"}}
         </SortableTh>
@@ -16,6 +20,10 @@
           @sortedAscending={{this.sortedAscending}}
           @sortType="numeric"
           @click={{fn this.setSortBy "usersCount"}}
+          @sortedBy={{or
+            (eq sortBy "usersCount")
+            (eq sortBy "usersCount:desc")
+          }}
         >
           {{t "general.members"}}
         </SortableTh>
@@ -26,6 +34,10 @@
           @sortedAscending={{this.sortedAscending}}
           @sortType="numeric"
           @click={{fn this.setSortBy "childrenCount"}}
+          @sortedBy={{or
+            (eq sortBy "childrenCount")
+            (eq sortBy "childrenCount:desc")
+          }}
         >
           {{t "general.subgroups"}}
         </SortableTh>

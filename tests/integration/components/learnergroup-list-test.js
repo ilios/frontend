@@ -21,7 +21,7 @@ module('Integration | Component | learner group list', function(hooks) {
     const secondGroupModel = await this.owner.lookup('service:store').find('learner-group', secondGroup.id);
 
     this.set('learnerGroups', [firstGroupModel, secondGroupModel]);
-    await render(hbs`<LearnergroupList @learnerGroups={{learnerGroups}} />`);
+    await render(hbs`<LearnergroupList @learnerGroups={{this.learnerGroups}} />`);
 
     assert.equal(component.headings[0].text, 'Learner Group Title');
     assert.equal(component.headings[1].text, 'Members');
@@ -56,8 +56,8 @@ module('Integration | Component | learner group list', function(hooks) {
     });
     this.set('learnerGroups', [model]);
     await render(hbs`<LearnergroupList
-      @learnerGroups={{learnerGroups}}
-      @remove={{remove}}
+      @learnerGroups={{this.learnerGroups}}
+      @remove={{this.remove}}
       @canDelete={{true}}
     />`);
 
@@ -77,8 +77,7 @@ module('Integration | Component | learner group list', function(hooks) {
     const model = await this.owner.lookup('service:store').find('learner-group', parent.id);
     this.set('learnerGroups', [model]);
     await render(hbs`<LearnergroupList
-      @learnerGroups={{learnerGroups}}
-      @remove={{remove}}
+      @learnerGroups={{this.learnerGroups}}
       @canDelete={{true}}
     />`);
 
@@ -95,8 +94,7 @@ module('Integration | Component | learner group list', function(hooks) {
     const model = await this.owner.lookup('service:store').find('learner-group', parent.id);
     this.set('learnerGroups', [model]);
     await render(hbs`<LearnergroupList
-      @learnerGroups={{learnerGroups}}
-      @remove={{remove}}
+      @learnerGroups={{this.learnerGroups}}
       @canDelete={{true}}
     />`);
 
@@ -122,8 +120,7 @@ module('Integration | Component | learner group list', function(hooks) {
     const model = await this.owner.lookup('service:store').find('learner-group', parent.id);
     this.set('learnerGroups', [model]);
     await render(hbs`<LearnergroupList
-      @learnerGroups={{learnerGroups}}
-      @remove={{remove}}
+      @learnerGroups={{this.learnerGroups}}
       @canDelete={{true}}
     />`);
 
@@ -172,8 +169,8 @@ module('Integration | Component | learner group list', function(hooks) {
     });
     this.set('learnerGroups', [model]);
     await render(hbs`<LearnergroupList
-      @learnerGroups={{learnerGroups}}
-      @copy={{copy}}
+      @learnerGroups={{this.learnerGroups}}
+      @copy={{this.copy}}
       @canCreate={{true}}
     />`);
 
@@ -188,12 +185,10 @@ module('Integration | Component | learner group list', function(hooks) {
     assert.expect(3);
     const group = this.server.create('learner-group');
     const model = await this.owner.lookup('service:store').find('learner-group', group.id);
-
-    this.set('copy', () => { });
     this.set('learnerGroups', [model]);
     await render(hbs`<LearnergroupList
-      @learnerGroups={{learnerGroups}}
-      @copy={{copy}}
+      @learnerGroups={{this.learnerGroups}}
+      @copy={{noop}}
       @canCreate={{true}}
       @canCopyWithLearners={{false}}
     />`);
@@ -210,11 +205,10 @@ module('Integration | Component | learner group list', function(hooks) {
     const group = this.server.create('learner-group', { users });
     const model = await this.owner.lookup('service:store').find('learner-group', group.id);
 
-    this.set('copy', () => { });
     this.set('learnerGroups', [model]);
     await render(hbs`<LearnergroupList
-      @learnerGroups={{learnerGroups}}
-      @copy={{copy}}
+      @learnerGroups={{this.learnerGroups}}
+      @copy={{noop}}
       @canCreate={{true}}
       @canCopyWithLearners={{false}}
     />`);
@@ -223,5 +217,52 @@ module('Integration | Component | learner group list', function(hooks) {
     assert.ok(component.groups[0].actions.canCopy);
     await component.groups[0].actions.copy();
     assert.notOk(component.confirmCopy.canCopyWithLearners);
+  });
+
+  test('sorting', async function(assert) {
+    const users = this.server.createList('user', 2);
+    const group1 = this.server.create('learner-group', { title: 'Zebra' });
+    const group2 = this.server.create('learner-group', { title: 'Alpha', users });
+    this.server.create('learner-group', { parent: group1 });
+    const groupModel1 = await this.owner.lookup('service:store').find('learner-group', group1.id);
+    const groupModel2 = await this.owner.lookup('service:store').find('learner-group', group2.id);
+
+    this.set('learnerGroups', [ groupModel1, groupModel2 ]);
+    await render(hbs`<LearnergroupList @learnerGroups={{this.learnerGroups}} />`);
+    assert.ok(component.isSortedByTitleAscending, 'Default sort order is by title ascending');
+    assert.ok(component.isNotSortedByMembers);
+    assert.ok(component.isNotSortedBySubgroups);
+    assert.equal(component.groups[0].title, 'Alpha');
+    assert.equal(component.groups[1].title, 'Zebra');
+    await component.sortByTitle();
+    assert.ok(component.isSortedByTitleDescending);
+    assert.ok(component.isNotSortedByMembers);
+    assert.ok(component.isNotSortedBySubgroups);
+    assert.equal(component.groups[0].title, 'Zebra');
+    assert.equal(component.groups[1].title, 'Alpha');
+    await component.sortByMembers();
+    assert.ok(component.isSortedByMembersAscending);
+    assert.ok(component.isNotSortedByTitle);
+    assert.ok(component.isNotSortedBySubgroups);
+    assert.equal(component.groups[0].members, '0');
+    assert.equal(component.groups[1].members, '2');
+    await component.sortByMembers();
+    assert.ok(component.isSortedByMembersDescending);
+    assert.ok(component.isNotSortedByTitle);
+    assert.ok(component.isNotSortedBySubgroups);
+    assert.equal(component.groups[0].members, '2');
+    assert.equal(component.groups[1].members, '0');
+    await component.sortBySubgroups();
+    assert.ok(component.isSortedBySubgroupsAscending);
+    assert.ok(component.isNotSortedByTitle);
+    assert.ok(component.isNotSortedByMembers);
+    assert.equal(component.groups[0].subgroups, '0');
+    assert.equal(component.groups[1].subgroups, '1');
+    await component.sortBySubgroups();
+    assert.ok(component.isSortedBySubgroupsDescending);
+    assert.ok(component.isNotSortedByTitle);
+    assert.ok(component.isNotSortedByMembers);
+    assert.equal(component.groups[0].subgroups, '1');
+    assert.equal(component.groups[1].subgroups, '0');
   });
 });
