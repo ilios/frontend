@@ -1,6 +1,6 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
 import ObjectProxy from '@ember/object/proxy';
-import { computed } from '@ember/object';
+import { action, computed } from '@ember/object';
 import { alias, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
@@ -16,74 +16,66 @@ const ReportProxy = ObjectProxy.extend({
   isPublished: alias('isFinalized'),
 
   userCanDelete: computed('content', 'content.isFinalized', 'currentUser.model', async function() {
-    const permissionChecker = this.permissionChecker;
     const report = this.content;
-    if (report.get('isFinalized')) {
+    if (report.isFinalized) {
       return false;
     }
-    return permissionChecker.canDeleteCurriculumInventoryReport(report);
+    return this.permissionChecker.canDeleteCurriculumInventoryReport(report);
   })
 });
 
-export default Component.extend({
-  currentUser: service(),
-  intl: service(),
-  permissionChecker: service(),
-  tagName: "",
-  program: null,
-  sortBy: 'name',
-  edit() {},
-  remove() {},
-  setSortBy() {},
+export default class CurriculumInventoryReportListComponent extends Component {
+  @service currentUser;
+  @service intl;
+  @service permissionChecker;
 
-  /**
-   * @property proxiedReports
-   * @type {Ember.computed}
-   * @public
-   */
-  proxiedReports: computed('program.curriculumInventoryReports.[]', async function () {
-    const currentUser = this.currentUser;
-    const intl = this.intl;
-    const permissionChecker = this.permissionChecker;
-    const program = this.program;
-    const reports = await program.get('curriculumInventoryReports');
-    return reports.map(report => {
+  get proxiedReports() {
+    if (! this.args.reports) {
+      return [];
+    }
+    return this.args.reports.toArray().map(report => {
       return ReportProxy.create({
         content: report,
-        intl,
-        currentUser,
-        permissionChecker
+        intl: this.intl,
+        currentUser: this.currentUser,
+        permissionChecker: this.permissionChecker
       });
     });
-  }),
-
-  sortedAscending: computed('sortBy', function() {
-    return this.sortBy.search(/desc/) === -1;
-  }),
-
-  actions: {
-    edit(proxy) {
-      this.edit(proxy.get('content'));
-    },
-
-    remove(proxy) {
-      this.remove(proxy.get('content'));
-    },
-
-    cancelRemove(proxy) {
-      proxy.set('showRemoveConfirmation', false);
-    },
-
-    confirmRemove(proxy) {
-      proxy.set('showRemoveConfirmation', true);
-    },
-
-    sortBy(what){
-      const sortBy = this.sortBy;
-      if(sortBy === what){
-        what += ':desc';
-      }
-      this.setSortBy(what);
-    }
   }
-});
+
+  get sortedAscending() {
+    return this.sortBy.search(/desc/) === -1;
+  }
+
+  get sortBy() {
+    return this.args.sortBy || 'name';
+  }
+
+  @action
+  edit(proxy) {
+    this.args.edit(proxy.get('content'));
+  }
+
+  @action
+  remove(proxy) {
+    this.args.remove(proxy.get('content'));
+  }
+
+  @action
+  cancelRemove(proxy) {
+    proxy.set('showRemoveConfirmation', false);
+  }
+
+  @action
+  confirmRemove(proxy) {
+    proxy.set('showRemoveConfirmation', true);
+  }
+
+  @action
+  setSortBy(what){
+    if(this.sortBy === what){
+      what += ':desc';
+    }
+    this.args.setSortBy(what);
+  }
+}

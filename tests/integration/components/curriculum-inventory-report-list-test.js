@@ -2,10 +2,11 @@ import { resolve } from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, render, findAll } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory-report-list';
 
 module('Integration | Component | curriculum inventory report list', function(hooks) {
   setupRenderingTest(hooks);
@@ -38,54 +39,40 @@ module('Integration | Component | curriculum inventory report list', function(ho
     });
     this.owner.register('service:permission-checker', permissionCheckerMock);
 
-    const reports = [report1, report2];
+    const reportModel1 = await this.owner.lookup('service:store').find('curriculum-inventory-report', report1.id);
+    const reportModel2 = await this.owner.lookup('service:store').find('curriculum-inventory-report', report2.id);
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const reports = [reportModel1, reportModel2];
 
-    this.set('program', programModel);
-    await render(hbs`<CurriculumInventoryReportList @program={{program}} />`);
-    assert.dom('th').exists({ count: 7 }, 'Table header has seven columns.');
-    assert.dom('th').hasText('Report Name', 'First column table header is labeled correctly');
-    assert.dom(findAll('th')[1]).hasText('Program', 'Second column table header is labeled correctly');
-    assert.dom(findAll('th')[2]).hasText('Academic Year', 'Third column table header is labeled correctly');
-    assert.dom(findAll('th')[3]).hasText('Start Date', 'Fourth column table header is labeled correctly');
-    assert.dom(findAll('th')[4]).hasText('End Date', 'Fifth column table header is labeled correctly');
-    assert.dom(findAll('th')[5]).hasText('Status', 'Sixth column table header is labeled correctly');
-    assert.dom(findAll('th')[6]).hasText('Actions', 'Seventh column table header is labeled correctly');
-    assert.equal(findAll('tbody tr').length, reports.length, 'All reports are shown in list.');
-
-    assert.dom('tbody tr').exists({ count: 2 });
-    assert.dom(`[data-test-report="0"] [data-test-name]`).hasText(report2.name, 'Report name shows.');
-    assert.dom(`[data-test-report="0"] [data-test-program]`).hasText(program.title, 'Program title shows.');
-    assert.dom(`[data-test-report="0"] [data-test-year]`).hasText('2016 - 2017', 'Academic year shows.');
-    assert.dom(`[data-test-report="0"] [data-test-start-date]`).hasText(moment(report2.startDate).format('L'), 'Start date shows.');
-    assert.dom(`[data-test-report="0"] [data-test-end-date]`).hasText(moment(report2.endDate).format('L'), 'End date shows.');
-    assert.dom(`[data-test-report="0"] [data-test-status]`).hasText('Finalized', 'Status shows.');
-    assert.dom(`[data-test-report="0"] [data-test-actions] .fa-edit`).exists({ count: 1 }, 'Edit button shows.');
-    assert.dom(`[data-test-report="0"] [data-test-actions] .fa-download`).exists({ count: 1 }, 'Download button shows.');
-    assert.dom(`[data-test-report="0"] [data-test-actions] .fa-trash.disabled`).exists({ count: 1}, 'Delete button disabled for finalized reports.');
-
-    assert.dom(`[data-test-report="1"] [data-test-name]`).hasText(report1.name, 'Report name shows.');
-    assert.dom(`[data-test-report="1"] [data-test-program]`).hasText(program.title, 'Program title shows.');
-    assert.dom(`[data-test-report="1"] [data-test-year]`).hasText('2017 - 2018', 'Academic year shows.');
-    assert.dom(`[data-test-report="1"] [data-test-start-date]`).hasText(moment(report1.startDate).format('L'), 'Start date shows.');
-    assert.dom(`[data-test-report="1"] [data-test-end-date]`).hasText(moment(report1.endDate).format('L'), 'End date shows.');
-    assert.dom(`[data-test-report="1"] [data-test-status]`).hasText('Draft', 'Status shows.');
-    assert.dom(`[data-test-report="1"] [data-test-actions] .fa-edit`).exists({ count: 1 }, 'Edit button shows.');
-    assert.dom(`[data-test-report="1"] [data-test-actions] .fa-download`).exists({ count: 1 }, 'Download button shows.');
-    assert.dom(`[data-test-report="1"] [data-test-actions] .fa-trash`).exists({ count: 1 }, 'Delete button shows for reports in draft.');
+    this.set('reports', reports);
+    await render(hbs`<CurriculumInventoryReportList @reports={{this.reports}} />`);
+    assert.equal(component.headers.name, 'Report Name', 'First column table header is labeled correctly');
+    assert.equal(component.headers.program, 'Program', 'Second column table header is labeled correctly');
+    assert.equal(component.headers.year, 'Academic Year', 'Third column table header is labeled correctly');
+    assert.equal(component.headers.startDate, 'Start Date', 'Fourth column table header is labeled correctly');
+    assert.equal(component.headers.endDate, 'End Date', 'Fifth column table header is labeled correctly');
+    assert.equal(component.headers.status, 'Status', 'Sixth column table header is labeled correctly');
+    assert.equal(component.headers.actions, 'Actions', 'Seventh column table header is labeled correctly');
+    assert.equal(component.reports.length, reports.length, 'All reports are shown in list.');
+    assert.equal(component.reports[0].name, reportModel2.name, 'Report name shows.');
+    assert.equal(component.reports[0].program, programModel.title, 'Program title shows.');
+    assert.equal(component.reports[0].year, '2016 - 2017', 'Academic year shows.');
+    assert.equal(component.reports[0].startDate, moment(reportModel2.startDate).format('L'), 'Start date shows.');
+    assert.equal(component.reports[0].endDate, moment(reportModel2.endDate).format('L'), 'End date shows.');
+    assert.equal(component.reports[0].status, 'Finalized', 'Status shows.');
+    assert.notOk(component.reports[0].isDeletable, 'Delete button is disabled for finalized reports.');
+    assert.equal(component.reports[1].name, reportModel1.name, 'Report name shows.');
+    assert.equal(component.reports[1].program, programModel.title, 'Program title shows.');
+    assert.equal(component.reports[1].year, '2017 - 2018', 'Academic year shows.');
+    assert.equal(component.reports[1].startDate, moment(reportModel1.startDate).format('L'), 'Start date shows.');
+    assert.equal(component.reports[1].endDate, moment(reportModel1.endDate).format('L'), 'End date shows.');
+    assert.equal(component.reports[1].status, 'Draft', 'Status shows.');
+    assert.ok(component.reports[1].isDeletable, 'Delete button is enabled for reports in draft.');
   });
 
   test('empty list', async function (assert) {
-    const school = this.server.create('school');
-    const program = this.server.create('program', { school });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
-
-    this.set('program', programModel);
-    await render(hbs`<CurriculumInventoryReportList @program={{program}} />`);
-    assert.dom('thead tr').exists({ count: 1 }, 'Table header shows.');
-    assert.dom('tbody').exists({ count: 1 }, 'Table body shows.');
-    assert.dom('tbody [data-test-active-row]').doesNotExist('Table body is empty.');
-    assert.dom('tbody [data-test-empty-list]').exists();
+    await render(hbs`<CurriculumInventoryReportList @reports={{array}} />`);
+    assert.equal(component.emptyList.text, 'None');
   });
 
   test('delete and confirm', async function(assert) {
@@ -96,7 +83,7 @@ module('Integration | Component | curriculum inventory report list', function(ho
       program,
       name: 'Zeppelin',
     });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
 
     const permissionCheckerMock = Service.extend({
       canDeleteCurriculumInventoryReport() {
@@ -105,22 +92,22 @@ module('Integration | Component | curriculum inventory report list', function(ho
     });
     this.owner.register('service:permission-checker', permissionCheckerMock);
 
-    this.set('program', programModel);
+    this.set('reports', [ reportModel ]);
     this.set('removeAction', (obj) => {
       assert.equal(report.id, obj.id, 'Report is passed to remove action.');
     });
-    await render(hbs`<CurriculumInventoryReportList @program={{program}} @remove={{removeAction}} />`);
-    assert.dom('.confirm-removal').doesNotExist('Confirm dialog is initially not visible.');
-    await click('[data-test-report="0"] .remove');
-    assert.dom('.confirm-removal').exists({ count: 2 }, 'Confirm dialog shows.');
-    await click('[data-test-confirm-removal="0"] .remove');
+    await render(hbs`<CurriculumInventoryReportList @reports={{this.reports}} @remove={{this.removeAction}} />`);
+    assert.notOk(component.confirmRemoval.isVisible, 'Confirm dialog is initially not visible.');
+    await component.reports[0].remove();
+    assert.ok(component.confirmRemoval.isVisible, 'Confirm dialog shows.');
+    await component.confirmRemoval.confirm();
   });
 
   test('delete and cancel', async function(assert) {
     assert.expect(3);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    this.server.create('curriculum-inventory-report', {
+    const report = this.server.create('curriculum-inventory-report', {
       program,
       name: 'Zeppelin',
     });
@@ -130,34 +117,34 @@ module('Integration | Component | curriculum inventory report list', function(ho
       }
     });
     this.owner.register('service:permission-checker', permissionCheckerMock);
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
 
-    this.set('program', programModel);
+    this.set('reports', [ reportModel ]);
     this.set('removeAction', () => {
       assert.ok(false, 'Remove action should not have been invoked.');
     });
-    await render(hbs`<CurriculumInventoryReportList @program={{program}} @remove={{removeAction}} />`);
-    assert.dom('.confirm-removal').doesNotExist('Confirm dialog is initially not visible.');
-    await click('[data-test-report="0"] .remove');
-    assert.dom('.confirm-removal').exists({ count: 2 }, 'Confirm dialog shows.');
-    await click('[data-test-confirm-removal="0"] .done');
-    assert.dom('.confirm-removal').doesNotExist('Confirm dialog is invisible again.');
+    await render(hbs`<CurriculumInventoryReportList @reports={{this.reports}} @remove={{this.removeAction}} />`);
+    assert.notOk(component.confirmRemoval.isVisible, 'Confirm dialog is initially not visible.');
+    await component.reports[0].remove();
+    assert.ok(component.confirmRemoval.isVisible, 'Confirm dialog shows.');
+    await component.confirmRemoval.cancel();
+    assert.notOk(component.confirmRemoval.isVisible, 'Confirm dialog is invisible again.');
   });
 
   test('sorting', async function(assert) {
     assert.expect(4);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
-    this.server.create('curriculum-inventory-report', {
+    const report = this.server.create('curriculum-inventory-report', {
       program,
       name: 'Zeppelin',
     });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
 
     let count = 0;
     const sortBys = ['name', 'name:desc', 'year', 'year:desc'];
 
-    this.set('program', programModel);
+    this.set('reports', [ reportModel ]);
     this.set('sortBy', 'id');
     this.set('setSortBy', (what) => {
       assert.equal(what, sortBys[count]);
@@ -165,14 +152,14 @@ module('Integration | Component | curriculum inventory report list', function(ho
       count++;
     });
     await render(hbs`<CurriculumInventoryReportList
-      @program={{program}}
-      @setSortBy={{action setSortBy}}
-      @sortBy={{sortBy}}
+      @reports={{this.reports}}
+      @setSortBy={{this.setSortBy}}
+      @sortBy={{this.sortBy}}
     />`);
-    await click(`th:nth-of-type(1)`);
-    await click(`th:nth-of-type(1)`);
-    await click(`th:nth-of-type(3)`);
-    await click(`th:nth-of-type(3)`);
+    await component.headers.clickOnName();
+    await component.headers.clickOnName();
+    await component.headers.clickOnYear();
+    await component.headers.clickOnYear();
   });
 
   test('edit', async function(assert) {
@@ -183,17 +170,18 @@ module('Integration | Component | curriculum inventory report list', function(ho
       program,
       name: 'Zeppelin',
     });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
 
-    this.set('program', programModel);
+    this.set('reports', [ reportModel ]);
     this.set('editAction', (obj) => {
       assert.equal(report.id, obj.id, 'Report is passed to edit action.');
     });
-    await render(hbs`<CurriculumInventoryReportList @program={{program}} @edit={{editAction}} />`);
-    await click(`tbody tr:nth-of-type(1) td:nth-of-type(2)`);
-    await click(`tbody tr:nth-of-type(1) td:nth-of-type(3)`);
-    await click(`tbody tr:nth-of-type(1) td:nth-of-type(4)`);
-    await click(`tbody tr:nth-of-type(1) td:nth-of-type(5)`);
-    await click(`tbody tr:nth-of-type(1) td:nth-of-type(6)`);
+    await render(hbs`<CurriculumInventoryReportList @reports={{this.reports}} @edit={{this.editAction}} />`);
+    await component.reports[0].clickOnName();
+    await component.reports[0].clickOnProgram();
+    await component.reports[0].clickOnYear();
+    await component.reports[0].clickOnStartDate();
+    await component.reports[0].clickOnEndDate();
+    await component.reports[0].clickOnStatus();
   });
 });

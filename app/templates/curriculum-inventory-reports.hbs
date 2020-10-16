@@ -81,7 +81,7 @@
     <div class="list">
       {{#if (is-fulfilled this.reports)}}
         <CurriculumInventoryReportList
-          @program={{await this.selectedProgram}}
+          @reports={{await (get (await this.selectedProgram) "curriculumInventoryReports")}}
           @sortBy={{this.sortReportsBy}}
           @edit={{action "editCurriculumInventoryReport"}}
           @remove={{action "removeCurriculumInventoryReport"}}

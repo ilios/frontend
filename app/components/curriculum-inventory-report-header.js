@@ -1,61 +1,33 @@
-import Component from '@ember/component';
-import { alias } from '@ember/object/computed';
-import { inject as service } from '@ember/service';
-import { reject } from 'rsvp';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { NotBlank, Length, validatable } from 'ilios-common/decorators/validation';
+import { restartableTask } from "ember-concurrency-decorators";
 
-const Validations = buildValidations({
-  reportName: [
-    validator('presence', true),
-    validator('length', {
-      min: 3,
-      max: 200
-    })
-  ]
-});
+@validatable
+export default class CurriculumInventoryReportHeaderComponent extends Component {
+  @NotBlank() @Length(3, 200) @tracked name;
 
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  ajax: service(),
+  @action
+  load(element, [ report ]){
+    this.name = report?.name;
+  }
 
-  flashMessages: service(),
-
-  tagName: "",
-  canUpdate: false,
-  report: null,
-  reportName: null,
-
-  publishTarget: alias('report'),
-
-  didReceiveAttrs(){
-    this._super(...arguments);
-    this.set('reportName', this.get('report.name'));
-  },
-
-  actions: {
-    async changeName() {
-      const { report, reportName } = this.getProperties('report', 'reportName');
-      this.send('addErrorDisplayFor', 'reportName');
-      const { validations } = await this.validate();
-
-      if (validations.isValid) {
-        this.send('removeErrorDisplayFor', 'reportName');
-        report.set('name', reportName);
-        const newReport = await report.save();
-        this.set('reportName', newReport.name);
-        this.set('report', newReport);
-      } else {
-        await reject();
-      }
-    },
-
-    revertNameChanges() {
-      const report = this.report;
-      this.set('reportName', report.get('name'));
-    },
-
-    finalize() {
-      this.finalize();
+  @restartableTask
+  *saveName() {
+    this.addErrorDisplayFor('name');
+    const isValid = yield this.isValid('name');
+    if (!isValid) {
+      return false;
     }
-  },
-});
+    this.removeErrorDisplayFor('name');
+    this.args.report.set('name', this.name);
+    yield this.args.report.save();
+    this.name = this.args.report.name;
+  }
+
+  @action
+  revertNameChanges() {
+    this.name = this.args.report.name;
+  }
+}

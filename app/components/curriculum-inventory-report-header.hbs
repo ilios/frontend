@@ -1,34 +1,33 @@
-<div class="curriculum-inventory-report-header" ...attributes>
-  <div class="title">
-    {{#if canUpdate}}
+<div
+  class="curriculum-inventory-report-header"
+  {{did-insert this.load @report}}
+  {{did-update this.load @report}}
+  data-test-curriculum-inventory-report-header
+  ...attributes
+>
+  <div class="title" data-test-name>
+    {{#if @canUpdate}}
       <EditableField
-        @tagName="h2"
-        @value={{reportName}}
-        @save={{action "changeName"}}
-        @close={{action "revertNameChanges"}}
+        @value={{if this.name this.name (t "general.clickToEdit")}}
+        @save={{perform this.saveName}}
+        @close={{this.revertNameChanges}}
         @saveOnEnter={{true}}
         @closeOnEscape={{true}} as |isSaving|
       >
-        <input
+        <Input
           type="text"
-          value={{reportName}}
-          oninput={{action (mut reportName) value="target.value"}}
+          @value={{this.name}}
+          @key-press={{fn this.addErrorDisplayFor "name"}}
           disabled={{isSaving}}
-          onkeyup={{action "addErrorDisplayFor" "reportName"}}
-        >
-        {{#if
-          (and
-            (v-get this "reportName" "isInvalid")
-            (includes "reportName" showErrorsFor)
-          )
-        }}
+        />
+        {{#each (await (compute (fn this.getErrorsFor) "name")) as |message|}}
           <span class="validation-error-message">
-            {{v-get this "reportName" "message"}}
+            {{message}}
           </span>
-        {{/if}}
+        {{/each}}
       </EditableField>
     {{else}}
-      <h2>
+      <h2 data-test-locked-name>
         <FaIcon @icon="lock" />
         {{@report.name}}
       </h2>
@@ -41,10 +40,11 @@
       href={{@report.absoluteFileUri}}
       rel="noopener noreferrer"
       target="_blank"
+      data-test-download
     >
       {{t "general.download"}}
     </a>
-    <button type="button" class="finalize" disabled={{not canUpdate}} {{action "finalize"}}>
+    <button type="button" class="finalize" disabled={{not @canUpdate}} {{on "click" @finalize}} data-test-finalize>
       {{t "general.finalize"}}
     </button>
   </div>
