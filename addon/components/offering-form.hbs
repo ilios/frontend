@@ -22,165 +22,171 @@
       />
     {{/if}}
     <div class="form">
-      <div class="item start-date">
-        <label>
-          {{t "general.startDate"}}:
-        </label>
-        <DatePicker
-          @value={{this.startDate}}
-          @change={{this.updateStartDate}}
-        />
-      </div>
-      <div class="item start-time">
-        <label>
-          {{t "general.startTime"}}:
-        </label>
-        {{#unless this.isEditingTimezone}}
-          <div
-            data-test-current-timezone
-            class="editable clickable current-timezone"
-            role="button"
-            {{on "click" (set this.isEditingTimezone true)}}
-          >
-            {{this.formattedCurrentTimezone}}
+      <fieldset class="datetime-controls">
+        <legend>{{t "general.scheduling"}}</legend>
+        <div class="controls-container">
+          <div class="item start-date">
+            <label>
+              {{t "general.startDate"}}:
+            </label>
+            <DatePicker
+              @value={{this.startDate}}
+              @change={{this.updateStartDate}}
+            />
           </div>
-        {{/unless}}
-        <TimePicker @date={{this.startDate}} @action={{this.updateStartTime}} />
-      </div>
-      <div class="item timezone" data-test-timezone-picker>
-        {{#if this.isEditingTimezone}}
-          <label>
-            {{t "general.timezone"}}:
-          </label>
-          <span class="picker">
-            <select {{on "change" (fn this.changeTimezone)}}>
-              {{#each this.timezones as |timezone|}}
-                <option value={{timezone.value}} selected={{is-equal timezone.value this.currentTimezone}}>
-                  {{timezone.label}}
-                </option>
-              {{/each}}
-            </select>
-            <span class="actions">
-              <button
-                class="cancel"
-                title={{t "general.cancel"}}
-                type="button"
-                {{on "click" (set this.isEditingTimezone false)}}
-              >
-                <FaIcon @icon="times" />
-              </button>
-            </span>
-          </span>
-        {{/if}}
-      </div>
-      <div class="item offering-duration">
-        <label>
-          {{t "general.duration"}}:
-        </label>
-        <div class="duration-inputs">
-          <div class="hours">
-            <div class="hours-container">
-              <input
-                min="0"
-                type="number"
-                value={{this.durationHours}}
-                {{on "input" (perform this.updateDurationHours value="target.value")}}
-              >
-              {{#each (await (compute (fn this.getErrorsFor) "durationHours")) as |message|}}
-                <span class="validation-error-message">
-                  {{message}}
-                </span>
-              {{/each}}
-              <label>
-                {{t "general.hours"}}
-              </label>
-            </div>
+          <div class="item start-time">
+            <label>
+              {{t "general.startTime"}}:
+            </label>
+            <TimePicker @date={{this.startDate}} @action={{this.updateStartTime}} />
           </div>
-          <div class="minutes">
-            <div class="minutes-container">
-              <input
-                max="59"
-                min="0"
-                type="number"
-                value={{this.durationMinutes}}
-                {{on "input" (perform this.updateDurationMinutes value="target.value")}}
-              >
-              {{#each (await (compute (fn this.getErrorsFor) "durationMinutes")) as |message|}}
-                <span class="validation-error-message">
-                  {{message}}
-                </span>
-              {{/each}}
-              <label>
-                {{t "general.minutes"}}
-              </label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="item end-date-time">
-        <label>
-          {{t "general.end"}}:
-        </label>
-        {{#if this.endDate}}
-          <div class="text">
-            {{format-date this.endDate month="numeric" day="numeric" year="numeric" hour="numeric" minute="numeric"}}
-          </div>
-        {{/if}}
-      </div>
-      {{#if @showMakeRecurring}}
-        <div class="item make-recurring">
-          <label>
-            {{t "general.makeRecurring"}}
-          </label>
-          <ToggleYesno
-            @yes={{this.makeRecurring}}
-            @toggle={{set this.makeRecurring (not this.makeRecurring)}}
-          />
-          {{#if this.makeRecurring}}
-            <div class="make-recurring-options">
-              <div class="make-recurring-days">
-                {{#each this.recurringDayOptions as |obj i|}}
-                  <div data-test-make-recurring-day>
-                    <input id="make-recurring-day-input-{{i}}"
-                      type="checkbox"
-                      checked={{or
-                        (includes obj.day this.recurringDays)
-                        (eq (moment-format this.startDate "d") obj.day)
-                      }}
-                      disabled={{eq (moment-format this.startDate "d") obj.day}}
-                      data-test-recurring-day-input={{i}}
-                      {{on "click" (fn this.toggleRecurringDay obj.day)}}
-                    >
-                    <label
-                      class="day-of-week clickable"
-                      for="make-recurring-day-input-{{i}}"
-                      data-test-recurring-day-label={{i}}
-                    >
-                      {{t obj.t}}
-                    </label>
-                  </div>
-                {{/each}}
+          <div class="item end-date-time">
+            <label>
+              {{t "general.end"}}:
+            </label>
+            {{#if this.endDate}}
+              <div class="text">
+                {{format-date this.endDate month="numeric" day="numeric" year="numeric" hour="numeric" minute="numeric"}}
               </div>
-              <div class="make-recurring-input-container">
-                <input type="text"
-                  value={{this.numberOfWeeks}}
-                  class="make-recurring-input"
-                  {{on "input" (fn this.changeNumberOfWeeks)}}
-                  {{on "keyup" (fn this.addErrorDisplayFor "numberOfWeeks")}}
-                >
-                <label class="make-recurring-input-label">
-                  {{t "general.weeks"}}
-                </label>
-                {{#each (await (compute (fn this.getErrorsFor) "numberOfWeeks")) as |message|}}
-                  <span class="validation-error-message">
-                    {{message}}
-                  </span>
-                {{/each}}
+            {{/if}}
+          </div>
+          <div class="item timezone" data-test-timezone-picker>
+            <label>
+              {{t "general.timezone"}}:
+            </label>
+            {{#if this.isEditingTimezone}}
+              <div class="picker">
+                <select {{on "change" (fn this.changeTimezone)}}>
+                  {{#each this.timezones as |timezone|}}
+                    <option value={{timezone.value}} selected={{is-equal timezone.value this.currentTimezone}}>
+                      {{timezone.label}}
+                    </option>
+                  {{/each}}
+                </select>
+                <span class="actions">
+                  <button
+                      class="cancel"
+                      title={{t "general.cancel"}}
+                      type="button"
+                    {{on "click" (set this.isEditingTimezone false)}}
+                  >
+                    <FaIcon @icon="times" />
+                  </button>
+                </span>
+              </div>
+            {{else}}
+              <div
+                data-test-current-timezone
+                class="editable clickable current-timezone"
+                role="button"
+                {{on "click" (set this.isEditingTimezone true)}}
+              >
+                {{this.formattedCurrentTimezone}}
+              </div>
+            {{/if}}
+          </div>
+          <div class="item offering-duration">
+            <label>
+              {{t "general.duration"}}:
+            </label>
+            <div class="duration-inputs">
+              <div class="hours">
+                <div class="hours-container">
+                  <input
+                    min="0"
+                    type="number"
+                    value={{this.durationHours}}
+                    {{on "input" (perform this.updateDurationHours value="target.value")}}
+                  >
+                  {{#each (await (compute (fn this.getErrorsFor) "durationHours")) as |message|}}
+                    <span class="validation-error-message">
+                      {{message}}
+                    </span>
+                  {{/each}}
+                  <label>
+                    {{t "general.hours"}}
+                  </label>
+                </div>
+              </div>
+              <div class="minutes">
+                <div class="minutes-container">
+                  <input
+                    max="59"
+                    min="0"
+                    type="number"
+                    value={{this.durationMinutes}}
+                    {{on "input" (perform this.updateDurationMinutes value="target.value")}}
+                  >
+                  {{#each (await (compute (fn this.getErrorsFor) "durationMinutes")) as |message|}}
+                    <span class="validation-error-message">
+                      {{message}}
+                    </span>
+                  {{/each}}
+                  <label>
+                    {{t "general.minutes"}}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{#if @showMakeRecurring}}
+            <div class="item make-recurring">
+              <label>
+                {{t "general.makeRecurring"}}:
+              </label>
+              <div>
+                <ToggleYesno
+                  @yes={{this.makeRecurring}}
+                  @toggle={{set this.makeRecurring (not this.makeRecurring)}}
+                />
+                {{#if this.makeRecurring}}
+                  <div class="make-recurring-options">
+                    <div class="make-recurring-days">
+                      {{#each this.recurringDayOptions as |obj i|}}
+                        <div data-test-make-recurring-day>
+                          <input id="make-recurring-day-input-{{i}}"
+                            type="checkbox"
+                            checked={{or
+                              (includes obj.day this.recurringDays)
+                              (eq (moment-format this.startDate "d") obj.day)
+                            }}
+                            disabled={{eq (moment-format this.startDate "d") obj.day}}
+                            data-test-recurring-day-input={{i}}
+                            {{on "click" (fn this.toggleRecurringDay obj.day)}}
+                          >
+                          <label
+                            class="day-of-week clickable"
+                            for="make-recurring-day-input-{{i}}"
+                            data-test-recurring-day-label={{i}}
+                          >
+                            {{t obj.t}}
+                          </label>
+                        </div>
+                      {{/each}}
+                    </div>
+                    <div class="make-recurring-input-container">
+                      <input type="text"
+                        value={{this.numberOfWeeks}}
+                        class="make-recurring-input"
+                        {{on "input" (fn this.changeNumberOfWeeks)}}
+                        {{on "keyup" (fn this.addErrorDisplayFor "numberOfWeeks")}}
+                      >
+                      <label class="make-recurring-input-label">
+                        {{t "general.weeks"}}
+                      </label>
+                      {{#each (await (compute (fn this.getErrorsFor) "numberOfWeeks")) as |message|}}
+                        <span class="validation-error-message">
+                          {{message}}
+                        </span>
+                      {{/each}}
+                    </div>
+                  </div>
+                {{/if}}
               </div>
             </div>
           {{/if}}
         </div>
-      {{/if}}
+      </fieldset>
       {{#if @showRoom}}
         <div class="item room">
           <label>

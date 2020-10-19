@@ -12,20 +12,61 @@
     @include for-laptop-and-up {
       grid-template-columns: 2fr 1fr 1fr;
 
-      .end-date-time {
+      .datetime-controls {
+        grid-column: 1 / -1;
+        margin-bottom: 1rem;
+
+        .controls-container {
+          align-items: start;
+          display: grid;
+          grid-gap: .25rem 1rem;
+          grid-template-columns: repeat(4, 1fr);
+
+          .make-recurring {
+            grid-column-start: 2;
+            grid-column-end: 4;
+          }
+        }
+      }
+
+      .room {
+        grid-column-start: 1;
+        grid-column-end: 2;
+      }
+
+      .url {
         grid-column-start: 2;
         grid-column-end: 4;
       }
+    }
 
-      .current-timezone {
-        display: inline;
+    .end-date-time {
+      .text {
+        padding-top: .5rem;
       }
     }
 
-    .start-date {
+    .start-date, .room {
       input {
         min-width: initial;
         width: auto;
+      }
+    }
+
+    .url {
+      input {
+        min-width: initial;
+      }
+    }
+
+
+    .datetime-controls-container {
+      border: 1px solid $black;
+      grid-column: 1 / -1;
+      margin-top: 1em;
+
+      label {
+        @include ilios-heading;
       }
     }
 
@@ -39,11 +80,11 @@
       }
     }
 
-    .current-timezone {
-      font-size: small;
-    }
-
     .timezone {
+
+      .current-timezone {
+        padding-top: .5rem;
+      }
 
       .picker {
         display: flex;

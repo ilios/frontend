@@ -248,6 +248,7 @@ general:
   savedSuccessfully: "Saved Successfully"
   scheduled: Scheduled
   scheduledSuccessfully: "Scheduled Successfully"
+  scheduling: Scheduling
   school: School
   searchForIliosUsers: "Find Ilios Users..."
   searchPlaceholder: "Find Learning Material"

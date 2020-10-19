@@ -248,6 +248,7 @@ general:
   savedSuccessfully: "Ahorrado Con Éxito"
   scheduled: Programado
   scheduledSuccessfully: "Programdo con Éxito"
+  scheduling: Programación
   school: Escuela
   searchForIliosUsers: "Encuentre Usuarios de Ilios..."
   searchPlaceholder: "encontrar material de aprendizaje"
