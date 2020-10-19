@@ -85,7 +85,7 @@
     "ember-maybe-import-regenerator": "^0.1.6",
     "ember-metrics": "0.16.0",
     "ember-noscript": "^4.1.0",
-    "ember-page-title": "^6.0.1",
+    "ember-page-title": "^6.0.2",
     "ember-qunit": "^4.6.0",
     "ember-qunit-nice-errors": "^1.2.0",
     "ember-resolver": "^8.0.0",
