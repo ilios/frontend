@@ -233,23 +233,75 @@
         </div>
       </fieldset>
       {{#if @showInstructors}}
-        <div class="instructors item">
-          <label>
-            {{t "general.instructors"}}:
-            {{#unless @offering}}
-              <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
-            {{/unless}}
-          </label>
-          <InstructorSelectionManager
-            @addInstructor={{this.addInstructor}}
-            @addInstructorGroup={{this.addInstructorGroup}}
-            @removeInstructor={{this.removeInstructor}}
-            @removeInstructorGroup={{this.removeInstructorGroup}}
-            @availableInstructorGroups={{this.availableInstructorGroups}}
-            @instructorGroups={{this.instructorGroups}}
-            @instructors={{this.instructors}}
-          />
-        </div>
+        <fieldset class="instructor-management">
+          <legend>{{t "general.instructorsAndInstructorGroups"}}</legend>
+          <div class="instructor-management-controls">
+            <div class="item instructors">
+              <label>
+                {{t "general.instructors"}}:
+                {{#unless @offering}}
+                  <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
+                {{/unless}}
+              </label>
+              {{#if (get (await this.instructors) "length")}}
+                <ul class="instructors-list" data-test-instructors>
+                  {{#each (sort-by "fullName" (await this.instructors)) as |user|}}
+                    <li role="button" {{on "click" (fn this.removeInstructor user)}}>
+                      <UserNameInfo @user={{user}} />
+                      <FaIcon @icon="times" class="remove" />
+                    </li>
+                  {{/each}}
+                </ul>
+              {{else}}
+                <div>{{t "general.none"}}</div>
+              {{/if}}
+            </div>
+            <div class="item instructor-groups">
+              <label>
+                {{t "general.instructorGroups"}}:
+                {{#unless @offering}}
+                  <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
+                {{/unless}}
+              </label>
+              <div data-test-instructor-groups>
+                {{#each (sort-by "title" (await this.instructorGroups)) as |instructorGroup|}}
+                  <div class="instructor-group" data-test-instructor-group>
+                    <span
+                      role="button"
+                      data-test-instructor-group-title
+                      {{on "click" (fn this.removeInstructorGroup instructorGroup)}}
+                    >
+                      <FaIcon @icon="users" />
+                      {{instructorGroup.title}}
+                      <FaIcon @icon="times" class="remove" />
+                    </span>
+                    <br>
+                    <ul class="instructorgroup-members-list" data-test-instructor-group-members>
+                      {{#each (sort-by "fullName" (await instructorGroup.users)) as |user|}}
+                        <li>
+                          <UserNameInfo @user={{user}} />
+                        </li>
+                      {{/each}}
+                    </ul>
+                  </div>
+                {{else}}
+                  <div>{{t "general.none"}}</div>
+                {{/each}}
+              </div>
+            </div>
+            <div class="item instructor-search">
+              <label>{{t "general.search"}}:</label>
+              <UserSearch
+                  @addUser={{this.addInstructor}}
+                  @addInstructorGroup={{this.addInstructorGroup}}
+                  @currentlyActiveUsers={{this.instructors}}
+                  @placeholder={{t "general.findInstructorOrGroup"}}
+                  @availableInstructorGroups={{await this.availableInstructorGroups}}
+                  @currentlyActiveInstructorGroups={{this.instructorGroups}}
+              />
+            </div>
+          </div>
+        </fieldset>
       {{/if}}
       {{#unless @smallGroupMode}}
         <div class="learners item">

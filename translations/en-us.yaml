@@ -251,6 +251,7 @@ general:
   scheduledSuccessfully: "Scheduled Successfully"
   scheduling: Scheduling
   school: School
+  search: Search
   searchForIliosUsers: "Find Ilios Users..."
   searchPlaceholder: "Find Learning Material"
   selectCohortsToAttach: "Select the cohort of students you wish to attach to the new course"

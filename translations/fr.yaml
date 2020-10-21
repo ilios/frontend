@@ -251,6 +251,7 @@ general:
   scheduledSuccessfully: "Faire à prévu réussi"
   scheduling: Planification
   school: "Écôle"
+  search: Chercher
   searchForIliosUsers: "Trouver des utilisateurs..."
   searchPlaceholder: "Trouver matériels d'étude"
   selectCohortsToAttach: "Choisissez le cohorte d'étudiants que vous voulez attacher au cours nouveau"

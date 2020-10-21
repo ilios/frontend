@@ -12,6 +12,8 @@
     @include for-laptop-and-up {
       grid-template-columns: 2fr 1fr 1fr;
 
+      .instructor-management,
+      .instructor-management-controls,
       .scheduling {
         grid-column: 1 / -1;
       }
@@ -33,12 +35,14 @@
       }
     }
 
-    .scheduling-controls {
+    .instructor-management-controls,
+    .scheduling-controls  {
       align-items: start;
       display: grid;
       grid-gap: .25rem 1rem;
     }
 
+    .instructor-management,
     .scheduling {
       margin-bottom: 1rem;
       legend {
@@ -155,8 +159,35 @@
       margin-top: .75rem;
     }
 
-    .instructors {
-      grid-column: 1 / 1;
+    .instructor-management-controls {
+      .instructor-group {
+        & > span {
+          background-color: $header-grey;
+          border-radius: 4px;
+          cursor: pointer;
+          font-weight: bold;
+          padding: .2em .4em .2em .6em;
+          vertical-align: middle;
+
+          .fa-users {
+            margin-right: .5rem;
+          }
+          .remove {
+            margin-left: .5em;
+          }
+        }
+        margin: 1rem 0;
+      }
+
+      .instructorgroup-members-list {
+        @include ilios-tag-list;
+        margin-bottom: 1rem;
+      }
+
+      .instructors-list {
+        @include ilios-removable-list;
+        margin-bottom: 1rem;
+      }
     }
 
     .learners {
