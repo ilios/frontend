@@ -12,25 +12,34 @@
     @include for-laptop-and-up {
       grid-template-columns: 2fr 1fr 1fr;
 
+      .controls-container {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
       .datetime-controls {
         grid-column: 1 / -1;
-        margin-bottom: 1rem;
+      }
 
-        .controls-container {
-          align-items: start;
-          display: grid;
-          grid-gap: .25rem 1rem;
-          grid-template-columns: repeat(4, 1fr);
-
-          .make-recurring {
-            grid-column-start: 2;
-            grid-column-end: 4;
-          }
-        }
+      .make-recurring {
+        grid-column: 2 / 4;
       }
 
       .url {
         grid-column: 2 / 4;
+      }
+    }
+
+    .controls-container {
+      align-items: start;
+      display: grid;
+      grid-gap: .25rem 1rem;
+    }
+
+    .datetime-controls {
+      margin-bottom: 1rem;
+      legend {
+        @include ilios-heading;
+        padding: 0 .5rem;
       }
     }
 
@@ -45,12 +54,6 @@
         min-width: initial;
         width: auto;
       }
-    }
-
-    .datetime-controls-container {
-      border: 1px solid $black;
-      grid-column: 1 / -1;
-      margin-top: 1em;
     }
 
     .start-time {
