@@ -83,6 +83,7 @@ general:
   day: Jour
   defaultInstructorsNotLoaded: "(Instructeurs par défaut ne seront pas chargés: s'il vous plaît entrer la valeur souhaitée.)"
   defaultLocationNotLoaded: "(Localisation par défaut ne sera pas chargé: s'il vous plaît entrer la valeur souhaitée.)"
+  defaultNotLoaded: "Par défaut non chargé"
   deprecatedAbbreviation: "obs."
   description: Description
   detail: "Détail"

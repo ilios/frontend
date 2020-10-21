@@ -193,7 +193,7 @@
           <label>
             {{t "general.location"}}:
             {{#unless @offering}}
-              {{t "general.defaultLocationNotLoaded"}}
+              <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
             {{/unless}}
           </label>
           <input
@@ -211,6 +211,9 @@
         <div class="item url" data-test-url>
           <label>
             {{t "general.virtualLearningLink"}}:
+            {{#unless @offering}}
+              <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
+            {{/unless}}
           </label>
           {{! template-lint-disable no-bare-strings}}
           <input
@@ -234,7 +237,7 @@
           <label>
             {{t "general.instructors"}}:
             {{#unless @offering}}
-              {{t "general.defaultInstructorsNotLoaded"}}
+              <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
             {{/unless}}
           </label>
           <InstructorSelectionManager

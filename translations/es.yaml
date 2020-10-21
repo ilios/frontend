@@ -83,6 +83,7 @@ general:
   day: "Día"
   defaultInstructorsNotLoaded: "(Instructores predeterminados no se cargarán: por favor introduzca el valor deseado.)"
   defaultLocationNotLoaded: "(Ubicación predterminada no se cargará: por favor introduzca el valor deseado.)"
+  defaultNotLoaded: "Predeterminado no cargado"
   deprecatedAbbreviation: "obs."
   description: "Descripción"
   detail: Detalle

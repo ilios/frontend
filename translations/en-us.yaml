@@ -83,6 +83,7 @@ general:
   day: Day
   defaultInstructorsNotLoaded: "(Default Instructors will not be loaded: please enter desired value.)"
   defaultLocationNotLoaded: "(Default Location will not be loaded: please enter desired value.)"
+  defaultNotLoaded: "Default Not Loaded"
   deprecatedAbbreviation: "depr."
   description: Description
   detail: Detail
