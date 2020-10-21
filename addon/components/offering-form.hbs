@@ -238,7 +238,7 @@
           <div class="instructor-management-controls">
             <div class="item instructors">
               <label>
-                {{t "general.instructors"}}:
+                {{t "general.selectedInstructors"}}:
                 {{#unless @offering}}
                   <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
                 {{/unless}}
@@ -258,7 +258,7 @@
             </div>
             <div class="item instructor-groups">
               <label>
-                {{t "general.instructorGroups"}}:
+                {{t "general.selectedInstructorGroups"}}:
                 {{#unless @offering}}
                   <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
                 {{/unless}}
@@ -303,18 +303,6 @@
           </div>
         </fieldset>
       {{/if}}
-      {{#unless @smallGroupMode}}
-        <div class="learners item">
-          <label>
-            {{t "general.learners"}}:
-          </label>
-            <LearnerSelectionManager
-              @learners={{this.learners}}
-              @add={{this.addLearner}}
-              @remove={{this.removeLearner}}
-            />
-        </div>
-      {{/unless}}
       <div class="learner-groups item">
         <label>
           {{t "general.learnerGroups"}}:
@@ -337,6 +325,18 @@
           </p>
         {{/each}}
       </div>
+      {{#unless @smallGroupMode}}
+        <div class="learners item">
+          <label>
+            {{t "general.learners"}}:
+          </label>
+          <LearnerSelectionManager
+              @learners={{this.learners}}
+              @add={{this.addLearner}}
+              @remove={{this.removeLearner}}
+          />
+        </div>
+      {{/unless}}
       <div class="buttons" {{did-insert (set this.scrollTo)}}>
         <SaveButton
           class="done text"
