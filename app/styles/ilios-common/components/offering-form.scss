@@ -21,11 +21,15 @@
       }
 
       .make-recurring {
-        grid-column: 2 / 4;
+        grid-column: 2 / -1;
+      }
+
+      .room {
+        grid-column: 1 / 1;
       }
 
       .url {
-        grid-column: 2 / 4;
+        grid-column: 2 / -1;
       }
     }
 

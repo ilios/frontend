@@ -186,52 +186,52 @@
               </div>
             </div>
           {{/if}}
+          {{#if @showRoom}}
+            <div class="item room">
+              <label>
+                {{t "general.location"}}:
+                {{#unless @offering}}
+                  <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
+                {{/unless}}
+              </label>
+              <input
+                type="text"
+                value={{this.room}}
+                {{on "input" (fn this.changeRoom)}}
+                {{on "keyup" (fn this.addErrorDisplayFor "room")}}
+              >
+              {{#each (await (compute (fn this.getErrorsFor) "room")) as |message|}}
+                <span class="validation-error-message">
+                  {{message}}
+                </span>
+              {{/each}}
+            </div>
+            <div class="item url" data-test-url>
+              <label>
+                {{t "general.virtualLearningLink"}}:
+                {{#unless @offering}}
+                  <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
+                {{/unless}}
+              </label>
+              {{! template-lint-disable no-bare-strings}}
+              <input
+                  type="text"
+                  placeholder="https://example.com"
+                  value={{this.bestUrl}}
+                  inputmode="url"
+                {{on "input" (pick "target.value" this.changeURL)}}
+                {{on "keyup" (fn this.addErrorDisplayFor "url")}}
+                {{on "focus" (fn this.selectAllText)}}
+              >
+              {{#each (await (compute (fn this.getErrorsFor) "url")) as |message|}}
+                <span class="validation-error-message">
+                  {{message}}
+                </span>
+              {{/each}}
+            </div>
+          {{/if}}
         </div>
       </fieldset>
-      {{#if @showRoom}}
-        <div class="item room">
-          <label>
-            {{t "general.location"}}:
-            {{#unless @offering}}
-              <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
-            {{/unless}}
-          </label>
-          <input
-              type="text"
-              value={{this.room}}
-            {{on "input" (fn this.changeRoom)}}
-            {{on "keyup" (fn this.addErrorDisplayFor "room")}}
-          >
-          {{#each (await (compute (fn this.getErrorsFor) "room")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
-        </div>
-        <div class="item url" data-test-url>
-          <label>
-            {{t "general.virtualLearningLink"}}:
-            {{#unless @offering}}
-              <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
-            {{/unless}}
-          </label>
-          {{! template-lint-disable no-bare-strings}}
-          <input
-              type="text"
-              placeholder="https://example.com"
-              value={{this.bestUrl}}
-              inputmode="url"
-            {{on "input" (pick "target.value" this.changeURL)}}
-            {{on "keyup" (fn this.addErrorDisplayFor "url")}}
-            {{on "focus" (fn this.selectAllText)}}
-          >
-          {{#each (await (compute (fn this.getErrorsFor) "url")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
-        </div>
-      {{/if}}
       {{#if @showInstructors}}
         <div class="instructors item">
           <label>
