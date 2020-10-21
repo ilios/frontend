@@ -51,16 +51,9 @@
       border: 1px solid $black;
       grid-column: 1 / -1;
       margin-top: 1em;
-
-      label {
-        @include ilios-heading;
-      }
     }
 
     .start-time {
-      label {
-        padding-right: .5rem;
-      }
       select {
         min-width: initial;
         width: 5rem;
@@ -122,11 +115,6 @@
           border: 1px $ilios-red solid;
         }
       }
-
-      label {
-        margin-top: 0;
-        width: auto;
-      }
     }
 
     .make-recurring-days {
@@ -135,11 +123,6 @@
       div {
         align-items: center;
         display: flex;
-
-        label {
-          margin-top: 0;
-          width: auto;
-        }
       }
     }
 
