@@ -40,6 +40,50 @@
             </label>
             <TimePicker @date={{this.startDate}} @action={{this.updateStartTime}} />
           </div>
+          <div class="item offering-duration">
+            <label>
+              {{t "general.duration"}}:
+            </label>
+            <div class="duration-inputs">
+              <div class="hours">
+                <div class="hours-container">
+                  <input
+                      min="0"
+                      type="number"
+                      value={{this.durationHours}}
+                    {{on "input" (perform this.updateDurationHours value="target.value")}}
+                  >
+                  {{#each (await (compute (fn this.getErrorsFor) "durationHours")) as |message|}}
+                    <span class="validation-error-message">
+                      {{message}}
+                    </span>
+                  {{/each}}
+                  <label>
+                    {{t "general.hours"}}
+                  </label>
+                </div>
+              </div>
+              <div class="minutes">
+                <div class="minutes-container">
+                  <input
+                      max="59"
+                      min="0"
+                      type="number"
+                      value={{this.durationMinutes}}
+                    {{on "input" (perform this.updateDurationMinutes value="target.value")}}
+                  >
+                  {{#each (await (compute (fn this.getErrorsFor) "durationMinutes")) as |message|}}
+                    <span class="validation-error-message">
+                      {{message}}
+                    </span>
+                  {{/each}}
+                  <label>
+                    {{t "general.minutes"}}
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="item end-date-time">
             <label>
               {{t "general.end"}}:
@@ -85,50 +129,7 @@
               </div>
             {{/if}}
           </div>
-          <div class="item offering-duration">
-            <label>
-              {{t "general.duration"}}:
-            </label>
-            <div class="duration-inputs">
-              <div class="hours">
-                <div class="hours-container">
-                  <input
-                    min="0"
-                    type="number"
-                    value={{this.durationHours}}
-                    {{on "input" (perform this.updateDurationHours value="target.value")}}
-                  >
-                  {{#each (await (compute (fn this.getErrorsFor) "durationHours")) as |message|}}
-                    <span class="validation-error-message">
-                      {{message}}
-                    </span>
-                  {{/each}}
-                  <label>
-                    {{t "general.hours"}}
-                  </label>
-                </div>
-              </div>
-              <div class="minutes">
-                <div class="minutes-container">
-                  <input
-                    max="59"
-                    min="0"
-                    type="number"
-                    value={{this.durationMinutes}}
-                    {{on "input" (perform this.updateDurationMinutes value="target.value")}}
-                  >
-                  {{#each (await (compute (fn this.getErrorsFor) "durationMinutes")) as |message|}}
-                    <span class="validation-error-message">
-                      {{message}}
-                    </span>
-                  {{/each}}
-                  <label>
-                    {{t "general.minutes"}}
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
+
           {{#if @showMakeRecurring}}
             <div class="item make-recurring">
               <label>
@@ -196,8 +197,8 @@
             {{/unless}}
           </label>
           <input
-            type="text"
-            value={{this.room}}
+              type="text"
+              value={{this.room}}
             {{on "input" (fn this.changeRoom)}}
             {{on "keyup" (fn this.addErrorDisplayFor "room")}}
           >
@@ -213,10 +214,10 @@
           </label>
           {{! template-lint-disable no-bare-strings}}
           <input
-            type="text"
-            placeholder="https://example.com"
-            value={{this.bestUrl}}
-            inputmode="url"
+              type="text"
+              placeholder="https://example.com"
+              value={{this.bestUrl}}
+              inputmode="url"
             {{on "input" (pick "target.value" this.changeURL)}}
             {{on "keyup" (fn this.addErrorDisplayFor "url")}}
             {{on "focus" (fn this.selectAllText)}}

@@ -29,14 +29,8 @@
         }
       }
 
-      .room {
-        grid-column-start: 1;
-        grid-column-end: 2;
-      }
-
       .url {
-        grid-column-start: 2;
-        grid-column-end: 4;
+        grid-column: 2 / 4;
       }
     }
 
@@ -52,13 +46,6 @@
         width: auto;
       }
     }
-
-    .url {
-      input {
-        min-width: initial;
-      }
-    }
-
 
     .datetime-controls-container {
       border: 1px solid $black;
