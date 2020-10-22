@@ -39,7 +39,7 @@
         @close={{fn @setSchoolNewSessionType false}}
       />
     {{/if}}
-    {{#if @managedSessionTypeId}}
+    {{#if this.managedSessionType}}
       <SchoolSessionTypeManager
         @sessionType={{this.managedSessionType}}
         @close={{fn @setSchoolManagedSessionType null}}
