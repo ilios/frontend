@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 
@@ -14,17 +14,14 @@ module('Integration | Component | school session attributes expanded', function(
     this.set('showSessionSupplemental', true);
     this.set('showSessionSpecialAttireRequired', false);
     this.set('showSessionSpecialEquipmentRequired', false);
-    this.set('nothing', parseInt);
     await render(hbs`<SchoolSessionAttributesExpanded
-      @showSessionAttendanceRequired={{showSessionAttendanceRequired}}
-      @showSessionSupplemental={{showSessionSupplemental}}
-      @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
-      @showSessionSpecialEquipmentRequired={{showSessionSpecialEquipmentRequired}}
-      @collapse={{action nothing}}
-      @manage={{action nothing}}
+      @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+      @showSessionSupplemental={{this.showSessionSupplemental}}
+      @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+      @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
+      @collapse={{noop}}
+      @manage={{noop}}
     />`);
-
-    await settled();
 
     const rows = 'table tbody tr';
     const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;

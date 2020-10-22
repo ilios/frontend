@@ -1,74 +1,75 @@
-import Component from '@ember/component';
-import EmberObject from '@ember/object';
-import { isEmpty } from '@ember/utils';
-import { task } from 'ember-concurrency';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { dropTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  tagName: "",
-  canUpdate: false,
-  bufferedShowSessionAttendanceRequired: false,
-  bufferedShowSessionSpecialAttireRequired: false,
-  bufferedShowSessionSpecialEquipmentRequired: false,
-  bufferedShowSessionSupplemental: false,
-  isManaging: false,
-  showSessionAttendanceRequired: false,
-  showSessionSpecialAttireRequired: false,
-  showSessionSpecialEquipmentRequired: false,
-  showSessionSupplemental: false,
+export default class SchoolSessionAttributesExpandedComponent extends Component {
+  @tracked flippedShowSessionAttendanceRequired = false;
+  @tracked flippedShowSessionSpecialAttireRequired = false;
+  @tracked flippedShowSessionSpecialEquipmentRequired = false;
+  @tracked flippedShowSessionSupplemental = false;
 
-  didReceiveAttrs() {
-    this._super(...arguments);
-    const isManaging = this.isManaging;
-    if (isManaging) {
-      const showSessionAttendanceRequired = this.showSessionAttendanceRequired;
-      const showSessionSupplemental = this.showSessionSupplemental;
-      const showSessionSpecialAttireRequired = this.showSessionSpecialAttireRequired;
-      const showSessionSpecialEquipmentRequired = this.showSessionSpecialEquipmentRequired;
-      this.set('bufferedShowSessionAttendanceRequired', showSessionAttendanceRequired);
-      this.set('bufferedShowSessionSupplemental', showSessionSupplemental);
-      this.set('bufferedShowSessionSpecialAttireRequired', showSessionSpecialAttireRequired);
-      this.set('bufferedShowSessionSpecialEquipmentRequired', showSessionSpecialEquipmentRequired);
+  get showSessionAttendanceRequired() {
+    if (this.flippedShowSessionAttendanceRequired) {
+      return !this.args.showSessionAttendanceRequired;
     }
-  },
+    return this.args.showSessionAttendanceRequired;
+  }
 
-  actions: {
-    cancel() {
-      this.manage(false);
-      this.set('bufferedShowSessionAttendanceRequired', false);
-      this.set('bufferedShowSessionSupplemental', false);
-      this.set('bufferedShowSessionSpecialAttireRequired', false);
-      this.set('bufferedShowSessionSpecialEquipmentRequired', false);
-    },
-
-    enableSessionAttributeConfig(name) {
-      const bufferName = 'buffered' + name.capitalize();
-      this.set(bufferName, true);
-    },
-
-    disableSessionAttributeConfig(name) {
-      const bufferName = 'buffered' + name.capitalize();
-      this.set(bufferName, false);
+  get showSessionSpecialAttireRequired() {
+    if (this.flippedShowSessionSpecialAttireRequired) {
+      return !this.args.showSessionSpecialAttireRequired;
     }
-  },
+    return this.args.showSessionSpecialAttireRequired;
+  }
 
-  save: task(function* () {
-    const bufferedShowSessionAttendanceRequired = this.bufferedShowSessionAttendanceRequired;
-    const bufferedShowSessionSupplemental = this.bufferedShowSessionSupplemental;
-    const bufferedShowSessionSpecialAttireRequired = this.bufferedShowSessionSpecialAttireRequired;
-    const bufferedShowSessionSpecialEquipmentRequired = this.bufferedShowSessionSpecialEquipmentRequired;
+  get showSessionSpecialEquipmentRequired() {
+    if (this.flippedShowSessionSpecialEquipmentRequired) {
+      return !this.args.showSessionSpecialEquipmentRequired;
+    }
+    return this.args.showSessionSpecialEquipmentRequired;
+  }
 
-    const showSessionAttendanceRequired = isEmpty(bufferedShowSessionAttendanceRequired)?false:bufferedShowSessionAttendanceRequired;
-    const showSessionSupplemental = isEmpty(bufferedShowSessionSupplemental)?false:bufferedShowSessionSupplemental;
-    const showSessionSpecialAttireRequired = isEmpty(bufferedShowSessionSpecialAttireRequired)?false:bufferedShowSessionSpecialAttireRequired;
-    const showSessionSpecialEquipmentRequired = isEmpty(bufferedShowSessionSpecialEquipmentRequired)?false:bufferedShowSessionSpecialEquipmentRequired;
+  get showSessionSupplemental() {
+    if (this.flippedShowSessionSupplemental) {
+      return !this.args.showSessionSupplemental;
+    }
+    return this.args.showSessionSupplemental;
+  }
 
-    const values = EmberObject.create({
-      showSessionAttendanceRequired,
-      showSessionSupplemental,
-      showSessionSpecialAttireRequired,
-      showSessionSpecialEquipmentRequired
+  resetFlipped() {
+    this.flippedShowSessionAttendanceRequired = false;
+    this.flippedShowSessionSupplemental = false;
+    this.flippedShowSessionSpecialAttireRequired = false;
+    this.flippedShowSessionSpecialEquipmentRequired = false;
+  }
+
+  @action
+  cancel() {
+    this.args.manage(false);
+    this.resetFlipped();
+  }
+
+  @action
+  enableSessionAttributeConfig(name) {
+    const bufferName = 'flipped' + name.capitalize();
+    this[bufferName] = !this.args[name];
+  }
+
+  @action
+  disableSessionAttributeConfig(name) {
+    const bufferName = 'flipped' + name.capitalize();
+    this[bufferName] = this.args[name];
+  }
+
+  @dropTask
+  *save() {
+    yield this.args.saveAll({
+      showSessionAttendanceRequired: this.showSessionAttendanceRequired,
+      showSessionSupplemental: this.showSessionSupplemental,
+      showSessionSpecialAttireRequired: this.showSessionSpecialAttireRequired,
+      showSessionSpecialEquipmentRequired: this.showSessionSpecialEquipmentRequired
     });
-
-    yield this.saveAll(values);
-  })
-});
+    this.resetFlipped();
+  }
+}
