@@ -76,6 +76,7 @@
     "ember-truth-helpers": "^3.0.0",
     "flatpickr": "^4.6.3",
     "froala-editor": "^3.0.6",
+    "luxon": "^1.25.0",
     "normalize.css": "^8.0.1",
     "query-string": "^6.8.3",
     "scroll-into-view": "^1.9.3",
