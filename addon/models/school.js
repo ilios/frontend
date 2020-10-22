@@ -70,9 +70,11 @@ export default Model.extend({
 
   async getConfigValue(name){
     const config = await this.getConfigByName(name);
-    const value = isEmpty(config)?null:config.get('value');
+    if (!config) {
+      return null;
+    }
 
-    return JSON.parse(value);
+    return config.parsedValue;
   },
 
   async setConfigValue(name, value){

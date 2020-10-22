@@ -39,4 +39,22 @@ module('Unit | Model | School', function(hooks) {
     const testTrue = await school.getConfigValue('test-true');
     assert.deepEqual(testTrue, true);
   });
+
+  test('getConfigValue empty', async function(assert) {
+    const school = this.owner.lookup('service:store').createRecord('school');
+    const testNull = await school.getConfigValue('test-false');
+    assert.deepEqual(testNull, null);
+  });
+
+  test('getConfigValue null', async function(assert) {
+    const store = this.owner.lookup('service:store');
+    const school = store.createRecord('school');
+    store.createRecord('school-config', {
+      name: 'test-null',
+      value: 'null',
+      school,
+    });
+    const testNull = await school.getConfigValue('test-null');
+    assert.deepEqual(testNull, null);
+  });
 });
