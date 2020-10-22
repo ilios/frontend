@@ -14,6 +14,14 @@ export function IsURL(validationOptions) {
           if (!value) {
             return true;
           }
+          // un-encoded backslashes are not allowed in urls.
+          // however, our validation library allows them.
+          // @link https://github.com/validatorjs/validator.js/issues/331
+          // so we need to check manually here until this gets corrected.
+          // [ST 2020/10/21]
+          if (-1 !== value.indexOf('\\')) {
+            return false;
+          }
           return URLValidator(value, {
             // eslint-disable-next-line camelcase
             require_protocol: true,

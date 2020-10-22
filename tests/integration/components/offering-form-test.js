@@ -47,6 +47,13 @@ module('Integration | Component | offering form', function(hooks) {
     assert.ok(component.url.hasError);
   });
 
+  test('url validation errors when URL contains backslash', async function(assert) {
+    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    await component.url.set('https://totallyfineurl.edu/hahajustjokingthisisinvalid\\');
+    await component.save();
+    assert.ok(component.url.hasError);
+  });
+
   test('recurring options does not show by default', async function(assert) {
     await render(hbs`<OfferingForm @close={{noop}} />`);
     assert.notOk(component.recurring.isPresent);
