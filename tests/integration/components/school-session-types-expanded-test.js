@@ -31,16 +31,16 @@ module('Integration | Component | school session types expanded', function(hooks
 
   test('it renders', async function(assert) {
     this.set('school', this.school);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolSessionTypesExpanded
       @school={{school}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @collapse={{action nothing}}
-      @expand={{action nothing}}
+      @collapse={{noop}}
+      @expand={{noop}}
       @managedSessionTypeId={{null}}
-      @setSchoolManagedSessionType={{action nothing}}
+      @setSchoolManagedSessionType={{noop}}
+      @setSchoolNewSessionType={{noop}}
     />`);
 
     const title = '.title';
@@ -54,16 +54,16 @@ module('Integration | Component | school session types expanded', function(hooks
   test('it renders as manager', async function(assert) {
     this.set('school', this.school);
     this.set('sessionType', this.sessionType);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolSessionTypesExpanded
       @school={{school}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @collapse={{action nothing}}
-      @expand={{action nothing}}
-      @managedSessionTypeId={{sessionType.id}}
-      @setSchoolManagedSessionType={{action nothing}}
+      @collapse={{noop}}
+      @expand={{noop}}
+      @managedSessionTypeId={{this.sessionType.id}}
+      @setSchoolManagedSessionType={{noop}}
+      @setSchoolNewSessionType={{noop}}
     />`);
 
     const title = '.title';
@@ -79,7 +79,6 @@ module('Integration | Component | school session types expanded', function(hooks
   test('editing session type fires action', async function(assert) {
     assert.expect(1);
     this.set('school', this.school);
-    this.set('nothing', () => {});
     this.set('click', id => {
       assert.equal(id, 1);
     });
@@ -88,10 +87,11 @@ module('Integration | Component | school session types expanded', function(hooks
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @collapse={{action nothing}}
-      @expand={{action nothing}}
+      @collapse={{noop}}
+      @expand={{noop}}
       @managedSessionTypeId={{null}}
-      @setSchoolManagedSessionType={{action click}}
+      @setSchoolManagedSessionType={{this.click}}
+      @setSchoolNewSessionType={{noop}}
     />`);
 
     const table = 'table';
@@ -104,7 +104,6 @@ module('Integration | Component | school session types expanded', function(hooks
   test('clicking expand new session fires action', async function(assert) {
     assert.expect(1);
     this.set('school', this.school);
-    this.set('nothing', () => {});
     this.set('click', isExpanded => {
       assert.equal(isExpanded, true);
     });
@@ -113,11 +112,11 @@ module('Integration | Component | school session types expanded', function(hooks
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @collapse={{action nothing}}
-      @expand={{action nothing}}
+      @collapse={{noop}}
+      @expand={{noop}}
       @managedSessionTypeId={{null}}
-      @setSchoolManagedSessionType={{action nothing}}
-      @setSchoolNewSessionType={{action click}}
+      @setSchoolManagedSessionType={{noop}}
+      @setSchoolNewSessionType={{this.click}}
     />`);
     const edit = `.expand-collapse-button button`;
 
@@ -128,7 +127,6 @@ module('Integration | Component | school session types expanded', function(hooks
     assert.expect(1);
     this.set('school', this.school);
     this.set('sessionType', this.sessionType);
-    this.set('nothing', () => {});
     this.set('click', id => {
       assert.equal(id, null);
     });
@@ -137,10 +135,11 @@ module('Integration | Component | school session types expanded', function(hooks
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @collapse={{action nothing}}
-      @expand={{action nothing}}
+      @collapse={{noop}}
+      @expand={{noop}}
       @managedSessionTypeId={{sessionType.id}}
-      @setSchoolManagedSessionType={{action click}}
+      @setSchoolManagedSessionType={{this.click}}
+      @setSchoolNewSessionType={{noop}}
     />`);
     const form = '.form';
     const button = `${form} .cancel`;
@@ -150,7 +149,6 @@ module('Integration | Component | school session types expanded', function(hooks
   test('collapse fires action', async function(assert) {
     assert.expect(1);
     this.set('school', this.school);
-    this.set('nothing', () => {});
     this.set('click', () => {
       assert.ok(true, 'action was fired');
     });
@@ -159,10 +157,11 @@ module('Integration | Component | school session types expanded', function(hooks
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @collapse={{action click}}
-      @expand={{action nothing}}
+      @collapse={{this.click}}
+      @expand={{noop}}
       @managedSessionTypeId={{null}}
-      @setSchoolManagedSessionType={{action nothing}}
+      @setSchoolManagedSessionType={{noop}}
+      @setSchoolNewSessionType={{noop}}
     />`);
     const title = '.title';
     await click(title);

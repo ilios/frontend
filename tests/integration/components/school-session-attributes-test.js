@@ -1,38 +1,32 @@
-import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
   render,
-  settled,
   click
 } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
+import { setupMirage } from 'ember-cli-mirage/test-support';
 
 module('Integration | Component | school session attributes', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders collapsed', async function(assert) {
     assert.expect(13);
-    const school = EmberObject.create({
-      async getConfigValue(name){
-        if (name === 'showSessionSupplemental') {
-          return true;
-        }
-
-        return false;
-      },
+    const school = this.server.create('school');
+    this.server.create('school-config', {
+      name: 'showSessionSupplemental',
+      value: true,
+      school,
     });
-
-    this.set('school', school);
-    this.set('nothing', parseInt);
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    this.set('school', schoolModel);
     await render(hbs`<SchoolSessionAttributes
-      @school={{school}}
-      @manage={{action nothing}}
-      @collapse={{action nothing}}
-      @expand={{action nothing}}
+      @school={{this.school}}
+      @manage={{noop}}
+      @collapse={{noop}}
+      @expand={{noop}}
     />`);
-    await settled();
 
     const rows = 'table tbody tr';
     const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
@@ -66,26 +60,21 @@ module('Integration | Component | school session attributes', function(hooks) {
 
   test('it renders expanded', async function(assert) {
     assert.expect(13);
-    const school = EmberObject.create({
-      async getConfigValue(name){
-        if (name === 'showSessionSupplemental') {
-          return true;
-        }
-
-        return false;
-      },
+    const school = this.server.create('school');
+    this.server.create('school-config', {
+      name: 'showSessionSupplemental',
+      value: true,
+      school,
     });
-
-    this.set('school', school);
-    this.set('nothing', parseInt);
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    this.set('school', schoolModel);
     await render(hbs`<SchoolSessionAttributes
-      @school={{school}}
+      @school={{this.school}}
       @details={{true}}
-      @manage={{action nothing}}
-      @collapse={{action nothing}}
-      @expand={{action nothing}}
+      @manage={{noop}}
+      @collapse={{noop}}
+      @expand={{noop}}
     />`);
-    await settled();
 
     const rows = 'table tbody tr';
     const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
@@ -118,24 +107,18 @@ module('Integration | Component | school session attributes', function(hooks) {
 
   test('clicking expand fires action', async function(assert) {
     assert.expect(1);
-    const school = EmberObject.create({
-      async getConfigValue(){
-        return false;
-      },
-    });
-
-    this.set('school', school);
-    this.set('nothing', parseInt);
+    const school = this.server.create('school');
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    this.set('school', schoolModel);
     this.set('click', () => {
       assert.ok(true, 'action fired');
     });
     await render(hbs`<SchoolSessionAttributes
-      @school={{school}}
-      @manage={{action nothing}}
-      @collapse={{action nothing}}
+      @school={{this.school}}
+      @manage={{noop}}
+      @collapse={{noop}}
       @expand={{action click}}
     />`);
-    await settled();
 
     const title = '.title';
     await click(title);
@@ -143,25 +126,19 @@ module('Integration | Component | school session attributes', function(hooks) {
 
   test('clicking collapse fires action', async function(assert) {
     assert.expect(1);
-    const school = EmberObject.create({
-      async getConfigValue(){
-        return false;
-      },
-    });
-
-    this.set('school', school);
-    this.set('nothing', parseInt);
+    const school = this.server.create('school');
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    this.set('school', schoolModel);
     this.set('click', () => {
       assert.ok(true, 'action fired');
     });
     await render(hbs`<SchoolSessionAttributes
-      @school={{school}}
+      @school={{this.school}}
       @details={{true}}
-      @manage={{action nothing}}
+      @manage={{noop}}
       @collapse={{action click}}
-      @expand={{action nothing}}
+      @expand={{noop}}
     />`);
-    await settled();
 
     const title = '.title';
     await click(title);

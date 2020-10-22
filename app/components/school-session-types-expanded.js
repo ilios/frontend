@@ -1,72 +1,42 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { notEmpty } from '@ember/object/computed';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { task } from 'ember-concurrency';
+import { restartableTask, dropTask } from 'ember-concurrency-decorators';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  store: service(),
-  tagName: "",
-  canCreate: false,
-  canDelete: false,
-  canUpdate: false,
-  managedSessionTypeId: null,
-  school: null,
-  isManaging: notEmpty('managedSessionTypeId'),
+export default class SchoolSessionTypesExpandedComponent extends Component {
+  @service store;
+  @tracked isCollapsible;
+  @tracked sessionTypes;
 
-  isCollapsible: computed('isManaging', 'school.session-types.length', async function() {
-    const school = this.school;
-    const isManaging = this.isManaging;
-    const sessionTypes = await school.get('sessionTypes');
-    return sessionTypes.get('length') && ! isManaging;
-  }),
+  get isManaging() {
+    return !!this.args.managedSessionTypeId;
+  }
 
-  sessionTypes: computed('school.sessionTypes.[]', async function() {
-    const school = this.school;
-    return await school.get('sessionTypes');
-  }),
+  @restartableTask
+  *load(element, [school]) {
+    this.sessionTypes = yield school.sessionTypes;
+    this.isCollapsible = !this.isManaging && this.sessionTypes.length;
+  }
 
-  managedSessionType: computed('managedSessionTypeId', async function() {
-    const managedSessionTypeId = this.managedSessionTypeId;
-    const sessionTypes = await this.sessionTypes;
-    const sessionType = sessionTypes.findBy('id', managedSessionTypeId);
-    return sessionType;
-  }),
+  get managedSessionType() {
+    return this.sessionTypes?.findBy('id', this.args.managedSessionTypeId);
+  }
 
-  actions: {
-    async collapse() {
-      const isCollapsible = this.isCollapsible;
-      const collapse = this.collapse;
-      const setSchoolManagedSessionType = this.setSchoolManagedSessionType;
-      if (isCollapsible) {
-        collapse();
-        setSchoolManagedSessionType(null);
-      }
-    },
-
-    cancel() {
-      const setSchoolManagedSessionType = this.setSchoolManagedSessionType;
-      setSchoolManagedSessionType(null);
-    },
-
-    toggleSchoolNewSessionType() {
-      const schoolNewSessionType = this.schoolNewSessionType;
-      const setSchoolNewSessionType = this.setSchoolNewSessionType;
-      setSchoolNewSessionType(!schoolNewSessionType);
+  @action
+  collapse() {
+    if (this.isCollapsible) {
+      this.args.collapse();
+      this.args.setSchoolManagedSessionType(null);
     }
-  },
+  }
 
-  save: task(function* (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) {
-    const store = this.store;
-    const sessionType = store.createRecord('sessionType');
-    const closeComponent = this.setSchoolNewSessionType;
-    const school = this.school;
-    const aamcMethods = [];
-    if (aamcMethod) {
-      aamcMethods.pushObject(aamcMethod);
-    }
+  @dropTask
+  *save(title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) {
+    const sessionType = this.store.createRecord('sessionType');
+    const aamcMethods = aamcMethod ? [aamcMethod] : [];
     sessionType.setProperties({
-      school,
+      school: this.args.school,
       title,
       calendarColor,
       assessment,
@@ -76,6 +46,6 @@ export default Component.extend({
     });
 
     yield sessionType.save();
-    closeComponent(false);
-  })
-});
+    this.args.setSchoolNewSessionType(false);
+  }
+}

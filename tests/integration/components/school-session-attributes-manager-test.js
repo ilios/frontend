@@ -20,8 +20,8 @@ module('Integration | Component | school session attributes manager', function(h
       @showSessionSupplemental={{showSessionSupplemental}}
       @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
       @showSessionSpecialEquipmentRequired={{showSessionSpecialEquipmentRequired}}
-      @enable={{action nothing}}
-      @disable={{action nothing}}
+      @enable={{noop}}
+      @disable={{noop}}
     />`);
 
     const rows = 'table tbody tr';
@@ -58,14 +58,13 @@ module('Integration | Component | school session attributes manager', function(h
       assert.equal(sentName, name);
       context.set(sentName, true);
     });
-    context.set('nothing', parseInt);
     await context.render(hbs`<SchoolSessionAttributesManager
       @showSessionAttendanceRequired={{showSessionAttendanceRequired}}
       @showSessionSupplemental={{showSessionSupplemental}}
       @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
       @showSessionSpecialEquipmentRequired={{showSessionSpecialEquipmentRequired}}
-      @enable={{action enable}}
-      @disable={{action nothing}}
+      @enable={{this.enable}}
+      @disable={{noop}}
     />`);
 
     const rows = 'table tbody tr';
@@ -102,14 +101,13 @@ module('Integration | Component | school session attributes manager', function(h
       assert.equal(sentName, name);
       context.set(sentName, false);
     });
-    context.set('nothing', parseInt);
     await context.render(hbs`<SchoolSessionAttributesManager
       @showSessionAttendanceRequired={{showSessionAttendanceRequired}}
       @showSessionSupplemental={{showSessionSupplemental}}
       @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
       @showSessionSpecialEquipmentRequired={{showSessionSpecialEquipmentRequired}}
-      @enable={{action nothing}}
-      @disable={{action disable}}
+      @enable={{noop}}
+      @disable={{this.disable}}
     />`);
 
     const rows = 'table tbody tr';
