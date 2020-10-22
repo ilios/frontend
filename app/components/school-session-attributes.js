@@ -1,35 +1,37 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { all, hash } from 'rsvp';
+import { all } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 
 
 export default class SchoolSessionAttributesComponent extends Component {
   @service store;
-
-  @tracked showSessionAttendanceRequired;
-  @tracked showSessionSupplemental;
-  @tracked showSessionSpecialAttireRequired;
-  @tracked showSessionSpecialEquipmentRequired;
+  @tracked showSessionAttendanceRequiredConfig;
+  @tracked showSessionSupplementalConfig;
+  @tracked showSessionSpecialAttireRequiredConfig;
+  @tracked showSessionSpecialEquipmentRequiredConfig;
 
   @restartableTask
-  *load() {
-    const {
-      showSessionAttendanceRequired,
-      showSessionSupplemental,
-      showSessionSpecialAttireRequired,
-      showSessionSpecialEquipmentRequired,
-    } = yield hash({
-      showSessionAttendanceRequired: this.args.school.getConfigValue('showSessionAttendanceRequired'),
-      showSessionSupplemental: this.args.school.getConfigValue('showSessionSupplemental'),
-      showSessionSpecialAttireRequired: this.args.school.getConfigValue('showSessionSpecialAttireRequired'),
-      showSessionSpecialEquipmentRequired: this.args.school.getConfigValue('showSessionSpecialEquipmentRequired'),
-    });
-    this.showSessionAttendanceRequired = showSessionAttendanceRequired;
-    this.showSessionSupplemental = showSessionSupplemental;
-    this.showSessionSpecialAttireRequired = showSessionSpecialAttireRequired;
-    this.showSessionSpecialEquipmentRequired = showSessionSpecialEquipmentRequired;
+  *load(element, [school]) {
+    const schoolConfigs = yield school.configurations;
+    this.showSessionAttendanceRequiredConfig = schoolConfigs.findBy('name', 'showSessionAttendanceRequired');
+    this.showSessionSupplementalConfig = schoolConfigs.findBy('name', 'showSessionSupplemental');
+    this.showSessionSpecialAttireRequiredConfig = schoolConfigs.findBy('name', 'showSessionSpecialAttireRequired');
+    this.showSessionSpecialEquipmentRequiredConfig = schoolConfigs.findBy('name', 'showSessionSpecialEquipmentRequired');
+  }
+
+  get showSessionAttendanceRequired() {
+    return JSON.parse(this.showSessionAttendanceRequiredConfig?.value ?? null);
+  }
+  get showSessionSupplemental() {
+    return JSON.parse(this.showSessionSupplementalConfig?.value ?? null);
+  }
+  get showSessionSpecialAttireRequired() {
+    return JSON.parse(this.showSessionSpecialAttireRequiredConfig?.value ?? null);
+  }
+  get showSessionSpecialEquipmentRequired() {
+    return JSON.parse(this.showSessionSpecialEquipmentRequiredConfig?.value ?? null);
   }
 
   @dropTask
@@ -43,14 +45,13 @@ export default class SchoolSessionAttributesComponent extends Component {
     const toSave = [];
     for (let i = 0; i < names.length; i++) {
       const name = names[i];
-      const config = yield this.args.school.setConfigValue(name, newValues.get(name));
+      const config = yield this.args.school.setConfigValue(name, newValues[name]);
       if (config) {
         toSave.pushObject(config);
       }
     }
     try {
       yield all(toSave.invoke('save'));
-      yield this.load.perform();
     } finally {
       this.args.manage(false);
     }

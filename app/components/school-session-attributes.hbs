@@ -1,7 +1,7 @@
 <div
   class="school-session-attributes"
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @school}}
+  {{did-insert (perform this.load) @school}}
+  {{did-update (perform this.load) @school @school.configurations}}
   ...attributes
 >
   {{#if this.load.lastSuccessful}}
