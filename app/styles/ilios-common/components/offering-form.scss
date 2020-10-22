@@ -14,6 +14,8 @@
 
       .instructor-management,
       .instructor-management-controls,
+      .learner-management,
+      .learner-management-controls,
       .scheduling {
         grid-column: 1 / -1;
       }
@@ -36,6 +38,7 @@
     }
 
     .instructor-management-controls,
+    .learner-management-controls,
     .scheduling-controls  {
       align-items: start;
       display: grid;
@@ -43,6 +46,7 @@
     }
 
     .instructor-management,
+    .learner-management,
     .scheduling {
       margin-bottom: 1rem;
       legend {
@@ -190,13 +194,43 @@
       }
     }
 
-    .learners {
-      grid-column: 1 / 1;
+    .available-learner-groups {
+
+      .search-box {
+        margin-top: .5rem;
+        padding-bottom: .5rem;
+      }
+
+      .cohort-learner-groups {
+        border: 1px solid $ilios-blue;
+
+        h5 {
+          margin-bottom: .5rem;
+          padding: .5rem;
+        }
+
+        .tree-groups-list > li > span {
+          font-weight: bold;
+        }
+
+        & > ul {
+          @include ilios-list-tree;
+          background-color: $white;
+          height: 15rem;
+          margin-bottom: 1rem;
+          overflow-y: scroll;
+          padding: .5rem 0;
+
+          ul {
+            padding: 0;
+          }
+        }
+      }
     }
 
-
-    .learner-groups {
-      grid-column: 1 / -1;
+    .available-learner-groups,
+    .selected-learner-groups {
+      padding-bottom: 1rem;
     }
 
     .buttons {

@@ -292,51 +292,121 @@
             <div class="item instructor-search">
               <label>{{t "general.search"}}:</label>
               <UserSearch
-                  @addUser={{this.addInstructor}}
-                  @addInstructorGroup={{this.addInstructorGroup}}
-                  @currentlyActiveUsers={{this.instructors}}
-                  @placeholder={{t "general.findInstructorOrGroup"}}
-                  @availableInstructorGroups={{await this.availableInstructorGroups}}
-                  @currentlyActiveInstructorGroups={{this.instructorGroups}}
+                @addUser={{this.addInstructor}}
+                @addInstructorGroup={{this.addInstructorGroup}}
+                @currentlyActiveUsers={{this.instructors}}
+                @placeholder={{t "general.findInstructorOrGroup"}}
+                @availableInstructorGroups={{await this.availableInstructorGroups}}
+                @currentlyActiveInstructorGroups={{this.instructorGroups}}
               />
             </div>
           </div>
         </fieldset>
       {{/if}}
-      <div class="learner-groups item">
-        <label>
-          {{t "general.learnerGroups"}}:
-        </label>
-        {{#if @cohorts.length}}
-          <LearnergroupSelectionManager
-            @learnerGroups={{this.learnerGroups}}
-            @cohorts={{@cohorts}}
-            @add={{this.addLearnerGroup}}
-            @remove={{this.removeLearnerGroup}}
-          />
-        {{else}}
-          <p>
-            {{t "general.noAvailableLearnerGroups"}}
-          </p>
-        {{/if}}
-        {{#each (await (compute (fn this.getErrorsFor) "learnerGroups")) as |message|}}
-          <p class="validation-error-message">
-            {{message}}
-          </p>
-        {{/each}}
-      </div>
-      {{#unless @smallGroupMode}}
-        <div class="learners item">
-          <label>
-            {{t "general.learners"}}:
-          </label>
-          <LearnerSelectionManager
-              @learners={{this.learners}}
-              @add={{this.addLearner}}
-              @remove={{this.removeLearner}}
-          />
+      <fieldset class="learner-management">
+        <legend>{{t "general.learnersAndLearnerGroups"}}</legend>
+        <div class="learner-management-controls">
+          <div class="selected-learner-groups item">
+            <label>
+              {{t "general.selectedLearnerGroups"}}:
+            </label>
+            {{#if this.learnerGroups.length}}
+              <DetailLearnergroupsList
+                @learnerGroups={{this.learnerGroups}}
+                @isManaging={{true}}
+                @remove={{this.removeLearnerGroup}}
+              />
+            {{else}}
+              <p data-test-no-selected-learnergroups>
+                {{t "general.none"}}
+              </p>
+            {{/if}}
+          </div>
+          {{#if @cohorts.length}}
+            <div class="available-learner-groups item" data-test-available-learner-groups>
+              <label>
+                {{t "general.availableLearnerGroups"}}:
+                {{#unless (and (is-fulfilled this.allLearnerGroups) (is-fulfilled @cohorts))}}
+                  <LoadingSpinner />
+                {{/unless}}
+              </label>
+              <SearchBox
+                @search={{fn (mut this.learnerGroupsFilter)}}
+                placeholder={{t "general.filterPlaceholder"}}
+              />
+              <div class="cohorts-container">
+                {{#each (sort-by "title" (await @cohorts)) as |cohort|}}
+                  <div class="cohort-learner-groups" data-test-cohorts>
+                    {{#if
+                      (and
+                        (is-fulfilled cohort.programYear)
+                        (is-fulfilled cohort.programYear.program)
+                        (is-fulfilled cohort.rootLevelLearnerGroups)
+                      )
+                    }}
+                      <h5 class="cohort-title" data-test-title>
+                        {{cohort.programYear.program.title}}
+                        {{cohort.title}}
+                      </h5>
+                      <ul class="tree-groups-list" data-test-tree-groups-list>
+                        {{#each
+                          (sort-by
+                            "title" (await cohort.rootLevelLearnerGroups)
+                          ) as |learnerGroup|
+                        }}
+                          <LearnergroupTree
+                            @learnerGroup={{learnerGroup}}
+                            @selectedGroups={{this.learnerGroups}}
+                            @filter={{this.learnerGroupsFilter}}
+                            @add={{this.addLearnerGroup}}
+                          />
+                        {{/each}}
+                      </ul>
+                    {{else}}
+                      <LoadingSpinner />
+                    {{/if}}
+                  </div>
+                {{/each}}
+              </div>
+            </div>
+          {{else}}
+            <p>
+              {{t "general.noAvailableLearnerGroups"}}
+            </p>
+          {{/if}}
+          {{#each (await (compute (fn this.getErrorsFor) "learnerGroups")) as |message|}}
+            <p class="validation-error-message">
+              {{message}}
+            </p>
+          {{/each}}
         </div>
-      {{/unless}}
+        {{#unless @smallGroupMode}}
+          <div class="selected-learners item">
+            <label>
+              {{t "general.selectedLearners"}}:
+            </label>
+            {{#if this.learners.length}}
+              <DetailLearnerList
+                @learners={{this.learners}}
+                @isManaging={{true}}
+                @remove={{this.removeLearner}}
+              />
+            {{else}}
+              <p data-test-no-selected-learners>
+                {{t "general.none"}}
+              </p>
+            {{/if}}
+          </div>
+          <div class="learner-search item">
+            <label>{{t "general.search"}}:</label>
+            <UserSearch
+              @addUser={{this.addLearner}}
+              @currentlyActiveUsers={{this.learners}}
+              @placeholder={{t "general.findLearners"}}
+            />
+          </div>
+        {{/unless}}
+      </fieldset>
       <div class="buttons" {{did-insert (set this.scrollTo)}}>
         <SaveButton
           class="done text"
