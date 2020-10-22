@@ -1,5 +1,5 @@
 import Service from '@ember/service';
-import moment from 'moment';
+import { DateTime } from 'luxon';
 
 export default class EventsBase extends Service {
   /**
@@ -122,7 +122,7 @@ export default class EventsBase extends Service {
    */
   getSlugForUserEvent(event){
     let slug = 'U';
-    slug += moment(event.startDate).format('YYYYMMDD');
+    slug += DateTime.fromISO(event.startDate).toFormat('yyyyMMdd');
     if(event.offering){
       slug += 'O' + event.offering;
     }
@@ -146,7 +146,7 @@ export default class EventsBase extends Service {
       schoolId = '0' + schoolId;
     }
     slug += schoolId;
-    slug += moment(event.startDate).format('YYYYMMDD');
+    slug += DateTime.fromISO(event.startDate).toFormat('yyyyMMdd');
     if(event.offering){
       slug += 'O' + event.offering;
     }
