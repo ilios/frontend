@@ -8,7 +8,6 @@ import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
 import { enableFeature } from 'ember-feature-flags/test-support';
-
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/session';
 
@@ -80,7 +79,7 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.ok(page.overview.ilmHours.isVisible);
     assert.ok(page.overview.ilmDueDate.isVisible);
     assert.equal(page.overview.ilmHours.value, 1);
-    assert.equal(page.overview.ilmDueDate.value, moment().add(6, 'weeks').format('L'));
+    assert.equal(page.overview.ilmDueDate.value, moment().add(6, 'weeks').toDate().toLocaleDateString('en'));
   });
 
   test('change ilm hours', async function (assert) {
