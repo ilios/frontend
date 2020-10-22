@@ -19,7 +19,7 @@ export function IsURL(validationOptions) {
           // @link https://github.com/validatorjs/validator.js/issues/331
           // so we need to check manually here until this gets corrected.
           // [ST 2020/10/21]
-          if (-1 !== value.indexOf('\\')) {
+          if (value.includes('\\')) {
             return false;
           }
           return URLValidator(value, {
