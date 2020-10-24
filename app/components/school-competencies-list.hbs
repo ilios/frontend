@@ -1,7 +1,7 @@
 <div ...attributes>
-  {{#if domains.length}}
+  {{#if @domains.length}}
     <ul data-test-domains>
-      {{#each (sort-by "title" domains) as |domain|}}
+      {{#each (sort-by "title" @domains) as |domain|}}
         <li>
           {{domain.title}}
           <ul>
