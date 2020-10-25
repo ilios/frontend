@@ -1,23 +1,36 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { all } from 'rsvp';
 import { restartableTask } from 'ember-concurrency-decorators';
+import { inject as service } from '@ember/service';
 
 export default class CollapsedCompetenciesComponent extends Component {
-  @tracked summary;
+  @service store;
+  @tracked competenciesRelationship;
+  @tracked allSchools;
 
   @restartableTask
-  *load(element, [competencies]) {
-    if (!competencies) {
-      return;
+  *load(element, [subject]) {
+    this.competenciesRelationship = yield subject.competencies;
+    this.allSchools = yield this.store.findAll('school');
+  }
+
+  get summary() {
+    if (!this.allSchools || !this.competenciesRelationship) {
+      return [];
     }
-    const schools = yield all(competencies.mapBy('school'));
-    const schoolIds = schools.mapBy('id').uniq();
-    this.summary = schoolIds.map((id) => {
-      return {
-        competencies: schools.filterBy('id', id),
-        school: schools.findBy('id', id)
-      };
-    });
+    const schools = this.competenciesRelationship.reduce((schools, competency) => {
+      const schoolId = competency.belongsTo('school').id();
+      if (!(schoolId in schools)) {
+        schools[schoolId] = {
+          competencies: [],
+          school: this.allSchools.findBy('id', schoolId)
+        };
+      }
+      schools[schoolId].competencies.push(competency);
+
+      return schools;
+    }, {});
+
+    return Object.values(schools);
   }
 }
