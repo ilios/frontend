@@ -1,16 +1,16 @@
 <div class="school-competencies-manager" ...attributes>
-  {{#each domains as |obj|}}
+  {{#each this.domains as |obj|}}
     <div class="domain">
       <div class="block">
         <CompetencyTitleEditor
           @competency={{obj.domain}}
-          @canUpdate={{canUpdate}}
+          @canUpdate={{@canUpdate}}
         />
         {{#if (eq obj.competencies.length 0)}}
           <FaIcon
             @icon="trash"
             class="clickable enabled"
-            @click={{action remove obj.domain}}
+            @click={{fn @remove obj.domain}}
           />
         {{else}}
           <FaIcon @icon="trash" class="disabled" />
@@ -21,30 +21,30 @@
           <li class="block">
             <CompetencyTitleEditor
               @competency={{competency}}
-              @canUpdate={{canUpdate}}
+              @canUpdate={{@canUpdate}}
             />
             ({{competency.programYearObjectives.length}})
-            {{#if (and canDelete (eq competency.programYearObjectives.length 0))}}
+            {{#if (and @canDelete (eq competency.programYearObjectives.length 0))}}
               <FaIcon
                 @icon="trash"
                 class="clickable enabled"
-                @click={{action remove competency}}
+                @click={{fn @remove competency}}
               />
             {{else}}
               <FaIcon @icon="trash" class="disabled" />
             {{/if}}
           </li>
         {{/each}}
-        {{#if (and obj.domain.id canCreate)}}
-          <NewCompetency @add={{action add obj.domain}} />
+        {{#if (and obj.domain.id @canCreate)}}
+          <NewCompetency @add={{fn @add obj.domain}} />
         {{/if}}
       </ul>
     </div>
   {{/each}}
-  {{#if canCreate}}
+  {{#if @canCreate}}
     <h5>
       {{t "general.newDomain"}}
     </h5>
-    <NewCompetency @add={{action add null}} />
+    <NewCompetency @add={{fn @add null}} />
   {{/if}}
 </div>

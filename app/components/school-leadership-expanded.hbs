@@ -1,53 +1,58 @@
-<div class="school-leadership-expanded" ...attributes>
+<div
+  class="school-leadership-expanded"
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @school.directors @school.administrators}}
+  ...attributes
+>
   <div class="school-leadership-expanded-header">
     <div
-      class="title {{if isCollapsible "collapsible clickable"}}"
+      class="title {{if this.isCollapsible "collapsible clickable"}}"
       role="button"
-      {{action collapse}}
+      {{on "click" @collapse}}
     >
       {{t "general.schoolLeadership"}}
     </div>
     <div class="actions">
-      {{#if isManaging}}
-        <button type="button" class="bigadd" onclick={{perform save}}>
+      {{#if @isManaging}}
+        <button type="button" class="bigadd" {{on "click" (perform this.save)}}>
           <FaIcon
-            @icon={{if save.isRunning "spinner" "check"}}
-            @spin={{if isSaving true false}}
+            @icon={{if this.save.isRunning "spinner" "check"}}
+            @spin={{this.save.isRunning}}
           />
         </button>
-        <button type="button" class="bigcancel" {{action setIsManaging false}}>
+        <button type="button" class="bigcancel" {{on "click" (fn @setIsManaging false)}}>
           <FaIcon @icon="undo" />
         </button>
-      {{else if canUpdate}}
-        <button type="button" {{action setIsManaging true}}>
+      {{else if @canUpdate}}
+        <button type="button" {{on "click" (fn @setIsManaging true)}}>
           {{t "general.manageLeadership"}}
         </button>
       {{/if}}
     </div>
   </div>
   <div class="school-leadership-expanded-content">
-    {{#if (and (is-fulfilled directors) (is-fulfilled administrators))}}
+    {{#if this.load.lastSuccessful}}
       {{#if isManaging}}
         <LeadershipManager
-          @directors={{await directors}}
-          @administrators={{await administrators}}
+          @directors={{this.directors}}
+          @administrators={{this.administrators}}
           @showAdministrators={{true}}
           @showDirectors={{true}}
-          @removeDirector={{action "removeDirector"}}
-          @addDirector={{action "addDirector"}}
-          @removeAdministrator={{action "removeAdministrator"}}
-          @addAdministrator={{action "addAdministrator"}}
+          @removeDirector={{this.removeDirector}}
+          @addDirector={{this.addDirector}}
+          @removeAdministrator={{this.removeAdministrator}}
+          @addAdministrator={{this.addAdministrator}}
         />
       {{else}}
         <LeadershipList
-          @directors={{await directors}}
-          @administrators={{await administrators}}
+          @directors={{this.directors}}
+          @administrators={{this.administrators}}
           @showAdministrators={{true}}
           @showDirectors={{true}}
         />
       {{/if}}
     {{else}}
-      <LoadingSpinner @tagName="h3" />
+      <LoadingSpinner />
     {{/if}}
   </div>
 </div>

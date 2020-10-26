@@ -20,14 +20,13 @@ module('Integration | Component | school leadership expanded', function(hooks) {
 
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
     this.set('school', schoolModel);
-    this.set('nothing', parseInt);
     await render(hbs`<SchoolLeadershipExpanded
       @school={{school}}
       @canUpdate={{true}}
-      @collapse={{action nothing}}
-      @expand={{action nothing}}
+      @collapse={{noop}}
+      @expand={{noop}}
       @isManaging={{false}}
-      @setIsManaging={{action nothing}}
+      @setIsManaging={{noop}}
     />`);
     const title = '.title';
     const table = 'table';
@@ -54,14 +53,13 @@ module('Integration | Component | school leadership expanded', function(hooks) {
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    this.set('nothing', parseInt);
     await render(hbs`<SchoolLeadershipExpanded
       @school={{school}}
       @canUpdate={{true}}
       @collapse={{action click}}
-      @expand={{action nothing}}
+      @expand={{noop}}
       @isManaging={{false}}
-      @setIsManaging={{action nothing}}
+      @setIsManaging={{noop}}
     />`);
     const title = '.title';
 
@@ -76,12 +74,11 @@ module('Integration | Component | school leadership expanded', function(hooks) {
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    this.set('nothing', parseInt);
     await render(hbs`<SchoolLeadershipExpanded
       @school={{school}}
       @canUpdate={{true}}
-      @collapse={{action nothing}}
-      @expand={{action nothing}}
+      @collapse={{noop}}
+      @expand={{noop}}
       @isManaging={{false}}
       @setIsManaging={{action click}}
     />`);

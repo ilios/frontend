@@ -8,7 +8,7 @@
     </div>
     <div class="actions">
       {{#if @canUpdate}}
-        <button type="button" {{action "manage"}}>
+        <button type="button" {{on "click" (fn @manage true)}}>
           {{t "general.manageInstitutionalInfo"}}
         </button>
       {{/if}}
@@ -18,7 +18,7 @@
     data-test-school-curriculum-inventory-institution-details-content
     class="school-curriculum-inventory-institution-details-content"
   >
-    {{#if this.hasInstitution}}
+    {{#if @school.curriculumInventoryInstitution}}
       <div class="block" data-test-institution-name>
         <label>
           {{t "general.schoolName"}}:
