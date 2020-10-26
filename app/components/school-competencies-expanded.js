@@ -1,130 +1,104 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { isEmpty, isPresent } from '@ember/utils';
 import { all } from 'rsvp';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  store: service(),
-  tagName: "",
-  bufferedCompetencies: null,
-  canCreate: false,
-  canDelete: false,
-  canUpdate: false,
-  isManaging: false,
-  isSaving: false,
-  school: null,
+export default class SchoolCompetenciesExpandedComponent extends Component {
+  @service store;
+  @tracked competenciesToAdd = [];
+  @tracked competenciesToRemove = [];
+  @tracked schoolCompetencies;
 
-  competencies: computed('school.competencies.[]', async function() {
-    const school = this.school;
-    return await school.get('competencies');
-  }),
+  @restartableTask
+  *load() {
+    this.cleanup();
+    this.schoolCompetencies = yield this.args.school.competencies;
+  }
 
-  domains: computed('school.competencies.[]', async function() {
-    const competencies = await this.competencies;
-    return competencies.filterBy('isDomain');
-  }),
-
-  childCompetencies: computed('school.competencies.[]', async function() {
-    const competencies = await this.competencies;
-    return competencies.filterBy('isNotDomain');
-  }),
-
-  showCollapsible: computed('isManaging', 'school.competencies.length', function() {
-    const isManaging = this.isManaging;
-    const school = this.school;
-    const competencyIds = school.hasMany('competencies').ids();
-    return competencyIds.length && ! isManaging;
-  }),
-
-  /**
-   * @todo rewrite the component so we don't deal with promises in this lifecycle hook. [ST 2019/01/30]
-   */
-  async didReceiveAttrs() {
-    this._super(...arguments);
-    if (this.isManaging && isEmpty(this.bufferedCompetencies)) {
-      const school = this.school;
-      const competencies  = await school.get('competencies');
-      this.set('bufferedCompetencies', competencies.toArray());
+  get competencies() {
+    if (!this.schoolCompetencies) {
+      return [];
     }
-  },
+    const arr = [...this.schoolCompetencies.toArray(), ...this.competenciesToAdd];
+    return arr.filter(competency => !this.competenciesToRemove.includes(competency)).uniq();
+  }
 
-  actions: {
-    async collapse() {
-      const collapse = this.collapse;
-      const school = this.school;
-      const competencies = await school.get('competencies');
-      if (competencies.length) {
-        collapse();
-      }
-    },
+  get domains() {
+    return this.competencies.filterBy('isDomain');
+  }
 
-    async addCompetencyToBuffer(domain, title) {
-      const competency = this.store.createRecord('competency', {title, active: true});
-      if (isPresent(domain)) {
-        competency.set('parent', domain);
-        const children = await domain.get('children');
-        children.pushObject(competency);
-        this.bufferedCompetencies.pushObject(competency);
-      } else {
-        this.bufferedCompetencies.pushObject(competency);
-      }
-    },
+  get childCompetencies() {
+    return this.competencies.filterBy('isNotDomain');
+  }
 
-    removeCompetencyFromBuffer(competency) {
-      const buffer = this.bufferedCompetencies;
-      if (buffer.includes(competency)) {
-        buffer.removeObject(competency);
-      }
-    },
+  get showCollapsible() {
+    return this.competencies.length && ! this.args.isManaging;
+  }
 
-    async save() {
-      this.set('isSaving', true);
-      const setSchoolManageCompetencies = this.setSchoolManageCompetencies;
-      const school = this.school;
-      const schoolCompetencies = await school.get('competencies');
-      const bufferedCompetencies = this.bufferedCompetencies;
-      const domainsToRemove = schoolCompetencies.filter(competency => {
-        return !bufferedCompetencies.includes(competency) && competency.get('isDomain');
-      });
-      const competenciesToRemove = schoolCompetencies.filter(competency => {
-        return !bufferedCompetencies.includes(competency) && !competency.get('isDomain');
-      });
+  cleanup() {
+    this.competenciesToAdd = [];
+    this.competenciesToRemove = [];
+  }
 
-      // delete all removed competencies first, then all removed domains
-      await all(competenciesToRemove.invoke('destroyRecord'));
-      await all(domainsToRemove.invoke('destroyRecord'));
-
-      // set the school on new competencies
-      bufferedCompetencies.filterBy('isNew').forEach(competency => {
-        competency.set('school', school);
-      });
-
-      // update all modified competencies (this will include new ones).
-      await all(
-        bufferedCompetencies.filterBy('hasDirtyAttributes').invoke('save')
-      );
-
-      // repopulate school from buffer.
-      schoolCompetencies.clear();
-      bufferedCompetencies.forEach(competency => {
-        schoolCompetencies.pushObject(competency);
-      });
-
-      // cleanup
-      this.set('bufferedCompetencies', []);
-      this.set('isSaving', false);
-      setSchoolManageCompetencies(false);
-    },
-
-    cancel() {
-      const setSchoolManageCompetencies = this.setSchoolManageCompetencies;
-      setSchoolManageCompetencies(false);
-    },
-
-    manage() {
-      const setSchoolManageCompetencies = this.setSchoolManageCompetencies;
-      setSchoolManageCompetencies(true);
+  @action
+  collapse() {
+    if (this.competencies.length) {
+      this.args.collapse();
+      this.cleanup();
     }
   }
-});
+
+  @action
+  stopManaging() {
+    this.cleanup();
+    this.args.setSchoolManageCompetencies(false);
+  }
+
+  @action
+  addCompetency(domain, title){
+    const competency = this.store.createRecord('competency', {
+      title,
+      active: true
+    });
+    if (domain) {
+      competency.set('parent', domain);
+    }
+    this.competenciesToAdd = [...this.competenciesToAdd, competency];
+  }
+  @action
+  removeCompetency(competency){
+    this.competenciesToAdd = this.competenciesToAdd.filter(c => c !== competency);
+    this.competenciesToRemove = [...this.competenciesToRemove, competency];
+  }
+
+  @dropTask
+  *save() {
+    const domainsToRemove = this.schoolCompetencies.filter(competency => {
+      return competency.isDomain && !this.competencies.includes(competency);
+    });
+    const competenciesToRemove = this.schoolCompetencies.filter(competency => {
+      return !competency.isDomain && !this.competencies.includes(competency);
+    });
+
+    // delete all removed competencies first, then all removed domains
+    yield all(competenciesToRemove.invoke('destroyRecord'));
+    yield all(domainsToRemove.invoke('destroyRecord'));
+
+    // set the school on new competencies
+    this.competencies.filterBy('isNew').forEach(competency => {
+      competency.set('school', this.args.school);
+    });
+
+    // update all modified competencies (this will include new ones).
+    yield all(
+      this.competencies.filterBy('hasDirtyAttributes').invoke('save')
+    );
+
+    // cleanup
+    this.cleanup();
+    this.args.setSchoolManageCompetencies(false);
+    this.schoolCompetencies = yield this.args.school.competencies;
+  }
+}
