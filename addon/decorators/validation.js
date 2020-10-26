@@ -11,11 +11,14 @@ import { IsTrue } from './validation/is-true';
 import { IsURL } from './validation/is-url';
 import { validatable } from './validation/validatable';
 import { ArrayNotEmpty } from './validation/array-not-empty';
+import { GteProp } from './validation/gte-prop';
+
 
 export {
   ArrayNotEmpty,
   Gt,
   Gte,
+  GteProp,
   Lte,
   IsInt,
   IsTrue,
