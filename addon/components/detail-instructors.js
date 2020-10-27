@@ -12,6 +12,11 @@ export default class DetailInstructorsComponent extends Component {
   @tracked instructorBuffer = [];
   @tracked availableInstructorGroups;
 
+  constructor() {
+    super(...arguments);
+    this.load.perform();
+  }
+
   @restartableTask
   *load() {
     const user = yield this.currentUser.getModel();
