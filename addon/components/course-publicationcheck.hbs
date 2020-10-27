@@ -1,7 +1,7 @@
 <div
   class="course-publicationcheck"
-  {{did-insert (fn this.load) (await @course.courseObjectives)}}
-  {{did-update (fn this.load) (await @course.courseObjectives)}}
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @course.courseObjectives}}
 >
   <div class="title">
     {{t "general.missingItems"}} ({{@course.allPublicationIssuesLength}})

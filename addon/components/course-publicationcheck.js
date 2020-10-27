@@ -1,15 +1,19 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { action, computed } from '@ember/object';
+import { computed } from '@ember/object';
+import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class CoursePublicationCheckComponent extends Component {
   @service router;
-  @tracked objectives = [];
+  @tracked objectivesRelationship;
 
-  @computed('objectives.@each.programYearObjectives')
+  @computed('objectivesRelationship.@each.programYearObjectives')
   get showUnlinkIcon() {
-    const objectivesWithoutParents = this.objectives.filter(objective => {
+    if (!this.objectivesRelationship) {
+      return false;
+    }
+    const objectivesWithoutParents = this.objectivesRelationship.filter(objective => {
       const parentIds = objective.hasMany('programYearObjectives').ids();
       return parentIds.length === 0;
     });
@@ -17,12 +21,8 @@ export default class CoursePublicationCheckComponent extends Component {
     return objectivesWithoutParents.length > 0;
   }
 
-  @action
-  load(event, [objectives]) {
-    if (!objectives) {
-      this.objectives = [];
-      return;
-    }
-    this.objectives = objectives.toArray();
+  @restartableTask
+  *load() {
+    this.objectivesRelationship = yield this.args.course.courseObjectives;
   }
 }
