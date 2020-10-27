@@ -12,6 +12,11 @@ export default class DashboardMaterialsComponent extends Component {
   @tracked daysInAdvance = 60;
   @tracked materials = null;
 
+  constructor() {
+    super(...arguments);
+    this.load.perform();
+  }
+
   @restartableTask
   *load() {
     const from = moment().hour(0).minute(0).unix();
