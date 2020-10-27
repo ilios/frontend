@@ -25,7 +25,7 @@
       <fieldset class="scheduling">
         <legend>{{t "general.scheduling"}}</legend>
         <div class="scheduling-controls">
-          <div class="item start-date">
+          <div class="start-date">
             <label>
               {{t "general.startDate"}}:
             </label>
@@ -34,13 +34,13 @@
               @change={{this.updateStartDate}}
             />
           </div>
-          <div class="item start-time">
+          <div class="start-time">
             <label>
               {{t "general.startTime"}}:
             </label>
             <TimePicker @date={{this.startDate}} @action={{this.updateStartTime}} />
           </div>
-          <div class="item offering-duration">
+          <div class="offering-duration">
             <label>
               {{t "general.duration"}}:
             </label>
@@ -84,7 +84,7 @@
               </div>
             </div>
           </div>
-          <div class="item end-date-time">
+          <div class="end-date-time">
             <label>
               {{t "general.end"}}:
             </label>
@@ -94,7 +94,7 @@
               </div>
             {{/if}}
           </div>
-          <div class="item timezone" data-test-timezone-picker>
+          <div class="timezone" data-test-timezone-picker>
             <label>
               {{t "general.timezone"}}:
             </label>
@@ -131,7 +131,7 @@
           </div>
 
           {{#if @showMakeRecurring}}
-            <div class="item make-recurring">
+            <div class="make-recurring">
               <label>
                 {{t "general.makeRecurring"}}:
               </label>
@@ -187,7 +187,7 @@
             </div>
           {{/if}}
           {{#if @showRoom}}
-            <div class="item room">
+            <div class="room">
               <label>
                 {{t "general.location"}}:
                 {{#unless @offering}}
@@ -206,7 +206,7 @@
                 </span>
               {{/each}}
             </div>
-            <div class="item url" data-test-url>
+            <div class="url" data-test-url>
               <label>
                 {{t "general.virtualLearningLink"}}:
                 {{#unless @offering}}
@@ -236,7 +236,7 @@
         <fieldset class="instructor-management">
           <legend>{{t "general.instructorsAndInstructorGroups"}}</legend>
           <div class="instructor-management-controls">
-            <div class="item instructors">
+            <div class="instructors">
               <label>
                 {{t "general.selectedInstructors"}}:
                 {{#unless @offering}}
@@ -256,7 +256,7 @@
                 <div>{{t "general.none"}}</div>
               {{/if}}
             </div>
-            <div class="item instructor-groups">
+            <div class="instructor-groups">
               <label>
                 {{t "general.selectedInstructorGroups"}}:
                 {{#unless @offering}}
@@ -289,7 +289,7 @@
                 {{/each}}
               </div>
             </div>
-            <div class="item instructor-search">
+            <div class="available-instructors">
               <label>{{t "general.availableInstructorsAndInstructorGroups"}}:</label>
               <UserSearch
                 @addUser={{this.addInstructor}}
@@ -306,7 +306,7 @@
       <fieldset class="learner-management">
         <legend>{{t "general.learnersAndLearnerGroups"}}</legend>
         <div class="learner-management-controls">
-          <div class="selected-learner-groups item">
+          <div class="selected-learner-groups">
             <label>
               {{t "general.selectedLearnerGroups"}}:
             </label>
@@ -317,13 +317,13 @@
                 @remove={{this.removeLearnerGroup}}
               />
             {{else}}
-              <p data-test-no-selected-learnergroups>
+              <div data-test-no-selected-learnergroups>
                 {{t "general.none"}}
-              </p>
+              </div>
             {{/if}}
           </div>
           {{#if @cohorts.length}}
-            <div class="available-learner-groups item" data-test-available-learner-groups>
+            <div class="available-learner-groups" data-test-available-learner-groups>
               <label>
                 {{t "general.availableLearnerGroups"}}:
                 {{#unless (and (is-fulfilled this.allLearnerGroups) (is-fulfilled @cohorts))}}
@@ -370,9 +370,9 @@
               </div>
             </div>
           {{else}}
-            <p>
+            <div>
               {{t "general.noAvailableLearnerGroups"}}
-            </p>
+            </div>
           {{/if}}
           {{#each (await (compute (fn this.getErrorsFor) "learnerGroups")) as |message|}}
             <p class="validation-error-message">
@@ -381,23 +381,26 @@
           {{/each}}
         </div>
         {{#unless @smallGroupMode}}
-          <div class="selected-learners item">
+          <div class="selected-learners">
             <label>
               {{t "general.selectedLearners"}}:
             </label>
             {{#if this.learners.length}}
-              <DetailLearnerList
-                @learners={{this.learners}}
-                @isManaging={{true}}
-                @remove={{this.removeLearner}}
-              />
+              <ul class="learners-list" data-test-selected-learners>
+                {{#each (sort-by "fullName" (await this.learners)) as |user|}}
+                  <li role="button" {{on "click" (fn this.removeLearner user)}}>
+                    <UserNameInfo @user={{user}} />
+                    <FaIcon @icon="times" class="remove" />
+                  </li>
+                {{/each}}
+              </ul>
             {{else}}
-              <p data-test-no-selected-learners>
+              <div data-test-no-selected-learners>
                 {{t "general.none"}}
-              </p>
+              </div>
             {{/if}}
           </div>
-          <div class="learner-search item">
+          <div class="available-learners">
             <label>{{t "general.availableLearners"}}:</label>
             <UserSearch
               @addUser={{this.addLearner}}

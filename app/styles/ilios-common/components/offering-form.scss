@@ -160,11 +160,14 @@
       display: block;
       font-size: 12px;
       font-style: italic;
-      margin-top: .75rem;
+      margin-top: .5rem;
     }
 
     .instructor-management-controls {
       .instructor-group {
+
+        margin-bottom: 1rem;
+
         & > span {
           background-color: $header-grey;
           border-radius: 4px;
@@ -180,25 +183,41 @@
             margin-left: .5em;
           }
         }
-        margin: 1rem 0;
       }
 
       .instructorgroup-members-list {
         @include ilios-tag-list;
-        margin-bottom: 1rem;
+
+        margin-top: .25rem;
+
+        li {
+          margin-top: .25rem;
+        }
       }
 
       .instructors-list {
         @include ilios-removable-list;
-        margin-bottom: 1rem;
+
+        li {
+          margin-top: .25rem;
+        }
+      }
+    }
+
+    .learner-management {
+      .learners-list {
+        @include ilios-removable-list;
+
+        li {
+          margin-top: .25rem;
+        }
       }
     }
 
     .available-learner-groups {
 
       .search-box {
-        margin-top: .5rem;
-        padding-bottom: .5rem;
+        margin-bottom: .5rem;
       }
 
       .cohort-learner-groups {
@@ -228,9 +247,19 @@
       }
     }
 
+    .available-instructors,
+    .available-learners,
     .available-learner-groups,
-    .selected-learner-groups {
-      padding-bottom: 1rem;
+    .instructor-groups,
+    .instructors,
+    .selected-learner-groups,
+    .selected-learners {
+      margin-bottom: .5rem;
+
+      label {
+        display: inline-block;
+        margin-bottom: .5rem;
+      }
     }
 
     .buttons {
