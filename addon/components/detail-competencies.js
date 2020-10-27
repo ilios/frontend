@@ -1,18 +1,25 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class DetailCompetenciesComponent extends Component {
-  @tracked hasCompetencies = false;
-  @tracked competencyCount;
+  @tracked competenciesRelationship;
 
-  @action
-  load(event, [competencies]) {
-    if (!competencies) {
-      return;
+  @restartableTask
+  *load() {
+    this.competenciesRelationship = yield this.args.course.competencies;
+  }
+
+  get competencyCount() {
+    if (!this.competenciesRelationship) {
+      return 0;
     }
-    this.competencyCount = competencies.length;
-    this.hasCompetencies = this.competencyCount > 0;
+    return this.competenciesRelationship.length;
+  }
+
+  get hasCompetencies() {
+    return this.competencyCount > 0;
   }
 
   @action
