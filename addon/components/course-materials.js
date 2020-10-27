@@ -10,6 +10,8 @@ const DEBOUNCE_DELAY = 250;
 export default class CourseMaterialsComponent extends Component {
   @tracked courseLearningMaterialObjects = [];
   @tracked sessionLearningMaterialObjects = [];
+  @tracked courseMaterialsRelationship;
+  @tracked sessionsRelationship;
   @tracked courseQuery;
   @tracked sessionQuery;
 
@@ -19,17 +21,20 @@ export default class CourseMaterialsComponent extends Component {
   }
 
   @restartableTask
-  *load(element, [
-    courseLearningMaterials,
-    sessions
-  ]) {
-    if (courseLearningMaterials) {
-      this.courseLearningMaterialObjects = yield map(courseLearningMaterials.toArray(), async (clm) => {
+  *load() {
+    this.courseMaterialsRelationship = yield this.args.course.learningMaterials;
+    this.sessionsRelationship = yield this.args.course.sessions;
+  }
+
+  @restartableTask
+  *update() {
+    if (this.courseMaterialsRelationship) {
+      this.courseLearningMaterialObjects = yield map(this.courseMaterialsRelationship.toArray(), async (clm) => {
         return await this.buildClmObject(clm);
       });
     }
-    if (sessions) {
-      const sessionMaterials = yield map(sessions.toArray(), async (session) => {
+    if (this.sessionsRelationship) {
+      const sessionMaterials = yield map(this.sessionsRelationship.toArray(), async (session) => {
         const data = await session.learningMaterials;
         return data.toArray();
       });

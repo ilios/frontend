@@ -1,8 +1,9 @@
 <div
   class="course-materials"
   data-test-course-materials
-  {{did-insert (perform this.load) (await @course.learningMaterials) (await @course.sessions)}}
-  {{did-update (perform this.load) (await @course.learningMaterials) (await @course.sessions)}}
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @course}}
+  {{did-update (perform this.update) this.courseMaterialsRelationship this.sessionsRelationship}}
 >
   <div class="material-list">
     <h3>
@@ -97,7 +98,7 @@
   </div>
   <div class="material-list">
     <h3 class="session-material-title">
-      {{t "general.sessionLearningMaterials"}} ({{get this.sessionLearningMaterialObjects "length"}})
+      {{t "general.sessionLearningMaterials"}} ({{this.sessionLearningMaterialObjects.length}})
     </h3>
     <span class="filter-session-lms">
       <input
