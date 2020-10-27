@@ -12,6 +12,11 @@ export default class DashboardAgendaComponent extends Component {
   @tracked sixDaysAgo = moment().hour(0).minute(0).subtract(6, 'days');
   @tracked weeksEvents = null;
 
+  constructor(){
+    super(...arguments);
+    this.load.perform();
+  }
+
   @restartableTask
   *load() {
     const from = moment().hour(0).minute(0).unix();
