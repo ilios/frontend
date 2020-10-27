@@ -1,8 +1,8 @@
 <div
   class="offering-form"
   data-test-offering-form
-  {{did-insert (perform this.load) @offering @cohorts @scrollToBottom}}
-  {{did-update (perform this.load) @offering @cohorts @scrollToBottom}}
+  {{did-insert (perform this.load) @offering @cohorts}}
+  {{did-update (perform this.load) @offering @cohorts}}
 >
   {{#unless this.loadData.isRunning}}
     <div class="toggle-offering-calendar">
@@ -407,7 +407,7 @@
           </div>
         {{/unless}}
       </fieldset>
-      <div class="buttons" {{did-insert (set this.scrollTo)}}>
+      <div class="buttons">
         <SaveButton
           class="done text"
           @isSaving={{this.saveOffering.isRunning}}
