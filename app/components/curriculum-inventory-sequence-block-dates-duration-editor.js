@@ -15,7 +15,6 @@ export default class CurriculumInventorySequenceBlockDatesDurationEditor extends
   @NotBlank()
   @AfterDate('startDate', { granularity: 'day'})
   endDate = null;
-  @tracked isSaving = null;
 
   get hasZeroDuration() {
     const num = Number(this.duration);

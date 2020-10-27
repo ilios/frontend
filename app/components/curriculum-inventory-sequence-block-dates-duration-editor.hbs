@@ -39,7 +39,7 @@
     <Input
       type="text"
       @value={{this.duration}}
-      @key-up={{fn this.addErrorDisplayFor "title"}}
+      @key-up={{fn this.addErrorDisplayFor "duration"}}
       @enter={{perform this.save}}
       @escape-press={{@cancel}}
       disabled={{this.save.isRunning}}
