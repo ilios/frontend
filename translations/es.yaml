@@ -21,7 +21,9 @@ general:
   attendanceRequired: "Asistencia Requerida"
   author: Autor
   autoUpdatingSeconds: "{count, plural, =1 {Actualización automática en 1 segundo...} other {Actualización automática en # segundos...}}"
+  availableInstructorsAndInstructorGroups: "Instructores y Grupos de instructores Disponibles"
   availableLearnerGroups: "Grupos de Aprendedores Disponibles"
+  availableLearners: "Aprendedores Disponibles"
   back: Volver
   backToCourse: "Volver al Curso"
   backToCourses: "Atrás a la Lista de Cursos"

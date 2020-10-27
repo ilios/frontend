@@ -21,7 +21,9 @@ general:
   attendanceRequired: "Attendance Required"
   author: Author
   autoUpdatingSeconds: "{count, plural, =1 {Auto updating in 1 second...} other {Auto updating in # seconds...}}"
+  availableInstructorsAndInstructorGroups: "Available Instructors and Instructor Groups"
   availableLearnerGroups: "Available Learner Groups"
+  availableLearners: "Available Learners"
   back: Back
   backToCourse: "Back to Course"
   backToCourses: "Back to Courses List"
