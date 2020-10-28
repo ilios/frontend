@@ -9,6 +9,7 @@ import { timeout } from 'ember-concurrency';
 import { dropTask, restartableTask } from "ember-concurrency-decorators";
 import { ArrayNotEmpty, IsInt, Lte, Gte, Gt, NotBlank, Length, IsURL, validatable } from 'ilios-common/decorators/validation';
 import { ValidateIf } from "class-validator";
+import scrollIntoView from "scroll-into-view";
 
 const DEBOUNCE_DELAY = 600;
 const DEFAULT_URL_VALUE = 'https://';
@@ -127,9 +128,12 @@ export default class OfferingForm extends Component {
   }
 
   @restartableTask
-  * load(element, [offering, cohorts]) {
+  * load(element, [offering, cohorts, scrollToBottom]) {
     yield this.loadData.perform(offering, cohorts);
     yield timeout(1);
+    if (scrollToBottom) {
+      scrollIntoView(this.scrollTo);
+    }
   }
 
   @restartableTask()
