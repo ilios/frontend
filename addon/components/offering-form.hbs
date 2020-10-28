@@ -235,8 +235,8 @@
       {{#if @showInstructors}}
         <fieldset class="instructor-management">
           <legend>{{t "general.instructorsAndInstructorGroups"}}</legend>
-          <div class="instructor-management-controls">
-            <div class="instructors">
+          <div class="instructor-management-controls" data-test-instructor-management>
+            <div class="instructors" data-test-selected-instructors>
               <label>
                 {{t "general.selectedInstructors"}}:
                 {{#unless @offering}}
@@ -244,9 +244,9 @@
                 {{/unless}}
               </label>
               {{#if (get (await this.instructors) "length")}}
-                <ul class="instructors-list" data-test-instructors>
+                <ul class="instructors-list" data-test-selected-instructors-list>
                   {{#each (sort-by "fullName" (await this.instructors)) as |user|}}
-                    <li role="button" {{on "click" (fn this.removeInstructor user)}}>
+                    <li role="button" {{on "click" (fn this.removeInstructor user)}} data-test-selected-instructor>
                       <UserNameInfo @user={{user}} />
                       <FaIcon @icon="times" class="remove" />
                     </li>
@@ -256,16 +256,16 @@
                 <div>{{t "general.none"}}</div>
               {{/if}}
             </div>
-            <div class="instructor-groups">
+            <div class="instructor-groups" data-test-selected-instructor-groups>
               <label>
                 {{t "general.selectedInstructorGroups"}}:
                 {{#unless @offering}}
                   <span class="label-description">({{t "general.defaultNotLoaded"}})</span>
                 {{/unless}}
               </label>
-              <div data-test-instructor-groups>
+              <div data-test-selected-instructor-groups>
                 {{#each (sort-by "title" (await this.instructorGroups)) as |instructorGroup|}}
-                  <div class="instructor-group" data-test-instructor-group>
+                  <div class="instructor-group" data-test-selected-instructor-group>
                     <span
                       role="button"
                       data-test-instructor-group-title
@@ -276,9 +276,9 @@
                       <FaIcon @icon="times" class="remove" />
                     </span>
                     <br>
-                    <ul class="instructorgroup-members-list" data-test-instructor-group-members>
+                    <ul class="instructorgroup-members-list" data-test-selected-instructor-group-members>
                       {{#each (sort-by "fullName" (await instructorGroup.users)) as |user|}}
-                        <li>
+                        <li data-test-selected-instructor-group-member>
                           <UserNameInfo @user={{user}} />
                         </li>
                       {{/each}}
@@ -289,7 +289,7 @@
                 {{/each}}
               </div>
             </div>
-            <div class="available-instructors">
+            <div class="available-instructors" data-test-available-instructors>
               <label>{{t "general.availableInstructorsAndInstructorGroups"}}:</label>
               <UserSearch
                 @addUser={{this.addInstructor}}
@@ -303,10 +303,10 @@
           </div>
         </fieldset>
       {{/if}}
-      <fieldset class="learner-management">
+      <fieldset class="learner-management" >
         <legend>{{t "general.learnersAndLearnerGroups"}}</legend>
-        <div class="learner-management-controls">
-          <div class="selected-learner-groups">
+        <div class="learner-management-controls" data-test-learner-management>
+          <div class="selected-learner-groups" data-test-selected-learner-groups>
             <label>
               {{t "general.selectedLearnerGroups"}}:
             </label>
@@ -317,7 +317,7 @@
                 @remove={{this.removeLearnerGroup}}
               />
             {{else}}
-              <div data-test-no-selected-learnergroups>
+              <div data-test-no-selected-learner-groups>
                 {{t "general.none"}}
               </div>
             {{/if}}
@@ -370,7 +370,7 @@
               </div>
             </div>
           {{else}}
-            <div>
+            <div data-test-no-available-learner-groups>
               {{t "general.noAvailableLearnerGroups"}}
             </div>
           {{/if}}
@@ -379,36 +379,36 @@
               {{message}}
             </p>
           {{/each}}
+          {{#unless @smallGroupMode}}
+            <div class="selected-learners" data-test-selected-learners>
+              <label>
+                {{t "general.selectedLearners"}}:
+              </label>
+              {{#if this.learners.length}}
+                <ul class="learners-list" data-test-selected-learners-list>
+                  {{#each (sort-by "fullName" (await this.learners)) as |user|}}
+                    <li role="button" {{on "click" (fn this.removeLearner user)}}>
+                      <UserNameInfo @user={{user}} />
+                      <FaIcon @icon="times" class="remove" />
+                    </li>
+                  {{/each}}
+                </ul>
+              {{else}}
+                <div data-test-no-selected-learners>
+                  {{t "general.none"}}
+                </div>
+              {{/if}}
+            </div>
+            <div class="available-learners" data-test-available-learners>
+              <label>{{t "general.availableLearners"}}:</label>
+              <UserSearch
+                  @addUser={{this.addLearner}}
+                  @currentlyActiveUsers={{this.learners}}
+                  @placeholder={{t "general.findLearners"}}
+              />
+            </div>
+          {{/unless}}
         </div>
-        {{#unless @smallGroupMode}}
-          <div class="selected-learners">
-            <label>
-              {{t "general.selectedLearners"}}:
-            </label>
-            {{#if this.learners.length}}
-              <ul class="learners-list" data-test-selected-learners>
-                {{#each (sort-by "fullName" (await this.learners)) as |user|}}
-                  <li role="button" {{on "click" (fn this.removeLearner user)}}>
-                    <UserNameInfo @user={{user}} />
-                    <FaIcon @icon="times" class="remove" />
-                  </li>
-                {{/each}}
-              </ul>
-            {{else}}
-              <div data-test-no-selected-learners>
-                {{t "general.none"}}
-              </div>
-            {{/if}}
-          </div>
-          <div class="available-learners">
-            <label>{{t "general.availableLearners"}}:</label>
-            <UserSearch
-              @addUser={{this.addLearner}}
-              @currentlyActiveUsers={{this.learners}}
-              @placeholder={{t "general.findLearners"}}
-            />
-          </div>
-        {{/unless}}
       </fieldset>
       <div class="buttons">
         <SaveButton
