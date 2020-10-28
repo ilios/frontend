@@ -100,12 +100,12 @@ module('Integration | Component | offering form', function(hooks) {
 
   test('instructor manager does not show by default', async function(assert) {
     await render(hbs`<OfferingForm @close={{noop}} />`);
-    assert.notOk(component.instructors.isPresent);
+    assert.notOk(component.instructorManager.isPresent);
   });
 
   test('instructor manager shows up when requested', async function(assert) {
     await render(hbs`<OfferingForm @close={{noop}} @showInstructors={{true}} />`);
-    assert.ok(component.instructors.isPresent);
+    assert.ok(component.instructorManager.isPresent);
   });
 
   test('before course startDate default initial startDate falls on course start date', async function(assert) {
@@ -342,23 +342,26 @@ module('Integration | Component | offering form', function(hooks) {
 
   test('learner manager is not present in small-group mode', async function(assert) {
     await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`);
-    assert.notOk(component.learners.isPresent);
+    assert.notOk(component.learnerManager.selectedLearners.isPresent);
+    assert.notOk(component.learnerManager.availableLearners.isPresent);
+
   });
 
   test('learner manager is present in single-offering mode', async function(assert) {
     await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{false}} />`);
-    assert.ok(component.learners.isPresent);
+    assert.ok(component.learnerManager.selectedLearners.isPresent);
+    assert.ok(component.learnerManager.availableLearners.isPresent);
   });
 
   test('learnerGroup validation errors do not show up initially', async function(assert) {
     await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`);
-    assert.notOk(component.learnerGroups.hasError);
+    assert.notOk(component.learnerManager.hasError);
   });
 
   test('learnerGroup validation errors show up when saving', async function(assert) {
     await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`);
     await component.save();
-    assert.ok(component.learnerGroups.hasError);
+    assert.ok(component.learnerManager.hasError);
   });
 
   test('renders when an offering is provided', async function(assert) {
@@ -401,11 +404,11 @@ module('Integration | Component | offering form', function(hooks) {
     await render(hbs`<OfferingForm @close={{noop}} />`);
     const timezoneService = this.owner.lookup('service:timezone');
     const currentTimezone = moment.tz.guess();
-    assert.equal(component.currentTimezone.text, timezoneService.formatTimezone(currentTimezone));
+    assert.equal(component.timezoneEditor.currentTimezone.text, timezoneService.formatTimezone(currentTimezone));
   });
 
   test('save date with new timezone', async function(assert) {
-    assert.expect(11);
+    assert.expect(8);
     const newTimezone = 'Pacific/Midway';
     const utc = 'Etc/UTC';
     const currentTimezone = moment.tz.guess();
@@ -423,16 +426,13 @@ module('Integration | Component | offering form', function(hooks) {
     const timezoneService = this.owner.lookup('service:timezone');
     await render(hbs`<OfferingForm @offering={{this.offering}} @close={{noop}} @save={{this.save}} />`);
     assert.notEqual(newTimezone, currentTimezone);
-    assert.notOk(component.timezoneEditor.label.isPresent);
     assert.notOk(component.timezoneEditor.picker.isPresent);
-    await component.currentTimezone.edit();
-    assert.ok(component.timezoneEditor.label.isPresent);
+    await component.timezoneEditor.currentTimezone.edit();
     assert.ok(component.timezoneEditor.picker.isPresent);
     assert.equal(component.timezoneEditor.picker.value, currentTimezone);
     await component.timezoneEditor.picker.select(newTimezone);
-    assert.notOk(component.timezoneEditor.label.isPresent);
     assert.notOk(component.timezoneEditor.picker.isPresent);
-    assert.equal(component.currentTimezone.text, timezoneService.formatTimezone(newTimezone));
+    assert.equal(component.timezoneEditor.currentTimezone.text, timezoneService.formatTimezone(newTimezone));
     await component.save();
   });
 
