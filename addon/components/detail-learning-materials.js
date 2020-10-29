@@ -4,7 +4,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { timeout } from 'ember-concurrency';
 import { dropTask, restartableTask } from 'ember-concurrency-decorators';
-import { map, all } from 'rsvp';
+import { all } from 'rsvp';
 import ObjectProxy from '@ember/object/proxy';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 
@@ -13,31 +13,39 @@ export default class DetailCohortsComponent extends Component {
   @service store;
   @service intl;
   @tracked isSorting = false;
-  @tracked managingMaterial = null;
-  @tracked totalMaterialsToSave = null;
-  @tracked currentMaterialsSaved = null;
+  @tracked managingMaterial;
+  @tracked totalMaterialsToSave;
+  @tracked currentMaterialsSaved;
 
   @tracked displayAddNewForm = false;
-  @tracked type = null;
-  @tracked materials = [];
-  @tracked parentMaterials = null;
-  @tracked learningMaterialStatuses = null;
-  @tracked learningMaterialUserRoles = null;
+  @tracked type;
+  @tracked materialsRelationship;
+  @tracked learningMaterialStatuses;
+  @tracked learningMaterialUserRoles;
+
+  constructor(){
+    super(...arguments);
+    this.learningMaterialStatuses = this.store.peekAll('learning-material-status');
+    this.learningMaterialUserRoles = this.store.peekAll('learning-material-user-role');
+  }
 
   @restartableTask
-  *load(event, [learningMaterials]) {
-    if (!learningMaterials) {
-      return;
+  *load() {
+    this.materialsRelationship = yield this.args.subject.learningMaterials;
+  }
+
+  get materials() {
+    if (!this.materialsRelationship) {
+      return [];
     }
 
-    this.materials = learningMaterials.toArray();
+    return this.materialsRelationship.toArray();
+  }
 
-    this.parentMaterials = yield map(this.materials, async lm => {
-      return await lm.get('learningMaterial');
+  get parentMaterialIds() {
+    return this.materials.map(lm => {
+      return lm.belongsTo('learningMaterial').id();
     });
-
-    this.learningMaterialStatuses = yield this.store.peekAll('learning-material-status');
-    this.learningMaterialUserRoles = yield this.store.peekAll('learning-material-user-role');
   }
 
   get proxyMaterials() {
@@ -105,7 +113,7 @@ export default class DetailCohortsComponent extends Component {
     this.totalMaterialsToSave = learningMaterials.length;
     this.currentMaterialsSaved = 0;
 
-    this.materials = yield this.saveSomeMaterials(learningMaterials);
+    yield this.saveSomeMaterials(learningMaterials);
     this.isSorting = false;
   }
 

@@ -15,11 +15,7 @@
     <ul class="lm-search-results">
       {{#each this.searchResults as |learningMaterial|}}
         <li
-          class={{if
-            (includes learningMaterial (await @currentMaterials))
-            "disabled"
-            ""
-          }}
+          class={{if (includes learningMaterial.id @currentMaterialIds) "disabled"}}
           role="button"
           {{on "click" (perform this.addLearningMaterial learningMaterial)}}
         >
