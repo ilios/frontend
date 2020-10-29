@@ -21,7 +21,9 @@ general:
   attendanceRequired: "Participation Requise"
   author: Auteur
   autoUpdatingSeconds: "{count, plural, =1 { Mise à jour automatique en 1 seconde...} other { Mise à jour automatique en # secondes...}}"
+  availableInstructorsAndInstructorGroups: "Instructeurs et groupes d'instructeurs disponibles"
   availableLearnerGroups: "Groupes d'apprenants disponsibles"
+  availableLearners: "Apprenants disponibles"
   back: Retour
   backToCourse: "Retour au Cours"
   backToCourses: "Retour à liste"
@@ -83,6 +85,7 @@ general:
   day: Jour
   defaultInstructorsNotLoaded: "(Instructeurs par défaut ne seront pas chargés: s'il vous plaît entrer la valeur souhaitée.)"
   defaultLocationNotLoaded: "(Localisation par défaut ne sera pas chargé: s'il vous plaît entrer la valeur souhaitée.)"
+  defaultNotLoaded: "Par défaut non chargé"
   deprecatedAbbreviation: "obs."
   description: Description
   detail: "Détail"
@@ -248,10 +251,14 @@ general:
   savedSuccessfully: "Réussie Sauvé"
   scheduled: Prevu
   scheduledSuccessfully: "Faire à prévu réussi"
+  scheduling: Planification
   school: "Écôle"
+  search: Chercher
   searchForIliosUsers: "Trouver des utilisateurs..."
   searchPlaceholder: "Trouver matériels d'étude"
   selectCohortsToAttach: "Choisissez le cohorte d'étudiants que vous voulez attacher au cours nouveau"
+  selectedInstructorGroups: "Groupes d’Instructeurs Selectionées"
+  selectedInstructors: "Instructeurs Selectionées"
   selectedLearnerGroups: "Groupes d’Étudiants Selectionées"
   selectedLearners: "Étudiants Selectionées"
   selectMeshFor: "Sélectionnez MeSH pour: {title}"

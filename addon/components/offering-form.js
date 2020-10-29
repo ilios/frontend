@@ -42,6 +42,7 @@ export default class OfferingForm extends Component {
   @tracked loaded = false;
   @tracked saveProgressPercent;
   @tracked urlChanged = false;
+  @tracked learnerGroupsFilter = '';
 
   constructor() {
     super(...arguments);

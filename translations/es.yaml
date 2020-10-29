@@ -21,7 +21,9 @@ general:
   attendanceRequired: "Asistencia Requerida"
   author: Autor
   autoUpdatingSeconds: "{count, plural, =1 {Actualización automática en 1 segundo...} other {Actualización automática en # segundos...}}"
+  availableInstructorsAndInstructorGroups: "Instructores y Grupos de instructores Disponibles"
   availableLearnerGroups: "Grupos de Aprendedores Disponibles"
+  availableLearners: "Aprendedores Disponibles"
   back: Volver
   backToCourse: "Volver al Curso"
   backToCourses: "Atrás a la Lista de Cursos"
@@ -83,6 +85,7 @@ general:
   day: "Día"
   defaultInstructorsNotLoaded: "(Instructores predeterminados no se cargarán: por favor introduzca el valor deseado.)"
   defaultLocationNotLoaded: "(Ubicación predterminada no se cargará: por favor introduzca el valor deseado.)"
+  defaultNotLoaded: "Predeterminado no cargado"
   deprecatedAbbreviation: "obs."
   description: "Descripción"
   detail: Detalle
@@ -248,10 +251,14 @@ general:
   savedSuccessfully: "Ahorrado Con Éxito"
   scheduled: Programado
   scheduledSuccessfully: "Programdo con Éxito"
+  scheduling: Programación
   school: Escuela
+  search: Buscar
   searchForIliosUsers: "Encuentre Usuarios de Ilios..."
   searchPlaceholder: "encontrar material de aprendizaje"
   selectCohortsToAttach: "Seleccione la cohorte de estudiantes que desea adjuntar al nuevo curso"
+  selectedInstructorGroups: "Grupos de Instructores Seleccionados"
+  selectedInstructors: "Instructores Seleccionados"
   selectedLearnerGroups: "Grupos de Aprendizaje Seleccionados"
   selectedLearners: "Aprendizaje Seleccionados"
   selectMeshFor: "Seleccione MeSH para: {title}"

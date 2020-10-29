@@ -99,6 +99,12 @@
 
 @mixin ilios-label () {
   font-weight: bold;
+
+  .label-description {
+    font-size: smaller;
+    font-weight: normal;
+
+  }
 }
 
 @mixin ilios-form-error {

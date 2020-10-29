@@ -21,7 +21,9 @@ general:
   attendanceRequired: "Attendance Required"
   author: Author
   autoUpdatingSeconds: "{count, plural, =1 {Auto updating in 1 second...} other {Auto updating in # seconds...}}"
+  availableInstructorsAndInstructorGroups: "Available Instructors and Instructor Groups"
   availableLearnerGroups: "Available Learner Groups"
+  availableLearners: "Available Learners"
   back: Back
   backToCourse: "Back to Course"
   backToCourses: "Back to Courses List"
@@ -83,6 +85,7 @@ general:
   day: Day
   defaultInstructorsNotLoaded: "(Default Instructors will not be loaded: please enter desired value.)"
   defaultLocationNotLoaded: "(Default Location will not be loaded: please enter desired value.)"
+  defaultNotLoaded: "Default Not Loaded"
   deprecatedAbbreviation: "depr."
   description: Description
   detail: Detail
@@ -248,10 +251,14 @@ general:
   savedSuccessfully: "Saved Successfully"
   scheduled: Scheduled
   scheduledSuccessfully: "Scheduled Successfully"
+  scheduling: Scheduling
   school: School
+  search: Search
   searchForIliosUsers: "Find Ilios Users..."
   searchPlaceholder: "Find Learning Material"
   selectCohortsToAttach: "Select the cohort of students you wish to attach to the new course"
+  selectedInstructorGroups: "Selected Instructors Groups"
+  selectedInstructors: "Selected Instructors"
   selectedLearnerGroups: "Selected Learner Groups"
   selectedLearners: "Selected Learners"
   selectMeshFor: "Select MeSH for: {title}"

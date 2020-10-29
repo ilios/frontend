@@ -34,8 +34,8 @@ module('Acceptance | Session - Offering Management', function(hooks) {
     await page.offerings.dateBlocks[0].offerings[0].edit();
 
     const { offeringForm: form } = page.offerings;
-    await form.instructors.manager.search('guy 3');
-    assert.equal(form.instructors.manager.searchResults.length, 1);
+    await form.instructorManager.search('guy 3');
+    assert.equal(form.instructorManager.searchResults.length, 1);
   });
 
   test('searching for course directors as instructors does not remove existing instructors #3479', async function(assert) {
@@ -60,21 +60,21 @@ module('Acceptance | Session - Offering Management', function(hooks) {
     await page.offerings.dateBlocks[0].offerings[0].edit();
 
     const { offeringForm: form } = page.offerings;
-    assert.equal(form.instructors.manager.instructors.length, 0);
-    await form.instructors.manager.search('guy 2');
-    assert.equal(form.instructors.manager.searchResults.length, 1);
-    await form.instructors.manager.searchResults[0].add();
-    assert.equal(form.instructors.manager.instructors.length, 1);
-    assert.equal(form.instructors.manager.instructors[0].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.equal(form.instructorManager.selectedInstructors.length, 0);
+    await form.instructorManager.search('guy 2');
+    assert.equal(form.instructorManager.searchResults.length, 1);
+    await form.instructorManager.searchResults[0].add();
+    assert.equal(form.instructorManager.selectedInstructors.length, 1);
+    assert.equal(form.instructorManager.selectedInstructors[0].userNameInfo.fullName, '2 guy M. Mc2son');
 
-    await form.instructors.manager.search('guy 3');
-    assert.equal(form.instructors.manager.instructors.length, 1);
-    assert.equal(form.instructors.manager.instructors[0].userNameInfo.fullName, '2 guy M. Mc2son');
-    assert.equal(form.instructors.manager.searchResults.length, 1);
-    await form.instructors.manager.searchResults[0].add();
-    assert.equal(form.instructors.manager.instructors.length, 2);
-    assert.equal(form.instructors.manager.instructors[0].userNameInfo.fullName, '2 guy M. Mc2son');
-    assert.equal(form.instructors.manager.instructors[1].userNameInfo.fullName, '3 guy M. Mc3son');
+    await form.instructorManager.search('guy 3');
+    assert.equal(form.instructorManager.selectedInstructors.length, 1);
+    assert.equal(form.instructorManager.selectedInstructors[0].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.equal(form.instructorManager.searchResults.length, 1);
+    await form.instructorManager.searchResults[0].add();
+    assert.equal(form.instructorManager.selectedInstructors.length, 2);
+    assert.equal(form.instructorManager.selectedInstructors[0].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.equal(form.instructorManager.selectedInstructors[1].userNameInfo.fullName, '3 guy M. Mc3son');
   });
 
   test('Instructors additional name info is displayed if applicable', async function(assert) {

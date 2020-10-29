@@ -1,8 +1,18 @@
-import {clickable, collection, create, fillable, isVisible, property, text, value} from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  fillable, hasClass,
+  isPresent,
+  isVisible,
+  property,
+  text,
+  value,
+} from 'ember-cli-page-object';
 import { flatpickrDatePicker } from 'ilios-common';
-import learnerSelectionManager from './learner-selection-manager';
-import learnergroupSelectionManager from './learnergroup-selection-manager';
-import instructorSelectionManager from './instructor-selection-manager';
+import userNameInfo from "./user-name-info";
+import detailLearnergroupsList from "./detail-learnergroups-list";
+import learnergroupTree from "./learnergroup-tree";
 
 const definition = {
   scope: '[data-test-offering-form]',
@@ -33,12 +43,12 @@ const definition = {
       set: fillable(),
     }
   },
-  currentTimezone: {
-    scope: '[data-test-current-timezone]',
-    edit: clickable(),
-  },
   timezoneEditor: {
     scope: '[data-test-timezone-picker]',
+    currentTimezone: {
+      scope: '[data-test-current-timezone]',
+      edit: clickable(),
+    },
     label: {
       scope: 'label'
     },
@@ -75,19 +85,55 @@ const definition = {
       }
     })
   },
-  instructors: {
-    scope: '.instructors',
-    manager: instructorSelectionManager,
+  instructorManager: {
+    scope: '[data-test-instructor-management]',
+    selectedInstructors: collection('[data-test-selected-instructor]', {
+      userNameInfo,
+      remove: clickable('.remove')
+    }),
+    selectedInstructorGroups: collection('[data-test-selected-instructor-group]', {
+      title: text('[data-test-instructor-group-title]'),
+      members: collection('[data-test-instructor-group-member]', {
+        userNameInfo
+      }),
+      remove: clickable('[data-test-instructor-group-title]')
+    }),
+    search: fillable('.search-box input'),
+    searchResults: collection('.results [data-test-result]', {
+      add: clickable(),
+      active: hasClass('active'),
+      inactive: hasClass('inactive'),
+    }),
   },
-  learners: {
-    scope: '.learners',
-    manager: learnerSelectionManager,
+  learnerManager: {
+    scope: '[data-test-learner-management]',
+    selectedLearners: {
+      scope: '[data-test-selected-learners]',
+    },
+    availableLearners: {
+      scope: '[data-test-available-learners]',
+    },
+    selectedLearnerGroups: {
+      scope: '[data-test-selected-learner-groups]',
+      title: text('[data-test-title]', { at: 0 }),
+      list: detailLearnergroupsList,
+      noGroups: {
+        scope: '[data-test-no-selected-learner-groups]'
+      }
+    },
+    availableLearnerGroups: {
+      scope: '[data-test-available-learner-groups]',
+      title: text('[data-test-title]', { at: 0 }),
+      search: fillable('[data-test-search-box] input'),
+      runSearch: clickable('[data-test-search-box] .search-icon'),
+      cohorts: collection('[data-test-cohorts]', {
+        title: text('[data-test-title]', { at: 0 }),
+        trees: collection('[data-test-learnergroup-tree-root=true]', learnergroupTree)
+      })
+    },
+    hasError: isPresent('.validation-error-message')
   },
-  learnerGroups: {
-    scope: '.learner-groups',
-    manager: learnergroupSelectionManager,
-    hasError: isVisible('.validation-error-message')
-  },
+
   save: clickable('.done'),
   close: clickable('.cancel')
 };
