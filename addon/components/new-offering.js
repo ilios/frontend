@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import scrollIntoView from "scroll-into-view";
 
 export default class NewObjectiveComponent extends Component {
   @service store;
@@ -22,5 +23,10 @@ export default class NewObjectiveComponent extends Component {
     });
 
     return offering.save();
+  }
+
+  @action
+  scrollHere(element) {
+    scrollIntoView(element);
   }
 }
