@@ -1,8 +1,8 @@
 <div
   class="offering-form"
   data-test-offering-form
-  {{did-insert (perform this.load) @offering @cohorts @scrollToBottom}}
-  {{did-update (perform this.load) @offering @cohorts @scrollToBottom}}
+  {{did-insert (perform this.load) @offering @cohorts}}
+  {{did-update (perform this.load) @offering @cohorts}}
 >
   {{#unless this.loadData.isRunning}}
     <div class="toggle-offering-calendar">
@@ -21,7 +21,7 @@
         @session={{@session}}
       />
     {{/if}}
-    <div class="form" {{did-insert (set this.scrollTo)}}>
+    <div class="form">
       <fieldset class="scheduling">
         <legend>{{t "general.scheduling"}}</legend>
         <div class="scheduling-controls">

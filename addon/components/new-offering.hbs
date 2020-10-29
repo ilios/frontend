@@ -1,5 +1,7 @@
-<div class="new-offering">
-  <div class="new-offering-title">
+<div
+  class="new-offering"
+>
+  <div class="new-offering-title" {{did-insert this.scrollHere}}>
     {{t "general.newOffering"}}
   </div>
   <div class="choose-offering-type">
@@ -21,6 +23,5 @@
     @save={{this.save}}
     @smallGroupMode={{this.smallGroupMode}}
     @session={{@session}}
-    @scrollToBottom={{true}}
   />
 </div>
