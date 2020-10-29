@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency-decorators';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 import { action } from '@ember/object';
 
 export default class DetailMeshComponent extends Component {
@@ -10,14 +10,18 @@ export default class DetailMeshComponent extends Component {
 
   @tracked isManaging = false;
   @tracked bufferedDescriptors = null;
-  @tracked meshDescriptors = null;
+  @tracked meshDescriptorRelationship;
 
-  @action
-  load(event, [meshDescriptors]) {
-    if (!meshDescriptors) {
-      return;
+  @restartableTask
+  *load() {
+    this.meshDescriptorRelationship = yield this.args.subject.meshDescriptors;
+  }
+  get meshDescriptors() {
+    if (!this.meshDescriptorRelationship) {
+      return [];
     }
-    this.meshDescriptors = meshDescriptors.toArray();
+
+    return this.meshDescriptorRelationship.toArray();
   }
   @action
   manage() {

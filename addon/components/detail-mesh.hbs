@@ -1,8 +1,8 @@
 <section
   class="detail-mesh"
   data-test-detail-mesh
-  {{did-insert (fn this.load) (await @subject.meshDescriptors)}}
-  {{did-update (fn this.load) (await @subject.meshDescriptors)}}
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @subject.meshDescriptors}}
 >
   {{#if (is-array this.meshDescriptors)}}
     <div class="detail-mesh-header">
