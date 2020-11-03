@@ -55,7 +55,7 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.ok(page.overview.ilmHours.isVisible);
     assert.ok(page.overview.ilmDueDate.isVisible);
     assert.equal(page.overview.ilmHours.value, ilmSession.hours);
-    assert.equal(page.overview.ilmDueDate.value, moment(ilmSession.dueDate).format('L'));
+    assert.equal(page.overview.ilmDueDate.value, moment(ilmSession.dueDate).format('M/D/YYYY'));
 
     await page.overview.toggleIlm();
 
