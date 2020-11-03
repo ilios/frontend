@@ -80,12 +80,17 @@
         {{t "general.url"}}:
       </label>
       <span>
-        <Input
+        {{! template-lint-disable no-bare-strings}}
+        <input
           type="text"
-          @value={{this.link}}
-          @focus-out={{fn this.addErrorDisplayFor "link"}}
+          placeholder="https://example.com"
+          value={{this.bestLink}}
+          inputmode="url"
           disabled={{this.prepareSave.isRunning}}
-        />
+          {{on "input" (pick "target.value" this.changeLink)}}
+          {{on "keyup" (fn this.addErrorDisplayFor "link")}}
+          {{on "focus" (fn this.selectAllText)}}
+        >
         {{#each (await (compute (fn this.getErrorsFor) "link")) as |message|}}
           <span class="validation-error-message">
             {{message}}
