@@ -151,7 +151,7 @@ module('Integration | Component | dashboard materials', function(hooks) {
     assert.dom(firstLmSessionTitle).hasText('session1title');
     assert.dom(firstLmCourseTitle).hasText('course1title');
     assert.dom(firstLmInstructor).hasText('Instructor1name, Instructor2name');
-    assert.dom(firstLmFirstOffering).hasText(today.format('L'));
+    assert.dom(firstLmFirstOffering).hasText(today.format('M/D/YYYY'));
     assert.equal(find(firstLmDownloadLink).href.trim(), 'http://myhost.com/url1');
 
     assert.equal(find(secondLmTitle).textContent.replace(/[\t\n\s]+/g, ""), 'Citationtitle3citationtext');
@@ -160,7 +160,7 @@ module('Integration | Component | dashboard materials', function(hooks) {
     assert.dom(secondLmSessionTitle).hasText('session3title');
     assert.dom(secondLmCourseTitle).hasText('course3title');
     assert.dom(secondLmInstructor).hasText('');
-    assert.dom(secondLmFirstOffering).hasText(today.format('L'));
+    assert.dom(secondLmFirstOffering).hasText(today.format('M/D/YYYY'));
 
     assert.ok(find(thirdLmTitle).textContent.includes('title2'));
     assert.equal(find(thirdLmLink).href.trim(), 'http://myhost.com/url2');
@@ -168,21 +168,21 @@ module('Integration | Component | dashboard materials', function(hooks) {
     assert.dom(thirdLmSessionTitle).hasText('session2title');
     assert.dom(thirdLmCourseTitle).hasText('course2title');
     assert.dom(thirdLmInstructor).hasText('Instructor1name, Instructor2name');
-    assert.dom(thirdLmFirstOffering).hasText(tomorrow.format('L'));
+    assert.dom(thirdLmFirstOffering).hasText(tomorrow.format('M/D/YYYY'));
 
     assert.equal(find(fourthLmLink).href.trim(), 'http://myhost.com/document.txt');
     assert.dom(fourthLmTypeIcon).exists({ count: 1 }, 'LM type icon is present');
     assert.dom(fourthLmSessionTitle).hasText('session4title');
     assert.dom(fourthLmCourseTitle).hasText('course4title');
     assert.dom(fourthLmInstructor).hasText('Instructor3name, Instructor4name');
-    assert.dom(fourthLmFirstOffering).hasText(tomorrow.format('L'));
+    assert.dom(fourthLmFirstOffering).hasText(tomorrow.format('M/D/YYYY'));
 
     assert.ok(find(fifthLmTitle).textContent.includes('title5'));
     assert.dom(fifthLmTypeIcon).exists({ count: 1 }, 'LM type icon is present');
     assert.dom(fifthLmSessionTitle).hasText('session5title');
     assert.dom(fifthLmCourseTitle).hasText('course5title');
     assert.dom(fifthLmInstructor).hasText('');
-    assert.dom(fifthFirstOffering).hasText(tomorrow.format('L'));
+    assert.dom(fifthFirstOffering).hasText(tomorrow.format('M/D/YYYY'));
   });
 
   test('it renders blank', async function(assert) {
