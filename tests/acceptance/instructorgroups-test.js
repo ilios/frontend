@@ -198,16 +198,6 @@ module('Acceptance | Instructor Groups', function(hooks) {
       );
     });
 
-    test('click edit takes you to instructorgroup route', async function(assert) {
-      assert.expect(1);
-      this.server.create('instructorGroup', {
-        school: this.school,
-      });
-      await page.visit();
-      await page.instructorGroups(0).edit();
-      assert.equal(currentURL(), '/instructorgroups/1');
-    });
-
     test('click title takes you to instructorgroup route', async function(assert) {
       assert.expect(1);
       this.server.create('instructorGroup', {
