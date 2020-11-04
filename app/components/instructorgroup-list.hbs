@@ -38,13 +38,6 @@
             {{/if}}
           </td>
           <td class="text-right">
-            <LinkTo
-              @route="instructorGroup"
-              @model={{instructorGroup}}
-              class="edit"
-            >
-              <FaIcon @icon="edit" class="enabled" />
-            </LinkTo>
             {{#if
               (and
                 @canDelete (eq (get (await instructorGroup.courses) "length") 0)
