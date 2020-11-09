@@ -57,45 +57,6 @@
           {{/if}}
         </span>
       </div>
-      <div class="block defaultinstructors">
-        <label>
-          {{t "general.defaultInstructors"}}:
-        </label>
-        <div>
-          {{#if (is-fulfilled @learnerGroup.allInstructors)}}
-            {{#if this.isManagingInstructors}}
-              <LearnergroupInstructorManager
-                @learnerGroup={{@learnerGroup}}
-                @save={{this.saveInstructors}}
-                @close={{fn this.manageInstructors false}}
-              />
-            {{else}}
-              {{#if (get (await @learnerGroup.allInstructors) "length")}}
-                <ul class="assigned-instructors" data-test-assigned-instructors>
-                {{#each (sort-by "fullName" (await @learnerGroup.allInstructors)) as |instructor|}}
-                  <li
-                    class={{if @canUpdate "clickable link"}}
-                    role="button"
-                    {{on "click" (fn this.manageInstructors true)}}
-                  >
-                    <UserNameInfo @user={{instructor}} /></li>
-                {{/each}}
-                </ul>
-              {{else}}
-                <span
-                  class={{if @canUpdate "clickable link"}}
-                  role="button"
-                  {{on "click" (fn this.manageInstructors true)}}
-                >
-                  {{t "general.none"}}
-                </span>
-              {{/if}}
-            {{/if}}
-          {{else}}
-            <LoadingSpinner />
-          {{/if}}
-        </div>
-      </div>
       <div class="block defaulturl">
         <label>
           {{t "general.defaultVirtualLearningLink"}}:
@@ -143,6 +104,11 @@
           {{/each}}
         </ul>
       </div>
+      <LearnergroupInstructorManager
+        @learnerGroup={{@learnerGroup}}
+        @save={{this.saveInstructors}}
+        @canUpdate={{@canUpdate}}
+      />
       <div class="learnergroup-overview-actions">
         {{#if (or @isEditing @isBulkAssigning)}}
           <button

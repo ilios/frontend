@@ -1,5 +1,31 @@
 .learnergroup-instructor-manager {
-  .removable-instructors {
-    @include ilios-removable-list;
+  @include detail-container($ilios-orange);
+  border-top: 1px dotted $ilios-orange;
+
+  .detail-header {
+    @include detail-container-header;
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
+  }
+
+  .detail-content {
+
+    .assigned-instructors {
+      @include ilios-tag-list;
+    }
+
+    .removable-instructors {
+      @include ilios-removable-list;
+    }
+
+    .user-search {
+      margin-top: 1rem;
+    }
   }
 }

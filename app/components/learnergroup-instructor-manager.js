@@ -8,6 +8,7 @@ export default class LearnergroupInstructorManager extends Component {
   @tracked availableInstructorGroups = [];
   @tracked instructors = [];
   @tracked instructorGroups = [];
+  @tracked isManaging = false;
 
   @restartableTask
   *load(element, [learnerGroup]) {
@@ -49,5 +50,6 @@ export default class LearnergroupInstructorManager extends Component {
   @dropTask
   *saveChanges() {
     yield this.args.save(this.instructors, this.instructorGroups);
+    this.isManaging = false;
   }
 }
