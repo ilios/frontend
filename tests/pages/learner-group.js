@@ -20,7 +20,7 @@ export default create({
   },
   overview: {
     scope: '[data-test-overview]',
-    manage: clickable('[data-test-manage]'),
+    manage: clickable('[data-test-overview-actions] [data-test-manage]'),
     learnerGroupUserManager,
     calendarToggledHidden: isVisible('[data-test-toggle-learnergroup-calendar] [data-test-first][data-test-selected]'),
     calendarToggledVisible: isVisible('[data-test-toggle-learnergroup-calendar] [data-test-second][data-test-selected]'),

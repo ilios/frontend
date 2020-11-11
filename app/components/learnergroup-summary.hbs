@@ -109,7 +109,7 @@
         @save={{this.saveInstructors}}
         @canUpdate={{@canUpdate}}
       />
-      <div class="learnergroup-overview-actions">
+      <div class="learnergroup-overview-actions" data-test-overview-actions>
         {{#if (or @isEditing @isBulkAssigning)}}
           <button
             type="button"
