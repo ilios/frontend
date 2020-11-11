@@ -6,24 +6,24 @@
 >
   {{#unless this.load.isRunning}}
     <div class="detail-header">
-      <div class="title">
+      <div class="title" data-test-title>
         {{t "general.defaultInstructors"}}
       </div>
       {{#if this.isManaging}}
         <div class="actions">
-          <button type="button" class="bigadd" {{action (perform this.saveChanges)}}>
+          <button type="button" class="bigadd" {{action (perform this.saveChanges)}} data-test-save>
             <FaIcon
               @icon={{if this.saveChanges.isRunning "spinner" "check"}}
               @spin={{if this.saveChanges.isRunning true false}}
             />
           </button>
-          <button type="button" class="bigcancel" {{ on "click" (set this.isManaging false)}}>
+          <button type="button" class="bigcancel" {{ on "click" (set this.isManaging false)}} data-test-cancel>
             <FaIcon @icon="undo" />
           </button>
         </div>
       {{else}}
         {{#if @canUpdate}}
-          <button type="button" {{on "click" (set this.isManaging true)}}>
+          <button type="button" {{on "click" (set this.isManaging true)}} data-test-manage>
             {{t "general.instructorsManageTitle"}}
           </button>
         {{/if}}
@@ -33,13 +33,17 @@
       {{#if this.isManaging}}
         <ul class="removable-instructors">
           {{#each (sort-by "fullName" this.instructors) as |user|}}
-            <li role="button" {{on "click" (fn this.removeInstructor user)}}>
+            <li role="button" {{on "click" (fn this.removeInstructor user)}} data-test-selected-instructor>
               <UserNameInfo @user={{user}} />
               <FaIcon @icon="times" class="remove" />
             </li>
           {{/each}}
           {{#each (sort-by "title" this.instructorGroups) as |instructorGroup|}}
-            <li role="button" {{on "click" (fn this.removeInstructorGroup instructorGroup)}}>
+            <li
+              role="button"
+              {{on "click" (fn this.removeInstructorGroup instructorGroup)}}
+              data-test-selected-instructor-group
+            >
               {{instructorGroup.title}}
               <FaIcon @icon="times" class="remove" />
             </li>
@@ -54,15 +58,15 @@
         />
       {{else}}
         {{#if (get (await @learnerGroup.allInstructors) "length")}}
-          <ul class="assigned-instructors" data-test-assigned-instructors>
+          <ul class="assigned-instructors">
             {{#each (sort-by "fullName" (await @learnerGroup.allInstructors)) as |instructor|}}
-              <li>
+              <li data-test-assigned-instructor>
                 <UserNameInfo @user={{instructor}} />
               </li>
             {{/each}}
           </ul>
         {{else}}
-          <span>
+          <span data-test-no-assigned-instructors>
             {{t "general.none"}}
           </span>
         {{/if}}
