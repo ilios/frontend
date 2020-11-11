@@ -165,7 +165,7 @@ module('Unit | Model | LearnerGroup', function(hooks) {
     const user1 = store.createRecord('user');
     const user2 = store.createRecord('user');
     const user3 = store.createRecord('user');
-    learnerGroup.get('instructors').pushObject(user1);
+    learnerGroup.get('instructors').pushObject(user1, user2);
     const instructorGroup1 = store.createRecord('instructor-group', {users: [user2]});
     const instructorGroup2 = store.createRecord('instructor-group', {users: [user3]});
     learnerGroup.get('instructorGroups').pushObjects([instructorGroup1, instructorGroup2]);
