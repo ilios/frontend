@@ -31,24 +31,47 @@
     </div>
     <div class="detail-content">
       {{#if this.isManaging}}
-        <ul class="removable-instructors">
-          {{#each (sort-by "fullName" this.instructors) as |user|}}
-            <li role="button" {{on "click" (fn this.removeInstructor user)}} data-test-selected-instructor>
-              <UserNameInfo @user={{user}} />
-              <FaIcon @icon="times" class="remove" />
-            </li>
-          {{/each}}
-          {{#each (sort-by "title" this.instructorGroups) as |instructorGroup|}}
-            <li
-              role="button"
-              {{on "click" (fn this.removeInstructorGroup instructorGroup)}}
-              data-test-selected-instructor-group
-            >
-              {{instructorGroup.title}}
-              <FaIcon @icon="times" class="remove" />
-            </li>
-          {{/each}}
-        </ul>
+        {{#if this.instructors.length}}
+          <h4>
+            {{t "general.instructors"}}
+          </h4>
+          <ul class="removable-instructors">
+            {{#each (sort-by "fullName" this.instructors) as |user|}}
+              <li role="button" {{on "click" (fn this.removeInstructor user)}} data-test-selected-instructor>
+                <UserNameInfo @user={{user}} />
+                <FaIcon @icon="times" class="remove" />
+              </li>
+            {{/each}}
+          </ul>
+        {{/if}}
+        {{#if this.instructorGroups.length}}
+          <h4>
+            {{t "general.instructorGroups"}}
+          </h4>
+          <div class="removable-instructor-groups">
+            {{#each (sort-by "title" this.instructorGroups) as |instructorGroup|}}
+              <div class="removable-instructor-group" data-test-selected-instructor-group>
+                <span
+                  role="button"
+                  data-test-instructor-group-title
+                  {{on "click" (fn this.removeInstructorGroup instructorGroup)}}
+                >
+                  <FaIcon @icon="users" />
+                  {{instructorGroup.title}}
+                  <FaIcon @icon="times" class="remove" />
+                </span>
+                <br>
+                <ul class="instructorgroup-members-list">
+                  {{#each (sort-by "fullName" (await instructorGroup.users)) as |user|}}
+                    <li data-test-instructor-group-member>
+                      <UserNameInfo @user={{user}} />
+                    </li>
+                  {{/each}}
+                </ul>
+              </div>
+            {{/each}}
+          </div>
+        {{/if}}
         <UserSearch
           @addUser={{this.addInstructor}}
           @addInstructorGroup={{this.addInstructorGroup}}

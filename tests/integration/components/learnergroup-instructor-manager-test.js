@@ -55,7 +55,9 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
     assert.equal(component.selectedInstructors[1].userNameInfo.fullName, 'test person');
     assert.notOk(component.selectedInstructors[1].userNameInfo.hasAdditionalInfo);
     assert.equal(component.selectedInstructorGroups.length, 1);
-    assert.equal(component.selectedInstructorGroups[0].text, 'test group');
+    assert.equal(component.selectedInstructorGroups[0].title, 'test group');
+    assert.equal(component.selectedInstructorGroups[0].members.length, 1);
+    assert.equal(component.selectedInstructorGroups[0].members[0].userNameInfo.fullName, 'test person2');
     assert.ok(component.saveButton.isVisible);
     assert.ok(component.cancelButton.isVisible);
     assert.notOk(component.manageButton.isVisible);

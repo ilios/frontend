@@ -27,6 +27,9 @@ const definition = {
   selectedInstructorGroups: collection('[data-test-selected-instructor-group]', {
     title: text('[data-test-instructor-group-title]'),
     remove: clickable('[data-test-instructor-group-title]'),
+    members: collection('[data-test-instructor-group-member]', {
+      userNameInfo
+    }),
   }),
   search: fillable('.search-box input'),
   searchResults: collection('.results [data-test-result]', {
