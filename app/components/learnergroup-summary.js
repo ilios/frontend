@@ -20,7 +20,6 @@ export default class LearnergroupSummaryComponent extends Component {
   @tracked topLevelGroupTitle = null;
   @tracked totalGroupsToSave = 0;
   @tracked showLearnerGroupCalendar = false;
-  @tracked isManagingInstructors = false;
   @tracked courses = [];
   @tracked treeGroups = [];
   @tracked usersToPassToManager = [];
@@ -115,15 +114,7 @@ export default class LearnergroupSummaryComponent extends Component {
   saveInstructors(newInstructors, newInstructorGroups) {
     this.args.learnerGroup.set('instructors', newInstructors.toArray());
     this.args.learnerGroup.set('instructorGroups', newInstructorGroups.toArray());
-    this.isManagingInstructors = false;
     return this.args.learnerGroup.save();
-  }
-
-  @action
-  manageInstructors(isManagingInstructors) {
-    if (this.args.canUpdate) {
-      this.isManagingInstructors = isManagingInstructors;
-    }
   }
 
   @enqueueTask

@@ -8,6 +8,13 @@ module('Integration | Component | learnergroup summary', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
+  hooks.beforeEach(function() {
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    this.programYear = this.server.create('programYear', { program });
+    this.cohort = this.server.create('cohort', { programYear: this.programYear });
+  });
+
   test('renders with data', async function (assert) {
     const user1 = this.server.create('user');
     const user2 = this.server.create('user');
@@ -19,6 +26,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     const cohort = this.server.create('cohort', {
       title: 'this cohort',
       users: [user1, user2, user3, user4],
+      programYear: this.programYear
     });
     const subGroup = this.server.create('learner-group', {
       title: 'test sub-group',
@@ -57,7 +65,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     />`);
 
     const defaultLocation = '[data-test-overview] .defaultlocation span:nth-of-type(1)';
-    const instructors = '[data-test-overview] .defaultinstructors ul li';
+    const instructors = '[data-test-overview] [data-test-assigned-instructor]';
     const coursesList = '[data-test-overview] .associatedcourses ul';
 
     assert.dom(defaultLocation).hasText('test location');
@@ -70,8 +78,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
   });
 
   test('Needs accommodation', async function(assert) {
-    const cohort = this.server.create('cohort');
-    const learnerGroup = this.server.create('learner-group', { needsAccommodation: true, cohort });
+    const learnerGroup = this.server.create('learner-group', { needsAccommodation: true, cohort: this.cohort });
     const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupSummary
@@ -87,8 +94,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
   });
 
   test('Does not need accommodation', async function(assert) {
-    const cohort = this.server.create('cohort');
-    const learnerGroup = this.server.create('learner-group', { needsAccommodation: false, cohort });
+    const learnerGroup = this.server.create('learner-group', { needsAccommodation: false, cohort: this.cohort });
     const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupSummary
@@ -104,8 +110,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
   });
 
   test('Read-only: Needs accommodation', async function(assert) {
-    const cohort = this.server.create('cohort');
-    const learnerGroup = this.server.create('learner-group', { needsAccommodation: true, cohort });
+    const learnerGroup = this.server.create('learner-group', { needsAccommodation: true, cohort: this.cohort });
     const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupSummary
@@ -121,8 +126,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
   });
 
   test('Read-only: Does not need accommodation', async function(assert) {
-    const cohort = this.server.create('cohort');
-    const learnerGroup = this.server.create('learner-group', { needsAccommodation: false, cohort });
+    const learnerGroup = this.server.create('learner-group', { needsAccommodation: false, cohort: this.cohort });
     const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupSummary
@@ -138,8 +142,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
   });
 
   test('Toggle needs accommodations', async function(assert) {
-    const cohort = this.server.create('cohort');
-    const learnerGroup = this.server.create('learner-group', { needsAccommodation: false, cohort });
+    const learnerGroup = this.server.create('learner-group', { needsAccommodation: false, cohort: this.cohort });
     const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupSummary
@@ -161,10 +164,9 @@ module('Integration | Component | learnergroup summary', function(hooks) {
   test('Update location', async function(assert) {
     assert.expect(2);
 
-    const cohort = this.server.create('cohort');
     const learnerGroup = this.server.create('learner-group', {
       location: 'test location',
-      cohort,
+      cohort: this.cohort
     });
     const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
@@ -193,6 +195,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
   test('each course is only shown once', async function (assert) {
     const cohort = this.server.create('cohort', {
       title: 'this cohort',
+      programYear: this.programYear
     });
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
@@ -234,10 +237,9 @@ module('Integration | Component | learnergroup summary', function(hooks) {
   test('Update default URL', async function(assert) {
     assert.expect(2);
 
-    const cohort = this.server.create('cohort');
     const learnerGroup = this.server.create('learner-group', {
       url: 'https://iliosproject.org/',
-      cohort,
+      cohort: this.cohort
     });
     const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
@@ -264,9 +266,8 @@ module('Integration | Component | learnergroup summary', function(hooks) {
   });
 
   test('URL input validation', async function(assert) {
-    const cohort = this.server.create('cohort');
     const learnerGroup = this.server.create('learner-group', {
-      cohort,
+      cohort: this.cohort
     });
     const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);

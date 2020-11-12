@@ -5,7 +5,6 @@
     display: block;
 
     .learnergroup-overview-actions {
-      border-top: 1px dotted $ilios-orange;
       margin-top: .25rem;
       padding-top: .5rem;
       text-align: right;
@@ -25,13 +24,8 @@
     }
   }
 
-  .defaultinstructors {
-    .assigned-instructors {
-      @include ilios-tag-list;
-    }
-  }
-
   .associatedcourses {
+    margin-bottom: .5rem;
     margin-top: .3rem;
     display: flex;
 
