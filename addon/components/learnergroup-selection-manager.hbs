@@ -43,7 +43,7 @@
             <ul class="tree-groups-list" data-test-tree-groups-list>
               {{#each
                 (sort-by
-                  "title" (await cohort.rootLevelLearnerGroups)
+                  this.sortByTitle (await cohort.rootLevelLearnerGroups)
                 ) as |learnerGroup|
               }}
                 <LearnergroupTree

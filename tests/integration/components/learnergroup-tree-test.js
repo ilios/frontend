@@ -12,7 +12,7 @@ module('Integration | Component | learnergroup-tree', function(hooks) {
   hooks.beforeEach(async function() {
     const thirdLevelLearnerGroup1 = this.server.create('learner-group', { title: 'Third 1' });
     const thirdLevelLearnerGroup2 = this.server.create('learner-group', { title: 'Third 2' });
-    const thirdLevelLearnerGroup3 = this.server.create('learner-group', { title: 'Third 3', needsAccommodation: true });
+    const thirdLevelLearnerGroup3 = this.server.create('learner-group', { title: 'Third 10', needsAccommodation: true });
 
     const secondLevelLearnerGroup1 = this.server.create('learner-group', {
       title: 'Second 1',
@@ -22,7 +22,7 @@ module('Integration | Component | learnergroup-tree', function(hooks) {
       title: 'Second 2',
       children: [ thirdLevelLearnerGroup3 ]
     });
-    const secondLevelLearnerGroup3 = this.server.create('learner-group', { title: 'Second 3' });
+    const secondLevelLearnerGroup3 = this.server.create('learner-group', { title: 'Second 10' });
     const topLevelLearnerGroup = this.server.create('learner-group', {
       title: 'Top Group',
       children: [ secondLevelLearnerGroup1, secondLevelLearnerGroup2, secondLevelLearnerGroup3 ],
@@ -60,11 +60,11 @@ module('Integration | Component | learnergroup-tree', function(hooks) {
     assert.equal(component.subgroups[0].subgroups[1].title, 'Third 2');
     assert.notOk(component.subgroups[0].subgroups[1].needsAccommodation);
     assert.equal(component.subgroups[0].subgroups.length, 2);
-    assert.equal(component.subgroups[1].subgroups[0].title, 'Third 3');
+    assert.equal(component.subgroups[1].subgroups[0].title, 'Third 10');
     assert.ok(component.subgroups[1].subgroups[0].needsAccommodation);
     assert.equal(component.subgroups[1].title, 'Second 2');
     assert.notOk(component.subgroups[1].needsAccommodation);
-    assert.equal(component.subgroups[2].title, 'Second 3');
+    assert.equal(component.subgroups[2].title, 'Second 10');
     assert.notOk(component.subgroups[2].needsAccommodation);
   });
 
