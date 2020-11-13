@@ -4,11 +4,14 @@ import { action } from '@ember/object';
 import { filter } from 'rsvp';
 import { isEmpty, isPresent } from '@ember/utils';
 import {restartableTask} from "ember-concurrency-decorators";
+import { inject as service } from '@ember/service';
+
 
 export default class LearnergroupTree extends Component {
   @tracked isHidden = true;
   @tracked selectable = false;
   @tracked hasChildren = false;
+  @service intl;
 
   get isRoot() {
     return isPresent(this.args.isRoot) ? this.args.isRoot : true;
