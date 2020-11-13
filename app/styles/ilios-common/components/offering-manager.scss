@@ -1,9 +1,11 @@
 .offering-manager {
+  border-bottom: 1px dotted $dark-grey;
   display: grid;
   font-size: .9rem;
   grid-column: 1 / -1;
   grid-template-columns: repeat(5, 1fr);
   margin-bottom: .5rem;
+  padding-bottom: .5rem;
 
   .offering-manager-learner-groups {
     grid-column-start: 2;
