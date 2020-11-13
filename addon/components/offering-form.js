@@ -482,7 +482,7 @@ export default class OfferingForm extends Component {
       .toDate();
   }
 
-
+  @action
   sortLearnergroupsByTitle(learnerGroupA, learnerGroupB) {
     const locale = this.intl.get('locale');
     return learnerGroupA.title.localeCompare(learnerGroupB.title, locale, {numeric: true});

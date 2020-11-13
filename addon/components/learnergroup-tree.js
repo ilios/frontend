@@ -58,6 +58,7 @@ export default class LearnergroupTree extends Component {
     }
   }
 
+  @action
   sortByTitle(learnerGroupA, learnerGroupB) {
     const locale = this.intl.get('locale');
     return learnerGroupA.title.localeCompare(learnerGroupB.title, locale, {numeric: true});
