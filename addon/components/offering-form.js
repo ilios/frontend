@@ -484,6 +484,7 @@ export default class OfferingForm extends Component {
 
 
   sortLearnergroupsByTitle(learnerGroupA, learnerGroupB) {
-    return learnerGroupA.title.localeCompare(learnerGroupB.title, undefined, {numeric: true});
+    const locale = this.intl.get('locale');
+    return learnerGroupA.title.localeCompare(learnerGroupB.title, locale, {numeric: true});
   }
 }
