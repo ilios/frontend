@@ -456,4 +456,22 @@ module('Integration | Component | offering form', function(hooks) {
     await component.url.set('http://example.com?jayden=awesome/');
     assert.ok(component.url.hasError);
   });
+
+  test('learner groups sort order', async function(assert) {
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const programYear = this.server.create('programYear', { program });
+    const cohort = this.server.create('cohort', { programYear });
+    this.server.create('learnerGroup', { cohort, title: 'Learner Group 1'});
+    this.server.create('learnerGroup', { cohort, title: 'Learner Group 10'});
+    this.server.create('learnerGroup', { cohort, title: 'Learner Group 2'});
+
+    const cohortModel = await this.owner.lookup('service:store').find('cohort', cohort.id);
+    this.set('cohorts', [ cohortModel ]);
+    await render(hbs`<OfferingForm @cohorts={{this.cohorts}} @close={{noop}} />`);
+
+    assert.equal(component.learnerManager.availableLearnerGroups.cohorts[0].trees[0].title, 'Learner Group 1');
+    assert.equal(component.learnerManager.availableLearnerGroups.cohorts[0].trees[1].title, 'Learner Group 2');
+    assert.equal(component.learnerManager.availableLearnerGroups.cohorts[0].trees[2].title, 'Learner Group 10');
+  });
 });

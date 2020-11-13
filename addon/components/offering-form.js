@@ -481,4 +481,9 @@ export default class OfferingForm extends Component {
       .add(minutes, 'minutes')
       .toDate();
   }
+
+
+  sortLearnergroupsByTitle(learnerGroupA, learnerGroupB) {
+    return learnerGroupA.title.localeCompare(learnerGroupB.title, undefined, {numeric: true});
+  }
 }
