@@ -6,7 +6,7 @@
   {{did-insert (set this.row)}}
 >
   {{#if (and this.isEditing (is-fulfilled @offering.session.course.cohorts))}}
-    <td colspan="10" class="expanded-offering-manager">
+    <td colspan={{if @canUpdate "9" "8"}} class="expanded-offering-manager">
       <OfferingForm
         @showRoom={{true}}
         @showInstructors={{true}}
