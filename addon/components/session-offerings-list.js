@@ -7,17 +7,18 @@ import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class SessionOfferingsListComponent extends Component {
   @service store;
-  @tracked offerings;
+  @tracked offeringsRelationship;
 
   @restartableTask
-  *load(element, [session]){
-    this.offerings = (yield session.offerings).toArray();
+  *load(){
+    this.offeringsRelationship = yield this.args.session.offerings;
+  }
+
+  get offerings() {
+    return this.offeringsRelationship ? this.offeringsRelationship.toArray() : [];
   }
 
   get offeringBlocks() {
-    if (!this.offerings) {
-      return [];
-    }
     const dateBlocks = {};
     this.offerings.forEach(offering => {
       const key = offering.get('dateKey');
