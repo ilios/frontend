@@ -7,12 +7,13 @@ import { setupAuthentication, getElementText, getText } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import page from 'ilios-common/page-objects/course-publish-all';
 
 module('Acceptance | Course - Publish All Sessions', function(hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
-    await setupAuthentication();
+    this.user = await setupAuthentication();
     this.school = this.server.create('school');
     this.cohort = this.server.create('cohort');
   });
@@ -92,5 +93,46 @@ module('Acceptance | Course - Publish All Sessions', function(hooks) {
     await click('.publish-all-sessions-review button');
     assert.equal(currentURL(), '/courses/1');
     assert.ok(session.published);
+  });
+
+  test('Updating course objectives updates the unlinked objective warning', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    const programYear = this.server.create('program-year', {
+      cohort: this.cohort,
+    });
+    this.server.create('program', {
+      school: this.school,
+      programYears: [programYear],
+    });
+    this.server.create('program-year-objective', {
+      programYear,
+    });
+
+    const course = this.server.create('course', {
+      year: 2020,
+      school: this.school,
+      published: true,
+      cohorts: [this.cohort],
+    });
+    this.server.create('course-objective', {
+      course,
+    });
+    const session = this.server.create('session', {
+      course,
+      published: false,
+      publishedAsTbd: false,
+    });
+    this.server.create('sessionType', {
+      sessions: [session]
+    });
+    await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
+    assert.ok(page.publishAll.isVisible);
+    assert.ok(page.publishAll.hasUnlinkedWarning);
+
+    await page.course.objectives.objectiveList.objectives[0].parents.list[0].manage();
+    const m = page.course.objectives.objectiveList.objectives[0].parentManager;
+    await m.competencies[0].objectives[0].add();
+    await page.course.objectives.objectiveList.objectives[0].parents.save();
+    assert.notOk(page.publishAll.hasUnlinkedWarning);
   });
 });

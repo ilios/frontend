@@ -42,12 +42,12 @@ module('Integration | Component | publish all sessions', function(hooks) {
     this.server.create('offering', { session: completeSession });
     this.server.create('offering', { session: fullyPublishedByIncompleteSession });
     this.server.create('sessionObjective', { session: completeSession });
-    this.publishableSession = await this.owner.lookup('service:store').find('session', publishableSession.id);
-    this.unpublishableSession = await this.owner.lookup('service:store').find('session', unpublishableSession.id);
-    this.completeSession = await this.owner.lookup('service:store').find('session', completeSession.id);
-    this.fullyPublishedByIncompleteSession
-      = await this.owner.lookup('service:store').find('session', fullyPublishedByIncompleteSession.id);
-    this.course = await this.owner.lookup('service:store').find('course', course.id);
+    const store = this.owner.lookup('service:store');
+    this.publishableSession = await store.find('session', publishableSession.id);
+    this.unpublishableSession = await store.find('session', unpublishableSession.id);
+    this.completeSession = await store.find('session', completeSession.id);
+    this.fullyPublishedByIncompleteSession = await store.find('session', fullyPublishedByIncompleteSession.id);
+    this.course = await store.find('course', course.id);
   });
 
   test('it renders', async function(assert) {
