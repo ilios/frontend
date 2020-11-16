@@ -1,9 +1,6 @@
 import { click, currentRouteName } from '@ember/test-helpers';
 import moment from 'moment';
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
@@ -19,6 +16,15 @@ module('Acceptance | Course - Session List', function(hooks) {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
     this.sessionType = this.server.create('sessionType', { school: this.school });
+
+    const learner1 = this.server.create('user');
+    const learner2 = this.server.create('user');
+    const instructor1 = this.server.create('user');
+    const instructor2 = this.server.create('user');
+    const instructor3 = this.server.create('user');
+    const learnerGroup1 = this.server.create('learnerGroup', { users: [ learner1, learner2 ] });
+    const learnerGroup2 = this.server.create('learnerGroup');
+    const instructorGroup = this.server.create('instructorGroup', { users: [ instructor1, instructor2, instructor3 ] });
     const course = this.course = this.server.create('course', {
       school: this.school,
       directorIds: [this.user.id]
@@ -47,6 +53,10 @@ module('Acceptance | Course - Session List', function(hooks) {
       session: this.session1,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
+      learners: [ learner1 ],
+      learnerGroups: [ learnerGroup1, learnerGroup2 ],
+      instructors: [ instructor1 ],
+      instructorGroups: [ instructorGroup ]
     });
     this.server.create('offering', {
       session: this.session1,
@@ -67,7 +77,7 @@ module('Acceptance | Course - Session List', function(hooks) {
     assert.equal(sessions.length, 4);
     assert.equal(sessions[0].title, 'session 0');
     assert.equal(sessions[0].type, 'session type 0');
-    assert.equal(sessions[0].groupCount, '0');
+    assert.equal(sessions[0].groupCount, '2');
     assert.equal(sessions[0].objectiveCount, '0');
     assert.equal(sessions[0].termCount, '0');
     assert.equal(sessions[0].firstOffering, today.toDate().toLocaleString('en', {
@@ -137,19 +147,19 @@ module('Acceptance | Course - Session List', function(hooks) {
     assert.equal(offerings.offerings.length, 3);
     assert.equal(offerings.offerings[0].startTime, offering1StartDate.format('LT'));
     assert.equal(offerings.offerings[0].location, 'room 0');
-    assert.equal(offerings.offerings[0].learners, '0');
-    assert.equal(offerings.offerings[0].learnerGroups, '');
-    assert.equal(offerings.offerings[0].instructors, '');
+    assert.equal(offerings.offerings[0].learners, '(2) 1 guy M. Mc1son, 2 guy...');
+    assert.equal(offerings.offerings[0].learnerGroups, '(2) learner group 0, learn...');
+    assert.equal(offerings.offerings[0].instructors, '(3) 3 guy M. Mc3son, 4 guy...');
 
     assert.equal(offerings.offerings[1].startTime, offering2StartDate.format('LT'));
     assert.equal(offerings.offerings[1].location, 'room 1');
-    assert.equal(offerings.offerings[1].learners, '0');
+    assert.equal(offerings.offerings[1].learners, '');
     assert.equal(offerings.offerings[1].learnerGroups, '');
     assert.equal(offerings.offerings[1].instructors, '');
 
     assert.equal(offerings.offerings[2].startTime, offering3StartDate.format('LT'));
     assert.equal(offerings.offerings[2].location, 'room 2');
-    assert.equal(offerings.offerings[2].learners, '0');
+    assert.equal(offerings.offerings[2].learners, '');
     assert.equal(offerings.offerings[2].learnerGroups, '');
     assert.equal(offerings.offerings[2].instructors, '');
   });

@@ -6,7 +6,7 @@
   {{did-insert (set this.row)}}
 >
   {{#if (and this.isEditing (is-fulfilled @offering.session.course.cohorts))}}
-    <td colspan={{if @canUpdate "9" "8"}} class="expanded-offering-manager">
+    <td colspan={{if @canUpdate "10" "9"}} class="expanded-offering-manager">
       <OfferingForm
         @showRoom={{true}}
         @showInstructors={{true}}
@@ -64,8 +64,22 @@
         <TruncateText @text={{this.room}} @length={{10}} />
       {{/if}}
     </td>
-    <td class="text-center">
-      {{get (await @offering.allLearners) "length"}}
+    <td
+        colspan="2"
+        title={{join
+        ", "
+        (map-by "fullName" (sort-by "fullName" (await @offering.allLearners)))
+    }}
+    >
+      {{#if (get (await @offering.allLearners) "length")}}
+        <strong>({{get (await @offering.allLearners) "length"}})</strong>
+      {{/if}}
+      {{truncate
+        (join
+          ", " (map-by "fullName" (sort-by "fullName" (await @offering.allLearners)))
+        )
+        25
+      }}
     </td>
     <td
       colspan="2"
@@ -74,11 +88,14 @@
         (map-by "title" (sort-by "title" (await @offering.learnerGroups)))
       }}
     >
+      {{#if (get (await @offering.learnerGroups) "length")}}
+        <strong>({{get (await @offering.learnerGroups) "length"}})</strong>
+      {{/if}}
       {{truncate
         (join
           ", " (map-by "title" (sort-by "title" (await @offering.learnerGroups)))
         )
-        30
+        25
       }}
     </td>
     <td
@@ -88,6 +105,9 @@
         (map-by "fullName" (sort-by "fullName" (await @offering.allInstructors)))
       }}
     >
+      {{#if (get (await @offering.allInstructors) "length")}}
+        <strong>({{get (await @offering.allInstructors) "length"}})</strong>
+      {{/if}}
       {{truncate
         (join
           ", "
@@ -95,7 +115,7 @@
             "fullName" (sort-by "fullName" (await @offering.allInstructors))
           )
         )
-        30
+        25
       }}
     </td>
     {{#if @canUpdate}}
