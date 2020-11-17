@@ -9,28 +9,37 @@
     flex-direction: row;
   }
 
+  .academic-year {
+    @include ilios-heading-h4;
+    @include for-tablet-and-up {
+      display: inline;
+      margin-left: .5rem;
+    }
+  }
+
   .title {
     display: flex;
     flex-direction: column;
+    flex-grow: 2;
 
     @include for-tablet-and-up {
       flex-direction: row;
     }
 
-    .editable,
-    h2,
-    h3 {
-      display: block;
-      font-size: 1.5rem;
+    input {
+      width: 100%;
+    }
 
+    .editable {
       @include for-laptop-and-up {
         display: inline;
       }
+      font-size: 1.5rem;
     }
 
-    @include for-tablet-and-up {
-      h3 {
-        margin-left: .5rem;
+    .editinplace.is-editing {
+      @include for-laptop-and-up {
+        flex-grow: 2;
       }
     }
   }

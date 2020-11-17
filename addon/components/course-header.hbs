@@ -26,16 +26,16 @@
         {{/each}}
       </EditableField>
     {{else}}
-      <h2>
+      <h4>
         {{#if @course.locked}}
           <FaIcon @icon="lock" />
         {{/if}}
         {{@course.title}}
-      </h2>
+      </h4>
     {{/if}}
-    <h3>
+    <h4 class="academic-year">
       {{@course.academicYear}}
-    </h3>
+    </h4>
   </span>
   <span class="course-publication">
     {{#if @editable}}

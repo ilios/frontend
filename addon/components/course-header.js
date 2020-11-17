@@ -7,6 +7,7 @@ import { validatable, Length, NotBlank } from 'ilios-common/decorators/validatio
 @validatable
 export default class CourseHeaderComponent extends Component {
   @Length(3, 200) @NotBlank() @tracked courseTitle;
+  @tracked isEditingTitle = false;
 
   @restartableTask
   *changeTitle() {
