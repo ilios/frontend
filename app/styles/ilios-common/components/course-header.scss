@@ -9,8 +9,11 @@
     flex-direction: row;
   }
 
-  .academic-year {
+  h2, h3 {
     @include ilios-heading-h4;
+  }
+
+  .academic-year {
     @include for-tablet-and-up {
       display: inline;
       margin-left: .5rem;
