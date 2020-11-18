@@ -35,6 +35,13 @@ module('Integration | Component | offering form', function(hooks) {
     assert.ok(component.location.hasError);
   });
 
+  test('room validation succeeds on blank value', async function(assert) {
+    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    await component.location.set('');
+    await component.save();
+    assert.notOk(component.location.hasError);
+  });
+
   test('url validation errors do not show up initially', async function(assert) {
     await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
     assert.notOk(component.url.hasError);
