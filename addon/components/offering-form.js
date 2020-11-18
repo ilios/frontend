@@ -294,7 +294,6 @@ export default class OfferingForm extends Component {
     }
     this.startDate = moment(this.defaultStartDate).hour(8).minute(0).second(0).toDate();
     this.endDate = moment(this.defaultStartDate).hour(9).minute(0).second(0).toDate();
-    this.room = 'TBD';
     this.learnerGroups = [];
     this.learners = [];
     this.recurringDays = [];
