@@ -12,7 +12,7 @@
     @include ilios-fieldset;
 
     ul {
-      @include ilios-list-badges();
+      @include ilios-removable-list;
 
       .top-level-group {
         background-color: $ilios-yellow;
