@@ -23,7 +23,6 @@
 
     &.expanded-offering-manager {
       background-color: $active-background-color;
-      border-left: 1px solid $dark-grey;
       padding: 0;
     }
 
@@ -73,7 +72,6 @@
   .offering-form {
     background-color: $white;
     border: 1px solid $grey;
-    margin-left: 2rem;
     padding: .5rem;
   }
 }
