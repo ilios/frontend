@@ -48,10 +48,12 @@
               <div class="hours">
                 <div class="hours-container">
                   <input
-                      min="0"
-                      type="number"
-                      value={{this.durationHours}}
+                    min="0"
+                    type="number"
+                    value={{this.durationHours}}
+                    disabled={{this.saveOffering.isRunning}}
                     {{on "input" (perform this.updateDurationHours value="target.value")}}
+                    {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
                   >
                   {{#each (await (compute (fn this.getErrorsFor) "durationHours")) as |message|}}
                     <span class="validation-error-message">
@@ -66,11 +68,13 @@
               <div class="minutes">
                 <div class="minutes-container">
                   <input
-                      max="59"
-                      min="0"
-                      type="number"
-                      value={{this.durationMinutes}}
+                    max="59"
+                    min="0"
+                    type="number"
+                    value={{this.durationMinutes}}
+                    disabled={{this.saveOffering.isRunning}}
                     {{on "input" (perform this.updateDurationMinutes value="target.value")}}
+                    {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
                   >
                   {{#each (await (compute (fn this.getErrorsFor) "durationMinutes")) as |message|}}
                     <span class="validation-error-message">
@@ -109,9 +113,9 @@
                 </select>
                 <span class="actions">
                   <button
-                      class="cancel"
-                      title={{t "general.cancel"}}
-                      type="button"
+                    class="cancel"
+                    title={{t "general.cancel"}}
+                    type="button"
                     {{on "click" (set this.isEditingTimezone false)}}
                   >
                     <FaIcon @icon="times" />
@@ -197,8 +201,10 @@
               <input
                 type="text"
                 value={{this.room}}
+                disabled={{this.saveOffering.isRunning}}
                 {{on "input" (fn this.changeRoom)}}
                 {{on "keyup" (fn this.addErrorDisplayFor "room")}}
+                {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
               >
               {{#each (await (compute (fn this.getErrorsFor) "room")) as |message|}}
                 <span class="validation-error-message">
@@ -219,9 +225,11 @@
                   placeholder="https://example.com"
                   value={{this.bestUrl}}
                   inputmode="url"
-                {{on "input" (pick "target.value" this.changeURL)}}
-                {{on "keyup" (fn this.addErrorDisplayFor "url")}}
-                {{on "focus" (fn this.selectAllText)}}
+                  disabled={{this.saveOffering.isRunning}}
+                  {{on "input" (pick "target.value" this.changeURL)}}
+                  {{on "keyup" (fn this.addErrorDisplayFor "url")}}
+                  {{on "focus" (fn this.selectAllText)}}
+                  {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
               >
               {{#each (await (compute (fn this.getErrorsFor) "url")) as |message|}}
                 <span class="validation-error-message">
