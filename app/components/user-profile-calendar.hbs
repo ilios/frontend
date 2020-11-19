@@ -21,8 +21,9 @@
     <IliosCalendarWeek
       @calendarEvents={{this.calendarEvents}}
       @date={{date}}
-      @areEventsSelectable={{false}}
+      @areEventsSelectable={{true}}
       @areDaysSelectable={{false}}
+      @selectEvent={{@selectEvent}}
     />
   </div>
   <span class="loading-indicator {{if (is-array this.calendarEvents) "loaded"}}">
