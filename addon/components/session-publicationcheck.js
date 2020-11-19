@@ -2,27 +2,25 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action, computed } from '@ember/object';
+import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class SessionPublicationCheckComponent extends Component {
   @service router;
-  @tracked objectives = [];
+  @tracked objectivesRelationship;
 
-  @computed('objectives.@each.parents')
+  @computed('objectivesRelationship.@each.courseObjectives')
   get showUnlinkIcon() {
-    const objectivesWithoutParents = this.objectives.filter(objective => {
+    if (!this.objectivesRelationship) {
+      return false;
+    }
+    return  this.objectivesRelationship.toArray().any(objective => {
       const parentIds = objective.hasMany('courseObjectives').ids();
       return parentIds.length === 0;
     });
-
-    return objectivesWithoutParents.length > 0;
   }
-  @action
-  load(event, [objectives]) {
-    if (!objectives) {
-      this.objectives = [];
-      return;
-    }
-    this.objectives = objectives.toArray();
+  @restartableTask
+  *load() {
+    this.objectivesRelationship = yield this.args.session.sessionObjectives;
   }
 
   @action

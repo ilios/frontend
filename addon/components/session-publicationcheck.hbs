@@ -1,7 +1,7 @@
 <div
   class="session-publicationcheck"
-  {{did-insert (fn this.load) (await @session.sessionObjectives)}}
-  {{did-update (fn this.load) (await @session.sessionObjectives)}}
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @session}}
 >
   <SessionOverview
     @session={{@session}}
