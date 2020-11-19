@@ -29,11 +29,11 @@
       }
 
       .room {
-        grid-column: 1 / 1;
+        grid-column: 1 / 3;
       }
 
       .url {
-        grid-column: 2 / -1;
+        grid-column: 3 / -1;
       }
     }
 
@@ -61,7 +61,7 @@
       }
     }
 
-    .start-date, .room {
+    .start-date {
       input {
         min-width: initial;
         width: auto;
