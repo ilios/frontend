@@ -327,6 +327,14 @@ export default class OfferingForm extends Component {
   }
 
   @dropTask
+  *saveOnEnter(event) {
+    const keyCode = event.keyCode;
+    if (13 === keyCode) {
+      yield this.saveOffering.perform();
+    }
+  }
+
+  @dropTask
   * saveOffering() {
     this.addErrorDisplaysFor(['room', 'url', 'numberOfWeeks', 'durationHours', 'durationMinutes', 'learnerGroups']);
 

@@ -7,6 +7,7 @@ import {
   isVisible,
   property,
   text,
+  triggerable,
   value,
 } from 'ember-cli-page-object';
 import { flatpickrDatePicker } from 'ilios-common';
@@ -37,10 +38,12 @@ const definition = {
     hours: {
       scope: '.hours input',
       set: fillable(),
+      submit: triggerable('keypress', '', { eventProperties: { key: 'Enter' } })
     },
     minutes: {
       scope: '.minutes input',
       set: fillable(),
+      submit: triggerable('keypress', '', { eventProperties: { key: 'Enter' } })
     }
   },
   timezoneEditor: {
@@ -62,13 +65,15 @@ const definition = {
     scope: '.room',
     set: fillable('input'),
     value: value('input'),
-    hasError: isVisible('.validation-error-message')
+    hasError: isVisible('.validation-error-message'),
+    submit: triggerable('keypress', 'input', { eventProperties: { key: 'Enter' } })
   },
   url: {
     scope: '[data-test-url]',
     set: fillable('input'),
     value: value('input'),
-    hasError: isVisible('.validation-error-message')
+    hasError: isVisible('.validation-error-message'),
+    submit: triggerable('keypress', 'input', { eventProperties: { key: 'Enter' } })
   },
   recurring: {
     scope: '.make-recurring',
