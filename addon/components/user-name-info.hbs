@@ -1,8 +1,8 @@
 <span
   class="user-name-info"
   data-test-user-name-info
-  {{did-insert this.load (await @user)}}
-  {{did-update this.load (await @user)}}
+  {{did-insert this.load}}
+  {{did-update this.load @user}}
 >
   <span data-test-fullname>{{this.fullName}}</span>
   {{#if this.hasDifferentCampusNameOfRecord}}

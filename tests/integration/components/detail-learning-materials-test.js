@@ -42,7 +42,6 @@ module('Integration | Component | detail learning materials', function(hooks) {
     await render(hbs`<DetailLearningMaterials
       @subject={{this.subject}}
       @isCourse={{true}}
-      @isCourse={{true}}
       @editable={{true}}
     />`);
     assert.equal(component.current.length, 1);

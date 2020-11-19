@@ -114,7 +114,7 @@
                 </span>
               </td>
               <td class="text-center" colspan="2">
-                <UserNameInfo @user={{get (await lmProxy.learningMaterial) "owningUser"}} />
+                <UserNameInfo @user={{await (get (await lmProxy.learningMaterial) "owningUser")}} />
               </td>
               <td class="text-center" colspan="2">
                 {{#if lmProxy.required}}
