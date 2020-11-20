@@ -1,71 +1,59 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import moment from 'moment';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
+import { task } from 'ember-concurrency-decorators';
 import { padStart } from 'ember-pad/utils/pad';
 
-export default Component.extend({
-  fetch: service(),
-  flashMessages: service(),
-  iliosConfig: service(),
+export default class MyProfileComponent extends Component {
+  @service fetch;
+  @service flashMessages;
+  @service iliosConfig;
+  @service session;
 
-  session: service(),
+  @tracked expiresAt = null;
+  @tracked generatedJwt = null;
+  @tracked maxDate = null;
+  @tracked minDate = null;
 
-  tagName: "",
-  expiresAt: null,
-  generatedJwt: null,
-  maxDate: null,
-  minDate: null,
-  user: null,
-
-  host: reads('iliosConfig.apiHost'),
-  namespace: reads('iliosConfig.apiNameSpace'),
-
-  apiDocsLink: computed('host', 'namespace', function() {
-    const apiPath = '/' + this.namespace;
-    const host = this.host?this.host:window.location.protocol + '//' + window.location.host;
-    const docPath = host + apiPath.replace('v1', 'doc');
+  get apiDocsLink() {
+    const apiPath = '/' + this.iliosConfig.namespace;
+    const host = this.iliosConfig.host ? this.iliosConfig.host : window.location.protocol + '//' + window.location.host;
+    const docPath = host + apiPath.replace('v3', 'doc');
     return `<a href="${docPath}">${docPath}</a>`;
-  }),
+  }
 
-  init() {
-    this._super(...arguments);
+  constructor() {
+    super(...arguments);
     this.reset();
-  },
+  }
 
-  actions: {
-    nothing() {
-      //noop action to pass to profile components
-    },
+  @action
+  tokenCopied() {
+    this.flashMessages.success('general.copiedSuccessfully');
+  }
 
-    tokenCopied() {
-      const flashMessages = this.flashMessages;
-      flashMessages.success('general.copiedSuccessfully');
-    },
+  @action
+  selectExpiresAtDate(selectedDate) {
+    this.expiresAt = selectedDate;
+  }
 
-    reset() {
-      this.reset();
-    },
-
-    selectExpiresAtDate(selectedDate) {
-      this.set('expiresAt', selectedDate);
-    }
-  },
-
+  @action
   reset() {
     const midnightToday = moment().hour(23).minute(59).second(59);
     const twoWeeksFromNow = midnightToday.clone().add(2, 'weeks');
     const oneYearFromNow = midnightToday.clone().add(1, 'year');
-    this.set('minDate', midnightToday.toDate());
-    this.set('maxDate', oneYearFromNow.toDate());
-    this.set('expiresAt', twoWeeksFromNow.toDate());
-    this.set('generatedJwt', null);
-  },
+    this.minDate = midnightToday.toDate();
+    this.maxDate = oneYearFromNow.toDate();
+    this.expiresAt = twoWeeksFromNow.toDate();
+    this.generatedJwt = null;
+  }
 
-  createNewToken: task(function* () {
+  @task
+  *createNewToken() {
     yield timeout(10); //small delay to allow rendering the spinner
     const selection = this.expiresAt;
     const expiresAt = moment(selection).hour(23).minute(59).second(59);
@@ -80,10 +68,11 @@ export default Component.extend({
 
     const url = '/auth/token?ttl=' + interval;
     const data = yield this.fetch.getJsonFromApiHost(url);
-    this.set('generatedJwt', data.jwt);
-  }),
+    this.generatedJwt = data.jwt;
+  }
 
-  invalidateTokens: task(function* () {
+  @task
+  *invalidateTokens() {
     yield timeout(10); //small delay to allow rendering the spinner
     const url = '/auth/invalidatetokens';
     const data = yield this.fetch.getJsonFromApiHost(url);
@@ -94,7 +83,7 @@ export default Component.extend({
       const authenticator = 'authenticator:ilios-jwt';
       session.authenticate(authenticator, {jwt: data.jwt});
       flashMessages.success('general.successfullyInvalidatedTokens');
-      this.toggleShowInvalidateTokens();
+      this.args.toggleShowInvalidateTokens();
     }
-  })
-});
+  }
+}
