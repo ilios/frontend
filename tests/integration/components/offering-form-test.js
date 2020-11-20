@@ -35,6 +35,13 @@ module('Integration | Component | offering form', function(hooks) {
     assert.ok(component.location.hasError);
   });
 
+  test('room validation succeeds on blank value', async function(assert) {
+    await render(hbs`<OfferingForm @close={{noop}} @save={{noop}} @showRoom={{true}} />`);
+    await component.location.set('');
+    await component.save();
+    assert.notOk(component.location.hasError);
+  });
+
   test('url validation errors do not show up initially', async function(assert) {
     await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
     assert.notOk(component.url.hasError);
@@ -207,7 +214,7 @@ module('Integration | Component | offering form', function(hooks) {
     this.set('save', async (startDate, endDate, room, url, learners, learnerGroups, instructorGroups, instructors) => {
       assert.equal(moment(startDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
       assert.equal(moment(endDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
-      assert.equal(room, 'TBD');
+      assert.equal(room, null);
       assert.equal(url, null);
       assert.equal(learnerGroups.length, 0);
       assert.equal(learners.length, 0);

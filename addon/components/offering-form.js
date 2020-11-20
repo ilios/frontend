@@ -7,7 +7,7 @@ import { filter, hash, map } from 'rsvp';
 import moment from 'moment';
 import { timeout } from 'ember-concurrency';
 import { dropTask, restartableTask } from "ember-concurrency-decorators";
-import { ArrayNotEmpty, IsInt, Lte, Gte, Gt, NotBlank, Length, IsURL, validatable } from 'ilios-common/decorators/validation';
+import { ArrayNotEmpty, IsInt, Lte, Gte, Gt, Length, IsURL, validatable } from 'ilios-common/decorators/validation';
 import { ValidateIf } from "class-validator";
 
 const DEBOUNCE_DELAY = 600;
@@ -24,7 +24,7 @@ export default class OfferingForm extends Component {
   @tracked timezones = null;
   @tracked startDate = null;
   @tracked endDate = null;
-  @NotBlank() @Length(1, 255) @tracked room = 'TBD';
+  @Length(1, 255) @tracked room = null;
   @IsURL() @Length(1, 2000) @tracked url = null;
   @ValidateIf(o => o.args.smallGroupMode) @ArrayNotEmpty() @tracked learnerGroups = [];
   @tracked learners = [];
@@ -294,7 +294,6 @@ export default class OfferingForm extends Component {
     }
     this.startDate = moment(this.defaultStartDate).hour(8).minute(0).second(0).toDate();
     this.endDate = moment(this.defaultStartDate).hour(9).minute(0).second(0).toDate();
-    this.room = 'TBD';
     this.learnerGroups = [];
     this.learners = [];
     this.recurringDays = [];
