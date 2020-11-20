@@ -1,14 +1,15 @@
 import Component from '@ember/component';
 import { getOwner } from '@ember/application';
 import EmberObject, { computed } from '@ember/object';
-import { not, reads } from '@ember/object/computed';
+import { not, oneWay, reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
-import { Promise, all, filter } from 'rsvp';
+import RSVP, { Promise, all, filter } from 'rsvp';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
-import NewUser from 'ilios/mixins/newuser';
+import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 import PapaParse from 'papaparse';
+import moment from "moment";
 
 const UserValidations = buildValidations({
   firstName: [
@@ -72,10 +73,13 @@ const UserValidations = buildValidations({
   ]
 });
 
-export default Component.extend(NewUser, {
+export default Component.extend(UserValidations, ValidationErrorDisplay, {
   flashMessages: service(),
   iliosConfig: service(),
   intl: service(),
+  store: service(),
+  currentUser: service(),
+  permissionChecker: service(),
 
   tagName: "",
 
@@ -87,8 +91,24 @@ export default Component.extend(NewUser, {
   savingUserErrors: null,
   selectedUsers: null,
 
+  firstName: null,
+  middleName: null,
+  lastName: null,
+  campusId: null,
+  otherId: null,
+  email: null,
+  username: null,
+  password: null,
+  phone: null,
+  schoolId: null,
+  primaryCohortId: null,
+
+  isSaving: false,
+  nonStudentMode: true,
+
   host: reads('iliosConfig.apiHost'),
   namespace: reads('iliosConfig.apiNameSpace'),
+  cohorts: oneWay('loadCohorts.lastSuccessful.value'),
 
   sampleData: computed(function(){
     const sampleUploadFields = ['First', 'Last', 'Middle', 'Phone', 'Email', 'CampusID', 'OtherID', 'Username', 'Password'];
@@ -97,8 +117,50 @@ export default Component.extend(NewUser, {
     return encoded;
   }),
 
+  schools: computed(async function(){
+    const permissionChecker = this.permissionChecker;
+    const store = this.store;
+    const schools = await store.findAll('school', {reload: true});
+    return filter(schools.toArray(), async school => {
+      return permissionChecker.canCreateUser(school);
+    });
+  }),
+
+  bestSelectedSchool: computed('schoolId', 'schools.[]', async function() {
+    const schoolId = this.schoolId;
+    const schools = await this.schools;
+
+    if (schoolId) {
+      const currentSchool = schools.findBy('id', schoolId);
+
+      if (currentSchool) {
+        return currentSchool;
+      }
+    }
+
+    const user = await this.currentUser.model;
+    return user.school;
+  }),
+
+  bestSelectedCohort: computed('bestSelectedSchool.cohorts.[]', 'primaryCohortId', async function() {
+    const primaryCohortId = this.primaryCohortId;
+    const school = await this.bestSelectedSchool;
+    const cohorts = await school.cohorts;
+
+    if (primaryCohortId) {
+      const currentCohort = cohorts.findBy('id', primaryCohortId);
+
+      if (currentCohort) {
+        return currentCohort;
+      }
+    }
+
+    return cohorts.lastObject;
+  }),
+
   init(){
     this._super(...arguments);
+    this.loadCohorts.perform();
     this.set('selectedUsers', []);
     this.set('proposedUsers', []);
     this.set('savedUserIds', []);
@@ -126,6 +188,13 @@ export default Component.extend(NewUser, {
       } else {
         selectedUsers.pushObject(obj);
       }
+    },
+    setSchool(id){
+      this.set('schoolId', id);
+      this.loadCohorts.perform();
+    },
+    setPrimaryCohort(id){
+      this.set('primaryCohortId', id);
     }
   },
 
@@ -279,5 +348,42 @@ export default Component.extend(NewUser, {
     this.set('selectedUsers', []);
     this.set('proposedUsers', []);
 
-  }).drop()
+  }).drop(),
+
+  loadCohorts: task(function * () {
+    const school = yield this.bestSelectedSchool;
+    let cohorts = yield this.store.query('cohort', {
+      filters: {
+        schools: [school.get('id')],
+      }
+    });
+
+    //prefetch programYears and programs so that ember data will coalesce these requests.
+    const programYears = yield RSVP.all(cohorts.getEach('programYear'));
+    yield RSVP.all(programYears.getEach('program'));
+
+    cohorts = cohorts.toArray();
+    const all = [];
+
+    for(let i = 0; i < cohorts.length; i++){
+      const cohort = cohorts[i];
+      const obj = {
+        id: cohort.get('id')
+      };
+      const programYear = yield cohort.get('programYear');
+      const program = yield programYear.get('program');
+      obj.title = program.get('title') + ' ' + cohort.get('title');
+      obj.startYear = programYear.get('startYear');
+      obj.duration = program.get('duration');
+
+      all.pushObject(obj);
+    }
+
+    const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
+    return all.filter(obj=> {
+      const finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
+      return finalYear > lastYear;
+    });
+
+  }).restartable(),
 });
