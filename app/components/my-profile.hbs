@@ -1,9 +1,9 @@
-<div class="my-profile" ...attributes>
-  <h1 class="name">
+<div class="my-profile" ...attributes data-test-my-profile>
+  <h1 class="name" data-test-name>
     {{@user.fullName}}
   </h1>
   {{#if (await @user.isStudent)}}
-    <span class="is-student">
+    <span class="is-student" data-test-is-student>
       <h2>
         {{t "general.student"}}
       </h2>
@@ -16,25 +16,29 @@
       @setIsManaging={{noop}}
     />
     <div class="small-component" data-test-info>
-      <div>
+      <div >
         <label>
           {{t "general.primarySchool"}}:
         </label>
-        {{#if (await @user.school)}}
-          {{get (await @user.school) "title"}}
-        {{else}}
-          {{t "general.unassigned"}}
-        {{/if}}
+        <span data-test-primary-school>
+          {{#if (await @user.school)}}
+            {{get (await @user.school) "title"}}
+          {{else}}
+            {{t "general.unassigned"}}
+          {{/if}}
+        </span>
       </div>
       <div>
         <label>
           {{t "general.primaryCohort"}}:
         </label>
-        {{#if (await @user.primaryCohort)}}
-          {{get (await @user.primaryCohort) "title"}}
-        {{else}}
-          {{t "general.unassigned"}}
-        {{/if}}
+        <span data-test-primary-cohort>
+          {{#if (await @user.primaryCohort)}}
+            {{get (await @user.primaryCohort) "title"}}
+          {{else}}
+            {{t "general.unassigned"}}
+          {{/if}}
+        </span>
       </div>
       <div>
         <label>
@@ -43,7 +47,7 @@
         {{#if (get (await @user.secondaryCohorts) "length")}}
           <ul class="secondary-cohorts details-list">
             {{#each (sort-by "title" (await @user.secondaryCohorts)) as |cohort|}}
-              <li>
+              <li data-test-secondary-cohort>
                 <span class="title">
                   {{cohort.title}}
                 </span>
@@ -54,24 +58,24 @@
             {{/each}}
           </ul>
         {{else}}
-          {{t "general.unassigned"}}
+          <span data-test-secondary-cohort>{{t "general.unassigned"}}</span>
         {{/if}}
       </div>
     </div>
     <UserProfilePermissions @user={{@user}} />
     <UserProfileLearnergroups @user={{@user}} />
   </div>
-  <section class="token-maintenance">
+  <section class="token-maintenance" data-test-token-maintenance>
     <h3>
       {{t "general.manageAPITokens"}}
     </h3>
-    <p>
+    <p data-test-token-info-link>
       {{{t "general.tokenInfo" apiDocsLink=this.apiDocsLink}}}
     </p>
     {{#if (or @showInvalidateTokens @showCreateNewToken)}}
       {{#if @showCreateNewToken}}
         {{#if this.generatedJwt}}
-          <div class="new-token-result">
+          <div class="new-token-result" data-test-new-token-result>
             <h3>
               {{t "general.newToken"}}:
             </h3>
@@ -89,7 +93,7 @@
             </button>
           </div>
         {{else}}
-          <div class="new-token-form">
+          <div class="new-token-form" data-test-new-token-form>
             <label>
               {{t "general.validUntil"}}
             </label>
@@ -114,6 +118,7 @@
             <button
               type="button"
               class="bigcancel"
+              data-test-new-token-cancel
               {{on "click" (pipe @toggleShowCreateNewToken this.reset)}}
             >
               <FaIcon @icon="times" />
@@ -122,21 +127,31 @@
         {{/if}}
       {{/if}}
       {{#if @showInvalidateTokens}}
-        <div class="invalidate-tokens-form">
+        <div class="invalidate-tokens-form" data-test-invalidate-tokens-form>
           <h3>
             {{t "general.invalidateTokens"}}
           </h3>
           <p>
             {{t "general.invalidateTokensConfirmation"}}
           </p>
-          <button type="button" class="done text" {{on "click" (perform this.invalidateTokens)}}>
+          <button
+            type="button"
+            class="done text"
+            data-test-invalidate-tokens-submit
+            {{on "click" (perform this.invalidateTokens)}}
+          >
             {{#if this.invalidateTokens.isRunning}}
               <LoadingSpinner />
             {{else}}
               {{t "general.yes"}}
             {{/if}}
           </button>
-          <button type="button" class="cancel text" {{on "click" @toggleShowInvalidateTokens}}>
+          <button
+            type="button"
+            class="cancel text"
+            data-test-invalidate-tokens-cancel
+            {{on "click" @toggleShowInvalidateTokens}}
+          >
             {{t "general.cancel"}}
           </button>
         </div>
@@ -145,14 +160,15 @@
       <button
         type="button"
         class="new-token done text"
-        {{on "click" @toggleShowCreateNewToken}}
         data-test-show-create-new-token
+        {{on "click" @toggleShowCreateNewToken}}
       >
         {{t "general.createNew"}}
       </button>
       <button
         type="button"
         class="invalidate-tokens cancel text"
+        data-test-show-invalidate-tokens
         {{on "click" @toggleShowInvalidateTokens}}
       >
         {{t "general.invalidateTokens"}}
