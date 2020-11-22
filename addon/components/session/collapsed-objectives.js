@@ -3,33 +3,32 @@ import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class SessionCollapsedObjectivesComponent extends Component {
-  @tracked objectives;
-  @tracked objectivesWithParents;
-  @tracked objectivesWithMesh;
-  @tracked objectivesWithTerms;
+  @tracked objectivesRelationship;
 
   @restartableTask
-  *load(element, [objectivePromise]) {
-    if (!objectivePromise) {
-      return false;
-    }
-    this.objectives = yield objectivePromise;
+  *load() {
+    this.objectivesRelationship = yield this.args.session.sessionObjectives;
+  }
 
-    this.objectivesWithParents = this.objectives.filter(objective => {
-      const parentIds = objective.hasMany('courseObjectives').ids();
+  get objectives() {
+    return this.objectivesRelationship ? this.objectivesRelationship.toArray() : [];
+  }
 
-      return parentIds.length > 0;
+  get objectivesWithParents() {
+    return this.objectives.filter(objective => {
+      return objective.courseObjectives.length > 0;
     });
-    this.objectivesWithMesh = this.objectives.filter(objective => {
-      const meshDescriptorIds = objective.hasMany('meshDescriptors').ids();
+  }
 
-      return meshDescriptorIds.length > 0;
+  get objectivesWithMesh() {
+    return this.objectives.filter(objective => {
+      return objective.meshDescriptors.length > 0;
     });
-    this.objectivesWithTerms = this.objectives.filter(objective => {
-      const termIds = objective.hasMany('terms').ids();
-      return termIds.length > 0;
-    });
+  }
 
-    return true;
+  get objectivesWithTerms() {
+    return this.objectives.filter(objective => {
+      return objective.terms.length > 0;
+    });
   }
 }
