@@ -1,6 +1,7 @@
 <div
   class="calendar-filter-list large-filter-list dashboard-courses-calendar-filter"
-  {{did-insert (perform this.load) @school}}
+  {{did-insert (set this.el)}}
+  {{did-insert (perform this.load)}}
   {{did-update (perform this.load) @school}}
   data-test-courses-calendar-filter
 >
