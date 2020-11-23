@@ -33,11 +33,12 @@
         {{t "general.sessionType"}}:
       </label>
       {{#if (is-array this.activeSessionTypes)}}
-        <select data-test-type {{on "change" (fn this.changeSelectedSessionTypeId)}}>
+        <select data-test-session-types {{on "change" (fn this.changeSelectedSessionTypeId)}}>
           {{#each (sort-by "title" this.activeSessionTypes) as |sessionType|}}
             <option
               value={{sessionType.id}}
               selected={{eq sessionType.id this.selectedSessionType.id}}
+              data-test-session-type
             >
               {{sessionType.title}}
             </option>

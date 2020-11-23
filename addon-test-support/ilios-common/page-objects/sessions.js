@@ -7,6 +7,7 @@ import {
 } from 'ember-cli-page-object';
 
 import sessionsList from './components/sessions-grid';
+import newSession  from './components/new-session';
 
 export default create({
   visit: visitable('/courses/:courseId'),
@@ -14,13 +15,14 @@ export default create({
   expandCollapseAllSessions: clickable('[data-test-sessions-grid-header] [data-test-expand-collapse-all]'),
   showsAllSessionsExpanded: hasClass('fa-caret-down', '[data-test-expand-all] svg'),
   expandNewSessionForm: clickable('[data-test-actions] [data-test-expand-collapse-button] button'),
-  newSession: {
-    scope: '[data-test-new-session]',
-    title: fillable('[data-test-title]'),
-    type: fillable('[data-test-type]'),
-    save: clickable('[data-test-save]'),
-    cancel: clickable('[data-test-cancel]'),
-  },
+  // newSession: {
+  //   scope: '[data-test-new-session]',
+  //   title: fillable('[data-test-title]'),
+  //   type: fillable('[data-test-type]'),
+  //   save: clickable('[data-test-save]'),
+  //   cancel: clickable('[data-test-cancel]'),
+  // },
+  newSession,
   newSavedSession: {
     scope: '[data-test-new-saved-session] a'
   },
