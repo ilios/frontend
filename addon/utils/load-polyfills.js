@@ -1,8 +1,17 @@
 export async function loadPolyfills() {
   await Promise.all([
+    intlLocale(),
     intlPluralRules(),
     intlRelativeTimeFormat(),
   ]);
+}
+
+async function intlLocale() {
+  if ('Intl' in window && 'locale' in Intl) {
+    return;
+  }
+
+  await import('@formatjs/intl-locale/polyfill');
 }
 
 async function intlPluralRules() {
