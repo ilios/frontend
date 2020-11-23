@@ -1,7 +1,7 @@
 <section
   class="course-objectives {{if this.showCollapsible "collapsible"}}"
-  {{did-insert this.load @course}}
-  {{did-update this.load @course @course.courseObjectives}}
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @course}}
   data-test-course-objectives
 >
   <div class="header">
