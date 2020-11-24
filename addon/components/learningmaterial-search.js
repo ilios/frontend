@@ -71,6 +71,8 @@ export default class LearningMaterialSearchComponent extends Component {
 
   @enqueueTask
   *addLearningMaterial(lm) {
-    yield this.args.add(lm);
+    if (!this.args.currentMaterialIds.includes(lm.id)) {
+      yield this.args.add(lm);
+    }
   }
 }

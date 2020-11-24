@@ -9,21 +9,32 @@ export default class PrintCourseComponent extends Component {
 
   @tracked sortTitle;
   @tracked sortDirectorsBy;
-  @tracked sessions = [];
-  @tracked courseLearningMaterials = [];
+  @tracked courseLearningMaterialsRelationship;
+  @tracked sessionsRelationship;
 
   @dropTask
-  *load(event, [course]) {
-    if (!course) {
-      return;
-    }
-    this.courseLearningMaterials = (yield course.learningMaterials).toArray().sort(sortableByPosition);
+  *load() {
+    this.courseLearningMaterialsRelationship = yield this.args.course.learningMaterials;
+    this.sessionsRelationship = yield this.args.course.sessions;
+  }
 
-    let sessions = yield course.sessions;
+  get courseLearningMaterials() {
+    if (!this.courseLearningMaterialsRelationship) {
+      return [];
+    }
+
+    return this.courseLearningMaterialsRelationship.toArray().sort(sortableByPosition);
+  }
+
+  get sessions() {
+    if (!this.sessionsRelationship) {
+      return [];
+    }
+
     if (!this.args.includeUnpublishedSessions) {
-      sessions = sessions.filterBy('isPublishedOrScheduled');
+      return this.sessionsRelationship.filterBy('isPublishedOrScheduled');
     }
 
-    this.sessions = sessions;
+    return this.sessionsRelationship.toArray();
   }
 }

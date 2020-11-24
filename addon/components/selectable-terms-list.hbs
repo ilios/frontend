@@ -1,9 +1,9 @@
 <ul
   class="selectable-terms-list"
-  {{did-insert (perform this.load) @vocabulary @terms @termFilter}}
-  {{did-update (perform this.load) @vocabulary @terms @termFilter}}
+  {{did-insert (perform this.loadFilteredTerms)}}
+  {{did-update (perform this.loadFilteredTerms) this.topLevelTermsRelationshipPromise @termFilter @terms}}
 >
-  {{#if this.terms}}
+  {{#unless this.loadFilteredTerms.isRunning}}
     {{#each (sort-by "title" this.terms) as |term|}}
       {{#if (await term.isActiveInTree)}}
         <li class={{if term.isTopLevel "top-level" "nested"}}>
@@ -25,5 +25,5 @@
         </li>
       {{/if}}
     {{/each}}
-  {{/if}}
+  {{/unless}}
 </ul>

@@ -14,9 +14,9 @@ export default class PublishAllSessionsComponent extends Component {
   @tracked sessionsToOverride = [];
   @tracked publishableCollapsed = true;
   @tracked unPublishableCollapsed = true;
-  @tracked showWarning = false;
   @tracked totalSessionsToSave;
   @tracked currentSessionsSaved;
+  @tracked courseObjectivesRelationship;
 
   get noSessionsAsIs() {
     return this.sessionsToOverride.length === 0;
@@ -34,15 +34,21 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   @restartableTask
-  *load(element, [sessions]) {
-    const objectives = yield this.args.course.courseObjectives;
-    this.showWarning = objectives.toArray().any(objective => ! objective.programYearObjectives.length);
-    this.sessionsToOverride = [];
-    if (sessions) {
-      this.sessionsToOverride = this.overridableSessions.filter(session => {
-        return session.published && ! session.publishedAsTbd;
-      });
+  *load() {
+    this.courseObjectivesRelationship = yield this.args.course.courseObjectives;
+    this.sessionsToOverride = this.overridableSessions.filter(session => {
+      return session.published && ! session.publishedAsTbd;
+    });
+  }
+
+  get showWarning(){
+    if (!this.courseObjectivesRelationship) {
+      return false;
     }
+
+    return this.courseObjectivesRelationship.toArray().any(objective => {
+      return objective.programYearObjectives.length === 0;
+    });
   }
 
   get allSessionsAsIs(){

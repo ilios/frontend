@@ -1,8 +1,8 @@
 <section
   class="detail-learningmaterials {{if this.displaySearchBox "display-search-box"}}"
   data-test-detail-learning-materials
-  {{did-insert (perform this.load) (await @subject.learningMaterials)}}
-  {{did-update (perform this.load) (await @subject.learningMaterials)}}
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @subject.learningMaterials}}
 >
   <div class="detail-learningmaterials-header">
     <div class="title">
@@ -11,13 +11,13 @@
           {{t "general.learningMaterialManageTitle"}}
         </span>
       {{else}}
-        {{t "general.learningMaterials"}} ({{get (await @subject.learningMaterials) "length"}})
+        {{t "general.learningMaterials"}} ({{@subject.learningMaterials.length}})
       {{/if}}
     </div>
     {{#if this.displaySearchBox}}
       <LearningmaterialSearch
         @add={{perform this.addLearningMaterial}}
-        @currentMaterials={{this.parentMaterials}}
+        @currentMaterialIds={{this.parentMaterialIds}}
       />
     {{/if}}
     <div class="detail-learningmaterials-actions">
@@ -114,7 +114,7 @@
                 </span>
               </td>
               <td class="text-center" colspan="2">
-                <UserNameInfo @user={{get (await lmProxy.learningMaterial) "owningUser"}} />
+                <UserNameInfo @user={{await (get (await lmProxy.learningMaterial) "owningUser")}} />
               </td>
               <td class="text-center" colspan="2">
                 {{#if lmProxy.required}}

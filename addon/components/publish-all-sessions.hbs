@@ -1,7 +1,7 @@
 <div
   class="publish-all-sessions"
-  {{did-insert (perform this.load) @sessions @course.objectives}}
-  {{did-update (perform this.load) @sessions @course.objectives}}
+  data-test-publish-all-sessions
+  {{did-insert (perform this.load)}}
 >
   {{#unless this.load.isRunning}}
     <section class="publish-all-sessions-unpublishable">

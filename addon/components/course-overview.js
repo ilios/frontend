@@ -20,21 +20,11 @@ export default class CourseOverview extends Component {
   @BeforeDate('endDate', { granularity: 'day'}) @tracked startDate = null;
   @AfterDate('startDate', { granularity: 'day'}) @tracked endDate = null;
   @tracked level = null;
-  @tracked levelOptions = null;
-  @tracked clerkshipTypeId = null;
-  @tracked manageDirectors = false;
-  @tracked showDirectorManagerLoader = true;
-  @tracked currentRoute = '';
-
+  @tracked levelOptions = [1, 2, 3, 4, 5];
+  @tracked clerkshipTypeId;
   @tracked clerkshipTypeOptions;
-
   @tracked canCreateCourseInSchool = false;
   @tracked school = null;
-
-  constructor() {
-    super(...arguments);
-    this.levelOptions = [1, 2, 3, 4, 5];
-  }
 
   @restartableTask
   *load() {
@@ -46,14 +36,6 @@ export default class CourseOverview extends Component {
     this.school = yield this.args.course.school;
     this.clerkshipTypeId = this.args.course.belongsTo('clerkshipType').id();
     this.canCreateCourseInSchool = yield this.permissionChecker.canCreateCourse(this.school);
-    yield this.directorsToPassToManager.perform();
-  }
-
-  @restartableTask
-  *directorsToPassToManager() {
-    const users = yield this.args.course.directors;
-    this.showDirectorManagerLoader = false;
-    return users;
   }
 
   get selectedClerkshipType() {
@@ -78,14 +60,6 @@ export default class CourseOverview extends Component {
     }
 
     return this.selectedClerkshipType.title;
-  }
-
-  @action
-  async saveDirectors(newDirectors){
-    this.args.course.set('directors', newDirectors.toArray());
-    await this.args.course.save();
-    this.directorsToPassToManager.perform();
-    return this.manageDirectors = false;
   }
   @action
   async changeClerkshipType() {

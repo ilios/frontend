@@ -1,13 +1,13 @@
 <section
   class="session-collapsed-objectives"
   data-test-session-collapsed-objectives
-  {{did-insert (perform this.load) @session.sessionObjectives}}
+  {{did-insert (perform this.load)}}
   {{did-update (perform this.load) @session.sessionObjectives}}
 >
   <div class="title" role="button" {{on "click" @expand}} data-test-title>
     {{t "general.objectives"}} ({{get this.objectives "length"}})
   </div>
-  {{#if this.load.lastSuccessful.value}}
+  {{#if this.load.lastSuccessful}}
     <div class="content">
       <table>
         <thead>

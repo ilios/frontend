@@ -1,7 +1,7 @@
 <section
   class="print-course"
-  {{did-insert (perform this.load) @course}}
-  {{did-update (perform this.load) @course}}
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @course.sessions @course.learningMaterials}}
   ...attributes
 >
   <div class="header" data-test-course-header>
@@ -122,10 +122,10 @@
   </section>
   <section class="block" data-test-course-learningmaterials>
     <div class="title">
-      {{t "general.learningMaterials"}} ({{get (await this.courseLearningMaterials) "length"}})
+      {{t "general.learningMaterials"}} ({{this.courseLearningMaterials.length}})
     </div>
     <div class="content">
-      {{#if (get (await this.courseLearningMaterials) "length")}}
+      {{#if this.courseLearningMaterials}}
         <table>
           <thead>
             <tr>
@@ -147,7 +147,7 @@
             </tr>
           </thead>
           <tbody>
-            {{#each (await this.courseLearningMaterials) as |lm|}}
+            {{#each this.courseLearningMaterials as |lm|}}
               <tr>
                 <td class="text-left text-top" colspan="2">
                   {{lm.learningMaterial.title}}

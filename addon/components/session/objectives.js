@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { dropTask } from 'ember-concurrency-decorators';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 import { action } from '@ember/object';
 
 export default class SessionObjectivesComponent extends Component {
@@ -10,7 +10,7 @@ export default class SessionObjectivesComponent extends Component {
 
   @tracked newObjectiveEditorOn = false;
   @tracked newObjectiveTitle;
-  @tracked objectiveCount;
+  @tracked objectivesRelationship;
 
   get showCollapsible(){
     return this.hasObjectives && !this.isManaging;
@@ -20,9 +20,13 @@ export default class SessionObjectivesComponent extends Component {
     return this.objectiveCount > 0;
   }
 
-  @action
-  load(element, [session]) {
-    this.objectiveCount = session.hasMany('sessionObjectives').ids().length;
+  get objectiveCount() {
+    return this.objectivesRelationship ? this.objectivesRelationship.length : 0;
+  }
+
+  @restartableTask
+  *load() {
+    this.objectivesRelationship = yield this.args.session.sessionObjectives;
   }
 
   @dropTask

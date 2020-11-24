@@ -1,7 +1,7 @@
 <section
  class="detail-competencies {{if this.hasCompetencies "collapsible"}}"
-  {{did-insert (fn this.load) (await @course.competencies)}}
-  {{did-update (fn this.load) (await @course.competencies)}}
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @course.competencies}}
 >
   <div
     class="title {{if this.hasCompetencies "clickable collapsible"}}"

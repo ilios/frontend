@@ -9,13 +9,13 @@ export default class UserNameInfoComponent extends Component {
   @tracked hasDifferentCampusNameOfRecord = false;
 
   @action
-  load(element, [user]){
-    if (! user) {
-      return;
+  load(){
+    if (!this.args.user) {
+      return false;
     }
-    this.fullName = user.get('fullName');
-    this.hasDifferentCampusNameOfRecord = user.get('hasDifferentDisplayName');
-    this.campusNameOfRecord = user.get('fullNameFromFirstMiddleLastName');
+    this.fullName = this.args.user.get('fullName');
+    this.hasDifferentCampusNameOfRecord = this.args.user.get('hasDifferentDisplayName');
+    this.campusNameOfRecord = this.args.user.get('fullNameFromFirstMiddleLastName');
   }
 
   @action

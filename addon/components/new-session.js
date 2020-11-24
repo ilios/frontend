@@ -11,15 +11,9 @@ export default class NewSessionComponent extends Component {
 
   @NotBlank() @Length(3, 200) @tracked title;
   @tracked selectedSessionTypeId;
-  @tracked activeSessionTypes;
 
-  @action
-  load(element, [sessionTypes]) {
-    if (!sessionTypes) {
-      return;
-    }
-
-    this.activeSessionTypes = sessionTypes.filterBy('active', true);
+  get activeSessionTypes() {
+    return this.args.sessionTypes.filterBy('active', true);
   }
 
   get selectedSessionType() {

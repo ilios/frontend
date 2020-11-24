@@ -1,7 +1,7 @@
 <div
   class="session-offerings-list"
-  {{did-insert (perform this.load) @session @session.offerings}}
-  {{did-update (perform this.load) @session @session.offerings}}
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @session}}
   data-test-session-offerings-list
 >
   {{#each (await this.offeringBlocks) as |block|}}
