@@ -79,13 +79,30 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     const user = this.server.create('user', {
       school: this.schools[1],
     });
+
+    this.server.create('course', {
+      school: this.schools[1],
+      directors: [ user ],
+      year: this.thisYear
+    });
+
+    this.server.create('course', {
+      school: this.schools[1],
+      administrators: [ user ],
+      year: this.thisYear + 1
+    });
+
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserProfilePermissions @user={{this.user}} />`);
-
     assert.equal(component.selectedYear, this.thisYear);
+    await component.courses.toggle();
+    assert.equal(component.courses.directors.length, 1);
+    assert.ok(component.courses.notAdministrating);
     await component.changeYear(this.thisYear + 1);
     assert.equal(component.selectedYear, this.thisYear + 1);
+    assert.ok(component.courses.notDirecting);
+    assert.equal(component.courses.administrators.length, 1);
   });
 
   test('it renders with school data', async function (assert) {
