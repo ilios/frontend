@@ -9,15 +9,17 @@
       <label>
         {{t "general.title"}}:
       </label>
-      <Input
+      <input
         type="text"
-        @value={{this.title}}
-        @focus-out={{fn this.addErrorDisplayFor "title"}}
-        @key-down={{this.keyboard}}
+        value={{this.title}}
+        {{on "focusout" (fn this.addErrorDisplayFor "title")}}
+        {{on "keydown" this.keyboard}}
+        {{on "input" (fn this.changeTitle)}}
+        {{on "keyup" (fn this.addErrorDisplayFor "title")}}
         class={{if (await (compute (fn this.hasErrorFor) "title")) "has-error"}}
         disabled={{this.saveNewSession.isRunning}}
         data-test-title
-      />
+      >
       {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
         <span class="validation-error-message">
           {{message}}
@@ -29,11 +31,12 @@
         {{t "general.sessionType"}}:
       </label>
       {{#if (is-array this.activeSessionTypes)}}
-        <select data-test-type {{on "change" (fn this.changeSelectedSessionTypeId)}}>
+        <select data-test-session-types {{on "change" (fn this.changeSelectedSessionTypeId)}}>
           {{#each (sort-by "title" this.activeSessionTypes) as |sessionType|}}
             <option
               value={{sessionType.id}}
               selected={{eq sessionType.id this.selectedSessionType.id}}
+              data-test-session-type
             >
               {{sessionType.title}}
             </option>

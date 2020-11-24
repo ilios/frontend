@@ -63,7 +63,7 @@ export default class NewSessionComponent extends Component {
     }
 
     if (13 === keyCode) {
-      this.get('saveNewSession').perform();
+      this.saveNewSession.perform();
       return;
     }
 
@@ -75,5 +75,10 @@ export default class NewSessionComponent extends Component {
   @action
   changeSelectedSessionTypeId(event) {
     this.selectedSessionTypeId = Number(event.target.value);
+  }
+
+  @action
+  changeTitle(event) {
+    this.title = event.target.value;
   }
 }

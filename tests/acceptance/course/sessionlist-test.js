@@ -270,8 +270,8 @@ module('Acceptance | Course - Session List', function(hooks) {
     const { sessions } = page.sessionsList;
     assert.equal(sessions.length, 4);
     await page.expandNewSessionForm();
-    await page.newSession.title('xx new session');
-    await page.newSession.type('2');
+    await page.newSession.title.set('xx new session');
+    await page.newSession.selectSessionType('2');
     await page.newSession.save();
 
     assert.equal(sessions.length, 5);
@@ -291,7 +291,7 @@ module('Acceptance | Course - Session List', function(hooks) {
     assert.equal(sessions.length, 4);
     await page.expandNewSessionForm();
     assert.ok(page.newSession.isVisible);
-    await page.newSession.title('new');
+    await page.newSession.title.set('new');
     await page.newSession.cancel();
 
     assert.equal(sessions.length, 4);
@@ -305,7 +305,7 @@ module('Acceptance | Course - Session List', function(hooks) {
     await page.expandNewSessionForm();
     assert.ok(page.newSession.isVisible);
     const newTitle = 'new session';
-    await page.newSession.title(newTitle);
+    await page.newSession.title.set(newTitle);
     await page.newSession.save();
     assert.equal(sessions.length, 5);
 
