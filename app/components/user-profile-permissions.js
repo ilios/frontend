@@ -62,20 +62,40 @@ export default class UserProfilePermissionsComponent extends Component {
     this.selectedSchool = this.schools.findBy('id', schoolId);
     this.isDirectingSchool = this.args.user.hasMany('directedSchools').ids().includes(schoolId);
     this.isAdministeringSchool = this.args.user.hasMany('administeredSchools').ids().includes(schoolId);
-
     const map = yield hash({
       directedPrograms: this.getDirectedPrograms(this.selectedSchool),
       directedProgramYears: this.getDirectedProgramYears(this.selectedSchool),
-      directedCourses: this.getDirectedCourses(this.selectedSchool),
-      administeredCourses: this.getAdministeredCourses(this.selectedSchool),
-      instructedCourses: this.getInstructedCourses(this.selectedSchool),
-      studentAdvisedCourses: this.getStudentAdvisedCourses(this.selectedSchool),
-      administeredSessions: this.getAdministeredSessions(this.selectedSchool),
-      instructedSessions: this.getInstructedSessions(this.selectedSchool),
-      studentAdvisedSessions: this.getStudentAdvisedSessions(this.selectedSchool),
+      directedCourses: this.getDirectedCourses(this.selectedSchool, this.selectedYearId),
+      administeredCourses: this.getAdministeredCourses(this.selectedSchool, this.selectedYearId),
+      instructedCourses: this.getInstructedCourses(this.selectedSchool, this.selectedYearId),
+      studentAdvisedCourses: this.getStudentAdvisedCourses(this.selectedSchool, this.selectedYearId),
+      administeredSessions: this.getAdministeredSessions(this.selectedSchool, this.selectedYearId),
+      instructedSessions: this.getInstructedSessions(this.selectedSchool, this.selectedYearId),
+      studentAdvisedSessions: this.getStudentAdvisedSessions(this.selectedSchool, this.selectedYearId),
     });
     this.directedPrograms = map.directedPrograms;
     this.directedProgramYears = map.directedProgramYears;
+    this.directedCourses = map.directedCourses;
+    this.administeredCourses = map.administeredCourses;
+    this.instructedCourses = map.instructedCourses;
+    this.studentAdvisedCourses = map.studentAdvisedCourses;
+    this.administeredSessions = map.administeredSessions;
+    this.instructedSessions = map.instructedSessions;
+    this.studentAdvisedSessions = map.studentAdvisedSessions;
+  }
+
+  @restartableTask
+  *changeYear(yearId) {
+    this.selectedYearId = yearId;
+    const map = yield hash({
+      directedCourses: this.getDirectedCourses(this.selectedSchool, this.selectedYearId),
+      administeredCourses: this.getAdministeredCourses(this.selectedSchool, this.selectedYearId),
+      instructedCourses: this.getInstructedCourses(this.selectedSchool, this.selectedYearId),
+      studentAdvisedCourses: this.getStudentAdvisedCourses(this.selectedSchool, this.selectedYearId),
+      administeredSessions: this.getAdministeredSessions(this.selectedSchool, this.selectedYearId),
+      instructedSessions: this.getInstructedSessions(this.selectedSchool, this.selectedYearId),
+      studentAdvisedSessions: this.getStudentAdvisedSessions(this.selectedSchool, this.selectedYearId),
+    });
     this.directedCourses = map.directedCourses;
     this.administeredCourses = map.administeredCourses;
     this.instructedCourses = map.instructedCourses;
@@ -108,69 +128,69 @@ export default class UserProfilePermissionsComponent extends Component {
     });
   }
 
-  async getDirectedCourses(selectedSchool) {
+  async getDirectedCourses(selectedSchool, selectedYearId) {
     const directedCourses = (await this.args.user.directedCourses).toArray();
 
     return filter(directedCourses, async course => {
       const school = await course.school;
-      return (school === selectedSchool && this.selectedYear.id == course.year);
+      return (school === selectedSchool && selectedYearId === course.year.toString());
     });
   }
 
-  async getAdministeredCourses(selectedSchool) {
+  async getAdministeredCourses(selectedSchool, selectedYearId) {
     const administeredCourses = (await this.args.user.administeredCourses).toArray();
 
     return filter(administeredCourses, async course => {
       const school = await course.school;
-      return (school === selectedSchool && this.selectedYear.id == course.year);
+      return (school === selectedSchool && selectedYearId === course.year.toString());
     });
   }
 
-  async getInstructedCourses(selectedSchool) {
+  async getInstructedCourses(selectedSchool, selectedYearId) {
     const allInstructedCourses = (await this.args.user.allInstructedCourses).toArray();
 
     return filter(allInstructedCourses, async course => {
       const school = await course.school;
-      return (school === selectedSchool && this.selectedYear.id == course.year);
+      return (school === selectedSchool && selectedYearId === course.year.toString());
     });
   }
 
-  async getStudentAdvisedCourses(selectedSchool) {
+  async getStudentAdvisedCourses(selectedSchool, selectedYearId) {
     const studentAdvisedCourses = (await this.args.user.studentAdvisedCourses).toArray();
 
     return filter(studentAdvisedCourses, async course => {
       const school = await course.school;
-      return (school === selectedSchool && this.selectedYear.id == course.year);
+      return (school === selectedSchool && selectedYearId === course.year.toString());
     });
   }
 
-  async getAdministeredSessions(selectedSchool) {
+  async getAdministeredSessions(selectedSchool, selectedYearId) {
     const administeredSessions = (await this.args.user.administeredSessions).toArray();
 
     return filter(administeredSessions, async session => {
       const course = await session.course;
       const school = await course.school;
-      return (school === selectedSchool && this.selectedYear.id == course.year);
+      return (school === selectedSchool && selectedYearId === course.year.toString());
     });
   }
 
-  async getInstructedSessions(selectedSchool) {
+  async getInstructedSessions(selectedSchool, selectedYearId) {
     const allInstructedSessions = (await this.args.user.allInstructedSessions).toArray();
 
     return filter(allInstructedSessions, async session => {
       const course = await session.course;
       const school = await course.school;
-      return (school === selectedSchool && this.selectedYear.id == course.year);
+      return (school === selectedSchool && selectedYearId === course.year.toString());
     });
   }
 
-  async getStudentAdvisedSessions(selectedSchool) {
+  async getStudentAdvisedSessions(selectedSchool, selectedYearId) {
     const studentAdvisedSessions = (await this.args.user.studentAdvisedSessions).toArray();
 
     return filter(studentAdvisedSessions, async session => {
       const course = await session.course;
       const school = await course.school;
-      return (school === selectedSchool && this.selectedYear.id == course.year);
+      return (school === selectedSchool && selectedYearId === course.year.toString());
     });
   }
 

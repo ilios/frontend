@@ -25,7 +25,7 @@
   </span>
   <span>
     <FaIcon @icon="calendar" @fixedWidth={{true}} />
-    <select {{on "change" (pick "target.value" (set selectedYearId))}} data-test-select-year>
+    <select {{on "change" (pick "target.value" (perform this.changeYear))}} data-test-select-year>
       {{#each (sort-by "title" this.academicYears) as |year|}}
         <option value={{year.id}} selected={{is-equal year this.selectedYear}}>
           {{year.academicYearTitle}}
