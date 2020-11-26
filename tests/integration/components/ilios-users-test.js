@@ -12,7 +12,19 @@ module('Integration | Component | ilios users', function(hooks) {
 
   test('it renders', async function(assert) {
     const title = '.users .title';
-    await render(hbs`<IliosUsers />`);
+    await render(hbs`<IliosUsers
+      @limit=25
+      @offset=25
+      @query=""
+      @searchTerms={{array}}
+      @setQuery={{noop}}
+      @setLimit={{noop}}
+      @setOffset={{noop}}
+      @setShowNewUserForm={{noop}}
+      @setShowBulkNewUserForm={{noop}}
+      @setSearchTerms={{noop}}
+      @transitionToUser={{noop}}
+    />`);
     assert.dom(title).hasText('Users');
   });
 
@@ -21,17 +33,27 @@ module('Integration | Component | ilios users', function(hooks) {
 
     const query = '.user-search input';
     const value = 'nothing';
+    const newValue = 'test';
     this.set('value', value);
+    this.set('setQuery', query => {
+      assert.equal(query, newValue);
+    });
     await render(hbs`<IliosUsers
-      @query={{value}}
-      @limit={{25}}
-      @offset={{25}}
-      @setQuery={{action (mut value) value="target.value"}}
+      @limit=25
+      @offset=25
+      @query={{this.value}}
+      @searchTerms={{array}}
+      @setQuery={{this.setQuery}}
+      @setLimit={{noop}}
+      @setOffset={{noop}}
+      @setShowNewUserForm={{noop}}
+      @setShowBulkNewUserForm={{noop}}
+      @setSearchTerms={{noop}}
+      @transitionToUser={{noop}}
     />`);
 
-    assert.equal(find(query).value.trim(), 'nothing');
-    await fillIn(query, 'test');
-    assert.equal(this.get('value'), 'test');
+    assert.equal(find(query).value.trim(), value);
+    await fillIn(query, newValue);
   });
 
   test('add user form renders when configured to', async function(assert) {
@@ -58,13 +80,16 @@ module('Integration | Component | ilios users', function(hooks) {
       }
     });
     this.owner.register('service:currentUser', currentUserMock);
-
-    this.set('nothing', parseInt);
     await render(hbs`<IliosUsers
-      @setShowNewUserForm={{action nothing}}
-      @transitionToUser={{action nothing}}
-      @setSearchTerms={{action nothing}}
       @showNewUserForm={{true}}
+      @searchTerms={{array}}
+      @setQuery={{noop}}
+      @setLimit={{noop}}
+      @setOffset={{noop}}
+      @setShowNewUserForm={{noop}}
+      @setShowBulkNewUserForm={{noop}}
+      @setSearchTerms={{noop}}
+      @transitionToUser={{noop}}
     />`);
     const form = '.new-user-form';
     const blocks = `${form} .item`;
@@ -103,10 +128,15 @@ module('Integration | Component | ilios users', function(hooks) {
     this.set('nothing', parseInt);
 
     await render(hbs`<IliosUsers
-      @setShowNewUserForm={{action nothing}}
-      @transitionToUser={{action nothing}}
-      @setSearchTerms={{action nothing}}
       @showNewUserForm={{true}}
+      @searchTerms={{array}}
+      @setQuery={{noop}}
+      @setLimit={{noop}}
+      @setOffset={{noop}}
+      @setShowNewUserForm={{noop}}
+      @setShowBulkNewUserForm={{noop}}
+      @setSearchTerms={{noop}}
+      @transitionToUser={{noop}}
     />`);
     const form = '.new-user-form';
     const blocks = `${form} .item`;
