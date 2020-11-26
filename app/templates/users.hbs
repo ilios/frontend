@@ -4,16 +4,16 @@
 </LinkTo>
 <IliosUsers
   @offset={{this.offset}}
-  @setOffset={{action (mut this.offset)}}
+  @setOffset={{set this.offset}}
   @limit={{this.limit}}
-  @setLimit={{action (mut this.limit)}}
+  @setLimit={{set this.limit}}
   @query={{this.query}}
-  @setQuery={{action (mut this.query) value="target.value"}}
+  @setQuery={{set this.query}}
   @showNewUserForm={{this.showNewUserForm}}
-  @setShowNewUserForm={{action (mut this.showNewUserForm)}}
+  @setShowNewUserForm={{set this.showNewUserForm}}
   @showBulkNewUserForm={{this.showBulkNewUserForm}}
-  @setShowBulkNewUserForm={{action (mut this.showBulkNewUserForm)}}
+  @setShowBulkNewUserForm={{set this.showBulkNewUserForm}}
   @searchTerms={{this.searchTerms}}
-  @setSearchTerms={{action (mut this.searchTerms)}}
-  @transitionToUser={{action "transitionToUser"}}
+  @setSearchTerms={{set this.searchTerms}}
+  @transitionToUser={{this.transitionToUser}}
 />

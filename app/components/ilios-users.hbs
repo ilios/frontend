@@ -10,7 +10,7 @@
       <input
         type="search"
         value={{@query}}
-        oninput={{@setQuery}}
+        {{on "input" (pick "target.value" @setQuery)}}
         placeholder={{t "general.searchUsers"}}
       >
     </div>
