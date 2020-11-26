@@ -1,52 +1,39 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
-import { task, timeout } from 'ember-concurrency';
+import { timeout } from 'ember-concurrency';
+import { restartableTask } from 'ember-concurrency-decorators';
 
 const DEBOUNCE_TIMEOUT = 250;
 
-export default Component.extend({
-  iliosConfig: service(),
+export default class IliosUsersComponent extends Component {
+  @service iliosConfig;
+  @service store;
+  @tracked newUserComponent = null;
 
-  store: service(),
+  @restartableTask
+  *load() {
+    const userSearchType = yield this.iliosConfig.getUserSearchType();
+    this.newUserComponent = userSearchType === 'ldap' ? 'new-directory-user' : 'new-user';
+    yield this.searchForUsers.perform();
+  }
 
-  tagName: "",
-  limit: null,
-  offset: null,
-  query: null,
-  showBulkNewUserForm: false,
-  showNewUserForm: false,
+  @restartableTask
+  *reload() {
+    yield this.searchForUsers.perform();
+  }
 
-  newUserComponent: computed('iliosConfig.userSearchType', async function() {
-    const iliosConfig = this.iliosConfig;
-    const userSearchType = await iliosConfig.get('userSearchType');
-    return userSearchType === 'ldap'?'new-directory-user':'new-user';
-  }),
-
-  searchForUsers: task(function* () {
-    const query = this.query;
-    const q = cleanQuery(query);
+  @restartableTask
+  *searchForUsers() {
+    const q = cleanQuery(this.args.query);
     yield timeout(DEBOUNCE_TIMEOUT);
-    const { store, offset, limit } = this;
-    return yield store.query('user', {
-      limit, q, offset,
+    return this.store.query('user', {
+      limit: this.args.limit,
+      q,
+      offset: this.args.offset,
       'order_by[lastName]': 'ASC',
       'order_by[firstName]': 'ASC'
     });
-  }).cancelOn('deactivate').restartable(),
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.searchForUsers.perform();
-  },
-
-  actions: {
-    setOffset(offset) {
-      if (offset < 0) {
-        offset = 0;
-      }
-      this.setOffset(offset);
-    }
   }
-});
+}
