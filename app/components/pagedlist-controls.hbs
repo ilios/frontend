@@ -1,30 +1,32 @@
-<div class="pagedlist-controls" ...attributes>
-  {{#unless firstPage}}
-    <span class="clickable link backward" role="button" {{action "goBack"}}>
+<div class="pagedlist-controls" data-test-pagedlist-controls ...attributes>
+  {{#unless this.firstPage}}
+    <span class="clickable link backward" role="button" {{on "click" this.goBack}} data-test-go-back>
       <FaIcon @icon="backward" />
     </span>
   {{/unless}}
-  {{#if limitless}}
-    <select onchange={{action "setLimit" value="target.value"}}>
-      {{#each offsetOptions as |o|}}
-        <option value={{o}} selected={{is-equal o limit}}>
+  {{#if @limitless}}
+    <select {{on "change" (pick "target.value" this.setLimit)}} data-test-limits>
+      {{#each this.offsetOptions as |o|}}
+        <option value={{o}} selected={{is-equal o this.limit}} data-test-limit>
           {{o}}
         </option>
       {{/each}}
     </select>
     {{t "general.perPage"}}
   {{else}}
-    {{t "general.pagedResultsCount" start=start end=end total=total}}
+    <span data-test-paged-results-count>
+      {{t "general.pagedResultsCount" start=this.start end=this.end total=this.total}}
+    </span>
   {{/if}}
-  {{#unless lastPage}}
-    <span class="clickable link forward" role="button" {{action "goForward"}}>
+  {{#unless this.lastPage}}
+    <span class="clickable link forward" role="button" {{on "click" this.goForward}} data-test-go-forward>
       <FaIcon @icon="forward" />
     </span>
   {{/unless}}
-  {{#unless limitless}}
-    <select onchange={{action "setLimit" value="target.value"}}>
-      {{#each offsetOptions as |o|}}
-        <option value={{o}} selected={{is-equal o limit}}>
+  {{#unless @limitless}}
+    <select {{on "change" (pick "target.value" this.setLimit)}} data-test-limits>
+      {{#each this.offsetOptions as |o|}}
+        <option value={{o}} selected={{is-equal o this.limit}} data-test-limit>
           {{o}}
         </option>
       {{/each}}
