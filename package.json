@@ -26,7 +26,7 @@
   "dependencies": {
     "@ember/render-modifiers": "^1.0.2",
     "@formatjs/intl-locale": "^2.4.7",
-    "@formatjs/intl-pluralrules": "^3.0.2",
+    "@formatjs/intl-pluralrules": "^4.0.0",
     "@formatjs/intl-relativetimeformat": "^8.0.0",
     "@fortawesome/ember-fontawesome": "^0.2.0",
     "@fortawesome/free-brands-svg-icons": "^5.6.1",
