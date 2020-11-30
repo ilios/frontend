@@ -40,7 +40,7 @@
       {{t "general.loadingEvents"}}
       ...
     </h1>
-    {{#let (concat "ilios-calendar-" @selectedView) as |Calendar|}}
+    {{#let (component (concat "ilios-calendar-" @selectedView)) as |Calendar|}}
       <Calendar
         @calendarEvents={{this.sortedEvents}}
         @date={{@selectedDate}}
