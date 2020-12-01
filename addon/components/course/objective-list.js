@@ -1,41 +1,61 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency-decorators';
-import { hash, map } from 'rsvp';
+import { map } from 'rsvp';
 import { inject as service } from '@ember/service';
+import { use } from 'ember-could-get-used-to-this';
+import AsyncProcess from '../../classes/async-process';
+import ResolveAsyncValue from '../../classes/resolve-async-value';
+import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 
 export default class CourseObjectiveListComponent extends Component {
   @service store;
   @service intl;
   @service dataLoader;
 
-  @tracked courseObjectives;
   @tracked isSorting = false;
-  @tracked cohortObjectives;
-  @tracked courseObjectiveCount;
 
-  @restartableTask
-  *load(element, [course]) {
-    if (!course) {
-      return;
+  @use courseObjectivesAsync = new ResolveAsyncValue(() => [
+    this.args.course.courseObjectives,
+  ]);
+
+  get courseObjectives() {
+    if (this.load.lastSuccessful && this.courseObjectivesAsync) {
+      return this.courseObjectivesAsync.toArray().sort(sortableByPosition);
     }
-    //pre-load all session data as well to get access to child objectives
-    yield this.dataLoader.loadCourseSessions(course.id);
-    this.courseObjectiveCount = course.hasMany('courseObjectives').ids().length;
-    const {
-      courseObjectives,
-      cohortObjectives
-    } = yield hash({
-      courseObjectives: course.sortedCourseObjectives,
-      cohortObjectives: this.getCohortObjectives(course)
-    });
-    this.courseObjectives = courseObjectives;
-    this.cohortObjectives = cohortObjectives;
+
+    return undefined;
   }
 
-  async getCohortObjectives(course) {
-    const cohorts = (await course.cohorts).toArray();
-    return await map(cohorts, async cohort => {
+  @use cohortObjectiveAsync = new AsyncProcess(() => [
+    this.getCohortObjectives,
+    this.args.course.cohorts,
+    this.intl,
+  ]);
+
+  get cohortObjectives() {
+    if (!this.load.lastSuccessful) {
+      return null;
+    }
+    return this?.cohortObjectiveAsync;
+  }
+
+  get courseObjectiveCount() {
+    if (this.courseObjectives) {
+      return this.courseObjectives.length;
+    }
+
+    return this.args.course.hasMany('courseObjectives').ids().length;
+  }
+
+  @restartableTask
+  *load() {
+    //pre-load all session data as well to get access to child objectives
+    yield this.dataLoader.loadCourseSessions(this.args.course.id);
+  }
+
+  async getCohortObjectives(cohorts, intl) {
+    return await map(cohorts.toArray(), async cohort => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;
       const school = await program.school;
@@ -43,7 +63,7 @@ export default class CourseObjectiveListComponent extends Component {
       const objectives = await programYear.programYearObjectives;
       const objectiveObjects = await map(objectives.toArray(), async objective => {
         let competencyId = 0;
-        let competencyTitle = this.intl.t('general.noAssociatedCompetency');
+        let competencyTitle = intl.t('general.noAssociatedCompetency');
         const competency = await objective.competency;
         if (competency) {
           competencyId = competency.id;
