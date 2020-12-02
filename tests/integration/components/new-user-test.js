@@ -208,4 +208,16 @@ module('Integration | Component | new user', function(hooks) {
     assert.equal(component.cohort.options[0].text, 'program 1 cohort 1');
     assert.ok(component.cohort.options[0].selected);
   });
+
+  test('validate email address', async function(assert) {
+    await render(hbs`<NewUser @close={{noop}}  />`);
+    await component.cancel();
+    assert.notOk(component.email.hasError);
+    await component.email.set('thisisnotanemailaddress');
+    await component.email.submit();
+    assert.ok(component.email.hasError);
+    await component.email.set('but@this.is');
+    await component.email.submit();
+    assert.notOk(component.email.hasError);
+  });
 });

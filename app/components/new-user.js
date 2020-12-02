@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 import {all, filter} from 'rsvp';
 import {dropTask, restartableTask} from 'ember-concurrency-decorators';
 import moment from "moment";
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { validatable, IsEmail, Length, NotBlank } from 'ilios-common/decorators/validation';
 
 @validatable
 export default class NewUserComponent extends Component {
@@ -18,8 +18,7 @@ export default class NewUserComponent extends Component {
   @tracked @Length(1, 50) @NotBlank() lastName = null;
   @tracked @Length(1, 16) campusId = null;
   @tracked @Length(1, 16) otherId = null;
-  // @todo check if given input is a valid email address. needs a new modifier [ST 2020/11/30]
-  @tracked @Length(1, 100) @NotBlank() email = null;
+  @tracked @IsEmail() @Length(1, 100) @NotBlank() email = null;
   @tracked @Length(1, 100) @NotBlank() username = null;
   @tracked @NotBlank() password = null;
   @tracked @Length(1, 20) phone = null;
