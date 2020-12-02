@@ -2,9 +2,10 @@ import Service from '@ember/service';
 import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll, fillIn } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from  'ilios/tests/pages/components/new-user';
 
 module('Integration | Component | new user', function(hooks) {
   setupRenderingTest(hooks);
@@ -35,53 +36,42 @@ module('Integration | Component | new user', function(hooks) {
 
 
   test('it renders', async function (assert) {
-    this.set('close', () => {});
+    await render(hbs`<NewUser @close={{noop}} />`);
 
-    await render(hbs`<NewUser @close={{action close}} />`);
-
-    const content = this.element.textContent.trim();
-    assert.ok(content.includes('New User'));
-    assert.ok(content.includes('First Name'));
-    assert.ok(content.includes('Last Name'));
-    assert.ok(content.includes('Middle Name'));
-    assert.ok(content.includes('Campus ID'));
-    assert.ok(content.includes('Other ID'));
-    assert.ok(content.includes('Email'));
-    assert.ok(content.includes('Phone'));
-    assert.ok(content.includes('Username'));
-    assert.ok(content.includes('Password'));
-    assert.ok(content.includes('Primary School'));
-
-    const schools = 'select:nth-of-type(1) option';
-    const options = findAll(schools);
-    assert.equal(options.length, 3);
-    assert.dom(options[0]).hasText('school 0');
-    assert.dom(options[1]).hasText('school 1');
-    assert.dom(options[2]).hasText('school 2');
+    await component.clickChoiceButtons.firstButton.isActive;
+    assert.equal(component.school.options.length, 3);
+    assert.equal(component.school.options[0].text, 'school 0');
+    assert.equal(component.school.options[1].text, 'school 1');
+    assert.equal(component.school.options[2].text, 'school 2');
   });
 
   test('errors do not show up initially', async function(assert) {
-    this.set('close', () => {
-      assert.ok(false); //shouldn't be called
-    });
-    await render(hbs`<NewUser @close={{action close}} />`);
-    assert.dom('.message').doesNotExist();
+    await render(hbs`<NewUser @close={{noop}} />`);
+
+    assert.notOk(component.firstName.hasError);
+    assert.notOk(component.middleName.hasError);
+    assert.notOk(component.lastName.hasError);
+    assert.notOk(component.campusId.hasError);
+    assert.notOk(component.otherId.hasError);
+    assert.notOk(component.email.hasError);
+    assert.notOk(component.phone.hasError);
+    assert.notOk(component.username.hasError);
+    assert.notOk(component.password.hasError);
   });
 
-  test('errors show up', async function(assert) {
-    this.set('close', () => {
-      assert.ok(false); //shouldn't be called
-    });
-    await render(hbs`<NewUser @close={{action close}} />`);
+  test('submit empty form', async function(assert) {
+    await render(hbs`<NewUser @close={{noop}} />`);
+    await component.submit();
 
-    await click('.done');
-    assert.dom('.message').exists({ count: 5 });
-    const boxes = findAll('.item');
-    assert.ok(boxes[0].textContent.includes('blank'));
-    assert.ok(boxes[2].textContent.includes('blank'));
-    assert.ok(boxes[5].textContent.includes('blank'));
-    assert.ok(boxes[7].textContent.includes('blank'));
-    assert.ok(boxes[8].textContent.includes('blank'));
+    assert.ok(component.firstName.hasError);
+    assert.notOk(component.middleName.hasError);
+    assert.ok(component.lastName.hasError);
+    assert.notOk(component.campusId.hasError);
+    assert.notOk(component.otherId.hasError);
+    assert.ok(component.email.hasError);
+    assert.notOk(component.phone.hasError);
+    assert.ok(component.username.hasError);
+    assert.ok(component.password.hasError);
   });
 
   test('create new user', async function(assert) {
@@ -91,31 +81,21 @@ module('Integration | Component | new user', function(hooks) {
       title: 'Student'
     });
 
-    this.set('nothing', () => {});
     this.set('transitionToUser', (userId)=>{
       assert.equal(userId, 2);
     });
-    await render(hbs`<NewUser @close={{action nothing}} @transitionToUser={{action transitionToUser}} />`);
-    const firstName = '[data-test-first-name] input';
-    const middleName = '[data-test-middle-name] input';
-    const lastName = '[data-test-last-name] input';
-    const campusId = '[data-test-campus-id] input';
-    const otherId = '[data-test-other-id] input';
-    const email = '[data-test-email] input';
-    const phone = '[data-test-phone] input';
-    const username = '[data-test-username] input';
-    const password = '[data-test-password] input';
+    await render(hbs`<NewUser @close={{noop}} @transitionToUser={{this.transitionToUser}} />`);
 
-    await fillIn(firstName, 'first');
-    await fillIn(middleName, 'middle');
-    await fillIn(lastName, 'last');
-    await fillIn(campusId, 'campusid');
-    await fillIn(otherId, 'otherid');
-    await fillIn(phone, 'phone');
-    await fillIn(email, 'test@test.com');
-    await fillIn(username, 'user123');
-    await fillIn(password, 'password123');
-    await click('.done');
+    await component.firstName.set('first');
+    await component.middleName.set('middle');
+    await component.lastName.set('last');
+    await component.campusId.set('campusid');
+    await component.otherId.set('otherid');
+    await component.phone.set('phone');
+    await component.email.set('test@test.com');
+    await component.username.set('user123');
+    await component.password.set('password123');
+    await component.submit();
 
     const newUser = await this.owner.lookup('service:store').find('user', 2);
     assert.equal(newUser.firstName, 'first', 'with the correct firstName');
@@ -125,10 +105,10 @@ module('Integration | Component | new user', function(hooks) {
     assert.equal(newUser.otherId, 'otherid', 'with the correct otherId');
     assert.equal(newUser.phone, 'phone', 'with the correct phone');
     assert.equal(newUser.email, 'test@test.com', 'with the correct email');
-    const roles = await newUser.get('roles');
+    const roles = await newUser.roles;
     assert.notOk(roles.mapBy('id').includes(studentRole.id));
 
-    const authentication = await newUser.get('authentication');
+    const authentication = await newUser.authentication;
     assert.equal(authentication.username, 'user123', 'with the correct username');
     assert.equal(authentication.password, 'password123', 'with the correct password');
   });
@@ -146,34 +126,21 @@ module('Integration | Component | new user', function(hooks) {
     });
     const cohort = this.server.create('cohort', { programYear });
 
-    this.set('nothing', () => {});
     this.set('transitionToUser', (userId)=>{
       assert.equal(userId, 2);
     });
-    await render(hbs`<NewUser @close={{action nothing}} @transitionToUser={{action transitionToUser}} />`);
-    const student = '[data-test-user-type] [data-test-second-button]';
-    const firstName = '[data-test-first-name] input';
-    const middleName = '[data-test-middle-name] input';
-    const lastName = '[data-test-last-name] input';
-    const campusId = '[data-test-campus-id] input';
-    const otherId = '[data-test-other-id] input';
-    const email = '[data-test-email] input';
-    const phone = '[data-test-phone] input';
-    const username = '[data-test-username] input';
-    const password = '[data-test-password] input';
-
-    await click(student);
-    await fillIn(firstName, 'first');
-    await fillIn(middleName, 'middle');
-    await fillIn(lastName, 'last');
-    await fillIn(campusId, 'campusid');
-    await fillIn(otherId, 'otherid');
-    await fillIn(phone, 'phone');
-    await fillIn(email, 'test@test.com');
-    await fillIn(username, 'user123');
-    await fillIn(password, 'password123');
-
-    await click('.done');
+    await render(hbs`<NewUser @close={{noop}} @transitionToUser={{this.transitionToUser}} />`);
+    await component.clickChoiceButtons.secondButton.click();
+    await component.firstName.set('first');
+    await component.middleName.set('middle');
+    await component.lastName.set('last');
+    await component.campusId.set('campusid');
+    await component.otherId.set('otherid');
+    await component.phone.set('phone');
+    await component.email.set('test@test.com');
+    await component.username.set('user123');
+    await component.password.set('password123');
+    await component.submit();
 
     const newUser = await this.owner.lookup('service:store').find('user', 2);
     assert.equal(newUser.firstName, 'first', 'with the correct firstName');
@@ -183,13 +150,62 @@ module('Integration | Component | new user', function(hooks) {
     assert.equal(newUser.otherId, 'otherid', 'with the correct otherId');
     assert.equal(newUser.phone, 'phone', 'with the correct phone');
     assert.equal(newUser.email, 'test@test.com', 'with the correct email');
-    const roles = await newUser.get('roles');
+    const roles = await newUser.roles;
     assert.ok(roles.mapBy('id').includes(studentRole.id));
-    const primaryCohort = await newUser.get('primaryCohort');
-    assert.equal(primaryCohort.id, cohort.id);
 
-    const authentication = await newUser.get('authentication');
+    const authentication = await newUser.authentication;
     assert.equal(authentication.username, 'user123', 'with the correct username');
     assert.equal(authentication.password, 'password123', 'with the correct password');
+
+    const primaryCohort = await newUser.primaryCohort;
+    assert.equal(primaryCohort.id, cohort.id);
+  });
+
+  test('cancel', async function(assert) {
+    assert.expect(1);
+    this.set('cancel', () => {
+      assert.ok(true, 'cancel event fired.');
+    });
+    await render(hbs`<NewUser @close={{this.cancel}}  />`);
+    await component.cancel();
+  });
+
+  test('change school', async function(assert) {
+    const program1 = this.server.create('program', { school: this.schools[0] });
+    const programYear1 = this.server.create('programYear', {
+      program: program1,
+      startYear: new Date().getFullYear()
+    });
+    this.server.create('cohort', { programYear: programYear1 });
+
+    const program2 = this.server.create('program', { school: this.schools[1] });
+    const programYear2 = this.server.create('programYear', {
+      program: program2,
+      startYear: new Date().getFullYear() - 1,
+      duration: 4
+    });
+    this.server.create('cohort', { programYear: programYear2 });
+    // this program is too old and will not show as option in the dropdown
+    const programYear3 = this.server.create('programYear', {
+      program: program2,
+      startYear: new Date().getFullYear() - 5,
+    });
+    this.server.create('cohort', { programYear: programYear3 });
+
+    await render(hbs`<NewUser @close={{noop}}  />`);
+    await component.cancel();
+    await component.clickChoiceButtons.secondButton.click();
+
+    assert.ok(component.school.options[0].selected);
+    assert.equal(component.cohort.options.length, 1);
+    assert.equal(component.cohort.options[0].text, 'program 0 cohort 0');
+    assert.ok(component.cohort.options[0].selected);
+
+    await component.school.select(2);
+
+    assert.ok(component.school.options[1].selected);
+    assert.equal(component.cohort.options.length, 1);
+    assert.equal(component.cohort.options[0].text, 'program 1 cohort 1');
+    assert.ok(component.cohort.options[0].selected);
   });
 });

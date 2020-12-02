@@ -146,7 +146,7 @@ export default class NewUserComponent extends Component {
     user = yield user.save();
     const authentication = this.store.createRecord('authentication', {
       user,
-      username: this.userName,
+      username: this.username,
       password: this.password,
     });
     yield authentication.save();

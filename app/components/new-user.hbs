@@ -140,7 +140,7 @@
         type="text"
         value={{this.username}}
         {{on "input" (pick "target.value" (set this.username))}}
-        {{on "keyup" (queue (fn this.addErrorDisplayFor "userName") (perform this.saveOrCancel))}}
+        {{on "keyup" (queue (fn this.addErrorDisplayFor "username") (perform this.saveOrCancel))}}
       >
       {{#each (await (compute (fn this.getErrorsFor) "username")) as |message|}}
         <span class="validation-error-message">
@@ -210,6 +210,7 @@
         class="done text"
         disabled={{this.save.isRunning}}
         {{on "click" (perform this.save)}}
+        data-test-submit
       >
         {{#if this.save.isRunning}}
           <LoadingSpinner />
@@ -217,7 +218,7 @@
           {{t "general.done"}}
         {{/if}}
       </button>
-      <button type="button" class="cancel text" {{on "click" @close}}>
+      <button type="button" class="cancel text" {{on "click" @close}} data-test-cancel>
         {{t "general.cancel"}}
       </button>
     </div>
