@@ -6,6 +6,7 @@ import { HtmlNotBlank }  from './validation/html-not-blank';
 import { Gte } from './validation/gte';
 import { Gt } from './validation/gt';
 import { Lte } from './validation/lte';
+import { IsEmail } from './validation/is-email';
 import { IsInt } from './validation/is-int';
 import { IsTrue } from './validation/is-true';
 import { IsURL } from './validation/is-url';
@@ -20,6 +21,7 @@ export {
   Gte,
   GteProp,
   Lte,
+  IsEmail,
   IsInt,
   IsTrue,
   IsURL,
