@@ -5,7 +5,7 @@
   {{did-update (perform this.reload) @limit @offset @query}}
   ...attributes
 >
-  <div class="filters">
+  <div class="filters" data-test-filters>
     <div class="filter user-search">
       <input
         type="search"
@@ -16,8 +16,8 @@
     </div>
   </div>
   <section class="users">
-    <div class="header">
-      <span class="title">
+    <div class="header" data-test-header>
+      <span class="title" data-test-title>
         {{t "general.users"}}
       </span>
       <div class="actions">
@@ -25,15 +25,16 @@
           <button
             type="button"
             {{on "click" (if @showNewUserForm (fn @setShowNewUserForm false) (fn @setShowBulkNewUserForm false))}}
+            data-test-collapse
           >
             <FaIcon @icon="minus" />
           </button>
         {{else}}
-          <button type="button" {{on "click" (fn @setShowNewUserForm true)}}>
+          <button type="button" {{on "click" (fn @setShowNewUserForm true)}} data-test-show-new-user-form>
             {{t "general.create"}}
           </button>
           {{#if (not-eq (await this.iliosConfig.userSearchType) "ldap")}}
-            <button type="button" {{on "click" (fn @setShowBulkNewUserForm true)}}>
+            <button type="button" {{on "click" (fn @setShowBulkNewUserForm true)}} data-test-show-bulk-new-user-form>
               {{t "general.createBulk"}}
             </button>
           {{/if}}
@@ -65,6 +66,7 @@
         @limitless={{true}}
         @setOffset={{@setOffset}}
         @setLimit={{@setLimit}}
+        data-test-top-paged-list-controls
       />
       <div class="list">
         {{#if (gt this.searchForUsers.lastSuccessful.value.length 0)}}
@@ -81,6 +83,7 @@
         @limitless={{true}}
         @setOffset={{@setOffset}}
         @setLimit={{@setLimit}}
+        data-test-bottom-paged-list-controls
       />
     {{else}}
       <PulseLoader />
