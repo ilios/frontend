@@ -13,6 +13,10 @@ module('Integration | Component | new user', function(hooks) {
 
   hooks.beforeEach(async function () {
     this.schools = this.server.createList('school', 3);
+
+    // fetch all the schools into the store
+    await this.owner.lookup('service:store').findAll('school');
+
     this.server.create('user', {
       school: this.schools[0],
     });
