@@ -1,39 +1,40 @@
-<div class="ilios-users" ...attributes>
-  <div class="filters">
+<div
+  class="ilios-users"
+  data-test-ilios-users
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.reload) @limit @offset @query}}
+  ...attributes
+>
+  <div class="filters" data-test-filters>
     <div class="filter user-search">
       <input
         type="search"
-        value={{query}}
-        oninput={{setQuery}}
+        value={{@query}}
+        {{on "input" (pick "target.value" @setQuery)}}
         placeholder={{t "general.searchUsers"}}
       >
     </div>
   </div>
   <section class="users">
-    <div class="header">
-      <span class="title">
+    <div class="header" data-test-header>
+      <span class="title" data-test-title>
         {{t "general.users"}}
       </span>
       <div class="actions">
-        {{#if (or showNewUserForm showBulkNewUserForm)}}
+        {{#if (or @showNewUserForm @showBulkNewUserForm)}}
           <button
             type="button"
-            {{action
-              (if
-                showNewUserForm
-                (toggle "showNewUserForm" this)
-                (toggle "showBulkNewUserForm" this)
-              )
-            }}
+            {{on "click" (if @showNewUserForm (fn @setShowNewUserForm false) (fn @setShowBulkNewUserForm false))}}
+            data-test-collapse
           >
             <FaIcon @icon="minus" />
           </button>
         {{else}}
-          <button type="button" {{action (toggle "showNewUserForm" this)}}>
+          <button type="button" {{on "click" (fn @setShowNewUserForm true)}} data-test-show-new-user-form>
             {{t "general.create"}}
           </button>
-          {{#if (not-eq (await iliosConfig.userSearchType) "ldap")}}
-            <button type="button" {{action (toggle "showBulkNewUserForm" this)}}>
+          {{#if (not-eq (await this.iliosConfig.userSearchType) "ldap")}}
+            <button type="button" {{on "click" (fn @setShowBulkNewUserForm true)}} data-test-show-bulk-new-user-form>
               {{t "general.createBulk"}}
             </button>
           {{/if}}
@@ -41,38 +42,35 @@
       </div>
     </div>
     <section class="new">
-      {{#if showNewUserForm}}
-        {{#if (is-fulfilled newUserComponent)}}
+      {{#if @showNewUserForm}}
+        {{#if this.newUserComponent}}
           {{component
-            (await newUserComponent)
-            close=(action setShowNewUserForm false)
-            transitionToUser=transitionToUser
-            searchTerms=searchTerms
-            setSearchTerms=setSearchTerms
+            this.newUserComponent
+            close=(fn @setShowNewUserForm false)
+            transitionToUser=@transitionToUser
+            searchTerms=@searchTerms
+            setSearchTerms=@setSearchTerms
           }}
         {{else}}
           <LoadingSpinner />
         {{/if}}
       {{/if}}
-      {{#if showBulkNewUserForm}}
-        {{#if (is-fulfilled newBulkUserComponent)}}
-          <BulkNewUsers @close={{action setShowNewUserForm false}} />
-        {{else}}
-          <LoadingSpinner />
-        {{/if}}
+      {{#if @showBulkNewUserForm}}
+        <BulkNewUsers @close={{fn @setShowBulkNewUserForm false}} />
       {{/if}}
     </section>
-    {{#if searchForUsers.lastSuccessful}}
+    {{#if this.searchForUsers.lastSuccessful}}
       <PagedlistControls
-        @offset={{offset}}
-        @limit={{limit}}
+        @offset={{@offset}}
+        @limit={{@limit}}
         @limitless={{true}}
-        @setOffset={{action "setOffset"}}
-        @setLimit={{setLimit}}
+        @setOffset={{@setOffset}}
+        @setLimit={{@setLimit}}
+        data-test-top-paged-list-controls
       />
       <div class="list">
-        {{#if (gt searchForUsers.lastSuccessful.value.length 0)}}
-          <UserList @users={{searchForUsers.lastSuccessful.value}} />
+        {{#if (gt this.searchForUsers.lastSuccessful.value.length 0)}}
+          <UserList @users={{this.searchForUsers.lastSuccessful.value}} />
         {{else}}
           <span class="no-results">
             {{t "general.noResultsFound"}}
@@ -80,11 +78,12 @@
         {{/if}}
       </div>
       <PagedlistControls
-        @offset={{offset}}
-        @limit={{limit}}
+        @offset={{@offset}}
+        @limit={{@limit}}
         @limitless={{true}}
-        @setOffset={{action "setOffset"}}
-        @setLimit={{setLimit}}
+        @setOffset={{@setOffset}}
+        @setLimit={{@setLimit}}
+        data-test-bottom-paged-list-controls
       />
     {{else}}
       <PulseLoader />

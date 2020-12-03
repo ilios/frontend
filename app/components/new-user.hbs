@@ -1,239 +1,226 @@
-<h3>
-  {{t "general.newUser"}}
-</h3>
-<div class="new-user-form">
-  <div class="choose-form-type" data-test-user-type>
-    <label>
-      {{t "general.createNew"}}:
-    </label>
-    <ClickChoiceButtons
-      @buttonContent1={{t "general.nonStudent"}}
-      @buttonContent2={{t "general.student"}}
-      @firstChoicePicked={{nonStudentMode}}
-      @toggle={{action (mut nonStudentMode)}}
-    />
-  </div>
-  <div class="item" data-test-first-name>
-    <label>
-      {{t "general.firstName"}}:
-    </label>
-    <input
-      type="text"
-      value={{firstName}}
-      oninput={{action (mut firstName) value="target.value"}}
-      onkeyup={{action "addErrorDisplayFor" "firstName"}}
-    >
-    {{#if
-      (and
-        (v-get this "firstName" "isInvalid") (includes "firstName" showErrorsFor)
-      )
-    }}
-      <span class="message error">
-        {{v-get this "firstName" "message"}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item" data-test-middle-name>
-    <label>
-      {{t "general.middleName"}}:
-    </label>
-    <input
-      type="text"
-      value={{middleName}}
-      oninput={{action (mut middleName) value="target.value"}}
-      onkeyup={{action "addErrorDisplayFor" "middleName"}}
-    >
-    {{#if
-      (and
-        (v-get this "middleName" "isInvalid") (includes "middleName" showErrorsFor)
-      )
-    }}
-      <span class="message error">
-        {{v-get this "middleName" "message"}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item" data-test-last-name>
-    <label>
-      {{t "general.lastName"}}:
-    </label>
-    <input
-      type="text"
-      value={{lastName}}
-      oninput={{action (mut lastName) value="target.value"}}
-      onkeyup={{action "addErrorDisplayFor" "lastName"}}
-    >
-    {{#if
-      (and (v-get this "lastName" "isInvalid") (includes "lastName" showErrorsFor))
-    }}
-      <span class="message error">
-        {{v-get this "lastName" "message"}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item" data-test-campus-id>
-    <label>
-      {{t "general.campusId"}}:
-    </label>
-    <input
-      type="text"
-      value={{campusId}}
-      oninput={{action (mut campusId) value="target.value"}}
-      onkeyup={{action "addErrorDisplayFor" "campusId"}}
-    >
-    {{#if
-      (and (v-get this "campusId" "isInvalid") (includes "campusId" showErrorsFor))
-    }}
-      <span class="message error">
-        {{v-get this "campusId" "message"}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item" data-test-other-id>
-    <label>
-      {{t "general.otherId"}}:
-    </label>
-    <input
-      type="text"
-      value={{otherId}}
-      oninput={{action (mut otherId) value="target.value"}}
-      onkeyup={{action "addErrorDisplayFor" "otherId"}}
-    >
-    {{#if
-      (and (v-get this "otherId" "isInvalid") (includes "otherId" showErrorsFor))
-    }}
-      <span class="message error">
-        {{v-get this "otherId" "message"}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item" data-test-email>
-    <label>
-      {{t "general.email"}}:
-    </label>
-    <input
-      type="text"
-      value={{email}}
-      oninput={{action (mut email) value="target.value"}}
-      onkeyup={{action "addErrorDisplayFor" "email"}}
-    >
-    {{#if (and (v-get this "email" "isInvalid") (includes "email" showErrorsFor))}}
-      <span class="message error">
-        {{v-get this "email" "message"}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item" data-test-phone>
-    <label>
-      {{t "general.phone"}}:
-    </label>
-    <input
-      type="text"
-      value={{phone}}
-      oninput={{action (mut phone) value="target.value"}}
-      onkeyup={{action "addErrorDisplayFor" "phone"}}
-    >
-    {{#if (and (v-get this "phone" "isInvalid") (includes "phone" showErrorsFor))}}
-      <span class="message error">
-        {{v-get this "phone" "message"}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item" data-test-username>
-    <label>
-      {{t "general.username"}}:
-    </label>
-    <input
-      type="text"
-      value={{username}}
-      oninput={{action (mut username) value="target.value"}}
-      onkeyup={{action "addErrorDisplayFor" "username"}}
-    >
-    {{#if
-      (and (v-get this "username" "isInvalid") (includes "username" showErrorsFor))
-    }}
-      <span class="message error">
-        {{v-get this "username" "message"}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item" data-test-password>
-    <label>
-      {{t "general.password"}}:
-    </label>
-    <input
-      type="text"
-      value={{password}}
-      oninput={{action (mut password) value="target.value"}}
-      onkeyup={{action "addErrorDisplayFor" "password"}}
-    >
-    {{#if
-      (and (v-get this "password" "isInvalid") (includes "password" showErrorsFor))
-    }}
-      <span class="message error">
-        {{v-get this "password" "message"}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item" data-test-school>
-    <label>
-      {{t "general.primarySchool"}}:
-    </label>
-    {{#if (and (is-fulfilled schools) (is-fulfilled bestSelectedSchool))}}
-      <select onchange={{action "setSchool" value="target.value"}}>
-        {{#each (sort-by "title" (await schools)) as |school|}}
-          <option
-            value={{school.id}}
-            selected={{eq school (await bestSelectedSchool)}}
-          >
-            {{school.title}}
-          </option>
-        {{/each}}
-      </select>
-    {{else}}
-      <LoadingSpinner />
-    {{/if}}
-  </div>
-  {{#if (and (not nonStudentMode) (is-fulfilled bestSelectedSchool))}}
-    <div class="item last" data-test-cohort>
+<div
+  class="new-user"
+  data-test-new-user
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.reload) this.schoolId}}
+  ...attributes
+>
+  <h3>
+    {{t "general.newUser"}}
+  </h3>
+  <div class="new-user-form">
+    <div class="choose-form-type" data-test-user-type>
       <label>
-        {{t "general.primaryCohort"}}:
+        {{t "general.createNew"}}:
       </label>
-      {{#if (and loadCohorts.isIdle (is-fulfilled bestSelectedCohort))}}
-        <select onchange={{action "setPrimaryCohort" value="target.value"}}>
-          {{#each (sort-by "title" cohorts) as |cohort|}}
+      <ClickChoiceButtons
+        @buttonContent1={{t "general.nonStudent"}}
+        @buttonContent2={{t "general.student"}}
+        @firstChoicePicked={{this.nonStudentMode}}
+        @toggle={{set this.nonStudentMode (not this.nonStudentMode)}}
+      />
+    </div>
+    <div class="item" data-test-first-name>
+      <label>
+        {{t "general.firstName"}}:
+      </label>
+      <input
+        type="text"
+        value={{this.firstName}}
+        {{on "input" (pick "target.value" (set this.firstName))}}
+        {{on "keyup" (queue (fn this.addErrorDisplayFor "firstName") (perform this.saveOrCancel))}}
+      >
+      {{#each (await (compute (fn this.getErrorsFor) "firstName")) as |message|}}
+        <span class="validation-error-message">
+          {{message}}
+        </span>
+      {{/each}}
+    </div>
+    <div class="item" data-test-middle-name>
+      <label>
+        {{t "general.middleName"}}:
+      </label>
+      <input
+        type="text"
+        value={{this.middleName}}
+        {{on "input" (pick "target.value" (set this.middleName))}}
+        {{on "keyup" (queue (fn this.addErrorDisplayFor "middleName") (perform this.saveOrCancel))}}
+      >
+      {{#each (await (compute (fn this.getErrorsFor) "middleName")) as |message|}}
+        <span class="validation-error-message">
+          {{message}}
+        </span>
+      {{/each}}
+    </div>
+    <div class="item" data-test-last-name>
+      <label>
+        {{t "general.lastName"}}:
+      </label>
+      <input
+        type="text"
+        value={{this.lastName}}
+        {{on "input" (pick "target.value" (set this.lastName))}}
+        {{on "keyup" (queue (fn this.addErrorDisplayFor "lastName") (perform this.saveOrCancel))}}
+      >
+      {{#each (await (compute (fn this.getErrorsFor) "lastName")) as |message|}}
+        <span class="validation-error-message">
+          {{message}}
+        </span>
+      {{/each}}
+    </div>
+    <div class="item" data-test-campus-id>
+      <label>
+        {{t "general.campusId"}}:
+      </label>
+      <input
+        type="text"
+        value={{this.campusId}}
+        {{on "input" (pick "target.value" (set this.campusId))}}
+        {{on "keyup" (queue (fn this.addErrorDisplayFor "campusId") (perform this.saveOrCancel))}}
+      >
+      {{#each (await (compute (fn this.getErrorsFor) "campusId")) as |message|}}
+        <span class="validation-error-message">
+          {{message}}
+        </span>
+      {{/each}}
+    </div>
+    <div class="item" data-test-other-id>
+      <label>
+        {{t "general.otherId"}}:
+      </label>
+      <input
+        type="text"
+        value={{this.otherId}}
+        {{on "input" (pick "target.value" (set this.otherId))}}
+        {{on "keyup" (queue (fn this.addErrorDisplayFor "otherId") (perform this.saveOrCancel))}}
+      >
+      {{#each (await (compute (fn this.getErrorsFor) "otherId")) as |message|}}
+        <span class="validation-error-message">
+          {{message}}
+        </span>
+      {{/each}}
+    </div>
+    <div class="item" data-test-email>
+      <label>
+        {{t "general.email"}}:
+      </label>
+      <input
+        type="text"
+        value={{this.email}}
+        {{on "input" (pick "target.value" (set this.email))}}
+        {{on "keyup" (queue (fn this.addErrorDisplayFor "email") (perform this.saveOrCancel))}}
+      >
+      {{#each (await (compute (fn this.getErrorsFor) "email")) as |message|}}
+        <span class="validation-error-message">
+          {{message}}
+        </span>
+      {{/each}}
+    </div>
+    <div class="item" data-test-phone>
+      <label>
+        {{t "general.phone"}}:
+      </label>
+      <input
+        type="text"
+        value={{this.phone}}
+        {{on "input" (pick "target.value" (set this.phone))}}
+        {{on "keyup" (queue (fn this.addErrorDisplayFor "phone") (perform this.saveOrCancel))}}
+      >
+      {{#each (await (compute (fn this.getErrorsFor) "phone")) as |message|}}
+        <span class="validation-error-message">
+          {{message}}
+        </span>
+      {{/each}}
+    </div>
+    <div class="item" data-test-username>
+      <label>
+        {{t "general.username"}}:
+      </label>
+      <input
+        type="text"
+        value={{this.username}}
+        {{on "input" (pick "target.value" (set this.username))}}
+        {{on "keyup" (queue (fn this.addErrorDisplayFor "username") (perform this.saveOrCancel))}}
+      >
+      {{#each (await (compute (fn this.getErrorsFor) "username")) as |message|}}
+        <span class="validation-error-message">
+          {{message}}
+        </span>
+      {{/each}}
+    </div>
+    <div class="item" data-test-password>
+      <label>
+        {{t "general.password"}}:
+      </label>
+      <input
+        type="text"
+        value={{this.password}}
+        {{on "input" (pick "target.value" (set this.password))}}
+        {{on "keyup" (queue (fn this.addErrorDisplayFor "password") (perform this.saveOrCancel))}}
+      >
+      {{#each (await (compute (fn this.getErrorsFor) "password")) as |message|}}
+        <span class="validation-error-message">
+          {{message}}
+        </span>
+      {{/each}}
+    </div>
+    <div class="item" data-test-school>
+      <label>
+        {{t "general.primarySchool"}}:
+      </label>
+      {{#if (or this.load.isRunning this.reload.isRunning)}}
+        <LoadingSpinner />
+      {{else}}
+        <select {{on "change" (pick "target.value" (set this.schoolId))}}>
+          {{#each (sort-by "title" this.schools) as |school|}}
             <option
-              value={{cohort.id}}
-              selected={{eq cohort.id (get (await bestSelectedCohort) "id")}}
+              value={{school.id}}
+              selected={{eq school this.bestSelectedSchool}}
             >
-              {{cohort.title}}
+              {{school.title}}
             </option>
           {{/each}}
         </select>
-      {{else}}
-        <LoadingSpinner />
       {{/if}}
     </div>
-  {{/if}}
-  <div class="buttons">
-    <button
-      type="button"
-      class="done text"
-      disabled={{or
-        save.isRunning
-        (is-pending bestSelectedCohort)
-        (and (not nonStudentMode) (is-pending bestSelectedSchool))
-      }}
-      {{action (perform save)}}
-    >
-      {{#if save.isRunning}}
-        <LoadingSpinner />
-      {{else}}
-        {{t "general.done"}}
-      {{/if}}
-    </button>
-    <button type="button" class="cancel text" {{action (action close)}}>
-      {{t "general.cancel"}}
-    </button>
+    {{#unless this.nonStudentMode}}
+      <div class="item last" data-test-cohort>
+        <label>
+          {{t "general.primaryCohort"}}:
+        </label>
+        {{#if (or this.load.isRunning this.reload.isRunning)}}
+          <LoadingSpinner />
+        {{else}}
+          <select {{on "change" (pick "target.value" (set this.primaryCohortId))}}>
+            {{#each (sort-by "title" this.cohorts) as |cohort|}}
+              <option
+                value={{cohort.id}}
+                selected={{eq cohort.id this.bestSelectedCohort?.id}}
+              >
+                {{cohort.title}}
+              </option>
+            {{/each}}
+          </select>
+        {{/if}}
+      </div>
+    {{/unless}}
+    <div class="buttons">
+      <button
+        type="button"
+        class="done text"
+        disabled={{this.save.isRunning}}
+        {{on "click" (perform this.save)}}
+        data-test-submit
+      >
+        {{#if this.save.isRunning}}
+          <LoadingSpinner />
+        {{else}}
+          {{t "general.done"}}
+        {{/if}}
+      </button>
+      <button type="button" class="cancel text" {{on "click" @close}} data-test-cancel>
+        {{t "general.cancel"}}
+      </button>
+    </div>
   </div>
 </div>

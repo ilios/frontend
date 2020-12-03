@@ -1,82 +1,88 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { lte } from '@ember/object/computed';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  tagName: "",
-  limit: null,
-  limitless: false,
-  offset: null,
-  total: null,
-  firstPage: lte('offset', 0),
+export default class PagedlistControlsComponent extends Component {
 
-  start: computed('offset', function() {
-    return parseInt(this.offset, 10) + 1;
-  }),
+  get offset() {
+    return this.args.offset ? parseInt(this.args.offset, 10) : 0;
+  }
 
-  end: computed('offset', 'limit', function() {
+  get limit() {
+    return this.args.limit ? parseInt(this.args.limit, 10) : 0;
+  }
+
+  get total() {
+    return this.args.total ? parseInt(this.args.total, 10) : 0;
+  }
+
+  get firstPage() {
+    return this.offset <= 0;
+  }
+
+  get start() {
+    return this.offset + 1;
+  }
+
+  get end() {
     const total = this.total;
-    let end = parseInt(this.offset, 10) + parseInt(this.limit, 10);
+    let end = this.offset + this.limit;
     if(end > total) {
       end = total;
     }
 
     return end;
-  }),
+  }
 
-  offsetOptions: computed('total', function() {
-    const total = this.limitless?1000:this.total;
-    const available = [10, 25, 50, 100, 200, 400, 1000];
+  get offsetOptions() {
+    const total = this.args.limitless ? 1000 : this.total;
+    const available = [ 10, 25, 50, 100, 200, 400, 1000 ];
     const options = available.filter(option => {
       return option < total;
     });
-    options.pushObject(available[options.length]);
+    options.push(available[options.length]);
 
     return options;
-  }),
+  }
 
-  lastPage: computed('total', 'limit', 'offset', 'limitless', function() {
-    if(this.limitless) {
+  get lastPage() {
+    if (this.args.limitless) {
       return false;
     }
-
-    const total = parseInt(this.total, 10);
-    const limit = parseInt(this.limit, 10);
-    const offset = parseInt(this.offset, 10);
-
-    return (offset + limit) >= total;
-  }),
-
-  actions: {
-    goForward() {
-      const offset = this.offset;
-      const limit = this.limit;
-      this.setOffset(offset+limit);
-    },
-
-    goBack() {
-      const offset = this.offset;
-      const limit = this.limit;
-      this.setOffset(offset-limit);
-    },
-
-    setOffset(offset) {
-      const limit = this.limit;
-      const total = this.total;
-      const largestOffset = total - limit;
-      if (offset < 0) {
-        offset = 0;
-      }
-      if (offset > largestOffset) {
-        offset = largestOffset;
-      }
-
-      this.setOffset(offset);
-    },
-
-    setLimit(limit) {
-      this.setLimit(parseInt(limit, 10));
-      this.setOffset(0);
-    }
+    return (this.offset + this.limit) >= this.total;
   }
-});
+
+  @action
+  goForward() {
+    const offset = this.offset;
+    const limit = this.limit;
+    this.args.setOffset(offset + limit);
+  }
+
+  @action
+  goBack() {
+    const offset = this.offset;
+    const limit = this.limit;
+    this.args.setOffset(offset - limit);
+  }
+
+  @action
+  setOffset(offset) {
+    const limit = this.limit;
+    const total = this.total;
+    const largestOffset = total - limit;
+    if (offset < 0) {
+      offset = 0;
+    }
+    if (offset > largestOffset) {
+      offset = largestOffset;
+    }
+
+    this.args.setOffset(offset);
+  }
+
+  @action
+  setLimit(limit) {
+    this.args.setLimit(parseInt(limit, 10));
+    this.args.setOffset(0);
+  }
+}
