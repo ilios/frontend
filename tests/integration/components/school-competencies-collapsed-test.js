@@ -1,39 +1,45 @@
-import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled } from '@ember/test-helpers';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
-const { resolve } = RSVP;
+import { component } from 'ilios/tests/pages/components/school-competencies-collapsed';
 
 module('Integration | Component | school competencies collapsed', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(3);
-    const domain = EmberObject.create({title: 'domain 0', isDomain: true, childCount: 1});
-    const competency = EmberObject.create({isNotDomain: true, parent: resolve(domain)});
-    domain.set('children', resolve([competency]));
+    const school = this.server.create('school');
+    const domain = this.server.create('competency', { school });
+    const domain2 = this.server.create('competency', { school });
+    this.server.create('competency', { school });
+    this.server.create('competency', { school, parent: domain2 });
+    this.server.createList('competency', 3, { school, parent: domain });
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
 
-    const competencies = [domain, competency];
+    this.set('school', schoolModel);
+    await render(hbs`<SchoolCompetenciesCollapsed @school={{this.school}} @expand={{noop}} />`);
 
-    const school = EmberObject.create({
-      competencies: resolve(competencies)
+    assert.equal(component.expandButton.text, 'Competencies (3/4)');
+    assert.equal(component.domains.length, 3);
+    assert.equal(component.domains[0].title, 'competency 0');
+    assert.equal(component.domains[0].summary, 'There are 3 competencies');
+    assert.equal(component.domains[1].title, 'competency 1');
+    assert.equal(component.domains[1].summary, 'There is 1 competency');
+    assert.equal(component.domains[2].title, 'competency 2');
+    assert.equal(component.domains[2].summary, 'There are 0 competencies');
+  });
+
+  test('it renders', async function(assert) {
+    const school = this.server.create('school');
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+
+    this.set('school', schoolModel);
+    this.set('expand', () => {
+      assert.ok(true);
     });
-
-
-    this.set('school', school);
-    this.set('click', () => {});
-    await render(hbs`<SchoolCompetenciesCollapsed @school={{school}} @expand={{action click}} />`);
-    const title = '.title';
-    const domains = 'table tbody tr';
-    const domainTitle = `${domains}:nth-of-type(1) td:nth-of-type(1)`;
-    const children = `${domains}:nth-of-type(1) td:nth-of-type(2)`;
-
-    await settled();
-    assert.dom(title).hasText('Competencies (1/1)');
-    assert.dom(domainTitle).hasText('domain 0');
-    assert.dom(children).hasText('There is 1 competency');
+    await render(hbs`<SchoolCompetenciesCollapsed @school={{this.school}} @expand={{this.expand}} />`);
+    await component.expandButton.click();
   });
 });

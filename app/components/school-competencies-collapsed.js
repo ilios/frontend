@@ -1,25 +1,18 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  tagName: "",
-  school: null,
+export default class SchoolCompetenciesCollapsedComponent extends Component {
+  @tracked competenciesRelationship;
+  @tracked domains = [];
+  @tracked childCompetencies = [];
 
-  competencies: computed('school.competencies.[]', async function() {
-    const school = this.school;
-    const competencies = await school.get('competencies');
-    return competencies;
-  }),
+  get competencies() {
+    return this.competenciesRelationship ? this.competenciesRelationship.toArray() : [];
+  }
 
-  domains: computed('school.competencies.[]', async function() {
-    const competencies = await this.competencies;
-    const domains = competencies.filterBy('isDomain');
-    return domains;
-  }),
-
-  childCompetencies: computed('school.competencies.[]', async function() {
-    const competencies = await this.competencies;
-    const childCompetencies = competencies.filterBy('isNotDomain');
-    return childCompetencies;
-  })
-});
+  @restartableTask
+  *load() {
+    this.competenciesRelationship = yield this.args.school.competencies;
+  }
+}

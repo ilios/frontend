@@ -1,12 +1,18 @@
-<section class="school-competencies-collapsed" ...attributes>
-  <div class="title clickable" role="button" {{action expand}}>
+<section
+  class="school-competencies-collapsed"
+  data-test-school-competencies-collapsed
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @school.competencies}}
+  ...attributes
+>
+  <div class="title clickable" role="button" {{on "click" @expand}} data-test-expand-competencies>
     {{t "general.competencies"}}
-    ({{get (await domains) "length"}}/{{get (await childCompetencies) "length"}})
+    ({{get (filter-by "isDomain" this.competencies) "length"~}}/
+    {{~get (filter-by "isNotDomain" this.competencies) "length"}})
   </div>
-  {{#if competencies.isPending}}
+  {{#if this.load.isRunning}}
     <LoadingSpinner @tagName="h3" />
-  {{/if}}
-  {{#if (is-fulfilled school.competencies)}}
+  {{else}}
     <div class="content">
       <table class="condensed">
         <thead>
@@ -20,12 +26,12 @@
           </tr>
         </thead>
         <tbody>
-          {{#each (sort-by "title" (await domains)) as |domain|}}
-            <tr>
-              <td>
+          {{#each (sort-by "title" (filter-by "isDomain" this.competencies)) as |domain|}}
+            <tr data-test-domain>
+              <td data-test-domain-title>
                 {{domain.title}}
               </td>
-              <td class="summary-highlight">
+              <td class="summary-highlight" data-test-domain-summary>
                 {{t "general.competencyCount" count=domain.childCount}}
               </td>
             </tr>
