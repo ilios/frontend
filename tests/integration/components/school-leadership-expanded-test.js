@@ -86,4 +86,23 @@ module('Integration | Component | school leadership expanded', function(hooks) {
 
     await click(manage);
   });
+
+  // @link https://github.com/ilios/frontend/issues/5732
+  test('managing mode', async function(assert) {
+    assert.expect(1);
+    const school = this.server.create('school');
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    this.set('school', schoolModel);
+    await render(hbs`<SchoolLeadershipExpanded
+      @school={{this.school}}
+      @canUpdate={{true}}
+      @collapse={{noop}}
+      @expand={{noop}}
+      @isManaging={{true}}
+      @setIsManaging={{noop}}
+    />`);
+
+    assert.dom('[data-test-leadership-manager]').exists();
+    // @todo flesh this out when octanifying component under test [ST 2020/12/02].
+  });
 });
