@@ -26,11 +26,10 @@ module('Integration | Component | school-curriculum-inventory-institution-manage
 
     this.set('school', schoolModel);
     this.set('canUpdate', true);
-    this.set('manage', parseInt);
     await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{await school.curriculumInventoryInstitution}}
-      @canUpdate={{canUpdate}}
-      @manage={{manage}}
+      @institution={{await this.school.curriculumInventoryInstitution}}
+      @canUpdate={{this.canUpdate}}
+      @manage={{noop}}
     />`);
 
     assert.equal(component.header.title, "Curriculum Inventory Institutional Information");
@@ -57,11 +56,10 @@ module('Integration | Component | school-curriculum-inventory-institution-manage
 
     this.set('school', schoolModel);
     this.set('canUpdate', true);
-    this.set('manage', parseInt);
     await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{await school.curriculumInventoryInstitution}}
-      @canUpdate={{canUpdate}}
-      @manage={{manage}}
+      @institution={{await this.school.curriculumInventoryInstitution}}
+      @canUpdate={{this.canUpdate}}
+      @manage={{noop}}
     />`);
 
     assert.equal(component.content.name.value, "");
@@ -88,7 +86,7 @@ module('Integration | Component | school-curriculum-inventory-institution-manage
       assert.equal(isManaging, false);
     }));
     await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{await school.curriculumInventoryInstitution}}
+      @institution={{await this.school.curriculumInventoryInstitution}}
       @canUpdate={{canUpdate}}
       @manage={{manage}}
     />`);
@@ -131,12 +129,11 @@ module('Integration | Component | school-curriculum-inventory-institution-manage
       assert.equal(institution.get('addressCountryCode'), newAddressCountryCode);
       assert.equal(institution.belongsTo('school').id(), schoolModel.get('id'));
     });
-    this.set('manage', parseInt);
     await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{await school.curriculumInventoryInstitution}}
-      @canUpdate={{canUpdate}}
-      @manage={{manage}}
-      @save={{action saveInstitution}}
+      @institution={{await this.school.curriculumInventoryInstitution}}
+      @canUpdate={{this.canUpdate}}
+      @manage={{noop}}
+      @save={{this.saveInstitution}}
     />`);
 
     component.content.name.change(newName);
@@ -175,12 +172,11 @@ module('Integration | Component | school-curriculum-inventory-institution-manage
       assert.equal(institution.get('addressCountryCode'), newAddressCountryCode);
       assert.notOk(institution.belongsTo('school').id());
     });
-    this.set('manage', parseInt);
     await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{await school.curriculumInventoryInstitution}}
-      @canUpdate={{canUpdate}}
-      @manage={{manage}}
-      @save={{action saveInstitution}}
+      @institution={{await this.school.curriculumInventoryInstitution}}
+      @canUpdate={{this.canUpdate}}
+      @manage={{noop}}
+      @save={{this.saveInstitution}}
     />`);
 
     component.content.name.change(newName);
@@ -201,11 +197,10 @@ module('Integration | Component | school-curriculum-inventory-institution-manage
     this.set('school', schoolModel);
     this.set('canUpdate', true);
 
-    this.set('manage', parseInt);
     await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{await school.curriculumInventoryInstitution}}
-      @canUpdate={{canUpdate}}
-      @manage={{manage}}
+      @institution={{await this.school.curriculumInventoryInstitution}}
+      @canUpdate={{this.canUpdate}}
+      @manage={{noop}}
     />`);
 
     assert.notOk(component.content.name.hasError);
@@ -215,12 +210,13 @@ module('Integration | Component | school-curriculum-inventory-institution-manage
     assert.notOk(component.content.addressStateOrProvince.hasError);
     assert.notOk(component.content.addressZipCode.hasError);
     assert.notOk(component.content.addressCountryCode.hasError);
+
     await component.header.save();
 
     assert.ok(component.content.name.hasError);
     assert.equal(component.content.name.errorMessage, "This field can not be blank");
     assert.ok(component.content.aamcCode.hasError);
-    assert.equal(component.content.aamcCode.errorMessage, "This field must be a number");
+    assert.equal(component.content.aamcCode.errorMessage, "This field must be greater than or equal to 1");
     assert.ok(component.content.addressStreet.hasError);
     assert.equal(component.content.addressStreet.errorMessage, "This field can not be blank");
     assert.ok(component.content.addressCity.hasError);
@@ -243,12 +239,11 @@ module('Integration | Component | school-curriculum-inventory-institution-manage
 
     this.set('school', schoolModel);
     this.set('canUpdate', false);
-    this.set('manage', parseInt);
 
     await render(hbs`<SchoolCurriculumInventoryInstitutionManager
-      @institution={{await school.curriculumInventoryInstitution}}
-      @canUpdate={{canUpdate}}
-      @manage={{manage}}
+      @institution={{await this.school.curriculumInventoryInstitution}}
+      @canUpdate={{this.canUpdate}}
+      @manage={{noop}}
     />`);
     assert.notOk(component.header.hasSaveButton);
   });

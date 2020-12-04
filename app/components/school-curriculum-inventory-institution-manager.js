@@ -1,140 +1,81 @@
-import Component from '@ember/component';
-import { isPresent } from '@ember/utils';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import { dropTask } from 'ember-concurrency-decorators';
+import { validatable, IsInt, Gte, Length, Lte, NotBlank } from 'ilios-common/decorators/validation';
 
-const Validations = buildValidations({
-  name: [
-    validator('presence', {
-      presence: true
-    }),
-    validator('length', {
-      max: 100
-    }),
-  ],
-  aamcCode: [
-    validator('number', {
-      allowString: true,
-      integer: true,
-      gte: 1,
-      lte: 99999
-    })
-  ],
-  addressStreet: [
-    validator('presence', {
-      presence: true
-    }),
-    validator('length', {
-      max: 100
-    }),
-  ],
-  addressCity: [
-    validator('presence', {
-      presence: true
-    }),
-    validator('length', {
-      max: 100
-    }),
-  ],
-  addressStateOrProvince: [
-    validator('presence', {
-      presence: true
-    }),
-    validator('length', {
-      max: 50
-    }),
-  ],
-  addressZipCode: [
-    validator('presence', {
-      presence: true
-    }),
-    validator('length', {
-      max: 10
-    }),
-  ],
-  addressCountryCode: [
-    validator('presence', {
-      presence: true
-    }),
-    validator('length', {
-      max: 2
-    }),
-  ],
-});
+@validatable
+export default class SchoolCurriculumInventoryInstitutionManagerComponent extends Component {
+  @service store;
+  @tracked @Length(1, 100) @NotBlank() name;
+  @tracked @IsInt() @Gte(1) @Lte(99999) aamcCode;
+  @tracked @Length(1, 100) @NotBlank() addressStreet;
+  @tracked @Length(1, 100) @NotBlank() addressCity;
+  @tracked @Length(1, 50) @NotBlank() addressStateOrProvince;
+  @tracked @Length(1, 10) @NotBlank() addressZipCode;
+  @tracked @Length(1, 2) @NotBlank() addressCountryCode;
 
-export default Component.extend(ValidationErrorDisplay, Validations, {
-  store: service(),
-  tagName: "",
-  isSaving: false,
-  name: null,
-  aamcCode: null,
-  addressStreet: null,
-  addressCity: null,
-  addressStateOrProvince: null,
-  addressZipCode: null,
-  addressCountryCode: null,
-
-  didReceiveAttrs(){
-    this._super(...arguments);
-    if (isPresent(this.institution)) {
-      this.setProperties({
-        name: this.institution.get("name"),
-        aamcCode: this.institution.get("aamcCode"),
-        addressStreet: this.institution.get("addressStreet"),
-        addressCity: this.institution.get("addressCity"),
-        addressStateOrProvince: this.institution.get("addressStateOrProvince"),
-        addressZipCode: this.institution.get("addressZipCode"),
-        addressCountryCode: this.institution.get("addressCountryCode")
-      });
+  @action
+  load(){
+    if (this.args.institution) {
+      this.name = this.args.institution?.name;
+      this.aamcCode = this.args.institution?.aamcCode;
+      this.addressStreet = this.args.institution?.addressStreet;
+      this.addressCity = this.args.institution?.addressCity;
+      this.addressStateOrProvince = this.args.institution?.addressStateOrProvince;
+      this.addressZipCode = this.args.institution?.addressZipCode;
+      this.addressCountryCode = this.args.institution?.addressCountryCode;
     } else {
-      this.setProperties({
-        name: "",
-        aamcCode: "",
-        addressStreet: "",
-        addressCity: "",
-        addressStateOrProvince: "",
-        addressZipCode: "",
-        addressCountryCode: ""
-      });
-    }
-  },
-
-  actions: {
-    async save() {
-      this.set('isSaving', true);
-      this.send('addErrorDisplaysFor', [
-        'name',
-        'aamcCode',
-        'addressStreet',
-        'addressCity',
-        'addressStateOrProvince',
-        'addressZipCode',
-        'addressCountryCode',
-      ]);
-      const {validations} = await this.validate();
-      if (validations.get('isInvalid')) {
-        this.set('isSaving', false);
-        return;
-      }
-      let institution = this.institution;
-      if (! isPresent(institution)) {
-        institution = this.store.createRecord('curriculum-inventory-institution');
-      }
-      institution.set("name", this.name);
-      institution.set("aamcCode", this.aamcCode);
-      institution.set("addressStreet", this.addressStreet);
-      institution.set("addressCity", this.addressCity);
-      institution.set("addressStateOrProvince", this.addressStateOrProvince);
-      institution.set("addressZipCode", this.addressZipCode);
-      institution.set("addressCountryCode", this.addressCountryCode);
-      await this.save(institution);
-      this.send('clearErrorDisplay');
-      this.set('isSaving', false);
-      this.manage(false);
-    },
-    cancel() {
-      this.manage(false);
+      this.name = '';
+      this.aamcCode = '';
+      this.addressStreet = '';
+      this.addressCity = '';
+      this.addressStateOrProvince = '';
+      this.addressZipCode = '';
+      this.addressCountryCode = '';
     }
   }
-});
+
+  @dropTask
+  *save() {
+    this.addErrorDisplaysFor([
+      'name',
+      'aamcCode',
+      'addressStreet',
+      'addressCity',
+      'addressStateOrProvince',
+      'addressZipCode',
+      'addressCountryCode',
+    ]);
+    const isValid = yield this.isValid();
+    if (! isValid) {
+      return false;
+    }
+
+    let institution = this.args.institution;
+    if (! institution) {
+      institution = this.store.createRecord('curriculum-inventory-institution');
+    }
+    institution.set("name", this.name);
+    institution.set("aamcCode", this.aamcCode);
+    institution.set("addressStreet", this.addressStreet);
+    institution.set("addressCity", this.addressCity);
+    institution.set("addressStateOrProvince", this.addressStateOrProvince);
+    institution.set("addressZipCode", this.addressZipCode);
+    institution.set("addressCountryCode", this.addressCountryCode);
+    yield this.args.save(institution);
+    this.clearErrorDisplay();
+    this.args.manage(false);
+  }
+
+  @dropTask
+  *saveOrCancel(event) {
+    const keyCode = event.keyCode;
+    if (13 === keyCode) {
+      yield this.save.perform();
+    } else if (27 === keyCode) {
+      this.args.manage(false);
+    }
+  }
+}
