@@ -1,90 +1,57 @@
-import Component from '@ember/component';
-import { sort } from '@ember/object/computed';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import { dropTask } from 'ember-concurrency-decorators';
+import { validatable, IsEmail, Length, NotBlank } from 'ilios-common/decorators/validation';
 
-const Validations = buildValidations({
-  title: [
-    validator('presence', true),
-    validator('length', {
-      max: 60,
-      descriptionKey: 'general.title'
-    })
-  ],
-  iliosAdministratorEmail: [
-    validator('presence', true),
-    validator('length', {
-      max: 100
-    }),
-    validator('format', {
-      type: 'email'
-    })
-  ]
-});
+@validatable
+export default class SchoolListComponent extends Component {
+  @service currentUser;
+  @service store;
 
-export default Component.extend(ValidationErrorDisplay, Validations, {
-  currentUser: service(),
-  store: service(),
+  @tracked @IsEmail() @Length(1, 100) @NotBlank() iliosAdministratorEmail;
+  @tracked @Length(1, 60) @NotBlank() title;
+  @tracked newSchool;
+  @tracked isSavingNewSchool = false;
+  @tracked showNewSchoolForm = false;
 
-  classNames: ['school-list'],
-  tagName: 'section',
 
-  iliosAdministratorEmail: null,
-  isSavingNewSchool: false,
-  newSchool: null,
-  schools: null,
-  showNewSchoolForm: false,
-  sortSchoolsBy: null,
-  title: null,
+  @action
+  toggleNewSchoolForm() {
+    this.showNewSchoolForm = ! this.showNewSchoolForm;
+    this.newSchool = null;
+    this.title = null;
+    this.iliosAdministratorEmail = null;
+  }
 
-  sortedSchools: sort('schools', 'sortSchoolsBy'),
+  @action
+  closeNewSchoolForm() {
+    this.showNewSchoolForm = false;
+    this.title = null;
+    this.iliosAdministratorEmail = null;
+  }
 
-  init(){
-    this._super(...arguments);
-    this.set('sortSchoolsBy', ['title']);
-  },
-
-  actions: {
-    toggleNewSchoolForm() {
-      this.set('showNewSchoolForm', !this.showNewSchoolForm);
-      this.set('newSchool', null);
-      this.set('title', null);
-      this.set('iliosAdministratorEmail', null);
-    },
-
-    hideNewSchoolForm() {
-      this.set('showNewSchoolForm', false);
-      this.set('title', null);
-      this.set('iliosAdministratorEmail', null);
-    },
-
-    createNewSchool() {
-      this.set('isSavingNewSchool', true);
-      this.send('addErrorDisplayFor', 'title');
-      this.send('addErrorDisplayFor', 'iliosAdministratorEmail');
-      this.validate().then(({validations}) => {
-        if (validations.get('isValid')) {
-          const title = this.title;
-          const iliosAdministratorEmail = this.iliosAdministratorEmail;
-          const newSchool = this.store.createRecord('school', {title, iliosAdministratorEmail});
-          newSchool.save().then(school => {
-            this.set('newSchool', school);
-          }).finally(() => {
-            this.send('clearErrorDisplay');
-            this.set('title', null);
-            this.set('iliosAdministratorEmail', null);
-            this.set('showNewSchoolForm', false);
-            this.set('isSavingNewSchool', false);
-          });
-        } else {
-          this.set('isSavingNewSchool', false);
-        }
-      });
+  @dropTask
+  *save() {
+    this.addErrorDisplaysFor(['title', 'iliosAdministratorEmail']);
+    const isValid = yield this.isValid();
+    if (! isValid) {
+      return false;
     }
-  },
+    const newSchool = this.store.createRecord('school', {
+      title: this.title,
+      iliosAdministratorEmail: this.iliosAdministratorEmail
+    });
+    this.newSchool = yield newSchool.save();
+    this.clearErrorDisplay();
+    this.title = null;
+    this.iliosAdministratorEmail = null;
+    this.showNewSchoolForm = false;
+  }
 
-  keyUp(event) {
+  @dropTask
+  *saveOrCancel(event) {
     const keyCode = event.keyCode;
     const target = event.target;
 
@@ -93,12 +60,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
 
     if (13 === keyCode) {
-      this.send('createNewSchool');
-      return;
-    }
-
-    if (27 === keyCode) {
-      this.send('hideNewSchoolForm');
+      yield this.save.perform();
+    } else if (27 === keyCode) {
+      this.closeNewSchoolForm();
     }
   }
-});
+}
+
