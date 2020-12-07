@@ -53,7 +53,7 @@
     "ember-cli-page-object": "1.17.4",
     "ember-cli-string-helpers": "^5.0.0",
     "ember-click-outside": "^2.0.0",
-    "ember-composable-helpers": "4.4.0",
+    "ember-composable-helpers": "4.4.1",
     "ember-concurrency": "^1.0.0",
     "ember-concurrency-decorators": "^2.0.0",
     "ember-data": "3.23.0",
