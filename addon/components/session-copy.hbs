@@ -4,9 +4,11 @@
   {{did-update (perform this.setup) @session}}
 >
   {{#if (and (is-array this.years) (is-array this.courses))}}
-    <LinkTo @route="session" @model={{@session}}>
-      {{t "general.backToTitle" title=@session.title}}
-    </LinkTo>
+    <div class="backtolink">
+      <LinkTo @route="session" @model={{@session}}>
+        {{t "general.backToTitle" title=@session.title}}
+      </LinkTo>
+    </div>
     <div class="rollover-form">
       <h3 class="title">
         {{t "general.copySession"}}
