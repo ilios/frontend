@@ -52,13 +52,14 @@
 
   .confirm-removal {
     background-color: $remove-background-color;
-    grid-column: 2 / -1;
+    grid-column: 1 / -1;
 
     .confirm-message {
+      background-color: $remove-background-color;
       color: $ilios-remove-color;
       font-weight: bold;
-      padding-left: 8rem;
-      padding-right: 8rem;
+      margin: 0;
+      padding: 1rem 8rem;
       text-align: center;
       width: 100%;
     }
