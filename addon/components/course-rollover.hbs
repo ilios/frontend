@@ -3,9 +3,11 @@
   {{did-insert (perform this.load) @course}}
   {{did-update (perform this.load) @course}}
 >
-  <LinkTo @route="course" @model={{@course}}>
-    {{t "general.backToTitle" title=@course.title}}
-  </LinkTo>
+  <div class="backtolink">
+    <LinkTo @route="course" @model={{@course}}>
+      {{t "general.backToTitle" title=@course.title}}
+    </LinkTo>
+  </div>
   <div class="rollover-form">
     <h3 class="title">
       {{t "general.courseRollover"}}
