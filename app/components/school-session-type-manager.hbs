@@ -2,10 +2,11 @@
   class="school-session-type-manager"
   {{did-insert (perform this.load)}}
   {{did-update (perform this.load) @sessionType}}
+  data-test-school-session-type-manager
   ...attributes
 >
   {{#if this.readonlySessionType}}
-    <div class="session-type-title">
+    <div class="session-type-title" data-test-school-session-type-manager-title>
       {{@sessionType.title}}
     </div>
     <SchoolSessionTypeForm

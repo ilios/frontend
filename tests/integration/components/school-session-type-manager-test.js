@@ -1,8 +1,9 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios/tests/pages/components/school-session-type-manager';
 
 module('Integration | Component | school session type manager', function(hooks) {
   setupRenderingTest(hooks);
@@ -33,19 +34,11 @@ module('Integration | Component | school session type manager', function(hooks) 
       @close={{noop}}
     />`);
 
-    const title = '[data-test-title]';
-    const titleInput = `${title} input`;
-    const color = '[data-test-color]';
-    const colorInput = `${color} input`;
-    const assessment = '[data-test-assessment]';
-    const assessmentInput = `${assessment} input`;
-    const assessmentOption = '[data-test-assessment-option]';
-    const assessmentOptionSelect = `${assessmentOption} select`;
-
-    assert.equal(find(titleInput).value.trim(), 'one');
-    assert.equal(find(colorInput).value.trim(), '#ffffff');
-    assert.dom(assessmentInput).isChecked();
-    assert.dom(assessmentOptionSelect).hasValue('2');
+    assert.equal(component.title, 'one');
+    assert.equal(component.form.title.value, 'one');
+    assert.equal(component.form.calendarColor.value, '#ffffff');
+    assert.ok(component.form.assessment.isAssessment);
+    assert.ok(component.form.assessmentSelector.value, '2');
   });
 
   test('close fires action', async function(assert) {
@@ -67,8 +60,6 @@ module('Integration | Component | school session type manager', function(hooks) 
       @close={{this.close}}
     />`);
 
-    const button = '.cancel';
-
-    await click(button);
+    await component.form.cancel.click();
   });
 });
