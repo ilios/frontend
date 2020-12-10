@@ -113,11 +113,12 @@
           <PublicationStatus @item={{obj}} @showIcon={{true}} @showText={{false}} />
         </span>
         <span class="session-grid-actions" data-test-actions>
-          {{#if obj.canUpdate}}
+          {{#if (and obj.canUpdate (not obj.prerequisiteCount))}}
             <FaIcon
               @icon="trash"
               @ariaHidden={{false}}
               class="clickable remove enabled"
+              data-test-delete
               @title={{t "general.remove"}}
               @click={{fn this.confirmDelete obj.session.id}}
             />
@@ -126,6 +127,7 @@
               @icon="trash"
               @ariaHidden={{false}}
               class="disabled"
+              data-test-delete-disabled
               @title={{t "general.remove"}}
             />
           {{/if}}
