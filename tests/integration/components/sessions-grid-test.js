@@ -67,4 +67,34 @@ module('Integration | Component | sessions-grid', function(hooks) {
 
     await click('[data-test-expand-collapse-control] svg');
   });
+
+  // @see issue ilios/common#1820 [ST 2020/12/10]
+  test('deletion of session is disabled if it has prerequisites', async function (assert) {
+    const sessions = this.server.createList('session', 2);
+    const sessionModel1 = await this.owner.lookup('service:store').find('session', sessions[0].id);
+    const sessionModel2 = await this.owner.lookup('service:store').find('session', sessions[0].id);
+
+    this.set('sessions', [
+      {
+        sessionModel1,
+        prerequisiteCount: 1,
+        canUpdate: true,
+      },
+      {
+        sessionModel2,
+        prerequisiteCount: 0,
+        canUpdate: true,
+      }]);
+    await render(hbs`<SessionsGrid
+      @sessions={{this.sessions}}
+      @sortBy='title'
+      @setSortBy={{noop}}
+      @expandSession={{noop}}
+    />`);
+
+    assert.dom('[data-test-session]:nth-of-type(1) [data-test-delete-disabled]').isVisible();
+    assert.dom('[data-test-session]:nth-of-type(1) [data-test-delete]').isNotVisible();
+    assert.dom('[data-test-session]:nth-of-type(2) [data-test-delete-disabled]').isNotVisible();
+    assert.dom('[data-test-session]:nth-of-type(2) [data-test-delete]').isVisible();
+  });
 });
