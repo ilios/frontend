@@ -33,4 +33,12 @@ export default class LoginController extends Controller {
       }
     }
   }
+
+  @action
+  async loginOnEnter(event) {
+    const keyCode = event.keyCode;
+    if (13 === keyCode) {
+      await this.login();
+    }
+  }
 }

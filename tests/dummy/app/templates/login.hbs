@@ -2,8 +2,9 @@
 <input
   type="text"
   value={{this.jwt}}
-  {{on "input" this.updateJwt}} />
-
+  {{on "input" this.updateJwt}}
+  {{on "keypress" this.loginOnEnter}}
+/>
 <button type="button" {{on "click" this.login}}>{{t "general.login"}}</button>
 
 <p>{{this.error}}</p>
