@@ -1,5 +1,4 @@
 import {
-  attribute,
   clickable,
   collection,
   create,
@@ -40,9 +39,8 @@ export default create({
       value: text('.title')
     },
     copy: {
-      scope: 'a.copy',
+      scope: '[data-test-copy]',
       visit: clickable(),
-      link: attribute('href'),
       visible: isVisible(),
     },
     sessionType: {

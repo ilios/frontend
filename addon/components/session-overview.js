@@ -7,6 +7,7 @@ import { task, restartableTask, dropTask } from 'ember-concurrency-decorators';
 import moment from 'moment';
 import { validatable, Length, Gte, NotBlank } from 'ilios-common/decorators/validation';
 import { hash } from 'rsvp';
+import scrollTo from 'ilios-common/utils/scroll-to';
 
 @validatable
 export default class SessionOverview extends Component {
@@ -315,5 +316,11 @@ export default class SessionOverview extends Component {
     this.args.session.instructionalNotes = this.instructionalNotes;
 
     yield this.args.session.save();
+  }
+
+  @action
+  transitionToCopy() {
+    this.router.transitionTo('session.copy', this.args.session);
+    scrollTo('.copy-form .scroll-target');
   }
 }

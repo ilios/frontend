@@ -3,19 +3,19 @@
   {{did-insert (perform this.setup) @session}}
   {{did-update (perform this.setup) @session}}
 >
-  {{#if (and (is-array this.years) (is-array this.courses))}}
-    <div class="backtolink">
-      <LinkTo @route="session" @model={{@session}}>
-        {{t "general.backToTitle" title=@session.title}}
-      </LinkTo>
-    </div>
-    <div class="rollover-form">
-      <h3 class="title">
-        {{t "general.copySession"}}
-      </h3>
-      <p class="rollover-summary">
-        {{t "general.copySessionSummary"}}
-      </p>
+  <div class="backtolink">
+    <LinkTo @route="session" @model={{@session}}>
+      {{t "general.backToTitle" title=@session.title}}
+    </LinkTo>
+  </div>
+  <div class="copy-form">
+    <h3 class="title">
+      {{t "general.copySession"}}
+    </h3>
+    <p class="rollover-summary">
+      {{t "general.copySessionSummary"}}
+    </p>
+    {{#if (and (is-array this.years) (is-array this.courses))}}
       <div class="item year-select">
         <label>
           {{t "general.year"}}:
@@ -82,8 +82,8 @@
           </button>
         </LinkTo>
       </div>
-    </div>
-  {{else}}
-    <LoadingSpinner />
-  {{/if}}
+    {{else}}
+      <LoadingSpinner />
+    {{/if}}
+  </div>
 </div>

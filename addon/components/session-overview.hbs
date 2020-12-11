@@ -54,9 +54,9 @@
 
         <div class="session-overview-actions">
           {{#if (and (is-fulfilled this.showCopy) (await this.showCopy))}}
-            <LinkTo @route="session.copy" @model={{@session}} class="copy">
+            <span class="clickable copy" role="button" {{on "click" this.transitionToCopy}} data-test-copy>
               <FaIcon @icon="copy" @title={{t "general.copySession"}} @fixedWidth={{true}} />
-            </LinkTo>
+            </span>
           {{/if}}
         </div>
       </div>
