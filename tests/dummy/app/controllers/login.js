@@ -1,6 +1,5 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
-import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { dropTask } from "ember-concurrency-decorators";
 
@@ -10,11 +9,6 @@ export default class LoginController extends Controller {
   @service session;
   @tracked jwt =  null;
   @tracked error = null;
-
-  @action
-  updateJwt(event) {
-    this.jwt = event.target.value;
-  }
 
   @dropTask
   *login(){

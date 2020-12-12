@@ -2,7 +2,7 @@
 <input
   type="text"
   value={{this.jwt}}
-  {{on "input" this.updateJwt}}
+  {{on "input" (pick "target.value" (set this.jwt))}}
   {{on "keypress" (perform this.loginOnEnter)}}
   disabled={{this.loginOnEnter.isRunning}}
 />
