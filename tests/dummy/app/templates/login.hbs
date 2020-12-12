@@ -3,8 +3,14 @@
   type="text"
   value={{this.jwt}}
   {{on "input" this.updateJwt}}
-  {{on "keypress" this.loginOnEnter}}
+  {{on "keypress" (perform this.loginOnEnter)}}
+  disabled={{this.loginOnEnter.isRunning}}
 />
-<button type="button" {{on "click" this.login}}>{{t "general.login"}}</button>
+<button type="button" disabled={{this.login.isRunning}} {{on "click" (perform this.login)}}>
+  {{#if this.login.isRunning}}
+    <FaIcon @icon="spinner"  @spin={{true}}/>
+  {{/if}}
+  {{t "general.login"}}
+</button>
 
 <p>{{this.error}}</p>
