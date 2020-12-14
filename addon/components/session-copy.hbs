@@ -1,7 +1,6 @@
 <div
   class="session-copy"
   {{did-insert (perform this.setup) @session}}
-  {{did-insert this.scrollIntoView}}
   {{did-update (perform this.setup) @session}}
 >
   <div class="backtolink">
@@ -9,7 +8,7 @@
       {{t "general.backToTitle" title=@session.title}}
     </LinkTo>
   </div>
-  <div class="copy-form">
+  <div class="copy-form" {{scroll-into-view}}>
     <h3 class="title">
       {{t "general.copySession"}}
     </h3>

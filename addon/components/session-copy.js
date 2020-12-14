@@ -6,7 +6,6 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 import moment from 'moment';
-import scrollTo from 'ilios-common/utils/scroll-to';
 
 export default class SessionCopyComponent extends Component {
   @service store;
@@ -158,10 +157,5 @@ export default class SessionCopyComponent extends Component {
     }
     this.flashMessages.success('general.copySuccess');
     return this.args.visit(session);
-  }
-
-  @action
-  scrollIntoView() {
-    scrollTo('.copy-form');
   }
 }
