@@ -1,4 +1,5 @@
 import {
+  attribute,
   create,
   clickable,
   fillable,
@@ -10,9 +11,10 @@ import { flatpickrDatePicker } from 'ilios-common';
 const definition = {
   scope: '[data-test-course-overview]',
   rollover: {
-    scope: 'span.rollover',
+    scope: 'a.rollover',
     visit: clickable(),
-    visible: isVisible()
+    link: attribute('href'),
+    visible: isVisible(),
   },
   externalId: {
     scope: '.courseexternalid',

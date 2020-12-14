@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import scrollTo from 'ilios-common/utils/scroll-to';
 import { restartableTask } from 'ember-concurrency-decorators';
 import { validatable, Length, BeforeDate, AfterDate } from 'ilios-common/decorators/validation';
 
@@ -155,11 +154,5 @@ export default class CourseOverview extends Component {
   @action
   revertLevelChanges(){
     this.level = this.args.course.level;
-  }
-
-  @action
-  transitionToRollover() {
-    this.router.transitionTo('course.rollover', this.args.course);
-    scrollTo('.rollover-form');
   }
 }
