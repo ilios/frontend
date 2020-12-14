@@ -4,7 +4,7 @@
   value={{this.jwt}}
   {{on "input" (pick "target.value" (set this.jwt))}}
   {{on "keypress" (perform this.loginOnEnter)}}
-  disabled={{this.loginOnEnter.isRunning}}
+  disabled={{this.login.isRunning}}
 />
 <button type="button" disabled={{this.login.isRunning}} {{on "click" (perform this.login)}}>
   {{#if this.login.isRunning}}
