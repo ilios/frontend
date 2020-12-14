@@ -1,6 +1,7 @@
 <div
   class="session-copy"
   {{did-insert (perform this.setup) @session}}
+  {{did-insert this.scrollIntoView}}
   {{did-update (perform this.setup) @session}}
 >
   <div class="backtolink">
