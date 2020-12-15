@@ -29,17 +29,13 @@
         />
       </LinkTo>
       {{#if this.showRollover}}
-        <span
-          class="clickable rollover"
-          role="button"
-          {{on "click" this.transitionToRollover}}
-        >
+        <LinkTo @route="course.rollover" @model={{@course}} class="rollover">
           <FaIcon
-            @icon="random"
-            @fixedWidth={{true}}
-            @title={{t "general.courseRollover"}}
+              @icon="random"
+              @fixedWidth={{true}}
+              @title={{t "general.courseRollover"}}
           />
-        </span>
+        </LinkTo>
       {{/if}}
       <LinkTo
         @route="course-visualizations"
