@@ -4,7 +4,6 @@ import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 import { waitForProperty } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import flatpickr from "flatpickr";
-import { action } from '@ember/object';
 import { later } from '@ember/runloop';
 
 export default class DatePickerComponent extends Component {
@@ -55,11 +54,6 @@ export default class DatePickerComponent extends Component {
       maxDate: this.args.maxDate ?? null,
       minDate: this.args.minDate ?? null,
     });
-  }
-
-  @action
-  close() {
-    this?._flatPickerInstance.close();
   }
 
   willDestroy() {
