@@ -65,8 +65,6 @@ export default class SchoolVocabulariesListComponent extends Component {
       active: true
     });
     const savedVocabulary = yield vocabulary.save();
-    const vocabularies = yield this.args.school.get('vocabularies');
-    vocabularies.pushObject(savedVocabulary);
     this.clearErrorDisplay();
     this.showNewVocabularyForm =  false;
     this.newVocabularyTitle =  null;
