@@ -43,7 +43,7 @@
     "dotenv": "^8.2.0",
     "ember-a11y-testing": "^3.0.2",
     "ember-ajax": "^5.0.0",
-    "ember-auto-import": "^1.9.0",
+    "ember-auto-import": "^1.10.0",
     "ember-chrome-devtools": "^0.2.0",
     "ember-cli": "~3.20.0",
     "ember-cli-app-version": "^3.2.0",
