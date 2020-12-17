@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { action, computed } from '@ember/object';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 import { validatable, IsHexColor, Length, NotBlank } from 'ilios-common/decorators/validation';
@@ -17,7 +17,6 @@ export default class SchoolSessionTypeFormComponent extends Component {
   @tracked assessmentOptions = [];
   @tracked aamcMethods = [];
 
-  @computed('aamcMethods', 'assessment', 'selectedAamcMethodId')
   get filteredAamcMethods() {
     return this.aamcMethods.filter(aamcMethod => {
       const id = aamcMethod.get('id');
@@ -32,7 +31,6 @@ export default class SchoolSessionTypeFormComponent extends Component {
     });
   }
 
-  @computed('filteredAamcMethods', 'selectedAamcMethodId')
   get selectedAamcMethod() {
     if (this.selectedAamcMethodId) {
       const selectedAamcMethod = this.filteredAamcMethods.findBy('id', this.selectedAamcMethodId);
@@ -41,7 +39,6 @@ export default class SchoolSessionTypeFormComponent extends Component {
     return null;
   }
 
-  @computed('assessmentOptions', 'selectedAssessmentOptionId', 'assessment')
   get selectedAssessmentOption() {
     if (this.assessment) {
       const assessmentOption = this.selectedAssessmentOptionId ?
