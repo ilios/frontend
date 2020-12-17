@@ -1,101 +1,81 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import { isPresent } from '@ember/utils';
-import { resolve } from 'rsvp';
-import { task } from 'ember-concurrency';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import { action } from '@ember/object';
+import {dropTask, restartableTask} from 'ember-concurrency-decorators';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 
-const Validations = buildValidations({
-  newVocabularyTitle: [
-    validator('presence', true),
-    validator('length', {
-      min: 1,
-      max: 200
-    })
-  ]
-});
+@validatable
+export default class SchoolVocabulariesListComponent extends Component {
+  @service store;
+  @tracked @Length(1, 200) @NotBlank() newVocabularyTitle;
+  @tracked vocabulariesRelationship;
+  @tracked newVocabulary;
+  @tracked showRemovalConfirmationFor;
+  @tracked showNewVocabularyForm = false;
 
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: service(),
-
-  classNames: ['school-vocabularies-list'],
-
-  canCreate: false,
-  canDelete: false,
-  newVocabulary: null,
-  newVocabularyTitle: null,
-  school: null,
-  showNewVocabularyForm: false,
-  showRemovalConfirmationFor: null,
-
-  sortedVocabularies: computed('school.vocabularies.[]', 'newVocabulary', async function() {
-    const school = this.school;
-    if (! isPresent(school)) {
-      resolve([]);
+  get sortedVocabularies() {
+    if (! this.vocabulariesRelationship) {
+      return [];
     }
-    const vocabularies = await school.get('vocabularies');
-    return vocabularies.filterBy('isNew', false).sortBy('title').toArray();
-  }),
+    return this.vocabulariesRelationship.filterBy('isNew', false).sortBy('title').toArray();
+  }
 
-  actions: {
-    toggleShowNewVocabularyForm() {
-      this.set('newVocabularyTitle', null);
-      this.set('showNewVocabularyForm', !this.showNewVocabularyForm);
-    },
+  @restartableTask
+  *load() {
+    this.vocabulariesRelationship = yield this.args.school.vocabularies;
+  }
 
-    confirmRemoval(vocabulary) {
-      this.set('showRemovalConfirmationFor', vocabulary);
-    },
+  @action
+  toggleShowNewVocabularyForm() {
+    this.newVocabularyTitle = null;
+    this.showNewVocabularyForm = !this.showNewVocabularyForm;
+  }
 
-    cancelRemoval() {
-      this.set('showRemovalConfirmationFor', null);
-    }
-  },
+  @action
+  confirmRemoval(vocabulary) {
+    this.showRemovalConfirmationFor = vocabulary;
+  }
 
-  keyUp(event) {
+  @action
+  cancelRemoval() {
+    this.showRemovalConfirmationFor = null;
+  }
+
+  @dropTask
+  *saveOrCancel(event) {
     const keyCode = event.keyCode;
-    const target = event.target;
-
-    if ('text' !== target.type) {
-      return;
-    }
-
     if (13 === keyCode) {
-      this.saveNew.perform(this.newVocabularyTitle);
-      return;
+      yield this.saveNew.perform();
+    } else if (27 === keyCode) {
+      this.args.close();
     }
+  }
 
-    if (27 === keyCode) {
-      this.send('toggleShowNewVocabularyForm');
+  @dropTask
+  *saveNew() {
+    this.addErrorDisplaysFor(['newVocabularyTitle']);
+    const isValid = yield this.isValid();
+    if (! isValid) {
+      return false;
     }
-  },
+    const vocabulary = this.store.createRecord('vocabulary', {
+      title: this.newVocabularyTitle,
+      school: this.args.school,
+      active: true
+    });
+    const savedVocabulary = yield vocabulary.save();
+    this.clearErrorDisplay();
+    this.showNewVocabularyForm =  false;
+    this.newVocabularyTitle =  null;
+    this.newVocabulary = savedVocabulary;
+  }
 
-  saveNew: task(function* (title) {
-    this.send('addErrorDisplayFor', 'newVocabularyTitle');
-    const { validations } = yield this.validate();
-    if (validations.get('isValid')) {
-      const school = this.school;
-      const vocabulary = this.store.createRecord('vocabulary', {title, school, active: true});
-      const savedVocabulary = yield vocabulary.save();
-      const vocabularies = yield school.get('vocabularies');
-      vocabularies.pushObject(savedVocabulary);
-      this.send('removeErrorDisplayFor', 'newVocabularyTitle');
-      this.set('showNewVocabularyForm', false);
-      this.set('newVocabularyTitle', null);
-      this.set('newVocabulary', savedVocabulary);
-    }
-  }).drop(),
-
-  remove: task(function* (vocabulary) {
-    const school = this.school;
-    const vocabularies = yield school.get('vocabularies');
-    vocabularies.removeObject(vocabulary);
+  @dropTask
+  *remove(vocabulary) {
     yield vocabulary.destroyRecord();
-    const newVocabulary = this.newVocabulary;
-    if (newVocabulary === vocabulary) {
-      this.set('newVocabulary', null);
+    if (this.newVocabulary === vocabulary) {
+      this.newVocabulary = null;
     }
-  }).drop()
-});
+  }
+}

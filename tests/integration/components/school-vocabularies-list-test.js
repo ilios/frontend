@@ -1,53 +1,46 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  click,
-  findAll,
-  find,
-  fillIn
-} from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios/tests/pages/components/school-vocabularies-list';
 
 module('Integration | Component | school vocabularies list', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(4);
     const school = this.server.create('school');
     const vocabularies = this.server.createList('vocabulary', 2, { school });
     this.server.createList('term', 2, { vocabulary: vocabularies[0] });
     this.server.create('term', { vocabulary: vocabularies[1] });
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
 
-    this.set('edit', () => {});
     this.set('school', schoolModel);
-    await render(hbs`<SchoolVocabulariesList @school={{school}} @manageVocabulary={{action edit}} />`);
-    assert.dom('[data-test-vocabulary="0"] td:nth-of-type(1)').hasText('Vocabulary 1');
-    assert.dom('[data-test-vocabulary="1"] td:nth-of-type(1)').hasText('Vocabulary 2');
-    assert.dom('[data-test-vocabulary="0"] td:nth-of-type(2)').hasText('2');
-    assert.dom('[data-test-vocabulary="1"] td:nth-of-type(2)').hasText('1');
+    await render(hbs`<SchoolVocabulariesList @school={{this.school}} @manageVocabulary={{noop}} />`);
+    assert.equal(component.vocabularies.length, 2);
+    assert.equal(component.vocabularies[0].title.text, 'Vocabulary 1');
+    assert.equal(component.vocabularies[0].termsCount, '2');
+    assert.equal(component.vocabularies[1].title.text, 'Vocabulary 2');
+    assert.equal(component.vocabularies[1].termsCount, '1');
   });
 
   test('can create new vocabulary', async function(assert) {
-    assert.expect(4);
     this.server.create('school');
     const school = await this.owner.lookup('service:store').find('school', 1);
 
-    this.set('edit', () => {});
     this.set('school', school);
     await render(hbs`<SchoolVocabulariesList
-      @school={{school}}
-      @manageVocabulary={{action edit}}
+      @school={{this.school}}
+      @manageVocabulary={{noop}}
       @canCreate={{true}}
     />`);
-    await click('.expand-button');
-    await fillIn('input', 'new vocab');
-    await click('.done');
-    assert.equal(find('.savedvocabulary').textContent.trim().search(/new vocab/), 0);
-
+    assert.notOk(component.form.isVisible);
+    await component.expandCollapseButton.toggle();
+    assert.ok(component.form.isVisible);
+    await component.form.title.set('new vocab');
+    await component.form.title.submit();
+    assert.equal(component.savedVocabulary.text, 'new vocab Saved Successfully');
     const vocabularies = await this.owner.lookup('service:store').findAll('vocabulary');
     assert.equal(vocabularies.length, 1);
     assert.equal(vocabularies.objectAt(0).title, 'new vocab');
@@ -56,45 +49,39 @@ module('Integration | Component | school vocabularies list', function(hooks) {
   });
 
   test('cannot delete vocabularies with terms', async function(assert) {
-    assert.expect(3);
     const school = this.server.create('school');
     const vocabularies = this.server.createList('vocabulary', 3, { school });
     this.server.createList('term', 2, { vocabulary: vocabularies[0] });
     this.server.create('term', { vocabulary: vocabularies[1] });
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
 
-    this.set('edit', () => {});
     this.set('school', schoolModel);
     await render(hbs`<SchoolVocabulariesList
-      @school={{school}}
-      @manageVocabulary={{action edit}}
+      @school={{this.school}}
+      @manageVocabulary={{noop}}
       @canDelete={{true}}
     />`);
-    assert.dom('[data-test-vocabulary="0"] td:nth-of-type(3) svg.fa-trash.disabled').exists({ count: 1 });
-    assert.dom('[data-test-vocabulary="1"] td:nth-of-type(3) svg.fa-trash.disabled').exists({ count: 1 });
-    assert.dom('[data-test-vocabulary="2"] td:nth-of-type(3) svg.fa-trash.enabled').exists({ count: 1 });
-
+    assert.equal(component.vocabularies.length, 3);
+    assert.notOk(component.vocabularies[0].hasDeleteButton);
+    assert.notOk(component.vocabularies[1].hasDeleteButton);
+    assert.ok(component.vocabularies[2].hasDeleteButton);
   });
 
   test('clicking delete removes the vocabulary', async function(assert) {
-    assert.expect(5);
     const school = this.server.create('school');
     this.server.create('vocabulary', { school });
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
-    this.set('edit', () => {});
     this.set('school', schoolModel);
     await render(hbs`<SchoolVocabulariesList
-      @school={{school}}
-      @manageVocabulary={{action edit}}
+      @school={{this.school}}
+      @manageVocabulary={{noop}}
       @canDelete={{true}}
     />`);
 
-    assert.dom('[data-test-vocabulary="0"]').hasNoClass('confirm-removal');
-    assert.dom('[data-test-vocabulary="0"] td:nth-of-type(3) .remove').exists({ count: 1 });
-    await click('[data-test-vocabulary="0"] td:nth-of-type(3) .remove');
-    assert.equal(find(findAll('tr')[2]).textContent.trim().search(/Are you sure you want to delete this vocabulary/), 0);
-    assert.dom('[data-test-vocabulary="0"]').hasClass('confirm-removal');
-    await click('[data-test-confirm-removal="0"] .remove');
+    assert.notOk(component.deletionConfirmation.isVisible);
+    await component.vocabularies[0].delete();
+    assert.ok(component.deletionConfirmation.isVisible);
+    await component.deletionConfirmation.submit();
     const vocabularies = await this.owner.lookup('service:store').findAll('vocabulary');
     assert.equal(vocabularies.length, 0);
 
@@ -107,10 +94,10 @@ module('Integration | Component | school vocabularies list', function(hooks) {
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
 
     this.set('school', schoolModel);
-    this.set('edit', function(id){
+    this.set('edit', id => {
       assert.equal(id, vocabularies[0].id);
     });
-    await render(hbs`<SchoolVocabulariesList @school={{school}} @manageVocabulary={{action edit}} />`);
-    await click('[data-test-vocabulary="0"] svg');
+    await render(hbs`<SchoolVocabulariesList @school={{this.school}} @manageVocabulary={{this.edit}} />`);
+    await component.vocabularies[0].manage();
   });
 });

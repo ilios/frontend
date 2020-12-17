@@ -1,159 +1,99 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { isPresent } from '@ember/utils';
-import { task } from 'ember-concurrency';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { validator, buildValidations } from 'ember-cp-validations';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { validatable, IsHexColor, Length, NotBlank } from 'ilios-common/decorators/validation';
 
-const Validations = buildValidations({
-  title: [
-    validator('presence', true),
-    validator('length', {
-      max: 100
-    })
-  ],
-  calendarColor: [
-    validator('presence', true),
-    validator('format', {
-      regex: /^#[a-fA-F0-9]{6}$/,
-    })
-  ],
-  selectedAamcMethodId: [
-    validator(function(aamcMethodId, options, model) {
-      if (!aamcMethodId) {
-        return true;
-      }
-      const assessment = model.get('assessment');
-      const lookup = assessment?'AM':'IM';
-      if (aamcMethodId.indexOf(lookup) !== 0) {
-        return this.createErrorMessage(options.messageKey, aamcMethodId, options);
-      }
+@validatable
+export default class SchoolSessionTypeFormComponent extends Component {
+  @service store;
+  @tracked assessment;
+  @tracked @NotBlank() @IsHexColor() calendarColor;
+  @tracked isActive;
+  @tracked selectedAamcMethodId;
+  @tracked selectedAssessmentOptionId;
+  @tracked @NotBlank() @Length(1, 100) title;
+  @tracked assessmentOptions = [];
+  @tracked aamcMethods = [];
 
-      return true;
-    }, {
-      dependentKeys: ['model.assessment'],
-      descriptionKey: 'general.aamcMethod',
-      messageKey: 'general.invalid',
-    })
-  ]
-});
-
-export default Component.extend(ValidationErrorDisplay, Validations, {
-  store: service(),
-
-  classNames: ['school-session-type-form'],
-
-  assessment: false,
-  calendarColor: null,
-  canEditAamcMethod: false,
-  canEditActive: false,
-  canEditAssessment: false,
-  canEditAssessmentOption: false,
-  canEditCalendarColor: false,
-  canEditTitle: false,
-  canUpdate: false,
-  isActive: true,
-  selectedAamcMethodId: null,
-  selectedAssessmentOptionId: null,
-  title: null,
-
-  assessmentOptions: computed(async function() {
-    const store = this.store;
-    return await store.findAll('assessment-option');
-  }),
-
-  allAamcMethods: computed(async function() {
-    const store = this.store;
-    const aamcMethods = await store.findAll('aamc-method');
-
-    return aamcMethods;
-  }),
-
-  filteredAamcMethods: computed('allAamcMethods.[]', 'assessment', 'selectedAamcMethodId', async function() {
-    const assessment = this.assessment;
-    const aamcMethods = await this.allAamcMethods;
-    const selectedAamcMethodId = this.selectedAamcMethodId;
-    return aamcMethods.filter(aamcMethod => {
+  get filteredAamcMethods() {
+    return this.aamcMethods.filter(aamcMethod => {
       const id = aamcMethod.get('id');
-      if (id !== selectedAamcMethodId && ! aamcMethod.get('active')) {
+      if (id !== this.selectedAamcMethodId && ! aamcMethod.get('active')) {
         return false;
       }
-      if (assessment) {
+      if (this.assessment) {
         return id.indexOf('AM') === 0;
       } else {
         return id.indexOf('IM') === 0;
       }
     });
-  }),
+  }
 
-  selectedAamcMethod: computed('filteredAamcMethods.[]', 'selectedAamcMethodId', async function() {
-    const filteredAamcMethods = await this.filteredAamcMethods;
-    const selectedAamcMethodId = this.selectedAamcMethodId;
-    if(isPresent(selectedAamcMethodId)){
-      const selectedAamcMethod = filteredAamcMethods.findBy('id', selectedAamcMethodId);
-      if (selectedAamcMethod) {
-        return selectedAamcMethod;
-      }
+  get selectedAamcMethod() {
+    if (this.selectedAamcMethodId) {
+      const selectedAamcMethod = this.filteredAamcMethods.findBy('id', this.selectedAamcMethodId);
+      return selectedAamcMethod ?? null;
     }
-
     return null;
-  }),
+  }
 
-  selectedAssessmentOption: computed('assessmentOptions.[]', 'selectedAssessmentOptionId', 'assessment', async function() {
-    const assessment = this.assessment;
-    const selectedAssessmentOptionId = this.selectedAssessmentOptionId;
-    const assessmentOptions = await this.assessmentOptions;
-    let assessmentOption = null;
-
-    if (assessment) {
-      assessmentOption = selectedAssessmentOptionId?assessmentOptions.findBy('id', selectedAssessmentOptionId):assessmentOptions.sortBy('name').get('firstObject');
+  get selectedAssessmentOption() {
+    if (this.assessment) {
+      const assessmentOption = this.selectedAssessmentOptionId ?
+        this.assessmentOptions.findBy('id', this.selectedAssessmentOptionId)
+        : this.assessmentOptions.sortBy('name').get('firstObject');
+      return assessmentOption ?? null;
     }
+    return null;
+  }
 
-    return assessmentOption;
-  }),
+  @restartableTask
+  *load() {
+    this.assessment = this.args.assessment;
+    this.calendarColor = this.args.calendarColor;
+    this.isActive = this.args.isActive;
+    this.title = this.args.title;
+    this.selectedAssessmentOptionId = this.args.selectedAssessmentOptionId;
+    this.selectedAamcMethodId = this.args.selectedAamcMethodId;
+    this.assessmentOptions = (yield this.store.findAll('assessment-option')).toArray();
+    this.aamcMethods = (yield this.store.findAll('aamc-method')).toArray();
+  }
 
-  actions: {
-    updateAssessment(value) {
-      this.set('selectedAamcMethodId', null);
-      this.set('assessment', value);
+  @action
+  updateAssessment(assessment) {
+    this.selectedAamcMethodId = null;
+    this.assessment = assessment;
+  }
+
+  @dropTask
+  *saveSessionType() {
+    this.addErrorDisplaysFor(['title', 'calendarColor']);
+    const isValid = yield this.isValid();
+    if (! isValid) {
+      return false;
     }
-  },
+    yield this.args.save(
+      this.title,
+      this.calendarColor,
+      this.assessment,
+      this.selectedAssessmentOption,
+      this.selectedAamcMethod,
+      this.isActive
+    );
+    this.clearErrorDisplay();
+  }
 
-  keyUp(event) {
+  @dropTask
+  *saveOrCancel(event) {
     const keyCode = event.keyCode;
-    const target = event.target;
-
-    if ('text' !== target.type) {
-      return;
-    }
-
     if (13 === keyCode) {
-      this.saveSessionType.perform();
+      yield this.saveSessionType.perform();
       return;
     }
-
     if (27 === keyCode) {
-      this.close();
+      this.args.close();
     }
-  },
-
-  saveSessionType: task(function* () {
-    this.send('addErrorDisplaysFor', ['title', 'calendarColor', 'selectedAamcMethodId']);
-    const {validations} = yield this.validate();
-    if (validations.get('isInvalid')) {
-      return;
-    }
-
-    const title = this.title;
-    const calendarColor = this.calendarColor;
-    const assessment = this.assessment;
-    const aamcMethod = yield this.selectedAamcMethod;
-    const assessmentOption = yield this.selectedAssessmentOption;
-    const isActive = this.isActive;
-    const save = this.save;
-
-    yield save(title, calendarColor, assessment, assessmentOption, aamcMethod, isActive);
-    this.send('clearErrorDisplay');
-  })
-});
+  }
+}

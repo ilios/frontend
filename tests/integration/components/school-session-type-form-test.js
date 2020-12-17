@@ -1,20 +1,15 @@
-import { module, test } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  click,
-  find,
-  fillIn
-} from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios/tests/pages/components/school-session-type-form';
 
 module('Integration | Component | school session type form', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(9);
     this.server.create('aamc-method', {
       id: 'AM001',
       description: "lorem ipsum",
@@ -22,12 +17,12 @@ module('Integration | Component | school session type form', function(hooks) {
     });
     this.server.create('aamc-method', {
       id: 'AM002',
-      description: "lorem ipsum",
+      description: "dolor sit",
       active: false,
     });
     this.server.create('aamc-method', {
       id: 'IM001',
-      description: "lorem ipsum",
+      description: "amet",
       active: true,
     });
     this.server.create('assessment-option', {
@@ -37,7 +32,8 @@ module('Integration | Component | school session type form', function(hooks) {
       name: 'summative'
     });
     this.set('assessmentOptionId', summative.id);
-    this.set('nothing', () => {});
+    this.set('title', 'one');
+    this.set('calendarColor', '#ffffff');
     await render(hbs`<SchoolSessionTypeForm
       @canEditTitle={{true}}
       @canEditAamcMethod={{true}}
@@ -45,40 +41,34 @@ module('Integration | Component | school session type form', function(hooks) {
       @canEditAssessment={{true}}
       @canEditAssessmentOption={{true}}
       @canEditActive={{true}}
-      @title="one"
-      @calendarColor="#ffffff"
+      @title={{this.title}}
+      @calendarColor={{this.calendarColor}}
       @assessment={{true}}
       @isActive={{true}}
-      @selectedAssessmentOptionId={{assessmentOptionId}}
-      @save={{action nothing}}
-      @close={{action nothing}}
+      @selectedAssessmentOptionId={{this.assessmentOptionId}}
+      @save={{noop}}
+      @close={{noop}}
     />`);
 
-    const title = '[data-test-title]';
-    const titleInput = `${title} input`;
-    const aamcMethod = '[data-test-aamc-method]';
-    const aamcMethodSelect = `${aamcMethod} select`;
-    const aamcMethodOptions = `${aamcMethodSelect} option`;
-    const firstAamcMethodOption = `${aamcMethodOptions}:nth-of-type(1)`;
-    const secondAamcMethodOption = `${aamcMethodOptions}:nth-of-type(2)`;
-    const color = '[data-test-color]';
-    const colorInput = `${color} input`;
-    const assessment = '[data-test-assessment]';
-    const assessmentInput = `${assessment} input`;
-    const assessmentOption = '[data-test-assessment-option]';
-    const assessmentOptionSelect = `${assessmentOption} select`;
-    const isActive = '[data-test-active]';
-    const isActiveInput = `${isActive} input`;
-
-    assert.dom(titleInput).hasValue('one', 'title is correct');
-    assert.dom(aamcMethodSelect).hasValue('', 'corrrect aamc method is selected');
-    assert.dom(aamcMethodOptions).exists({ count: 2 }, 'right number of aamcMethod options');
-    assert.dom(firstAamcMethodOption).hasValue('', 'first aamcMethod is blank');
-    assert.dom(secondAamcMethodOption).hasValue('AM001', 'second aamcMethod is filtered correctly');
-    assert.dom(colorInput).hasValue('#ffffff', 'color is correct');
-    assert.dom(assessmentInput).isChecked('assessment is selected');
-    assert.dom(isActiveInput).isChecked('active is selected');
-    assert.dom(assessmentOptionSelect).hasValue('2', 'correct assessment option is selected');
+    assert.equal('one', component.title.value);
+    assert.equal(component.aamcMethod.value, '');
+    assert.equal(component.aamcMethod.options.length, 2);
+    assert.equal(component.aamcMethod.options[0].value, '');
+    assert.ok(component.aamcMethod.options[0].selected);
+    assert.equal(component.aamcMethod.options[1].value, 'AM001');
+    assert.equal(component.aamcMethod.options[1].text, 'lorem ipsum');
+    assert.notOk(component.aamcMethod.options[1].selected);
+    assert.equal(component.calendarColor.value, '#ffffff');
+    assert.ok(component.assessment.isAssessment);
+    assert.ok(component.active.isActive);
+    assert.equal(component.assessmentSelector.value, '2');
+    assert.equal(component.assessmentSelector.options.length, 2);
+    assert.equal(component.assessmentSelector.options[0].value, '1');
+    assert.equal(component.assessmentSelector.options[0].text, 'formative');
+    assert.notOk(component.assessmentSelector.options[0].selected);
+    assert.equal(component.assessmentSelector.options[1].value, '2');
+    assert.equal(component.assessmentSelector.options[1].text, 'summative');
+    assert.ok(component.assessmentSelector.options[1].selected);
   });
 
   test('changing assessment changes available aamcMethods', async function (assert) {
@@ -89,7 +79,7 @@ module('Integration | Component | school session type form', function(hooks) {
     });
     this.server.create('aamc-method', {
       id: 'IM001',
-      description: "lorem ipsum",
+      description: "dolor sit",
       active: true,
     });
 
@@ -103,127 +93,93 @@ module('Integration | Component | school session type form', function(hooks) {
 
     this.set('assessmentOption', assessmentOptions[1]);
     this.set('assessmentOptions', assessmentOptions);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolSessionTypeForm
-      @canEditTitle={{true}}
       @canEditAamcMethod={{true}}
       @canEditCalendarColor={{true}}
       @canEditAssessment={{true}}
-      @canEditAssessmentOption={{true}}
-      @canEditActive={{true}}
-      @title="one"
-      @calendarColor="#ffffff"
       @assessment={{true}}
-      @assessmentOption={{assessmentOption}}
-      @assessmentOptions={{assessmentOptions}}
-      @save={{action nothing}}
-      @close={{action nothing}}
+      @assessmentOption={{this.assessmentOption}}
+      @assessmentOptions={{this.assessmentOptions}}
+      @save={{noop}}
+      @close={{noop}}
     />`);
 
-    const aamcMethod = '[data-test-aamc-method]';
-    const aamcMethodSelect = `${aamcMethod} select`;
-    const aamcMethodOptions = `${aamcMethodSelect} option`;
-    const firstAamcMethodOption = `${aamcMethodOptions}:nth-of-type(1)`;
-    const secondAamcMethodOption = `${aamcMethodOptions}:nth-of-type(2)`;
-    const assessment = '[data-test-assessment]';
-    const assessmentInput = `${assessment} .toggle-yesno .switch-handle`;
+    assert.equal(component.aamcMethod.value, '');
+    assert.equal(component.aamcMethod.options.length, 2);
+    assert.equal(component.aamcMethod.options[0].value, '');
+    assert.ok(component.aamcMethod.options[0].selected);
+    assert.equal(component.aamcMethod.options[1].value, 'AM001');
+    assert.equal(component.aamcMethod.options[1].text, 'lorem ipsum');
+    assert.notOk(component.aamcMethod.options[1].selected);
 
-    assert.dom(aamcMethodSelect).hasValue('');
-    assert.dom(aamcMethodOptions).exists({ count: 2 });
-    assert.dom(firstAamcMethodOption).hasValue('');
-    assert.dom(secondAamcMethodOption).hasValue('AM001');
+    await component.assessment.toggle();
 
-    await click(assessmentInput);
-
-    assert.dom(aamcMethodSelect).hasValue('');
-    assert.dom(aamcMethodOptions).exists({ count: 2 });
-    assert.dom(firstAamcMethodOption).hasValue('');
-    assert.dom(secondAamcMethodOption).hasValue('IM001');
+    assert.equal(component.aamcMethod.value, '');
+    assert.equal(component.aamcMethod.options.length, 2);
+    assert.equal(component.aamcMethod.options[0].value, '');
+    assert.ok(component.aamcMethod.options[0].selected);
+    assert.equal(component.aamcMethod.options[1].value, 'IM001');
+    assert.equal(component.aamcMethod.options[1].text, 'dolor sit');
+    assert.notOk(component.aamcMethod.options[1].selected);
   });
 
   test('assessment option hidden when assessment is false', async function(assert) {
-    this.set('assessmentOptions', []);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolSessionTypeForm
-      @title="one"
-      @calendarColor="#ffffff"
       @assessment={{false}}
       @assessmentOption={{null}}
-      @assessmentOptions={{assessmentOptions}}
-      @save={{action nothing}}
-      @close={{action nothing}}
+      @assessmentOptions={{array}}
+      @canEditAssessment={{true}}
+      @canEditAssessmentOption={{true}}
+      @save={{noop}}
+      @close={{noop}}
     />`);
 
-    const title = '[data-test-title]';
-    const color = '[data-test-color]';
-    const assessment = '[data-test-assessment]';
-    const assessmentOption = '[data-test-assessment-option]';
-
-    assert.dom(title).exists({ count: 1 });
-    assert.dom(color).exists({ count: 1 });
-    assert.dom(assessment).exists({ count: 1 });
-    assert.dom(assessmentOption).doesNotExist();
+    assert.notOk(component.assessment.isAssessment);
+    assert.notOk(component.assessmentSelector.isVisible);
   });
 
   test('cancel fires action', async function(assert) {
     assert.expect(1);
-    this.set('assessmentOptions', []);
-    this.set('nothing', () => {});
-    this.set('close', ()=>{
-      assert.ok(true, 'action was fired');
+    this.set('cancel', ()=>{
+      assert.ok(true);
     });
     await render(hbs`<SchoolSessionTypeForm
-      @title="one"
-      @calendarColor="#ffffff"
-      @assessment={{false}}
-      @assessmentOption={{null}}
-      @assessmentOptions={{assessmentOptions}}
       @canUpdate={{true}}
-      @save={{action nothing}}
-      @close={{action close}}
+      @save={{noop}}
+      @close={{this.cancel}}
     />`);
 
-    const button = '.cancel';
-    await click(button);
+    await component.cancel.click();
   });
 
   test('close fires action', async function(assert) {
     assert.expect(1);
-    this.set('assessmentOptions', []);
-    this.set('nothing', () => {});
     this.set('close', ()=>{
-      assert.ok(true, 'action was fired');
+      assert.ok(true);
     });
     await render(hbs`<SchoolSessionTypeForm
-      @title="one"
-      @calendarColor="#ffffff"
-      @assessment={{false}}
-      @assessmentOption={{null}}
-      @assessmentOptions={{assessmentOptions}}
       @canUpdate={{false}}
-      @save={{action nothing}}
-      @close={{action close}}
+      @save={{noop}}
+      @close={{this.close}}
     />`);
 
-    const button = '.text';
-    await click(button);
+    await component.close.click();
+
   });
 
   test('save fires save', async function(assert) {
-    assert.expect(9);
+    assert.expect(8);
     const method = this.server.create('aamc-method', {
       id: 'AM001',
       description: "lorem ipsum",
       active: true,
     });
-
     const formative = this.server.create('assessment-option', {
       name: 'formative'
     });
     const aamcMethodModel = await this.owner.lookup('service:store').find('aamc-method', method.id);
     const assessmentOptionModel = await this.owner.lookup('service:store').find('assessment-option', formative.id);
 
-    this.set('nothing', () => {});
     this.set('save', (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
       assert.equal(title, 'new title', 'title is correct');
       assert.equal(calendarColor, '#a1b2c3', 'color is correct');
@@ -233,8 +189,8 @@ module('Integration | Component | school session type form', function(hooks) {
       assert.equal(isActive, false, 'correct isActive value is sent');
     });
     await render(hbs`<SchoolSessionTypeForm
-      @title="one"
-      @calendarColor="#ffffff"
+      @title=""
+      @calendarColor=""
       @assessment={{true}}
       @canEditTitle={{true}}
       @canEditAamcMethod={{true}}
@@ -244,37 +200,21 @@ module('Integration | Component | school session type form', function(hooks) {
       @canEditActive={{true}}
       @isActive={{true}}
       @canUpdate={{true}}
-      @save={{action save}}
-      @close={{action nothing}}
+      @save={{this.save}}
+      @close={{noop}}
     />`);
 
-    const title = '[data-test-title]';
-    const titleInput = `${title} input`;
-    const aamcMethod = '[data-test-aamc-method]';
-    const aamcMethodSelect = `${aamcMethod} select`;
-    const color = '[data-test-color]';
-    const colorInput = `${color} input`;
-    const assessmentOption = '[data-test-assessment-option]';
-    const assessmentOptionSelect = `${assessmentOption} select`;
-    const isActive = '[data-test-active]';
-    const isActiveInput = `${isActive} input`;
-    const isActiveControl = `${isActive} .toggle-yesno .switch-handle`;
-    const button = '.done';
-
-    assert.dom(isActiveInput).isChecked('active is selected');
-
-    fillIn(titleInput, 'new title');
-    fillIn(aamcMethodSelect, aamcMethodModel.id);
-    fillIn(colorInput, '#a1b2c3');
-    fillIn(assessmentOptionSelect, '1');
-
-    assert.dom(isActiveInput).isChecked('active is selected');
-    await click(isActiveControl);
-    assert.dom(isActiveInput).isNotChecked('active is not selected');
-    await click(button);
+    assert.ok(component.active.isActive);
+    await component.title.set('new title');
+    await component.aamcMethod.select(aamcMethodModel.id);
+    await component.calendarColor.set('#a1b2c3');
+    await component.assessmentSelector.select(assessmentOptionModel.id);
+    await component.active.toggle();
+    assert.notOk(component.active.isActive);
+    await component.submit.click();
   });
 
-  test('editing is blocked correctly', async function(assert) {
+  test('read-only mode works correctly', async function(assert) {
     this.server.create('aamc-method', {
       id: 'AM001',
       description: "lorem ipsum",
@@ -285,7 +225,6 @@ module('Integration | Component | school session type form', function(hooks) {
       name: 'formative'
     });
 
-    this.set('nothing', () => {});
     await render(hbs`<SchoolSessionTypeForm
       @canEditTitle={{false}}
       @canEditAamcMethod={{false}}
@@ -298,48 +237,28 @@ module('Integration | Component | school session type form', function(hooks) {
       @calendarColor="#ffffff"
       @assessment={{true}}
       @selectedAssessmentOptionId="1"
-      @save={{action nothing}}
-      @close={{action nothing}}
+      @isActive={{true}}
+      @save={{noop}}
+      @close={{noop}}
     />`);
 
-    const title = '[data-test-title]';
-    const titleInput = `${title} input`;
-    const titleValue = `${title} .value`;
-    const aamcMethod = '[data-test-aamc-method]';
-    const aamcMethodSelect = `${aamcMethod} select`;
-    const aamcMethodValue = `${aamcMethod} .value`;
-    const color = '[data-test-color]';
-    const colorBox = '[data-test-color] .box';
-    const colorInput = `${color} input`;
-    const colorValue = `${color} .value`;
-    const assessment = '[data-test-assessment]';
-    const assessmentInput = `${assessment} input`;
-    const assessmentValue = `${assessment} .value`;
-    const assessmentOption = '[data-test-assessment-option]';
-    const assessmentOptionSelect = `${assessmentOption} select`;
-    const assessmentOptionValue = `${assessmentOption} .value`;
-    const active = '[data-test-active]';
-    const activeInput = `${active} input`;
-    const activeValue = `${active} .value`;
+    assert.notOk(component.title.inputControlIsVisible);
+    assert.notOk(component.aamcMethod.inputControlIsVisible);
+    assert.notOk(component.calendarColor.inputControlIsVisible);
+    assert.notOk(component.assessment.inputControlIsVisible);
+    assert.notOk(component.assessmentSelector.inputControlIsVisible);
+    assert.notOk(component.active.inputControlIsVisible);
 
-    assert.dom(titleInput).doesNotExist();
-    assert.dom(aamcMethodSelect).doesNotExist();
-    assert.dom(colorInput).doesNotExist();
-    assert.dom(assessmentInput).doesNotExist();
-    assert.dom(assessmentOptionSelect).doesNotExist();
-    assert.dom(activeInput).doesNotExist();
-
-    assert.dom(titleValue).hasText('one');
-    assert.dom(aamcMethodValue).hasText('lorem ipsum');
-    assert.dom(colorValue).hasText('#ffffff');
-    assert.equal(find(colorBox).style.backgroundColor.trim(), ('rgb(255, 255, 255)'));
-    assert.dom(assessmentValue).hasText('Yes');
-    assert.dom(assessmentOptionValue).hasText('formative');
-    assert.dom(activeValue).hasText('Yes');
+    assert.equal(component.title.readonlyValue, 'one');
+    assert.equal(component.aamcMethod.readonlyValue, 'lorem ipsum');
+    assert.equal(component.calendarColor.readonlyValue, '#ffffff');
+    assert.equal(component.calendarColor.colorboxStyle, 'background-color: #ffffff');
+    assert.equal(component.assessment.readonlyValue, 'Yes');
+    assert.equal(component.assessmentSelector.readonlyValue, 'formative');
+    assert.equal(component.active.readonlyValue, 'Yes');
   });
 
   test('inactive method is labeled as such in dropdown', async function(assert) {
-    assert.expect(2);
     this.server.create('aamc-method', {
       id: 'AM001',
       description: "lorem ipsum",
@@ -350,34 +269,23 @@ module('Integration | Component | school session type form', function(hooks) {
       name: 'formative'
     });
 
-    this.set('nothing', () => {});
     await render(hbs`<SchoolSessionTypeForm
-      @canEditTitle={{true}}
       @canEditAamcMethod={{true}}
-      @canEditCalendarColor={{true}}
-      @canEditAssessment={{true}}
-      @canEditAssessmentOption={{true}}
-      @canEditActive={{true}}
-      @title="one"
       @selectedAamcMethodId="AM001"
-      @calendarColor="#ffffff"
       @assessment={{true}}
-      @selectedAssessmentOptionId="1"
-      @save={{action nothing}}
-      @close={{action nothing}}
+      @save={{noop}}
+      @close={{noop}}
     />`);
 
-    const aamcMethod = '[data-test-aamc-method]';
-    const aamcMethodSelect = `${aamcMethod} select`;
-
-    assert.dom(aamcMethodSelect).hasValue('AM001', 'correct aamc method is selected');
-    assert.dom(aamcMethodSelect).hasText('lorem ipsum (inactive)');
+    assert.equal(component.aamcMethod.value, 'AM001');
+    assert.equal(component.aamcMethod.options[1].text, 'lorem ipsum (inactive)');
   });
 
   test('inactive method is labeled as such in read-only mode', async function(assert) {
-    assert.expect(1);
+    const aamcMethodId = 'AM001';
+
     this.server.create('aamc-method', {
-      id: 'AM001',
+      id: aamcMethodId,
       description: "lorem ipsum",
       active: false,
     });
@@ -386,24 +294,47 @@ module('Integration | Component | school session type form', function(hooks) {
       name: 'formative'
     });
 
-    this.set('nothing', () => {});
+    this.set('aamcMethodId', aamcMethodId);
     await render(hbs`<SchoolSessionTypeForm
-      @canEditTitle={{false}}
       @canEditAamcMethod={{false}}
-      @canEditCalendarColor={{false}}
-      @canEditAssessment={{false}}
-      @canEditAssessmentOption={{false}}
       @canEditActive={{true}}
-      @title="one"
-      @selectedAamcMethodId="AM001"
-      @calendarColor="#ffffff"
+      @selectedAamcMethodId={{this.aamcMethodId}}
       @assessment={{true}}
-      @selectedAssessmentOptionId="1"
-      @save={{action nothing}}
-      @close={{action nothing}}
+      @save={{noop}}
+      @close={{noop}}
     />`);
 
-    const aamcMethodValue = "[data-test-aamc-method] .value";
-    assert.dom(aamcMethodValue).hasText('lorem ipsum (inactive)');
+    assert.equal(component.aamcMethod.readonlyValue, 'lorem ipsum (inactive)');
+  });
+
+  // Skipped as it appears impossible to provide invalid input to color input fields.
+  // @todo: check if we can get rid of validation modifiers for this field altogether.[ST 2020/12/08]
+  skip('calendar color input validation', async function(assert) {
+    await render(hbs`<SchoolSessionTypeForm
+      @assessment={{false}}
+      @assessmentOption={{null}}
+      @assessmentOptions={{array}}
+      @canUpdate={{true}}
+      @canEditCalendarColor={{true}}
+      @calendarColor='#ffffff'
+      @save={{noop}}
+      @close={{noop}}
+    />`);
+
+    assert.equal(component.calendarColor.value, '#ffffff');
+    assert.notOk(component.calendarColor.hasError);
+    // blank the input
+    //  blanking the input seems to be impossible, FF and Chrome fill it with Black '#000000'
+    assert.equal(component.calendarColor.value, '');
+    assert.ok(component.calendarColor.hasError);
+
+    // reset to valid input
+    assert.equal(component.calendarColor.value, '#ffffff');
+    assert.notOk(component.calendarColor.hasError);
+
+    // provide invalid input
+    // [ST 2020/12/08]: likewise, non-hex color values result in the browser defaulting to Black as well.
+    await component.calendarColor.set('geflarknik');
+    assert.ok(component.calendarColor.hasError);
   });
 });

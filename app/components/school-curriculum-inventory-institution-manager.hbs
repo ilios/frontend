@@ -1,4 +1,10 @@
-<div class="school-curriculum-inventory-institution-manager" data-test-school-curriculum-inventory-institution-manager ...attributes>
+<div
+  class="school-curriculum-inventory-institution-manager"
+  data-test-school-curriculum-inventory-institution-manager
+  {{did-insert this.load}}
+  {{did-update this.load @institution}}
+  ...attributes
+>
   <div
     data-test-school-curriculum-inventory-institution-manager-header
     class="school-curriculum-inventory-institution-manager-header"
@@ -8,14 +14,14 @@
     </div>
     <div class="actions">
       {{#if @canUpdate}}
-        <button type="button" class="bigadd" {{action "save"}}>
+        <button type="button" class="bigadd" {{on "click" (perform this.save)}}>
           <FaIcon
-            @icon={{if isSaving "spinner" "check"}}
-            @spin={{if isSaving true false}}
+            @icon={{if this.save.isRunning "spinner" "check"}}
+            @spin={{this.save.isRunning}}
           />
         </button>
       {{/if}}
-      <button type="button" class="bigcancel" {{action "cancel"}}>
+      <button type="button" class="bigcancel" {{on "click" (fn @manage false)}}>
         <FaIcon @icon="undo" />
       </button>
     </div>
@@ -32,14 +38,19 @@
         <input
           type="text"
           value={{this.name}}
-          oninput={{action (mut this.name) value="target.value"}}
-          onkeyup={{action "addErrorDisplayFor" "name"}}
+          {{on "input" (pick "target.value" (set this.name))}}
+          {{on "keyup"
+            (queue
+              (fn this.addErrorDisplayFor "name")
+              (if @institution (perform this.saveOrCancel) (noop))
+            )
+          }}
         >
-        {{#if (and (v-get this "name" "isInvalid") (includes "name" showErrorsFor))}}
+        {{#each (await (compute (fn this.getErrorsFor) "name")) as |message|}}
           <span class="validation-error-message">
-            {{v-get this "name" "message"}}
+            {{message}}
           </span>
-        {{/if}}
+        {{/each}}
       </div>
       <div class="item" data-test-institution-aamc-code>
         <label>
@@ -49,18 +60,19 @@
           type="text"
           maxlength="5"
           value={{this.aamcCode}}
-          oninput={{action (mut this.aamcCode) value="target.value"}}
-          onkeyup={{action "addErrorDisplayFor" "aamcCode"}}
+          {{on "input" (pick "target.value" (set this.aamcCode))}}
+          {{on "keyup"
+            (queue
+              (fn this.addErrorDisplayFor "aamcCode")
+              (if @institution (perform this.saveOrCancel) (noop))
+            )
+          }}
         >
-        {{#if
-          (and
-            (v-get this "aamcCode" "isInvalid") (includes "aamcCode" showErrorsFor)
-          )
-        }}
+        {{#each (await (compute (fn this.getErrorsFor) "aamcCode")) as |message|}}
           <span class="validation-error-message">
-            {{v-get this "aamcCode" "message"}}
+            {{message}}
           </span>
-        {{/if}}
+        {{/each}}
       </div>
       <div class="item" data-test-institution-address-street>
         <label>
@@ -69,19 +81,19 @@
         <input
           type="text"
           value={{this.addressStreet}}
-          oninput={{action (mut this.addressStreet) value="target.value"}}
-          onkeyup={{action "addErrorDisplayFor" "addressStreet"}}
+          {{on "input" (pick "target.value" (set this.addressStreet))}}
+          {{on "keyup"
+            (queue
+              (fn this.addErrorDisplayFor "addressStreet")
+              (if @institution (perform this.saveOrCancel) (noop))
+            )
+          }}
         >
-        {{#if
-          (and
-            (v-get this "addressStreet" "isInvalid")
-            (includes "addressStreet" showErrorsFor)
-          )
-        }}
+        {{#each (await (compute (fn this.getErrorsFor) "addressStreet")) as |message|}}
           <span class="validation-error-message">
-            {{v-get this "addressStreet" "message"}}
+            {{message}}
           </span>
-        {{/if}}
+        {{/each}}
       </div>
       <div class="item" data-test-institution-address-city>
         <label>
@@ -90,19 +102,19 @@
         <input
           type="text"
           value={{this.addressCity}}
-          oninput={{action (mut this.addressCity) value="target.value"}}
-          onkeyup={{action "addErrorDisplayFor" "addressCity"}}
+          {{on "input" (pick "target.value" (set this.addressCity))}}
+          {{on "keyup"
+            (queue
+              (fn this.addErrorDisplayFor "addressCity")
+              (if @institution (perform this.saveOrCancel) (noop))
+            )
+          }}
         >
-        {{#if
-          (and
-            (v-get this "addressCity" "isInvalid")
-            (includes "addressCity" showErrorsFor)
-          )
-        }}
+        {{#each (await (compute (fn this.getErrorsFor) "addressCity")) as |message|}}
           <span class="validation-error-message">
-            {{v-get this "addressCity" "message"}}
+            {{message}}
           </span>
-        {{/if}}
+        {{/each}}
       </div>
       <div class="item" data-test-institution-address-state-or-province>
         <label>
@@ -111,20 +123,19 @@
         <input
           type="text"
           value={{this.addressStateOrProvince}}
-          oninput={{action (mut this.addressStateOrProvince) value="target.value"
+          {{on "input" (pick "target.value" (set this.addressStateOrProvince))}}
+          {{on "keyup"
+            (queue
+              (fn this.addErrorDisplayFor "addressStateOrProvince")
+              (if @institution (perform this.saveOrCancel) (noop))
+            )
           }}
-          onkeyup={{action "addErrorDisplayFor" "addressStateOrProvince"}}
         >
-        {{#if
-          (and
-            (v-get this "addressStateOrProvince" "isInvalid")
-            (includes "addressStateOrProvince" showErrorsFor)
-          )
-        }}
+        {{#each (await (compute (fn this.getErrorsFor) "addressStateOrProvince")) as |message|}}
           <span class="validation-error-message">
-            {{v-get this "addressStateOrProvince" "message"}}
+            {{message}}
           </span>
-        {{/if}}
+        {{/each}}
       </div>
       <div class="item" data-test-institution-address-zip-code>
         <label>
@@ -133,19 +144,19 @@
         <input
           type="text"
           value={{this.addressZipCode}}
-          oninput={{action (mut this.addressZipCode) value="target.value"}}
-          onkeyup={{action "addErrorDisplayFor" "addressZipCode"}}
+          {{on "input" (pick "target.value" (set this.addressZipCode))}}
+          {{on "keyup"
+            (queue
+              (fn this.addErrorDisplayFor "addressZipCode")
+              (if @institution (perform this.saveOrCancel) (noop))
+            )
+          }}
         >
-        {{#if
-          (and
-            (v-get this "addressZipCode" "isInvalid")
-            (includes "addressZipCode" showErrorsFor)
-          )
-        }}
+        {{#each (await (compute (fn this.getErrorsFor) "addressZipCode")) as |message|}}
           <span class="validation-error-message">
-            {{v-get this "addressZipCode" "message"}}
+            {{message}}
           </span>
-        {{/if}}
+        {{/each}}
       </div>
       <div class="item" data-test-institution-address-country-code>
         <label>
@@ -155,19 +166,19 @@
           type="text"
           maxlength="2"
           value={{this.addressCountryCode}}
-          oninput={{action (mut this.addressCountryCode) value="target.value"}}
-          onkeyup={{action "addErrorDisplayFor" "addressCountryCode"}}
+          {{on "input" (pick "target.value" (set this.addressCountryCode))}}
+          {{on "keyup"
+            (queue
+              (fn this.addErrorDisplayFor "addressCountryCode")
+              (if @institution (perform this.saveOrCancel) (noop))
+            )
+          }}
         >
-        {{#if
-          (and
-            (v-get this "addressCountryCode" "isInvalid")
-            (includes "addressCountryCode" showErrorsFor)
-          )
-        }}
+        {{#each (await (compute (fn this.getErrorsFor) "addressCountryCode")) as |message|}}
           <span class="validation-error-message">
-            {{v-get this "addressCountryCode" "message"}}
+            {{message}}
           </span>
-        {{/if}}
+        {{/each}}
       </div>
     </div>
   </div>
