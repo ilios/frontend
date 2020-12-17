@@ -73,8 +73,6 @@ export default class SchoolVocabulariesListComponent extends Component {
 
   @dropTask
   *remove(vocabulary) {
-    const vocabularies = yield this.args.school.get('vocabularies');
-    vocabularies.removeObject(vocabulary);
     yield vocabulary.destroyRecord();
     if (this.newVocabulary === vocabulary) {
       this.newVocabulary = null;
