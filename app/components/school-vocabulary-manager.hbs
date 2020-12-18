@@ -1,103 +1,78 @@
-<div class="breadcrumbs" data-test-breadcrumbs>
-  <span role="button" data-test-all {{action manageVocabulary null}}>
-    {{t "general.allVocabularies"}}
-  </span>
-  <span data-test-vocabulary>
-    {{@vocabulary.title}}
-  </span>
-</div>
-<br>
-<div class="school-vocabulary-manager-title" data-test-title>
-  <h4>
-    {{t "general.title"}}:
-  </h4>
-  {{#if canUpdate}}
-    <EditableField
-      @value={{if vocabularyTitle vocabularyTitle (t "general.clickToEdit")}}
-      @save={{action "changeVocabularyTitle"}}
-      @close={{action "revertVocabularyTitleChanges"}}
-      @isSaveDisabled={{and
-        (v-get this "vocabularyTitle" "isInvalid")
-        (includes "vocabularyTitle" showErrorsFor)
-      }}
-      @saveOnEnter={{true}}
-      @closeOnEscape={{true}} as |isSaving|
-    >
-      <input
-        value={{vocabularyTitle}}
-        oninput={{action (mut vocabularyTitle) value="target.value"}}
-        disabled={{isSaving}}
-        onkeyup={{action "addErrorDisplayFor" "vocabularyTitle"}}
-      >
-    </EditableField>
-    {{#if
-      (and
-        (v-get this "vocabularyTitle" "isInvalid")
-        (includes "vocabularyTitle" showErrorsFor)
-      )
-    }}
-      <span class="validation-error-message" data-test-title-error-message>
-        {{v-get this "vocabularyTitle" "message"}}
-      </span>
-    {{/if}}
+<div
+  class="school-vocabulary-manager"
+  data-test-school-vocabulary-manager
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @vocabulary.terms}}
+  attributes...
+>
+  {{#if this.load.isRunning}}
+    <LoadingSpinner />
   {{else}}
-    {{this.vocabularyTitle}}
-  {{/if}}
-</div>
-<h5>
-  {{t "general.terms"}}:
-</h5>
-<div class="terms" data-test-terms>
-  {{#if newTerm}}
-    <div class="saved-result">
-      <span class="clickable link" role="button" {{action manageTerm newTerm.id}}>
-        <FaIcon @icon="external-link-square-alt" />
-        {{this.newTerm.title}}
+    <div class="breadcrumbs" data-test-breadcrumbs>
+      <span role="button" data-test-all {{on "click" (fn @manageVocabulary null)}}>
+        {{t "general.allVocabularies"}}
       </span>
-      {{t "general.savedSuccessfully"}}
+      <span data-test-vocabulary>
+        {{@vocabulary.title}}
+      </span>
     </div>
-  {{/if}}
-  {{#if canCreate}}
-    <div class="form" data-test-new-term-form>
-      <input
-        type="text"
-        value={{newTermTitle}}
-        oninput={{action (mut newTermTitle) value="target.value"}}
-        onkeyup={{action "addErrorDisplayFor" "newTermTitle"}}
-      >
-      <button type="button" class="save text" {{action "createTerm"}}>
-        {{#if isSavingNewTerm}}
-          <LoadingSpinner />
-        {{else}}
-          {{t "general.add"}}
-        {{/if}}
-      </button>
-      {{#if
-        (and
-          (v-get this "newTermTitle" "isInvalid")
-          (includes "newTermTitle" showErrorsFor)
-        )
-      }}
-        <span class="validation-error-message" data-test-error-message>
-          {{v-get this "newTermTitle" "message"}}
-        </span>
+    <br>
+    <div class="school-vocabulary-manager-title" data-test-title>
+      <h4>
+        {{t "general.title"}}:
+      </h4>
+      {{#if @canUpdate}}
+        <EditableField
+          @value={{if this.title this.title (t "general.clickToEdit")}}
+          @save={{perform this.changeTitle}}
+          @close={{this.revertTitleChanges}}
+          @saveOnEnter={{true}}
+          @closeOnEscape={{true}} as |isSaving|
+        >
+          <Input
+            type="text"
+            @value={{this.title}}
+            @key-press={{fn this.addErrorDisplayFor "title"}}
+            disabled={{isSaving}}
+          />
+          {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
+        </EditableField>
+      {{else}}
+        {{this.title}}
       {{/if}}
     </div>
-  {{/if}}
-  {{#if (is-fulfilled sortedTerms)}}
-    <ul data-test-term-list>
-      {{#each (await sortedTerms) as |term|}}
-        <li role="button" data-test-term {{action manageTerm term.id}}>
-          {{term.title}}
-          {{#unless term.active}}
-            <em>
-              ({{t "general.inactive"}})
-            </em>
-          {{/unless}}
-        </li>
-      {{/each}}
-    </ul>
-  {{else}}
-    <LoadingSpinner />
+    <h5>
+      {{t "general.terms"}}:
+    </h5>
+    <div class="terms" data-test-terms>
+      {{#if this.newTerm}}
+        <div class="saved-result">
+          <span class="clickable link" role="button" {{on "click" (fn @manageTerm newTerm.id)}}>
+            <FaIcon @icon="external-link-square-alt" />
+            {{this.newTerm.title}}
+          </span>
+          {{t "general.savedSuccessfully"}}
+        </div>
+      {{/if}}
+      {{#if @canCreate}}
+        <SchoolVocabularyNewTerm @createTerm={{this.createTerm}} @vocabulary={{@vocabulary}}/>
+      {{/if}}
+      <ul data-test-term-list>
+        {{#each this.sortedTerms as |term|}}
+          <li role="button" data-test-term {{on "click" (fn @manageTerm term.id)}}>
+            {{term.title}}
+            {{#unless term.active}}
+              <em>
+                ({{t "general.inactive"}})
+              </em>
+            {{/unless}}
+          </li>
+        {{/each}}
+      </ul>
+    </div>
   {{/if}}
 </div>

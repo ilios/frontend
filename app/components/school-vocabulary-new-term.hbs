@@ -1,0 +1,29 @@
+<div
+  class="school-vocabulary-new-term"
+  data-test-school-vocabulary-new-term
+>
+  <input
+    type="text"
+    value={{this.title}}
+    disabled={{this.save.isRunning}}
+    {{on "input" (pick "target.value" (set this.title))}}
+    {{on "keyup" (queue (fn this.addErrorDisplayFor "title") (perform this.saveOnEnter))}}
+  >
+  <button
+    type="button"
+    class="save text"
+    disabled={{this.save.isRunning}}
+    {{on "click" (perform this.save)}}
+  >
+    {{#if this.save.isRunning}}
+      <LoadingSpinner />
+    {{else}}
+      {{t "general.add"}}
+    {{/if}}
+  </button>
+  {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+    <span class="validation-error-message">
+      {{message}}
+    </span>
+  {{/each}}
+</div>
