@@ -2,49 +2,47 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { component } from 'ilios/tests/pages/components/school-session-attributes-collapsed';
 
 module('Integration | Component | school session attributes collapsed', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(12);
-
     this.set('showSessionAttendanceRequired', false);
     this.set('showSessionSupplemental', true);
     this.set('showSessionSpecialAttireRequired', false);
     this.set('showSessionSpecialEquipmentRequired', false);
     await render(hbs`<SchoolSessionAttributesCollapsed
-      @showSessionAttendanceRequired={{showSessionAttendanceRequired}}
-      @showSessionSupplemental={{showSessionSupplemental}}
-      @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
-      @showSessionSpecialEquipmentRequired={{showSessionSpecialEquipmentRequired}}
+      @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
+      @showSessionSupplemental={{this.showSessionSupplemental}}
+      @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
+      @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
       @expand={{noop}}
     />`);
 
-    const rows = 'table tbody tr';
-    const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
-    const attendanceEnabled = `${rows}:nth-of-type(1) td:nth-of-type(2) svg`;
-    const supplementalTitle = `${rows}:nth-of-type(2) td:nth-of-type(1)`;
-    const supplementalEnabled = `${rows}:nth-of-type(2) td:nth-of-type(2) svg`;
-    const specialAttireTitle = `${rows}:nth-of-type(3) td:nth-of-type(1)`;
-    const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) svg`;
-    const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
-    const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) svg`;
+    assert.equal(component.attendanceRequired.label, 'Attendance Required');
+    assert.ok(component.attendanceRequired.isDisabled);
+    assert.equal(component.supplemental.label, 'Supplemental Curriculum');
+    assert.ok(component.supplemental.isEnabled);
+    assert.equal(component.specialAttireRequired.label, 'Special Attire Required');
+    assert.ok(component.specialAttireRequired.isDisabled);
+    assert.equal(component.specialEquipmentRequired.label, 'Special Equipment Required');
+    assert.ok(component.specialEquipmentRequired.isDisabled);
+  });
 
-    assert.dom(attendanceTitle).hasText('Attendance Required');
-    assert.dom(attendanceEnabled).hasClass('no');
-    assert.dom(attendanceEnabled).hasClass('fa-ban');
+  test('expand', async function(assert) {
+    assert.expect(1);
+    this.set('expand', () => {
+      assert.ok(true, 'expand triggered.');
+    });
+    await render(hbs`<SchoolSessionAttributesCollapsed
+      @showSessionAttendanceRequired={{true}}
+      @showSessionSupplemental={{true}}
+      @showSessionSpecialAttireRequired={{true}}
+      @showSessionSpecialEquipmentRequired={{true}}
+      @expand={{this.expand}}
+    />`);
 
-    assert.dom(supplementalTitle).hasText('Supplemental Curriculum');
-    assert.dom(supplementalEnabled).hasClass('yes');
-    assert.dom(supplementalEnabled).hasClass('fa-check');
-
-    assert.dom(specialAttireTitle).hasText('Special Attire Required');
-    assert.dom(specialAttireEnabled).hasClass('no');
-    assert.dom(specialAttireEnabled).hasClass('fa-ban');
-
-    assert.dom(specialEquipmentTitle).hasText('Special Equipment Required');
-    assert.dom(specialEquipmentEnabled).hasClass('no');
-    assert.dom(specialEquipmentEnabled).hasClass('fa-ban');
+    await component.expand();
   });
 });

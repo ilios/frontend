@@ -2,11 +2,12 @@
   class="school-competencies-expanded"
   {{did-insert (perform this.load)}}
   {{did-update (perform this.load) @school.competencies}}
+  data-test-school-competencies-expanded
   ...attributes
 >
   <div class="school-competencies-expanded-header">
     {{#if @isManaging}}
-      <div class="title">
+      <div class="title" data-test-title>
         {{t "general.competencies"}}
       </div>
     {{else}}
@@ -14,6 +15,7 @@
         class="title {{if this.showCollapsible "collapsible clickable"}}"
         role="button"
         {{on "click" this.collapse}}
+        data-test-collapse
       >
         {{t "general.competencies"}}
         ({{this.domains.length}}/{{this.childCompetencies.length}})
@@ -21,17 +23,17 @@
     {{/if}}
     <div class="actions">
       {{#if @isManaging}}
-        <button type="button" class="bigadd" {{on "click" (perform this.save)}}>
+        <button type="button" class="bigadd" {{on "click" (perform this.save)}} data-test-save>
           <FaIcon
             @icon={{if this.save.isRunning "spinner" "check"}}
             @spin={{this.save.isRunning}}
           />
         </button>
-        <button type="button" class="bigcancel" {{on "click" this.stopManaging}}>
+        <button type="button" class="bigcancel" {{on "click" this.stopManaging}} data-test-cancel>
           <FaIcon @icon="undo" />
         </button>
       {{else if (or @canUpdate @canDelete @canCreate)}}
-        <button type="button" {{on "click" (fn @setSchoolManageCompetencies true)}}>
+        <button type="button" {{on "click" (fn @setSchoolManageCompetencies true)}} data-test-manage>
           {{t "general.manageCompetencies"}}
         </button>
       {{/if}}

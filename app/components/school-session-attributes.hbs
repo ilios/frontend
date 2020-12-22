@@ -2,6 +2,7 @@
   class="school-session-attributes"
   {{did-insert (perform this.load) @school}}
   {{did-update (perform this.load) @school @school.configurations}}
+  data-test-school-session-attributes
   ...attributes
 >
   {{#if this.load.lastSuccessful}}

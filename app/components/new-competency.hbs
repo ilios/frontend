@@ -1,19 +1,29 @@
-<input
-  type="text"
-  value={{title}}
-  oninput={{action (mut title) value="target.value"}}
-  onkeyup={{action "addErrorDisplayFor" "title"}}
-  placeholder={{t "general.title"}}
->
-<button type="button" class="save text" {{action (perform save)}}>
-  {{#if save.isRunning}}
-    <LoadingSpinner />
-  {{else}}
-    {{t "general.add"}}
-  {{/if}}
-</button>
-{{#if (and (v-get this "title" "isInvalid") (includes "title" showErrorsFor))}}
-  <span class="validation-error-message">
-    {{v-get this "title" "message"}}
-  </span>
-{{/if}}
+<div class="new-competency" data-test-new-competency ...attributes>
+  <input
+    type="text"
+    value={{this.title}}
+    disabled={{this.save.isRunning}}
+    data-test-title
+    {{on "input" (pick "target.value" (set this.title))}}
+    {{on "keyup" (queue (fn this.addErrorDisplayFor "title") (perform this.cancelOrSave))}}
+    placeholder={{t "general.title"}}
+  >
+  <button
+    type="button"
+    class="save text"
+    disabled={{this.save.isRunning}}
+    data-test-save
+    {{on "click" (perform this.save)}}
+  >
+    {{#if this.save.isRunning}}
+      <LoadingSpinner />
+    {{else}}
+      {{t "general.add"}}
+    {{/if}}
+  </button>
+  {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+    <span class="validation-error-message">
+      {{message}}
+    </span>
+  {{/each}}
+</div>

@@ -1,34 +1,27 @@
-import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, find } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
-const { resolve } = RSVP;
+import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios/tests/pages/components/school-competencies-list';
 
 module('Integration | Component | school competencies list', function(hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(4);
-    const domain = EmberObject.create({title: 'domain 0', isDomain: true, childCount: 1});
-    const competency1 = EmberObject.create({title: 'competency 0', isNotDomain: true, parent: resolve(domain)});
-    const competency2 = EmberObject.create({title: 'competency 1', isNotDomain: true, parent: resolve(domain)});
-    domain.set('children', resolve([competency1, competency2]));
+    const domain = this.server.create('competency', { title: 'domain 0' });
+    this.server.create('competency', { title: 'competency 0', parent: domain });
+    this.server.create('competency', { title: 'competency 1', parent: domain });
+    const domainModel = await this.owner.lookup('service:store').find('competency', domain.id);
 
-    const domainsList = [domain];
+    this.set('domains', [ domainModel ]);
+    await render(hbs`<SchoolCompetenciesList @domains={{this.domains}} />`);
 
-    this.set('domains', domainsList);
-    await render(hbs`<SchoolCompetenciesList @domains={{domains}} />`);
-    const domains = '[data-test-domains] > li';
-    const domainTitle = `${domains}:nth-of-type(1)`;
-
-    await settled();
-    assert.dom(domains).exists({ count: 1 });
-    assert.ok(find(domainTitle).textContent.includes('domain 0'));
-    assert.ok(find(domainTitle).textContent.includes('competency 0'));
-    assert.ok(find(domainTitle).textContent.includes('competency 1'));
-
+    assert.equal(component.domains.length, 1);
+    assert.equal(component.domains[0].title, 'domain 0');
+    assert.equal(component.domains[0].competencies.length, 2);
+    assert.equal(component.domains[0].competencies[0].text, 'competency 0');
+    assert.equal(component.domains[0].competencies[1].text, 'competency 1');
   });
 });

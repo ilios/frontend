@@ -2,13 +2,14 @@
   class="school-vocabularies-expanded"
   {{did-insert (perform this.load) @school}}
   {{did-update (perform this.load) @school @school.vocabularies}}
+  data-test-school-vocabularies-expanded
   ...attributes
 >
   <div
     class="title {{if this.isCollapsible "collapsible clickable"}}"
     role="button"
     {{on "click" this.doCollapse}}
-    data-test-title
+    data-test-vocabularies-title
   >
     {{t "general.vocabularies"}}
     {{#if this.load.lastSuccessful}}

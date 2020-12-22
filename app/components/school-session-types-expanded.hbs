@@ -2,6 +2,7 @@
   class="school-session-types-expanded"
   {{did-insert (perform this.load) @school}}
   {{did-update (perform this.load) @school @school.sessionTypes}}
+  data-test-school-session-types-expanded
   ...attributes
 >
   <div class="school-session-types-header">
@@ -9,6 +10,7 @@
       class="title {{if this.isCollapsible "collapsible clickable"}}"
       role="button"
       {{on "click" @collapse}}
+      data-test-collapse
     >
       {{t "general.sessionTypes"}}
     </div>

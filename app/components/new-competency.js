@@ -1,51 +1,38 @@
-import Component from '@ember/component';
-import { task, timeout } from 'ember-concurrency';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import Component from '@glimmer/component';
+import { tracked } from "@glimmer/tracking";
+import { dropTask } from 'ember-concurrency-decorators';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 
-const Validations = buildValidations({
-  title: [
-    validator('presence', true),
-    validator('length', {
-      max: 200
-    })
-  ]
-});
+@validatable
+export default class NewCompetencyComponent extends Component {
 
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  classNames: ['new-competency'],
+  @tracked @NotBlank() @Length(1, 200) title;
 
-  title: null,
-
-  keyUp(event) {
+  @dropTask
+  *cancelOrSave(event) {
     const keyCode = event.keyCode;
-    const target = event.target;
-
-    if ('text' !== target.type) {
-      return;
-    }
 
     if (13 === keyCode) {
-      this.save.perform();
+      yield this.save.perform();
       return;
     }
 
     if(27 === keyCode) {
-      this.send('removeErrorDisplayFor', 'title');
-      this.set('title', '');
+      this.removeErrorDisplayFor('title');
+      this.title = null;
     }
-  },
+  }
 
-  save: task(function* () {
-    this.send('addErrorDisplayFor', 'title');
-    const {validations} = yield this.validate();
-    if (validations.get('isInvalid')) {
-      return;
+  @dropTask
+  *save() {
+    this.addErrorDisplayFor('title');
+    const isValid = yield this.isValid();
+    if (! isValid) {
+      return false;
     }
-    yield timeout(10);
     const title = this.title;
-    yield this.add(title);
-    this.send('clearErrorDisplay');
-    this.set('title', null);
-  })
-});
+    yield this.args.add(title);
+    this.removeErrorDisplayFor('title');
+    this.title = null;
+  }
+}
