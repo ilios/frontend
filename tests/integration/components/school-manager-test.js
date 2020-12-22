@@ -11,19 +11,18 @@ module('Integration | Component | school manager', function(hooks) {
   test('it renders', async function(assert) {
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
-    this.set('nothing', () => { });
     this.set('school', schoolModel);
     await render(hbs`<SchoolManager
       @school={{school}}
-      @setSchoolCompetencyDetails={{action nothing}}
-      @setSchoolManageCompetencies={{action nothing}}
-      @setSchoolVocabularyDetails={{action nothing}}
-      @setSchoolLeadershipDetails={{action nothing}}
-      @setSchoolManageLeadership={{action nothing}}
-      @setSchoolSessionAttributesDetails={{action nothing}}
-      @setSchoolManageSessionAttributes={{action nothing}}
-      @setSchoolSessionTypeDetails={{action nothing}}
-      @setSchoolManagedSessionType={{action nothing}}
+      @setSchoolCompetencyDetails={{noop}}
+      @setSchoolManageCompetencies={{noop}}
+      @setSchoolVocabularyDetails={{noop}}
+      @setSchoolLeadershipDetails={{noop}}
+      @setSchoolManageLeadership={{noop}}
+      @setSchoolSessionAttributesDetails={{noop}}
+      @setSchoolManageSessionAttributes={{noop}}
+      @setSchoolSessionTypeDetails={{noop}}
+      @setSchoolManagedSessionType={{noop}}
     />`);
 
     assert.ok(this.element.textContent.includes("Back to Schools List"));
