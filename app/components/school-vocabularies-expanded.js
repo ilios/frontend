@@ -7,7 +7,7 @@ import { tracked } from '@glimmer/tracking';
 
 export default class SchoolVocabulariesExpandedComponent extends Component {
   @service store;
-  @tracked schoolVocabularies;
+  @tracked schoolVocabularies = [];
 
   #loadedSchools = {};
 
@@ -44,7 +44,7 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
   }
 
   get managedVocabulary() {
-    if (!this.args.managedVocabularyId || !this.schoolVocabularies) {
+    if (!this.args.managedVocabularyId || ! this.schoolVocabularies.length) {
       return null;
     }
 
@@ -56,7 +56,7 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
   }
 
   get managedTerm() {
-    if (!this.schoolVocabularies || !this.args.managedVocabularyId || !this.args.managedTermId) {
+    if (! this.schoolVocabularies.length || !this.args.managedVocabularyId || !this.args.managedTermId) {
       return null;
     }
 
