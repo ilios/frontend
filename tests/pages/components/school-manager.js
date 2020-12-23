@@ -9,18 +9,21 @@ import schoolSessionTypesCollapsed from './school-session-types-collapsed';
 import schoolSessionAttributes from './school-session-attributes';
 import schoolCurriculumInventoryInstitutionManager from './school-curriculum-inventory-institution-manager';
 import schoolCurriculumInventoryInstitutionDetails from './school-curriculum-inventory-institution-details';
-import leadershipCollapsed from 'ilios-common/page-objects/components/leadership-collapsed';
+import schoolLeadershipCollapsed from 'ilios-common/page-objects/components/leadership-collapsed';
 
 const definition = {
   scope: '[data-test-school-manager]',
-  title: text('[data-test-school-title]'),
-  editTitle: clickable('[data-test-school-title] .clickable'),
-  changeTitle: fillable('[data-test-school-title] input'),
-  saveTitle: clickable('[data-test-school-title] .done'),
-  hasError: isPresent('[data-test-school-title] .validation-error-message'),
-  errorMessage: text('[data-test-school-title] .validation-error-message'),
+  title: {
+    scope: '[data-test-school-title]',
+    edit: clickable('.clickable'),
+    set: fillable('input'),
+    save: clickable('.done'),
+    cancel: clickable('.cancel'),
+    hasError: isPresent('.validation-error-message'),
+    errorMessage: text('.validation-error-message'),
+  },
   schoolLeadershipExpanded,
-  leadershipCollapsed,
+  schoolLeadershipCollapsed,
   schoolCompetenciesExpanded,
   schoolCompetenciesCollapsed,
   schoolVocabulariesExpanded,
