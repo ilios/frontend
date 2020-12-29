@@ -2,9 +2,10 @@
   class="school-session-types-collapsed"
   {{did-insert (perform this.load) @school}}
   {{did-update (perform this.load) @school.sessionTypes}}
+  data-test-school-session-types-collapsed
   ...attributes
 >
-  <div class="title clickable" role="button" {{on "click" @expand}}>
+  <div class="title clickable" role="button" {{on "click" @expand}} data-test-expand>
     {{t "general.sessionTypes"}}
   </div>
   <div class="content">
@@ -24,7 +25,7 @@
           <td>
             {{t "general.assessmentMethods"}}
           </td>
-          <td class="summary-highlight">
+          <td class="summary-highlight" data-test-assessment-count>
             {{#if this.load.lastSuccessful}}
               {{this.assessmentMethods.length}}
             {{else}}
@@ -36,7 +37,7 @@
           <td>
             {{t "general.instructionalMethods"}}
           </td>
-          <td class="summary-highlight">
+          <td class="summary-highlight" data-test-instructional-count>
             {{#if this.load.lastSuccessful}}
               {{this.instructionalMethods.length}}
             {{else}}

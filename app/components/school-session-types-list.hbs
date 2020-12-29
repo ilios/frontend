@@ -1,4 +1,4 @@
-<div class="school-session-types-list" ...attributes>
+<div class="school-session-types-list" data-test-school-session-types-list ...attributes>
   <table>
     <thead>
       <tr>
@@ -27,31 +27,31 @@
     </thead>
     <tbody>
       {{#each (sort-by "active:desc" "title" @sessionTypes) as |sessionType|}}
-        <tr>
-          <td colspan="3">
-            <button class="link-button" type="button" {{on "click" (fn @manageSessionType sessionType.id)}} data-test-title>
+        <tr data-test-session-type>
+          <td colspan="3" data-test-title>
+            <button class="link-button" type="button" {{on "click" (fn @manageSessionType sessionType.id)}}>
               {{sessionType.title}}
             </button>
             {{#unless sessionType.active}}
-              <em>
+              <em data-test-inactive>
                 ({{t "general.inactive"}})
               </em>
             {{/unless}}
           </td>
-          <td class="hide-from-small-screen">
+          <td class="hide-from-small-screen" data-test-sessions-count>
             {{sessionType.sessionCount}}
           </td>
-          <td>
+          <td data-test-is-assessment>
             {{#if sessionType.assessment}}
               <FaIcon @icon="check" class="yes" />
             {{else}}
               <FaIcon @icon="ban" class="no" />
             {{/if}}
           </td>
-          <td class="hide-from-small-screen" colspan="2">
+          <td class="hide-from-small-screen" colspan="2" data-test-assessment-option>
             {{get (await sessionType.assessmentOption) "name"}}
           </td>
-          <td class="hide-from-small-screen" colspan="2">
+          <td class="hide-from-small-screen" colspan="2" data-test-assessment-method-description>
             {{get (await sessionType.firstAamcMethod) "description"}}
             {{#if (not (get (await sessionType.firstAamcMethod) "active"))}}
               <em>
@@ -63,6 +63,7 @@
             {{! template-lint-disable no-inline-styles style-concatenation}}
             <span
               class="box"
+              data-test-colorbox
               style={{{concat "background-color: " sessionType.safeCalendarColor}}}
             ></span>
           </td>
@@ -71,6 +72,7 @@
               @icon="edit"
               class="edit clickable enabled"
               @click={{fn @manageSessionType sessionType.id}}
+              data-test-manage
             />
             {{#if (eq sessionType.sessionCount 0)}}
               {{#if (includes sessionType.id this.deletedSessionTypes)}}
@@ -78,6 +80,7 @@
               {{else if @canDelete}}
                 <FaIcon
                   @icon="trash"
+                  data-test-delete
                   class={{if
                     this.deleteSessionType.isRunning
                     "inactive"

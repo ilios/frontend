@@ -1,71 +1,44 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { reject } from 'rsvp';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { dropTask } from 'ember-concurrency-decorators';
 
-const Validations = buildValidations({
-  title: [
-    validator('presence', true),
-    validator('length', {
-      max: 60,
-      descriptionKey: 'general.title'
-    })
-  ]
-});
+@validatable
+export default class SchoolManagerComponent extends Component {
+  @service flashMessages;
+  @tracked @NotBlank() @Length(1, 60) title;
 
-export default Component.extend(ValidationErrorDisplay, Validations, {
-  flashMessages: service(),
-  tagName: "",
-  canCreateCompetency: false,
-  canCreateSessionType: false,
-  canCreateTerm: false,
-  canCreateVocabulary: false,
-  canDeleteCompetency: false,
-  canDeleteSessionType: false,
-  canDeleteTerm: false,
-  canDeleteVocabulary: false,
-  canUpdateCompetency: false,
-  canUpdateSchool: false,
-  canUpdateSchoolConfig: false,
-  canUpdateSessionType: false,
-  canUpdateVocabulary: false,
-  canUpdateTerm: false,
-  school: null,
-  title: null,
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.set('title', this.get('school.title'));
-  },
-
-  actions: {
-    async changeTitle() {
-      const { school, title } = this.getProperties('school', 'title');
-      this.send('addErrorDisplayFor', 'title');
-      const { validations } = await this.validate();
-
-      if (validations.isValid) {
-        this.send('clearErrorDisplay');
-        school.set('title', title);
-        const newSchool = await school.save();
-        this.setProperties({ school: newSchool, title: newSchool.title });
-        this.flashMessages.success('general.savedSuccessfully');
-      } else {
-        await reject();
-      }
-    },
-
-    revertTitleChanges() {
-      const school = this.school;
-      this.set('title', school.get('title'));
-    },
-
-    async saveInstitution(institution) {
-      if (! institution.belongsTo('school').id()) {
-        institution.set('school', this.get("school"));
-      }
-      await institution.save();
-    }
+  @action
+  load() {
+    this.title = this.args.school.title;
   }
-});
+
+  @dropTask
+  *changeTitle() {
+    this.addErrorDisplayFor('title');
+    const isValid = yield this.isValid();
+    if (! isValid) {
+      return false;
+    }
+    this.removeErrorDisplayFor('title');
+
+    this.args.school.title = this.title;
+    this.newSchool = yield this.args.school.save();
+    this.flashMessages.success('general.savedSuccessfully');
+  }
+
+  @action
+  revertTitleChanges() {
+    this.title = this.args.school.title;
+  }
+
+  @action
+  async saveInstitution(institution) {
+    if (! institution.belongsTo('school').id()) {
+      institution.school = this.args.school;
+    }
+    await institution.save();
+  }
+}

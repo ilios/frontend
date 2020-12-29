@@ -40,12 +40,11 @@ module('Integration | Component | school vocabulary term manager', function(hook
 
     this.set('term', termModel);
     this.set('vocabulary', vocabularyModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolVocabularyTermManager
-      @term={{term}}
-      @vocabulary={{vocabulary}}
-      @manageTerm={{action nothing}}
-      @manageVocabulary={{action nothing}}
+      @term={{this.term}}
+      @vocabulary={{this.vocabulary}}
+      @manageTerm={{noop}}
+      @manageVocabulary={{noop}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -77,12 +76,11 @@ module('Integration | Component | school vocabulary term manager', function(hook
 
     this.set('term', termModel);
     this.set('vocabulary', vocabularyModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolVocabularyTermManager
-      @term={{term}}
-      @vocabulary={{vocabulary}}
-      @manageTerm={{action nothing}}
-      @manageVocabulary={{action nothing}}
+      @term={{this.term}}
+      @vocabulary={{this.vocabulary}}
+      @manageTerm={{noop}}
+      @manageVocabulary={{noop}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -93,7 +91,7 @@ module('Integration | Component | school vocabulary term manager', function(hook
     assert.ok(this.server.db.terms[0].active);
   });
 
-  test('inactive active term', async function(assert) {
+  test('inactivate active term', async function(assert) {
     assert.expect(3);
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', {
@@ -105,12 +103,11 @@ module('Integration | Component | school vocabulary term manager', function(hook
 
     this.set('term', termModel);
     this.set('vocabulary', vocabularyModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolVocabularyTermManager
-      @term={{term}}
-      @vocabulary={{vocabulary}}
-      @manageTerm={{action nothing}}
-      @manageVocabulary={{action nothing}}
+      @term={{this.term}}
+      @vocabulary={{this.vocabulary}}
+      @manageTerm={{noop}}
+      @manageVocabulary={{noop}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -134,12 +131,11 @@ module('Integration | Component | school vocabulary term manager', function(hook
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolVocabularyTermManager
-      @term={{term}}
-      @vocabulary={{vocabulary}}
-      @manageTerm={{action nothing}}
-      @manageVocabulary={{action nothing}}
+      @term={{this.term}}
+      @vocabulary={{this.vocabulary}}
+      @manageTerm={{noop}}
+      @manageVocabulary={{noop}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -151,7 +147,7 @@ module('Integration | Component | school vocabulary term manager', function(hook
     assert.equal(this.server.db.terms[0].title, 'new title');
   });
 
-  test('cant set empty term title', async function(assert) {
+  test("can't set empty term title", async function(assert) {
     assert.expect(5);
 
     const vocabulary = this.server.create('vocabulary');
@@ -164,12 +160,11 @@ module('Integration | Component | school vocabulary term manager', function(hook
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolVocabularyTermManager
-      @term={{term}}
-      @vocabulary={{vocabulary}}
-      @manageTerm={{action nothing}}
-      @manageVocabulary={{action nothing}}
+      @term={{this.term}}
+      @vocabulary={{this.vocabulary}}
+      @manageTerm={{noop}}
+      @manageVocabulary={{noop}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -193,6 +188,7 @@ module('Integration | Component | school vocabulary term manager', function(hook
       active: true,
     });
     this.server.create('term', {
+      parent: term,
       title: 'duplicate one',
       vocabulary,
     });
@@ -201,12 +197,11 @@ module('Integration | Component | school vocabulary term manager', function(hook
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolVocabularyTermManager
-      @term={{term}}
-      @vocabulary={{vocabulary}}
-      @manageTerm={{action nothing}}
-      @manageVocabulary={{action nothing}}
+      @term={{this.term}}
+      @vocabulary={{this.vocabulary}}
+      @manageTerm={{noop}}
+      @manageVocabulary={{noop}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -233,12 +228,11 @@ module('Integration | Component | school vocabulary term manager', function(hook
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolVocabularyTermManager
-      @term={{term}}
-      @vocabulary={{vocabulary}}
-      @manageTerm={{action nothing}}
-      @manageVocabulary={{action nothing}}
+      @term={{this.term}}
+      @vocabulary={{this.vocabulary}}
+      @manageTerm={{noop}}
+      @manageVocabulary={{noop}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -254,7 +248,7 @@ module('Integration | Component | school vocabulary term manager', function(hook
     assert.equal(this.server.db.terms[1].vocabularyId, vocabulary.id);
   });
 
-  test('cant add term with empty title', async function(assert) {
+  test("can't add term with empty title", async function(assert) {
     assert.expect(6);
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', {
@@ -266,12 +260,11 @@ module('Integration | Component | school vocabulary term manager', function(hook
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolVocabularyTermManager
-      @term={{term}}
-      @vocabulary={{vocabulary}}
-      @manageTerm={{action nothing}}
-      @manageVocabulary={{action nothing}}
+      @term={{this.term}}
+      @vocabulary={{this.vocabulary}}
+      @manageTerm={{noop}}
+      @manageVocabulary={{noop}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -287,7 +280,7 @@ module('Integration | Component | school vocabulary term manager', function(hook
     assert.equal(component.subTerms.newTermForm.errorMessage, 'This field can not be blank');
   });
 
-  test('cant add term with duplicate title', async function(assert) {
+  test("can't add term with duplicate title", async function(assert) {
     assert.expect(6);
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', {
@@ -306,12 +299,11 @@ module('Integration | Component | school vocabulary term manager', function(hook
 
     this.set('vocabulary', vocabularyModel);
     this.set('term', termModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolVocabularyTermManager
-      @term={{term}}
-      @vocabulary={{vocabulary}}
-      @manageTerm={{action nothing}}
-      @manageVocabulary={{action nothing}}
+      @term={{this.term}}
+      @vocabulary={{this.vocabulary}}
+      @manageTerm={{noop}}
+      @manageVocabulary={{noop}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}

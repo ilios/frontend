@@ -24,11 +24,10 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
     const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolVocabularyManager
-      @vocabulary={{vocabulary}}
-      @manageTerm={{action nothing}}
-      @manageVocabulary={{action nothing}}
+      @vocabulary={{this.vocabulary}}
+      @manageTerm={{noop}}
+      @manageVocabulary={{noop}}
     />`);
     assert.equal(component.title, `Title: ${vocabulary.title}`);
     assert.equal(component.breadcrumbs.all, 'All Vocabularies');
@@ -46,11 +45,10 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
     const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolVocabularyManager
-      @vocabulary={{vocabulary}}
-      @manageTerm={{action nothing}}
-      @manageVocabulary={{action nothing}}
+      @vocabulary={{this.vocabulary}}
+      @manageTerm={{noop}}
+      @manageVocabulary={{noop}}
       @canUpdate={{true}}
     />`);
     assert.equal(component.title, `Title: ${vocabulary.title}`);
@@ -68,11 +66,10 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
     const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolVocabularyManager
-      @vocabulary={{vocabulary}}
-      @manageTerm={{action nothing}}
-      @manageVocabulary={{action nothing}}
+      @vocabulary={{this.vocabulary}}
+      @manageTerm={{noop}}
+      @manageVocabulary={{noop}}
       @canUpdate={{true}}
     />`);
     assert.equal(component.title, `Title: ${vocabulary.title}`);
@@ -97,11 +94,10 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
     const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolVocabularyManager
-      @vocabulary={{vocabulary}}
-      @manageTerm={{action nothing}}
-      @manageVocabulary={{action nothing}}
+      @vocabulary={{this.vocabulary}}
+      @manageTerm={{noop}}
+      @manageVocabulary={{noop}}
       @canUpdate={{true}}
     />`);
     assert.equal(component.title, `Title: ${vocabulary.title}`);
@@ -122,11 +118,10 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
     const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolVocabularyManager
-      @vocabulary={{vocabulary}}
-      @manageTerm={{action nothing}}
-      @manageVocabulary={{action nothing}}
+      @vocabulary={{this.vocabulary}}
+      @manageTerm={{noop}}
+      @manageVocabulary={{noop}}
       @canCreate={{true}}
     />`);
     assert.equal(component.title, `Title: ${vocabulary.title}`);
@@ -148,11 +143,10 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
     const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolVocabularyManager
-      @vocabulary={{vocabulary}}
-      @manageTerm={{action nothing}}
-      @manageVocabulary={{action nothing}}
+      @vocabulary={{this.vocabulary}}
+      @manageTerm={{noop}}
+      @manageVocabulary={{noop}}
       @canCreate={{true}}
     />`);
     assert.equal(component.title, `Title: ${vocabulary.title}`);
@@ -177,11 +171,10 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
     const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
-    this.set('nothing', () => {});
     await render(hbs`<SchoolVocabularyManager
-      @vocabulary={{vocabulary}}
-      @manageTerm={{action nothing}}
-      @manageVocabulary={{action nothing}}
+      @vocabulary={{this.vocabulary}}
+      @manageTerm={{noop}}
+      @manageVocabulary={{noop}}
       @canCreate={{true}}
     />`);
     assert.equal(component.title, `Title: ${vocabulary.title}`);

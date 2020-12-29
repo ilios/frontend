@@ -1,12 +1,12 @@
-<div ...attributes>
+<div data-test-school-competencies-list ...attributes>
   {{#if @domains.length}}
     <ul data-test-domains>
       {{#each (sort-by "title" @domains) as |domain|}}
-        <li>
-          {{domain.title}}
+        <li data-test-domain>
+          <span data-test-title>{{domain.title}}</span>
           <ul>
             {{#each (sort-by "title" (await domain.children)) as |competency|}}
-              <li>
+              <li data-test-competency>
                 {{competency.title}}
               </li>
             {{/each}}

@@ -1,33 +1,33 @@
-<section class="school-session-attributes-expanded" ...attributes>
+<section class="school-session-attributes-expanded" data-test-school-session-attributes-expanded ...attributes>
   <div class="school-session-attributes-expanded-header">
     {{#if @isManaging}}
       <div class="title">
         {{t "general.sessionAttributes"}}
       </div>
     {{else}}
-      <div class="title clickable collapsible" role="button" {{on "click" @collapse}}>
+      <div class="title clickable collapsible" role="button" {{on "click" @collapse}} data-test-collapse>
         {{t "general.sessionAttributes"}}
       </div>
     {{/if}}
     <div class="actions">
       {{#if @isManaging}}
-        <button type="button" class="bigadd" {{on "click" (perform this.save)}}>
+        <button type="button" class="bigadd" {{on "click" (perform this.save)}} data-test-save>
           <FaIcon
             @icon={{if this.save.isRunning "spinner" "check"}}
             @spin={{this.save.isRunning}}
           />
         </button>
-        <button type="button" class="bigcancel" {{on "click" this.cancel}}>
+        <button type="button" class="bigcancel" {{on "click" this.cancel}} data-test-cancel>
           <FaIcon @icon="undo" />
         </button>
       {{else if @canUpdate}}
-        <button type="button"  {{on "click" (fn @manage true)}}>
+        <button type="button"  {{on "click" (fn @manage true)}} data-test-manage>
           {{t "general.manageSessionAttributes"}}
         </button>
       {{/if}}
     </div>
   </div>
-  <div class="school-session-attributes-expanded-content">
+  <div class="school-session-attributes-expanded-content" data-test-expanded>
     {{#if @isManaging}}
       <SchoolSessionAttributesManager
         @showSessionAttendanceRequired={{this.showSessionAttendanceRequired}}
@@ -38,7 +38,7 @@
         @disable={{this.disableSessionAttributeConfig}}
       />
     {{else}}
-      <table>
+      <table data-test-attributes>
         <thead>
           <tr>
             <th class="text-left">
@@ -50,7 +50,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+          <tr data-test-attendance-required>
             <td>
               {{t "general.attendanceRequired"}}
             </td>
@@ -61,7 +61,7 @@
               />
             </td>
           </tr>
-          <tr>
+          <tr data-test-supplemental>
             <td>
               {{t "general.supplementalCurriculum"}}
             </td>
@@ -72,7 +72,7 @@
               />
             </td>
           </tr>
-          <tr>
+          <tr data-test-special-attire-required>
             <td>
               {{t "general.specialAttireRequired"}}
             </td>
@@ -83,7 +83,7 @@
               />
             </td>
           </tr>
-          <tr>
+          <tr data-test-special-equipment-required>
             <td>
               {{t "general.specialEquipmentRequired"}}
             </td>

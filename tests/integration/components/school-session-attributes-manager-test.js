@@ -1,20 +1,17 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
+import { component } from 'ilios/tests/pages/components/school-session-attributes-manager';
 
 module('Integration | Component | school session attributes manager', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(8);
-
     this.set('showSessionAttendanceRequired', false);
     this.set('showSessionSupplemental', true);
     this.set('showSessionSpecialAttireRequired', false);
     this.set('showSessionSpecialEquipmentRequired', false);
-    this.set('nothing', parseInt);
     await render(hbs`<SchoolSessionAttributesManager
       @showSessionAttendanceRequired={{showSessionAttendanceRequired}}
       @showSessionSupplemental={{showSessionSupplemental}}
@@ -24,30 +21,17 @@ module('Integration | Component | school session attributes manager', function(h
       @disable={{noop}}
     />`);
 
-    const rows = 'table tbody tr';
-    const attendanceTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
-    const attendanceCheckbox = `${rows}:nth-of-type(1) td:nth-of-type(2) input`;
-    const supplementalTitle = `${rows}:nth-of-type(2) td:nth-of-type(1)`;
-    const supplementalCheckbox = `${rows}:nth-of-type(2) td:nth-of-type(2) input`;
-    const specialAttireTitle = `${rows}:nth-of-type(3) td:nth-of-type(1)`;
-    const specialAttireCheckbox = `${rows}:nth-of-type(3) td:nth-of-type(2) input`;
-    const specialEquipmentTitle = `${rows}:nth-of-type(4) td:nth-of-type(1)`;
-    const specialEquipmentCheckbox = `${rows}:nth-of-type(4) td:nth-of-type(2) input`;
-
-    assert.dom(attendanceTitle).hasText('Attendance Required');
-    assert.dom(attendanceCheckbox).isNotChecked();
-
-    assert.dom(supplementalTitle).hasText('Supplemental Curriculum');
-    assert.dom(supplementalCheckbox).isChecked();
-
-    assert.dom(specialAttireTitle).hasText('Special Attire Required');
-    assert.dom(specialAttireCheckbox).isNotChecked();
-
-    assert.dom(specialEquipmentTitle).hasText('Special Equipment Required');
-    assert.dom(specialEquipmentCheckbox).isNotChecked();
+    assert.equal(component.attendanceRequired.label, 'Attendance Required');
+    assert.notOk(component.attendanceRequired.isChecked);
+    assert.equal(component.supplemental.label, 'Supplemental Curriculum');
+    assert.ok(component.supplemental.isChecked);
+    assert.equal(component.specialAttireRequired.label, 'Special Attire Required');
+    assert.notOk(component.specialAttireRequired.isChecked);
+    assert.equal(component.specialEquipmentRequired.label, 'Special Equipment Required');
+    assert.notOk(component.specialEquipmentRequired.isChecked);
   });
 
-  const selectTest = async function(context, assert, name, position){
+  const selectTest = async function(context, assert, name, attribute){
     assert.expect(3);
 
     context.set('showSessionAttendanceRequired', false);
@@ -67,30 +51,28 @@ module('Integration | Component | school session attributes manager', function(h
       @disable={{noop}}
     />`);
 
-    const rows = 'table tbody tr';
-    const checkbox = `${rows}:nth-of-type(${position + 1}) td:nth-of-type(2) input`;
-    assert.dom(checkbox).isNotChecked();
-    await click(checkbox);
-    assert.dom(checkbox).isChecked();
+    assert.notOk(attribute.isChecked);
+    await attribute.check();
+    assert.ok(attribute.isChecked);
   };
 
   test('select showSessionAttendanceRequired', async function(assert) {
-    await selectTest(this, assert, 'showSessionAttendanceRequired', 0);
+    await selectTest(this, assert, 'showSessionAttendanceRequired', component.attendanceRequired);
   });
 
   test('select showSessionSupplemental', async function(assert) {
-    await selectTest(this, assert, 'showSessionSupplemental', 1);
+    await selectTest(this, assert, 'showSessionSupplemental', component.supplemental);
   });
 
   test('select showSessionSpecialAttireRequired', async function(assert) {
-    await selectTest(this, assert, 'showSessionSpecialAttireRequired', 2);
+    await selectTest(this, assert, 'showSessionSpecialAttireRequired', component.specialAttireRequired);
   });
 
   test('select showSessionSpecialEquipmentRequired', async function(assert) {
-    await selectTest(this, assert, 'showSessionSpecialEquipmentRequired', 3);
+    await selectTest(this, assert, 'showSessionSpecialEquipmentRequired', component.specialEquipmentRequired);
   });
 
-  const unSelectTest = async function(context, assert, name, position){
+  const unSelectTest = async function(context, assert, name, attribute){
     assert.expect(3);
 
     context.set('showSessionAttendanceRequired', true);
@@ -110,26 +92,24 @@ module('Integration | Component | school session attributes manager', function(h
       @disable={{this.disable}}
     />`);
 
-    const rows = 'table tbody tr';
-    const checkbox = `${rows}:nth-of-type(${position + 1}) td:nth-of-type(2) input`;
-    assert.dom(checkbox).isChecked();
-    await click(checkbox);
-    assert.dom(checkbox).isNotChecked();
+    assert.ok(attribute.isChecked);
+    await attribute.check();
+    assert.notOk(attribute.isChecked);
   };
 
   test('unSelect showSessionAttendanceRequired', async function(assert) {
-    await unSelectTest(this, assert, 'showSessionAttendanceRequired', 0);
+    await unSelectTest(this, assert, 'showSessionAttendanceRequired', component.attendanceRequired);
   });
 
   test('unSelect showSessionSupplemental', async function(assert) {
-    await unSelectTest(this, assert, 'showSessionSupplemental', 1);
+    await unSelectTest(this, assert, 'showSessionSupplemental', component.supplemental);
   });
 
   test('unSelect showSessionSpecialAttireRequired', async function(assert) {
-    await unSelectTest(this, assert, 'showSessionSpecialAttireRequired', 2);
+    await unSelectTest(this, assert, 'showSessionSpecialAttireRequired', component.specialAttireRequired);
   });
 
   test('unSelect showSessionSpecialEquipmentRequired', async function(assert) {
-    await unSelectTest(this, assert, 'showSessionSpecialEquipmentRequired', 3);
+    await unSelectTest(this, assert, 'showSessionSpecialEquipmentRequired', component.specialEquipmentRequired);
   });
 });

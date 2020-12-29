@@ -1,18 +1,15 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  click
-} from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import { component } from 'ilios/tests/pages/components/school-session-types-list';
 
 module('Integration | Component | school session types list', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(21);
     const school = this.server.create('school');
     const assessmentOption = this.server.create('assessment-option', {
       id: 1,
@@ -61,58 +58,25 @@ module('Integration | Component | school session types list', function(hooks) {
     this.set('sessionTypes', sessionTypeModels);
     await render(hbs`<SchoolSessionTypesList @sessionTypes={{this.sessionTypes}} @manageSessionType={{noop}} />`);
 
-    const rows = 'table tbody tr';
-    const firstSessionType = `${rows}:nth-of-type(1)`;
-    const firstTitle = `${firstSessionType} td:nth-of-type(1)`;
-    const firstSessionCount = `${firstSessionType} td:nth-of-type(2)`;
-    const firstAssessment = `${firstSessionType} td:nth-of-type(3) svg`;
-    const firstAssessmentOption = `${firstSessionType} td:nth-of-type(4)`;
-    const firstAamcMethod = `${firstSessionType} td:nth-of-type(5)`;
-    const firstColorBox = `${firstSessionType} td:nth-of-type(6) .box`;
-    const secondSessionType = `${rows}:nth-of-type(2)`;
-    const secondTitle = `${secondSessionType} td:nth-of-type(1)`;
-    const secondSessionCount = `${secondSessionType} td:nth-of-type(2)`;
-    const secondAssessment = `${secondSessionType} td:nth-of-type(3) svg`;
-    const secondAssessmentOption = `${secondSessionType} td:nth-of-type(4)`;
-    const secondAamcMethod = `${secondSessionType} td:nth-of-type(5)`;
-    const secondColorBox = `${secondSessionType} td:nth-of-type(6) .box`;
-    const thirdSessionType = `${rows}:nth-of-type(3)`;
-    const thirdTitle = `${thirdSessionType} td:nth-of-type(1)`;
-    const thirdSessionCount = `${thirdSessionType} td:nth-of-type(2)`;
-    const thirdAssessment = `${thirdSessionType} td:nth-of-type(3) svg`;
-    const thirdAssessmentOption = `${thirdSessionType} td:nth-of-type(4)`;
-    const thirdAamcMethod = `${thirdSessionType} td:nth-of-type(5)`;
-    const thirdColorBox = `${thirdSessionType} td:nth-of-type(6) .box`;
-
-    assert.dom(firstTitle).hasText('first');
-    assert.dom(firstSessionCount).hasText('2');
-    assert.dom(firstAssessment).hasClass('no');
-    assert.dom(firstAssessment).hasClass('fa-ban');
-    assert.dom(firstAamcMethod).hasText(aamcMethod1.description);
-    assert.dom(firstAssessmentOption).hasText('');
-    assert.dom(firstColorBox).hasStyle({
-      'background-color': 'rgb(204, 204, 204)'
-    });
-
-    assert.dom(secondTitle).hasText('second');
-    assert.dom(secondSessionCount).hasText('0');
-    assert.dom(secondAssessment).hasClass('yes');
-    assert.dom(secondAssessment).hasClass('fa-check');
-    assert.dom(secondAamcMethod).hasText(aamcMethod2.description + ' (inactive)');
-    assert.dom(secondAssessmentOption).hasText('formative');
-    assert.dom(secondColorBox).hasStyle({
-      'background-color': 'rgb(18, 52, 86)'
-    });
-
-    assert.dom(thirdTitle).hasText('not needed anymore (inactive)');
-    assert.dom(thirdSessionCount).hasText('2');
-    assert.dom(thirdAssessment).hasClass('no');
-    assert.dom(thirdAssessment).hasClass('fa-ban');
-    assert.dom(thirdAamcMethod).hasText(aamcMethod1.description);
-    assert.dom(thirdAssessmentOption).hasText('');
-    assert.dom(thirdColorBox).hasStyle({
-      'background-color': 'rgb(255, 255, 255)'
-    });
+    assert.equal(component.sessionTypes.length, 3);
+    assert.equal(component.sessionTypes[0].title.text, 'first');
+    assert.equal(component.sessionTypes[0].sessionCount, '2');
+    assert.notOk(component.sessionTypes[0].isAssessment);
+    assert.equal(component.sessionTypes[0].aamcMethod, aamcMethod1.description);
+    assert.equal(component.sessionTypes[0].assessmentOption, '');
+    assert.equal(component.sessionTypes[0].calendarColor, 'background-color: #cccccc');
+    assert.equal(component.sessionTypes[1].title.text, 'second');
+    assert.equal(component.sessionTypes[1].sessionCount, '0');
+    assert.ok(component.sessionTypes[1].isAssessment);
+    assert.equal(component.sessionTypes[1].aamcMethod, aamcMethod2.description + ' (inactive)');
+    assert.equal(component.sessionTypes[1].assessmentOption, 'formative');
+    assert.equal(component.sessionTypes[1].calendarColor, 'background-color: #123456');
+    assert.equal(component.sessionTypes[2].title.text, 'not needed anymore (inactive)');
+    assert.equal(component.sessionTypes[2].sessionCount, '2');
+    assert.notOk(component.sessionTypes[2].isAssessment);
+    assert.equal(component.sessionTypes[2].aamcMethod, aamcMethod1.description);
+    assert.equal(component.sessionTypes[2].assessmentOption, '');
+    assert.equal(component.sessionTypes[2].calendarColor, 'background-color: #ffffff');
   });
 
   test('clicking edit fires action', async function(assert) {
@@ -135,10 +99,7 @@ module('Integration | Component | school session types list', function(hooks) {
       @manageSessionType={{this.manageSessionType}}
     />`);
 
-    const rows = 'table tbody tr';
-    const edit = `${rows}:nth-of-type(1) td:nth-of-type(7) .fa-edit`;
-
-    await click(edit);
+    await component.sessionTypes[0].manage();
   });
 
   test('clicking title fires action', async function(assert) {
@@ -161,15 +122,10 @@ module('Integration | Component | school session types list', function(hooks) {
       @manageSessionType={{this.manageSessionType}}
     />`);
 
-    const rows = 'table tbody tr';
-    const title = `${rows}:nth-of-type(1) td:nth-of-type(1) [data-test-title]`;
-
-    await click(title);
+    await component.sessionTypes[0].title.edit();
   });
 
   test('session types without sessions can be deleted', async function(assert) {
-    assert.expect(4);
-
     const school = this.server.create('school');
     this.server.create('session-type', {
       school,
@@ -195,20 +151,11 @@ module('Integration | Component | school session types list', function(hooks) {
       @canDelete={{true}}
     />`);
 
-    const rows = 'table tbody tr';
-    const linkedTitle = `${rows}:nth-of-type(1) td:nth-of-type(1)`;
-    const unlinkedTitle = `${rows}:nth-of-type(2) td:nth-of-type(1)`;
-    const linkedTrash = `${rows}:nth-of-type(1) td:nth-of-type(7) .fa-trash.disabled`;
-    const unlinkedTrash = `${rows}:nth-of-type(2) td:nth-of-type(7) .fa-trash.enabled`;
-
-    assert.dom(linkedTitle).hasText('linked', 'linked is first');
-    assert.dom(unlinkedTitle).hasText('unlinked', 'unlinked is second');
-    assert.dom(linkedTrash).exists({ count: 1 }, 'linked has a disabled trash can');
-    assert.dom(unlinkedTrash).exists({ count: 1 }, 'unlinked has an enabled trash can');
+    assert.notOk(component.sessionTypes[0].isDeletable);
+    assert.ok(component.sessionTypes[1].isDeletable);
   });
 
   test('clicking delete deletes the record', async function(assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     this.server.create('session-type', {
       school,
@@ -223,11 +170,8 @@ module('Integration | Component | school session types list', function(hooks) {
       @canDelete={{true}}
     />`);
 
-    const rows = 'table tbody tr';
-    const trash = `${rows}:nth-of-type(1) td:nth-of-type(7) .fa-trash`;
-
     assert.equal(this.server.db.sessionTypes.length, 1);
-    await click(trash);
+    await component.sessionTypes[0].delete();
     assert.equal(this.server.db.sessionTypes.length, 0);
   });
 });

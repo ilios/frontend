@@ -1,168 +1,112 @@
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { isEmpty, isPresent } from '@ember/utils';
-import { task } from 'ember-concurrency';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import { action } from '@ember/object';
+import { isEmpty } from '@ember/utils';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { Custom } from '../decorators/validation/custom';
 
-const Validations = buildValidations({
-  newTermTitle: [
-    validator('presence', true),
-    validator('length', {
-      min: 1,
-      max: 200
-    }),
-    validator('async-exclusion', {
-      dependentKeys: ['model.term.children.@each.title'],
-      in: computed('model.term.children.@each.title', async function(){
-        const term = this.get('model.term');
-        if (isPresent(term)) {
-          const children = await term.children;
-          return children.mapBy('title');
-        }
-        return [];
+@validatable
+export default class SchoolVocabularyTermManagerComponent extends Component {
+  @service store;
+  @service flashMessages;
+  @service intl;
+  @tracked @NotBlank() @Length(1, 200) @Custom('validateTitleCallback', 'validateTitleMessageCallback') title;
+  @tracked isActive = false;
+  @tracked description;
+  @tracked newTerm;
+  @tracked termsRelationship;
 
-      }),
-      descriptionKey: 'general.term',
-    }),
-  ],
-  termTitle: [
-    validator('presence', true),
-    validator('length', {
-      min: 1,
-      max: 200
-    }),
-    validator('async-exclusion', {
-      dependentKeys: ['model.vocabulary.@each.terms'],
-      in: computed('model.vocabulary.@each.terms', async function(){
-        const vocabulary = this.get('model.vocabulary');
-        if (isPresent(vocabulary)) {
-          const terms = await vocabulary.terms;
-          return terms.mapBy('title');
-        }
-        return [];
-
-      }),
-      descriptionKey: 'general.term',
-    })
-  ],
-});
-
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: service(),
-  flashMessages: service(),
-  term: null,
-  canUpdate: false,
-  canDelete: false,
-  canCreate: false,
-  newTerm: null,
-  vocabulary: null,
-  newTermTitle: null,
-  isSavingNewTerm: false,
-  description: null,
-  termTitle: null,
-  isActive: null,
-  classNames: ['school-vocabulary-term-manager'],
-  'data-test-school-vocabulary-term-manager': true,
-  sortedTerms: computed('term.children.[]', 'newTerm', async function () {
-    if (!this.term) {
-      return [];
+  get terms() {
+    if (this.termsRelationship) {
+      return this.termsRelationship.sortBy('title');
     }
-    const terms = await this.term.get('children');
-    return terms.filterBy('isNew', false).filterBy('isDeleted', false).sortBy('title');
-  }),
-  allParents: computed('term.allParents.[]', async function(){
-    if (isPresent(this.term)) {
-      return await this.term.allParents;
-    }
-
     return [];
-  }),
-  didReceiveAttrs(){
-    this._super(...arguments);
-    if (this.term) {
-      this.set('description', this.term.description);
-      this.set('termTitle', this.term.title);
-      this.set('isActive', this.term.active);
-    }
-  },
+  }
 
-  actions: {
-    async changeTermTitle() {
-      this.send('addErrorDisplayFor', 'termTitle');
-      await this.validate();
-      if (this.validations.attrs.termTitle.isValid) {
-        this.send('removeErrorDisplayFor', 'termTitle');
-        this.term.set('title', this.termTitle);
-        return this.term.save();
-      }
+  @restartableTask
+  *load() {
+    this.newTerm = null;
+    this.title = this.args.term.title;
+    this.isActive = this.args.term.active;
+    this.description = this.args.term.description;
+    this.termsRelationship = yield this.args.term.children;
+  }
 
+  @dropTask
+  *changeTitle() {
+    this.addErrorDisplayFor('title');
+    const isValid = yield this.isValid();
+    if (! isValid) {
       return false;
-    },
-    revertTermTitleChanges(){
-      this.send('removeErrorDisplayFor', 'termTitle');
-      this.set('termTitle', this.term.title);
-    },
-    async changeTermDescription(){
-      this.term.set('description', this.description);
-      return this.term.save();
-    },
-    revertTermDescriptionChanges(){
-      this.set('description', this.term.description);
-    },
-    async createTerm() {
-      this.send('addErrorDisplayFor', 'newTermTitle');
-      this.set('isSavingNewTerm', true);
-      try {
-        await this.validate();
-        if (this.validations.attrs.newTermTitle.isValid) {
-          this.send('removeErrorDisplayFor', 'newTermTitle');
-          const title = this.newTermTitle;
-          const term = this.store.createRecord('term', {
-            title,
-            parent: this.term,
-            vocabulary: this.vocabulary,
-            active: true,
-          });
-
-          const newTerm = await term.save();
-          this.set('newTermTitle', null);
-          this.set('newTerm', newTerm);
-          return true;
-        }
-      } finally {
-        this.set('isSavingNewTerm', false);
-      }
-    },
-    async deleteTerm() {
-      const parent = await this.term.parent;
-      const goTo = isEmpty(parent)?null:parent.id;
-      this.manageTerm(goTo);
-      this.term.deleteRecord();
-      await this.term.save();
-      this.flashMessages.success('general.successfullyRemovedTerm');
-    },
-    clearVocabAndTerm(){
-      this.manageVocabulary(null);
-      this.manageTerm(null);
     }
-  },
-  keyUp(event) {
-    const keyCode = event.keyCode;
-    const target = event.target;
+    this.removeErrorDisplayFor('title');
+    this.args.term.title = this.title;
+    return this.args.term.save();
+  }
 
-    if ('text' !== target.type) {
-      return;
-    }
+  @action
+  revertTitleChanges(){
+    this.removeErrorDisplayFor('title');
+    this.title = this.args.term.title;
+  }
 
-    if (13 === keyCode) {
-      this.send('createTerm');
+  @dropTask
+  *changeDescription() {
+    this.args.term.set('description', this.description);
+    yield this.args.term.save();
+  }
+
+  @action
+  revertDescriptionChanges(){
+    this.description = this.args.term.description;
+  }
+
+  @action
+  async createTerm(title) {
+    const term = this.store.createRecord('term', {
+      title,
+      parent: this.args.term,
+      vocabulary: this.args.vocabulary,
+      active: true,
+    });
+    this.newTerm  = await term.save();
+  }
+
+  @dropTask
+  *deleteTerm() {
+    const parent = yield this.args.term.parent;
+    const goTo = isEmpty(parent) ? null : parent.id;
+    this.args.term.deleteRecord();
+    if (parent) {
+      const siblings = parent.children;
+      siblings.removeObject(this.args.term);
     }
-  },
-  changeIsActive: task(function * (isActive){
-    this.term.set('active', isActive);
-    yield this.term.save();
-    this.set('isActive', this.term.active);
-  }).drop(),
-});
+    yield this.args.term.save();
+    this.args.manageTerm(goTo);
+    this.flashMessages.success('general.successfullyRemovedTerm');
+  }
+
+  @action
+  clearVocabAndTerm(){
+    this.args.manageVocabulary(null);
+    this.args.manageTerm(null);
+  }
+
+  @dropTask
+  *changeIsActive(isActive) {
+    this.args.term.active = isActive;
+    yield this.args.term.save();
+    this.isActive = this.args.term.active;
+  }
+
+  async validateTitleCallback() {
+    const terms = await this.args.term.children;
+    return ! terms.mapBy('title').includes(this.title);
+  }
+
+  validateTitleMessageCallback() {
+    return this.intl.t('errors.exclusion', { description: this.intl.t('general.term') });
+  }
+}

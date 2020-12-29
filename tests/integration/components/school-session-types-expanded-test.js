@@ -1,8 +1,9 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios/tests/pages/components/school-session-types-expanded';
 
 module('Integration | Component | school session types expanded', function(hooks) {
   setupRenderingTest(hooks);
@@ -32,7 +33,7 @@ module('Integration | Component | school session types expanded', function(hooks
   test('it renders', async function(assert) {
     this.set('school', this.school);
     await render(hbs`<SchoolSessionTypesExpanded
-      @school={{school}}
+      @school={{this.school}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -43,19 +44,14 @@ module('Integration | Component | school session types expanded', function(hooks
       @setSchoolNewSessionType={{noop}}
     />`);
 
-    const title = '.title';
-    const table = 'table';
-    const sessionTypes = `${table} tbody tr`;
-
-    assert.dom(title).hasText('Session Types');
-    assert.dom(sessionTypes).exists({ count: 1 });
+    assert.equal(component.list.sessionTypes.length, 1);
   });
 
   test('it renders as manager', async function(assert) {
     this.set('school', this.school);
     this.set('sessionType', this.sessionType);
     await render(hbs`<SchoolSessionTypesExpanded
-      @school={{school}}
+      @school={{this.school}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -66,14 +62,7 @@ module('Integration | Component | school session types expanded', function(hooks
       @setSchoolNewSessionType={{noop}}
     />`);
 
-    const title = '.title';
-    const sessionTypeTitle = '.session-type-title';
-    const form = '.form';
-    const items = `${form} .item`;
-
-    assert.dom(title).hasText('Session Types');
-    assert.dom(sessionTypeTitle).hasText('one');
-    assert.dom(items).exists({ count: 6 });
+    assert.ok(component.manager.isVisible);
   });
 
   test('editing session type fires action', async function(assert) {
@@ -83,7 +72,7 @@ module('Integration | Component | school session types expanded', function(hooks
       assert.equal(id, 1);
     });
     await render(hbs`<SchoolSessionTypesExpanded
-      @school={{school}}
+      @school={{this.school}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -94,21 +83,17 @@ module('Integration | Component | school session types expanded', function(hooks
       @setSchoolNewSessionType={{noop}}
     />`);
 
-    const table = 'table';
-    const sessionTypes = `${table} tbody tr`;
-    const edit = `${sessionTypes}:nth-of-type(1) td:nth-of-type(7) .edit`;
-
-    await click(edit);
+    await component.list.sessionTypes[0].manage();
   });
 
-  test('clicking expand new session fires action', async function(assert) {
+  test('clicking add new session fires action', async function(assert) {
     assert.expect(1);
     this.set('school', this.school);
     this.set('click', isExpanded => {
       assert.equal(isExpanded, true);
     });
     await render(hbs`<SchoolSessionTypesExpanded
-      @school={{school}}
+      @school={{this.school}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -118,9 +103,8 @@ module('Integration | Component | school session types expanded', function(hooks
       @setSchoolManagedSessionType={{noop}}
       @setSchoolNewSessionType={{this.click}}
     />`);
-    const edit = `.expand-collapse-button button`;
 
-    await click(edit);
+    await component.createNew();
   });
 
   test('close fires action', async function(assert) {
@@ -131,7 +115,7 @@ module('Integration | Component | school session types expanded', function(hooks
       assert.equal(id, null);
     });
     await render(hbs`<SchoolSessionTypesExpanded
-      @school={{school}}
+      @school={{this.school}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -141,9 +125,8 @@ module('Integration | Component | school session types expanded', function(hooks
       @setSchoolManagedSessionType={{this.click}}
       @setSchoolNewSessionType={{noop}}
     />`);
-    const form = '.form';
-    const button = `${form} .cancel`;
-    await click(button);
+
+    await component.newSessionType.cancel.click();
   });
 
   test('collapse fires action', async function(assert) {
@@ -153,7 +136,7 @@ module('Integration | Component | school session types expanded', function(hooks
       assert.ok(true, 'action was fired');
     });
     await render(hbs`<SchoolSessionTypesExpanded
-      @school={{school}}
+      @school={{this.school}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -163,7 +146,7 @@ module('Integration | Component | school session types expanded', function(hooks
       @setSchoolManagedSessionType={{noop}}
       @setSchoolNewSessionType={{noop}}
     />`);
-    const title = '.title';
-    await click(title);
+
+    await component.collapse();
   });
 });

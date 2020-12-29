@@ -1,7 +1,7 @@
-<div class="school-competencies-manager" ...attributes>
+<div class="school-competencies-manager" data-test-school-competencies-manager ...attributes>
   {{#each this.domains as |obj|}}
-    <div class="domain">
-      <div class="block">
+    <div class="domain" data-test-domain>
+      <div class="block" data-test-domain-details>
         <CompetencyTitleEditor
           @competency={{obj.domain}}
           @canUpdate={{@canUpdate}}
@@ -11,6 +11,7 @@
             @icon="trash"
             class="clickable enabled"
             @click={{fn @remove obj.domain}}
+            data-test-remove-domain
           />
         {{else}}
           <FaIcon @icon="trash" class="disabled" />
@@ -18,17 +19,18 @@
       </div>
       <ul>
         {{#each obj.competencies as |competency|}}
-          <li class="block">
+          <li class="block" data-test-competency>
             <CompetencyTitleEditor
               @competency={{competency}}
               @canUpdate={{@canUpdate}}
             />
-            ({{competency.programYearObjectives.length}})
+            <span data-test-objectives-count>({{competency.programYearObjectives.length}})</span>
             {{#if (and @canDelete (eq competency.programYearObjectives.length 0))}}
               <FaIcon
                 @icon="trash"
                 class="clickable enabled"
                 @click={{fn @remove competency}}
+                data-test-remove-competency
               />
             {{else}}
               <FaIcon @icon="trash" class="disabled" />
@@ -42,9 +44,11 @@
     </div>
   {{/each}}
   {{#if @canCreate}}
-    <h5>
-      {{t "general.newDomain"}}
-    </h5>
-    <NewCompetency @add={{fn @add null}} />
+    <div data-test-new-domain>
+      <h5>
+        {{t "general.newDomain"}}
+      </h5>
+      <NewCompetency @add={{fn @add null}} />
+    </div>
   {{/if}}
 </div>

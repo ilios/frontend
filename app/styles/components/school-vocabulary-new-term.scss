@@ -1,0 +1,13 @@
+.school-vocabulary-new-term {
+  @include ilios-form;
+  display: flex;
+  margin-bottom: .5rem;
+
+  .item {
+    @include ilios-form-item;
+  }
+
+  button {
+    margin-left: .5rem;
+  }
+}

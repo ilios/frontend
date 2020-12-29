@@ -1,5 +1,5 @@
-<section class="school-session-attributes-collapsed" ...attributes>
-  <div class="title clickable" role="button" {{on "click" @expand}}>
+<section class="school-session-attributes-collapsed" data-test-school-session-attributes-collapsed ...attributes>
+  <div class="title clickable" role="button" {{on "click" @expand}} data-test-expand>
     {{t "general.sessionAttributes"}}
   </div>
   <div class="content">
@@ -15,7 +15,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
+        <tr data-test-attendance-required>
           <td>
             {{t "general.attendanceRequired"}}
           </td>
@@ -26,7 +26,7 @@
             />
           </td>
         </tr>
-        <tr>
+        <tr data-test-supplemental>
           <td>
             {{t "general.supplementalCurriculum"}}
           </td>
@@ -37,7 +37,7 @@
             />
           </td>
         </tr>
-        <tr>
+        <tr data-test-special-attire-required>
           <td>
             {{t "general.specialAttireRequired"}}
           </td>
@@ -48,7 +48,7 @@
             />
           </td>
         </tr>
-        <tr>
+        <tr data-test-special-equipment-required>
           <td>
             {{t "general.specialEquipmentRequired"}}
           </td>

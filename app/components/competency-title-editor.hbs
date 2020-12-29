@@ -1,5 +1,6 @@
 <span
   class="competency-title-editor"
+  data-test-competency-title-editor
 >
   {{#if @canUpdate}}
     <EditableField
@@ -7,6 +8,7 @@
       @save={{perform this.save}}
       @close={{fn this.revert}}
       @saveOnEnter={{true}}
+      data-test-title
       @closeOnEscape={{true}} as |isSaving|
     >
       <Input
