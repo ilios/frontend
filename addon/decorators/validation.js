@@ -14,6 +14,7 @@ import { IsURL } from './validation/is-url';
 import { validatable } from './validation/validatable';
 import { ArrayNotEmpty } from './validation/array-not-empty';
 import { GteProp } from './validation/gte-prop';
+import { Custom } from './validation/custom';
 
 
 export {
@@ -32,5 +33,6 @@ export {
   Length,
   NotBlank,
   HtmlNotBlank,
-  validatable
+  validatable,
+  Custom
 };
