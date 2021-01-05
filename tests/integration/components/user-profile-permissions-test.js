@@ -13,6 +13,7 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
   hooks.beforeEach(async function () {
     this.schools = this.server.createList('school', 2);
     this.thisYear = parseInt(moment().format('YYYY'), 10);
+    this.currentAcademicYear = Number(moment().format('M')) >= 6 ? this.thisYear : this.thisYear - 1;
     this.server.create('academic-year', { id: this.thisYear - 1 });
     this.server.create('academic-year', { id: this.thisYear });
     this.server.create('academic-year', { id: this.thisYear + 1 });
@@ -36,7 +37,7 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     assert.equal(component.years[0].text, `${this.thisYear - 1} - ${this.thisYear}`);
     assert.equal(component.years[1].text, `${this.thisYear} - ${this.thisYear + 1}`);
     assert.equal(component.years[2].text, `${this.thisYear + 1} - ${this.thisYear + 2}`);
-    assert.equal(component.selectedYear, this.thisYear);
+    assert.equal(component.selectedYear, this.currentAcademicYear);
 
     assert.equal(component.school.title, 'School (school 1)');
     assert.equal(component.school.director, 'No');
@@ -83,24 +84,24 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     this.server.create('course', {
       school: this.schools[1],
       directors: [ user ],
-      year: this.thisYear
+      year: this.currentAcademicYear
     });
 
     this.server.create('course', {
       school: this.schools[1],
       administrators: [ user ],
-      year: this.thisYear + 1
+      year: this.currentAcademicYear + 1
     });
 
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserProfilePermissions @user={{this.user}} />`);
-    assert.equal(component.selectedYear, this.thisYear);
+    assert.equal(component.selectedYear, this.currentAcademicYear);
     await component.courses.toggle();
     assert.equal(component.courses.directors.length, 1);
     assert.ok(component.courses.notAdministrating);
-    await component.changeYear(this.thisYear + 1);
-    assert.equal(component.selectedYear, this.thisYear + 1);
+    await component.changeYear(this.currentAcademicYear + 1);
+    assert.equal(component.selectedYear, this.currentAcademicYear + 1);
     assert.ok(component.courses.notDirecting);
     assert.equal(component.courses.administrators.length, 1);
   });
@@ -194,7 +195,7 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
       directors: [user],
       administrators: [user],
       studentAdvisors: [user],
-      year: this.thisYear,
+      year: this.currentAcademicYear,
     });
     const session = this.server.create('session', {
       course,
@@ -236,7 +237,7 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     });
     const course = this.server.create('course', {
       school,
-      year: this.thisYear,
+      year: this.currentAcademicYear,
     });
     const session = this.server.create('session', {
       course,
