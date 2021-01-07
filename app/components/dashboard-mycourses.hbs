@@ -1,16 +1,16 @@
-<div class="dashboard-mycourses" ...attributes>
+<div class="dashboard-mycourses" data-test-dashboard-mycourses ...attributes>
   <div class="dashboard-block-header">
-    <h3>
+    <h3 data-test-title>
       {{t "general.myCourses"}}
     </h3>
   </div>
   <div class="dashboard-block-body">
     {{#if (is-array this.listOfCourses)}}
-      {{#if this.listOfCourses.length}}
-        <ul>
+      <ul>
+        {{#if this.listOfCourses.length}}
           {{#each (sort-by "year" "title" this.listOfCourses) as |course|}}
             {{#if this.canEditCourses}}
-              <li>
+              <li data-test-course>
                 <LinkTo @route="course" @model={{course}}>
                   <FaIcon @icon="external-link-square-alt" />
                   {{course.academicYear}}
@@ -21,16 +21,16 @@
                 </LinkTo>
               </li>
             {{else}}
-              <li>
+              <li data-test-course>
                 {{course.academicYear}}
                 {{course.title}}
               </li>
             {{/if}}
           {{/each}}
-        </ul>
-      {{else}}
-        {{t "general.none"}}
-      {{/if}}
+        {{else}}
+          <li data-test-course>{{t "general.none"}}</li>
+        {{/if}}
+      </ul>
     {{else}}
       <LoadingSpinner />
     {{/if}}
