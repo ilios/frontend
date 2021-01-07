@@ -26,7 +26,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
     this.set('learnerGroup', learnerGroup);
     await render(hbs`<LearnergroupHeader @learnerGroup={{learnerGroup}} />`);
 
-    assert.dom('h2').hasText('our group');
+    assert.dom('.title').hasText('our group');
     assert.equal(find('.breadcrumbs').textContent.replace(/\s/g,''), 'LearnerGroupsparentgroupourgroup');
   });
 
@@ -41,11 +41,11 @@ module('Integration | Component | learnergroup header', function(hooks) {
     this.set('learnerGroup', learnerGroup);
     await render(hbs`<LearnergroupHeader @learnerGroup={{learnerGroup}} @canUpdate={{true}} />`);
 
-    assert.dom('h2').hasText('our group');
-    await click('h2 .editable');
-    await fillIn('h2 input', 'new title');
-    await triggerEvent('h2 input', 'input');
-    await click('h2 .done');
+    assert.dom('.title').hasText('our group');
+    await click('.title .editable');
+    await fillIn('.title input', 'new title');
+    await triggerEvent('.title input', 'input');
+    await click('.title .done');
     await settled();
   });
 
@@ -74,7 +74,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
 
   test('validate title length', async function(assert) {
     assert.expect(4);
-    const title = 'h2';
+    const title = '.title';
     const edit = `${title} .editable`;
     const input = `${title} input`;
     const done = `${title} .done`;
