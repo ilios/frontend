@@ -124,7 +124,7 @@
         </tr>
         {{#if (includes course.id this.coursesForRemovalConfirmation)}}
           <tr class="confirm-removal">
-            <td colspan="15">
+            <td colspan={{if (media "isLaptopAndUp") "15" "6"}}>
               <div class="confirm-message">
                 {{t
                   "general.confirmRemoveCourse"
