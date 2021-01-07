@@ -7,39 +7,27 @@
   <div class="dashboard-block-body">
     {{#if (is-array this.listOfCourses)}}
       {{#if this.listOfCourses.length}}
-        <table>
-          <tbody>
-            {{#each (sort-by "year" "title" this.listOfCourses) as |course|}}
-              {{#if this.canEditCourses}}
-                <tr class="clickable">
-                  <td>
-                    <LinkTo @route="course" @model={{course}}>
-                      <FaIcon @icon="external-link-square-alt" />
-                      {{course.academicYear}}
-                    </LinkTo>
-                  </td>
-                  <td>
-                    <LinkTo @route="course" @model={{course}}>
-                      {{course.title}}
-                      {{#if course.externalId}}
-                        ({{course.externalId}})
-                      {{/if}}
-                    </LinkTo>
-                  </td>
-                </tr>
-              {{else}}
-                <tr>
-                  <td>
-                    {{course.academicYear}}
-                  </td>
-                  <td>
-                    {{course.title}}
-                  </td>
-                </tr>
-              {{/if}}
-            {{/each}}
-          </tbody>
-        </table>
+        <ul>
+          {{#each (sort-by "year" "title" this.listOfCourses) as |course|}}
+            {{#if this.canEditCourses}}
+              <li>
+                <LinkTo @route="course" @model={{course}}>
+                  <FaIcon @icon="external-link-square-alt" />
+                  {{course.academicYear}}
+                  {{course.title}}
+                  {{#if course.externalId}}
+                    ({{course.externalId}})
+                  {{/if}}
+                </LinkTo>
+              </li>
+            {{else}}
+              <li>
+                {{course.academicYear}}
+                {{course.title}}
+              </li>
+            {{/if}}
+          {{/each}}
+        </ul>
       {{else}}
         {{t "general.none"}}
       {{/if}}

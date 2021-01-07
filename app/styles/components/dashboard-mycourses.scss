@@ -2,9 +2,9 @@
   @include dashboard-block;
 
   .dashboard-block-body {
-    table {
+    ul {
+      @include ilios-list-reset;
       margin: .5rem;
-      width: auto;
     }
   }
 }
