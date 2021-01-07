@@ -1,7 +1,6 @@
 <header class="learnergroup-header" data-test-learnergroup-header ...attributes>
   <div class="header-bar">
     <span class="title">
-      <h2>
         {{#if canUpdate}}
           <EditableField
             @value={{if title title (t "general.clickToEdit")}}
@@ -26,9 +25,8 @@
             {{/if}}
           </EditableField>
         {{else}}
-          {{this.title}}
+          <h2>{{this.title}}</h2>
         {{/if}}
-      </h2>
     </span>
     <span class="info" data-test-members>
       {{#if
