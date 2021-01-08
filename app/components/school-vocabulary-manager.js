@@ -2,9 +2,8 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { validatable, Custom, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { dropTask, restartableTask } from 'ember-concurrency-decorators';
-import { Custom } from '../decorators/validation/custom';
 
 @validatable
 export default class SchoolVocabularyManagerComponent extends Component {

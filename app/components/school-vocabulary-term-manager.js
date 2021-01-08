@@ -3,9 +3,8 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { isEmpty } from '@ember/utils';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { validatable, Custom, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { dropTask, restartableTask } from 'ember-concurrency-decorators';
-import { Custom } from '../decorators/validation/custom';
 
 @validatable
 export default class SchoolVocabularyTermManagerComponent extends Component {
