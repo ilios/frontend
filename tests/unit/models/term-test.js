@@ -181,4 +181,14 @@ module('Unit | Model | term', function(hooks) {
       assert.equal(length, 1);
     });
   });
+
+  test('childCount', function(assert) {
+    assert.expect(2);
+    const model = this.owner.lookup('service:store').createRecord('term');
+    const store = model.store;
+    assert.equal(model.get('childCount'), 0);
+    const child = store.createRecord('term', { id: 1 });
+    model.get('children').pushObject(child);
+    assert.ok(model.get('childCount'), 1);
+  });
 });
