@@ -33,8 +33,12 @@ export default Model.extend({
     return isEmpty(this.belongsTo('parent').id());
   }),
 
-  hasChildren: computed('children', function() {
-    return (this.hasMany('children').ids().length > 0);
+  hasChildren: computed('childCount', function () {
+    return (this.childCount > 0);
+  }),
+
+  childCount: computed('children', function () {
+    return this.hasMany('children').ids().length;
   }),
 
   /**
