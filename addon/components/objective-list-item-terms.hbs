@@ -33,7 +33,7 @@
           @vocabulary={{vocab}}
           @terms={{await @subject.terms}}
           @canEdit={{false}}
-          @manage={{if @editable @manage null}}
+          @manage={{if @editable @manage (noop)}}
         />
       {{/if}}
     {{else}}

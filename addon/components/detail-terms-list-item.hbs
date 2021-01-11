@@ -2,7 +2,7 @@
   {{! template-lint-disable no-invalid-interactive }}
   class="detail-terms-list-item"
   role={{if @canEdit "button"}}
-  {{on "click" (if @canEdit (fn @remove @term) (noop))}}
+  {{on "click" (fn (if @canEdit @remove (noop)) @term)}}
   {{mouse-hover-toggle (set this.isHovering)}}
   {{did-insert (set this.theElement)}}
 >
