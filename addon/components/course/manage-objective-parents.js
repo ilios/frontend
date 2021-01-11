@@ -3,19 +3,24 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
 export default class CourseManageObjectiveParentsComponent extends Component {
-  @tracked selectedCohort;
+  @tracked userSelectedCohort;
 
-  @action
-  chooseFirstCohort(element, [cohorts]) {
-    if (cohorts) {
-      this.selectedCohort = cohorts[0];
+  get selectedCohort() {
+    if (this.userSelectedCohort && this.args.cohortObjectives.includes(this.userSelectedCohort)) {
+      return this.userSelectedCohort;
     }
+
+    if (this.args.cohortObjectives.length) {
+      return this.args.cohortObjectives[0];
+    }
+
+    return null;
   }
 
   @action
   chooseCohort(event) {
     const cohortId = event.target.value;
-    this.selectedCohort = this.args.cohortObjectives.findBy('id', cohortId);
+    this.userSelectedCohort = this.args.cohortObjectives.findBy('id', cohortId);
   }
 
   get selectedCompetencyIdsInSelectedCohort() {
