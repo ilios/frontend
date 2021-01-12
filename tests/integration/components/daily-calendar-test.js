@@ -37,6 +37,7 @@ module('Integration | Component | daily-calendar', function(hooks) {
     await render(hbs`<DailyCalendar
       @date={{this.date}}
       @events={{array}}
+      @selectEvent={{noop}}
     />`);
 
     assert.equal(component.longDayOfWeek, 'Wednesday, January 9, 2019');
@@ -55,6 +56,7 @@ module('Integration | Component | daily-calendar', function(hooks) {
     await render(hbs`<DailyCalendar
       @date={{this.date}}
       @events={{this.events}}
+      @selectEvent={{noop}}
     />`);
 
     assert.equal(component.longDayOfWeek, 'Wednesday, January 9, 2019');
@@ -80,6 +82,7 @@ module('Integration | Component | daily-calendar', function(hooks) {
     await render(hbs`<DailyCalendar
       @date={{this.date}}
       @events={{this.events}}
+      @selectEvent={{noop}}
     />`);
 
     assert.equal(component.events.length, 6);
