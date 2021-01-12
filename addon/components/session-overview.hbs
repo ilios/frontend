@@ -54,7 +54,7 @@
 
         <div class="session-overview-actions">
           {{#if (and (is-fulfilled this.showCopy) (await this.showCopy))}}
-            <LinkTo @route="session.copy" @model={{@session}} class="copy">
+            <LinkTo @route="session.copy" @models={{array @session.course @session}} class="copy">
               <FaIcon @icon="copy" @title={{t "general.copySession"}} @fixedWidth={{true}} />
             </LinkTo>
           {{/if}}
