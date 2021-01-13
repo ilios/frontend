@@ -27,9 +27,21 @@ export default class CourseObjectiveListComponent extends Component {
     return undefined;
   }
 
-  @use cohortObjectiveAsync = new AsyncProcess(() => [
-    this.getCohortObjectives,
+  @use courseCohortsAsync = new ResolveAsyncValue(() => [
     this.args.course.cohorts,
+  ]);
+
+  get courseCohorts() {
+    if (this.load.lastSuccessful && this.courseCohortsAsync) {
+      return this.courseCohortsAsync.toArray();
+    }
+
+    return [];
+  }
+
+  @use cohortObjectives = new AsyncProcess(() => [
+    this.getCohortObjectives,
+    this.courseCohorts,
     this.intl,
   ]);
 
@@ -55,7 +67,7 @@ export default class CourseObjectiveListComponent extends Component {
   }
 
   async getCohortObjectives(cohorts, intl) {
-    return await map(cohorts.toArray(), async cohort => {
+    return await map(cohorts, async cohort => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;
       const school = await program.school;
