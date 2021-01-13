@@ -26,7 +26,22 @@
         <LinkTo
           @route="courses"
           @title={{t "general.coursesAndSessions"}}
-          @current-when="courses course"
+          @current-when={{
+            join " "
+            (array
+              "course"
+              "course-visualizations"
+              "course-visualize-instructor"
+              "course-visualize-instructors"
+              "course-visualize-objectives"
+              "course-visualize-session-type"
+              "course-visualize-session-types"
+              "course-visualize-term"
+              "course-visualize-vocabularies"
+              "course-visualize-vocabulary"
+              "courses"
+            )
+          }}
         >
           <FaIcon @icon="book" @fixedWidth={{true}} />
           <span class="text">
