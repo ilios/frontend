@@ -14,7 +14,8 @@ export default class PrintCourseComponent extends Component {
 
   @dropTask
   *load() {
-    this.courseLearningMaterialsRelationship = yield this.args.course.learningMaterials;
+    this.courseLearningMaterialsRelationship = yield this.args.course
+      .learningMaterials;
     this.sessionsRelationship = yield this.args.course.sessions;
   }
 
@@ -23,7 +24,9 @@ export default class PrintCourseComponent extends Component {
       return [];
     }
 
-    return this.courseLearningMaterialsRelationship.toArray().sort(sortableByPosition);
+    return this.courseLearningMaterialsRelationship
+      .toArray()
+      .sort(sortableByPosition);
   }
 
   get sessions() {

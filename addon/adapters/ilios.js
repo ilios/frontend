@@ -39,7 +39,7 @@ export default class IliosAdapter extends JSONAPIAdapter {
     return this.ajax(url, 'GET', {
       data: {
         filters: { id: ids },
-      }
+      },
     });
   }
 

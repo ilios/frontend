@@ -10,21 +10,23 @@ export default class SessionOfferingsListComponent extends Component {
   @tracked offeringsRelationship;
 
   @restartableTask
-  *load(){
+  *load() {
     this.offeringsRelationship = yield this.args.session.offerings;
   }
 
   get offerings() {
-    return this.offeringsRelationship ? this.offeringsRelationship.toArray() : [];
+    return this.offeringsRelationship
+      ? this.offeringsRelationship.toArray()
+      : [];
   }
 
   get offeringBlocks() {
     const dateBlocks = {};
-    this.offerings.forEach(offering => {
+    this.offerings.forEach((offering) => {
       const key = offering.get('dateKey');
       if (!(key in dateBlocks)) {
         dateBlocks[key] = OfferingDateBlock.create({
-          dateKey: key
+          dateKey: key,
         });
       }
       dateBlocks[key].addOffering(offering);

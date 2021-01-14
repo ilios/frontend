@@ -5,11 +5,11 @@ import { render } from '@ember/test-helpers';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/course-materials';
 
-module('Integration | Component | course materials', function(hooks) {
+module('Integration | Component | course materials', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('course lms render', async function(assert) {
+  test('course lms render', async function (assert) {
     assert.expect(4);
 
     const lm1 = this.server.create('learning-material', {
@@ -24,14 +24,16 @@ module('Integration | Component | course materials', function(hooks) {
     });
 
     const course = this.server.create('course', {
-      learningMaterials: [courseLm1]
+      learningMaterials: [courseLm1],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner
+      .lookup('service:store')
+      .find('course', course.id);
 
     this.setProperties({
       course: courseModel,
       courseSort: 'title',
-      sessionSort: 'firstOfferingDate'
+      sessionSort: 'firstOfferingDate',
     });
     await render(hbs`<CourseMaterials
       @course={{this.course}}
@@ -98,20 +100,20 @@ module('Integration | Component | course materials', function(hooks) {
 
     const course = context.server.create('course', {
       sessions: [session],
-      learningMaterials: [courseLm1, courseLm2, courseLm3]
+      learningMaterials: [courseLm1, courseLm2, courseLm3],
     });
 
     return context.owner.lookup('service:store').find('course', course.id);
   };
 
-  test('course & session lms render', async function(assert) {
+  test('course & session lms render', async function (assert) {
     assert.expect(29);
 
     const course = await setupPage(this);
     this.setProperties({
       course,
       courseSort: 'title',
-      sessionSort: 'firstOfferingDate'
+      sessionSort: 'firstOfferingDate',
     });
     await render(hbs`<CourseMaterials
       @course={{this.course}}
@@ -154,18 +156,31 @@ module('Integration | Component | course materials', function(hooks) {
     assert.equal(component.sessions[2].firstOffering, '2/2/2020');
   });
 
-  test('clicking sort fires action', async function(assert) {
+  test('clicking sort fires action', async function (assert) {
     assert.expect(16);
 
     const course = await setupPage(this);
-    let cCount = 0, sCount = 0;
+    let cCount = 0,
+      sCount = 0;
     const cSortList = [
-      'title:desc', 'title', 'type', 'type:desc', 'author', 'author:desc'
+      'title:desc',
+      'title',
+      'type',
+      'type:desc',
+      'author',
+      'author:desc',
     ];
     const sSortList = [
-      'title', 'title:desc', 'type', 'type:desc', 'author', 'author:desc',
-      'sessionTitle', 'sessionTitle:desc', 'firstOfferingDate',
-      'firstOfferingDate:desc'
+      'title',
+      'title:desc',
+      'type',
+      'type:desc',
+      'author',
+      'author:desc',
+      'sessionTitle',
+      'sessionTitle:desc',
+      'firstOfferingDate',
+      'firstOfferingDate:desc',
     ];
     this.set('cSortBy', (prop) => {
       assert.equal(prop, cSortList[cCount]);
@@ -180,7 +195,7 @@ module('Integration | Component | course materials', function(hooks) {
     this.setProperties({
       course,
       courseSort: 'title',
-      sessionSort: 'firstOfferingDate'
+      sessionSort: 'firstOfferingDate',
     });
 
     await render(hbs`<CourseMaterials
@@ -209,14 +224,14 @@ module('Integration | Component | course materials', function(hooks) {
     await component.sortSessionsBy.firstOffering();
   });
 
-  test('filter course lms by title', async function(assert) {
+  test('filter course lms by title', async function (assert) {
     assert.expect(3);
 
     const course = await setupPage(this);
     this.setProperties({
       course,
       courseSort: 'title',
-      sessionSort: 'firstOfferingDate'
+      sessionSort: 'firstOfferingDate',
     });
 
     await render(hbs`<CourseMaterials
@@ -231,14 +246,14 @@ module('Integration | Component | course materials', function(hooks) {
     assert.equal(component.courses[0].title, 'title1');
   });
 
-  test('filter course lms by type', async function(assert) {
+  test('filter course lms by type', async function (assert) {
     assert.expect(3);
 
     const course = await setupPage(this);
     this.setProperties({
       course,
       courseSort: 'title',
-      sessionSort: 'firstOfferingDate'
+      sessionSort: 'firstOfferingDate',
     });
 
     await render(hbs`<CourseMaterials
@@ -253,14 +268,14 @@ module('Integration | Component | course materials', function(hooks) {
     assert.equal(component.courses[0].title, 'title2');
   });
 
-  test('filter course lms by author', async function(assert) {
+  test('filter course lms by author', async function (assert) {
     assert.expect(3);
 
     const course = await setupPage(this);
     this.setProperties({
       course,
       courseSort: 'title',
-      sessionSort: 'firstOfferingDate'
+      sessionSort: 'firstOfferingDate',
     });
 
     await render(hbs`<CourseMaterials
@@ -275,14 +290,14 @@ module('Integration | Component | course materials', function(hooks) {
     assert.equal(component.courses[0].title, 'title2');
   });
 
-  test('filter course lms by citation', async function(assert) {
+  test('filter course lms by citation', async function (assert) {
     assert.expect(3);
 
     const course = await setupPage(this);
     this.setProperties({
       course,
       courseSort: 'title',
-      sessionSort: 'firstOfferingDate'
+      sessionSort: 'firstOfferingDate',
     });
 
     await render(hbs`<CourseMaterials
@@ -297,14 +312,14 @@ module('Integration | Component | course materials', function(hooks) {
     assert.equal(component.courses[0].title, 'title3 citationtext');
   });
 
-  test('filter session lms by title', async function(assert) {
+  test('filter session lms by title', async function (assert) {
     assert.expect(3);
 
     const course = await setupPage(this);
     this.setProperties({
       course,
       courseSort: 'title',
-      sessionSort: 'firstOfferingDate'
+      sessionSort: 'firstOfferingDate',
     });
 
     await render(hbs`<CourseMaterials
@@ -319,14 +334,14 @@ module('Integration | Component | course materials', function(hooks) {
     assert.equal(component.sessions[0].title, 'title1');
   });
 
-  test('filter session lms by type', async function(assert) {
+  test('filter session lms by type', async function (assert) {
     assert.expect(3);
 
     const course = await setupPage(this);
     this.setProperties({
       course,
       courseSort: 'title',
-      sessionSort: 'firstOfferingDate'
+      sessionSort: 'firstOfferingDate',
     });
 
     await render(hbs`<CourseMaterials
@@ -341,14 +356,14 @@ module('Integration | Component | course materials', function(hooks) {
     assert.equal(component.sessions[0].title, 'title2');
   });
 
-  test('filter session lms by author', async function(assert) {
+  test('filter session lms by author', async function (assert) {
     assert.expect(3);
 
     const course = await setupPage(this);
     this.setProperties({
       course,
       courseSort: 'title',
-      sessionSort: 'firstOfferingDate'
+      sessionSort: 'firstOfferingDate',
     });
 
     await render(hbs`<CourseMaterials
@@ -363,14 +378,14 @@ module('Integration | Component | course materials', function(hooks) {
     assert.equal(component.sessions[0].title, 'title2');
   });
 
-  test('filter session lms by citation', async function(assert) {
+  test('filter session lms by citation', async function (assert) {
     assert.expect(3);
 
     const course = await setupPage(this);
     this.setProperties({
       course,
       courseSort: 'title',
-      sessionSort: 'firstOfferingDate'
+      sessionSort: 'firstOfferingDate',
     });
 
     await render(hbs`<CourseMaterials

@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, find, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Helper | set', function(hooks) {
+module('Integration | Helper | set', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it works when transformed', async function(assert) {
+  test('it works when transformed', async function (assert) {
     await render(hbs`
       <span data-test-greeting>{{this.greeting}}</span>
 
@@ -22,7 +22,7 @@ module('Integration | Helper | set', function(hooks) {
     assert.equal(find('[data-test-greeting]').textContent.trim(), 'Hello!');
   });
 
-  test('it works when called directly', async function(assert) {
+  test('it works when called directly', async function (assert) {
     await render(hbs`
       <span data-test-greeting>{{this.greeting}}</span>
 

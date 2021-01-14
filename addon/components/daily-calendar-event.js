@@ -11,12 +11,12 @@ export default class DailyCalendarEventComponent extends Component {
 
   constructor() {
     super(...arguments);
-    const allMinutesInDay = Array((60 * 24)).fill(0);
+    const allMinutesInDay = Array(60 * 24).fill(0);
     this.args.allDayEvents.forEach(({ startDate, endDate }) => {
       const start = this.getMinuteInTheDay(startDate);
       const end = this.getMinuteInTheDay(endDate);
       for (let i = start; i <= end; i++) {
-        allMinutesInDay[i-1]++;
+        allMinutesInDay[i - 1]++;
       }
     });
 
@@ -75,7 +75,7 @@ export default class DailyCalendarEventComponent extends Component {
   getMinuteInTheDay(date) {
     const m = moment(date);
     const midnight = moment(date).startOf('day');
-    return  m.diff(midnight, 'minutes');
+    return m.diff(midnight, 'minutes');
   }
 
   get span() {
@@ -100,5 +100,4 @@ export default class DailyCalendarEventComponent extends Component {
        grid-row-end: span ${this.totalMinutesRounded};`
     );
   }
-
 }

@@ -3,7 +3,7 @@ import {
   create,
   collection,
   isPresent,
-  text
+  text,
 } from 'ember-cli-page-object';
 
 const definition = {
@@ -17,8 +17,8 @@ const definition = {
   }),
   sessionLearningMaterials: {
     scope: '[data-test-session-materials]',
-    linksToAllMaterials: isPresent('[data-test-link-to-all-materials]')
-  }
+    linksToAllMaterials: isPresent('[data-test-link-to-all-materials]'),
+  },
 };
 
 export default definition;

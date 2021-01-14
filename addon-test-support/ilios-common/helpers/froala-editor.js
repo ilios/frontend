@@ -21,7 +21,7 @@ export function pageObjectFillInFroalaEditor(selector, options = {}) {
         const element = findOne(this, selector, options);
         return fillInFroalaEditor(element, html);
       };
-    }
+    },
   };
 }
 
@@ -34,16 +34,16 @@ export function pageObjectFroalaEditorValue(selector, options = {}) {
         const element = findOne(this, selector, options);
         return froalaEditorValue(element);
       };
-    }
+    },
   };
 }
 
 function getEditorInstance(element) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     loadFroalaEditor().then(({ FroalaEditor }) => {
       later(() => {
         const { INSTANCES } = FroalaEditor;
-        const ourInstance = INSTANCES.find(instance => {
+        const ourInstance = INSTANCES.find((instance) => {
           const instanceElement = instance['$oel'][0];
           return instanceElement.id === element.id;
         });

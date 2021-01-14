@@ -20,14 +20,18 @@ export default class DashboardMaterialsComponent extends Component {
   @restartableTask
   *load() {
     const from = moment().hour(0).minute(0).unix();
-    const to = moment().hour(23).minute(59).add(this.daysInAdvance, 'days').unix();
+    const to = moment()
+      .hour(23)
+      .minute(59)
+      .add(this.daysInAdvance, 'days')
+      .unix();
     const namespace = this.iliosConfig.apiNameSpace;
 
     const url = `${namespace}/usermaterials/${this.currentUser.currentUserId}?before=${to}&after=${from}`;
     const data = yield this.fetch.getJsonFromApiHost(url);
     this.materials = data.userMaterials;
   }
-  sortString(a, b){
+  sortString(a, b) {
     return a.localeCompare(b);
   }
 }

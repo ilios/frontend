@@ -4,7 +4,7 @@ import { timeout } from 'ember-concurrency';
 
 export default class OfferingUrlDisplayComponent extends Component {
   @restartableTask
-  *copy(){
+  *copy() {
     yield timeout(1500);
   }
 }

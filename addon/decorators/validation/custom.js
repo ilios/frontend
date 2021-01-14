@@ -1,12 +1,16 @@
-import { registerDecorator } from "class-validator";
+import { registerDecorator } from 'class-validator';
 
-export function Custom(validatorCallbackName, messageCallbackName, validationOptions) {
+export function Custom(
+  validatorCallbackName,
+  messageCallbackName,
+  validationOptions
+) {
   return function (object, propertyName) {
     registerDecorator({
-      name: "custom",
+      name: 'custom',
       target: object.constructor,
       propertyName: propertyName,
-      constraints: [ validatorCallbackName, messageCallbackName ],
+      constraints: [validatorCallbackName, messageCallbackName],
       options: validationOptions,
       validator: {
         async validate(value, { constraints, object: target }) {
@@ -15,7 +19,7 @@ export function Custom(validatorCallbackName, messageCallbackName, validationOpt
 
         defaultMessage({ constraints, object: target }) {
           return target[constraints[1]]();
-        }
+        },
       },
     });
   };

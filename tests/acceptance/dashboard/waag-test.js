@@ -1,16 +1,13 @@
 import { currentRouteName } from '@ember/test-helpers';
 import moment from 'moment';
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/dashboard';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
-module('Acceptance | Dashboard Week at a Glance', function(hooks) {
+module('Acceptance | Dashboard Week at a Glance', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   const today = moment().hour(8);
@@ -20,7 +17,7 @@ module('Acceptance | Dashboard Week at a Glance', function(hooks) {
     this.user = await setupAuthentication({ school: this.school });
   });
 
-  test('shows events', async function(assert) {
+  test('shows events', async function (assert) {
     const startOfWeek = today.clone().startOf('week');
     const endOfWeek = today.clone().endOf('week').hour(22).minute(59);
     this.server.create('userevent', {
@@ -50,8 +47,8 @@ module('Acceptance | Dashboard Week at a Glance', function(hooks) {
     assert.equal(page.weekGlance.offeringEvents[1].title, 'end of week');
   });
 
-  test('shows all pre work', async function(assert) {
-    const prerequisites = [1, 2, 3].map(id => {
+  test('shows all pre work', async function (assert) {
+    const prerequisites = [1, 2, 3].map((id) => {
       return {
         user: Number(this.user.id),
         name: `pre ${id}`,

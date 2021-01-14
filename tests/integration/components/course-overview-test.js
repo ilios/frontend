@@ -1,13 +1,13 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {  render } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/course-overview';
 import moment from 'moment';
 
-module('Integration | Component | course overview', function(hooks) {
+module('Integration | Component | course overview', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -15,20 +15,22 @@ module('Integration | Component | course overview', function(hooks) {
     const permissionCheckerMock = Service.extend({
       async canCreateCourse() {
         return true;
-      }
+      },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
     this.store = this.owner.lookup('service:store');
   });
 
-  test('course external id validation fails if value is too short', async function(assert) {
+  test('course external id validation fails if value is too short', async function (assert) {
     const course = this.server.create('course');
     this.server.create('course-clerkship-type', {
-      courses: [course]
+      courses: [course],
     });
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`);
+    await render(
+      hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`
+    );
 
     assert.ok(component.externalId.isVisible);
     assert.equal(component.externalId.value, 'Click to edit');
@@ -42,11 +44,13 @@ module('Integration | Component | course overview', function(hooks) {
   test('course external id validation fails if value is too long', async function (assert) {
     const course = this.server.create('course');
     this.server.create('course-clerkship-type', {
-      courses: [course]
+      courses: [course],
     });
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`);
+    await render(
+      hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`
+    );
 
     assert.ok(component.externalId.isVisible);
     assert.equal(component.externalId.value, 'Click to edit');
@@ -64,7 +68,9 @@ module('Integration | Component | course overview', function(hooks) {
     });
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`);
+    await render(
+      hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`
+    );
 
     assert.ok(component.startDate.isVisible);
     await component.startDate.edit();
@@ -81,7 +87,9 @@ module('Integration | Component | course overview', function(hooks) {
     });
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`);
+    await render(
+      hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`
+    );
 
     assert.ok(component.endDate.isVisible);
     await component.endDate.edit();

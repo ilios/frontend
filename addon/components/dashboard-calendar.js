@@ -28,10 +28,16 @@ export default class DashboardCalendarComponent extends Component {
   courseLevels = ['1', '2', '3', '4', '5'];
 
   get fromTimeStamp() {
-    return moment(this.args.selectedDate).startOf(this.args.selectedView).subtract(this.clockSkew, 'days').unix();
+    return moment(this.args.selectedDate)
+      .startOf(this.args.selectedView)
+      .subtract(this.clockSkew, 'days')
+      .unix();
   }
   get toTimeStamp() {
-    return moment(this.args.selectedDate).endOf(this.args.selectedView).add(this.clockSkew, 'days').unix();
+    return moment(this.args.selectedDate)
+      .endOf(this.args.selectedView)
+      .add(this.clockSkew, 'days')
+      .unix();
   }
   get clockSkew() {
     if (this.selectedView === 'month') {
@@ -83,18 +89,25 @@ export default class DashboardCalendarComponent extends Component {
       return;
     }
     if (this.args.mySchedule) {
-      this.ourEvents = yield this.userEvents.getEvents(fromTimeStamp, toTimeStamp);
+      this.ourEvents = yield this.userEvents.getEvents(
+        fromTimeStamp,
+        toTimeStamp
+      );
     } else {
-      this.ourEvents = yield this.schoolEvents.getEvents(school.id, fromTimeStamp, toTimeStamp);
+      this.ourEvents = yield this.schoolEvents.getEvents(
+        school.id,
+        fromTimeStamp,
+        toTimeStamp
+      );
     }
   }
 
   async getCohortProxies(school) {
     const cohorts = await this.getSchoolCohorts(school);
-    const cohortProxies = await map(cohorts, async cohort => {
+    const cohortProxies = await map(cohorts, async (cohort) => {
       let displayTitle = cohort.get('title');
       if (!displayTitle) {
-        const intl = this.get('intl');
+        const intl = this.intl;
         const classOfYear = await cohort.get('classOfYear');
         displayTitle = intl.t('general.classOf', { year: classOfYear });
       }
@@ -116,7 +129,7 @@ export default class DashboardCalendarComponent extends Component {
 
   async getSchoolCohorts(school) {
     const programs = await school.programs;
-    const programYears = await map(programs.toArray(), async program => {
+    const programYears = await map(programs.toArray(), async (program) => {
       const programYears = await program.programYears;
       return programYears.toArray();
     });
@@ -143,12 +156,12 @@ export default class DashboardCalendarComponent extends Component {
       'eventsWithSelectedCourses',
       'eventsWithSelectedTerms',
     ];
-    const allFilteredEvents = eventTypes.map(name => {
+    const allFilteredEvents = eventTypes.map((name) => {
       return this[name];
     });
 
-    return this.ourEvents.filter(event => {
-      return allFilteredEvents.every(arr => {
+    return this.ourEvents.filter((event) => {
+      return allFilteredEvents.every((arr) => {
         return arr.includes(event);
       });
     });
@@ -171,7 +184,7 @@ export default class DashboardCalendarComponent extends Component {
       return this.ourEvents;
     }
     const selectedIds = this.args.selectedSessionTypeIds.map(Number);
-    return this.ourEvents.filter(event => {
+    return this.ourEvents.filter((event) => {
       return selectedIds.includes(event.sessionTypeId);
     });
   }
@@ -181,7 +194,7 @@ export default class DashboardCalendarComponent extends Component {
       return this.ourEvents;
     }
     const levels = this.args.selectedCourseLevels.map(Number);
-    return this.ourEvents.filter(event => {
+    return this.ourEvents.filter((event) => {
       return levels.includes(event.courseLevel);
     });
   }
@@ -191,8 +204,10 @@ export default class DashboardCalendarComponent extends Component {
       return this.ourEvents;
     }
     const selectedIds = this.args.selectedCohortIds.map(Number);
-    return this.ourEvents.filter(event => {
-      const matchingCohorts = event.cohorts.filter(({ id }) => selectedIds.includes(id));
+    return this.ourEvents.filter((event) => {
+      const matchingCohorts = event.cohorts.filter(({ id }) =>
+        selectedIds.includes(id)
+      );
       return matchingCohorts.length > 0;
     });
   }
@@ -202,7 +217,7 @@ export default class DashboardCalendarComponent extends Component {
       return this.ourEvents;
     }
     const selectedIds = this.args.selectedCourseIds.map(Number);
-    return this.ourEvents.filter(event => {
+    return this.ourEvents.filter((event) => {
       return selectedIds.includes(event.course);
     });
   }
@@ -212,9 +227,11 @@ export default class DashboardCalendarComponent extends Component {
       return this.ourEvents;
     }
     const selectedIds = this.args.selectedTermIds.map(Number);
-    return this.ourEvents.filter(event => {
-      const allTerms = [].concat(event.sessionTerms || [], event.courseTerms || []).mapBy('id');
-      const matchingTerms = allTerms.filter(id => selectedIds.includes(id));
+    return this.ourEvents.filter((event) => {
+      const allTerms = []
+        .concat(event.sessionTerms || [], event.courseTerms || [])
+        .mapBy('id');
+      const matchingTerms = allTerms.filter((id) => selectedIds.includes(id));
       return matchingTerms.length > 0;
     });
   }

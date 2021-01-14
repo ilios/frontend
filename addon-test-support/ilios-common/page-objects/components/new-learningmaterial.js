@@ -10,7 +10,7 @@ const definition = {
   citation: fillable('textarea'),
   owningUser: {
     scope: '[data-test-owninguser]',
-    userNameInfo
+    userNameInfo,
   },
   status: fillable('select', { at: 0 }),
   role: fillable('select', { at: 1 }),
@@ -19,7 +19,9 @@ const definition = {
   agreement: clickable('[data-test-copyright-agreement]'),
   save: clickable('.done'),
   cancel: clickable('.cancel'),
-  hasAgreementValidationError: isVisible('[data-test-agreement-validation-error-message]'),
+  hasAgreementValidationError: isVisible(
+    '[data-test-agreement-validation-error-message]'
+  ),
 };
 
 export default definition;

@@ -9,5 +9,5 @@ export default {
   save: clickable('.actions .bigadd'),
   cancel: clickable('.actions .bigcancel'),
   vocabularies: collection('[data-test-detail-terms-list]', detailTermsList),
-  manager
+  manager,
 };

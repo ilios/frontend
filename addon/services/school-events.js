@@ -17,7 +17,7 @@ export default class SchoolEvents extends EventsBase {
    * @param {int} to
    * @return {Promise.<Array>}
    */
-  async getEvents(schoolId, from, to){
+  async getEvents(schoolId, from, to) {
     let url = '';
     const namespace = this.iliosConfig.apiNameSpace;
     if (namespace) {
@@ -27,7 +27,9 @@ export default class SchoolEvents extends EventsBase {
 
     const data = await this.fetch.getJsonFromApiHost(url);
 
-    return data.events.map(obj => this.createEventFromData(obj, false)).sortBy('startDate', 'name');
+    return data.events
+      .map((obj) => this.createEventFromData(obj, false))
+      .sortBy('startDate', 'name');
   }
 
   /**
@@ -36,7 +38,7 @@ export default class SchoolEvents extends EventsBase {
    * @param {String} slug
    * @return {Promise.<Object>}
    */
-  async getEventForSlug(slug){
+  async getEventForSlug(slug) {
     const schoolId = parseInt(slug.substring(1, 3), 10);
     const from = moment(slug.substring(3, 11), 'YYYYMMDD').hour(0);
     const to = from.clone().hour(24);
@@ -45,11 +47,11 @@ export default class SchoolEvents extends EventsBase {
 
     const events = await this.getEvents(schoolId, from.unix(), to.unix());
 
-    return events.find( event => {
-      if(type === 'O'){
+    return events.find((event) => {
+      if (type === 'O') {
         return parseInt(event.offering, 10) === id;
       }
-      if(type === 'I'){
+      if (type === 'I') {
         return parseInt(event.ilmSession, 10) === id;
       }
     });

@@ -29,7 +29,7 @@ export default create({
     title: text('[data-test-edit]'),
     edit: clickable('[data-test-edit]'),
     set: fillable('input'),
-    save: clickable('.done')
+    save: clickable('.done'),
   },
 
   overview: courseOverview,

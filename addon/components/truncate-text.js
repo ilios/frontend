@@ -17,21 +17,21 @@ export default class TruncateTextComponent extends Component {
     if (!this.args.text) {
       return '';
     }
-    if (typeOf(this.args.text) !== 'string'){
+    if (typeOf(this.args.text) !== 'string') {
       return this.args.text.toString();
     }
 
     return this.args.text;
   }
   get cleanText() {
-    return this.text.replace(/(<([^>]+)>)/ig,"");
+    return this.text.replace(/(<([^>]+)>)/gi, '');
   }
   get totalLength() {
     return this.length + this.slippage;
   }
   get displayText() {
-    if(this.expanded || this.cleanText.length < this.totalLength){
-      if(this.args.renderHtml){
+    if (this.expanded || this.cleanText.length < this.totalLength) {
+      if (this.args.renderHtml) {
         return new htmlSafe(this.text);
       } else {
         return new htmlSafe(this.cleanText);
@@ -41,7 +41,7 @@ export default class TruncateTextComponent extends Component {
     return new htmlSafe(truncatedText);
   }
   get isTruncated() {
-    if(this.args.renderHtml){
+    if (this.args.renderHtml) {
       return this.displayText.toString() !== this.text;
     } else {
       return this.displayText.toString() !== this.cleanText;

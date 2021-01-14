@@ -5,13 +5,14 @@ import { action } from '@ember/object';
 
 export default class IliosCalendarComponent extends Component {
   @tracked showIcsFeed = false;
-  get compiledCalendarEvents(){
-    if(this.args.selectedView === 'day'){
+  get compiledCalendarEvents() {
+    if (this.args.selectedView === 'day') {
       return this.args.calendarEvents;
     } else {
       const hashedEvents = {};
-      this.args.calendarEvents.forEach(event => {
-        const hash = moment(event.startDate).format() +
+      this.args.calendarEvents.forEach((event) => {
+        const hash =
+          moment(event.startDate).format() +
           moment(event.endDate).format() +
           event.name;
         if (!(hash in hashedEvents)) {
@@ -34,7 +35,7 @@ export default class IliosCalendarComponent extends Component {
     }
   }
 
-  get sortedEvents(){
+  get sortedEvents() {
     return this.compiledCalendarEvents.sort((a, b) => {
       const startDiff = moment(a.startDate).diff(moment(b.startDate));
       if (startDiff !== 0) {
@@ -55,17 +56,21 @@ export default class IliosCalendarComponent extends Component {
   }
 
   @action
-  goForward(){
-    const newDate = moment(this.args.selectedDate).add(1, this.args.selectedView).toDate();
+  goForward() {
+    const newDate = moment(this.args.selectedDate)
+      .add(1, this.args.selectedView)
+      .toDate();
     this.args.changeDate(newDate);
   }
   @action
-  goBack(){
-    const newDate = moment(this.args.selectedDate).subtract(1, this.args.selectedView).toDate();
+  goBack() {
+    const newDate = moment(this.args.selectedDate)
+      .subtract(1, this.args.selectedView)
+      .toDate();
     this.args.changeDate(newDate);
   }
   @action
-  gotoToday(){
+  gotoToday() {
     const newDate = moment().toDate();
     this.args.changeDate(newDate);
   }

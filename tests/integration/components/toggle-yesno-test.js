@@ -4,11 +4,11 @@ import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupIntl } from 'ember-intl/test-support';
 
-module('Integration | Component | toggle yesno', function(hooks) {
+module('Integration | Component | toggle yesno', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(2);
     const state = 'input';
 
@@ -19,17 +19,16 @@ module('Integration | Component | toggle yesno', function(hooks) {
 
     this.set('value', false);
     assert.dom(state).isNotChecked();
-
   });
 
-  test('click', async function(assert) {
+  test('click', async function (assert) {
     assert.expect(9);
     const state = 'input';
     const handle = '.switch-handle';
-    const label =  '.switch-label';
+    const label = '.switch-label';
     this.set('value', true);
     this.set('toggle', (val) => {
-      const value = this.get('value');
+      const value = this.value;
       assert.equal(!value, val);
       this.set('value', val);
     });

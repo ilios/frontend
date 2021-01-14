@@ -5,7 +5,7 @@ import { hbs } from 'ember-cli-htmlbars';
 const s = '[data-test-daily-calendar-event]';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | daily-calendar-event', function(hooks) {
+module('Integration | Component | daily-calendar-event', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -21,7 +21,7 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
     });
   };
 
-  this.getStyle = function(rowStart, minutes, columnSpan) {
+  this.getStyle = function (rowStart, minutes, columnSpan) {
     return {
       'background-color': 'rgb(0, 204, 101)',
       'border-left-width': '4px',
@@ -129,7 +129,6 @@ module('Integration | Component | daily-calendar-event', function(hooks) {
 
   module('Second complicated event list', function (hooks) {
     hooks.beforeEach(function () {
-
       this.createEvent('2020-02-10 08:10:00', '2020-02-10 10:00:00');
       this.createEvent('2020-02-10 08:10:00', '2020-02-10 09:20:00');
       this.createEvent('2020-02-10 09:40:00', '2020-02-10 10:30:00');

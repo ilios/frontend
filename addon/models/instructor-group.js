@@ -6,15 +6,15 @@ const { map, all } = RSVP;
 
 export default Model.extend({
   title: attr('string'),
-  school: belongsTo('school', {async: true}),
-  learnerGroups: hasMany('learner-group', {async: true}),
-  ilmSessions: hasMany('ilm-session', {async: true}),
-  users: hasMany('user', {async: true}),
-  offerings: hasMany('offering', {async: true}),
+  school: belongsTo('school', { async: true }),
+  learnerGroups: hasMany('learner-group', { async: true }),
+  ilmSessions: hasMany('ilm-session', { async: true }),
+  users: hasMany('user', { async: true }),
+  offerings: hasMany('offering', { async: true }),
 
   coursesFromOfferings: computed('offerings.[]', async function () {
-    const offerings = await this.get('offerings');
-    const courses = await map(offerings.toArray(), async offering => {
+    const offerings = await this.offerings;
+    const courses = await map(offerings.toArray(), async (offering) => {
       const session = await offering.get('session');
       return session.get('course');
     });
@@ -22,22 +22,26 @@ export default Model.extend({
   }),
 
   coursesFromIlmSessions: computed('ilmSessions.[]', async function () {
-    const ilmSessions = await this.get('ilmSessions');
-    const courses = await map(ilmSessions.toArray(), async ilmSession => {
+    const ilmSessions = await this.ilmSessions;
+    const courses = await map(ilmSessions.toArray(), async (ilmSession) => {
       const session = await ilmSession.get('session');
       return session.get('course');
     });
     return courses.uniq();
   }),
 
-  courses: computed('coursesFromOfferings.[]', 'coursesFromIlmSessions.[]', async function () {
-    const offeringCourses = await this.get('coursesFromOfferings');
-    const ilmCourses = await this.get('coursesFromIlmSessions');
-    const courses = [];
-    courses.pushObjects(offeringCourses);
-    courses.pushObjects(ilmCourses);
-    return courses.uniqBy('id');
-  }),
+  courses: computed(
+    'coursesFromOfferings.[]',
+    'coursesFromIlmSessions.[]',
+    async function () {
+      const offeringCourses = await this.coursesFromOfferings;
+      const ilmCourses = await this.coursesFromIlmSessions;
+      const courses = [];
+      courses.pushObjects(offeringCourses);
+      courses.pushObjects(ilmCourses);
+      return courses.uniqBy('id');
+    }
+  ),
 
   /**
    * A list of all sessions associated with this group, via offerings or via ILMs.
@@ -46,14 +50,16 @@ export default Model.extend({
    * @public
    */
   sessions: computed('ilmSessions.[]', 'offerings.[]', async function () {
-    const offerings = await this.get('offerings');
-    const ilms = await this.get('ilmSessions');
+    const offerings = await this.offerings;
+    const ilms = await this.ilmSessions;
     const arr = [].concat(offerings.toArray(), ilms.toArray());
 
     const sessions = await all(arr.mapBy('session'));
 
-    return sessions.filter(session => {
-      return !isEmpty(session);
-    }).uniq();
-  })
+    return sessions
+      .filter((session) => {
+        return !isEmpty(session);
+      })
+      .uniq();
+  }),
 });

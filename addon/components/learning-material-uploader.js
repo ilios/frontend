@@ -20,13 +20,15 @@ export default class LearningMaterialUploaderComponent extends Component {
     const maxUploadSize = yield this.iliosConfig.getMaxUploadSize();
     if (file.size > maxUploadSize) {
       const maxSize = readableFileSize(maxUploadSize);
-      this.fileUploadErrorMessage = this.intl.t('general.fileSizeError', { maxSize });
+      this.fileUploadErrorMessage = this.intl.t('general.fileSizeError', {
+        maxSize,
+      });
       const queue = this.fileQueue.find(this.uploadQueueName);
       queue.files.removeObject(file);
       return false;
     }
     const response = yield file.upload(`${this.fetch.host}/upload`, {
-      headers: this.fetch.authHeaders
+      headers: this.fetch.authHeaders,
     });
     if (response.status === 200) {
       const { filename, fileHash } = response.body;

@@ -1,9 +1,4 @@
-import {
-  attribute,
-  create,
-  isPresent,
-  text
-} from 'ember-cli-page-object';
+import { attribute, create, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-ilios-calendar-pre-work-event]',

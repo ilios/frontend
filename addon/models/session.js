@@ -1,3 +1,5 @@
+/* eslint-disable ember/no-side-effects */
+
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { isPresent, isEmpty } from '@ember/utils';
@@ -28,21 +30,21 @@ export default Model.extend({
   offerings: hasMany('offering', { async: true }),
   administrators: hasMany('user', {
     async: true,
-    inverse: 'administeredSessions'
+    inverse: 'administeredSessions',
   }),
   studentAdvisors: hasMany('user', {
     async: true,
-    inverse: 'studentAdvisedSessions'
+    inverse: 'studentAdvisedSessions',
   }),
   postrequisite: belongsTo('session', {
     inverse: 'prerequisites',
-    async: true
+    async: true,
   }),
   prerequisites: hasMany('session', {
     inverse: 'postrequisite',
-    async: true
+    async: true,
   }),
-  terms: hasMany('term', {async: true}),
+  terms: hasMany('term', { async: true }),
   offeringLearnerGroups: mapBy('offerings', 'learnerGroups'),
   offeringLearnerGroupsLength: mapBy('offeringLearnerGroups', 'length'),
   learnerGroupCount: sum('offeringLearnerGroupsLength'),
@@ -58,18 +60,23 @@ export default Model.extend({
    * @property sortedOfferingsByDate
    * @type {Ember.computed}
    */
-  sortedOfferingsByDate: computed('offerings.@each.startDate', async function () {
-    const offerings = await this.get('offerings');
-    const filteredOfferings = offerings.filter(offering => isPresent(offering.get('startDate')));
-    return filteredOfferings.sort((a, b) => {
-      const aDate = moment(a.get('startDate'));
-      const bDate = moment(b.get('startDate'));
-      if (aDate === bDate) {
-        return 0;
-      }
-      return aDate > bDate ? 1 : -1;
-    });
-  }),
+  sortedOfferingsByDate: computed(
+    'offerings.@each.startDate',
+    async function () {
+      const offerings = await this.offerings;
+      const filteredOfferings = offerings.filter((offering) =>
+        isPresent(offering.get('startDate'))
+      );
+      return filteredOfferings.sort((a, b) => {
+        const aDate = moment(a.get('startDate'));
+        const bDate = moment(b.get('startDate'));
+        if (aDate === bDate) {
+          return 0;
+        }
+        return aDate > bDate ? 1 : -1;
+      });
+    }
+  ),
 
   /**
    * The earliest start date of all offerings in this session, or, if this is an ILM session, the ILM's due date.
@@ -77,62 +84,93 @@ export default Model.extend({
    * @property firstOfferingDate
    * @type {Ember.computed}
    */
-  firstOfferingDate: computed('sortedOfferingsByDate.@each.startDate', 'ilmSession.dueDate', async function () {
-    const ilmSession = await this.get('ilmSession');
-    if (ilmSession) {
-      return ilmSession.get('dueDate');
-    }
+  firstOfferingDate: computed(
+    'sortedOfferingsByDate.@each.startDate',
+    'ilmSession.dueDate',
+    async function () {
+      const ilmSession = await this.ilmSession;
+      if (ilmSession) {
+        return ilmSession.get('dueDate');
+      }
 
-    const offerings = await this.get('sortedOfferingsByDate');
-    if (isEmpty(offerings)) {
-      return null;
-    }
+      const offerings = await this.sortedOfferingsByDate;
+      if (isEmpty(offerings)) {
+        return null;
+      }
 
-    return offerings.get('firstObject.startDate');
-  }),
+      return offerings.get('firstObject.startDate');
+    }
+  ),
 
   /**
    * The maximum duration in hours (incl. fractions) of any session offerings.
    * @property maxSingleOfferingDuration
    * @type {Ember.computed}
    */
-  maxSingleOfferingDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', async function () {
-    const offerings = await this.get('offerings');
-    if (isEmpty(offerings)) {
-      return 0;
-    }
-    const sortedOfferings = offerings.toArray().sort(function (a, b) {
-      const diffA = moment(a.get('endDate')).diff(moment(a.get('startDate')), 'minutes');
-      const diffB = moment(b.get('endDate')).diff(moment(b.get('startDate')), 'minutes');
-      if (diffA > diffB) {
-        return -1;
-      } else if (diffA < diffB) {
-        return 1;
+  maxSingleOfferingDuration: computed(
+    'offerings.@each.startDate',
+    'offerings.@each.endDate',
+    async function () {
+      const offerings = await this.offerings;
+      if (isEmpty(offerings)) {
+        return 0;
       }
-      return 0;
-    });
+      const sortedOfferings = offerings.toArray().sort(function (a, b) {
+        const diffA = moment(a.get('endDate')).diff(
+          moment(a.get('startDate')),
+          'minutes'
+        );
+        const diffB = moment(b.get('endDate')).diff(
+          moment(b.get('startDate')),
+          'minutes'
+        );
+        if (diffA > diffB) {
+          return -1;
+        } else if (diffA < diffB) {
+          return 1;
+        }
+        return 0;
+      });
 
-    const offering = sortedOfferings[0];
-    const duration = moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
+      const offering = sortedOfferings[0];
+      const duration = moment(offering.get('endDate')).diff(
+        moment(offering.get('startDate')),
+        'hours',
+        true
+      );
 
-    return duration.toFixed(2);
-  }),
+      return duration.toFixed(2);
+    }
+  ),
 
   /**
    * The total duration in hours (incl. fractions) of all session offerings.
    * @property totalSumOfferingsDuration
    * @type {Ember.computed}
    */
-  totalSumOfferingsDuration: computed('offerings.@each.startDate', 'offerings.@each.endDate', async function () {
-    const offerings = await this.get('offerings');
-    if (isEmpty(offerings)) {
-      return 0;
-    }
+  totalSumOfferingsDuration: computed(
+    'offerings.@each.startDate',
+    'offerings.@each.endDate',
+    async function () {
+      const offerings = await this.offerings;
+      if (isEmpty(offerings)) {
+        return 0;
+      }
 
-    return offerings.reduce((total, offering) => {
-      return total + moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true);
-    }, 0).toFixed(2);
-  }),
+      return offerings
+        .reduce((total, offering) => {
+          return (
+            total +
+            moment(offering.get('endDate')).diff(
+              moment(offering.get('startDate')),
+              'hours',
+              true
+            )
+          );
+        }, 0)
+        .toFixed(2);
+    }
+  ),
 
   /**
    * Total duration in hours for offerings and ILM Sessions
@@ -140,17 +178,21 @@ export default Model.extend({
    * @property totalSumDuration
    * @type {Ember.computed}
    */
-  totalSumDuration: computed('totalSumOfferingsDuration', 'ilmSession.hours', async function () {
-    const totalSumOfferingsDuration = await this.get('totalSumOfferingsDuration');
-    const ilmSession = await this.get('ilmSession');
-    if (!ilmSession) {
-      return totalSumOfferingsDuration;
+  totalSumDuration: computed(
+    'totalSumOfferingsDuration',
+    'ilmSession.hours',
+    async function () {
+      const totalSumOfferingsDuration = await this.totalSumOfferingsDuration;
+      const ilmSession = await this.ilmSession;
+      if (!ilmSession) {
+        return totalSumOfferingsDuration;
+      }
+
+      const ilmHours = ilmSession.get('hours');
+
+      return parseFloat(ilmHours) + parseFloat(totalSumOfferingsDuration);
     }
-
-    const ilmHours = ilmSession.get('hours');
-
-    return parseFloat(ilmHours) + parseFloat(totalSumOfferingsDuration);
-  }),
+  ),
 
   /**
    * The maximum duration in hours (incl. fractions) of any session offerings, plus any ILM hours.
@@ -158,30 +200,37 @@ export default Model.extend({
    * @property totalSumDuration
    * @type {Ember.computed}
    */
-  maxDuration: computed('maxSingleOfferingDuration', 'ilmSession.hours', async function () {
-    const maxSingleOfferingDuration = await this.get('maxSingleOfferingDuration');
-    const ilmSession = await this.get('ilmSession');
-    if (!ilmSession) {
-      return maxSingleOfferingDuration;
+  maxDuration: computed(
+    'maxSingleOfferingDuration',
+    'ilmSession.hours',
+    async function () {
+      const maxSingleOfferingDuration = await this.maxSingleOfferingDuration;
+      const ilmSession = await this.ilmSession;
+      if (!ilmSession) {
+        return maxSingleOfferingDuration;
+      }
+
+      const ilmHours = ilmSession.get('hours');
+
+      return parseFloat(ilmHours) + parseFloat(maxSingleOfferingDuration);
     }
-
-    const ilmHours = ilmSession.get('hours');
-
-    return parseFloat(ilmHours) + parseFloat(maxSingleOfferingDuration);
-  }),
+  ),
 
   requiredPublicationIssues: computed(
     'title',
     'offerings.length',
     'ilmSession.dueDate',
     'isIndependentLearning',
-    function(){
-      if(!this.get('isIndependentLearning')){
+    function () {
+      if (!this.isIndependentLearning) {
         this.set('requiredPublicationLengthFields', ['offerings']);
         this.set('requiredPublicationSetFields', ['title']);
       } else {
         this.set('requiredPublicationLengthFields', []);
-        this.set('requiredPublicationSetFields', ['title', 'ilmSession.dueDate']);
+        this.set('requiredPublicationSetFields', [
+          'title',
+          'ilmSession.dueDate',
+        ]);
       }
       return this.getRequiredPublicationIssues();
     }
@@ -190,7 +239,7 @@ export default Model.extend({
     'terms.length',
     'sessionObjectives.length',
     'meshDescriptors.length',
-    function(){
+    function () {
       return this.getOptionalPublicationIssues();
     }
   ),
@@ -202,7 +251,7 @@ export default Model.extend({
    * @public
    */
   associatedVocabularies: computed('terms.@each.vocabulary', async function () {
-    const terms = await this.get('terms');
+    const terms = await this.terms;
     const vocabularies = await all(terms.toArray().mapBy('vocabulary'));
     return vocabularies.uniq().sortBy('title');
   }),
@@ -214,12 +263,14 @@ export default Model.extend({
    * @public
    */
   termsWithAllParents: computed('terms.[]', async function () {
-    const terms = await this.get('terms');
+    const terms = await this.terms;
     const allTerms = await all(terms.toArray().mapBy('termWithAllParents'));
-    return (allTerms.reduce((array, set) => {
-      array.pushObjects(set);
-      return array;
-    }, [])).uniq();
+    return allTerms
+      .reduce((array, set) => {
+        array.pushObjects(set);
+        return array;
+      }, [])
+      .uniq();
   }),
 
   /**
@@ -228,7 +279,7 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  termCount: computed('terms.[]', function(){
+  termCount: computed('terms.[]', function () {
     const termIds = this.hasMany('terms').ids();
     return termIds.length;
   }),
@@ -239,88 +290,125 @@ export default Model.extend({
    * @property associatedOfferingLearnerGroups
    * @type {Ember.computed}
    */
-  associatedOfferingLearnerGroups: computed('offerings.@each.learnerGroups', async function(){
-    const offerings = await this.get('offerings');
-    const offeringLearnerGroups = await all(offerings.mapBy('learnerGroups'));
-    return offeringLearnerGroups.reduce((array, set) => {
-      array.pushObjects(set.toArray());
-      return array;
-    }, []).uniq().sortBy('title');
-  }),
+  associatedOfferingLearnerGroups: computed(
+    'offerings.@each.learnerGroups',
+    async function () {
+      const offerings = await this.offerings;
+      const offeringLearnerGroups = await all(offerings.mapBy('learnerGroups'));
+      return offeringLearnerGroups
+        .reduce((array, set) => {
+          array.pushObjects(set.toArray());
+          return array;
+        }, [])
+        .uniq()
+        .sortBy('title');
+    }
+  ),
 
   /**
    * Learner-groups associated with this session via its ILM.
    * @property associatedIlmLearnerGroups
    * @type {Ember.computed}
    */
-  associatedIlmLearnerGroups: computed('ilmSession.learnerGroups', async function(){
-    const ilmSession = await this.get('ilmSession');
-    if (! isPresent(ilmSession)) {
-      return [];
-    }
+  associatedIlmLearnerGroups: computed(
+    'ilmSession.learnerGroups',
+    async function () {
+      const ilmSession = await this.ilmSession;
+      if (!isPresent(ilmSession)) {
+        return [];
+      }
 
-    const learnerGroups = await ilmSession.get('learnerGroups');
-    return learnerGroups.sortBy('title');
-  }),
+      const learnerGroups = await ilmSession.get('learnerGroups');
+      return learnerGroups.sortBy('title');
+    }
+  ),
 
   /**
    * Learner-groups associated with this session via its ILM and offerings.
    * @property associatedLearnerGroups
    * @type {Ember.computed}
    */
-  associatedLearnerGroups: computed('associatedIlmLearnerGroups.[]', 'associatedOfferingLearnerGroups.[]', async function(){
-    const ilmLearnerGroups = await this.get('associatedIlmLearnerGroups');
-    const offeringLearnerGroups = await this.get('associatedOfferingLearnerGroups');
-    const allGroups = [].pushObjects(offeringLearnerGroups).pushObjects(ilmLearnerGroups);
-    return allGroups.uniq().sortBy('title');
-  }),
+  associatedLearnerGroups: computed(
+    'associatedIlmLearnerGroups.[]',
+    'associatedOfferingLearnerGroups.[]',
+    async function () {
+      const ilmLearnerGroups = await this.associatedIlmLearnerGroups;
+      const offeringLearnerGroups = await this.associatedOfferingLearnerGroups;
+      const allGroups = []
+        .pushObjects(offeringLearnerGroups)
+        .pushObjects(ilmLearnerGroups);
+      return allGroups.uniq().sortBy('title');
+    }
+  ),
 
   /**
    * A list of session objectives, sorted by position (asc) and then id (desc).
    * @property sortedSessionObjectives
    * @type {Ember.computed}
    */
-  sortedSessionObjectives: computed('sessionObjectives.@each.position', async function() {
-    const objectives = await this.get('sessionObjectives');
-    return objectives.toArray().sort(sortableByPosition);
-  }),
+  sortedSessionObjectives: computed(
+    'sessionObjectives.@each.position',
+    async function () {
+      const objectives = await this.sessionObjectives;
+      return objectives.toArray().sort(sortableByPosition);
+    }
+  ),
 
   /**
    * Every instructor associated with the session
    * @property allInstructors
    * @type {Ember.computed}
    */
-  allInstructors: computed('offerings.[]', 'offerings.@each.{instructors,instructorGroups}', 'ilmSession.{instructors.[],instructorGroups.[]}', async function() {
-    const offerings = await this.get('offerings');
-    const offeringInstructors = await all(offerings.mapBy('instructors'));
-    const offeringInstructorGroupsArr = await all(offerings.mapBy('instructorGroups'));
-    const flatten = (flattened, obj) => {
-      return flattened.pushObjects(obj.toArray());
-    };
+  allInstructors: computed(
+    'offerings.[]',
+    'offerings.@each.{instructors,instructorGroups}',
+    'ilmSession.{instructors.[],instructorGroups.[]}',
+    async function () {
+      const offerings = await this.offerings;
+      const offeringInstructors = await all(offerings.mapBy('instructors'));
+      const offeringInstructorGroupsArr = await all(
+        offerings.mapBy('instructorGroups')
+      );
+      const flatten = (flattened, obj) => {
+        return flattened.pushObjects(obj.toArray());
+      };
 
-    const offeringInstructorGroups = offeringInstructorGroupsArr.reduce(flatten, []);
+      const offeringInstructorGroups = offeringInstructorGroupsArr.reduce(
+        flatten,
+        []
+      );
 
-    let ilmInstructorGroups = [];
-    let ilmInstructors = [];
-    const ilmSession = await this.get('ilmSession');
-    if (ilmSession) {
-      ilmInstructors = await ilmSession.get('instructors');
-      ilmInstructorGroups = await ilmSession.get('instructorGroups');
+      let ilmInstructorGroups = [];
+      let ilmInstructors = [];
+      const ilmSession = await this.ilmSession;
+      if (ilmSession) {
+        ilmInstructors = await ilmSession.get('instructors');
+        ilmInstructorGroups = await ilmSession.get('instructorGroups');
+      }
+
+      const groupInstructors = await all(
+        []
+          .concat(
+            offeringInstructorGroups.toArray(),
+            ilmInstructorGroups.toArray()
+          )
+          .mapBy('users')
+      );
+
+      const flat = []
+        .concat(offeringInstructors, ilmInstructors, groupInstructors)
+        .reduce(flatten, []);
+
+      return flat.uniq();
     }
-
-    const groupInstructors = await all([].concat(offeringInstructorGroups.toArray(), ilmInstructorGroups.toArray()).mapBy('users'));
-
-    const flat = [].concat(offeringInstructors, ilmInstructors, groupInstructors).reduce(flatten, []);
-
-    return flat.uniq();
-  }),
+  ),
 
   /**
    * Computes if this session has any prerequisites.
    * @property hasPrerequisites
    * @type {Ember.computed}
    */
-  hasPrerequisites: computed('prerequisites.[]', function(){
+  hasPrerequisites: computed('prerequisites.[]', function () {
     const ids = this.hasMany('prerequisites').ids();
     return ids.length > 0;
   }),
@@ -330,19 +418,27 @@ export default Model.extend({
    * @property hasPostrequisite
    * @type {Ember.computed}
    */
-  hasPostrequisite: computed('postrequisite', function(){
+  hasPostrequisite: computed('postrequisite', function () {
     return !!this.belongsTo('postrequisite').id();
   }),
 
-  showUnlinkIcon: computed('sessionObjectives.[]', async function() {
-    const sessionObjectives = await this.get("sessionObjectives");
-    const collectionOfCourseObjectives = await all(sessionObjectives.mapBy('courseObjectives'));
-    return collectionOfCourseObjectives.any((courseObjectives) => isEmpty(courseObjectives.toArray()));
+  showUnlinkIcon: computed('sessionObjectives.[]', async function () {
+    const sessionObjectives = await this.sessionObjectives;
+    const collectionOfCourseObjectives = await all(
+      sessionObjectives.mapBy('courseObjectives')
+    );
+    return collectionOfCourseObjectives.any((courseObjectives) =>
+      isEmpty(courseObjectives.toArray())
+    );
   }),
 
   init() {
     this._super(...arguments);
-    this.set('optionalPublicationLengthFields', ['terms', 'sessionObjectives', 'meshDescriptors']);
+    this.set('optionalPublicationLengthFields', [
+      'terms',
+      'sessionObjectives',
+      'meshDescriptors',
+    ]);
     this.set('requiredPublicationSetFields', []);
     this.set('requiredPublicationLengthFields', []);
     this.set('optionalPublicationSetFields', []);
@@ -350,41 +446,42 @@ export default Model.extend({
   isPublished: alias('published'),
   isNotPublished: not('isPublished'),
   isScheduled: oneWay('publishedAsTbd'),
-  isPublishedOrScheduled: computed('publishTarget.isPublished', 'publishTarget.isScheduled', function(){
-    return this.get('publishedAsTbd') || this.get('isPublished');
-  }),
-  allPublicationIssuesCollection: collect('requiredPublicationIssues.length', 'optionalPublicationIssues.length'),
+  isPublishedOrScheduled: computed.or('publishedAsTbd', 'isPublished'),
+  allPublicationIssuesCollection: collect(
+    'requiredPublicationIssues.length',
+    'optionalPublicationIssues.length'
+  ),
   allPublicationIssuesLength: sum('allPublicationIssuesCollection'),
   requiredPublicationSetFields: null,
   requiredPublicationLengthFields: null,
   optionalPublicationSetFields: null,
   optionalPublicationLengthFields: null,
-  getRequiredPublicationIssues(){
+  getRequiredPublicationIssues() {
     const issues = [];
-    this.requiredPublicationSetFields.forEach(val => {
-      if(!this.get(val)){
+    this.requiredPublicationSetFields.forEach((val) => {
+      if (!this.get(val)) {
         issues.push(val);
       }
     });
 
-    this.requiredPublicationLengthFields.forEach(val => {
-      if(this.get(val + '.length') === 0){
+    this.requiredPublicationLengthFields.forEach((val) => {
+      if (this.get(val + '.length') === 0) {
         issues.push(val);
       }
     });
 
     return issues;
   },
-  getOptionalPublicationIssues(){
+  getOptionalPublicationIssues() {
     const issues = [];
-    this.optionalPublicationSetFields.forEach(val => {
-      if(!this.get(val)){
+    this.optionalPublicationSetFields.forEach((val) => {
+      if (!this.get(val)) {
         issues.push(val);
       }
     });
 
-    this.optionalPublicationLengthFields.forEach(val => {
-      if(this.get(val + '.length') === 0){
+    this.optionalPublicationLengthFields.forEach((val) => {
+      if (this.get(val + '.length') === 0) {
         issues.push(val);
       }
     });
@@ -392,7 +489,7 @@ export default Model.extend({
     return issues;
   },
 
-  textDescription: computed('description', function(){
+  textDescription: computed('description', function () {
     return striptags(this.description);
   }),
 });

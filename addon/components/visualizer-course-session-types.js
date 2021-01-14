@@ -4,9 +4,9 @@ import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import {tracked} from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import {restartableTask} from "ember-concurrency-decorators";
+import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class VisualizerCourseSessionTypes extends Component {
   @service router;
@@ -22,7 +22,7 @@ export default class VisualizerCourseSessionTypes extends Component {
   @restartableTask
   *load(element, [course]) {
     const sessions = yield course.get('sessions');
-    const dataMap = yield map(sessions.toArray(), async session => {
+    const dataMap = yield map(sessions.toArray(), async (session) => {
       const sessionType = await session.get('sessionType');
       const hours = await session.get('totalSumDuration');
       const minutes = Math.round(hours * 60);
@@ -43,8 +43,8 @@ export default class VisualizerCourseSessionTypes extends Component {
           meta: {
             sessionType: obj.sessionTypeTitle,
             sessionTypeId: obj.sessionTypeId,
-            sessions: []
-          }
+            sessions: [],
+          },
         };
         set.pushObject(existing);
       }
@@ -54,17 +54,20 @@ export default class VisualizerCourseSessionTypes extends Component {
       return set;
     }, []);
 
-
-    const totalMinutes = mappedSessionTypes.mapBy('data').reduce((total, minutes) => total + minutes, 0);
-    this.data = mappedSessionTypes.map(obj => {
-      const percent = (obj.data / totalMinutes * 100).toFixed(1);
-      obj.label = `${obj.meta.sessionType} ${percent}%`;
-      obj.meta.totalMinutes = totalMinutes;
-      obj.meta.percent = percent;
-      return obj;
-    }).sort((first, second) => {
-      return first.data - second.data;
-    });
+    const totalMinutes = mappedSessionTypes
+      .mapBy('data')
+      .reduce((total, minutes) => total + minutes, 0);
+    this.data = mappedSessionTypes
+      .map((obj) => {
+        const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
+        obj.label = `${obj.meta.sessionType} ${percent}%`;
+        obj.meta.totalMinutes = totalMinutes;
+        obj.meta.percent = percent;
+        return obj;
+      })
+      .sort((first, second) => {
+        return first.data - second.data;
+      });
   }
 
   @restartableTask
@@ -77,7 +80,9 @@ export default class VisualizerCourseSessionTypes extends Component {
     }
     const { label, data, meta } = obj;
 
-    const title = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
+    const title = htmlSafe(
+      `${label} ${data} ${this.intl.t('general.minutes')}`
+    );
     const sessions = meta.sessions.uniq().sort().join();
 
     this.tooltipTitle = title;
@@ -89,6 +94,10 @@ export default class VisualizerCourseSessionTypes extends Component {
     if (this.args.isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
       return;
     }
-    this.router.transitionTo('course-visualize-session-type', this.args.course.get('id'), obj.meta.sessionTypeId);
+    this.router.transitionTo(
+      'course-visualize-session-type',
+      this.args.course.get('id'),
+      obj.meta.sessionTypeId
+    );
   }
 }

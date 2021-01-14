@@ -3,7 +3,7 @@ import {
   collection,
   clickable,
   hasClass,
-  text
+  text,
 } from 'ember-cli-page-object';
 
 const definition = {
@@ -32,7 +32,7 @@ const definition = {
     complete: hasClass('yes'),
     partial: hasClass('maybe'),
     none: hasClass('no'),
-  }
+  },
 };
 
 export default definition;

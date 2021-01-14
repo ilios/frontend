@@ -10,38 +10,43 @@ export default class CourseLeadershipExpandedComponent extends Component {
   @tracked studentAdvisors = [];
   get isCollapsible() {
     const administratorIds = this.args.session.hasMany('administrators').ids();
-    const studentAdvisorIds = this.args.session.hasMany('studentAdvisors').ids();
+    const studentAdvisorIds = this.args.session
+      .hasMany('studentAdvisors')
+      .ids();
 
-    return (administratorIds.length > 0 || studentAdvisorIds.length > 0) && !this.args.isManaging;
+    return (
+      (administratorIds.length > 0 || studentAdvisorIds.length > 0) &&
+      !this.args.isManaging
+    );
   }
   @action
   addAdministrator(user) {
     this.administrators = [...this.administrators, user];
   }
   @action
-  removeAdministrator(user){
-    this.administrators = this.administrators.filter(obj => obj !== user);
+  removeAdministrator(user) {
+    this.administrators = this.administrators.filter((obj) => obj !== user);
   }
   @action
   addStudentAdvisor(user) {
     this.studentAdvisors = [...this.studentAdvisors, user];
   }
   @action
-  removeStudentAdvisor(user){
-    this.studentAdvisors = this.studentAdvisors.filter(obj => obj !== user);
+  removeStudentAdvisor(user) {
+    this.studentAdvisors = this.studentAdvisors.filter((obj) => obj !== user);
   }
   @dropTask
   *manage() {
     const obj = yield hash({
       administrators: this.args.session.administrators,
-      studentAdvisors: this.args.session.studentAdvisors
+      studentAdvisors: this.args.session.studentAdvisors,
     });
     this.administrators = obj.administrators.toArray();
     this.studentAdvisors = obj.studentAdvisors.toArray();
     this.args.setIsManaging(true);
   }
   @dropTask
-  *save(){
+  *save() {
     yield timeout(10);
     this.args.session.setProperties({
       administrators: this.administrators,

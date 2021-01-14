@@ -5,48 +5,50 @@ import hbs from 'htmlbars-inline-precompile';
 import EmberObject from '@ember/object';
 import { resolve } from 'rsvp';
 
-module('Integration | Component | detail terms list item', function(hooks) {
+module('Integration | Component | detail terms list item', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('top-level', async function(assert) {
+  test('top-level', async function (assert) {
     assert.expect(1);
     const term = EmberObject.create({
       isTopLevel: true,
-      title: 'Foo'
+      title: 'Foo',
     });
 
     this.set('term', term);
-    await render(hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`);
+    await render(
+      hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`
+    );
     assert.ok(this.element.textContent.trim().indexOf('Foo') !== -1);
-
   });
 
-  test('nested', async function(assert) {
+  test('nested', async function (assert) {
     assert.expect(3);
     const term = EmberObject.create({
       isTopLevel: false,
       title: 'Foo',
-      allParentTitles: resolve(['Lorem', 'Ipsum'])
+      allParentTitles: resolve(['Lorem', 'Ipsum']),
     });
 
     this.set('term', term);
-    await render(hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`);
+    await render(
+      hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`
+    );
     assert.dom('.muted').includesText('Lorem »');
     assert.dom(findAll('.muted')[1]).includesText('Ipsum »');
     assert.ok(this.element.textContent.trim().indexOf('Foo') !== -1);
   });
 
-  test('remove', async function(assert) {
+  test('remove', async function (assert) {
     assert.expect(2);
     const term = EmberObject.create({
       isTopLevel: true,
       title: 'Foo',
-      isActiveInTree: resolve(true)
-
+      isActiveInTree: resolve(true),
     });
 
     this.set('term', term);
-    this.set('remove', val => {
+    this.set('remove', (val) => {
       assert.equal(term, val);
     });
     await render(hbs`<DetailTermsListItem
@@ -58,31 +60,35 @@ module('Integration | Component | detail terms list item', function(hooks) {
     await click('.fa-times');
   });
 
-  test('inactive', async function(assert) {
+  test('inactive', async function (assert) {
     assert.expect(2);
     const term = EmberObject.create({
       isTopLevel: true,
       title: 'Foo',
-      isActiveInTree: resolve(false)
+      isActiveInTree: resolve(false),
     });
-    this.set('remove', () => { });
+    this.set('remove', () => {});
 
     this.set('term', term);
-    await render(hbs`<DetailTermsListItem @term={{term}} @canEdit={{true}} @remove={{this.remove}} />`);
+    await render(
+      hbs`<DetailTermsListItem @term={{term}} @canEdit={{true}} @remove={{this.remove}} />`
+    );
     assert.dom('.inactive').hasText('(inactive)');
     assert.dom('.fa-times').exists({ count: 1 });
   });
 
-  test('read-only mode', async function(assert) {
+  test('read-only mode', async function (assert) {
     assert.expect(2);
     const term = EmberObject.create({
       isTopLevel: true,
       title: 'Foo',
-      isActiveInTree: resolve(false)
+      isActiveInTree: resolve(false),
     });
 
     this.set('term', term);
-    await render(hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`);
+    await render(
+      hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`
+    );
     assert.dom('.inactive').doesNotExist();
     assert.dom('.fa-times').doesNotExist();
   });

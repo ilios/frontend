@@ -5,33 +5,36 @@ import hbs from 'htmlbars-inline-precompile';
 import { component as weeklyCalendarComponent } from 'ilios-common/page-objects/components/weekly-calendar';
 import moment from 'moment';
 
-module('Integration | Component | ilios calendar week', function(hooks) {
+module('Integration | Component | ilios calendar week', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.actions = {};
-    this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
+    this.send = (actionName, ...args) =>
+      this.actions[actionName].apply(this, args);
   });
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(2);
     const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
 
-    await render(hbs`<IliosCalendarWeek @date={{this.date}} @calendarEvents={{array}} />`);
+    await render(
+      hbs`<IliosCalendarWeek @date={{this.date}} @calendarEvents={{array}} />`
+    );
     assert.dom().containsText('Week of September 27, 2015');
     assert.equal(weeklyCalendarComponent.events.length, 0);
   });
 
-  test('clicking on a day header fires the correct events', async function(assert) {
+  test('clicking on a day header fires the correct events', async function (assert) {
     assert.expect(3);
     const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
-    this.actions.changeDate = newDate => {
+    this.actions.changeDate = (newDate) => {
       assert.ok(newDate instanceof Date);
       assert.ok(newDate.toString().search(/Sun Sep 27/) === 0);
     };
-    this.actions.changeView = newView => {
+    this.actions.changeView = (newView) => {
       assert.equal(newView, 'day');
     };
 
@@ -45,7 +48,7 @@ module('Integration | Component | ilios calendar week', function(hooks) {
     weeklyCalendarComponent.dayHeadings[0].selectDay();
   });
 
-  test('clicking on a day header does nothing when areDaysSelectable is false', async function(assert) {
+  test('clicking on a day header does nothing when areDaysSelectable is false', async function (assert) {
     assert.expect(0);
     const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
@@ -63,7 +66,7 @@ module('Integration | Component | ilios calendar week', function(hooks) {
     await weeklyCalendarComponent.dayHeadings[0].selectDay();
   });
 
-  test('prework', async function(assert) {
+  test('prework', async function (assert) {
     assert.expect(3);
 
     const date = moment(new Date('2015-09-30T12:00:00'));
@@ -88,7 +91,7 @@ module('Integration | Component | ilios calendar week', function(hooks) {
         name: 'prework 2',
         startDate: moment().format(),
         endDate: moment().format(),
-        location: "room 111",
+        location: 'room 111',
         ilmSession: true,
         slug: 'whatever',
         postrequisiteSlug: 'something',
@@ -101,7 +104,7 @@ module('Integration | Component | ilios calendar week', function(hooks) {
         name: 'blanked prework',
         startDate: moment().format(),
         endDate: moment().format(),
-        location: "room 111",
+        location: 'room 111',
         ilmSession: true,
         slug: 'whatever',
         postrequisiteSlug: 'something',
@@ -114,7 +117,7 @@ module('Integration | Component | ilios calendar week', function(hooks) {
         name: 'scheduled prework',
         startDate: moment().format(),
         endDate: moment().format(),
-        location: "room 111",
+        location: 'room 111',
         ilmSession: true,
         slug: 'whatever',
         postrequisiteSlug: 'something',
@@ -127,7 +130,7 @@ module('Integration | Component | ilios calendar week', function(hooks) {
         name: 'unpublished prework',
         startDate: moment().format(),
         endDate: moment().format(),
-        location: "room 111",
+        location: 'room 111',
         ilmSession: true,
         slug: 'whatever',
         postrequisiteSlug: 'something',
@@ -153,7 +156,7 @@ module('Integration | Component | ilios calendar week', function(hooks) {
     assert.ok(preworkElements[1].textContent.includes('prework 2'));
   });
 
-  test('prework to unpublished/scheduled/blanked events is not visible', async function(assert) {
+  test('prework to unpublished/scheduled/blanked events is not visible', async function (assert) {
     assert.expect(1);
 
     const date = moment(new Date('2015-09-30T12:00:00'));
@@ -186,12 +189,10 @@ module('Integration | Component | ilios calendar week', function(hooks) {
 
     const events = [unpublishedEvent, scheduledEvent, blankedEvent];
 
-    events.forEach(event => {
+    events.forEach((event) => {
       event.startDate = date.clone();
       event.endDate = date.clone().add(1, 'hour');
-      event.prerequisites = [
-        publishedPrework
-      ];
+      event.prerequisites = [publishedPrework];
     });
 
     this.set('date', date.toDate());
@@ -209,7 +210,6 @@ module('Integration | Component | ilios calendar week', function(hooks) {
   });
 
   const createUserEventObject = function () {
-
     return {
       user: 1,
       name: '',

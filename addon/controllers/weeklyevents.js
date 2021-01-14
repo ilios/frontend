@@ -8,11 +8,11 @@ export default class WeeklyeventsController extends Controller {
   year = moment().format('YYYY');
   @tracked expanded = '';
 
-  get expandedString(){
+  get expandedString() {
     return this.expanded ? this.expanded : '';
   }
 
-  get expandedWeeks(){
+  get expandedWeeks() {
     return this.expandedString.split('-');
   }
 

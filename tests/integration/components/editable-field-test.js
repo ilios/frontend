@@ -1,28 +1,24 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  click,
-  triggerKeyEvent
-} from '@ember/test-helpers';
+import { render, click, triggerKeyEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | editable field', function(hooks) {
+module('Integration | Component | editable field', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders value', async function(assert) {
+  test('it renders value', async function (assert) {
     await render(hbs`<EditableField @value="woot!" />`);
 
     assert.dom(this.element).hasText('woot!');
   });
 
-  test('it renders clickPrompt', async function(assert) {
+  test('it renders clickPrompt', async function (assert) {
     await render(hbs`<EditableField @clickPrompt="click me!" />`);
 
     assert.dom(this.element).hasText('click me!');
   });
 
-  test('it renders content', async function(assert) {
+  test('it renders content', async function (assert) {
     await render(hbs`
       <EditableField @value="text">
         template block text
@@ -34,20 +30,23 @@ module('Integration | Component | editable field', function(hooks) {
     assert.dom(this.element).hasText('template block text');
   });
 
-  test('it renders an edit icon when it looks empty', async function(assert) {
+  test('it renders an edit icon when it looks empty', async function (assert) {
     const icon = '.fa-edit';
-    this.set('value', `
+    this.set(
+      'value',
+      `
       <p>
         &nbsp;
       </p>
-    `);
+    `
+    );
     await render(hbs`<EditableField @value={{this.value}} />`);
 
     assert.dom(this.element).hasText('');
     assert.dom(icon).exists({ count: 1 });
   });
 
-  test('save on enter', async function(assert) {
+  test('save on enter', async function (assert) {
     assert.expect(1);
     this.set('value', 'lorem');
     this.set('save', () => {
@@ -59,12 +58,13 @@ module('Integration | Component | editable field', function(hooks) {
           >
             <input value={{this.value}} oninput={{action (mut this.value) value="target.value"}}>
           </EditableField>
-      `);
+      `
+    );
     await click('[data-test-edit]');
     await triggerKeyEvent('.editinplace input', 'keydown', 13);
   });
 
-  test('close on escape', async function(assert) {
+  test('close on escape', async function (assert) {
     assert.expect(1);
     this.set('value', 'lorem');
     this.set('revert', () => {
@@ -78,12 +78,13 @@ module('Integration | Component | editable field', function(hooks) {
           >
             <input value={{this.value}} oninput={{action (mut this.value) value="target.value"}}>
           </EditableField>
-      `);
+      `
+    );
     await click('[data-test-edit]');
     await triggerKeyEvent('.editinplace input', 'keydown', 27);
   });
 
-  test('focus when editor opens on input', async function(assert) {
+  test('focus when editor opens on input', async function (assert) {
     assert.expect(1);
     this.set('value', 'lorem');
     await render(
@@ -92,12 +93,13 @@ module('Integration | Component | editable field', function(hooks) {
           >
             <input>
           </EditableField>
-      `);
+      `
+    );
     await click('[data-test-edit]');
     assert.dom('input', this.element).isFocused();
   });
 
-  test('focus when editor opens on textarea', async function(assert) {
+  test('focus when editor opens on textarea', async function (assert) {
     assert.expect(1);
     this.set('value', 'lorem');
     await render(
@@ -106,7 +108,8 @@ module('Integration | Component | editable field', function(hooks) {
           >
             <textarea></textarea>
           </EditableField>
-      `);
+      `
+    );
     await click('[data-test-edit]');
 
     assert.dom('textarea', this.element).isFocused();

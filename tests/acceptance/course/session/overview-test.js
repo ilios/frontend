@@ -1,9 +1,6 @@
 import { currentRouteName } from '@ember/test-helpers';
 import moment from 'moment';
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
@@ -11,24 +8,24 @@ import { enableFeature } from 'ember-feature-flags/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/session';
 
-module('Acceptance | Session - Overview', function(hooks) {
+module('Acceptance | Session - Overview', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.server.create('academicYear');
     this.course = this.server.create('course', {
-      school: this.school
+      school: this.school,
     });
     this.sessionTypes = this.server.createList('sessionType', 2, {
-      school: this.school
+      school: this.school,
     });
   });
 
-  test('check fields', async function(assert) {
+  test('check fields', async function (assert) {
     await setupAuthentication({
       school: this.school,
-      administeredSchools: [this.school]
+      administeredSchools: [this.school],
     });
     const session = this.server.create('session', {
       course: this.course,
@@ -42,12 +39,15 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.notOk(page.overview.ilmHours.isVisible);
   });
 
-  test('check remove ilm', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('check remove ilm', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const ilmSession = this.server.create('ilmSession');
     this.server.create('session', {
       course: this.course,
-      ilmSession
+      ilmSession,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
 
@@ -55,7 +55,10 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.ok(page.overview.ilmHours.isVisible);
     assert.ok(page.overview.ilmDueDate.isVisible);
     assert.equal(page.overview.ilmHours.value, ilmSession.hours);
-    assert.equal(page.overview.ilmDueDate.value, moment(ilmSession.dueDate).format('M/D/YYYY'));
+    assert.equal(
+      page.overview.ilmDueDate.value,
+      moment(ilmSession.dueDate).format('M/D/YYYY')
+    );
 
     await page.overview.toggleIlm();
 
@@ -64,7 +67,10 @@ module('Acceptance | Session - Overview', function(hooks) {
   });
 
   test('check add ilm', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
     });
@@ -79,17 +85,23 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.ok(page.overview.ilmHours.isVisible);
     assert.ok(page.overview.ilmDueDate.isVisible);
     assert.equal(page.overview.ilmHours.value, 1);
-    assert.equal(page.overview.ilmDueDate.value, moment().add(6, 'weeks').toDate().toLocaleDateString('en'));
+    assert.equal(
+      page.overview.ilmDueDate.value,
+      moment().add(6, 'weeks').toDate().toLocaleDateString('en')
+    );
   });
 
   test('change ilm hours', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const ilmSession = this.server.create('ilmSession', {
-      hours: 3
+      hours: 3,
     });
     this.server.create('session', {
       course: this.course,
-      ilmSession
+      ilmSession,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
 
@@ -101,31 +113,43 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.equal(page.overview.ilmHours.value, 23);
   });
 
-  test('change ilm due date', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('change ilm due date', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const ilmSession = this.server.create('ilmSession', {
-      hours: 3
+      hours: 3,
     });
     this.server.create('session', {
       course: this.course,
-      ilmSession
+      ilmSession,
     });
     const newDate = moment(ilmSession.dueDate).add(3, 'weeks');
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.equal(currentRouteName(), 'session.index');
-    assert.equal(page.overview.ilmDueDate.value, new Date(ilmSession.dueDate).toLocaleDateString('en'));
+    assert.equal(
+      page.overview.ilmDueDate.value,
+      new Date(ilmSession.dueDate).toLocaleDateString('en')
+    );
     await page.overview.ilmDueDate.edit();
     await page.overview.ilmDueDate.set(newDate.toDate());
     await page.overview.ilmDueDate.save();
-    assert.equal(page.overview.ilmDueDate.value, newDate.toDate().toLocaleDateString('en'));
+    assert.equal(
+      page.overview.ilmDueDate.value,
+      newDate.toDate().toLocaleDateString('en')
+    );
   });
 
-  test('change title', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('change title', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const session = this.server.create('session', {
       course: this.course,
-      sessionType: this.sessionTypes[0]
+      sessionType: this.sessionTypes[0],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
 
@@ -137,24 +161,33 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.equal(page.overview.title.value, 'Rad Session Dude');
   });
 
-  test('last Updated', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('last Updated', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
       sessionType: this.sessionTypes[0],
-      updatedAt: moment('2019-07-09 17:00:00').toDate()
+      updatedAt: moment('2019-07-09 17:00:00').toDate(),
     });
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.equal(currentRouteName(), 'session.index');
-    assert.equal(page.overview.lastUpdated, 'Last Update Last Update: 07/09/2019 5:00 PM');
+    assert.equal(
+      page.overview.lastUpdated,
+      'Last Update Last Update: 07/09/2019 5:00 PM'
+    );
   });
 
   test('change type', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
-      sessionType: this.sessionTypes[0]
+      sessionType: this.sessionTypes[0],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
 
@@ -166,36 +199,36 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.equal(page.overview.sessionType.value, 'session type 1');
   });
 
-  test('session attributes are shown by school config', async function(assert) {
+  test('session attributes are shown by school config', async function (assert) {
     assert.expect(5);
     await setupAuthentication({ school: this.school });
     this.server.create('session', {
       course: this.course,
-      sessionType: this.sessionTypes[0]
+      sessionType: this.sessionTypes[0],
     });
     this.server.create('session', {
       course: this.course,
-      sessionType: this.sessionTypes[1]
+      sessionType: this.sessionTypes[1],
     });
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSupplemental',
-      value: true
+      value: true,
     });
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSpecialAttireRequired',
-      value: true
+      value: true,
     });
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSpecialEquipmentRequired',
-      value: true
+      value: true,
     });
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionAttendanceRequired',
-      value: true
+      value: true,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(currentRouteName(), 'session.index');
@@ -205,32 +238,32 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.ok(page.overview.attendanceRequired.isVisible);
   });
 
-  test('session attributes are hidden by school config', async function(assert) {
+  test('session attributes are hidden by school config', async function (assert) {
     assert.expect(5);
     await setupAuthentication({ school: this.school });
     this.server.create('session', {
       course: this.course,
-      sessionType: this.sessionTypes[0]
+      sessionType: this.sessionTypes[0],
     });
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSupplemental',
-      value: false
+      value: false,
     });
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSpecialAttireRequired',
-      value: false
+      value: false,
     });
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSpecialEquipmentRequired',
-      value: false
+      value: false,
     });
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionAttendanceRequired',
-      value: false
+      value: false,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(currentRouteName(), 'session.index');
@@ -240,12 +273,12 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.notOk(page.overview.attendanceRequired.isVisible);
   });
 
-  test('session attributes are hidden when there is no school config', async function(assert) {
+  test('session attributes are hidden when there is no school config', async function (assert) {
     assert.expect(5);
     await setupAuthentication({ school: this.school });
     this.server.create('session', {
       course: this.course,
-      sessionType: this.sessionTypes[0]
+      sessionType: this.sessionTypes[0],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(currentRouteName(), 'session.index');
@@ -256,15 +289,18 @@ module('Acceptance | Session - Overview', function(hooks) {
   });
 
   test('change supplemental', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
-      sessionType: this.sessionTypes[1]
+      sessionType: this.sessionTypes[1],
     });
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSupplemental',
-      value: true
+      value: true,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(currentRouteName(), 'session.index');
@@ -275,15 +311,18 @@ module('Acceptance | Session - Overview', function(hooks) {
   });
 
   test('change special attire', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
-      sessionType: this.sessionTypes[1]
+      sessionType: this.sessionTypes[1],
     });
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSpecialAttireRequired',
-      value: true
+      value: true,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(currentRouteName(), 'session.index');
@@ -294,15 +333,18 @@ module('Acceptance | Session - Overview', function(hooks) {
   });
 
   test('change special equipment', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
-      sessionType: this.sessionTypes[1]
+      sessionType: this.sessionTypes[1],
     });
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionSpecialEquipmentRequired',
-      value: true
+      value: true,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(currentRouteName(), 'session.index');
@@ -313,15 +355,18 @@ module('Acceptance | Session - Overview', function(hooks) {
   });
 
   test('change attendance rquired', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
-      sessionType: this.sessionTypes[1]
+      sessionType: this.sessionTypes[1],
     });
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'showSessionAttendanceRequired',
-      value: true
+      value: true,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(currentRouteName(), 'session.index');
@@ -331,8 +376,11 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.ok(page.overview.attendanceRequired.isActive);
   });
 
-  test('change description', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('change description', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const session = this.server.create('session', {
       course: this.course,
     });
@@ -347,8 +395,11 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.equal(page.overview.sessionDescription.value, newDescription);
   });
 
-  test('add description', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('add description', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
       description: null,
@@ -365,7 +416,10 @@ module('Acceptance | Session - Overview', function(hooks) {
   });
 
   test('empty description removes description', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
       description: null,
@@ -375,13 +429,18 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.equal(currentRouteName(), 'session.index');
     assert.equal(page.overview.sessionDescription.value, 'Click to edit');
     await page.overview.sessionDescription.edit();
-    await page.overview.sessionDescription.set('<p>&nbsp</p><div></div><span>  </span>');
+    await page.overview.sessionDescription.set(
+      '<p>&nbsp</p><div></div><span>  </span>'
+    );
     await page.overview.sessionDescription.save();
     assert.equal(page.overview.sessionDescription.value, 'Click to edit');
   });
 
-  test('remove description', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('remove description', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const session = this.server.create('session', {
       course: this.course,
     });
@@ -390,13 +449,18 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.equal(currentRouteName(), 'session.index');
     assert.equal(page.overview.sessionDescription.value, session.description);
     await page.overview.sessionDescription.edit();
-    await page.overview.sessionDescription.set('<p>&nbsp</p><div></div><span>  </span>');
+    await page.overview.sessionDescription.set(
+      '<p>&nbsp</p><div></div><span>  </span>'
+    );
     await page.overview.sessionDescription.save();
     assert.equal(page.overview.sessionDescription.value, 'Click to edit');
   });
 
-  test('cancel editing empty description #3210', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('cancel editing empty description #3210', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
       description: null,
@@ -406,17 +470,21 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.equal(currentRouteName(), 'session.index');
     assert.equal(page.overview.sessionDescription.value, 'Click to edit');
     await page.overview.sessionDescription.edit();
-    await page.overview.sessionDescription.set('something useless this way types');
+    await page.overview.sessionDescription.set(
+      'something useless this way types'
+    );
     await page.overview.sessionDescription.cancel();
     assert.equal(page.overview.sessionDescription.value, 'Click to edit');
   });
 
-
-  test('click copy', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('click copy', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
-      sessionType: this.sessionTypes[0]
+      sessionType: this.sessionTypes[0],
     });
 
     await page.visit({ courseId: 1, sessionId: 1 });
@@ -425,33 +493,39 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.equal(currentRouteName(), 'session.copy');
   });
 
-  test('copy hidden from unprivledged users', async function(assert) {
-    await setupAuthentication({ school: this.school});
+  test('copy hidden from unprivledged users', async function (assert) {
+    await setupAuthentication({ school: this.school });
     this.server.create('session', {
       course: this.course,
-      sessionType: this.sessionTypes[0]
+      sessionType: this.sessionTypes[0],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(currentRouteName(), 'session.index');
     assert.notOk(page.overview.copy.isVisible);
   });
 
-  test('copy visible to privileged users', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('copy visible to privileged users', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
-      sessionType: this.sessionTypes[0]
+      sessionType: this.sessionTypes[0],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(currentRouteName(), 'session.index');
     assert.ok(page.overview.copy.isVisible);
   });
 
-  test('copy hidden on copy route', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('copy hidden on copy route', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
-      sessionType: this.sessionTypes[0]
+      sessionType: this.sessionTypes[0],
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(currentRouteName(), 'session.index');
@@ -461,11 +535,14 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.notOk(page.overview.copy.isVisible);
   });
 
-  test('change instructionalNotes', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('change instructionalNotes', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
-      instructionalNotes: 'instructional note'
+      instructionalNotes: 'instructional note',
     });
     const newInstructionalNotes = 'some new thing';
     await page.visit({ courseId: 1, sessionId: 1 });
@@ -476,11 +553,17 @@ module('Acceptance | Session - Overview', function(hooks) {
     await page.overview.instructionalNotes.set(newInstructionalNotes);
     await page.overview.instructionalNotes.save();
     assert.equal(page.overview.instructionalNotes.value, newInstructionalNotes);
-    assert.equal(this.server.db.sessions[0].instructionalNotes, `<p>${newInstructionalNotes}</p>`);
+    assert.equal(
+      this.server.db.sessions[0].instructionalNotes,
+      `<p>${newInstructionalNotes}</p>`
+    );
   });
 
-  test('add instructionalNotes', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('add instructionalNotes', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
     });
@@ -493,11 +576,17 @@ module('Acceptance | Session - Overview', function(hooks) {
     await page.overview.instructionalNotes.set(newInstructionalNotes);
     await page.overview.instructionalNotes.save();
     assert.equal(page.overview.instructionalNotes.value, newInstructionalNotes);
-    assert.equal(this.server.db.sessions[0].instructionalNotes, `<p>${newInstructionalNotes}</p>`);
+    assert.equal(
+      this.server.db.sessions[0].instructionalNotes,
+      `<p>${newInstructionalNotes}</p>`
+    );
   });
 
   test('empty instructionalNotes removes instructionalNotes', async function (assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
     });
@@ -506,30 +595,40 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.equal(currentRouteName(), 'session.index');
     assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
     await page.overview.instructionalNotes.edit();
-    await page.overview.instructionalNotes.set('<p>&nbsp</p><div></div><span>  </span>');
+    await page.overview.instructionalNotes.set(
+      '<p>&nbsp</p><div></div><span>  </span>'
+    );
     await page.overview.instructionalNotes.save();
     assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
     assert.equal(this.server.db.sessions[0].instructionalNotes, null);
   });
 
-  test('remove instructionalNotes', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('remove instructionalNotes', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
-      instructionalNotes: 'instructional note'
+      instructionalNotes: 'instructional note',
     });
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.equal(currentRouteName(), 'session.index');
     assert.equal(page.overview.instructionalNotes.value, 'instructional note');
     await page.overview.instructionalNotes.edit();
-    await page.overview.instructionalNotes.set('<p>&nbsp</p><div></div><span>  </span>');
+    await page.overview.instructionalNotes.set(
+      '<p>&nbsp</p><div></div><span>  </span>'
+    );
     await page.overview.instructionalNotes.save();
     assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
   });
 
-  test('cancel editing empty instructionalNotes #3210', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('cancel editing empty instructionalNotes #3210', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
     });
@@ -538,14 +637,19 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.equal(currentRouteName(), 'session.index');
     assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
     await page.overview.instructionalNotes.edit();
-    await page.overview.instructionalNotes.set('something useless this way types');
+    await page.overview.instructionalNotes.set(
+      'something useless this way types'
+    );
     await page.overview.instructionalNotes.cancel();
     assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
   });
 
-  test('has no pre-requisite', async function(assert) {
+  test('has no pre-requisite', async function (assert) {
     enableFeature('sessionLinkingAdminUi');
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
     });
@@ -553,9 +657,12 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.equal(page.overview.prerequisites.text, 'Prerequisites: None');
   });
 
-  test('has pre-requisites', async function(assert) {
+  test('has pre-requisites', async function (assert) {
     enableFeature('sessionLinkingAdminUi');
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school] });
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const session = this.server.create('session', {
       course: this.course,
     });
@@ -567,39 +674,61 @@ module('Acceptance | Session - Overview', function(hooks) {
       course: this.course,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
-    assert.equal(page.overview.prerequisites.text, 'Prerequisites: session 1, session 2, session 3');
+    assert.equal(
+      page.overview.prerequisites.text,
+      'Prerequisites: session 1, session 2, session 3'
+    );
   });
 
-  test('has no post-requisite', async function(assert) {
+  test('has no post-requisite', async function (assert) {
     enableFeature('sessionLinkingAdminUi');
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
     });
-    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    await page.visit({
+      courseId: 1,
+      sessionId: 1,
+      sessionLearnergroupDetails: true,
+    });
     assert.equal(page.overview.postrequisite.text, 'Due prior to: None');
   });
 
-  test('has post-requisite', async function(assert) {
+  test('has post-requisite', async function (assert) {
     enableFeature('sessionLinkingAdminUi');
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const session = this.server.create('session', {
       course: this.course,
     });
-    const postRequisite = this.server.create('session', { course: this.course });
+    const postRequisite = this.server.create('session', {
+      course: this.course,
+    });
     session.update('postrequisite', postRequisite);
-    await page.visit({ courseId: 1, sessionId: 1, sessionLearnergroupDetails: true });
+    await page.visit({
+      courseId: 1,
+      sessionId: 1,
+      sessionLearnergroupDetails: true,
+    });
     assert.equal(page.overview.postrequisite.text, 'Due prior to: session 1');
   });
 
-  test('change post-requisite', async function(assert) {
+  test('change post-requisite', async function (assert) {
     enableFeature('sessionLinkingAdminUi');
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', {
       course: this.course,
     });
     this.server.createList('session', 3, {
-      course: this.course
+      course: this.course,
     });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(page.overview.postrequisite.value, 'None');
@@ -609,16 +738,22 @@ module('Acceptance | Session - Overview', function(hooks) {
     assert.equal(page.overview.postrequisite.value, 'session 2');
   });
 
-  test('shows expanded objectives if no objectives exist', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('shows expanded objectives if no objectives exist', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     this.server.create('session', { course: this.course });
     await page.visit({ courseId: 1, sessionId: 1 });
     assert.equal(currentRouteName(), 'session.index');
     assert.notOk(page.collapsedObjectives.isPresent);
   });
 
-  test('shows collapsed objectives if objectives exist', async function(assert) {
-    await setupAuthentication({ school: this.school, administeredSchools: [this.school]});
+  test('shows collapsed objectives if objectives exist', async function (assert) {
+    await setupAuthentication({
+      school: this.school,
+      administeredSchools: [this.school],
+    });
     const session = this.server.create('session', { course: this.course });
     this.server.create('sessionObjective', { session });
     await page.visit({ courseId: 1, sessionId: 1 });

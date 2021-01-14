@@ -6,12 +6,14 @@ import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'ilios-common/page-objects/components/session/objective-list-item-descriptors';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | session/objective-list-item-descriptors', function(hooks) {
-  setupRenderingTest(hooks);
-  setupMirage(hooks);
+module(
+  'Integration | Component | session/objective-list-item-descriptors',
+  function (hooks) {
+    setupRenderingTest(hooks);
+    setupMirage(hooks);
 
-  test('it renders and is accessible when managing', async function(assert) {
-    await render(hbs`<Session::ObjectiveListItemDescriptors
+    test('it renders and is accessible when managing', async function (assert) {
+      await render(hbs`<Session::ObjectiveListItemDescriptors
       @sessionObjective={{null}}
       @editable={{false}}
       @manage={{noop}}
@@ -20,18 +22,22 @@ module('Integration | Component | session/objective-list-item-descriptors', func
       @isSaving={{false}}
       @cancel={{noop}}
     />`);
-    assert.ok(component.canSave);
-    assert.ok(component.canCancel);
-    await a11yAudit(this.element);
-    assert.ok(true, 'no a11y errors found!');
-  });
+      assert.ok(component.canSave);
+      assert.ok(component.canCancel);
+      await a11yAudit(this.element);
+      assert.ok(true, 'no a11y errors found!');
+    });
 
-  test('it renders and is accessible empty and un-editable', async function(assert) {
-    const session = this.server.create('session');
-    const sessionObjective = this.server.create('sessionObjective', { session });
-    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
-    this.set('sessionObjective', sessionObjectiveModel);
-    await render(hbs`<Session::ObjectiveListItemDescriptors
+    test('it renders and is accessible empty and un-editable', async function (assert) {
+      const session = this.server.create('session');
+      const sessionObjective = this.server.create('sessionObjective', {
+        session,
+      });
+      const sessionObjectiveModel = await this.owner
+        .lookup('service:store')
+        .find('session-objective', sessionObjective.id);
+      this.set('sessionObjective', sessionObjectiveModel);
+      await render(hbs`<Session::ObjectiveListItemDescriptors
       @sessionObjective={{this.sessionObjective}}
       @editable={{false}}
       @manage={{noop}}
@@ -40,18 +46,23 @@ module('Integration | Component | session/objective-list-item-descriptors', func
       @isSaving={{false}}
       @cancel={{noop}}
     />`);
-    assert.equal(component.text, 'None');
-    await a11yAudit(this.element);
-    assert.ok(true, 'no a11y errors found!');
-  });
+      assert.equal(component.text, 'None');
+      await a11yAudit(this.element);
+      assert.ok(true, 'no a11y errors found!');
+    });
 
-  test('it renders and is accessible un-editable', async function (assert) {
-    const meshDescriptors = this.server.createList('meshDescriptor', 2);
-    const session = this.server.create('session');
-    const sessionObjective = this.server.create('sessionObjective', { session, meshDescriptors });
-    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
-    this.set('sessionObjective', sessionObjectiveModel);
-    await render(hbs`<Session::ObjectiveListItemDescriptors
+    test('it renders and is accessible un-editable', async function (assert) {
+      const meshDescriptors = this.server.createList('meshDescriptor', 2);
+      const session = this.server.create('session');
+      const sessionObjective = this.server.create('sessionObjective', {
+        session,
+        meshDescriptors,
+      });
+      const sessionObjectiveModel = await this.owner
+        .lookup('service:store')
+        .find('session-objective', sessionObjective.id);
+      this.set('sessionObjective', sessionObjectiveModel);
+      await render(hbs`<Session::ObjectiveListItemDescriptors
       @sessionObjective={{this.sessionObjective}}
       @editable={{false}}
       @manage={{noop}}
@@ -60,20 +71,25 @@ module('Integration | Component | session/objective-list-item-descriptors', func
       @isSaving={{false}}
       @cancel={{noop}}
     />`);
-    assert.equal(component.list.length, 2);
-    assert.equal(component.list[0].title, 'descriptor 0');
-    assert.equal(component.list[1].title, 'descriptor 1');
-    await a11yAudit(this.element);
-    assert.ok(true, 'no a11y errors found!');
-  });
+      assert.equal(component.list.length, 2);
+      assert.equal(component.list[0].title, 'descriptor 0');
+      assert.equal(component.list[1].title, 'descriptor 1');
+      await a11yAudit(this.element);
+      assert.ok(true, 'no a11y errors found!');
+    });
 
-  test('it renders and is accessible editable', async function (assert) {
-    const meshDescriptors = this.server.createList('meshDescriptor', 2);
-    const session = this.server.create('session');
-    const sessionObjective = this.server.create('sessionObjective', { session, meshDescriptors });
-    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
-    this.set('sessionObjective', sessionObjectiveModel);
-    await render(hbs`<Session::ObjectiveListItemDescriptors
+    test('it renders and is accessible editable', async function (assert) {
+      const meshDescriptors = this.server.createList('meshDescriptor', 2);
+      const session = this.server.create('session');
+      const sessionObjective = this.server.create('sessionObjective', {
+        session,
+        meshDescriptors,
+      });
+      const sessionObjectiveModel = await this.owner
+        .lookup('service:store')
+        .find('session-objective', sessionObjective.id);
+      this.set('sessionObjective', sessionObjectiveModel);
+      await render(hbs`<Session::ObjectiveListItemDescriptors
       @sessionObjective={{this.sessionObjective}}
       @editable={{true}}
       @manage={{noop}}
@@ -82,24 +98,29 @@ module('Integration | Component | session/objective-list-item-descriptors', func
       @isSaving={{false}}
       @cancel={{noop}}
     />`);
-    assert.equal(component.list.length, 2);
-    assert.equal(component.list[0].title, 'descriptor 0');
-    assert.equal(component.list[1].title, 'descriptor 1');
-    await a11yAudit(this.element);
-    assert.ok(true, 'no a11y errors found!');
-  });
-
-  test('clicking save fires save', async function (assert) {
-    assert.expect(1);
-    const meshDescriptors = this.server.createList('meshDescriptor', 2);
-    const session = this.server.create('session');
-    const sessionObjective = this.server.create('sessionObjective', { session, meshDescriptors });
-    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
-    this.set('sessionObjective', sessionObjectiveModel);
-    this.set('save', () => {
-      assert.ok(true);
+      assert.equal(component.list.length, 2);
+      assert.equal(component.list[0].title, 'descriptor 0');
+      assert.equal(component.list[1].title, 'descriptor 1');
+      await a11yAudit(this.element);
+      assert.ok(true, 'no a11y errors found!');
     });
-    await render(hbs`<Session::ObjectiveListItemDescriptors
+
+    test('clicking save fires save', async function (assert) {
+      assert.expect(1);
+      const meshDescriptors = this.server.createList('meshDescriptor', 2);
+      const session = this.server.create('session');
+      const sessionObjective = this.server.create('sessionObjective', {
+        session,
+        meshDescriptors,
+      });
+      const sessionObjectiveModel = await this.owner
+        .lookup('service:store')
+        .find('session-objective', sessionObjective.id);
+      this.set('sessionObjective', sessionObjectiveModel);
+      this.set('save', () => {
+        assert.ok(true);
+      });
+      await render(hbs`<Session::ObjectiveListItemDescriptors
       @sessionObjective={{this.sessionObjective}}
       @editable={{true}}
       @manage={{noop}}
@@ -108,20 +129,25 @@ module('Integration | Component | session/objective-list-item-descriptors', func
       @isSaving={{false}}
       @cancel={{noop}}
     />`);
-    await component.save();
-  });
-
-  test('clicking cancel fires cancel', async function (assert) {
-    assert.expect(1);
-    const meshDescriptors = this.server.createList('meshDescriptor', 2);
-    const session = this.server.create('session');
-    const sessionObjective = this.server.create('sessionObjective', { session, meshDescriptors });
-    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
-    this.set('sessionObjective', sessionObjectiveModel);
-    this.set('cancel', () => {
-      assert.ok(true);
+      await component.save();
     });
-    await render(hbs`<Session::ObjectiveListItemDescriptors
+
+    test('clicking cancel fires cancel', async function (assert) {
+      assert.expect(1);
+      const meshDescriptors = this.server.createList('meshDescriptor', 2);
+      const session = this.server.create('session');
+      const sessionObjective = this.server.create('sessionObjective', {
+        session,
+        meshDescriptors,
+      });
+      const sessionObjectiveModel = await this.owner
+        .lookup('service:store')
+        .find('session-objective', sessionObjective.id);
+      this.set('sessionObjective', sessionObjectiveModel);
+      this.set('cancel', () => {
+        assert.ok(true);
+      });
+      await render(hbs`<Session::ObjectiveListItemDescriptors
       @sessionObjective={{this.sessionObjective}}
       @editable={{true}}
       @manage={{noop}}
@@ -130,20 +156,25 @@ module('Integration | Component | session/objective-list-item-descriptors', func
       @isSaving={{false}}
       @cancel={{this.cancel}}
     />`);
-    await component.cancel();
-  });
-
-  test('clicking descriptor fires manage', async function (assert) {
-    assert.expect(1);
-    const meshDescriptors = this.server.createList('meshDescriptor', 2);
-    const session = this.server.create('session');
-    const sessionObjective = this.server.create('sessionObjective', { session, meshDescriptors });
-    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
-    this.set('sessionObjective', sessionObjectiveModel);
-    this.set('manage', () => {
-      assert.ok(true);
+      await component.cancel();
     });
-    await render(hbs`<Session::ObjectiveListItemDescriptors
+
+    test('clicking descriptor fires manage', async function (assert) {
+      assert.expect(1);
+      const meshDescriptors = this.server.createList('meshDescriptor', 2);
+      const session = this.server.create('session');
+      const sessionObjective = this.server.create('sessionObjective', {
+        session,
+        meshDescriptors,
+      });
+      const sessionObjectiveModel = await this.owner
+        .lookup('service:store')
+        .find('session-objective', sessionObjective.id);
+      this.set('sessionObjective', sessionObjectiveModel);
+      this.set('manage', () => {
+        assert.ok(true);
+      });
+      await render(hbs`<Session::ObjectiveListItemDescriptors
       @sessionObjective={{this.sessionObjective}}
       @editable={{true}}
       @manage={{this.manage}}
@@ -152,6 +183,7 @@ module('Integration | Component | session/objective-list-item-descriptors', func
       @isSaving={{false}}
       @cancel={{noop}}
     />`);
-    await component.list[0].manage();
-  });
-});
+      await component.list[0].manage();
+    });
+  }
+);

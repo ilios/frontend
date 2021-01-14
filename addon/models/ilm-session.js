@@ -8,10 +8,10 @@ export default Model.extend({
   instructorGroups: hasMany('instructor-group', { async: true }),
   instructors: hasMany('user', {
     async: true,
-    inverse: 'instructorIlmSessions'
+    inverse: 'instructorIlmSessions',
   }),
   learners: hasMany('user', {
     async: true,
-    inverse: 'learnerIlmSessions'
+    inverse: 'learnerIlmSessions',
   }),
 });

@@ -3,7 +3,11 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask, restartableTask } from 'ember-concurrency-decorators';
-import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import {
+  validatable,
+  Length,
+  NotBlank,
+} from 'ilios-common/decorators/validation';
 import { timeout } from 'ember-concurrency';
 import moment from 'moment';
 
@@ -25,7 +29,7 @@ export default class CourseRolloverComponent extends Component {
   @tracked allCourses;
   @tracked selectedCohorts = [];
 
-  constructor(){
+  constructor() {
     super(...arguments);
     const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));
     this.years = [];
@@ -43,14 +47,14 @@ export default class CourseRolloverComponent extends Component {
     const school = course.belongsTo('school').id();
     this.allCourses = yield this.store.query('course', {
       filters: {
-        school
-      }
+        school,
+      },
     });
     this.changeSelectedYear(this.years.firstObject);
   }
 
   @action
-  changeTitle(newTitle){
+  changeTitle(newTitle) {
     this.title = newTitle;
   }
   @action
@@ -58,12 +62,12 @@ export default class CourseRolloverComponent extends Component {
     this.selectedCohorts = [...this.selectedCohorts, cohort];
   }
   @action
-  removeCohort(cohort){
-    this.selectedCohorts = this.selectedCohorts.filter(obj => obj !== cohort);
+  removeCohort(cohort) {
+    this.selectedCohorts = this.selectedCohorts.filter((obj) => obj !== cohort);
   }
 
   @dropTask
-  *save(){
+  *save() {
     yield timeout(1);
     this.addErrorDisplayForAllFields();
     const isValid = yield this.isValid();
@@ -76,7 +80,7 @@ export default class CourseRolloverComponent extends Component {
 
     const data = {
       year: this.selectedYear,
-      newCourseTitle: this.title
+      newCourseTitle: this.title,
     };
     if (this.startDate) {
       data.newStartDate = moment(this.startDate).format('YYYY-MM-DD');
@@ -88,7 +92,10 @@ export default class CourseRolloverComponent extends Component {
       data.newCohorts = selectedCohortIds;
     }
 
-    const newCoursesObj = yield this.fetch.postToApi(`courses/${courseId}/rollover`, data);
+    const newCoursesObj = yield this.fetch.postToApi(
+      `courses/${courseId}/rollover`,
+      data
+    );
 
     this.flashMessages.success('general.courseRolloverSuccess');
     this.store.pushPayload(newCoursesObj);
@@ -101,23 +108,32 @@ export default class CourseRolloverComponent extends Component {
     if (!this.allCourses) {
       return [];
     }
-    const existingCoursesWithTitle = this.allCourses.filterBy('title', this.title);
+    const existingCoursesWithTitle = this.allCourses.filterBy(
+      'title',
+      this.title
+    );
     return existingCoursesWithTitle.mapBy('year');
   }
 
   @action
-  setSelectedYear(event){
+  setSelectedYear(event) {
     this.changeSelectedYear(event.target.value);
   }
 
   @action
-  changeSelectedYear(selectedYear){
+  changeSelectedYear(selectedYear) {
     this.selectedYear = Number(selectedYear);
 
     const date = moment(this.args.course.startDate);
     const day = date.isoWeekday();
     const week = date.isoWeek();
 
-    this.startDate = moment().hour(0).minute(0).year(selectedYear).isoWeek(week).isoWeekday(day).toDate();
+    this.startDate = moment()
+      .hour(0)
+      .minute(0)
+      .year(selectedYear)
+      .isoWeek(week)
+      .isoWeekday(day)
+      .toDate();
   }
 }

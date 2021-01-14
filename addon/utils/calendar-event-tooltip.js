@@ -3,27 +3,44 @@ import moment from 'moment';
 import { htmlSafe } from '@ember/string';
 
 export default function calendarEventTooltip(event, intl, timeFormat) {
-  const addLocationToContents = function(contents, eventLocation) {
-    if (! isBlank(eventLocation)) {
+  const addLocationToContents = function (contents, eventLocation) {
+    if (!isBlank(eventLocation)) {
       contents = contents + `${eventLocation}<br />`;
     }
     return contents;
   };
 
-  const addInstructorsToContents = function(contents, instructors, etAlPhrase) {
-    if (! instructors.length) {
+  const addInstructorsToContents = function (
+    contents,
+    instructors,
+    etAlPhrase
+  ) {
+    if (!instructors.length) {
       return contents;
     }
 
     if (3 > instructors.length) {
-      contents = contents + '<br /> ' + intl.t('general.taughtBy', { instructors: instructors.join(', ') });
+      contents =
+        contents +
+        '<br /> ' +
+        intl.t('general.taughtBy', { instructors: instructors.join(', ') });
     } else {
-      contents = contents + '<br /> ' + intl.t('general.taughtBy', { instructors: instructors.slice(0, 2).join(', ') }) + ` ${etAlPhrase}`;
+      contents =
+        contents +
+        '<br /> ' +
+        intl.t('general.taughtBy', {
+          instructors: instructors.slice(0, 2).join(', '),
+        }) +
+        ` ${etAlPhrase}`;
     }
     return contents;
   };
 
-  const addCourseTitleToContents = function(contents, courseTitle, courseTitlePhrase) {
+  const addCourseTitleToContents = function (
+    contents,
+    courseTitle,
+    courseTitlePhrase
+  ) {
     if (courseTitle) {
       contents = contents + `<br />${courseTitlePhrase}: ${courseTitle}`;
     }
@@ -41,30 +58,47 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
   let contents = '';
 
   if (event.ilmSession) {
-    if (! isMulti) {
+    if (!isMulti) {
       contents = addLocationToContents(contents, eventLocation);
     }
     contents = contents + `ILM - ${intl.t('general.dueThisDay')}<br />${name}`;
-    if (! isMulti) {
-      contents = addInstructorsToContents(contents, instructors, intl.t('general.etAl'));
+    if (!isMulti) {
+      contents = addInstructorsToContents(
+        contents,
+        instructors,
+        intl.t('general.etAl')
+      );
     }
-    contents = addCourseTitleToContents(contents, courseTitle, intl.t('general.course'));
+    contents = addCourseTitleToContents(
+      contents,
+      courseTitle,
+      intl.t('general.course')
+    );
     if (isMulti) {
       contents = contents + `<br />, ${intl.t('general.multiple')}`;
     }
   } else if (event.offering) {
-    if (! isMulti) {
+    if (!isMulti) {
       contents = addLocationToContents(contents, eventLocation);
     }
     contents = contents + `${startTime} - ${endTime}<br />${name}`;
-    if (! isMulti) {
-      contents = addInstructorsToContents(contents, instructors, intl.t('general.etAl'));
+    if (!isMulti) {
+      contents = addInstructorsToContents(
+        contents,
+        instructors,
+        intl.t('general.etAl')
+      );
     }
-    contents = addCourseTitleToContents(contents, courseTitle, intl.t('general.course'));
+    contents = addCourseTitleToContents(
+      contents,
+      courseTitle,
+      intl.t('general.course')
+    );
     if (isMulti) {
       contents = contents + `<br />, ${intl.t('general.multiple')}`;
     }
-  } else { // 'TBD' event
+  } else {
+    // 'TBD' event
     contents = `TBD<br />${startTime} - ${endTime}<br />${name}`;
   }
 

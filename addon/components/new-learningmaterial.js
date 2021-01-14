@@ -3,8 +3,14 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency-decorators';
-import { validatable, Length, NotBlank, IsTrue, IsURL } from 'ilios-common/decorators/validation';
-import { ValidateIf } from "class-validator";
+import {
+  validatable,
+  Length,
+  NotBlank,
+  IsTrue,
+  IsURL,
+} from 'ilios-common/decorators/validation';
+import { ValidateIf } from 'class-validator';
 import { guidFor } from '@ember/object/internals';
 
 const DEFAULT_URL_VALUE = 'https://';
@@ -14,18 +20,25 @@ export default class NewLearningmaterialComponent extends Component {
   @service store;
   @service currentUser;
   @service iliosConfig;
-  @ValidateIf(o => o.isFile) @NotBlank() @tracked filename;
-  @ValidateIf(o => o.isFile) @NotBlank() @tracked fileHash;
+  @ValidateIf((o) => o.isFile) @NotBlank() @tracked filename;
+  @ValidateIf((o) => o.isFile) @NotBlank() @tracked fileHash;
   @tracked statusId;
   @tracked userRoleId;
   @tracked description;
   @NotBlank() @Length(2, 80) @tracked originalAuthor;
   @NotBlank() @Length(4, 120) @tracked title;
-  @ValidateIf(o => o.isLink)  @NotBlank() @IsURL() @tracked link = DEFAULT_URL_VALUE;
-  @ValidateIf(o => o.isFile && !o.copyrightRationale) @IsTrue() @tracked copyrightPermission = false;
-  @ValidateIf(o => o.isFile) @Length(2, 65000) @tracked copyrightRationale;
+  @ValidateIf((o) => o.isLink)
+  @NotBlank()
+  @IsURL()
+  @tracked
+  link = DEFAULT_URL_VALUE;
+  @ValidateIf((o) => o.isFile && !o.copyrightRationale)
+  @IsTrue()
+  @tracked
+  copyrightPermission = false;
+  @ValidateIf((o) => o.isFile) @Length(2, 65000) @tracked copyrightRationale;
   @tracked owner;
-  @ValidateIf(o => o.isCitation) @NotBlank() @tracked citation;
+  @ValidateIf((o) => o.isCitation) @NotBlank() @tracked citation;
   @tracked fileUploadErrorMessage = false;
 
   get uniqueId() {
@@ -73,7 +86,7 @@ export default class NewLearningmaterialComponent extends Component {
   }
 
   @dropTask
-  * prepareSave() {
+  *prepareSave() {
     this.addErrorDisplayForAllFields();
     const isValid = yield this.isValid();
     if (!isValid) {
@@ -89,25 +102,25 @@ export default class NewLearningmaterialComponent extends Component {
       originalAuthor: this.originalAuthor,
       owningUser,
     });
-    switch(this.args.type){
-    case 'file': {
-      learningMaterial.setProperties({
-        copyrightRationale: this.copyrightRationale,
-        copyrightPermission: this.copyrightPermission,
-        filename: this.filename,
-        fileHash: this.fileHash,
-      });
-      break;
-    }
-    case 'link': {
-      console.log(this.link);
-      learningMaterial.set('link', this.link);
-      break;
-    }
-    case 'citation': {
-      learningMaterial.set('citation', this.citation);
-      break;
-    }
+    switch (this.args.type) {
+      case 'file': {
+        learningMaterial.setProperties({
+          copyrightRationale: this.copyrightRationale,
+          copyrightPermission: this.copyrightPermission,
+          filename: this.filename,
+          fileHash: this.fileHash,
+        });
+        break;
+      }
+      case 'link': {
+        console.log(this.link);
+        learningMaterial.set('link', this.link);
+        break;
+      }
+      case 'citation': {
+        learningMaterial.set('citation', this.citation);
+        break;
+      }
     }
 
     yield this.args.save(learningMaterial);

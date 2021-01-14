@@ -14,12 +14,9 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   @dropTask
   *manage() {
     const { ilmSession } = this.args;
-    const {
-      learnerGroups,
-      learners
-    } = yield hash({
+    const { learnerGroups, learners } = yield hash({
       learnerGroups: ilmSession.learnerGroups,
-      learners: ilmSession.learners
+      learners: ilmSession.learners,
     });
 
     this.learnerGroupBuffer = learnerGroups.toArray();
@@ -37,20 +34,20 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
 
   @computed('args.ilmSession.learners.length')
   get learnerCount() {
-    if (! this.args.ilmSession) {
+    if (!this.args.ilmSession) {
       return 0;
     }
     return this.args.ilmSession.hasMany('learners').ids().length;
   }
   @computed('args.ilmSession.learnerGroups.length')
   get learnerGroupCount() {
-    if (! this.args.ilmSession) {
+    if (!this.args.ilmSession) {
       return 0;
     }
     return this.args.ilmSession.hasMany('learnerGroups').ids().length;
   }
   @action
-  cancel(){
+  cancel() {
     this.learnerGroupBuffer = [];
     this.learnerBuffer = [];
     this.isManaging = false;
@@ -59,14 +56,20 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   @action
   async addLearnerGroupToBuffer(learnerGroup) {
     const descendants = await learnerGroup.get('allDescendants');
-    this.learnerGroupBuffer = [...this.learnerGroupBuffer, ...descendants, learnerGroup];
+    this.learnerGroupBuffer = [
+      ...this.learnerGroupBuffer,
+      ...descendants,
+      learnerGroup,
+    ];
   }
 
   @action
   async removeLearnerGroupFromBuffer(learnerGroup) {
     const descendants = await learnerGroup.get('allDescendants');
     const groupsToRemove = [...descendants, learnerGroup];
-    this.learnerGroupBuffer = this.learnerGroupBuffer.filter(g => !groupsToRemove.includes(g));
+    this.learnerGroupBuffer = this.learnerGroupBuffer.filter(
+      (g) => !groupsToRemove.includes(g)
+    );
   }
 
   @action
@@ -75,6 +78,8 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   }
   @action
   removeLearnerFromBuffer(learner) {
-    this.learnerBuffer = this.learnerBuffer.filter(obj => obj.id !== learner.id);
+    this.learnerBuffer = this.learnerBuffer.filter(
+      (obj) => obj.id !== learner.id
+    );
   }
 }

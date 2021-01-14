@@ -1,15 +1,12 @@
 import { click, visit, currentURL } from '@ember/test-helpers';
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupAuthentication, getElementText, getText } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/course-publish-all';
 
-module('Acceptance | Course - Publish All Sessions', function(hooks) {
+module('Acceptance | Course - Publish All Sessions', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
@@ -18,7 +15,7 @@ module('Acceptance | Course - Publish All Sessions', function(hooks) {
     this.cohort = this.server.create('cohort');
   });
 
-  test('published sessions do not appear in the cannot publish list #1658', async function(assert) {
+  test('published sessions do not appear in the cannot publish list #1658', async function (assert) {
     const meshDescriptor = this.server.create('meshDescriptor');
     const term = this.server.create('term');
 
@@ -26,23 +23,23 @@ module('Acceptance | Course - Publish All Sessions', function(hooks) {
       year: 2013,
       school: this.school,
       published: true,
-      cohorts: [ this.cohort ],
+      cohorts: [this.cohort],
     });
     const session1 = this.server.create('session', {
       course,
       published: true,
       publishedAsTbd: false,
-      meshDescriptors: [ meshDescriptor ],
-      terms: [ term ],
+      meshDescriptors: [meshDescriptor],
+      terms: [term],
     });
     this.server.create('sessionObjective', { session: session1 });
-    this.server.create('offering', {sessionId: 1});
+    this.server.create('offering', { sessionId: 1 });
     const session2 = this.server.create('session', {
       course,
       published: true,
       publishedAsTbd: false,
-      meshDescriptors: [ meshDescriptor ],
-      terms: [ term ],
+      meshDescriptors: [meshDescriptor],
+      terms: [term],
     });
     this.server.create('sessionObjective', { session: session2 });
 
@@ -52,8 +49,8 @@ module('Acceptance | Course - Publish All Sessions', function(hooks) {
       course,
       published: true,
       publishedAsTbd: true,
-      meshDescriptors: [ meshDescriptor ],
-      terms: [ term ],
+      meshDescriptors: [meshDescriptor],
+      terms: [term],
     });
     this.server.create('sessionObjective', { session: session3 });
 
@@ -61,12 +58,21 @@ module('Acceptance | Course - Publish All Sessions', function(hooks) {
     await visit('/courses/1/publishall');
 
     await click('.publish-all-sessions-publishable .title');
-    assert.equal(await getElementText('tbody tr:nth-of-type(1) td:nth-of-type(1)'), getText('session 0'));
-    assert.equal(await getElementText('tbody tr:nth-of-type(2) td:nth-of-type(1)'), getText('session 1'));
-    assert.equal(await getElementText('tbody tr:nth-of-type(3) td:nth-of-type(1)'), getText('session 2'));
+    assert.equal(
+      await getElementText('tbody tr:nth-of-type(1) td:nth-of-type(1)'),
+      getText('session 0')
+    );
+    assert.equal(
+      await getElementText('tbody tr:nth-of-type(2) td:nth-of-type(1)'),
+      getText('session 1')
+    );
+    assert.equal(
+      await getElementText('tbody tr:nth-of-type(3) td:nth-of-type(1)'),
+      getText('session 2')
+    );
   });
 
-  test('After publishing user is returned to the courses route #4099', async function(assert) {
+  test('After publishing user is returned to the courses route #4099', async function (assert) {
     const meshDescriptors = this.server.createList('meshDescriptor', 1);
     const terms = this.server.createList('term', 1);
 
@@ -81,11 +87,11 @@ module('Acceptance | Course - Publish All Sessions', function(hooks) {
       published: false,
       publishedAsTbd: false,
       meshDescriptors,
-      terms
+      terms,
     });
     this.server.create('sessionObjective', { session });
     this.server.create('sessionType', {
-      sessions: [session]
+      sessions: [session],
     });
     this.server.create('offering', { session });
     await visit('/courses/1/publishall');
@@ -95,7 +101,7 @@ module('Acceptance | Course - Publish All Sessions', function(hooks) {
     assert.ok(session.published);
   });
 
-  test('Updating course objectives updates the unlinked objective warning', async function(assert) {
+  test('Updating course objectives updates the unlinked objective warning', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     const programYear = this.server.create('program-year', {
       cohort: this.cohort,
@@ -123,9 +129,13 @@ module('Acceptance | Course - Publish All Sessions', function(hooks) {
       publishedAsTbd: false,
     });
     this.server.create('sessionType', {
-      sessions: [session]
+      sessions: [session],
     });
-    await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
+    await page.visit({
+      courseId: 1,
+      details: true,
+      courseObjectiveDetails: true,
+    });
     assert.ok(page.publishAll.isVisible);
     assert.ok(page.publishAll.hasUnlinkedWarning);
 

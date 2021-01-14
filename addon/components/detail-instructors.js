@@ -27,12 +27,9 @@ export default class DetailInstructorsComponent extends Component {
   @dropTask
   *manage() {
     const { ilmSession } = this.args;
-    const {
-      instructorGroups,
-      instructors
-    } = yield hash({
+    const { instructorGroups, instructors } = yield hash({
       instructorGroups: ilmSession.instructorGroups,
-      instructors: ilmSession.instructors
+      instructors: ilmSession.instructors,
     });
 
     this.instructorGroupBuffer = instructorGroups.toArray();
@@ -61,18 +58,23 @@ export default class DetailInstructorsComponent extends Component {
     return this.args.ilmSession.hasMany('instructorGroups').ids().length;
   }
   @action
-  cancel(){
+  cancel() {
     this.instructorGroupBuffer = [];
     this.instructorBuffer = [];
     this.isManaging = false;
   }
   @action
   addInstructorGroupToBuffer(instructorGroup) {
-    this.instructorGroupBuffer = [...this.instructorGroupBuffer, instructorGroup];
+    this.instructorGroupBuffer = [
+      ...this.instructorGroupBuffer,
+      instructorGroup,
+    ];
   }
   @action
   removeInstructorGroupFromBuffer(instructorGroup) {
-    this.instructorGroupBuffer = this.instructorGroupBuffer.filter(obj => obj.id !== instructorGroup.id);
+    this.instructorGroupBuffer = this.instructorGroupBuffer.filter(
+      (obj) => obj.id !== instructorGroup.id
+    );
   }
   @action
   addInstructorToBuffer(instructor) {
@@ -80,6 +82,8 @@ export default class DetailInstructorsComponent extends Component {
   }
   @action
   removeInstructorFromBuffer(instructor) {
-    this.instructorBuffer = this.instructorBuffer.filter(obj => obj.id !== instructor.id);
+    this.instructorBuffer = this.instructorBuffer.filter(
+      (obj) => obj.id !== instructor.id
+    );
   }
 }

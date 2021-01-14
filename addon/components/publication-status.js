@@ -1,8 +1,7 @@
 import Component from '@glimmer/component';
 
 export default class ProgressBarComponent extends Component {
-
-  get textKey(){
+  get textKey() {
     if (this.args.item.isScheduled) {
       return 'general.scheduled';
     }
@@ -25,9 +24,9 @@ export default class ProgressBarComponent extends Component {
   }
 
   get publicationStatus() {
-    if(this.args.item.isScheduled){
+    if (this.args.item.isScheduled) {
       return 'scheduled';
-    } else if (this.args.item.isPublished){
+    } else if (this.args.item.isPublished) {
       return 'published';
     }
 

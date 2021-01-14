@@ -22,12 +22,12 @@ export default class HtmlEditorComponent extends Component {
         'formatUL',
         'insertLink',
       ],
-      'buttonsVisible': 7
+      buttonsVisible: 7,
     },
     moreMisc: {
       buttons: ['undo', 'redo', 'html'],
       align: 'right',
-    }
+    },
   };
 
   constructor() {
@@ -35,9 +35,10 @@ export default class HtmlEditorComponent extends Component {
     this.editorId = guidFor(this);
   }
 
-  get options(){
+  get options() {
     return {
-      key: 'Kb3A3pE2E2A1E4G4I4oCd2ZSb1XHi1Cb2a1KIWCWMJHXCLSwG1G1B2C1B1C7F6E1E4F4==',
+      key:
+        'Kb3A3pE2E2A1E4G4I4oCd2ZSb1XHi1Cb2a1KIWCWMJHXCLSwG1G1B2C1B1C7F6E1E4F4==',
       theme: 'gray',
       attribution: false,
       language: this.intl.locale,
@@ -53,19 +54,26 @@ export default class HtmlEditorComponent extends Component {
       quickInsertButtons: false,
       pluginsEnabled: ['lists', 'code_view', 'link'],
       listAdvancedTypes: false,
-      shortcutsEnabled: ['bold', 'italic', 'strikeThrough', 'undo', 'redo', 'createLink'],
+      shortcutsEnabled: [
+        'bold',
+        'italic',
+        'strikeThrough',
+        'undo',
+        'redo',
+        'createLink',
+      ],
       events: {
         contentChanged: () => {
           if (!this.isDestroyed && !this.isDestroying) {
             this.args.update(this.editor.html.get());
           }
-        }
+        },
       },
       linkList: [
         {
           displayText: 'PubMed',
           href: 'https://www.ncbi.nlm.nih.gov/pubmed/',
-          target: '_blank'
+          target: '_blank',
         },
       ],
       linkEditButtons: ['linkEdit', 'linkRemove'],
@@ -78,9 +86,9 @@ export default class HtmlEditorComponent extends Component {
     }
   }
   createEditor(element, options) {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       loadFroalaEditor().then(({ FroalaEditor }) => {
-        new FroalaEditor(element, options, function() {
+        new FroalaEditor(element, options, function () {
           resolve(this);
         });
       });

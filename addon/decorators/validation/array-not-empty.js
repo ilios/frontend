@@ -1,4 +1,4 @@
-import { registerDecorator } from "class-validator";
+import { registerDecorator } from 'class-validator';
 import { getOwner } from '@ember/application';
 
 export function ArrayNotEmpty(validationOptions) {
@@ -10,7 +10,7 @@ export function ArrayNotEmpty(validationOptions) {
       options: validationOptions,
       validator: {
         validate(value) {
-          if (! Array.isArray(value)) {
+          if (!Array.isArray(value)) {
             throw `${propertyName} is not an array.`;
           }
           return !!value.length;
@@ -20,7 +20,7 @@ export function ArrayNotEmpty(validationOptions) {
           const intl = owner.lookup('service:intl');
           const description = intl.t('errors.description');
           return intl.t('errors.empty', { description });
-        }
+        },
       },
     });
   };

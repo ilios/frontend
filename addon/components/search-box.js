@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { isNone } from '@ember/utils';
 import { timeout } from 'ember-concurrency';
-import {restartableTask} from "ember-concurrency-decorators";
+import { restartableTask } from 'ember-concurrency-decorators';
 
 const DEBOUNCE_TIMEOUT = 250;
 
@@ -16,7 +16,7 @@ export default class SearchBox extends Component {
   }
 
   @action
-  update(event){
+  update(event) {
     this.value = event.target.value;
     if (this.liveSearch) {
       this.searchTask.perform();
@@ -40,12 +40,12 @@ export default class SearchBox extends Component {
   @action
   keyUp({ key }) {
     switch (key) {
-    case 'Enter':
-      this.searchTask.perform();
-      break;
-    case 'Escape':
-      this.clear();
-      break;
+      case 'Enter':
+        this.searchTask.perform();
+        break;
+      case 'Escape':
+        this.clear();
+        break;
     }
   }
 

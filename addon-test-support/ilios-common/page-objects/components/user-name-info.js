@@ -3,7 +3,7 @@ import {
   create,
   isVisible,
   text,
-  triggerable
+  triggerable,
 } from 'ember-cli-page-object';
 
 const definition = {

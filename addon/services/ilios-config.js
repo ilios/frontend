@@ -9,12 +9,17 @@ export default Service.extend({
   _configPromise: null,
 
   config: computed('apiHost', function () {
-    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
+    deprecate('Async Computed Called', false, {
+      id: 'common.async-computed',
+      until: '40',
+    });
     return this.getConfig();
   }),
   async getConfig() {
     if (!this._configPromise) {
-      this._configPromise = this.fetch.getJsonFromApiHost('/application/config');
+      this._configPromise = this.fetch.getJsonFromApiHost(
+        '/application/config'
+      );
     }
     const config = await this._configPromise;
     return config;
@@ -23,105 +28,135 @@ export default Service.extend({
   async itemFromConfig(key) {
     const config = await this.getConfig();
     const obj = config.config;
-    return key in obj?obj[key]:null;
+    return key in obj ? obj[key] : null;
   },
 
-  userSearchType: computed('config.userSearchType', function(){
-    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
+  userSearchType: computed('config.userSearchType', function () {
+    deprecate('Async Computed Called', false, {
+      id: 'common.async-computed',
+      until: '40',
+    });
     return this.getUserSearchType();
   }),
   async getUserSearchType() {
     return this.itemFromConfig('userSearchType');
   },
 
-  authenticationType: computed('config.type', function(){
-    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
+  authenticationType: computed('config.type', function () {
+    deprecate('Async Computed Called', false, {
+      id: 'common.async-computed',
+      until: '40',
+    });
     return this.getAuthenticationType();
   }),
   async getAuthenticationType() {
     return this.itemFromConfig('type');
   },
 
-  maxUploadSize: computed('config.maxUploadSize', function(){
-    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
+  maxUploadSize: computed('config.maxUploadSize', function () {
+    deprecate('Async Computed Called', false, {
+      id: 'common.async-computed',
+      until: '40',
+    });
     return this.getMaxUploadSize();
   }),
   async getMaxUploadSize() {
     return this.itemFromConfig('maxUploadSize');
   },
 
-  apiVersion: computed('config.apiVersion', function(){
-    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
+  apiVersion: computed('config.apiVersion', function () {
+    deprecate('Async Computed Called', false, {
+      id: 'common.async-computed',
+      until: '40',
+    });
     return this.getApiVersion();
   }),
   async getApiVersion() {
     return this.itemFromConfig('apiVersion');
   },
 
-  trackingEnabled: computed('config.trackingEnabled', function(){
-    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
+  trackingEnabled: computed('config.trackingEnabled', function () {
+    deprecate('Async Computed Called', false, {
+      id: 'common.async-computed',
+      until: '40',
+    });
     return this.getTrackingEnabled();
   }),
   async getTrackingEnabled() {
     return this.itemFromConfig('trackingEnabled');
   },
 
-  trackingCode: computed('config.trackingCode', function(){
-    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
+  trackingCode: computed('config.trackingCode', function () {
+    deprecate('Async Computed Called', false, {
+      id: 'common.async-computed',
+      until: '40',
+    });
     return this.getTrackingCode();
   }),
   async getTrackingCode() {
     return this.itemFromConfig('trackingCode');
   },
 
-  loginUrl: computed('config.loginUrl', function(){
-    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
+  loginUrl: computed('config.loginUrl', function () {
+    deprecate('Async Computed Called', false, {
+      id: 'common.async-computed',
+      until: '40',
+    });
     return this.getLoginUrl();
   }),
   async getLoginUrl() {
     return this.itemFromConfig('loginUrl');
   },
 
-  casLoginUrl: computed('config.casLoginUrl', function(){
-    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
+  casLoginUrl: computed('config.casLoginUrl', function () {
+    deprecate('Async Computed Called', false, {
+      id: 'common.async-computed',
+      until: '40',
+    });
     return this.getCasLoginUrl();
   }),
   async getCasLoginUrl() {
     return this.itemFromConfig('casLoginUrl');
   },
 
-  apiNameSpace: computed('serverVariables.apiNameSpace', function(){
-    const serverVariables = this.get('serverVariables');
+  apiNameSpace: computed('serverVariables.apiNameSpace', function () {
+    const serverVariables = this.serverVariables;
     const apiNameSpace = serverVariables.get('apiNameSpace');
     if (isPresent(apiNameSpace)) {
       //remove trailing slashes
-      return apiNameSpace.replace(/\/+$/, "");
+      return apiNameSpace.replace(/\/+$/, '');
     }
     return '';
   }),
 
-  apiHost: computed('serverVariables.apiHost', function(){
-    const serverVariables = this.get('serverVariables');
+  apiHost: computed('serverVariables.apiHost', function () {
+    const serverVariables = this.serverVariables;
     const apiHost = serverVariables.get('apiHost');
     if (isPresent(apiHost)) {
       //remove trailing slashes
-      return apiHost.replace(/\/+$/, "");
+      return apiHost.replace(/\/+$/, '');
     }
     return '';
   }),
 
-  errorCaptureEnabled: computed('serverVariables.errorCaptureEnabled', function(){
-    const serverVariables = this.get('serverVariables');
-    const errorCaptureEnabled = serverVariables.get('errorCaptureEnabled');
-    if (typeof errorCaptureEnabled === 'boolean') {
-      return errorCaptureEnabled;
+  errorCaptureEnabled: computed(
+    'serverVariables.errorCaptureEnabled',
+    function () {
+      const serverVariables = this.serverVariables;
+      const errorCaptureEnabled = serverVariables.get('errorCaptureEnabled');
+      if (typeof errorCaptureEnabled === 'boolean') {
+        return errorCaptureEnabled;
+      }
+
+      return errorCaptureEnabled === 'true';
     }
+  ),
 
-    return errorCaptureEnabled === 'true';
-  }),
-
-  searchEnabled: computed('config.searchEnabled', async function(){
-    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
+  searchEnabled: computed('config.searchEnabled', async function () {
+    deprecate('Async Computed Called', false, {
+      id: 'common.async-computed',
+      until: '40',
+    });
     return this.getSearchEnabled();
   }),
   async getSearchEnabled() {

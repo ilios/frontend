@@ -6,6 +6,8 @@ export default class DetailTermsListItem extends Component {
   @tracked theElement;
 
   get showTooltip() {
-    return this.args?.term.description?.length && this.theElement && this.isHovering;
+    return (
+      this.args?.term.description?.length && this.theElement && this.isHovering
+    );
   }
 }

@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import moment from 'moment';
 
 export default class TimedReleaseSchedule extends Component {
-
   constructor() {
     super(...arguments);
     this.now = new Date();
@@ -16,7 +15,7 @@ export default class TimedReleaseSchedule extends Component {
   }
 
   get startDateInTheFuture() {
-    if (! this.args.startDate) {
+    if (!this.args.startDate) {
       return false;
     }
     return moment(this.args.startDate).isAfter(this.now);

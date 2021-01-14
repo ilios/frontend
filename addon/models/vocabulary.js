@@ -7,12 +7,12 @@ Inflector.inflector.irregular('vocabulary', 'vocabularies');
 
 export default Model.extend({
   title: attr('string'),
-  school: belongsTo('school', {async: true}),
+  school: belongsTo('school', { async: true }),
   active: attr('boolean'),
-  terms: hasMany('term', {async: true}),
+  terms: hasMany('term', { async: true }),
 
-  topLevelTerms: computed('terms.[]', async function() {
-    const terms = await this.get('terms');
+  topLevelTerms: computed('terms.[]', async function () {
+    const terms = await this.terms;
     return terms.toArray().filterBy('isTopLevel');
   }),
 
@@ -23,7 +23,7 @@ export default Model.extend({
    * @public
    */
   associatedVocabularies: computed('terms.@each.vocabulary', async function () {
-    const terms = await this.get('terms');
+    const terms = await this.terms;
     const vocabularies = await all(terms.toArray().mapBy('vocabulary'));
     return vocabularies.uniq().sortBy('title');
   }),
@@ -35,12 +35,14 @@ export default Model.extend({
    * @public
    */
   termsWithAllParents: computed('terms.[]', async function () {
-    const terms = await this.get('terms');
+    const terms = await this.terms;
     const allTerms = await all(terms.toArray().mapBy('termWithAllParents'));
-    return (allTerms.reduce((array, set) => {
-      array.pushObjects(set);
-      return array;
-    }, [])).uniq();
+    return allTerms
+      .reduce((array, set) => {
+        array.pushObjects(set);
+        return array;
+      }, [])
+      .uniq();
   }),
 
   /**
@@ -49,7 +51,7 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  termCount: computed('terms.[]', function(){
+  termCount: computed('terms.[]', function () {
     const termIds = this.hasMany('terms').ids();
     return termIds.length;
   }),

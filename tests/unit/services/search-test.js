@@ -2,20 +2,18 @@ import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Unit | Service | search', function(hooks) {
+module('Unit | Service | search', function (hooks) {
   setupTest(hooks);
   setupMirage(hooks);
 
-  test('it exists', function(assert) {
+  test('it exists', function (assert) {
     const service = this.owner.lookup('service:search');
     assert.ok(service);
   });
 
   test('test search for curriculum', async function (assert) {
     assert.expect(3);
-    const courses = [
-      { id: 1, title: 'Sweet', sessions: [] },
-    ];
+    const courses = [{ id: 1, title: 'Sweet', sessions: [] }];
     const autocomplete = ['one', 'two'];
     this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
       assert.equal(queryParams.q, 'codejam');
@@ -23,8 +21,8 @@ module('Unit | Service | search', function(hooks) {
       return {
         results: {
           courses,
-          autocomplete
-        }
+          autocomplete,
+        },
       };
     });
     const service = this.owner.lookup('service:search');
@@ -40,12 +38,22 @@ module('Unit | Service | search', function(hooks) {
       return {
         results: {
           users: [
-            {id: 1, firstName: 'Stefan', lastName: 'Dude', middleName: 'Awesome'},
-            {id: 2, firstName: 'Sascha', lastName: 'B', displayName: 'IliosMan'},
-            {id: 3, firstName: 'Dave', lastName: 'Lombard'},
+            {
+              id: 1,
+              firstName: 'Stefan',
+              lastName: 'Dude',
+              middleName: 'Awesome',
+            },
+            {
+              id: 2,
+              firstName: 'Sascha',
+              lastName: 'B',
+              displayName: 'IliosMan',
+            },
+            { id: 3, firstName: 'Dave', lastName: 'Lombard' },
           ],
-          autocomplete: ['one', 'two']
-        }
+          autocomplete: ['one', 'two'],
+        },
       };
     });
     const service = this.owner.lookup('service:search');
@@ -68,8 +76,8 @@ module('Unit | Service | search', function(hooks) {
       return {
         results: {
           users: [],
-          autocomplete: []
-        }
+          autocomplete: [],
+        },
       };
     });
     const service = this.owner.lookup('service:search');
@@ -85,8 +93,8 @@ module('Unit | Service | search', function(hooks) {
       return {
         results: {
           users: [],
-          autocomplete: ['one', 'two']
-        }
+          autocomplete: ['one', 'two'],
+        },
       };
     });
     const service = this.owner.lookup('service:search');
@@ -102,8 +110,8 @@ module('Unit | Service | search', function(hooks) {
       return {
         results: {
           courses: [],
-          autocomplete: ['one', 'two']
-        }
+          autocomplete: ['one', 'two'],
+        },
       };
     });
     const service = this.owner.lookup('service:search');

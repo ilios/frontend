@@ -7,10 +7,9 @@ import {
 } from 'ember-cli-page-object';
 import {
   pageObjectFillInFroalaEditor,
-  pageObjectFroalaEditorValue
+  pageObjectFroalaEditorValue,
 } from 'ilios-common';
 import meshManager from './mesh-manager';
-
 
 export default {
   scope: '[data-test-detail-objectives]',
@@ -35,14 +34,24 @@ export default {
       validationError: text('.validation-error-message'),
       hasValidationError: isVisible('.validation-error-message'),
     },
-    parents: collection('td:eq(1) [data-test-parent]', {
-      description: text(),
-    }, { at: 1 }),
+    parents: collection(
+      'td:eq(1) [data-test-parent]',
+      {
+        description: text(),
+      },
+      { at: 1 }
+    ),
     manageParents: clickable('.clickable:eq(0)', { scope: 'td:eq(1)' }),
-    meshTerms: collection('td:eq(2) [data-test-term]', {
-      title: text(),
-    }, { at: 1 }),
-    manageMesh: clickable('li:eq(0)', { scope: 'td:eq(2) .mesh-descriptor-list' }),
+    meshTerms: collection(
+      'td:eq(2) [data-test-term]',
+      {
+        title: text(),
+      },
+      { at: 1 }
+    ),
+    manageMesh: clickable('li:eq(0)', {
+      scope: 'td:eq(2) .mesh-descriptor-list',
+    }),
   }),
   meshManager,
 };

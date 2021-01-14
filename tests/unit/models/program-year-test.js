@@ -1,25 +1,31 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Model | ProgramYear', function(hooks) {
+module('Unit | Model | ProgramYear', function (hooks) {
   setupTest(hooks);
 
-  test('it exists', function(assert) {
-    const model = this.owner.lookup('service:store').createRecord('program-year');
+  test('it exists', function (assert) {
+    const model = this.owner
+      .lookup('service:store')
+      .createRecord('program-year');
     assert.ok(!!model);
   });
 
-  test('academic year string', function(assert) {
-    const model = this.owner.lookup('service:store').createRecord('program-year');
+  test('academic year string', function (assert) {
+    const model = this.owner
+      .lookup('service:store')
+      .createRecord('program-year');
     model.set('startYear', 2000);
     assert.equal(model.get('academicYear'), '2000 - 2001');
   });
 
-  test('classOf string', async function(assert) {
+  test('classOf string', async function (assert) {
     assert.expect(3);
-    const model = this.owner.lookup('service:store').createRecord('program-year');
+    const model = this.owner
+      .lookup('service:store')
+      .createRecord('program-year');
     var store = model.store;
-    const program = store.createRecord('program', {id:99, duration:1});
+    const program = store.createRecord('program', { id: 99, duration: 1 });
     model.set('program', program);
     model.set('startYear', 2000);
     assert.equal(await model.get('classOfYear'), '2001');
@@ -29,7 +35,7 @@ module('Unit | Model | ProgramYear', function(hooks) {
     assert.equal(await model.get('classOfYear'), '2006');
   });
 
-  test('sortedProgramYearObjectives', async function(assert) {
+  test('sortedProgramYearObjectives', async function (assert) {
     assert.expect(4);
     const store = this.owner.lookup('service:store');
     const programYear = store.createRecord('program-year');
@@ -37,19 +43,19 @@ module('Unit | Model | ProgramYear', function(hooks) {
       id: 1,
       programYear,
       title: 'Aardvark',
-      position: 3
+      position: 3,
     });
     const programYearObjective2 = store.createRecord('program-year-objective', {
       id: 2,
       programYear,
       title: 'Bar',
-      position: 2
+      position: 2,
     });
     const programYearObjective3 = store.createRecord('program-year-objective', {
       id: 3,
       programYear,
       title: 'Foo',
-      position: 2
+      position: 2,
     });
     const objectives = await programYear.get('sortedProgramYearObjectives');
     assert.equal(objectives.length, 3);

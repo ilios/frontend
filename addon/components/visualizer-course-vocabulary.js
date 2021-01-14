@@ -4,9 +4,9 @@ import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import {tracked} from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import {restartableTask} from "ember-concurrency-decorators";
+import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class VisualizerCourseVocabulary extends Component {
   @service router;
@@ -18,21 +18,24 @@ export default class VisualizerCourseVocabulary extends Component {
   @restartableTask
   *load(element, [course, vocabulary]) {
     const sessions = yield course.get('sessions');
-    const terms = yield map(sessions.toArray(), async session => {
+    const terms = yield map(sessions.toArray(), async (session) => {
       const sessionTerms = await session.get('terms');
       const hours = await session.get('totalSumDuration');
       const minutes = Math.round(hours * 60);
-      const sessionTermsInThisVocabulary = await filter(sessionTerms.toArray(), async term => {
-        const termVocab = await term.get('vocabulary');
-        return termVocab.get('id') === vocabulary.get('id');
-      });
-      return sessionTermsInThisVocabulary.map(term => {
+      const sessionTermsInThisVocabulary = await filter(
+        sessionTerms.toArray(),
+        async (term) => {
+          const termVocab = await term.get('vocabulary');
+          return termVocab.get('id') === vocabulary.get('id');
+        }
+      );
+      return sessionTermsInThisVocabulary.map((term) => {
         return {
           term,
           session: {
             title: session.get('title'),
             minutes,
-          }
+          },
         };
       });
     });
@@ -51,8 +54,8 @@ export default class VisualizerCourseVocabulary extends Component {
           meta: {
             termTitle,
             termId: term.get('id'),
-            sessions: []
-          }
+            sessions: [],
+          },
         };
         set.pushObject(existing);
       }
@@ -62,15 +65,16 @@ export default class VisualizerCourseVocabulary extends Component {
       return set;
     }, []);
 
-    const totalMinutes = termData.mapBy('data').reduce((total, minutes) => total + minutes, 0);
-    const mappedTermsWithLabel = termData.map(obj => {
-      const percent = (obj.data / totalMinutes * 100).toFixed(1);
+    const totalMinutes = termData
+      .mapBy('data')
+      .reduce((total, minutes) => total + minutes, 0);
+    const mappedTermsWithLabel = termData.map((obj) => {
+      const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
       obj.label = `${obj.meta.termTitle} ${percent}%`;
       obj.meta.totalMinutes = totalMinutes;
       obj.meta.percent = percent;
       return obj;
     });
-
 
     this.data = mappedTermsWithLabel.sort((first, second) => {
       return first.data - second.data;
@@ -87,7 +91,9 @@ export default class VisualizerCourseVocabulary extends Component {
     }
     const { label, data, meta } = obj;
 
-    this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
+    this.tooltipTitle = htmlSafe(
+      `${label} ${data} ${this.intl.t('general.minutes')}`
+    );
     this.tooltipContent = meta.sessions.uniq().sort().join();
   }
 
@@ -96,6 +102,10 @@ export default class VisualizerCourseVocabulary extends Component {
     if (this.args.isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
       return;
     }
-    this.router.transitionTo('course-visualize-term', this.args.course.get('id'), obj.meta.termId);
+    this.router.transitionTo(
+      'course-visualize-term',
+      this.args.course.get('id'),
+      obj.meta.termId
+    );
   }
 }

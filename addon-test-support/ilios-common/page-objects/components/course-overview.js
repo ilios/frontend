@@ -18,43 +18,43 @@ const definition = {
   },
   externalId: {
     scope: '.courseexternalid',
-    value: text('span', { at: 0}),
+    value: text('span', { at: 0 }),
     edit: clickable('[data-test-edit]'),
     set: fillable('input'),
     save: clickable('.done'),
-    hasError: isVisible('.validation-error-message')
+    hasError: isVisible('.validation-error-message'),
   },
   startDate: {
     scope: '.coursestartdate',
-    value: text('span', { at: 0}),
+    value: text('span', { at: 0 }),
     edit: clickable('[data-test-edit]'),
     set: flatpickrDatePicker('input'),
     save: clickable('.done'),
-    hasError: isVisible('.validation-error-message')
+    hasError: isVisible('.validation-error-message'),
   },
   endDate: {
     scope: '.courseenddate',
-    value: text('span', { at: 0}),
+    value: text('span', { at: 0 }),
     edit: clickable('[data-test-edit]'),
     set: flatpickrDatePicker('input'),
     save: clickable('.done'),
-    hasError: isVisible('.validation-error-message')
+    hasError: isVisible('.validation-error-message'),
   },
   level: {
     scope: '.courselevel',
-    value: text('span', { at: 0}),
+    value: text('span', { at: 0 }),
     edit: clickable('[data-test-edit]'),
     set: fillable('select'),
     save: clickable('.done'),
-    hasError: isVisible('.validation-error-message')
+    hasError: isVisible('.validation-error-message'),
   },
   universalLocator: text('.universallocator'),
   clerkshipType: {
     scope: '.clerkshiptype',
-    value: text('span', { at: 0}),
+    value: text('span', { at: 0 }),
     edit: clickable('[data-test-edit]'),
     set: fillable('select'),
-    save: clickable('.done')
+    save: clickable('.done'),
   },
 };
 

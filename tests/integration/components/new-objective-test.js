@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | new objective', function(hooks) {
+module('Integration | Component | new objective', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     this.set('cancel', () => {});
 
     await render(hbs`<NewObjective @cancel={{action cancel}} />`);
@@ -15,7 +15,7 @@ module('Integration | Component | new objective', function(hooks) {
     assert.ok(content.includes('Description'));
   });
 
-  test('errors do not show up initially', async function(assert) {
+  test('errors do not show up initially', async function (assert) {
     this.set('cancel', () => {
       assert.ok(false); //shouldn't be called
     });
@@ -23,7 +23,7 @@ module('Integration | Component | new objective', function(hooks) {
     assert.dom('.validation-error-message').doesNotExist();
   });
 
-  test('errors show up', async function(assert) {
+  test('errors show up', async function (assert) {
     this.set('cancel', () => {
       assert.ok(false); //shouldn't be called
     });

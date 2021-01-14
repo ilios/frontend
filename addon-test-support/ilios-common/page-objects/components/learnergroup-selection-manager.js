@@ -1,4 +1,10 @@
-import {clickable, collection, create, fillable, text} from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  fillable,
+  text,
+} from 'ember-cli-page-object';
 import detailLearnergroupsList from './detail-learnergroups-list';
 import learnergroupTree from './learnergroup-tree';
 
@@ -9,8 +15,8 @@ const definition = {
     title: text('[data-test-title]', { at: 0 }),
     list: detailLearnergroupsList,
     noGroups: {
-      scope: '[data-test-no-selected-learnergroups]'
-    }
+      scope: '[data-test-no-selected-learnergroups]',
+    },
   },
   availableGroups: {
     scope: '[data-test-available-learner-groups]',
@@ -19,9 +25,12 @@ const definition = {
     runSearch: clickable('[data-test-search-box] .search-icon'),
     cohorts: collection('[data-test-cohorts]', {
       title: text('[data-test-title]', { at: 0 }),
-      trees: collection('[data-test-learnergroup-tree-root=true]', learnergroupTree)
-    })
-  }
+      trees: collection(
+        '[data-test-learnergroup-tree-root=true]',
+        learnergroupTree
+      ),
+    }),
+  },
 };
 
 export default definition;

@@ -7,7 +7,8 @@ import {
   hasClass,
   isVisible,
   property,
-  text, triggerable,
+  text,
+  triggerable,
   visitable,
 } from 'ember-cli-page-object';
 import objectives from './components/session/objectives';
@@ -18,7 +19,10 @@ import collapsedTaxonomies from './components/collapsed-taxonomies';
 import collapsedObjectives from './components/session/collapsed-objectives';
 import instructorSelectionManager from './components/instructor-selection-manager';
 import offeringForm from './components/offering-form';
-import { flatpickrDatePicker, pageObjectFillInFroalaEditor } from 'ilios-common';
+import {
+  flatpickrDatePicker,
+  pageObjectFillInFroalaEditor,
+} from 'ilios-common';
 import leadershipCollapsed from './components/leadership-collapsed';
 import leadershipExpanded from './components/session-leadership-expanded';
 import postrequisiteEditor from './components/session/postrequisite-editor';
@@ -37,7 +41,7 @@ export default create({
       edit: clickable('[data-test-edit]'),
       set: fillable('input'),
       save: clickable('.done'),
-      value: text('.title')
+      value: text('.title'),
     },
     copy: {
       scope: 'a.copy',
@@ -47,33 +51,33 @@ export default create({
     },
     sessionType: {
       scope: '.sessiontype',
-      value: text('span', { at: 0}),
+      value: text('span', { at: 0 }),
       edit: clickable('[data-test-edit]'),
       set: fillable('select'),
       save: clickable('.done'),
-      hasError: isVisible('.validation-error-message')
+      hasError: isVisible('.validation-error-message'),
     },
     sessionDescription: {
       scope: '.sessiondescription',
-      value: text('span', { at: 0}),
+      value: text('span', { at: 0 }),
       edit: clickable('[data-test-edit]'),
       set: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
       save: clickable('.done'),
       cancel: clickable('.cancel'),
-      hasError: isVisible('.validation-error-message')
+      hasError: isVisible('.validation-error-message'),
     },
     instructionalNotes: {
       scope: '[data-test-instructional-notes]',
-      value: text('span', { at: 0}),
+      value: text('span', { at: 0 }),
       edit: clickable('[data-test-edit]'),
       set: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
       save: clickable('.done'),
       cancel: clickable('.cancel'),
-      hasError: isVisible('.validation-error-message')
+      hasError: isVisible('.validation-error-message'),
     },
     ilmHours: {
       scope: '.sessionilmhours',
-      value: text('span', { at: 0}),
+      value: text('span', { at: 0 }),
       edit: clickable('[data-test-edit]'),
       set: fillable('input'),
       save: clickable('.done'),
@@ -81,7 +85,7 @@ export default create({
     },
     ilmDueDate: {
       scope: '.sessionilmduedate',
-      value: text('span', { at: 0}),
+      value: text('span', { at: 0 }),
       edit: clickable('[data-test-edit]'),
       set: flatpickrDatePicker('input'),
       save: clickable('.done'),
@@ -107,7 +111,9 @@ export default create({
       isActive: property('checked', 'input'),
       click: clickable('[data-test-toggle-yesno] [data-test-handle]'),
     },
-    toggleIlm: clickable('[data-test-toggle-yesno] [data-test-handle]', { scope: '.independentlearningcontrol' }),
+    toggleIlm: clickable('[data-test-toggle-yesno] [data-test-handle]', {
+      scope: '.independentlearningcontrol',
+    }),
     prerequisites: {
       scope: '.prerequisites',
     },
@@ -115,7 +121,7 @@ export default create({
       scope: '[data-test-postrequisite]',
       value: text('[data-test-edit]'),
       edit: clickable('[data-test-edit]'),
-      editor: postrequisiteEditor
+      editor: postrequisiteEditor,
     },
     lastUpdated: text('.last-update'),
   },
@@ -128,7 +134,9 @@ export default create({
   taxonomies,
   collapsedTaxonomies,
   detailLearnersAndLearnerGroups,
-  learnersAreVisible: isVisible('[data-test-detail-learners-and-learner-groups]'),
+  learnersAreVisible: isVisible(
+    '[data-test-detail-learners-and-learner-groups]'
+  ),
   instructorsAreVisible: isVisible('[data-test-detail-instructors]'),
   instructors: {
     scope: '[data-test-detail-instructors]',
@@ -139,7 +147,7 @@ export default create({
     currentGroups: collection('[data-test-instructor-group]', {
       title: text('[data-test-instructor-group-title]'),
       members: collection('[data-test-instructor-group-members] li', {
-        userNameInfo
+        userNameInfo,
       }),
     }),
     currentInstructors: collection('[data-test-instructors] li', {
@@ -155,40 +163,51 @@ export default create({
       title: text('.title'),
       createNew: clickable('.actions button'),
     },
-    dateBlocks: collection('[data-test-session-offerings-list] .offering-block', {
-      dayOfWeek: text('.offering-block-date-dayofweek'),
-      dayOfMonth: text('.offering-block-date-dayofmonth'),
-      startTime: text('.offering-block-time-time-starttime'),
-      hasStartTime: isVisible('.offering-block-time-time-starttime'),
-      endTime: text('.offering-block-time-time-endtime'),
-      hasEndTime: isVisible('.offering-block-time-time-endtime'),
-      multiDay: text('.multiday-offering-block-time-time'),
-      hasMultiDay: isVisible('.multiday-offering-block-time-time'),
-      offerings: collection('[data-test-offerings] [data-test-offering-manager]', {
-        learnerGroups: collection('.offering-manager-learner-groups li', {
-          title: text(),
-          expandTooltip: triggerable('mouseover'),
-          closeTooltip: triggerable('mouseout'),
-          tooltipContents: text('.ilios-tooltip', { resetScope: true }),
-          isTooltipVisible: isVisible('.ilios-tooltip', { resetScope: true }),
-        }),
-        location: text('[data-test-location]'),
-        url: property('href', '[data-test-url] a'),
-        hasUrl: isVisible('[data-test-url]'),
-        instructors: collection('.offering-manager-instructors [data-test-instructor]', {
-          userNameInfo
-        }),
-        edit: clickable('.edit'),
-        remove: clickable('.remove'),
-        hasRemoveConfirm: hasClass('show-remove-confirmation'),
-        removeConfirmMessage: text('.confirm-message'),
-        confirmRemoval: clickable('.remove', { scope: '.confirm-buttons'}),
-        cancelRemoval: clickable('.cancel', { scope: '.confirm-buttons' }),
-        offeringForm,
-      }),
-    }),
+    dateBlocks: collection(
+      '[data-test-session-offerings-list] .offering-block',
+      {
+        dayOfWeek: text('.offering-block-date-dayofweek'),
+        dayOfMonth: text('.offering-block-date-dayofmonth'),
+        startTime: text('.offering-block-time-time-starttime'),
+        hasStartTime: isVisible('.offering-block-time-time-starttime'),
+        endTime: text('.offering-block-time-time-endtime'),
+        hasEndTime: isVisible('.offering-block-time-time-endtime'),
+        multiDay: text('.multiday-offering-block-time-time'),
+        hasMultiDay: isVisible('.multiday-offering-block-time-time'),
+        offerings: collection(
+          '[data-test-offerings] [data-test-offering-manager]',
+          {
+            learnerGroups: collection('.offering-manager-learner-groups li', {
+              title: text(),
+              expandTooltip: triggerable('mouseover'),
+              closeTooltip: triggerable('mouseout'),
+              tooltipContents: text('.ilios-tooltip', { resetScope: true }),
+              isTooltipVisible: isVisible('.ilios-tooltip', {
+                resetScope: true,
+              }),
+            }),
+            location: text('[data-test-location]'),
+            url: property('href', '[data-test-url] a'),
+            hasUrl: isVisible('[data-test-url]'),
+            instructors: collection(
+              '.offering-manager-instructors [data-test-instructor]',
+              {
+                userNameInfo,
+              }
+            ),
+            edit: clickable('.edit'),
+            remove: clickable('.remove'),
+            hasRemoveConfirm: hasClass('show-remove-confirmation'),
+            removeConfirmMessage: text('.confirm-message'),
+            confirmRemoval: clickable('.remove', { scope: '.confirm-buttons' }),
+            cancelRemoval: clickable('.cancel', { scope: '.confirm-buttons' }),
+            offeringForm,
+          }
+        ),
+      }
+    ),
     offeringForm,
-    smallGroup: clickable('.choose-offering-type button', { at: 0}),
-    singleOffering: clickable('.choose-offering-type button', { at: 1}),
+    smallGroup: clickable('.choose-offering-type button', { at: 0 }),
+    singleOffering: clickable('.choose-offering-type button', { at: 1 }),
   },
 });

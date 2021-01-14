@@ -1,4 +1,4 @@
-import { registerDecorator } from "class-validator";
+import { registerDecorator } from 'class-validator';
 import { getOwner } from '@ember/application';
 
 export function IsInt(validationOptions) {
@@ -15,9 +15,11 @@ export function IsInt(validationOptions) {
             return Number.isInteger(numValue);
           }
           // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger#Polyfill
-          return typeof value === 'number' &&
+          return (
+            typeof value === 'number' &&
             isFinite(numValue) &&
-            Math.floor(numValue) === numValue;
+            Math.floor(numValue) === numValue
+          );
         },
         defaultMessage({ object: target }) {
           const owner = getOwner(target);
@@ -25,7 +27,7 @@ export function IsInt(validationOptions) {
           const description = intl.t('errors.description');
 
           return intl.t('errors.notAnInteger', { description });
-        }
+        },
       },
     });
   };

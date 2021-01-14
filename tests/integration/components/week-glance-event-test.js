@@ -9,7 +9,7 @@ import { component } from 'ilios-common/page-objects/components/week-glance-even
 
 const today = moment();
 
-module('Integration | Component | week-glance-event', function(hooks) {
+module('Integration | Component | week-glance-event', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders with some stuff', async function (assert) {
@@ -20,7 +20,9 @@ module('Integration | Component | week-glance-event', function(hooks) {
       url: 'https://zoom.example.com/123?p=456',
       sessionTypeTitle: 'Lecture',
       courseExternalId: 'C1',
-      sessionDescription: 'Best <strong>Session</strong> For Sure' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+      sessionDescription:
+        'Best <strong>Session</strong> For Sure' +
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -63,7 +65,10 @@ module('Integration | Component | week-glance-event', function(hooks) {
     assert.equal(component.link, 'Virtual Session Link');
     assert.equal(component.url, 'https://zoom.example.com/123?p=456');
     assert.ok(component.hasDescription);
-    assert.equal(component.description, 'Best Session For SureLorem ipsum dolor sit amet, c');
+    assert.equal(
+      component.description,
+      'Best Session For SureLorem ipsum dolor sit amet, c'
+    );
     assert.equal(component.learningMaterials.length, 3);
     assert.equal(component.learningMaterials[0].title, 'Citation LM');
     assert.ok(component.learningMaterials[0].hasTypeIcon);
@@ -85,7 +90,10 @@ module('Integration | Component | week-glance-event', function(hooks) {
     assert.equal(component.learningMaterials[2].typeIconTitle, 'File');
     assert.notOk(component.learningMaterials[2].hasCitation);
     assert.notOk(component.learningMaterials[2].hasPublicNotes);
-    assert.equal(component.learningMaterials[2].url, 'http://myhost.com/url1?inline');
+    assert.equal(
+      component.learningMaterials[2].url,
+      'http://myhost.com/url1?inline'
+    );
 
     assert.notOk(component.hasInstructors);
     assert.equal(component.sessionAttributes.length, 4);
@@ -118,10 +126,7 @@ module('Integration | Component | week-glance-event', function(hooks) {
           sessionLearningMaterial: 1,
         },
       ],
-      instructors: [
-        'Second Person',
-        'First Person',
-      ],
+      instructors: ['Second Person', 'First Person'],
       attireRequired: false,
       equipmentRequired: false,
       attendanceRequired: false,
@@ -140,10 +145,16 @@ module('Integration | Component | week-glance-event', function(hooks) {
     assert.notOk(component.learningMaterials[0].hasCitation);
     assert.ok(component.learningMaterials[0].hasPublicNotes);
     assert.equal(component.learningMaterials[0].publicNotes, 'slide notes');
-    assert.equal(component.learningMaterials[0].url, 'http://myhost.com/url1?inline');
+    assert.equal(
+      component.learningMaterials[0].url,
+      'http://myhost.com/url1?inline'
+    );
 
     assert.ok(component.hasInstructors);
-    assert.equal(component.instructors, 'Instructors: First Person, Second Person');
+    assert.equal(
+      component.instructors,
+      'Instructors: First Person, Second Person'
+    );
     assert.equal(component.sessionAttributes.length, 0);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -155,7 +166,9 @@ module('Integration | Component | week-glance-event', function(hooks) {
       location: 'Room 123',
       sessionTypeTitle: 'Lecture',
       courseExternalId: 'C1',
-      sessionDescription: 'Best <strong>Session</strong> For Sure' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+      sessionDescription:
+        'Best <strong>Session</strong> For Sure' +
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -200,7 +213,10 @@ module('Integration | Component | week-glance-event', function(hooks) {
     assert.equal(component.sessionType, 'Lecture');
     assert.equal(component.location, '- Room 123');
     assert.ok(component.hasDescription);
-    assert.equal(component.description, 'Best Session For Sure' + 'Lorem ipsum dolor sit amet, c');
+    assert.equal(
+      component.description,
+      'Best Session For Sure' + 'Lorem ipsum dolor sit amet, c'
+    );
     assert.equal(component.learningMaterials.length, 3);
     assert.equal(component.learningMaterials[0].title, 'In the window');
     assert.ok(component.learningMaterials[0].timedReleaseInfo.length > 0);
@@ -222,14 +238,16 @@ module('Integration | Component | week-glance-event', function(hooks) {
       location: 'Room 123',
       sessionTypeTitle: 'Lecture',
       courseExternalId: 'C1',
-      sessionDescription: 'Best <strong>Session</strong> For Sure' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+      sessionDescription:
+        'Best <strong>Session</strong> For Sure' +
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
       prerequisites: [
         { name: 'prework 1', slug: 'e1' },
         { name: 'prework 2', slug: 'e2' },
-      ]
+      ],
     });
     await render(hbs`<WeekGlanceEvent @event={{event}} />`);
 
@@ -250,7 +268,9 @@ module('Integration | Component | week-glance-event', function(hooks) {
       location: 'Room 123',
       sessionTypeTitle: 'Lecture',
       courseExternalId: 'C1',
-      sessionDescription: 'Best <strong>Session</strong> For Sure' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+      sessionDescription:
+        'Best <strong>Session</strong> For Sure' +
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -302,6 +322,9 @@ module('Integration | Component | week-glance-event', function(hooks) {
     assert.equal(component.learningMaterials[1].typeIconTitle, 'File');
     assert.notOk(component.learningMaterials[1].hasCitation);
     assert.notOk(component.learningMaterials[1].hasPublicNotes);
-    assert.equal(component.learningMaterials[1].url, 'http://myhost.com/url1?inline');
+    assert.equal(
+      component.learningMaterials[1].url,
+      'http://myhost.com/url1?inline'
+    );
   });
 });

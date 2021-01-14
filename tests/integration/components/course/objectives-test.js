@@ -6,7 +6,7 @@ import { component } from 'ilios-common/page-objects/components/course/objective
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | course/objectives', function(hooks) {
+module('Integration | Component | course/objectives', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -19,12 +19,20 @@ module('Integration | Component | course/objectives', function(hooks) {
     const course = this.server.create('course', { cohorts: [cohort] });
     const pyObjectives = this.server.createList('programYearObjective', 3, {
       programYear,
-      competency: competencies[0]
+      competency: competencies[0],
     });
-    this.server.createList('programYearObjective', 2, { programYear, competency: competencies[1] });
-    this.server.create('courseObjective', { course, programYearObjectives: [ pyObjectives[0] ] });
+    this.server.createList('programYearObjective', 2, {
+      programYear,
+      competency: competencies[1],
+    });
+    this.server.create('courseObjective', {
+      course,
+      programYearObjectives: [pyObjectives[0]],
+    });
     this.server.create('courseObjective', { course });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner
+      .lookup('service:store')
+      .find('course', course.id);
 
     this.set('course', courseModel);
     await render(hbs`<Course::Objectives
@@ -35,12 +43,21 @@ module('Integration | Component | course/objectives', function(hooks) {
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 2);
-    assert.equal(component.objectiveList.objectives[0].description.text, 'course objective 0');
+    assert.equal(
+      component.objectiveList.objectives[0].description.text,
+      'course objective 0'
+    );
     assert.equal(component.objectiveList.objectives[0].parents.list.length, 1);
-    assert.equal(component.objectiveList.objectives[0].parents.list[0].text, 'program-year objective 0');
+    assert.equal(
+      component.objectiveList.objectives[0].parents.list[0].text,
+      'program-year objective 0'
+    );
     assert.ok(component.objectiveList.objectives[0].meshDescriptors.empty);
 
-    assert.equal(component.objectiveList.objectives[1].description.text, 'course objective 1');
+    assert.equal(
+      component.objectiveList.objectives[1].description.text,
+      'course objective 1'
+    );
     assert.ok(component.objectiveList.objectives[1].parents.empty);
     assert.ok(component.objectiveList.objectives[1].meshDescriptors.empty);
 
@@ -57,11 +74,19 @@ module('Integration | Component | course/objectives', function(hooks) {
     const course = this.server.create('course', { cohorts: [cohort] });
     const pyObjectives = this.server.createList('programYearObjective', 3, {
       programYear,
-      competency: competencies[0]
+      competency: competencies[0],
     });
-    this.server.createList('programYearObjective', 2, { programYear, competency: competencies[1] });
-    this.server.create('courseObjective', { course, programYearObjectives: [ pyObjectives[0] ] });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.server.createList('programYearObjective', 2, {
+      programYear,
+      competency: competencies[1],
+    });
+    this.server.create('courseObjective', {
+      course,
+      programYearObjectives: [pyObjectives[0]],
+    });
+    const courseModel = await this.owner
+      .lookup('service:store')
+      .find('course', course.id);
 
     this.set('course', courseModel);
     await render(hbs`<Course::Objectives
@@ -72,7 +97,10 @@ module('Integration | Component | course/objectives', function(hooks) {
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 1);
-    assert.equal(component.objectiveList.objectives[0].description.text, 'course objective 0');
+    assert.equal(
+      component.objectiveList.objectives[0].description.text,
+      'course objective 0'
+    );
     assert.equal(component.objectiveList.objectives[0].parents.list.length, 1);
     await component.objectiveList.objectives[0].parents.list[0].manage();
 
@@ -84,20 +112,35 @@ module('Integration | Component | course/objectives', function(hooks) {
     assert.ok(m.competencies[0].selected);
 
     assert.equal(m.competencies[0].objectives.length, 3);
-    assert.equal(m.competencies[0].objectives[0].title, 'program-year objective 0');
+    assert.equal(
+      m.competencies[0].objectives[0].title,
+      'program-year objective 0'
+    );
     assert.ok(m.competencies[0].objectives[0].selected);
-    assert.equal(m.competencies[0].objectives[1].title, 'program-year objective 1');
+    assert.equal(
+      m.competencies[0].objectives[1].title,
+      'program-year objective 1'
+    );
     assert.ok(m.competencies[0].objectives[1].notSelected);
-    assert.equal(m.competencies[0].objectives[2].title, 'program-year objective 2');
+    assert.equal(
+      m.competencies[0].objectives[2].title,
+      'program-year objective 2'
+    );
     assert.ok(m.competencies[0].objectives[2].notSelected);
 
     assert.equal(m.competencies[1].title, 'competency 1');
     assert.ok(m.competencies[1].notSelected);
 
     assert.equal(m.competencies[1].objectives.length, 2);
-    assert.equal(m.competencies[1].objectives[0].title, 'program-year objective 3');
+    assert.equal(
+      m.competencies[1].objectives[0].title,
+      'program-year objective 3'
+    );
     assert.ok(m.competencies[1].objectives[0].notSelected);
-    assert.equal(m.competencies[1].objectives[1].title, 'program-year objective 4');
+    assert.equal(
+      m.competencies[1].objectives[1].title,
+      'program-year objective 4'
+    );
     assert.ok(m.competencies[1].objectives[1].notSelected);
 
     await a11yAudit(this.element);
@@ -113,20 +156,29 @@ module('Integration | Component | course/objectives', function(hooks) {
     const cohort2 = this.server.create('cohort', { programYear: programYear2 });
     const competencies = this.server.createList('competency', 2);
     const course = this.server.create('course', {
-      cohorts: [cohort1, cohort2]
+      cohorts: [cohort1, cohort2],
     });
     const pyObjectives1 = this.server.createList('programYearObjective', 2, {
       competency: competencies[0],
-      programYear: programYear1
+      programYear: programYear1,
     });
     this.server.createList('programYearObjective', 2, {
       competency: competencies[1],
-      programYear: programYear2
+      programYear: programYear2,
     });
-    this.server.create('courseObjective', { course, programYearObjectives: [ pyObjectives1[0] ] });
-    this.server.createList('programYearObjective', 2, { competency: competencies[0] });
-    this.server.createList('programYearObjective', 4, { competency: competencies[1] });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.server.create('courseObjective', {
+      course,
+      programYearObjectives: [pyObjectives1[0]],
+    });
+    this.server.createList('programYearObjective', 2, {
+      competency: competencies[0],
+    });
+    this.server.createList('programYearObjective', 4, {
+      competency: competencies[1],
+    });
+    const courseModel = await this.owner
+      .lookup('service:store')
+      .find('course', course.id);
 
     this.set('course', courseModel);
     await render(hbs`<Course::Objectives
@@ -137,13 +189,19 @@ module('Integration | Component | course/objectives', function(hooks) {
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 1);
-    assert.equal(component.objectiveList.objectives[0].description.text, 'course objective 0');
+    assert.equal(
+      component.objectiveList.objectives[0].description.text,
+      'course objective 0'
+    );
     assert.equal(component.objectiveList.objectives[0].parents.list.length, 1);
     await component.objectiveList.objectives[0].parents.list[0].manage();
 
     const m = component.objectiveList.objectives[0].parentManager;
     assert.ok(m.hasMultipleCohorts);
-    assert.equal(m.selectedCohortTitle, 'program 0 cohort 0 program 0 cohort 1');
+    assert.equal(
+      m.selectedCohortTitle,
+      'program 0 cohort 0 program 0 cohort 1'
+    );
     assert.equal(m.selectedCohortId, '1');
 
     assert.equal(m.competencies.length, 1);
@@ -151,9 +209,15 @@ module('Integration | Component | course/objectives', function(hooks) {
     assert.ok(m.competencies[0].selected);
 
     assert.equal(m.competencies[0].objectives.length, 2);
-    assert.equal(m.competencies[0].objectives[0].title, 'program-year objective 0');
+    assert.equal(
+      m.competencies[0].objectives[0].title,
+      'program-year objective 0'
+    );
     assert.ok(m.competencies[0].objectives[0].selected);
-    assert.equal(m.competencies[0].objectives[1].title, 'program-year objective 1');
+    assert.equal(
+      m.competencies[0].objectives[1].title,
+      'program-year objective 1'
+    );
     assert.ok(m.competencies[0].objectives[1].notSelected);
 
     await m.selectCohort(2);
@@ -162,9 +226,15 @@ module('Integration | Component | course/objectives', function(hooks) {
     assert.ok(m.competencies[0].notSelected);
 
     assert.equal(m.competencies[0].objectives.length, 2);
-    assert.equal(m.competencies[0].objectives[0].title, 'program-year objective 2');
+    assert.equal(
+      m.competencies[0].objectives[0].title,
+      'program-year objective 2'
+    );
     assert.ok(m.competencies[0].objectives[0].notSelected);
-    assert.equal(m.competencies[0].objectives[1].title, 'program-year objective 3');
+    assert.equal(
+      m.competencies[0].objectives[1].title,
+      'program-year objective 3'
+    );
     assert.ok(m.competencies[0].objectives[1].notSelected);
 
     await a11yAudit(this.element);
@@ -174,7 +244,9 @@ module('Integration | Component | course/objectives', function(hooks) {
   test('deleting objective', async function (assert) {
     const course = this.server.create('course');
     this.server.create('courseObjective', { course });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner
+      .lookup('service:store')
+      .find('course', course.id);
 
     this.set('course', courseModel);
     await render(hbs`<Course::Objectives

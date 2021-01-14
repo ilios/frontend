@@ -3,7 +3,7 @@ import {
   collection,
   hasClass,
   isPresent,
-  text
+  text,
 } from 'ember-cli-page-object';
 import offerings from './sessions-grid-offering-table';
 

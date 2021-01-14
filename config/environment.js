@@ -2,7 +2,7 @@
 
 const API_VERSION = require('./api-version.js');
 
-module.exports = function(environment /*, appConfig */) {
+module.exports = function (environment /*, appConfig */) {
   var ENV = {
     moment: {
       includeLocales: ['es', 'fr'],
@@ -10,10 +10,10 @@ module.exports = function(environment /*, appConfig */) {
       // 'all' - all years, all timezones
       // '2010-2020' - 2010-2020, all timezones
       // 'none' - no data, just timezone API
-      includeTimezone: 'all'
+      includeTimezone: 'all',
     },
     featureFlags: {
-      'sessionLinkingAdminUi': true,
+      sessionLinkingAdminUi: true,
     },
     apiVersion: API_VERSION,
   };
@@ -23,5 +23,4 @@ module.exports = function(environment /*, appConfig */) {
   }
 
   return ENV;
-
 };

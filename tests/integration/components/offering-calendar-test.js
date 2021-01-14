@@ -5,11 +5,11 @@ import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | offering-calendar', function(hooks) {
+module('Integration | Component | offering-calendar', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('shows events', async function(assert) {
+  test('shows events', async function (assert) {
     assert.expect(1);
     const today = moment().hour(8);
     const tomorrow = moment().add(1, 'day').hour(8);
@@ -17,27 +17,30 @@ module('Integration | Component | offering-calendar', function(hooks) {
     const sessionType = this.server.create('session-type');
     const session = this.server.create('session', {
       course,
-      sessionType
+      sessionType,
     });
-
 
     const offering1 = this.server.create('offering', {
       startDate: today.format(),
       endDate: today.clone().add('1', 'hour').format(),
       location: 123,
-      session
+      session,
     });
     const offering2 = this.server.create('offering', {
       startDate: today.format(),
       endDate: today.clone().add('1', 'hour').format(),
       location: 123,
-      session
+      session,
     });
     const learnerGroup = this.server.create('learner-group', {
       offerings: [offering1, offering2],
     });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .find('session', session.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
     this.set('startDate', today.toDate());
     this.set('endDate', tomorrow.toDate());
     this.set('session', sessionModel);

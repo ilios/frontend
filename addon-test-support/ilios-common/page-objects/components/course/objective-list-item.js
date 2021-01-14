@@ -7,7 +7,7 @@ import {
 } from 'ember-cli-page-object';
 import {
   pageObjectFillInFroalaEditor,
-  pageObjectFroalaEditorValue
+  pageObjectFroalaEditorValue,
 } from 'ilios-common';
 import meshManager from './manage-objective-descriptors';
 import parentManager from './manage-objective-parents';
@@ -30,8 +30,10 @@ const definition = {
   },
   parents,
   meshDescriptors,
-  remove: clickable('[data-icon="trash"]', { scope: '[data-test-actions]'}),
-  hasTrashCan: isVisible('[data-icon="trash"]', { scope: '[data-test-actions]' }),
+  remove: clickable('[data-icon="trash"]', { scope: '[data-test-actions]' }),
+  hasTrashCan: isVisible('[data-icon="trash"]', {
+    scope: '[data-test-actions]',
+  }),
   confirmRemoval: {
     scope: '[data-test-confirm-removal]',
     confirm: clickable('[data-test-confirm]'),

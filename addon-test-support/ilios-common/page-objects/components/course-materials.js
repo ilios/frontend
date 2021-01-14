@@ -5,7 +5,7 @@ import {
   collection,
   fillable,
   isPresent,
-  text
+  text,
 } from 'ember-cli-page-object';
 
 const definition = {

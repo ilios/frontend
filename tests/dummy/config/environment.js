@@ -8,14 +8,14 @@ if (fs.existsSync(dotEnvPath)) {
   dotenv.config({ path: dotEnvPath });
 }
 
-module.exports = function(environment) {
+module.exports = function (environment) {
   const ENV = {
     modulePrefix: 'dummy',
     environment,
     rootURL: '/',
     locationType: 'auto',
     intl: {
-      defaultLocale: 'en'
+      defaultLocale: 'en',
     },
     'ember-simple-auth-token': {
       serverTokenEndpoint: '/auth/login',
@@ -24,7 +24,7 @@ module.exports = function(environment) {
       refreshTokenPropertyName: 'jwt',
       authorizationHeaderName: 'X-JWT-Authorization',
       authorizationPrefix: 'Token ',
-      refreshLeeway: 300
+      refreshLeeway: 300,
     },
     serverVariables: {
       tagPrefix: 'iliosconfig',
@@ -32,7 +32,7 @@ module.exports = function(environment) {
       defaults: {
         'api-name-space': process.env.ILIOS_FRONTEND_API_NAMESPACE || 'api/v3',
         'api-host': process.env.ILIOS_FRONTEND_API_HOST || null,
-      }
+      },
     },
     fontawesome: {
       enableExperimentalBuildTimeTransform: false,
@@ -70,7 +70,7 @@ module.exports = function(environment) {
 
     //Remove mirage in development, we only use it in testing
     ENV['ember-cli-mirage'] = {
-      enabled: false
+      enabled: false,
     };
 
     //put ember concurrency tasks into debug mode to make errors much easier to spot

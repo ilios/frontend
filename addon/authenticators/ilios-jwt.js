@@ -15,14 +15,14 @@ export default JwtTokenAuthenticator.extend({
                                  otherwise
   */
   async authenticate(credentials, headers) {
-    if(this.tokenPropertyName in credentials){
+    if (this.tokenPropertyName in credentials) {
       const token = get(credentials, this.tokenPropertyName);
       const tokenData = this.getTokenData(token);
       const expiresAt = get(tokenData, this.tokenExpireName);
 
       this.scheduleAccessTokenRefresh(expiresAt, token);
 
-      const response  = {};
+      const response = {};
       response[this.tokenPropertyName] = token;
       response[this.tokenExpireName] = expiresAt;
 
@@ -41,7 +41,7 @@ export default JwtTokenAuthenticator.extend({
    * @param {Object} data The POST data.
    * @param {Object} headers Request headers.
    * @return {Promise} The result of the request.
-  */
+   */
   makeRequest(url, data, headers) {
     const host = this.iliosConfig.apiHost ? this.iliosConfig.apiHost : '';
     return this._super(`${host}${url}`, data, headers);

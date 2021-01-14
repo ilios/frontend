@@ -1,15 +1,22 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, fillIn, click, findAll, find, triggerEvent } from '@ember/test-helpers';
+import {
+  render,
+  fillIn,
+  click,
+  findAll,
+  find,
+  triggerEvent,
+} from '@ember/test-helpers';
 import { map } from 'rsvp';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | leadership manager', function(hooks) {
+module('Integration | Component | leadership manager', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders with data', async function(assert) {
+  test('it renders with data', async function (assert) {
     assert.expect(7);
     this.server.createList('user', 2);
     const users = await this.owner.lookup('service:store').findAll('user');
@@ -33,7 +40,8 @@ module('Integration | Component | leadership manager', function(hooks) {
     />`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
+    const studentAdvisors =
+      'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
 
     assert.dom(directors).exists({ count: 1 });
     assert.dom(findAll(directors)[0]).hasText('0 guy M. Mc0son');
@@ -44,7 +52,7 @@ module('Integration | Component | leadership manager', function(hooks) {
     assert.dom(findAll(studentAdvisors)[0]).hasText('1 guy M. Mc1son');
   });
 
-  test('it renders without data', async function(assert) {
+  test('it renders without data', async function (assert) {
     assert.expect(3);
     this.set('directors', []);
     this.set('administrators', []);
@@ -66,14 +74,15 @@ module('Integration | Component | leadership manager', function(hooks) {
     />`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
+    const studentAdvisors =
+      'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
 
     assert.dom(directors).doesNotExist();
     assert.dom(administrators).doesNotExist();
     assert.dom(studentAdvisors).doesNotExist();
   });
 
-  test('remove director', async function(assert) {
+  test('remove director', async function (assert) {
     assert.expect(3);
     this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').find('user', 1);
@@ -106,7 +115,7 @@ module('Integration | Component | leadership manager', function(hooks) {
     await click(icon);
   });
 
-  test('remove administrator', async function(assert) {
+  test('remove administrator', async function (assert) {
     assert.expect(3);
     this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').find('user', 1);
@@ -139,7 +148,7 @@ module('Integration | Component | leadership manager', function(hooks) {
     await click(icon);
   });
 
-  test('remove student advisor', async function(assert) {
+  test('remove student advisor', async function (assert) {
     assert.expect(3);
     this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').find('user', 1);
@@ -172,7 +181,7 @@ module('Integration | Component | leadership manager', function(hooks) {
     await click(icon);
   });
 
-  test('add director', async function(assert) {
+  test('add director', async function (assert) {
     assert.expect(8);
     this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').find('user', 1);
@@ -199,8 +208,10 @@ module('Integration | Component | leadership manager', function(hooks) {
       @addStudentAdvisor={{noop}}
     />`);
     const directorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
-    const administratorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const studentAdvisorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
+    const administratorsList =
+      'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
+    const studentAdvisorsList =
+      'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
     const directorSearch = '[data-test-director-search] input';
     const firstResult = '[data-test-result-index="1"]';
 
@@ -216,7 +227,7 @@ module('Integration | Component | leadership manager', function(hooks) {
     assert.dom(studentAdvisorsList).exists({ count: 1 });
   });
 
-  test('add administrator', async function(assert) {
+  test('add administrator', async function (assert) {
     assert.expect(8);
     this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').find('user', 1);
@@ -243,8 +254,10 @@ module('Integration | Component | leadership manager', function(hooks) {
       @addStudentAdvisor={{noop}}
     />`);
     const directorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
-    const administratorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const studentAdvisorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
+    const administratorsList =
+      'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
+    const studentAdvisorsList =
+      'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
     const administratorSearch = '[data-test-administrator-search] input';
     const firstResult = '[data-test-result-index="1"]';
 
@@ -261,7 +274,7 @@ module('Integration | Component | leadership manager', function(hooks) {
     assert.dom(studentAdvisorsList).exists({ count: 1 });
   });
 
-  test('add student advisor', async function(assert) {
+  test('add student advisor', async function (assert) {
     assert.expect(8);
     this.server.createList('user', 1);
     const user = await this.owner.lookup('service:store').find('user', 1);
@@ -288,8 +301,10 @@ module('Integration | Component | leadership manager', function(hooks) {
       @addStudentAdvisor={{this.add}}
     />`);
     const directorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
-    const administratorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const studentAdvisorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
+    const administratorsList =
+      'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
+    const studentAdvisorsList =
+      'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
     const studentAdvisorSearch = '[data-test-student-advisor-search] input';
     const firstResult = '[data-test-result-index="1"]';
 
@@ -306,13 +321,13 @@ module('Integration | Component | leadership manager', function(hooks) {
     assert.dom(studentAdvisorsList).exists({ count: 1 });
   });
 
-  test('disabled users are indicated with an icon', async function(assert) {
+  test('disabled users are indicated with an icon', async function (assert) {
     assert.expect(7);
     this.server.create('user', {
-      enabled: true
+      enabled: true,
     });
     this.server.create('user', {
-      enabled: false
+      enabled: false,
     });
     const users = await this.owner.lookup('service:store').findAll('user');
 
@@ -345,12 +360,20 @@ module('Integration | Component | leadership manager', function(hooks) {
     assert.dom(secondAdministratorName).hasText('1 guy M. Mc1son');
   });
 
-  test('users are sorted by full name', async function(assert) {
+  test('users are sorted by full name', async function (assert) {
     assert.expect(12);
 
     this.server.create('user', { firstName: 'Aaron', lastName: 'Aardvark' });
-    this.server.create('user', { firstName: 'Ursula', middleName: 'Undine', lastName: 'Unbekannt' });
-    this.server.create('user', { firstName: 'Zeb', lastName: 'Zoober', displayName: 'The Bane of Iowa' });
+    this.server.create('user', {
+      firstName: 'Ursula',
+      middleName: 'Undine',
+      lastName: 'Unbekannt',
+    });
+    this.server.create('user', {
+      firstName: 'Zeb',
+      lastName: 'Zoober',
+      displayName: 'The Bane of Iowa',
+    });
     const users = await this.owner.lookup('service:store').findAll('user');
 
     this.set('directors', users);
@@ -374,20 +397,35 @@ module('Integration | Component | leadership manager', function(hooks) {
 
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
+    const studentAdvisors =
+      'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
 
-    [directors, administrators, studentAdvisors].forEach(users => {
+    [directors, administrators, studentAdvisors].forEach((users) => {
       assert.dom(users).exists({ count: 3 });
-      assert.dom(`${users}:nth-of-type(1) [data-test-fullname]`).hasText('Aaron M. Aardvark');
-      assert.dom(`${users}:nth-of-type(2) [data-test-fullname]`).hasText('The Bane of Iowa');
-      assert.dom(`${users}:nth-of-type(3) [data-test-fullname]`).hasText('Ursula U. Unbekannt');
+      assert
+        .dom(`${users}:nth-of-type(1) [data-test-fullname]`)
+        .hasText('Aaron M. Aardvark');
+      assert
+        .dom(`${users}:nth-of-type(2) [data-test-fullname]`)
+        .hasText('The Bane of Iowa');
+      assert
+        .dom(`${users}:nth-of-type(3) [data-test-fullname]`)
+        .hasText('Ursula U. Unbekannt');
     });
   });
 
-  test('username info tooltip shows as applicable', async function(assert) {
+  test('username info tooltip shows as applicable', async function (assert) {
     this.server.create('user', { firstName: 'Aaron', lastName: 'Aardvark' });
-    this.server.create('user', { firstName: 'Ursula', middleName: 'Undine', lastName: 'Unbekannt' });
-    this.server.create('user', { firstName: 'Zeb', lastName: 'Zoober', displayName: 'The Bane of Iowa' });
+    this.server.create('user', {
+      firstName: 'Ursula',
+      middleName: 'Undine',
+      lastName: 'Unbekannt',
+    });
+    this.server.create('user', {
+      firstName: 'Zeb',
+      lastName: 'Zoober',
+      displayName: 'The Bane of Iowa',
+    });
     const users = await this.owner.lookup('service:store').findAll('user');
 
     this.set('directors', users);
@@ -411,19 +449,34 @@ module('Integration | Component | leadership manager', function(hooks) {
 
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
-    const studentAdvisors = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
+    const studentAdvisors =
+      'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
 
-    await map([directors, administrators, studentAdvisors], async users => {
+    await map([directors, administrators, studentAdvisors], async (users) => {
       assert.dom(users).exists({ count: 3 });
-      assert.dom(`${users}:nth-of-type(1) [data-test-fullname]`).hasText('Aaron M. Aardvark');
+      assert
+        .dom(`${users}:nth-of-type(1) [data-test-fullname]`)
+        .hasText('Aaron M. Aardvark');
       assert.dom(`${users}:nth-of-type(1) [data-test-info]`).doesNotExist();
-      assert.dom(`${users}:nth-of-type(2) [data-test-fullname]`).hasText('The Bane of Iowa');
+      assert
+        .dom(`${users}:nth-of-type(2) [data-test-fullname]`)
+        .hasText('The Bane of Iowa');
       assert.dom(find('.ilios-tooltip')).doesNotExist();
-      await triggerEvent(find(`${users}:nth-of-type(2) [data-test-info]`), 'mouseover');
-      assert.dom(find('.ilios-tooltip')).hasText('Campus name of record: Zeb M, Zoober');
-      await triggerEvent(find(`${users}:nth-of-type(2) [data-test-info]`), 'mouseout');
+      await triggerEvent(
+        find(`${users}:nth-of-type(2) [data-test-info]`),
+        'mouseover'
+      );
+      assert
+        .dom(find('.ilios-tooltip'))
+        .hasText('Campus name of record: Zeb M, Zoober');
+      await triggerEvent(
+        find(`${users}:nth-of-type(2) [data-test-info]`),
+        'mouseout'
+      );
       assert.dom(find('.ilios-tooltip')).doesNotExist();
-      assert.dom(`${users}:nth-of-type(3) [data-test-fullname]`).hasText('Ursula U. Unbekannt');
+      assert
+        .dom(`${users}:nth-of-type(3) [data-test-fullname]`)
+        .hasText('Ursula U. Unbekannt');
       assert.dom(`${users}:nth-of-type(3) [data-test-info]`).doesNotExist();
     });
   });

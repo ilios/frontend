@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/learning-materials';
 
-module('Integration | Component | detail learning materials', function(hooks) {
+module('Integration | Component | detail learning materials', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -15,7 +15,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
     this.user = this.server.create('user');
   });
 
-  test('lm table items', async function(assert) {
+  test('lm table items', async function (assert) {
     assert.expect(10);
 
     const learningMaterial = this.server.create('learning-material', {
@@ -33,9 +33,11 @@ module('Integration | Component | detail learning materials', function(hooks) {
     });
 
     const course = this.server.create('course', {
-      learningMaterials: [clm]
+      learningMaterials: [clm],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner
+      .lookup('service:store')
+      .find('course', course.id);
 
     this.set('subject', courseModel);
 
@@ -47,7 +49,10 @@ module('Integration | Component | detail learning materials', function(hooks) {
     assert.equal(component.current.length, 1);
     assert.equal(component.current[0].type, 'Citation');
     assert.equal(component.current[0].title, 'test title');
-    assert.equal(component.current[0].owner.userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.equal(
+      component.current[0].owner.userNameInfo.fullName,
+      '0 guy M. Mc0son'
+    );
     assert.equal(component.current[0].required, 'Yes');
     assert.equal(component.current[0].notes, 'Yes');
     assert.equal(component.current[0].mesh, 'None');
@@ -56,7 +61,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
     assert.notOk(component.current[0].isTimedRelease);
   });
 
-  test('custom user display name', async function(assert) {
+  test('custom user display name', async function (assert) {
     const user = this.server.create('user', { displayName: 'Clem Chowder' });
 
     const learningMaterial = this.server.create('learning-material', {
@@ -74,9 +79,11 @@ module('Integration | Component | detail learning materials', function(hooks) {
     });
 
     const course = this.server.create('course', {
-      learningMaterials: [clm]
+      learningMaterials: [clm],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner
+      .lookup('service:store')
+      .find('course', course.id);
 
     this.set('subject', courseModel);
 
@@ -86,16 +93,22 @@ module('Integration | Component | detail learning materials', function(hooks) {
       @isCourse={{true}}
       @editable={{true}}
     />`);
-    assert.equal(component.current[0].owner.userNameInfo.fullName, 'Clem Chowder');
+    assert.equal(
+      component.current[0].owner.userNameInfo.fullName,
+      'Clem Chowder'
+    );
     assert.notOk(component.current[0].owner.userNameInfo.isTooltipVisible);
     await component.current[0].owner.userNameInfo.expandTooltip();
     assert.ok(component.current[0].owner.userNameInfo.isTooltipVisible);
-    assert.equal(component.current[0].owner.userNameInfo.tooltipContents, 'Campus name of record: 1 guy M, Mc1son');
+    assert.equal(
+      component.current[0].owner.userNameInfo.tooltipContents,
+      'Campus name of record: 1 guy M, Mc1son'
+    );
     await component.current[0].owner.userNameInfo.closeTooltip();
     assert.notOk(component.current[0].owner.userNameInfo.isTooltipVisible);
   });
 
-  test('sort button visible when lm list has 2+ items and editing is allowed', async function(assert) {
+  test('sort button visible when lm list has 2+ items and editing is allowed', async function (assert) {
     assert.expect(1);
 
     const learningMaterial = this.server.create('learning-material', {
@@ -104,14 +117,20 @@ module('Integration | Component | detail learning materials', function(hooks) {
       userRole: this.roles[0],
     });
 
-    const learningMaterials = this.server.createList('course-learning-material', 2, {
-      learningMaterial,
-    });
+    const learningMaterials = this.server.createList(
+      'course-learning-material',
+      2,
+      {
+        learningMaterial,
+      }
+    );
 
     const course = this.server.create('course', {
-      learningMaterials
+      learningMaterials,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner
+      .lookup('service:store')
+      .find('course', course.id);
     this.set('subject', courseModel);
 
     await render(hbs`<DetailLearningMaterials
@@ -123,7 +142,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
     assert.ok(component.canSort);
   });
 
-  test('sort button not visible when in read-only mode', async function(assert) {
+  test('sort button not visible when in read-only mode', async function (assert) {
     assert.expect(1);
 
     const learningMaterial = this.server.create('learning-material', {
@@ -132,14 +151,20 @@ module('Integration | Component | detail learning materials', function(hooks) {
       userRole: this.roles[0],
     });
 
-    const learningMaterials = this.server.createList('course-learning-material', 2, {
-      learningMaterial,
-    });
+    const learningMaterials = this.server.createList(
+      'course-learning-material',
+      2,
+      {
+        learningMaterial,
+      }
+    );
 
     const course = this.server.create('course', {
-      learningMaterials
+      learningMaterials,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner
+      .lookup('service:store')
+      .find('course', course.id);
     this.set('subject', courseModel);
 
     await render(hbs`<DetailLearningMaterials
@@ -151,11 +176,13 @@ module('Integration | Component | detail learning materials', function(hooks) {
     assert.notOk(component.canSort);
   });
 
-  test('sort button not visible when lm list is empty', async function(assert) {
+  test('sort button not visible when lm list is empty', async function (assert) {
     assert.expect(1);
 
     const course = this.server.create('course');
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner
+      .lookup('service:store')
+      .find('course', course.id);
     this.set('subject', courseModel);
 
     await render(hbs`<DetailLearningMaterials
@@ -181,9 +208,11 @@ module('Integration | Component | detail learning materials', function(hooks) {
     });
 
     const course = this.server.create('course', {
-      learningMaterials: [clm]
+      learningMaterials: [clm],
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner
+      .lookup('service:store')
+      .find('course', course.id);
 
     this.set('subject', courseModel);
 
@@ -196,7 +225,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
     assert.notOk(component.canSort);
   });
 
-  test('click sort button, then cancel', async function(assert) {
+  test('click sort button, then cancel', async function (assert) {
     assert.expect(6);
 
     const learningMaterial = this.server.create('learning-material', {
@@ -205,14 +234,20 @@ module('Integration | Component | detail learning materials', function(hooks) {
       userRole: this.roles[0],
     });
 
-    const learningMaterials = this.server.createList('course-learning-material', 2, {
-      learningMaterial,
-    });
+    const learningMaterials = this.server.createList(
+      'course-learning-material',
+      2,
+      {
+        learningMaterial,
+      }
+    );
 
     const course = this.server.create('course', {
-      learningMaterials
+      learningMaterials,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner
+      .lookup('service:store')
+      .find('course', course.id);
     this.set('subject', courseModel);
     await render(hbs`<DetailLearningMaterials
       @subject={{this.subject}}
@@ -229,7 +264,7 @@ module('Integration | Component | detail learning materials', function(hooks) {
     assert.notOk(component.sortManager.isVisible);
   });
 
-  test('click sort button, then save', async function(assert) {
+  test('click sort button, then save', async function (assert) {
     assert.expect(2);
 
     const learningMaterial = this.server.create('learning-material', {
@@ -238,13 +273,19 @@ module('Integration | Component | detail learning materials', function(hooks) {
       userRole: this.roles[0],
     });
 
-    const learningMaterials = this.server.createList('course-learning-material', 2, {
-      learningMaterial,
-    });
+    const learningMaterials = this.server.createList(
+      'course-learning-material',
+      2,
+      {
+        learningMaterial,
+      }
+    );
     const course = this.server.create('course', {
-      learningMaterials
+      learningMaterials,
     });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner
+      .lookup('service:store')
+      .find('course', course.id);
     this.set('subject', courseModel);
     this.server.patch('/api/courselearningmaterials/1', (schema) => {
       assert.ok(true);

@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, find, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | toggle buttons', function(hooks) {
+module('Integration | Component | toggle buttons', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(8);
 
     const firstRadio = 'input:nth-of-type(1)';
@@ -21,18 +21,34 @@ module('Integration | Component | toggle buttons', function(hooks) {
       @secondLabel="Second"
       @secondIcon="expand"
     />`);
-    assert.dom('[data-test-first]').hasText('First', 'first label has correct text');
+    assert
+      .dom('[data-test-first]')
+      .hasText('First', 'first label has correct text');
     assert.dom(firstRadio).isChecked('first radio is checked');
     assert.dom('[data-test-first][data-test-selected]').exists();
-    assert.dom('[data-test-first]').hasAttribute('for', find(firstRadio).id, 'first label is linked to radio correctly');
+    assert
+      .dom('[data-test-first]')
+      .hasAttribute(
+        'for',
+        find(firstRadio).id,
+        'first label is linked to radio correctly'
+      );
 
-    assert.dom('[data-test-second]').hasText('Second', 'second label has correct text');
+    assert
+      .dom('[data-test-second]')
+      .hasText('Second', 'second label has correct text');
     assert.dom(secondRadio).isNotChecked('second radio is not checked');
     assert.dom('[data-test-second][data-test-selected]').doesNotExist();
-    assert.dom('[data-test-second]').hasAttribute('for', find(secondRadio).id, 'second label is linked to radio correctly');
+    assert
+      .dom('[data-test-second]')
+      .hasAttribute(
+        'for',
+        find(secondRadio).id,
+        'second label is linked to radio correctly'
+      );
   });
 
-  test('clicking radio fires toggle action', async function(assert) {
+  test('clicking radio fires toggle action', async function (assert) {
     assert.expect(2);
 
     const first = 'input:nth-of-type(1)';
@@ -47,7 +63,7 @@ module('Integration | Component | toggle buttons', function(hooks) {
         assert.ok(newValue, 'has been toggled');
       }
       this.set('firstOptionSelected', newValue);
-      called ++;
+      called++;
     });
     await render(hbs`<ToggleButtons
       @toggle={{action toggle}}
@@ -60,7 +76,7 @@ module('Integration | Component | toggle buttons', function(hooks) {
     await click(first);
   });
 
-  test('clicking label fires toggle action', async function(assert) {
+  test('clicking label fires toggle action', async function (assert) {
     assert.expect(2);
 
     this.set('firstOptionSelected', true);
@@ -72,7 +88,7 @@ module('Integration | Component | toggle buttons', function(hooks) {
         assert.ok(newValue, 'has been toggled');
       }
       this.set('firstOptionSelected', newValue);
-      called ++;
+      called++;
     });
     await render(hbs`<ToggleButtons
       @toggle={{this.toggle}}
@@ -85,7 +101,7 @@ module('Integration | Component | toggle buttons', function(hooks) {
     await click('[data-test-first]');
   });
 
-  test('clicking selected radio does not fire toggle action', async function(assert) {
+  test('clicking selected radio does not fire toggle action', async function (assert) {
     assert.expect(1);
 
     const first = 'input:nth-of-type(1)';
@@ -102,6 +118,6 @@ module('Integration | Component | toggle buttons', function(hooks) {
     />`);
 
     await click(first);
-    assert.equal(this.get('firstOptionSelected'), true);
+    assert.equal(this.firstOptionSelected, true);
   });
 });

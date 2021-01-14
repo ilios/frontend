@@ -8,7 +8,7 @@ export default class CourseController extends Controller {
     'courseTaxonomyDetails',
     'courseCompetencyDetails',
     'courseManageLeadership',
-  ]
+  ];
 
   details = false;
   editable = false;

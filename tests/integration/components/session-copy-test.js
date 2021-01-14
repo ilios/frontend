@@ -1,17 +1,12 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  click,
-  find,
-  fillIn
-} from '@ember/test-helpers';
+import { render, click, find, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | session copy', function(hooks) {
+module('Integration | Component | session copy', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -21,10 +16,10 @@ module('Integration | Component | session copy', function(hooks) {
     const lastYear = thisYear - 1;
     const nextYear = thisYear + 1;
 
-    [lastYear, thisYear, nextYear].forEach(year => {
+    [lastYear, thisYear, nextYear].forEach((year) => {
       this.server.create('academic-year', {
         id: year,
-        title: year
+        title: year,
       });
     });
     const school = this.server.create('school');
@@ -42,17 +37,19 @@ module('Integration | Component | session copy', function(hooks) {
 
     const session = this.server.create('session', {
       title: 'old session',
-      course
+      course,
     });
 
     const permissionCheckerMock = Service.extend({
       canCreateSession() {
         return true;
-      }
+      },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
 
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .find('session', session.id);
     this.set('session', sessionModel);
 
     await render(hbs`<SessionCopy @session={{this.session}} />`);
@@ -62,39 +59,43 @@ module('Integration | Component | session copy', function(hooks) {
     const save = '.done';
 
     assert.dom(`${yearSelect} option`).exists({ count: 3 });
-    for (let i = 1; i <= 2; i++){
-      assert.dom(`${yearSelect} option:nth-of-type(${i})`).hasText(`${lastYear + i - 1} - ${lastYear + i}`);
+    for (let i = 1; i <= 2; i++) {
+      assert
+        .dom(`${yearSelect} option:nth-of-type(${i})`)
+        .hasText(`${lastYear + i - 1} - ${lastYear + i}`);
     }
     assert.dom(`${courseSelect} option`).exists({ count: 2 });
     assert.dom(`${courseSelect} option:nth-of-type(1)`).hasText(course.title);
     assert.dom(`${courseSelect} option:nth-of-type(2)`).hasText(course2.title);
     assert.notOk(find(save).enabled);
-
   });
 
-  test('copy session', async function(assert) {
+  test('copy session', async function (assert) {
     assert.expect(22);
 
     const thisYear = parseInt(moment().format('YYYY'), 10);
     this.server.create('academic-year', {
       id: thisYear,
-      title: thisYear
+      title: thisYear,
     });
 
     const school = this.server.create('school');
     const course = this.server.create('course', {
       title: 'old course',
       year: thisYear,
-      school
+      school,
     });
     const learningMaterial = this.server.create('learning-material');
-    const sessionLearningMaterial = this.server.create('session-learning-material', {
-      notes: 'some notes',
-      required: false,
-      publicNotes: true,
-      learningMaterial,
-      position: 3,
-    });
+    const sessionLearningMaterial = this.server.create(
+      'session-learning-material',
+      {
+        notes: 'some notes',
+        required: false,
+        publicNotes: true,
+        learningMaterial,
+        position: 3,
+      }
+    );
     const meshDescriptor = this.server.create('mesh-descriptor');
     const term = this.server.create('term');
     const sessionType = this.server.create('session-type');
@@ -119,27 +120,33 @@ module('Integration | Component | session copy', function(hooks) {
     const sessionObjective = this.server.create('sessionObjective', {
       session,
       title: 'session objective title',
-      courseObjectives: [ courseObjective ],
-      terms: [ objectiveTerm ],
+      courseObjectives: [courseObjective],
+      terms: [objectiveTerm],
       position: 3,
     });
 
     const permissionCheckerMock = Service.extend({
       canCreateSession() {
         return true;
-      }
+      },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 2);
     });
-    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
+    await render(
+      hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`
+    );
 
     await click('.done');
 
-    const sessions = await this.owner.lookup('service:store').findAll('session');
+    const sessions = await this.owner
+      .lookup('service:store')
+      .findAll('session');
     assert.equal(sessions.length, 2);
     const newSession = sessions.findBy('id', '2');
     assert.equal(session.attireRequired, newSession.attireRequired);
@@ -150,7 +157,9 @@ module('Integration | Component | session copy', function(hooks) {
     assert.equal(session.description, newSession.description);
     assert.equal(session.instructionalNotes, newSession.instructionalNotes);
 
-    const sessionLearningMaterials = await this.owner.lookup('service:store').findAll('session-learning-material');
+    const sessionLearningMaterials = await this.owner
+      .lookup('service:store')
+      .findAll('session-learning-material');
     assert.equal(sessionLearningMaterials.length, 2);
     const newSessionLm = sessionLearningMaterials.findBy('id', '2');
     assert.equal(sessionLearningMaterial.notes, newSessionLm.notes);
@@ -158,21 +167,28 @@ module('Integration | Component | session copy', function(hooks) {
     assert.equal(sessionLearningMaterial.publicNotes, newSessionLm.publicNotes);
     assert.equal(sessionLearningMaterial.position, newSessionLm.position);
     assert.equal(newSessionLm.belongsTo('session').id(), newSession.id);
-    assert.equal(newSessionLm.belongsTo('learningMaterial').id(), learningMaterial.id);
+    assert.equal(
+      newSessionLm.belongsTo('learningMaterial').id(),
+      learningMaterial.id
+    );
 
-    const sessionObjectives = await this.owner.lookup('service:store').findAll('session-objective');
+    const sessionObjectives = await this.owner
+      .lookup('service:store')
+      .findAll('session-objective');
     assert.equal(sessionObjectives.length, 2);
     const newSessionObjective = sessionObjectives.findBy('id', '2');
     assert.equal(newSessionObjective.title, sessionObjective.title);
     assert.equal(sessionObjective.position, newSessionObjective.position);
     assert.equal(newSessionObjective.belongsTo('session').id(), newSession.id);
-    const objectiveTermModel = await this.owner.lookup('service:store').find('term', objectiveTerm.id);
-    const copiedSessionObjectiveTerms = (await newSessionObjective.terms);
+    const objectiveTermModel = await this.owner
+      .lookup('service:store')
+      .find('term', objectiveTerm.id);
+    const copiedSessionObjectiveTerms = await newSessionObjective.terms;
     assert.equal(copiedSessionObjectiveTerms.length, 1);
     assert.ok(copiedSessionObjectiveTerms.includes(objectiveTermModel));
   });
 
-  test('save cannot be clicked when there is no year or course', async function(assert) {
+  test('save cannot be clicked when there is no year or course', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', {
       school,
@@ -191,17 +207,19 @@ module('Integration | Component | session copy', function(hooks) {
     const permissionCheckerMock = Service.extend({
       canCreateSession() {
         return true;
-      }
+      },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .find('session', session.id);
     this.set('session', sessionModel);
 
     await render(hbs`<SessionCopy @session={{this.session}} />`);
     assert.dom('[data-test-save]').isDisabled();
   });
 
-  test('changing the year looks for new matching courses', async function(assert) {
+  test('changing the year looks for new matching courses', async function (assert) {
     assert.expect(5);
     const thisYear = parseInt(moment().format('YYYY'), 10);
     const nextYear = thisYear + 1;
@@ -215,11 +233,11 @@ module('Integration | Component | session copy', function(hooks) {
     const school = this.server.create('school');
     const course1 = this.server.create('course', {
       school,
-      year: thisYear
+      year: thisYear,
     });
     const course2 = this.server.create('course', {
       school,
-      year: nextYear
+      year: nextYear,
     });
 
     const sessionType = this.server.create('session-type');
@@ -236,10 +254,12 @@ module('Integration | Component | session copy', function(hooks) {
     const permissionCheckerMock = Service.extend({
       canCreateSession() {
         return true;
-      }
+      },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .find('session', session.id);
     this.set('session', sessionModel);
     await render(hbs`<SessionCopy @session={{this.session}} />`);
     const yearSelect = '.year-select select';
@@ -254,7 +274,7 @@ module('Integration | Component | session copy', function(hooks) {
     assert.dom(`${courseSelect} option:nth-of-type(1)`).hasText(course2.title);
   });
 
-  test('copy session into the first course in a different year #2130', async function(assert) {
+  test('copy session into the first course in a different year #2130', async function (assert) {
     assert.expect(4);
     const thisYear = parseInt(moment().format('YYYY'), 10);
     const nextYear = thisYear + 1;
@@ -268,16 +288,16 @@ module('Integration | Component | session copy', function(hooks) {
     const school = this.server.create('school');
     const course = this.server.create('course', {
       school,
-      year: thisYear
+      year: thisYear,
     });
     this.server.create('course', {
       school,
-      year: nextYear
+      year: nextYear,
     });
     const course3 = this.server.create('course', {
       school,
       title: 'alpha first',
-      year: nextYear
+      year: nextYear,
     });
 
     const sessionType = this.server.create('session-type');
@@ -294,16 +314,20 @@ module('Integration | Component | session copy', function(hooks) {
     const permissionCheckerMock = Service.extend({
       canCreateSession() {
         return true;
-      }
+      },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 2);
     });
 
-    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
+    await render(
+      hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`
+    );
     const yearSelect = '.year-select select';
     const courseSelect = '.course-select select';
 
@@ -311,25 +335,27 @@ module('Integration | Component | session copy', function(hooks) {
     assert.dom(courseSelect).hasValue(course3.id, 'first course is selected');
     await click('.done');
 
-    const sessions = await this.owner.lookup('service:store').findAll('session');
+    const sessions = await this.owner
+      .lookup('service:store')
+      .findAll('session');
     assert.equal(sessions.length, 2);
     const newSession = sessions.findBy('id', '2');
     assert.equal(newSession.belongsTo('course').id(), course3.id);
   });
 
-  test('copy session into same course saves postrequisites', async function(assert) {
+  test('copy session into same course saves postrequisites', async function (assert) {
     assert.expect(4);
 
     const thisYear = parseInt(moment().format('YYYY'), 10);
     this.server.create('academic-year', {
       id: thisYear,
-      title: thisYear
+      title: thisYear,
     });
 
     const school = this.server.create('school');
     const course = this.server.create('course', {
       year: thisYear,
-      school
+      school,
     });
 
     const sessionType = this.server.create('session-type');
@@ -342,26 +368,32 @@ module('Integration | Component | session copy', function(hooks) {
     const session = this.server.create('session', {
       course,
       sessionType,
-      postrequisite
+      postrequisite,
     });
 
     const permissionCheckerMock = Service.extend({
       canCreateSession() {
         return true;
-      }
+      },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 3);
     });
 
-    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
+    await render(
+      hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`
+    );
 
     await click('.done');
 
-    const sessions = await this.owner.lookup('service:store').findAll('session');
+    const sessions = await this.owner
+      .lookup('service:store')
+      .findAll('session');
     assert.equal(sessions.length, 3);
     const newSession = sessions.findBy('id', '3');
     assert.equal(session.title, newSession.title);
@@ -370,23 +402,23 @@ module('Integration | Component | session copy', function(hooks) {
     assert.equal(postrequisite.id, newPostRequisite.id);
   });
 
-  test('copy session into different course does not save postrequisites', async function(assert) {
+  test('copy session into different course does not save postrequisites', async function (assert) {
     assert.expect(4);
 
     const thisYear = parseInt(moment().format('YYYY'), 10);
     this.server.create('academic-year', {
       id: thisYear,
-      title: thisYear
+      title: thisYear,
     });
 
     const school = this.server.create('school');
     const course = this.server.create('course', {
       year: thisYear,
-      school
+      school,
     });
     const secondCourse = this.server.create('course', {
       year: thisYear,
-      school
+      school,
     });
 
     const sessionType = this.server.create('session-type');
@@ -399,27 +431,33 @@ module('Integration | Component | session copy', function(hooks) {
     const session = this.server.create('session', {
       course,
       sessionType,
-      postrequisite
+      postrequisite,
     });
 
     const permissionCheckerMock = Service.extend({
       canCreateSession() {
         return true;
-      }
+      },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 3);
     });
 
-    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
+    await render(
+      hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`
+    );
     const courseSelect = '.course-select select';
     await fillIn(courseSelect, secondCourse.id);
     await click('.done');
 
-    const sessions = await this.owner.lookup('service:store').findAll('session');
+    const sessions = await this.owner
+      .lookup('service:store')
+      .findAll('session');
     assert.equal(sessions.length, 3);
     const newSession = sessions.findBy('id', '3');
     assert.equal(session.title, newSession.title);
@@ -428,19 +466,19 @@ module('Integration | Component | session copy', function(hooks) {
     assert.equal(newPostRequisite, null);
   });
 
-  test('copy session into same course saves prerequisites', async function(assert) {
+  test('copy session into same course saves prerequisites', async function (assert) {
     assert.expect(6);
 
     const thisYear = parseInt(moment().format('YYYY'), 10);
     this.server.create('academic-year', {
       id: thisYear,
-      title: thisYear
+      title: thisYear,
     });
 
     const school = this.server.create('school');
     const course = this.server.create('course', {
       year: thisYear,
-      school
+      school,
     });
 
     const sessionType = this.server.create('session-type');
@@ -457,26 +495,32 @@ module('Integration | Component | session copy', function(hooks) {
     const session = this.server.create('session', {
       course,
       sessionType,
-      prerequisites: [firstPrerequisite, secondPrerequisite]
+      prerequisites: [firstPrerequisite, secondPrerequisite],
     });
 
     const permissionCheckerMock = Service.extend({
       canCreateSession() {
         return true;
-      }
+      },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 4);
     });
 
-    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
+    await render(
+      hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`
+    );
 
     await click('.done');
 
-    const sessions = await this.owner.lookup('service:store').findAll('session');
+    const sessions = await this.owner
+      .lookup('service:store')
+      .findAll('session');
     assert.equal(sessions.length, 4);
     const newSession = sessions.findBy('id', '4');
     assert.equal(session.title, newSession.title);
@@ -488,23 +532,23 @@ module('Integration | Component | session copy', function(hooks) {
     assert.ok(ids.includes(secondPrerequisite.id));
   });
 
-  test('copy session into different course does not save prerequisites', async function(assert) {
+  test('copy session into different course does not save prerequisites', async function (assert) {
     assert.expect(4);
 
     const thisYear = parseInt(moment().format('YYYY'), 10);
     this.server.create('academic-year', {
       id: thisYear,
-      title: thisYear
+      title: thisYear,
     });
 
     const school = this.server.create('school');
     const course = this.server.create('course', {
       year: thisYear,
-      school
+      school,
     });
     const secondCourse = this.server.create('course', {
       year: thisYear,
-      school
+      school,
     });
 
     const sessionType = this.server.create('session-type');
@@ -521,28 +565,34 @@ module('Integration | Component | session copy', function(hooks) {
     const session = this.server.create('session', {
       course,
       sessionType,
-      prerequisites: [firstPrerequisite, secondPrerequisite]
+      prerequisites: [firstPrerequisite, secondPrerequisite],
     });
 
     const permissionCheckerMock = Service.extend({
       canCreateSession() {
         return true;
-      }
+      },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 4);
     });
 
-    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
+    await render(
+      hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`
+    );
 
     const courseSelect = '.course-select select';
     await fillIn(courseSelect, secondCourse.id);
     await click('.done');
 
-    const sessions = await this.owner.lookup('service:store').findAll('session');
+    const sessions = await this.owner
+      .lookup('service:store')
+      .findAll('session');
     assert.equal(sessions.length, 4);
     const newSession = sessions.findBy('id', '4');
     assert.equal(session.title, newSession.title);

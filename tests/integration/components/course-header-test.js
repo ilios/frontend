@@ -6,7 +6,7 @@ import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'ilios-common/page-objects/components/course-header';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | course-header', function(hooks) {
+module('Integration | Component | course-header', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -16,7 +16,7 @@ module('Integration | Component | course-header', function(hooks) {
 
   test('it renders and is accessible', async function (assert) {
     const course = this.server.create('course', {
-      published: true
+      published: true,
     });
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
@@ -27,7 +27,7 @@ module('Integration | Component | course-header', function(hooks) {
 
   test('it renders and is accessible when not editable', async function (assert) {
     const course = this.server.create('course', {
-      published: true
+      published: true,
     });
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
@@ -36,7 +36,7 @@ module('Integration | Component | course-header', function(hooks) {
     assert.ok(true, 'not a11y violations');
   });
 
-  test('course title validation fails if value is empty', async function(assert) {
+  test('course title validation fails if value is empty', async function (assert) {
     const course = this.server.create('course');
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
@@ -51,7 +51,7 @@ module('Integration | Component | course-header', function(hooks) {
     assert.ok(component.title.hasError);
   });
 
-  test('course title validation fails if value is too short', async function(assert) {
+  test('course title validation fails if value is too short', async function (assert) {
     const course = this.server.create('course');
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
@@ -111,7 +111,7 @@ module('Integration | Component | course-header', function(hooks) {
     assert.ok(component.title.hasError);
   });
 
-  test('cancel course title changes', async function(assert) {
+  test('cancel course title changes', async function (assert) {
     const course = this.server.create('course');
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);

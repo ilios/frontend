@@ -4,20 +4,22 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
-module('Integration | Component | ilios calendar day', function(hooks) {
+module('Integration | Component | ilios calendar day', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(2);
     const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
-    await render(hbs`<IliosCalendarDay @date={{date}} @selectEvent={{noop}} @calendarEvents={{array}} />`);
+    await render(
+      hbs`<IliosCalendarDay @date={{date}} @selectEvent={{noop}} @calendarEvents={{array}} />`
+    );
     //Date input is Wednesday, Septrmber 30th.  Should be the first string
     assert.dom().containsText('Wednesday');
     assert.dom('[data-test-calender-event]').doesNotExist();
   });
 
-  test('prework', async function(assert) {
+  test('prework', async function (assert) {
     assert.expect(3);
 
     const date = moment(new Date('2015-09-30T12:00:00'));
@@ -42,7 +44,7 @@ module('Integration | Component | ilios calendar day', function(hooks) {
         name: 'prework 2',
         startDate: moment().format(),
         endDate: moment().format(),
-        location: "room 111",
+        location: 'room 111',
         ilmSession: true,
         slug: 'whatever',
         postrequisiteSlug: 'something',
@@ -55,7 +57,7 @@ module('Integration | Component | ilios calendar day', function(hooks) {
         name: 'blanked prework',
         startDate: moment().format(),
         endDate: moment().format(),
-        location: "room 111",
+        location: 'room 111',
         ilmSession: true,
         slug: 'whatever',
         postrequisiteSlug: 'something',
@@ -68,7 +70,7 @@ module('Integration | Component | ilios calendar day', function(hooks) {
         name: 'scheduled prework',
         startDate: moment().format(),
         endDate: moment().format(),
-        location: "room 111",
+        location: 'room 111',
         ilmSession: true,
         slug: 'whatever',
         postrequisiteSlug: 'something',
@@ -81,7 +83,7 @@ module('Integration | Component | ilios calendar day', function(hooks) {
         name: 'unpublished prework',
         startDate: moment().format(),
         endDate: moment().format(),
-        location: "room 111",
+        location: 'room 111',
         ilmSession: true,
         slug: 'whatever',
         postrequisiteSlug: 'something',
@@ -105,7 +107,7 @@ module('Integration | Component | ilios calendar day', function(hooks) {
     assert.ok(preworkElements[1].textContent.includes('prework 2'));
   });
 
-  test('prework to unpublished/scheduled/blanked events is not visible', async function(assert) {
+  test('prework to unpublished/scheduled/blanked events is not visible', async function (assert) {
     assert.expect(1);
 
     const date = moment(new Date('2015-09-30T12:00:00'));
@@ -138,12 +140,10 @@ module('Integration | Component | ilios calendar day', function(hooks) {
 
     const events = [unpublishedEvent, scheduledEvent, blankedEvent];
 
-    events.forEach(event => {
+    events.forEach((event) => {
       event.startDate = date.clone();
       event.endDate = date.clone().add(1, 'hour');
-      event.prerequisites = [
-        publishedPrework
-      ];
+      event.prerequisites = [publishedPrework];
     });
 
     this.set('date', date.toDate());
@@ -159,7 +159,6 @@ module('Integration | Component | ilios calendar day', function(hooks) {
   });
 
   const createUserEventObject = function () {
-
     return {
       user: 1,
       name: '',

@@ -1,4 +1,13 @@
-import {clickable, collection, create, fillable, hasClass, isVisible, notHasClass, text} from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  fillable,
+  hasClass,
+  isVisible,
+  notHasClass,
+  text,
+} from 'ember-cli-page-object';
 import detailLearnerList from './detail-learner-list';
 
 const definition = {
@@ -8,8 +17,8 @@ const definition = {
     heading: text('h4'),
     detailLearnerList,
     noLearners: {
-      scope: '[data-test-no-selected-learners]'
-    }
+      scope: '[data-test-no-selected-learners]',
+    },
   },
   search: fillable('[data-test-search-box] input'),
   runSearch: clickable('[data-test-search-box] .search-icon'),

@@ -1,10 +1,10 @@
-import { registerDecorator } from "class-validator";
+import { registerDecorator } from 'class-validator';
 import { getOwner } from '@ember/application';
 
 export function Gt(gt, validationOptions) {
   return function (object, propertyName) {
     registerDecorator({
-      name: "gt",
+      name: 'gt',
       target: object.constructor,
       propertyName: propertyName,
       constraints: [gt],
@@ -12,7 +12,9 @@ export function Gt(gt, validationOptions) {
       validator: {
         validate(value, { constraints, property }) {
           if (!constraints || constraints.length < 1) {
-            throw new Error(`You must pass a ${property} value as the first argument to Gte`);
+            throw new Error(
+              `You must pass a ${property} value as the first argument to Gte`
+            );
           }
           const numValue = Number(value);
           if (isNaN(numValue)) {
@@ -31,7 +33,7 @@ export function Gt(gt, validationOptions) {
           const gtValue = constraints[0];
           const description = intl.t('errors.description');
           return intl.t('errors.greaterThan', { description, gt: gtValue });
-        }
+        },
       },
     });
   };

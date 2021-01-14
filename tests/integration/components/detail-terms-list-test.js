@@ -5,14 +5,14 @@ import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/detail-terms-list';
 
-module('Integration | Component | detail terms list', function(hooks) {
+module('Integration | Component | detail terms list', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('list with terms', async function(assert) {
+  test('list with terms', async function (assert) {
     assert.expect(5);
     const school = this.server.create('school', {
-      title: 'Medicine'
+      title: 'Medicine',
     });
 
     const vocabulary = this.server.create('vocabulary', {
@@ -28,12 +28,10 @@ module('Integration | Component | detail terms list', function(hooks) {
     this.server.create('term', {
       title: 'foo',
       vocabulary,
-
     });
     this.server.create('term', {
       title: 'bar',
       vocabulary,
-
     });
     this.server.create('term', {
       title: 'baz',
@@ -43,7 +41,9 @@ module('Integration | Component | detail terms list', function(hooks) {
       title: 'bat',
       vocabulary: vocabulary2,
     });
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
     const terms = await this.owner.lookup('service:store').findAll('term');
 
     this.set('vocabulary', vocabularyModel);
@@ -60,10 +60,10 @@ module('Integration | Component | detail terms list', function(hooks) {
     assert.equal(component.terms[1].name, 'foo');
   });
 
-  test('empty list', async function(assert) {
+  test('empty list', async function (assert) {
     assert.expect(2);
     const school = this.server.create('school', {
-      title: 'Medicine'
+      title: 'Medicine',
     });
 
     const vocabulary = this.server.create('vocabulary', {
@@ -93,7 +93,9 @@ module('Integration | Component | detail terms list', function(hooks) {
       vocabulary: vocabulary2,
     });
 
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
     const terms = await this.owner.lookup('service:store').findAll('term');
 
     this.set('vocabulary', vocabularyModel);
@@ -107,10 +109,10 @@ module('Integration | Component | detail terms list', function(hooks) {
     assert.equal(component.terms.length, 0);
   });
 
-  test('remove term', async function(assert) {
+  test('remove term', async function (assert) {
     assert.expect(2);
     const school = this.server.create('school', {
-      title: 'Medicine'
+      title: 'Medicine',
     });
 
     const vocabulary = this.server.create('vocabulary', {
@@ -123,12 +125,14 @@ module('Integration | Component | detail terms list', function(hooks) {
       vocabulary,
     });
 
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
     const terms = await this.owner.lookup('service:store').findAll('term');
     this.set('vocabulary', vocabularyModel);
     this.set('terms', terms);
 
-    this.set('remove', val => {
+    this.set('remove', (val) => {
       assert.equal(val.id, term1.id);
     });
     await render(hbs`<DetailTermsList
@@ -141,10 +145,10 @@ module('Integration | Component | detail terms list', function(hooks) {
     await component.terms[0].remove();
   });
 
-  test('inactive vocabulary labeled as such in edit mode', async function(assert) {
+  test('inactive vocabulary labeled as such in edit mode', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school', {
-      title: 'Medicine'
+      title: 'Medicine',
     });
 
     const vocabulary = this.server.create('vocabulary', {
@@ -153,7 +157,9 @@ module('Integration | Component | detail terms list', function(hooks) {
       school,
     });
 
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
     this.set('vocabulary', vocabularyModel);
     this.set('terms', []);
     await render(hbs`<DetailTermsList
@@ -164,15 +170,17 @@ module('Integration | Component | detail terms list', function(hooks) {
     assert.dom('[data-test-title] .inactive').hasText('(inactive)');
   });
 
-  test('click vocabulary title to manage', async function(assert) {
+  test('click vocabulary title to manage', async function (assert) {
     assert.expect(1);
-    const school = this.server.create( 'school' );
+    const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', { school });
     this.server.create('term', { vocabulary });
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
     this.set('vocabulary', vocabularyModel);
     this.set('terms', []);
-    this.set('manage', vocabulary => {
+    this.set('manage', (vocabulary) => {
       assert.equal(vocabulary, vocabularyModel);
     });
     await render(hbs`<DetailTermsList

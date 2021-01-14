@@ -1,9 +1,4 @@
-import {
-  collection,
-  clickable,
-  create,
-  text
-} from 'ember-cli-page-object';
+import { collection, clickable, create, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-collapsed-taxonomies]',

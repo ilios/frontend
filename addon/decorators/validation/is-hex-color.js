@@ -1,4 +1,4 @@
-import { registerDecorator } from "class-validator";
+import { registerDecorator } from 'class-validator';
 import { getOwner } from '@ember/application';
 
 const HEX_COLOR_PATTERN = /^#[a-fA-F0-9]{6}$/;
@@ -20,7 +20,7 @@ export function IsHexColor(validationOptions) {
           const description = intl.t('errors.description');
 
           return intl.t('errors.invalid', { description });
-        }
+        },
       },
     });
   };

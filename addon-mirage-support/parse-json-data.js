@@ -1,6 +1,6 @@
 import { camelize, singularize } from 'ember-cli-mirage/utils/inflector';
 
-export default function parseJsonData(json){
+export default function parseJsonData(json) {
   let attrs = {};
 
   if (json.data.attributes) {
@@ -15,7 +15,9 @@ export default function parseJsonData(json){
       const relationship = json.data.relationships[key];
 
       if (Array.isArray(relationship.data)) {
-        attrs[`${camelize(singularize(key))}Ids`] = relationship.data.map(rel => rel.id);
+        attrs[`${camelize(singularize(key))}Ids`] = relationship.data.map(
+          (rel) => rel.id
+        );
       } else {
         attrs[`${camelize(key)}Id`] = relationship.data && relationship.data.id;
       }

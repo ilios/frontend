@@ -1,4 +1,11 @@
-import { clickable, collection, create, fillable, hasClass, text } from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  fillable,
+  hasClass,
+  text,
+} from 'ember-cli-page-object';
 import userNameInfo from './user-name-info';
 
 const definition = {
@@ -11,14 +18,14 @@ const definition = {
   }),
   instructors: collection('[data-test-instructors] li', {
     userNameInfo,
-    remove: clickable('.remove')
+    remove: clickable('.remove'),
   }),
   instructorGroups: collection('[data-test-instructor-group]', {
     title: text('[data-test-instructor-group-title]'),
     members: collection('[data-test-instructor-group-members] li', {
-      userNameInfo
+      userNameInfo,
     }),
-    remove: clickable('[data-test-instructor-group-title]')
+    remove: clickable('[data-test-instructor-group-title]'),
   }),
 };
 

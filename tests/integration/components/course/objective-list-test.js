@@ -6,21 +6,33 @@ import { component } from 'ilios-common/page-objects/components/course/objective
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | course/objective-list', function(hooks) {
+module('Integration | Component | course/objective-list', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders and is accessible', async function(assert) {
+  test('it renders and is accessible', async function (assert) {
     assert.expect(14);
     const school = this.server.create('school');
     const course = this.server.create('course');
     const vocabulary = this.server.create('vocabulary', { school });
     const term1 = this.server.create('term', { vocabulary });
     const term2 = this.server.create('term', { vocabulary });
-    this.server.create('course-objective', { course, title: 'Objective A', position: 0, terms: [ term1 ] });
-    this.server.create('course-objective', { course, title: 'Objective B', position: 0, terms: [ term2 ] });
+    this.server.create('course-objective', {
+      course,
+      title: 'Objective A',
+      position: 0,
+      terms: [term1],
+    });
+    this.server.create('course-objective', {
+      course,
+      title: 'Objective B',
+      position: 0,
+      terms: [term2],
+    });
 
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner
+      .lookup('service:store')
+      .find('course', course.id);
     this.set('course', courseModel);
 
     await render(
@@ -38,20 +50,34 @@ module('Integration | Component | course/objective-list', function(hooks) {
 
     assert.equal(component.objectives.length, 2);
     assert.equal(component.objectives[0].description.text, 'Objective B');
-    assert.equal(component.objectives[0].selectedTerms.list[0].title, 'Vocabulary 1 (school 0)');
-    assert.equal(component.objectives[0].selectedTerms.list[0].terms[0].name, 'term 1');
+    assert.equal(
+      component.objectives[0].selectedTerms.list[0].title,
+      'Vocabulary 1 (school 0)'
+    );
+    assert.equal(
+      component.objectives[0].selectedTerms.list[0].terms[0].name,
+      'term 1'
+    );
     assert.equal(component.objectives[1].description.text, 'Objective A');
-    assert.equal(component.objectives[1].selectedTerms.list[0].title, 'Vocabulary 1 (school 0)');
-    assert.equal(component.objectives[1].selectedTerms.list[0].terms[0].name, 'term 0');
+    assert.equal(
+      component.objectives[1].selectedTerms.list[0].title,
+      'Vocabulary 1 (school 0)'
+    );
+    assert.equal(
+      component.objectives[1].selectedTerms.list[0].terms[0].name,
+      'term 0'
+    );
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('empty list', async function(assert) {
+  test('empty list', async function (assert) {
     assert.expect(2);
     const course = this.server.create('course');
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner
+      .lookup('service:store')
+      .find('course', course.id);
     this.set('course', courseModel);
 
     await render(
@@ -64,11 +90,13 @@ module('Integration | Component | course/objective-list', function(hooks) {
     assert.equal(component.text, '');
   });
 
-  test('no "sort objectives" button in list with one item', async function(assert) {
+  test('no "sort objectives" button in list with one item', async function (assert) {
     assert.expect(3);
     const course = this.server.create('course');
     this.server.create('course-objective', { course, position: 0 });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const courseModel = await this.owner
+      .lookup('service:store')
+      .find('course', course.id);
     this.set('course', courseModel);
 
     await render(

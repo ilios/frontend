@@ -2,11 +2,11 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Service | permission-checker', function(hooks) {
+module('Unit | Service | permission-checker', function (hooks) {
   setupTest(hooks);
 
   // Replace this with your real tests.
-  test('it exists', function(assert) {
+  test('it exists', function (assert) {
     const service = this.owner.lookup('service:permission-checker');
     assert.ok(service);
   });
@@ -42,12 +42,15 @@ module('Unit | Service | permission-checker', function(hooks) {
         assert.deepEqual(roles, ['ADMIN']);
 
         return ['ADMIN'];
-      }
+      },
     });
     this.owner.register('service:permissionMatrix', permissionMatrixMock);
 
     const service = this.owner.lookup('service:permission-checker');
-    const canChangeInSchool = await service.canChangeInSchool(school, 'GO_FORTH');
+    const canChangeInSchool = await service.canChangeInSchool(
+      school,
+      'GO_FORTH'
+    );
     assert.ok(canChangeInSchool);
   });
 
@@ -68,7 +71,10 @@ module('Unit | Service | permission-checker', function(hooks) {
 
     this.owner.register('service:apiVersion', apiVersionMock);
     const service = this.owner.lookup('service:permission-checker');
-    const canChangeInSchool = await service.canChangeInSchool(school, 'GO_FORTH');
+    const canChangeInSchool = await service.canChangeInSchool(
+      school,
+      'GO_FORTH'
+    );
     assert.notOk(canChangeInSchool);
   });
 
@@ -90,8 +96,10 @@ module('Unit | Service | permission-checker', function(hooks) {
     this.owner.register('service:currentUser', currentUserMock);
 
     const service = this.owner.lookup('service:permission-checker');
-    const canChangeInSchool = await service.canChangeInSchool(school, 'GO_FORTH');
+    const canChangeInSchool = await service.canChangeInSchool(
+      school,
+      'GO_FORTH'
+    );
     assert.ok(canChangeInSchool);
   });
 });
-

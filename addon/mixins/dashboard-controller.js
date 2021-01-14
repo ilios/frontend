@@ -20,7 +20,7 @@ export default Mixin.create({
     'show',
     'showFilters',
     'terms',
-    'view'
+    'view',
   ],
 
   academicYear: null,
@@ -37,22 +37,26 @@ export default Mixin.create({
   terms: '',
   view: 'week',
 
-  selectedAcademicYear: computed('academicYear', 'model.academicYears.[]', function(){
-    const academicYear = this.get('academicYear');
-    const { academicYears } = this.get('model');
+  selectedAcademicYear: computed(
+    'academicYear',
+    'model.academicYears.[]',
+    function () {
+      const academicYear = this.academicYear;
+      const { academicYears } = this.model;
 
-    return academicYears.findBy('id', academicYear);
-  }),
+      return academicYears.findBy('id', academicYear);
+    }
+  ),
 
-  selectedSchool: computed('school', 'model.schools.[]', function(){
-    const schoolId = this.get('school');
-    const { schools } = this.get('model');
+  selectedSchool: computed('school', 'model.schools.[]', function () {
+    const schoolId = this.school;
+    const { schools } = this.model;
 
     return schools.findBy('id', schoolId);
   }),
 
-  selectedDate: computed('date', function(){
-    const date = this.get('date');
+  selectedDate: computed('date', function () {
+    const date = this.date;
 
     if (date) {
       return moment(date, 'YYYY-MM-DD').format();
@@ -60,8 +64,8 @@ export default Mixin.create({
 
     return moment().format();
   }),
-  selectedView: computed('view', function(){
-    let view = this.get('view');
+  selectedView: computed('view', function () {
+    let view = this.view;
     const viewOptions = ['month', 'week', 'day'];
 
     if (viewOptions.indexOf(view) === -1) {
@@ -83,7 +87,7 @@ export default Mixin.create({
 
   @action
   toggleMySchedule() {
-    if (this.get('mySchedule')) {
+    if (this.mySchedule) {
       this.setProperties({ mySchedule: false, school: null });
     } else {
       this.set('mySchedule', true);
@@ -92,8 +96,13 @@ export default Mixin.create({
 
   @action
   toggleShowFilters() {
-    if (this.get('showFilters')) {
-      this.setProperties({ showFilters: false, school: null, academicYear: null, courseFilters: true });
+    if (this.showFilters) {
+      this.setProperties({
+        showFilters: false,
+        school: null,
+        academicYear: null,
+        courseFilters: true,
+      });
     } else {
       this.set('showFilters', true);
     }
@@ -126,8 +135,11 @@ export default Mixin.create({
   @action
   clearFilters() {
     this.setProperties({
-      cohorts: '', courseLevels: '', courses: '', sessionTypes: '', terms: ''
+      cohorts: '',
+      courseLevels: '',
+      courses: '',
+      sessionTypes: '',
+      terms: '',
     });
-  }
-
+  },
 });

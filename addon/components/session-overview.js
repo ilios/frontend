@@ -5,7 +5,12 @@ import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { task, restartableTask, dropTask } from 'ember-concurrency-decorators';
 import moment from 'moment';
-import { validatable, Length, Gte, NotBlank } from 'ilios-common/decorators/validation';
+import {
+  validatable,
+  Length,
+  Gte,
+  NotBlank,
+} from 'ilios-common/decorators/validation';
 import { hash } from 'rsvp';
 
 @validatable
@@ -20,7 +25,7 @@ export default class SessionOverview extends Component {
   @Length(3, 200) @NotBlank() @tracked title = null;
   @Length(3, 65000) @tracked instructionalNotes = null;
   @NotBlank() @Gte(0) @tracked hours = null;
-  @NotBlank()@tracked dueDate = null;
+  @NotBlank() @tracked dueDate = null;
   @Length(3, 65000) @tracked description = null;
   @tracked sessionType = null;
   @tracked isSaving = false;
@@ -36,9 +41,11 @@ export default class SessionOverview extends Component {
   @tracked isIndependentLearning = false;
 
   get filteredSessionTypes() {
-    const selectedSessionTypeId = isEmpty(this.sessionType) ? -1 : this.sessionType.id;
-    return this.sessionTypes.filter(sessionType => {
-      return (sessionType.active || sessionType.id === selectedSessionTypeId);
+    const selectedSessionTypeId = isEmpty(this.sessionType)
+      ? -1
+      : this.sessionType.id;
+    return this.sessionTypes.filter((sessionType) => {
+      return sessionType.active || sessionType.id === selectedSessionTypeId;
     });
   }
 
@@ -63,10 +70,16 @@ export default class SessionOverview extends Component {
       ilmSession: session.ilmSession,
       sessionType: session.sessionType,
       showCopy: this.getShowCopy(session),
-      showSessionAttendanceRequired: school.getConfigValue('showSessionAttendanceRequired'),
+      showSessionAttendanceRequired: school.getConfigValue(
+        'showSessionAttendanceRequired'
+      ),
       showSessionSupplemental: school.getConfigValue('showSessionSupplemental'),
-      showSessionSpecialAttireRequired: school.getConfigValue('showSessionSpecialAttireRequired'),
-      showSessionSpecialEquipmentRequired: school.getConfigValue('showSessionSpecialEquipmentRequired'),
+      showSessionSpecialAttireRequired: school.getConfigValue(
+        'showSessionSpecialAttireRequired'
+      ),
+      showSessionSpecialEquipmentRequired: school.getConfigValue(
+        'showSessionSpecialEquipmentRequired'
+      ),
     });
     this.showCopy = showCopy;
 
@@ -85,7 +98,7 @@ export default class SessionOverview extends Component {
     } else {
       this.isIndependentLearning = false;
     }
-    this.updatedAt = moment(session.updatedAt).format("L LT");
+    this.updatedAt = moment(session.updatedAt).format('L LT');
     this.sessionTypes = sessionTypes || [];
     this.description = session.description;
   }
@@ -141,9 +154,9 @@ export default class SessionOverview extends Component {
       const ilmSession = this.store.createRecord('ilm-session', {
         session: this.args.session,
         hours,
-        dueDate
+        dueDate,
       });
-      this.args.session.set('ilmSession', (yield ilmSession.save()));
+      this.args.session.set('ilmSession', yield ilmSession.save());
       yield this.args.session.save();
     }
   }
@@ -152,7 +165,7 @@ export default class SessionOverview extends Component {
   async changeTitle() {
     this.addErrorDisplayFor('title');
     const isValid = await this.isValid('title');
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
 
@@ -162,17 +175,17 @@ export default class SessionOverview extends Component {
   }
 
   @action
-  revertTitleChanges(){
+  revertTitleChanges() {
     this.title = this.args.session.title;
   }
 
   @action
-  revertInstructionalNotesChanges(){
+  revertInstructionalNotesChanges() {
     this.instructionalNotes = this.args.session.instructionalNotes;
   }
 
   @action
-  setSessionType(event){
+  setSessionType(event) {
     this.sessionType = this.sessionTypes.findBy('id', event.target.value);
   }
 
@@ -215,7 +228,7 @@ export default class SessionOverview extends Component {
   async changeIlmHours() {
     this.addErrorDisplayFor('hours');
     const isValid = await this.isValid('hours');
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('hours');
@@ -227,7 +240,7 @@ export default class SessionOverview extends Component {
   }
 
   @action
-  async revertIlmHoursChanges(){
+  async revertIlmHoursChanges() {
     const ilmSession = await this.args.session.ilmSession;
     if (ilmSession) {
       this.hours = ilmSession.hours;
@@ -239,19 +252,19 @@ export default class SessionOverview extends Component {
     this.addErrorDisplayFor('dueDate');
     const isValid = await this.isValid('dueDate');
 
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('dueDate');
     const ilmSession = await this.args.session.ilmSession;
-    if (ilmSession){
+    if (ilmSession) {
       ilmSession.dueDate = this.dueDate;
       await ilmSession.save();
     }
   }
 
   @action
-  async revertIlmDueDateChanges(){
+  async revertIlmDueDateChanges() {
     const ilmSession = await this.args.session.ilmSession;
     if (ilmSession) {
       this.dueDate = ilmSession.dueDate;
@@ -263,7 +276,7 @@ export default class SessionOverview extends Component {
     this.addErrorDisplayFor('description');
     const isValid = yield this.isValid('description');
 
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
 
@@ -273,13 +286,13 @@ export default class SessionOverview extends Component {
   }
 
   @action
-  changeDescription(html){
+  changeDescription(html) {
     this.addErrorDisplayFor('description');
-    const noTagsText = html.replace(/(<([^>]+)>)/ig,"");
-    const strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
+    const noTagsText = html.replace(/(<([^>]+)>)/gi, '');
+    const strippedText = noTagsText.replace(/&nbsp;/gi, '').replace(/\s/g, '');
 
     //if all we have is empty html then save null
-    if(strippedText.length === 0){
+    if (strippedText.length === 0) {
       html = null;
     }
 
@@ -292,13 +305,13 @@ export default class SessionOverview extends Component {
   }
 
   @action
-  changeInstructionalNotes(html){
+  changeInstructionalNotes(html) {
     this.addErrorDisplayFor('instructionalNotes');
-    const noTagsText = html.replace(/(<([^>]+)>)/ig,"");
-    const strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
+    const noTagsText = html.replace(/(<([^>]+)>)/gi, '');
+    const strippedText = noTagsText.replace(/&nbsp;/gi, '').replace(/\s/g, '');
 
     //if all we have is empty html then save null
-    if(strippedText.length === 0){
+    if (strippedText.length === 0) {
       html = null;
     }
     this.instructionalNotes = html;
@@ -308,7 +321,7 @@ export default class SessionOverview extends Component {
   *saveInstructionalNotes() {
     this.addErrorDisplayFor('instructionalNotes');
     const isValid = yield this.isValid('instructionalNotes');
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('instructionalNotes');

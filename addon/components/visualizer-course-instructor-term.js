@@ -4,8 +4,8 @@ import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import {tracked} from '@glimmer/tracking';
-import {restartableTask} from "ember-concurrency-decorators";
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class VisualizerCourseInstructorTerm extends Component {
   @service router;
@@ -15,26 +15,29 @@ export default class VisualizerCourseInstructorTerm extends Component {
   @tracked tooltipTitle = null;
 
   @restartableTask
-  * load(element, [course, user]) {
+  *load(element, [course, user]) {
     const sessions = yield course.get('sessions');
-    const sessionsWithUser = yield filter(sessions.toArray(), async session => {
-      const instructors = await session.get('allInstructors');
-      return instructors.mapBy('id').includes(user.get('id'));
-    });
+    const sessionsWithUser = yield filter(
+      sessions.toArray(),
+      async (session) => {
+        const instructors = await session.get('allInstructors');
+        return instructors.mapBy('id').includes(user.get('id'));
+      }
+    );
 
-    const dataMap = yield map(sessionsWithUser, async session => {
+    const dataMap = yield map(sessionsWithUser, async (session) => {
       const terms = await session.get('terms');
 
       const hours = await session.get('totalSumDuration');
       const minutes = Math.round(hours * 60);
 
-      return map(terms.toArray(), async term => {
+      return map(terms.toArray(), async (term) => {
         const vocabulary = await term.get('vocabulary');
         return {
           sessionTitle: session.get('title'),
           termTitle: term.get('title'),
           vocabularyTitle: vocabulary.get('title'),
-          minutes
+          minutes,
         };
       });
     });
@@ -52,8 +55,8 @@ export default class VisualizerCourseInstructorTerm extends Component {
           label: name,
           meta: {
             sessions: [],
-            vocabularyTitle: obj.vocabularyTitle
-          }
+            vocabularyTitle: obj.vocabularyTitle,
+          },
         };
         set.pushObject(existing);
       }
@@ -63,29 +66,39 @@ export default class VisualizerCourseInstructorTerm extends Component {
       return set;
     }, []);
 
-    const totalMinutes = sessionTypeData.mapBy('data').reduce((total, minutes) => total + minutes, 0);
-    this.data = sessionTypeData.map(obj => {
-      const percent = (obj.data / totalMinutes * 100).toFixed(1);
-      obj.label = `${obj.label} ${percent}%`;
-      obj.meta.totalMinutes = totalMinutes;
-      obj.meta.percent = percent;
-      return obj;
-    }).sort((first, second) => {
-      return first.meta.vocabularyTitle.localeCompare(second.meta.vocabularyTitle) || second.data - first.data;
-    });
+    const totalMinutes = sessionTypeData
+      .mapBy('data')
+      .reduce((total, minutes) => total + minutes, 0);
+    this.data = sessionTypeData
+      .map((obj) => {
+        const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
+        obj.label = `${obj.label} ${percent}%`;
+        obj.meta.totalMinutes = totalMinutes;
+        obj.meta.percent = percent;
+        return obj;
+      })
+      .sort((first, second) => {
+        return (
+          first.meta.vocabularyTitle.localeCompare(
+            second.meta.vocabularyTitle
+          ) || second.data - first.data
+        );
+      });
   }
 
   @restartableTask
-  * donutHover(obj) {
+  *donutHover(obj) {
     yield timeout(100);
     if (this.args.isIcon || isEmpty(obj) || obj.empty) {
       this.tooltipTitle = null;
       this.tooltipContent = null;
       return;
     }
-    const {label, data, meta} = obj;
+    const { label, data, meta } = obj;
 
-    this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
+    this.tooltipTitle = htmlSafe(
+      `${label} ${data} ${this.intl.t('general.minutes')}`
+    );
     this.tooltipContent = meta.sessions.uniq().sort().join();
   }
 }

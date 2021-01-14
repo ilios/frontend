@@ -9,16 +9,20 @@ export default Model.extend({
   registryNumber: attr('string'),
   createdAt: attr('date'),
   updatedAt: attr('date'),
-  terms: hasMany('mesh-term', {async: true}),
-  descriptors: hasMany('mesh-descriptor', {async: true}),
-  truncatedScopeNote: computed('scopeNote', function() {
-    let scopeNote = this.get('scopeNote');
+  terms: hasMany('mesh-term', { async: true }),
+  descriptors: hasMany('mesh-descriptor', { async: true }),
+  truncatedScopeNote: computed('scopeNote', function () {
+    let scopeNote = this.scopeNote;
     if (250 < scopeNote.length) {
       scopeNote = scopeNote.substring(0, 250);
     }
     return scopeNote;
   }),
-  hasTruncatedScopeNote: computed('scopeNote', 'truncatedScopeNote', function() {
-    return this.get('scopeNote').length !== this.get('truncatedScopeNote').length;
-  })
+  hasTruncatedScopeNote: computed(
+    'scopeNote.length',
+    'truncatedScopeNote.length',
+    function () {
+      return this.scopeNote.length !== this.truncatedScopeNote.length;
+    }
+  ),
 });

@@ -15,7 +15,7 @@ const definition = {
     title: text(),
     selected: hasClass('selected', 'label'),
     notSelected: notHasClass('selected', 'label'),
-    add: clickable('input')
+    add: clickable('input'),
   }),
   hasNoObjectivesWarning: isPresent('[data-test-no-course-objectives-message]'),
 };

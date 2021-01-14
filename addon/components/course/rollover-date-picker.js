@@ -23,23 +23,23 @@ export default class CourseRolloverDatePickerComponent extends Component {
     const currentLocale = this.intl.locale[0];
     let locale;
     switch (currentLocale) {
-    case 'fr':
-      // eslint-disable-next-line no-case-declarations
-      const { French } = yield import('flatpickr/dist/l10n/fr.js');
-      locale = French;
-      break;
-    case 'es':
-      // eslint-disable-next-line no-case-declarations
-      const { Spanish } = yield import('flatpickr/dist/l10n/es.js');
-      locale = Spanish;
-      break;
-    default:
-      locale = 'en';
+      case 'fr':
+        // eslint-disable-next-line no-case-declarations
+        const { French } = yield import('flatpickr/dist/l10n/fr.js');
+        locale = French;
+        break;
+      case 'es':
+        // eslint-disable-next-line no-case-declarations
+        const { Spanish } = yield import('flatpickr/dist/l10n/es.js');
+        locale = Spanish;
+        break;
+      default:
+        locale = 'en';
     }
     this.#flatPickerInstance = flatpickr(element, {
       locale,
       defaultDate: value ?? course.startDate,
-      formatDate: dateObj => dateObj.toLocaleDateString(currentLocale),
+      formatDate: (dateObj) => dateObj.toLocaleDateString(currentLocale),
       minDate: course.startDate,
       onChange: ([selectedDate]) => {
         // if a date is forced that isn't allowed
@@ -56,10 +56,10 @@ export default class CourseRolloverDatePickerComponent extends Component {
       onClose: () => {
         this.isOpen = false;
       },
-      "disable": [
+      disable: [
         function (date) {
           return course.startDate.getUTCDay() !== date.getUTCDay();
-        }
+        },
       ],
     });
   }

@@ -9,38 +9,45 @@ export default class IliosCalendarDayComponent extends Component {
   }
   get events() {
     return this.args.calendarEvents.filter(
-      event =>
+      (event) =>
         this.moment.moment(event.startDate).isSame(this.today, 'day') ||
         this.moment.moment(event.endDate).isSame(this.today, 'day')
     );
   }
   get ilmPreWorkEvents() {
-    const preWork =  this.args.calendarEvents.reduce((arr, ev) => {
+    const preWork = this.args.calendarEvents.reduce((arr, ev) => {
       if (!ev.isBlanked && ev.isPublished && !ev.isScheduled) {
         arr.pushObjects(ev.prerequisites);
       }
       return arr;
     }, []);
 
-    return preWork.filter(ev => ev.ilmSession).filter(ev => {
-      return !ev.isBlanked && ev.isPublished && !ev.isScheduled;
-    });
+    return preWork
+      .filter((ev) => ev.ilmSession)
+      .filter((ev) => {
+        return !ev.isBlanked && ev.isPublished && !ev.isScheduled;
+      });
   }
 
   get nonIlmPreWorkEvents() {
-    return this.events.filter(ev => {
+    return this.events.filter((ev) => {
       return ev.postrequisites.length === 0 || !ev.ilmSession;
     });
   }
 
-  get singleDayEvents(){
-    return this.nonIlmPreWorkEvents.filter(
-      event => this.moment.moment(event.startDate).isSame(this.moment.moment(event.endDate), 'day')
+  get singleDayEvents() {
+    return this.nonIlmPreWorkEvents.filter((event) =>
+      this.moment
+        .moment(event.startDate)
+        .isSame(this.moment.moment(event.endDate), 'day')
     );
   }
-  multiDayEvents(){
+  multiDayEvents() {
     return this.nonIlmPreWorkEvents.filter(
-      event => !this.moment.moment(event.startDate).isSame(this.moment.moment(event.endDate), 'day')
+      (event) =>
+        !this.moment
+          .moment(event.startDate)
+          .isSame(this.moment.moment(event.endDate), 'day')
     );
   }
 }

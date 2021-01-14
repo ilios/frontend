@@ -13,7 +13,9 @@ export default class SelectableTermsListItem extends Component {
   }
 
   get showTooltip() {
-    return this.args?.term.description?.length && this.theElement && this.isHovering;
+    return (
+      this.args?.term.description?.length && this.theElement && this.isHovering
+    );
   }
 
   @action

@@ -1,32 +1,25 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  findAll,
-  click,
-  fillIn,
-  find
-} from '@ember/test-helpers';
+import { render, findAll, click, fillIn, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | user search', function(hooks) {
+module('Integration | Component | user search', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.server.get('api/users', (schema) => {
       return schema.users.all();
     });
   });
 
-
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     await render(hbs`<UserSearch />`);
     assert.dom('input').exists({ count: 1 });
   });
 
-  test('less than 3 characters triggers warning', async function(assert) {
+  test('less than 3 characters triggers warning', async function (assert) {
     await render(hbs`<UserSearch />`);
 
     await fillIn('input', 'ab');
@@ -44,10 +37,13 @@ module('Integration | Component | user search', function(hooks) {
     await fillIn('input', 'search words');
 
     assert.dom('li').hasText('1 Results');
-    assert.equal(find(findAll('li')[1]).textContent.replace(/[\t\n\s]+/g, ""), '0guyM.Mc0sonuser@example.edu');
+    assert.equal(
+      find(findAll('li')[1]).textContent.replace(/[\t\n\s]+/g, ''),
+      '0guyM.Mc0sonuser@example.edu'
+    );
   });
 
-  test('no results displays messages', async function(assert) {
+  test('no results displays messages', async function (assert) {
     await render(hbs`<UserSearch />`);
 
     await fillIn('input', 'search words');
@@ -56,9 +52,13 @@ module('Integration | Component | user search', function(hooks) {
 
   test('search for groups', async function (assert) {
     this.server.createList('instructor-group', 2);
-    const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
+    const instructorGroups = this.owner
+      .lookup('service:store')
+      .findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
-    await render(hbs`<UserSearch @availableInstructorGroups={{availableInstructorGroups}} />`);
+    await render(
+      hbs`<UserSearch @availableInstructorGroups={{availableInstructorGroups}} />`
+    );
 
     await fillIn('input', 'group');
     assert.dom('li').hasText('2 Results');
@@ -66,25 +66,30 @@ module('Integration | Component | user search', function(hooks) {
     assert.dom(findAll('li')[2]).hasText('instructor group 1');
   });
 
-  test('click user fires add user', async function(assert) {
+  test('click user fires add user', async function (assert) {
     const user = this.server.create('user');
 
-    this.set('action', passedUser => {
+    this.set('action', (passedUser) => {
       assert.equal(user.id, passedUser.id);
     });
     await render(hbs`<UserSearch @addUser={{action action}} />`);
 
     await fillIn('input', 'test');
-    assert.equal(findAll('li')[1].textContent.replace(/[\t\n\s]+/g, ""), '0guyM.Mc0sonuser@example.edu');
+    assert.equal(
+      findAll('li')[1].textContent.replace(/[\t\n\s]+/g, ''),
+      '0guyM.Mc0sonuser@example.edu'
+    );
     await click(findAll('li')[1]);
   });
 
-  test('click group fires add group', async function(assert) {
-    this.set('action', group => {
+  test('click group fires add group', async function (assert) {
+    this.set('action', (group) => {
       assert.equal(1, group.id);
     });
     this.server.createList('instructor-group', 2);
-    const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
+    const instructorGroups = this.owner
+      .lookup('service:store')
+      .findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
 
     await render(hbs`<UserSearch
@@ -97,7 +102,7 @@ module('Integration | Component | user search', function(hooks) {
     await click(findAll('li')[1]);
   });
 
-  test('sorting is natural', async function(assert) {
+  test('sorting is natural', async function (assert) {
     this.server.create('user', {
       firstName: '20',
       lastName: 'person',
@@ -131,14 +136,18 @@ module('Integration | Component | user search', function(hooks) {
     assert.dom(fifth).includesText('20');
   });
 
-  test('reads currentlyActiveUsers', async function(assert) {
+  test('reads currentlyActiveUsers', async function (assert) {
     const user = this.server.create('user');
     this.server.get('api/users', (schema) => {
       return schema.users.all();
     });
-    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    const userModel = await this.owner
+      .lookup('service:store')
+      .find('user', user.id);
     this.set('currentlyActiveUsers', [userModel]);
-    await render(hbs`<UserSearch @currentlyActiveUsers={{this.currentlyActiveUsers}} />`);
+    await render(
+      hbs`<UserSearch @currentlyActiveUsers={{this.currentlyActiveUsers}} />`
+    );
     await fillIn('input', 'foo');
 
     assert.dom('[data-test-results-count]').hasText('1 Results');
@@ -146,12 +155,14 @@ module('Integration | Component | user search', function(hooks) {
     assert.dom('[data-test-result]').hasClass('inactive');
   });
 
-  test('reads currentlyActiveUsers from a promise', async function(assert) {
+  test('reads currentlyActiveUsers from a promise', async function (assert) {
     const user = this.server.create('user');
     this.server.get('api/users', (schema) => {
       return schema.users.all();
     });
-    const userPromise = this.owner.lookup('service:store').query('user', { id : user.id });
+    const userPromise = this.owner
+      .lookup('service:store')
+      .query('user', { id: user.id });
     this.set('currentlyActiveUsersPromise', userPromise);
     await render(hbs`<UserSearch
       @currentlyActiveUsers={{await this.currentlyActiveUsersPromise}}
@@ -163,9 +174,11 @@ module('Integration | Component | user search', function(hooks) {
     assert.dom('[data-test-result]').hasClass('inactive');
   });
 
-  test('reads currentlyActiveInstructorGroups', async function(assert) {
+  test('reads currentlyActiveInstructorGroups', async function (assert) {
     this.server.create('instructor-group');
-    const instructorGroups = await this.owner.lookup('service:store').findAll('instructor-group');
+    const instructorGroups = await this.owner
+      .lookup('service:store')
+      .findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
     this.set('currentlyActiveInstructorGroups', instructorGroups);
     await render(hbs`<UserSearch
@@ -179,9 +192,11 @@ module('Integration | Component | user search', function(hooks) {
     assert.dom('[data-test-result]').hasClass('inactive');
   });
 
-  test('reads currentlyActiveInstructorGroups from a promise', async function(assert) {
+  test('reads currentlyActiveInstructorGroups from a promise', async function (assert) {
     this.server.create('instructor-group');
-    const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
+    const instructorGroups = this.owner
+      .lookup('service:store')
+      .findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
     this.set('currentlyActiveInstructorGroups', instructorGroups);
     await render(hbs`<UserSearch

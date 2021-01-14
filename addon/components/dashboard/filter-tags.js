@@ -15,7 +15,7 @@ export default class DashboardFilterTagsComponent extends Component {
       this.args.selectedCourseLevels || [],
       this.args.selectedCohortIds || [],
       this.args.selectedCourseIds || [],
-      this.args.selectedTermIds || [],
+      this.args.selectedTermIds || []
     );
   }
 
@@ -42,7 +42,7 @@ export default class DashboardFilterTagsComponent extends Component {
         id: level,
         class: 'tag-course-level',
         remove: this.args.removeCourseLevel,
-        name: this.intl.t('general.courseLevel', { level })
+        name: this.intl.t('general.courseLevel', { level }),
       };
     });
   }
@@ -53,7 +53,7 @@ export default class DashboardFilterTagsComponent extends Component {
         id,
         class: 'tag-session-type',
         remove: this.args.removeSessionTypeId,
-        name: sessionType.title
+        name: sessionType.title,
       };
     });
   }
@@ -64,7 +64,7 @@ export default class DashboardFilterTagsComponent extends Component {
         id,
         class: 'tag-cohort',
         remove: this.args.removeCohortId,
-        name: `${proxy.displayTitle} ${proxy.programTitle}`
+        name: `${proxy.displayTitle} ${proxy.programTitle}`,
       };
     });
   }
@@ -78,7 +78,7 @@ export default class DashboardFilterTagsComponent extends Component {
         id,
         class: 'tag-term',
         remove: this.args.removeTermId,
-        name: `${title} > ${allTitles}`
+        name: `${title} > ${allTitles}`,
       };
     });
   }
@@ -89,7 +89,7 @@ export default class DashboardFilterTagsComponent extends Component {
         id,
         class: 'tag-course',
         remove: this.args.removeCourseId,
-        name: `${course.year} ${course.title}`
+        name: `${course.year} ${course.title}`,
       };
     });
   }

@@ -46,7 +46,7 @@ export default class DailyCalendarComponent extends Component {
   }
 
   get hours() {
-    return [...Array(24).keys()].map(i => {
+    return [...Array(24).keys()].map((i) => {
       const time = this.today.hour(i);
       return {
         hour: time.format('H'),

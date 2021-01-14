@@ -8,7 +8,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 
 import { component } from 'ilios-common/page-objects/components/dashboard-week';
 
-module('Integration | Component | dashboard week', function(hooks) {
+module('Integration | Component | dashboard week', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -57,11 +57,11 @@ module('Integration | Component | dashboard week', function(hooks) {
     this.blankEventsMock = Service.extend({
       async getEvents() {
         return [];
-      }
+      },
     });
   });
 
-  const getTitle = function(){
+  const getTitle = function () {
     const startOfWeek = today.clone().day(0).hour(0).minute(0).second(0);
     const endOfWeek = today.clone().day(6).hour(23).minute(59).second(59);
 
@@ -80,7 +80,7 @@ module('Integration | Component | dashboard week', function(hooks) {
     return expectedTitle;
   };
 
-  test('it renders with events', async function(assert) {
+  test('it renders with events', async function (assert) {
     assert.expect(5);
     this.owner.register('service:user-events', this.userEventsMock);
 
@@ -88,12 +88,22 @@ module('Integration | Component | dashboard week', function(hooks) {
     const expectedTitle = getTitle();
     assert.equal(component.weeklyLink, 'All Weeks');
     assert.equal(component.weekGlance.title, expectedTitle);
-    assert.equal(component.weekGlance.offeringEvents.length, 2, 'Blank events are not shown');
-    assert.equal(component.weekGlance.offeringEvents[0].title, 'Learn to Learn');
-    assert.equal(component.weekGlance.offeringEvents[1].title, 'Finding the Point in Life');
+    assert.equal(
+      component.weekGlance.offeringEvents.length,
+      2,
+      'Blank events are not shown'
+    );
+    assert.equal(
+      component.weekGlance.offeringEvents[0].title,
+      'Learn to Learn'
+    );
+    assert.equal(
+      component.weekGlance.offeringEvents[1].title,
+      'Finding the Point in Life'
+    );
   });
 
-  test('it renders blank', async function(assert) {
+  test('it renders blank', async function (assert) {
     assert.expect(3);
     this.owner.register('service:user-events', this.blankEventsMock);
     this.userEvents = this.owner.lookup('service:user-events');

@@ -18,18 +18,21 @@ export default class CollapsedCompetenciesComponent extends Component {
     if (!this.allSchools || !this.competenciesRelationship) {
       return [];
     }
-    const schools = this.competenciesRelationship.reduce((schools, competency) => {
-      const schoolId = competency.belongsTo('school').id();
-      if (!(schoolId in schools)) {
-        schools[schoolId] = {
-          competencies: [],
-          school: this.allSchools.findBy('id', schoolId)
-        };
-      }
-      schools[schoolId].competencies.push(competency);
+    const schools = this.competenciesRelationship.reduce(
+      (schools, competency) => {
+        const schoolId = competency.belongsTo('school').id();
+        if (!(schoolId in schools)) {
+          schools[schoolId] = {
+            competencies: [],
+            school: this.allSchools.findBy('id', schoolId),
+          };
+        }
+        schools[schoolId].competencies.push(competency);
 
-      return schools;
-    }, {});
+        return schools;
+      },
+      {}
+    );
 
     return Object.values(schools);
   }

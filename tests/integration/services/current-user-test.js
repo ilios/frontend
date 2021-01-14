@@ -1,26 +1,30 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import { authenticateSession, invalidateSession } from 'ember-simple-auth/test-support';
+import {
+  authenticateSession,
+  invalidateSession,
+} from 'ember-simple-auth/test-support';
 
-module('Integration | Service | Current User', function(hooks) {
+module('Integration | Service | Current User', function (hooks) {
   setupTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     await authenticateSession({
       // this token de-serializes to object with "user_id:100" property/value
-      jwt: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MTA5Njg4NDEsImV4cCI6MTUxMDk3MjQ3NiwidXNlcl9pZCI6MTAwLCJqdGkiOiI5YzYxZDdjZS1jZjliLTQxZDgtYjQ5YS0zMWFmNWQ4Y2MzY2UifQ.P1QY8zDSi8IAVaJ0YHX_KzYsIfZP_bvBdocZ9V9JUb0"
+      jwt:
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MTA5Njg4NDEsImV4cCI6MTUxMDk3MjQ3NiwidXNlcl9pZCI6MTAwLCJqdGkiOiI5YzYxZDdjZS1jZjliLTQxZDgtYjQ5YS0zMWFmNWQ4Y2MzY2UifQ.P1QY8zDSi8IAVaJ0YHX_KzYsIfZP_bvBdocZ9V9JUb0',
     });
   });
 
-  test('currentUserId', function(assert) {
+  test('currentUserId', function (assert) {
     const subject = this.owner.lookup('service:current-user');
     const userId = subject.get('currentUserId');
     assert.equal(userId, 100);
   });
 
-  test('no token - no currentUserId', async function(assert) {
+  test('no token - no currentUserId', async function (assert) {
     assert.expect(1);
     await invalidateSession();
     const subject = this.owner.lookup('service:current-user');
@@ -28,8 +32,7 @@ module('Integration | Service | Current User', function(hooks) {
     assert.equal(userId, null);
   });
 
-
-  test('model', async function(assert) {
+  test('model', async function (assert) {
     assert.expect(1);
     this.server.create('user', { id: 100 });
     const subject = this.owner.lookup('service:current-user');
@@ -37,7 +40,7 @@ module('Integration | Service | Current User', function(hooks) {
     assert.equal(model.id, 100);
   });
 
-  test('no token - no model', async function(assert) {
+  test('no token - no model', async function (assert) {
     assert.expect(1);
     await invalidateSession();
     const subject = this.owner.lookup('service:current-user');
@@ -45,7 +48,7 @@ module('Integration | Service | Current User', function(hooks) {
     assert.equal(model, null);
   });
 
-  test('model only loaded once', async function(assert) {
+  test('model only loaded once', async function (assert) {
     assert.expect(2);
     this.server.create('user', { id: 100 });
     let calledAlready = false;
@@ -65,7 +68,7 @@ module('Integration | Service | Current User', function(hooks) {
     await subject.getModel();
   });
 
-  test('userRoleTitles', async function(assert){
+  test('userRoleTitles', async function (assert) {
     assert.expect(3);
     const roles = this.server.createList('user-role', 2);
     this.server.create('user', { id: 100, roles });
@@ -77,7 +80,7 @@ module('Integration | Service | Current User', function(hooks) {
     assert.ok(titles.includes('user role 1'));
   });
 
-  test('userIsStudent', async function(assert) {
+  test('userIsStudent', async function (assert) {
     assert.expect(1);
     const role = this.server.create('user-role', { title: 'student' });
     this.server.create('user', { id: 100, roles: [role] });
@@ -86,7 +89,7 @@ module('Integration | Service | Current User', function(hooks) {
     assert.ok(isStudent);
   });
 
-  test('not userIsStudent', async function(assert) {
+  test('not userIsStudent', async function (assert) {
     assert.expect(1);
     this.server.create('user', { id: 100 });
     const subject = this.owner.lookup('service:current-user');
@@ -94,7 +97,7 @@ module('Integration | Service | Current User', function(hooks) {
     assert.notOk(isStudent);
   });
 
-  test('userIsFormerStudent', async function(assert) {
+  test('userIsFormerStudent', async function (assert) {
     assert.expect(1);
     const role = this.server.create('user-role', { title: 'FORMeR Student' });
     this.server.create('user', { id: 100, roles: [role] });
@@ -103,7 +106,7 @@ module('Integration | Service | Current User', function(hooks) {
     assert.ok(isFormerStudent);
   });
 
-  test('not userIsFormerStudent', async function(assert) {
+  test('not userIsFormerStudent', async function (assert) {
     assert.expect(1);
     this.server.create('user', { id: 100 });
     const subject = this.owner.lookup('service:current-user');
@@ -111,7 +114,7 @@ module('Integration | Service | Current User', function(hooks) {
     assert.notOk(isFormerStudent);
   });
 
-  test('activeRelatedCoursesInThisYearAndLastYear', async function(assert){
+  test('activeRelatedCoursesInThisYearAndLastYear', async function (assert) {
     assert.expect(10);
     const courses = this.server.createList('course', 2);
     this.server.create('user', {
@@ -122,18 +125,20 @@ module('Integration | Service | Current User', function(hooks) {
 
     this.server.get('/api/courses', (schema, { queryParams }) => {
       assert.ok('my' in queryParams);
-      assert.equal(queryParams.my, "true");
+      assert.equal(queryParams.my, 'true');
       assert.ok('filters[year]' in queryParams);
       assert.ok('filters[locked]' in queryParams);
       assert.ok('filters[archived]' in queryParams);
-      assert.equal(queryParams['filters[locked]'], "false");
-      assert.equal(queryParams['filters[archived]'], "false");
+      assert.equal(queryParams['filters[locked]'], 'false');
+      assert.equal(queryParams['filters[archived]'], 'false');
       assert.ok(queryParams['filters[year]'].length, 3);
 
       return schema.courses.all();
     });
     const subject = this.owner.lookup('service:current-user');
-    const activeRelatedCourses = await subject.get('activeRelatedCoursesInThisYearAndLastYear');
+    const activeRelatedCourses = await subject.get(
+      'activeRelatedCoursesInThisYearAndLastYear'
+    );
     assert.ok(activeRelatedCourses.mapBy('id').includes(courses[0].id));
     assert.ok(activeRelatedCourses.mapBy('id').includes(courses[1].id));
   });

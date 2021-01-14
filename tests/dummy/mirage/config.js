@@ -7,10 +7,12 @@ export default function () {
   this.namespace = '/';
   setupMirage(this);
 
-  this.get('application/config', function() {
-    return { config: {
-      type: 'form',
-      apiVersion,
-    }};
+  this.get('application/config', function () {
+    return {
+      config: {
+        type: 'form',
+        apiVersion,
+      },
+    };
   });
 }

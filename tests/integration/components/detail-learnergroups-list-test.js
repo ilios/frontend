@@ -5,11 +5,11 @@ import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/detail-learnergroups-list';
 
-module('Integration | Component | detail learnergroups list', function(hooks) {
+module('Integration | Component | detail learnergroups list', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     const users = this.server.createList('user', 5);
 
     const tlg1 = this.server.create('learner-group', {
@@ -43,8 +43,13 @@ module('Integration | Component | detail learnergroups list', function(hooks) {
     this.subGroup2 = await store.find('learner-group', subGroup2.id);
   });
 
-  test('it renders', async function(assert) {
-    this.set('learnerGroups', [ this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2 ]);
+  test('it renders', async function (assert) {
+    this.set('learnerGroups', [
+      this.tlg1,
+      this.subGroup1,
+      this.subSubGroup,
+      this.subGroup2,
+    ]);
     await render(hbs`<DetailLearnergroupsList
       @learnerGroups={{this.learnerGroups}}
       @remove={{noop}}
@@ -62,10 +67,15 @@ module('Integration | Component | detail learnergroups list', function(hooks) {
     assert.ok(component.trees[1].subgroups[1].title, 'sub group 2 (0)');
   });
 
-  test('remove', async function(assert) {
+  test('remove', async function (assert) {
     assert.expect(1);
-    this.set('learnerGroups', [ this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2 ]);
-    this.set('remove', learnerGroup => {
+    this.set('learnerGroups', [
+      this.tlg1,
+      this.subGroup1,
+      this.subSubGroup,
+      this.subGroup2,
+    ]);
+    this.set('remove', (learnerGroup) => {
       assert.equal(this.subGroup2, learnerGroup);
     });
     await render(hbs`<DetailLearnergroupsList
@@ -76,10 +86,15 @@ module('Integration | Component | detail learnergroups list', function(hooks) {
     await component.trees[1].subgroups[1].remove();
   });
 
-  test('remove-all', async function(assert) {
+  test('remove-all', async function (assert) {
     assert.expect(1);
-    this.set('learnerGroups', [ this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2 ]);
-    this.set('remove', learnerGroup => {
+    this.set('learnerGroups', [
+      this.tlg1,
+      this.subGroup1,
+      this.subSubGroup,
+      this.subGroup2,
+    ]);
+    this.set('remove', (learnerGroup) => {
       assert.equal(this.tlg1, learnerGroup);
     });
     await render(hbs`<DetailLearnergroupsList

@@ -7,7 +7,7 @@ import { component } from 'ilios-common/page-objects/components/monthly-calendar
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | monthly-calendar', function(hooks) {
+module('Integration | Component | monthly-calendar', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -113,7 +113,7 @@ module('Integration | Component | monthly-calendar', function(hooks) {
     this.server.create('userevent', {
       startDate: january9th2018.format(),
       endDate: january9th2018.clone().add(1, 'hour').format(),
-      offering: 1
+      offering: 1,
     });
     this.set('events', this.server.db.userevents);
     this.set('date', january9th2018);

@@ -15,7 +15,7 @@ const definition = {
     set: fillable('input'),
     save: clickable('.done'),
     cancel: clickable('.cancel'),
-    hasError: isVisible('.validation-error-message')
+    hasError: isVisible('.validation-error-message'),
   },
 };
 

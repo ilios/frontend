@@ -1,20 +1,17 @@
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/course';
 
-module('Acceptance | Course - Objective Mesh Descriptors', function(hooks) {
+module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
     this.school = this.server.create('school');
-    this.server.create('academicYear', {id: 2013});
+    this.server.create('academicYear', { id: 2013 });
     this.server.createList('program', 2);
     this.server.createList('programYear', 2);
     this.server.createList('cohort', 2);
@@ -25,7 +22,10 @@ module('Acceptance | Course - Objective Mesh Descriptors', function(hooks) {
     });
 
     const meshDescriptors = this.server.createList('meshDescriptor', 6);
-    this.server.create('courseObjective', { meshDescriptors: [ meshDescriptors.shift() ], course });
+    this.server.create('courseObjective', {
+      meshDescriptors: [meshDescriptors.shift()],
+      course,
+    });
     this.server.create('courseObjective', { meshDescriptors, course });
     this.server.create('courseObjective', { course });
 
@@ -33,24 +33,53 @@ module('Acceptance | Course - Objective Mesh Descriptors', function(hooks) {
     //this.server.createList('objective', 2);
 
     //create some extra descriptors that shouldn't be found in search
-    this.server.createList('meshDescriptor', 10, {name: 'nope', annotation: 'nope'});
+    this.server.createList('meshDescriptor', 10, {
+      name: 'nope',
+      annotation: 'nope',
+    });
   });
 
-  test('manage terms', async function(assert) {
+  test('manage terms', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
+    await page.visit({
+      courseId: 1,
+      details: true,
+      courseObjectiveDetails: true,
+    });
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
 
-    assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'course objective 1');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title, 'descriptor 1');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title, 'descriptor 2');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[2].title, 'descriptor 3');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[3].title, 'descriptor 4');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[4].title, 'descriptor 5');
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].description.text,
+      'course objective 1'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
+      5
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title,
+      'descriptor 1'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title,
+      'descriptor 2'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list[2].title,
+      'descriptor 3'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list[3].title,
+      'descriptor 4'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list[4].title,
+      'descriptor 5'
+    );
 
     await page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
-    const m = page.objectives.objectiveList.objectives[1].meshManager.meshManager;
+    const m =
+      page.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.equal(m.selectedTerms.length, 5);
     assert.equal(m.selectedTerms[0].title, 'descriptor 1');
     assert.equal(m.selectedTerms[1].title, 'descriptor 2');
@@ -84,16 +113,27 @@ module('Acceptance | Course - Objective Mesh Descriptors', function(hooks) {
     assert.equal(m.selectedTerms[4].title, 'descriptor 5');
   });
 
-  test('save terms', async function(assert) {
+  test('save terms', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
+    await page.visit({
+      courseId: 1,
+      details: true,
+      courseObjectiveDetails: true,
+    });
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
 
-    assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'course objective 1');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].description.text,
+      'course objective 1'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
+      5
+    );
     await page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
 
-    const m = page.objectives.objectiveList.objectives[1].meshManager.meshManager;
+    const m =
+      page.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.equal(m.selectedTerms.length, 5);
     await m.search('descriptor');
     await m.runSearch();
@@ -109,24 +149,53 @@ module('Acceptance | Course - Objective Mesh Descriptors', function(hooks) {
     assert.equal(m.selectedTerms[4].title, 'descriptor 5');
 
     await page.objectives.objectiveList.objectives[1].meshDescriptors.save();
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title, 'descriptor 0');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title, 'descriptor 2');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[2].title, 'descriptor 3');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[3].title, 'descriptor 4');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[4].title, 'descriptor 5');
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
+      5
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title,
+      'descriptor 0'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title,
+      'descriptor 2'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list[2].title,
+      'descriptor 3'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list[3].title,
+      'descriptor 4'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list[4].title,
+      'descriptor 5'
+    );
   });
 
-  test('cancel changes', async function(assert) {
+  test('cancel changes', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
+    await page.visit({
+      courseId: 1,
+      details: true,
+      courseObjectiveDetails: true,
+    });
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
 
-    assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'course objective 1');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].description.text,
+      'course objective 1'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
+      5
+    );
     await page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
 
-    const m = page.objectives.objectiveList.objectives[1].meshManager.meshManager;
+    const m =
+      page.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.equal(m.selectedTerms.length, 5);
     await m.search('descriptor');
     await m.runSearch();
@@ -142,11 +211,29 @@ module('Acceptance | Course - Objective Mesh Descriptors', function(hooks) {
     assert.equal(m.selectedTerms[4].title, 'descriptor 5');
 
     await page.objectives.objectiveList.objectives[1].meshDescriptors.cancel();
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title, 'descriptor 1');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title, 'descriptor 2');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[2].title, 'descriptor 3');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[3].title, 'descriptor 4');
-    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list[4].title, 'descriptor 5');
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
+      5
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title,
+      'descriptor 1'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title,
+      'descriptor 2'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list[2].title,
+      'descriptor 3'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list[3].title,
+      'descriptor 4'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].meshDescriptors.list[4].title,
+      'descriptor 5'
+    );
   });
 });

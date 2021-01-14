@@ -5,21 +5,18 @@ import {
   currentURL,
   currentRouteName,
   visit,
-  triggerEvent
+  triggerEvent,
 } from '@ember/test-helpers';
 import { isEmpty } from '@ember/utils';
 import moment from 'moment';
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { map } from 'rsvp';
 import page from 'ilios-common/page-objects/dashboard';
 
-module('Acceptance | Dashboard Calendar', function(hooks) {
+module('Acceptance | Dashboard Calendar', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
@@ -74,24 +71,24 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     });
     const session3 = this.server.create('session', {
       course: course2,
-      sessionType: sessionType2
+      sessionType: sessionType2,
     });
     this.server.create('academicYear', {
       id: 2015,
-      title: 2015
+      title: 2015,
     });
     this.server.create('offering', {
-      session: session1
+      session: session1,
     });
     this.server.create('offering', {
-      session: session2
+      session: session2,
     });
     this.server.create('offering', {
-      session: session3
+      session: session3,
     });
   });
 
-  test('load month calendar', async function(assert) {
+  test('load month calendar', async function (assert) {
     const today = moment().hour(8);
     const startOfMonth = today.clone().startOf('month');
     const endOfMonth = today.clone().endOf('month').hour(22).minute(59);
@@ -113,15 +110,35 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(currentRouteName(), 'dashboard');
     const events = findAll('[data-test-ilios-calendar-event');
     assert.equal(events.length, 2);
-    const startOfMonthStartFormat = startOfMonth.toDate().toLocaleTimeString([], { hour: "numeric", minute: "numeric" });
-    const startOfMonthEndFormat = startOfMonth.clone().add(1, 'hour').toDate().toLocaleTimeString([], { hour: "numeric", minute: "numeric" });
-    assert.dom(events[0]).hasText(`${startOfMonthStartFormat} - ${startOfMonthEndFormat} : start of month`);
-    const endOfMonthStartFormat = endOfMonth.toDate().toLocaleTimeString([], { hour: "numeric", minute: "numeric" });
-    const endOfMonthEndFormat = endOfMonth.clone().add(1, 'hour').toDate().toLocaleTimeString([], { hour: "numeric", minute: "numeric" });
-    assert.dom(events[1]).hasText(`${endOfMonthStartFormat} - ${endOfMonthEndFormat} : end of month`);
+    const startOfMonthStartFormat = startOfMonth
+      .toDate()
+      .toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
+    const startOfMonthEndFormat = startOfMonth
+      .clone()
+      .add(1, 'hour')
+      .toDate()
+      .toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
+    assert
+      .dom(events[0])
+      .hasText(
+        `${startOfMonthStartFormat} - ${startOfMonthEndFormat} : start of month`
+      );
+    const endOfMonthStartFormat = endOfMonth
+      .toDate()
+      .toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
+    const endOfMonthEndFormat = endOfMonth
+      .clone()
+      .add(1, 'hour')
+      .toDate()
+      .toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
+    assert
+      .dom(events[1])
+      .hasText(
+        `${endOfMonthStartFormat} - ${endOfMonthEndFormat} : end of month`
+      );
   });
 
-  test('load week calendar', async function(assert) {
+  test('load week calendar', async function (assert) {
     const today = moment().hour(8);
     const startOfWeek = today.clone().startOf('week');
     const endOfWeek = today.clone().endOf('week').hour(22).minute(59);
@@ -151,7 +168,10 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
 
     assert.equal(page.weeklyCalendar.dayHeadings.length, 7);
     assert.ok(page.weeklyCalendar.dayHeadings[0].isFirstDayOfWeek);
-    assert.equal(page.weeklyCalendar.dayHeadings[0].text, `Sunday Sun ${longDayHeading} ${shortDayHeading}`);
+    assert.equal(
+      page.weeklyCalendar.dayHeadings[0].text,
+      `Sunday Sun ${longDayHeading} ${shortDayHeading}`
+    );
 
     assert.equal(page.weeklyCalendar.events.length, 2);
     assert.ok(page.weeklyCalendar.events[0].isFirstDayOfWeek);
@@ -160,7 +180,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(page.weeklyCalendar.events[1].name, 'end of week');
   });
 
-  test('load day calendar', async function(assert) {
+  test('load day calendar', async function (assert) {
     const today = moment().hour(8);
     const tomorow = today.clone().add(1, 'day');
     const yesterday = today.clone().subtract(1, 'day');
@@ -192,114 +212,154 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(page.dailyCalendar.events[0].name, 'today');
   });
 
-  test('click month day number and go to day', async function(assert) {
+  test('click month day number and go to day', async function (assert) {
     const aDayInTheMonth = moment().startOf('month').add(12, 'days').hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       name: 'start of month',
       startDate: aDayInTheMonth.format(),
-      endDate: aDayInTheMonth.clone().add(1, 'hour').format()
+      endDate: aDayInTheMonth.clone().add(1, 'hour').format(),
     });
     await visit('/dashboard?show=calendar&view=month');
     const dayOfMonth = aDayInTheMonth.date();
     await click(`[data-test-day-button="${dayOfMonth}"]`);
-    assert.equal(currentURL(), '/dashboard?date=' + aDayInTheMonth.format('YYYY-MM-DD') + '&show=calendar&view=day');
+    assert.equal(
+      currentURL(),
+      '/dashboard?date=' +
+        aDayInTheMonth.format('YYYY-MM-DD') +
+        '&show=calendar&view=day'
+    );
   });
 
-  test('click week day title and go to day', async function(assert) {
+  test('click week day title and go to day', async function (assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       name: 'today',
       startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format()
+      endDate: today.clone().add(1, 'hour').format(),
     });
     await page.visit({ show: 'calendar', view: 'week' });
     const dayOfWeek = today.day();
     assert.equal(page.weeklyCalendar.dayHeadings.length, 7);
     await page.weeklyCalendar.dayHeadings[dayOfWeek].selectDay();
-    assert.equal(currentURL(), '/dashboard?date=' + today.format('YYYY-MM-DD') + '&show=calendar&view=day');
+    assert.equal(
+      currentURL(),
+      '/dashboard?date=' +
+        today.format('YYYY-MM-DD') +
+        '&show=calendar&view=day'
+    );
   });
 
-  test('click forward on a day goes to next day', async function(assert) {
+  test('click forward on a day goes to next day', async function (assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       name: 'today',
       startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format()
+      endDate: today.clone().add(1, 'hour').format(),
     });
     await visit('/dashboard?show=calendar&view=day');
     await click(findAll('.calendar-time-picker li')[2]);
-    assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'day').format('YYYY-MM-DD') + '&show=calendar&view=day');
+    assert.equal(
+      currentURL(),
+      '/dashboard?date=' +
+        today.add(1, 'day').format('YYYY-MM-DD') +
+        '&show=calendar&view=day'
+    );
   });
 
-  test('click forward on a week goes to next week', async function(assert) {
+  test('click forward on a week goes to next week', async function (assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       name: 'today',
       startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format()
+      endDate: today.clone().add(1, 'hour').format(),
     });
     await visit('/dashboard?show=calendar&view=week');
     await click(findAll('.calendar-time-picker li')[2]);
-    assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'week').format('YYYY-MM-DD') + '&show=calendar');
+    assert.equal(
+      currentURL(),
+      '/dashboard?date=' +
+        today.add(1, 'week').format('YYYY-MM-DD') +
+        '&show=calendar'
+    );
   });
 
-  test('click forward on a month goes to next month', async function(assert) {
+  test('click forward on a month goes to next month', async function (assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       name: 'today',
       startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format()
+      endDate: today.clone().add(1, 'hour').format(),
     });
     await visit('/dashboard?show=calendar&view=month');
     await click(findAll('.calendar-time-picker li')[2]);
-    assert.equal(currentURL(), '/dashboard?date=' + today.add(1, 'month').format('YYYY-MM-DD') + '&show=calendar&view=month');
+    assert.equal(
+      currentURL(),
+      '/dashboard?date=' +
+        today.add(1, 'month').format('YYYY-MM-DD') +
+        '&show=calendar&view=month'
+    );
   });
 
-  test('click back on a day goes to previous day', async function(assert) {
+  test('click back on a day goes to previous day', async function (assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       name: 'today',
       startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format()
+      endDate: today.clone().add(1, 'hour').format(),
     });
     await visit('/dashboard?show=calendar&view=day');
     await click(find('.calendar-time-picker li'));
-    assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'day').format('YYYY-MM-DD') + '&show=calendar&view=day');
+    assert.equal(
+      currentURL(),
+      '/dashboard?date=' +
+        today.subtract(1, 'day').format('YYYY-MM-DD') +
+        '&show=calendar&view=day'
+    );
   });
 
-  test('click back on a week goes to previous week', async function(assert) {
+  test('click back on a week goes to previous week', async function (assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       name: 'today',
       startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format()
+      endDate: today.clone().add(1, 'hour').format(),
     });
     await visit('/dashboard?show=calendar&view=week');
     await click(find('.calendar-time-picker li'));
-    assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'week').format('YYYY-MM-DD') + '&show=calendar');
+    assert.equal(
+      currentURL(),
+      '/dashboard?date=' +
+        today.subtract(1, 'week').format('YYYY-MM-DD') +
+        '&show=calendar'
+    );
   });
 
-  test('click back on a month goes to previous month', async function(assert) {
+  test('click back on a month goes to previous month', async function (assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       name: 'today',
       startDate: today.format(),
-      endDate: today.clone().add(1, 'hour').format()
+      endDate: today.clone().add(1, 'hour').format(),
     });
     await visit('/dashboard?show=calendar&view=month');
     await click(find('.calendar-time-picker li'));
-    assert.equal(currentURL(), '/dashboard?date=' + today.subtract(1, 'month').format('YYYY-MM-DD') + '&show=calendar&view=month');
+    assert.equal(
+      currentURL(),
+      '/dashboard?date=' +
+        today.subtract(1, 'month').format('YYYY-MM-DD') +
+        '&show=calendar&view=month'
+    );
   });
 
-  test('show user events', async function(assert) {
+  test('show user events', async function (assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
@@ -317,10 +377,10 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(page.weeklyCalendar.events.length, 2);
   });
 
-  const chooseSchoolEvents = async function(){
+  const chooseSchoolEvents = async function () {
     return await click(find(findAll('.togglemyschedule label')[1]));
   };
-  test('show school events', async function(assert) {
+  test('show school events', async function (assert) {
     const today = moment().hour(8);
     this.server.create('schoolevent', {
       school: 1,
@@ -339,15 +399,17 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(page.weeklyCalendar.events.length, 2);
   });
 
-  const showFilters = async function(){
+  const showFilters = async function () {
     return await click('.showfilters label:nth-of-type(2)');
   };
 
-  const pickSessionType = async function(i) {
-    return await click(find(`.sessiontypefilter li:nth-of-type(${i}) [data-test-target]`));
+  const pickSessionType = async function (i) {
+    return await click(
+      find(`.sessiontypefilter li:nth-of-type(${i}) [data-test-target]`)
+    );
   };
 
-  test('test session type filter', async function(assert) {
+  test('test session type filter', async function (assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
@@ -375,15 +437,17 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(page.weeklyCalendar.events.length, 0);
   });
 
-  const pickCourseLevel = async function(i) {
-    return await click(find(`.courselevelfilter li:nth-of-type(${i}) [data-test-target]`));
+  const pickCourseLevel = async function (i) {
+    return await click(
+      find(`.courselevelfilter li:nth-of-type(${i}) [data-test-target]`)
+    );
   };
   const clearCourseLevels = async function () {
     const selected = findAll('.courselevelfilter [data-test-checked]');
-    await map(selected, e => click(e));
+    await map(selected, (e) => click(e));
   };
 
-  test('test course level filter', async function(assert) {
+  test('test course level filter', async function (assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
@@ -408,11 +472,15 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(page.weeklyCalendar.events.length, 0);
   });
 
-  const pickCohort = async function(i) {
-    return await click(find(`[data-test-cohort-calendar-filter] li:nth-of-type(${i}) [data-test-target]`));
+  const pickCohort = async function (i) {
+    return await click(
+      find(
+        `[data-test-cohort-calendar-filter] li:nth-of-type(${i}) [data-test-target]`
+      )
+    );
   };
 
-  test('test cohort filter', async function(assert) {
+  test('test cohort filter', async function (assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
@@ -438,16 +506,22 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(page.weeklyCalendar.events.length, 0);
   });
 
-  const chooseDetailFilter = async function(){
+  const chooseDetailFilter = async function () {
     return await click(find(findAll('.togglecoursefilters label')[1]));
   };
 
-  const pickCourse = async function(i) {
-    return await click(find(`[data-test-courses-calendar-filter] li:nth-of-type(${i}) [data-test-target]`));
+  const pickCourse = async function (i) {
+    return await click(
+      find(
+        `[data-test-courses-calendar-filter] li:nth-of-type(${i}) [data-test-target]`
+      )
+    );
   };
   const clearCourses = async function () {
-    const selected = findAll('[data-test-courses-calendar-filter] [data-test-checked]');
-    await map(selected, e => click(e));
+    const selected = findAll(
+      '[data-test-courses-calendar-filter] [data-test-checked]'
+    );
+    await map(selected, (e) => click(e));
   };
 
   test('test course filter', async function (assert) {
@@ -480,7 +554,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(page.weeklyCalendar.events.length, 1);
   });
 
-  test('test course and session type filter together', async function(assert) {
+  test('test course and session type filter together', async function (assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
@@ -515,7 +589,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(page.weeklyCalendar.events.length, 1);
   });
 
-  test('agenda show next seven days of events', async function(assert) {
+  test('agenda show next seven days of events', async function (assert) {
     const today = moment().hour(0).minute(2);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
@@ -551,21 +625,26 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       hour: 'numeric',
       minute: 'numeric',
     };
-    assert.dom(events[0]).hasText(today.toDate().toLocaleString([], options) + ' event 0');
-    assert.dom(events[1]).hasText(endOfTheWeek.toDate().toLocaleString([], options) + ' event 1');
+    assert
+      .dom(events[0])
+      .hasText(today.toDate().toLocaleString([], options) + ' event 0');
+    assert
+      .dom(events[1])
+      .hasText(endOfTheWeek.toDate().toLocaleString([], options) + ' event 1');
   });
 
   test('clear all filters', async function (assert) {
     const vocabulary = this.server.create('vocabulary', {
-      school: this.school
+      school: this.school,
     });
     this.server.createList('term', 2, {
-      vocabulary
+      vocabulary,
     });
 
     const clearFilter = '.filters-clear-filters';
     const sessiontype = '.sessiontypefilter li:nth-of-type(1) input';
-    const course = '[data-test-courses-calendar-filter] li:nth-of-type(1) input';
+    const course =
+      '[data-test-courses-calendar-filter] li:nth-of-type(1) input';
     const term = '.vocabularyfilter li:nth-of-type(1) input';
 
     await page.visit({ show: 'calendar', view: 'week' });
@@ -576,7 +655,9 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     await click(course);
     await click(term);
 
-    assert.dom(clearFilter).hasText('Clear Filters', 'clear filter button is active');
+    assert
+      .dom(clearFilter)
+      .hasText('Clear Filters', 'clear filter button is active');
     assert.dom(sessiontype).isChecked('filter is checked');
     assert.dom(course).isChecked('filter is checked');
     assert.dom(term).isChecked('filter is checked');
@@ -588,7 +669,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.ok(!find(term).checked, 'filter is unchecked');
   });
 
-  test('clear all detail filters', async function(assert) {
+  test('clear all detail filters', async function (assert) {
     const clearFilter = '.filters-clear-filters';
     const sessiontype = '.sessiontypefilter li:nth-of-type(1) input';
     const courselevel = '.courselevelfilter li:nth-of-type(1) input';
@@ -603,7 +684,9 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     await click(courselevel);
     await click(cohort);
 
-    assert.dom(clearFilter).hasText('Clear Filters', 'clear filter button is active');
+    assert
+      .dom(clearFilter)
+      .hasText('Clear Filters', 'clear filter button is active');
     assert.dom(sessiontype).isChecked('filter is checked');
     assert.dom(courselevel).isChecked('filter is checked');
     assert.dom(cohort).isChecked('filter is checked');
@@ -615,10 +698,13 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.ok(!find(cohort).checked, 'filter is unchecked');
   });
 
-  test('filter tags work properly', async function(assert) {
-    const sessiontype = '.sessiontypefilter li:nth-of-type(1) [data-test-target]';
-    const courselevel = '.courselevelfilter li:nth-of-type(1) [data-test-target]';
-    const cohort = '[data-test-cohort-calendar-filter] li:nth-of-type(2) [data-test-target]';
+  test('filter tags work properly', async function (assert) {
+    const sessiontype =
+      '.sessiontypefilter li:nth-of-type(1) [data-test-target]';
+    const courselevel =
+      '.courselevelfilter li:nth-of-type(1) [data-test-target]';
+    const cohort =
+      '[data-test-cohort-calendar-filter] li:nth-of-type(2) [data-test-target]';
 
     const filtersList = '.filters-list';
     const clearFilter = '.filters-clear-filters';
@@ -657,7 +743,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.ok(!find(cohort).checked, 'filter is unchecked');
   });
 
-  test('query params work', async function(assert) {
+  test('query params work', async function (assert) {
     const calendarPicker = '.dashboard-view-picker li:nth-of-type(4) button';
     const schoolEvents = '.togglemyschedule label:nth-of-type(2)';
     const showFiltersButton = '.showfilters label:nth-of-type(2)';
@@ -671,66 +757,120 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
 
     await click(showFiltersButton);
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?mySchedule=false&show=calendar&showFilters=true'
+    );
 
     await chooseDetailFilter();
-    assert.equal(currentURL(), '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true'
+    );
 
     await click(hideFiltersButton);
     assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
 
     await click(showFiltersButton);
     await click('[data-test-courses-calendar-filter] ul li:nth-child(1) input');
-    assert.equal(currentURL(), '/dashboard?courses=1&mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?courses=1&mySchedule=false&show=calendar&showFilters=true'
+    );
 
     await click('[data-test-courses-calendar-filter] ul li:nth-child(2) input');
-    assert.equal(currentURL(), '/dashboard?courses=1-2&mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?courses=1-2&mySchedule=false&show=calendar&showFilters=true'
+    );
 
     await click('[data-test-courses-calendar-filter] ul li:nth-child(2) input');
-    assert.equal(currentURL(), '/dashboard?courses=1&mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?courses=1&mySchedule=false&show=calendar&showFilters=true'
+    );
 
     await click('[data-test-courses-calendar-filter] ul li:nth-child(1) input');
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?mySchedule=false&show=calendar&showFilters=true'
+    );
 
     await click('.sessiontypefilter ul li:nth-child(1) input');
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&sessionTypes=1&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?mySchedule=false&sessionTypes=1&show=calendar&showFilters=true'
+    );
 
     await click('.sessiontypefilter ul li:nth-child(2) input');
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&sessionTypes=1-2&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?mySchedule=false&sessionTypes=1-2&show=calendar&showFilters=true'
+    );
 
     await click('.sessiontypefilter ul li:nth-child(2) input');
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&sessionTypes=1&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?mySchedule=false&sessionTypes=1&show=calendar&showFilters=true'
+    );
 
     await click('.sessiontypefilter ul li:nth-child(1) input');
-    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?mySchedule=false&show=calendar&showFilters=true'
+    );
 
     await click('.togglecoursefilters label:nth-of-type(2)');
     await click('.courselevelfilter ul li:nth-child(1) input');
-    assert.equal(currentURL(), '/dashboard?courseFilters=false&courseLevels=1&mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?courseFilters=false&courseLevels=1&mySchedule=false&show=calendar&showFilters=true'
+    );
 
     await click('.courselevelfilter ul li:nth-child(2) input');
-    assert.equal(currentURL(), '/dashboard?courseFilters=false&courseLevels=1-2&mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?courseFilters=false&courseLevels=1-2&mySchedule=false&show=calendar&showFilters=true'
+    );
 
     await click('.courselevelfilter ul li:nth-child(2) input');
-    assert.equal(currentURL(), '/dashboard?courseFilters=false&courseLevels=1&mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?courseFilters=false&courseLevels=1&mySchedule=false&show=calendar&showFilters=true'
+    );
 
     await click('.courselevelfilter ul li:nth-child(1) input');
-    assert.equal(currentURL(), '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true'
+    );
 
     await click('[data-test-cohort-calendar-filter] ul li:nth-child(2) input');
-    assert.equal(currentURL(), '/dashboard?cohorts=1&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?cohorts=1&courseFilters=false&mySchedule=false&show=calendar&showFilters=true'
+    );
 
     await click('[data-test-cohort-calendar-filter] ul li:nth-child(1) input');
-    assert.equal(currentURL(), '/dashboard?cohorts=1-2&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?cohorts=1-2&courseFilters=false&mySchedule=false&show=calendar&showFilters=true'
+    );
 
     await click('[data-test-cohort-calendar-filter] ul li:nth-child(1) input');
-    assert.equal(currentURL(), '/dashboard?cohorts=1&courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?cohorts=1&courseFilters=false&mySchedule=false&show=calendar&showFilters=true'
+    );
 
     await click('[data-test-cohort-calendar-filter] ul li:nth-child(2) input');
-    assert.equal(currentURL(), '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true');
+    assert.equal(
+      currentURL(),
+      '/dashboard?courseFilters=false&mySchedule=false&show=calendar&showFilters=true'
+    );
   });
 
-  test('week summary displays the whole week', async function(assert) {
+  test('week summary displays the whole week', async function (assert) {
     const startOfTheWeek = moment().day(0).hour(0).minute(2);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
@@ -759,37 +899,45 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
       hour: 'numeric',
       minute: 'numeric',
     };
-    assert.dom(eventBLocks[0]).hasText('event 0 ' + startOfTheWeek.toDate().toLocaleString([], options));
-    assert.dom(eventBLocks[1]).hasText('event 1 ' + endOfTheWeek.toDate().toLocaleString([], options));
+    assert
+      .dom(eventBLocks[0])
+      .hasText(
+        'event 0 ' + startOfTheWeek.toDate().toLocaleString([], options)
+      );
+    assert
+      .dom(eventBLocks[1])
+      .hasText('event 1 ' + endOfTheWeek.toDate().toLocaleString([], options));
   });
 
-  const pickTerm = async function(i) {
-    return await click(find(`.vocabularyfilter li:nth-of-type(${i}) [data-test-target]`));
+  const pickTerm = async function (i) {
+    return await click(
+      find(`.vocabularyfilter li:nth-of-type(${i}) [data-test-target]`)
+    );
   };
 
-  test('test term filter', async function(assert) {
+  test('test term filter', async function (assert) {
     const vocabulary = this.server.create('vocabulary', {
-      school: this.school
+      school: this.school,
     });
     this.server.create('term', {
       vocabulary,
-      sessionIds: [1, 2]
+      sessionIds: [1, 2],
     });
     this.server.create('term', {
-      vocabulary
+      vocabulary,
     });
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      sessionTerms: [{id: 1}],
+      sessionTerms: [{ id: 1 }],
     });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      sessionTerms: [{id: 1}],
+      sessionTerms: [{ id: 1 }],
     });
     await page.visit({ show: 'calendar', view: 'week' });
     await showFilters();
@@ -802,20 +950,20 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(page.weeklyCalendar.events.length, 0);
   });
 
-  test('clear vocab filter #3450', async function(assert) {
+  test('clear vocab filter #3450', async function (assert) {
     const vocabulary = this.server.create('vocabulary', {
-      school: this.school
+      school: this.school,
     });
     this.server.create('term', {
       vocabulary,
-      sessionIds: [1]
+      sessionIds: [1],
     });
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      sessionTerms: [{id: 1}],
+      sessionTerms: [{ id: 1 }],
     });
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
@@ -838,7 +986,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(page.weeklyCalendar.events.length, 2);
   });
 
-  test('test tooltip', async function(assert) {
+  test('test tooltip', async function (assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
@@ -851,7 +999,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.dom('[data-test-ilios-calendar-event-tooltip]').exists();
   });
 
-  test('visit with course filters open #5098', async function(assert) {
+  test('visit with course filters open #5098', async function (assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),
@@ -868,7 +1016,7 @@ module('Acceptance | Dashboard Calendar', function(hooks) {
     assert.equal(page.weeklyCalendar.events.length, 1);
   });
 
-  test('visit with detail filters open #5098', async function(assert) {
+  test('visit with detail filters open #5098', async function (assert) {
     const today = moment().hour(8);
     this.server.create('userevent', {
       user: parseInt(this.user.id, 10),

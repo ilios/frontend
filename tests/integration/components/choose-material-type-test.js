@@ -5,11 +5,11 @@ import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios-common/page-objects/components/choose-material-type';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
-module('Integration | Component | choose-material-type', function(hooks) {
+module('Integration | Component | choose-material-type', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders and is accessible', async function (assert) {
-    this.set('nothing', () => { });
+    this.set('nothing', () => {});
     await render(hbs`<ChooseMaterialType
       @choose={{action this.nothing}}
       @types={{array "file" "link" "citation"}}
@@ -23,8 +23,8 @@ module('Integration | Component | choose-material-type', function(hooks) {
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('click opens menu', async function(assert) {
-    this.set('nothing', () => { });
+  test('click opens menu', async function (assert) {
+    this.set('nothing', () => {});
     await render(hbs`<ChooseMaterialType
       @choose={{action this.nothing}}
       @types={{array "file" "link" "citation"}}
@@ -51,8 +51,8 @@ module('Integration | Component | choose-material-type', function(hooks) {
     await component.types[1].click();
   });
 
-  test('down opens menu', async function(assert) {
-    this.set('nothing', () => { });
+  test('down opens menu', async function (assert) {
+    this.set('nothing', () => {});
     await render(hbs`<ChooseMaterialType
       @choose={{action this.nothing}}
       @types={{array "file" "link" "citation"}}
@@ -63,8 +63,8 @@ module('Integration | Component | choose-material-type', function(hooks) {
     assert.equal(component.types.length, 3);
   });
 
-  test('escape closes menu', async function(assert) {
-    this.set('nothing', () => { });
+  test('escape closes menu', async function (assert) {
+    this.set('nothing', () => {});
     await render(hbs`<ChooseMaterialType
       @choose={{action this.nothing}}
       @types={{array "file" "link" "citation"}}

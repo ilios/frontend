@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 import { waitForProperty } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
-import flatpickr from "flatpickr";
+import flatpickr from 'flatpickr';
 import { later } from '@ember/runloop';
 
 export default class DatePickerComponent extends Component {
@@ -25,24 +25,24 @@ export default class DatePickerComponent extends Component {
     const currentLocale = this.intl.locale[0];
     let locale;
     switch (currentLocale) {
-    case 'fr':
-      // eslint-disable-next-line no-case-declarations
-      const { French } = yield import('flatpickr/dist/l10n/fr.js');
-      locale = French;
-      break;
-    case 'es':
-      // eslint-disable-next-line no-case-declarations
-      const { Spanish } = yield import('flatpickr/dist/l10n/es.js');
-      locale = Spanish;
-      break;
-    default:
-      locale = 'en';
+      case 'fr':
+        // eslint-disable-next-line no-case-declarations
+        const { French } = yield import('flatpickr/dist/l10n/fr.js');
+        locale = French;
+        break;
+      case 'es':
+        // eslint-disable-next-line no-case-declarations
+        const { Spanish } = yield import('flatpickr/dist/l10n/es.js');
+        locale = Spanish;
+        break;
+      default:
+        locale = 'en';
     }
     this._flatPickerInstance = flatpickr(element, {
       locale,
       defaultDate: this.args.value,
-      formatDate: dateObj => dateObj.toLocaleDateString(currentLocale),
-      onChange: selectedDates => this.args.change(selectedDates[0]),
+      formatDate: (dateObj) => dateObj.toLocaleDateString(currentLocale),
+      onChange: (selectedDates) => this.args.change(selectedDates[0]),
       onOpen: () => {
         later(() => {
           this.isOpen = true;

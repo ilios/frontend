@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { click, find, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | sortable heading', function(hooks) {
+module('Integration | Component | sortable heading', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders with default options', async function(assert) {
+  test('it renders with default options', async function (assert) {
     assert.expect(5);
     await render(hbs`<SortableHeading>Foo</SortableHeading>`);
     assert.dom('span').hasText('Foo');
@@ -16,7 +16,7 @@ module('Integration | Component | sortable heading', function(hooks) {
     assert.dom('svg').hasClass('fa-sort');
   });
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(6);
     const title = 'Bar';
     const align = 'right';
@@ -48,12 +48,14 @@ module('Integration | Component | sortable heading', function(hooks) {
     assert.dom('span').hasAttribute('title', title);
     assert.dom('svg').hasClass('fa-sort-numeric-down');
   });
-  test('click event fires', async function(assert) {
+  test('click event fires', async function (assert) {
     assert.expect(1);
     this.set('click', () => {
       assert.ok(true);
     });
-    await render(hbs`<SortableHeading @click={{this.click}}>Foo</SortableHeading>`);
+    await render(
+      hbs`<SortableHeading @click={{this.click}}>Foo</SortableHeading>`
+    );
     await click(find('span'));
   });
 });

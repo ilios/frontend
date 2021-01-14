@@ -1,20 +1,12 @@
-import {
-  click,
-  currentRouteName,
-  findAll,
-  visit
-} from '@ember/test-helpers';
+import { click, currentRouteName, findAll, visit } from '@ember/test-helpers';
 import moment from 'moment';
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupAuthentication, getElementText, getText } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Acceptance | Session - Publish', function(hooks) {
+module('Acceptance | Session - Publish', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
@@ -23,7 +15,7 @@ module('Acceptance | Session - Publish', function(hooks) {
     const course = this.server.create('course', { school });
     this.server.create('sessionType');
     this.server.create('ilmSession', {
-      dueDate: moment().format()
+      dueDate: moment().format(),
     });
     this.publishedSession = this.server.create('session', {
       published: true,
@@ -39,26 +31,26 @@ module('Acceptance | Session - Publish', function(hooks) {
     });
     this.ilmSession = this.server.create('session', {
       course,
-      ilmSessionId: 1
+      ilmSessionId: 1,
     });
     this.server.create('offering', {
       sessionId: 1,
       startDate: moment().format(),
-      endDate: moment().add('6 hours').format()
+      endDate: moment().add('6 hours').format(),
     });
     this.server.create('offering', {
       sessionId: 2,
       startDate: moment().format(),
-      endDate: moment().add('6 hours').format()
+      endDate: moment().add('6 hours').format(),
     });
     this.server.create('offering', {
       sessionId: 3,
       startDate: moment().format(),
-      endDate: moment().add('6 hours').format()
+      endDate: moment().add('6 hours').format(),
     });
   });
 
-  test('check published session', async function(assert) {
+  test('check published session', async function (assert) {
     await visit('/courses/1/sessions/' + this.publishedSession.id);
 
     assert.equal(currentRouteName(), 'session.index');
@@ -71,13 +63,17 @@ module('Acceptance | Session - Publish', function(hooks) {
 
     const items = findAll(choices);
     assert.equal(items.length, 3);
-    const expectedItems = ['Review 3 Missing Items', 'Mark as Scheduled', 'UnPublish Session'];
-    for(let i = 0; i < items.length; i++){
+    const expectedItems = [
+      'Review 3 Missing Items',
+      'Mark as Scheduled',
+      'UnPublish Session',
+    ];
+    for (let i = 0; i < items.length; i++) {
       assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
     }
   });
 
-  test('check scheduled session', async function(assert) {
+  test('check scheduled session', async function (assert) {
     await visit('/courses/1/sessions/' + this.scheduledSession.id);
 
     assert.equal(currentRouteName(), 'session.index');
@@ -89,13 +85,17 @@ module('Acceptance | Session - Publish', function(hooks) {
     await click(selector);
     const items = findAll(choices);
     assert.equal(items.length, 3);
-    const expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'UnPublish Session'];
-    for(let i = 0; i < items.length; i++){
+    const expectedItems = [
+      'Publish As-is',
+      'Review 3 Missing Items',
+      'UnPublish Session',
+    ];
+    for (let i = 0; i < items.length; i++) {
       assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
     }
   });
 
-  test('check draft session', async function(assert) {
+  test('check draft session', async function (assert) {
     await visit('/courses/1/sessions/' + this.draftSession.id);
 
     assert.equal(currentRouteName(), 'session.index');
@@ -107,13 +107,17 @@ module('Acceptance | Session - Publish', function(hooks) {
     await click(selector);
     const items = findAll(choices);
     assert.equal(items.length, 3);
-    const expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'Mark as Scheduled'];
-    for(let i = 0; i < items.length; i++){
+    const expectedItems = [
+      'Publish As-is',
+      'Review 3 Missing Items',
+      'Mark as Scheduled',
+    ];
+    for (let i = 0; i < items.length; i++) {
       assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
     }
   });
 
-  test('check publish draft session', async function(assert) {
+  test('check publish draft session', async function (assert) {
     await visit('/courses/1/sessions/' + this.draftSession.id);
     const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
@@ -125,7 +129,7 @@ module('Acceptance | Session - Publish', function(hooks) {
     assert.equal(await getElementText(selector), getText('Published'));
   });
 
-  test('check schedule draft session', async function(assert) {
+  test('check schedule draft session', async function (assert) {
     await visit('/courses/1/sessions/' + this.draftSession.id);
     const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
@@ -136,7 +140,7 @@ module('Acceptance | Session - Publish', function(hooks) {
     assert.equal(await getElementText(selector), getText('Scheduled'));
   });
 
-  test('check publish scheduled session', async function(assert) {
+  test('check publish scheduled session', async function (assert) {
     await visit('/courses/1/sessions/' + this.scheduledSession.id);
     const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
@@ -148,7 +152,7 @@ module('Acceptance | Session - Publish', function(hooks) {
     assert.equal(await getElementText(selector), getText('Published'));
   });
 
-  test('check unpublish scheduled session', async function(assert) {
+  test('check unpublish scheduled session', async function (assert) {
     await visit('/courses/1/sessions/' + this.scheduledSession.id);
     const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
@@ -159,7 +163,7 @@ module('Acceptance | Session - Publish', function(hooks) {
     assert.equal(await getElementText(selector), getText('Not Published'));
   });
 
-  test('check schedule published session', async function(assert) {
+  test('check schedule published session', async function (assert) {
     await visit('/courses/1/sessions/' + this.publishedSession.id);
     const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
@@ -170,7 +174,7 @@ module('Acceptance | Session - Publish', function(hooks) {
     assert.equal(await getElementText(selector), getText('Scheduled'));
   });
 
-  test('check unpublish published session', async function(assert) {
+  test('check unpublish published session', async function (assert) {
     await visit('/courses/1/sessions/' + this.publishedSession.id);
     const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
@@ -181,7 +185,7 @@ module('Acceptance | Session - Publish', function(hooks) {
     assert.equal(await getElementText(selector), getText('Not Published'));
   });
 
-  test('check publish requirements for ilm session', async function(assert) {
+  test('check publish requirements for ilm session', async function (assert) {
     await visit('/courses/1/sessions/' + this.ilmSession.id);
     const menu = '.session-header .publication-menu';
     const selector = `${menu} [data-test-toggle]`;
@@ -191,7 +195,13 @@ module('Acceptance | Session - Publish', function(hooks) {
     const thirdChoice = `${choices}:nth-of-type(3)`;
     await click(selector);
     assert.equal(await getElementText(firstChoice), getText('Publish As-is'));
-    assert.equal(await getElementText(secondChoice), getText('Review 3 Missing Items'));
-    assert.equal(await getElementText(thirdChoice), getText('Mark as Scheduled'));
+    assert.equal(
+      await getElementText(secondChoice),
+      getText('Review 3 Missing Items')
+    );
+    assert.equal(
+      await getElementText(thirdChoice),
+      getText('Mark as Scheduled')
+    );
   });
 });

@@ -15,13 +15,21 @@ export default Model.extend({
   startDate: attr('date'),
   endDate: attr('date'),
   duration: attr('number'),
-  academicLevel: belongsTo('curriculum-inventory-academic-level', {async: true}),
-  parent: belongsTo('curriculum-inventory-sequence-block', {async: true, inverse: 'children'}),
-  children: hasMany('curriculum-inventory-sequence-block', {async: true, inverse: 'parent'}),
-  report: belongsTo('curriculum-inventory-report', {async: true}),
-  sessions: hasMany('session', {async: true}),
-  excludedSessions: hasMany('session', {async: true}),
-  course: belongsTo('course', {async: true}),
+  academicLevel: belongsTo('curriculum-inventory-academic-level', {
+    async: true,
+  }),
+  parent: belongsTo('curriculum-inventory-sequence-block', {
+    async: true,
+    inverse: 'children',
+  }),
+  children: hasMany('curriculum-inventory-sequence-block', {
+    async: true,
+    inverse: 'parent',
+  }),
+  report: belongsTo('curriculum-inventory-report', { async: true }),
+  sessions: hasMany('session', { async: true }),
+  excludedSessions: hasMany('session', { async: true }),
+  course: belongsTo('course', { async: true }),
 
   isFinalized: alias('report.isFinalized'),
   isRequired: equal('required', 1),
@@ -42,10 +50,10 @@ export default Model.extend({
    * @public
    * @todo Rename this property to 'ancestors'. [ST 2016/11/01]
    */
-  allParents: computed('parent', 'parent.allParents.[]', async function(){
+  allParents: computed('parent', 'parent.allParents.[]', async function () {
     const rhett = [];
-    const parent = await this.get('parent');
-    if(!parent){
+    const parent = await this.parent;
+    if (!parent) {
       return [];
     }
     rhett.pushObject(parent);

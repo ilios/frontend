@@ -1,7 +1,4 @@
-import {
-  collection,
-  text
-} from 'ember-cli-page-object';
+import { collection, text } from 'ember-cli-page-object';
 
 export default {
   scope: '[data-test-leadership-collapsed]',

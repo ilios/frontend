@@ -14,8 +14,8 @@ export default class MeshManagerComponent extends Component {
   @tracked searchPage = 0;
   @tracked hasMoreSearchResults = false;
 
-  get sortedTerms(){
-    if(!this.args.terms || this.args.terms.length === 0){
+  get sortedTerms() {
+    if (!this.args.terms || this.args.terms.length === 0) {
       return [];
     }
     return this.args.terms.sortBy('name');
@@ -27,12 +27,12 @@ export default class MeshManagerComponent extends Component {
 
     const descriptors = (yield this.store.query('mesh-descriptor', {
       q: query,
-      limit: SEARCH_RESULTS_PER_PAGE + 1
+      limit: SEARCH_RESULTS_PER_PAGE + 1,
     })).toArray();
 
     this.searching = false;
     this.searchPage = 1;
-    this.hasMoreSearchResults = (descriptors.length > SEARCH_RESULTS_PER_PAGE);
+    this.hasMoreSearchResults = descriptors.length > SEARCH_RESULTS_PER_PAGE;
     if (this.hasMoreSearchResults) {
       descriptors.pop();
     }
@@ -44,10 +44,10 @@ export default class MeshManagerComponent extends Component {
     const descriptors = (yield this.store.query('mesh-descriptor', {
       q: this.query,
       limit: SEARCH_RESULTS_PER_PAGE + 1,
-      offset: this.searchPage * SEARCH_RESULTS_PER_PAGE
+      offset: this.searchPage * SEARCH_RESULTS_PER_PAGE,
     })).toArray();
     this.searchPage = this.searchPage + 1;
-    this.hasMoreSearchResults = (descriptors.length > SEARCH_RESULTS_PER_PAGE);
+    this.hasMoreSearchResults = descriptors.length > SEARCH_RESULTS_PER_PAGE;
     if (this.hasMoreSearchResults) {
       descriptors.pop();
     }
@@ -65,7 +65,7 @@ export default class MeshManagerComponent extends Component {
 
   @action
   add(term) {
-    if (! this.args.editable) {
+    if (!this.args.editable) {
       return;
     }
 
@@ -82,5 +82,4 @@ export default class MeshManagerComponent extends Component {
       this.args.remove(term);
     }
   }
-
 }

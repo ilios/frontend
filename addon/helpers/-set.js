@@ -11,7 +11,7 @@ function set(positional) {
 
   return positional.length === 3
     ? () => emberSet(target, key, maybeValue)
-    : value => emberSet(target, key, value);
+    : (value) => emberSet(target, key, value);
 }
 
 export default helper(set);

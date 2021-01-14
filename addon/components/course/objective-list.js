@@ -67,36 +67,41 @@ export default class CourseObjectiveListComponent extends Component {
   }
 
   async getCohortObjectives(cohorts, intl) {
-    return await map(cohorts, async cohort => {
+    return await map(cohorts, async (cohort) => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;
       const school = await program.school;
-      const allowMultipleCourseObjectiveParents = await school.getConfigValue('allowMultipleCourseObjectiveParents');
+      const allowMultipleCourseObjectiveParents = await school.getConfigValue(
+        'allowMultipleCourseObjectiveParents'
+      );
       const objectives = await programYear.programYearObjectives;
-      const objectiveObjects = await map(objectives.toArray(), async objective => {
-        let competencyId = 0;
-        let competencyTitle = intl.t('general.noAssociatedCompetency');
-        const competency = await objective.competency;
-        if (competency) {
-          competencyId = competency.id;
-          competencyTitle = competency.title;
+      const objectiveObjects = await map(
+        objectives.toArray(),
+        async (objective) => {
+          let competencyId = 0;
+          let competencyTitle = intl.t('general.noAssociatedCompetency');
+          const competency = await objective.competency;
+          if (competency) {
+            competencyId = competency.id;
+            competencyTitle = competency.title;
+          }
+          return {
+            id: objective.id,
+            title: objective.textTitle,
+            active: objective.active,
+            competencyId,
+            competencyTitle,
+            cohortId: cohort.id,
+          };
         }
-        return {
-          id: objective.id,
-          title: objective.textTitle,
-          active: objective.active,
-          competencyId,
-          competencyTitle,
-          cohortId: cohort.id,
-        };
-      });
+      );
       const competencies = objectiveObjects.reduce((set, obj) => {
         let existing = set.findBy('id', obj.competencyId);
         if (!existing) {
           existing = {
             id: obj.competencyId,
             title: obj.competencyTitle,
-            objectives: []
+            objectives: [],
           };
           set.push(existing);
         }

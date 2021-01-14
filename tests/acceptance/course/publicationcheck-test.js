@@ -3,33 +3,30 @@ import {
   currentURL,
   click,
   findAll,
-  visit
+  visit,
 } from '@ember/test-helpers';
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupAuthentication, getElementText, getText } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Acceptance | Course - Publication Check', function(hooks) {
+module('Acceptance | Course - Publication Check', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     await setupAuthentication();
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', {
-      school
+      school,
     });
     const program = this.server.create('program', {
-      school
+      school,
     });
     const programYear = this.server.create('programYear', {
       program,
     });
     const cohort = this.server.create('cohort', {
-      programYear
+      programYear,
     });
     const term = this.server.create('term', {
       vocabulary,
@@ -45,11 +42,11 @@ module('Acceptance | Course - Publication Check', function(hooks) {
     this.server.create('courseObjective', { course: this.fullCourse });
     this.emptyCourse = this.server.create('course', {
       year: 2013,
-      schoolId: 1
+      schoolId: 1,
     });
   });
 
-  test('full course count', async function(assert) {
+  test('full course count', async function (assert) {
     await visit('/courses/' + this.fullCourse.id + '/publicationcheck');
     assert.equal(currentRouteName(), 'course.publication_check');
     var items = findAll('.course-publicationcheck table tbody td');
@@ -60,7 +57,7 @@ module('Acceptance | Course - Publication Check', function(hooks) {
     assert.equal(await getElementText(items[4]), getText('Yes (1)'));
   });
 
-  test('empty course count', async function(assert) {
+  test('empty course count', async function (assert) {
     await visit('/courses/' + this.emptyCourse.id + '/publicationcheck');
     assert.equal(currentRouteName(), 'course.publication_check');
     var items = findAll('.course-publicationcheck table tbody td');
@@ -71,9 +68,12 @@ module('Acceptance | Course - Publication Check', function(hooks) {
     assert.equal(await getElementText(items[4]), getText('No'));
   });
 
-  test('unlink icon transitions properly', async function(assert) {
+  test('unlink icon transitions properly', async function (assert) {
     await visit('/courses/' + this.fullCourse.id + '/publicationcheck');
     await click('.fa-unlink');
-    assert.equal(currentURL(), '/courses/1?courseObjectiveDetails=true&details=true');
+    assert.equal(
+      currentURL(),
+      '/courses/1?courseObjectiveDetails=true&details=true'
+    );
   });
 });

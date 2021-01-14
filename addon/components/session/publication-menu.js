@@ -10,25 +10,24 @@ export default class SessionPublicationMenuComponent extends Component {
   @service flashMessages;
   @tracked isOpen = false;
 
-
   get hideCheckLink() {
     return this.args.hideCheckLink || false;
   }
 
-  get title(){
-    if(this.args.session.publishedAsTbd){
+  get title() {
+    if (this.args.session.publishedAsTbd) {
       return this.intl.t('general.scheduled');
     }
-    if(this.args.session.published){
+    if (this.args.session.published) {
       return this.intl.t('general.published');
     }
     return this.intl.t('general.notPublished');
   }
-  get icon(){
-    if(this.args.session.publishedAsTbd){
+  get icon() {
+    if (this.args.session.publishedAsTbd) {
       return 'clock';
     }
-    if(this.args.session.published){
+    if (this.args.session.published) {
       return 'star';
     }
     return 'cloud';
@@ -37,7 +36,7 @@ export default class SessionPublicationMenuComponent extends Component {
   get showTbd() {
     return !this.args.session.publishedAsTbd;
   }
-  get showAsIs(){
+  get showAsIs() {
     return (
       (!this.args.session.published || this.args.session.publishedAsTbd) &&
       this.args.session.requiredPublicationIssues.length === 0 &&
@@ -48,9 +47,11 @@ export default class SessionPublicationMenuComponent extends Component {
     if (this.router.currentRouteName === 'session.publication_check') {
       return false;
     }
-    return !this.hideCheckLink && this.args.session.allPublicationIssuesLength > 0;
+    return (
+      !this.hideCheckLink && this.args.session.allPublicationIssuesLength > 0
+    );
   }
-  get showPublish(){
+  get showPublish() {
     return (
       (!this.args.session.published || this.args.session.publishedAsTbd) &&
       this.args.session.allPublicationIssuesLength === 0
@@ -59,10 +60,10 @@ export default class SessionPublicationMenuComponent extends Component {
   get showUnPublish() {
     return this.args.session.published || this.args.session.publishedAsTbd;
   }
-  get publicationStatus(){
-    if(this.args.session.publishedAsTbd){
+  get publicationStatus() {
+    if (this.args.session.publishedAsTbd) {
       return 'scheduled';
-    } else if (this.args.session.published){
+    } else if (this.args.session.published) {
       return 'published';
     }
 
@@ -76,45 +77,45 @@ export default class SessionPublicationMenuComponent extends Component {
   @action
   moveFocus({ key, target }) {
     switch (key) {
-    case 'ArrowDown':
-      if (target.nextElementSibling) {
-        target.nextElementSibling.focus();
-      } else {
-        this.menuElement.querySelector('button:nth-of-type(1)').focus();
-      }
-      break;
-    case 'ArrowUp':
-      if (target.previousElementSibling) {
-        target.previousElementSibling.focus();
-      } else {
-        this.menuElement.querySelector('button:last-of-type').focus();
-      }
-      break;
-    case 'Escape':
-    case 'Tab':
-    case 'ArrowRight':
-    case 'ArrowLeft':
-      this.isOpen = false;
-      break;
+      case 'ArrowDown':
+        if (target.nextElementSibling) {
+          target.nextElementSibling.focus();
+        } else {
+          this.menuElement.querySelector('button:nth-of-type(1)').focus();
+        }
+        break;
+      case 'ArrowUp':
+        if (target.previousElementSibling) {
+          target.previousElementSibling.focus();
+        } else {
+          this.menuElement.querySelector('button:last-of-type').focus();
+        }
+        break;
+      case 'Escape':
+      case 'Tab':
+      case 'ArrowRight':
+      case 'ArrowLeft':
+        this.isOpen = false;
+        break;
     }
   }
   @action
   clearFocus() {
     const buttons = this.menuElement.querySelectorAll('button');
-    buttons.forEach(el => el.blur());
+    buttons.forEach((el) => el.blur());
   }
   @action
   toggleMenu({ key }) {
     switch (key) {
-    case 'ArrowDown':
-      this.isOpen = true;
-      break;
-    case 'Escape':
-    case 'Tab':
-    case 'ArrowRight':
-    case 'ArrowLeft':
-      this.isOpen = false;
-      break;
+      case 'ArrowDown':
+        this.isOpen = true;
+        break;
+      case 'Escape':
+      case 'Tab':
+      case 'ArrowRight':
+      case 'ArrowLeft':
+        this.isOpen = false;
+        break;
     }
   }
 

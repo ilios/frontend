@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
-module('Integration | Component | publication-status', function(hooks) {
+module('Integration | Component | publication-status', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders published and is accessible', async function (assert) {

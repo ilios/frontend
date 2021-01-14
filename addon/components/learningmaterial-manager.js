@@ -4,7 +4,12 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import moment from 'moment';
-import { validatable, Length, AfterDate, NotBlank } from 'ilios-common/decorators/validation';
+import {
+  validatable,
+  Length,
+  AfterDate,
+  NotBlank,
+} from 'ilios-common/decorators/validation';
 
 @validatable
 export default class LearningMaterialManagerComponent extends Component {
@@ -14,7 +19,7 @@ export default class LearningMaterialManagerComponent extends Component {
   @tracked learningMaterial;
 
   @Length(4, 120) @NotBlank() @tracked title;
-  @AfterDate('startDate', { granularity: 'minute'}) @tracked endDate;
+  @AfterDate('startDate', { granularity: 'minute' }) @tracked endDate;
 
   @tracked type;
   @tracked owningUser;
@@ -36,7 +41,6 @@ export default class LearningMaterialManagerComponent extends Component {
   @tracked userRoleTitle;
   @tracked publicNotes;
   @tracked required;
-
 
   get isFile() {
     return this.type === 'file';
@@ -73,7 +77,7 @@ export default class LearningMaterialManagerComponent extends Component {
     }
 
     const newDate = moment();
-    newDate.set({year, month, date, hour, minute});
+    newDate.set({ year, month, date, hour, minute });
     this[which] = newDate.toDate();
   }
   @action
@@ -86,7 +90,7 @@ export default class LearningMaterialManagerComponent extends Component {
   }
   @action
   removeTerm(term) {
-    this.terms = this.terms.filter(obj => obj !== term);
+    this.terms = this.terms.filter((obj) => obj !== term);
   }
   @action
   updateStatusId(event) {
@@ -114,7 +118,11 @@ export default class LearningMaterialManagerComponent extends Component {
    * @public
    */
   get isLinkedOnlyOnce() {
-    return this.courseLearningMaterialIds.length + this.sessionLearningMaterialIds.length === 1;
+    return (
+      this.courseLearningMaterialIds.length +
+        this.sessionLearningMaterialIds.length ===
+      1
+    );
   }
 
   get currentStatus() {
@@ -159,7 +167,8 @@ export default class LearningMaterialManagerComponent extends Component {
   *save() {
     this.addErrorDisplayForAllFields();
     const isTitleValid = yield this.isValid('title');
-    const isEndDateValid = (this.startDate && this.endDate) ? yield this.isValid('endDate'): true;
+    const isEndDateValid =
+      this.startDate && this.endDate ? yield this.isValid('endDate') : true;
     if (!isTitleValid || !isEndDateValid) {
       return false;
     }

@@ -1,4 +1,4 @@
-import { registerDecorator } from "class-validator";
+import { registerDecorator } from 'class-validator';
 import { getOwner } from '@ember/application';
 import URLValidator from 'validator/es/lib/isURL';
 
@@ -33,7 +33,7 @@ export function IsURL(validationOptions) {
           const description = intl.t('errors.description');
 
           return intl.t('errors.url', { description });
-        }
+        },
       },
     });
   };

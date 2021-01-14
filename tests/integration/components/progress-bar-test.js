@@ -3,17 +3,16 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | progress bar', function(hooks) {
+module('Integration | Component | progress bar', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders at default 0%', async function(assert) {
+  test('it renders at default 0%', async function (assert) {
     await render(hbs`<ProgressBar />`);
 
     assert.dom(this.element).hasText('0%');
   });
 
-  test('changing percentage changes width', async function(assert) {
-
+  test('changing percentage changes width', async function (assert) {
     this.set('passedValue', 42);
 
     await render(hbs`<ProgressBar @percentage={{passedValue}} />`);
@@ -24,8 +23,7 @@ module('Integration | Component | progress bar', function(hooks) {
     assert.equal(find('.meter').getAttribute('style').trim(), 'width: 12%');
   });
 
-  test('changing percentage changes the displayvalue', async function(assert) {
-
+  test('changing percentage changes the displayvalue', async function (assert) {
     this.set('passedValue', 42);
 
     await render(hbs`<ProgressBar @percentage={{passedValue}} />`);
@@ -34,6 +32,5 @@ module('Integration | Component | progress bar', function(hooks) {
 
     this.set('passedValue', 11);
     assert.dom(this.element).hasText('11%');
-
   });
 });

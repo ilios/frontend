@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Serializer | Course ', function(hooks) {
+module('Unit | Serializer | Course ', function (hooks) {
   setupTest(hooks);
 
-  test('it serializes records', function(assert) {
+  test('it serializes records', function (assert) {
     var record = this.owner.lookup('service:store').createRecord('course');
 
     var serializedRecord = record.serialize();
@@ -12,7 +12,7 @@ module('Unit | Serializer | Course ', function(hooks) {
     assert.ok(serializedRecord);
   });
 
-  test('start and end date are formatted during serialization', function(assert) {
+  test('start and end date are formatted during serialization', function (assert) {
     const record = this.owner.lookup('service:store').createRecord('course');
     record.set('startDate', new Date());
     record.set('endDate', new Date());

@@ -2,7 +2,9 @@ import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default class MymaterialsRoute extends Route.extend(AuthenticatedRouteMixin) {
+export default class MymaterialsRoute extends Route.extend(
+  AuthenticatedRouteMixin
+) {
   @service fetch;
   @service currentUser;
   @service iliosConfig;

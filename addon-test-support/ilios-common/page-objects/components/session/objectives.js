@@ -11,7 +11,9 @@ import objectiveList from './objective-list';
 const definition = {
   scope: '[data-test-session-objectives]',
   title: text('[data-test-title]'),
-  createNew: clickable('[data-test-actions] [data-test-expand-collapse-button] button'),
+  createNew: clickable(
+    '[data-test-actions] [data-test-expand-collapse-button] button'
+  ),
   newObjective: {
     description: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
     save: clickable('.done'),

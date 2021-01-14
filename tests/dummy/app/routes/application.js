@@ -10,5 +10,5 @@ export default Route.extend(ApplicationRouteMixin, {
     await loadPolyfills();
     this.intl.setLocale('en-us');
     this.moment.setLocale('en');
-  }
+  },
 });

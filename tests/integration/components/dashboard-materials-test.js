@@ -11,11 +11,11 @@ let lm1, lm2, lm3, lm4, lm5, userMaterials;
 const today = moment();
 const tomorrow = moment().add(1, 'day');
 
-module('Integration | Component | dashboard materials', function(hooks) {
+module('Integration | Component | dashboard materials', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     lm1 = EmberObject.create({
       title: 'title1',
       absoluteFileUri: 'http://myhost.com/url1',
@@ -64,37 +64,39 @@ module('Integration | Component | dashboard materials', function(hooks) {
       sessionTitle: 'session5title',
       courseTitle: 'course5title',
       firstOfferingDate: tomorrow.toDate(),
-      endDate: new Date('2013-03-01T01:10:00')
+      endDate: new Date('2013-03-01T01:10:00'),
     });
     userMaterials = [lm1, lm2, lm3, lm4, lm5];
   });
 
-
-  test('it renders with materials', async function(assert) {
+  test('it renders with materials', async function (assert) {
     assert.expect(42);
     const currentUserMock = Service.extend({
-      currentUserId: 11
+      currentUserId: 11,
     });
     this.owner.register('service:current-user', currentUserMock);
     const iliosConfigMock = Service.extend({
-      apiNameSpace: '/api'
+      apiNameSpace: '/api',
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
 
-    this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
-      assert.ok('id' in params);
-      assert.equal(params.id, 11);
-      assert.ok('before' in queryParams);
-      assert.ok('after' in queryParams);
-      const before = moment(queryParams.before, 'X');
-      const after = moment(queryParams.after, 'X');
-      assert.ok(before.isSame(today.clone().add(60, 'days'), 'day'));
-      assert.ok(after.isSame(today, 'day'));
+    this.server.get(
+      `/api/usermaterials/:id`,
+      (scheme, { params, queryParams }) => {
+        assert.ok('id' in params);
+        assert.equal(params.id, 11);
+        assert.ok('before' in queryParams);
+        assert.ok('after' in queryParams);
+        const before = moment(queryParams.before, 'X');
+        const after = moment(queryParams.after, 'X');
+        assert.ok(before.isSame(today.clone().add(60, 'days'), 'day'));
+        assert.ok(after.isSame(today, 'day'));
 
-      return {
-        userMaterials
-      };
-    });
+        return {
+          userMaterials,
+        };
+      }
+    );
 
     await render(hbs`<DashboardMaterials />`);
 
@@ -142,7 +144,9 @@ module('Integration | Component | dashboard materials', function(hooks) {
     const fifthLmInstructor = `${materials}:nth-of-type(5) td:nth-of-type(4)`;
     const fifthFirstOffering = `${materials}:nth-of-type(5) td:nth-of-type(5)`;
 
-    assert.dom(this.element.querySelector(title)).hasText('My Learning Materials for the next 60 days');
+    assert
+      .dom(this.element.querySelector(title))
+      .hasText('My Learning Materials for the next 60 days');
     assert.dom('[data-test-all-materials-link]').hasText('View: All Materials');
 
     assert.ok(find(firstLmTitle).textContent.includes('title1'));
@@ -152,11 +156,19 @@ module('Integration | Component | dashboard materials', function(hooks) {
     assert.dom(firstLmCourseTitle).hasText('course1title');
     assert.dom(firstLmInstructor).hasText('Instructor1name, Instructor2name');
     assert.dom(firstLmFirstOffering).hasText(today.format('M/D/YYYY'));
-    assert.equal(find(firstLmDownloadLink).href.trim(), 'http://myhost.com/url1');
+    assert.equal(
+      find(firstLmDownloadLink).href.trim(),
+      'http://myhost.com/url1'
+    );
 
-    assert.equal(find(secondLmTitle).textContent.replace(/[\t\n\s]+/g, ""), 'Citationtitle3citationtext');
+    assert.equal(
+      find(secondLmTitle).textContent.replace(/[\t\n\s]+/g, ''),
+      'Citationtitle3citationtext'
+    );
     assert.dom(secondLmLink).doesNotExist();
-    assert.dom(secondLmTypeIcon).exists({ count: 1 }, 'LM type icon is present');
+    assert
+      .dom(secondLmTypeIcon)
+      .exists({ count: 1 }, 'LM type icon is present');
     assert.dom(secondLmSessionTitle).hasText('session3title');
     assert.dom(secondLmCourseTitle).hasText('course3title');
     assert.dom(secondLmInstructor).hasText('');
@@ -170,8 +182,13 @@ module('Integration | Component | dashboard materials', function(hooks) {
     assert.dom(thirdLmInstructor).hasText('Instructor1name, Instructor2name');
     assert.dom(thirdLmFirstOffering).hasText(tomorrow.format('M/D/YYYY'));
 
-    assert.equal(find(fourthLmLink).href.trim(), 'http://myhost.com/document.txt');
-    assert.dom(fourthLmTypeIcon).exists({ count: 1 }, 'LM type icon is present');
+    assert.equal(
+      find(fourthLmLink).href.trim(),
+      'http://myhost.com/document.txt'
+    );
+    assert
+      .dom(fourthLmTypeIcon)
+      .exists({ count: 1 }, 'LM type icon is present');
     assert.dom(fourthLmSessionTitle).hasText('session4title');
     assert.dom(fourthLmCourseTitle).hasText('course4title');
     assert.dom(fourthLmInstructor).hasText('Instructor3name, Instructor4name');
@@ -185,37 +202,42 @@ module('Integration | Component | dashboard materials', function(hooks) {
     assert.dom(fifthFirstOffering).hasText(tomorrow.format('M/D/YYYY'));
   });
 
-  test('it renders blank', async function(assert) {
+  test('it renders blank', async function (assert) {
     assert.expect(9);
     const currentUserMock = Service.extend({
-      currentUserId: 11
+      currentUserId: 11,
     });
     this.owner.register('service:current-user', currentUserMock);
     const iliosConfigMock = Service.extend({
-      apiNameSpace: '/api'
+      apiNameSpace: '/api',
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
 
-    this.server.get(`/api/usermaterials/:id`, (scheme, { params, queryParams }) => {
-      assert.ok('id' in params);
-      assert.equal(params.id, 11);
-      assert.ok('before' in queryParams);
-      assert.ok('after' in queryParams);
-      const before = moment(queryParams.before, 'X');
-      const after = moment(queryParams.after, 'X');
-      assert.ok(before.isSame(today.clone().add(60, 'days'), 'day'));
-      assert.ok(after.isSame(today, 'day'));
+    this.server.get(
+      `/api/usermaterials/:id`,
+      (scheme, { params, queryParams }) => {
+        assert.ok('id' in params);
+        assert.equal(params.id, 11);
+        assert.ok('before' in queryParams);
+        assert.ok('after' in queryParams);
+        const before = moment(queryParams.before, 'X');
+        const after = moment(queryParams.after, 'X');
+        assert.ok(before.isSame(today.clone().add(60, 'days'), 'day'));
+        assert.ok(after.isSame(today, 'day'));
 
-      return {
-        userMaterials: []
-      };
-    });
+        return {
+          userMaterials: [],
+        };
+      }
+    );
     const title = 'h3';
     const body = 'p';
 
     await render(hbs`<DashboardMaterials />`);
     assert.dom('[data-test-all-materials-link]').hasText('View: All Materials');
-    assert.dom(this.element.querySelector(title)).hasText('My Learning Materials for the next 60 days');
+    assert
+      .dom(this.element.querySelector(title))
+      .hasText('My Learning Materials for the next 60 days');
     assert.dom(this.element.querySelector(body)).hasText('None');
   });
 });

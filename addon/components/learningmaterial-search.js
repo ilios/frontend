@@ -1,5 +1,9 @@
 import Component from '@glimmer/component';
-import { dropTask, enqueueTask, restartableTask } from 'ember-concurrency-decorators';
+import {
+  dropTask,
+  enqueueTask,
+  restartableTask,
+} from 'ember-concurrency-decorators';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
@@ -16,7 +20,7 @@ export default class LearningMaterialSearchComponent extends Component {
   @tracked searchReturned = false;
 
   @restartableTask
-  *search(query){
+  *search(query) {
     if (query.trim() === '') {
       this.searchReturned = false;
       this.searchPage = 1;
@@ -40,11 +44,11 @@ export default class LearningMaterialSearchComponent extends Component {
     if (this.hasMoreSearchResults) {
       lms.pop();
     }
-    this.searchResults =  lms;
+    this.searchResults = lms;
   }
 
   @action
-  clear(){
+  clear() {
     this.searchResults = [];
     this.searchReturned = false;
     this.searching = false;
@@ -54,7 +58,7 @@ export default class LearningMaterialSearchComponent extends Component {
   }
   @dropTask
   *searchMore() {
-    const results  = yield this.store.query('learningMaterial', {
+    const results = yield this.store.query('learningMaterial', {
       q: this.query,
       limit: this.searchResultsPerPage + 1,
       offset: this.searchPage * this.searchResultsPerPage,

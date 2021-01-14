@@ -6,7 +6,7 @@ import { component } from 'ilios-common/page-objects/components/session/objectiv
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | session/objectives', function(hooks) {
+module('Integration | Component | session/objectives', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -16,8 +16,13 @@ module('Integration | Component | session/objectives', function(hooks) {
     const session = this.server.create('session', { course });
     this.server.create('sessionObjective', { session });
     this.server.create('sessionObjective', { session });
-    this.server.create('sessionObjective', { session, courseObjectives: [ courseObjective ] });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    this.server.create('sessionObjective', {
+      session,
+      courseObjectives: [courseObjective],
+    });
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .find('session', session.id);
 
     this.set('session', sessionModel);
     await render(hbs`<Session::Objectives
@@ -28,17 +33,29 @@ module('Integration | Component | session/objectives', function(hooks) {
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 3);
-    assert.equal(component.objectiveList.objectives[0].description.text, 'session objective 0');
+    assert.equal(
+      component.objectiveList.objectives[0].description.text,
+      'session objective 0'
+    );
     assert.ok(component.objectiveList.objectives[0].parents.empty);
     assert.ok(component.objectiveList.objectives[0].meshDescriptors.empty);
 
-    assert.equal(component.objectiveList.objectives[1].description.text, 'session objective 1');
+    assert.equal(
+      component.objectiveList.objectives[1].description.text,
+      'session objective 1'
+    );
     assert.ok(component.objectiveList.objectives[1].parents.empty);
     assert.ok(component.objectiveList.objectives[1].meshDescriptors.empty);
 
-    assert.equal(component.objectiveList.objectives[2].description.text, 'session objective 2');
+    assert.equal(
+      component.objectiveList.objectives[2].description.text,
+      'session objective 2'
+    );
     assert.equal(component.objectiveList.objectives[2].parents.list.length, 1);
-    assert.equal(component.objectiveList.objectives[2].parents.list[0].text, 'course objective 0');
+    assert.equal(
+      component.objectiveList.objectives[2].parents.list[0].text,
+      'course objective 0'
+    );
     assert.ok(component.objectiveList.objectives[2].meshDescriptors.empty);
 
     await a11yAudit(this.element);
@@ -49,7 +66,9 @@ module('Integration | Component | session/objectives', function(hooks) {
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
     this.server.create('sessionObjective', { session });
-    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    const sessionModel = await this.owner
+      .lookup('service:store')
+      .find('session', session.id);
 
     this.set('session', sessionModel);
     await render(hbs`<Session::Objectives

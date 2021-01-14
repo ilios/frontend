@@ -3,9 +3,8 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { filter } from 'rsvp';
 import { isEmpty, isPresent } from '@ember/utils';
-import {restartableTask} from "ember-concurrency-decorators";
+import { restartableTask } from 'ember-concurrency-decorators';
 import { inject as service } from '@ember/service';
-
 
 export default class LearnergroupTree extends Component {
   @tracked isHidden = true;
@@ -21,13 +20,19 @@ export default class LearnergroupTree extends Component {
   *load(element, [learnerGroup, selectedGroups, filter]) {
     const exp = new RegExp(filter, 'gi');
     const children = yield learnerGroup.children;
-    const hasUnSelectedChildren = yield this.hasUnSelectedChildren(children.toArray(), selectedGroups);
+    const hasUnSelectedChildren = yield this.hasUnSelectedChildren(
+      children.toArray(),
+      selectedGroups
+    );
     let filterMatch = true;
     if (filter && filter.length > 0) {
       const filterTitle = yield learnerGroup.filterTitle;
       filterMatch = filterTitle.match(exp) != null;
     }
-    const available = hasUnSelectedChildren || isEmpty(selectedGroups) || !selectedGroups.includes(learnerGroup);
+    const available =
+      hasUnSelectedChildren ||
+      isEmpty(selectedGroups) ||
+      !selectedGroups.includes(learnerGroup);
 
     this.isHidden = !filterMatch || !available;
     this.selectable = available;
@@ -39,14 +44,17 @@ export default class LearnergroupTree extends Component {
    * @param {Array} children
    * @param {Array} selectedGroups
    * @return {boolean}
-  **/
-  async hasUnSelectedChildren(children, selectedGroups){
+   **/
+  async hasUnSelectedChildren(children, selectedGroups) {
     const unselectedChildren = await filter(children, async (child) => {
-      if (isEmpty(selectedGroups) || ! selectedGroups.includes(child)) {
+      if (isEmpty(selectedGroups) || !selectedGroups.includes(child)) {
         return true;
       }
       const childChildren = await child.children;
-      return this.hasUnSelectedChildren(childChildren.toArray(), selectedGroups);
+      return this.hasUnSelectedChildren(
+        childChildren.toArray(),
+        selectedGroups
+      );
     });
     return unselectedChildren.length > 0;
   }
@@ -61,6 +69,8 @@ export default class LearnergroupTree extends Component {
   @action
   sortByTitle(learnerGroupA, learnerGroupB) {
     const locale = this.intl.get('locale');
-    return learnerGroupA.title.localeCompare(learnerGroupB.title, locale, {numeric: true});
+    return learnerGroupA.title.localeCompare(learnerGroupB.title, locale, {
+      numeric: true,
+    });
   }
 }

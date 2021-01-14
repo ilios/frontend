@@ -22,10 +22,10 @@ export default class PublishAllSessionsComponent extends Component {
     return this.sessionsToOverride.length === 0;
   }
 
-  get saveProgressPercent(){
+  get saveProgressPercent() {
     const total = this.totalSessionsToSave || 1;
     const current = this.currentSessionsSaved || 0;
-    const floor = Math.floor(current / total * 100);
+    const floor = Math.floor((current / total) * 100);
     if (!floor && this.save.isRunning) {
       return 1;
     }
@@ -36,48 +36,48 @@ export default class PublishAllSessionsComponent extends Component {
   @restartableTask
   *load() {
     this.courseObjectivesRelationship = yield this.args.course.courseObjectives;
-    this.sessionsToOverride = this.overridableSessions.filter(session => {
-      return session.published && ! session.publishedAsTbd;
+    this.sessionsToOverride = this.overridableSessions.filter((session) => {
+      return session.published && !session.publishedAsTbd;
     });
   }
 
-  get showWarning(){
+  get showWarning() {
     if (!this.courseObjectivesRelationship) {
       return false;
     }
 
-    return this.courseObjectivesRelationship.toArray().any(objective => {
+    return this.courseObjectivesRelationship.toArray().any((objective) => {
       return objective.programYearObjectives.length === 0;
     });
   }
 
-  get allSessionsAsIs(){
-    return (this.sessionsToOverride.length === this.overridableSessions.length);
+  get allSessionsAsIs() {
+    return this.sessionsToOverride.length === this.overridableSessions.length;
   }
 
-  get publishableSessions(){
-    if (! this.args.sessions) {
+  get publishableSessions() {
+    if (!this.args.sessions) {
       return [];
     }
-    return this.args.sessions.filter(session => {
-      return (session.allPublicationIssuesLength === 0);
+    return this.args.sessions.filter((session) => {
+      return session.allPublicationIssuesLength === 0;
     });
   }
 
-  get unPublishableSessions(){
-    if (! this.args.sessions) {
+  get unPublishableSessions() {
+    if (!this.args.sessions) {
       return [];
     }
-    return this.args.sessions.filter(session => {
-      return (session.requiredPublicationIssues.length > 0);
+    return this.args.sessions.filter((session) => {
+      return session.requiredPublicationIssues.length > 0;
     });
   }
 
-  get overridableSessions(){
-    if (! this.args.sessions) {
+  get overridableSessions() {
+    if (!this.args.sessions) {
       return [];
     }
-    return this.args.sessions.filter(session => {
+    return this.args.sessions.filter((session) => {
       return (
         session.requiredPublicationIssues.length === 0 &&
         session.optionalPublicationIssues.length > 0
@@ -98,17 +98,22 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   @action
-  toggleSession(session){
+  toggleSession(session) {
     if (this.sessionsToOverride.includes(session)) {
-      this.sessionsToOverride = this.sessionsToOverride.filter(({ id }) => id !== session.id);
-    } else{
+      this.sessionsToOverride = this.sessionsToOverride.filter(
+        ({ id }) => id !== session.id
+      );
+    } else {
       this.sessionsToOverride = [...this.sessionsToOverride, session];
     }
   }
 
   @action
   publishAllAsIs() {
-    this.sessionsToOverride = [...this.sessionsToOverride, ...this.overridableSessions].uniq();
+    this.sessionsToOverride = [
+      ...this.sessionsToOverride,
+      ...this.overridableSessions,
+    ].uniq();
   }
 
   @action
@@ -116,7 +121,7 @@ export default class PublishAllSessionsComponent extends Component {
     this.sessionsToOverride = [];
   }
 
-  async saveSomeSessions(sessions){
+  async saveSomeSessions(sessions) {
     const chunk = sessions.splice(0, 6);
 
     await all(chunk.invoke('save'));
@@ -127,16 +132,16 @@ export default class PublishAllSessionsComponent extends Component {
   }
 
   @dropTask
-  *save(){
+  *save() {
     const sessionsToSave = [];
 
-    this.overridableSessions.forEach(session => {
+    this.overridableSessions.forEach((session) => {
       session.set('publishedAsTbd', !this.sessionsToOverride.includes(session));
       session.set('published', true);
       sessionsToSave.push(session);
     });
 
-    this.publishableSessions.forEach(session => {
+    this.publishableSessions.forEach((session) => {
       session.set('published', true);
       sessionsToSave.push(session);
     });

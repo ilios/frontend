@@ -1,8 +1,4 @@
-import {
-  create,
-  clickable,
-  text
-} from 'ember-cli-page-object';
+import { create, clickable, text } from 'ember-cli-page-object';
 import leadershipList from './leadership-list';
 import leadershipManager from './leadership-manager';
 

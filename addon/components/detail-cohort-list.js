@@ -14,13 +14,13 @@ export default class DetailCohortListComponent extends Component {
       return false;
     }
 
-    const sortProxies = yield map(cohorts.toArray(), async cohort => {
+    const sortProxies = yield map(cohorts.toArray(), async (cohort) => {
       const school = await cohort.school;
       const schoolTitle = school.title;
       let displayTitle = cohort.title;
       if (!displayTitle) {
         const classOfYear = await cohort.classOfYear;
-        displayTitle = this.intl.t('general.classOf', {year: classOfYear});
+        displayTitle = this.intl.t('general.classOf', { year: classOfYear });
       }
 
       return {
@@ -30,6 +30,8 @@ export default class DetailCohortListComponent extends Component {
       };
     });
 
-    this.sortedCohorts = sortProxies.sortBy('schoolTitle', 'displayTitle').mapBy('cohort');
+    this.sortedCohorts = sortProxies
+      .sortBy('schoolTitle', 'displayTitle')
+      .mapBy('cohort');
   }
 }

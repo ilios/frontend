@@ -4,14 +4,14 @@ import userNameInfo from './user-name-info';
 const definition = {
   scope: '[data-test-instructors-list]',
   instructors: collection('[data-test-instructor-group] li', {
-    userNameInfo
+    userNameInfo,
   }),
   instructorGroups: collection('[data-test-instructor-group]', {
     title: text('[data-test-instructor-group-title]'),
     members: collection('[data-test-instructor-group-members] li', {
-      userNameInfo
-    })
-  })
+      userNameInfo,
+    }),
+  }),
 };
 
 export default definition;

@@ -1,4 +1,4 @@
-import { registerDecorator } from "class-validator";
+import { registerDecorator } from 'class-validator';
 import { getOwner } from '@ember/application';
 import EmailValidator from 'validator/es/lib/isEmail';
 
@@ -11,7 +11,7 @@ export function IsEmail(validationOptions) {
       options: validationOptions,
       validator: {
         validate(value) {
-          if (! value) {
+          if (!value) {
             return true;
           }
           return EmailValidator(value);
@@ -22,7 +22,7 @@ export function IsEmail(validationOptions) {
           const description = intl.t('errors.description');
 
           return intl.t('errors.email', { description });
-        }
+        },
       },
     });
   };

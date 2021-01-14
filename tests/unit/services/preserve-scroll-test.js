@@ -1,10 +1,10 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Service | preserve-scroll', function(hooks) {
+module('Unit | Service | preserve-scroll', function (hooks) {
   setupTest(hooks);
 
-  test('it works', function(assert) {
+  test('it works', function (assert) {
     const service = this.owner.lookup('service:preserve-scroll');
     assert.ok(service);
     service.savePosition('foo', 93);

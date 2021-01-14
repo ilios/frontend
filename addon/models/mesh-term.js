@@ -9,5 +9,5 @@ export default Model.extend({
   permuted: attr('string'),
   createdAt: attr('date'),
   updatedAt: attr('date'),
-  concepts: hasMany('mesh-concept', {async: true}),
+  concepts: hasMany('mesh-concept', { async: true }),
 });

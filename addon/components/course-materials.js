@@ -29,19 +29,28 @@ export default class CourseMaterialsComponent extends Component {
   @restartableTask
   *update() {
     if (this.courseMaterialsRelationship) {
-      this.courseLearningMaterialObjects = yield map(this.courseMaterialsRelationship.toArray(), async (clm) => {
-        return await this.buildClmObject(clm);
-      });
+      this.courseLearningMaterialObjects = yield map(
+        this.courseMaterialsRelationship.toArray(),
+        async (clm) => {
+          return await this.buildClmObject(clm);
+        }
+      );
     }
     if (this.sessionsRelationship) {
-      const sessionMaterials = yield map(this.sessionsRelationship.toArray(), async (session) => {
-        const data = await session.learningMaterials;
-        return data.toArray();
-      });
+      const sessionMaterials = yield map(
+        this.sessionsRelationship.toArray(),
+        async (session) => {
+          const data = await session.learningMaterials;
+          return data.toArray();
+        }
+      );
       const flatSessionMaterials = sessionMaterials.flat(2);
-      this.sessionLearningMaterialObjects = yield map(flatSessionMaterials, async (slm) => {
-        return await this.buildSlmObject(slm);
-      });
+      this.sessionLearningMaterialObjects = yield map(
+        flatSessionMaterials,
+        async (slm) => {
+          return await this.buildSlmObject(slm);
+        }
+      );
     }
   }
 
@@ -52,11 +61,13 @@ export default class CourseMaterialsComponent extends Component {
     }
     const exp = new RegExp(q, 'gi');
     return this.courseLearningMaterialObjects.filter((obj) => {
-      return (obj.title && obj.title.match(exp)) ||
-             (obj.description && obj.description.match(exp)) ||
-             (obj.author && obj.author.match(exp)) ||
-             (obj.type && obj.type.match(exp)) ||
-             (obj.citation && obj.citation.match(exp));
+      return (
+        (obj.title && obj.title.match(exp)) ||
+        (obj.description && obj.description.match(exp)) ||
+        (obj.author && obj.author.match(exp)) ||
+        (obj.type && obj.type.match(exp)) ||
+        (obj.citation && obj.citation.match(exp))
+      );
     });
   }
 
@@ -67,12 +78,14 @@ export default class CourseMaterialsComponent extends Component {
     }
     const exp = new RegExp(q, 'gi');
     return this.sessionLearningMaterialObjects.filter((obj) => {
-      return (obj.title && obj.title.match(exp)) ||
-             (obj.description && obj.description.match(exp)) ||
-             (obj.author && obj.author.match(exp)) ||
-             (obj.type && obj.type.match(exp)) ||
-             (obj.citation && obj.citation.match(exp)) ||
-             (obj.sessionTitle && obj.sessionTitle.match(exp));
+      return (
+        (obj.title && obj.title.match(exp)) ||
+        (obj.description && obj.description.match(exp)) ||
+        (obj.author && obj.author.match(exp)) ||
+        (obj.type && obj.type.match(exp)) ||
+        (obj.citation && obj.citation.match(exp)) ||
+        (obj.sessionTitle && obj.sessionTitle.match(exp))
+      );
     });
   }
 
@@ -101,7 +114,7 @@ export default class CourseMaterialsComponent extends Component {
   }
 
   @restartableTask
-  *setCourseQuery (q) {
+  *setCourseQuery(q) {
     yield timeout(DEBOUNCE_DELAY);
     this.courseQuery = q;
   }
@@ -120,7 +133,7 @@ export default class CourseMaterialsComponent extends Component {
       description: lm.description,
       title: lm.title,
       type: lm.type,
-      url: lm.url
+      url: lm.url,
     };
   }
 
@@ -136,7 +149,7 @@ export default class CourseMaterialsComponent extends Component {
       sessionTitle: session.title,
       title: lm.title,
       type: lm.type,
-      url: lm.url
+      url: lm.url,
     };
   }
 }

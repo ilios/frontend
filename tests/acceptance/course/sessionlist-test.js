@@ -9,30 +9,36 @@ import page from 'ilios-common/page-objects/sessions';
 
 moment.locale('en');
 const today = moment().hour(8);
-module('Acceptance | Course - Session List', function(hooks) {
+module('Acceptance | Course - Session List', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
     this.user = await setupAuthentication({ school: this.school });
-    this.sessionType = this.server.create('sessionType', { school: this.school });
+    this.sessionType = this.server.create('sessionType', {
+      school: this.school,
+    });
 
     const learner1 = this.server.create('user');
     const learner2 = this.server.create('user');
     const instructor1 = this.server.create('user');
     const instructor2 = this.server.create('user');
     const instructor3 = this.server.create('user');
-    const learnerGroup1 = this.server.create('learnerGroup', { users: [ learner1, learner2 ] });
-    const learnerGroup2 = this.server.create('learnerGroup');
-    const instructorGroup = this.server.create('instructorGroup', { users: [ instructor1, instructor2, instructor3 ] });
-    const course = this.course = this.server.create('course', {
-      school: this.school,
-      directorIds: [this.user.id]
+    const learnerGroup1 = this.server.create('learnerGroup', {
+      users: [learner1, learner2],
     });
+    const learnerGroup2 = this.server.create('learnerGroup');
+    const instructorGroup = this.server.create('instructorGroup', {
+      users: [instructor1, instructor2, instructor3],
+    });
+    const course = (this.course = this.server.create('course', {
+      school: this.school,
+      directorIds: [this.user.id],
+    }));
     this.session1 = this.server.create('session', {
       course,
       sessionType: this.sessionType,
-      updatedAt: moment('2019-07-09 17:00:00').toDate()
+      updatedAt: moment('2019-07-09 17:00:00').toDate(),
     });
     this.session2 = this.server.create('session', {
       course,
@@ -47,16 +53,16 @@ module('Acceptance | Course - Session List', function(hooks) {
       course,
       sessionType: this.sessionType,
       prerequisites: [this.session2],
-      title: 'session3\\'
+      title: 'session3\\',
     });
     this.server.create('offering', {
       session: this.session1,
       startDate: today.format(),
       endDate: today.clone().add(1, 'hour').format(),
-      learners: [ learner1 ],
-      learnerGroups: [ learnerGroup1, learnerGroup2 ],
-      instructors: [ instructor1 ],
-      instructorGroups: [ instructorGroup ]
+      learners: [learner1],
+      learnerGroups: [learnerGroup1, learnerGroup2],
+      instructors: [instructor1],
+      instructorGroups: [instructorGroup],
     });
     this.server.create('offering', {
       session: this.session1,
@@ -70,7 +76,7 @@ module('Acceptance | Course - Session List', function(hooks) {
     });
   });
 
-  test('session list', async function(assert) {
+  test('session list', async function (assert) {
     await page.visit({ courseId: 1, details: true });
     const { sessions } = page.sessionsList;
 
@@ -80,13 +86,16 @@ module('Acceptance | Course - Session List', function(hooks) {
     assert.equal(sessions[0].groupCount, '2');
     assert.equal(sessions[0].objectiveCount, '0');
     assert.equal(sessions[0].termCount, '0');
-    assert.equal(sessions[0].firstOffering, today.toDate().toLocaleString('en', {
-      month: 'numeric',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    }));
+    assert.equal(
+      sessions[0].firstOffering,
+      today.toDate().toLocaleString('en', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      })
+    );
     assert.equal(sessions[0].offeringCount, '3');
     assert.notOk(sessions[0].hasInstructionalNotes);
     assert.notOk(sessions[0].hasPrerequisites);
@@ -130,41 +139,76 @@ module('Acceptance | Course - Session List', function(hooks) {
     await sessions[0].expandCollapse();
     const { offerings } = sessions[0];
 
-
     const offering1StartDate = moment(this.server.db.offerings[0].startDate);
     const offering2StartDate = moment(this.server.db.offerings[1].startDate);
     const offering3StartDate = moment(this.server.db.offerings[2].startDate);
 
     assert.equal(offerings.dates.length, 3);
 
-    assert.equal(offerings.dates[0].dayOfWeek, offering1StartDate.format('dddd'));
-    assert.equal(offerings.dates[0].dayOfMonth, offering1StartDate.format('MMMM Do'));
-    assert.equal(offerings.dates[1].dayOfWeek, offering2StartDate.format('dddd'));
-    assert.equal(offerings.dates[1].dayOfMonth, offering2StartDate.format('MMMM Do'));
-    assert.equal(offerings.dates[2].dayOfWeek, offering3StartDate.format('dddd'));
-    assert.equal(offerings.dates[2].dayOfMonth, offering3StartDate.format('MMMM Do'));
+    assert.equal(
+      offerings.dates[0].dayOfWeek,
+      offering1StartDate.format('dddd')
+    );
+    assert.equal(
+      offerings.dates[0].dayOfMonth,
+      offering1StartDate.format('MMMM Do')
+    );
+    assert.equal(
+      offerings.dates[1].dayOfWeek,
+      offering2StartDate.format('dddd')
+    );
+    assert.equal(
+      offerings.dates[1].dayOfMonth,
+      offering2StartDate.format('MMMM Do')
+    );
+    assert.equal(
+      offerings.dates[2].dayOfWeek,
+      offering3StartDate.format('dddd')
+    );
+    assert.equal(
+      offerings.dates[2].dayOfMonth,
+      offering3StartDate.format('MMMM Do')
+    );
 
     assert.equal(offerings.offerings.length, 3);
-    assert.equal(offerings.offerings[0].startTime, offering1StartDate.format('LT'));
+    assert.equal(
+      offerings.offerings[0].startTime,
+      offering1StartDate.format('LT')
+    );
     assert.equal(offerings.offerings[0].location, 'room 0');
-    assert.equal(offerings.offerings[0].learners, '(2) 1 guy M. Mc1son, 2 guy...');
-    assert.equal(offerings.offerings[0].learnerGroups, '(2) learner group 0, learn...');
-    assert.equal(offerings.offerings[0].instructors, '(3) 3 guy M. Mc3son, 4 guy...');
+    assert.equal(
+      offerings.offerings[0].learners,
+      '(2) 1 guy M. Mc1son, 2 guy...'
+    );
+    assert.equal(
+      offerings.offerings[0].learnerGroups,
+      '(2) learner group 0, learn...'
+    );
+    assert.equal(
+      offerings.offerings[0].instructors,
+      '(3) 3 guy M. Mc3son, 4 guy...'
+    );
 
-    assert.equal(offerings.offerings[1].startTime, offering2StartDate.format('LT'));
+    assert.equal(
+      offerings.offerings[1].startTime,
+      offering2StartDate.format('LT')
+    );
     assert.equal(offerings.offerings[1].location, 'room 1');
     assert.equal(offerings.offerings[1].learners, '');
     assert.equal(offerings.offerings[1].learnerGroups, '');
     assert.equal(offerings.offerings[1].instructors, '');
 
-    assert.equal(offerings.offerings[2].startTime, offering3StartDate.format('LT'));
+    assert.equal(
+      offerings.offerings[2].startTime,
+      offering3StartDate.format('LT')
+    );
     assert.equal(offerings.offerings[2].location, 'room 2');
     assert.equal(offerings.offerings[2].learners, '');
     assert.equal(offerings.offerings[2].learnerGroups, '');
     assert.equal(offerings.offerings[2].instructors, '');
   });
 
-  test('no offerings', async function(assert) {
+  test('no offerings', async function (assert) {
     await page.visit({ courseId: 1, details: true });
     const { sessions } = page.sessionsList;
 
@@ -194,7 +238,10 @@ module('Acceptance | Course - Session List', function(hooks) {
     await page.visit({ courseId: 1, details: true });
     const { sessions, expandedSessions } = page.sessionsList;
     await sessions[0].expandCollapse();
-    assert.equal(expandedSessions[0].lastUpdated, 'Last Update Last Update: 07/09/2019 5:00 PM');
+    assert.equal(
+      expandedSessions[0].lastUpdated,
+      'Last Update Last Update: 07/09/2019 5:00 PM'
+    );
   });
 
   test('expand all sessions', async function (assert) {
@@ -230,7 +277,7 @@ module('Acceptance | Course - Session List', function(hooks) {
     assert.notOk(page.showsAllSessionsExpanded);
   });
 
-  test('expand all sessions with one session expanded already', async function(assert) {
+  test('expand all sessions with one session expanded already', async function (assert) {
     this.server.create('offering', { session: this.session2 });
     this.server.create('offering', { session: this.session3 });
     this.server.create('offering', { session: this.session4 });
@@ -246,7 +293,7 @@ module('Acceptance | Course - Session List', function(hooks) {
     assert.equal(expandedSessions.length, 0);
   });
 
-  test('expand sessions one at a time and collapse all', async function(assert) {
+  test('expand sessions one at a time and collapse all', async function (assert) {
     this.server.create('offering', { session: this.session2 });
     this.server.create('offering', { session: this.session3 });
     this.server.create('offering', { session: this.session4 });
@@ -282,7 +329,6 @@ module('Acceptance | Course - Session List', function(hooks) {
     assert.equal(sessions[4].termCount, '0');
     assert.equal(sessions[4].firstOffering, '');
     assert.equal(sessions[4].offeringCount, '0');
-
   });
 
   test('cancel session', async function (assert) {
@@ -298,8 +344,7 @@ module('Acceptance | Course - Session List', function(hooks) {
     assert.notOk(page.newSession.isVisible);
   });
 
-
-  test('new session goes away when we navigate #643', async function(assert) {
+  test('new session goes away when we navigate #643', async function (assert) {
     await page.visit({ courseId: 1, details: true });
     const { sessions } = page.sessionsList;
     await page.expandNewSessionForm();
@@ -324,13 +369,16 @@ module('Acceptance | Course - Session List', function(hooks) {
     const { offerings } = sessions[0].offerings;
 
     assert.equal(sessions.length, 4);
-    assert.equal(sessions[0].firstOffering, today.toDate().toLocaleString('en', {
-      month: 'numeric',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    }));
+    assert.equal(
+      sessions[0].firstOffering,
+      today.toDate().toLocaleString('en', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      })
+    );
     await sessions[0].expandCollapse();
     await offerings[0].edit();
     const { offeringForm: form } = offerings[0];
@@ -341,17 +389,19 @@ module('Acceptance | Course - Session List', function(hooks) {
     await form.startTime.ampm(newDate.format('a'));
     await form.save();
 
-    assert.equal(sessions[0].firstOffering, newDate.toDate().toLocaleString('en', {
-      month: 'numeric',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    }));
-
+    assert.equal(
+      sessions[0].firstOffering,
+      newDate.toDate().toLocaleString('en', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      })
+    );
   });
 
-  test('title filter escapes regex', async function(assert) {
+  test('title filter escapes regex', async function (assert) {
     assert.expect(4);
     await page.visit({ courseId: 1, details: true });
     const { sessions } = page.sessionsList;
@@ -391,7 +441,6 @@ module('Acceptance | Course - Session List', function(hooks) {
       assert.equal(currentRouteName(), 'course.index');
       assert.equal(sessions.length, sessionCount + 4);
     }
-
   });
 
   test('edit offering URL', async function (assert) {
@@ -400,18 +449,24 @@ module('Acceptance | Course - Session List', function(hooks) {
     const { offerings } = sessions[0].offerings;
 
     assert.equal(sessions.length, 4);
-    assert.equal(sessions[0].firstOffering, today.toDate().toLocaleString('en', {
-      month: 'numeric',
-      day: 'numeric',
-      year: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    }));
+    assert.equal(
+      sessions[0].firstOffering,
+      today.toDate().toLocaleString('en', {
+        month: 'numeric',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      })
+    );
     await sessions[0].expandCollapse();
     await offerings[0].edit();
     const { offeringForm: form } = offerings[0];
     await form.url.set('https://zoom.example.edu');
     await form.save();
-    assert.equal(this.server.schema.offerings.find(1).url, 'https://zoom.example.edu');
+    assert.equal(
+      this.server.schema.offerings.find(1).url,
+      'https://zoom.example.edu'
+    );
   });
 });

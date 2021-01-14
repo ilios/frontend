@@ -31,7 +31,7 @@ export default class WeeklyCalendarComponent extends Component {
   }
 
   get week() {
-    return [...Array(7).keys()].map(i => {
+    return [...Array(7).keys()].map((i) => {
       const date = this.firstDayOfWeek.add(i, 'days');
       return {
         date: date.toDate(),
@@ -60,14 +60,16 @@ export default class WeeklyCalendarComponent extends Component {
   }
 
   get eventDays() {
-    return this.week.map(day => {
-      day.events = this.sortedEvents.filter(e => moment(day.date).isSame(moment(e.startDate), 'day'));
+    return this.week.map((day) => {
+      day.events = this.sortedEvents.filter((e) =>
+        moment(day.date).isSame(moment(e.startDate), 'day')
+      );
       return day;
     });
   }
 
   get days() {
-    return this.eventDays.map(day => {
+    return this.eventDays.map((day) => {
       const date = moment(day.date);
       day.dayOfWeek = date.weekday() + 1;
       day.fullName = date.format('dddd LL');
@@ -77,7 +79,7 @@ export default class WeeklyCalendarComponent extends Component {
   }
 
   get hours() {
-    return [...Array(24).keys()].map(i => {
+    return [...Array(24).keys()].map((i) => {
       const time = this.firstDayOfWeek.hour(i);
       return {
         hour: time.format('H'),

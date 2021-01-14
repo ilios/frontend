@@ -18,7 +18,7 @@ export default class SortableTh extends Component {
     return this.args.sortedBy || false;
   }
 
-  get textDirection(){
+  get textDirection() {
     return 'text-' + this.align;
   }
 
@@ -37,9 +37,13 @@ export default class SortableTh extends Component {
   get sortIcon() {
     if (this.sortedBy) {
       if (this.sortedAscending) {
-        return this.sortType === 'numeric' ? 'sort-numeric-down' : 'sort-alpha-down';
+        return this.sortType === 'numeric'
+          ? 'sort-numeric-down'
+          : 'sort-alpha-down';
       } else {
-        return this.sortType === 'numeric' ? 'sort-numeric-down-alt' : 'sort-alpha-down-alt';
+        return this.sortType === 'numeric'
+          ? 'sort-numeric-down-alt'
+          : 'sort-alpha-down-alt';
       }
     } else {
       return 'sort';

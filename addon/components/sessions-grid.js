@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
 import escapeRegExp from '../utils/escape-reg-exp';
-import { dropTask } from "ember-concurrency-decorators";
+import { dropTask } from 'ember-concurrency-decorators';
 
 export default class SessionsGrid extends Component {
   @service router;
@@ -20,12 +20,14 @@ export default class SessionsGrid extends Component {
       return this.args.sessions;
     }
 
-    const filterExpressions = this.args.filterBy.split(' ').map(function (string) {
-      const clean = escapeRegExp(string);
-      return new RegExp(clean, 'gi');
-    });
+    const filterExpressions = this.args.filterBy
+      .split(' ')
+      .map(function (string) {
+        const clean = escapeRegExp(string);
+        return new RegExp(clean, 'gi');
+      });
 
-    return this.args.sessions.filter(session => {
+    return this.args.sessions.filter((session) => {
       let matchedSearchTerms = 0;
 
       for (let i = 0; i < filterExpressions.length; i++) {
@@ -34,7 +36,7 @@ export default class SessionsGrid extends Component {
         }
       }
       //if the number of matching search terms is equal to the number searched, return true
-      return (matchedSearchTerms === filterExpressions.length);
+      return matchedSearchTerms === filterExpressions.length;
     });
   }
 

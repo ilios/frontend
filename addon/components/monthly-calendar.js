@@ -36,8 +36,10 @@ export default class MonthlyCalendarComponent extends Component {
   }
 
   get eventDays() {
-    return this.month.map(day => {
-      day.events = this.sortedEvents.filter(e => moment(day.date).isSame(moment(e.startDate), 'day'));
+    return this.month.map((day) => {
+      day.events = this.sortedEvents.filter((e) =>
+        moment(day.date).isSame(moment(e.startDate), 'day')
+      );
       return day;
     });
   }
@@ -50,7 +52,7 @@ export default class MonthlyCalendarComponent extends Component {
     const firstDayOfWeek = this.firstDayOfMonth.clone().weekday(0);
     const offset = this.firstDayOfMonth.diff(firstDayOfWeek, 'days');
 
-    return this.eventDays.map(day => {
+    return this.eventDays.map((day) => {
       const date = moment(day.date);
       day.dayOfWeek = date.weekday() + 1;
       day.weekOfMonth = Math.ceil((date.date() + offset) / 7);
@@ -67,7 +69,7 @@ export default class MonthlyCalendarComponent extends Component {
     const longDays = moment.weekdays(true);
     const shortDays = moment.weekdaysShort(true);
 
-    return [0, 1, 2, 3, 4, 5, 6].map(i => {
+    return [0, 1, 2, 3, 4, 5, 6].map((i) => {
       return {
         day: i + 1,
         longName: longDays[i],

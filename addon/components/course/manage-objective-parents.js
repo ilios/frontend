@@ -6,7 +6,10 @@ export default class CourseManageObjectiveParentsComponent extends Component {
   @tracked userSelectedCohort;
 
   get selectedCohort() {
-    if (this.userSelectedCohort && this.args.cohortObjectives.includes(this.userSelectedCohort)) {
+    if (
+      this.userSelectedCohort &&
+      this.args.cohortObjectives.includes(this.userSelectedCohort)
+    ) {
       return this.userSelectedCohort;
     }
 
@@ -24,7 +27,9 @@ export default class CourseManageObjectiveParentsComponent extends Component {
   }
 
   get selectedCompetencyIdsInSelectedCohort() {
-    const selectedInCohort = this.args.selected.filter(obj => obj.cohortId === this.selectedCohort.id);
+    const selectedInCohort = this.args.selected.filter(
+      (obj) => obj.cohortId === this.selectedCohort.id
+    );
     return selectedInCohort.mapBy('competencyId');
   }
 

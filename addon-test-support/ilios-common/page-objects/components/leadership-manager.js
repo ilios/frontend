@@ -3,7 +3,7 @@ import {
   collection,
   fillable,
   hasClass,
-  notHasClass
+  notHasClass,
 } from 'ember-cli-page-object';
 
 export default {

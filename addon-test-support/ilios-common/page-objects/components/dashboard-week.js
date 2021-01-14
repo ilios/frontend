@@ -1,7 +1,4 @@
-import {
-  create,
-  text
-} from 'ember-cli-page-object';
+import { create, text } from 'ember-cli-page-object';
 import weekGlance from './week-glance';
 
 const definition = {

@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { restartableTask } from "ember-concurrency-decorators";
+import { restartableTask } from 'ember-concurrency-decorators';
 import { map } from 'rsvp';
 
 export default class OfferingCalendar extends Component {
@@ -11,7 +11,7 @@ export default class OfferingCalendar extends Component {
   @tracked currentEvent = null;
 
   get calendarEvents() {
-    if(! this.currentEvent) {
+    if (!this.currentEvent) {
       return [];
     }
     let events = [];
@@ -21,13 +21,16 @@ export default class OfferingCalendar extends Component {
     if (this.showSessionEvents) {
       events = [...events, ...this.sessionEvents];
     }
-    const currentEventIdentifier = this.currentEvent.name + this.currentEvent.startDate + this.currentEvent.endDate;
-    const filteredEvents = events.filter(event => {
-      if (! event) {
+    const currentEventIdentifier =
+      this.currentEvent.name +
+      this.currentEvent.startDate +
+      this.currentEvent.endDate;
+    const filteredEvents = events.filter((event) => {
+      if (!event) {
         return false;
       }
       const eventIdentifier = event.name + event.startDate + event.endDate;
-      return (eventIdentifier !== currentEventIdentifier);
+      return eventIdentifier !== currentEventIdentifier;
     });
 
     return [...filteredEvents, this.currentEvent];
@@ -35,12 +38,12 @@ export default class OfferingCalendar extends Component {
 
   @restartableTask
   *load(element, [startDate, endDate, learnerGroups, session]) {
-    if (! learnerGroups) {
+    if (!learnerGroups) {
       this.learnerGroupEvents = [];
     } else {
-      const data = yield map(learnerGroups, async learnerGroup => {
+      const data = yield map(learnerGroups, async (learnerGroup) => {
         const offerings = await learnerGroup.offerings;
-        return await map(offerings.toArray(), async offering => {
+        return await map(offerings.toArray(), async (offering) => {
           const session = await offering.session;
           const course = await session.course;
           return {
@@ -50,7 +53,7 @@ export default class OfferingCalendar extends Component {
             name: session.title,
             offering: offering.id,
             location: offering.location,
-            color: "#84c444",
+            color: '#84c444',
             postrequisites: [],
             prerequisites: [],
           };
@@ -62,14 +65,14 @@ export default class OfferingCalendar extends Component {
       }, []);
     }
 
-    if (! session) {
+    if (!session) {
       this.sessionEvents = [];
       this.currentEvent = null;
     } else {
       const offerings = yield session.offerings;
       const sessionType = yield session.sessionType;
       const course = yield session.course;
-      this.sessionEvents = yield map(offerings.toArray(), async offering => {
+      this.sessionEvents = yield map(offerings.toArray(), async (offering) => {
         return {
           startDate: offering.startDate,
           endDate: offering.endDate,
@@ -77,7 +80,7 @@ export default class OfferingCalendar extends Component {
           name: session.title,
           offering: offering.id,
           location: offering.location,
-          color: "#f6f6f6",
+          color: '#f6f6f6',
           postrequisites: [],
           prerequisites: [],
         };

@@ -14,42 +14,38 @@ export default Model.extend({
   filesize: attr('number'),
   link: attr('string'),
   absoluteFileUri: attr('string'),
-  userRole: belongsTo('learning-material-user-role', {async: true}),
-  status: belongsTo('learning-material-status', {async: true}),
-  owningUser: belongsTo('user', {async: true}),
-  sessionLearningMaterials: hasMany('session-learning-material', {async: true}),
-  courseLearningMaterials: hasMany('course-learning-material', {async: true}),
-  type: computed('filename', 'citation', 'link', function(){
-    if (this.get('filename')) {
+  userRole: belongsTo('learning-material-user-role', { async: true }),
+  status: belongsTo('learning-material-status', { async: true }),
+  owningUser: belongsTo('user', { async: true }),
+  sessionLearningMaterials: hasMany('session-learning-material', {
+    async: true,
+  }),
+  courseLearningMaterials: hasMany('course-learning-material', { async: true }),
+  type: computed('filename', 'citation', 'link', function () {
+    if (this.filename) {
       return 'file';
     }
-    if (this.get('citation')) {
+    if (this.citation) {
       return 'citation';
     }
-    if (this.get('link')) {
+    if (this.link) {
       return 'link';
     }
 
     return null;
   }),
-  url: computed('link', 'citation', 'absoluteFileUri', function(){
-    if(this.get('type') === 'file'){
-      return this.get('absoluteFileUri');
+  url: computed('absoluteFileUri', 'citation', 'link', 'type', function () {
+    if (this.type === 'file') {
+      return this.absoluteFileUri;
     }
-    if(this.get('type') === 'link'){
-      return this.get('link');
+    if (this.type === 'link') {
+      return this.link;
     }
 
     return null;
   }),
-  isFile: computed('type', function() {
-    return (this.get('type') === 'file');
-  }),
-  isLink: computed('type', function() {
-    return (this.get('type') === 'link');
-  }),
-  isCitation: computed('type', function() {
-    return (this.get('type') === 'citation');
-  }),
+  isFile: computed.equal('type', 'file'),
+  isLink: computed.equal('type', 'link'),
+  isCitation: computed.equal('type', 'citation'),
   fileHash: null,
 });

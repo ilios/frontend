@@ -5,7 +5,7 @@ import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/mesh-manager';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | mesh-manager', function(hooks) {
+module('Integration | Component | mesh-manager', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -14,7 +14,7 @@ module('Integration | Component | mesh-manager', function(hooks) {
     this.concepts = this.server.createList('meshConcept', 3);
 
     const concept = this.server.create('meshConcept', {
-      scopeNote: '1234567890'.repeat(30)
+      scopeNote: '1234567890'.repeat(30),
     });
     this.concepts.push(concept);
   });
@@ -25,11 +25,11 @@ module('Integration | Component | mesh-manager', function(hooks) {
       trees: this.trees,
     });
     this.server.create('meshDescriptor', {
-      deleted: true
+      deleted: true,
     });
     const descriptors = this.server.createList('meshDescriptor', 3);
 
-    this.set('nothing', () => { });
+    this.set('nothing', () => {});
     this.set('terms', [descriptors[0], descriptors[2]]);
     await render(hbs`<MeshManager
       @editable={{true}}
@@ -58,7 +58,7 @@ module('Integration | Component | mesh-manager', function(hooks) {
 
   test('searching with more than 50 results', async function (assert) {
     this.server.createList('meshDescriptor', 200);
-    this.set('nothing', () => { });
+    this.set('nothing', () => {});
     await render(hbs`<MeshManager
       @editable={{true}}
       @terms={{array}}
@@ -80,11 +80,11 @@ module('Integration | Component | mesh-manager', function(hooks) {
     }
   });
 
-  test('clicking on unselected term adds it.', async function(assert) {
+  test('clicking on unselected term adds it.', async function (assert) {
     assert.expect(3);
     const descriptors = this.server.createList('meshDescriptor', 3);
-    this.set('nothing', () => { });
-    this.set('add', term => {
+    this.set('nothing', () => {});
+    this.set('add', (term) => {
       assert.equal(term.name, 'descriptor 1');
     });
     this.set('terms', [descriptors[0], descriptors[2]]);
@@ -101,10 +101,10 @@ module('Integration | Component | mesh-manager', function(hooks) {
     await component.searchResults[1].add();
   });
 
-  test('clicking on selected term does not add it.', async function(assert) {
+  test('clicking on selected term does not add it.', async function (assert) {
     assert.expect(1);
     const descriptors = this.server.createList('meshDescriptor', 3);
-    this.set('nothing', () => { });
+    this.set('nothing', () => {});
     this.set('add', () => {
       // this function should never be invoked.
       assert.ok(false);

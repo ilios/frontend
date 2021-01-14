@@ -1,27 +1,24 @@
 import { currentURL, currentRouteName } from '@ember/test-helpers';
 import moment from 'moment';
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupAuthentication } from 'ilios-common';
 import { setupIntl, t } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/course';
 
-module('Acceptance | Course - Overview', function(hooks) {
+module('Acceptance | Course - Overview', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   setupIntl(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
-    this.school =  this.server.create('school');
+    this.school = this.server.create('school');
     this.server.createList('courseClerkshipType', 2);
   });
 
-  module('check fields', function(hooks2) {
-    hooks2.beforeEach(function() {
+  module('check fields', function (hooks2) {
+    hooks2.beforeEach(function () {
       this.user.update({ administeredSchools: [this.school] });
       this.clerkshipType = this.server.create('courseClerkshipType');
       this.course = this.server.create('course', {
@@ -34,31 +31,43 @@ module('Acceptance | Course - Overview', function(hooks) {
       this.server.create('user', {
         firstName: 'A',
         lastName: 'Director',
-        directedCourses: [this.course]
+        directedCourses: [this.course],
       });
     });
 
     test('collapsed', async function (assert) {
       await page.visit({ courseId: 1 });
-      assert.equal(page.overview.startDate.value, this.intl.formatDate(this.course.startDate));
+      assert.equal(
+        page.overview.startDate.value,
+        this.intl.formatDate(this.course.startDate)
+      );
       assert.equal(page.overview.externalId.value, '123');
       assert.equal(page.overview.level.value, '3');
-      assert.equal(page.overview.endDate.value, this.intl.formatDate(this.course.endDate));
+      assert.equal(
+        page.overview.endDate.value,
+        this.intl.formatDate(this.course.endDate)
+      );
       assert.equal(page.overview.universalLocator, 'ILIOS' + this.course.id);
       assert.equal(page.overview.clerkshipType.value, this.clerkshipType.title);
     });
 
     test('expanded', async function (assert) {
       await page.visit({ courseId: 1, details: true });
-      assert.equal(page.overview.startDate.value, this.intl.formatDate(this.course.startDate));
+      assert.equal(
+        page.overview.startDate.value,
+        this.intl.formatDate(this.course.startDate)
+      );
       assert.equal(page.overview.externalId.value, '123');
       assert.equal(page.overview.level.value, '3');
-      assert.equal(page.overview.endDate.value, this.intl.formatDate(this.course.endDate));
+      assert.equal(
+        page.overview.endDate.value,
+        this.intl.formatDate(this.course.endDate)
+      );
       assert.equal(page.overview.universalLocator, 'ILIOS' + this.course.id);
       assert.equal(page.overview.clerkshipType.value, this.clerkshipType.title);
     });
 
-    test('open and close details', async function(assert) {
+    test('open and close details', async function (assert) {
       await page.visit({ courseId: 1 });
       assert.equal(page.titles, 2);
       assert.equal(currentURL(), '/courses/1');
@@ -71,7 +80,7 @@ module('Acceptance | Course - Overview', function(hooks) {
     });
   });
 
-  test('pick clerkship type', async function(assert) {
+  test('pick clerkship type', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
@@ -85,7 +94,7 @@ module('Acceptance | Course - Overview', function(hooks) {
     assert.equal(page.overview.clerkshipType.value, 'clerkship type 1');
   });
 
-  test('remove clerkship type', async function(assert) {
+  test('remove clerkship type', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     this.server.create('courseClerkshipType');
     this.server.create('course', {
@@ -100,7 +109,6 @@ module('Acceptance | Course - Overview', function(hooks) {
     await page.overview.clerkshipType.save();
     assert.equal(page.overview.clerkshipType.value, t('general.notAClerkship'));
   });
-
 
   test('change title', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
@@ -126,7 +134,10 @@ module('Acceptance | Course - Overview', function(hooks) {
     });
     await page.visit({ courseId: 1, details: true });
     const newDate = moment(course.startDate).add(1, 'year').add(1, 'month');
-    assert.equal(page.overview.startDate.value, this.intl.formatDate(course.startDate));
+    assert.equal(
+      page.overview.startDate.value,
+      this.intl.formatDate(course.startDate)
+    );
 
     await page.overview.startDate.edit();
     await page.overview.startDate.set(newDate.toDate());
@@ -134,7 +145,7 @@ module('Acceptance | Course - Overview', function(hooks) {
     assert.equal(page.overview.startDate.value, this.intl.formatDate(newDate));
   });
 
-  test('start date validation', async function(assert) {
+  test('start date validation', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(3);
     const course = this.server.create('course', {
@@ -174,7 +185,7 @@ module('Acceptance | Course - Overview', function(hooks) {
     assert.equal(page.overview.endDate.value, this.intl.formatDate(newDate));
   });
 
-  test('end date validation', async function(assert) {
+  test('end date validation', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(3);
     const course = this.server.create('course', {
@@ -200,7 +211,7 @@ module('Acceptance | Course - Overview', function(hooks) {
     const course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
-      externalId: 'abc123'
+      externalId: 'abc123',
     });
     await page.visit({ courseId: 1, details: true });
     const newValue = 'new id';
@@ -217,7 +228,7 @@ module('Acceptance | Course - Overview', function(hooks) {
     const course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
-      externalId: 'abc123'
+      externalId: 'abc123',
     });
     await page.visit({ courseId: 1, details: true });
     assert.equal(page.overview.externalId.value, course.externalId);
@@ -232,7 +243,7 @@ module('Acceptance | Course - Overview', function(hooks) {
     this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
-      schoolId: 1
+      schoolId: 1,
     });
     await page.visit({ courseId: 1, details: true });
     assert.equal(page.overview.externalId.value, t('general.clickToEdit'));
@@ -243,7 +254,7 @@ module('Acceptance | Course - Overview', function(hooks) {
     const course = this.server.create('course', {
       year: 2013,
       schoolId: 1,
-      level: 3
+      level: 3,
     });
     await page.visit({ courseId: 1, details: true });
     const newValue = 1;
@@ -255,7 +266,7 @@ module('Acceptance | Course - Overview', function(hooks) {
     assert.equal(page.overview.level.value, newValue);
   });
 
-  test('click rollover', async function(assert) {
+  test('click rollover', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
@@ -268,7 +279,7 @@ module('Acceptance | Course - Overview', function(hooks) {
     assert.equal(currentRouteName(), 'course.rollover');
   });
 
-  test('rollover hidden from unprivileged users', async function(assert) {
+  test('rollover hidden from unprivileged users', async function (assert) {
     this.server.create('course', {
       year: 2013,
       schoolId: 1,
@@ -277,7 +288,7 @@ module('Acceptance | Course - Overview', function(hooks) {
     assert.notOk(page.overview.rollover.isVisible);
   });
 
-  test('rollover visible to privileged users', async function(assert) {
+  test('rollover visible to privileged users', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
@@ -287,7 +298,7 @@ module('Acceptance | Course - Overview', function(hooks) {
     assert.ok(page.overview.rollover.isVisible);
   });
 
-  test('rollover hidden on rollover route', async function(assert) {
+  test('rollover hidden on rollover route', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     this.server.create('course', {
       year: 2013,
