@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-computed-properties-in-native-classes */
 import { inject as service } from '@ember/service';
 import ObjectProxy from '@ember/object/proxy';
 import Component from '@glimmer/component';
