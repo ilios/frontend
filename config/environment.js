@@ -12,14 +12,6 @@ module.exports = function(environment /*, appConfig */) {
       // 'none' - no data, just timezone API
       includeTimezone: 'all'
     },
-    EmberENV: {
-      EXTEND_PROTOTYPES: {
-        String: true,
-        Array: true,
-        Function: false,
-        Date: false,
-      }
-    },
     featureFlags: {
       'sessionLinkingAdminUi': true,
     },
