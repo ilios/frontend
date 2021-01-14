@@ -19,7 +19,7 @@ export default class CourseOverview extends Component {
   @BeforeDate('endDate', { granularity: 'day'}) @tracked startDate = null;
   @AfterDate('startDate', { granularity: 'day'}) @tracked endDate = null;
   @tracked level = null;
-  @tracked levelOptions = [1, 2, 3, 4, 5];
+  @tracked levelOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   @tracked clerkshipTypeId;
   @tracked clerkshipTypeOptions;
   @tracked canCreateCourseInSchool = false;
