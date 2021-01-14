@@ -10,8 +10,8 @@
       </LinkTo>
     </div>
   {{/if}}
-  <CourseHeader @course={{@course}} @editable={{@editable}} />
-  <CourseOverview @course={{@course}} @editable={{@editable}} />
+  <CourseHeader @course={{@course}} @editable={{and @editable this.notRolloverRoute}} />
+  <CourseOverview @course={{@course}} @editable={{and @editable this.notRolloverRoute}} />
   {{#unless @showDetails}}
     <div
       class="detail-collapsed-control"
@@ -26,7 +26,7 @@
   {{else}}
     <CourseEditing
       @course={{@course}}
-      @editable={{@editable}}
+      @editable={{and @editable this.notRolloverRoute}}
       @courseLeadershipDetails={{@courseLeadershipDetails}}
       @courseObjectiveDetails={{@courseObjectiveDetails}}
       @courseTaxonomyDetails={{@courseTaxonomyDetails}}
