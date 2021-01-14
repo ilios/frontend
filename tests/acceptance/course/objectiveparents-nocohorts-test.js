@@ -30,11 +30,12 @@ module('Acceptance | Course with no cohorts - Objective Parents', function(hooks
 
     await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
+    const firstObjective = page.objectives.objectiveList.objectives[0];
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'course objective 0');
-    assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
-    await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
-    const m = page.objectives.objectiveList.objectives[0].parentManager;
+    assert.equal(firstObjective.description.text, 'course objective 0');
+    assert.ok(firstObjective.parents.empty);
+    await firstObjective.parents.list[0].manage();
+    const m = firstObjective.parentManager;
 
     assert.ok(m.hasNoCohortWarning);
 
@@ -42,6 +43,7 @@ module('Acceptance | Course with no cohorts - Objective Parents', function(hooks
     await page.cohorts.selectable[0].add();
     await page.cohorts.save();
     assert.equal(page.cohorts.current.length, 1);
+    await firstObjective.parents.list[0].manage();
 
     assert.equal(m.selectedCohortTitle, 'program 0 cohort 0');
     assert.equal(m.competencies.length, 1);
@@ -55,6 +57,7 @@ module('Acceptance | Course with no cohorts - Objective Parents', function(hooks
     await page.cohorts.selected[0].remove();
     await page.cohorts.save();
     assert.equal(page.cohorts.current.length, 0);
+    await firstObjective.parents.list[0].manage();
     assert.ok(m.hasNoCohortWarning);
   });
 });

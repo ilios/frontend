@@ -91,4 +91,13 @@ export default class WeeklyCalendarComponent extends Component {
   setHour(element, [hour]) {
     set(this, `hour${hour}`, element);
   }
+
+  @action
+  selectEvent(event) {
+    if (event.isMulti) {
+      this.args.changeToDayView(event.startDate);
+    } else {
+      this.args.selectEvent(event);
+    }
+  }
 }

@@ -40,7 +40,7 @@
             @event={{event}}
             @day={{day.dayOfWeek}}
             @allDayEvents={{day.events}}
-            @selectEvent={{if event.isMulti (fn @changeToDayView event.startDate) (fn @selectEvent event)}}
+            @selectEvent={{fn this.selectEvent event}}
           />
         {{/each}}
       </div>
