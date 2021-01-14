@@ -1,6 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 import { Resource } from 'ember-could-get-used-to-this';
-export default  class AsyncProcessResource extends Resource {
+export default class AsyncProcessResource extends Resource {
   @tracked data;
 
   get value() {
