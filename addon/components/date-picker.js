@@ -57,6 +57,7 @@ export default class DatePickerComponent extends Component {
   }
 
   willDestroy() {
+    super.willDestroy(...arguments);
     if (this._flatPickerInstance) {
       this._flatPickerInstance.destroy();
     }

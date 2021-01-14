@@ -70,6 +70,7 @@ export default class CourseRolloverDatePickerComponent extends Component {
   }
 
   willDestroy() {
+    super.willDestroy(...arguments);
     this.#flatPickerInstance.destroy();
   }
 }
