@@ -117,7 +117,15 @@
         <LinkTo
           @route="curriculumInventoryReports"
           @title={{t "general.curriculumInventory"}}
-          @current-when="curriculumInventoryReports curriculumInventoryReport curriculumInventorySequenceBlock"
+          @current-when={{
+            join " "
+            (array
+              "curriculumInventoryReport"
+              "curriculumInventoryReports"
+              "curriculumInventorySequenceBlock"
+              "verificationPreview"
+            )
+          }}
         >
           <FaIcon @icon="chart-bar" @fixedWidth={{true}} />
           <span class="text">
