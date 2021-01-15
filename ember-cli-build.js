@@ -59,13 +59,6 @@ module.exports = function(defaults) {
       enabled: true,
       useAppVersion: true
     },
-    'ember-cli-uglify': {
-      uglify: {
-        compress: {
-          collapse_vars: false
-        }
-      }
-    },
     postcssOptions: {
       compile: {
         extension: 'scss',
