@@ -26,7 +26,25 @@
         <LinkTo
           @route="courses"
           @title={{t "general.coursesAndSessions"}}
-          @current-when="courses course"
+          @current-when={{
+            join " "
+            (array
+              "course"
+              "course-materials"
+              "course-rollover"
+              "course-visualizations"
+              "course-visualize-instructor"
+              "course-visualize-instructors"
+              "course-visualize-objectives"
+              "course-visualize-session-type"
+              "course-visualize-session-types"
+              "course-visualize-term"
+              "course-visualize-vocabularies"
+              "course-visualize-vocabulary"
+              "courses"
+              "print_course"
+            )
+          }}
         >
           <FaIcon @icon="book" @fixedWidth={{true}} />
           <span class="text">
@@ -62,7 +80,7 @@
         <LinkTo
           @route="schools"
           @title={{t "general.schools"}}
-          @current-when="schools school"
+          @current-when="schools school session-type-visualize-vocabularies session-type-visualize-terms"
       >
           <FaIcon @icon="university" @fixedWidth={{true}} />
           <span class="text">
@@ -74,7 +92,7 @@
         <LinkTo
           @route="programs"
           @title={{t "general.programs"}}
-          @current-when="programs program"
+          @current-when="programs program program-year-visualizations program-year-visualize-competencies"
         >
           <FaIcon @icon="list-alt" @fixedWidth={{true}} />
           <span class="text">
@@ -88,7 +106,7 @@
         <LinkTo
           @route="admin-dashboard"
           @title={{t "general.admin"}}
-          @current-when="admin-dashboard users user"
+          @current-when="admin-dashboard users user assign-students pending-user-updates"
         >
           <FaIcon @icon="cogs" @fixedWidth={{true}} />
           <span class="text">
@@ -102,7 +120,15 @@
         <LinkTo
           @route="curriculumInventoryReports"
           @title={{t "general.curriculumInventory"}}
-          @current-when="curriculumInventoryReports curriculumInventoryReport curriculumInventorySequenceBlock"
+          @current-when={{
+            join " "
+            (array
+              "curriculumInventoryReport"
+              "curriculumInventoryReports"
+              "curriculumInventorySequenceBlock"
+              "verificationPreview"
+            )
+          }}
         >
           <FaIcon @icon="chart-bar" @fixedWidth={{true}} />
           <span class="text">
