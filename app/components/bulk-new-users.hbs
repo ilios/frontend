@@ -174,7 +174,7 @@
           {{#each (sort-by "title" this.schools) as |school|}}
             <option
               value={{school.id}}
-              selected={{eq school.id this.bestSelectedSchool?.id}}
+              selected={{eq school.id this.bestSelectedSchool.id}}
             >
               {{school.title}}
             </option>
@@ -194,7 +194,7 @@
               {{#each (sort-by "title" this.cohorts) as |cohort|}}
                 <option
                   value={{cohort.id}}
-                  selected={{eq cohort.id this.bestSelectedCohort?.id}}
+                  selected={{eq cohort.id this.bestSelectedCohort.id}}
                 >
                   {{cohort.title}}
                 </option>

@@ -23,6 +23,8 @@ export default class BulkNewUsersComponent extends Component {
   @tracked fileUploadError = false;
   @tracked nonStudentMode = true;
   @tracked primarySchool = null;
+  @tracked schoolId;
+  @tracked primaryCohortId;
   @tracked cohorts = [];
   @tracked schools = [];
   @tracked proposedUsers = [];
@@ -135,8 +137,7 @@ export default class BulkNewUsersComponent extends Component {
         yield this.parseFile.perform(files[0]);
       }
     } else {
-      const intl = this.intl;
-      throw new Error(intl.t('general.unsupportedBrowserFailure'));
+      throw new Error(this.intl.t('general.unsupportedBrowserFailure'));
     }
   }
 
@@ -166,11 +167,10 @@ export default class BulkNewUsersComponent extends Component {
   @dropTask
   *save() {
     this.savedUserIds = [];
-    const store = this.store;
     const nonStudentMode = this.nonStudentMode;
     const selectedSchool = this.bestSelectedSchool;
     const selectedCohort = this.bestSelectedCohort;
-    const roles = yield store.findAll('user-role');
+    const roles = yield this.store.findAll('user-role');
     const studentRole = roles.findBy('id', '4');
 
     const proposedUsers = this.selectedUsers;
@@ -181,7 +181,7 @@ export default class BulkNewUsersComponent extends Component {
 
     const records = validUsers.map(userInput => {
       const { firstName, lastName, middleName, phone, email, campusId, otherId, addedViaIlios, enabled, username, password } = userInput;
-      const user = store.createRecord('user', {
+      const user = this.store.createRecord('user', {
         firstName,
         lastName,
         middleName,
@@ -201,7 +201,7 @@ export default class BulkNewUsersComponent extends Component {
 
       let authentication = false;
       if (userInput.username) {
-        authentication = store.createRecord('authentication', { username, password });
+        authentication = this.store.createRecord('authentication', { username, password });
         authentication.set('user', user);
       }
 
@@ -243,8 +243,7 @@ export default class BulkNewUsersComponent extends Component {
 
   @restartableTask
   *loadSchools() {
-    const store = this.store;
-    const schools = yield store.findAll('school', { reload: true });
+    const schools = yield this.store.findAll('school', { reload: true });
     return filter(schools.toArray(), async school => {
       return this.permissionChecker.canCreateUser(school);
     });
