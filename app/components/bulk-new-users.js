@@ -1,147 +1,103 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import {tracked} from '@glimmer/tracking';
 import { getOwner } from '@ember/application';
-import EmberObject, { computed } from '@ember/object';
-import { not, reads } from '@ember/object/computed';
-import { inject as service } from '@ember/service';
-import { isPresent } from '@ember/utils';
-import { Promise, all, filter } from 'rsvp';
-import { task } from 'ember-concurrency';
-import { validator, buildValidations } from 'ember-cp-validations';
-import NewUser from 'ilios/mixins/newuser';
+import { action } from '@ember/object';
+import CoreObject from '@ember/object/core';
+import {inject as service} from '@ember/service';
+import {isPresent} from '@ember/utils';
+import {all, filter} from 'rsvp';
+import {dropTask, restartableTask} from 'ember-concurrency-decorators';
 import PapaParse from 'papaparse';
+import moment from "moment";
+import { validatable, Length, NotBlank, IsEmail, Custom } from 'ilios-common/decorators/validation';
 
-const UserValidations = buildValidations({
-  firstName: [
-    validator('presence', true),
-    validator('length', {
-      max: 50
-    }),
-  ],
-  middleName: [
-    validator('length', {
-      max: 20
-    }),
-  ],
-  lastName: [
-    validator('presence', true),
-    validator('length', {
-      max: 50
-    }),
-  ],
-  username: [
-    validator('length', {
-      max: 100,
-      min: 1,
-      ignoreBlank: true,
-    }),
-    validator('exclusion', {
-      dependentKeys: ['model.existingUsernames.[]'],
-      in: reads('model.existingUsernames')
-    })
-  ],
-  password: [
-    validator('presence', {
-      presence: true,
-      dependentKeys: ['model.username'],
-      disabled: not('model.username'),
-    })
-  ],
-  campusId: [
-    validator('length', {
-      max: 16
-    }),
-  ],
-  otherId: [
-    validator('length', {
-      max: 16
-    }),
-  ],
-  email: [
-    validator('presence', true),
-    validator('length', {
-      max: 100
-    }),
-    validator('format', {
-      type: 'email'
-    }),
-  ],
-  phone: [
-    validator('length', {
-      max: 20
-    }),
-  ]
-});
+export default class BulkNewUsersComponent extends Component {
+  @service flashMessages;
+  @service iliosConfig;
+  @service intl;
+  @service store;
+  @service currentUser;
+  @service permissionChecker;
 
-export default Component.extend(NewUser, {
-  flashMessages: service(),
-  iliosConfig: service(),
-  intl: service(),
+  @tracked file = null;
+  @tracked fileUploadError = false;
+  @tracked nonStudentMode = true;
+  @tracked primarySchool = null;
+  @tracked schoolId;
+  @tracked primaryCohortId;
+  @tracked cohorts = [];
+  @tracked schools = [];
+  @tracked proposedUsers = [];
+  @tracked savedUserIds = [];
+  @tracked savingAuthenticationErrors = [];
+  @tracked savingUserErrors = [];
+  @tracked selectedUsers = [];
 
-  tagName: "",
-
-  file: null,
-  fileUploadError: false,
-  proposedUsers: null,
-  savedUserIds: null,
-  savingAuthenticationErrors: null,
-  savingUserErrors: null,
-  selectedUsers: null,
-
-  host: reads('iliosConfig.apiHost'),
-  namespace: reads('iliosConfig.apiNameSpace'),
-
-  sampleData: computed(function(){
+  get sampleData(){
     const sampleUploadFields = ['First', 'Last', 'Middle', 'Phone', 'Email', 'CampusID', 'OtherID', 'Username', 'Password'];
     const str = sampleUploadFields.join("\t");
-    const encoded = window.btoa(str);
-    return encoded;
-  }),
+    return window.btoa(str);
+  }
 
-  init(){
-    this._super(...arguments);
-    this.set('selectedUsers', []);
-    this.set('proposedUsers', []);
-    this.set('savedUserIds', []);
-    this.set('savingUserErrors', []);
-    this.set('savingAuthenticationErrors', []);
-  },
+  get bestSelectedSchool() {
+    if (this.schoolId) {
+      const currentSchool = this.schools.findBy('id', this.schoolId);
 
-  actions: {
-    updateSelectedFile(files){
-      // Check for the various File API support.
-      if (window.File && window.FileReader && window.FileList && window.Blob) {
-        if (files.length > 0) {
-          this.parseFile.perform(files[0]);
-        }
-      } else {
-        const intl = this.intl;
-        throw new Error(intl.t('general.unsupportedBrowserFailure'));
-      }
-    },
-
-    toggleUserSelection(obj){
-      const selectedUsers = this.selectedUsers;
-      if (selectedUsers.includes(obj)) {
-        selectedUsers.removeObject(obj);
-      } else {
-        selectedUsers.pushObject(obj);
+      if (currentSchool) {
+        return currentSchool;
       }
     }
-  },
+    return this.primarySchool;
+  }
+
+  get bestSelectedCohort() {
+    if (this.primaryCohortId) {
+      const currentCohort = this.cohorts.findBy('id', this.primaryCohortId);
+
+      if (currentCohort) {
+        return currentCohort;
+      }
+    }
+
+    return this.cohorts.lastObject;
+  }
+
+  @restartableTask
+  *load(){
+    const user = yield this.currentUser.model;
+    this.primarySchool = yield user.school;
+    this.schools = yield this.loadSchools.perform();
+    this.cohorts = yield this.loadCohorts.perform(this.bestSelectedSchool);
+  }
+
+  @action
+  toggleUserSelection(obj){
+    if (this.selectedUsers.includes(obj)) {
+      this.selectedUsers.removeObject(obj);
+    } else {
+      this.selectedUsers.pushObject(obj);
+    }
+  }
+
+  @action
+  setPrimaryCohort(id){
+    this.primaryCohortId = id;
+  }
+
 
   async existingUsernames() {
     const authentications = await this.store.findAll('authentication');
     return authentications.mapBy('username');
-  },
+  }
 
   /**
    * Extract the contents of a file into an array of user like objects
-   * @param Object file
+   * @param {Object} file
    *
    * @return array
    **/
-  getFileContents(file){
-    this.set('fileUploadError', false);
+  async getFileContents(file){
+    this.fileUploadError = false;
     return new Promise(resolve => {
       const allowedFileTypes = ['text/plain', 'text/csv', 'text/tab-separated-values'];
       if (!allowedFileTypes.includes(file.type)) {
@@ -149,10 +105,6 @@ export default Component.extend(NewUser, {
         this.set('fileUploadError', true);
         throw new Error(intl.t('general.fileTypeError', {fileType: file.type}));
       }
-
-      const ProposedUser = EmberObject.extend(UserValidations, {
-        email: null
-      });
       const complete = ({data}) => {
         const proposedUsers = data.map(arr => {
           return ProposedUser.create(getOwner(this).ownerInjection(), {
@@ -168,8 +120,6 @@ export default Component.extend(NewUser, {
           });
         });
         const notHeaderRow = proposedUsers.filter(obj => String(obj.firstName).toLowerCase() !== 'first' || String(obj.lastName).toLowerCase() !== 'last');
-
-
         resolve(notHeaderRow);
       };
 
@@ -177,56 +127,71 @@ export default Component.extend(NewUser, {
         complete
       });
     });
-  },
+  }
 
-  parseFile: task(function * (file) {
+  @restartableTask
+  *updateSelectedFile(files){
+    // Check for the various File API support.
+    if (window.File && window.FileReader && window.FileList && window.Blob) {
+      if (files.length > 0) {
+        yield this.parseFile.perform(files[0]);
+      }
+    } else {
+      throw new Error(this.intl.t('general.unsupportedBrowserFailure'));
+    }
+  }
+
+  @restartableTask
+  *setSchool(id){
+    this.schoolId = id;
+    this.cohorts = yield this.loadCohorts.perform(this.bestSelectedSchool);
+  }
+
+  @restartableTask
+  *parseFile(file) {
     const proposedUsers = yield this.getFileContents(file);
     const existingUsernames = yield this.existingUsernames();
     const filledOutUsers = proposedUsers.map(obj => {
-      obj.addedViaIlios = true;
-      obj.enabled = true;
       obj.existingUsernames = existingUsernames;
 
       return obj;
     });
-    const validUsers = yield filter(filledOutUsers, obj => {
-      return obj.validate().then(({validations}) => {
-        return validations.get('isValid');
-      });
+    const validUsers = yield filter(filledOutUsers, async obj => {
+      return await obj.isValid();
     });
 
-    this.set('selectedUsers', validUsers);
-    this.set('proposedUsers', filledOutUsers);
-  }).restartable(),
+    this.selectedUsers = validUsers;
+    this.proposedUsers = filledOutUsers;
+  }
 
-  save: task(function * () {
-    this.set('savedUserIds', []);
-    const store = this.store;
+  @dropTask
+  *save() {
+    this.savedUserIds = [];
     const nonStudentMode = this.nonStudentMode;
-    const selectedSchool = yield this.bestSelectedSchool;
-    const selectedCohort = yield this.bestSelectedCohort;
-    const roles = yield store.findAll('user-role');
+    const selectedSchool = this.bestSelectedSchool;
+    const selectedCohort = this.bestSelectedCohort;
+    const roles = yield this.store.findAll('user-role');
     const studentRole = roles.findBy('id', '4');
 
     const proposedUsers = this.selectedUsers;
 
-    const validUsers = yield filter(proposedUsers, obj => {
-      return obj.validate().then(({validations}) => {
-        return validations.get('isValid');
-      });
+    const validUsers = yield filter(proposedUsers, async obj => {
+      return obj.isValid();
     });
+
     const records = validUsers.map(userInput => {
-      const user = store.createRecord('user', userInput.getProperties(
-        'firstName',
-        'lastName',
-        'middleName',
-        'phone',
-        'email',
-        'campusId',
-        'otherId',
-        'addedViaIlios',
-        'enabled'
-      ));
+      const { firstName, lastName, middleName, phone, email, campusId, otherId, addedViaIlios, enabled, username, password } = userInput;
+      const user = this.store.createRecord('user', {
+        firstName,
+        lastName,
+        middleName,
+        phone,
+        email,
+        campusId,
+        otherId,
+        addedViaIlios,
+        enabled
+      });
       user.set('school', selectedSchool);
 
       if (!nonStudentMode) {
@@ -235,11 +200,8 @@ export default Component.extend(NewUser, {
       }
 
       let authentication = false;
-      if (isPresent(userInput.get('username'))) {
-        authentication = store.createRecord('authentication', userInput.getProperties(
-          'username',
-          'password'
-        ));
+      if (userInput.username) {
+        authentication = this.store.createRecord('authentication', { username, password });
         authentication.set('user', user);
       }
 
@@ -251,7 +213,7 @@ export default Component.extend(NewUser, {
       return rhett;
     });
     let parts;
-    while (records.get('length') > 0){
+    while (records.length > 0){
       try {
         parts = records.splice(0, 10);
         const users = parts.mapBy('user');
@@ -269,15 +231,104 @@ export default Component.extend(NewUser, {
 
     }
 
-    const flashMessages = this.flashMessages;
-    if (this.savingUserErrors.get('length') || this.savingAuthenticationErrors.get('length')) {
-      flashMessages.warning('general.newUsersCreatedWarning');
+    if (this.savingUserErrors.length || this.savingAuthenticationErrors.length) {
+      this.flashMessages.warning('general.newUsersCreatedWarning');
     } else {
-      flashMessages.success('general.newUsersCreatedSuccessfully');
+      this.flashMessages.success('general.newUsersCreatedSuccessfully');
     }
 
-    this.set('selectedUsers', []);
-    this.set('proposedUsers', []);
+    this.selectedUsers = [];
+    this.proposedUsers = [];
+  }
 
-  }).drop()
-});
+  @restartableTask
+  *loadSchools() {
+    const schools = yield this.store.findAll('school', { reload: true });
+    return filter(schools.toArray(), async school => {
+      return this.permissionChecker.canCreateUser(school);
+    });
+  }
+
+  @restartableTask
+  *loadCohorts(school) {
+    const cohorts = yield this.store.query('cohort', {
+      filters: {
+        schools: [ school.id ],
+      }
+    });
+
+    //prefetch programYears and programs so that ember data will coalesce these requests.
+    const programYears = yield all(cohorts.getEach('programYear'));
+    yield all(programYears.getEach('program'));
+
+    const objects = yield all(cohorts.toArray().map(async cohort => {
+      const obj = {
+        id: cohort.get('id')
+      };
+      const programYear = await cohort.programYear;
+      const program = await programYear.program;
+      obj.title = program.title + ' ' + cohort.title;
+      obj.startYear = programYear.startYear;
+      obj.duration = program.duration;
+
+      return obj;
+    }));
+
+    const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
+    return objects.filter(obj => {
+      const finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
+      return finalYear > lastYear;
+    });
+  }
+}
+
+@validatable
+class ProposedUser extends CoreObject {
+  @service intl;
+
+  @Length(1, 50) @NotBlank() firstName;
+  @Length(1, 20) middleName;
+  @Length(1, 50) @NotBlank() lastName;
+  @Length(1, 100) @Custom('validateUsernameCallback', 'validateUsernameMessageCallback') username;
+  @Custom('validatePasswordCallback', 'validatePasswordMessageCallback') password;
+  @Length(1, 16) campusId;
+  @Length(1, 16) otherId;
+  @Length(1, 100) @NotBlank() @IsEmail() email;
+  @Length(1, 20) phone;
+  addedViaIlios = true;
+  enabled = true;
+
+  init(data) {
+    super.init(...arguments);
+    this.firstName = data.firstName;
+    this.lastName = data.lastName;
+    this.middleName = data.middleName;
+    this.phone = data.phone;
+    this.email = data.email;
+    this.campusId = data.campusId;
+    this.otherId = data.otherId;
+    this.username = data.username;
+    this.password = data.password;
+    this.addErrorDisplayForAllFields();
+  }
+
+  async validateUsernameCallback() {
+    return ! this.existingUsernames.includes(this.username);
+  }
+
+  validateUsernameMessageCallback() {
+    return this.intl.t('errors.exclusion', { description: this.intl.t('general.username') });
+  }
+
+  async validatePasswordCallback() {
+    if (!this.username) {
+      return true;
+    }
+    const stringValue = String(this.password).trim();
+    return Boolean(stringValue.length);
+  }
+
+  validatePasswordMessageCallback() {
+    return this.intl.t('errors.blank', { description: this.intl.t('general.password') });
+  }
+}
