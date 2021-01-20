@@ -1,26 +1,26 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, find, waitFor, waitUntil } from '@ember/test-helpers';
+import { render, waitUntil } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import component from 'ilios/tests/pages/components/loading-bar';
 
 module('Integration | Component | loading bar', function(hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    const bar = '.bar';
-    const emptyBar = '.bar[value="0"]';
     this.set('isLoading', true);
-
     // don't `await` this render as the internal task that never stops will keep this test running forever
-    render(hbs`<LoadingBar @isLoading={{isLoading}} />`);
+    render(hbs`<LoadingBar @isLoading={{this.isLoading}} />`);
     await waitUntil(() => {
-      const value = parseInt(find(bar).getAttribute('value').trim(), 10);
+      const value = parseInt(component.bar.value, 10);
       return value > 0;
     });
-    await waitFor(bar);
-    assert.ok(find(bar).getAttribute('value').trim() > 0);
+    assert.ok(parseInt(component.bar.value, 10) > 0);
     this.set('isLoading', false);
-    await waitFor(emptyBar);
-    assert.equal(find(bar).getAttribute('value').trim(), 0);
+    await waitUntil(() => {
+      const value = parseInt(component.bar.value, 10);
+      return value === 0;
+    });
+    assert.ok(parseInt(component.bar.value, 10) === 0);
   });
 });

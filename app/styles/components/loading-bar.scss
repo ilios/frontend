@@ -15,12 +15,12 @@
     opacity: 1;
     transition: width .25s linear;
 
-    &[value='0'] {
+    &[data-value='0'] {
       opacity: 0;
       transition: none;
     }
 
-    &[value='100'] {
+    &[data-value='100'] {
       transition: none;
     }
   }
