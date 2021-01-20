@@ -82,7 +82,7 @@ module('Integration | Component | bulk new users', function(hooks) {
     await triggerEvent(
       inputElement,
       'change',
-      [file]
+      { files: [file] }
     );
     await waitFor('[data-test-proposed-new-users]');
   };
