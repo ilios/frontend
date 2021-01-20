@@ -74,6 +74,7 @@ general:
   copyWithoutLearners: "Copy Without Learners"
   couldNotFindUserCampusId: "Could not find a user with the campusId {campusId}"
   countAsOneOffering: "Count as one offering"
+  countTotal: "{total} total"
   country: Country
   courseDirector: "Course Director"
   courseTitleFilterPlaceholder: "Filter by course title"

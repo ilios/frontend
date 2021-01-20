@@ -29,12 +29,12 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
       @manageTerm={{noop}}
       @manageVocabulary={{noop}}
     />`);
-    assert.equal(component.title, `Title: ${vocabulary.title}`);
+    assert.equal(component.title, `Title: ${vocabulary.title} (2 total)`);
     assert.equal(component.breadcrumbs.all, 'All Vocabularies');
     assert.equal(component.breadcrumbs.vocabulary, vocabulary.title);
     assert.equal(component.terms.list.length, 2);
-    assert.equal(component.terms.list[0].text, 'term 0 (inactive)');
-    assert.equal(component.terms.list[1].text, 'term 1');
+    assert.equal(component.terms.list[0].text, 'term 0 (0) (inactive)');
+    assert.equal(component.terms.list[1].text, 'term 1 (0)');
   });
 
   test('change vocabulary title', async function(assert) {
@@ -51,7 +51,7 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
       @manageVocabulary={{noop}}
       @canUpdate={{true}}
     />`);
-    assert.equal(component.title, `Title: ${vocabulary.title}`);
+    assert.equal(component.title, `Title: ${vocabulary.title} (0 total)`);
     await component.editTitle();
     await component.changeTitle('new title');
     await component.saveTitle();
@@ -72,7 +72,7 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
       @manageVocabulary={{noop}}
       @canUpdate={{true}}
     />`);
-    assert.equal(component.title, `Title: ${vocabulary.title}`);
+    assert.equal(component.title, `Title: ${vocabulary.title} (0 total)`);
     assert.notOk(component.hasError);
     await component.editTitle();
     await component.changeTitle('');
@@ -100,7 +100,7 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
       @manageVocabulary={{noop}}
       @canUpdate={{true}}
     />`);
-    assert.equal(component.title, `Title: ${vocabulary.title}`);
+    assert.equal(component.title, `Title: ${vocabulary.title} (0 total)`);
     assert.notOk(component.hasError);
     await component.editTitle();
     await component.changeTitle('duplicate one');
@@ -124,7 +124,7 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
       @manageVocabulary={{noop}}
       @canCreate={{true}}
     />`);
-    assert.equal(component.title, `Title: ${vocabulary.title}`);
+    assert.equal(component.title, `Title: ${vocabulary.title} (0 total)`);
     assert.equal(component.terms.list.length, 0);
 
     await component.terms.newTermForm.setTitle('new term');
@@ -149,7 +149,7 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
       @manageVocabulary={{noop}}
       @canCreate={{true}}
     />`);
-    assert.equal(component.title, `Title: ${vocabulary.title}`);
+    assert.equal(component.title, `Title: ${vocabulary.title} (0 total)`);
     assert.equal(component.terms.list.length, 0);
 
     assert.notOk(component.terms.newTermForm.hasError);
@@ -177,7 +177,7 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
       @manageVocabulary={{noop}}
       @canCreate={{true}}
     />`);
-    assert.equal(component.title, `Title: ${vocabulary.title}`);
+    assert.equal(component.title, `Title: ${vocabulary.title} (1 total)`);
     assert.equal(component.terms.list.length, 1);
 
     assert.notOk(component.terms.newTermForm.hasError);

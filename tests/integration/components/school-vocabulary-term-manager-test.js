@@ -60,8 +60,8 @@ module('Integration | Component | school vocabulary term manager', function(hook
     assert.equal(component.breadcrumbs.terms[2].text, term.title);
 
     assert.equal(component.subTerms.list.length, 2);
-    assert.equal(component.subTerms.list[0].text, 'term 3 (inactive)');
-    assert.equal(component.subTerms.list[1].text, 'term 4');
+    assert.equal(component.subTerms.list[0].text, 'term 3 (0) (inactive)');
+    assert.equal(component.subTerms.list[1].text, 'term 4 (0)');
   });
 
   test('activate inactive term', async function(assert) {

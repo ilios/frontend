@@ -123,7 +123,7 @@
       <ul data-test-term-list>
         {{#each this.terms as |term|}}
           <li role="button" data-test-term {{on "click" (fn @manageTerm term.id)}}>
-            {{term.title}}
+            {{term.title}} ({{term.childCount}})
             {{#unless term.active}}
               <em>
                 ({{t "general.inactive"}})
