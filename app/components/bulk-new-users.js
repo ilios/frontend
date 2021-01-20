@@ -1,77 +1,15 @@
 import Component from '@glimmer/component';
 import {tracked} from '@glimmer/tracking';
-import {getOwner} from '@ember/application';
-import EmberObject, {action} from '@ember/object';
-import {not, reads} from '@ember/object/computed';
+import { getOwner } from '@ember/application';
+import { action } from '@ember/object';
+import CoreObject from '@ember/object/core';
 import {inject as service} from '@ember/service';
 import {isPresent} from '@ember/utils';
 import {all, filter} from 'rsvp';
 import {dropTask, restartableTask} from 'ember-concurrency-decorators';
 import PapaParse from 'papaparse';
 import moment from "moment";
-import {buildValidations, validator} from 'ember-cp-validations';
-
-const UserValidations = buildValidations({
-  firstName: [
-    validator('presence', true),
-    validator('length', {
-      max: 50
-    }),
-  ],
-  middleName: [
-    validator('length', {
-      max: 20
-    }),
-  ],
-  lastName: [
-    validator('presence', true),
-    validator('length', {
-      max: 50
-    }),
-  ],
-  username: [
-    validator('length', {
-      max: 100,
-      min: 1,
-      ignoreBlank: true,
-    }),
-    validator('exclusion', {
-      dependentKeys: ['model.existingUsernames.[]'],
-      in: reads('model.existingUsernames')
-    })
-  ],
-  password: [
-    validator('presence', {
-      presence: true,
-      dependentKeys: ['model.username'],
-      disabled: not('model.username'),
-    })
-  ],
-  campusId: [
-    validator('length', {
-      max: 16
-    }),
-  ],
-  otherId: [
-    validator('length', {
-      max: 16
-    }),
-  ],
-  email: [
-    validator('presence', true),
-    validator('length', {
-      max: 100
-    }),
-    validator('format', {
-      type: 'email'
-    }),
-  ],
-  phone: [
-    validator('length', {
-      max: 20
-    }),
-  ]
-});
+import { validatable, Length, NotBlank, IsEmail, Custom } from 'ilios-common/decorators/validation';
 
 export default class BulkNewUsersComponent extends Component {
   @service flashMessages;
@@ -83,7 +21,7 @@ export default class BulkNewUsersComponent extends Component {
 
   @tracked file = null;
   @tracked fileUploadError = false;
-  @tracked nonStudentMode = false;
+  @tracked nonStudentMode = true;
   @tracked primarySchool = null;
   @tracked cohorts = [];
   @tracked schools = [];
@@ -157,33 +95,35 @@ export default class BulkNewUsersComponent extends Component {
    * @return array
    **/
   async getFileContents(file){
-    this.set('fileUploadError', false);
-    const allowedFileTypes = ['text/plain', 'text/csv', 'text/tab-separated-values'];
-    if (!allowedFileTypes.includes(file.type)) {
-      const intl = this.intl;
-      this.set('fileUploadError', true);
-      throw new Error(intl.t('general.fileTypeError', {fileType: file.type}));
-    }
-
-    const ProposedUser = EmberObject.extend(UserValidations, {
-      email: null
-    });
-
-    await PapaParse.parse(file, async data => {
-      const proposedUsers = data.map(arr => {
-        return ProposedUser.create(getOwner(this).ownerInjection(), {
-          firstName: isPresent(arr[0]) ? arr[0] : null,
-          lastName: isPresent(arr[1]) ? arr[1] : null,
-          middleName: isPresent(arr[2]) ? arr[2] : null,
-          phone: isPresent(arr[3]) ? arr[3] : null,
-          email: isPresent(arr[4]) ? arr[4] : null,
-          campusId: isPresent(arr[5]) ? arr[5] : null,
-          otherId: isPresent(arr[6]) ? arr[6] : null,
-          username: isPresent(arr[7]) ? arr[7] : null,
-          password: isPresent(arr[8]) ? arr[8] : null
+    this.fileUploadError = false;
+    return new Promise(resolve => {
+      const allowedFileTypes = ['text/plain', 'text/csv', 'text/tab-separated-values'];
+      if (!allowedFileTypes.includes(file.type)) {
+        const intl = this.intl;
+        this.set('fileUploadError', true);
+        throw new Error(intl.t('general.fileTypeError', {fileType: file.type}));
+      }
+      const complete = ({data}) => {
+        const proposedUsers = data.map(arr => {
+          return ProposedUser.create(getOwner(this).ownerInjection(), {
+            firstName: isPresent(arr[0])?arr[0]:null,
+            lastName: isPresent(arr[1])?arr[1]:null,
+            middleName: isPresent(arr[2])?arr[2]:null,
+            phone: isPresent(arr[3])?arr[3]:null,
+            email: isPresent(arr[4])?arr[4]:null,
+            campusId: isPresent(arr[5])?arr[5]:null,
+            otherId: isPresent(arr[6])?arr[6]:null,
+            username: isPresent(arr[7])?arr[7]:null,
+            password: isPresent(arr[8])?arr[8]:null
+          });
         });
+        const notHeaderRow = proposedUsers.filter(obj => String(obj.firstName).toLowerCase() !== 'first' || String(obj.lastName).toLowerCase() !== 'last');
+        resolve(notHeaderRow);
+      };
+
+      PapaParse.parse(file, {
+        complete
       });
-      return proposedUsers.filter(obj => String(obj.firstName).toLowerCase() !== 'first' || String(obj.lastName).toLowerCase() !== 'last');
     });
   }
 
@@ -210,17 +150,17 @@ export default class BulkNewUsersComponent extends Component {
   *parseFile(file) {
     const proposedUsers = yield this.getFileContents(file);
     const existingUsernames = yield this.existingUsernames();
-    this.proposedUsers = proposedUsers.map(obj => {
-      obj.addedViaIlios = true;
-      obj.enabled = true;
+    const filledOutUsers = proposedUsers.map(obj => {
       obj.existingUsernames = existingUsernames;
 
       return obj;
     });
-    this.selectedUsers = yield filter(this.proposedUsers, async obj => {
-      const validations = await obj.validate();
-      return validations.get('isValid');
+    const validUsers = yield filter(filledOutUsers, async obj => {
+      return await obj.isValid();
     });
+
+    this.selectedUsers = validUsers;
+    this.proposedUsers = filledOutUsers;
   }
 
   @dropTask
@@ -236,22 +176,22 @@ export default class BulkNewUsersComponent extends Component {
     const proposedUsers = this.selectedUsers;
 
     const validUsers = yield filter(proposedUsers, async obj => {
-      const validations = await obj.validate();
-      return validations.get('isValid');
+      return obj.isValid();
     });
 
     const records = validUsers.map(userInput => {
-      const user = store.createRecord('user', userInput.getProperties(
-        'firstName',
-        'lastName',
-        'middleName',
-        'phone',
-        'email',
-        'campusId',
-        'otherId',
-        'addedViaIlios',
-        'enabled'
-      ));
+      const { firstName, lastName, middleName, phone, email, campusId, otherId, addedViaIlios, enabled, username, password } = userInput;
+      const user = store.createRecord('user', {
+        firstName,
+        lastName,
+        middleName,
+        phone,
+        email,
+        campusId,
+        otherId,
+        addedViaIlios,
+        enabled
+      });
       user.set('school', selectedSchool);
 
       if (!nonStudentMode) {
@@ -260,11 +200,8 @@ export default class BulkNewUsersComponent extends Component {
       }
 
       let authentication = false;
-      if (isPresent(userInput.get('username'))) {
-        authentication = store.createRecord('authentication', userInput.getProperties(
-          'username',
-          'password'
-        ));
+      if (userInput.username) {
+        authentication = store.createRecord('authentication', { username, password });
         authentication.set('user', user);
       }
 
@@ -276,7 +213,7 @@ export default class BulkNewUsersComponent extends Component {
       return rhett;
     });
     let parts;
-    while (records.get('length') > 0){
+    while (records.length > 0){
       try {
         parts = records.splice(0, 10);
         const users = parts.mapBy('user');
@@ -294,7 +231,7 @@ export default class BulkNewUsersComponent extends Component {
 
     }
 
-    if (this.savingUserErrors.get('length') || this.savingAuthenticationErrors.get('length')) {
+    if (this.savingUserErrors.length || this.savingAuthenticationErrors.length) {
       this.flashMessages.warning('general.newUsersCreatedWarning');
     } else {
       this.flashMessages.success('general.newUsersCreatedSuccessfully');
@@ -302,7 +239,6 @@ export default class BulkNewUsersComponent extends Component {
 
     this.selectedUsers = [];
     this.proposedUsers = [];
-
   }
 
   @restartableTask
@@ -344,5 +280,56 @@ export default class BulkNewUsersComponent extends Component {
       const finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
       return finalYear > lastYear;
     });
+  }
+}
+
+@validatable
+class ProposedUser extends CoreObject {
+  @service intl;
+
+  @Length(1, 50) @NotBlank() firstName;
+  @Length(1, 20) middleName;
+  @Length(1, 50) @NotBlank() lastName;
+  @Length(1, 100) @Custom('validateUsernameCallback', 'validateUsernameMessageCallback') username;
+  @Custom('validatePasswordCallback', 'validatePasswordMessageCallback') password;
+  @Length(1, 16) campusId;
+  @Length(1, 16) otherId;
+  @Length(1, 100) @NotBlank() @IsEmail() email;
+  @Length(1, 20) phone;
+  addedViaIlios = true;
+  enabled = true;
+
+  init(data) {
+    super.init(...arguments);
+    this.firstName = data.firstName;
+    this.lastName = data.lastName;
+    this.middleName = data.middleName;
+    this.phone = data.phone;
+    this.email = data.email;
+    this.campusId = data.campusId;
+    this.otherId = data.otherId;
+    this.username = data.username;
+    this.password = data.password;
+    this.addErrorDisplayForAllFields();
+  }
+
+  async validateUsernameCallback() {
+    return ! this.existingUsernames.includes(this.username);
+  }
+
+  validateUsernameMessageCallback() {
+    return this.intl.t('errors.exclusion', { description: this.intl.t('general.username') });
+  }
+
+  async validatePasswordCallback() {
+    if (!this.username) {
+      return true;
+    }
+    const stringValue = String(this.password).trim();
+    return Boolean(stringValue.length);
+  }
+
+  validatePasswordMessageCallback() {
+    return this.intl.t('errors.blank', { description: this.intl.t('general.password') });
   }
 }

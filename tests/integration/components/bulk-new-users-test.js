@@ -1,7 +1,6 @@
 import { resolve } from 'rsvp';
 import Service from '@ember/service';
 import EmberObject from '@ember/object';
-import { run } from '@ember/runloop';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
@@ -90,9 +89,8 @@ module('Integration | Component | bulk new users', function(hooks) {
 
   test('it renders', async function(assert) {
     assert.expect(6);
-    this.set('nothing', parseInt);
 
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
 
     const content = this.element.textContent.trim();
     assert.notEqual(content.search(/File with user data/), -1);
@@ -108,9 +106,8 @@ module('Integration | Component | bulk new users', function(hooks) {
 
   test('select student mode display cohort', async function(assert) {
     assert.expect(10);
-    this.set('nothing', parseInt);
 
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
     await click('.click-choice-buttons .second-button');
     const content = this.element.textContent.trim();
     assert.notEqual(content.search(/File with user data/), -1);
@@ -132,8 +129,7 @@ module('Integration | Component | bulk new users', function(hooks) {
   });
 
   test('parses file into table', async function (assert) {
-    this.set('nothing', parseInt);
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
 
     const users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -169,8 +165,7 @@ module('Integration | Component | bulk new users', function(hooks) {
     assert.expect(30);
     this.server.create('user-role', { id: 4 });
 
-    this.set('nothing', parseInt);
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
 
     const users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -219,12 +214,8 @@ module('Integration | Component | bulk new users', function(hooks) {
     assert.expect(28);
     this.server.create('user-role', { id: 4 });
 
-    this.set('nothing', parseInt);
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
-
-    run(async () => {
-      await click('.click-choice-buttons .second-button');
-    });
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
+    await click('.click-choice-buttons .second-button');
 
     const users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -281,8 +272,7 @@ module('Integration | Component | bulk new users', function(hooks) {
   });
 
   test('validate firstName', async function(assert) {
-    this.set('nothing', parseInt);
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
 
     const users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -301,8 +291,7 @@ module('Integration | Component | bulk new users', function(hooks) {
   });
 
   test('validate lastName', async function(assert) {
-    this.set('nothing', parseInt);
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
 
     const users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -321,8 +310,7 @@ module('Integration | Component | bulk new users', function(hooks) {
   });
 
   test('validate middleName', async function(assert) {
-    this.set('nothing', parseInt);
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
 
     const users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -342,8 +330,7 @@ module('Integration | Component | bulk new users', function(hooks) {
   });
 
   test('validate email address', async function(assert) {
-    this.set('nothing', parseInt);
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
 
     const users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -362,8 +349,7 @@ module('Integration | Component | bulk new users', function(hooks) {
   });
 
   test('validate campusId', async function(assert) {
-    this.set('nothing', parseInt);
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
 
     const users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -382,8 +368,7 @@ module('Integration | Component | bulk new users', function(hooks) {
   });
 
   test('validate otherId', async function(assert) {
-    this.set('nothing', parseInt);
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
 
     const users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -401,11 +386,29 @@ module('Integration | Component | bulk new users', function(hooks) {
     assert.dom(BadBox).hasClass('error');
   });
 
-  test('validate username', async function(assert) {
-    this.set('nothing', parseInt);
+  test('validate username length', async function(assert) {
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
+
+    const users = [
+      ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
+      ['jayden', 'johnson', '', '12345', 'jj@example.com', '1234Campus', '1234Other', 'long_name'.repeat(20), '1234Test'],
+    ];
+    await triggerUpload(users, find('input[type=file]'));
+
+    const goodCheck = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
+    const goodBox = 'tbody tr:nth-of-type(1) td:nth-of-type(9)';
+    const badCheck = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
+    const BadBox = 'tbody tr:nth-of-type(2) td:nth-of-type(9)';
+    assert.dom(goodCheck).isNotDisabled();
+    assert.dom(goodBox).hasNoClass('error');
+    assert.dom(badCheck).isDisabled();
+    assert.dom(BadBox).hasClass('error');
+  });
+
+  test('validate username uniqueness', async function(assert) {
     const user = this.server.create('user');
     this.server.create('authentication', { user, username: 'existingName' });
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
 
     const users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test'],
@@ -427,9 +430,8 @@ module('Integration | Component | bulk new users', function(hooks) {
     this.server.post('api/authentications', function () {
       return new Response(500);
     });
-    this.set('nothing', parseInt);
     const user = this.server.create('user');
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
 
     const users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
@@ -437,7 +439,6 @@ module('Integration | Component | bulk new users', function(hooks) {
     await triggerUpload(users, find('input[type=file]'));
     this.server.create('authentication', { user, username: 'jasper' });
     await click('.done');
-    await settled();
     assert.ok(findAll('.saving-authentication-errors').length, 1);
     assert.dom('.saving-authentication-errors li').hasText('johnson, jasper (jasper.johnson@example.com)');
   });
@@ -446,8 +447,7 @@ module('Integration | Component | bulk new users', function(hooks) {
     this.server.post('api/users', function () {
       return new Response(500);
     });
-    this.set('nothing', parseInt);
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
 
     const users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', 'jasper', '123Test']
@@ -460,8 +460,7 @@ module('Integration | Component | bulk new users', function(hooks) {
   });
 
   test('username not required', async function(assert) {
-    this.set('nothing', parseInt);
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
 
     const users = [
       ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', '1234Test'],
@@ -475,8 +474,7 @@ module('Integration | Component | bulk new users', function(hooks) {
   });
 
   test('password not required if username is blank', async function(assert) {
-    this.set('nothing', parseInt);
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
 
     const users = [
       ['jackson', 'johnson', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],
@@ -491,10 +489,9 @@ module('Integration | Component | bulk new users', function(hooks) {
 
   test('dont create authentication if username is not set', async function(assert) {
     assert.expect(2);
-    this.set('nothing', parseInt);
     const proposedNewUsers = '[data-test-proposed-new-users]';
     const waitSaving = '[data-test-wait-saving]';
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
 
     const users = [
       ['jasper', 'johnson', '', '1234567890', 'jasper.johnson@example.com', '123Campus', '123Other', '', '123Test']
@@ -511,8 +508,7 @@ module('Integration | Component | bulk new users', function(hooks) {
   });
 
   test('ignore header row', async function(assert) {
-    this.set('nothing', parseInt);
-    await render(hbs`<BulkNewUsers @close={{action nothing}} />`);
+    await render(hbs`<BulkNewUsers @close={{noop}} />`);
 
     const users = [
       ['First', 'Last', 'middle', '12345', 'jj@example.com', '1234Campus', '1234Other', '', ''],
