@@ -21,6 +21,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @tracked linkableCourses = [];
   @tracked maximum = 0;
   @tracked minimum = 0;
+  @tracked isInOrderedSequence;
   @tracked orderInSequence;
   @tracked orderInSequenceOptions = [];
   @tracked parent;
@@ -323,4 +324,3 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.orderInSequence = event.target.value;
   }
 }
-

@@ -15,5 +15,7 @@ window.deprecationWorkflow.config = {
     { handler: "silence", matchId: "ember-views.curly-components.jquery-element"},
     { handler: "silence", matchId: "computed-property.volatile"},
     { handler: "silence", matchId: "common.async-computed"},
+    { handler: "silence", matchId: "ember-metal.get-with-default"},
+    { handler: "silence", matchId: "ember-test-helpers.trigger-event.options-blob-array"},
   ]
 };
