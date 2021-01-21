@@ -19,11 +19,12 @@ module('Integration | Component | user profile calendar', function(hooks) {
   });
 
   test('shows events for this week', async function(assert) {
-    assert.expect(10);
+    assert.expect(9);
 
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
       assert.equal(params.id, 13);
+
       const today = moment();
       const from = moment(today).day(0).hour(0).minute(0).second(0).format('X');
       const to = moment(today).day(6).hour(23).minute(59).second(59).format('X');
@@ -34,9 +35,9 @@ module('Integration | Component | user profile calendar', function(hooks) {
       assert.equal(queryParams.to, to);
 
       const userEvents = [
-        {name: 'first', startDate: today.format(), location: 123, offering: 1, lastModified: today.format(), prerequisites: [], postrequisites: []},
-        {name: 'second', startDate: today.format(), location: 456, offering: 2, lastModified: today.format(), prerequisites: [], postrequisites: []},
-        {name: 'third', startDate: today.format(), location: 789, offering: 3, lastModified: today.format(), prerequisites: [], postrequisites: []},
+        {name: 'first', startDate: today.format(), location: 123, lastModified: today.format(), prerequisites: [], postrequisites: []},
+        {name: 'second', startDate: today.format(), location: 456, lastModified: today.format(), prerequisites: [], postrequisites: []},
+        {name: 'third', startDate: today.format(), location: 789, lastModified: today.format(), prerequisites: [], postrequisites: []},
       ];
 
       return { userEvents };
@@ -46,10 +47,7 @@ module('Integration | Component | user profile calendar', function(hooks) {
       id: 13
     });
     this.set('user', user);
-    this.set('selectEvent', (ev) => {
-      assert.equal(ev.name, 'first');
-    });
-    await render(hbs`<UserProfileCalendar @user={{user}} @selectEvent={{this.selectEvent}} />`);
+    await render(hbs`<UserProfileCalendar @user={{user}} />`);
     const events = '[data-test-calendar-event]';
     const firstEventTitle = `${events}:nth-of-type(1) [data-test-name]`;
     const secondEventTitle = `${events}:nth-of-type(2) [data-test-name]`;
@@ -58,8 +56,6 @@ module('Integration | Component | user profile calendar', function(hooks) {
     assert.dom(firstEventTitle).hasText('first');
     assert.dom(secondEventTitle).hasText('second');
     assert.dom(thirdEventTitle).hasText('third');
-
-    await click(firstEventTitle);
   });
 
   test('clicking forward goes to next week', async function(assert) {
