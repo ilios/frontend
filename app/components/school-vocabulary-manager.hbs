@@ -44,6 +44,7 @@
       {{else}}
         {{this.title}}
       {{/if}}
+      <span class="term-totals">({{t "general.countTotal" total=(get (await @vocabulary.terms) "length")}})</span>
     </div>
     <h5>
       {{t "general.terms"}}:
@@ -64,7 +65,7 @@
       <ul data-test-term-list>
         {{#each this.sortedTerms as |term|}}
           <li role="button" data-test-term {{on "click" (fn @manageTerm term.id)}}>
-            {{term.title}}
+            {{term.title}} <span data-test-term-child-count>({{term.childCount}})</span>
             {{#unless term.active}}
               <em>
                 ({{t "general.inactive"}})
