@@ -44,7 +44,7 @@
       {{else}}
         {{this.title}}
       {{/if}}
-      ({{t "general.countTotal" total=(get (await @vocabulary.terms) "length")}})
+      <span class="term-totals">({{t "general.countTotal" total=(get (await @vocabulary.terms) "length")}})</span>
     </div>
     <h5>
       {{t "general.terms"}}:
