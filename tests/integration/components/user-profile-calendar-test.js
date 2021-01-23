@@ -19,7 +19,7 @@ module('Integration | Component | user profile calendar', function(hooks) {
   });
 
   test('shows events for this week', async function(assert) {
-    assert.expect(9);
+    assert.expect(12);
 
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
@@ -54,8 +54,12 @@ module('Integration | Component | user profile calendar', function(hooks) {
     const thirdEventTitle = `${events}:nth-of-type(3) [data-test-name]`;
 
     assert.dom(firstEventTitle).hasText('first');
+    assert.dom(firstEventTitle).doesNotHaveClass('clickable');
     assert.dom(secondEventTitle).hasText('second');
+    assert.dom(secondEventTitle).doesNotHaveClass('clickable');
     assert.dom(thirdEventTitle).hasText('third');
+    assert.dom(thirdEventTitle).doesNotHaveClass('clickable');
+
   });
 
   test('clicking forward goes to next week', async function(assert) {
