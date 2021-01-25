@@ -1,5 +1,6 @@
 .daily-calendar-event {
   @include ilios-button-reset;
+  cursor: default;
   border-radius: $base-border-radius;
   display: flex;
   flex-direction: column;
@@ -13,6 +14,9 @@
   overflow: hidden;
   z-index: 2;
 
+  &.clickable {
+    cursor: pointer;
+  }
 
   .ilios-calendar-event-time {
     color: $maroon;
