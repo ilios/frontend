@@ -67,7 +67,7 @@ export default class IliosCourseListComponent extends Component {
   }
 
   @action
-  sortBy(what){
+  setSortBy(what){
     if(this.args.sortBy === what){
       what += ':desc';
     }
