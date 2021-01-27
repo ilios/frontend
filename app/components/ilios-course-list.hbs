@@ -22,6 +22,7 @@
           @colspan={{1}}
           @hideFromSmallScreen={{true}}
           @sortedAscending={{this.sortedAscending}}
+          @sortedBy={{or (eq @sortBy "level") (eq @sortBy "level:desc")}}
           @sortType="numeric"
           @click={{fn this.setSortBy "level"}}
         >
