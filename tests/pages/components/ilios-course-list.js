@@ -23,7 +23,17 @@ const definition = {
   sortByStartDate: clickable('th', {scope: '[data-test-course-headings]', at: 4}),
   sortByEndDate: clickable('th', {scope: '[data-test-course-headings]', at: 5}),
   sortByStatus: clickable('th', {scope: '[data-test-course-headings]', at: 6}),
-  confirmCourseRemoval: clickable('[data-test-courses] .confirm-removal button.remove')
+  confirmCourseRemoval: clickable('[data-test-courses] .confirm-removal button.remove'),
+  isSortedByTitleAscending: hasClass('fa-sort-alpha-down', '[data-test-course-headings] th:eq(0) svg'),
+  isSortedByTitleDescending: hasClass('fa-sort-alpha-down-alt', '[data-test-course-headings] th:eq(0) svg'),
+  isSortedByLevelAscending: hasClass('fa-sort-numeric-down', '[data-test-course-headings] th:eq(3) svg'),
+  isSortedByLevelDescending: hasClass('fa-sort-numeric-down-alt', '[data-test-course-headings] th:eq(3) svg'),
+  isSortedByStartDateAscending: hasClass('fa-sort-numeric-down', '[data-test-course-headings] th:eq(4) svg'),
+  isSortedByStartDateDescending: hasClass('fa-sort-numeric-down-alt', '[data-test-course-headings] th:eq(4) svg'),
+  isSortedByEndDateAscending: hasClass('fa-sort-numeric-down', '[data-test-course-headings] th:eq(5) svg'),
+  isSortedByEndDateDescending: hasClass('fa-sort-numeric-down-alt', '[data-test-course-headings] th:eq(5) svg'),
+  isSortedByStatusAscending: hasClass('fa-sort-alpha-down', '[data-test-course-headings] th:eq(6) svg'),
+  isSortedByStatusDescending: hasClass('fa-sort-alpha-down-alt', '[data-test-course-headings] th:eq(6) svg'),
 };
 
 export default definition;

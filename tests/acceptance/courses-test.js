@@ -419,10 +419,12 @@ module('Acceptance | Courses', function(hooks) {
       schoolId: 1,
     });
     await page.visit();
+    assert.ok(page.courses.isSortedByTitleAscending);
     assert.equal(page.courses.courses.length, 2);
     assert.equal(page.courses.courses[0].title, firstCourse.title);
     assert.equal(page.courses.courses[1].title, secondCourse.title);
     await page.courses.sortByTitle();
+    assert.ok(page.courses.isSortedByTitleDescending);
     assert.equal(page.courses.courses[0].title, secondCourse.title);
     assert.equal(page.courses.courses[1].title, firstCourse.title);
   });
@@ -442,10 +444,12 @@ module('Acceptance | Courses', function(hooks) {
 
     await page.visit();
     await page.courses.sortByLevel();
+    assert.ok(page.courses.isSortedByLevelAscending);
     assert.equal(page.courses.courses.length, 2);
     assert.equal(page.courses.courses[0].title, firstCourse.title);
     assert.equal(page.courses.courses[1].title, secondCourse.title);
     await page.courses.sortByLevel();
+    assert.ok(page.courses.isSortedByLevelDescending);
     assert.equal(page.courses.courses[0].title, secondCourse.title);
     assert.equal(page.courses.courses[1].title, firstCourse.title);
   });
@@ -465,10 +469,12 @@ module('Acceptance | Courses', function(hooks) {
 
     await page.visit();
     await page.courses.sortByStartDate();
+    assert.ok(page.courses.isSortedByStartDateAscending);
     assert.equal(page.courses.courses.length, 2);
     assert.equal(page.courses.courses[0].title, firstCourse.title);
     assert.equal(page.courses.courses[1].title, secondCourse.title);
     await page.courses.sortByStartDate();
+    assert.ok(page.courses.isSortedByStartDateDescending);
     assert.equal(page.courses.courses[0].title, secondCourse.title);
     assert.equal(page.courses.courses[1].title, firstCourse.title);
   });
@@ -488,10 +494,12 @@ module('Acceptance | Courses', function(hooks) {
 
     await page.visit();
     await page.courses.sortByEndDate();
+    assert.ok(page.courses.isSortedByEndDateAscending);
     assert.equal(page.courses.courses.length, 2);
     assert.equal(page.courses.courses[0].title, firstCourse.title);
     assert.equal(page.courses.courses[1].title, secondCourse.title);
     await page.courses.sortByEndDate();
+    assert.ok(page.courses.isSortedByEndDateDescending);
     assert.equal(page.courses.courses[0].title, secondCourse.title);
     assert.equal(page.courses.courses[1].title, firstCourse.title);
   });
@@ -519,11 +527,13 @@ module('Acceptance | Courses', function(hooks) {
 
     await page.visit();
     await page.courses.sortByStatus();
+    assert.ok(page.courses.isSortedByStatusAscending);
     assert.equal(page.courses.courses.length, 3);
     assert.equal(page.courses.courses[0].title, thirdCourse.title);
     assert.equal(page.courses.courses[1].title, firstCourse.title);
     assert.equal(page.courses.courses[2].title, secondCourse.title);
     await page.courses.sortByStatus();
+    assert.ok(page.courses.isSortedByStatusDescending);
     assert.equal(page.courses.courses[0].title, secondCourse.title);
     assert.equal(page.courses.courses[1].title, firstCourse.title);
     assert.equal(page.courses.courses[2].title, thirdCourse.title);
