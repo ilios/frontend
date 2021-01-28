@@ -215,7 +215,7 @@ module('Integration | Component | weekly-calendar', function(hooks) {
     assert.equal(component.longWeekOfYear, 'Semana de 8 de diciembre de 1980');
     assert.equal(component.shortWeekOfYear, '8/12 — 14/12 1980');
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
-    assert.equal(component.dayHeadings[0].text, 'lunes lun. 8 dic. 8');
+    assert.ok(component.dayHeadings[0].text.match('lunes lun.? 8 dic.? 8'));
 
     assert.equal(component.events.length, 1);
     assert.ok(component.events[0].isFourthDayOfWeek);
@@ -256,7 +256,7 @@ module('Integration | Component | weekly-calendar', function(hooks) {
     assert.equal(component.longWeekOfYear, 'Semana de 24 de febrero de 2020');
     assert.equal(component.shortWeekOfYear, '24/2 — 1/3 2020');
     assert.ok(component.dayHeadings[0].isFirstDayOfWeek);
-    assert.equal(component.dayHeadings[0].text, 'lunes lun. 24 feb. 24');
+    assert.ok(component.dayHeadings[0].text.match('lunes lun.? 24 feb.? 24'));
 
     assert.equal(component.events.length, 1);
     assert.ok(component.events[0].isSecondDayOfWeek);
