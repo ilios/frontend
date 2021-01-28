@@ -27,6 +27,7 @@ const definition = {
   },
   showCreateNewTokenForm: clickable('[data-test-show-create-new-token]'),
   showInvalidateTokensForm: clickable('[data-test-show-invalidate-tokens]'),
+  tokenInfoLink: text('[data-test-token-info-link]'),
 };
 
 export default definition;

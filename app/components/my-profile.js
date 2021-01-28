@@ -20,7 +20,7 @@ export default class MyProfileComponent extends Component {
   @tracked minDate = null;
 
   get apiDocsLink() {
-    const apiPath = '/' + this.iliosConfig.namespace;
+    const apiPath = '/' + this.iliosConfig.apiNameSpace;
     const host = this.iliosConfig.host ? this.iliosConfig.host : window.location.protocol + '//' + window.location.host;
     const docPath = host + apiPath.replace('v3', 'doc');
     return `<a href="${docPath}">${docPath}</a>`;
