@@ -9,8 +9,8 @@ module.exports = function(defaults) {
     dotEnv: {
       clientAllowedKeys: ['ILIOS_FRONTEND_API_NAMESPACE', 'ILIOS_FRONTEND_API_HOST']
     },
-    'ember-cli-uglify': {
-      uglify: {
+    'ember-cli-terser': {
+      terser: {
         compress: {
           collapse_vars: false
         }
