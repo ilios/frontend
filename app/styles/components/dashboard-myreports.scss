@@ -59,4 +59,13 @@
   .fa-trash {
     @include icon;
   }
+
+  .report-title {
+    padding-left: 1rem;
+  }
+
+  .report-results {
+    @include ilios-list-reset;
+    margin-left: 1rem;
+  }
 }

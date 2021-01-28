@@ -47,7 +47,7 @@
         {{! template-lint-disable no-invalid-interactive }}
         {{on "scroll" this.setScroll}}
       >
-        <h3 data-test-report-title>
+        <h3 class="report-title" data-test-report-title>
           {{this.selectedReportTitle}}
         </h3>
         {{#if this.showAcademicYearFilter}}
@@ -75,34 +75,32 @@
           </div>
         {{/if}}
         {{#if (is-array this.reportResultsList)}}
-          {{#if this.reportResultsList.length}}
-            <ul data-test-results {{did-insert (action this.scrollDown)}}>
-              {{#each this.reportResultsList as |item|}}
-                {{#if item.model2}}
-                  <li>
-                    <LinkTo
-                      @route={{item.route}}
-                      @models={{array item.model item.model2}}
-                    >
-                      {{item.value}}
-                    </LinkTo>
-                  </li>
-                {{else if item.model}}
-                  <li>
-                    <LinkTo @route={{item.route}} @model={{item.model}}>
-                      {{item.value}}
-                    </LinkTo>
-                  </li>
-                {{else}}
-                  <li>
+          <ul class="report-results" data-test-results {{did-insert (action this.scrollDown)}}>
+            {{#each this.reportResultsList as |item|}}
+              {{#if item.model2}}
+                <li>
+                  <LinkTo
+                    @route={{item.route}}
+                    @models={{array item.model item.model2}}
+                  >
                     {{item.value}}
-                  </li>
-                {{/if}}
-              {{/each}}
-            </ul>
-          {{else}}
-            {{t "general.none"}}
-          {{/if}}
+                  </LinkTo>
+                </li>
+              {{else if item.model}}
+                <li>
+                  <LinkTo @route={{item.route}} @model={{item.model}}>
+                    {{item.value}}
+                  </LinkTo>
+                </li>
+              {{else}}
+                <li>
+                  {{item.value}}
+                </li>
+              {{/if}}
+            {{else}}
+                <li>{{t "general.none"}}</li>
+            {{/each}}
+          </ul>
         {{else}}
           <LoadingSpinner />
         {{/if}}
