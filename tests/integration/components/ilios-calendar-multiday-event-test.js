@@ -55,8 +55,7 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
       />
     `);
     assert.dom(this.element).containsText('Cheramie is born');
-
-    await click('[data-test-event-name]');
+    await click('[data-test-ilios-calendar-multiday-event]');
   });
 
   test('action does not fire for scheduled events', async function(assert) {
