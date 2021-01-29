@@ -3,7 +3,7 @@
   &ndash;
   {{format-date @event.endDate month="numeric" day="numeric" year="2-digit" hour="numeric" minute="numeric"}}
   <span
-    class={{if (and this.clickable @isEventSelectable) "clickable"}}
+    class={{if (and this.clickable @isEventSelectable) "clickable link"}}
     role="button"
     data-test-event-name
     {{on "click" (fn this.selectEvent @event)}}
