@@ -25,6 +25,7 @@ module.exports = {
     'ember/no-new-mixins': 0,
     'ember/no-classic-classes': 0,
     'ember/no-mixins': 0,
+    'ember/require-tagless-components': 0,
   },
   overrides: [
     // node files
