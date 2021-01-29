@@ -7,9 +7,11 @@
     font-size: 1.25em;
     font-weight: bold;
     margin-top: 0;
+    padding-left: 1rem;
   }
 
   ul {
-    margin-left: 1em;
+    @include ilios-list-reset;
+    padding: 1rem;
   }
 }
