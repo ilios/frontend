@@ -221,8 +221,8 @@ module('Integration | Component | learner group list', function(hooks) {
 
   test('sorting', async function(assert) {
     const users = this.server.createList('user', 2);
-    const group1 = this.server.create('learner-group', { title: 'Zebra' });
-    const group2 = this.server.create('learner-group', { title: 'Alpha', users });
+    const group1 = this.server.create('learner-group', { title: 'Group 10' });
+    const group2 = this.server.create('learner-group', { title: 'Group 2', users });
     this.server.create('learner-group', { parent: group1 });
     const groupModel1 = await this.owner.lookup('service:store').find('learner-group', group1.id);
     const groupModel2 = await this.owner.lookup('service:store').find('learner-group', group2.id);
@@ -232,14 +232,14 @@ module('Integration | Component | learner group list', function(hooks) {
     assert.ok(component.isSortedByTitleAscending, 'Default sort order is by title ascending');
     assert.ok(component.isNotSortedByMembers);
     assert.ok(component.isNotSortedBySubgroups);
-    assert.equal(component.groups[0].title, 'Alpha');
-    assert.equal(component.groups[1].title, 'Zebra');
+    assert.equal(component.groups[0].title, 'Group 2');
+    assert.equal(component.groups[1].title, 'Group 10');
     await component.sortByTitle();
     assert.ok(component.isSortedByTitleDescending);
     assert.ok(component.isNotSortedByMembers);
     assert.ok(component.isNotSortedBySubgroups);
-    assert.equal(component.groups[0].title, 'Zebra');
-    assert.equal(component.groups[1].title, 'Alpha');
+    assert.equal(component.groups[0].title, 'Group 10');
+    assert.equal(component.groups[1].title, 'Group 2');
     await component.sortByMembers();
     assert.ok(component.isSortedByMembersAscending);
     assert.ok(component.isNotSortedByTitle);

@@ -1,10 +1,12 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { task } from 'ember-concurrency-decorators';
 import { map } from 'rsvp';
 
 export default class LearnerGroupListComponent extends Component {
+  @service intl;
   @tracked toCopy = [];
   @tracked toRemove = [];
   @tracked preparingToRemove = [];
@@ -56,6 +58,15 @@ export default class LearnerGroupListComponent extends Component {
       this.args.setSortBy(what);
     }
     this.localSortBy = what;
+  }
+
+  @action
+  sortByTitle(learnerGroupA, learnerGroupB) {
+    const locale = this.intl.get('locale');
+    if ('title:desc' === this.sortBy) {
+      return learnerGroupB.title.localeCompare(learnerGroupA.title, locale, {numeric: true});
+    }
+    return learnerGroupA.title.localeCompare(learnerGroupB.title, locale, {numeric: true});
   }
 
   async getCoursesForGroup(learnerGroup) {
