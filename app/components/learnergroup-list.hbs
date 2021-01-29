@@ -47,7 +47,10 @@
       </tr>
     </thead>
     <tbody>
-      {{#each (sort-by this.sortBy @learnerGroups) as |learnerGroup|}}
+      {{#each (
+          sort-by (if (or (eq this.sortBy "title") (eq this.sortBy "title:desc")) this.sortByTitle this.sortBy
+        ) @learnerGroups) as |learnerGroup|
+      }}
         <tr
           class={{if
             (includes learnerGroup.id (map-by "id" this.toRemove))
