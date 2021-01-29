@@ -108,7 +108,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     await visit('/dashboard?show=calendar&view=month');
     assert.equal(currentRouteName(), 'dashboard');
-    const events = findAll('[data-test-ilios-calendar-event');
+    const events = findAll('[data-test-ilios-calendar-event]');
     assert.equal(events.length, 2);
     const startOfMonthStartFormat = startOfMonth
       .toDate()
