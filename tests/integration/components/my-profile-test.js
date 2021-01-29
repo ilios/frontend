@@ -56,6 +56,7 @@ module('Integration | Component | my profile', function(hooks) {
     assert.equal(component.secondaryCohorts.length, 2);
     assert.equal(component.secondaryCohorts[0].text, 'a third cohort program 1');
     assert.equal(component.secondaryCohorts[1].text, 'second cohort program 0');
+    assert.ok(component.tokenInfoLink.includes('/api'));
   });
 
   test('it renders all no', async function(assert) {
