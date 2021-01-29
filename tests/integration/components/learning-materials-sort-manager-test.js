@@ -5,6 +5,7 @@ import { render, settled, click, find } from '@ember/test-helpers';
 import { module, skip, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { setupIntl } from 'ember-intl/test-support';
+import { capitalize } from '@ember/string';
 
 const { resolve } = RSVP;
 
@@ -91,7 +92,7 @@ module(
             /[\s\n\t]+/g,
             ''
           ),
-          `${lm2.type.capitalize()}, owned by ${owner2.fullName}, Status: ${
+          `${capitalize(lm2.type)}, owned by ${owner2.fullName}, Status: ${
             status2.title
           }`.replace(/[\s\n\t]+/g, '')
         );
@@ -108,7 +109,7 @@ module(
             /[\s\n\t]+/g,
             ''
           ),
-          `${lm1.type.capitalize()}, owned by ${owner1.fullName}, Status: ${
+          `${capitalize(lm1.type)}, owned by ${owner1.fullName}, Status: ${
             status1.title
           }`.replace(/[\s\n\t]+/g, '')
         );
