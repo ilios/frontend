@@ -25,7 +25,15 @@
         {{/if}}
         {{#unless @event.ilmSession}}
           <p>
-            {{format-date @event.startDate month="long" weekday="long" day="numeric" year="numeric" hour12=true hour="numeric" minute="numeric"}}
+            {{#if (eq @event.startDate @event.endDate)}}
+              {{format-date @event.startDate month="long" weekday="long" day="numeric" year="numeric" hour12=true hour="numeric" minute="numeric"}}
+            {{else if this.startsAndEndsOnSameDay}}
+              {{format-date @event.startDate month="long" weekday="long" day="numeric" year="numeric" hour12=true hour="numeric" minute="numeric"}}
+              - {{format-date @event.endDate hour12=true hour="numeric" minute="numeric"}}
+            {{else}}
+              {{format-date @event.startDate month="long" weekday="long" day="numeric" year="numeric" hour12=true hour="numeric" minute="numeric"}}
+              - {{format-date @event.endDate month="long" weekday="long" day="numeric" year="numeric" hour12=true hour="numeric" minute="numeric"}}
+            {{/if}}
           </p>
         {{/unless}}
       </div>

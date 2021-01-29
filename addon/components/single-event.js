@@ -14,6 +14,14 @@ export default class SingleEvent extends Component {
     return this.args.event.course;
   }
 
+  get startsAndEndsOnSameDay() {
+    const startDate = new Date(this.args.event.startDate);
+    const endDate = new Date(this.args.event.endDate);
+    return startDate.getDate() === endDate.getDate()
+       && startDate.getFullYear() === endDate.getFullYear()
+       && startDate.getMonth() === endDate.getMonth();
+  }
+
   get taughtBy() {
     const instructors = this.args.event.instructors;
     if (isEmpty(instructors)) {

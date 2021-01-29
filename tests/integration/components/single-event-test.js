@@ -168,6 +168,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       name: 'Learn to Learn',
       courseTitle: 'course',
       startDate: today.format(),
+      endDate: today.format(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -206,6 +207,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       name: 'Learn to Learn',
       courseTitle: 'course',
       startDate: today.format(),
+      endDate: today.format(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -251,6 +253,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       name: 'Learn to Learn',
       courseTitle: 'course',
       startDate: today.format(),
+      endDate: today.format(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -288,6 +291,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       name: 'Learn to Learn',
       courseTitle: 'course',
       startDate: today.format(),
+      endDate: today.format(),
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
@@ -350,5 +354,98 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     this.set('evt', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.evt}} />`);
     assert.notOk(component.sessionLearningMaterials.linksToAllMaterials);
+  });
+
+  test('start and end date are the same', async function(assert) {
+    const today = moment().hour(8).minute(0).second(0);
+    this.server.create('userevent', {
+      name: 'Learn to Learn',
+      courseTitle: 'course',
+      startDate: today.format(),
+      endDate: today.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      offering: 1,
+      lastModified: null,
+    });
+
+    this.set('event', this.server.db.userevents[0]);
+    await render(hbs`<SingleEvent @event={{this.event}} />`);
+    assert.equal(component.title, 'course - Learn to Learn');
+    assert.equal(component.offeredAt, today.toDate().toLocaleString([], {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    }));
+  });
+
+  test('start and end date fall on the same day but different times', async function(assert) {
+    const today = moment().hour(8).minute(0).second(0);
+    const laterToday = moment().hour(8).minute(1).second(0);
+    this.server.create('userevent', {
+      name: 'Learn to Learn',
+      courseTitle: 'course',
+      startDate: today.format(),
+      endDate: laterToday.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      offering: 1,
+      lastModified: null,
+    });
+
+    this.set('event', this.server.db.userevents[0]);
+    await render(hbs`<SingleEvent @event={{this.event}} />`);
+    assert.equal(component.title, 'course - Learn to Learn');
+    assert.equal(component.offeredAt, today.toDate().toLocaleString([], {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    }) + ' - ' + laterToday.toDate().toLocaleString([], {
+      hour: 'numeric',
+      minute: 'numeric',
+    }));
+  });
+
+  test('start and end date fall on different days', async function(assert) {
+    const today = moment().hour(8).minute(0).second(0);
+    const notToday = moment().hour(8).minute(0).second(0).add(72, 'hours');
+    this.server.create('userevent', {
+      name: 'Learn to Learn',
+      courseTitle: 'course',
+      startDate: today.format(),
+      endDate: notToday.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      offering: 1,
+      lastModified: null,
+    });
+
+    this.set('event', this.server.db.userevents[0]);
+    await render(hbs`<SingleEvent @event={{this.event}} />`);
+    assert.equal(component.title, 'course - Learn to Learn');
+    assert.equal(component.offeredAt, today.toDate().toLocaleString([], {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    }) + ' - ' + notToday.toDate().toLocaleString([], {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+    }));
   });
 });
