@@ -65,12 +65,17 @@
       }
 
       .month-event {
+        cursor: default;
         border: 1px solid $grey;
         border-radius: $base-border-radius;
         height: 1.5em;
         overflow: hidden;
         padding: 0 8px 0 0;
         position: relative;
+
+        &.clickable {
+          cursor: pointer;
+        }
 
         span {
           background-color: transparent;
