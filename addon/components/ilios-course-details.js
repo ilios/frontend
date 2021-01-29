@@ -13,7 +13,7 @@ export default class IliosCourseDetailsComponent extends Component {
     this.args.setShowDetails(false);
   }
 
-  get notRolloverRoute(){
+  get notRolloverRoute() {
     return this.router.currentRouteName !== 'course.rollover';
   }
 }

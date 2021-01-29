@@ -17,9 +17,11 @@ export default class SingleEvent extends Component {
   get startsAndEndsOnSameDay() {
     const startDate = new Date(this.args.event.startDate);
     const endDate = new Date(this.args.event.endDate);
-    return startDate.getDate() === endDate.getDate()
-       && startDate.getFullYear() === endDate.getFullYear()
-       && startDate.getMonth() === endDate.getMonth();
+    return (
+      startDate.getDate() === endDate.getDate() &&
+      startDate.getFullYear() === endDate.getFullYear() &&
+      startDate.getMonth() === endDate.getMonth()
+    );
   }
 
   get taughtBy() {
