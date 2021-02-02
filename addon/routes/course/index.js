@@ -1,13 +1,13 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { action } from '@ember/object';
 
-export default class CourseIndexRoute extends Route.extend(AuthenticatedRouteMixin) {
+export default class CourseIndexRoute extends Route {
   @service permissionChecker;
   @service preserveScroll;
   @service store;
   @service dataLoader;
+  @service session;
 
   canCreateSession = false;
   canUpdateCourse = false;
@@ -15,6 +15,10 @@ export default class CourseIndexRoute extends Route.extend(AuthenticatedRouteMix
   async afterModel(course) {
     this.canUpdateCourse = await this.permissionChecker.canUpdateCourse(course);
     this.canCreateSession = await this.permissionChecker.canCreateSession(course);
+  }
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
   }
 
   setupController(controller, model) {

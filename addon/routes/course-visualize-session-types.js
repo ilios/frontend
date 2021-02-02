@@ -1,11 +1,9 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { all, map } from 'rsvp';
 
-export default class CourseVisualizeSessionTypesRoute extends Route.extend(
-  AuthenticatedRouteMixin
-) {
+export default class CourseVisualizeSessionTypesRoute extends Route {
+  @service session;
   @service store;
 
   titleToken = 'general.coursesAndSessions';
@@ -16,5 +14,9 @@ export default class CourseVisualizeSessionTypesRoute extends Route.extend(
       map(sessions.toArray(), (s) => s.sessionType),
       map(sessions.toArray(), (s) => s.totalSumDuration),
     ]);
+  }
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
   }
 }
