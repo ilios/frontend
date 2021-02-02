@@ -107,7 +107,6 @@ export default class NewLearningmaterialComponent extends Component {
         break;
       }
       case 'link': {
-        console.log(this.link);
         learningMaterial.set('link', this.link);
         break;
       }
