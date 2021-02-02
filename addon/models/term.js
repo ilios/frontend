@@ -7,7 +7,7 @@ const { collect, sum, gte } = computed;
 export default Model.extend({
   title: attr('string'),
   description: attr('string'),
-  vocabulary: belongsTo('vocabulary', {async: true}),
+  vocabulary: belongsTo('vocabulary', { async: true }),
   parent: belongsTo('term', { inverse: 'children', async: true }),
   children: hasMany('term', { inverse: 'parent', async: true }),
   programYears: hasMany('programYear', { async: true }),
@@ -25,17 +25,15 @@ export default Model.extend({
   totalAssociations: sum('associatedLengths'),
   hasAssociations: gte('totalAssociations', 1),
   active: attr('boolean'),
-  courseObjectives: hasMany('course-objective', {async: true}),
-  programYearObjectives: hasMany('program-year-objective', {async: true}),
-  sessionObjectives: hasMany('session-objective', {async: true}),
+  courseObjectives: hasMany('course-objective', { async: true }),
+  programYearObjectives: hasMany('program-year-objective', { async: true }),
+  sessionObjectives: hasMany('session-objective', { async: true }),
 
-  isTopLevel: computed('parent', function() {
+  isTopLevel: computed('parent', function () {
     return isEmpty(this.belongsTo('parent').id());
   }),
 
-  hasChildren: computed('childCount', function () {
-    return (this.childCount > 0);
-  }),
+  hasChildren: computed.gt('childCount', 0),
 
   childCount: computed('children', function () {
     return this.hasMany('children').ids().length;
@@ -48,9 +46,9 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  allParents: computed('parent', 'parent.allParents.[]', async function(){
-    const parentTerm = await this.get('parent');
-    if(!parentTerm) {
+  allParents: computed('parent', 'parent.allParents.[]', async function () {
+    const parentTerm = await this.parent;
+    if (!parentTerm) {
       return [];
     }
 
@@ -68,9 +66,9 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  termWithAllParents: computed('allParents.[]', async function(){
+  termWithAllParents: computed('allParents.[]', async function () {
     const terms = [];
-    const allParents = await this.get('allParents');
+    const allParents = await this.allParents;
     terms.pushObjects(allParents);
     terms.pushObject(this);
     return terms;
@@ -83,9 +81,9 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  allParentTitles: computed('parent.{title,allParentTitles.[]}', async function() {
-    const parentTerm = await this.get('parent');
-    if(!parentTerm){
+  allParentTitles: computed('parent.{title,allParentTitles.[]}', async function () {
+    const parentTerm = await this.parent;
+    if (!parentTerm) {
       return [];
     }
 
@@ -102,12 +100,12 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  titleWithParentTitles: computed('title', 'allParentTitles.[]', async function() {
-    const parentTitles = await this.get('allParentTitles');
-    if(isEmpty(parentTitles)) {
-      return this.get('title');
+  titleWithParentTitles: computed('title', 'allParentTitles.[]', async function () {
+    const parentTitles = await this.allParentTitles;
+    if (isEmpty(parentTitles)) {
+      return this.title;
     }
-    return parentTitles.join(' > ') + ' > ' + this.get('title');
+    return parentTitles.join(' > ') + ' > ' + this.title;
   }),
 
   /**
@@ -117,17 +115,19 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  allDescendants: computed('children.[]', 'children.@each.allDescendants', async function(){
+  allDescendants: computed('children.[]', 'children.@each.allDescendants', async function () {
     const descendants = [];
-    const children = await this.get('children');
+    const children = await this.children;
     descendants.pushObjects(children.toArray());
-    const childrenDescendants = await map(children.mapBy('allDescendants'), childDescendants => {
+    const childrenDescendants = await map(children.mapBy('allDescendants'), (childDescendants) => {
       return childDescendants;
     });
-    descendants.pushObjects(childrenDescendants.reduce((array, set) => {
-      array.pushObjects(set);
-      return array;
-    }, []));
+    descendants.pushObjects(
+      childrenDescendants.reduce((array, set) => {
+        array.pushObjects(set);
+        return array;
+      }, [])
+    );
     return descendants;
   }),
 
@@ -138,13 +138,13 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  titleWithDescendantTitles: computed('title', 'allDescendants.[]', async function() {
-    const allDescendants = await this.get('allDescendants');
+  titleWithDescendantTitles: computed('title', 'allDescendants.[]', async function () {
+    const allDescendants = await this.allDescendants;
     const allDescendantTitles = allDescendants.mapBy('title');
-    if(isEmpty(allDescendantTitles)) {
-      return this.get('title');
+    if (isEmpty(allDescendantTitles)) {
+      return this.title;
     }
-    return allDescendantTitles.join(' > ') + ' > ' + this.get('title');
+    return allDescendantTitles.join(' > ') + ' > ' + this.title;
   }),
 
   /**
@@ -154,18 +154,18 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  isActiveInTree: computed('active', 'parent.isActiveInTree', async function() {
-    const parent = await this.get('parent');
-    const active = this.get('active');
+  isActiveInTree: computed('active', 'parent.isActiveInTree', async function () {
+    const parent = await this.parent;
+    const active = this.active;
 
-    if (! active) {
+    if (!active) {
       return false;
     }
 
-    if (! parent) {
+    if (!parent) {
       return true;
     }
 
     return parent.get('isActiveInTree');
-  })
+  }),
 });

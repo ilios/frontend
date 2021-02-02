@@ -70,7 +70,7 @@ export default class SessionObjectiveListItemComponent extends Component {
 
   @dropTask
   *saveParents() {
-    const newParents = this.parentsBuffer.map(obj => {
+    const newParents = this.parentsBuffer.map((obj) => {
       return this.store.peekRecord('course-objective', obj.id);
     });
     this.args.sessionObjective.set('courseObjectives', newParents);
@@ -114,7 +114,7 @@ export default class SessionObjectiveListItemComponent extends Component {
   }
   @action
   removeParentFromBuffer(objective) {
-    this.parentsBuffer = this.parentsBuffer.filter(obj => obj.id !== objective.id);
+    this.parentsBuffer = this.parentsBuffer.filter((obj) => obj.id !== objective.id);
   }
   @action
   addDescriptorToBuffer(descriptor) {
@@ -122,7 +122,7 @@ export default class SessionObjectiveListItemComponent extends Component {
   }
   @action
   removeDescriptorFromBuffer(descriptor) {
-    this.descriptorsBuffer = this.descriptorsBuffer.filter(obj => obj.id !== descriptor.id);
+    this.descriptorsBuffer = this.descriptorsBuffer.filter((obj) => obj.id !== descriptor.id);
   }
   @action
   addTermToBuffer(term) {
@@ -130,7 +130,7 @@ export default class SessionObjectiveListItemComponent extends Component {
   }
   @action
   removeTermFromBuffer(term) {
-    this.termsBuffer = this.termsBuffer.filter(obj => obj.id !== term.id);
+    this.termsBuffer = this.termsBuffer.filter((obj) => obj.id !== term.id);
   }
   @action
   cancel() {

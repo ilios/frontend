@@ -1,8 +1,4 @@
-import {
-  create,
-  collection,
-  text,
-} from 'ember-cli-page-object';
+import { create, collection, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-daily-calendar]',

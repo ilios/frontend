@@ -20,7 +20,7 @@ export default class NewSessionComponent extends Component {
     let selectedSessionType;
 
     if (this.selectedSessionTypeId) {
-      selectedSessionType = this.args.sessionTypes.find(sessionType => {
+      selectedSessionType = this.args.sessionTypes.find((sessionType) => {
         return Number(sessionType.id) === this.selectedSessionTypeId;
       });
     }
@@ -47,7 +47,7 @@ export default class NewSessionComponent extends Component {
     this.removeErrorDisplayFor('title');
     const session = this.store.createRecord('session', {
       title: this.title,
-      sessionType: this.selectedSessionType
+      sessionType: this.selectedSessionType,
     });
     yield this.args.save(session);
     this.args.cancel();
@@ -67,7 +67,7 @@ export default class NewSessionComponent extends Component {
       return;
     }
 
-    if(27 === keyCode) {
+    if (27 === keyCode) {
       this.cancel();
     }
   }

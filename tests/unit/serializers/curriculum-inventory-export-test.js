@@ -1,16 +1,16 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Serializer | curriculum inventory export', function(hooks) {
+module('Unit | Serializer | curriculum inventory export', function (hooks) {
   setupTest(hooks);
 
-  test('it serializes records', function(assert) {
+  test('it serializes records', function (assert) {
     const record = this.owner.lookup('service:store').createRecord('curriculum-inventory-export');
     const serializedRecord = record.serialize();
     assert.ok(serializedRecord);
   });
 
-  test('it removes all non postable fields', function(assert) {
+  test('it removes all non postable fields', function (assert) {
     var record = this.owner.lookup('service:store').createRecord('curriculum-inventory-export');
     var store = this.owner.lookup('service:store');
     var now = new Date();
@@ -21,7 +21,7 @@ module('Unit | Serializer | curriculum inventory export', function(hooks) {
     record.set('createdBy', user);
     assert.equal(record.get('createdAt'), now);
     assert.equal(record.get('document'), doc);
-    record.get('createdBy').then(creator => {
+    record.get('createdBy').then((creator) => {
       assert.equal(user, creator);
     });
     var serializedRecord = record.serialize();

@@ -1,50 +1,64 @@
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/course';
 
-module('Acceptance | Course - Objective Inactive Parents', function(hooks) {
+module('Acceptance | Course - Objective Inactive Parents', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     this.user = await setupAuthentication();
-    this.school =  this.server.create('school');
+    this.school = this.server.create('school');
   });
 
   test('inactive program year objectives are hidden unless they are selected', async function (assert) {
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
     const cohort = this.server.create('cohort', {
-      programYear
+      programYear,
     });
     const competency = this.server.create('competency', {
       school: this.school,
       programYears: [programYear],
     });
 
-    this.server.create('program-year-objective', { programYear, competency, title: 'active', active: true });
-    this.server.create('program-year-objective', { programYear, competency, title: 'inactive', active: false });
+    this.server.create('program-year-objective', {
+      programYear,
+      competency,
+      title: 'active',
+      active: true,
+    });
+    this.server.create('program-year-objective', {
+      programYear,
+      competency,
+      title: 'inactive',
+      active: false,
+    });
     const parent = this.server.create('program-year-objective', {
       programYear,
       competency,
       title: 'inactive selected',
-      active: false
+      active: false,
     });
 
     const course = this.server.create('course', {
       year: 2013,
       school: this.school,
-      cohorts: [cohort]
+      cohorts: [cohort],
     });
-    this.server.create('course-objective', { course, programYearObjectives: [ parent ] });
+    this.server.create('course-objective', {
+      course,
+      programYearObjectives: [parent],
+    });
 
     this.user.update({ administeredSchools: [this.school] });
-    await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
+    await page.visit({
+      courseId: 1,
+      details: true,
+      courseObjectiveDetails: true,
+    });
     const { objectives } = page.objectives.objectiveList;
     assert.equal(objectives.length, 1);
 

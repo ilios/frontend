@@ -5,7 +5,7 @@ import {
   hasClass,
   isPresent,
   property,
-  text
+  text,
 } from 'ember-cli-page-object';
 
 const definition = {

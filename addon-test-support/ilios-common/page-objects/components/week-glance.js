@@ -1,8 +1,4 @@
-import {
-  collection,
-  create,
-  text
-} from 'ember-cli-page-object';
+import { collection, create, text } from 'ember-cli-page-object';
 import weekGlanceEvent from './week-glance-event';
 import weekGlancePreWork from './week-glance-pre-work';
 
@@ -11,7 +7,10 @@ const definition = {
   title: text('[data-test-week-title]'),
   offeringEvents: collection('[data-test-week-glance-event]', weekGlanceEvent),
   ilmEvents: collection('[data-test-ilm-events] [data-test-week-glance-event]', weekGlanceEvent),
-  preWork: collection('[data-test-ilm-pre-work] [data-test-week-glance-pre-work]', weekGlancePreWork),
+  preWork: collection(
+    '[data-test-ilm-pre-work] [data-test-week-glance-pre-work]',
+    weekGlancePreWork
+  ),
 };
 
 export default definition;

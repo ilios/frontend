@@ -8,5 +8,5 @@ export default Model.extend({
   addressStateOrProvince: attr('string'),
   addressZipCode: attr('string'),
   addressCountryCode: attr('string'),
-  school: belongsTo('school', {async: true}),
+  school: belongsTo('school', { async: true }),
 });

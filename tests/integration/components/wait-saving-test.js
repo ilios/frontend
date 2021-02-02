@@ -4,11 +4,11 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupIntl } from 'ember-intl/test-support';
 
-module('Integration | Component | wait saving', function(hooks) {
+module('Integration | Component | wait saving', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(1);
     const modalDialogService = this.owner.lookup('service:modal-dialog');
     modalDialogService.set('destinationElementId', 'modal-testing-div');

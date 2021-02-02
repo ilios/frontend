@@ -1,14 +1,11 @@
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/session';
 
-module('Acceptance | Session - Objective Parents', function(hooks) {
+module('Acceptance | Session - Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
@@ -18,23 +15,41 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
       year: 2013,
       school: this.school,
     });
-    const courseObjectives = this.server.createList('courseObjective', 3, { course });
+    const courseObjectives = this.server.createList('courseObjective', 3, {
+      course,
+    });
     const session = this.server.create('session', { course });
-    this.server.create('sessionObjective', { session, courseObjectives: courseObjectives.slice(0, 2) });
+    this.server.create('sessionObjective', {
+      session,
+      courseObjectives: courseObjectives.slice(0, 2),
+    });
     this.server.create('sessionObjective', { session });
   });
 
-  test('list parent objectives', async function(assert) {
+  test('list parent objectives', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(13);
 
-    await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
+    await page.visit({
+      courseId: 1,
+      sessionId: 1,
+      sessionObjectiveDetails: true,
+    });
     assert.equal(page.objectives.objectiveList.objectives.length, 2);
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'session objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'session objective 0'
+    );
     assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'course objective 0');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[1].text, 'course objective 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      'course objective 0'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].parents.list[1].text,
+      'course objective 1'
+    );
 
     await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
     const m = page.objectives.objectiveList.objectives[0].parentManager;
@@ -48,15 +63,28 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
     assert.ok(m.objectives[2].notSelected);
   });
 
-  test('save changes', async function(assert) {
+  test('save changes', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(12);
-    await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
+    await page.visit({
+      courseId: 1,
+      sessionId: 1,
+      sessionObjectiveDetails: true,
+    });
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'session objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'session objective 0'
+    );
     assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'course objective 0');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[1].text, 'course objective 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      'course objective 0'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].parents.list[1].text,
+      'course objective 1'
+    );
 
     await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
     const m = page.objectives.objectiveList.objectives[0].parentManager;
@@ -68,22 +96,43 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
     assert.ok(m.objectives[2].selected);
     await page.objectives.objectiveList.objectives[0].parents.save();
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'session objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'session objective 0'
+    );
     assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'course objective 1');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[1].text, 'course objective 2');
-
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      'course objective 1'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].parents.list[1].text,
+      'course objective 2'
+    );
   });
 
-  test('cancel changes', async function(assert) {
+  test('cancel changes', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(12);
-    await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
+    await page.visit({
+      courseId: 1,
+      sessionId: 1,
+      sessionObjectiveDetails: true,
+    });
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'session objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'session objective 0'
+    );
     assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'course objective 0');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[1].text, 'course objective 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      'course objective 0'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].parents.list[1].text,
+      'course objective 1'
+    );
 
     await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
     const m = page.objectives.objectiveList.objectives[0].parentManager;
@@ -95,21 +144,43 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
     assert.ok(m.objectives[2].selected);
     await page.objectives.objectiveList.objectives[0].parents.cancel();
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'session objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'session objective 0'
+    );
     assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'course objective 0');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[1].text, 'course objective 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      'course objective 0'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].parents.list[1].text,
+      'course objective 1'
+    );
   });
 
-  test('deselect all parents for session objective', async function(assert) {
+  test('deselect all parents for session objective', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(10);
-    await page.visit({ courseId: 1, sessionId: 1, sessionObjectiveDetails: true });
+    await page.visit({
+      courseId: 1,
+      sessionId: 1,
+      sessionObjectiveDetails: true,
+    });
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'session objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'session objective 0'
+    );
     assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'course objective 0');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[1].text, 'course objective 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      'course objective 0'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].parents.list[1].text,
+      'course objective 1'
+    );
 
     await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
     const m = page.objectives.objectiveList.objectives[0].parentManager;
@@ -121,7 +192,10 @@ module('Acceptance | Session - Objective Parents', function(hooks) {
     assert.ok(m.objectives[2].notSelected);
     await page.objectives.objectiveList.objectives[0].parents.save();
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'session objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'session objective 0'
+    );
     assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
   });
 });

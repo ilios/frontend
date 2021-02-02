@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { restartableTask } from "ember-concurrency-decorators";
+import { restartableTask } from 'ember-concurrency-decorators';
 import { filter } from 'rsvp';
 
 export default class SelectableTermsList extends Component {
@@ -21,7 +21,7 @@ export default class SelectableTermsList extends Component {
 
     if (this.args.termFilter) {
       const exp = new RegExp(this.args.termFilter, 'gi');
-      this.terms = yield filter(terms, async term => {
+      this.terms = yield filter(terms, async (term) => {
         const searchString = await term.get('titleWithDescendantTitles');
         return searchString.match(exp);
       });

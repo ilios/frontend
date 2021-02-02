@@ -6,11 +6,11 @@ import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'ilios-common/page-objects/components/course/objective-list-item-descriptors';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | course/objective-list-item-descriptors', function(hooks) {
+module('Integration | Component | course/objective-list-item-descriptors', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders and is accessible when managing', async function(assert) {
+  test('it renders and is accessible when managing', async function (assert) {
     await render(hbs`<Course::ObjectiveListItemDescriptors
       @courseOjective={{null}}
       @editable={{false}}
@@ -26,10 +26,12 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('it renders and is accessible empty and un-editable', async function(assert) {
+  test('it renders and is accessible empty and un-editable', async function (assert) {
     const course = this.server.create('course');
     const courseObjective = this.server.create('courseObjective', { course });
-    const courseObjectiveModel = await this.owner.lookup('service:store').find('courseObjective', courseObjective.id);
+    const courseObjectiveModel = await this.owner
+      .lookup('service:store')
+      .find('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(hbs`<Course::ObjectiveListItemDescriptors
       @courseObjective={{this.courseObjective}}
@@ -48,8 +50,13 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
   test('it renders and is accessible un-editable', async function (assert) {
     const meshDescriptors = this.server.createList('meshDescriptor', 2);
     const course = this.server.create('course');
-    const courseObjective = this.server.create('courseObjective', { course, meshDescriptors });
-    const courseObjectiveModel = await this.owner.lookup('service:store').find('courseObjective', courseObjective.id);
+    const courseObjective = this.server.create('courseObjective', {
+      course,
+      meshDescriptors,
+    });
+    const courseObjectiveModel = await this.owner
+      .lookup('service:store')
+      .find('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(hbs`<Course::ObjectiveListItemDescriptors
       @courseObjective={{this.courseObjective}}
@@ -70,8 +77,13 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
   test('it renders and is accessible editable', async function (assert) {
     const meshDescriptors = this.server.createList('meshDescriptor', 2);
     const course = this.server.create('course');
-    const courseObjective = this.server.create('courseObjective', { course, meshDescriptors });
-    const courseObjectiveModel = await this.owner.lookup('service:store').find('courseObjective', courseObjective.id);
+    const courseObjective = this.server.create('courseObjective', {
+      course,
+      meshDescriptors,
+    });
+    const courseObjectiveModel = await this.owner
+      .lookup('service:store')
+      .find('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     await render(hbs`<Course::ObjectiveListItemDescriptors
       @courseObjective={{this.courseObjective}}
@@ -93,8 +105,13 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
     assert.expect(1);
     const meshDescriptors = this.server.createList('meshDescriptor', 2);
     const course = this.server.create('course');
-    const courseObjective = this.server.create('courseObjective', { course, meshDescriptors });
-    const courseObjectiveModel = await this.owner.lookup('service:store').find('courseObjective', courseObjective.id);
+    const courseObjective = this.server.create('courseObjective', {
+      course,
+      meshDescriptors,
+    });
+    const courseObjectiveModel = await this.owner
+      .lookup('service:store')
+      .find('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     this.set('save', () => {
       assert.ok(true);
@@ -115,8 +132,13 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
     assert.expect(1);
     const meshDescriptors = this.server.createList('meshDescriptor', 2);
     const course = this.server.create('course');
-    const courseObjective = this.server.create('courseObjective', { course, meshDescriptors });
-    const courseObjectiveModel = await this.owner.lookup('service:store').find('courseObjective', courseObjective.id);
+    const courseObjective = this.server.create('courseObjective', {
+      course,
+      meshDescriptors,
+    });
+    const courseObjectiveModel = await this.owner
+      .lookup('service:store')
+      .find('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     this.set('cancel', () => {
       assert.ok(true);
@@ -137,8 +159,13 @@ module('Integration | Component | course/objective-list-item-descriptors', funct
     assert.expect(1);
     const meshDescriptors = this.server.createList('meshDescriptor', 2);
     const course = this.server.create('course');
-    const courseObjective = this.server.create('courseObjective', { course, meshDescriptors });
-    const courseObjectiveModel = await this.owner.lookup('service:store').find('courseObjective', courseObjective.id);
+    const courseObjective = this.server.create('courseObjective', {
+      course,
+      meshDescriptors,
+    });
+    const courseObjectiveModel = await this.owner
+      .lookup('service:store')
+      .find('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
     this.set('manage', () => {
       assert.ok(true);

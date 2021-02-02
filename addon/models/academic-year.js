@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 
 export default Model.extend({
   title: attr('number'),
-  academicYearTitle: computed('title', function(){
-    return this.get('title') + ' - ' + (parseInt(this.get('title'), 10) + 1);
+  academicYearTitle: computed('title', function () {
+    return this.title + ' - ' + (parseInt(this.title, 10) + 1);
   }),
 });

@@ -1,9 +1,4 @@
-import {
-  create,
-  hasClass,
-  notHasClass,
-  property,
-} from 'ember-cli-page-object';
+import { create, hasClass, notHasClass, property } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-api-version-notice]',

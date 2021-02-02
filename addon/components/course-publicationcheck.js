@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-computed-properties-in-native-classes */
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
@@ -13,7 +14,7 @@ export default class CoursePublicationCheckComponent extends Component {
     if (!this.objectivesRelationship) {
       return false;
     }
-    const objectivesWithoutParents = this.objectivesRelationship.filter(objective => {
+    const objectivesWithoutParents = this.objectivesRelationship.filter((objective) => {
       const parentIds = objective.hasMany('programYearObjectives').ids();
       return parentIds.length === 0;
     });

@@ -2,11 +2,11 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Service | api-version', function(hooks) {
+module('Unit | Service | api-version', function (hooks) {
   setupTest(hooks);
 
   // Replace this with your real tests.
-  test('it exists', function(assert) {
+  test('it exists', function (assert) {
     const service = this.owner.lookup('service:api-version');
     assert.ok(service);
   });
@@ -17,7 +17,7 @@ module('Unit | Service | api-version', function(hooks) {
     const iliosConfigMock = Service.extend({
       async getApiVersion() {
         return apiVersion;
-      }
+      },
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
     const service = this.owner.lookup('service:api-version');
@@ -25,11 +25,11 @@ module('Unit | Service | api-version', function(hooks) {
     assert.notOk(versionMismatch);
   });
 
-  test('returns true on version mismatch', async function(assert) {
+  test('returns true on version mismatch', async function (assert) {
     const iliosConfigMock = Service.extend({
       async getApiVersion() {
         return '1.0.0';
-      }
+      },
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
     const service = this.owner.lookup('service:api-version');

@@ -1,11 +1,11 @@
-import { registerDecorator } from "class-validator";
+import { registerDecorator } from 'class-validator';
 import moment from 'moment';
 import { getOwner } from '@ember/application';
 
 export function BeforeDate(property, validationOptions) {
   return function (object, propertyName) {
     registerDecorator({
-      name: "beforeDate",
+      name: 'beforeDate',
       target: object.constructor,
       propertyName: propertyName,
       constraints: [property],
@@ -13,7 +13,9 @@ export function BeforeDate(property, validationOptions) {
       validator: {
         validate(value, { constraints, object: target, property }) {
           if (!constraints[0]) {
-            throw new Error(`You must pass the name of a property that ${property} is before as the first argument to BeforeDate`);
+            throw new Error(
+              `You must pass the name of a property that ${property} is before as the first argument to BeforeDate`
+            );
           }
           const beforeKey = constraints[0];
           if (!(value instanceof Date)) {
@@ -40,9 +42,12 @@ export function BeforeDate(property, validationOptions) {
           const before = moment(beforeValue);
           const description = intl.t('errors.description');
           const format = validationOptions?.granularity === 'day' ? 'LL' : 'LLL';
-          const message = intl.t('errors.before', { description, before: before.format(format) });
+          const message = intl.t('errors.before', {
+            description,
+            before: before.format(format),
+          });
           return message;
-        }
+        },
       },
     });
   };

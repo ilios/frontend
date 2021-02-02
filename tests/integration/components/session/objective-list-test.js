@@ -6,11 +6,11 @@ import { component } from 'ilios-common/page-objects/components/session/objectiv
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | session/objective-list', function(hooks) {
+module('Integration | Component | session/objective-list', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders and is accessible', async function(assert) {
+  test('it renders and is accessible', async function (assert) {
     assert.expect(14);
     const school = this.server.create('school');
     const course = this.server.create('course');
@@ -18,8 +18,18 @@ module('Integration | Component | session/objective-list', function(hooks) {
     const vocabulary = this.server.create('vocabulary', { school });
     const term1 = this.server.create('term', { vocabulary });
     const term2 = this.server.create('term', { vocabulary });
-    this.server.create('sessionObjective', { session, title: 'Objective A', position: 0, terms: [ term1 ] });
-    this.server.create('sessionObjective', { session, title: 'Objective B', position: 0, terms: [ term2 ] });
+    this.server.create('sessionObjective', {
+      session,
+      title: 'Objective A',
+      position: 0,
+      terms: [term1],
+    });
+    this.server.create('sessionObjective', {
+      session,
+      title: 'Objective B',
+      position: 0,
+      terms: [term2],
+    });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
 
@@ -48,7 +58,7 @@ module('Integration | Component | session/objective-list', function(hooks) {
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('empty list', async function(assert) {
+  test('empty list', async function (assert) {
     assert.expect(2);
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
@@ -65,7 +75,7 @@ module('Integration | Component | session/objective-list', function(hooks) {
     assert.equal(component.text, '');
   });
 
-  test('no "sort objectives" button in list with one item', async function(assert) {
+  test('no "sort objectives" button in list with one item', async function (assert) {
     assert.expect(3);
     const course = this.server.create('course');
     const session = this.server.create('session', { course });

@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | course/rollover-date-picker', function(hooks) {
+module('Integration | Component | course/rollover-date-picker', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 

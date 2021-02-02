@@ -4,11 +4,11 @@ import { setupTest } from 'ember-qunit';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Service | school events', function(hooks) {
+module('Integration | Service | school events', function (hooks) {
   setupTest(hooks);
   setupMirage(hooks);
 
-  test('getEvents', async function(assert){
+  test('getEvents', async function (assert) {
     assert.expect(21);
     const event1 = {
       offering: 1,
@@ -35,7 +35,7 @@ module('Integration | Service | school events', function(hooks) {
       assert.equal(queryParams.from, from.unix());
       assert.equal(queryParams.to, to.unix());
 
-      return { events: [ event1, event2 ] };
+      return { events: [event1, event2] };
     });
     const schoolId = 7;
     const subject = this.owner.lookup('service:school-events');
@@ -58,10 +58,10 @@ module('Integration | Service | school events', function(hooks) {
     assert.notOk(events[1].isBlanked);
   });
 
-  test('getEvents - with configured namespace', async function(assert){
+  test('getEvents - with configured namespace', async function (assert) {
     assert.expect(4);
     const iliosConfigMock = Service.extend({
-      apiNameSpace: 'geflarknik'
+      apiNameSpace: 'geflarknik',
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
 
@@ -80,7 +80,7 @@ module('Integration | Service | school events', function(hooks) {
     assert.equal(events.length, 0);
   });
 
-  test('getEventForSlug - offering', async function(assert){
+  test('getEventForSlug - offering', async function (assert) {
     assert.expect(10);
     const event1 = {
       offering: 1,
@@ -115,10 +115,9 @@ module('Integration | Service | school events', function(hooks) {
     assert.deepEqual(event.postrequisites, event1.postrequisites);
     assert.equal(event.slug, 'S0720110421O1');
     assert.notOk(event.isBlanked);
-
   });
 
-  test('getEventForSlug - ILM', async function(assert){
+  test('getEventForSlug - ILM', async function (assert) {
     assert.expect(10);
     const event1 = {
       offering: 1,

@@ -6,11 +6,11 @@ import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'ilios-common/page-objects/components/session/objective-list-item-parents';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | session/objective-list-item-parents', function(hooks) {
+module('Integration | Component | session/objective-list-item-parents', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders and is accessible when managing', async function(assert) {
+  test('it renders and is accessible when managing', async function (assert) {
     await render(hbs`<Session::ObjectiveListItemParents
       @sessionObjective={{null}}
       @editable={{false}}
@@ -26,10 +26,14 @@ module('Integration | Component | session/objective-list-item-parents', function
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('it renders and is accessible empty and un-editable', async function(assert) {
+  test('it renders and is accessible empty and un-editable', async function (assert) {
     const session = this.server.create('session');
-    const sessionObjective = this.server.create('sessionObjective', { session });
-    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
+    const sessionObjective = this.server.create('sessionObjective', {
+      session,
+    });
+    const sessionObjectiveModel = await this.owner
+      .lookup('service:store')
+      .find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     await render(hbs`<Session::ObjectiveListItemParents
       @sessionObjective={{this.sessionObjective}}
@@ -46,11 +50,15 @@ module('Integration | Component | session/objective-list-item-parents', function
   });
 
   test('it renders and is accessible un-editable', async function (assert) {
-
     const session = this.server.create('session');
     const courseObjectives = this.server.createList('courseObjective', 2);
-    const sessionObjective = this.server.create('sessionObjective', { session, courseObjectives });
-    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
+    const sessionObjective = this.server.create('sessionObjective', {
+      session,
+      courseObjectives,
+    });
+    const sessionObjectiveModel = await this.owner
+      .lookup('service:store')
+      .find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     await render(hbs`<Session::ObjectiveListItemParents
       @sessionObjective={{this.sessionObjective}}
@@ -71,8 +79,13 @@ module('Integration | Component | session/objective-list-item-parents', function
   test('it renders and is accessible editable', async function (assert) {
     const session = this.server.create('session');
     const courseObjectives = this.server.createList('courseObjective', 2);
-    const sessionObjective = this.server.create('sessionObjective', { session, courseObjectives });
-    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
+    const sessionObjective = this.server.create('sessionObjective', {
+      session,
+      courseObjectives,
+    });
+    const sessionObjectiveModel = await this.owner
+      .lookup('service:store')
+      .find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     await render(hbs`<Session::ObjectiveListItemParents
       @sessionObjective={{this.sessionObjective}}
@@ -94,8 +107,13 @@ module('Integration | Component | session/objective-list-item-parents', function
     assert.expect(1);
     const session = this.server.create('session');
     const courseObjectives = this.server.createList('courseObjective', 2);
-    const sessionObjective = this.server.create('sessionObjective', { session, courseObjectives });
-    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
+    const sessionObjective = this.server.create('sessionObjective', {
+      session,
+      courseObjectives,
+    });
+    const sessionObjectiveModel = await this.owner
+      .lookup('service:store')
+      .find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     this.set('save', () => {
       assert.ok(true);
@@ -116,8 +134,13 @@ module('Integration | Component | session/objective-list-item-parents', function
     assert.expect(1);
     const session = this.server.create('session');
     const courseObjectives = this.server.createList('courseObjective', 2);
-    const sessionObjective = this.server.create('sessionObjective', { session, courseObjectives });
-    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
+    const sessionObjective = this.server.create('sessionObjective', {
+      session,
+      courseObjectives,
+    });
+    const sessionObjectiveModel = await this.owner
+      .lookup('service:store')
+      .find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     this.set('cancel', () => {
       assert.ok(true);
@@ -138,8 +161,13 @@ module('Integration | Component | session/objective-list-item-parents', function
     assert.expect(1);
     const session = this.server.create('session');
     const courseObjectives = this.server.createList('courseObjective', 2);
-    const sessionObjective = this.server.create('sessionObjective', { session, courseObjectives });
-    const sessionObjectiveModel = await this.owner.lookup('service:store').find('session-objective', sessionObjective.id);
+    const sessionObjective = this.server.create('sessionObjective', {
+      session,
+      courseObjectives,
+    });
+    const sessionObjectiveModel = await this.owner
+      .lookup('service:store')
+      .find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
     this.set('manage', () => {
       assert.ok(true);

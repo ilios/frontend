@@ -21,7 +21,7 @@ export default class NewObjectiveComponent extends Component {
   }
 
   @action
-  changeTitle(contents){
+  changeTitle(contents) {
     this.addErrorDisplayFor('title');
     this.title = contents;
   }

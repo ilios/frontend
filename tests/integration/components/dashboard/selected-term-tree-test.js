@@ -4,14 +4,14 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | dashboard/SelectedTermTree', function(hooks) {
+module('Integration | Component | dashboard/SelectedTermTree', function (hooks) {
   setupRenderingTest(hooks);
 
   const tree = [
     EmberObject.create({
       id: 1,
       title: 'top 1',
-      children: []
+      children: [],
     }),
     EmberObject.create({
       id: 2,
@@ -20,13 +20,13 @@ module('Integration | Component | dashboard/SelectedTermTree', function(hooks) {
         EmberObject.create({
           id: 3,
           title: 'top 2 child 1',
-          children: []
+          children: [],
         }),
-      ]
+      ],
     }),
   ];
 
-  test('it renders a tree', async function(assert) {
+  test('it renders a tree', async function (assert) {
     this.set('tree', tree);
     this.set('selectedTermIds', [3]);
     await render(hbs`<Dashboard::SelectedTermTree
@@ -51,7 +51,7 @@ module('Integration | Component | dashboard/SelectedTermTree', function(hooks) {
     assert.dom(secondTopTermFirstChildCheckbox).isChecked();
   });
 
-  test('clicking unchecked checkbox fires add', async function(assert) {
+  test('clicking unchecked checkbox fires add', async function (assert) {
     assert.expect(1);
     this.set('tree', tree);
     this.set('add', (id) => {
@@ -66,7 +66,7 @@ module('Integration | Component | dashboard/SelectedTermTree', function(hooks) {
     await click('[data-test-target]:nth-of-type(1)');
   });
 
-  test('clicking checked checkbox fires add', async function(assert) {
+  test('clicking checked checkbox fires add', async function (assert) {
     assert.expect(1);
     this.set('tree', tree);
     this.set('selectedTermIds', [1]);

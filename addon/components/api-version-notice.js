@@ -20,7 +20,7 @@ export default class ApiVersionNoticeComponent extends Component {
   *check() {
     const mismatched = yield this.apiVersion.isMismatched;
     if (mismatched && 'serviceWorker' in navigator) {
-      yield (2000); //wait to let the new service worker get fetched if it is available
+      yield 2000; //wait to let the new service worker get fetched if it is available
       const reg = yield navigator.serviceWorker.getRegistration();
       if (reg) {
         if (reg.waiting) {

@@ -4,19 +4,19 @@ import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | selectable terms list item', function(hooks) {
+module('Integration | Component | selectable terms list item', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     const term = this.server.create('term', { title: 'Term1' });
     this.termModel = await this.owner.lookup('service:store').find('term', term.id);
   });
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(1);
 
-    this.set('selectedTerms', [ this.termModel ]);
+    this.set('selectedTerms', [this.termModel]);
     this.set('term', this.termModel);
 
     await render(hbs`<SelectableTermsListItem
@@ -27,12 +27,12 @@ module('Integration | Component | selectable terms list item', function(hooks) {
     assert.dom(this.element).hasText(this.termModel.get('title'));
   });
 
-  test('selected term', async function(assert) {
+  test('selected term', async function (assert) {
     assert.expect(4);
 
-    this.set('selectedTerms', [ this.termModel ]);
+    this.set('selectedTerms', [this.termModel]);
     this.set('term', this.termModel);
-    this.set('remove', term => {
+    this.set('remove', (term) => {
       assert.equal(term, this.termModel);
       this.selectedTerms.removeObject(term);
     });
@@ -49,12 +49,12 @@ module('Integration | Component | selectable terms list item', function(hooks) {
     assert.dom('.selected').exists({ count: 0 });
   });
 
-  test('unselected term', async function(assert) {
+  test('unselected term', async function (assert) {
     assert.expect(4);
 
     this.set('selectedTerms', []);
     this.set('term', this.termModel);
-    this.set('add', term => {
+    this.set('add', (term) => {
       assert.equal(term, this.termModel);
       this.selectedTerms.pushObject(term);
     });

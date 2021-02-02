@@ -20,7 +20,7 @@ export default class DashboardController extends Controller {
     'show',
     'showFilters',
     'terms',
-    'view'
+    'view',
   ];
 
   @tracked courseFilters = true;
@@ -36,13 +36,13 @@ export default class DashboardController extends Controller {
   @tracked showFilters = false;
   @tracked view = 'week';
 
-  get selectedSchool(){
+  get selectedSchool() {
     const { schools } = this.model;
 
     return schools.findBy('id', this.school);
   }
 
-  get selectedDate(){
+  get selectedDate() {
     if (this.date) {
       return moment(this.date, 'YYYY-MM-DD').format();
     }

@@ -12,13 +12,11 @@ module.exports = {
 
   options: {
     babel: {
-      plugins: [
-        require.resolve('ember-auto-import/babel-plugin'),
-      ]
-    }
+      plugins: [require.resolve('ember-auto-import/babel-plugin')],
+    },
   },
 
-  included: function() {
+  included: function () {
     this._super.included.apply(this, arguments);
 
     // _findHost is private API but it's been stable in ember-cli for two years.
@@ -37,7 +35,7 @@ module.exports = {
     this.import(path.join('node_modules', 'flatpickr', 'dist', 'flatpickr.css'));
   },
 
-  setupPreprocessorRegistry: function(type, registry) {
+  setupPreprocessorRegistry: function (type, registry) {
     // ACHTUNG!
     // This is necessary in order to make this helper available to
     // applications that include ilios-common and that use its components that make use of cp-validations.
@@ -45,7 +43,7 @@ module.exports = {
     // [ST 2018/09/26]
     // revised [JJ 2020/02/04]
     if (!this.isDevelopingAddon()) {
-      const cpValidationsAddon = this.addons.find(addon => addon.name === 'ember-cp-validations');
+      const cpValidationsAddon = this.addons.find((addon) => addon.name === 'ember-cp-validations');
       if (cpValidationsAddon && cpValidationsAddon.setupPreprocessorRegistry) {
         cpValidationsAddon.setupPreprocessorRegistry(type, registry);
       }
@@ -84,11 +82,15 @@ module.exports = {
       trees.push(publicTree);
     }
     const nunitoDir = path.join(path.dirname(require.resolve('typeface-nunito')), 'files');
-    const nunitoTree = new Funnel(nunitoDir, { destDir: 'assets/fonts/nunito' });
+    const nunitoTree = new Funnel(nunitoDir, {
+      destDir: 'assets/fonts/nunito',
+    });
     trees.push(nunitoTree);
 
     const nunitoSansDir = path.join(path.dirname(require.resolve('typeface-nunito-sans')), 'files');
-    const nunitoSansTree = new Funnel(nunitoSansDir, { destDir: 'assets/fonts/nunito-sans' });
+    const nunitoSansTree = new Funnel(nunitoSansDir, {
+      destDir: 'assets/fonts/nunito-sans',
+    });
     trees.push(nunitoSansTree);
 
     return MergeTrees(trees);
@@ -104,10 +106,10 @@ module.exports = {
         'nunito-sans/nunito-sans-latin-600.woff2',
         'nunito-sans/nunito-sans-latin-700.woff2',
       ];
-      const links = fonts.map(font => {
+      const links = fonts.map((font) => {
         return `<link rel="preload" href="${rootUrl}/assets/fonts/${font}" as="font" type="font/woff2" crossorigin="anonymous">`;
       });
-      const linkText = links.join("\n");
+      const linkText = links.join('\n');
 
       return `
         <title>Ilios</title>

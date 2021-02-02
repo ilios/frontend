@@ -11,10 +11,10 @@ export async function getElementText(element) {
   } else {
     elements = await findAll(element);
   }
-  const strings = elements.map(e => e.textContent.replace(/[\t\n\s]+/g, ""));
+  const strings = elements.map((e) => e.textContent.replace(/[\t\n\s]+/g, ''));
   return strings.join('');
 }
 
 export function getText(string) {
-  return string.replace(/[\t\n\s]+/g, "");
+  return string.replace(/[\t\n\s]+/g, '');
 }

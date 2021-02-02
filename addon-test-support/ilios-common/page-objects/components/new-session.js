@@ -1,4 +1,12 @@
-import {clickable, collection, create, fillable, isPresent, text, triggerable} from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  fillable,
+  isPresent,
+  text,
+  triggerable,
+} from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-new-session]',
@@ -13,7 +21,7 @@ const definition = {
   selectSessionType: fillable('[data-test-session-types]'),
   hasError: isPresent('.validation-error-message'),
   save: clickable('[data-test-save]'),
-  cancel: clickable('[data-test-cancel]')
+  cancel: clickable('[data-test-cancel]'),
 };
 
 export default definition;

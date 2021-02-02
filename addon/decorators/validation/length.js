@@ -1,10 +1,10 @@
-import { registerDecorator } from "class-validator";
+import { registerDecorator } from 'class-validator';
 import { getOwner } from '@ember/application';
 
 export function Length(min, max, validationOptions) {
   return function (object, propertyName) {
     registerDecorator({
-      name: "length",
+      name: 'length',
       target: object.constructor,
       propertyName: propertyName,
       constraints: [min, max],
@@ -12,7 +12,9 @@ export function Length(min, max, validationOptions) {
       validator: {
         validate(value, { constraints, property }) {
           if (!constraints || constraints.length < 2) {
-            throw new Error(`You must pass a min and max length to the Length validator on ${property}`);
+            throw new Error(
+              `You must pass a min and max length to the Length validator on ${property}`
+            );
           }
           if (!value) {
             return true;
@@ -35,7 +37,7 @@ export function Length(min, max, validationOptions) {
           if (length > max) {
             return intl.t('errors.tooLong', { description, max });
           }
-        }
+        },
       },
     });
   };

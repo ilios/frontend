@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | leadership collapsed', function(hooks) {
+module('Integration | Component | leadership collapsed', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(3);
 
     this.set('title', 'Test Title');
@@ -33,7 +33,7 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     assert.dom(administrators).hasText('There is 1 administrator');
   });
 
-  test('clicking the header expands the list', async function(assert) {
+  test('clicking the header expands the list', async function (assert) {
     assert.expect(1);
 
     this.set('click', () => {
@@ -51,7 +51,7 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     await click(title);
   });
 
-  test('it renders without directors', async function(assert) {
+  test('it renders without directors', async function (assert) {
     assert.expect(2);
 
     this.set('title', 'Test Title');
@@ -75,7 +75,7 @@ module('Integration | Component | leadership collapsed', function(hooks) {
     assert.dom(administrators).hasText('There is 1 administrator');
   });
 
-  test('it renders without administrators', async function(assert) {
+  test('it renders without administrators', async function (assert) {
     assert.expect(2);
 
     this.set('title', 'Test Title');

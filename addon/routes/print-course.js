@@ -28,6 +28,6 @@ export default class PrintCourseRoute extends Route.extend(AuthenticatedRouteMix
 
   setupController(controller, model) {
     super.setupController(controller, model);
-    controller.set('canViewUnpublished', this.get('canViewUnpublished'));
+    controller.set('canViewUnpublished', this.canViewUnpublished);
   }
 }

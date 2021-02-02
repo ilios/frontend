@@ -16,9 +16,9 @@ export default class UserEvents extends EventsBase {
    * @param {int} to
    * @return {Promise.<Array>}
    */
-  async getEvents(from, to){
+  async getEvents(from, to) {
     const user = await this.currentUser.getModel();
-    if (! user) {
+    if (!user) {
       return [];
     }
 
@@ -31,7 +31,9 @@ export default class UserEvents extends EventsBase {
 
     const data = await this.fetch.getJsonFromApiHost(url);
 
-    return data.userEvents.map(obj => this.createEventFromData(obj, true)).sortBy('startDate', 'name');
+    return data.userEvents
+      .map((obj) => this.createEventFromData(obj, true))
+      .sortBy('startDate', 'name');
   }
 
   /**
@@ -40,7 +42,7 @@ export default class UserEvents extends EventsBase {
    * @param {String} slug
    * @return {Promise.<Object>}
    */
-  async getEventForSlug(slug){
+  async getEventForSlug(slug) {
     const from = moment(slug.substring(1, 9), 'YYYYMMDD').hour(0);
     const to = from.clone().hour(24);
     const type = slug.substring(9, 10);
@@ -48,11 +50,11 @@ export default class UserEvents extends EventsBase {
 
     const events = await this.getEvents(from.unix(), to.unix());
 
-    return events.find(event => {
-      if(type === 'O'){
+    return events.find((event) => {
+      if (type === 'O') {
         return parseInt(event.offering, 10) === id;
       }
-      if(type === 'I'){
+      if (type === 'I') {
         return parseInt(event.ilmSession, 10) === id;
       }
     });
@@ -64,13 +66,13 @@ export default class UserEvents extends EventsBase {
    * @param {Object} event
    * @return {String}
    */
-  getSlugForEvent(event){
+  getSlugForEvent(event) {
     let slug = 'U';
     slug += moment(event.startDate).format('YYYYMMDD');
-    if(event.offering){
+    if (event.offering) {
       slug += 'O' + event.offering;
     }
-    if(event.ilmSession){
+    if (event.ilmSession) {
       slug += 'I' + event.ilmSession;
     }
     return slug;

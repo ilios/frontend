@@ -1,20 +1,21 @@
+/* eslint-disable ember/no-computed-properties-in-native-classes */
 import { inject as service } from '@ember/service';
 import ObjectProxy from '@ember/object/proxy';
 import Component from '@glimmer/component';
 import { computed } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 const { oneWay } = computed;
-import {tracked} from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { restartableTask } from "ember-concurrency-decorators";
+import { restartableTask } from 'ember-concurrency-decorators';
 
 const userProxy = ObjectProxy.extend({
   isUser: true,
   currentlyActiveUsers: null,
   sortTerm: oneWay('content.fullName'),
-  isActive: computed('content', 'currentlyActiveUsers.[]', function(){
+  isActive: computed('content', 'currentlyActiveUsers.[]', function () {
     const user = this.get('content');
-    if(!user.get('enabled')){
+    if (!user.get('enabled')) {
       return false;
     }
     return !this.get('currentlyActiveUsers').includes(user);
@@ -24,7 +25,7 @@ const instructorGroupProxy = ObjectProxy.extend({
   isInstructorGroup: true,
   currentlyActiveInstructorGroups: null,
   sortTerm: oneWay('content.title'),
-  isActive: computed('content', 'currentlyActiveInstructorGroups.[]', function(){
+  isActive: computed('content', 'currentlyActiveInstructorGroups.[]', function () {
     return !this.get('currentlyActiveInstructorGroups').includes(this.get('content'));
   }),
 });
@@ -45,7 +46,7 @@ export default class UserSearch extends Component {
   addUser(user) {
     //don't send actions to the calling component if the user is already in the list
     //prevents a complicated if/else on the template.
-    if(! this.currentlyActiveUsers.includes(user)){
+    if (!this.currentlyActiveUsers.includes(user)) {
       if (this.args.addUser) {
         this.args.addUser(user);
       }
@@ -71,7 +72,7 @@ export default class UserSearch extends Component {
   addInstructorGroup(group) {
     //don't send actions to the calling component if the user is already in the list
     //prevents a complicated if/else on the template.
-    if(! this.currentlyActiveInstructorGroups.includes(group)){
+    if (!this.currentlyActiveInstructorGroups.includes(group)) {
       if (this.args.addInstructorGroup) {
         this.args.addInstructorGroup(group);
       }
@@ -82,24 +83,24 @@ export default class UserSearch extends Component {
   *search(searchTerms = '') {
     this.showMoreInputPrompt = false;
     this.searchReturned = false;
-    const noWhiteSpaceTerm = searchTerms.replace(/ /g,'');
-    if(noWhiteSpaceTerm.length === 0){
+    const noWhiteSpaceTerm = searchTerms.replace(/ /g, '');
+    if (noWhiteSpaceTerm.length === 0) {
       return [];
-    } else if(noWhiteSpaceTerm.length < 3){
+    } else if (noWhiteSpaceTerm.length < 3) {
       this.showMoreInputPrompt = true;
       return [];
     }
     const query = {
       q: searchTerms,
-      limit: 100
+      limit: 100,
     };
     if (this.roles) {
       query.filters = {
-        roles: this.roles.split(',')
+        roles: this.roles.split(','),
       };
     }
     const users = yield this.store.query('user', query);
-    const results = users.map(user => {
+    const results = users.map((user) => {
       return userProxy.create({
         content: user,
         currentlyActiveUsers: this.currentlyActiveUsers,
@@ -107,14 +108,14 @@ export default class UserSearch extends Component {
     });
 
     const availableInstructorGroups = yield this.args.availableInstructorGroups;
-    if (! isEmpty(availableInstructorGroups)){
+    if (!isEmpty(availableInstructorGroups)) {
       const fragment = searchTerms.toLowerCase().trim();
 
-      const filteredGroups = availableInstructorGroups.filter(group => {
+      const filteredGroups = availableInstructorGroups.filter((group) => {
         return group.get('title') && group.get('title').toLowerCase().includes(fragment);
       });
 
-      const instructorGroupProxies = filteredGroups.map(group => {
+      const instructorGroupProxies = filteredGroups.map((group) => {
         return instructorGroupProxy.create({
           content: group,
           currentlyActiveInstructorGroups: this.currentlyActiveInstructorGroups,

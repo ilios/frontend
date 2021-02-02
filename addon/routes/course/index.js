@@ -25,12 +25,12 @@ export default class CourseIndexRoute extends Route.extend(AuthenticatedRouteMix
 
   queryParams = {
     sortSessionsBy: {
-      replace: true
+      replace: true,
     },
     filterSessionsBy: {
-      replace: true
+      replace: true,
     },
-  }
+  };
 
   @action
   willTransition(transition) {

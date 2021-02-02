@@ -4,29 +4,32 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | publish all sessions', function(hooks) {
+module('Integration | Component | publish all sessions', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     const programYearObjective = this.server.create('programYearObjective');
     const course = this.server.create('course');
     const term = this.server.create('term');
     const meshDescriptor = this.server.create('meshDescriptor');
-    this.server.create('courseObjective', { course, programYearObjectives: [ programYearObjective ] });
+    this.server.create('courseObjective', {
+      course,
+      programYearObjectives: [programYearObjective],
+    });
     this.server.create('courseObjective', { course });
     const unpublishableSession = this.server.create('session', {
       title: 'session 1',
       published: false,
       course,
-      meshDescriptors: [ meshDescriptor ],
-      terms: [ term ],
+      meshDescriptors: [meshDescriptor],
+      terms: [term],
     });
     const completeSession = this.server.create('session', {
       title: 'session 2',
       published: true,
-      meshDescriptors: [ meshDescriptor ],
-      terms: [ term ],
+      meshDescriptors: [meshDescriptor],
+      terms: [term],
     });
     const publishableSession = this.server.create('session', {
       title: 'session 3',
@@ -40,24 +43,29 @@ module('Integration | Component | publish all sessions', function(hooks) {
 
     this.server.create('offering', { session: publishableSession });
     this.server.create('offering', { session: completeSession });
-    this.server.create('offering', { session: fullyPublishedByIncompleteSession });
+    this.server.create('offering', {
+      session: fullyPublishedByIncompleteSession,
+    });
     this.server.create('sessionObjective', { session: completeSession });
     const store = this.owner.lookup('service:store');
     this.publishableSession = await store.find('session', publishableSession.id);
     this.unpublishableSession = await store.find('session', unpublishableSession.id);
     this.completeSession = await store.find('session', completeSession.id);
-    this.fullyPublishedByIncompleteSession = await store.find('session', fullyPublishedByIncompleteSession.id);
+    this.fullyPublishedByIncompleteSession = await store.find(
+      'session',
+      fullyPublishedByIncompleteSession.id
+    );
     this.course = await store.find('course', course.id);
   });
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(4);
 
     const sessions = [
       this.unpublishableSession,
       this.completeSession,
       this.publishableSession,
-      this.fullyPublishedByIncompleteSession
+      this.fullyPublishedByIncompleteSession,
     ];
     this.set('sessions', sessions);
     this.set('course', this.course);
@@ -66,10 +74,12 @@ module('Integration | Component | publish all sessions', function(hooks) {
     assert.ok(this.element.textContent.search(/Sessions Incomplete: cannot publish \(1\)/) !== -1);
     assert.ok(this.element.textContent.search(/Sessions Complete: ready to publish \(1\)/) !== -1);
     assert.ok(this.element.textContent.search(/Sessions Requiring Review \(2\)/) !== -1);
-    assert.ok(this.element.textContent.search(/Publish 2, schedule 1, and ignore 1 sessions/) !== -1);
+    assert.ok(
+      this.element.textContent.search(/Publish 2, schedule 1, and ignore 1 sessions/) !== -1
+    );
   });
 
-  test('it renders empty', async function(assert) {
+  test('it renders empty', async function (assert) {
     assert.expect(5);
 
     const reviewButtons = '.publish-all-sessions-overridable button';
@@ -81,15 +91,19 @@ module('Integration | Component | publish all sessions', function(hooks) {
     assert.ok(this.element.textContent.search(/Sessions Incomplete: cannot publish \(0\)/) !== -1);
     assert.ok(this.element.textContent.search(/Sessions Complete: ready to publish \(0\)/) !== -1);
     assert.ok(this.element.textContent.search(/Sessions Requiring Review \(0\)/) !== -1);
-    assert.dom(reviewButtons).doesNotExist(
-      'If there are no reviewable sessions do not display buttons to act on them #1173'
-    );
-    assert.dom(reviewTable).doesNotExist(
-      'If there are no reviewable sessions do not display a table to list them #1173'
-    );
+    assert
+      .dom(reviewButtons)
+      .doesNotExist(
+        'If there are no reviewable sessions do not display buttons to act on them #1173'
+      );
+    assert
+      .dom(reviewTable)
+      .doesNotExist(
+        'If there are no reviewable sessions do not display a table to list them #1173'
+      );
   });
 
-  test('shows course objective warning', async function(assert) {
+  test('shows course objective warning', async function (assert) {
     assert.expect(3);
 
     const sessions = [this.unpublishableSession];

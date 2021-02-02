@@ -16,7 +16,6 @@ import { ArrayNotEmpty } from './validation/array-not-empty';
 import { GteProp } from './validation/gte-prop';
 import { Custom } from './validation/custom';
 
-
 export {
   ArrayNotEmpty,
   Gt,
@@ -34,5 +33,5 @@ export {
   NotBlank,
   HtmlNotBlank,
   validatable,
-  Custom
+  Custom,
 };

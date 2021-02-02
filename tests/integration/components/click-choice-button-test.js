@@ -4,10 +4,10 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios-common/page-objects/components/click-choice-buttons';
 
-module('Integration | Component | click choice buttons', function(hooks) {
+module('Integration | Component | click choice buttons', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(4);
     await render(hbs`<ClickChoiceButtons
       @toggle={{noop}}
@@ -21,7 +21,7 @@ module('Integration | Component | click choice buttons', function(hooks) {
     assert.notOk(component.secondButton.isActive);
   });
 
-  test('it renders second choice picked', async function(assert) {
+  test('it renders second choice picked', async function (assert) {
     assert.expect(4);
     await render(hbs`<ClickChoiceButtons
       @toggle={{noop}}
@@ -35,7 +35,7 @@ module('Integration | Component | click choice buttons', function(hooks) {
     assert.ok(component.secondButton.isActive);
   });
 
-  test('click fires toggle action', async function(assert) {
+  test('click fires toggle action', async function (assert) {
     assert.expect(8);
     this.set('firstChoicePicked', true);
     let called = 0;
@@ -46,7 +46,7 @@ module('Integration | Component | click choice buttons', function(hooks) {
         assert.ok(newValue, 'has been toggled');
       }
       this.set('firstChoicePicked', newValue);
-      called ++;
+      called++;
     });
     await render(hbs`<ClickChoiceButtons
       @toggle={{action this.toggle}}
@@ -68,7 +68,7 @@ module('Integration | Component | click choice buttons', function(hooks) {
     assert.notOk(component.secondButton.isActive);
   });
 
-  test('clicking selected button does not fire toggle action', async function(assert) {
+  test('clicking selected button does not fire toggle action', async function (assert) {
     assert.expect(4);
     this.set('toggle', () => {
       assert.ok(false, 'this should not be fired');

@@ -1,10 +1,10 @@
-import { registerDecorator } from "class-validator";
+import { registerDecorator } from 'class-validator';
 import { getOwner } from '@ember/application';
 
 export function Gte(gte, validationOptions) {
   return function (object, propertyName) {
     registerDecorator({
-      name: "gte",
+      name: 'gte',
       target: object.constructor,
       propertyName: propertyName,
       constraints: [gte],
@@ -30,8 +30,11 @@ export function Gte(gte, validationOptions) {
           const intl = owner.lookup('service:intl');
           const gteValue = constraints[0];
           const description = intl.t('errors.description');
-          return intl.t('errors.greaterThanOrEqualTo', { description, gte: gteValue });
-        }
+          return intl.t('errors.greaterThanOrEqualTo', {
+            description,
+            gte: gteValue,
+          });
+        },
       },
     });
   };

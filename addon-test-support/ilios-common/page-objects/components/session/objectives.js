@@ -1,10 +1,4 @@
-import {
-  clickable,
-  create,
-  isVisible,
-  property,
-  text,
-} from 'ember-cli-page-object';
+import { clickable, create, isVisible, property, text } from 'ember-cli-page-object';
 import { pageObjectFillInFroalaEditor } from 'ilios-common';
 import objectiveList from './objective-list';
 

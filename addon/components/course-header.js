@@ -22,7 +22,7 @@ export default class CourseHeaderComponent extends Component {
     yield this.args.course.save();
   }
   @action
-  revertTitleChanges(){
+  revertTitleChanges() {
     this.courseTitle = this.args.course.title;
   }
 }

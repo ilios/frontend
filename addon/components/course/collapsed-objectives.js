@@ -15,19 +15,19 @@ export default class CourseCollapsedObjectivesComponent extends Component {
   }
 
   get objectivesWithParents() {
-    return this.objectives.filter(objective => {
+    return this.objectives.filter((objective) => {
       return objective.programYearObjectives.length > 0;
     });
   }
 
   get objectivesWithMesh() {
-    return this.objectives.filter(objective => {
+    return this.objectives.filter((objective) => {
       return objective.meshDescriptors.length > 0;
     });
   }
 
   get objectivesWithTerms() {
-    return this.objectives.filter(objective => {
+    return this.objectives.filter((objective) => {
       return objective.terms.length > 0;
     });
   }

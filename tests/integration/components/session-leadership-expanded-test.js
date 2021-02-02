@@ -5,11 +5,11 @@ import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios-common/page-objects/components/session-leadership-expanded';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | session leadership expanded', function(hooks) {
+module('Integration | Component | session leadership expanded', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(6);
     const users = this.server.createList('user', 2);
     const course = this.server.create('course');
@@ -37,13 +37,13 @@ module('Integration | Component | session leadership expanded', function(hooks) 
     assert.equal(component.leadershipList.studentAdvisors[0].text, '0 guy M. Mc0son');
   });
 
-  test('clicking the header collapses when there are administrators', async function(assert) {
+  test('clicking the header collapses when there are administrators', async function (assert) {
     assert.expect(1);
     const administrators = this.server.createList('user', 1);
     const course = this.server.create('course');
     const session = this.server.create('session', {
       course,
-      administrators
+      administrators,
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
@@ -61,13 +61,13 @@ module('Integration | Component | session leadership expanded', function(hooks) 
     await component.collapse();
   });
 
-  test('clicking the header collapses when there are student advisors', async function(assert) {
+  test('clicking the header collapses when there are student advisors', async function (assert) {
     assert.expect(1);
     const studentAdvisors = this.server.createList('user', 1);
     const course = this.server.create('course');
     const session = this.server.create('session', {
       course,
-      studentAdvisors
+      studentAdvisors,
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
@@ -85,7 +85,7 @@ module('Integration | Component | session leadership expanded', function(hooks) 
     await component.collapse();
   });
 
-  test('clicking the header does not collapse where there are no linked leaders', async function(assert) {
+  test('clicking the header does not collapse where there are no linked leaders', async function (assert) {
     assert.expect(0);
     const session = this.server.create('session');
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
@@ -104,7 +104,7 @@ module('Integration | Component | session leadership expanded', function(hooks) 
     await component.collapse();
   });
 
-  test('clicking manage fires action', async function(assert) {
+  test('clicking manage fires action', async function (assert) {
     assert.expect(1);
     const session = this.server.create('session');
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);

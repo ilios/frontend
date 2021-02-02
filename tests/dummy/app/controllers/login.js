@@ -1,17 +1,16 @@
 import Controller from '@ember/controller';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { dropTask } from "ember-concurrency-decorators";
-
+import { dropTask } from 'ember-concurrency-decorators';
 
 export default class LoginController extends Controller {
   @service iliosConfig;
   @service session;
-  @tracked jwt =  null;
+  @tracked jwt = null;
   @tracked error = null;
 
   @dropTask
-  *login(){
+  *login() {
     this.error = null;
 
     if (this.jwt) {
@@ -19,13 +18,13 @@ export default class LoginController extends Controller {
       const url = `${apiHost}/auth/token`;
       const response = yield fetch(url, {
         headers: {
-          'X-JWT-Authorization': `Token ${this.jwt}`
-        }
+          'X-JWT-Authorization': `Token ${this.jwt}`,
+        },
       });
       if (response.ok) {
         const obj = yield response.json();
         const authenticator = 'authenticator:ilios-jwt';
-        this.session.authenticate(authenticator, {jwt: obj.jwt});
+        this.session.authenticate(authenticator, { jwt: obj.jwt });
       }
     }
   }

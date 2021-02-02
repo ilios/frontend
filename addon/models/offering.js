@@ -14,16 +14,16 @@ export default Model.extend({
   startDate: attr('date'),
   endDate: attr('date'),
   updatedAt: attr('date'),
-  session: belongsTo('session', {async: true}),
-  learnerGroups: hasMany('learner-group', {async: true}),
-  instructorGroups: hasMany('instructor-group', {async: true}),
+  session: belongsTo('session', { async: true }),
+  learnerGroups: hasMany('learner-group', { async: true }),
+  instructorGroups: hasMany('instructor-group', { async: true }),
   learners: hasMany('user', {
     async: true,
-    inverse: 'offerings'
+    inverse: 'offerings',
   }),
   instructors: hasMany('user', {
     async: true,
-    inverse: 'instructedOfferings'
+    inverse: 'instructedOfferings',
   }),
   //startFoo and key properties are used in creating offering blocks
   startDayOfYear: momentFormat('startDate', 'DDDD'),
@@ -35,11 +35,11 @@ export default Model.extend({
   startYearAndDayOfYear: momentFormat('startDate', 'DDDDYYYY'),
   endYearAndDayOfYear: momentFormat('endDate', 'DDDDYYYY'),
   isMultiDay: not('isSingleDay'),
-  isSingleDay: computed('startYearAndDayOfYear', 'endYearAndDayOfYear', function(){
-    return this.get('startYearAndDayOfYear') === this.get('endYearAndDayOfYear');
+  isSingleDay: computed('startYearAndDayOfYear', 'endYearAndDayOfYear', function () {
+    return this.startYearAndDayOfYear === this.endYearAndDayOfYear;
   }),
-  dateKey: computed('startDayOfYear', 'startYear', function(){
-    return this.get('startYear') + this.get('startDayOfYear');
+  dateKey: computed('startDayOfYear', 'startYear', function () {
+    return this.startYear + this.startDayOfYear;
   }),
   timeKey: computed(
     'startDayOfYear',
@@ -48,17 +48,17 @@ export default Model.extend({
     'endDayOfYear',
     'endYear',
     'endTime',
-    function(){
+    function () {
       const properties = [
         'startYear',
         'startDayOfYear',
         'startTime',
         'endYear',
         'endDayOfYear',
-        'endTime'
+        'endTime',
       ];
       let key = '';
-      for(let i = 0; i < properties.length; i++){
+      for (let i = 0; i < properties.length; i++) {
         key += this.get(properties[i]);
       }
       return key;
@@ -69,9 +69,9 @@ export default Model.extend({
    * @property allInstructors
    * @type {Ember.computed}
    */
-  allInstructors: computed('instructors.[]', 'instructorGroups.@each.users', async function(){
-    const instructorGroups = await this.get('instructorGroups');
-    const instructors = await this.get('instructors');
+  allInstructors: computed('instructors.[]', 'instructorGroups.@each.users', async function () {
+    const instructorGroups = await this.instructorGroups;
+    const instructors = await this.instructors;
     const instructorsInInstructorGroups = await all(instructorGroups.mapBy('users'));
     const allInstructors = instructorsInInstructorGroups.reduce((array, set) => {
       return array.pushObjects(set.toArray());
@@ -86,9 +86,9 @@ export default Model.extend({
    * @property allLearners
    * @type {Ember.computed}
    */
-  allLearners: computed('learners.[]', 'learnerGroups.[]', async function(){
-    const learnerGroups = await this.get('learnerGroups');
-    const learners = await this.get('learners');
+  allLearners: computed('learners.[]', 'learnerGroups.[]', async function () {
+    const learnerGroups = await this.learnerGroups;
+    const learners = await this.learners;
     const learnersInLearnerGroups = await all(learnerGroups.mapBy('users'));
     const allLearners = learnersInLearnerGroups.reduce((array, set) => {
       return array.pushObjects(set.toArray());
@@ -99,9 +99,9 @@ export default Model.extend({
     return allLearners.uniq().sortBy('fullName');
   }),
 
-  durationHours: computed('startDate', 'endDate', function(){
-    const startDate = this.get('startDate');
-    const endDate = this.get('endDate');
+  durationHours: computed('startDate', 'endDate', function () {
+    const startDate = this.startDate;
+    const endDate = this.endDate;
 
     if (!startDate || !endDate) {
       return 0;
@@ -112,9 +112,9 @@ export default Model.extend({
 
     return diffInHours;
   }),
-  durationMinutes: computed('startDate', 'endDate', function(){
-    const startDate = this.get('startDate');
-    const endDate = this.get('endDate');
+  durationMinutes: computed('startDate', 'endDate', function () {
+    const startDate = this.startDate;
+    const endDate = this.endDate;
 
     if (!startDate || !endDate) {
       return 0;
@@ -132,7 +132,7 @@ export default Model.extend({
     if (endMinute > startMinute) {
       diff = endMinute - startMinute;
     } else if (endMinute < startMinute) {
-      diff = (60 - startMinute) + endMinute;
+      diff = 60 - startMinute + endMinute;
     }
     return diff;
   }),

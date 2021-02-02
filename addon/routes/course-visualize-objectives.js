@@ -12,8 +12,8 @@ export default class CourseVisualizeObjectivesRoute extends Route.extend(Authent
     const sessions = (await course.sessions).toArray();
     return await all([
       course.get('objectives'),
-      map(sessions, s => s.objectives),
-      map(sessions, s => s.totalSumDuration),
+      map(sessions, (s) => s.objectives),
+      map(sessions, (s) => s.totalSumDuration),
     ]);
   }
 }

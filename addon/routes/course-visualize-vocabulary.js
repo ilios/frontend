@@ -21,8 +21,8 @@ export default class CourseVisualizeVocabularyRoute extends Route.extend(Authent
     return await all([
       course.get('school'),
       vocabulary.terms,
-      map(sessions, s => s.terms),
-      map(sessions, s => s.totalSumDuration),
+      map(sessions, (s) => s.terms),
+      map(sessions, (s) => s.totalSumDuration),
     ]);
   }
 }

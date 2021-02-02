@@ -14,38 +14,41 @@ export default class CourseLeadershipExpandedComponent extends Component {
     const directorIds = this.args.course.hasMany('directors').ids();
     const studentAdvisorIds = this.args.course.hasMany('studentAdvisors').ids();
 
-    return (administratorIds.length > 0 || directorIds.length > 0 || studentAdvisorIds.length > 0) && !this.args.isManaging;
+    return (
+      (administratorIds.length > 0 || directorIds.length > 0 || studentAdvisorIds.length > 0) &&
+      !this.args.isManaging
+    );
   }
   @action
   addDirector(user) {
     this.directors = [...this.directors, user];
   }
   @action
-  removeDirector(user){
-    this.directors = this.directors.filter(obj => obj !== user);
+  removeDirector(user) {
+    this.directors = this.directors.filter((obj) => obj !== user);
   }
   @action
   addAdministrator(user) {
     this.administrators = [...this.administrators, user];
   }
   @action
-  removeAdministrator(user){
-    this.administrators = this.administrators.filter(obj => obj !== user);
+  removeAdministrator(user) {
+    this.administrators = this.administrators.filter((obj) => obj !== user);
   }
   @action
   addStudentAdvisor(user) {
     this.studentAdvisors = [...this.studentAdvisors, user];
   }
   @action
-  removeStudentAdvisor(user){
-    this.studentAdvisors = this.studentAdvisors.filter(obj => obj !== user);
+  removeStudentAdvisor(user) {
+    this.studentAdvisors = this.studentAdvisors.filter((obj) => obj !== user);
   }
   @dropTask
   *manage() {
     const obj = yield hash({
       administrators: this.args.course.administrators,
       directors: this.args.course.directors,
-      studentAdvisors: this.args.course.studentAdvisors
+      studentAdvisors: this.args.course.studentAdvisors,
     });
     this.administrators = obj.administrators.toArray();
     this.directors = obj.directors.toArray();
@@ -53,7 +56,7 @@ export default class CourseLeadershipExpandedComponent extends Component {
     this.args.setIsManaging(true);
   }
   @dropTask
-  *save(){
+  *save() {
     yield timeout(10);
     this.args.course.setProperties({
       directors: this.directors,

@@ -1,10 +1,4 @@
-import {
-  create,
-  collection,
-  clickable,
-  hasClass,
-  text
-} from 'ember-cli-page-object';
+import { create, collection, clickable, hasClass, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-session-collapsed-objectives]',
@@ -32,7 +26,7 @@ const definition = {
     complete: hasClass('yes'),
     partial: hasClass('maybe'),
     none: hasClass('no'),
-  }
+  },
 };
 
 export default definition;

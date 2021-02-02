@@ -1,4 +1,4 @@
-import {clickable, create, isPresent, text} from 'ember-cli-page-object';
+import { clickable, create, isPresent, text } from 'ember-cli-page-object';
 import detailLearnergroupsList from './detail-learnergroups-list';
 import detailLearnerList from './detail-learner-list';
 import learnergroupSelectionManager from './learnergroup-selection-manager';
@@ -18,7 +18,7 @@ const definition = {
   detailLearnerList,
   detailLearnergroupsList,
   learnersTitle: text('[data-test-learners-title]'),
-  learnergroupsTitle: text('[data-test-learnergroups-title]')
+  learnergroupsTitle: text('[data-test-learnergroups-title]'),
 };
 
 export default definition;

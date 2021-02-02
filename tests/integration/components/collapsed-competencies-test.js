@@ -5,28 +5,46 @@ import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/collapsed-competencies';
 
-module('Integration | Component | collapsed competencies', function(hooks) {
+module('Integration | Component | collapsed competencies', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     const schoolA = this.server.create('school', { title: 'Medicine' });
     const schoolB = this.server.create('school', { title: 'Pharmacy' });
     const competencyA = this.server.create('competency', { school: schoolA });
     const competencyB = this.server.create('competency', { school: schoolB });
     const competencyC = this.server.create('competency', { school: schoolB });
     const programYear = this.server.create('programYear');
-    const pyObjectiveA = this.server.create('programYearObjective', { programYear, competency: competencyA });
-    const pyObjectiveB = this.server.create('programYearObjective', { programYear, competency: competencyB });
-    const pyObjectiveC = this.server.create('programYearObjective', { programYear, competency: competencyC });
+    const pyObjectiveA = this.server.create('programYearObjective', {
+      programYear,
+      competency: competencyA,
+    });
+    const pyObjectiveB = this.server.create('programYearObjective', {
+      programYear,
+      competency: competencyB,
+    });
+    const pyObjectiveC = this.server.create('programYearObjective', {
+      programYear,
+      competency: competencyC,
+    });
     const course = this.server.create('course');
-    this.server.create('courseObjective', { course, programYearObjectives: [ pyObjectiveA, pyObjectiveC ]});
-    this.server.create('courseObjective', { course, programYearObjectives: [ pyObjectiveB ]});
-    this.server.create('courseObjective', { course, programYearObjectives: [ pyObjectiveC ]});
+    this.server.create('courseObjective', {
+      course,
+      programYearObjectives: [pyObjectiveA, pyObjectiveC],
+    });
+    this.server.create('courseObjective', {
+      course,
+      programYearObjectives: [pyObjectiveB],
+    });
+    this.server.create('courseObjective', {
+      course,
+      programYearObjectives: [pyObjectiveC],
+    });
     this.course = await this.owner.lookup('service:store').find('course', course.id);
   });
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(7);
     this.set('subject', this.course);
     await render(hbs`<CollapsedCompetencies @subject={{this.subject}} @expand={{noop}} />`);
@@ -39,7 +57,7 @@ module('Integration | Component | collapsed competencies', function(hooks) {
     assert.equal(component.competencies[1].count, '2');
   });
 
-  test('clicking the header expands the list', async function(assert) {
+  test('clicking the header expands the list', async function (assert) {
     assert.expect(2);
     this.set('subject', this.course);
     this.set('click', () => {

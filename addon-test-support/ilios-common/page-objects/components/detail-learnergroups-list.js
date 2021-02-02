@@ -21,7 +21,7 @@ const definition = {
       isRemovable: hasClass('.clickable'),
       remove: clickable(),
     }),
-  })
+  }),
 };
 
 export default definition;

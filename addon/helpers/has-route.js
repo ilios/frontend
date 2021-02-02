@@ -4,6 +4,6 @@ import { getOwner } from '@ember/application';
 export default Helper.extend({
   compute([value]) {
     // @link https://stackoverflow.com/a/52655828/307333
-    return (typeof getOwner(this).lookup(`route:${value}`) !== 'undefined');
+    return typeof getOwner(this).lookup(`route:${value}`) !== 'undefined';
   },
 });

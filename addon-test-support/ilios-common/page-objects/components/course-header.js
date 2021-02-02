@@ -1,10 +1,4 @@
-import {
-  create,
-  clickable,
-  fillable,
-  text,
-  isVisible,
-} from 'ember-cli-page-object';
+import { create, clickable, fillable, text, isVisible } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-course-header]',
@@ -15,7 +9,7 @@ const definition = {
     set: fillable('input'),
     save: clickable('.done'),
     cancel: clickable('.cancel'),
-    hasError: isVisible('.validation-error-message')
+    hasError: isVisible('.validation-error-message'),
   },
 };
 

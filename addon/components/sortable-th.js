@@ -18,7 +18,7 @@ export default class SortableTh extends Component {
     return this.args.sortedBy || false;
   }
 
-  get textDirection(){
+  get textDirection() {
     return 'text-' + this.align;
   }
 

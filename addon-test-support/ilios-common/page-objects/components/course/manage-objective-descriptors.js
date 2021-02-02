@@ -1,6 +1,4 @@
-import {
-  create,
-} from 'ember-cli-page-object';
+import { create } from 'ember-cli-page-object';
 import meshManager from '../mesh-manager';
 
 const definition = {

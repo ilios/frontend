@@ -10,7 +10,6 @@ export default class CourseMaterialsRoute extends Route.extend(AuthenticatedRout
       this.loadCourseLearningMaterials(course),
       this.loadSessionLearningMaterials(course),
     ]);
-
   }
 
   async loadCourseLearningMaterials(course) {

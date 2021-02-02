@@ -1,7 +1,4 @@
-import {
-  create,
-  hasClass,
-} from 'ember-cli-page-object';
+import { create, hasClass } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-click-choice-buttons]',

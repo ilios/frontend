@@ -4,43 +4,47 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | visualizer-course-instructor-session-type', function(hooks) {
+module('Integration | Component | visualizer-course-instructor-session-type', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(3);
     const instructor = this.server.create('user');
-    const sessionType1 = this.server.create('session-type', { title: 'Standalone' });
-    const sessionType2 = this.server.create('session-type', { title: 'Campaign' });
+    const sessionType1 = this.server.create('session-type', {
+      title: 'Standalone',
+    });
+    const sessionType2 = this.server.create('session-type', {
+      title: 'Campaign',
+    });
     const course = this.server.create('course');
     const session1 = this.server.create('session', {
       title: 'Berkeley Investigations',
       course,
-      sessionType: sessionType1
+      sessionType: sessionType1,
     });
     const session2 = this.server.create('session', {
       title: 'The San Leandro Horror',
       course,
-      sessionType: sessionType2
+      sessionType: sessionType2,
     });
     this.server.create('offering', {
-      session:session1,
+      session: session1,
       startDate: new Date('2019-12-08T12:00:00'),
       endDate: new Date('2019-12-08T17:00:00'),
-      instructors: [ instructor ]
+      instructors: [instructor],
     });
     this.server.create('offering', {
-      session:session1,
+      session: session1,
       startDate: new Date('2019-12-21T12:00:00'),
       endDate: new Date('2019-12-21T17:30:00'),
-      instructors: [ instructor ]
+      instructors: [instructor],
     });
     this.server.create('offering', {
-      session:session2,
+      session: session2,
       startDate: new Date('2019-12-05T18:00:00'),
       endDate: new Date('2019-12-05T21:00:00'),
-      instructors: [ instructor ]
+      instructors: [instructor],
     });
 
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);

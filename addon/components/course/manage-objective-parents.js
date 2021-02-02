@@ -24,7 +24,9 @@ export default class CourseManageObjectiveParentsComponent extends Component {
   }
 
   get selectedCompetencyIdsInSelectedCohort() {
-    const selectedInCohort = this.args.selected.filter(obj => obj.cohortId === this.selectedCohort.id);
+    const selectedInCohort = this.args.selected.filter(
+      (obj) => obj.cohortId === this.selectedCohort.id
+    );
     return selectedInCohort.mapBy('competencyId');
   }
 

@@ -1,17 +1,17 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Model | program year objective', function(hooks) {
+module('Unit | Model | program year objective', function (hooks) {
   setupTest(hooks);
 
   // Replace this with your real tests.
-  test('it exists', function(assert) {
+  test('it exists', function (assert) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('program-year-objective', {});
     assert.ok(model);
   });
 
-  test('associatedVocabularies', async function(assert) {
+  test('associatedVocabularies', async function (assert) {
     assert.expect(3);
     const store = this.owner.lookup('service:store');
     const subject = store.createRecord('program-year-objective');
@@ -20,14 +20,14 @@ module('Unit | Model | program year objective', function(hooks) {
     const term1 = store.createRecord('term', { vocabulary: vocab1 });
     const term2 = store.createRecord('term', { vocabulary: vocab1 });
     const term3 = store.createRecord('term', { vocabulary: vocab2 });
-    subject.get('terms').pushObjects([term1, term2, term3 ]);
+    subject.get('terms').pushObjects([term1, term2, term3]);
     const vocabularies = await subject.get('associatedVocabularies');
     assert.equal(vocabularies.length, 2);
     assert.equal(vocabularies[0], vocab2);
     assert.equal(vocabularies[1], vocab1);
   });
 
-  test('termsWithAllParents', async function(assert) {
+  test('termsWithAllParents', async function (assert) {
     assert.expect(7);
     const store = this.owner.lookup('service:store');
     const subject = store.createRecord('program-year-objective');
@@ -37,7 +37,7 @@ module('Unit | Model | program year objective', function(hooks) {
     const term4 = store.createRecord('term', { parent: term2 });
     const term5 = store.createRecord('term', { parent: term3 });
     const term6 = store.createRecord('term');
-    subject.get('terms').pushObjects([term4, term5, term6 ]);
+    subject.get('terms').pushObjects([term4, term5, term6]);
     const terms = await subject.get('termsWithAllParents');
     assert.equal(terms.length, 6);
     assert.ok(terms.includes(term1));

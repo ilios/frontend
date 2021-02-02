@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-computed-properties-in-native-classes */
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { map } from 'rsvp';
@@ -26,27 +27,27 @@ export default class CourseSessionsComponent extends Component {
     this.sessions = (yield course.sessions).toArray();
     const [sessionObjects, sessionTypes] = yield Promise.all([
       this.buildSessionObjects(),
-      school.sessionTypes
+      school.sessionTypes,
     ]);
     this.sessionObjects = sessionObjects;
     this.sessionTypes = sessionTypes;
   }
 
   @computed('args.course.sessions.[]')
-  get sessionsCount(){
+  get sessionsCount() {
     const sessionIds = this.args.course.hasMany('sessions').ids();
     return sessionIds.length;
   }
 
   get sessionsWithOfferings() {
-    return this.sessions.filter(session => {
+    return this.sessions.filter((session) => {
       const ids = session.hasMany('offerings').ids();
       return ids.length > 0;
     });
   }
 
-  async buildSessionObjects(){
-    const sessionObjects = await map(this.sessions, async session => {
+  async buildSessionObjects() {
+    const sessionObjects = await map(this.sessions, async (session) => {
       const canDelete = await this.permissionChecker.canDeleteSession(session);
       const canUpdate = await this.permissionChecker.canUpdateSession(session);
       const postrequisite = await session.postrequisite;
@@ -61,7 +62,7 @@ export default class CourseSessionsComponent extends Component {
         instructionalNotes: session.instructionalNotes,
         isPublished: session.isPublished,
         isNotPublished: session.isNotPublished,
-        isScheduled: session.isScheduled
+        isScheduled: session.isScheduled,
       };
       const sessionType = await session.sessionType;
       sessionObject.sessionTypeTitle = sessionType.title;
@@ -91,16 +92,17 @@ export default class CourseSessionsComponent extends Component {
       const learnerGroupCount = offeringLearnerGroupCount + ilmLearnerGroupCount;
       sessionObject.learnerGroupCount = learnerGroupCount;
       let status = this.intl.t('general.notPublished');
-      if(session.published){
+      if (session.published) {
         sessionObject.isPublished = true;
         status = this.intl.t('general.published');
       }
-      if(session.publishedAsTbd){
+      if (session.publishedAsTbd) {
         sessionObject.publishedAsTbd = true;
         status = this.intl.t('general.scheduled');
       }
       sessionObject.status = status.toString();
-      sessionObject.searchString = sessionObject.title + sessionObject.sessionTypeTitle + sessionObject.status;
+      sessionObject.searchString =
+        sessionObject.title + sessionObject.sessionTypeTitle + sessionObject.status;
 
       return sessionObject;
     });
@@ -108,7 +110,7 @@ export default class CourseSessionsComponent extends Component {
     return sessionObjects;
   }
 
-  get filterByDebounced(){
+  get filterByDebounced() {
     if (this.changeFilterBy.isIdle) {
       return this.args.filterBy;
     }
@@ -132,11 +134,11 @@ export default class CourseSessionsComponent extends Component {
   @task
   *closeSession(session) {
     yield timeout(1);
-    this.expandedSessionIds = this.expandedSessionIds.filter(id => id !== session.id);
+    this.expandedSessionIds = this.expandedSessionIds.filter((id) => id !== session.id);
   }
 
   @restartableTask
-  *changeFilterBy(event){
+  *changeFilterBy(event) {
     const value = event.target.value;
     this.filterByLocalCache = value;
     yield timeout(DEBOUNCE_DELAY);

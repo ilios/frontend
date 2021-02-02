@@ -6,7 +6,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/dashboard/courses-calendar-filter';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
-module('Integration | Component | dashboard/courses-calendar-filter', function(hooks) {
+module('Integration | Component | dashboard/courses-calendar-filter', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -20,11 +20,11 @@ module('Integration | Component | dashboard/courses-calendar-filter', function(h
     this.server.createList('course', 2, {
       school,
       year: thisYear + 1,
-      externalId: 1
+      externalId: 1,
     });
     this.server.createList('course', 2, {
       school,
-      year: thisYear - 1
+      year: thisYear - 1,
     });
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
     this.set('school', schoolModel);
@@ -94,18 +94,17 @@ module('Integration | Component | dashboard/courses-calendar-filter', function(h
     assert.equal(component.years[1].courses[1].title, 'course 3');
 
     assert.equal(component.years[2].courses.length, 0);
-
   });
 
   test('opens last year if current year has no courses', async function (assert) {
     const school = this.server.create('school');
     this.server.createList('course', 2, {
       school,
-      year: 2015
+      year: 2015,
     });
     this.server.createList('course', 2, {
       school,
-      year: 2014
+      year: 2014,
     });
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
     this.set('school', schoolModel);
@@ -128,7 +127,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function(h
   test('selected courses are checked', async function (assert) {
     const school = this.server.create('school');
     this.server.createList('course', 4, {
-      school
+      school,
     });
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
     this.set('school', schoolModel);
@@ -156,7 +155,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function(h
     assert.expect(2);
     const school = this.server.create('school');
     this.server.create('course', {
-      school
+      school,
     });
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
     this.set('school', schoolModel);
@@ -177,7 +176,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function(h
     assert.expect(2);
     const school = this.server.create('school');
     this.server.create('course', {
-      school
+      school,
     });
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
     this.set('school', schoolModel);

@@ -5,42 +5,48 @@ import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/learnergroup-selection-manager';
 
-module('Integration | Component | learnergroup-selection-manager', function(hooks) {
+module('Integration | Component | learnergroup-selection-manager', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(async function() {
-
+  hooks.beforeEach(async function () {
     const program = this.server.create('program');
     const programYear1 = this.server.create('program-year', { program });
     const programYear2 = this.server.create('program-year', { program });
-    const cohort1 = this.server.create('cohort', { programYear: programYear1 });
-    const cohort2 = this.server.create('cohort', { programYear: programYear2 });
-    const secondLevelLearnerGroup1 = this.server.create('learner-group', { title: 'Second 1', cohort: cohort1 });
+    const cohort1 = this.server.create('cohort', {
+      programYear: programYear1,
+    });
+    const cohort2 = this.server.create('cohort', {
+      programYear: programYear2,
+    });
+    const secondLevelLearnerGroup1 = this.server.create('learner-group', {
+      title: 'Second 1',
+      cohort: cohort1,
+    });
     const secondLevelLearnerGroup2 = this.server.create('learner-group', {
       title: 'Second 2',
       cohort: cohort1,
-      needsAccommodation: true
+      needsAccommodation: true,
     });
     const secondLevelLearnerGroup3 = this.server.create('learner-group', {
       title: 'Second 10',
       cohort: cohort2,
-      needsAccommodation: true
+      needsAccommodation: true,
     });
     const topLevelLearnerGroup1 = this.server.create('learner-group', {
       title: 'Top Group 1',
-      children: [ secondLevelLearnerGroup1, secondLevelLearnerGroup2 ],
+      children: [secondLevelLearnerGroup1, secondLevelLearnerGroup2],
       cohort: cohort1,
-      needsAccommodation: true
+      needsAccommodation: true,
     });
     const topLevelLearnerGroup2 = this.server.create('learner-group', {
       title: 'Top Group 2',
-      children: [ secondLevelLearnerGroup3 ],
-      cohort: cohort2
+      children: [secondLevelLearnerGroup3],
+      cohort: cohort2,
     });
     const topLevelLearnerGroup3 = this.server.create('learner-group', {
       title: 'Top Group 10',
-      cohort: cohort2
+      cohort: cohort2,
     });
 
     const store = this.owner.lookup('service:store');
@@ -54,12 +60,9 @@ module('Integration | Component | learnergroup-selection-manager', function(hook
     this.secondLevelLearnerGroup3 = await store.find('learner-group', secondLevelLearnerGroup3.id);
   });
 
-  test('it renders', async function(assert) {
-    this.set(
-      'learnerGroups',
-      [ this.secondLevelLearnerGroup1, this.secondLevelLearnerGroup3 ]
-    );
-    this.set('cohorts', [ this.cohort1, this.cohort2 ]);
+  test('it renders', async function (assert) {
+    this.set('learnerGroups', [this.secondLevelLearnerGroup1, this.secondLevelLearnerGroup3]);
+    this.set('cohorts', [this.cohort1, this.cohort2]);
     await render(hbs`<LearnergroupSelectionManager
       @learnerGroups={{this.learnerGroups}}
       @cohorts={{this.cohorts}}
@@ -107,13 +110,13 @@ module('Integration | Component | learnergroup-selection-manager', function(hook
     assert.equal(component.availableGroups.cohorts[1].trees[1].subgroups.length, 0);
   });
 
-  test('remove selected group', async function(assert) {
+  test('remove selected group', async function (assert) {
     assert.expect(1);
-    this.set('remove', learnerGroup => {
+    this.set('remove', (learnerGroup) => {
       assert.ok(this.secondLevelLearnerGroup1, learnerGroup);
     });
-    this.set('learnerGroups', [ this.secondLevelLearnerGroup1 ]);
-    this.set('cohorts', [ this.cohort1 ]);
+    this.set('learnerGroups', [this.secondLevelLearnerGroup1]);
+    this.set('cohorts', [this.cohort1]);
     await render(hbs`<LearnergroupSelectionManager
       @learnerGroups={{this.learnerGroups}}
       @cohorts={{this.cohorts}}
@@ -123,13 +126,13 @@ module('Integration | Component | learnergroup-selection-manager', function(hook
     await component.selectedGroups.list.trees[0].subgroups[1].remove();
   });
 
-  test('add available group', async function(assert) {
+  test('add available group', async function (assert) {
     assert.expect(1);
-    this.set('add', learnerGroup => {
+    this.set('add', (learnerGroup) => {
       assert.ok(this.secondLevelLearnerGroup1, learnerGroup);
     });
     this.set('learnerGroups', []);
-    this.set('cohorts', [ this.cohort1 ]);
+    this.set('cohorts', [this.cohort1]);
     await render(hbs`<LearnergroupSelectionManager
       @learnerGroups={{this.learnerGroups}}
       @cohorts={{this.cohorts}}

@@ -1,11 +1,4 @@
-import {
-  create,
-  collection,
-  clickable,
-  fillable,
-  hasClass,
-  text,
-} from 'ember-cli-page-object';
+import { create, collection, clickable, fillable, hasClass, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-session-postrequisite-editor]',
@@ -15,7 +8,7 @@ const definition = {
   filterBy: fillable('[data-test-filter]'),
   postRequisites: collection('[data-test-postrequisites] [data-test-postrequisite]', {
     isSelected: hasClass('active'),
-    title: text('td', {at: 1}),
+    title: text('td', { at: 1 }),
   }),
   close: clickable('[data-test-cancel]'),
   save: clickable('[data-test-save]'),

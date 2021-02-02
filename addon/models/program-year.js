@@ -9,24 +9,24 @@ export default Model.extend({
   startYear: attr('string'),
   locked: attr('boolean'),
   archived: attr('boolean'),
-  program: belongsTo('program', {async: true}),
-  cohort: belongsTo('cohort', {async: true}),
-  directors: hasMany('user', {async: true}),
-  competencies: hasMany('competency', {async: true}),
-  programYearObjectives: hasMany('program-year-objective', {async: true}),
-  terms: hasMany('term', {async: true}),
+  program: belongsTo('program', { async: true }),
+  cohort: belongsTo('cohort', { async: true }),
+  directors: hasMany('user', { async: true }),
+  competencies: hasMany('competency', { async: true }),
+  programYearObjectives: hasMany('program-year-objective', { async: true }),
+  terms: hasMany('term', { async: true }),
 
   xObjectives: alias('programYearObjectives'),
   assignableVocabularies: alias('program.school.vocabularies'),
 
-  academicYear: computed('startYear', function(){
-    return this.get('startYear') + ' - ' + (parseInt(this.get('startYear'), 10) + 1);
+  academicYear: computed('startYear', function () {
+    return this.startYear + ' - ' + (parseInt(this.startYear, 10) + 1);
   }),
-  classOfYear: computed('startYear', 'program.duration', async function(){
-    const program = await this.get('program');
-    return (parseInt(this.startYear, 10) + parseInt(program.duration, 10));
+  classOfYear: computed('startYear', 'program.duration', async function () {
+    const program = await this.program;
+    return parseInt(this.startYear, 10) + parseInt(program.duration, 10);
   }),
-  requiredPublicationIssues: computed('startYear', 'cohort', 'program', function(){
+  requiredPublicationIssues: computed('startYear', 'cohort', 'program', function () {
     return this.getRequiredPublicationIssues();
   }),
   optionalPublicationIssues: computed(
@@ -34,7 +34,7 @@ export default Model.extend({
     'competencies.length',
     'terms.length',
     'programYearObjectives.length',
-    function(){
+    function () {
       return this.getOptionalPublicationIssues();
     }
   ),
@@ -45,8 +45,8 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  sortedProgramYearObjectives: computed('programYearObjectives.@each.position', async function() {
-    const objectives = await this.get('programYearObjectives');
+  sortedProgramYearObjectives: computed('programYearObjectives.@each.position', async function () {
+    const objectives = await this.programYearObjectives;
     return objectives.toArray().sort(sortableByPosition);
   }),
 
@@ -57,7 +57,7 @@ export default Model.extend({
    * @public
    */
   associatedVocabularies: computed('terms.@each.vocabulary', async function () {
-    const terms = await this.get('terms');
+    const terms = await this.terms;
     const vocabularies = await all(terms.toArray().mapBy('vocabulary'));
     return vocabularies.uniq().sortBy('title');
   }),
@@ -69,12 +69,14 @@ export default Model.extend({
    * @public
    */
   termsWithAllParents: computed('terms.[]', async function () {
-    const terms = await this.get('terms');
+    const terms = await this.terms;
     const allTerms = await all(terms.toArray().mapBy('termWithAllParents'));
-    return (allTerms.reduce((array, set) => {
-      array.pushObjects(set);
-      return array;
-    }, [])).uniq();
+    return allTerms
+      .reduce((array, set) => {
+        array.pushObjects(set);
+        return array;
+      }, [])
+      .uniq();
   }),
 
   /**
@@ -83,7 +85,7 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  termCount: computed('terms.[]', function(){
+  termCount: computed('terms.[]', function () {
     const termIds = this.hasMany('terms').ids();
     return termIds.length;
   }),

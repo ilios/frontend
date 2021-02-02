@@ -16,7 +16,6 @@ export function countRelated(params) {
     return false;
   }
 
-
   return object.hasMany(what).ids().length;
 }
 

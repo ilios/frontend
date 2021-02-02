@@ -10,7 +10,7 @@ export default class SessionPostrequisiteEditorComponent extends Component {
 
   constructor() {
     super(...arguments);
-    this.args.session.postrequisite.then(postrequisite => {
+    this.args.session.postrequisite.then((postrequisite) => {
       this.selectedPostrequisite = postrequisite;
     });
   }
@@ -19,7 +19,9 @@ export default class SessionPostrequisiteEditorComponent extends Component {
     const { session } = this.args;
     const course = yield session.course;
     const sessions = yield course.sessions;
-    this.linkablePostrequisites = sessions.sortBy("title").filter(sessionInCourse => sessionInCourse.id !== session.id);
+    this.linkablePostrequisites = sessions
+      .sortBy('title')
+      .filter((sessionInCourse) => sessionInCourse.id !== session.id);
   }
   @task
   *save() {
@@ -32,6 +34,6 @@ export default class SessionPostrequisiteEditorComponent extends Component {
       return this.linkablePostrequisites;
     }
     const exp = new RegExp(escapeRegExp(this.filter), 'gi');
-    return this.linkablePostrequisites.filter(session => session.title.match(exp));
+    return this.linkablePostrequisites.filter((session) => session.title.match(exp));
   }
 }

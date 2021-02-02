@@ -1,4 +1,13 @@
-import {clickable, collection, create, fillable, hasClass, notHasClass, property, text} from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  fillable,
+  hasClass,
+  notHasClass,
+  property,
+  text,
+} from 'ember-cli-page-object';
 import detailTermsList from './detail-terms-list';
 
 const definition = {
@@ -8,8 +17,8 @@ const definition = {
     scope: '.vocabulary-picker',
     set: fillable('select'),
     options: collection('option', {
-      isSelected: property('selected')
-    })
+      isSelected: property('selected'),
+    }),
   },
   filter: {
     scope: '[data-test-filter]',
@@ -17,15 +26,15 @@ const definition = {
   },
   availableTerms: collection('.selectable-terms-list li.top-level', {
     name: text('[data-test-title]', { at: 0 }),
-    notSelected: notHasClass('selected', 'div', { at: 0}),
-    isSelected: hasClass('selected', 'div', { at: 0}),
-    toggle: clickable('div', {at: 0}),
+    notSelected: notHasClass('selected', 'div', { at: 0 }),
+    isSelected: hasClass('selected', 'div', { at: 0 }),
+    toggle: clickable('div', { at: 0 }),
     children: collection('.selectable-terms-list li.nested', {
       name: text('[data-test-title]'),
       notSelected: notHasClass('selected', 'div'),
       isSelected: hasClass('selected', 'div'),
       toggle: clickable('div'),
-    })
+    }),
   }),
 };
 

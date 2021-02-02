@@ -1,10 +1,10 @@
-import { registerDecorator } from "class-validator";
+import { registerDecorator } from 'class-validator';
 import { getOwner } from '@ember/application';
 
 export function GteProp(property, validationOptions) {
   return function (object, propertyName) {
     registerDecorator({
-      name: "gteProp",
+      name: 'gteProp',
       target: object.constructor,
       propertyName: propertyName,
       constraints: [property],
@@ -12,7 +12,9 @@ export function GteProp(property, validationOptions) {
       validator: {
         validate(value, { constraints, object: target, property }) {
           if (!constraints[0]) {
-            throw new Error(`You must pass the name of a property that ${property} is after as the first argument to GteProp`);
+            throw new Error(
+              `You must pass the name of a property that ${property} is after as the first argument to GteProp`
+            );
           }
           const compareToProperty = constraints[0];
           const numValue = Number(value);
@@ -38,8 +40,11 @@ export function GteProp(property, validationOptions) {
           const compareToKey = constraints[0];
           const compareToValue = target[compareToKey];
           const description = intl.t('errors.description');
-          return intl.t('errors.greaterThanOrEqualTo', { description, gte: compareToValue });
-        }
+          return intl.t('errors.greaterThanOrEqualTo', {
+            description,
+            gte: compareToValue,
+          });
+        },
       },
     });
   };

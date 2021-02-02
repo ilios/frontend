@@ -13,7 +13,10 @@ export default Service.extend({
   }),
 
   isMismatched: computed('iliosConfig.apiVersion', 'version', async function () {
-    deprecate('Async Computed Called', false, {id: 'common.async-computed', until: '40'});
+    deprecate('Async Computed Called', false, {
+      id: 'common.async-computed',
+      until: '40',
+    });
     const serverApiVersion = await this.iliosConfig.getApiVersion();
     return serverApiVersion !== this.version;
   }),
@@ -21,5 +24,5 @@ export default Service.extend({
   async getIsMismatched() {
     const serverApiVersion = await this.iliosConfig.getApiVersion();
     return serverApiVersion !== this.version;
-  }
+  },
 });

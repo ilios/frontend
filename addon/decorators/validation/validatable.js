@@ -1,6 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { validate } from "class-validator";
+import { validate } from 'class-validator';
 
 export function validatable(target) {
   return class extends target {
@@ -27,7 +27,7 @@ export function validatable(target) {
       if (field === null) {
         return errors._hasErrors;
       }
-      return (field in errors);
+      return field in errors;
     }
     @action
     async getErrorsFor(field) {
@@ -48,7 +48,7 @@ export function validatable(target) {
 
     @action
     addErrorDisplaysFor(fields) {
-      fields.forEach(field => this.addErrorDisplayFor(field));
+      fields.forEach((field) => this.addErrorDisplayFor(field));
     }
 
     @action
@@ -69,7 +69,7 @@ export function validatable(target) {
     removeErrorDisplayFor(field) {
       if (this._evdVisibleErrors.includes(field)) {
         this._evdShowAllErrors = false;
-        this._evdVisibleErrors = this._evdVisibleErrors.filter(f => f !== field);
+        this._evdVisibleErrors = this._evdVisibleErrors.filter((f) => f !== field);
       }
     }
   };

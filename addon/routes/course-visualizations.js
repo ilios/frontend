@@ -17,7 +17,7 @@ export default class CourseVisualizationsRoute extends Route.extend(Authenticate
     const sessions = model.hasMany('sessions').ids();
     const existingSessionsInStore = this.store.peekAll('session');
     const existingSessionIds = existingSessionsInStore.mapBy('id');
-    const unloadedSessions = sessions.filter(id => !existingSessionIds.includes(id));
+    const unloadedSessions = sessions.filter((id) => !existingSessionIds.includes(id));
 
     //if we have already loaded all of these sessions we can just proceed normally
     if (unloadedSessions.length === 0) {
@@ -38,7 +38,11 @@ export default class CourseVisualizationsRoute extends Route.extend(Authenticate
     } else {
       for (let i = 0; i < sessions.length; i += maximumSessionLoad) {
         const slice = sessions.slice(i, i + maximumSessionLoad);
-        promises.pushObject(this.store.query('session-objective', { filters: { sessions: slice } }));
+        promises.pushObject(
+          this.store.query('session-objective', {
+            filters: { sessions: slice },
+          })
+        );
         promises.pushObject(this.store.query('session-type', { filters: { sessions: slice } }));
         promises.pushObject(this.store.query('term', { filters: { sessions: slice } }));
       }

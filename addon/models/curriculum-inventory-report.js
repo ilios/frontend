@@ -11,14 +11,18 @@ export default Model.extend({
   startDate: attr('date'),
   endDate: attr('date'),
   absoluteFileUri: attr('string'),
-  export: belongsTo('curriculum-inventory-export', {async: true}),
-  sequence: belongsTo('curriculum-inventory-sequence', {async: true}),
-  sequenceBlocks: hasMany('curriculum-inventory-sequence-block', {async: true}),
-  program: belongsTo('program', {async: true}),
-  academicLevels: hasMany('curriculum-inventory-academic-level', {async: true}),
+  export: belongsTo('curriculum-inventory-export', { async: true }),
+  sequence: belongsTo('curriculum-inventory-sequence', { async: true }),
+  sequenceBlocks: hasMany('curriculum-inventory-sequence-block', {
+    async: true,
+  }),
+  program: belongsTo('program', { async: true }),
+  academicLevels: hasMany('curriculum-inventory-academic-level', {
+    async: true,
+  }),
   administrators: hasMany('user', {
     async: true,
-    inverse: 'administeredCurriculumInventoryReports'
+    inverse: 'administeredCurriculumInventoryReports',
   }),
 
   /**
@@ -29,8 +33,8 @@ export default Model.extend({
    * @public
    */
   topLevelSequenceBlocks: computed('sequenceBlocks.[]', async function () {
-    const sequenceBlocks = await this.get('sequenceBlocks');
-    return sequenceBlocks.filter(block => {
+    const sequenceBlocks = await this.sequenceBlocks;
+    return sequenceBlocks.filter((block) => {
       return !block.belongsTo('parent').id();
     });
   }),
@@ -52,7 +56,7 @@ export default Model.extend({
    * @public
    */
   yearLabel: computed('year', function () {
-    const year = this.get('year');
+    const year = this.year;
     return year + ' - ' + (parseInt(year, 10) + 1);
   }),
 
@@ -64,9 +68,9 @@ export default Model.extend({
    * @public
    */
   linkedCourses: computed('sequenceBlocks.@each.course', async function () {
-    const sequenceBlocks = await this.get('sequenceBlocks');
+    const sequenceBlocks = await this.sequenceBlocks;
     const courses = await all(sequenceBlocks.toArray().mapBy('course'));
-    return courses.filter(course => {
+    return courses.filter((course) => {
       return !isEmpty(course);
     });
   }),
@@ -78,8 +82,7 @@ export default Model.extend({
    * @public
    */
   hasLinkedCourses: computed('linkedCourses.[]', async function () {
-    const linkedCourses = await this.get('linkedCourses');
+    const linkedCourses = await this.linkedCourses;
     return !isEmpty(linkedCourses);
-  })
+  }),
 });
-

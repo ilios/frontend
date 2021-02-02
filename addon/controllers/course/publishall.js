@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 
 export default class CoursePublishallController extends Controller {
   @action
-  returnToList(){
+  returnToList() {
     this.transitionToRoute('course.index', this.model);
   }
 }

@@ -20,18 +20,20 @@ export default class Fetch extends Service {
   }
 
   get host() {
-    return this.iliosConfig.apiHost ? this.iliosConfig.apiHost : window.location.protocol + '//' + window.location.host;
+    return this.iliosConfig.apiHost
+      ? this.iliosConfig.apiHost
+      : window.location.protocol + '//' + window.location.host;
   }
 
   apiHostUrlFromPath(relativePath) {
-    const trimmedPath = relativePath.replace(/^\//, "");
+    const trimmedPath = relativePath.replace(/^\//, '');
     return `${this.host}/${trimmedPath}`;
   }
 
   async getJsonFromApiHost(relativePath) {
     const url = this.apiHostUrlFromPath(relativePath);
     const response = await fetch(url, {
-      headers: this.authHeaders
+      headers: this.authHeaders,
     });
     return response.json();
   }
@@ -47,7 +49,7 @@ export default class Fetch extends Service {
     const response = await fetch(url, {
       method: 'POST',
       headers,
-      body
+      body,
     });
     return response.json();
   }

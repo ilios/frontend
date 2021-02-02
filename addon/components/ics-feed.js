@@ -4,7 +4,7 @@ import { timeout } from 'ember-concurrency';
 
 export default class IcsFeedComponent extends Component {
   @restartableTask
-  *textCopied(){
+  *textCopied() {
     yield timeout(3000);
   }
 }

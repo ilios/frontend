@@ -4,9 +4,9 @@ import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import {tracked} from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import {restartableTask} from "ember-concurrency-decorators";
+import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class VisualizerCourseVocabularies extends Component {
   @service router;
@@ -18,7 +18,7 @@ export default class VisualizerCourseVocabularies extends Component {
   @restartableTask
   *load(element, [course]) {
     const sessions = yield course.get('sessions');
-    const dataMap = yield map(sessions.toArray(), async session => {
+    const dataMap = yield map(sessions.toArray(), async (session) => {
       const terms = await session.get('terms');
       const vocabularies = await all(terms.mapBy('vocabulary'));
       const hours = await session.get('totalSumDuration');
@@ -32,7 +32,7 @@ export default class VisualizerCourseVocabularies extends Component {
     });
 
     this.data = dataMap.reduce((set, obj) => {
-      obj.vocabularies.forEach(vocabulary => {
+      obj.vocabularies.forEach((vocabulary) => {
         const vocabularyTitle = vocabulary.get('title');
         let existing = set.findBy('label', vocabularyTitle);
         if (!existing) {
@@ -41,8 +41,8 @@ export default class VisualizerCourseVocabularies extends Component {
             label: vocabularyTitle,
             meta: {
               vocabulary,
-              sessions: []
-            }
+              sessions: [],
+            },
           };
           set.pushObject(existing);
         }
@@ -73,6 +73,10 @@ export default class VisualizerCourseVocabularies extends Component {
     if (this.args.isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
       return;
     }
-    this.router.transitionTo('course-visualize-vocabulary', this.args.course.get('id'), obj.meta.vocabulary.get('id'));
+    this.router.transitionTo(
+      'course-visualize-vocabulary',
+      this.args.course.get('id'),
+      obj.meta.vocabulary.get('id')
+    );
   }
 }

@@ -5,12 +5,12 @@ import hbs from 'htmlbars-inline-precompile';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | objective sort manager', async function(hooks) {
+module('Integration | Component | objective sort manager', async function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks);
   setupMirage(hooks);
 
-  test('it renders for session', async function(assert) {
+  test('it renders for session', async function (assert) {
     assert.expect(5);
 
     const session = this.server.create('session');
@@ -26,11 +26,11 @@ module('Integration | Component | objective sort manager', async function(hooks)
     assert.dom('.actions .bigcancel').exists({ count: 1 });
   });
 
-  test('it renders for course', async function(assert) {
+  test('it renders for course', async function (assert) {
     assert.expect(5);
     const course = this.server.create('course');
     this.server.create('courseObjective', { course, position: 1 });
-    this.server.create('courseObjective', { course,  position: 0 });
+    this.server.create('courseObjective', { course, position: 0 });
     const subject = await this.owner.lookup('service:store').find('course', course.id);
     this.set('subject', subject);
     await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @close={{noop}} />`);
@@ -41,7 +41,7 @@ module('Integration | Component | objective sort manager', async function(hooks)
     assert.dom('.actions .bigcancel').exists({ count: 1 });
   });
 
-  test('it renders for program-year', async function(assert) {
+  test('it renders for program-year', async function (assert) {
     assert.expect(5);
 
     const programYear = this.server.create('programYear');
@@ -57,7 +57,7 @@ module('Integration | Component | objective sort manager', async function(hooks)
     assert.dom('.actions .bigcancel').exists({ count: 1 });
   });
 
-  test('cancel', async function(assert) {
+  test('cancel', async function (assert) {
     assert.expect(1);
     const course = this.server.create('course');
     const subject = await this.owner.lookup('service:store').find('course', course.id);
@@ -69,7 +69,7 @@ module('Integration | Component | objective sort manager', async function(hooks)
     await click('.actions .bigcancel');
   });
 
-  skip('reorder and save', function(assert) {
+  skip('reorder and save', function (assert) {
     assert.ok(false);
     // @todo figure out how to simulate drag and drop and implement this test [ST 2017/02/13]
   });

@@ -15,16 +15,16 @@ export default class ObjectiveSortManagerComponent extends Component {
     this.sortableObjectList = objectives.sort(sortableByPosition);
   }
 
-  get saveProgress(){
+  get saveProgress() {
     const total = this.totalObjectivesToSave || 1;
     const current = this.currentObjectivesSaved || 0;
-    return Math.floor(current / total * 100);
+    return Math.floor((current / total) * 100);
   }
 
-  async saveSomeObjectives(arr){
+  async saveSomeObjectives(arr) {
     const chunk = arr.splice(0, 5);
     await all(chunk.invoke('save'));
-    if (arr.length){
+    if (arr.length) {
       this.currentObjectivesSaved += chunk.length;
       await this.saveSomeObjectives(arr);
     }

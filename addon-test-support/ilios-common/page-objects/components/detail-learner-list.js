@@ -6,7 +6,7 @@ const definition = {
   learners: collection('li', {
     remove: clickable('[data-icon="times"]'),
     isRemovable: isPresent('[data-icon="times"]'),
-    userNameInfo
+    userNameInfo,
   }),
 };
 

@@ -1,14 +1,11 @@
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/course';
 
-module('Acceptance | Course - Mesh Terms', function(hooks) {
+module('Acceptance | Course - Mesh Terms', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
@@ -19,26 +16,26 @@ module('Acceptance | Course - Mesh Terms', function(hooks) {
     this.server.createList('meshConcept', 3);
 
     this.server.create('meshConcept', {
-      scopeNote: '1234567890'.repeat(30)
+      scopeNote: '1234567890'.repeat(30),
     });
 
     this.server.create('meshDescriptor', {
       conceptIds: [1, 2, 3, 4],
-      treeIds: [1, 2, 3]
+      treeIds: [1, 2, 3],
     });
     this.server.create('meshDescriptor', {
-      deleted: true
+      deleted: true,
     });
     this.server.createList('meshDescriptor', 4);
 
     this.server.create('course', {
       year: 2014,
       school: this.school,
-      meshDescriptorIds: [1, 2, 3]
+      meshDescriptorIds: [1, 2, 3],
     });
   });
 
-  test('list mesh', async function(assert) {
+  test('list mesh', async function (assert) {
     assert.expect(4);
     await page.visit({ courseId: 1, details: true });
     assert.equal(page.meshTerms.current.length, 3);
@@ -106,7 +103,7 @@ module('Acceptance | Course - Mesh Terms', function(hooks) {
     assert.equal(page.meshTerms.current[2].title, 'descriptor 3');
   });
 
-  test('cancel term changes', async function(assert) {
+  test('cancel term changes', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(11);
     await page.visit({ courseId: 1, details: true });

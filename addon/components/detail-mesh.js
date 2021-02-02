@@ -39,7 +39,7 @@ export default class DetailMeshComponent extends Component {
   }
   @action
   removeDescriptorFromBuffer(descriptor) {
-    this.bufferedDescriptors = this.bufferedDescriptors.filter(obj => obj.id !== descriptor.id);
+    this.bufferedDescriptors = this.bufferedDescriptors.filter((obj) => obj.id !== descriptor.id);
   }
 
   @dropTask

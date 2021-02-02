@@ -8,51 +8,55 @@ import { component } from 'ilios-common/page-objects/components/week-glance-pre-
 
 const today = moment();
 
-module('Integration | Component | week-glance-pre-work', function(hooks) {
+module('Integration | Component | week-glance-pre-work', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
     assert.expect(4);
-    this.set('events', [{
-      name: 'Learn to Learn',
-      startDate: today.format(),
-      location: 'Room 123',
-      sessionTypeTitle: 'Lecture',
-      courseExternalId: 'C1',
-      sessionDescription: 'Best <strong>Session</strong> For Sure' + 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
-      isBlanked: false,
-      isPublished: true,
-      isScheduled: false,
-      learningMaterials: [
-        {
-          title: 'Citation LM',
-          type: 'citation',
-          required: true,
-          publicNotes: 'This is cool.',
-          citation: 'citationtext',
-        },
-        {
-          title: 'Link LM',
-          type: 'link',
-          required: false,
-          link: 'http://myhost.com/url2',
-        },
-        {
-          title: 'File LM',
-          type: 'file',
-          filename: 'This is a PDF',
-          mimetype: 'application/pdf',
-          required: true,
-          absoluteFileUri: 'http://myhost.com/url1',
-        },
-      ],
-      attireRequired: true,
-      equipmentRequired: true,
-      attendanceRequired: true,
-      supplemental: true,
-      postrequisiteName: 'reading to read',
-      postrequisiteSlug: '123',
-    }]);
+    this.set('events', [
+      {
+        name: 'Learn to Learn',
+        startDate: today.format(),
+        location: 'Room 123',
+        sessionTypeTitle: 'Lecture',
+        courseExternalId: 'C1',
+        sessionDescription:
+          'Best <strong>Session</strong> For Sure' +
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+        isBlanked: false,
+        isPublished: true,
+        isScheduled: false,
+        learningMaterials: [
+          {
+            title: 'Citation LM',
+            type: 'citation',
+            required: true,
+            publicNotes: 'This is cool.',
+            citation: 'citationtext',
+          },
+          {
+            title: 'Link LM',
+            type: 'link',
+            required: false,
+            link: 'http://myhost.com/url2',
+          },
+          {
+            title: 'File LM',
+            type: 'file',
+            filename: 'This is a PDF',
+            mimetype: 'application/pdf',
+            required: true,
+            absoluteFileUri: 'http://myhost.com/url1',
+          },
+        ],
+        attireRequired: true,
+        equipmentRequired: true,
+        attendanceRequired: true,
+        supplemental: true,
+        postrequisiteName: 'reading to read',
+        postrequisiteSlug: '123',
+      },
+    ]);
     await render(hbs`<WeekGlancePreWork @events={{events}} />`);
 
     assert.equal(component.title, 'Learn to Learn');
@@ -63,29 +67,35 @@ module('Integration | Component | week-glance-pre-work', function(hooks) {
 
   test('two items', async function (assert) {
     assert.expect(4);
-    this.set('events', [{
-      name: 'Learn to Learn',
-      startDate: today.format(),
-      postrequisiteName: 'reading to read',
-      postrequisiteSlug: '123',
-    }, {} ]);
+    this.set('events', [
+      {
+        name: 'Learn to Learn',
+        startDate: today.format(),
+        postrequisiteName: 'reading to read',
+        postrequisiteSlug: '123',
+      },
+      {},
+    ]);
     await render(hbs`<WeekGlancePreWork @events={{events}} />`);
 
     assert.equal(component.title, 'Learn to Learn');
     assert.equal(component.date, `Due Before reading to read (${today.format('M/D/Y')})`);
     assert.equal(component.url, '#event123');
     assert.equal(component.moreInfo, 'with one more offering');
-
   });
 
   test('more than two items', async function (assert) {
     assert.expect(4);
-    this.set('events', [{
-      name: 'Learn to Learn',
-      startDate: today.format(),
-      postrequisiteName: 'reading to read',
-      postrequisiteSlug: '123',
-    }, {}, {} ]);
+    this.set('events', [
+      {
+        name: 'Learn to Learn',
+        startDate: today.format(),
+        postrequisiteName: 'reading to read',
+        postrequisiteSlug: '123',
+      },
+      {},
+      {},
+    ]);
     await render(hbs`<WeekGlancePreWork @events={{events}} />`);
 
     assert.equal(component.title, 'Learn to Learn');

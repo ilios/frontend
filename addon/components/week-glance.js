@@ -23,13 +23,18 @@ export default class WeeklyGlance extends Component {
     thursdayOfTheWeek.hour(0).minute(0).second(0);
 
     this.midnightAtTheStartOfThisWeek = thursdayOfTheWeek.clone().subtract(4, 'days');
-    this.midnightAtTheEndOfThisWeek = thursdayOfTheWeek.clone().add(2, 'days').hour(23).minute(59).second(59);
+    this.midnightAtTheEndOfThisWeek = thursdayOfTheWeek
+      .clone()
+      .add(2, 'days')
+      .hour(23)
+      .minute(59)
+      .second(59);
 
-    const weekEvents =  yield this.userEvents.getEvents(
+    const weekEvents = yield this.userEvents.getEvents(
       this.midnightAtTheStartOfThisWeek.unix(),
       this.midnightAtTheEndOfThisWeek.unix()
     );
-    this.publishedWeekEvents = weekEvents.filter(ev => {
+    this.publishedWeekEvents = weekEvents.filter((ev) => {
       return !ev.isBlanked && ev.isPublished && !ev.isScheduled;
     });
   }
@@ -56,25 +61,26 @@ export default class WeeklyGlance extends Component {
       return rhett;
     }
 
-    const preWork =  this.publishedWeekEvents.reduce((arr, eventObject) => {
+    const preWork = this.publishedWeekEvents.reduce((arr, eventObject) => {
       return arr.pushObjects(eventObject.prerequisites);
     }, []);
 
     // grab ILMs only, and group them by session.
     const groups = {};
-    preWork.filter(ev => ev.ilmSession).forEach(ilm => {
-      if (! Object.prototype.hasOwnProperty.call(groups, ilm.session)) {
-        groups[ilm.session] = [];
-      }
-      groups[ilm.session].pushObject(ilm);
-    });
+    preWork
+      .filter((ev) => ev.ilmSession)
+      .forEach((ilm) => {
+        if (!Object.prototype.hasOwnProperty.call(groups, ilm.session)) {
+          groups[ilm.session] = [];
+        }
+        groups[ilm.session].pushObject(ilm);
+      });
 
     // return an array of arrays of ILMs.
     const sessions = Object.getOwnPropertyNames(groups);
-    sessions.forEach(session => {
+    sessions.forEach((session) => {
       rhett.push(groups[session]);
     });
-
 
     return rhett.sort((ilmGroupA, ilmGroupB) => {
       const eventA = ilmGroupA.firstObject;
@@ -88,8 +94,7 @@ export default class WeeklyGlance extends Component {
 
       if (eventA.postrequisiteName > eventB.postrequisiteName) {
         return 1;
-      }
-      else if (eventA.postrequisiteName < eventB.postrequisiteName) {
+      } else if (eventA.postrequisiteName < eventB.postrequisiteName) {
         return -1;
       }
 
@@ -105,7 +110,7 @@ export default class WeeklyGlance extends Component {
     if (!this.publishedWeekEvents) {
       return [];
     }
-    return this.publishedWeekEvents.filter(ev => {
+    return this.publishedWeekEvents.filter((ev) => {
       return ev.postrequisites.length === 0 || !ev.ilmSession;
     });
   }

@@ -5,13 +5,15 @@ import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/session/manage-objective-descriptors';
 
-module('Integration | Component | session/manage-objective-descriptors', function(hooks) {
+module('Integration | Component | session/manage-objective-descriptors', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     const descriptors = this.server.createList('meshDescriptor', 4);
-    const descriptorModel = await this.owner.lookup('service:store').find('meshDescriptor', descriptors[0].id);
+    const descriptorModel = await this.owner
+      .lookup('service:store')
+      .find('meshDescriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
     await render(hbs`<Session::ManageObjectiveDescriptors
       @selected={{this.selected}}
@@ -39,7 +41,9 @@ module('Integration | Component | session/manage-objective-descriptors', functio
   test('add works', async function (assert) {
     assert.expect(16);
     const descriptors = this.server.createList('meshDescriptor', 2);
-    const descriptorModel = await this.owner.lookup('service:store').find('meshDescriptor', descriptors[0].id);
+    const descriptorModel = await this.owner
+      .lookup('service:store')
+      .find('meshDescriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
     this.set('add', (descriptor) => {
       this.set('selected', [descriptorModel, descriptor]);
@@ -74,10 +78,12 @@ module('Integration | Component | session/manage-objective-descriptors', functio
     assert.ok(m.searchResults[1].isDisabled);
   });
 
-  test('remove works', async function(assert) {
+  test('remove works', async function (assert) {
     assert.expect(15);
     const descriptors = this.server.createList('meshDescriptor', 2);
-    const descriptorModel = await this.owner.lookup('service:store').find('meshDescriptor', descriptors[0].id);
+    const descriptorModel = await this.owner
+      .lookup('service:store')
+      .find('meshDescriptor', descriptors[0].id);
     this.set('selected', [descriptorModel]);
     this.set('remove', (descriptor) => {
       assert.equal(descriptor.id, descriptorModel.id);

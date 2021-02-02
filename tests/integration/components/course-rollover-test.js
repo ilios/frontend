@@ -3,20 +3,13 @@ import { resolve } from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  click,
-  find,
-  findAll,
-  fillIn,
-  blur as emberBlur
-} from '@ember/test-helpers';
+import { render, click, find, findAll, fillIn, blur as emberBlur } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import queryString from 'query-string';
 
-module('Integration | Component | course rollover', function(hooks) {
+module('Integration | Component | course rollover', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -24,7 +17,7 @@ module('Integration | Component | course rollover', function(hooks) {
     const school = this.server.create('school');
     const course = this.server.create('course', {
       title: 'old course',
-      school
+      school,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
@@ -35,12 +28,13 @@ module('Integration | Component | course rollover', function(hooks) {
     const yearSelect = '.year-select select';
     const title = '.title input';
 
-    for (let i=0; i<6; i++){
-      assert.dom(`${yearSelect} option:nth-of-type(${i+1})`).hasText(`${lastYear + i} - ${lastYear + 1 + i}`);
+    for (let i = 0; i < 6; i++) {
+      assert
+        .dom(`${yearSelect} option:nth-of-type(${i + 1})`)
+        .hasText(`${lastYear + i} - ${lastYear + 1 + i}`);
     }
     assert.dom(title).exists({ count: 1 });
     assert.equal(find(title).value.trim(), course.title);
-
   });
 
   test('rollover course', async function (assert) {
@@ -49,7 +43,7 @@ module('Integration | Component | course rollover', function(hooks) {
     const course = this.server.create('course', {
       title: 'old title',
       school,
-      startDate: moment().hour(0).minute(0).second(0).toDate()
+      startDate: moment().hour(0).minute(0).second(0).toDate(),
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
@@ -61,12 +55,14 @@ module('Integration | Component | course rollover', function(hooks) {
       assert.equal(data.year, lastYear);
       assert.equal(data.newCourseTitle, course.title);
       assert.ok('newStartDate' in data);
-      return this.serialize(schema.courses.create({
-        id: 14,
-        title: data.newCourseTitle,
-        startDate: data.newStartDate,
-        year: data.year
-      }));
+      return this.serialize(
+        schema.courses.create({
+          id: 14,
+          title: data.newCourseTitle,
+          startDate: data.newStartDate,
+          year: data.year,
+        })
+      );
     });
     this.set('visit', (newCourse) => {
       assert.equal(newCourse.id, 14);
@@ -78,7 +74,7 @@ module('Integration | Component | course rollover', function(hooks) {
     await click('.done');
   });
 
-  test('rollover course with new title', async function(assert) {
+  test('rollover course with new title', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school');
     const course = this.server.create('course', {
@@ -95,9 +91,11 @@ module('Integration | Component | course rollover', function(hooks) {
       const data = queryString.parse(request.requestBody);
       assert.equal(data.newCourseTitle, newTitle, 'The new title gets passed.');
 
-      return this.serialize(schema.courses.create({
-        id: 14,
-      }));
+      return this.serialize(
+        schema.courses.create({
+          id: 14,
+        })
+      );
     });
     await render(hbs`<CourseRollover
       @course={{this.course}}
@@ -109,7 +107,7 @@ module('Integration | Component | course rollover', function(hooks) {
     await click('.done');
   });
 
-  test('rollover course to selected year', async function(assert) {
+  test('rollover course to selected year', async function (assert) {
     assert.expect(5);
     const school = this.server.create('school');
     const course = this.server.create('course', {
@@ -126,12 +124,14 @@ module('Integration | Component | course rollover', function(hooks) {
       assert.equal(data.year, selectedYear);
       assert.equal(data.newCourseTitle, course.title);
       assert.ok('newStartDate' in data);
-      return this.serialize(schema.courses.create({
-        id: 14,
-        title: data.newCourseTitle,
-        startDate: data.newStartDate,
-        year: data.year
-      }));
+      return this.serialize(
+        schema.courses.create({
+          id: 14,
+          title: data.newCourseTitle,
+          startDate: data.newStartDate,
+          year: data.year,
+        })
+      );
     });
     this.set('visit', (newCourse) => {
       assert.equal(newCourse.id, 14);
@@ -145,7 +145,7 @@ module('Integration | Component | course rollover', function(hooks) {
     await click('.done');
   });
 
-  test('disable years when title already exists', async function(assert) {
+  test('disable years when title already exists', async function (assert) {
     assert.expect(5);
     const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));
     const school = this.server.create('school');
@@ -158,13 +158,13 @@ module('Integration | Component | course rollover', function(hooks) {
       id: 2,
       school,
       title: 'to be rolled',
-      year: lastYear
+      year: lastYear,
     });
     this.server.create('course', {
       id: 3,
       school,
       title: 'to be rolled',
-      year: lastYear+2
+      year: lastYear + 2,
     });
 
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
@@ -182,14 +182,14 @@ module('Integration | Component | course rollover', function(hooks) {
     assert.notOk(options[4].disabled);
   });
 
-  test('rollover into same year with title changed #1342', async function(assert) {
+  test('rollover into same year with title changed #1342', async function (assert) {
     assert.expect(2);
     const thisYear = Number(moment().format('YYYY'));
     const school = this.server.create('school');
     this.server.create('course', {
       id: 2,
       school,
-      year: thisYear
+      year: thisYear,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', 2);
     this.set('course', courseModel);
@@ -202,7 +202,7 @@ module('Integration | Component | course rollover', function(hooks) {
     assert.dom('[data-test-year] option:disabled').doesNotExist();
   });
 
-  test('rollover course with new start date', async function(assert) {
+  test('rollover course with new start date', async function (assert) {
     assert.expect(7);
     // ensure that rollover date and course start date fall on the same day of the week.
     let courseStartDate = moment().hour(0).minute(0).subtract(1, 'week').day(1);
@@ -232,9 +232,11 @@ module('Integration | Component | course rollover', function(hooks) {
         rolloverDate.format('YYYY-MM-DD'),
         'New start date is rollover date.'
       );
-      return this.serialize(schema.courses.create({
-        id: 14,
-      }));
+      return this.serialize(
+        schema.courses.create({
+          id: 14,
+        })
+      );
     });
     await render(hbs`<CourseRollover
       @course={{this.course}}
@@ -275,7 +277,7 @@ module('Integration | Component | course rollover', function(hooks) {
     await click('.done');
   });
 
-  test('rollover course prohibit non-matching day-of-week date selection', async function(assert) {
+  test('rollover course prohibit non-matching day-of-week date selection', async function (assert) {
     assert.expect(4);
     // rollover date and course start date don't fall on the same day of the week.
     let courseStartDate = moment().hour(0).minute(0).subtract(1, 'week').day(1);
@@ -295,7 +297,6 @@ module('Integration | Component | course rollover', function(hooks) {
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
 
-
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
       const data = queryString.parse(request.requestBody);
       assert.ok('newStartDate' in data, 'A new start date was passed.');
@@ -305,9 +306,11 @@ module('Integration | Component | course rollover', function(hooks) {
         courseStartDate.format('YYYY-MM-DD'),
         'New start date is course start date.'
       );
-      return this.serialize(schema.courses.create({
-        id: 14,
-      }));
+      return this.serialize(
+        schema.courses.create({
+          id: 14,
+        })
+      );
     });
 
     await render(hbs`<CourseRollover
@@ -341,7 +344,7 @@ module('Integration | Component | course rollover', function(hooks) {
    * This tests wonky business logic where the targeted rollover start date gets adjusted to a date in the current year
    * if the given course has a start date in a former year.
    */
-  test('rollover start date adjustment with former year course start date', async function(assert) {
+  test('rollover start date adjustment with former year course start date', async function (assert) {
     assert.expect(2);
 
     const courseStartDate = moment('2019-01-15').hour(0).minute(0).subtract(2, 'year').day(1);
@@ -384,25 +387,27 @@ module('Integration | Component | course rollover', function(hooks) {
     );
   });
 
-  test('rollover course with no offerings', async function(assert) {
+  test('rollover course with no offerings', async function (assert) {
     assert.expect(4);
     const school = this.server.create('school', {
       title: 'SOM',
     });
     this.server.create('course', {
       title: 'old course',
-      school
+      school,
     });
     const course = await this.owner.lookup('service:store').find('course', 1);
     this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
       const data = queryString.parse(request.requestBody, {
-        parseBooleans: true
+        parseBooleans: true,
       });
       assert.ok('skipOfferings' in data);
       assert.equal(data.skipOfferings, true);
-      return this.serialize(schema.courses.create({
-        id: 14,
-      }));
+      return this.serialize(
+        schema.courses.create({
+          id: 14,
+        })
+      );
     });
 
     this.set('course', course);
@@ -419,7 +424,7 @@ module('Integration | Component | course rollover', function(hooks) {
     await click('.done');
   });
 
-  test('errors do not show up initially', async function(assert) {
+  test('errors do not show up initially', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', {
       school,
@@ -431,7 +436,7 @@ module('Integration | Component | course rollover', function(hooks) {
     assert.dom('.validation-error-message').doesNotExist();
   });
 
-  test('errors show up', async function(assert) {
+  test('errors show up', async function (assert) {
     const school = this.server.create('school');
     const course = this.server.create('course', {
       school,
@@ -449,14 +454,14 @@ module('Integration | Component | course rollover', function(hooks) {
     assert.ok(find('.validation-error-message').textContent.includes('blank'));
   });
 
-  test('rollover course with cohorts', async function(assert) {
+  test('rollover course with cohorts', async function (assert) {
     assert.expect(2);
     const school = this.server.create('school', {
       title: 'SOM',
     });
     const program = this.server.create('program', {
       title: 'SOM',
-      school
+      school,
     });
     const programYear = this.server.create('programYear', {
       program,
@@ -477,15 +482,17 @@ module('Integration | Component | course rollover', function(hooks) {
       });
       assert.ok('newCohorts' in data);
       assert.deepEqual(data.newCohorts, ['1']);
-      return this.serialize(schema.courses.create({
-        id: 14,
-      }));
+      return this.serialize(
+        schema.courses.create({
+          id: 14,
+        })
+      );
     });
 
     const mockCurrentUser = EmberObject.create({});
 
     const currentUserMock = Service.extend({
-      model: resolve(mockCurrentUser)
+      model: resolve(mockCurrentUser),
     });
     this.owner.register('service:currentUser', currentUserMock);
 

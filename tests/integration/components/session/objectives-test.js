@@ -6,7 +6,7 @@ import { component } from 'ilios-common/page-objects/components/session/objectiv
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | session/objectives', function(hooks) {
+module('Integration | Component | session/objectives', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -16,7 +16,10 @@ module('Integration | Component | session/objectives', function(hooks) {
     const session = this.server.create('session', { course });
     this.server.create('sessionObjective', { session });
     this.server.create('sessionObjective', { session });
-    this.server.create('sessionObjective', { session, courseObjectives: [ courseObjective ] });
+    this.server.create('sessionObjective', {
+      session,
+      courseObjectives: [courseObjective],
+    });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
 
     this.set('session', sessionModel);

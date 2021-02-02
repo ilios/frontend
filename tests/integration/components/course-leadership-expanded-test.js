@@ -5,11 +5,11 @@ import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios-common/page-objects/components/course-leadership-expanded';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | course leadership expanded', function(hooks) {
+module('Integration | Component | course leadership expanded', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(8);
     const users = this.server.createList('user', 2);
     const course = this.server.create('course', {
@@ -38,11 +38,11 @@ module('Integration | Component | course leadership expanded', function(hooks) {
     assert.equal(component.leadershipList.studentAdvisors[0].text, '0 guy M. Mc0son');
   });
 
-  test('clicking the header collapses when there are administrators', async function(assert) {
+  test('clicking the header collapses when there are administrators', async function (assert) {
     assert.expect(1);
     const administrators = this.server.createList('user', 1);
     const course = this.server.create('course', {
-      administrators
+      administrators,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
@@ -60,11 +60,11 @@ module('Integration | Component | course leadership expanded', function(hooks) {
     await component.collapse();
   });
 
-  test('clicking the header collapses when there are directors', async function(assert) {
+  test('clicking the header collapses when there are directors', async function (assert) {
     assert.expect(1);
     const directors = this.server.createList('user', 1);
     const course = this.server.create('course', {
-      directors
+      directors,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
@@ -82,11 +82,11 @@ module('Integration | Component | course leadership expanded', function(hooks) {
     await component.collapse();
   });
 
-  test('clicking the header collapses when there are student advisors', async function(assert) {
+  test('clicking the header collapses when there are student advisors', async function (assert) {
     assert.expect(1);
     const studentAdvisors = this.server.createList('user', 1);
     const course = this.server.create('course', {
-      studentAdvisors
+      studentAdvisors,
     });
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
@@ -104,7 +104,7 @@ module('Integration | Component | course leadership expanded', function(hooks) {
     await component.collapse();
   });
 
-  test('clicking the header does not collapse where there are no linked leaders', async function(assert) {
+  test('clicking the header does not collapse where there are no linked leaders', async function (assert) {
     assert.expect(0);
     const course = this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
@@ -123,7 +123,7 @@ module('Integration | Component | course leadership expanded', function(hooks) {
     await component.collapse();
   });
 
-  test('clicking manage fires action', async function(assert) {
+  test('clicking manage fires action', async function (assert) {
     assert.expect(1);
     const course = this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);

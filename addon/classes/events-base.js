@@ -8,12 +8,12 @@ export default class EventsBase extends Service {
    * @param {Object} event
    * @return {Promise.<Object>}
    */
-  async getSessionForEvent(event){
+  async getSessionForEvent(event) {
     let intermediary;
-    if(event.offering){
-      intermediary = await this.get('store').findRecord('offering', event.offering);
+    if (event.offering) {
+      intermediary = await this.store.findRecord('offering', event.offering);
     } else {
-      intermediary = await this.get('store').findRecord('ilmSession', event.ilmSession);
+      intermediary = await this.store.findRecord('ilmSession', event.ilmSession);
     }
     return await intermediary.get('session');
   }
@@ -34,7 +34,7 @@ export default class EventsBase extends Service {
    * @param {Object} event
    * @return {Promise.<Array>}
    */
-  async getTermIdsForEvent(event){
+  async getTermIdsForEvent(event) {
     const terms = [];
     const session = await this.getSessionForEvent(event);
     const sessionTerms = await session.get('terms');
@@ -51,7 +51,7 @@ export default class EventsBase extends Service {
    * @param {Object} event
    * @return {Promise.<int>}
    */
-  async getSessionTypeIdForEvent(event){
+  async getSessionTypeIdForEvent(event) {
     const session = await this.getSessionForEvent(event);
     const sessionType = await session.get('sessionType');
     return sessionType.get('id');
@@ -63,7 +63,7 @@ export default class EventsBase extends Service {
    * @param {Object} event
    * @return {Promise.<int>}
    */
-  async getCourseLevelForEvent(event){
+  async getCourseLevelForEvent(event) {
     const course = await this.getCourseForEvent(event);
     return course.get('level');
   }
@@ -74,7 +74,7 @@ export default class EventsBase extends Service {
    * @param {Object} event
    * @return {Promise.<int>}
    */
-  async getCourseIdForEvent(event){
+  async getCourseIdForEvent(event) {
     const course = await this.getCourseForEvent(event);
     return course.get('id');
   }
@@ -85,7 +85,7 @@ export default class EventsBase extends Service {
    * @param {Object} event
    * @return {Promise.<Array>}
    */
-  async getCohortIdsForEvent(event){
+  async getCohortIdsForEvent(event) {
     const course = await this.getCourseForEvent(event);
     const cohorts = await course.get('cohorts');
     return cohorts.toArray().mapBy('id');
@@ -101,15 +101,19 @@ export default class EventsBase extends Service {
   createEventFromData(obj, isUserEvent) {
     obj.isBlanked = !obj.offering && !obj.ilmSession;
     obj.slug = isUserEvent ? this.getSlugForUserEvent(obj) : this.getSlugForSchoolEvent(obj);
-    obj.prerequisites = obj.prerequisites.map(prereq => {
-      const rhett = this.createEventFromData(prereq, isUserEvent);
-      rhett.startDate = obj.startDate;
-      rhett.postrequisiteName = obj.name;
-      rhett.postrequisiteSlug = obj.slug;
+    obj.prerequisites = obj.prerequisites
+      .map((prereq) => {
+        const rhett = this.createEventFromData(prereq, isUserEvent);
+        rhett.startDate = obj.startDate;
+        rhett.postrequisiteName = obj.name;
+        rhett.postrequisiteSlug = obj.slug;
 
-      return rhett;
-    }).sortBy('startDate', 'name');
-    obj.postrequisites = obj.postrequisites.map(postreq => this.createEventFromData(postreq, isUserEvent)).sortBy('startDate', 'name');
+        return rhett;
+      })
+      .sortBy('startDate', 'name');
+    obj.postrequisites = obj.postrequisites
+      .map((postreq) => this.createEventFromData(postreq, isUserEvent))
+      .sortBy('startDate', 'name');
     obj.isUserEvent = isUserEvent;
     return obj;
   }
@@ -120,13 +124,13 @@ export default class EventsBase extends Service {
    * @param {Object} event
    * @return {String}
    */
-  getSlugForUserEvent(event){
+  getSlugForUserEvent(event) {
     let slug = 'U';
     slug += DateTime.fromISO(event.startDate).toFormat('yyyyMMdd');
-    if(event.offering){
+    if (event.offering) {
       slug += 'O' + event.offering;
     }
-    if(event.ilmSession){
+    if (event.ilmSession) {
       slug += 'I' + event.ilmSession;
     }
     return slug;
@@ -138,19 +142,19 @@ export default class EventsBase extends Service {
    * @param {Object} event
    * @return {String}
    */
-  getSlugForSchoolEvent(event){
+  getSlugForSchoolEvent(event) {
     let slug = 'S';
     let schoolId = parseInt(event.school, 10).toString();
     //always use a two digit schoolId
-    if(schoolId.length === 1){
+    if (schoolId.length === 1) {
       schoolId = '0' + schoolId;
     }
     slug += schoolId;
     slug += DateTime.fromISO(event.startDate).toFormat('yyyyMMdd');
-    if(event.offering){
+    if (event.offering) {
       slug += 'O' + event.offering;
     }
-    if(event.ilmSession){
+    if (event.ilmSession) {
       slug += 'I' + event.ilmSession;
     }
     return slug;

@@ -6,7 +6,7 @@ import { component } from 'ilios-common/page-objects/components/session/manage-o
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | session/manage-objective-parents', function(hooks) {
+module('Integration | Component | session/manage-objective-parents', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 

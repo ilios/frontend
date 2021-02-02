@@ -4,15 +4,15 @@ import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
-module('Integration | Component | ilios calendar month', function(hooks) {
+module('Integration | Component | ilios calendar month', function (hooks) {
   setupRenderingTest(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     this.actions = {};
     this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
   });
 
-  test('month displays with three events', async function(assert) {
+  test('month displays with three events', async function (assert) {
     assert.expect(4);
     const date = moment(new Date('2015-09-30T12:00:00'));
 
@@ -50,7 +50,7 @@ module('Integration | Component | ilios calendar month', function(hooks) {
     assert.dom(this.element.querySelector(more)).hasText('Show more');
   });
 
-  test('month displays with two events', async function(assert) {
+  test('month displays with two events', async function (assert) {
     assert.expect(3);
 
     const date = moment(new Date('2015-09-30T12:00:00'));
@@ -83,16 +83,16 @@ module('Integration | Component | ilios calendar month', function(hooks) {
     assert.equal(this.element.querySelectorAll(more).length, 0);
   });
 
-  test('clicking on a day fires the correct event', async function(assert) {
+  test('clicking on a day fires the correct event', async function (assert) {
     assert.expect(3);
     const date = new Date('2015-09-30T12:00:00');
     this.set('date', date);
 
-    this.actions.changeDate = newDate => {
+    this.actions.changeDate = (newDate) => {
       assert.ok(newDate instanceof Date);
-      assert.ok(newDate.toString().includes("Tue Sep 01"));
+      assert.ok(newDate.toString().includes('Tue Sep 01'));
     };
-    this.actions.changeView = newView => {
+    this.actions.changeView = (newView) => {
       assert.equal(newView, 'day');
     };
 
@@ -107,7 +107,7 @@ module('Integration | Component | ilios calendar month', function(hooks) {
     await click('[data-test-day-button="1"]');
   });
 
-  test('prework', async function(assert) {
+  test('prework', async function (assert) {
     assert.expect(3);
 
     const date = moment(new Date('2015-09-30T12:00:00'));
@@ -132,7 +132,7 @@ module('Integration | Component | ilios calendar month', function(hooks) {
         name: 'prework 2',
         startDate: moment().format(),
         endDate: moment().format(),
-        location: "room 111",
+        location: 'room 111',
         ilmSession: true,
         slug: 'whatever',
         postrequisiteSlug: 'something',
@@ -145,7 +145,7 @@ module('Integration | Component | ilios calendar month', function(hooks) {
         name: 'blanked prework',
         startDate: moment().format(),
         endDate: moment().format(),
-        location: "room 111",
+        location: 'room 111',
         ilmSession: true,
         slug: 'whatever',
         postrequisiteSlug: 'something',
@@ -158,7 +158,7 @@ module('Integration | Component | ilios calendar month', function(hooks) {
         name: 'scheduled prework',
         startDate: moment().format(),
         endDate: moment().format(),
-        location: "room 111",
+        location: 'room 111',
         ilmSession: true,
         slug: 'whatever',
         postrequisiteSlug: 'something',
@@ -171,7 +171,7 @@ module('Integration | Component | ilios calendar month', function(hooks) {
         name: 'unpublished prework',
         startDate: moment().format(),
         endDate: moment().format(),
-        location: "room 111",
+        location: 'room 111',
         ilmSession: true,
         slug: 'whatever',
         postrequisiteSlug: 'something',
@@ -195,7 +195,7 @@ module('Integration | Component | ilios calendar month', function(hooks) {
     assert.ok(preworkElements[1].textContent.includes('prework 2'));
   });
 
-  test('prework to unpublished/scheduled/blanked events is not visible', async function(assert) {
+  test('prework to unpublished/scheduled/blanked events is not visible', async function (assert) {
     assert.expect(1);
 
     const date = moment(new Date('2015-09-30T12:00:00'));
@@ -228,12 +228,10 @@ module('Integration | Component | ilios calendar month', function(hooks) {
 
     const events = [unpublishedEvent, scheduledEvent, blankedEvent];
 
-    events.forEach(event => {
+    events.forEach((event) => {
       event.startDate = date.clone();
       event.endDate = date.clone().add(1, 'hour');
-      event.prerequisites = [
-        publishedPrework
-      ];
+      event.prerequisites = [publishedPrework];
     });
 
     this.set('date', date.toDate());
@@ -249,7 +247,6 @@ module('Integration | Component | ilios calendar month', function(hooks) {
   });
 
   const createUserEventObject = function () {
-
     return {
       user: 1,
       name: '',

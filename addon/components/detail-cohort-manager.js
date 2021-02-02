@@ -18,7 +18,7 @@ export default class DetailCohortManagerComponent extends Component {
       return false;
     }
     const allCohorts = yield this.store.findAll('cohort');
-    const cohortProxies = yield map(allCohorts.toArray(), async cohort => {
+    const cohortProxies = yield map(allCohorts.toArray(), async (cohort) => {
       const school = await cohort.school;
       const program = await cohort.program;
       const programYear = await cohort.programYear;
@@ -26,7 +26,7 @@ export default class DetailCohortManagerComponent extends Component {
       return { school, program, programYear, cohort };
     });
 
-    this.availableCohortProxies = yield filter(cohortProxies, async obj => {
+    this.availableCohortProxies = yield filter(cohortProxies, async (obj) => {
       if (obj.school === school) {
         return true;
       }
@@ -49,7 +49,7 @@ export default class DetailCohortManagerComponent extends Component {
     }
     const selectedCohorts = this.args.selectedCohorts || [];
 
-    return this.availableCohortProxies.filter(obj => !selectedCohorts.includes(obj.cohort));
+    return this.availableCohortProxies.filter((obj) => !selectedCohorts.includes(obj.cohort));
   }
 
   /**
@@ -60,13 +60,13 @@ export default class DetailCohortManagerComponent extends Component {
    * 3. cohort title, descending
    */
   get sortedAvailableCohorts() {
-    const objects = this.unselectedAvailableCohortProxies.map(obj => {
+    const objects = this.unselectedAvailableCohortProxies.map((obj) => {
       const sortTitle = obj.school.get('title') + obj.program.get('title');
 
       return {
         cohort: obj.cohort,
         sortTitle,
-        cohortTitle: obj.cohort.title
+        cohortTitle: obj.cohort.title,
       };
     });
 
@@ -78,7 +78,6 @@ export default class DetailCohortManagerComponent extends Component {
       }
 
       return compare;
-
     });
 
     return objects.mapBy('cohort');

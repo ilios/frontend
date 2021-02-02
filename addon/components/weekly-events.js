@@ -3,7 +3,6 @@ import { action } from '@ember/object';
 import moment from 'moment';
 
 export default class WeeklyEvents extends Component {
-
   get weeksInYear() {
     const weeksInTheYear = moment().year(this.args.year).isoWeeksInYear();
     const weeks = [];
@@ -14,12 +13,12 @@ export default class WeeklyEvents extends Component {
   }
 
   @action
-  incrementYear(){
+  incrementYear() {
     this.args.setYear(parseInt(this.args.year, 10) + 1);
   }
 
   @action
-  decrementYear(){
+  decrementYear() {
     this.args.setYear(parseInt(this.args.year, 10) - 1);
   }
 }

@@ -17,9 +17,11 @@ export default class SingleEvent extends Component {
   get startsAndEndsOnSameDay() {
     const startDate = new Date(this.args.event.startDate);
     const endDate = new Date(this.args.event.endDate);
-    return startDate.getDate() === endDate.getDate()
-       && startDate.getFullYear() === endDate.getFullYear()
-       && startDate.getMonth() === endDate.getMonth();
+    return (
+      startDate.getDate() === endDate.getDate() &&
+      startDate.getFullYear() === endDate.getFullYear() &&
+      startDate.getMonth() === endDate.getMonth()
+    );
   }
 
   get taughtBy() {
@@ -27,47 +29,53 @@ export default class SingleEvent extends Component {
     if (isEmpty(instructors)) {
       return '';
     }
-    return this.intl.t('general.taughtBy', { instructors: instructors.join(', ') });
+    return this.intl.t('general.taughtBy', {
+      instructors: instructors.join(', '),
+    });
   }
 
   get sessionIs() {
-    return this.intl.t('general.sessionIs', { type: this.args.event.sessionTypeTitle });
+    return this.intl.t('general.sessionIs', {
+      type: this.args.event.sessionTypeTitle,
+    });
   }
 
   get courseObjectives() {
-    const objectives =  this.args.event.courseObjectives || [];
+    const objectives = this.args.event.courseObjectives || [];
     const competencies = this.args.event.competencies || [];
-    return objectives.map(objective => {
-      //strip all HTML
-      const title = objective.title.replace(/(<([^>]+)>)/ig,"");
-      const position = objective.position;
-      if(isEmpty(objective.competencies)) {
+    return objectives
+      .map((objective) => {
+        //strip all HTML
+        const title = objective.title.replace(/(<([^>]+)>)/gi, '');
+        const position = objective.position;
+        if (isEmpty(objective.competencies)) {
+          return {
+            id: objective.id,
+            title,
+            domain: this.intl.t('general.noAssociatedCompetencies'),
+            position,
+          };
+        }
+        const competencyId = objective.competencies[0];
+        const competency = competencies.findBy('id', competencyId);
+        const parentId = competency.parent;
+        let domain = competency;
+        if (!isEmpty(parentId)) {
+          domain = competencies.findBy('id', parentId);
+        }
         return {
           id: objective.id,
           title,
-          domain: this.intl.t('general.noAssociatedCompetencies'),
-          position
+          domain: competency.title + ' (' + domain.title + ')',
+          position,
         };
-      }
-      const competencyId = objective.competencies[0];
-      const competency = competencies.findBy('id', competencyId);
-      const parentId = competency.parent;
-      let domain = competency;
-      if (! isEmpty(parentId)) {
-        domain = competencies.findBy('id', parentId);
-      }
-      return {
-        id: objective.id,
-        title,
-        domain: competency.title + ' (' + domain.title + ')',
-        position
-      };
-    }).sort(this.positionSortingCallback);
+      })
+      .sort(this.positionSortingCallback);
   }
 
   get typedLearningMaterials() {
     const handler = {
-      get: function(obj, prop) {
+      get: function (obj, prop) {
         if ('type' === prop) {
           if (obj.isBlanked) {
             return 'unknown';
@@ -81,10 +89,10 @@ export default class SingleEvent extends Component {
           }
         }
         return obj[prop];
-      }
+      },
     };
     const lms = this.args.event.learningMaterials || [];
-    return lms.map(lm => {
+    return lms.map((lm) => {
       return new Proxy(lm, handler);
     });
   }
@@ -115,34 +123,36 @@ export default class SingleEvent extends Component {
   }
 
   get sessionObjectives() {
-    const objectives =  this.args.event.sessionObjectives || [];
+    const objectives = this.args.event.sessionObjectives || [];
     const competencies = this.args.event.competencies || [];
-    return objectives.map(objective => {
-      //strip all HTML
-      const title = objective.title.replace(/(<([^>]+)>)/ig,"");
-      const position = objective.position;
-      if(isEmpty(objective.competencies)) {
+    return objectives
+      .map((objective) => {
+        //strip all HTML
+        const title = objective.title.replace(/(<([^>]+)>)/gi, '');
+        const position = objective.position;
+        if (isEmpty(objective.competencies)) {
+          return {
+            id: objective.id,
+            title,
+            domain: this.intl.t('general.noAssociatedCompetencies'),
+            position,
+          };
+        }
+        const competencyId = objective.competencies[0];
+        const competency = competencies.findBy('id', competencyId);
+        const parentId = competency.parent;
+        let domain = competency;
+        if (!isEmpty(parentId)) {
+          domain = competencies.findBy('id', parentId);
+        }
         return {
           id: objective.id,
           title,
-          domain: this.intl.t('general.noAssociatedCompetencies'),
-          position
+          domain: competency.title + ' (' + domain.title + ')',
+          position,
         };
-      }
-      const competencyId = objective.competencies[0];
-      const competency = competencies.findBy('id', competencyId);
-      const parentId = competency.parent;
-      let domain = competency;
-      if (! isEmpty(parentId)) {
-        domain = competencies.findBy('id', parentId);
-      }
-      return {
-        id: objective.id,
-        title,
-        domain: competency.title + ' (' + domain.title + ')',
-        position
-      };
-    }).sort(this.positionSortingCallback);
+      })
+      .sort(this.positionSortingCallback);
   }
 
   get sessionLearningMaterials() {

@@ -1,20 +1,11 @@
-import {
-  click,
-  currentRouteName,
-  currentURL,
-  findAll,
-  visit
-} from '@ember/test-helpers';
-import {
-  module,
-  test
-} from 'qunit';
+import { click, currentRouteName, currentURL, findAll, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
 import { setupAuthentication, getElementText, getText } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
 const url = '/courses/1/sessions/1/publicationcheck';
-module('Acceptance | Session - Publication Check', function(hooks) {
+module('Acceptance | Session - Publication Check', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
@@ -25,7 +16,7 @@ module('Acceptance | Session - Publication Check', function(hooks) {
     });
     this.course = this.server.create('course', { school });
     this.sessionTypes = this.server.createList('sessionType', 2, {
-      school
+      school,
     });
     this.term = this.server.create('term', { vocabulary });
     this.meshDescriptor = this.server.create('meshDescriptor');
@@ -34,8 +25,8 @@ module('Acceptance | Session - Publication Check', function(hooks) {
   test('full session count', async function (assert) {
     const session = this.server.create('session', {
       course: this.course,
-      terms: [ this.term ],
-      meshDescriptors: [ this.meshDescriptor ],
+      terms: [this.term],
+      meshDescriptors: [this.meshDescriptor],
       sessionType: this.sessionTypes[0],
     });
     this.server.create('sessionObjective', { session });
@@ -50,10 +41,10 @@ module('Acceptance | Session - Publication Check', function(hooks) {
     assert.equal(await getElementText(items[4]), getText('Yes (1)'));
   });
 
-  test('empty session count', async function(assert) {
+  test('empty session count', async function (assert) {
     //create 2 because the second one is empty
     this.server.createList('session', 2, {
-      course: this.course
+      course: this.course,
     });
     this.server.db.courses.update(1, { sessionIds: [1, 2] });
     await visit('/courses/1/sessions/2/publicationcheck');
@@ -66,11 +57,14 @@ module('Acceptance | Session - Publication Check', function(hooks) {
     assert.equal(await getElementText(items[4]), getText('No'));
   });
 
-  test('unlink icon transitions properly', async function(assert) {
+  test('unlink icon transitions properly', async function (assert) {
     const session = this.server.create('session', { course: this.course });
     this.server.create('sessionObjective', { session });
     await visit(url);
     await click('.fa-unlink');
-    assert.equal(currentURL(), '/courses/1/sessions/1?addOffering=false&courseCompetencyDetails=false&courseLeadershipDetails=false&courseManageLeadership=false&courseObjectiveDetails=false&courseTaxonomyDetails=false&details=false&sessionLeadershipDetails=false&sessionManageLeadership=false&sessionObjectiveDetails=true&sessionTaxonomyDetails=false');
+    assert.equal(
+      currentURL(),
+      '/courses/1/sessions/1?addOffering=false&courseCompetencyDetails=false&courseLeadershipDetails=false&courseManageLeadership=false&courseObjectiveDetails=false&courseTaxonomyDetails=false&details=false&sessionLeadershipDetails=false&sessionManageLeadership=false&sessionObjectiveDetails=true&sessionTaxonomyDetails=false'
+    );
   });
 });

@@ -2,18 +2,51 @@
 
 module.exports = {
   root: true,
-  extends: [
-    '@ilios/eslint-config-ember-addon'
-  ],
+  parser: 'babel-eslint',
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: 'module',
+    ecmaFeatures: {
+      legacyDecorators: true,
+    },
+  },
+  plugins: ['ember'],
+  extends: ['eslint:recommended', 'plugin:ember/recommended', 'plugin:prettier/recommended'],
+  env: {
+    browser: true,
+  },
   rules: {
-    'ember/no-side-effects': 0,
     'ember/no-get': 0,
-    'ember/use-ember-get-and-set': 0,
     'ember/use-brace-expansion': 0,
     'ember/no-new-mixins': 0,
+    'ember/no-classic-classes': 0,
     'ember/no-mixins': 0,
-    'sort-imports': 0,
-    'ember/require-computed-property-dependencies': 0,
-    'ember/require-computed-macros': 0,
-  }
+    'ember/require-tagless-components': 0,
+  },
+  overrides: [
+    // node files
+    {
+      files: [
+        '.eslintrc.js',
+        '.prettierrc.js',
+        '.template-lintrc.js',
+        'ember-cli-build.js',
+        'index.js',
+        'testem.js',
+        'blueprints/*/index.js',
+        'config/**/*.js',
+        'tests/dummy/config/**/*.js',
+      ],
+      excludedFiles: ['addon/**', 'addon-test-support/**', 'app/**', 'tests/dummy/app/**'],
+      parserOptions: {
+        sourceType: 'script',
+      },
+      env: {
+        browser: false,
+        node: true,
+      },
+      plugins: ['node'],
+      extends: ['plugin:node/recommended'],
+    },
+  ],
 };

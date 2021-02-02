@@ -7,7 +7,7 @@ import {
   fillable,
   isVisible,
   text,
-  value
+  value,
 } from 'ember-cli-page-object';
 import meshManager from './mesh-manager';
 import search from './learningmaterial-search';
@@ -16,14 +16,18 @@ import newLearningMaterial from './new-learningmaterial';
 import {
   flatpickrDatePicker,
   pageObjectFillInFroalaEditor,
-  pageObjectFroalaEditorValue
+  pageObjectFroalaEditorValue,
 } from 'ilios-common';
 
 const definition = {
   scope: '[data-test-detail-learning-materials]',
   search,
-  createNew: clickable('.detail-learningmaterials-actions [data-test-choose-material-type] [data-test-toggle]'),
-  pickNew: clickOnText('.detail-learningmaterials-actions [data-test-choose-material-type] [data-test-item]'),
+  createNew: clickable(
+    '.detail-learningmaterials-actions [data-test-choose-material-type] [data-test-toggle]'
+  ),
+  pickNew: clickOnText(
+    '.detail-learningmaterials-actions [data-test-choose-material-type] [data-test-item]'
+  ),
   save: clickable('.actions button.bigadd'),
   cancel: clickable('.actions button.bigcancel'),
   canCreateNew: isVisible('.detail-learningmaterials-actions [data-test-choose-material-type]'),
@@ -32,10 +36,10 @@ const definition = {
   sort: clickable('[data-test-sort-button]'),
   current: collection('.detail-learningmaterials-content table tbody tr', {
     title: text('td [data-test-title]', { at: 0 }),
-    type: text( 'td [data-test-lm-type-icon] title'),
+    type: text('td [data-test-lm-type-icon] title'),
     owner: {
       scope: 'td:nth-of-type(2)',
-      userNameInfo
+      userNameInfo,
     },
     required: text('td', { at: 2 }),
     notes: text('td:eq(3) > span'),
@@ -49,7 +53,7 @@ const definition = {
   manager: {
     scope: '.learningmaterial-manager',
     name: {
-      scope: '.displayname input'
+      scope: '.displayname input',
     },
     nameValue: text('.displayname span'),
     author: text('.originalauthor'),
@@ -57,7 +61,7 @@ const definition = {
       scope: '.description',
       value: text(),
       update: pageObjectFillInFroalaEditor('[data-test-html-editor]'),
-      editorValue: pageObjectFroalaEditorValue('[data-test-html-editor]')
+      editorValue: pageObjectFroalaEditorValue('[data-test-html-editor]'),
     },
     copyrightPermission: text('.copyrightpermission'),
     copyrightRationale: text('.copyrightrationale'),
@@ -107,7 +111,7 @@ const definition = {
     scope: '[data-test-detail-learning-materials-sort-manager]',
     save: clickable('[data-test-save]'),
     cancel: clickable('[data-test-cancel]'),
-  }
+  },
 };
 
 export default definition;

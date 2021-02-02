@@ -6,7 +6,7 @@ export default Service.extend({
   iliosConfig: service(),
   session: service(),
 
-  authHeaders: computed('session.isAuthenticated', function(){
+  authHeaders: computed('session.isAuthenticated', function () {
     const session = this.session;
     const { jwt } = session.data.authenticated;
     const headers = {};
@@ -18,7 +18,9 @@ export default Service.extend({
   }),
 
   host: computed('iliosConfig.apiHost', function () {
-    return this.iliosConfig.apiHost ? this.iliosConfig.apiHost : window.location.protocol + '//' + window.location.host;
+    return this.iliosConfig.apiHost
+      ? this.iliosConfig.apiHost
+      : window.location.protocol + '//' + window.location.host;
   }),
 
   /**
@@ -37,7 +39,7 @@ export default Service.extend({
   async forUsers(q, size = 100, onlySuggestEnabled = false) {
     const { users, autocomplete } = await this.search('users', q, size, onlySuggestEnabled);
 
-    const mappedUsers = users.map(user => {
+    const mappedUsers = users.map((user) => {
       user.fullName = this.getUserFullName(user);
 
       return user;
@@ -51,7 +53,7 @@ export default Service.extend({
     const url = `${this.host}/api/search/v1/${type}?q=${q}&size=${size}${onlySuggest}`;
 
     const response = await fetch(url, {
-      headers: this.authHeaders
+      headers: this.authHeaders,
     });
     const { results } = await response.json();
 
@@ -67,7 +69,7 @@ export default Service.extend({
       return '';
     }
 
-    const middleInitial = user.middleName?user.middleName.charAt(0):false;
+    const middleInitial = user.middleName ? user.middleName.charAt(0) : false;
 
     if (middleInitial) {
       return `${user.firstName} ${middleInitial}. ${user.lastName}`;

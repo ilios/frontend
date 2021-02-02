@@ -5,11 +5,11 @@ import { render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | course summary header', function(hooks) {
+module('Integration | Component | course summary header', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     const currentUserMock = Service.extend({
       userIsCourseDirector: true,
     });
@@ -18,12 +18,12 @@ module('Integration | Component | course summary header', function(hooks) {
     this.permissionCheckerMock = Service.extend({
       async canCreateCourse() {
         return true;
-      }
+      },
     });
     this.owner.register('service:permissionChecker', this.permissionCheckerMock);
   });
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     const school = this.server.create('school');
     this.permissionCheckerMock.canCreateCourse = async (inSchool) => {
       assert.equal(school.id, inSchool.id);
@@ -54,18 +54,18 @@ module('Integration | Component | course summary header', function(hooks) {
     assert.dom(materialsIcon).hasClass('fa-archive');
     assert.dom(printIcon).hasClass('fa-print');
     assert.dom(rolloverIcon).hasClass('fa-random');
-    assert.dom(start).hasText((new Date(course.startDate)).toLocaleDateString());
+    assert.dom(start).hasText(new Date(course.startDate).toLocaleDateString());
     assert.dom(externalId).hasText('abc');
-    assert.dom(end).hasText((new Date(course.endDate)).toLocaleDateString());
+    assert.dom(end).hasText(new Date(course.endDate).toLocaleDateString());
     assert.dom(level).hasText('3');
     assert.dom(status).hasText('Published');
   });
 
-  test('no link to materials when that is the current route', async function(assert) {
+  test('no link to materials when that is the current route', async function (assert) {
     const school = this.server.create('school');
     const routerMock = Service.extend({
       currentRouteName: 'course-materials',
-      generateURL(){},
+      generateURL() {},
     });
     this.owner.register('service:router', routerMock);
 
@@ -87,7 +87,7 @@ module('Integration | Component | course summary header', function(hooks) {
   test('no link to rollover when that is the current route', async function (assert) {
     const routerMock = Service.extend({
       currentRouteName: 'course.rollover',
-      generateURL(){},
+      generateURL() {},
     });
     this.owner.register('service:router', routerMock);
 
@@ -104,11 +104,11 @@ module('Integration | Component | course summary header', function(hooks) {
     assert.dom(materialsIcon).hasClass('fa-archive');
   });
 
-  test('no link to rollover when user cannot edit the course', async function(assert) {
+  test('no link to rollover when user cannot edit the course', async function (assert) {
     const school = this.server.create('school', {});
     const routerMock = Service.extend({
       currentRouteName: 'course.rollover',
-      generateURL(){},
+      generateURL() {},
     });
     this.owner.register('service:router', routerMock);
 

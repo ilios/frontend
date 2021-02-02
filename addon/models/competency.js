@@ -21,7 +21,7 @@ export default Model.extend({
   }),
 
   domain: computed('parent', 'parent.domain', async function () {
-    const parent = await this.get('parent');
+    const parent = await this.parent;
     if (!parent) {
       return this;
     }
@@ -30,7 +30,7 @@ export default Model.extend({
 
   treeChildren: computed('children.[]', async function () {
     const rhett = [];
-    const children = await this.get('children');
+    const children = await this.children;
     rhett.pushObjects(children.toArray());
 
     const trees = await all(children.mapBy('treeChildren'));
@@ -38,7 +38,7 @@ export default Model.extend({
       return array.pushObjects(set.toArray());
     }, []);
     rhett.pushObjects(competencies);
-    return rhett.uniq().filter(item => {
+    return rhett.uniq().filter((item) => {
       return !isEmpty(item);
     });
   }),

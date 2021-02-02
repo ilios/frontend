@@ -9,7 +9,7 @@ export default class UserNameInfoComponent extends Component {
   @tracked hasDifferentCampusNameOfRecord = false;
 
   @action
-  load(){
+  load() {
     if (!this.args.user) {
       return false;
     }

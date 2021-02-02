@@ -12,7 +12,7 @@ export default class DetailTaxonomiesComponent extends Component {
   @tracked bufferedTerms = [];
   @tracked isManaging = false;
 
-  get showCollapsible () {
+  get showCollapsible() {
     const terms = this.args.subject.hasMany('terms').ids();
     return !this.isManaging && terms.length;
   }
@@ -49,7 +49,7 @@ export default class DetailTaxonomiesComponent extends Component {
     this.bufferedTerms = [...this.bufferedTerms, term];
   }
   @action
-  removeTermFromBuffer(term){
-    this.bufferedTerms = this.bufferedTerms.filter(obj => obj.id !== term.id);
+  removeTermFromBuffer(term) {
+    this.bufferedTerms = this.bufferedTerms.filter((obj) => obj.id !== term.id);
   }
 }

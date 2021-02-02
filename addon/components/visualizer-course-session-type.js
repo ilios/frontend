@@ -4,8 +4,8 @@ import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import {tracked} from '@glimmer/tracking';
-import {restartableTask} from "ember-concurrency-decorators";
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class VisualizerCourseSessionType extends Component {
   @service router;
@@ -19,18 +19,20 @@ export default class VisualizerCourseSessionType extends Component {
     const courseSessions = yield course.get('sessions');
     const sessionTypeSessionIds = sessionType.hasMany('sessions').ids();
 
-    const sessions = courseSessions.filter(session => sessionTypeSessionIds.includes(session.get('id')));
-    const termData = yield map(sessions, async session => {
+    const sessions = courseSessions.filter((session) =>
+      sessionTypeSessionIds.includes(session.get('id'))
+    );
+    const termData = yield map(sessions, async (session) => {
       const hours = await session.get('totalSumDuration');
       const minutes = Math.round(hours * 60);
       const terms = await session.get('terms');
-      return map(terms.toArray(), async term => {
+      return map(terms.toArray(), async (term) => {
         const vocabulary = await term.get('vocabulary');
         return {
           sessionTitle: session.get('title'),
           termTitle: term.get('title'),
           vocabularyTitle: vocabulary.get('title'),
-          minutes
+          minutes,
         };
       });
     });
@@ -48,8 +50,8 @@ export default class VisualizerCourseSessionType extends Component {
           label,
           meta: {
             vocabularyTitle: obj.vocabularyTitle,
-            sessions: []
-          }
+            sessions: [],
+          },
         };
         set.pushObject(existing);
       }
@@ -60,15 +62,20 @@ export default class VisualizerCourseSessionType extends Component {
     }, []);
 
     const totalMinutes = data.mapBy('data').reduce((total, minutes) => total + minutes, 0);
-    this.data = data.map(obj => {
-      const percent = (obj.data / totalMinutes * 100).toFixed(1);
-      obj.label = `${obj.label} ${percent}%`;
-      obj.meta.totalMinutes = totalMinutes;
-      obj.meta.percent = percent;
-      return obj;
-    }).sort((first, second) => {
-      return first.meta.vocabularyTitle.localeCompare(second.meta.vocabularyTitle) || first.data - second.data;
-    });
+    this.data = data
+      .map((obj) => {
+        const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
+        obj.label = `${obj.label} ${percent}%`;
+        obj.meta.totalMinutes = totalMinutes;
+        obj.meta.percent = percent;
+        return obj;
+      })
+      .sort((first, second) => {
+        return (
+          first.meta.vocabularyTitle.localeCompare(second.meta.vocabularyTitle) ||
+          first.data - second.data
+        );
+      });
   }
 
   @restartableTask

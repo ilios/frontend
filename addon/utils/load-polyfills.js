@@ -1,9 +1,5 @@
 export async function loadPolyfills() {
-  await Promise.all([
-    intlLocale(),
-    intlPluralRules(),
-    intlRelativeTimeFormat(),
-  ]);
+  await Promise.all([intlLocale(), intlPluralRules(), intlRelativeTimeFormat()]);
 }
 
 async function intlLocale() {

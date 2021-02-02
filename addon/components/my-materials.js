@@ -2,15 +2,14 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { isNone, isPresent } from '@ember/utils';
 import { timeout } from 'ember-concurrency';
-import {restartableTask} from "ember-concurrency-decorators";
+import { restartableTask } from 'ember-concurrency-decorators';
 
 const DEBOUNCE_DELAY = 250;
 
 export default class MyMaterials extends Component {
-
   get filteredMaterials() {
     let materials = this.args.materials;
-    if (! this.args.materials) {
+    if (!this.args.materials) {
       return [];
     }
 
@@ -33,12 +32,15 @@ export default class MyMaterials extends Component {
   }
 
   get courses() {
-    if (! this.args.materials) {
+    if (!this.args.materials) {
       return [];
     }
-    return this.args.materials.map((material) => {
-      return { id: material.course, title: material.courseTitle };
-    }).uniqBy('id').sortBy('title');
+    return this.args.materials
+      .map((material) => {
+        return { id: material.course, title: material.courseTitle };
+      })
+      .uniqBy('id')
+      .sortBy('title');
   }
 
   get sortedAscending() {
@@ -50,13 +52,13 @@ export default class MyMaterials extends Component {
   }
 
   @action
-  sortString(a, b){
+  sortString(a, b) {
     return a.localeCompare(b);
   }
 
   @action
-  sortBy(what){
-    if (this.args.sortBy === what){
+  sortBy(what) {
+    if (this.args.sortBy === what) {
       what += ':desc';
     }
     this.args.setSortBy(what);
@@ -72,5 +74,4 @@ export default class MyMaterials extends Component {
     yield timeout(DEBOUNCE_DELAY);
     this.args.setFilter(query);
   }
-
 }

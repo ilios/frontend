@@ -5,15 +5,35 @@ import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios-common/page-objects/components/dashboard/cohort-calendar-filter';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
-module('Integration | Component | dashboard/cohort-calendar-filter', function(hooks) {
+module('Integration | Component | dashboard/cohort-calendar-filter', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders and is accessible', async function (assert) {
     this.set('cohortProxies', [
-      {id: 1, programTitle: 'program 1', displayTitle: 'name 1', classOfYear: 2015},
-      {id: 2, programTitle: 'program 2', displayTitle: 'name 2', classOfYear: 2014},
-      {id: 3, programTitle: 'program 3', displayTitle: 'name 3', classOfYear: 2019},
-      {id: 4, programTitle: 'program 4', displayTitle: 'name 4', classOfYear: 2025},
+      {
+        id: 1,
+        programTitle: 'program 1',
+        displayTitle: 'name 1',
+        classOfYear: 2015,
+      },
+      {
+        id: 2,
+        programTitle: 'program 2',
+        displayTitle: 'name 2',
+        classOfYear: 2014,
+      },
+      {
+        id: 3,
+        programTitle: 'program 3',
+        displayTitle: 'name 3',
+        classOfYear: 2019,
+      },
+      {
+        id: 4,
+        programTitle: 'program 4',
+        displayTitle: 'name 4',
+        classOfYear: 2025,
+      },
     ]);
     await render(hbs`<Dashboard::CohortCalendarFilter
       @cohortProxies={{this.cohortProxies}}
@@ -33,10 +53,30 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function(ho
 
   test('selected cohorts are checked', async function (assert) {
     this.set('cohortProxies', [
-      {id: 1, programTitle: 'program 1', displayTitle: 'name 1', classOfYear: 2015},
-      {id: 2, programTitle: 'program 2', displayTitle: 'name 2', classOfYear: 2014},
-      {id: 3, programTitle: 'program 3', displayTitle: 'name 3', classOfYear: 2013},
-      {id: 4, programTitle: 'program 4', displayTitle: 'name 4', classOfYear: 2012},
+      {
+        id: 1,
+        programTitle: 'program 1',
+        displayTitle: 'name 1',
+        classOfYear: 2015,
+      },
+      {
+        id: 2,
+        programTitle: 'program 2',
+        displayTitle: 'name 2',
+        classOfYear: 2014,
+      },
+      {
+        id: 3,
+        programTitle: 'program 3',
+        displayTitle: 'name 3',
+        classOfYear: 2013,
+      },
+      {
+        id: 4,
+        programTitle: 'program 4',
+        displayTitle: 'name 4',
+        classOfYear: 2012,
+      },
     ]);
     await render(hbs`<Dashboard::CohortCalendarFilter
       @cohortProxies={{this.cohortProxies}}
@@ -59,7 +99,12 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function(ho
   test('selected cohorts toggle remove', async function (assert) {
     assert.expect(2);
     this.set('cohortProxies', [
-      {id: 1, programTitle: 'program 1', displayTitle: 'name 1', classOfYear: 2015},
+      {
+        id: 1,
+        programTitle: 'program 1',
+        displayTitle: 'name 1',
+        classOfYear: 2015,
+      },
     ]);
     this.set('remove', (id) => {
       assert.equal(id, 1);
@@ -77,7 +122,12 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function(ho
   test('unselected cohorts toggle add', async function (assert) {
     assert.expect(2);
     this.set('cohortProxies', [
-      {id: 1, programTitle: 'program 1', displayTitle: 'name 1', classOfYear: 2015},
+      {
+        id: 1,
+        programTitle: 'program 1',
+        displayTitle: 'name 1',
+        classOfYear: 2015,
+      },
     ]);
     this.set('add', (id) => {
       assert.equal(id, 1);

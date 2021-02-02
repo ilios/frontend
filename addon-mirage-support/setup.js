@@ -16,12 +16,24 @@ export default function (server) {
     { route: 'courselearningmaterials/', name: 'courseLearningMaterial' },
     { route: 'courseobjectives/', name: 'courseObjective' },
     { route: 'courses/', name: 'course' },
-    { route: 'curriculuminventoryacademiclevels/', name: 'curriculumInventoryAcademicLevel' },
+    {
+      route: 'curriculuminventoryacademiclevels/',
+      name: 'curriculumInventoryAcademicLevel',
+    },
     { route: 'curriculuminventoryexports/', name: 'curriculumInventoryExport' },
-    { route: 'curriculuminventoryinstitutions/', name: 'curriculumInventoryInstitution' },
+    {
+      route: 'curriculuminventoryinstitutions/',
+      name: 'curriculumInventoryInstitution',
+    },
     { route: 'curriculuminventoryreports/', name: 'curriculumInventoryReport' },
-    { route: 'curriculuminventorysequenceblocks/', name: 'curriculumInventorySequenceBlock' },
-    { route: 'curriculuminventorysequences/', name: 'curriculumInventorySequence' },
+    {
+      route: 'curriculuminventorysequenceblocks/',
+      name: 'curriculumInventorySequenceBlock',
+    },
+    {
+      route: 'curriculuminventorysequences/',
+      name: 'curriculumInventorySequence',
+    },
     { route: 'vocabularies/', name: 'vocabulary' },
     { route: 'terms/', name: 'term' },
     { route: 'ilmsessions/', name: 'ilmSession' },
@@ -53,7 +65,7 @@ export default function (server) {
     { route: 'users/', name: 'user' },
   ];
 
-  models.forEach(obj => {
+  models.forEach((obj) => {
     server.get(`api/${obj.route}`, getAll);
     server.get(`api/${obj.route}/:id`, obj.name);
     server.patch(`api/${obj.route}/:id`, obj.name);
@@ -67,14 +79,13 @@ export default function (server) {
     const schoolKey = 'filters[schools]';
     if (keys.includes(schoolKey)) {
       const schoolsFilter = params[schoolKey];
-      const cohorts = schema.cohorts.all().filter(cohort => {
+      const cohorts = schema.cohorts.all().filter((cohort) => {
         const school = cohort.programYear.program.school;
 
         return schoolsFilter.includes(school.id);
       });
 
       return cohorts;
-
     } else {
       return getAll(schema, request);
     }
@@ -86,14 +97,13 @@ export default function (server) {
     const schoolKey = 'filters[school]';
     if (keys.includes(schoolKey)) {
       const schoolsFilter = params[schoolKey];
-      const courses = schema.courses.all().filter(course => {
+      const courses = schema.courses.all().filter((course) => {
         const school = course.school;
 
         return schoolsFilter.includes(school.id);
       });
 
       return filterResults(courses, 'courses', request);
-
     } else {
       return getAll(schema, request);
     }
@@ -105,25 +115,29 @@ export default function (server) {
     const schoolKey = 'filters[schools]';
     if (keys.includes(schoolKey)) {
       const schoolsFilter = params[schoolKey];
-      const updates = schema.pendingUserUpdates.all().filter(update => {
+      const updates = schema.pendingUserUpdates.all().filter((update) => {
         const school = update.user.school;
 
         return schoolsFilter.includes(school.id);
       });
 
       return updates;
-
     } else {
       return getAll(schema, request);
     }
   });
   server.post('api/programyears', function (schema, request) {
-    const jsonData = this.serializerOrRegistry.normalize(JSON.parse(request.requestBody), 'program-year');
+    const jsonData = this.serializerOrRegistry.normalize(
+      JSON.parse(request.requestBody),
+      'program-year'
+    );
     const attrs = parseJsonData(jsonData);
     const programYear = schema.programYears.create(attrs);
     const cohortAttr = {
       programYearId: programYear.id,
-      title: 'Class of ' + (parseInt(programYear.program.duration, 10) + parseInt(programYear.startYear, 10))
+      title:
+        'Class of ' +
+        (parseInt(programYear.program.duration, 10) + parseInt(programYear.startYear, 10)),
     };
     const cohort = schema.cohorts.create(cohortAttr);
     programYear.cohort = cohort;
@@ -136,25 +150,23 @@ export default function (server) {
     const schoolKey = 'filters[schools]';
     if (keys.includes(schoolKey)) {
       const schoolsFilter = params[schoolKey];
-      const sessions = schema.sessions.all().filter(session => {
+      const sessions = schema.sessions.all().filter((session) => {
         const school = session.course.school;
 
         return schoolsFilter.includes(school.id);
       });
 
       return sessions;
-
     } else {
       return getAll(schema, request);
     }
   });
 
-
   server.get('api/userevents/:userid', function ({ db }, request) {
     const from = moment.unix(request.queryParams.from);
     const to = moment.unix(request.queryParams.to);
     const userid = parseInt(request.params.userid, 10);
-    const userEvents = db.userevents.filter(event => {
+    const userEvents = db.userevents.filter((event) => {
       return (
         event.user === userid &&
         (from.isSame(event.startDate) || from.isBefore(event.startDate)) &&
@@ -162,15 +174,15 @@ export default function (server) {
       );
     });
     return {
-      userEvents: userEvents
+      userEvents: userEvents,
     };
   });
 
-  server.get('api/schoolevents/:schoolid', function({ db }, request) {
+  server.get('api/schoolevents/:schoolid', function ({ db }, request) {
     const from = moment.unix(request.queryParams.from);
     const to = moment.unix(request.queryParams.to);
     const schoolId = parseInt(request.params.schoolid, 10);
-    const schoolEvents = db.schoolevents.filter(event => {
+    const schoolEvents = db.schoolevents.filter((event) => {
       return (
         event.school === schoolId &&
         (from.isSame(event.startDate) || from.isBefore(event.startDate)) &&
@@ -178,21 +190,21 @@ export default function (server) {
       );
     });
     return {
-      events: schoolEvents
+      events: schoolEvents,
     };
   });
 
-  server.post('upload', function() {
-    let hash = "";
-    const allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  server.post('upload', function () {
+    let hash = '';
+    const allowedChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
-    for( var i=0; i < 32; i++ ) {
+    for (var i = 0; i < 32; i++) {
       hash += allowedChars.charAt(Math.floor(Math.random() * allowedChars.length));
     }
 
     return {
       filename: 'bogus.txt',
-      fileHash: hash
+      fileHash: hash,
     };
   });
 }

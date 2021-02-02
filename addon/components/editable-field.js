@@ -7,11 +7,11 @@ import { action } from '@ember/object';
 export default class EditableFieldComponent extends Component {
   @tracked isEditing = false;
 
-  get looksEmpty(){
+  get looksEmpty() {
     const value = this.args.value || '';
     const text = value.toString();
-    const noTagsText = text.replace(/(<([^>]+)>)/ig,"");
-    const strippedText = noTagsText.replace(/&nbsp;/ig,"").replace(/\s/g, "");
+    const noTagsText = text.replace(/(<([^>]+)>)/gi, '');
+    const strippedText = noTagsText.replace(/&nbsp;/gi, '').replace(/\s/g, '');
 
     return strippedText.length === 0;
   }
@@ -35,7 +35,7 @@ export default class EditableFieldComponent extends Component {
   focusFirstControl(element) {
     const elements = element.querySelectorAll('input,textarea,select,.fr-element');
     if (elements.length) {
-      const visibleControls = Array.from(elements).filter(el => {
+      const visibleControls = Array.from(elements).filter((el) => {
         return !el.hidden;
       });
       visibleControls[0].focus();
@@ -48,13 +48,13 @@ export default class EditableFieldComponent extends Component {
     const target = event.target;
 
     // only process key events coming from text input/textarea.
-    if (! ['text', 'textarea'].includes(target.type)) {
+    if (!['text', 'textarea'].includes(target.type)) {
       return;
     }
 
     if (13 === keyCode && this.args.saveOnEnter) {
       this.saveData.perform();
-    } else if(27 === keyCode && this.args.closeOnEscape) {
+    } else if (27 === keyCode && this.args.closeOnEscape) {
       this.closeEditor.perform();
     }
   }

@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Helper | lm-type', function(hooks) {
+module('Integration | Helper | lm-type', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('link', async function(assert) {
+  test('link', async function (assert) {
     assert.expect(1);
     const lm = { link: 'whatever' };
     this.set('lm', lm);
@@ -14,7 +14,7 @@ module('Integration | Helper | lm-type', function(hooks) {
     assert.dom(this.element).hasText('link');
   });
 
-  test('citation', async function(assert) {
+  test('citation', async function (assert) {
     assert.expect(1);
     const lm = { citation: 'whatever' };
     this.set('lm', lm);
@@ -22,7 +22,7 @@ module('Integration | Helper | lm-type', function(hooks) {
     assert.dom(this.element).hasText('citation');
   });
 
-  test('file', async function(assert) {
+  test('file', async function (assert) {
     assert.expect(1);
     const lm = { filename: 'whatever' };
     this.set('lm', lm);

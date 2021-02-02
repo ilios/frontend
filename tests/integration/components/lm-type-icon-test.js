@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | lm type icon', function(hooks) {
+module('Integration | Component | lm type icon', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('link', async function(assert) {
+  test('link', async function (assert) {
     assert.expect(1);
     const lm = { type: 'link' };
     this.set('lm', lm);
@@ -14,7 +14,7 @@ module('Integration | Component | lm type icon', function(hooks) {
     assert.dom('.fa-link').exists();
   });
 
-  test('citation', async function(assert) {
+  test('citation', async function (assert) {
     assert.expect(1);
     const lm = { type: 'citation' };
     this.set('lm', lm);
@@ -22,15 +22,21 @@ module('Integration | Component | lm type icon', function(hooks) {
     assert.dom('.fa-paragraph').exists();
   });
 
-  test('file', async function(assert) {
+  test('file', async function (assert) {
     assert.expect(16);
     const fixtures = [
-      { lm: { type: 'file', mimetype: 'application/pdf' }, icon: 'fa-file-pdf' },
+      {
+        lm: { type: 'file', mimetype: 'application/pdf' },
+        icon: 'fa-file-pdf',
+      },
       { lm: { type: 'file', mimetype: 'ppt' }, icon: 'fa-file-powerpoint' },
       { lm: { type: 'file', mimetype: 'keynote' }, icon: 'fa-file-powerpoint' },
       { lm: { type: 'file', mimetype: 'pps' }, icon: 'fa-file-powerpoint' },
       { lm: { type: 'file', mimetype: 'pptx' }, icon: 'fa-file-powerpoint' },
-      { lm: { type: 'file', mimetype: 'powerpoint' }, icon: 'fa-file-powerpoint' },
+      {
+        lm: { type: 'file', mimetype: 'powerpoint' },
+        icon: 'fa-file-powerpoint',
+      },
       { lm: { type: 'file', mimetype: 'video/mp4' }, icon: 'fa-file-video' },
       { lm: { type: 'file', mimetype: 'video/mpg' }, icon: 'fa-file-video' },
       { lm: { type: 'file', mimetype: 'video/mpeg' }, icon: 'fa-file-video' },
@@ -50,7 +56,7 @@ module('Integration | Component | lm type icon', function(hooks) {
     }
   });
 
-  test('listItem', async function(assert) {
+  test('listItem', async function (assert) {
     assert.expect(1);
     const lm = { type: 'link' };
     this.set('lm', lm);
@@ -58,13 +64,17 @@ module('Integration | Component | lm type icon', function(hooks) {
     assert.dom('.fa-li').exists();
   });
 
-  test('no listItem', async function(assert) {
+  test('no listItem', async function (assert) {
     assert.expect(2);
     const lm = { type: 'link' };
     this.set('lm', lm);
 
     await render(hbs`<LmTypeIcon @type={{this.lm.type}} />`);
-    assert.equal(this.element.querySelectorAll('.fa-li').length, 0, 'List icon class is not applied by default.');
+    assert.equal(
+      this.element.querySelectorAll('.fa-li').length,
+      0,
+      'List icon class is not applied by default.'
+    );
 
     await render(hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{false}} />`);
     assert.dom('.fa-li').doesNotExist();

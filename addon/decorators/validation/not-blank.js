@@ -1,4 +1,4 @@
-import { registerDecorator } from "class-validator";
+import { registerDecorator } from 'class-validator';
 import { getOwner } from '@ember/application';
 
 export function NotBlank(validationOptions) {
@@ -21,7 +21,7 @@ export function NotBlank(validationOptions) {
           const description = intl.t('errors.description');
 
           return intl.t('errors.blank', { description });
-        }
+        },
       },
     });
   };

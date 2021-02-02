@@ -1,14 +1,5 @@
-import {
-  clickable,
-  create,
-  hasClass,
-  isVisible,
-  text,
-} from 'ember-cli-page-object';
-import {
-  pageObjectFillInFroalaEditor,
-  pageObjectFroalaEditorValue
-} from 'ilios-common';
+import { clickable, create, hasClass, isVisible, text } from 'ember-cli-page-object';
+import { pageObjectFillInFroalaEditor, pageObjectFroalaEditorValue } from 'ilios-common';
 import meshManager from './manage-objective-descriptors';
 import parentManager from './manage-objective-parents';
 import meshDescriptors from './objective-list-item-descriptors';
@@ -30,8 +21,10 @@ const definition = {
   },
   parents,
   meshDescriptors,
-  remove: clickable('[data-icon="trash"]', { scope: '[data-test-actions]'}),
-  hasTrashCan: isVisible('[data-icon="trash"]', { scope: '[data-test-actions]' }),
+  remove: clickable('[data-icon="trash"]', { scope: '[data-test-actions]' }),
+  hasTrashCan: isVisible('[data-icon="trash"]', {
+    scope: '[data-test-actions]',
+  }),
   confirmRemoval: {
     scope: '[data-test-confirm-removal]',
     confirm: clickable('[data-test-confirm]'),

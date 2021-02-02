@@ -1,14 +1,11 @@
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/course';
 
-module('Acceptance | Course - Multiple Objective  Parents', function(hooks) {
+module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
@@ -17,7 +14,7 @@ module('Acceptance | Course - Multiple Objective  Parents', function(hooks) {
     this.server.create('schoolConfig', {
       school: this.school,
       name: 'allowMultipleCourseObjectiveParents',
-      value: true
+      value: true,
     });
     this.user.update({ administeredSchools: [this.school] });
 
@@ -30,30 +27,43 @@ module('Acceptance | Course - Multiple Objective  Parents', function(hooks) {
     });
     const programYearObjectives = this.server.createList('programYearObjective', 3, {
       programYear,
-      competency
+      competency,
     });
 
     const course = this.server.create('course', {
       school: this.school,
-      cohorts: [cohort]
+      cohorts: [cohort],
     });
 
     this.server.create('courseObjective', {
-      programYearObjectives: [ programYearObjectives[0], programYearObjectives[1] ],
-      course
+      programYearObjectives: [programYearObjectives[0], programYearObjectives[1]],
+      course,
     });
   });
 
-  test('initial view', async function(assert) {
+  test('initial view', async function (assert) {
     assert.expect(16);
 
-    await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
+    await page.visit({
+      courseId: 1,
+      details: true,
+      courseObjectiveDetails: true,
+    });
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'course objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'course objective 0'
+    );
     assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'program-year objective 0');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[1].text, 'program-year objective 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      'program-year objective 0'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].parents.list[1].text,
+      'program-year objective 1'
+    );
 
     await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
     const m = page.objectives.objectiveList.objectives[0].parentManager;
@@ -71,11 +81,18 @@ module('Acceptance | Course - Multiple Objective  Parents', function(hooks) {
     assert.ok(m.competencies[0].objectives[2].notSelected);
   });
 
-  test('can select multiple parents', async function(assert) {
+  test('can select multiple parents', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(8);
-    await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'course objective 0');
+    await page.visit({
+      courseId: 1,
+      details: true,
+      courseObjectiveDetails: true,
+    });
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'course objective 0'
+    );
     await page.objectives.objectiveList.objectives[0].parents.list[0].manage();
     const m = page.objectives.objectiveList.objectives[0].parentManager;
 
@@ -86,9 +103,18 @@ module('Acceptance | Course - Multiple Objective  Parents', function(hooks) {
     assert.ok(m.competencies[0].objectives[2].selected);
     await page.objectives.objectiveList.objectives[0].parents.save();
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'course objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'course objective 0'
+    );
     assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[0].text, 'program-year objective 0');
-    assert.equal(page.objectives.objectiveList.objectives[0].parents.list[1].text, 'program-year objective 2');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].parents.list[0].text,
+      'program-year objective 0'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].parents.list[1].text,
+      'program-year objective 2'
+    );
   });
 });

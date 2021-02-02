@@ -1,4 +1,4 @@
-import { registerDecorator } from "class-validator";
+import { registerDecorator } from 'class-validator';
 import { getOwner } from '@ember/application';
 
 export function HtmlNotBlank(validationOptions) {
@@ -11,8 +11,8 @@ export function HtmlNotBlank(validationOptions) {
       validator: {
         validate(value) {
           const text = value || '';
-          const noTagsText = text.replace(/(<([^>]+)>)/ig,"");
-          const strippedText = noTagsText.replace(/&nbsp;/ig, "").replace(/\s/g, "");
+          const noTagsText = text.replace(/(<([^>]+)>)/gi, '');
+          const strippedText = noTagsText.replace(/&nbsp;/gi, '').replace(/\s/g, '');
 
           return strippedText.trim() !== '';
         },
@@ -22,7 +22,7 @@ export function HtmlNotBlank(validationOptions) {
           const description = intl.t('errors.description');
 
           return intl.t('errors.blank', { description });
-        }
+        },
       },
     });
   };

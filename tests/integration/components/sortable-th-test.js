@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { click, find, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | sortable th', function(hooks) {
+module('Integration | Component | sortable th', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders with default options', async function(assert) {
+  test('it renders with default options', async function (assert) {
     assert.expect(6);
     await render(hbs`<SortableTh>Foo</SortableTh>`);
     assert.dom('th').hasText('Foo');
@@ -17,7 +17,7 @@ module('Integration | Component | sortable th', function(hooks) {
     assert.dom('svg').hasClass('fa-sort');
   });
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(6);
     const colspan = '3';
     const title = 'Bar';
@@ -51,7 +51,7 @@ module('Integration | Component | sortable th', function(hooks) {
     assert.dom('svg').hasClass('fa-sort-numeric-down');
   });
 
-  test('sorted descending', async function(assert) {
+  test('sorted descending', async function (assert) {
     this.set('sortedBy', true);
     this.set('sortedAscending', false);
     this.set('sortType', 'numeric');
@@ -67,14 +67,16 @@ module('Integration | Component | sortable th', function(hooks) {
     assert.dom('svg').hasClass('fa-sort-numeric-down-alt');
   });
 
-  test('no sort order specified defaults to ascending sort', async function(assert) {
+  test('no sort order specified defaults to ascending sort', async function (assert) {
     this.set('sortedBy', true);
     this.set('sortType', 'numeric');
-    await render(hbs`<SortableTh @sortedBy={{this.sortedBy}} @sortType={{this.sortType}}>Foo</SortableTh>`);
+    await render(
+      hbs`<SortableTh @sortedBy={{this.sortedBy}} @sortType={{this.sortType}}>Foo</SortableTh>`
+    );
     assert.dom('svg').hasClass('fa-sort-numeric-down');
   });
 
-  test('click event fires', async function(assert) {
+  test('click event fires', async function (assert) {
     assert.expect(1);
     this.set('click', () => {
       assert.ok(true);

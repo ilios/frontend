@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/collapsed-taxonomies';
 
-module('Integration | Component | collapsed taxonomies', function(hooks) {
+module('Integration | Component | collapsed taxonomies', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -17,11 +17,11 @@ module('Integration | Component | collapsed taxonomies', function(hooks) {
     });
     const term1 = this.server.create('term', {
       vocabulary,
-      active: true
+      active: true,
     });
     this.server.create('term', {
       vocabulary,
-      active: true
+      active: true,
     });
 
     const course = this.server.create('course', {
@@ -30,11 +30,11 @@ module('Integration | Component | collapsed taxonomies', function(hooks) {
     });
     this.session = this.server.create('session', {
       course,
-      terms: [term1]
+      terms: [term1],
     });
   });
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     const sessionModel = await this.owner.lookup('service:store').find('session', this.session.id);
 
     this.set('subject', sessionModel);

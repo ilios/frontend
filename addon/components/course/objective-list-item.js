@@ -50,7 +50,7 @@ export default class CourseObjectiveListItemComponent extends Component {
       return [...set, ...cohortObjectives.flat()];
     }, []);
     const parents = yield this.args.courseObjective.programYearObjectives;
-    this.parentsBuffer = parents.toArray().map(objective => {
+    this.parentsBuffer = parents.toArray().map((objective) => {
       return objectives.findBy('id', objective.id);
     });
     this.isManagingParents = true;
@@ -76,7 +76,7 @@ export default class CourseObjectiveListItemComponent extends Component {
 
   @dropTask
   *saveParents() {
-    const newParents = this.parentsBuffer.map(obj => {
+    const newParents = this.parentsBuffer.map((obj) => {
       return this.store.peekRecord('program-year-objective', obj.id);
     });
     this.args.courseObjective.set('programYearObjectives', newParents);
@@ -120,13 +120,13 @@ export default class CourseObjectiveListItemComponent extends Component {
   }
   @action
   removeParentFromBuffer(objective) {
-    this.parentsBuffer = this.parentsBuffer.filter(obj => obj.id !== objective.id);
+    this.parentsBuffer = this.parentsBuffer.filter((obj) => obj.id !== objective.id);
   }
   @action
   removeParentsWithCohortFromBuffer(cohort) {
     const cohortObjectives = cohort.competencies.mapBy('objectives');
     const ids = [...cohortObjectives.flat()].mapBy('id');
-    this.parentsBuffer = this.parentsBuffer.filter(obj => {
+    this.parentsBuffer = this.parentsBuffer.filter((obj) => {
       return !ids.includes(obj.id);
     });
   }
@@ -136,7 +136,7 @@ export default class CourseObjectiveListItemComponent extends Component {
   }
   @action
   removeDescriptorFromBuffer(descriptor) {
-    this.descriptorsBuffer = this.descriptorsBuffer.filter(obj => obj.id !== descriptor.id);
+    this.descriptorsBuffer = this.descriptorsBuffer.filter((obj) => obj.id !== descriptor.id);
   }
   @action
   addTermToBuffer(term) {
@@ -144,7 +144,7 @@ export default class CourseObjectiveListItemComponent extends Component {
   }
   @action
   removeTermFromBuffer(term) {
-    this.termsBuffer = this.termsBuffer.filter(obj => obj.id !== term.id);
+    this.termsBuffer = this.termsBuffer.filter((obj) => obj.id !== term.id);
   }
   @action
   cancel() {

@@ -1,15 +1,15 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Model | School Config', function(hooks) {
+module('Unit | Model | School Config', function (hooks) {
   setupTest(hooks);
 
-  test('it exists', function(assert) {
+  test('it exists', function (assert) {
     const model = this.owner.lookup('service:store').createRecord('school-config');
     assert.ok(!!model);
   });
 
-  test('getParsedValue boolean false', async function(assert) {
+  test('getParsedValue boolean false', async function (assert) {
     const model = this.owner.lookup('service:store').createRecord('school-config', {
       name: 'test-false',
       value: 'false',
@@ -17,7 +17,7 @@ module('Unit | Model | School Config', function(hooks) {
     assert.deepEqual(model.parsedValue, false);
   });
 
-  test('getParsedValue boolean true', async function(assert) {
+  test('getParsedValue boolean true', async function (assert) {
     const model = this.owner.lookup('service:store').createRecord('school-config', {
       name: 'test-true',
       value: 'true',

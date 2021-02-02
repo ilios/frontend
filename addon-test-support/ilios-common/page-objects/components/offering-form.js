@@ -2,7 +2,8 @@ import {
   clickable,
   collection,
   create,
-  fillable, hasClass,
+  fillable,
+  hasClass,
   isPresent,
   isVisible,
   property,
@@ -11,9 +12,9 @@ import {
   value,
 } from 'ember-cli-page-object';
 import { flatpickrDatePicker } from 'ilios-common';
-import userNameInfo from "./user-name-info";
-import detailLearnergroupsList from "./detail-learnergroups-list";
-import learnergroupTree from "./learnergroup-tree";
+import userNameInfo from './user-name-info';
+import detailLearnergroupsList from './detail-learnergroups-list';
+import learnergroupTree from './learnergroup-tree';
 
 const definition = {
   scope: '[data-test-offering-form]',
@@ -29,22 +30,26 @@ const definition = {
   },
   startTime: {
     scope: '.start-time',
-    hour: fillable('select', { at: 0}),
-    minutes: fillable('select', { at: 1}),
-    ampm: fillable('select', { at: 2}),
+    hour: fillable('select', { at: 0 }),
+    minutes: fillable('select', { at: 1 }),
+    ampm: fillable('select', { at: 2 }),
   },
   duration: {
     scope: '.offering-duration',
     hours: {
       scope: '.hours input',
       set: fillable(),
-      submit: triggerable('keypress', '', { eventProperties: { key: 'Enter' } })
+      submit: triggerable('keypress', '', {
+        eventProperties: { key: 'Enter' },
+      }),
     },
     minutes: {
       scope: '.minutes input',
       set: fillable(),
-      submit: triggerable('keypress', '', { eventProperties: { key: 'Enter' } })
-    }
+      submit: triggerable('keypress', '', {
+        eventProperties: { key: 'Enter' },
+      }),
+    },
   },
   timezoneEditor: {
     scope: '[data-test-timezone-picker]',
@@ -53,27 +58,31 @@ const definition = {
       edit: clickable(),
     },
     label: {
-      scope: 'label'
+      scope: 'label',
     },
     picker: {
       scope: '.picker select',
       select: fillable(),
     },
-    cancel: clickable('.actions .cancel')
+    cancel: clickable('.actions .cancel'),
   },
   location: {
     scope: '.room',
     set: fillable('input'),
     value: value('input'),
     hasError: isVisible('.validation-error-message'),
-    submit: triggerable('keypress', 'input', { eventProperties: { key: 'Enter' } })
+    submit: triggerable('keypress', 'input', {
+      eventProperties: { key: 'Enter' },
+    }),
   },
   url: {
     scope: '[data-test-url]',
     set: fillable('input'),
     value: value('input'),
     hasError: isVisible('.validation-error-message'),
-    submit: triggerable('keypress', 'input', { eventProperties: { key: 'Enter' } })
+    submit: triggerable('keypress', 'input', {
+      eventProperties: { key: 'Enter' },
+    }),
   },
   recurring: {
     scope: '.make-recurring',
@@ -87,21 +96,21 @@ const definition = {
         toggle: clickable(),
         isSelected: property('checked'),
         isDisabled: property('disabled'),
-      }
-    })
+      },
+    }),
   },
   instructorManager: {
     scope: '[data-test-instructor-management]',
     selectedInstructors: collection('[data-test-selected-instructor]', {
       userNameInfo,
-      remove: clickable('.remove')
+      remove: clickable('.remove'),
     }),
     selectedInstructorGroups: collection('[data-test-selected-instructor-group]', {
       title: text('[data-test-instructor-group-title]'),
       members: collection('[data-test-instructor-group-member]', {
-        userNameInfo
+        userNameInfo,
       }),
-      remove: clickable('[data-test-instructor-group-title]')
+      remove: clickable('[data-test-instructor-group-title]'),
     }),
     search: fillable('.search-box input'),
     searchResults: collection('.results [data-test-result]', {
@@ -123,8 +132,8 @@ const definition = {
       title: text('[data-test-title]', { at: 0 }),
       list: detailLearnergroupsList,
       noGroups: {
-        scope: '[data-test-no-selected-learner-groups]'
-      }
+        scope: '[data-test-no-selected-learner-groups]',
+      },
     },
     availableLearnerGroups: {
       scope: '[data-test-available-learner-groups]',
@@ -133,14 +142,14 @@ const definition = {
       runSearch: clickable('[data-test-search-box] .search-icon'),
       cohorts: collection('[data-test-cohorts]', {
         title: text('[data-test-title]', { at: 0 }),
-        trees: collection('[data-test-learnergroup-tree-root=true]', learnergroupTree)
-      })
+        trees: collection('[data-test-learnergroup-tree-root=true]', learnergroupTree),
+      }),
     },
-    hasError: isPresent('.validation-error-message')
+    hasError: isPresent('.validation-error-message'),
   },
 
   save: clickable('.done'),
-  close: clickable('.cancel')
+  close: clickable('.cancel'),
 };
 
 export default definition;

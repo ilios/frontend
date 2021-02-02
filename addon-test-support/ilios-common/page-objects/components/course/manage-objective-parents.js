@@ -28,7 +28,7 @@ const definition = {
       title: text(),
       selected: hasClass('selected', 'label'),
       notSelected: notHasClass('selected', 'label'),
-      add: clickable('input')
+      add: clickable('input'),
     }),
   }),
   hasNoCohortWarning: isPresent('[data-test-no-cohorts-message]'),

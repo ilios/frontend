@@ -1,7 +1,10 @@
 import moment from 'moment';
 
 export function jsonApiUtcSerializeDate(obj, property) {
-  obj.data.attributes[property] = moment.utc(obj.data.attributes[property]).local().format('YYYY-MM-DD');
+  obj.data.attributes[property] = moment
+    .utc(obj.data.attributes[property])
+    .local()
+    .format('YYYY-MM-DD');
 }
 
 export function jsonApiUtcNormalizeDate(resourceHash, property) {

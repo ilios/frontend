@@ -13,6 +13,6 @@ export function flatpickrDatePicker(selector, options = {}) {
         // to manually call settled to ensure test doesn't continue until it is set
         await settled();
       };
-    }
+    },
   };
 }

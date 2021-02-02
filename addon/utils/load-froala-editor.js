@@ -9,6 +9,6 @@ export async function loadFroalaEditor() {
   ]);
 
   return {
-    FroalaEditor
+    FroalaEditor,
   };
 }

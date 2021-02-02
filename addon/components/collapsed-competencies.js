@@ -23,7 +23,7 @@ export default class CollapsedCompetenciesComponent extends Component {
       if (!(schoolId in schools)) {
         schools[schoolId] = {
           competencies: [],
-          school: this.allSchools.findBy('id', schoolId)
+          school: this.allSchools.findBy('id', schoolId),
         };
       }
       schools[schoolId].competencies.push(competency);

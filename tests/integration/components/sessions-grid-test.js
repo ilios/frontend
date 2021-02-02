@@ -4,14 +4,14 @@ import { click, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | sessions-grid', function(hooks) {
+module('Integration | Component | sessions-grid', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     this.set('sessions', []);
     this.set('sortBy', 'title');
-    this.set('setSortBy', () => { });
+    this.set('setSortBy', () => {});
     await render(hbs`<SessionsGrid
       @sessions={{sessions}}
       @sortBy={{sortBy}}
@@ -23,14 +23,16 @@ module('Integration | Component | sessions-grid', function(hooks) {
 
   test('clicking expand fires action', async function (assert) {
     const session = {
-      id: 1
+      id: 1,
     };
-    this.set('sessions', [{
-      session,
-      offeringCount: 1
-    }]);
+    this.set('sessions', [
+      {
+        session,
+        offeringCount: 1,
+      },
+    ]);
     this.set('sortBy', 'title');
-    this.set('setSortBy', () => { });
+    this.set('setSortBy', () => {});
     this.set('expandSession', (s) => {
       assert.equal(s, session);
     });
@@ -47,14 +49,16 @@ module('Integration | Component | sessions-grid', function(hooks) {
   test('clicking expand does not fire action when there are no offerings', async function (assert) {
     assert.expect(0);
     const session = {
-      id: 1
+      id: 1,
     };
-    this.set('sessions', [{
-      session,
-      offeringCount: 0
-    }]);
+    this.set('sessions', [
+      {
+        session,
+        offeringCount: 0,
+      },
+    ]);
     this.set('sortBy', 'title');
-    this.set('setSortBy', () => { });
+    this.set('setSortBy', () => {});
     this.set('expandSession', () => {
       assert.ok(false);
     });
@@ -84,7 +88,8 @@ module('Integration | Component | sessions-grid', function(hooks) {
         sessionModel2,
         prerequisiteCount: 0,
         canUpdate: true,
-      }]);
+      },
+    ]);
     await render(hbs`<SessionsGrid
       @sessions={{this.sessions}}
       @sortBy='title'

@@ -10,22 +10,27 @@ export default Mixin.create({
   store: service(),
   intl: service(),
   showCheckLink: true,
-  menuTitle: computed('intl.locale', 'publishTarget.isPublished', 'publishTarget.publishedAsTbd', function(){
-    const publishTarget = this.get('publishTarget');
-    const intl = this.get('intl');
-    if(publishTarget.get('publishedAsTbd')){
-      return intl.t('general.scheduled');
+  menuTitle: computed(
+    'intl.locale',
+    'publishTarget.isPublished',
+    'publishTarget.publishedAsTbd',
+    function () {
+      const publishTarget = this.publishTarget;
+      const intl = this.intl;
+      if (publishTarget.get('publishedAsTbd')) {
+        return intl.t('general.scheduled');
+      }
+      if (publishTarget.get('isPublished')) {
+        return intl.t('general.published');
+      }
+      return intl.t('general.notPublished');
     }
-    if(publishTarget.get('isPublished')){
-      return intl.t('general.published');
-    }
-    return intl.t('general.notPublished');
-  }),
-  menuIcon: computed('publishTarget.isPublished', 'publishTarget.publishedAsTbd', function(){
-    if(this.get('publishTarget.publishedAsTbd')){
+  ),
+  menuIcon: computed('publishTarget.isPublished', 'publishTarget.publishedAsTbd', function () {
+    if (this.get('publishTarget.publishedAsTbd')) {
       return 'clock';
     }
-    if(this.get('publishTarget.isPublished')){
+    if (this.get('publishTarget.isPublished')) {
       return 'star';
     }
     return 'cloud';
@@ -36,7 +41,7 @@ export default Mixin.create({
     'publishTarget.isScheduled',
     'publishTarget.requiredPublicationIssues.length',
     'publishTarget.allPublicationIssuesLength',
-    function(){
+    function () {
       return (
         (!this.get('publishTarget.isPublished') || this.get('publishTarget.isScheduled')) &&
         this.get('publishTarget.requiredPublicationIssues.length') === 0 &&
@@ -44,13 +49,12 @@ export default Mixin.create({
       );
     }
   ),
-  showReview: computed('publishTarget.allPublicationIssuesLength', 'showCheckLink', function(){
-    return this.get('publishTarget.allPublicationIssuesLength') > 0 && this.get('showCheckLink');
+  showReview: computed('publishTarget.allPublicationIssuesLength', 'showCheckLink', function () {
+    return this.get('publishTarget.allPublicationIssuesLength') > 0 && this.showCheckLink;
   }),
   showPublish: computed(
-    'publishTarget.isPublished',
-    'publishTarget.allPublicationIssuesLength',
-    function(){
+    'publishTarget.{allPublicationIssuesLength,isPublished,isScheduled}',
+    function () {
       return (
         (!this.get('publishTarget.isPublished') || this.get('publishTarget.isScheduled')) &&
         this.get('publishTarget.allPublicationIssuesLength') === 0
@@ -58,39 +62,43 @@ export default Mixin.create({
     }
   ),
   showUnPublish: or('publishTarget.isPublished', 'publishTarget.isScheduled'),
-  publicationStatus: computed('publishTarget.isPublished', 'publishTarget.isScheduled', function(){
-    if(this.get('publishTarget.isScheduled')){
-      return 'scheduled';
-    } else if (this.get('publishTarget.isPublished')){
-      return 'published';
-    }
+  publicationStatus: computed(
+    'publishTarget.isPublished',
+    'publishTarget.isScheduled',
+    function () {
+      if (this.get('publishTarget.isScheduled')) {
+        return 'scheduled';
+      } else if (this.get('publishTarget.isPublished')) {
+        return 'published';
+      }
 
-    return 'notpublished';
-  }),
+      return 'notpublished';
+    }
+  ),
   actions: {
     unpublish() {
-      const publishTarget = this.get('publishTarget');
+      const publishTarget = this.publishTarget;
       publishTarget.set('publishedAsTbd', false);
       publishTarget.set('published', false);
-      publishTarget.save().then(()=>{
-        this.get('flashMessages').success('general.unPublishedSuccessfully');
+      publishTarget.save().then(() => {
+        this.flashMessages.success('general.unPublishedSuccessfully');
       });
     },
     publishAsTbd() {
-      const publishTarget = this.get('publishTarget');
+      const publishTarget = this.publishTarget;
       publishTarget.set('publishedAsTbd', true);
       publishTarget.set('published', true);
-      publishTarget.save().then(()=>{
-        this.get('flashMessages').success('general.scheduledSuccessfully');
+      publishTarget.save().then(() => {
+        this.flashMessages.success('general.scheduledSuccessfully');
       });
     },
     publish() {
-      const publishTarget = this.get('publishTarget');
+      const publishTarget = this.publishTarget;
       publishTarget.set('publishedAsTbd', false);
       publishTarget.set('published', true);
-      publishTarget.save().then(()=>{
-        this.get('flashMessages').success('general.publishedSuccessfully');
+      publishTarget.save().then(() => {
+        this.flashMessages.success('general.publishedSuccessfully');
       });
     },
-  }
+  },
 });

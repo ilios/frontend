@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 const s = '[data-test-ilios-calendar-event-month]';
 
-module('Integration | Component | ilios calendar event month', function(hooks) {
+module('Integration | Component | ilios calendar event month', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {

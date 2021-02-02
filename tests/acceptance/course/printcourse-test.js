@@ -5,7 +5,7 @@ import { setupAuthentication } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Acceptance | Course - Print Course', function(hooks) {
+module('Acceptance | Course - Print Course', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
@@ -35,9 +35,9 @@ module('Acceptance | Course - Print Course', function(hooks) {
     this.server.create('user', {
       lastName: 'Brown',
       firstName: 'Emmet',
-      id: 1
+      id: 1,
     });
-    this.server.create('learningMaterial',{
+    this.server.create('learningMaterial', {
       title: 'Save the Clock Tower',
       originalAuthor: 'Jennifer Johnson',
       filename: 'Clock Tower Flyer',
@@ -46,49 +46,52 @@ module('Acceptance | Course - Print Course', function(hooks) {
       userRoleId: 1,
       copyrightPermission: true,
       citation: 'Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955',
-      description: 'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.'
+      description:
+        'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.',
     });
-    this.server.create('courseLearningMaterial',{
+    this.server.create('courseLearningMaterial', {
       learningMaterialId: 1,
       courseId: 1,
       required: false,
     });
     this.server.create('meshDescriptor', {
       courseIds: [1],
-      name: "Flux Capacitor"
+      name: 'Flux Capacitor',
     });
   });
 
   test('print course header', async function (assert) {
     assert.expect(1);
-    await setupAuthentication( { school: this.school });
+    await setupAuthentication({ school: this.school });
     await visit('/course/1/print');
     assert.dom('[data-test-course-header] h2').hasText('Back to the Future');
   });
 
   test('print course mesh terms', async function (assert) {
     assert.expect(1);
-    await setupAuthentication( { school: this.school });
+    await setupAuthentication({ school: this.school });
     await visit('/course/1/print');
     assert.dom('[data-test-course-mesh] ul li').hasText('Flux Capacitor');
   });
 
   test('print course learning materials', async function (assert) {
     assert.expect(4);
-    await setupAuthentication( { school: this.school });
+    await setupAuthentication({ school: this.school });
     await visit('/course/1/print');
 
     const values = await findAll('[data-test-course-learningmaterials] .content tbody tr td');
     assert.dom(values[0]).hasText('Save the Clock Tower');
     assert.dom(values[1]).hasText('file');
     assert.dom(values[2]).hasText('No');
-    assert.dom(values[4]).hasText(
-      'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines. Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955'
-    );
+    assert
+      .dom(values[4])
+      .hasText(
+        'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines. Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955'
+      );
   });
 
   test('test print unpublished sessions for elevated privileges', async function (assert) {
-    await setupAuthentication( { school: this.school }, true);
+    await setupAuthentication({ school: this.school }, true);
     this.server.create('session', {
       course: this.course,
       published: false,
@@ -114,7 +117,7 @@ module('Acceptance | Course - Print Course', function(hooks) {
   });
 
   test('test does not print unpublished sessions for unprivileged users', async function (assert) {
-    await setupAuthentication( { school: this.school });
+    await setupAuthentication({ school: this.school });
     this.server.create('session', {
       course: this.course,
       published: false,
@@ -140,7 +143,7 @@ module('Acceptance | Course - Print Course', function(hooks) {
 
   test('test print ILM details', async function (assert) {
     assert.expect(6);
-    await setupAuthentication( { school: this.school });
+    await setupAuthentication({ school: this.school });
 
     this.server.create('session', {
       course: this.course,
@@ -151,7 +154,7 @@ module('Acceptance | Course - Print Course', function(hooks) {
     this.server.create('ilmSession', {
       sessionId: 1,
       hours: 1.5,
-      dueDate: new Date('1995-12-17T03:24:00')
+      dueDate: new Date('1995-12-17T03:24:00'),
     });
 
     await visit('/course/1/print');
@@ -169,39 +172,46 @@ module('Acceptance | Course - Print Course', function(hooks) {
     assert.dom(values[1]).hasText('12/17/1995');
   });
 
-  test('test print session objectives', async function(assert) {
+  test('test print session objectives', async function (assert) {
     assert.expect(9);
-    await setupAuthentication({school: this.school});
+    await setupAuthentication({ school: this.school });
 
     const session = this.server.create('session', {
       courseId: 1,
       published: true,
       publishedAsTbd: false,
     });
-    const courseObjective = this.server.create('courseObjective', {course: this.course, title: 'Course Objective 1'});
-    const vocabulary = this.server.create('vocabulary', {school: this.school});
-    const term = this.server.create('term', {vocabulary});
+    const courseObjective = this.server.create('courseObjective', {
+      course: this.course,
+      title: 'Course Objective 1',
+    });
+    const vocabulary = this.server.create('vocabulary', {
+      school: this.school,
+    });
+    const term = this.server.create('term', { vocabulary });
     const sessionObjective = this.server.create('sessionObjective', {
       session,
       title: 'Session Objective 1',
       courseObjectives: [courseObjective],
-      terms: [term]
+      terms: [term],
     });
 
     this.server.create('meshDescriptor', {
-      sessionObjectives: [ sessionObjective ],
-      name: "MeSH Descriptor 1",
+      sessionObjectives: [sessionObjective],
+      name: 'MeSH Descriptor 1',
     });
 
     this.server.create('meshDescriptor', {
-      sessionObjectives: [ sessionObjective ],
-      name: "MeSH Descriptor 2",
+      sessionObjectives: [sessionObjective],
+      name: 'MeSH Descriptor 2',
     });
 
     await visit('/course/1/print');
 
     const labels = await findAll('[data-test-session-objectives] [data-test-header]');
-    const values = await findAll('[data-test-session-objectives] [data-test-session-objective-list-item] .grid-item');
+    const values = await findAll(
+      '[data-test-session-objectives] [data-test-session-objective-list-item] .grid-item'
+    );
     assert.dom(labels[0]).hasText('Description');
     assert.dom(labels[1]).hasText('Parent Objectives');
     assert.dom(labels[2]).hasText('Vocabulary Terms');
@@ -213,9 +223,9 @@ module('Acceptance | Course - Print Course', function(hooks) {
     assert.ok(values[3].textContent.trim().endsWith('MeSH Descriptor 2'));
   });
 
-  test('test print course objectives', async function(assert) {
+  test('test print course objectives', async function (assert) {
     assert.expect(9);
-    await setupAuthentication( { school: this.school });
+    await setupAuthentication({ school: this.school });
 
     const competency = this.server.create('competency', {
       school: this.school,
@@ -225,29 +235,33 @@ module('Acceptance | Course - Print Course', function(hooks) {
       competency,
       title: 'Program Year Objective 1',
     });
-    const vocabulary = this.server.create('vocabulary', { school: this.school });
+    const vocabulary = this.server.create('vocabulary', {
+      school: this.school,
+    });
     const term = this.server.create('term', { vocabulary });
     const courseObjective = this.server.create('courseObjective', {
       course: this.course,
       title: 'Course Objective 1',
-      programYearObjectives: [ programYearObjective ],
-      terms: [ term ]
+      programYearObjectives: [programYearObjective],
+      terms: [term],
     });
 
     this.server.create('meshDescriptor', {
-      courseObjectives: [ courseObjective ],
-      name: "MeSH Descriptor 1",
+      courseObjectives: [courseObjective],
+      name: 'MeSH Descriptor 1',
     });
 
     this.server.create('meshDescriptor', {
-      courseObjectives: [ courseObjective ],
-      name: "MeSH Descriptor 2",
+      courseObjectives: [courseObjective],
+      name: 'MeSH Descriptor 2',
     });
 
     await visit('/course/1/print');
 
     const labels = await findAll('[data-test-course-objectives] [data-test-header]');
-    const values = await findAll('[data-test-course-objectives] [data-test-course-objective-list-item] .grid-item');
+    const values = await findAll(
+      '[data-test-course-objectives] [data-test-course-objective-list-item] .grid-item'
+    );
     assert.dom(labels[0]).hasText('Description');
     assert.dom(labels[1]).hasText('Parent Objectives');
     assert.dom(labels[2]).hasText('Vocabulary Terms');

@@ -15,6 +15,7 @@ export default class TooltipComponent extends Component {
   }
 
   willDestroy() {
+    super.willDestroy(...arguments);
     if (this._popper) {
       this._popper.destroy();
     }

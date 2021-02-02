@@ -4,8 +4,8 @@ import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import {tracked} from '@glimmer/tracking';
-import {restartableTask} from "ember-concurrency-decorators";
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class VisualizerCourseInstructorSessionType extends Component {
   @service router;
@@ -15,14 +15,14 @@ export default class VisualizerCourseInstructorSessionType extends Component {
   @tracked tooltipTitle = null;
 
   @restartableTask
-  * load(element, [course, user]) {
+  *load(element, [course, user]) {
     const sessions = yield course.get('sessions');
-    const sessionsWithUser = yield filter(sessions.toArray(), async session => {
+    const sessionsWithUser = yield filter(sessions.toArray(), async (session) => {
       const instructors = await session.get('allInstructors');
       return instructors.mapBy('id').includes(user.get('id'));
     });
 
-    const dataMap = yield map(sessionsWithUser, async session => {
+    const dataMap = yield map(sessionsWithUser, async (session) => {
       const sessionType = await session.get('sessionType');
 
       const hours = await session.get('totalSumDuration');
@@ -43,8 +43,8 @@ export default class VisualizerCourseInstructorSessionType extends Component {
           data: 0,
           label: name,
           meta: {
-            sessions: []
-          }
+            sessions: [],
+          },
         };
         set.pushObject(existing);
       }
@@ -54,9 +54,11 @@ export default class VisualizerCourseInstructorSessionType extends Component {
       return set;
     }, []);
 
-    const totalMinutes = sessionTypeData.mapBy('data').reduce((total, minutes) => total + minutes, 0);
-    this.data = sessionTypeData.map(obj => {
-      const percent = (obj.data / totalMinutes * 100).toFixed(1);
+    const totalMinutes = sessionTypeData
+      .mapBy('data')
+      .reduce((total, minutes) => total + minutes, 0);
+    this.data = sessionTypeData.map((obj) => {
+      const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
       obj.label = `${obj.label} ${percent}%`;
       obj.meta.totalMinutes = totalMinutes;
       obj.meta.percent = percent;

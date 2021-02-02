@@ -1,11 +1,4 @@
-import {
-  create,
-  clickable,
-  collection,
-  hasClass,
-  isPresent,
-  text,
-} from 'ember-cli-page-object';
+import { create, clickable, collection, hasClass, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-monthly-calendar]',

@@ -1,9 +1,4 @@
-import {
-  create,
-  triggerable,
-  isVisible,
-  isHidden
-} from 'ember-cli-page-object';
+import { create, triggerable, isVisible, isHidden } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-course-publication-menu]',

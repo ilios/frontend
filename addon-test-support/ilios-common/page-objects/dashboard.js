@@ -1,7 +1,4 @@
-import {
-  create,
-  visitable,
-} from 'ember-cli-page-object';
+import { create, visitable } from 'ember-cli-page-object';
 import weeklyCalendar from './components/weekly-calendar';
 import dailyCalendar from './components/daily-calendar';
 import weekGlance from './components/week-glance';

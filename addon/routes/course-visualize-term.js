@@ -19,8 +19,8 @@ export default class CourseVisualizeTermRoute extends Route.extend(Authenticated
     const sessions = (await course.sessions).toArray();
     return await all([
       term.vocabulary,
-      map(sessions, s => s.sessionType),
-      map(sessions, s => s.totalSumDuration),
+      map(sessions, (s) => s.sessionType),
+      map(sessions, (s) => s.totalSumDuration),
     ]);
   }
 }

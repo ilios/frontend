@@ -1,10 +1,10 @@
-import { registerDecorator } from "class-validator";
+import { registerDecorator } from 'class-validator';
 import { getOwner } from '@ember/application';
 
 export function Lte(lte, validationOptions) {
   return function (object, propertyName) {
     registerDecorator({
-      name: "lte",
+      name: 'lte',
       target: object.constructor,
       propertyName: propertyName,
       constraints: [lte],
@@ -30,8 +30,11 @@ export function Lte(lte, validationOptions) {
           const intl = owner.lookup('service:intl');
           const lteValue = constraints[0];
           const description = intl.t('errors.description');
-          return intl.t('errors.lessThanOrEqualTo', { description, lte: lteValue });
-        }
+          return intl.t('errors.lessThanOrEqualTo', {
+            description,
+            lte: lteValue,
+          });
+        },
       },
     });
   };

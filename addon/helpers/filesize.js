@@ -1,6 +1,6 @@
 import { helper } from '@ember/component/helper';
 
-export function filesize(params/*, hash*/) {
+export function filesize(params /*, hash*/) {
   let value = params[0];
   if (typeof value === 'undefined') {
     return null;

@@ -27,10 +27,12 @@ export default class LeadershipSearchComponent extends Component {
     }
 
     if (q.length < MIN_INPUT) {
-      return [{
-        type: 'text',
-        text: this.intl.t('general.moreInputRequiredPrompt')
-      }];
+      return [
+        {
+          type: 'text',
+          text: this.intl.t('general.moreInputRequiredPrompt'),
+        },
+      ];
     }
     yield timeout(DEBOUNCE_MS);
 
@@ -38,25 +40,29 @@ export default class LeadershipSearchComponent extends Component {
       q,
       'order_by[lastName]': 'ASC',
       'order_by[firstName]': 'ASC',
-      limit: 100
+      limit: 100,
     });
     if (searchResults.length === 0) {
-      return [{
-        type: 'text',
-        text: this.intl.t('general.noSearchResultsPrompt')
-      }];
+      return [
+        {
+          type: 'text',
+          text: this.intl.t('general.noSearchResultsPrompt'),
+        },
+      ];
     }
-    const mappedResults = searchResults.map(user => {
+    const mappedResults = searchResults.map((user) => {
       return {
         type: 'user',
-        user
+        user,
       };
     });
     const results = [
       {
         type: 'summary',
-        text: this.intl.t('general.resultsCount', {count: mappedResults.length})
-      }
+        text: this.intl.t('general.resultsCount', {
+          count: mappedResults.length,
+        }),
+      },
     ];
     results.pushObjects(mappedResults);
 

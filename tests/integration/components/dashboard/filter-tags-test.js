@@ -4,7 +4,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | dashboard/filter-tags', function(hooks) {
+module('Integration | Component | dashboard/filter-tags', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -14,9 +14,9 @@ module('Integration | Component | dashboard/filter-tags', function(hooks) {
     const vocabulary = this.server.create('vocabulary');
     this.server.createList('term', 3, { vocabulary });
     this.set('cohortProxies', [
-      { id: 1, displayTitle: 'cohort 1', programTitle: 'program 1'},
-      { id: 2, displayTitle: 'cohort 2', programTitle: 'program 1'},
-      { id: 3, displayTitle: 'cohort 3', programTitle: 'program 2'},
+      { id: 1, displayTitle: 'cohort 1', programTitle: 'program 1' },
+      { id: 2, displayTitle: 'cohort 2', programTitle: 'program 1' },
+      { id: 3, displayTitle: 'cohort 3', programTitle: 'program 2' },
     ]);
     await render(hbs`<Dashboard::FilterTags
       @selectedCourseLevels={{array 1 2}}

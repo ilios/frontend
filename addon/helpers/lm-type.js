@@ -1,6 +1,6 @@
 import { helper } from '@ember/component/helper';
 
-export function lmType(params/*, hash*/) {
+export function lmType(params /*, hash*/) {
   const obj = params[0];
   if (Object.prototype.hasOwnProperty.call(obj, 'filename')) {
     return 'file';

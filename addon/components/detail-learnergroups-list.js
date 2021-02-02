@@ -9,30 +9,30 @@ export default class DetailLearnerGroupsListComponent extends Component {
   @tracked lowestLeaves;
 
   @restartableTask
-  *load(event, [learnerGroups]){
+  *load(event, [learnerGroups]) {
     if (!learnerGroups) {
       return;
     }
 
     const topLevelGroups = yield all(learnerGroups.toArray().mapBy('topLevelGroup'));
 
-    this.trees = yield map(topLevelGroups.uniq(), async topLevelGroup => {
-      const groups = await filter(learnerGroups.toArray(), async learnerGroup => {
+    this.trees = yield map(topLevelGroups.uniq(), async (topLevelGroup) => {
+      const groups = await filter(learnerGroups.toArray(), async (learnerGroup) => {
         const thisGroupsTopLevelGroup = await learnerGroup.get('topLevelGroup');
-        return (thisGroupsTopLevelGroup === topLevelGroup);
+        return thisGroupsTopLevelGroup === topLevelGroup;
       });
 
-      const sortProxies = await map(groups, async group => {
+      const sortProxies = await map(groups, async (group) => {
         const sortTitle = await group.get('sortTitle');
         return {
           group,
-          sortTitle
+          sortTitle,
         };
       });
 
       return {
         topLevelGroup,
-        groups: sortProxies.sortBy('sortTitle').mapBy('group')
+        groups: sortProxies.sortBy('sortTitle').mapBy('group'),
       };
     });
 

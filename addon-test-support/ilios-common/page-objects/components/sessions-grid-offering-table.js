@@ -1,8 +1,4 @@
-import {
-  clickable,
-  collection,
-  text
-} from 'ember-cli-page-object';
+import { clickable, collection, text } from 'ember-cli-page-object';
 import offeringForm from './offering-form';
 
 export default {
@@ -20,5 +16,5 @@ export default {
     instructors: text('td', { at: 4 }),
     edit: clickable('td:nth-of-type(6) .link'),
     offeringForm,
-  })
+  }),
 };

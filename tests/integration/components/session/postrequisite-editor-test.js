@@ -5,14 +5,14 @@ import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/session/postrequisite-editor';
 
-module('Integration | Component | session/postrequisite-editor', function(hooks) {
+module('Integration | Component | session/postrequisite-editor', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   test('it renders with no postrequisite selected', async function (assert) {
     const sessions = this.server.createList('session', 5);
     this.server.create('course', {
-      sessions
+      sessions,
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', sessions[2].id);
     this.set('nothing', () => {});
@@ -34,11 +34,11 @@ module('Integration | Component | session/postrequisite-editor', function(hooks)
   test('it renders with a postrequisite selected', async function (assert) {
     const sessions = this.server.createList('session', 4);
     const course = this.server.create('course', {
-      sessions
+      sessions,
     });
     const session = this.server.create('session', {
       postrequisite: sessions[1],
-      course
+      course,
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('nothing', () => {});
@@ -59,11 +59,11 @@ module('Integration | Component | session/postrequisite-editor', function(hooks)
   test('can remove postrequisite from header', async function (assert) {
     const sessions = this.server.createList('session', 4);
     const course = this.server.create('course', {
-      sessions
+      sessions,
     });
     const session = this.server.create('session', {
       postrequisite: sessions[1],
-      course
+      course,
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('nothing', () => {});
@@ -91,11 +91,11 @@ module('Integration | Component | session/postrequisite-editor', function(hooks)
   test('can remove postrequisite from row', async function (assert) {
     const sessions = this.server.createList('session', 4);
     const course = this.server.create('course', {
-      sessions
+      sessions,
     });
     const session = this.server.create('session', {
       postrequisite: sessions[1],
-      course
+      course,
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('nothing', () => {});
@@ -123,7 +123,7 @@ module('Integration | Component | session/postrequisite-editor', function(hooks)
   test('can add postrequisite from row', async function (assert) {
     const sessions = this.server.createList('session', 5);
     this.server.create('course', {
-      sessions
+      sessions,
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', sessions[0].id);
     this.set('nothing', () => {});
@@ -152,7 +152,7 @@ module('Integration | Component | session/postrequisite-editor', function(hooks)
     assert.expect(1);
     const sessions = this.server.createList('session', 5);
     this.server.create('course', {
-      sessions
+      sessions,
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', sessions[0].id);
     this.set('close', () => {
@@ -171,7 +171,7 @@ module('Integration | Component | session/postrequisite-editor', function(hooks)
     assert.expect(1);
     const sessions = this.server.createList('session', 5);
     this.server.create('course', {
-      sessions
+      sessions,
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', sessions[0].id);
     this.set('close', () => {
@@ -189,19 +189,19 @@ module('Integration | Component | session/postrequisite-editor', function(hooks)
   test('filters by title', async function (assert) {
     const course = this.server.create('course');
     const session = this.server.create('session', {
-      course
+      course,
     });
     this.server.create('session', {
       title: 'jasper dog',
-      course
+      course,
     });
     this.server.create('session', {
       title: 'jackson dog',
-      course
+      course,
     });
     this.server.create('session', {
       title: 'fuzzy the cat',
-      course
+      course,
     });
     const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('nothing', () => {});

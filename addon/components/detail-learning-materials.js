@@ -23,7 +23,7 @@ export default class DetailCohortsComponent extends Component {
   @tracked learningMaterialStatuses;
   @tracked learningMaterialUserRoles;
 
-  constructor(){
+  constructor() {
     super(...arguments);
     this.learningMaterialStatuses = this.store.peekAll('learning-material-status');
     this.learningMaterialUserRoles = this.store.peekAll('learning-material-user-role');
@@ -43,7 +43,7 @@ export default class DetailCohortsComponent extends Component {
   }
 
   get parentMaterialIds() {
-    return this.materials.map(lm => {
+    return this.materials.map((lm) => {
       return lm.belongsTo('learningMaterial').id();
     });
   }
@@ -52,7 +52,7 @@ export default class DetailCohortsComponent extends Component {
     const materialProxy = ObjectProxy.extend({ confirmRemoval: false });
     return this.materials
       .sort(sortableByPosition)
-      .map(material => materialProxy.create({ content: material }));
+      .map((material) => materialProxy.create({ content: material }));
   }
 
   get isManaging() {
@@ -62,8 +62,8 @@ export default class DetailCohortsComponent extends Component {
   get isSession() {
     return !this.args.isCourse;
   }
-  get displaySearchBox(){
-    return (!this.isManaging && !this.displayAddNewForm && !this.isSorting && this.args.editable);
+  get displaySearchBox() {
+    return !this.isManaging && !this.displayAddNewForm && !this.isSorting && this.args.editable;
   }
 
   get hasMoreThanOneLearningMaterial() {
@@ -93,9 +93,15 @@ export default class DetailCohortsComponent extends Component {
       position = this.materials.sortBy('position').reverse()[0].get('position') + 1;
     }
     if (this.args.isCourse) {
-      lmSubject = this.store.createRecord('course-learning-material', {course: this.args.subject, position});
+      lmSubject = this.store.createRecord('course-learning-material', {
+        course: this.args.subject,
+        position,
+      });
     } else {
-      lmSubject = this.store.createRecord('session-learning-material', {session: this.args.subject, position});
+      lmSubject = this.store.createRecord('session-learning-material', {
+        session: this.args.subject,
+        position,
+      });
     }
     lmSubject.set('learningMaterial', savedLm);
     yield lmSubject.save();
@@ -131,7 +137,7 @@ export default class DetailCohortsComponent extends Component {
       newLearningMaterial = this.store.createRecord('session-learning-material', {
         session: this.args.subject,
         learningMaterial: parentLearningMaterial,
-        position: 0
+        position: 0,
       });
     }
     let position = 0;
@@ -149,7 +155,7 @@ export default class DetailCohortsComponent extends Component {
     return yield subjectLearningMaterial.save();
   }
 
-  async saveSomeMaterials(arr){
+  async saveSomeMaterials(arr) {
     const chunk = arr.splice(0, 5);
     const savedMaterials = await all(chunk.invoke('save'));
     let moreMaterials = [];

@@ -1,15 +1,15 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 
-module('Unit | Model | Program', function(hooks) {
+module('Unit | Model | Program', function (hooks) {
   setupTest(hooks);
 
-  test('it exists', function(assert) {
+  test('it exists', function (assert) {
     const model = this.owner.lookup('service:store').createRecord('program');
     assert.ok(!!model);
   });
 
-  test('hasCurriculumInventoryReports', function(assert){
+  test('hasCurriculumInventoryReports', function (assert) {
     assert.expect(2);
     const model = this.owner.lookup('service:store').createRecord('program');
     const store = this.owner.lookup('service:store');
@@ -19,7 +19,7 @@ module('Unit | Model | Program', function(hooks) {
     assert.ok(model.get('hasCurriculumInventoryReports'));
   });
 
-  test('hasProgramYears', function(assert){
+  test('hasProgramYears', function (assert) {
     assert.expect(2);
     const model = this.owner.lookup('service:store').createRecord('program');
     const store = this.owner.lookup('service:store');
@@ -29,33 +29,45 @@ module('Unit | Model | Program', function(hooks) {
     assert.ok(model.get('hasProgramYears'));
   });
 
-  test('cohorts', async function(assert){
+  test('cohorts', async function (assert) {
     assert.expect(3);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('program');
     const cohort1 = store.createRecord('cohort');
-    const programYear1 = store.createRecord('program-year', {cohort: cohort1 });
+    const programYear1 = store.createRecord('program-year', {
+      cohort: cohort1,
+    });
     const cohort2 = store.createRecord('cohort');
-    const programYear2 = store.createRecord('program-year', {cohort: cohort2 });
-    model.get('programYears').pushObjects([ programYear1, programYear2 ]);
+    const programYear2 = store.createRecord('program-year', {
+      cohort: cohort2,
+    });
+    model.get('programYears').pushObjects([programYear1, programYear2]);
     const cohorts = await model.get('cohorts');
     assert.equal(cohorts.length, 2);
     assert.ok(cohorts.includes(cohort1));
     assert.ok(cohorts.includes(cohort2));
   });
 
-  test('courses', async function(assert){
+  test('courses', async function (assert) {
     assert.expect(4);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('program');
     const course1 = store.createRecord('course');
     const course2 = store.createRecord('course');
     const course3 = store.createRecord('course');
-    const cohort1 = store.createRecord('cohort', {courses: [ course1, course2 ] });
-    const programYear1 = store.createRecord('program-year', {cohort: cohort1 });
-    const cohort2 = store.createRecord('cohort', {courses: [ course1, course3 ]});
-    const programYear2 = store.createRecord('program-year', {cohort: cohort2 });
-    model.get('programYears').pushObjects([ programYear1, programYear2 ]);
+    const cohort1 = store.createRecord('cohort', {
+      courses: [course1, course2],
+    });
+    const programYear1 = store.createRecord('program-year', {
+      cohort: cohort1,
+    });
+    const cohort2 = store.createRecord('cohort', {
+      courses: [course1, course3],
+    });
+    const programYear2 = store.createRecord('program-year', {
+      cohort: cohort2,
+    });
+    model.get('programYears').pushObjects([programYear1, programYear2]);
     const courses = await model.get('courses');
     assert.equal(courses.length, 3);
     assert.ok(courses.includes(course1));

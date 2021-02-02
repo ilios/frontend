@@ -1,8 +1,6 @@
-module.exports = function() {
+module.exports = function () {
   return {
-    'free-brands-svg-icons': [
-      'black-tie'
-    ],
+    'free-brands-svg-icons': ['black-tie'],
     'free-solid-svg-icons': [
       'angle-double-down',
       'angle-double-left',
@@ -73,13 +71,9 @@ module.exports = function() {
       'user-clock',
       'user-plus',
       'user-times',
-      'users'
+      'users',
     ],
-    'pro-light-svg-icons': [
-      'clipboard-list',
-    ],
-    'pro-duotone-svg-icons': [
-      'sign-in',
-    ],
+    'pro-light-svg-icons': ['clipboard-list'],
+    'pro-duotone-svg-icons': ['sign-in'],
   };
 };

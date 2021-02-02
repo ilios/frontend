@@ -1,10 +1,4 @@
-import {
-  attribute,
-  create,
-  isVisible,
-  text,
-  triggerable
-} from 'ember-cli-page-object';
+import { attribute, create, isVisible, text, triggerable } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-user-name-info]',

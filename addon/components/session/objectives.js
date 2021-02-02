@@ -12,7 +12,7 @@ export default class SessionObjectivesComponent extends Component {
   @tracked newObjectiveTitle;
   @tracked objectivesRelationship;
 
-  get showCollapsible(){
+  get showCollapsible() {
     return this.hasObjectives && !this.isManaging;
   }
 

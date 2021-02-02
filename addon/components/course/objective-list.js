@@ -15,9 +15,7 @@ export default class CourseObjectiveListComponent extends Component {
 
   @tracked isSorting = false;
 
-  @use courseObjectivesAsync = new ResolveAsyncValue(() => [
-    this.args.course.courseObjectives,
-  ]);
+  @use courseObjectivesAsync = new ResolveAsyncValue(() => [this.args.course.courseObjectives]);
 
   get courseObjectives() {
     if (this.load.lastSuccessful && this.courseObjectivesAsync) {
@@ -27,9 +25,7 @@ export default class CourseObjectiveListComponent extends Component {
     return undefined;
   }
 
-  @use courseCohortsAsync = new ResolveAsyncValue(() => [
-    this.args.course.cohorts,
-  ]);
+  @use courseCohortsAsync = new ResolveAsyncValue(() => [this.args.course.cohorts]);
 
   get courseCohorts() {
     if (this.load.lastSuccessful && this.courseCohortsAsync) {
@@ -67,13 +63,15 @@ export default class CourseObjectiveListComponent extends Component {
   }
 
   async getCohortObjectives(cohorts, intl) {
-    return await map(cohorts, async cohort => {
+    return await map(cohorts, async (cohort) => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;
       const school = await program.school;
-      const allowMultipleCourseObjectiveParents = await school.getConfigValue('allowMultipleCourseObjectiveParents');
+      const allowMultipleCourseObjectiveParents = await school.getConfigValue(
+        'allowMultipleCourseObjectiveParents'
+      );
       const objectives = await programYear.programYearObjectives;
-      const objectiveObjects = await map(objectives.toArray(), async objective => {
+      const objectiveObjects = await map(objectives.toArray(), async (objective) => {
         let competencyId = 0;
         let competencyTitle = intl.t('general.noAssociatedCompetency');
         const competency = await objective.competency;
@@ -96,7 +94,7 @@ export default class CourseObjectiveListComponent extends Component {
           existing = {
             id: obj.competencyId,
             title: obj.competencyTitle,
-            objectives: []
+            objectives: [],
           };
           set.push(existing);
         }

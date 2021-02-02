@@ -1,13 +1,13 @@
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {  render } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/course-overview';
 import moment from 'moment';
 
-module('Integration | Component | course overview', function(hooks) {
+module('Integration | Component | course overview', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -15,16 +15,16 @@ module('Integration | Component | course overview', function(hooks) {
     const permissionCheckerMock = Service.extend({
       async canCreateCourse() {
         return true;
-      }
+      },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
     this.store = this.owner.lookup('service:store');
   });
 
-  test('course external id validation fails if value is too short', async function(assert) {
+  test('course external id validation fails if value is too short', async function (assert) {
     const course = this.server.create('course');
     this.server.create('course-clerkship-type', {
-      courses: [course]
+      courses: [course],
     });
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
@@ -42,7 +42,7 @@ module('Integration | Component | course overview', function(hooks) {
   test('course external id validation fails if value is too long', async function (assert) {
     const course = this.server.create('course');
     this.server.create('course-clerkship-type', {
-      courses: [course]
+      courses: [course],
     });
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);

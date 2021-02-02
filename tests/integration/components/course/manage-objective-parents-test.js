@@ -6,7 +6,7 @@ import { component } from 'ilios-common/page-objects/components/course/manage-ob
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | course/manage-objective-parents', function(hooks) {
+module('Integration | Component | course/manage-objective-parents', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -24,12 +24,12 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
               {
                 id: programYearObjective.id,
                 title: programYearObjective.title,
-                active: programYearObjective.active
-              }
-            ]
-          }
-        ]
-      }
+                active: programYearObjective.active,
+              },
+            ],
+          },
+        ],
+      },
     ];
     this.set('cohortObjectives', cohortObjectives);
     await render(hbs`<Course::ManageObjectiveParents
@@ -69,10 +69,10 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
                 id: programYearObjective.title,
                 title: programYearObjective.title,
                 active: programYearObjective.active,
-              }
-            ]
-          }
-        ]
+              },
+            ],
+          },
+        ],
       },
       {
         title: 'cohort 1',
@@ -86,11 +86,11 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
                 id: programYearObjective.id,
                 title: programYearObjective.title,
                 active: programYearObjective.active,
-              }
-            ]
-          }
-        ]
-      }
+              },
+            ],
+          },
+        ],
+      },
     ];
     this.set('cohortObjectives', cohortObjectives);
     await render(hbs`<Course::ManageObjectiveParents
@@ -117,8 +117,12 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
 
   test('inactive parents are hidden unless they are selected', async function (assert) {
     const activeProgramYearObjective = this.server.create('programYearObjective');
-    const inactiveProgramYearObjective = this.server.create('programYearObjective', { active: false });
-    const inactiveSelectedProgramYearObjective = this.server.create('programYearObjective', { active: false });
+    const inactiveProgramYearObjective = this.server.create('programYearObjective', {
+      active: false,
+    });
+    const inactiveSelectedProgramYearObjective = this.server.create('programYearObjective', {
+      active: false,
+    });
 
     const obj1 = {
       id: activeProgramYearObjective.id,
@@ -146,10 +150,10 @@ module('Integration | Component | course/manage-objective-parents', function(hoo
         competencies: [
           {
             title: 'competency 0',
-            objectives: [ obj1, obj2, obj3 ],
-          }
-        ]
-      }
+            objectives: [obj1, obj2, obj3],
+          },
+        ],
+      },
     ];
     this.set('cohortObjectives', cohortObjectives);
     this.set('selected', [obj3]);

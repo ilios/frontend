@@ -1,8 +1,8 @@
 import colorChange from 'dummy/utils/color-change';
 import { module, test } from 'qunit';
 
-module('Unit | Utility | color change', function() {
-  test('it lightens', function(assert) {
+module('Unit | Utility | color change', function () {
+  test('it lightens', function (assert) {
     const hex = '#222222';
     const diff = '0.5';
     const result = colorChange(hex, diff);
@@ -10,7 +10,7 @@ module('Unit | Utility | color change', function() {
     assert.equal(result, '#333333');
   });
 
-  test('it darkens', function(assert) {
+  test('it darkens', function (assert) {
     const hex = '#aaaaaa';
     const diff = '-0.5';
     const result = colorChange(hex, diff);

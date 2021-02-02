@@ -10,10 +10,10 @@ export default class EventsRoute extends Route.extend(AuthenticatedRouteMixin) {
     const slug = params.slug;
     const container = slug.substring(0, 1);
     let eventService;
-    if(container === 'S'){
+    if (container === 'S') {
       eventService = this.schoolEvents;
     }
-    if(container === 'U'){
+    if (container === 'U') {
       eventService = this.userEvents;
     }
 

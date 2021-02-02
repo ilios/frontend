@@ -2,13 +2,13 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
-import { upload  } from 'ember-file-upload/mirage';
+import { upload } from 'ember-file-upload/mirage';
 import { selectFiles } from 'ember-file-upload/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import Service from '@ember/service';
 import Response from 'ember-cli-mirage/response';
 
-module('Integration | Component | learning-material-uploader', function(hooks) {
+module('Integration | Component | learning-material-uploader', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -17,18 +17,25 @@ module('Integration | Component | learning-material-uploader', function(hooks) {
     const iliosConfigMock = Service.extend({
       async getMaxUploadSize() {
         return 1000;
-      }
+      },
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
 
-    this.server.post('/upload', upload(function (db, request) {
-      const { name } = request.requestBody.file;
-      assert.equal(name, 'blob');
-      return new Response(200, {}, {
-        filename: 'test.file',
-        fileHash: '1234'
-      });
-    }));
+    this.server.post(
+      '/upload',
+      upload(function (db, request) {
+        const { name } = request.requestBody.file;
+        assert.equal(name, 'blob');
+        return new Response(
+          200,
+          {},
+          {
+            filename: 'test.file',
+            fileHash: '1234',
+          }
+        );
+      })
+    );
     let filename = null;
     let fileHash = null;
 
@@ -56,7 +63,7 @@ module('Integration | Component | learning-material-uploader', function(hooks) {
     const iliosConfigMock = Service.extend({
       async getMaxUploadSize() {
         return 1;
-      }
+      },
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
 

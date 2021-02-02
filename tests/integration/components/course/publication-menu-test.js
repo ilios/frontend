@@ -6,7 +6,7 @@ import { component } from 'ilios-common/page-objects/components/course/publicati
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | course/publication-menu', function(hooks) {
+module('Integration | Component | course/publication-menu', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -19,18 +19,18 @@ module('Integration | Component | course/publication-menu', function(hooks) {
     await a11yAudit(this.element, {
       rules: {
         'color-contrast': {
-          enabled: false
-        }
-      }
+          enabled: false,
+        },
+      },
     });
     assert.equal(component.text, 'Not Published');
     await component.toggle.click();
     await a11yAudit(this.element, {
       rules: {
         'color-contrast': {
-          enabled: false
-        }
-      }
+          enabled: false,
+        },
+      },
     });
     assert.ok(true, 'no a11y errors found!');
   });
@@ -67,7 +67,7 @@ module('Integration | Component | course/publication-menu', function(hooks) {
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('click opens menu', async function(assert) {
+  test('click opens menu', async function (assert) {
     this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').find('course', 1);
     this.set('course', courseModel);
@@ -77,7 +77,7 @@ module('Integration | Component | course/publication-menu', function(hooks) {
     assert.ok(component.menuOpen);
   });
 
-  test('correct actions for unpublished course', async function(assert) {
+  test('correct actions for unpublished course', async function (assert) {
     this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').find('course', 1);
     this.set('course', courseModel);
@@ -108,7 +108,7 @@ module('Integration | Component | course/publication-menu', function(hooks) {
     assert.notOk(component.hasUnPublish);
   });
 
-  test('correct actions for scheduled course', async function(assert) {
+  test('correct actions for scheduled course', async function (assert) {
     this.server.create('course', {
       published: true,
       publishedAsTbd: true,
@@ -144,7 +144,7 @@ module('Integration | Component | course/publication-menu', function(hooks) {
     assert.ok(component.hasUnPublish);
   });
 
-  test('correct actions for published course', async function(assert) {
+  test('correct actions for published course', async function (assert) {
     this.server.create('course', {
       published: true,
       publishedAsTbd: false,
@@ -161,7 +161,7 @@ module('Integration | Component | course/publication-menu', function(hooks) {
     assert.ok(component.hasUnPublish);
   });
 
-  test('down opens menu', async function(assert) {
+  test('down opens menu', async function (assert) {
     this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').find('course', 1);
     this.set('course', courseModel);
@@ -172,7 +172,7 @@ module('Integration | Component | course/publication-menu', function(hooks) {
     assert.ok(component.menuOpen);
   });
 
-  test('escape closes menu', async function(assert) {
+  test('escape closes menu', async function (assert) {
     this.server.create('course');
     const courseModel = await this.owner.lookup('service:store').find('course', 1);
     this.set('course', courseModel);

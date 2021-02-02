@@ -5,7 +5,7 @@ import { render, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios-common/page-objects/components/api-version-notice';
 
-module('Integration | Component | api-version-notice', function(hooks) {
+module('Integration | Component | api-version-notice', function (hooks) {
   setupRenderingTest(hooks);
 
   test('hidden when version match', async function (assert) {

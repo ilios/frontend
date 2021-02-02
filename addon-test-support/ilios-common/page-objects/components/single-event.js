@@ -1,10 +1,4 @@
-import {
-  attribute,
-  create,
-  collection,
-  isPresent,
-  text
-} from 'ember-cli-page-object';
+import { attribute, create, collection, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-single-event]',
@@ -17,8 +11,8 @@ const definition = {
   }),
   sessionLearningMaterials: {
     scope: '[data-test-session-materials]',
-    linksToAllMaterials: isPresent('[data-test-link-to-all-materials]')
-  }
+    linksToAllMaterials: isPresent('[data-test-link-to-all-materials]'),
+  },
 };
 
 export default definition;

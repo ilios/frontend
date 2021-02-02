@@ -19,43 +19,42 @@ export default Model.extend({
   archived: attr('boolean'),
   publishedAsTbd: attr('boolean'),
   published: attr('boolean'),
-  clerkshipType: belongsTo('course-clerkship-type', {async: true}),
-  school: belongsTo('school', {async: true}),
+  clerkshipType: belongsTo('course-clerkship-type', { async: true }),
+  school: belongsTo('school', { async: true }),
   directors: hasMany('user', {
     async: true,
-    inverse: 'directedCourses'
+    inverse: 'directedCourses',
   }),
   administrators: hasMany('user', {
     async: true,
-    inverse: 'administeredCourses'
+    inverse: 'administeredCourses',
   }),
   studentAdvisors: hasMany('user', {
     async: true,
-    inverse: 'studentAdvisedCourses'
+    inverse: 'studentAdvisedCourses',
   }),
-  cohorts: hasMany('cohort', {async: true}),
-  courseObjectives: hasMany('course-objective', {async: true}),
-  meshDescriptors: hasMany('mesh-descriptor', {async: true}),
-  learningMaterials: hasMany('course-learning-material', {async: true}),
-  sessions: hasMany('session', {async: true}),
+  cohorts: hasMany('cohort', { async: true }),
+  courseObjectives: hasMany('course-objective', { async: true }),
+  meshDescriptors: hasMany('mesh-descriptor', { async: true }),
+  learningMaterials: hasMany('course-learning-material', { async: true }),
+  sessions: hasMany('session', { async: true }),
   ancestor: belongsTo('course', {
     inverse: 'descendants',
-    async: true
+    async: true,
   }),
   descendants: hasMany('course', {
     inverse: 'ancestor',
-    async: true
+    async: true,
   }),
-  terms: hasMany('term', {async: true}),
+  terms: hasMany('term', { async: true }),
 
   publishedSessions: filterBy('sessions', 'isPublished'),
   publishedSessionOfferings: mapBy('publishedSessions', 'offerings'),
   publishedSessionOfferingCounts: mapBy('publishedSessionOfferings', 'length'),
   publishedOfferingCount: sum('publishedSessionOfferingCounts'),
 
-
-  academicYear: computed('year', function(){
-    return this.get('year') + ' - ' + (parseInt(this.get('year'), 10) + 1);
+  academicYear: computed('year', function () {
+    return this.year + ' - ' + (parseInt(this.year, 10) + 1);
   }),
 
   /**
@@ -64,13 +63,13 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  competencies: computed('courseObjectives.@each.treeCompetencies', async function() {
-    const courseObjectives = await this.get('courseObjectives');
+  competencies: computed('courseObjectives.@each.treeCompetencies', async function () {
+    const courseObjectives = await this.courseObjectives;
     const trees = await all(courseObjectives.mapBy('treeCompetencies'));
     const competencies = trees.reduce((array, set) => {
       return array.pushObjects(set);
     }, []);
-    return competencies.uniq().filter(item => {
+    return competencies.uniq().filter((item) => {
       return !isEmpty(item);
     });
   }),
@@ -83,34 +82,36 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  domains: computed('competencies.@each.domain', async function(){
-    const competencies = await this.get('competencies');
+  domains: computed('competencies.@each.domain', async function () {
+    const competencies = await this.competencies;
     const domains = await all(competencies.mapBy('domain'));
-    const domainProxies = await map(domains.uniq(), async domain => {
+    const domainProxies = await map(domains.uniq(), async (domain) => {
       let subCompetencies = await domain.get('treeChildren');
 
       // filter out any competencies of this domain that are not linked to this course.
-      subCompetencies = subCompetencies.filter(competency => {
-        return competencies.includes(competency);
-      }).sortBy('title');
+      subCompetencies = subCompetencies
+        .filter((competency) => {
+          return competencies.includes(competency);
+        })
+        .sortBy('title');
 
       return ObjectProxy.create({
         content: domain,
-        subCompetencies
+        subCompetencies,
       });
     });
 
     return domainProxies.sortBy('title');
   }),
 
-  requiredPublicationIssues: computed('startDate', 'endDate', 'cohorts.length', function(){
+  requiredPublicationIssues: computed('startDate', 'endDate', 'cohorts.length', function () {
     return this.getRequiredPublicationIssues();
   }),
   optionalPublicationIssues: computed(
     'terms.length',
     'courseObjectives.length',
     'meshDescriptors.length',
-    function(){
+    function () {
       return this.getOptionalPublicationIssues();
     }
   ),
@@ -122,11 +123,10 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  schools: computed('school', 'cohorts.[]', async function() {
+  schools: computed('school', 'cohorts.[]', async function () {
+    const courseOwningSchool = await this.school;
 
-    const courseOwningSchool = await this.get('school');
-
-    const cohorts = await this.get('cohorts');
+    const cohorts = await this.cohorts;
     const programYears = await all(cohorts.mapBy('programYear'));
     const programs = await all(programYears.mapBy('program'));
     const schools = await all(programs.mapBy('school'));
@@ -141,13 +141,15 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  assignableVocabularies: computed('schools.@each.vocabularies', async function() {
-    const schools = await this.get('schools');
+  assignableVocabularies: computed('schools.@each.vocabularies', async function () {
+    const schools = await this.schools;
     const vocabularies = await all(schools.mapBy('vocabularies'));
-    return vocabularies.reduce((array, set) => {
-      array.pushObjects(set.toArray());
-      return array;
-    }, []).sortBy('school.title', 'title');
+    return vocabularies
+      .reduce((array, set) => {
+        array.pushObjects(set.toArray());
+        return array;
+      }, [])
+      .sortBy('school.title', 'title');
   }),
 
   /**
@@ -155,12 +157,12 @@ export default Model.extend({
    * @property sortedCourseObjectives
    * @type {Ember.computed}
    */
-  sortedCourseObjectives: computed('courseObjectives.@each.position', async function() {
-    const objectives = await this.get('courseObjectives');
+  sortedCourseObjectives: computed('courseObjectives.@each.position', async function () {
+    const objectives = await this.courseObjectives;
     return objectives.toArray().sort(sortableByPosition);
   }),
 
-  hasMultipleCohorts: computed('cohorts.[]', function(){
+  hasMultipleCohorts: computed('cohorts.[]', function () {
     const meta = this.hasMany('cohorts');
     const ids = meta.ids();
 
@@ -174,7 +176,7 @@ export default Model.extend({
    * @public
    */
   associatedVocabularies: computed('terms.@each.vocabulary', async function () {
-    const terms = await this.get('terms');
+    const terms = await this.terms;
     const vocabularies = await all(terms.toArray().mapBy('vocabulary'));
     return vocabularies.uniq().sortBy('title');
   }),
@@ -186,12 +188,14 @@ export default Model.extend({
    * @public
    */
   termsWithAllParents: computed('terms.[]', async function () {
-    const terms = await this.get('terms');
+    const terms = await this.terms;
     const allTerms = await all(terms.toArray().mapBy('termWithAllParents'));
-    return (allTerms.reduce((array, set) => {
-      array.pushObjects(set);
-      return array;
-    }, [])).uniq();
+    return allTerms
+      .reduce((array, set) => {
+        array.pushObjects(set);
+        return array;
+      }, [])
+      .uniq();
   }),
 
   /**
@@ -200,7 +204,7 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  termCount: computed('terms.[]', function(){
+  termCount: computed('terms.[]', function () {
     const termIds = this.hasMany('terms').ids();
     return termIds.length;
   }),
@@ -213,10 +217,10 @@ export default Model.extend({
     this.set('optionalPublicationLengthFields', ['terms', 'courseObjectives', 'meshDescriptors']);
   },
 
-  setDatesBasedOnYear: function(){
+  setDatesBasedOnYear: function () {
     const today = moment();
-    const firstDayOfYear = moment(this.get('year') + '-7-1', "YYYY-MM-DD");
-    const startDate = today < firstDayOfYear?firstDayOfYear:today;
+    const firstDayOfYear = moment(this.year + '-7-1', 'YYYY-MM-DD');
+    const startDate = today < firstDayOfYear ? firstDayOfYear : today;
     const endDate = moment(startDate).add('8', 'weeks');
     this.set('startDate', startDate.toDate());
     this.set('endDate', endDate.toDate());
@@ -226,41 +230,42 @@ export default Model.extend({
   isPublished: alias('published'),
   isNotPublished: not('isPublished'),
   isScheduled: oneWay('publishedAsTbd'),
-  isPublishedOrScheduled: computed('publishTarget.isPublished', 'publishTarget.isScheduled', function(){
-    return this.get('publishedAsTbd') || this.get('isPublished');
-  }),
-  allPublicationIssuesCollection: collect('requiredPublicationIssues.length', 'optionalPublicationIssues.length'),
+  isPublishedOrScheduled: computed.or('publishedAsTbd', 'isPublished'),
+  allPublicationIssuesCollection: collect(
+    'requiredPublicationIssues.length',
+    'optionalPublicationIssues.length'
+  ),
   allPublicationIssuesLength: sum('allPublicationIssuesCollection'),
   requiredPublicationSetFields: null,
   requiredPublicationLengthFields: null,
   optionalPublicationSetFields: null,
   optionalPublicationLengthFields: null,
-  getRequiredPublicationIssues(){
+  getRequiredPublicationIssues() {
     const issues = [];
-    this.requiredPublicationSetFields.forEach(val => {
-      if(!this.get(val)){
+    this.requiredPublicationSetFields.forEach((val) => {
+      if (!this.get(val)) {
         issues.push(val);
       }
     });
 
-    this.requiredPublicationLengthFields.forEach(val => {
-      if(this.get(val + '.length') === 0){
+    this.requiredPublicationLengthFields.forEach((val) => {
+      if (this.get(val + '.length') === 0) {
         issues.push(val);
       }
     });
 
     return issues;
   },
-  getOptionalPublicationIssues(){
+  getOptionalPublicationIssues() {
     const issues = [];
-    this.optionalPublicationSetFields.forEach(val => {
-      if(!this.get(val)){
+    this.optionalPublicationSetFields.forEach((val) => {
+      if (!this.get(val)) {
         issues.push(val);
       }
     });
 
-    this.optionalPublicationLengthFields.forEach(val => {
-      if(this.get(val + '.length') === 0){
+    this.optionalPublicationLengthFields.forEach((val) => {
+      if (this.get(val + '.length') === 0) {
         issues.push(val);
       }
     });

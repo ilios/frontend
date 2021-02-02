@@ -3,12 +3,12 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { timeout } from 'ember-concurrency';
 import { next } from '@ember/runloop';
-import { dropTask } from "ember-concurrency-decorators";
+import { dropTask } from 'ember-concurrency-decorators';
 
 export default class SessionsGridHeader extends Component {
   @tracked isExpanding = false;
 
-  get sortedAscending () {
+  get sortedAscending() {
     return this.args.sortBy.search(/desc/) === -1;
   }
 

@@ -4,8 +4,8 @@ import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import {tracked} from '@glimmer/tracking';
-import {restartableTask} from "ember-concurrency-decorators";
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class VisualizerCourseTerm extends Component {
   @service router;
@@ -19,15 +19,15 @@ export default class VisualizerCourseTerm extends Component {
     const courseSessions = yield course.get('sessions');
     const termSessionIds = term.hasMany('sessions').ids();
 
-    const sessions = courseSessions.filter(session => termSessionIds.includes(session.get('id')));
-    const sessionTypeData = yield map(sessions, async session => {
+    const sessions = courseSessions.filter((session) => termSessionIds.includes(session.get('id')));
+    const sessionTypeData = yield map(sessions, async (session) => {
       const hours = await session.get('totalSumDuration');
       const minutes = Math.round(hours * 60);
       const sessionType = await session.get('sessionType');
       return {
         sessionTitle: session.get('title'),
         sessionTypeTitle: sessionType.get('title'),
-        minutes
+        minutes,
       };
     });
 
@@ -39,8 +39,8 @@ export default class VisualizerCourseTerm extends Component {
           label: obj.sessionTypeTitle,
           meta: {
             sessionTypeTitle: obj.sessionTypeTitle,
-            sessions: []
-          }
+            sessions: [],
+          },
         };
         set.pushObject(existing);
       }
@@ -52,8 +52,8 @@ export default class VisualizerCourseTerm extends Component {
 
     const totalMinutes = data.mapBy('data').reduce((total, minutes) => total + minutes, 0);
 
-    this.data = data.map(obj => {
-      const percent = (obj.data / totalMinutes * 100).toFixed(1);
+    this.data = data.map((obj) => {
+      const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
       obj.label = `${obj.meta.sessionTypeTitle} ${percent}%`;
       obj.meta.totalMinutes = totalMinutes;
       obj.meta.percent = percent;
@@ -72,6 +72,6 @@ export default class VisualizerCourseTerm extends Component {
     const { label, data, meta } = obj;
 
     this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
-    this.tooltipContent =  meta.sessions.uniq().sort().join(', ');
+    this.tooltipContent = meta.sessions.uniq().sort().join(', ');
   }
 }

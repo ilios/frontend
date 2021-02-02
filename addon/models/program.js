@@ -6,17 +6,19 @@ export default Model.extend({
   title: attr('string'),
   shortTitle: attr('string'),
   duration: attr('number', { defaultValue: 1 }),
-  school: belongsTo('school', {async: true}),
+  school: belongsTo('school', { async: true }),
   programYears: hasMany('program-year', { async: true, inverse: 'program' }),
   directors: hasMany('user', { async: true, inverse: 'directedPrograms' }),
-  curriculumInventoryReports: hasMany('curriculum-inventory-report', {async: true}),
-
-  hasCurriculumInventoryReports: computed('curriculumInventoryReports.[]', function(){
-    return (this.hasMany('curriculumInventoryReports').ids().length > 0);
+  curriculumInventoryReports: hasMany('curriculum-inventory-report', {
+    async: true,
   }),
 
-  hasProgramYears: computed('programYears.[]', function(){
-    return (this.hasMany('programYears').ids().length > 0);
+  hasCurriculumInventoryReports: computed('curriculumInventoryReports.[]', function () {
+    return this.hasMany('curriculumInventoryReports').ids().length > 0;
+  }),
+
+  hasProgramYears: computed('programYears.[]', function () {
+    return this.hasMany('programYears').ids().length > 0;
   }),
 
   /**
@@ -25,8 +27,8 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  cohorts: computed('programYears.[]', async function() {
-    const programYears = await this.get('programYears');
+  cohorts: computed('programYears.[]', async function () {
+    const programYears = await this.programYears;
     return all(programYears.toArray().mapBy('cohort'));
   }),
 
@@ -36,12 +38,14 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  courses: computed('cohorts.[]', async function() {
-    const cohorts = await this.get('cohorts');
+  courses: computed('cohorts.[]', async function () {
+    const cohorts = await this.cohorts;
     const courses = await all(cohorts.mapBy('courses'));
-    return courses.reduce((array, set) => {
-      array.pushObjects(set.toArray());
-      return array;
-    }, []).uniq();
+    return courses
+      .reduce((array, set) => {
+        array.pushObjects(set.toArray());
+        return array;
+      }, [])
+      .uniq();
   }),
 });

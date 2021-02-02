@@ -1,14 +1,11 @@
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/course';
 
-module('Acceptance | Course with no cohorts - Objective Parents', function(hooks) {
+module('Acceptance | Course with no cohorts - Objective Parents', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
@@ -18,17 +15,27 @@ module('Acceptance | Course with no cohorts - Objective Parents', function(hooks
 
     const programYear = this.server.create('programYear', { program });
     this.server.create('cohort', { programYear });
-    const competency = this.server.create('competency', { school: this.school, programYears: [programYear] });
+    const competency = this.server.create('competency', {
+      school: this.school,
+      programYears: [programYear],
+    });
     this.server.create('programYearObjective', { programYear, competency });
-    const course = this.server.create('course', { year: 2013, school: this.school });
+    const course = this.server.create('course', {
+      year: 2013,
+      school: this.school,
+    });
     this.server.create('courseObjective', { course });
   });
 
-  test('add and remove a new cohort', async function(assert) {
+  test('add and remove a new cohort', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(14);
 
-    await page.visit({ courseId: 1, details: true, courseObjectiveDetails: true });
+    await page.visit({
+      courseId: 1,
+      details: true,
+      courseObjectiveDetails: true,
+    });
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
     const firstObjective = page.objectives.objectiveList.objectives[0];
 

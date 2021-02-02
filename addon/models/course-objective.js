@@ -8,22 +8,22 @@ export default Model.extend({
   active: attr('boolean', { defaultValue: true }),
   course: belongsTo('course', { async: true }),
   terms: hasMany('term', { async: true }),
-  meshDescriptors: hasMany('mesh-descriptor', {async: true}),
+  meshDescriptors: hasMany('mesh-descriptor', { async: true }),
   ancestor: belongsTo('course-objective', {
     inverse: 'descendants',
-    async: true
+    async: true,
   }),
   descendants: hasMany('course-objective', {
     inverse: 'ancestor',
-    async: true
+    async: true,
   }),
   sessionObjectives: hasMany('session-objective', {
     inverse: 'courseObjectives',
-    async: true
+    async: true,
   }),
   programYearObjectives: hasMany('program-year-objective', {
     inverse: 'courseObjectives',
-    async: true
+    async: true,
   }),
 
   /**
@@ -33,7 +33,7 @@ export default Model.extend({
    * @public
    */
   associatedVocabularies: computed('terms.@each.vocabulary', async function () {
-    const terms = await this.get('terms');
+    const terms = await this.terms;
     const vocabularies = await all(terms.toArray().mapBy('vocabulary'));
     return vocabularies.uniq().sortBy('title');
   }),
@@ -45,12 +45,14 @@ export default Model.extend({
    * @public
    */
   termsWithAllParents: computed('terms.[]', async function () {
-    const terms = await this.get('terms');
+    const terms = await this.terms;
     const allTerms = await all(terms.toArray().mapBy('termWithAllParents'));
-    return (allTerms.reduce((array, set) => {
-      array.pushObjects(set);
-      return array;
-    }, [])).uniq();
+    return allTerms
+      .reduce((array, set) => {
+        array.pushObjects(set);
+        return array;
+      }, [])
+      .uniq();
   }),
 
   /**
@@ -61,8 +63,8 @@ export default Model.extend({
    * @public
    * @todo change name to just "competencies" [ST 2020/07/08]
    */
-  treeCompetencies: computed('programYearObjectives.@each.competency', async function() {
-    const programYearObjectives = await this.get('programYearObjectives');
+  treeCompetencies: computed('programYearObjectives.@each.competency', async function () {
+    const programYearObjectives = await this.programYearObjectives;
     const competencies = await all(programYearObjectives.mapBy('competency'));
     return competencies.uniq();
   }),
@@ -75,10 +77,10 @@ export default Model.extend({
    * @param {Array} programYearsToRemove
    * @todo Rename this method to something better [ST 2020/07/08]
    */
-  async removeParentWithProgramYears(programYearsToRemove){
-    const programYearObjectives = await this.get('programYearObjectives');
+  async removeParentWithProgramYears(programYearsToRemove) {
+    const programYearObjectives = await this.programYearObjectives;
 
-    await map(programYearObjectives.toArray(), async programYearObjective => {
+    await map(programYearObjectives.toArray(), async (programYearObjective) => {
       const programYear = await programYearObjective.get('programYear');
       if (programYearsToRemove.includes(programYear)) {
         programYearObjectives.removeObject(programYearObjective);
@@ -91,19 +93,19 @@ export default Model.extend({
   /**
    * @todo check if this method is obsolete, if so remove it [ST 2020/07/08]
    */
-  shortTitle: computed('title', function(){
-    const title = this.get('title');
-    if(title === undefined){
+  shortTitle: computed('title', function () {
+    const title = this.title;
+    if (title === undefined) {
       return '';
     }
-    return title.substr(0,200);
+    return title.substr(0, 200);
   }),
 
-  textTitle: computed('title', function(){
-    const title = this.get('title');
-    if(title === undefined){
+  textTitle: computed('title', function () {
+    const title = this.title;
+    if (title === undefined) {
       return '';
     }
-    return title.replace(/(<([^>]+)>)/ig,"");
+    return title.replace(/(<([^>]+)>)/gi, '');
   }),
 });

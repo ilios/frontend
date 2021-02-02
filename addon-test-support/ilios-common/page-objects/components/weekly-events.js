@@ -9,13 +9,13 @@ const definition = {
     nextYear: {
       scope: '[data-test-next]',
       title: text(),
-      visit: clickable()
+      visit: clickable(),
     },
     previousYear: {
       scope: '[data-test-previous]',
       title: text(),
-      visit: clickable()
-    }
+      visit: clickable(),
+    },
   },
   weeks: collection('[data-test-week-glance]', weekGlance),
   bottomNavigation: {
@@ -24,14 +24,14 @@ const definition = {
     nextYear: {
       scope: '[data-test-next]',
       title: text(),
-      visit: clickable()
+      visit: clickable(),
     },
     previousYear: {
       scope: '[data-test-previous]',
       title: text(),
-      visit: clickable()
-    }
-  }
+      visit: clickable(),
+    },
+  },
 };
 
 export default definition;

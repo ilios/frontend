@@ -8,7 +8,7 @@ import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/single-event';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
-module('Integration | Component | ilios calendar single event', function(hooks) {
+module('Integration | Component | ilios calendar single event', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -16,7 +16,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     this.owner.setupRouter();
   });
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(23);
 
     const now = moment().hour(8).minute(0).second(0);
@@ -27,7 +27,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     this.server.create('session', {
       id: 1,
       title: 'test session',
-      course
+      course,
     });
 
     const learningMaterials = [
@@ -47,8 +47,8 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
         sessionLearningMaterial: '2',
         position: 1,
         isBlanked: true,
-        endDate: new Date('2013-03-01T01:10:00')
-      }
+        endDate: new Date('2013-03-01T01:10:00'),
+      },
     ];
     const ourEvent = this.server.create('userevent', {
       user: 1,
@@ -69,46 +69,46 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
           id: 1,
           title: 'Session Objective A',
           position: 2,
-          competencies: [2]
+          competencies: [2],
         },
         {
           id: 2,
           title: 'Session Objective B',
           position: 0,
-          competencies: [2]
+          competencies: [2],
         },
         {
           id: 3,
           title: 'Session Objective C',
           position: 0,
-          competencies: [3]
-        }
+          competencies: [3],
+        },
       ],
       courseObjectives: [
         {
           id: 4,
           title: 'Course Objective A',
           position: 0,
-          competencies: [1]
+          competencies: [1],
         },
         {
           id: 5,
           title: 'Course Objective B',
           position: 0,
-          competencies: [1]
+          competencies: [1],
         },
         {
           id: 6,
           title: 'Course Objective C',
           position: 0,
-          competencies: [3]
-        }
+          competencies: [3],
+        },
       ],
       competencies: [
         {
           id: 1,
           title: 'Domain A',
-          parent: null
+          parent: null,
         },
         {
           id: 2,
@@ -118,8 +118,8 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
         {
           id: 3,
           title: 'Domain B',
-          parent: null
-        }
+          parent: null,
+        },
       ],
     });
 
@@ -130,37 +130,76 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     assert.dom('.single-event-summary').containsText('test session', 'session title is displayed');
     assert.dom('.single-event-location').containsText('Session Link here', 'location is displayed');
     assert.dom('.single-event-location a').hasProperty('href', 'https://example.edu/');
-    assert.dom('.single-event-instructors').containsText('Taught By Great Teacher', 'instructors are displayed');
-    assert.dom('.single-event-session-is').containsText('Session Type: test type', 'session type is displayed');
-    assert.dom('.single-event-summary').containsText('test description', 'session description is displayed');
+    assert
+      .dom('.single-event-instructors')
+      .containsText('Taught By Great Teacher', 'instructors are displayed');
+    assert
+      .dom('.single-event-session-is')
+      .containsText('Session Type: test type', 'session type is displayed');
+    assert
+      .dom('.single-event-summary')
+      .containsText('test description', 'session description is displayed');
 
-    const firstSessionLm = '.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(1)';
-    assert.dom(`${firstSessionLm} .lm-type-icon .fa-file-pdf`).exists('PDF file type icon is visible');
-    assert.dom(`${firstSessionLm} .single-event-learningmaterial-item-notes`).hasText(learningMaterials[0].publicNotes);
-    assert.dom(`${firstSessionLm} .single-event-learningmaterial-item-description`).hasText(learningMaterials[0].description);
-    assert.dom(`${firstSessionLm} .single-event-learningmaterial-item-title`).containsText(learningMaterials[0].title);
+    const firstSessionLm =
+      '.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(1)';
+    assert
+      .dom(`${firstSessionLm} .lm-type-icon .fa-file-pdf`)
+      .exists('PDF file type icon is visible');
+    assert
+      .dom(`${firstSessionLm} .single-event-learningmaterial-item-notes`)
+      .hasText(learningMaterials[0].publicNotes);
+    assert
+      .dom(`${firstSessionLm} .single-event-learningmaterial-item-description`)
+      .hasText(learningMaterials[0].description);
+    assert
+      .dom(`${firstSessionLm} .single-event-learningmaterial-item-title`)
+      .containsText(learningMaterials[0].title);
 
-    const secondSessionLm = '.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(2)';
-    assert.dom(`${secondSessionLm} .single-event-learningmaterial-item-title`).containsText(learningMaterials[1].title);
+    const secondSessionLm =
+      '.single-event-learningmaterial-list:nth-of-type(1) .single-event-learningmaterial-item:nth-of-type(2)';
+    assert
+      .dom(`${secondSessionLm} .single-event-learningmaterial-item-title`)
+      .containsText(learningMaterials[1].title);
 
-    const sessionObjectivesSelector = '.single-event-objective-list > .single-event-objective-list:nth-of-type(1)';
-    assert.dom(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1)`).containsText('Competency A (Domain A)');
-    assert.dom(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(1)`).hasText('Session Objective B');
-    assert.dom(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(2)`).hasText('Session Objective A');
-    assert.dom(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(2)`).containsText('Domain B (Domain B)');
-    assert.dom(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(2) li:nth-of-type(1)`).hasText('Session Objective C');
+    const sessionObjectivesSelector =
+      '.single-event-objective-list > .single-event-objective-list:nth-of-type(1)';
+    assert
+      .dom(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1)`)
+      .containsText('Competency A (Domain A)');
+    assert
+      .dom(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(1)`)
+      .hasText('Session Objective B');
+    assert
+      .dom(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(2)`)
+      .hasText('Session Objective A');
+    assert
+      .dom(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(2)`)
+      .containsText('Domain B (Domain B)');
+    assert
+      .dom(`${sessionObjectivesSelector} ul.tree > li:nth-of-type(2) li:nth-of-type(1)`)
+      .hasText('Session Objective C');
 
     const courseObjectivesSelector = '[data-test-course-objectives]';
-    assert.dom(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1)`).containsText('Domain A (Domain A)');
-    assert.dom(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(1)`).hasText('Course Objective B');
-    assert.dom(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(2)`).hasText('Course Objective A');
-    assert.dom(`${courseObjectivesSelector} ul.tree > li:nth-of-type(2)`).containsText('Domain B (Domain B)');
-    assert.dom(`${courseObjectivesSelector} ul.tree > li:nth-of-type(2) li:nth-of-type(1)`).hasText('Course Objective C');
+    assert
+      .dom(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1)`)
+      .containsText('Domain A (Domain A)');
+    assert
+      .dom(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(1)`)
+      .hasText('Course Objective B');
+    assert
+      .dom(`${courseObjectivesSelector} ul.tree > li:nth-of-type(1) li:nth-of-type(2)`)
+      .hasText('Course Objective A');
+    assert
+      .dom(`${courseObjectivesSelector} ul.tree > li:nth-of-type(2)`)
+      .containsText('Domain B (Domain B)');
+    assert
+      .dom(`${courseObjectivesSelector} ul.tree > li:nth-of-type(2) li:nth-of-type(1)`)
+      .hasText('Course Objective C');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('unlinked event date and title are displayed', async function(assert) {
+  test('unlinked event date and title are displayed', async function (assert) {
     assert.expect(2);
 
     const today = moment().hour(8).minute(0).second(0);
@@ -179,17 +218,20 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
     assert.equal(component.title, 'course - Learn to Learn');
-    assert.equal(component.offeredAt, today.toDate().toLocaleString([], {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    }));
+    assert.equal(
+      component.offeredAt,
+      today.toDate().toLocaleString([], {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      })
+    );
   });
 
-  test('postrequisite date and title are displayed', async function(assert) {
+  test('postrequisite date and title are displayed', async function (assert) {
     assert.expect(3);
 
     const today = moment().hour(8).minute(0).second(0);
@@ -201,7 +243,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
-      slug: '1234'
+      slug: '1234',
     };
     this.server.create('userevent', {
       name: 'Learn to Learn',
@@ -213,7 +255,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       isScheduled: false,
       ilmSession: 1,
       lastModified: null,
-      postrequisites: [postReq]
+      postrequisites: [postReq],
     });
 
     this.set('event', this.server.db.userevents[0]);
@@ -231,7 +273,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     assert.equal(component.offeredAtLink, `/events/1234`);
   });
 
-  test('prequisites are displayed', async function(assert) {
+  test('prequisites are displayed', async function (assert) {
     assert.expect(6);
 
     const today = moment().hour(8).minute(0).second(0);
@@ -259,7 +301,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       isScheduled: false,
       offering: 1,
       lastModified: null,
-      prerequisites: [prereq1, prereq2]
+      prerequisites: [prereq1, prereq2],
     });
 
     this.set('event', this.server.db.userevents[0]);
@@ -272,7 +314,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     assert.ok(component.preWork[1].hasLink);
   });
 
-  test('for non ilms postrequisite date and title are displayed along with offering date', async function(assert) {
+  test('for non ilms postrequisite date and title are displayed along with offering date', async function (assert) {
     assert.expect(3);
     this.owner.setupRouter();
 
@@ -285,7 +327,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       isBlanked: false,
       isPublished: true,
       isScheduled: false,
-      slug: '1234'
+      slug: '1234',
     };
     this.server.create('userevent', {
       name: 'Learn to Learn',
@@ -297,7 +339,7 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       isScheduled: false,
       offering: 1,
       lastModified: null,
-      postrequisites: [postReq]
+      postrequisites: [postReq],
     });
 
     this.set('event', this.server.db.userevents[0]);
@@ -319,44 +361,47 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
       hour: 'numeric',
       minute: 'numeric',
     });
-    assert.equal(component.offeredAt, `Due Before postrequisite session (${formattedTomorrow}) ${formattedToday}`);
+    assert.equal(
+      component.offeredAt,
+      `Due Before postrequisite session (${formattedTomorrow}) ${formattedToday}`
+    );
     assert.equal(component.offeredAtLink, `/events/1234`);
   });
 
-  test('link to all materials if user is student and event is user-event', async function(assert) {
+  test('link to all materials if user is student and event is user-event', async function (assert) {
     this.owner.setupRouter();
     const MockCurrentUserService = Service.extend({ userIsStudent: true });
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
-    this.server.create('userevent', {  isUserEvent: true });
+    this.server.create('userevent', { isUserEvent: true });
     this.set('evt', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.evt}} />`);
     assert.ok(component.sessionLearningMaterials.linksToAllMaterials);
   });
 
-  test('no link to all materials if user is not a student and event is user-event', async function(assert) {
+  test('no link to all materials if user is not a student and event is user-event', async function (assert) {
     this.owner.setupRouter();
     const MockCurrentUserService = Service.extend({ userIsStudent: false });
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
-    this.server.create('userevent', {  isUserEvent: true });
+    this.server.create('userevent', { isUserEvent: true });
     this.set('evt', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.evt}} />`);
     assert.notOk(component.sessionLearningMaterials.linksToAllMaterials);
   });
 
-  test('no link to all materials if user is student and event is school-event', async function(assert) {
+  test('no link to all materials if user is student and event is school-event', async function (assert) {
     this.owner.setupRouter();
     const MockCurrentUserService = Service.extend({ userIsStudent: true });
     this.owner.register('service:current-user', MockCurrentUserService);
     this.currentUser = this.owner.lookup('service:current-user');
-    this.server.create('userevent', {  isUserEvent: false });
+    this.server.create('userevent', { isUserEvent: false });
     this.set('evt', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.evt}} />`);
     assert.notOk(component.sessionLearningMaterials.linksToAllMaterials);
   });
 
-  test('start and end date are the same', async function(assert) {
+  test('start and end date are the same', async function (assert) {
     const today = moment().hour(8).minute(0).second(0);
     this.server.create('userevent', {
       name: 'Learn to Learn',
@@ -373,17 +418,20 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
     assert.equal(component.title, 'course - Learn to Learn');
-    assert.equal(component.offeredAt, today.toDate().toLocaleString([], {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    }));
+    assert.equal(
+      component.offeredAt,
+      today.toDate().toLocaleString([], {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      })
+    );
   });
 
-  test('start and end date fall on the same day but different times', async function(assert) {
+  test('start and end date fall on the same day but different times', async function (assert) {
     const today = moment().hour(8).minute(0).second(0);
     const laterToday = moment().hour(8).minute(1).second(0);
     this.server.create('userevent', {
@@ -401,20 +449,25 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
     assert.equal(component.title, 'course - Learn to Learn');
-    assert.equal(component.offeredAt, today.toDate().toLocaleString([], {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    }) + ' - ' + laterToday.toDate().toLocaleString([], {
-      hour: 'numeric',
-      minute: 'numeric',
-    }));
+    assert.equal(
+      component.offeredAt,
+      today.toDate().toLocaleString([], {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      }) +
+        ' - ' +
+        laterToday.toDate().toLocaleString([], {
+          hour: 'numeric',
+          minute: 'numeric',
+        })
+    );
   });
 
-  test('start and end date fall on different days', async function(assert) {
+  test('start and end date fall on different days', async function (assert) {
     const today = moment().hour(8).minute(0).second(0);
     const notToday = moment().hour(8).minute(0).second(0).add(72, 'hours');
     this.server.create('userevent', {
@@ -432,20 +485,25 @@ module('Integration | Component | ilios calendar single event', function(hooks) 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
     assert.equal(component.title, 'course - Learn to Learn');
-    assert.equal(component.offeredAt, today.toDate().toLocaleString([], {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    }) + ' - ' + notToday.toDate().toLocaleString([], {
-      weekday: 'long',
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-    }));
+    assert.equal(
+      component.offeredAt,
+      today.toDate().toLocaleString([], {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+      }) +
+        ' - ' +
+        notToday.toDate().toLocaleString([], {
+          weekday: 'long',
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+        })
+    );
   });
 });

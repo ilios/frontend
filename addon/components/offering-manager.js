@@ -5,13 +5,22 @@ import { timeout } from 'ember-concurrency';
 import { task } from 'ember-concurrency-decorators';
 
 export default class OfferingManagerComponent extends Component {
-  @tracked isEditing =  false;
+  @tracked isEditing = false;
   @tracked showRemoveConfirmation = false;
   @tracked hoveredGroups = [];
 
   @action
-  save(startDate, endDate, room, url, learnerGroups, learners, instructorGroups, instructors){
-    this.args.offering.setProperties({startDate, endDate, room, url, learnerGroups, learners, instructorGroups, instructors});
+  save(startDate, endDate, room, url, learnerGroups, learners, instructorGroups, instructors) {
+    this.args.offering.setProperties({
+      startDate,
+      endDate,
+      room,
+      url,
+      learnerGroups,
+      learners,
+      instructorGroups,
+      instructors,
+    });
 
     return this.args.offering.save();
   }
@@ -19,14 +28,14 @@ export default class OfferingManagerComponent extends Component {
   @action
   toggleHover(id) {
     if (this.hoveredGroups.includes(id)) {
-      this.hoveredGroups = this.hoveredGroups.filter(theId => theId !== id);
+      this.hoveredGroups = this.hoveredGroups.filter((theId) => theId !== id);
     } else {
       this.hoveredGroups = [...this.hoveredGroups, id];
     }
   }
 
   @task
-  *textCopied(){
+  *textCopied() {
     yield timeout(3000);
   }
   @action

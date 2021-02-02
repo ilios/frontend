@@ -14,6 +14,6 @@ export default class SessionIndexRoute extends Route.extend(AuthenticatedRouteMi
 
   setupController(controller, model) {
     super.setupController(controller, model);
-    controller.set('canUpdate', this.get('canUpdate'));
+    controller.set('canUpdate', this.canUpdate);
   }
 }

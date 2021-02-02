@@ -16,8 +16,8 @@ export default class CourseOverview extends Component {
   universalLocator = 'ILIOS';
 
   @Length(2, 255) @tracked externalId = null;
-  @BeforeDate('endDate', { granularity: 'day'}) @tracked startDate = null;
-  @AfterDate('startDate', { granularity: 'day'}) @tracked endDate = null;
+  @BeforeDate('endDate', { granularity: 'day' }) @tracked startDate = null;
+  @AfterDate('startDate', { granularity: 'day' }) @tracked endDate = null;
   @tracked level = null;
   @tracked levelOptions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   @tracked clerkshipTypeId;
@@ -67,7 +67,7 @@ export default class CourseOverview extends Component {
   }
 
   @action
-  setCourseClerkshipType(event){
+  setCourseClerkshipType(event) {
     let id = event.target.value;
     //convert the string 'null' to a real null
     if (id === 'null') {
@@ -100,7 +100,7 @@ export default class CourseOverview extends Component {
   }
 
   @action
-  revertStartDateChanges(){
+  revertStartDateChanges() {
     this.startDate = this.args.course.startDate;
   }
 
@@ -118,7 +118,7 @@ export default class CourseOverview extends Component {
   }
 
   @action
-  revertEndDateChanges(){
+  revertEndDateChanges() {
     this.endDate = this.args.course.endDate;
   }
 
@@ -141,7 +141,7 @@ export default class CourseOverview extends Component {
   }
 
   @action
-  setLevel(event){
+  setLevel(event) {
     this.level = parseInt(event.target.value, 10);
   }
 
@@ -152,7 +152,7 @@ export default class CourseOverview extends Component {
   }
 
   @action
-  revertLevelChanges(){
+  revertLevelChanges() {
     this.level = this.args.course.level;
   }
 }

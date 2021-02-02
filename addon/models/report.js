@@ -6,6 +6,6 @@ export default Model.extend({
   subject: attr('string'),
   prepositionalObject: attr('string'),
   prepositionalObjectTableRowId: attr('string'),
-  user: belongsTo('user', {async: true}),
-  school: belongsTo('school', {async: true}),
+  user: belongsTo('user', { async: true }),
+  school: belongsTo('school', { async: true }),
 });

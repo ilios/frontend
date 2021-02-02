@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(/* environment */) {
+module.exports = function (/* environment */) {
   return {
     /**
      * Merges the fallback locale's translations into all other locales as a
@@ -78,6 +78,6 @@ module.exports = function(/* environment */) {
      */
     requiresTranslation(/* key, locale */) {
       return true;
-    }
+    },
   };
 };

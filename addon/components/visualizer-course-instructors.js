@@ -4,9 +4,9 @@ import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
 import { timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import {tracked} from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import {restartableTask} from "ember-concurrency-decorators";
+import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class VisualizerCourseInstructors extends Component {
   @service router;
@@ -38,7 +38,7 @@ export default class VisualizerCourseInstructors extends Component {
   @restartableTask
   *load(element, [course]) {
     const sessions = yield course.get('sessions');
-    const dataMap = yield map(sessions.toArray(), async session => {
+    const dataMap = yield map(sessions.toArray(), async (session) => {
       const instructors = await session.get('allInstructors');
 
       const hours = await session.get('maxSingleOfferingDuration');
@@ -52,7 +52,7 @@ export default class VisualizerCourseInstructors extends Component {
     });
 
     const instructorData = dataMap.reduce((set, obj) => {
-      obj.instructors.forEach(instructor => {
+      obj.instructors.forEach((instructor) => {
         const name = instructor.get('fullName');
         const id = instructor.get('id');
         let existing = set.findBy('label', name);
@@ -62,8 +62,8 @@ export default class VisualizerCourseInstructors extends Component {
             label: name,
             meta: {
               userId: id,
-              sessions: []
-            }
+              sessions: [],
+            },
           };
           set.pushObject(existing);
         }
@@ -74,9 +74,11 @@ export default class VisualizerCourseInstructors extends Component {
       return set;
     }, []);
 
-    const totalMinutes = instructorData.mapBy('data').reduce((total, minutes) => total + minutes, 0);
-    this.data = instructorData.map(obj => {
-      const percent = (obj.data / totalMinutes * 100).toFixed(1);
+    const totalMinutes = instructorData
+      .mapBy('data')
+      .reduce((total, minutes) => total + minutes, 0);
+    this.data = instructorData.map((obj) => {
+      const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
       obj.label = `${obj.label} ${percent}%`;
       obj.meta.totalMinutes = totalMinutes;
       obj.meta.percent = percent;
@@ -85,7 +87,7 @@ export default class VisualizerCourseInstructors extends Component {
   }
 
   @restartableTask
-  *barHover (obj) {
+  *barHover(obj) {
     yield timeout(100);
     if (this.args.isIcon || isEmpty(obj) || obj.empty) {
       this.tooltipTitle = null;
@@ -105,6 +107,10 @@ export default class VisualizerCourseInstructors extends Component {
       return;
     }
 
-    this.router.transitionTo('course-visualize-instructor', this.args.course.get('id'), obj.meta.userId);
+    this.router.transitionTo(
+      'course-visualize-instructor',
+      this.args.course.get('id'),
+      obj.meta.userId
+    );
   }
 }

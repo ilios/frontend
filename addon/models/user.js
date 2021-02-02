@@ -12,91 +12,91 @@ export default Model.extend({
   middleName: attr('string'),
   displayName: attr('string'),
   phone: attr('string'),
-  email:  attr('string'),
+  email: attr('string'),
   preferredEmail: attr('string'),
-  addedViaIlios:  attr('boolean'),
-  enabled:  attr('boolean'),
-  campusId:  attr('string'),
-  otherId:  attr('string'),
-  examined:  attr('boolean'),
-  userSyncIgnore:  attr('boolean'),
-  icsFeedKey:  attr('string'),
+  addedViaIlios: attr('boolean'),
+  enabled: attr('boolean'),
+  campusId: attr('string'),
+  otherId: attr('string'),
+  examined: attr('boolean'),
+  userSyncIgnore: attr('boolean'),
+  icsFeedKey: attr('string'),
   root: attr('boolean'),
-  reports: hasMany('report', {async: true}),
-  school: belongsTo('school', {async: true}),
-  authentication: belongsTo('authentication', {async: true}),
+  reports: hasMany('report', { async: true }),
+  school: belongsTo('school', { async: true }),
+  authentication: belongsTo('authentication', { async: true }),
   directedCourses: hasMany('course', {
     async: true,
-    inverse: 'directors'
+    inverse: 'directors',
   }),
   administeredCourses: hasMany('course', {
     async: true,
-    inverse: 'administrators'
+    inverse: 'administrators',
   }),
   studentAdvisedCourses: hasMany('course', {
     async: true,
-    inverse: 'studentAdvisors'
+    inverse: 'studentAdvisors',
   }),
   studentAdvisedSessions: hasMany('session', {
     async: true,
-    inverse: 'studentAdvisors'
+    inverse: 'studentAdvisors',
   }),
   learnerGroups: hasMany('learner-group', {
     async: true,
-    inverse: 'users'
+    inverse: 'users',
   }),
   instructedLearnerGroups: hasMany('learner-group', {
     async: true,
-    inverse: 'instructors'
+    inverse: 'instructors',
   }),
   instructorGroups: hasMany('instructor-group', {
     async: true,
-    inverse: 'users'
+    inverse: 'users',
   }),
   instructorIlmSessions: hasMany('ilm-session', {
     async: true,
-    inverse: 'instructors'
+    inverse: 'instructors',
   }),
   learnerIlmSessions: hasMany('ilm-session', {
     async: true,
-    inverse: 'learners'
+    inverse: 'learners',
   }),
   offerings: hasMany('offering', {
     async: true,
-    inverse: 'learners'
+    inverse: 'learners',
   }),
   instructedOfferings: hasMany('offering', {
     async: true,
-    inverse: 'instructors'
+    inverse: 'instructors',
   }),
   programYears: hasMany('program-year', { async: true }),
-  roles: hasMany('user-role', {async: true}),
+  roles: hasMany('user-role', { async: true }),
   directedSchools: hasMany('school', {
     async: true,
-    inverse: 'directors'
+    inverse: 'directors',
   }),
   administeredSchools: hasMany('school', {
     async: true,
-    inverse: 'administrators'
+    inverse: 'administrators',
   }),
   administeredSessions: hasMany('session', {
     async: true,
-    inverse: 'administrators'
+    inverse: 'administrators',
   }),
   directedPrograms: hasMany('program', {
     async: true,
-    inverse: 'directors'
+    inverse: 'directors',
   }),
 
   cohorts: hasMany('cohort', {
     async: true,
-    inverse: 'users'
+    inverse: 'users',
   }),
-  primaryCohort: belongsTo('cohort', {async: true, inverse: null}),
-  pendingUserUpdates: hasMany('pending-user-update', {async: true}),
+  primaryCohort: belongsTo('cohort', { async: true, inverse: null }),
+  pendingUserUpdates: hasMany('pending-user-update', { async: true }),
   administeredCurriculumInventoryReports: hasMany('curriculum-inventory-report', {
     async: true,
-    inverse: 'administrators'
+    inverse: 'administrators',
   }),
 
   /**
@@ -105,8 +105,8 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  isStudent: computed('roles.[]', async function() {
-    const roles = await this.get('roles');
+  isStudent: computed('roles.[]', async function () {
+    const roles = await this.roles;
     return !!roles.toArray().findBy('title', 'Student');
   }),
 
@@ -116,18 +116,13 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  isLearner: computed(
-    'cohorts.[]',
-    'offerings.[]',
-    'learnerIlmSessions.[]',
-    function () {
-      const cohorts = this.hasMany('cohorts').ids();
-      const offerings = this.hasMany('offerings').ids();
-      const learnerIlmSessions = this.hasMany('learnerIlmSessions').ids();
+  isLearner: computed('cohorts.[]', 'offerings.[]', 'learnerIlmSessions.[]', function () {
+    const cohorts = this.hasMany('cohorts').ids();
+    const offerings = this.hasMany('offerings').ids();
+    const learnerIlmSessions = this.hasMany('learnerIlmSessions').ids();
 
-      return !isEmpty(cohorts) || !isEmpty(offerings) || !isEmpty(learnerIlmSessions);
-    }
-  ),
+    return !isEmpty(cohorts) || !isEmpty(offerings) || !isEmpty(learnerIlmSessions);
+  }),
 
   /**
    * Checks if a user is linked to any non-student things
@@ -156,33 +151,52 @@ export default Model.extend({
       const instructedOfferings = this.hasMany('instructedOfferings').ids();
       const directedPrograms = this.hasMany('directedPrograms').ids();
       const programYears = this.hasMany('programYears').ids();
-      const administeredCurriculumInventoryReports = this.hasMany('administeredCurriculumInventoryReports').ids();
+      const administeredCurriculumInventoryReports = this.hasMany(
+        'administeredCurriculumInventoryReports'
+      ).ids();
       const directedSchools = this.hasMany('directedSchools').ids();
       const administeredSchools = this.hasMany('administeredSchools').ids();
 
-      return !isEmpty(directedCourses) || !isEmpty(administeredCourses) || !isEmpty(administeredSessions) || !isEmpty(instructedLearnerGroups) || !isEmpty(instructorGroups) || !isEmpty(instructedOfferings) || !isEmpty(directedPrograms) || !isEmpty(programYears) || !isEmpty(administeredCurriculumInventoryReports) || !isEmpty(directedSchools) || !isEmpty(administeredSchools);
+      return (
+        !isEmpty(directedCourses) ||
+        !isEmpty(administeredCourses) ||
+        !isEmpty(administeredSessions) ||
+        !isEmpty(instructedLearnerGroups) ||
+        !isEmpty(instructorGroups) ||
+        !isEmpty(instructedOfferings) ||
+        !isEmpty(directedPrograms) ||
+        !isEmpty(programYears) ||
+        !isEmpty(administeredCurriculumInventoryReports) ||
+        !isEmpty(directedSchools) ||
+        !isEmpty(administeredSchools)
+      );
     }
   ),
 
-  fullName: computed('fullNameFromFirstMiddleInitialLastName', 'displayName', function() {
-    return this.displayName ? this.displayName : this.get('fullNameFromFirstMiddleInitialLastName');
+  fullName: computed('fullNameFromFirstMiddleInitialLastName', 'displayName', function () {
+    return this.displayName ? this.displayName : this.fullNameFromFirstMiddleInitialLastName;
   }),
 
-  fullNameFromFirstMiddleInitialLastName: computed('firstName', 'middleName', 'lastName', function() {
-    if (!this.firstName || !this.lastName) {
-      return '';
+  fullNameFromFirstMiddleInitialLastName: computed(
+    'firstName',
+    'middleName',
+    'lastName',
+    function () {
+      if (!this.firstName || !this.lastName) {
+        return '';
+      }
+
+      const middleInitial = this.middleName ? this.middleName.charAt(0) : false;
+
+      if (middleInitial) {
+        return `${this.firstName} ${middleInitial}. ${this.lastName}`;
+      } else {
+        return `${this.firstName} ${this.lastName}`;
+      }
     }
+  ),
 
-    const middleInitial = this.middleName ? this.middleName.charAt(0) : false;
-
-    if (middleInitial) {
-      return `${this.firstName} ${middleInitial}. ${this.lastName}`;
-    } else {
-      return `${this.firstName} ${this.lastName}`;
-    }
-  }),
-
-  fullNameFromFirstMiddleLastName: computed('firstName', 'middleName', 'lastName', function() {
+  fullNameFromFirstMiddleLastName: computed('firstName', 'middleName', 'lastName', function () {
     if (!this.firstName || !this.lastName) {
       return '';
     }
@@ -194,7 +208,7 @@ export default Model.extend({
     }
   }),
 
-  fullNameFromFirstLastName: computed('firstName', 'lastName', function() {
+  fullNameFromFirstLastName: computed('firstName', 'lastName', function () {
     if (!this.firstName || !this.lastName) {
       return '';
     }
@@ -206,16 +220,18 @@ export default Model.extend({
     'fullNameFromFirstMiddleInitialLastName',
     'fullNameFromFirstMiddleLastName',
     'fullNameFromFirstLastName',
-    function() {
+    function () {
       const displayName = this.displayName?.trim().toLowerCase();
       // no display name? nothing to compare then.
-      if (! displayName) {
+      if (!displayName) {
         return false;
       }
       // compare the display name to 'first last', then to 'first middle last' and 'first m. last' as a fallbacks.
-      return !(displayName === this.get('fullNameFromFirstLastName').trim().toLowerCase()
-        || displayName === this.get('fullNameFromFirstMiddleLastName').trim().toLowerCase()
-        || displayName === this.get('fullNameFromFirstMiddleInitialLastName').trim().toLowerCase());
+      return !(
+        displayName === this.fullNameFromFirstLastName.trim().toLowerCase() ||
+        displayName === this.fullNameFromFirstMiddleLastName.trim().toLowerCase() ||
+        displayName === this.fullNameFromFirstMiddleInitialLastName.trim().toLowerCase()
+      );
     }
   ),
 
@@ -231,16 +247,16 @@ export default Model.extend({
     'instructedOfferings.[]',
     'instructorGroupCourses.[]',
     'instructorIlmSessions.[]',
-    async function() {
-      const instructedLearnerGroups = await this.get('instructedLearnerGroups');
-      const instructorGroups = await this.get('instructorGroups');
-      const instructedOfferings = await this.get('instructedOfferings');
-      const instructorIlmSessions = await this.get('instructorIlmSessions');
+    async function () {
+      const instructedLearnerGroups = await this.instructedLearnerGroups;
+      const instructorGroups = await this.instructorGroups;
+      const instructedOfferings = await this.instructedOfferings;
+      const instructorIlmSessions = await this.instructorIlmSessions;
 
       const groups = [];
       groups.pushObjects(instructedLearnerGroups.toArray());
       groups.pushObjects(instructorGroups.toArray());
-      const listsOfCourses = await map(groups.mapBy('courses'), courses => {
+      const listsOfCourses = await map(groups.mapBy('courses'), (courses) => {
         return courses.toArray();
       });
 
@@ -254,10 +270,12 @@ export default Model.extend({
       listsOfCourses.pushObject(listOfCourses);
 
       // flatten these lists down to one list of courses, and de-dupe that list
-      return listsOfCourses.reduce((array, set) => {
-        array.pushObjects(set);
-        return array;
-      }, []).uniq();
+      return listsOfCourses
+        .reduce((array, set) => {
+          array.pushObjects(set);
+          return array;
+        }, [])
+        .uniq();
     }
   ),
 
@@ -272,22 +290,26 @@ export default Model.extend({
     'instructedOfferings.[]',
     'instructorGroupCourses.[]',
     'instructorIlmSessions.[]',
-    async function() {
-      const instructorGroups = await this.get('instructorGroups');
-      const instructedOfferings = await this.get('instructedOfferings');
-      const instructorIlmSessions = await this.get('instructorIlmSessions');
+    async function () {
+      const instructorGroups = await this.instructorGroups;
+      const instructedOfferings = await this.instructedOfferings;
+      const instructorIlmSessions = await this.instructorIlmSessions;
 
-      const instructorGroupSessions = await all(instructorGroups.mapBy('sessions'), sessions => {
+      const instructorGroupSessions = await all(instructorGroups.mapBy('sessions'), (sessions) => {
         return sessions.toArray();
       });
 
       // flatten these lists down to one list of sessions, and de-dupe that list
-      const flatInstructorGroupSessions = instructorGroupSessions.reduce((array, set) => {
-        array.pushObjects(set);
-        return array;
-      }, []).uniq();
+      const flatInstructorGroupSessions = instructorGroupSessions
+        .reduce((array, set) => {
+          array.pushObjects(set);
+          return array;
+        }, [])
+        .uniq();
 
-      const sessions = await all([].concat(instructedOfferings.toArray(), instructorIlmSessions.toArray()).mapBy('session'));
+      const sessions = await all(
+        [].concat(instructedOfferings.toArray(), instructorIlmSessions.toArray()).mapBy('session')
+      );
 
       return A().concat(flatInstructorGroupSessions, sessions).uniq();
     }
@@ -306,16 +328,16 @@ export default Model.extend({
     'offerings.[]',
     'learnerIlmSessions.[]',
     'allInstructedCourses.[]',
-    async function() {
-      const directedCourses = await this.get('directedCourses');
-      const administeredCourses = await this.get('administeredCourses');
-      const learnerGroups = await this.get('learnerGroups');
-      const offerings = await this.get('offerings');
-      const learnerIlmSessions = await this.get('learnerIlmSessions');
-      const allInstructedCourses = await this.get('allInstructedCourses');
+    async function () {
+      const directedCourses = await this.directedCourses;
+      const administeredCourses = await this.administeredCourses;
+      const learnerGroups = await this.learnerGroups;
+      const offerings = await this.offerings;
+      const learnerIlmSessions = await this.learnerIlmSessions;
+      const allInstructedCourses = await this.allInstructedCourses;
 
       // get lists of courses associated with this user's learner-groups
-      const listsOfCourses = await map(learnerGroups.mapBy('courses'), courses => {
+      const listsOfCourses = await map(learnerGroups.mapBy('courses'), (courses) => {
         return courses.toArray();
       });
 
@@ -335,17 +357,19 @@ export default Model.extend({
       listsOfCourses.pushObject(allInstructedCourses.toArray());
 
       // flatten these lists down to one list of courses, and de-dupe that list
-      return listsOfCourses.reduce((array, set) => {
-        array.pushObjects(set);
-        return array;
-      }, []).uniq();
+      return listsOfCourses
+        .reduce((array, set) => {
+          array.pushObjects(set);
+          return array;
+        }, [])
+        .uniq();
     }
   ),
 
-  secondaryCohorts: computed('primaryCohort', 'cohorts.[]', async function(){
-    const cohorts = await this.get('cohorts');
-    const primaryCohort = await this.get('primaryCohort');
-    return cohorts.toArray().filter(cohort => cohort !== primaryCohort);
+  secondaryCohorts: computed('primaryCohort', 'cohorts.[]', async function () {
+    const cohorts = await this.cohorts;
+    const primaryCohort = await this.primaryCohort;
+    return cohorts.toArray().filter((cohort) => cohort !== primaryCohort);
   }),
 
   /**
@@ -357,16 +381,20 @@ export default Model.extend({
    * @type function
    * @public
    */
-  async getLowestMemberGroupInALearnerGroupTree(learnerGroupTree){
-    const learnerGroups = await this.get('learnerGroups');
+  async getLowestMemberGroupInALearnerGroupTree(learnerGroupTree) {
+    const learnerGroups = await this.learnerGroups;
     //all the groups a user is in that are in our current learner groups tree
-    const relevantGroups = learnerGroups.toArray().filter(group => learnerGroupTree.includes(group));
+    const relevantGroups = learnerGroups
+      .toArray()
+      .filter((group) => learnerGroupTree.includes(group));
     const relevantGroupIds = relevantGroups.mapBy('id');
-    const lowestGroup = relevantGroups.find(group => {
+    const lowestGroup = relevantGroups.find((group) => {
       const childIds = group.hasMany('children').ids();
-      const childGroupsWhoAreUserGroupMembers = childIds.filter(id => relevantGroupIds.includes(id));
-      return (childGroupsWhoAreUserGroupMembers.length === 0);
+      const childGroupsWhoAreUserGroupMembers = childIds.filter((id) =>
+        relevantGroupIds.includes(id)
+      );
+      return childGroupsWhoAreUserGroupMembers.length === 0;
     });
-    return (lowestGroup ? lowestGroup : null);
+    return lowestGroup ? lowestGroup : null;
   },
 });

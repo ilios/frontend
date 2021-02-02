@@ -1,11 +1,4 @@
-import {
-  clickable,
-  create,
-  collection,
-  isHidden,
-  isPresent,
-  text,
-} from 'ember-cli-page-object';
+import { clickable, create, collection, isHidden, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-objective-list-item-descriptors]',

@@ -27,7 +27,7 @@ export default class DashboardMaterialsComponent extends Component {
     const data = yield this.fetch.getJsonFromApiHost(url);
     this.materials = data.userMaterials;
   }
-  sortString(a, b){
+  sortString(a, b) {
     return a.localeCompare(b);
   }
 }

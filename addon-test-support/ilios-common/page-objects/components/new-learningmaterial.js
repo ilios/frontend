@@ -10,7 +10,7 @@ const definition = {
   citation: fillable('textarea'),
   owningUser: {
     scope: '[data-test-owninguser]',
-    userNameInfo
+    userNameInfo,
   },
   status: fillable('select', { at: 0 }),
   role: fillable('select', { at: 1 }),
