@@ -11,9 +11,7 @@ export default class CourseCollapsedObjectivesComponent extends Component {
   }
 
   get objectives() {
-    return this.objectivesRelationship
-      ? this.objectivesRelationship.toArray()
-      : [];
+    return this.objectivesRelationship ? this.objectivesRelationship.toArray() : [];
   }
 
   get objectivesWithParents() {

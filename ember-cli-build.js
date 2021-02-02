@@ -7,10 +7,7 @@ module.exports = function (defaults) {
   const app = new EmberAddon(defaults, {
     // Add options here
     dotEnv: {
-      clientAllowedKeys: [
-        'ILIOS_FRONTEND_API_NAMESPACE',
-        'ILIOS_FRONTEND_API_HOST',
-      ],
+      clientAllowedKeys: ['ILIOS_FRONTEND_API_NAMESPACE', 'ILIOS_FRONTEND_API_HOST'],
     },
     'ember-cli-babel': {
       throwUnlessParallelizable: true,

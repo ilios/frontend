@@ -5,12 +5,7 @@ import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { task, restartableTask, dropTask } from 'ember-concurrency-decorators';
 import moment from 'moment';
-import {
-  validatable,
-  Length,
-  Gte,
-  NotBlank,
-} from 'ilios-common/decorators/validation';
+import { validatable, Length, Gte, NotBlank } from 'ilios-common/decorators/validation';
 import { hash } from 'rsvp';
 
 @validatable
@@ -41,9 +36,7 @@ export default class SessionOverview extends Component {
   @tracked isIndependentLearning = false;
 
   get filteredSessionTypes() {
-    const selectedSessionTypeId = isEmpty(this.sessionType)
-      ? -1
-      : this.sessionType.id;
+    const selectedSessionTypeId = isEmpty(this.sessionType) ? -1 : this.sessionType.id;
     return this.sessionTypes.filter((sessionType) => {
       return sessionType.active || sessionType.id === selectedSessionTypeId;
     });
@@ -70,13 +63,9 @@ export default class SessionOverview extends Component {
       ilmSession: session.ilmSession,
       sessionType: session.sessionType,
       showCopy: this.getShowCopy(session),
-      showSessionAttendanceRequired: school.getConfigValue(
-        'showSessionAttendanceRequired'
-      ),
+      showSessionAttendanceRequired: school.getConfigValue('showSessionAttendanceRequired'),
       showSessionSupplemental: school.getConfigValue('showSessionSupplemental'),
-      showSessionSpecialAttireRequired: school.getConfigValue(
-        'showSessionSpecialAttireRequired'
-      ),
+      showSessionSpecialAttireRequired: school.getConfigValue('showSessionSpecialAttireRequired'),
       showSessionSpecialEquipmentRequired: school.getConfigValue(
         'showSessionSpecialEquipmentRequired'
       ),

@@ -30,9 +30,7 @@ const definition = {
   ),
   save: clickable('.actions button.bigadd'),
   cancel: clickable('.actions button.bigcancel'),
-  canCreateNew: isVisible(
-    '.detail-learningmaterials-actions [data-test-choose-material-type]'
-  ),
+  canCreateNew: isVisible('.detail-learningmaterials-actions [data-test-choose-material-type]'),
   canCollapse: isVisible('.detail-learningmaterials-actions .collapse-button'),
   canSort: isVisible('[data-test-sort-button]'),
   sort: clickable('[data-test-sort-button]'),
@@ -106,12 +104,8 @@ const definition = {
       minute: fillable('select', { at: 1 }),
       ampm: fillable('select', { at: 2 }),
     },
-    hasEndDateValidationError: isVisible(
-      '[data-test-end-date-validation-error-message]'
-    ),
-    hasTitleValidationError: isVisible(
-      '[data-test-title-validation-error-message]'
-    ),
+    hasEndDateValidationError: isVisible('[data-test-end-date-validation-error-message]'),
+    hasTitleValidationError: isVisible('[data-test-title-validation-error-message]'),
   },
   sortManager: {
     scope: '[data-test-detail-learning-materials-sort-manager]',

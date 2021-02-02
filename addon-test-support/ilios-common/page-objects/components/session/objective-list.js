@@ -5,10 +5,7 @@ const definition = {
   scope: '[data-test-session-objective-list]',
   sortIsVisible: isVisible('[data-test-sort]'),
   headers: collection('[data-test-headers] [data-test-header]'),
-  objectives: collection(
-    '[data-test-session-objective-list-item]',
-    objectiveListItem
-  ),
+  objectives: collection('[data-test-session-objective-list-item]', objectiveListItem),
 };
 
 export default definition;

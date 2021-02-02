@@ -61,24 +61,12 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       vocabulary: vocab2,
     });
 
-    this.vocabModel1 = await this.owner
-      .lookup('service:store')
-      .find('vocabulary', vocab1.id);
-    this.vocabModel2 = await this.owner
-      .lookup('service:store')
-      .find('vocabulary', vocab2.id);
-    this.vocabModel3 = await this.owner
-      .lookup('service:store')
-      .find('vocabulary', vocab3.id);
-    this.termModel1 = await this.owner
-      .lookup('service:store')
-      .find('term', term1.id);
-    this.termModel2 = await this.owner
-      .lookup('service:store')
-      .find('term', term2.id);
-    this.termModel3 = await this.owner
-      .lookup('service:store')
-      .find('term', term3.id);
+    this.vocabModel1 = await this.owner.lookup('service:store').find('vocabulary', vocab1.id);
+    this.vocabModel2 = await this.owner.lookup('service:store').find('vocabulary', vocab2.id);
+    this.vocabModel3 = await this.owner.lookup('service:store').find('vocabulary', vocab3.id);
+    this.termModel1 = await this.owner.lookup('service:store').find('term', term1.id);
+    this.termModel2 = await this.owner.lookup('service:store').find('term', term2.id);
+    this.termModel3 = await this.owner.lookup('service:store').find('term', term3.id);
   });
 
   test('it renders', async function (assert) {
@@ -87,11 +75,7 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       'assignableVocabularies',
       resolve([this.vocabModel1, this.vocabModel2, this.vocabModel3])
     );
-    this.set('selectedTerms', [
-      this.termModel1,
-      this.termModel2,
-      this.termModel3,
-    ]);
+    this.set('selectedTerms', [this.termModel1, this.termModel2, this.termModel3]);
     this.set('nothing', () => {});
 
     await render(hbs`<TaxonomyManager
@@ -172,15 +156,8 @@ module('Integration | Component | taxonomy manager', function (hooks) {
   test('switch vocabularies', async function (assert) {
     assert.expect(10);
     this.vocabModel2.set('active', true);
-    this.set(
-      'assignableVocabularies',
-      resolve([this.vocabModel1, this.vocabModel2])
-    );
-    this.set('selectedTerms', [
-      this.termModel1,
-      this.termModel2,
-      this.termModel3,
-    ]);
+    this.set('assignableVocabularies', resolve([this.vocabModel1, this.vocabModel2]));
+    this.set('selectedTerms', [this.termModel1, this.termModel2, this.termModel3]);
     this.set('nothing', () => {});
 
     await render(hbs`<TaxonomyManager
@@ -208,15 +185,8 @@ module('Integration | Component | taxonomy manager', function (hooks) {
 
   test('filter terms', async function (assert) {
     assert.expect(14);
-    this.set(
-      'assignableVocabularies',
-      resolve([this.vocabModel1, this.vocabModel2])
-    );
-    this.set('selectedTerms', [
-      this.termModel1,
-      this.termModel2,
-      this.termModel3,
-    ]);
+    this.set('assignableVocabularies', resolve([this.vocabModel1, this.vocabModel2]));
+    this.set('selectedTerms', [this.termModel1, this.termModel2, this.termModel3]);
 
     await render(hbs`<TaxonomyManager
       @vocabularies={{await this.assignableVocabularies}}
@@ -252,11 +222,7 @@ module('Integration | Component | taxonomy manager', function (hooks) {
       'assignableVocabularies',
       resolve([this.vocabModel1, this.vocabModel2, this.vocabModel3])
     );
-    this.set('selectedTerms', [
-      this.termModel1,
-      this.termModel2,
-      this.termModel3,
-    ]);
+    this.set('selectedTerms', [this.termModel1, this.termModel2, this.termModel3]);
     this.set('vocabulary', this.vocabModel2);
     this.set('nothing', () => {});
 

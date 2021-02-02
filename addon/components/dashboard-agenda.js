@@ -20,11 +20,7 @@ export default class DashboardAgendaComponent extends Component {
   @restartableTask
   *load() {
     const from = moment().hour(0).minute(0).unix();
-    const to = moment()
-      .hour(23)
-      .minute(59)
-      .add(this.daysInAdvance, 'days')
-      .unix();
+    const to = moment().hour(23).minute(59).add(this.daysInAdvance, 'days').unix();
 
     this.weeksEvents = yield this.userEvents.getEvents(from, to);
   }
@@ -45,10 +41,7 @@ export default class DashboardAgendaComponent extends Component {
     const hashes = [];
     const uniques = [];
     preWork.forEach((event) => {
-      const hash =
-        moment(event.startDate).format() +
-        moment(event.endDate).format() +
-        event.name;
+      const hash = moment(event.startDate).format() + moment(event.endDate).format() + event.name;
       if (!hashes.includes(hash)) {
         hashes.push(hash);
         uniques.pushObject(event);

@@ -1,10 +1,4 @@
-import {
-  collection,
-  clickable,
-  create,
-  property,
-  text,
-} from 'ember-cli-page-object';
+import { collection, clickable, create, property, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-courses-calendar-filter]',

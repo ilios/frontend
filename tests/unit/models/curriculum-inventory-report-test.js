@@ -5,17 +5,13 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
   setupTest(hooks);
 
   test('it exists', function (assert) {
-    const model = this.owner
-      .lookup('service:store')
-      .createRecord('curriculum-inventory-report');
+    const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     assert.ok(!!model);
   });
 
   test('get top level sequence blocks', async function (assert) {
     assert.expect(3);
-    const model = this.owner
-      .lookup('service:store')
-      .createRecord('curriculum-inventory-report');
+    const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const store = this.owner.lookup('service:store');
     const block1 = store.createRecord('curriculumInventorySequenceBlock', {
       id: 1,
@@ -39,27 +35,21 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
 
   test('check if report is finalized', function (assert) {
     const store = this.owner.lookup('service:store');
-    const model = this.owner
-      .lookup('service:store')
-      .createRecord('curriculum-inventory-report');
+    const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     assert.notOk(model.get('isFinalized'));
     store.createRecord('curriculumInventoryExport', { id: 1, report: model });
     assert.ok(model.get('isFinalized'));
   });
 
   test('get label for academic year', function (assert) {
-    const model = this.owner
-      .lookup('service:store')
-      .createRecord('curriculum-inventory-report');
+    const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     model.set('year', 1346);
     assert.equal(model.get('yearLabel'), '1346 - 1347');
   });
 
   test('get linked courses', async function (assert) {
     assert.expect(3);
-    const model = this.owner
-      .lookup('service:store')
-      .createRecord('curriculum-inventory-report');
+    const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const store = this.owner.lookup('service:store');
     const course1 = store.createRecord('course');
     const course2 = store.createRecord('course');
@@ -85,18 +75,14 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
 
   test('no linked courses', async function (assert) {
     assert.expect(1);
-    const model = this.owner
-      .lookup('service:store')
-      .createRecord('curriculum-inventory-report');
+    const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const hasLinkedCourses = await model.get('hasLinkedCourses');
     assert.notOk(hasLinkedCourses);
   });
 
   test('linked blocks are not linked courses', async function (assert) {
     assert.expect(1);
-    const model = this.owner
-      .lookup('service:store')
-      .createRecord('curriculum-inventory-report');
+    const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const store = this.owner.lookup('service:store');
     model.get('sequenceBlocks').pushObject(
       store.createRecord('curriculumInventorySequenceBlock', {
@@ -109,9 +95,7 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
 
   test('check if report has linked courses', async function (assert) {
     assert.expect(1);
-    const model = this.owner
-      .lookup('service:store')
-      .createRecord('curriculum-inventory-report');
+    const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
     const store = this.owner.lookup('service:store');
     const course = store.createRecord('course');
     model.get('sequenceBlocks').pushObject(

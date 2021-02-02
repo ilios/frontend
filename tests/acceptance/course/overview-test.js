@@ -37,32 +37,20 @@ module('Acceptance | Course - Overview', function (hooks) {
 
     test('collapsed', async function (assert) {
       await page.visit({ courseId: 1 });
-      assert.equal(
-        page.overview.startDate.value,
-        this.intl.formatDate(this.course.startDate)
-      );
+      assert.equal(page.overview.startDate.value, this.intl.formatDate(this.course.startDate));
       assert.equal(page.overview.externalId.value, '123');
       assert.equal(page.overview.level.value, '3');
-      assert.equal(
-        page.overview.endDate.value,
-        this.intl.formatDate(this.course.endDate)
-      );
+      assert.equal(page.overview.endDate.value, this.intl.formatDate(this.course.endDate));
       assert.equal(page.overview.universalLocator, 'ILIOS' + this.course.id);
       assert.equal(page.overview.clerkshipType.value, this.clerkshipType.title);
     });
 
     test('expanded', async function (assert) {
       await page.visit({ courseId: 1, details: true });
-      assert.equal(
-        page.overview.startDate.value,
-        this.intl.formatDate(this.course.startDate)
-      );
+      assert.equal(page.overview.startDate.value, this.intl.formatDate(this.course.startDate));
       assert.equal(page.overview.externalId.value, '123');
       assert.equal(page.overview.level.value, '3');
-      assert.equal(
-        page.overview.endDate.value,
-        this.intl.formatDate(this.course.endDate)
-      );
+      assert.equal(page.overview.endDate.value, this.intl.formatDate(this.course.endDate));
       assert.equal(page.overview.universalLocator, 'ILIOS' + this.course.id);
       assert.equal(page.overview.clerkshipType.value, this.clerkshipType.title);
     });
@@ -134,10 +122,7 @@ module('Acceptance | Course - Overview', function (hooks) {
     });
     await page.visit({ courseId: 1, details: true });
     const newDate = moment(course.startDate).add(1, 'year').add(1, 'month');
-    assert.equal(
-      page.overview.startDate.value,
-      this.intl.formatDate(course.startDate)
-    );
+    assert.equal(page.overview.startDate.value, this.intl.formatDate(course.startDate));
 
     await page.overview.startDate.edit();
     await page.overview.startDate.set(newDate.toDate());

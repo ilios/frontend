@@ -8,9 +8,7 @@ export function jsonApiUtcSerializeDate(obj, property) {
 }
 
 export function jsonApiUtcNormalizeDate(resourceHash, property) {
-  const date = moment
-    .utc(resourceHash.attributes[property])
-    .format('YYYY-MM-DD');
+  const date = moment.utc(resourceHash.attributes[property]).format('YYYY-MM-DD');
   const localDate = moment(date, 'YYYY-MM-DD');
   resourceHash.attributes[property] = localDate.format();
 }

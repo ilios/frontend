@@ -81,20 +81,17 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  allParentTitles: computed(
-    'parent.{title,allParentTitles.[]}',
-    async function () {
-      const parentTerm = await this.parent;
-      if (!parentTerm) {
-        return [];
-      }
-
-      const parents = await parentTerm.get('allParents');
-      const titles = parents.mapBy('title');
-      titles.push(parentTerm.get('title'));
-      return titles;
+  allParentTitles: computed('parent.{title,allParentTitles.[]}', async function () {
+    const parentTerm = await this.parent;
+    if (!parentTerm) {
+      return [];
     }
-  ),
+
+    const parents = await parentTerm.get('allParents');
+    const titles = parents.mapBy('title');
+    titles.push(parentTerm.get('title'));
+    return titles;
+  }),
 
   /**
    * A list of parent terms titles of this term, including this term's title as its last item.
@@ -103,17 +100,13 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  titleWithParentTitles: computed(
-    'title',
-    'allParentTitles.[]',
-    async function () {
-      const parentTitles = await this.allParentTitles;
-      if (isEmpty(parentTitles)) {
-        return this.title;
-      }
-      return parentTitles.join(' > ') + ' > ' + this.title;
+  titleWithParentTitles: computed('title', 'allParentTitles.[]', async function () {
+    const parentTitles = await this.allParentTitles;
+    if (isEmpty(parentTitles)) {
+      return this.title;
     }
-  ),
+    return parentTitles.join(' > ') + ' > ' + this.title;
+  }),
 
   /**
    * A list of descendants terms of this term.
@@ -122,28 +115,21 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  allDescendants: computed(
-    'children.[]',
-    'children.@each.allDescendants',
-    async function () {
-      const descendants = [];
-      const children = await this.children;
-      descendants.pushObjects(children.toArray());
-      const childrenDescendants = await map(
-        children.mapBy('allDescendants'),
-        (childDescendants) => {
-          return childDescendants;
-        }
-      );
-      descendants.pushObjects(
-        childrenDescendants.reduce((array, set) => {
-          array.pushObjects(set);
-          return array;
-        }, [])
-      );
-      return descendants;
-    }
-  ),
+  allDescendants: computed('children.[]', 'children.@each.allDescendants', async function () {
+    const descendants = [];
+    const children = await this.children;
+    descendants.pushObjects(children.toArray());
+    const childrenDescendants = await map(children.mapBy('allDescendants'), (childDescendants) => {
+      return childDescendants;
+    });
+    descendants.pushObjects(
+      childrenDescendants.reduce((array, set) => {
+        array.pushObjects(set);
+        return array;
+      }, [])
+    );
+    return descendants;
+  }),
 
   /**
    * A list of descendant terms titles of this term, including this term's title as its last item.
@@ -152,18 +138,14 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  titleWithDescendantTitles: computed(
-    'title',
-    'allDescendants.[]',
-    async function () {
-      const allDescendants = await this.allDescendants;
-      const allDescendantTitles = allDescendants.mapBy('title');
-      if (isEmpty(allDescendantTitles)) {
-        return this.title;
-      }
-      return allDescendantTitles.join(' > ') + ' > ' + this.title;
+  titleWithDescendantTitles: computed('title', 'allDescendants.[]', async function () {
+    const allDescendants = await this.allDescendants;
+    const allDescendantTitles = allDescendants.mapBy('title');
+    if (isEmpty(allDescendantTitles)) {
+      return this.title;
     }
-  ),
+    return allDescendantTitles.join(' > ') + ' > ' + this.title;
+  }),
 
   /**
    * TRUE if this term and all of its ancestors, if existent, are active. FALSE otherwise.
@@ -172,22 +154,18 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  isActiveInTree: computed(
-    'active',
-    'parent.isActiveInTree',
-    async function () {
-      const parent = await this.parent;
-      const active = this.active;
+  isActiveInTree: computed('active', 'parent.isActiveInTree', async function () {
+    const parent = await this.parent;
+    const active = this.active;
 
-      if (!active) {
-        return false;
-      }
-
-      if (!parent) {
-        return true;
-      }
-
-      return parent.get('isActiveInTree');
+    if (!active) {
+      return false;
     }
-  ),
+
+    if (!parent) {
+      return true;
+    }
+
+    return parent.get('isActiveInTree');
+  }),
 });

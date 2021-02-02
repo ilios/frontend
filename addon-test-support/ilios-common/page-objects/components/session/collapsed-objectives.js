@@ -1,10 +1,4 @@
-import {
-  create,
-  collection,
-  clickable,
-  hasClass,
-  text,
-} from 'ember-cli-page-object';
+import { create, collection, clickable, hasClass, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-session-collapsed-objectives]',

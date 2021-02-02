@@ -11,10 +11,7 @@ export default class IliosCalendarComponent extends Component {
     } else {
       const hashedEvents = {};
       this.args.calendarEvents.forEach((event) => {
-        const hash =
-          moment(event.startDate).format() +
-          moment(event.endDate).format() +
-          event.name;
+        const hash = moment(event.startDate).format() + moment(event.endDate).format() + event.name;
         if (!(hash in hashedEvents)) {
           hashedEvents[hash] = [];
         }
@@ -57,16 +54,12 @@ export default class IliosCalendarComponent extends Component {
 
   @action
   goForward() {
-    const newDate = moment(this.args.selectedDate)
-      .add(1, this.args.selectedView)
-      .toDate();
+    const newDate = moment(this.args.selectedDate).add(1, this.args.selectedView).toDate();
     this.args.changeDate(newDate);
   }
   @action
   goBack() {
-    const newDate = moment(this.args.selectedDate)
-      .subtract(1, this.args.selectedView)
-      .toDate();
+    const newDate = moment(this.args.selectedDate).subtract(1, this.args.selectedView).toDate();
     this.args.changeDate(newDate);
   }
   @action

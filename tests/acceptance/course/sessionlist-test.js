@@ -145,63 +145,27 @@ module('Acceptance | Course - Session List', function (hooks) {
 
     assert.equal(offerings.dates.length, 3);
 
-    assert.equal(
-      offerings.dates[0].dayOfWeek,
-      offering1StartDate.format('dddd')
-    );
-    assert.equal(
-      offerings.dates[0].dayOfMonth,
-      offering1StartDate.format('MMMM Do')
-    );
-    assert.equal(
-      offerings.dates[1].dayOfWeek,
-      offering2StartDate.format('dddd')
-    );
-    assert.equal(
-      offerings.dates[1].dayOfMonth,
-      offering2StartDate.format('MMMM Do')
-    );
-    assert.equal(
-      offerings.dates[2].dayOfWeek,
-      offering3StartDate.format('dddd')
-    );
-    assert.equal(
-      offerings.dates[2].dayOfMonth,
-      offering3StartDate.format('MMMM Do')
-    );
+    assert.equal(offerings.dates[0].dayOfWeek, offering1StartDate.format('dddd'));
+    assert.equal(offerings.dates[0].dayOfMonth, offering1StartDate.format('MMMM Do'));
+    assert.equal(offerings.dates[1].dayOfWeek, offering2StartDate.format('dddd'));
+    assert.equal(offerings.dates[1].dayOfMonth, offering2StartDate.format('MMMM Do'));
+    assert.equal(offerings.dates[2].dayOfWeek, offering3StartDate.format('dddd'));
+    assert.equal(offerings.dates[2].dayOfMonth, offering3StartDate.format('MMMM Do'));
 
     assert.equal(offerings.offerings.length, 3);
-    assert.equal(
-      offerings.offerings[0].startTime,
-      offering1StartDate.format('LT')
-    );
+    assert.equal(offerings.offerings[0].startTime, offering1StartDate.format('LT'));
     assert.equal(offerings.offerings[0].location, 'room 0');
-    assert.equal(
-      offerings.offerings[0].learners,
-      '(2) 1 guy M. Mc1son, 2 guy...'
-    );
-    assert.equal(
-      offerings.offerings[0].learnerGroups,
-      '(2) learner group 0, learn...'
-    );
-    assert.equal(
-      offerings.offerings[0].instructors,
-      '(3) 3 guy M. Mc3son, 4 guy...'
-    );
+    assert.equal(offerings.offerings[0].learners, '(2) 1 guy M. Mc1son, 2 guy...');
+    assert.equal(offerings.offerings[0].learnerGroups, '(2) learner group 0, learn...');
+    assert.equal(offerings.offerings[0].instructors, '(3) 3 guy M. Mc3son, 4 guy...');
 
-    assert.equal(
-      offerings.offerings[1].startTime,
-      offering2StartDate.format('LT')
-    );
+    assert.equal(offerings.offerings[1].startTime, offering2StartDate.format('LT'));
     assert.equal(offerings.offerings[1].location, 'room 1');
     assert.equal(offerings.offerings[1].learners, '');
     assert.equal(offerings.offerings[1].learnerGroups, '');
     assert.equal(offerings.offerings[1].instructors, '');
 
-    assert.equal(
-      offerings.offerings[2].startTime,
-      offering3StartDate.format('LT')
-    );
+    assert.equal(offerings.offerings[2].startTime, offering3StartDate.format('LT'));
     assert.equal(offerings.offerings[2].location, 'room 2');
     assert.equal(offerings.offerings[2].learners, '');
     assert.equal(offerings.offerings[2].learnerGroups, '');
@@ -238,10 +202,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     await page.visit({ courseId: 1, details: true });
     const { sessions, expandedSessions } = page.sessionsList;
     await sessions[0].expandCollapse();
-    assert.equal(
-      expandedSessions[0].lastUpdated,
-      'Last Update Last Update: 07/09/2019 5:00 PM'
-    );
+    assert.equal(expandedSessions[0].lastUpdated, 'Last Update Last Update: 07/09/2019 5:00 PM');
   });
 
   test('expand all sessions', async function (assert) {
@@ -464,9 +425,6 @@ module('Acceptance | Course - Session List', function (hooks) {
     const { offeringForm: form } = offerings[0];
     await form.url.set('https://zoom.example.edu');
     await form.save();
-    assert.equal(
-      this.server.schema.offerings.find(1).url,
-      'https://zoom.example.edu'
-    );
+    assert.equal(this.server.schema.offerings.find(1).url, 'https://zoom.example.edu');
   });
 });

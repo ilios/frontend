@@ -10,14 +10,9 @@ export default class CourseLeadershipExpandedComponent extends Component {
   @tracked studentAdvisors = [];
   get isCollapsible() {
     const administratorIds = this.args.session.hasMany('administrators').ids();
-    const studentAdvisorIds = this.args.session
-      .hasMany('studentAdvisors')
-      .ids();
+    const studentAdvisorIds = this.args.session.hasMany('studentAdvisors').ids();
 
-    return (
-      (administratorIds.length > 0 || studentAdvisorIds.length > 0) &&
-      !this.args.isManaging
-    );
+    return (administratorIds.length > 0 || studentAdvisorIds.length > 0) && !this.args.isManaging;
   }
   @action
   addAdministrator(user) {

@@ -23,15 +23,10 @@ module('Acceptance | Course - Objective List', function (hooks) {
     const vocabulary = this.server.create('vocabulary', {
       school: this.school,
     });
-    const programYearObjectiveWithCompetency = this.server.create(
-      'programYearObjective',
-      {
-        competency: competencies[0],
-      }
-    );
-    const programYearObjectiveWithoutCompetency = this.server.create(
-      'programYearObjective'
-    );
+    const programYearObjectiveWithCompetency = this.server.create('programYearObjective', {
+      competency: competencies[0],
+    });
+    const programYearObjectiveWithoutCompetency = this.server.create('programYearObjective');
     const term1 = this.server.create('term', { vocabulary });
     const term2 = this.server.create('term', { vocabulary });
     const course = this.server.create('course', {
@@ -64,38 +59,24 @@ module('Acceptance | Course - Objective List', function (hooks) {
       page.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].parents.list.length,
-      1
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.equal(
       page.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].meshDescriptors.list.length,
-      1
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list.length, 1);
     assert.equal(
       page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].title,
       'descriptor 0'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].selectedTerms.list.length,
-      1
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
     assert.equal(
       page.objectives.objectiveList.objectives[0].selectedTerms.list[0].title,
       'Vocabulary 1 (school 0)'
     );
+    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms.length, 1);
     assert.equal(
-      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms
-        .length,
-      1
-    );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0]
-        .name,
+      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
       'term 0'
     );
 
@@ -103,18 +84,12 @@ module('Acceptance | Course - Objective List', function (hooks) {
       page.objectives.objectiveList.objectives[1].description.text,
       'course objective 1'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[1].parents.list.length,
-      1
-    );
+    assert.equal(page.objectives.objectiveList.objectives[1].parents.list.length, 1);
     assert.equal(
       page.objectives.objectiveList.objectives[1].parents.list[0].text,
       'program-year objective 1'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
-      2
-    );
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 2);
     assert.equal(
       page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title,
       'descriptor 0'
@@ -123,22 +98,14 @@ module('Acceptance | Course - Objective List', function (hooks) {
       page.objectives.objectiveList.objectives[1].meshDescriptors.list[1].title,
       'descriptor 1'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[1].selectedTerms.list.length,
-      1
-    );
+    assert.equal(page.objectives.objectiveList.objectives[1].selectedTerms.list.length, 1);
     assert.equal(
       page.objectives.objectiveList.objectives[1].selectedTerms.list[0].title,
       'Vocabulary 1 (school 0)'
     );
+    assert.equal(page.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms.length, 1);
     assert.equal(
-      page.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms
-        .length,
-      1
-    );
-    assert.equal(
-      page.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms[0]
-        .name,
+      page.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms[0].name,
       'term 1'
     );
 
@@ -148,9 +115,7 @@ module('Acceptance | Course - Objective List', function (hooks) {
         `course objective ${i}`
       );
       assert.ok(page.objectives.objectiveList.objectives[i].parents.empty);
-      assert.ok(
-        page.objectives.objectiveList.objectives[i].meshDescriptors.empty
-      );
+      assert.ok(page.objectives.objectiveList.objectives[i].meshDescriptors.empty);
     }
   });
 
@@ -201,15 +166,10 @@ module('Acceptance | Course - Objective List', function (hooks) {
       'course objective 0'
     );
     await page.objectives.objectiveList.objectives[0].description.openEditor();
-    await page.objectives.objectiveList.objectives[0].description.edit(
-      newDescription
-    );
+    await page.objectives.objectiveList.objectives[0].description.edit(newDescription);
     await page.objectives.objectiveList.objectives[0].description.save();
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].description.text,
-      newDescription
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].description.text, newDescription);
   });
 
   test('empty objective title can not be saved', async function (assert) {
@@ -226,17 +186,13 @@ module('Acceptance | Course - Objective List', function (hooks) {
       courseObjectiveDetails: true,
     });
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.notOk(
-      page.objectives.objectiveList.objectives[0].description.hasValidationError
-    );
+    assert.notOk(page.objectives.objectiveList.objectives[0].description.hasValidationError);
     await page.objectives.objectiveList.objectives[0].description.openEditor();
     await page.objectives.objectiveList.objectives[0].description.edit(
       '<p>&nbsp</p><div></div><span>  </span>'
     );
     await page.objectives.objectiveList.objectives[0].description.save();
-    assert.ok(
-      page.objectives.objectiveList.objectives[0].description.hasValidationError
-    );
+    assert.ok(page.objectives.objectiveList.objectives[0].description.hasValidationError);
     assert.equal(
       page.objectives.objectiveList.objectives[0].description.validationError,
       'This field can not be blank'

@@ -3,12 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask } from 'ember-concurrency-decorators';
-import {
-  validatable,
-  Length,
-  BeforeDate,
-  AfterDate,
-} from 'ilios-common/decorators/validation';
+import { validatable, Length, BeforeDate, AfterDate } from 'ilios-common/decorators/validation';
 
 @validatable
 export default class CourseOverview extends Component {
@@ -32,18 +27,14 @@ export default class CourseOverview extends Component {
 
   @restartableTask
   *load() {
-    this.clerkshipTypeOptions = yield this.store.peekAll(
-      'course-clerkship-type'
-    );
+    this.clerkshipTypeOptions = yield this.store.peekAll('course-clerkship-type');
     this.externalId = this.args.course.externalId;
     this.startDate = this.args.course.startDate;
     this.endDate = this.args.course.endDate;
     this.level = this.args.course.level;
     this.school = yield this.args.course.school;
     this.clerkshipTypeId = this.args.course.belongsTo('clerkshipType').id();
-    this.canCreateCourseInSchool = yield this.permissionChecker.canCreateCourse(
-      this.school
-    );
+    this.canCreateCourseInSchool = yield this.permissionChecker.canCreateCourse(this.school);
   }
 
   get selectedClerkshipType() {

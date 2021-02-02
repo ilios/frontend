@@ -42,19 +42,16 @@ module('Integration | Service | user events', function (hooks) {
     };
     const from = moment('20150305', 'YYYYMMDD').hour(0);
     const to = from.clone().hour(24);
-    this.server.get(
-      `/api/userevents/:id`,
-      (scheme, { params, queryParams }) => {
-        assert.ok('id' in params);
-        assert.equal(params.id, 1);
-        assert.ok('from' in queryParams);
-        assert.ok('to' in queryParams);
-        assert.equal(queryParams.from, from.unix());
-        assert.equal(queryParams.to, to.unix());
+    this.server.get(`/api/userevents/:id`, (scheme, { params, queryParams }) => {
+      assert.ok('id' in params);
+      assert.equal(params.id, 1);
+      assert.ok('from' in queryParams);
+      assert.ok('to' in queryParams);
+      assert.equal(queryParams.from, from.unix());
+      assert.equal(queryParams.to, to.unix());
 
-        return { userEvents: [event1, event2, event3] };
-      }
-    );
+      return { userEvents: [event1, event2, event3] };
+    });
 
     const subject = this.owner.lookup('service:user-events');
     const events = await subject.getEvents(from.unix(), to.unix());
@@ -151,18 +148,15 @@ module('Integration | Service | user events', function (hooks) {
       postrequisites: [],
     };
 
-    this.server.get(
-      `/api/userevents/:id`,
-      (scheme, { params, queryParams }) => {
-        assert.equal(params.id, 1);
-        const from = moment('20130121', 'YYYYMMDD').hour(0);
-        const to = from.clone().hour(24);
-        assert.equal(queryParams.from, from.unix());
-        assert.equal(queryParams.to, to.unix());
+    this.server.get(`/api/userevents/:id`, (scheme, { params, queryParams }) => {
+      assert.equal(params.id, 1);
+      const from = moment('20130121', 'YYYYMMDD').hour(0);
+      const to = from.clone().hour(24);
+      assert.equal(queryParams.from, from.unix());
+      assert.equal(queryParams.to, to.unix());
 
-        return { userEvents: [event1, event2] };
-      }
-    );
+      return { userEvents: [event1, event2] };
+    });
 
     const subject = this.owner.lookup('service:user-events');
     const event = await subject.getEventForSlug('U20130121O1');
@@ -184,18 +178,15 @@ module('Integration | Service | user events', function (hooks) {
       postrequisites: [],
     };
 
-    this.server.get(
-      `/api/userevents/:id`,
-      (scheme, { params, queryParams }) => {
-        assert.equal(params.id, 1);
-        const from = moment('20130121', 'YYYYMMDD').hour(0);
-        const to = from.clone().hour(24);
-        assert.equal(queryParams.from, from.unix());
-        assert.equal(queryParams.to, to.unix());
+    this.server.get(`/api/userevents/:id`, (scheme, { params, queryParams }) => {
+      assert.equal(params.id, 1);
+      const from = moment('20130121', 'YYYYMMDD').hour(0);
+      const to = from.clone().hour(24);
+      assert.equal(queryParams.from, from.unix());
+      assert.equal(queryParams.to, to.unix());
 
-        return { userEvents: [event1, event2] };
-      }
-    );
+      return { userEvents: [event1, event2] };
+    });
 
     const subject = this.owner.lookup('service:user-events');
     const event = await subject.getEventForSlug('U20130121I3');

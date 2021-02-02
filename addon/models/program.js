@@ -13,12 +13,9 @@ export default Model.extend({
     async: true,
   }),
 
-  hasCurriculumInventoryReports: computed(
-    'curriculumInventoryReports.[]',
-    function () {
-      return this.hasMany('curriculumInventoryReports').ids().length > 0;
-    }
-  ),
+  hasCurriculumInventoryReports: computed('curriculumInventoryReports.[]', function () {
+    return this.hasMany('curriculumInventoryReports').ids().length > 0;
+  }),
 
   hasProgramYears: computed('programYears.[]', function () {
     return this.hasMany('programYears').ids().length > 0;

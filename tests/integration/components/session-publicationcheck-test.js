@@ -21,9 +21,7 @@ module('Integration | Component | session-publicationcheck', function (hooks) {
     this.server.create('session-objective', { session });
 
     await setupAuthentication({ school, administeredSchools: [school] });
-    const sessionModel = await this.owner
-      .lookup('service:store')
-      .find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('model', sessionModel);
     await render(hbs`<SessionPublicationcheck @session={{this.model}} />`);
     assert.ok(!!find('.fa-unlink'));
@@ -43,9 +41,7 @@ module('Integration | Component | session-publicationcheck', function (hooks) {
       courseObjectives: [courseObjective],
     });
     await setupAuthentication({ school, administeredSchools: [school] });
-    const sessionModel = await this.owner
-      .lookup('service:store')
-      .find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('model', sessionModel);
     await render(hbs`<SessionPublicationcheck @session={{this.model}} />`);
     assert.notOk(!!find('.fa-unlink'));

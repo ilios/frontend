@@ -37,20 +37,14 @@ export default class CourseMaterialsComponent extends Component {
       );
     }
     if (this.sessionsRelationship) {
-      const sessionMaterials = yield map(
-        this.sessionsRelationship.toArray(),
-        async (session) => {
-          const data = await session.learningMaterials;
-          return data.toArray();
-        }
-      );
+      const sessionMaterials = yield map(this.sessionsRelationship.toArray(), async (session) => {
+        const data = await session.learningMaterials;
+        return data.toArray();
+      });
       const flatSessionMaterials = sessionMaterials.flat(2);
-      this.sessionLearningMaterialObjects = yield map(
-        flatSessionMaterials,
-        async (slm) => {
-          return await this.buildSlmObject(slm);
-        }
-      );
+      this.sessionLearningMaterialObjects = yield map(flatSessionMaterials, async (slm) => {
+        return await this.buildSlmObject(slm);
+      });
     }
   }
 

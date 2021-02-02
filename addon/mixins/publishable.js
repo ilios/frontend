@@ -26,19 +26,15 @@ export default Mixin.create({
       return intl.t('general.notPublished');
     }
   ),
-  menuIcon: computed(
-    'publishTarget.isPublished',
-    'publishTarget.publishedAsTbd',
-    function () {
-      if (this.get('publishTarget.publishedAsTbd')) {
-        return 'clock';
-      }
-      if (this.get('publishTarget.isPublished')) {
-        return 'star';
-      }
-      return 'cloud';
+  menuIcon: computed('publishTarget.isPublished', 'publishTarget.publishedAsTbd', function () {
+    if (this.get('publishTarget.publishedAsTbd')) {
+      return 'clock';
     }
-  ),
+    if (this.get('publishTarget.isPublished')) {
+      return 'star';
+    }
+    return 'cloud';
+  }),
   showTbd: not('publishTarget.isScheduled'),
   showAsIs: computed(
     'publishTarget.isPublished',
@@ -47,29 +43,20 @@ export default Mixin.create({
     'publishTarget.allPublicationIssuesLength',
     function () {
       return (
-        (!this.get('publishTarget.isPublished') ||
-          this.get('publishTarget.isScheduled')) &&
+        (!this.get('publishTarget.isPublished') || this.get('publishTarget.isScheduled')) &&
         this.get('publishTarget.requiredPublicationIssues.length') === 0 &&
         this.get('publishTarget.allPublicationIssuesLength') !== 0
       );
     }
   ),
-  showReview: computed(
-    'publishTarget.allPublicationIssuesLength',
-    'showCheckLink',
-    function () {
-      return (
-        this.get('publishTarget.allPublicationIssuesLength') > 0 &&
-        this.showCheckLink
-      );
-    }
-  ),
+  showReview: computed('publishTarget.allPublicationIssuesLength', 'showCheckLink', function () {
+    return this.get('publishTarget.allPublicationIssuesLength') > 0 && this.showCheckLink;
+  }),
   showPublish: computed(
     'publishTarget.{allPublicationIssuesLength,isPublished,isScheduled}',
     function () {
       return (
-        (!this.get('publishTarget.isPublished') ||
-          this.get('publishTarget.isScheduled')) &&
+        (!this.get('publishTarget.isPublished') || this.get('publishTarget.isScheduled')) &&
         this.get('publishTarget.allPublicationIssuesLength') === 0
       );
     }

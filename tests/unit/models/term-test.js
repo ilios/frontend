@@ -144,9 +144,7 @@ module('Unit | Model | term', function (hooks) {
 
   test('titleWithDescendantTitles', async function (assert) {
     assert.expect(1);
-    const model = this.owner
-      .lookup('service:store')
-      .createRecord('term', { title: 'top' });
+    const model = this.owner.lookup('service:store').createRecord('term', { title: 'top' });
     const store = model.store;
     const child1 = store.createRecord('term', {
       title: 'first',
@@ -154,9 +152,7 @@ module('Unit | Model | term', function (hooks) {
     });
     store.createRecord('term', { title: 'second', parent: model });
     store.createRecord('term', { title: 'third', parent: child1 });
-    const titleWithDescendantTitles = await model.get(
-      'titleWithDescendantTitles'
-    );
+    const titleWithDescendantTitles = await model.get('titleWithDescendantTitles');
     assert.equal(titleWithDescendantTitles, 'first > second > third > top');
   });
 

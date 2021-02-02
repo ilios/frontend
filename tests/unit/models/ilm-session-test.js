@@ -5,9 +5,7 @@ module('Unit | Model | IlmSession', function (hooks) {
   setupTest(hooks);
 
   test('it exists', function (assert) {
-    const model = this.owner
-      .lookup('service:store')
-      .createRecord('ilm-session');
+    const model = this.owner.lookup('service:store').createRecord('ilm-session');
     assert.ok(!!model);
   });
 });

@@ -120,9 +120,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       .toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
     assert
       .dom(events[0])
-      .hasText(
-        `${startOfMonthStartFormat} - ${startOfMonthEndFormat} : start of month`
-      );
+      .hasText(`${startOfMonthStartFormat} - ${startOfMonthEndFormat} : start of month`);
     const endOfMonthStartFormat = endOfMonth
       .toDate()
       .toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
@@ -133,9 +131,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       .toLocaleTimeString([], { hour: 'numeric', minute: 'numeric' });
     assert
       .dom(events[1])
-      .hasText(
-        `${endOfMonthStartFormat} - ${endOfMonthEndFormat} : end of month`
-      );
+      .hasText(`${endOfMonthStartFormat} - ${endOfMonthEndFormat} : end of month`);
   });
 
   test('load week calendar', async function (assert) {
@@ -225,9 +221,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await click(`[data-test-day-button="${dayOfMonth}"]`);
     assert.equal(
       currentURL(),
-      '/dashboard?date=' +
-        aDayInTheMonth.format('YYYY-MM-DD') +
-        '&show=calendar&view=day'
+      '/dashboard?date=' + aDayInTheMonth.format('YYYY-MM-DD') + '&show=calendar&view=day'
     );
   });
 
@@ -245,9 +239,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await page.weeklyCalendar.dayHeadings[dayOfWeek].selectDay();
     assert.equal(
       currentURL(),
-      '/dashboard?date=' +
-        today.format('YYYY-MM-DD') +
-        '&show=calendar&view=day'
+      '/dashboard?date=' + today.format('YYYY-MM-DD') + '&show=calendar&view=day'
     );
   });
 
@@ -263,9 +255,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await click(findAll('.calendar-time-picker li')[2]);
     assert.equal(
       currentURL(),
-      '/dashboard?date=' +
-        today.add(1, 'day').format('YYYY-MM-DD') +
-        '&show=calendar&view=day'
+      '/dashboard?date=' + today.add(1, 'day').format('YYYY-MM-DD') + '&show=calendar&view=day'
     );
   });
 
@@ -281,9 +271,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await click(findAll('.calendar-time-picker li')[2]);
     assert.equal(
       currentURL(),
-      '/dashboard?date=' +
-        today.add(1, 'week').format('YYYY-MM-DD') +
-        '&show=calendar'
+      '/dashboard?date=' + today.add(1, 'week').format('YYYY-MM-DD') + '&show=calendar'
     );
   });
 
@@ -299,9 +287,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await click(findAll('.calendar-time-picker li')[2]);
     assert.equal(
       currentURL(),
-      '/dashboard?date=' +
-        today.add(1, 'month').format('YYYY-MM-DD') +
-        '&show=calendar&view=month'
+      '/dashboard?date=' + today.add(1, 'month').format('YYYY-MM-DD') + '&show=calendar&view=month'
     );
   });
 
@@ -317,9 +303,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await click(find('.calendar-time-picker li'));
     assert.equal(
       currentURL(),
-      '/dashboard?date=' +
-        today.subtract(1, 'day').format('YYYY-MM-DD') +
-        '&show=calendar&view=day'
+      '/dashboard?date=' + today.subtract(1, 'day').format('YYYY-MM-DD') + '&show=calendar&view=day'
     );
   });
 
@@ -335,9 +319,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await click(find('.calendar-time-picker li'));
     assert.equal(
       currentURL(),
-      '/dashboard?date=' +
-        today.subtract(1, 'week').format('YYYY-MM-DD') +
-        '&show=calendar'
+      '/dashboard?date=' + today.subtract(1, 'week').format('YYYY-MM-DD') + '&show=calendar'
     );
   });
 
@@ -404,9 +386,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   };
 
   const pickSessionType = async function (i) {
-    return await click(
-      find(`.sessiontypefilter li:nth-of-type(${i}) [data-test-target]`)
-    );
+    return await click(find(`.sessiontypefilter li:nth-of-type(${i}) [data-test-target]`));
   };
 
   test('test session type filter', async function (assert) {
@@ -438,9 +418,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   const pickCourseLevel = async function (i) {
-    return await click(
-      find(`.courselevelfilter li:nth-of-type(${i}) [data-test-target]`)
-    );
+    return await click(find(`.courselevelfilter li:nth-of-type(${i}) [data-test-target]`));
   };
   const clearCourseLevels = async function () {
     const selected = findAll('.courselevelfilter [data-test-checked]');
@@ -474,9 +452,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   const pickCohort = async function (i) {
     return await click(
-      find(
-        `[data-test-cohort-calendar-filter] li:nth-of-type(${i}) [data-test-target]`
-      )
+      find(`[data-test-cohort-calendar-filter] li:nth-of-type(${i}) [data-test-target]`)
     );
   };
 
@@ -512,15 +488,11 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
   const pickCourse = async function (i) {
     return await click(
-      find(
-        `[data-test-courses-calendar-filter] li:nth-of-type(${i}) [data-test-target]`
-      )
+      find(`[data-test-courses-calendar-filter] li:nth-of-type(${i}) [data-test-target]`)
     );
   };
   const clearCourses = async function () {
-    const selected = findAll(
-      '[data-test-courses-calendar-filter] [data-test-checked]'
-    );
+    const selected = findAll('[data-test-courses-calendar-filter] [data-test-checked]');
     await map(selected, (e) => click(e));
   };
 
@@ -625,12 +597,8 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       hour: 'numeric',
       minute: 'numeric',
     };
-    assert
-      .dom(events[0])
-      .hasText(today.toDate().toLocaleString([], options) + ' event 0');
-    assert
-      .dom(events[1])
-      .hasText(endOfTheWeek.toDate().toLocaleString([], options) + ' event 1');
+    assert.dom(events[0]).hasText(today.toDate().toLocaleString([], options) + ' event 0');
+    assert.dom(events[1]).hasText(endOfTheWeek.toDate().toLocaleString([], options) + ' event 1');
   });
 
   test('clear all filters', async function (assert) {
@@ -643,8 +611,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
     const clearFilter = '.filters-clear-filters';
     const sessiontype = '.sessiontypefilter li:nth-of-type(1) input';
-    const course =
-      '[data-test-courses-calendar-filter] li:nth-of-type(1) input';
+    const course = '[data-test-courses-calendar-filter] li:nth-of-type(1) input';
     const term = '.vocabularyfilter li:nth-of-type(1) input';
 
     await page.visit({ show: 'calendar', view: 'week' });
@@ -655,9 +622,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await click(course);
     await click(term);
 
-    assert
-      .dom(clearFilter)
-      .hasText('Clear Filters', 'clear filter button is active');
+    assert.dom(clearFilter).hasText('Clear Filters', 'clear filter button is active');
     assert.dom(sessiontype).isChecked('filter is checked');
     assert.dom(course).isChecked('filter is checked');
     assert.dom(term).isChecked('filter is checked');
@@ -684,9 +649,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     await click(courselevel);
     await click(cohort);
 
-    assert
-      .dom(clearFilter)
-      .hasText('Clear Filters', 'clear filter button is active');
+    assert.dom(clearFilter).hasText('Clear Filters', 'clear filter button is active');
     assert.dom(sessiontype).isChecked('filter is checked');
     assert.dom(courselevel).isChecked('filter is checked');
     assert.dom(cohort).isChecked('filter is checked');
@@ -699,12 +662,9 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
   });
 
   test('filter tags work properly', async function (assert) {
-    const sessiontype =
-      '.sessiontypefilter li:nth-of-type(1) [data-test-target]';
-    const courselevel =
-      '.courselevelfilter li:nth-of-type(1) [data-test-target]';
-    const cohort =
-      '[data-test-cohort-calendar-filter] li:nth-of-type(2) [data-test-target]';
+    const sessiontype = '.sessiontypefilter li:nth-of-type(1) [data-test-target]';
+    const courselevel = '.courselevelfilter li:nth-of-type(1) [data-test-target]';
+    const cohort = '[data-test-cohort-calendar-filter] li:nth-of-type(2) [data-test-target]';
 
     const filtersList = '.filters-list';
     const clearFilter = '.filters-clear-filters';
@@ -757,10 +717,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar');
 
     await click(showFiltersButton);
-    assert.equal(
-      currentURL(),
-      '/dashboard?mySchedule=false&show=calendar&showFilters=true'
-    );
+    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
 
     await chooseDetailFilter();
     assert.equal(
@@ -791,10 +748,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     );
 
     await click('[data-test-courses-calendar-filter] ul li:nth-child(1) input');
-    assert.equal(
-      currentURL(),
-      '/dashboard?mySchedule=false&show=calendar&showFilters=true'
-    );
+    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
 
     await click('.sessiontypefilter ul li:nth-child(1) input');
     assert.equal(
@@ -815,10 +769,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     );
 
     await click('.sessiontypefilter ul li:nth-child(1) input');
-    assert.equal(
-      currentURL(),
-      '/dashboard?mySchedule=false&show=calendar&showFilters=true'
-    );
+    assert.equal(currentURL(), '/dashboard?mySchedule=false&show=calendar&showFilters=true');
 
     await click('.togglecoursefilters label:nth-of-type(2)');
     await click('.courselevelfilter ul li:nth-child(1) input');
@@ -901,18 +852,14 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     };
     assert
       .dom(eventBLocks[0])
-      .hasText(
-        'event 0 ' + startOfTheWeek.toDate().toLocaleString([], options)
-      );
+      .hasText('event 0 ' + startOfTheWeek.toDate().toLocaleString([], options));
     assert
       .dom(eventBLocks[1])
       .hasText('event 1 ' + endOfTheWeek.toDate().toLocaleString([], options));
   });
 
   const pickTerm = async function (i) {
-    return await click(
-      find(`.vocabularyfilter li:nth-of-type(${i}) [data-test-target]`)
-    );
+    return await click(find(`.vocabularyfilter li:nth-of-type(${i}) [data-test-target]`));
   };
 
   test('test term filter', async function (assert) {

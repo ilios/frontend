@@ -14,20 +14,13 @@ export default class DetailLearnerGroupsListComponent extends Component {
       return;
     }
 
-    const topLevelGroups = yield all(
-      learnerGroups.toArray().mapBy('topLevelGroup')
-    );
+    const topLevelGroups = yield all(learnerGroups.toArray().mapBy('topLevelGroup'));
 
     this.trees = yield map(topLevelGroups.uniq(), async (topLevelGroup) => {
-      const groups = await filter(
-        learnerGroups.toArray(),
-        async (learnerGroup) => {
-          const thisGroupsTopLevelGroup = await learnerGroup.get(
-            'topLevelGroup'
-          );
-          return thisGroupsTopLevelGroup === topLevelGroup;
-        }
-      );
+      const groups = await filter(learnerGroups.toArray(), async (learnerGroup) => {
+        const thisGroupsTopLevelGroup = await learnerGroup.get('topLevelGroup');
+        return thisGroupsTopLevelGroup === topLevelGroup;
+      });
 
       const sortProxies = await map(groups, async (group) => {
         const sortTitle = await group.get('sortTitle');
@@ -46,9 +39,7 @@ export default class DetailLearnerGroupsListComponent extends Component {
     const ids = learnerGroups.mapBy('id');
     this.lowestLeaves = yield filter(learnerGroups.toArray(), async (group) => {
       const children = await group.allDescendants;
-      const selectedChildren = children.filter((child) =>
-        ids.includes(child.id)
-      );
+      const selectedChildren = children.filter((child) => ids.includes(child.id));
       return selectedChildren.length === 0;
     });
   }

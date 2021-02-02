@@ -22,9 +22,7 @@ export default class OfferingCalendar extends Component {
       events = [...events, ...this.sessionEvents];
     }
     const currentEventIdentifier =
-      this.currentEvent.name +
-      this.currentEvent.startDate +
-      this.currentEvent.endDate;
+      this.currentEvent.name + this.currentEvent.startDate + this.currentEvent.endDate;
     const filteredEvents = events.filter((event) => {
       if (!event) {
         return false;

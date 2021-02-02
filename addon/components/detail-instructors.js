@@ -65,10 +65,7 @@ export default class DetailInstructorsComponent extends Component {
   }
   @action
   addInstructorGroupToBuffer(instructorGroup) {
-    this.instructorGroupBuffer = [
-      ...this.instructorGroupBuffer,
-      instructorGroup,
-    ];
+    this.instructorGroupBuffer = [...this.instructorGroupBuffer, instructorGroup];
   }
   @action
   removeInstructorGroupFromBuffer(instructorGroup) {
@@ -82,8 +79,6 @@ export default class DetailInstructorsComponent extends Component {
   }
   @action
   removeInstructorFromBuffer(instructor) {
-    this.instructorBuffer = this.instructorBuffer.filter(
-      (obj) => obj.id !== instructor.id
-    );
+    this.instructorBuffer = this.instructorBuffer.filter((obj) => obj.id !== instructor.id);
   }
 }

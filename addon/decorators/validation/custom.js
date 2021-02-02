@@ -1,10 +1,6 @@
 import { registerDecorator } from 'class-validator';
 
-export function Custom(
-  validatorCallbackName,
-  messageCallbackName,
-  validationOptions
-) {
+export function Custom(validatorCallbackName, messageCallbackName, validationOptions) {
   return function (object, propertyName) {
     registerDecorator({
       name: 'custom',

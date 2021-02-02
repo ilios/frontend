@@ -51,16 +51,10 @@ module('Integration | Component | detail cohort list', function (hooks) {
     assert.dom(findAll('th')[2]).hasText('Cohort');
     assert.dom('tbody tr').exists({ count: 2 });
     assert.dom('tbody tr:nth-of-type(1) td').hasText('School of Life');
-    assert
-      .dom(findAll('tbody tr:nth-of-type(1) td')[1])
-      .hasText('Professional Pie Eating');
+    assert.dom(findAll('tbody tr:nth-of-type(1) td')[1]).hasText('Professional Pie Eating');
     assert.dom(findAll('tbody tr:nth-of-type(1) td')[2]).hasText('Aardvark');
     assert.dom('tbody tr:nth-of-type(2) td').hasText('Starfleet Academy');
-    assert
-      .dom(findAll('tbody tr:nth-of-type(2) td')[1])
-      .hasText('Doctor of Rocket Surgery');
-    assert
-      .dom(findAll('tbody tr:nth-of-type(2) td')[2])
-      .hasText('Class of 2011');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[1]).hasText('Doctor of Rocket Surgery');
+    assert.dom(findAll('tbody tr:nth-of-type(2) td')[2]).hasText('Class of 2011');
   });
 });

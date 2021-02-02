@@ -16,9 +16,7 @@ export function IsInt(validationOptions) {
           }
           // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger#Polyfill
           return (
-            typeof value === 'number' &&
-            isFinite(numValue) &&
-            Math.floor(numValue) === numValue
+            typeof value === 'number' && isFinite(numValue) && Math.floor(numValue) === numValue
           );
         },
         defaultMessage({ object: target }) {

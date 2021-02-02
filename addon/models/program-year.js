@@ -26,14 +26,9 @@ export default Model.extend({
     const program = await this.program;
     return parseInt(this.startYear, 10) + parseInt(program.duration, 10);
   }),
-  requiredPublicationIssues: computed(
-    'startYear',
-    'cohort',
-    'program',
-    function () {
-      return this.getRequiredPublicationIssues();
-    }
-  ),
+  requiredPublicationIssues: computed('startYear', 'cohort', 'program', function () {
+    return this.getRequiredPublicationIssues();
+  }),
   optionalPublicationIssues: computed(
     'directors.length',
     'competencies.length',
@@ -50,13 +45,10 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  sortedProgramYearObjectives: computed(
-    'programYearObjectives.@each.position',
-    async function () {
-      const objectives = await this.programYearObjectives;
-      return objectives.toArray().sort(sortableByPosition);
-    }
-  ),
+  sortedProgramYearObjectives: computed('programYearObjectives.@each.position', async function () {
+    const objectives = await this.programYearObjectives;
+    return objectives.toArray().sort(sortableByPosition);
+  }),
 
   /**
    * A list of all vocabularies that are associated via terms.

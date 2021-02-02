@@ -27,19 +27,16 @@ module('Integration | Service | school events', function (hooks) {
     const from = moment('20150305', 'YYYYMMDD').hour(0);
     const to = from.clone().hour(24);
 
-    this.server.get(
-      `/api/schoolevents/:id`,
-      (scheme, { params, queryParams }) => {
-        assert.ok('id' in params);
-        assert.equal(params.id, 7);
-        assert.ok('from' in queryParams);
-        assert.ok('to' in queryParams);
-        assert.equal(queryParams.from, from.unix());
-        assert.equal(queryParams.to, to.unix());
+    this.server.get(`/api/schoolevents/:id`, (scheme, { params, queryParams }) => {
+      assert.ok('id' in params);
+      assert.equal(params.id, 7);
+      assert.ok('from' in queryParams);
+      assert.ok('to' in queryParams);
+      assert.equal(queryParams.from, from.unix());
+      assert.equal(queryParams.to, to.unix());
 
-        return { events: [event1, event2] };
-      }
-    );
+      return { events: [event1, event2] };
+    });
     const schoolId = 7;
     const subject = this.owner.lookup('service:school-events');
     const events = await subject.getEvents(schoolId, from.unix(), to.unix());
@@ -70,16 +67,13 @@ module('Integration | Service | school events', function (hooks) {
 
     const from = moment('20150305', 'YYYYMMDD').hour(0);
     const to = from.clone().hour(24);
-    this.server.get(
-      `/geflarknik/schoolevents/:id`,
-      (scheme, { params, queryParams }) => {
-        assert.equal(params.id, 3);
-        assert.equal(queryParams.from, from.unix());
-        assert.equal(queryParams.to, to.unix());
+    this.server.get(`/geflarknik/schoolevents/:id`, (scheme, { params, queryParams }) => {
+      assert.equal(params.id, 3);
+      assert.equal(queryParams.from, from.unix());
+      assert.equal(queryParams.to, to.unix());
 
-        return { events: [] };
-      }
-    );
+      return { events: [] };
+    });
     const subject = this.owner.lookup('service:school-events');
     const schoolId = 3;
     const events = await subject.getEvents(schoolId, from.unix(), to.unix());
@@ -102,18 +96,15 @@ module('Integration | Service | school events', function (hooks) {
       prerequisites: [],
       postrequisites: [],
     };
-    this.server.get(
-      `/api/schoolevents/:id`,
-      (scheme, { params, queryParams }) => {
-        const from = moment('20110421', 'YYYYMMDD').hour(0);
-        const to = from.clone().hour(24);
-        assert.equal(params.id, 7);
-        assert.equal(queryParams.from, from.unix());
-        assert.equal(queryParams.to, to.unix());
+    this.server.get(`/api/schoolevents/:id`, (scheme, { params, queryParams }) => {
+      const from = moment('20110421', 'YYYYMMDD').hour(0);
+      const to = from.clone().hour(24);
+      assert.equal(params.id, 7);
+      assert.equal(queryParams.from, from.unix());
+      assert.equal(queryParams.to, to.unix());
 
-        return { events: [event1, event2] };
-      }
-    );
+      return { events: [event1, event2] };
+    });
 
     const subject = this.owner.lookup('service:school-events');
     const event = await subject.getEventForSlug('S0720110421O1');
@@ -142,18 +133,15 @@ module('Integration | Service | school events', function (hooks) {
       prerequisites: [],
       postrequisites: [],
     };
-    this.server.get(
-      `/api/schoolevents/:id`,
-      (scheme, { params, queryParams }) => {
-        const from = moment('20080902', 'YYYYMMDD').hour(0);
-        const to = from.clone().hour(24);
-        assert.equal(params.id, 7);
-        assert.equal(queryParams.from, from.unix());
-        assert.equal(queryParams.to, to.unix());
+    this.server.get(`/api/schoolevents/:id`, (scheme, { params, queryParams }) => {
+      const from = moment('20080902', 'YYYYMMDD').hour(0);
+      const to = from.clone().hour(24);
+      assert.equal(params.id, 7);
+      assert.equal(queryParams.from, from.unix());
+      assert.equal(queryParams.to, to.unix());
 
-        return { events: [event1, event2] };
-      }
-    );
+      return { events: [event1, event2] };
+    });
 
     const subject = this.owner.lookup('service:school-events');
     const event = await subject.getEventForSlug('S0720080902I3');

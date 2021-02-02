@@ -10,16 +10,7 @@ export default class OfferingManagerComponent extends Component {
   @tracked hoveredGroups = [];
 
   @action
-  save(
-    startDate,
-    endDate,
-    room,
-    url,
-    learnerGroups,
-    learners,
-    instructorGroups,
-    instructors
-  ) {
+  save(startDate, endDate, room, url, learnerGroups, learners, instructorGroups, instructors) {
     this.args.offering.setProperties({
       startDate,
       endDate,

@@ -1,10 +1,4 @@
-import {
-  click,
-  currentRouteName,
-  currentURL,
-  findAll,
-  visit,
-} from '@ember/test-helpers';
+import { click, currentRouteName, currentURL, findAll, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication, getElementText, getText } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';

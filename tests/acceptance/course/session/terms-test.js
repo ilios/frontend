@@ -59,10 +59,7 @@ module('Acceptance | Session - Terms', function (hooks) {
       sessionTaxonomyDetails: true,
     });
     assert.equal(page.taxonomies.vocabularies.length, 1);
-    assert.equal(
-      page.taxonomies.vocabularies[0].vocabularyName,
-      'Vocabulary 1'
-    );
+    assert.equal(page.taxonomies.vocabularies[0].vocabularyName, 'Vocabulary 1');
     assert.equal(page.taxonomies.vocabularies[0].terms.length, 1);
     assert.equal(page.taxonomies.vocabularies[0].terms[0].name, 'term 0');
   });
@@ -79,15 +76,9 @@ module('Acceptance | Session - Terms', function (hooks) {
     await page.taxonomies.manage();
 
     assert.equal(page.taxonomies.manager.selectedTerms.length, 1);
-    assert.equal(
-      page.taxonomies.manager.selectedTerms[0].vocabularyName,
-      'Vocabulary 1'
-    );
+    assert.equal(page.taxonomies.manager.selectedTerms[0].vocabularyName, 'Vocabulary 1');
     assert.equal(page.taxonomies.manager.selectedTerms[0].terms.length, 1);
-    assert.equal(
-      page.taxonomies.manager.selectedTerms[0].terms[0].name,
-      'term 0'
-    );
+    assert.equal(page.taxonomies.manager.selectedTerms[0].terms[0].name, 'term 0');
     assert.equal(page.taxonomies.manager.availableTerms.length, 2);
     assert.equal(page.taxonomies.manager.availableTerms[0].name, 'term 0');
     assert.ok(page.taxonomies.manager.availableTerms[0].isSelected);
@@ -111,10 +102,7 @@ module('Acceptance | Session - Terms', function (hooks) {
     await page.taxonomies.save();
 
     assert.equal(page.taxonomies.vocabularies.length, 1);
-    assert.equal(
-      page.taxonomies.vocabularies[0].vocabularyName,
-      'Vocabulary 1'
-    );
+    assert.equal(page.taxonomies.vocabularies[0].vocabularyName, 'Vocabulary 1');
     assert.equal(page.taxonomies.vocabularies[0].terms.length, 1);
     assert.equal(page.taxonomies.vocabularies[0].terms[0].name, 'term 1');
   });
@@ -134,10 +122,7 @@ module('Acceptance | Session - Terms', function (hooks) {
     await page.taxonomies.cancel();
 
     assert.equal(page.taxonomies.vocabularies.length, 1);
-    assert.equal(
-      page.taxonomies.vocabularies[0].vocabularyName,
-      'Vocabulary 1'
-    );
+    assert.equal(page.taxonomies.vocabularies[0].vocabularyName, 'Vocabulary 1');
     assert.equal(page.taxonomies.vocabularies[0].terms.length, 1);
     assert.equal(page.taxonomies.vocabularies[0].terms[0].name, 'term 0');
   });

@@ -44,12 +44,7 @@ module('Integration | Component | detail learnergroups list', function (hooks) {
   });
 
   test('it renders', async function (assert) {
-    this.set('learnerGroups', [
-      this.tlg1,
-      this.subGroup1,
-      this.subSubGroup,
-      this.subGroup2,
-    ]);
+    this.set('learnerGroups', [this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2]);
     await render(hbs`<DetailLearnergroupsList
       @learnerGroups={{this.learnerGroups}}
       @remove={{noop}}
@@ -69,12 +64,7 @@ module('Integration | Component | detail learnergroups list', function (hooks) {
 
   test('remove', async function (assert) {
     assert.expect(1);
-    this.set('learnerGroups', [
-      this.tlg1,
-      this.subGroup1,
-      this.subSubGroup,
-      this.subGroup2,
-    ]);
+    this.set('learnerGroups', [this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2]);
     this.set('remove', (learnerGroup) => {
       assert.equal(this.subGroup2, learnerGroup);
     });
@@ -88,12 +78,7 @@ module('Integration | Component | detail learnergroups list', function (hooks) {
 
   test('remove-all', async function (assert) {
     assert.expect(1);
-    this.set('learnerGroups', [
-      this.tlg1,
-      this.subGroup1,
-      this.subSubGroup,
-      this.subGroup2,
-    ]);
+    this.set('learnerGroups', [this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2]);
     this.set('remove', (learnerGroup) => {
       assert.equal(this.tlg1, learnerGroup);
     });

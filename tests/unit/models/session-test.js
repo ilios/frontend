@@ -33,9 +33,7 @@ module('Unit | Model | Session', function (hooks) {
     assert.equal(model.get('optionalPublicationIssues').length, 2);
     store.createRecord('session-objective', { session: model });
     assert.equal(model.get('optionalPublicationIssues').length, 1);
-    model
-      .get('meshDescriptors')
-      .addObject(store.createRecord('meshDescriptor'));
+    model.get('meshDescriptors').addObject(store.createRecord('meshDescriptor'));
     assert.equal(model.get('optionalPublicationIssues').length, 0);
   });
 
@@ -148,12 +146,7 @@ module('Unit | Model | Session', function (hooks) {
     const learnerGroup5 = store.createRecord('learner-group');
 
     const ilm = store.createRecord('ilm-session', {
-      learnerGroups: [
-        learnerGroup1,
-        learnerGroup2,
-        learnerGroup3,
-        learnerGroup4,
-      ],
+      learnerGroups: [learnerGroup1, learnerGroup2, learnerGroup3, learnerGroup4],
     });
     const offering1 = store.createRecord('offering', {
       learnerGroups: [learnerGroup1, learnerGroup2, learnerGroup5],

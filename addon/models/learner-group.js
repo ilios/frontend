@@ -112,22 +112,18 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  allDescendantUsers: computed(
-    'users.[]',
-    'allDescendants.@each.users',
-    async function () {
-      const users = await this.users;
-      const allDescendants = await this.allDescendants;
-      const usersInSubgroups = await all(allDescendants.mapBy('users'));
-      const allUsers = usersInSubgroups.reduce((array, subGroupUsers) => {
-        array.pushObjects(subGroupUsers.toArray());
-        return array;
-      }, []);
-      allUsers.pushObjects(users.toArray());
+  allDescendantUsers: computed('users.[]', 'allDescendants.@each.users', async function () {
+    const users = await this.users;
+    const allDescendants = await this.allDescendants;
+    const usersInSubgroups = await all(allDescendants.mapBy('users'));
+    const allUsers = usersInSubgroups.reduce((array, subGroupUsers) => {
+      array.pushObjects(subGroupUsers.toArray());
+      return array;
+    }, []);
+    allUsers.pushObjects(users.toArray());
 
-      return allUsers.uniq();
-    }
-  ),
+    return allUsers.uniq();
+  }),
 
   /**
    * A list of users that are assigned to this group, excluding those that are ALSO assigned to any of this group's sub-groups.
@@ -135,23 +131,17 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  usersOnlyAtThisLevel: computed(
-    'users.[]',
-    'allDescendants.[]',
-    async function () {
-      const users = await this.users;
-      const descendants = await this.allDescendants;
-      const membersAtThisLevel = await map(users.toArray(), async (user) => {
-        const userGroups = await user.get('learnerGroups');
-        const subGroups = userGroups.filter((group) =>
-          descendants.includes(group)
-        );
-        return isEmpty(subGroups) ? user : null;
-      });
+  usersOnlyAtThisLevel: computed('users.[]', 'allDescendants.[]', async function () {
+    const users = await this.users;
+    const descendants = await this.allDescendants;
+    const membersAtThisLevel = await map(users.toArray(), async (user) => {
+      const userGroups = await user.get('learnerGroups');
+      const subGroups = userGroups.filter((group) => descendants.includes(group));
+      return isEmpty(subGroups) ? user : null;
+    });
 
-      return membersAtThisLevel.filter((user) => !isNone(user));
-    }
-  ),
+    return membersAtThisLevel.filter((user) => !isNone(user));
+  }),
 
   allParentsTitle: computed('allParentTitles', async function () {
     let title = '';
@@ -162,23 +152,19 @@ export default Model.extend({
     return title;
   }),
 
-  allParentTitles: computed(
-    'isTopLevelGroup',
-    'parent.allParentTitles.[]',
-    async function () {
-      const titles = [];
-      const parent = await this.parent;
-      if (parent) {
-        const allParentTitles = await parent.get('allParentTitles');
-        if (!isEmpty(allParentTitles)) {
-          titles.pushObjects(allParentTitles);
-        }
-        titles.pushObject(parent.get('title'));
+  allParentTitles: computed('isTopLevelGroup', 'parent.allParentTitles.[]', async function () {
+    const titles = [];
+    const parent = await this.parent;
+    if (parent) {
+      const allParentTitles = await parent.get('allParentTitles');
+      if (!isEmpty(allParentTitles)) {
+        titles.pushObjects(allParentTitles);
       }
-
-      return titles;
+      titles.pushObject(parent.get('title'));
     }
-  ),
+
+    return titles;
+  }),
 
   sortTitle: computed('title', 'allParentsTitle', async function () {
     const allParentsTitle = await this.allParentsTitle;
@@ -192,23 +178,19 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  allDescendants: computed(
-    'children.[]',
-    'children.@each.allDescendants',
-    async function () {
-      const descendants = [];
-      const children = await this.children;
-      descendants.pushObjects(children.toArray());
-      const childrenDescendants = await all(children.mapBy('allDescendants'));
-      descendants.pushObjects(
-        childrenDescendants.reduce((array, set) => {
-          array.pushObjects(set);
-          return array;
-        }, [])
-      );
-      return descendants;
-    }
-  ),
+  allDescendants: computed('children.[]', 'children.@each.allDescendants', async function () {
+    const descendants = [];
+    const children = await this.children;
+    descendants.pushObjects(children.toArray());
+    const childrenDescendants = await all(children.mapBy('allDescendants'));
+    descendants.pushObjects(
+      childrenDescendants.reduce((array, set) => {
+        array.pushObjects(set);
+        return array;
+      }, [])
+    );
+    return descendants;
+  }),
 
   /**
    * A text string comprised of all learner-group titles in this group's tree.
@@ -264,23 +246,17 @@ export default Model.extend({
     return !this.belongsTo('parent').id();
   }),
 
-  allInstructors: computed(
-    'instructors.[]',
-    'instructorGroups.@each.users',
-    async function () {
-      const allInstructors = [];
-      const instructors = await this.instructors;
-      allInstructors.pushObjects(instructors.toArray());
-      const instructorGroups = await this.instructorGroups;
-      const listsOfGroupInstructors = await all(
-        instructorGroups.mapBy('users')
-      );
-      listsOfGroupInstructors.forEach((groupInstructors) => {
-        allInstructors.pushObjects(groupInstructors.toArray());
-      });
-      return allInstructors.uniq();
-    }
-  ),
+  allInstructors: computed('instructors.[]', 'instructorGroups.@each.users', async function () {
+    const allInstructors = [];
+    const instructors = await this.instructors;
+    allInstructors.pushObjects(instructors.toArray());
+    const instructorGroups = await this.instructorGroups;
+    const listsOfGroupInstructors = await all(instructorGroups.mapBy('users'));
+    listsOfGroupInstructors.forEach((groupInstructors) => {
+      allInstructors.pushObjects(groupInstructors.toArray());
+    });
+    return allInstructors.uniq();
+  }),
 
   school: computed('cohort.programYear.program.school', async function () {
     const cohort = await this.cohort;
@@ -309,9 +285,7 @@ export default Model.extend({
         return false;
       }
 
-      const hasLearnersInSubgroups = await all(
-        children.mapBy('hasLearnersInGroupOrSubgroups')
-      );
+      const hasLearnersInSubgroups = await all(children.mapBy('hasLearnersInGroupOrSubgroups'));
       return hasLearnersInSubgroups.reduce((acc, val) => {
         return acc || val;
       }, false);
@@ -335,11 +309,9 @@ export default Model.extend({
       }
 
       // check direct subgroups for their needs.
-      const subgroupsNeeds = children
-        .mapBy('needsAccommodation')
-        .reduce((acc, val) => {
-          return acc || val;
-        }, false);
+      const subgroupsNeeds = children.mapBy('needsAccommodation').reduce((acc, val) => {
+        return acc || val;
+      }, false);
 
       if (subgroupsNeeds) {
         return true;

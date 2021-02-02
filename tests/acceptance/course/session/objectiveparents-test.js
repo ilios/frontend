@@ -41,10 +41,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
       page.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].parents.list.length,
-      2
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.equal(
       page.objectives.objectiveList.objectives[0].parents.list[0].text,
       'course objective 0'
@@ -79,10 +76,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
       page.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].parents.list.length,
-      2
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.equal(
       page.objectives.objectiveList.objectives[0].parents.list[0].text,
       'course objective 0'
@@ -106,10 +100,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
       page.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].parents.list.length,
-      2
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.equal(
       page.objectives.objectiveList.objectives[0].parents.list[0].text,
       'course objective 1'
@@ -133,10 +124,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
       page.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].parents.list.length,
-      2
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.equal(
       page.objectives.objectiveList.objectives[0].parents.list[0].text,
       'course objective 0'
@@ -160,10 +148,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
       page.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].parents.list.length,
-      2
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.equal(
       page.objectives.objectiveList.objectives[0].parents.list[0].text,
       'course objective 0'
@@ -187,10 +172,7 @@ module('Acceptance | Session - Objective Parents', function (hooks) {
       page.objectives.objectiveList.objectives[0].description.text,
       'session objective 0'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].parents.list.length,
-      2
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.equal(
       page.objectives.objectiveList.objectives[0].parents.list[0].text,
       'course objective 0'

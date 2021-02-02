@@ -109,10 +109,7 @@ module('Integration | Component | week glance', function (hooks) {
 
     assert.equal(component.offeringEvents.length, 3);
     assert.equal(component.offeringEvents[0].title, 'Learn to Learn');
-    assert.equal(
-      component.offeringEvents[1].title,
-      'Finding the Point in Life'
-    );
+    assert.equal(component.offeringEvents[1].title, 'Finding the Point in Life');
     assert.equal(component.offeringEvents[2].title, 'Schedule some materials');
 
     await a11yAudit(this.element);
@@ -251,32 +248,14 @@ module('Integration | Component | week glance', function (hooks) {
         const to = moment(toStamp, 'X');
         switch (count) {
           case 1:
-            assert.ok(
-              from.isSame(testDate, 'year'),
-              'From-date has same year as testDate.'
-            );
-            assert.ok(
-              to.isSame(testDate, 'year'),
-              'To-date has same year as testDate.'
-            );
-            assert.ok(
-              from.isSame(testDate, 'week'),
-              'From-date has same week as testDate.'
-            );
-            assert.ok(
-              to.isSame(testDate, 'week'),
-              'To-date has same wek as testDate.'
-            );
+            assert.ok(from.isSame(testDate, 'year'), 'From-date has same year as testDate.');
+            assert.ok(to.isSame(testDate, 'year'), 'To-date has same year as testDate.');
+            assert.ok(from.isSame(testDate, 'week'), 'From-date has same week as testDate.');
+            assert.ok(to.isSame(testDate, 'week'), 'To-date has same wek as testDate.');
             break;
           case 2:
-            assert.ok(
-              from.isSame(nextYear, 'year'),
-              'From-date has same year as next year.'
-            );
-            assert.ok(
-              to.isSame(nextYear, 'year'),
-              'To-date has same year as next year.'
-            );
+            assert.ok(from.isSame(nextYear, 'year'), 'From-date has same year as next year.');
+            assert.ok(to.isSame(nextYear, 'year'), 'To-date has same year as next year.');
             // comparing weeks needs some wiggle room as dates may be shifting across week lines.
             assert.ok(
               1 >= Math.abs(from.week() - nextYear.week()),

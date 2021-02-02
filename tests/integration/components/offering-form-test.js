@@ -36,9 +36,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('room validation succeeds on blank value', async function (assert) {
-    await render(
-      hbs`<OfferingForm @close={{noop}} @save={{noop}} @showRoom={{true}} />`
-    );
+    await render(hbs`<OfferingForm @close={{noop}} @save={{noop}} @showRoom={{true}} />`);
     await component.location.set('');
     await component.save();
     assert.notOk(component.location.hasError);
@@ -58,9 +56,7 @@ module('Integration | Component | offering form', function (hooks) {
 
   test('url validation errors when URL contains backslash', async function (assert) {
     await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
-    await component.url.set(
-      'https://totallyfineurl.edu/hahajustjokingthisisinvalid\\'
-    );
+    await component.url.set('https://totallyfineurl.edu/hahajustjokingthisisinvalid\\');
     await component.save();
     assert.ok(component.url.hasError);
   });
@@ -71,16 +67,12 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('recurring options shows up when requested', async function (assert) {
-    await render(
-      hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`
-    );
+    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
     assert.ok(component.recurring.isPresent);
   });
 
   test('recurring options has all the days of the week', async function (assert) {
-    await render(
-      hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`
-    );
+    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
     await component.recurring.toggle();
     assert.ok(component.recurring.weekdays[0].label, 'Sunday');
     assert.ok(component.recurring.weekdays[1].label, 'Monday');
@@ -92,17 +84,13 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('recurring numberOfWeeks validation errors do not show up initially', async function (assert) {
-    await render(
-      hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`
-    );
+    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
     await component.recurring.toggle();
     assert.notOk(component.recurring.hasError);
   });
 
   test('recurring numberOfWeeks validation errors show up when saving', async function (assert) {
-    await render(
-      hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`
-    );
+    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
     await component.recurring.toggle();
     await component.recurring.setWeeks('0');
     await component.save();
@@ -110,9 +98,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('recurring default day is disabled and checked', async function (assert) {
-    await render(
-      hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`
-    );
+    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
     const dayToday = moment().day();
     await component.recurring.toggle();
     assert.ok(component.recurring.weekdays[dayToday].input.isSelected);
@@ -125,9 +111,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('instructor manager shows up when requested', async function (assert) {
-    await render(
-      hbs`<OfferingForm @close={{noop}} @showInstructors={{true}} />`
-    );
+    await render(hbs`<OfferingForm @close={{noop}} @showInstructors={{true}} />`);
     assert.ok(component.instructorManager.isPresent);
   });
 
@@ -239,14 +223,8 @@ module('Integration | Component | offering form', function (hooks) {
         instructorGroups,
         instructors
       ) => {
-        assert.equal(
-          moment(startDate).format('YYYY-MM-DD'),
-          moment().format('YYYY-MM-DD')
-        );
-        assert.equal(
-          moment(endDate).format('YYYY-MM-DD'),
-          moment().format('YYYY-MM-DD')
-        );
+        assert.equal(moment(startDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
+        assert.equal(moment(endDate).format('YYYY-MM-DD'), moment().format('YYYY-MM-DD'));
         assert.equal(room, null);
         assert.equal(url, null);
         assert.equal(learnerGroups.length, 0);
@@ -273,10 +251,7 @@ module('Integration | Component | offering form', function (hooks) {
       } else if (savedCount === 1) {
         expectedStartDate = wednesday.clone().day(thursday);
       } else {
-        assert.ok(
-          false,
-          'should only get two saved offerings, we got ' + (savedCount + 1)
-        );
+        assert.ok(false, 'should only get two saved offerings, we got ' + (savedCount + 1));
       }
       if (expectedStartDate) {
         assert.equal(
@@ -313,19 +288,13 @@ module('Integration | Component | offering form', function (hooks) {
       } else if (savedCount === 1) {
         expectedStartDate = wednesday.clone().add(1, 'day');
       } else if (savedCount === 2) {
-        expectedStartDate = wednesday
-          .clone()
-          .subtract(1, 'day')
-          .add(1, 'weeks');
+        expectedStartDate = wednesday.clone().subtract(1, 'day').add(1, 'weeks');
       } else if (savedCount === 3) {
         expectedStartDate = wednesday.clone().add(1, 'weeks');
       } else if (savedCount === 4) {
         expectedStartDate = wednesday.clone().add(1, 'day').add(1, 'weeks');
       } else if (savedCount === 5) {
-        expectedStartDate = wednesday
-          .clone()
-          .subtract(1, 'day')
-          .add(2, 'weeks');
+        expectedStartDate = wednesday.clone().subtract(1, 'day').add(2, 'weeks');
       } else if (savedCount === 6) {
         expectedStartDate = wednesday.clone().add(2, 'weeks');
       } else if (savedCount === 7) {
@@ -365,94 +334,62 @@ module('Integration | Component | offering form', function (hooks) {
     await render(hbs`<OfferingForm @close={{noop}} />`);
     const format = 'M/D/YYYY, h:mm A';
     const newStartDate = moment().add(1, 'day').toDate();
-    assert.equal(
-      moment().hour(9).minute(0).format(format),
-      component.endDate.value
-    );
+    assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
     await component.startDate.set(newStartDate);
-    assert.equal(
-      moment(newStartDate).hour(9).minute(0).format(format),
-      component.endDate.value
-    );
+    assert.equal(moment(newStartDate).hour(9).minute(0).format(format), component.endDate.value);
   });
 
   test('changing start time changes end date', async function (assert) {
     await render(hbs`<OfferingForm @close={{noop}} />`);
     const format = 'M/D/YYYY, h:mm A';
-    assert.equal(
-      moment().hour(9).minute(0).format(format),
-      component.endDate.value
-    );
+    assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
     await component.startTime.hour('2');
     await component.startTime.minutes('15');
     await component.startTime.ampm('pm');
-    assert.equal(
-      moment().hour(15).minute(15).format(format),
-      component.endDate.value
-    );
+    assert.equal(moment().hour(15).minute(15).format(format), component.endDate.value);
   });
 
   test('changing duration changes end date', async function (assert) {
     await render(hbs`<OfferingForm @close={{noop}} />`);
     const format = 'M/D/YYYY, h:mm A';
-    assert.equal(
-      moment().hour(9).minute(0).format(format),
-      component.endDate.value
-    );
+    assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
     await component.duration.hours.set('2');
     await component.duration.minutes.set('15');
-    assert.equal(
-      moment().hour(10).minute(15).format(format),
-      component.endDate.value
-    );
+    assert.equal(moment().hour(10).minute(15).format(format), component.endDate.value);
   });
 
   // @see https://github.com/ilios/frontend/issues/1903
   test('changing duration and start time changes end date', async function (assert) {
     await render(hbs`<OfferingForm @close={{noop}} />`);
     const format = 'M/D/YYYY, h:mm A';
-    assert.equal(
-      moment().hour(9).minute(0).format(format),
-      component.endDate.value
-    );
+    assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
     await component.startTime.hour('2');
     await component.startTime.minutes('10');
     await component.startTime.ampm('pm');
     await component.duration.hours.set('2');
     await component.duration.minutes.set('50');
-    assert.equal(
-      moment().hour(17).minute(0).format(format),
-      component.endDate.value
-    );
+    assert.equal(moment().hour(17).minute(0).format(format), component.endDate.value);
   });
 
   test('learner manager is not present in small-group mode', async function (assert) {
-    await render(
-      hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`
-    );
+    await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`);
     assert.notOk(component.learnerManager.selectedLearners.isPresent);
     assert.notOk(component.learnerManager.availableLearners.isPresent);
   });
 
   test('learner manager is present in single-offering mode', async function (assert) {
-    await render(
-      hbs`<OfferingForm @close={{noop}} @smallGroupMode={{false}} />`
-    );
+    await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{false}} />`);
     assert.ok(component.learnerManager.selectedLearners.isPresent);
     assert.ok(component.learnerManager.availableLearners.isPresent);
   });
 
   test('learnerGroup validation errors do not show up initially', async function (assert) {
-    await render(
-      hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`
-    );
+    await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`);
     assert.notOk(component.learnerManager.hasError);
   });
 
   test('learnerGroup validation errors show up when saving', async function (assert) {
-    await render(
-      hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`
-    );
+    await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`);
     await component.save();
     assert.ok(component.learnerManager.hasError);
   });
@@ -463,9 +400,7 @@ module('Integration | Component | offering form', function (hooks) {
       startDate: moment('2005-06-24').hour(18).minute(24).toDate(),
       endDate: moment('2005-06-24').hour(19).minute(24).toDate(),
     });
-    const offeringModel = await this.owner
-      .lookup('service:store')
-      .find('offering', offering.id);
+    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
     this.set('offering', offeringModel);
     await render(hbs`<OfferingForm
       @offering={{this.offering}}
@@ -515,19 +450,11 @@ module('Integration | Component | offering form', function (hooks) {
       startDate: moment('2005-06-24').hour(18).minute(24).toDate(),
       endDate: moment('2005-06-24').hour(19).minute(24).toDate(),
     });
-    const offeringModel = await this.owner
-      .lookup('service:store')
-      .find('offering', offering.id);
+    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', async (startDate, endDate) => {
-      assert.equal(
-        '2005-06-25 05:24',
-        moment(startDate).tz(utc).format('Y-MM-DD HH:mm')
-      );
-      assert.equal(
-        '2005-06-25 06:24',
-        moment(endDate).tz(utc).format('Y-MM-DD HH:mm')
-      );
+      assert.equal('2005-06-25 05:24', moment(startDate).tz(utc).format('Y-MM-DD HH:mm'));
+      assert.equal('2005-06-25 06:24', moment(endDate).tz(utc).format('Y-MM-DD HH:mm'));
     });
     const timezoneService = this.owner.lookup('service:timezone');
     await render(
@@ -561,15 +488,12 @@ module('Integration | Component | offering form', function (hooks) {
     assert.equal('http://example.com', component.url.value);
   });
 
-  todo(
-    'rejects query param with trailing slash ilios/ilios#3050',
-    async function (assert) {
-      await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
-      assert.notOk(component.url.hasError);
-      await component.url.set('http://example.com?jayden=awesome/');
-      assert.ok(component.url.hasError);
-    }
-  );
+  todo('rejects query param with trailing slash ilios/ilios#3050', async function (assert) {
+    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    assert.notOk(component.url.hasError);
+    await component.url.set('http://example.com?jayden=awesome/');
+    assert.ok(component.url.hasError);
+  });
 
   test('learner groups sort order', async function (assert) {
     const school = this.server.create('school');
@@ -580,13 +504,9 @@ module('Integration | Component | offering form', function (hooks) {
     this.server.create('learnerGroup', { cohort, title: 'Learner Group 10' });
     this.server.create('learnerGroup', { cohort, title: 'Learner Group 2' });
 
-    const cohortModel = await this.owner
-      .lookup('service:store')
-      .find('cohort', cohort.id);
+    const cohortModel = await this.owner.lookup('service:store').find('cohort', cohort.id);
     this.set('cohorts', [cohortModel]);
-    await render(
-      hbs`<OfferingForm @cohorts={{this.cohorts}} @close={{noop}} />`
-    );
+    await render(hbs`<OfferingForm @cohorts={{this.cohorts}} @close={{noop}} />`);
 
     assert.equal(
       component.learnerManager.availableLearnerGroups.cohorts[0].trees[0].title,
@@ -605,9 +525,7 @@ module('Integration | Component | offering form', function (hooks) {
   test('save by pressing enter in duration hours field', async function (assert) {
     assert.expect(1);
     const offering = this.server.create('offering');
-    const offeringModel = await this.owner
-      .lookup('service:store')
-      .find('offering', offering.id);
+    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', () => {
       assert.ok(true);
@@ -621,9 +539,7 @@ module('Integration | Component | offering form', function (hooks) {
   test('save by pressing enter in duration hours field', async function (assert) {
     assert.expect(1);
     const offering = this.server.create('offering');
-    const offeringModel = await this.owner
-      .lookup('service:store')
-      .find('offering', offering.id);
+    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', () => {
       assert.ok(true);
@@ -637,9 +553,7 @@ module('Integration | Component | offering form', function (hooks) {
   test('save by pressing enter in duration minutes field', async function (assert) {
     assert.expect(1);
     const offering = this.server.create('offering');
-    const offeringModel = await this.owner
-      .lookup('service:store')
-      .find('offering', offering.id);
+    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', () => {
       assert.ok(true);
@@ -653,9 +567,7 @@ module('Integration | Component | offering form', function (hooks) {
   test('save by pressing enter in location field', async function (assert) {
     assert.expect(1);
     const offering = this.server.create('offering');
-    const offeringModel = await this.owner
-      .lookup('service:store')
-      .find('offering', offering.id);
+    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', () => {
       assert.ok(true);
@@ -672,9 +584,7 @@ module('Integration | Component | offering form', function (hooks) {
   test('save by pressing enter in url field', async function (assert) {
     assert.expect(1);
     const offering = this.server.create('offering');
-    const offeringModel = await this.owner
-      .lookup('service:store')
-      .find('offering', offering.id);
+    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', () => {
       assert.ok(true);

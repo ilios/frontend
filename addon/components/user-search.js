@@ -25,15 +25,9 @@ const instructorGroupProxy = ObjectProxy.extend({
   isInstructorGroup: true,
   currentlyActiveInstructorGroups: null,
   sortTerm: oneWay('content.title'),
-  isActive: computed(
-    'content',
-    'currentlyActiveInstructorGroups.[]',
-    function () {
-      return !this.get('currentlyActiveInstructorGroups').includes(
-        this.get('content')
-      );
-    }
-  ),
+  isActive: computed('content', 'currentlyActiveInstructorGroups.[]', function () {
+    return !this.get('currentlyActiveInstructorGroups').includes(this.get('content'));
+  }),
 });
 
 export default class UserSearch extends Component {
@@ -118,10 +112,7 @@ export default class UserSearch extends Component {
       const fragment = searchTerms.toLowerCase().trim();
 
       const filteredGroups = availableInstructorGroups.filter((group) => {
-        return (
-          group.get('title') &&
-          group.get('title').toLowerCase().includes(fragment)
-        );
+        return group.get('title') && group.get('title').toLowerCase().includes(fragment);
       });
 
       const instructorGroupProxies = filteredGroups.map((group) => {

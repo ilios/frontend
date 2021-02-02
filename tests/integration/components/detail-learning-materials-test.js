@@ -35,9 +35,7 @@ module('Integration | Component | detail learning materials', function (hooks) {
     const course = this.server.create('course', {
       learningMaterials: [clm],
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('subject', courseModel);
 
@@ -49,10 +47,7 @@ module('Integration | Component | detail learning materials', function (hooks) {
     assert.equal(component.current.length, 1);
     assert.equal(component.current[0].type, 'Citation');
     assert.equal(component.current[0].title, 'test title');
-    assert.equal(
-      component.current[0].owner.userNameInfo.fullName,
-      '0 guy M. Mc0son'
-    );
+    assert.equal(component.current[0].owner.userNameInfo.fullName, '0 guy M. Mc0son');
     assert.equal(component.current[0].required, 'Yes');
     assert.equal(component.current[0].notes, 'Yes');
     assert.equal(component.current[0].mesh, 'None');
@@ -81,9 +76,7 @@ module('Integration | Component | detail learning materials', function (hooks) {
     const course = this.server.create('course', {
       learningMaterials: [clm],
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('subject', courseModel);
 
@@ -93,10 +86,7 @@ module('Integration | Component | detail learning materials', function (hooks) {
       @isCourse={{true}}
       @editable={{true}}
     />`);
-    assert.equal(
-      component.current[0].owner.userNameInfo.fullName,
-      'Clem Chowder'
-    );
+    assert.equal(component.current[0].owner.userNameInfo.fullName, 'Clem Chowder');
     assert.notOk(component.current[0].owner.userNameInfo.isTooltipVisible);
     await component.current[0].owner.userNameInfo.expandTooltip();
     assert.ok(component.current[0].owner.userNameInfo.isTooltipVisible);
@@ -117,20 +107,14 @@ module('Integration | Component | detail learning materials', function (hooks) {
       userRole: this.roles[0],
     });
 
-    const learningMaterials = this.server.createList(
-      'course-learning-material',
-      2,
-      {
-        learningMaterial,
-      }
-    );
+    const learningMaterials = this.server.createList('course-learning-material', 2, {
+      learningMaterial,
+    });
 
     const course = this.server.create('course', {
       learningMaterials,
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('subject', courseModel);
 
     await render(hbs`<DetailLearningMaterials
@@ -151,20 +135,14 @@ module('Integration | Component | detail learning materials', function (hooks) {
       userRole: this.roles[0],
     });
 
-    const learningMaterials = this.server.createList(
-      'course-learning-material',
-      2,
-      {
-        learningMaterial,
-      }
-    );
+    const learningMaterials = this.server.createList('course-learning-material', 2, {
+      learningMaterial,
+    });
 
     const course = this.server.create('course', {
       learningMaterials,
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('subject', courseModel);
 
     await render(hbs`<DetailLearningMaterials
@@ -180,9 +158,7 @@ module('Integration | Component | detail learning materials', function (hooks) {
     assert.expect(1);
 
     const course = this.server.create('course');
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('subject', courseModel);
 
     await render(hbs`<DetailLearningMaterials
@@ -210,9 +186,7 @@ module('Integration | Component | detail learning materials', function (hooks) {
     const course = this.server.create('course', {
       learningMaterials: [clm],
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('subject', courseModel);
 
@@ -234,20 +208,14 @@ module('Integration | Component | detail learning materials', function (hooks) {
       userRole: this.roles[0],
     });
 
-    const learningMaterials = this.server.createList(
-      'course-learning-material',
-      2,
-      {
-        learningMaterial,
-      }
-    );
+    const learningMaterials = this.server.createList('course-learning-material', 2, {
+      learningMaterial,
+    });
 
     const course = this.server.create('course', {
       learningMaterials,
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('subject', courseModel);
     await render(hbs`<DetailLearningMaterials
       @subject={{this.subject}}
@@ -273,19 +241,13 @@ module('Integration | Component | detail learning materials', function (hooks) {
       userRole: this.roles[0],
     });
 
-    const learningMaterials = this.server.createList(
-      'course-learning-material',
-      2,
-      {
-        learningMaterial,
-      }
-    );
+    const learningMaterials = this.server.createList('course-learning-material', 2, {
+      learningMaterial,
+    });
     const course = this.server.create('course', {
       learningMaterials,
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('subject', courseModel);
     this.server.patch('/api/courselearningmaterials/1', (schema) => {
       assert.ok(true);

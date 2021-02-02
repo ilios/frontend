@@ -3,11 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { timeout } from 'ember-concurrency';
 import { restartableTask, dropTask } from 'ember-concurrency-decorators';
-import {
-  validatable,
-  Length,
-  NotBlank,
-} from 'ilios-common/decorators/validation';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import scrollIntoView from 'scroll-into-view';
 
 @validatable
@@ -41,16 +37,7 @@ export default class SessionsGridOffering extends Component {
   }
 
   @dropTask
-  *save(
-    startDate,
-    endDate,
-    room,
-    url,
-    learnerGroups,
-    learners,
-    instructorGroups,
-    instructors
-  ) {
+  *save(startDate, endDate, room, url, learnerGroups, learners, instructorGroups, instructors) {
     this.args.offering.setProperties({
       startDate,
       endDate,

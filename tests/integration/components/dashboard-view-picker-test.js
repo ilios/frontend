@@ -14,9 +14,7 @@ module('Integration | Component | dashbaord view picker', function (hooks) {
 
     this.set('nothing', parseInt);
     this.set('show', 'week');
-    await render(
-      hbs`<DashboardViewPicker @show={{show}} @change={{action nothing}} />`
-    );
+    await render(hbs`<DashboardViewPicker @show={{show}} @change={{action nothing}} />`);
 
     assert.dom(week).hasText('Week at a Glance');
     assert.dom(week).hasClass('active');
@@ -36,9 +34,7 @@ module('Integration | Component | dashbaord view picker', function (hooks) {
 
     this.set('nothing', parseInt);
     this.set('show', 'week');
-    await render(
-      hbs`<DashboardViewPicker @show={{show}} @change={{action nothing}} />`
-    );
+    await render(hbs`<DashboardViewPicker @show={{show}} @change={{action nothing}} />`);
 
     assert.dom(week).hasClass('active');
     assert.dom(activities).hasNoClass('active');
@@ -72,9 +68,7 @@ module('Integration | Component | dashbaord view picker', function (hooks) {
       assert.equal(what, 'week');
     });
     this.set('show', 'agenda');
-    await render(
-      hbs`<DashboardViewPicker @show={{show}} @change={{action click}} />`
-    );
+    await render(hbs`<DashboardViewPicker @show={{show}} @change={{action click}} />`);
 
     assert.dom(week).hasNoClass('active');
     find(week).click();
@@ -88,9 +82,7 @@ module('Integration | Component | dashbaord view picker', function (hooks) {
       assert.equal(what, 'agenda');
     });
     this.set('show', 'materials');
-    await render(
-      hbs`<DashboardViewPicker @show={{show}} @change={{action click}} />`
-    );
+    await render(hbs`<DashboardViewPicker @show={{show}} @change={{action click}} />`);
 
     assert.dom(activities).hasNoClass('active');
     find(activities).click();
@@ -104,9 +96,7 @@ module('Integration | Component | dashbaord view picker', function (hooks) {
       assert.equal(what, 'materials');
     });
     this.set('show', 'agenda');
-    await render(
-      hbs`<DashboardViewPicker @show={{show}} @change={{action click}} />`
-    );
+    await render(hbs`<DashboardViewPicker @show={{show}} @change={{action click}} />`);
 
     assert.dom(materials).hasNoClass('active');
     find(materials).click();
@@ -120,9 +110,7 @@ module('Integration | Component | dashbaord view picker', function (hooks) {
       assert.equal(what, 'calendar');
     });
     this.set('show', 'agenda');
-    await render(
-      hbs`<DashboardViewPicker @show={{show}} @change={{action click}} />`
-    );
+    await render(hbs`<DashboardViewPicker @show={{show}} @change={{action click}} />`);
 
     assert.dom(calendar).hasNoClass('active');
     find(calendar).click();

@@ -39,15 +39,9 @@ module('Acceptance | Session - Leadership', function (hooks) {
 
     assert.equal(page.leadershipCollapsed.summary.length, 2);
     assert.equal(page.leadershipCollapsed.summary[0].name, 'Administrators');
-    assert.equal(
-      page.leadershipCollapsed.summary[0].value,
-      'There are 2 administrators'
-    );
+    assert.equal(page.leadershipCollapsed.summary[0].value, 'There are 2 administrators');
     assert.equal(page.leadershipCollapsed.summary[1].name, 'Student Advisors');
-    assert.equal(
-      page.leadershipCollapsed.summary[1].value,
-      'There is 1 student advisor'
-    );
+    assert.equal(page.leadershipCollapsed.summary[1].value, 'There is 1 student advisor');
   });
 
   test('list leadership', async function (assert) {
@@ -59,10 +53,7 @@ module('Acceptance | Session - Leadership', function (hooks) {
     });
 
     assert.equal(page.leadershipExpanded.title, 'Session Administration');
-    const {
-      administrators,
-      studentAdvisors,
-    } = page.leadershipExpanded.leadershipList;
+    const { administrators, studentAdvisors } = page.leadershipExpanded.leadershipList;
 
     assert.equal(administrators.length, 2);
     assert.equal(administrators[0].text, '3 guy M. Mc3son');
@@ -82,35 +73,17 @@ module('Acceptance | Session - Leadership', function (hooks) {
     const manager = page.leadershipExpanded.leadershipManager;
     await manager.administratorSearch.search('guy');
     assert.equal(manager.administratorSearch.results.length, 6);
-    assert.equal(
-      manager.administratorSearch.results[0].text,
-      '0 guy M. Mc0son user@example.edu'
-    );
+    assert.equal(manager.administratorSearch.results[0].text, '0 guy M. Mc0son user@example.edu');
     assert.ok(manager.administratorSearch.results[0].isSelectable);
-    assert.equal(
-      manager.administratorSearch.results[1].text,
-      '1 guy M. Mc1son user@example.edu'
-    );
+    assert.equal(manager.administratorSearch.results[1].text, '1 guy M. Mc1son user@example.edu');
     assert.ok(manager.administratorSearch.results[1].isSelectable);
-    assert.equal(
-      manager.administratorSearch.results[2].text,
-      '2 guy M. Mc2son user@example.edu'
-    );
+    assert.equal(manager.administratorSearch.results[2].text, '2 guy M. Mc2son user@example.edu');
     assert.ok(manager.administratorSearch.results[2].isSelectable);
-    assert.equal(
-      manager.administratorSearch.results[3].text,
-      '3 guy M. Mc3son user@example.edu'
-    );
+    assert.equal(manager.administratorSearch.results[3].text, '3 guy M. Mc3son user@example.edu');
     assert.ok(manager.administratorSearch.results[3].isSelected);
-    assert.equal(
-      manager.administratorSearch.results[4].text,
-      '4 guy M. Mc4son user@example.edu'
-    );
+    assert.equal(manager.administratorSearch.results[4].text, '4 guy M. Mc4son user@example.edu');
     assert.ok(manager.administratorSearch.results[4].isSelected);
-    assert.equal(
-      manager.administratorSearch.results[5].text,
-      '5 guy M. Mc5son user@example.edu'
-    );
+    assert.equal(manager.administratorSearch.results[5].text, '5 guy M. Mc5son user@example.edu');
     assert.ok(manager.administratorSearch.results[5].isSelectable);
   });
 
@@ -125,35 +98,17 @@ module('Acceptance | Session - Leadership', function (hooks) {
     const manager = page.leadershipExpanded.leadershipManager;
     await manager.studentAdvisorSearch.search('guy');
     assert.equal(manager.studentAdvisorSearch.results.length, 6);
-    assert.equal(
-      manager.studentAdvisorSearch.results[0].text,
-      '0 guy M. Mc0son user@example.edu'
-    );
+    assert.equal(manager.studentAdvisorSearch.results[0].text, '0 guy M. Mc0son user@example.edu');
     assert.ok(manager.studentAdvisorSearch.results[0].isSelectable);
-    assert.equal(
-      manager.studentAdvisorSearch.results[1].text,
-      '1 guy M. Mc1son user@example.edu'
-    );
+    assert.equal(manager.studentAdvisorSearch.results[1].text, '1 guy M. Mc1son user@example.edu');
     assert.ok(manager.studentAdvisorSearch.results[1].isSelectable);
-    assert.equal(
-      manager.studentAdvisorSearch.results[2].text,
-      '2 guy M. Mc2son user@example.edu'
-    );
+    assert.equal(manager.studentAdvisorSearch.results[2].text, '2 guy M. Mc2son user@example.edu');
     assert.ok(manager.studentAdvisorSearch.results[2].isSelectable);
-    assert.equal(
-      manager.studentAdvisorSearch.results[3].text,
-      '3 guy M. Mc3son user@example.edu'
-    );
+    assert.equal(manager.studentAdvisorSearch.results[3].text, '3 guy M. Mc3son user@example.edu');
     assert.ok(manager.studentAdvisorSearch.results[3].isSelectable);
-    assert.equal(
-      manager.studentAdvisorSearch.results[4].text,
-      '4 guy M. Mc4son user@example.edu'
-    );
+    assert.equal(manager.studentAdvisorSearch.results[4].text, '4 guy M. Mc4son user@example.edu');
     assert.ok(manager.studentAdvisorSearch.results[4].isSelectable);
-    assert.equal(
-      manager.studentAdvisorSearch.results[5].text,
-      '5 guy M. Mc5son user@example.edu'
-    );
+    assert.equal(manager.studentAdvisorSearch.results[5].text, '5 guy M. Mc5son user@example.edu');
     assert.ok(manager.studentAdvisorSearch.results[5].isSelected);
   });
 
@@ -211,10 +166,7 @@ module('Acceptance | Session - Leadership', function (hooks) {
     await manager.studentAdvisorSearch.results[1].add();
 
     await page.leadershipExpanded.cancel();
-    const {
-      administrators,
-      studentAdvisors,
-    } = page.leadershipExpanded.leadershipList;
+    const { administrators, studentAdvisors } = page.leadershipExpanded.leadershipList;
 
     assert.equal(administrators.length, 2);
     assert.equal(administrators[0].text, '3 guy M. Mc3son');
@@ -243,10 +195,7 @@ module('Acceptance | Session - Leadership', function (hooks) {
     await manager.studentAdvisorSearch.results[1].add();
 
     await page.leadershipExpanded.save();
-    const {
-      administrators,
-      studentAdvisors,
-    } = page.leadershipExpanded.leadershipList;
+    const { administrators, studentAdvisors } = page.leadershipExpanded.leadershipList;
 
     assert.equal(administrators.length, 2);
     assert.equal(administrators[0].text, '1 guy M. Mc1son');

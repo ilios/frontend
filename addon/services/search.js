@@ -37,12 +37,7 @@ export default Service.extend({
    * @param {number} size
    */
   async forUsers(q, size = 100, onlySuggestEnabled = false) {
-    const { users, autocomplete } = await this.search(
-      'users',
-      q,
-      size,
-      onlySuggestEnabled
-    );
+    const { users, autocomplete } = await this.search('users', q, size, onlySuggestEnabled);
 
     const mappedUsers = users.map((user) => {
       user.fullName = this.getUserFullName(user);

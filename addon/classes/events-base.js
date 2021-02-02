@@ -13,10 +13,7 @@ export default class EventsBase extends Service {
     if (event.offering) {
       intermediary = await this.store.findRecord('offering', event.offering);
     } else {
-      intermediary = await this.store.findRecord(
-        'ilmSession',
-        event.ilmSession
-      );
+      intermediary = await this.store.findRecord('ilmSession', event.ilmSession);
     }
     return await intermediary.get('session');
   }
@@ -103,9 +100,7 @@ export default class EventsBase extends Service {
    */
   createEventFromData(obj, isUserEvent) {
     obj.isBlanked = !obj.offering && !obj.ilmSession;
-    obj.slug = isUserEvent
-      ? this.getSlugForUserEvent(obj)
-      : this.getSlugForSchoolEvent(obj);
+    obj.slug = isUserEvent ? this.getSlugForUserEvent(obj) : this.getSlugForSchoolEvent(obj);
     obj.prerequisites = obj.prerequisites
       .map((prereq) => {
         const rhett = this.createEventFromData(prereq, isUserEvent);

@@ -16,9 +16,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
     });
 
     this.set('term', term);
-    await render(
-      hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`
-    );
+    await render(hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`);
     assert.ok(this.element.textContent.trim().indexOf('Foo') !== -1);
   });
 
@@ -31,9 +29,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
     });
 
     this.set('term', term);
-    await render(
-      hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`
-    );
+    await render(hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`);
     assert.dom('.muted').includesText('Lorem »');
     assert.dom(findAll('.muted')[1]).includesText('Ipsum »');
     assert.ok(this.element.textContent.trim().indexOf('Foo') !== -1);
@@ -86,9 +82,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
     });
 
     this.set('term', term);
-    await render(
-      hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`
-    );
+    await render(hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`);
     assert.dom('.inactive').doesNotExist();
     assert.dom('.fa-times').doesNotExist();
   });

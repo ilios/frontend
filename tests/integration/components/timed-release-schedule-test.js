@@ -34,27 +34,19 @@ module('Integration | Component | timed release schedule', function (hooks) {
     await render(
       hbs`<TimedReleaseSchedule @startDate={{this.startDate}} @endDate={{this.endDate}} />`
     );
-    const expectedStartDate = startDate
-      .toDate()
-      .toLocaleString([], localeFormatOptions);
-    const expectedEndDate = endDate
-      .toDate()
-      .toLocaleString([], localeFormatOptions);
+    const expectedStartDate = startDate.toDate().toLocaleString([], localeFormatOptions);
+    const expectedEndDate = endDate.toDate().toLocaleString([], localeFormatOptions);
 
     assert
       .dom(this.element)
-      .hasText(
-        `(Available: ${expectedStartDate} and available until ${expectedEndDate})`
-      );
+      .hasText(`(Available: ${expectedStartDate} and available until ${expectedEndDate})`);
   });
 
   test('it renders with only start date in the future', async function (assert) {
     const tomorrow = moment().add(1, 'day');
     this.set('tomorrow', tomorrow.toDate());
     await render(hbs`<TimedReleaseSchedule @startDate={{tomorrow}} />`);
-    const expectedDate = tomorrow
-      .toDate()
-      .toLocaleString([], localeFormatOptions);
+    const expectedDate = tomorrow.toDate().toLocaleString([], localeFormatOptions);
 
     assert.dom(this.element).hasText(`(Available: ${expectedDate})`);
   });
@@ -70,9 +62,7 @@ module('Integration | Component | timed release schedule', function (hooks) {
     const tomorrow = moment().add(1, 'day');
     this.set('tomorrow', tomorrow.toDate());
     await render(hbs`<TimedReleaseSchedule @endDate={{tomorrow}} />`);
-    const expectedDate = tomorrow
-      .toDate()
-      .toLocaleString([], localeFormatOptions);
+    const expectedDate = tomorrow.toDate().toLocaleString([], localeFormatOptions);
 
     assert.dom(this.element).hasText(`(Available until ${expectedDate})`);
   });
@@ -81,9 +71,7 @@ module('Integration | Component | timed release schedule', function (hooks) {
     const tomorrow = moment().subtract(1, 'day');
     this.set('tomorrow', tomorrow.toDate());
     await render(hbs`<TimedReleaseSchedule @endDate={{tomorrow}} />`);
-    const expectedDate = tomorrow
-      .toDate()
-      .toLocaleString([], localeFormatOptions);
+    const expectedDate = tomorrow.toDate().toLocaleString([], localeFormatOptions);
     assert.dom(this.element).hasText(`(Available until ${expectedDate})`);
   });
 });

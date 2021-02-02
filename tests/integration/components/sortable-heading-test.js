@@ -53,9 +53,7 @@ module('Integration | Component | sortable heading', function (hooks) {
     this.set('click', () => {
       assert.ok(true);
     });
-    await render(
-      hbs`<SortableHeading @click={{this.click}}>Foo</SortableHeading>`
-    );
+    await render(hbs`<SortableHeading @click={{this.click}}>Foo</SortableHeading>`);
     await click(find('span'));
   });
 });

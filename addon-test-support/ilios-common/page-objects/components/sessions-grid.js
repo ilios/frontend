@@ -1,10 +1,4 @@
-import {
-  clickable,
-  collection,
-  hasClass,
-  isPresent,
-  text,
-} from 'ember-cli-page-object';
+import { clickable, collection, hasClass, isPresent, text } from 'ember-cli-page-object';
 import offerings from './sessions-grid-offering-table';
 
 export default {

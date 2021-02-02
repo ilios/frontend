@@ -6,10 +6,7 @@ export default class CourseManageObjectiveParentsComponent extends Component {
   @tracked userSelectedCohort;
 
   get selectedCohort() {
-    if (
-      this.userSelectedCohort &&
-      this.args.cohortObjectives.includes(this.userSelectedCohort)
-    ) {
+    if (this.userSelectedCohort && this.args.cohortObjectives.includes(this.userSelectedCohort)) {
       return this.userSelectedCohort;
     }
 

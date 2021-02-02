@@ -19,9 +19,7 @@ export default class SessionObjectiveListComponent extends Component {
     if (!session) {
       return;
     }
-    this.sessionObjectiveCount = session
-      .hasMany('sessionObjectives')
-      .ids().length;
+    this.sessionObjectiveCount = session.hasMany('sessionObjectives').ids().length;
     this.course = yield session.course;
     const { sessionObjectives, courseObjectives } = yield hash({
       sessionObjectives: session.sortedSessionObjectives,

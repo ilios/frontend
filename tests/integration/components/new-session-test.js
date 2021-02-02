@@ -47,10 +47,7 @@ module('Integration | Component | new session', function (hooks) {
     this.set('sessionTypes', [this.sessionType, this.sessionType2]);
     this.set('save', (session) => {
       assert.equal(session.get('title'), newTitle);
-      assert.equal(
-        session.get('sessionType').get('title'),
-        this.sessionType2.title
-      );
+      assert.equal(session.get('sessionType').get('title'), this.sessionType2.title);
     });
     await render(
       hbs`<NewSession @save={{this.save}} @cancel={{noop}} @sessionTypes={{this.sessionTypes}} />`
@@ -66,10 +63,7 @@ module('Integration | Component | new session', function (hooks) {
     this.set('sessionTypes', [this.sessionType, this.sessionType2]);
     this.set('save', (session) => {
       assert.equal(session.get('title'), newTitle);
-      assert.equal(
-        session.get('sessionType').get('title'),
-        this.sessionType2.title
-      );
+      assert.equal(session.get('sessionType').get('title'), this.sessionType2.title);
     });
     await render(
       hbs`<NewSession @save={{this.save}} @cancel={{noop}} @sessionTypes={{this.sessionTypes}} />`

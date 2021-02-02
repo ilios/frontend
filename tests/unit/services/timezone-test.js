@@ -26,10 +26,7 @@ module('Unit | Service | timezone', function (hooks) {
     const service = this.owner.lookup('service:timezone');
     const timezone = 'America/Los_Angeles';
     const offset = moment.tz(timezone).format('Z');
-    assert.equal(
-      `(${offset}) America - Los Angeles`,
-      service.formatTimezone(timezone)
-    );
+    assert.equal(`(${offset}) America - Los Angeles`, service.formatTimezone(timezone));
   });
 
   test('getTimezones', function (assert) {
@@ -39,10 +36,7 @@ module('Unit | Service | timezone', function (hooks) {
     // so it's safe to hardwire them into the test.
     assert.equal(timezones[0].label, '(-11:00) Pacific - Midway');
     assert.equal(timezones[0].value, 'Pacific/Midway');
-    assert.equal(
-      timezones[timezones.length - 1].label,
-      '(+14:00) Pacific - Kiritimati'
-    );
+    assert.equal(timezones[timezones.length - 1].label, '(+14:00) Pacific - Kiritimati');
     assert.equal(timezones[timezones.length - 1].value, 'Pacific/Kiritimati');
   });
 });

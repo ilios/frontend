@@ -3,9 +3,7 @@ import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { all, map } from 'rsvp';
 
-export default class CourseVisualizeObjectivesRoute extends Route.extend(
-  AuthenticatedRouteMixin
-) {
+export default class CourseVisualizeObjectivesRoute extends Route.extend(AuthenticatedRouteMixin) {
   @service store;
 
   titleToken = 'general.coursesAndSessions';

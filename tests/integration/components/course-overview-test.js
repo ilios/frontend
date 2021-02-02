@@ -28,9 +28,7 @@ module('Integration | Component | course overview', function (hooks) {
     });
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
-    await render(
-      hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`
-    );
+    await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`);
 
     assert.ok(component.externalId.isVisible);
     assert.equal(component.externalId.value, 'Click to edit');
@@ -48,9 +46,7 @@ module('Integration | Component | course overview', function (hooks) {
     });
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
-    await render(
-      hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`
-    );
+    await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`);
 
     assert.ok(component.externalId.isVisible);
     assert.equal(component.externalId.value, 'Click to edit');
@@ -68,9 +64,7 @@ module('Integration | Component | course overview', function (hooks) {
     });
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
-    await render(
-      hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`
-    );
+    await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`);
 
     assert.ok(component.startDate.isVisible);
     await component.startDate.edit();
@@ -87,9 +81,7 @@ module('Integration | Component | course overview', function (hooks) {
     });
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
-    await render(
-      hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`
-    );
+    await render(hbs`<CourseOverview @course={{this.course}} @editable={{true}} />`);
 
     assert.ok(component.endDate.isVisible);
     await component.endDate.edit();

@@ -1,11 +1,4 @@
-import {
-  clickable,
-  collection,
-  create,
-  fillable,
-  hasClass,
-  text,
-} from 'ember-cli-page-object';
+import { clickable, collection, create, fillable, hasClass, text } from 'ember-cli-page-object';
 import userNameInfo from './user-name-info';
 
 const definition = {

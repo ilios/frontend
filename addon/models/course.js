@@ -63,19 +63,16 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  competencies: computed(
-    'courseObjectives.@each.treeCompetencies',
-    async function () {
-      const courseObjectives = await this.courseObjectives;
-      const trees = await all(courseObjectives.mapBy('treeCompetencies'));
-      const competencies = trees.reduce((array, set) => {
-        return array.pushObjects(set);
-      }, []);
-      return competencies.uniq().filter((item) => {
-        return !isEmpty(item);
-      });
-    }
-  ),
+  competencies: computed('courseObjectives.@each.treeCompetencies', async function () {
+    const courseObjectives = await this.courseObjectives;
+    const trees = await all(courseObjectives.mapBy('treeCompetencies'));
+    const competencies = trees.reduce((array, set) => {
+      return array.pushObjects(set);
+    }, []);
+    return competencies.uniq().filter((item) => {
+      return !isEmpty(item);
+    });
+  }),
 
   /**
    * A list of competency and their domains linked to this course via its objectives.
@@ -107,14 +104,9 @@ export default Model.extend({
     return domainProxies.sortBy('title');
   }),
 
-  requiredPublicationIssues: computed(
-    'startDate',
-    'endDate',
-    'cohorts.length',
-    function () {
-      return this.getRequiredPublicationIssues();
-    }
-  ),
+  requiredPublicationIssues: computed('startDate', 'endDate', 'cohorts.length', function () {
+    return this.getRequiredPublicationIssues();
+  }),
   optionalPublicationIssues: computed(
     'terms.length',
     'courseObjectives.length',
@@ -149,32 +141,26 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  assignableVocabularies: computed(
-    'schools.@each.vocabularies',
-    async function () {
-      const schools = await this.schools;
-      const vocabularies = await all(schools.mapBy('vocabularies'));
-      return vocabularies
-        .reduce((array, set) => {
-          array.pushObjects(set.toArray());
-          return array;
-        }, [])
-        .sortBy('school.title', 'title');
-    }
-  ),
+  assignableVocabularies: computed('schools.@each.vocabularies', async function () {
+    const schools = await this.schools;
+    const vocabularies = await all(schools.mapBy('vocabularies'));
+    return vocabularies
+      .reduce((array, set) => {
+        array.pushObjects(set.toArray());
+        return array;
+      }, [])
+      .sortBy('school.title', 'title');
+  }),
 
   /**
    * A list of course objectives, sorted by position (asc) and then id (desc).
    * @property sortedCourseObjectives
    * @type {Ember.computed}
    */
-  sortedCourseObjectives: computed(
-    'courseObjectives.@each.position',
-    async function () {
-      const objectives = await this.courseObjectives;
-      return objectives.toArray().sort(sortableByPosition);
-    }
-  ),
+  sortedCourseObjectives: computed('courseObjectives.@each.position', async function () {
+    const objectives = await this.courseObjectives;
+    return objectives.toArray().sort(sortableByPosition);
+  }),
 
   hasMultipleCohorts: computed('cohorts.[]', function () {
     const meta = this.hasMany('cohorts');
@@ -228,11 +214,7 @@ export default Model.extend({
     this.set('requiredPublicationSetFields', ['startDate', 'endDate']);
     this.set('requiredPublicationLengthFields', ['cohorts']);
     this.set('optionalPublicationSetFields', []);
-    this.set('optionalPublicationLengthFields', [
-      'terms',
-      'courseObjectives',
-      'meshDescriptors',
-    ]);
+    this.set('optionalPublicationLengthFields', ['terms', 'courseObjectives', 'meshDescriptors']);
   },
 
   setDatesBasedOnYear: function () {

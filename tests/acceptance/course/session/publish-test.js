@@ -63,11 +63,7 @@ module('Acceptance | Session - Publish', function (hooks) {
 
     const items = findAll(choices);
     assert.equal(items.length, 3);
-    const expectedItems = [
-      'Review 3 Missing Items',
-      'Mark as Scheduled',
-      'UnPublish Session',
-    ];
+    const expectedItems = ['Review 3 Missing Items', 'Mark as Scheduled', 'UnPublish Session'];
     for (let i = 0; i < items.length; i++) {
       assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
     }
@@ -85,11 +81,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     await click(selector);
     const items = findAll(choices);
     assert.equal(items.length, 3);
-    const expectedItems = [
-      'Publish As-is',
-      'Review 3 Missing Items',
-      'UnPublish Session',
-    ];
+    const expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'UnPublish Session'];
     for (let i = 0; i < items.length; i++) {
       assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
     }
@@ -107,11 +99,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     await click(selector);
     const items = findAll(choices);
     assert.equal(items.length, 3);
-    const expectedItems = [
-      'Publish As-is',
-      'Review 3 Missing Items',
-      'Mark as Scheduled',
-    ];
+    const expectedItems = ['Publish As-is', 'Review 3 Missing Items', 'Mark as Scheduled'];
     for (let i = 0; i < items.length; i++) {
       assert.equal(await getElementText(items[i]), getText(expectedItems[i]));
     }
@@ -195,13 +183,7 @@ module('Acceptance | Session - Publish', function (hooks) {
     const thirdChoice = `${choices}:nth-of-type(3)`;
     await click(selector);
     assert.equal(await getElementText(firstChoice), getText('Publish As-is'));
-    assert.equal(
-      await getElementText(secondChoice),
-      getText('Review 3 Missing Items')
-    );
-    assert.equal(
-      await getElementText(thirdChoice),
-      getText('Mark as Scheduled')
-    );
+    assert.equal(await getElementText(secondChoice), getText('Review 3 Missing Items'));
+    assert.equal(await getElementText(thirdChoice), getText('Mark as Scheduled'));
   });
 });

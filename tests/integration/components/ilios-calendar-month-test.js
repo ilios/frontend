@@ -9,8 +9,7 @@ module('Integration | Component | ilios calendar month', function (hooks) {
 
   hooks.beforeEach(function () {
     this.actions = {};
-    this.send = (actionName, ...args) =>
-      this.actions[actionName].apply(this, args);
+    this.send = (actionName, ...args) => this.actions[actionName].apply(this, args);
   });
 
   test('month displays with three events', async function (assert) {

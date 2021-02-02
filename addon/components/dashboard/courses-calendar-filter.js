@@ -25,9 +25,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   }
 
   get expandedYearWithoutTitleView() {
-    const yearsWithNoTitle = this.yearsInView.filter(
-      (year) => !this.titlesInView.includes(year)
-    );
+    const yearsWithNoTitle = this.yearsInView.filter((year) => !this.titlesInView.includes(year));
     const expandedYearsWithNoTitle = yearsWithNoTitle.filter((year) =>
       this.expandedYears.includes(year)
     );
@@ -67,10 +65,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
       return this._expandedYears;
     }
     if (this.courseYears.length) {
-      const coursesThisYear = this.courseYears.findBy(
-        'year',
-        this.academicYear
-      );
+      const coursesThisYear = this.courseYears.findBy('year', this.academicYear);
       if (coursesThisYear) {
         return [this.academicYear];
       } else {
@@ -100,9 +95,7 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   @action
   toggleYear(year) {
     if (this.expandedYears.includes(year)) {
-      this._expandedYears = this.expandedYears.filter(
-        (theYear) => theYear !== year
-      );
+      this._expandedYears = this.expandedYears.filter((theYear) => theYear !== year);
     } else {
       this._expandedYears = [...this.expandedYears, year];
     }
@@ -126,8 +119,6 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
   }
   @action
   removeTitleInView(title) {
-    this.titlesInView = this.titlesInView.filter(
-      (theTitle) => theTitle !== title
-    );
+    this.titlesInView = this.titlesInView.filter((theTitle) => theTitle !== title);
   }
 }

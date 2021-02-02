@@ -47,9 +47,7 @@ module('Integration | Component | session copy', function (hooks) {
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
 
-    const sessionModel = await this.owner
-      .lookup('service:store')
-      .find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
 
     await render(hbs`<SessionCopy @session={{this.session}} />`);
@@ -86,16 +84,13 @@ module('Integration | Component | session copy', function (hooks) {
       school,
     });
     const learningMaterial = this.server.create('learning-material');
-    const sessionLearningMaterial = this.server.create(
-      'session-learning-material',
-      {
-        notes: 'some notes',
-        required: false,
-        publicNotes: true,
-        learningMaterial,
-        position: 3,
-      }
-    );
+    const sessionLearningMaterial = this.server.create('session-learning-material', {
+      notes: 'some notes',
+      required: false,
+      publicNotes: true,
+      learningMaterial,
+      position: 3,
+    });
     const meshDescriptor = this.server.create('mesh-descriptor');
     const term = this.server.create('term');
     const sessionType = this.server.create('session-type');
@@ -131,22 +126,16 @@ module('Integration | Component | session copy', function (hooks) {
       },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner
-      .lookup('service:store')
-      .find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 2);
     });
-    await render(
-      hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`
-    );
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
 
     await click('.done');
 
-    const sessions = await this.owner
-      .lookup('service:store')
-      .findAll('session');
+    const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.equal(sessions.length, 2);
     const newSession = sessions.findBy('id', '2');
     assert.equal(session.attireRequired, newSession.attireRequired);
@@ -167,14 +156,9 @@ module('Integration | Component | session copy', function (hooks) {
     assert.equal(sessionLearningMaterial.publicNotes, newSessionLm.publicNotes);
     assert.equal(sessionLearningMaterial.position, newSessionLm.position);
     assert.equal(newSessionLm.belongsTo('session').id(), newSession.id);
-    assert.equal(
-      newSessionLm.belongsTo('learningMaterial').id(),
-      learningMaterial.id
-    );
+    assert.equal(newSessionLm.belongsTo('learningMaterial').id(), learningMaterial.id);
 
-    const sessionObjectives = await this.owner
-      .lookup('service:store')
-      .findAll('session-objective');
+    const sessionObjectives = await this.owner.lookup('service:store').findAll('session-objective');
     assert.equal(sessionObjectives.length, 2);
     const newSessionObjective = sessionObjectives.findBy('id', '2');
     assert.equal(newSessionObjective.title, sessionObjective.title);
@@ -210,9 +194,7 @@ module('Integration | Component | session copy', function (hooks) {
       },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner
-      .lookup('service:store')
-      .find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
 
     await render(hbs`<SessionCopy @session={{this.session}} />`);
@@ -257,9 +239,7 @@ module('Integration | Component | session copy', function (hooks) {
       },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner
-      .lookup('service:store')
-      .find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     await render(hbs`<SessionCopy @session={{this.session}} />`);
     const yearSelect = '.year-select select';
@@ -317,17 +297,13 @@ module('Integration | Component | session copy', function (hooks) {
       },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner
-      .lookup('service:store')
-      .find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 2);
     });
 
-    await render(
-      hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`
-    );
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
     const yearSelect = '.year-select select';
     const courseSelect = '.course-select select';
 
@@ -335,9 +311,7 @@ module('Integration | Component | session copy', function (hooks) {
     assert.dom(courseSelect).hasValue(course3.id, 'first course is selected');
     await click('.done');
 
-    const sessions = await this.owner
-      .lookup('service:store')
-      .findAll('session');
+    const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.equal(sessions.length, 2);
     const newSession = sessions.findBy('id', '2');
     assert.equal(newSession.belongsTo('course').id(), course3.id);
@@ -377,23 +351,17 @@ module('Integration | Component | session copy', function (hooks) {
       },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner
-      .lookup('service:store')
-      .find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 3);
     });
 
-    await render(
-      hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`
-    );
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
 
     await click('.done');
 
-    const sessions = await this.owner
-      .lookup('service:store')
-      .findAll('session');
+    const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.equal(sessions.length, 3);
     const newSession = sessions.findBy('id', '3');
     assert.equal(session.title, newSession.title);
@@ -440,24 +408,18 @@ module('Integration | Component | session copy', function (hooks) {
       },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner
-      .lookup('service:store')
-      .find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 3);
     });
 
-    await render(
-      hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`
-    );
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
     const courseSelect = '.course-select select';
     await fillIn(courseSelect, secondCourse.id);
     await click('.done');
 
-    const sessions = await this.owner
-      .lookup('service:store')
-      .findAll('session');
+    const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.equal(sessions.length, 3);
     const newSession = sessions.findBy('id', '3');
     assert.equal(session.title, newSession.title);
@@ -504,23 +466,17 @@ module('Integration | Component | session copy', function (hooks) {
       },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner
-      .lookup('service:store')
-      .find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 4);
     });
 
-    await render(
-      hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`
-    );
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
 
     await click('.done');
 
-    const sessions = await this.owner
-      .lookup('service:store')
-      .findAll('session');
+    const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.equal(sessions.length, 4);
     const newSession = sessions.findBy('id', '4');
     assert.equal(session.title, newSession.title);
@@ -574,25 +530,19 @@ module('Integration | Component | session copy', function (hooks) {
       },
     });
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    const sessionModel = await this.owner
-      .lookup('service:store')
-      .find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     this.set('session', sessionModel);
     this.set('visit', (newSession) => {
       assert.equal(newSession.id, 4);
     });
 
-    await render(
-      hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`
-    );
+    await render(hbs`<SessionCopy @session={{this.session}} @visit={{this.visit}} />`);
 
     const courseSelect = '.course-select select';
     await fillIn(courseSelect, secondCourse.id);
     await click('.done');
 
-    const sessions = await this.owner
-      .lookup('service:store')
-      .findAll('session');
+    const sessions = await this.owner.lookup('service:store').findAll('session');
     assert.equal(sessions.length, 4);
     const newSession = sessions.findBy('id', '4');
     assert.equal(session.title, newSession.title);

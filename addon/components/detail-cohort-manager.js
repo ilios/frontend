@@ -30,9 +30,7 @@ export default class DetailCohortManagerComponent extends Component {
       if (obj.school === school) {
         return true;
       }
-      if (
-        await this.permissionChecker.canUpdateAllCoursesInSchool(obj.school)
-      ) {
+      if (await this.permissionChecker.canUpdateAllCoursesInSchool(obj.school)) {
         return true;
       }
       if (await this.permissionChecker.canUpdateProgramYear(obj.programYear)) {
@@ -51,9 +49,7 @@ export default class DetailCohortManagerComponent extends Component {
     }
     const selectedCohorts = this.args.selectedCohorts || [];
 
-    return this.availableCohortProxies.filter(
-      (obj) => !selectedCohorts.includes(obj.cohort)
-    );
+    return this.availableCohortProxies.filter((obj) => !selectedCohorts.includes(obj.cohort));
   }
 
   /**

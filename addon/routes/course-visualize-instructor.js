@@ -3,9 +3,7 @@ import Route from '@ember/routing/route';
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { all, map, filter } from 'rsvp';
 
-export default class CourseVisualizeInstructorRoute extends Route.extend(
-  AuthenticatedRouteMixin
-) {
+export default class CourseVisualizeInstructorRoute extends Route.extend(AuthenticatedRouteMixin) {
   @service store;
 
   titleToken = 'general.coursesAndSessions';
@@ -15,13 +13,10 @@ export default class CourseVisualizeInstructorRoute extends Route.extend(
     const user = await this.store.find('user', params.user_id);
 
     const sessions = await course.get('sessions');
-    const sessionsWithUser = await filter(
-      sessions.toArray(),
-      async (session) => {
-        const instructors = await session.get('allInstructors');
-        return instructors.mapBy('id').includes(user.get('id'));
-      }
-    );
+    const sessionsWithUser = await filter(sessions.toArray(), async (session) => {
+      const instructors = await session.get('allInstructors');
+      return instructors.mapBy('id').includes(user.get('id'));
+    });
 
     const minutes = await map(sessionsWithUser, async (session) => {
       const offeringHours = await session.get('maxSingleOfferingDuration');
@@ -39,9 +34,7 @@ export default class CourseVisualizeInstructorRoute extends Route.extend(
     const offeringMinutes = minutes
       .mapBy('offeringMinutes')
       .reduce((total, mins) => total + mins, 0);
-    const ilmMinutes = minutes
-      .mapBy('ilmMinutes')
-      .reduce((total, mins) => total + mins, 0);
+    const ilmMinutes = minutes.mapBy('ilmMinutes').reduce((total, mins) => total + mins, 0);
 
     return { course, user, offeringMinutes, ilmMinutes };
   }

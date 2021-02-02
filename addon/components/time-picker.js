@@ -6,20 +6,7 @@ export default class TimePicker extends Component {
   constructor() {
     super(...arguments);
     this.now = new Date();
-    this.hours = [
-      '1',
-      '2',
-      '3',
-      '4',
-      '5',
-      '6',
-      '7',
-      '8',
-      '9',
-      '10',
-      '11',
-      '12',
-    ];
+    this.hours = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
     this.minutes = [
       '00',
       '01',

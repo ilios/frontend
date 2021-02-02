@@ -57,20 +57,14 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   @action
   async addLearnerGroupToBuffer(learnerGroup) {
     const descendants = await learnerGroup.get('allDescendants');
-    this.learnerGroupBuffer = [
-      ...this.learnerGroupBuffer,
-      ...descendants,
-      learnerGroup,
-    ];
+    this.learnerGroupBuffer = [...this.learnerGroupBuffer, ...descendants, learnerGroup];
   }
 
   @action
   async removeLearnerGroupFromBuffer(learnerGroup) {
     const descendants = await learnerGroup.get('allDescendants');
     const groupsToRemove = [...descendants, learnerGroup];
-    this.learnerGroupBuffer = this.learnerGroupBuffer.filter(
-      (g) => !groupsToRemove.includes(g)
-    );
+    this.learnerGroupBuffer = this.learnerGroupBuffer.filter((g) => !groupsToRemove.includes(g));
   }
 
   @action
@@ -79,8 +73,6 @@ export default class DetailLearnersAndLearnerGroupsComponent extends Component {
   }
   @action
   removeLearnerFromBuffer(learner) {
-    this.learnerBuffer = this.learnerBuffer.filter(
-      (obj) => obj.id !== learner.id
-    );
+    this.learnerBuffer = this.learnerBuffer.filter((obj) => obj.id !== learner.id);
   }
 }

@@ -26,9 +26,7 @@ module('Integration | Component | course materials', function (hooks) {
     const course = this.server.create('course', {
       learningMaterials: [courseLm1],
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.setProperties({
       course: courseModel,
@@ -162,14 +160,7 @@ module('Integration | Component | course materials', function (hooks) {
     const course = await setupPage(this);
     let cCount = 0,
       sCount = 0;
-    const cSortList = [
-      'title:desc',
-      'title',
-      'type',
-      'type:desc',
-      'author',
-      'author:desc',
-    ];
+    const cSortList = ['title:desc', 'title', 'type', 'type:desc', 'author', 'author:desc'];
     const sSortList = [
       'title',
       'title:desc',

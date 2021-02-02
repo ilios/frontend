@@ -2,11 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency-decorators';
-import {
-  validatable,
-  Length,
-  HtmlNotBlank,
-} from 'ilios-common/decorators/validation';
+import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
 
 @validatable
 export default class NewObjectiveComponent extends Component {

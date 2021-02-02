@@ -139,27 +139,17 @@ module('Integration | Component | my-materials', function (hooks) {
     const fifthCourse = `${courseListOptions}:nth-of-type(6)`;
 
     assert.dom(firstLmLink).hasText('title1');
-    assert.equal(
-      find(firstLmLink).href.trim(),
-      'http://myhost.com/url1?inline'
-    );
-    assert
-      .dom(firstLmTypeIcon)
-      .exists({ count: 1 }, 'LM type icon is present.');
+    assert.equal(find(firstLmLink).href.trim(), 'http://myhost.com/url1?inline');
+    assert.dom(firstLmTypeIcon).exists({ count: 1 }, 'LM type icon is present.');
     assert.dom(firstLmSessionTitle).hasText('session1title');
     assert.dom(firstLmCourseTitle).hasText('course1title');
     assert.dom(firstLmInstructor).hasText('Instructor1name, Instructor2name');
     assert.dom(firstLmFirstOffering).hasText('2/2/2003');
-    assert.equal(
-      find(firstLmDownloadLink).href.trim(),
-      'http://myhost.com/url1'
-    );
+    assert.equal(find(firstLmDownloadLink).href.trim(), 'http://myhost.com/url1');
 
     assert.dom(secondLmLink).hasText('title2');
     assert.equal(find(secondLmLink).href.trim(), 'http://myhost.com/url2');
-    assert
-      .dom(secondLmTypeIcon)
-      .exists({ count: 1 }, 'LM type icon is present.');
+    assert.dom(secondLmTypeIcon).exists({ count: 1 }, 'LM type icon is present.');
     assert.dom(secondLmSessionTitle).hasText('session2title');
     assert.dom(secondLmCourseTitle).hasText('course2title');
     assert.dom(secondLmInstructor).hasText('Instructor1name, Instructor2name');
@@ -170,31 +160,22 @@ module('Integration | Component | my-materials', function (hooks) {
       'Citationtitle3citationtext'
     );
     assert.dom(thirdLmLink).doesNotExist();
-    assert
-      .dom(thirdLmTypeIcon)
-      .exists({ count: 1 }, 'LM type icon is present.');
+    assert.dom(thirdLmTypeIcon).exists({ count: 1 }, 'LM type icon is present.');
     assert.dom(thirdLmSessionTitle).hasText('session3title');
     assert.dom(thirdLmCourseTitle).hasText('course3title');
     assert.dom(thirdLmInstructor).hasText('');
     assert.dom(thirdLmFirstOffering).hasText('2/2/2020');
 
     assert.dom(fourthLmLink).hasText('title4');
-    assert.equal(
-      find(fourthLmLink).href.trim(),
-      'http://myhost.com/document.txt'
-    );
-    assert
-      .dom(fourthLmTypeIcon)
-      .exists({ count: 1 }, 'LM type icon is present.');
+    assert.equal(find(fourthLmLink).href.trim(), 'http://myhost.com/document.txt');
+    assert.dom(fourthLmTypeIcon).exists({ count: 1 }, 'LM type icon is present.');
     assert.dom(fourthLmSessionTitle).hasText('session4title');
     assert.dom(fourthLmCourseTitle).hasText('course4title');
     assert.dom(fourthLmInstructor).hasText('Instructor3name, Instructor4name');
     assert.dom(fourthLmFirstOffering).hasText('2/2/2030');
 
     assert.ok(find(fifthLmTitle).textContent.includes('title5'));
-    assert
-      .dom(fifthLmTypeIcon)
-      .exists({ count: 1 }, 'LM type icon is present.');
+    assert.dom(fifthLmTypeIcon).exists({ count: 1 }, 'LM type icon is present.');
     assert.dom(fifthLmSessionTitle).hasText('session5title');
     assert.dom(fifthLmCourseTitle).hasText('course5title');
     assert.dom(fifthLmInstructor).hasText('');

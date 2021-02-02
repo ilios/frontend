@@ -19,10 +19,7 @@ import collapsedTaxonomies from './components/collapsed-taxonomies';
 import collapsedObjectives from './components/session/collapsed-objectives';
 import instructorSelectionManager from './components/instructor-selection-manager';
 import offeringForm from './components/offering-form';
-import {
-  flatpickrDatePicker,
-  pageObjectFillInFroalaEditor,
-} from 'ilios-common';
+import { flatpickrDatePicker, pageObjectFillInFroalaEditor } from 'ilios-common';
 import leadershipCollapsed from './components/leadership-collapsed';
 import leadershipExpanded from './components/session-leadership-expanded';
 import postrequisiteEditor from './components/session/postrequisite-editor';
@@ -134,9 +131,7 @@ export default create({
   taxonomies,
   collapsedTaxonomies,
   detailLearnersAndLearnerGroups,
-  learnersAreVisible: isVisible(
-    '[data-test-detail-learners-and-learner-groups]'
-  ),
+  learnersAreVisible: isVisible('[data-test-detail-learners-and-learner-groups]'),
   instructorsAreVisible: isVisible('[data-test-detail-instructors]'),
   instructors: {
     scope: '[data-test-detail-instructors]',
@@ -163,49 +158,40 @@ export default create({
       title: text('.title'),
       createNew: clickable('.actions button'),
     },
-    dateBlocks: collection(
-      '[data-test-session-offerings-list] .offering-block',
-      {
-        dayOfWeek: text('.offering-block-date-dayofweek'),
-        dayOfMonth: text('.offering-block-date-dayofmonth'),
-        startTime: text('.offering-block-time-time-starttime'),
-        hasStartTime: isVisible('.offering-block-time-time-starttime'),
-        endTime: text('.offering-block-time-time-endtime'),
-        hasEndTime: isVisible('.offering-block-time-time-endtime'),
-        multiDay: text('.multiday-offering-block-time-time'),
-        hasMultiDay: isVisible('.multiday-offering-block-time-time'),
-        offerings: collection(
-          '[data-test-offerings] [data-test-offering-manager]',
-          {
-            learnerGroups: collection('.offering-manager-learner-groups li', {
-              title: text(),
-              expandTooltip: triggerable('mouseover'),
-              closeTooltip: triggerable('mouseout'),
-              tooltipContents: text('.ilios-tooltip', { resetScope: true }),
-              isTooltipVisible: isVisible('.ilios-tooltip', {
-                resetScope: true,
-              }),
-            }),
-            location: text('[data-test-location]'),
-            url: property('href', '[data-test-url] a'),
-            hasUrl: isVisible('[data-test-url]'),
-            instructors: collection(
-              '.offering-manager-instructors [data-test-instructor]',
-              {
-                userNameInfo,
-              }
-            ),
-            edit: clickable('.edit'),
-            remove: clickable('.remove'),
-            hasRemoveConfirm: hasClass('show-remove-confirmation'),
-            removeConfirmMessage: text('.confirm-message'),
-            confirmRemoval: clickable('.remove', { scope: '.confirm-buttons' }),
-            cancelRemoval: clickable('.cancel', { scope: '.confirm-buttons' }),
-            offeringForm,
-          }
-        ),
-      }
-    ),
+    dateBlocks: collection('[data-test-session-offerings-list] .offering-block', {
+      dayOfWeek: text('.offering-block-date-dayofweek'),
+      dayOfMonth: text('.offering-block-date-dayofmonth'),
+      startTime: text('.offering-block-time-time-starttime'),
+      hasStartTime: isVisible('.offering-block-time-time-starttime'),
+      endTime: text('.offering-block-time-time-endtime'),
+      hasEndTime: isVisible('.offering-block-time-time-endtime'),
+      multiDay: text('.multiday-offering-block-time-time'),
+      hasMultiDay: isVisible('.multiday-offering-block-time-time'),
+      offerings: collection('[data-test-offerings] [data-test-offering-manager]', {
+        learnerGroups: collection('.offering-manager-learner-groups li', {
+          title: text(),
+          expandTooltip: triggerable('mouseover'),
+          closeTooltip: triggerable('mouseout'),
+          tooltipContents: text('.ilios-tooltip', { resetScope: true }),
+          isTooltipVisible: isVisible('.ilios-tooltip', {
+            resetScope: true,
+          }),
+        }),
+        location: text('[data-test-location]'),
+        url: property('href', '[data-test-url] a'),
+        hasUrl: isVisible('[data-test-url]'),
+        instructors: collection('.offering-manager-instructors [data-test-instructor]', {
+          userNameInfo,
+        }),
+        edit: clickable('.edit'),
+        remove: clickable('.remove'),
+        hasRemoveConfirm: hasClass('show-remove-confirmation'),
+        removeConfirmMessage: text('.confirm-message'),
+        confirmRemoval: clickable('.remove', { scope: '.confirm-buttons' }),
+        cancelRemoval: clickable('.cancel', { scope: '.confirm-buttons' }),
+        offeringForm,
+      }),
+    }),
     offeringForm,
     smallGroup: clickable('.choose-offering-type button', { at: 0 }),
     singleOffering: clickable('.choose-offering-type button', { at: 1 }),

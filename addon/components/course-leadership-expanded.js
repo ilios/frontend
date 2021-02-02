@@ -15,9 +15,7 @@ export default class CourseLeadershipExpandedComponent extends Component {
     const studentAdvisorIds = this.args.course.hasMany('studentAdvisors').ids();
 
     return (
-      (administratorIds.length > 0 ||
-        directorIds.length > 0 ||
-        studentAdvisorIds.length > 0) &&
+      (administratorIds.length > 0 || directorIds.length > 0 || studentAdvisorIds.length > 0) &&
       !this.args.isManaging
     );
   }

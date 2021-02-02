@@ -22,13 +22,10 @@ export default class VisualizerCourseVocabulary extends Component {
       const sessionTerms = await session.get('terms');
       const hours = await session.get('totalSumDuration');
       const minutes = Math.round(hours * 60);
-      const sessionTermsInThisVocabulary = await filter(
-        sessionTerms.toArray(),
-        async (term) => {
-          const termVocab = await term.get('vocabulary');
-          return termVocab.get('id') === vocabulary.get('id');
-        }
-      );
+      const sessionTermsInThisVocabulary = await filter(sessionTerms.toArray(), async (term) => {
+        const termVocab = await term.get('vocabulary');
+        return termVocab.get('id') === vocabulary.get('id');
+      });
       return sessionTermsInThisVocabulary.map((term) => {
         return {
           term,
@@ -65,9 +62,7 @@ export default class VisualizerCourseVocabulary extends Component {
       return set;
     }, []);
 
-    const totalMinutes = termData
-      .mapBy('data')
-      .reduce((total, minutes) => total + minutes, 0);
+    const totalMinutes = termData.mapBy('data').reduce((total, minutes) => total + minutes, 0);
     const mappedTermsWithLabel = termData.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
       obj.label = `${obj.meta.termTitle} ${percent}%`;
@@ -91,9 +86,7 @@ export default class VisualizerCourseVocabulary extends Component {
     }
     const { label, data, meta } = obj;
 
-    this.tooltipTitle = htmlSafe(
-      `${label} ${data} ${this.intl.t('general.minutes')}`
-    );
+    this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
     this.tooltipContent = meta.sessions.uniq().sort().join();
   }
 
@@ -102,10 +95,6 @@ export default class VisualizerCourseVocabulary extends Component {
     if (this.args.isIcon || isEmpty(obj) || obj.empty || isEmpty(obj.meta)) {
       return;
     }
-    this.router.transitionTo(
-      'course-visualize-term',
-      this.args.course.get('id'),
-      obj.meta.termId
-    );
+    this.router.transitionTo('course-visualize-term', this.args.course.get('id'), obj.meta.termId);
   }
 }

@@ -11,9 +11,7 @@ module('Integration | Component | user-name-info', function (hooks) {
 
   test('it renders', async function (assert) {
     const user = this.server.create('user');
-    const userModel = await this.owner
-      .lookup('service:store')
-      .find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserNameInfo @user={{this.user}} />`);
     assert.notOk(component.hasAdditionalInfo);
@@ -22,9 +20,7 @@ module('Integration | Component | user-name-info', function (hooks) {
 
   test('it renders with additional info', async function (assert) {
     const user = this.server.create('user', { displayName: 'Clem Chowder' });
-    const userModel = await this.owner
-      .lookup('service:store')
-      .find('user', user.id);
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('user', userModel);
     await render(hbs`<UserNameInfo @user={{this.user}} />`);
     assert.ok(component.hasAdditionalInfo);
@@ -33,10 +29,7 @@ module('Integration | Component | user-name-info', function (hooks) {
     assert.notOk(component.isTooltipVisible);
     await component.expandTooltip();
     assert.ok(component.isTooltipVisible);
-    assert.equal(
-      component.tooltipContents,
-      'Campus name of record: 0 guy M, Mc0son'
-    );
+    assert.equal(component.tooltipContents, 'Campus name of record: 0 guy M, Mc0son');
     await component.closeTooltip();
     assert.notOk(component.isTooltipVisible);
   });

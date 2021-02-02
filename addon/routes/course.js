@@ -41,9 +41,6 @@ export default class CourseRoute extends Route.extend(AuthenticatedRouteMixin) {
       ];
     }
 
-    return Promise.all([
-      this.dataLoader.loadCourse(courseId),
-      ...this.#preloadTopLevel,
-    ]);
+    return Promise.all([this.dataLoader.loadCourse(courseId), ...this.#preloadTopLevel]);
   }
 }

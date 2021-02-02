@@ -34,11 +34,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     });
     const topLevelLearnerGroup = this.server.create('learner-group', {
       title: 'Top Group',
-      children: [
-        secondLevelLearnerGroup1,
-        secondLevelLearnerGroup2,
-        secondLevelLearnerGroup3,
-      ],
+      children: [secondLevelLearnerGroup1, secondLevelLearnerGroup2, secondLevelLearnerGroup3],
       needsAccommodation: true,
     });
 

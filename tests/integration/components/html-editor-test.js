@@ -13,9 +13,7 @@ module('Integration | Component | html editor', function (hooks) {
     await later(() => {
       assert
         .dom(this.element)
-        .hasText(
-          'BoldItalicSubscriptSuperscriptOrdered ListUnordered ListInsert LinkUndoRedo'
-        );
+        .hasText('BoldItalicSubscriptSuperscriptOrdered ListUnordered ListInsert LinkUndoRedo');
       assert.dom('svg').exists({ count: 9 });
     }, 500);
   });

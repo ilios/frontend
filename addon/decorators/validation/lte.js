@@ -12,9 +12,7 @@ export function Lte(lte, validationOptions) {
       validator: {
         validate(value, { constraints, property }) {
           if (!constraints || constraints.length < 1) {
-            throw new Error(
-              `You must pass a ${property} value as the first argument to Gte`
-            );
+            throw new Error(`You must pass a ${property} value as the first argument to Gte`);
           }
           const numValue = Number(value);
           if (isNaN(numValue)) {

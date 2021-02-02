@@ -27,29 +27,26 @@ const OfferingDateBlock = OfferingBlock.extend({
   dateStamp: format('date', 'X'),
   dayOfWeek: format('date', 'dddd'),
   dayOfMonth: format('date', 'MMMM Do'),
-  offeringTimeBlocks: computed(
-    'offerings.@each.{startDate,endDate}',
-    function () {
-      const offeringGroups = {};
-      this.offerings.forEach(function (offering) {
-        const key = offering.get('timeKey');
-        if (!(key in offeringGroups)) {
-          offeringGroups[key] = OfferingTimeBlock.create({
-            timeKey: key,
-          });
-        }
-        offeringGroups[key].addOffering(offering);
-      });
-      //convert indexed object to array
-      const offeringGroupArray = [];
-      let key;
-      for (key in offeringGroups) {
-        offeringGroupArray.pushObject(offeringGroups[key]);
+  offeringTimeBlocks: computed('offerings.@each.{startDate,endDate}', function () {
+    const offeringGroups = {};
+    this.offerings.forEach(function (offering) {
+      const key = offering.get('timeKey');
+      if (!(key in offeringGroups)) {
+        offeringGroups[key] = OfferingTimeBlock.create({
+          timeKey: key,
+        });
       }
-
-      return offeringGroupArray.sortBy('timeKey');
+      offeringGroups[key].addOffering(offering);
+    });
+    //convert indexed object to array
+    const offeringGroupArray = [];
+    let key;
+    for (key in offeringGroups) {
+      offeringGroupArray.pushObject(offeringGroups[key]);
     }
-  ),
+
+    return offeringGroupArray.sortBy('timeKey');
+  }),
 });
 
 const OfferingTimeBlock = OfferingBlock.extend({
@@ -59,9 +56,7 @@ const OfferingTimeBlock = OfferingBlock.extend({
   },
   timeKey: null,
   isMultiDay: computed('startDate', 'endDate', function () {
-    return (
-      this.startDate.format('DDDDYYYY') !== this.endDate.format('DDDDYYYY')
-    );
+    return this.startDate.format('DDDDYYYY') !== this.endDate.format('DDDDYYYY');
   }),
   //pull our times out of the key
   startDate: computed('timeKey', function () {

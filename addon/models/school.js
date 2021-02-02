@@ -14,10 +14,7 @@ export default Model.extend({
   programs: hasMany('program', { async: true }),
   vocabularies: hasMany('vocabulary', { async: true }),
   instructorGroups: hasMany('instructor-group', { async: true }),
-  curriculumInventoryInstitution: belongsTo(
-    'curriculum-inventory-institution',
-    { async: true }
-  ),
+  curriculumInventoryInstitution: belongsTo('curriculum-inventory-institution', { async: true }),
   sessionTypes: hasMany('session-type', { async: true }),
   directors: hasMany('user', { async: true, inverse: 'directedSchools' }),
   administrators: hasMany('user', {

@@ -12,9 +12,7 @@ module('Integration | Component | course sessions', function (hooks) {
     const title = '.title';
     const school = this.server.create('school');
     const course = this.server.create('course', { school });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('course', courseModel);
     this.set('nothing', () => {});

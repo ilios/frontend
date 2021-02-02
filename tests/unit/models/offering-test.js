@@ -7,9 +7,7 @@ module('Unit | Model | Offering', function (hooks) {
 
   test('check allInstructors', async function (assert) {
     assert.expect(11);
-    const offering = this.owner
-      .lookup('service:store')
-      .createRecord('offering');
+    const offering = this.owner.lookup('service:store').createRecord('offering');
     const store = this.owner.lookup('service:store');
 
     let allInstructors = await offering.get('allInstructors');
@@ -25,9 +23,7 @@ module('Unit | Model | Offering', function (hooks) {
     const instructorGroup2 = store.createRecord('instructor-group', {
       users: [user3],
     });
-    offering
-      .get('instructorGroups')
-      .pushObjects([instructorGroup1, instructorGroup2]);
+    offering.get('instructorGroups').pushObjects([instructorGroup1, instructorGroup2]);
 
     allInstructors = await offering.get('allInstructors');
 
@@ -83,9 +79,7 @@ module('Unit | Model | Offering', function (hooks) {
 
   test('check allLearners', async function (assert) {
     assert.expect(11);
-    const offering = this.owner
-      .lookup('service:store')
-      .createRecord('offering');
+    const offering = this.owner.lookup('service:store').createRecord('offering');
     const store = this.owner.lookup('service:store');
 
     let allLearners = await offering.get('allLearners');

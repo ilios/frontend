@@ -1,9 +1,4 @@
-import {
-  clickable,
-  create,
-  collection,
-  isPresent,
-} from 'ember-cli-page-object';
+import { clickable, create, collection, isPresent } from 'ember-cli-page-object';
 import selectedTerms from './detail-terms-list';
 
 const definition = {

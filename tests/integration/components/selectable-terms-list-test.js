@@ -42,21 +42,11 @@ module('Integration | Component | selectable terms list', function (hooks) {
     this.vocabularyModel = await this.owner
       .lookup('service:store')
       .find('vocabulary', vocabulary.id);
-    this.termModel1 = await this.owner
-      .lookup('service:store')
-      .find('term', term1.id);
-    this.termModel2 = await this.owner
-      .lookup('service:store')
-      .find('term', term2.id);
-    this.termModel3 = await this.owner
-      .lookup('service:store')
-      .find('term', term3.id);
-    this.termModel4 = await this.owner
-      .lookup('service:store')
-      .find('term', term4.id);
-    this.termModel5 = await this.owner
-      .lookup('service:store')
-      .find('term', term5.id);
+    this.termModel1 = await this.owner.lookup('service:store').find('term', term1.id);
+    this.termModel2 = await this.owner.lookup('service:store').find('term', term2.id);
+    this.termModel3 = await this.owner.lookup('service:store').find('term', term3.id);
+    this.termModel4 = await this.owner.lookup('service:store').find('term', term4.id);
+    this.termModel5 = await this.owner.lookup('service:store').find('term', term5.id);
   });
 
   test('it renders when given a vocabulary as input ', async function (assert) {
@@ -74,26 +64,16 @@ module('Integration | Component | selectable terms list', function (hooks) {
 
     assert.dom('li').exists({ count: 5 });
     assert.dom('li.top-level').exists({ count: 2 });
+    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('First');
+    assert.dom('li.top-level:nth-of-type(2) .selectable-terms-list-item').hasText('Second');
     assert
-      .dom('li.top-level:nth-of-type(1) .selectable-terms-list-item')
-      .hasText('First');
-    assert
-      .dom('li.top-level:nth-of-type(2) .selectable-terms-list-item')
-      .hasText('Second');
-    assert
-      .dom(
-        'li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item'
-      )
+      .dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
       .hasText('Alpha');
     assert
-      .dom(
-        'li.top-level:nth-of-type(1) li:nth-of-type(2) .selectable-terms-list-item'
-      )
+      .dom('li.top-level:nth-of-type(1) li:nth-of-type(2) .selectable-terms-list-item')
       .hasText('Beta');
     assert
-      .dom(
-        'li.top-level:nth-of-type(2) li:nth-of-type(1) .selectable-terms-list-item'
-      )
+      .dom('li.top-level:nth-of-type(2) li:nth-of-type(1) .selectable-terms-list-item')
       .hasText('Gamma');
   });
 
@@ -112,26 +92,16 @@ module('Integration | Component | selectable terms list', function (hooks) {
 
     assert.dom('li').exists({ count: 5 });
     assert.dom('li.top-level').exists({ count: 2 });
+    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('First');
+    assert.dom('li.top-level:nth-of-type(2) .selectable-terms-list-item').hasText('Second');
     assert
-      .dom('li.top-level:nth-of-type(1) .selectable-terms-list-item')
-      .hasText('First');
-    assert
-      .dom('li.top-level:nth-of-type(2) .selectable-terms-list-item')
-      .hasText('Second');
-    assert
-      .dom(
-        'li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item'
-      )
+      .dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
       .hasText('Alpha');
     assert
-      .dom(
-        'li.top-level:nth-of-type(1) li:nth-of-type(2) .selectable-terms-list-item'
-      )
+      .dom('li.top-level:nth-of-type(1) li:nth-of-type(2) .selectable-terms-list-item')
       .hasText('Beta');
     assert
-      .dom(
-        'li.top-level:nth-of-type(2) li:nth-of-type(1) .selectable-terms-list-item'
-      )
+      .dom('li.top-level:nth-of-type(2) li:nth-of-type(1) .selectable-terms-list-item')
       .hasText('Gamma');
   });
 
@@ -154,13 +124,9 @@ module('Integration | Component | selectable terms list', function (hooks) {
 
     assert.dom('li').exists({ count: 2 });
     assert.dom('li.top-level').exists({ count: 1 });
+    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('First');
     assert
-      .dom('li.top-level:nth-of-type(1) .selectable-terms-list-item')
-      .hasText('First');
-    assert
-      .dom(
-        'li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item'
-      )
+      .dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
       .hasText('Alpha');
   });
 
@@ -209,13 +175,9 @@ module('Integration | Component | selectable terms list', function (hooks) {
 
     assert.dom('li').exists({ count: 2 });
     assert.dom('li.top-level').exists({ count: 1 });
+    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('Second');
     assert
-      .dom('li.top-level:nth-of-type(1) .selectable-terms-list-item')
-      .hasText('Second');
-    assert
-      .dom(
-        'li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item'
-      )
+      .dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
       .hasText('Gamma');
   });
 
@@ -236,13 +198,9 @@ module('Integration | Component | selectable terms list', function (hooks) {
 
     assert.dom('li').exists({ count: 2 });
     assert.dom('li.top-level').exists({ count: 1 });
+    assert.dom('li.top-level:nth-of-type(1) .selectable-terms-list-item').hasText('Second');
     assert
-      .dom('li.top-level:nth-of-type(1) .selectable-terms-list-item')
-      .hasText('Second');
-    assert
-      .dom(
-        'li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item'
-      )
+      .dom('li.top-level:nth-of-type(1) li:nth-of-type(1) .selectable-terms-list-item')
       .hasText('Gamma');
   });
 });

@@ -36,12 +36,8 @@ module(
       assert
         .dom('li:nth-of-type(1) .single-event-learningmaterial-item-title')
         .hasText('first one');
-      assert
-        .dom('li:nth-of-type(1) .fa-file-pdf')
-        .exists('LM type icon is present.');
-      assert
-        .dom('li:nth-of-type(1) a')
-        .hasAttribute('href', 'http://firstlink?inline');
+      assert.dom('li:nth-of-type(1) .fa-file-pdf').exists('LM type icon is present.');
+      assert.dom('li:nth-of-type(1) a').hasAttribute('href', 'http://firstlink?inline');
       assert
         .dom('li:nth-of-type(1) a:nth-of-type(1)')
         .hasAttribute('href', 'http://firstlink?inline');
@@ -49,12 +45,8 @@ module(
       assert
         .dom('li:nth-of-type(2) .single-event-learningmaterial-item-title')
         .hasText('second one');
-      assert
-        .dom('li:nth-of-type(2) .fa-file-audio')
-        .exists('LM type icon is present.');
-      assert
-        .dom('li:nth-of-type(2) a')
-        .hasAttribute('href', 'http://secondlink');
+      assert.dom('li:nth-of-type(2) .fa-file-audio').exists('LM type icon is present.');
+      assert.dom('li:nth-of-type(2) a').hasAttribute('href', 'http://secondlink');
       assert
         .dom('li:nth-of-type(3) .single-event-learningmaterial-item-title')
         .hasText('third one');

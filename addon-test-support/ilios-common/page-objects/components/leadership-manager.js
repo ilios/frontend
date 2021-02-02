@@ -1,10 +1,4 @@
-import {
-  clickable,
-  collection,
-  fillable,
-  hasClass,
-  notHasClass,
-} from 'ember-cli-page-object';
+import { clickable, collection, fillable, hasClass, notHasClass } from 'ember-cli-page-object';
 
 export default {
   scope: '[data-test-leadership-manager]',

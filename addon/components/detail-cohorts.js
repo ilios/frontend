@@ -23,14 +23,9 @@ export default class DetailCohortsComponent extends Component {
       return !this.bufferedCohorts.includes(cohort);
     });
     if (removedCohorts.length) {
-      const programYearsToRemove = yield map(
-        removedCohorts,
-        async (cohort) => cohort.programYear
-      );
+      const programYearsToRemove = yield map(removedCohorts, async (cohort) => cohort.programYear);
       const objectives = yield course.courseObjectives;
-      yield all(
-        objectives.invoke('removeParentWithProgramYears', programYearsToRemove)
-      );
+      yield all(objectives.invoke('removeParentWithProgramYears', programYearsToRemove));
     }
     course.set('cohorts', this.bufferedCohorts);
     yield course.save();
@@ -49,8 +44,6 @@ export default class DetailCohortsComponent extends Component {
   }
   @action
   removeCohortFromBuffer(cohort) {
-    this.bufferedCohorts = this.bufferedCohorts.filter(
-      (obj) => obj.id !== cohort.id
-    );
+    this.bufferedCohorts = this.bufferedCohorts.filter((obj) => obj.id !== cohort.id);
   }
 }

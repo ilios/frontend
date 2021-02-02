@@ -35,13 +35,9 @@ export default Model.extend({
   startYearAndDayOfYear: momentFormat('startDate', 'DDDDYYYY'),
   endYearAndDayOfYear: momentFormat('endDate', 'DDDDYYYY'),
   isMultiDay: not('isSingleDay'),
-  isSingleDay: computed(
-    'startYearAndDayOfYear',
-    'endYearAndDayOfYear',
-    function () {
-      return this.startYearAndDayOfYear === this.endYearAndDayOfYear;
-    }
-  ),
+  isSingleDay: computed('startYearAndDayOfYear', 'endYearAndDayOfYear', function () {
+    return this.startYearAndDayOfYear === this.endYearAndDayOfYear;
+  }),
   dateKey: computed('startDayOfYear', 'startYear', function () {
     return this.startYear + this.startDayOfYear;
   }),
@@ -73,27 +69,18 @@ export default Model.extend({
    * @property allInstructors
    * @type {Ember.computed}
    */
-  allInstructors: computed(
-    'instructors.[]',
-    'instructorGroups.@each.users',
-    async function () {
-      const instructorGroups = await this.instructorGroups;
-      const instructors = await this.instructors;
-      const instructorsInInstructorGroups = await all(
-        instructorGroups.mapBy('users')
-      );
-      const allInstructors = instructorsInInstructorGroups.reduce(
-        (array, set) => {
-          return array.pushObjects(set.toArray());
-        },
-        []
-      );
+  allInstructors: computed('instructors.[]', 'instructorGroups.@each.users', async function () {
+    const instructorGroups = await this.instructorGroups;
+    const instructors = await this.instructors;
+    const instructorsInInstructorGroups = await all(instructorGroups.mapBy('users'));
+    const allInstructors = instructorsInInstructorGroups.reduce((array, set) => {
+      return array.pushObjects(set.toArray());
+    }, []);
 
-      allInstructors.pushObjects(instructors.toArray());
+    allInstructors.pushObjects(instructors.toArray());
 
-      return allInstructors.uniq().sortBy('fullName');
-    }
-  ),
+    return allInstructors.uniq().sortBy('fullName');
+  }),
   /**
    * All learners associated with this offering, either directly or indirectly via learner groups.
    * @property allLearners

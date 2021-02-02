@@ -61,10 +61,7 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
       page.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].parents.list.length,
-      1
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.equal(
       page.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0'
@@ -78,24 +75,15 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
     assert.equal(m.competencies[0].title, 'competency 0');
     assert.ok(m.competencies[0].selected);
     assert.equal(m.competencies[0].objectives.length, 1);
-    assert.equal(
-      m.competencies[0].objectives[0].title,
-      'program-year objective 0'
-    );
+    assert.equal(m.competencies[0].objectives[0].title, 'program-year objective 0');
     assert.ok(m.competencies[0].objectives[0].selected);
 
     assert.equal(m.competencies[1].title, 'competency 1');
     assert.ok(m.competencies[1].notSelected);
     assert.equal(m.competencies[1].objectives.length, 2);
-    assert.equal(
-      m.competencies[1].objectives[0].title,
-      'program-year objective 1'
-    );
+    assert.equal(m.competencies[1].objectives[0].title, 'program-year objective 1');
     assert.ok(m.competencies[1].objectives[0].notSelected);
-    assert.equal(
-      m.competencies[1].objectives[1].title,
-      'program-year objective 2'
-    );
+    assert.equal(m.competencies[1].objectives[1].title, 'program-year objective 2');
     assert.ok(m.competencies[1].objectives[1].notSelected);
   });
 
@@ -113,10 +101,7 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
       page.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].parents.list.length,
-      1
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.equal(
       page.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0'
@@ -135,10 +120,7 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
       page.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].parents.list.length,
-      1
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.equal(
       page.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 1'
@@ -159,10 +141,7 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
       page.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].parents.list.length,
-      1
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.equal(
       page.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0'
@@ -181,10 +160,7 @@ module('Acceptance | Course - Objective Parents', function (hooks) {
       page.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].parents.list.length,
-      1
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.equal(
       page.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0'

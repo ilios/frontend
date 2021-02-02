@@ -1,10 +1,4 @@
-import {
-  currentRouteName,
-  currentURL,
-  click,
-  findAll,
-  visit,
-} from '@ember/test-helpers';
+import { currentRouteName, currentURL, click, findAll, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication, getElementText, getText } from 'ilios-common';
 import { setupApplicationTest } from 'ember-qunit';
@@ -71,9 +65,6 @@ module('Acceptance | Course - Publication Check', function (hooks) {
   test('unlink icon transitions properly', async function (assert) {
     await visit('/courses/' + this.fullCourse.id + '/publicationcheck');
     await click('.fa-unlink');
-    assert.equal(
-      currentURL(),
-      '/courses/1?courseObjectiveDetails=true&details=true'
-    );
+    assert.equal(currentURL(), '/courses/1?courseObjectiveDetails=true&details=true');
   });
 });

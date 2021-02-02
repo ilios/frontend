@@ -89,16 +89,9 @@ export default class DashboardCalendarComponent extends Component {
       return;
     }
     if (this.args.mySchedule) {
-      this.ourEvents = yield this.userEvents.getEvents(
-        fromTimeStamp,
-        toTimeStamp
-      );
+      this.ourEvents = yield this.userEvents.getEvents(fromTimeStamp, toTimeStamp);
     } else {
-      this.ourEvents = yield this.schoolEvents.getEvents(
-        school.id,
-        fromTimeStamp,
-        toTimeStamp
-      );
+      this.ourEvents = yield this.schoolEvents.getEvents(school.id, fromTimeStamp, toTimeStamp);
     }
   }
 
@@ -205,9 +198,7 @@ export default class DashboardCalendarComponent extends Component {
     }
     const selectedIds = this.args.selectedCohortIds.map(Number);
     return this.ourEvents.filter((event) => {
-      const matchingCohorts = event.cohorts.filter(({ id }) =>
-        selectedIds.includes(id)
-      );
+      const matchingCohorts = event.cohorts.filter(({ id }) => selectedIds.includes(id));
       return matchingCohorts.length > 0;
     });
   }
@@ -228,9 +219,7 @@ export default class DashboardCalendarComponent extends Component {
     }
     const selectedIds = this.args.selectedTermIds.map(Number);
     return this.ourEvents.filter((event) => {
-      const allTerms = []
-        .concat(event.sessionTerms || [], event.courseTerms || [])
-        .mapBy('id');
+      const allTerms = [].concat(event.sessionTerms || [], event.courseTerms || []).mapBy('id');
       const matchingTerms = allTerms.filter((id) => selectedIds.includes(id));
       return matchingTerms.length > 0;
     });

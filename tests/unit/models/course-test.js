@@ -33,9 +33,7 @@ module('Unit | Model | Course', function (hooks) {
     });
     model.get('courseObjectives').addObject(courseObjective);
     assert.equal(model.get('optionalPublicationIssues').length, 1);
-    model
-      .get('meshDescriptors')
-      .addObject(store.createRecord('meshDescriptor'));
+    model.get('meshDescriptors').addObject(store.createRecord('meshDescriptor'));
     assert.equal(model.get('optionalPublicationIssues').length, 0);
   });
 

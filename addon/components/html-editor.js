@@ -13,15 +13,7 @@ export default class HtmlEditorComponent extends Component {
 
   defaultButtons = {
     moreText: {
-      buttons: [
-        'bold',
-        'italic',
-        'subscript',
-        'superscript',
-        'formatOL',
-        'formatUL',
-        'insertLink',
-      ],
+      buttons: ['bold', 'italic', 'subscript', 'superscript', 'formatOL', 'formatUL', 'insertLink'],
       buttonsVisible: 7,
     },
     moreMisc: {
@@ -37,8 +29,7 @@ export default class HtmlEditorComponent extends Component {
 
   get options() {
     return {
-      key:
-        'Kb3A3pE2E2A1E4G4I4oCd2ZSb1XHi1Cb2a1KIWCWMJHXCLSwG1G1B2C1B1C7F6E1E4F4==',
+      key: 'Kb3A3pE2E2A1E4G4I4oCd2ZSb1XHi1Cb2a1KIWCWMJHXCLSwG1G1B2C1B1C7F6E1E4F4==',
       theme: 'gray',
       attribution: false,
       language: this.intl.locale,
@@ -54,14 +45,7 @@ export default class HtmlEditorComponent extends Component {
       quickInsertButtons: false,
       pluginsEnabled: ['lists', 'code_view', 'link'],
       listAdvancedTypes: false,
-      shortcutsEnabled: [
-        'bold',
-        'italic',
-        'strikeThrough',
-        'undo',
-        'redo',
-        'createLink',
-      ],
+      shortcutsEnabled: ['bold', 'italic', 'strikeThrough', 'undo', 'redo', 'createLink'],
       events: {
         contentChanged: () => {
           if (!this.isDestroyed && !this.isDestroying) {

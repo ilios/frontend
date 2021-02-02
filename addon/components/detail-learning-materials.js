@@ -25,12 +25,8 @@ export default class DetailCohortsComponent extends Component {
 
   constructor() {
     super(...arguments);
-    this.learningMaterialStatuses = this.store.peekAll(
-      'learning-material-status'
-    );
-    this.learningMaterialUserRoles = this.store.peekAll(
-      'learning-material-user-role'
-    );
+    this.learningMaterialStatuses = this.store.peekAll('learning-material-status');
+    this.learningMaterialUserRoles = this.store.peekAll('learning-material-user-role');
   }
 
   @restartableTask
@@ -67,12 +63,7 @@ export default class DetailCohortsComponent extends Component {
     return !this.args.isCourse;
   }
   get displaySearchBox() {
-    return (
-      !this.isManaging &&
-      !this.displayAddNewForm &&
-      !this.isSorting &&
-      this.args.editable
-    );
+    return !this.isManaging && !this.displayAddNewForm && !this.isSorting && this.args.editable;
   }
 
   get hasMoreThanOneLearningMaterial() {
@@ -99,8 +90,7 @@ export default class DetailCohortsComponent extends Component {
     let lmSubject;
     let position = 0;
     if (this.materials && this.materials.length) {
-      position =
-        this.materials.sortBy('position').reverse()[0].get('position') + 1;
+      position = this.materials.sortBy('position').reverse()[0].get('position') + 1;
     }
     if (this.args.isCourse) {
       lmSubject = this.store.createRecord('course-learning-material', {
@@ -138,28 +128,21 @@ export default class DetailCohortsComponent extends Component {
     let newLearningMaterial;
 
     if (this.args.isCourse) {
-      newLearningMaterial = this.store.createRecord(
-        'course-learning-material',
-        {
-          course: this.args.subject,
-          learningMaterial: parentLearningMaterial,
-          position: 0,
-        }
-      );
+      newLearningMaterial = this.store.createRecord('course-learning-material', {
+        course: this.args.subject,
+        learningMaterial: parentLearningMaterial,
+        position: 0,
+      });
     } else {
-      newLearningMaterial = this.store.createRecord(
-        'session-learning-material',
-        {
-          session: this.args.subject,
-          learningMaterial: parentLearningMaterial,
-          position: 0,
-        }
-      );
+      newLearningMaterial = this.store.createRecord('session-learning-material', {
+        session: this.args.subject,
+        learningMaterial: parentLearningMaterial,
+        position: 0,
+      });
     }
     let position = 0;
     if (this.materials && this.materials.length > 1) {
-      position =
-        this.materials.sortBy('position').reverse()[0].get('position') + 1;
+      position = this.materials.sortBy('position').reverse()[0].get('position') + 1;
     }
     newLearningMaterial.set('position', position);
     yield newLearningMaterial.save();

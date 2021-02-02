@@ -4,11 +4,7 @@ import { action } from '@ember/object';
 import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 import { timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
-import {
-  validatable,
-  Length,
-  HtmlNotBlank,
-} from 'ilios-common/decorators/validation';
+import { validatable, Length, HtmlNotBlank } from 'ilios-common/decorators/validation';
 
 @validatable
 export default class SessionObjectiveListItemComponent extends Component {
@@ -32,11 +28,7 @@ export default class SessionObjectiveListItemComponent extends Component {
   }
 
   get isManaging() {
-    return (
-      this.isManagingParents ||
-      this.isManagingDescriptors ||
-      this.isManagingTerms
-    );
+    return this.isManagingParents || this.isManagingDescriptors || this.isManagingTerms;
   }
 
   @dropTask
@@ -122,9 +114,7 @@ export default class SessionObjectiveListItemComponent extends Component {
   }
   @action
   removeParentFromBuffer(objective) {
-    this.parentsBuffer = this.parentsBuffer.filter(
-      (obj) => obj.id !== objective.id
-    );
+    this.parentsBuffer = this.parentsBuffer.filter((obj) => obj.id !== objective.id);
   }
   @action
   addDescriptorToBuffer(descriptor) {
@@ -132,9 +122,7 @@ export default class SessionObjectiveListItemComponent extends Component {
   }
   @action
   removeDescriptorFromBuffer(descriptor) {
-    this.descriptorsBuffer = this.descriptorsBuffer.filter(
-      (obj) => obj.id !== descriptor.id
-    );
+    this.descriptorsBuffer = this.descriptorsBuffer.filter((obj) => obj.id !== descriptor.id);
   }
   @action
   addTermToBuffer(term) {

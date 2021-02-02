@@ -24,9 +24,7 @@ export function GteProp(property, validationOptions) {
           }
 
           if (!(compareToProperty in target)) {
-            throw new Error(
-              `${compareToProperty} is not a property of this object`
-            );
+            throw new Error(`${compareToProperty} is not a property of this object`);
           }
 
           const compareToValue = Number(target[compareToProperty]);

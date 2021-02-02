@@ -24,76 +24,53 @@ module('Integration | Component | learner selection manager', function (hooks) {
       displayName: 'Clem Chowder',
     });
 
-    this.learnerModel1 = await this.owner
-      .lookup('service:store')
-      .find('user', learner1.id);
-    this.learnerModel2 = await this.owner
-      .lookup('service:store')
-      .find('user', learner2.id);
-    this.learnerModel3 = await this.owner
-      .lookup('service:store')
-      .find('user', learner3.id);
+    this.learnerModel1 = await this.owner.lookup('service:store').find('user', learner1.id);
+    this.learnerModel2 = await this.owner.lookup('service:store').find('user', learner2.id);
+    this.learnerModel3 = await this.owner.lookup('service:store').find('user', learner3.id);
   });
 
   test('selected learners', async function (assert) {
-    this.set('learners', [
-      this.learnerModel1,
-      this.learnerModel2,
-      this.learnerModel3,
-    ]);
+    this.set('learners', [this.learnerModel1, this.learnerModel2, this.learnerModel3]);
     await render(
       hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{noop}} @remove={{noop}}/>`
     );
     assert.equal(component.selectedLearners.heading, 'Selected Learners');
+    assert.equal(component.selectedLearners.detailLearnerList.learners.length, 3);
     assert.equal(
-      component.selectedLearners.detailLearnerList.learners.length,
-      3
-    );
-    assert.equal(
-      component.selectedLearners.detailLearnerList.learners[0].userNameInfo
-        .fullName,
+      component.selectedLearners.detailLearnerList.learners[0].userNameInfo.fullName,
       'Clem Chowder'
     );
     assert.ok(
-      component.selectedLearners.detailLearnerList.learners[0].userNameInfo
-        .hasAdditionalInfo
+      component.selectedLearners.detailLearnerList.learners[0].userNameInfo.hasAdditionalInfo
     );
     assert.notOk(
-      component.selectedLearners.detailLearnerList.learners[0].userNameInfo
-        .isTooltipVisible
+      component.selectedLearners.detailLearnerList.learners[0].userNameInfo.isTooltipVisible
     );
     await component.selectedLearners.detailLearnerList.learners[0].userNameInfo.expandTooltip();
     assert.ok(
-      component.selectedLearners.detailLearnerList.learners[0].userNameInfo
-        .isTooltipVisible
+      component.selectedLearners.detailLearnerList.learners[0].userNameInfo.isTooltipVisible
     );
     assert.equal(
-      component.selectedLearners.detailLearnerList.learners[0].userNameInfo
-        .tooltipContents,
+      component.selectedLearners.detailLearnerList.learners[0].userNameInfo.tooltipContents,
       'Campus name of record: 2 guy M, Mc2son'
     );
     await component.selectedLearners.detailLearnerList.learners[0].userNameInfo.closeTooltip();
     assert.notOk(
-      component.selectedLearners.detailLearnerList.learners[0].userNameInfo
-        .isTooltipVisible
+      component.selectedLearners.detailLearnerList.learners[0].userNameInfo.isTooltipVisible
     );
     assert.equal(
-      component.selectedLearners.detailLearnerList.learners[1].userNameInfo
-        .fullName,
+      component.selectedLearners.detailLearnerList.learners[1].userNameInfo.fullName,
       'Jane A. Doe'
     );
     assert.notOk(
-      component.selectedLearners.detailLearnerList.learners[1].userNameInfo
-        .hasAdditionalInfo
+      component.selectedLearners.detailLearnerList.learners[1].userNameInfo.hasAdditionalInfo
     );
     assert.equal(
-      component.selectedLearners.detailLearnerList.learners[2].userNameInfo
-        .fullName,
+      component.selectedLearners.detailLearnerList.learners[2].userNameInfo.fullName,
       'Joe M. Doe'
     );
     assert.notOk(
-      component.selectedLearners.detailLearnerList.learners[2].userNameInfo
-        .hasAdditionalInfo
+      component.selectedLearners.detailLearnerList.learners[2].userNameInfo.hasAdditionalInfo
     );
   });
 
@@ -118,13 +95,9 @@ module('Integration | Component | learner selection manager', function (hooks) {
       hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{noop}} @remove={{remove}}/>`
     );
     assert.equal(component.selectedLearners.heading, 'Selected Learners');
+    assert.equal(component.selectedLearners.detailLearnerList.learners.length, 2);
     assert.equal(
-      component.selectedLearners.detailLearnerList.learners.length,
-      2
-    );
-    assert.equal(
-      component.selectedLearners.detailLearnerList.learners[1].userNameInfo
-        .fullName,
+      component.selectedLearners.detailLearnerList.learners[1].userNameInfo.fullName,
       'Joe M. Doe'
     );
     await component.selectedLearners.detailLearnerList.learners[1].remove();
@@ -137,9 +110,7 @@ module('Integration | Component | learner selection manager', function (hooks) {
       middleName: 'Roy',
       lastName: 'Schmitt',
     });
-    const learnerModel3 = await this.owner
-      .lookup('service:store')
-      .find('user', learner3.id);
+    const learnerModel3 = await this.owner.lookup('service:store').find('user', learner3.id);
 
     this.set('learners', []);
     this.set('add', (user) => {

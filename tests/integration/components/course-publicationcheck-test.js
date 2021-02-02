@@ -16,9 +16,7 @@ module('Integration | Component | course-publicationcheck', function (hooks) {
       programYearObjectives: [programYearObjective],
     });
     this.server.create('courseObjective', { course });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('model', courseModel);
     await render(hbs`<CoursePublicationcheck @course={{model}} />`);
     assert.ok(!!find('.fa-unlink'));
@@ -35,9 +33,7 @@ module('Integration | Component | course-publicationcheck', function (hooks) {
       course,
       programYearObjectives: [programYearObjective],
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('model', courseModel);
     await render(hbs`<CoursePublicationcheck @course={{model}} />`);
     assert.notOk(!!find('.fa-unlink'));

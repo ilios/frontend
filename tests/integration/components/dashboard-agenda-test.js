@@ -108,13 +108,7 @@ module('Integration | Component | dashboard agenda', function (hooks) {
         equipmentRequired: true,
         attireRequired: true,
         postrequisites: [],
-        prerequisites: [
-          preWork[1],
-          preWork[2],
-          preWork[3],
-          preWork[4],
-          preWork[5],
-        ],
+        prerequisites: [preWork[1], preWork[2], preWork[3], preWork[4], preWork[5]],
         isPublished: true,
         isScheduled: false,
         isBlanked: false,
@@ -214,14 +208,10 @@ module('Integration | Component | dashboard agenda', function (hooks) {
     await render(hbs`<DashboardAgenda />`);
     const title = 'h3';
 
-    assert
-      .dom(this.element.querySelector(title))
-      .hasText('My Activities for the next 60 days');
+    assert.dom(this.element.querySelector(title)).hasText('My Activities for the next 60 days');
     assert.equal(this.element.querySelectorAll('table tr').length, 6);
     for (let i = 0; i < 6; i++) {
-      const tds = this.element.querySelectorAll(
-        `table tr:nth-of-type(${i + 1}) td`
-      );
+      const tds = this.element.querySelectorAll(`table tr:nth-of-type(${i + 1}) td`);
       assert.dom(tds[0]).hasText(
         new Date(mockEvents[i].startDate).toLocaleString([], {
           weekday: 'long',
@@ -260,39 +250,31 @@ module('Integration | Component | dashboard agenda', function (hooks) {
 
     await render(hbs`<DashboardAgenda />`);
     assert.equal(
-      this.element.querySelectorAll(
-        'table tr:nth-of-type(1) td:nth-of-type(4) .fa-black-tie'
-      ).length,
+      this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-black-tie')
+        .length,
       1
     );
     assert.equal(
-      this.element.querySelectorAll(
-        'table tr:nth-of-type(1) td:nth-of-type(4) .fa-flask'
-      ).length,
+      this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-flask').length,
       1
     );
     assert.equal(
-      this.element.querySelectorAll(
-        'table tr:nth-of-type(1) td:nth-of-type(4) .fa-calendar-check'
-      ).length,
+      this.element.querySelectorAll('table tr:nth-of-type(1) td:nth-of-type(4) .fa-calendar-check')
+        .length,
       1
     );
     assert.equal(
-      this.element.querySelectorAll(
-        'table tr:nth-of-type(2) td:nth-of-type(4) .fa-black-tie'
-      ).length,
+      this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-black-tie')
+        .length,
       0
     );
     assert.equal(
-      this.element.querySelectorAll(
-        'table tr:nth-of-type(2) td:nth-of-type(4) .fa-flask'
-      ).length,
+      this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-flask').length,
       0
     );
     assert.equal(
-      this.element.querySelectorAll(
-        'table tr:nth-of-type(2) td:nth-of-type(4) .fa-calendar-check'
-      ).length,
+      this.element.querySelectorAll('table tr:nth-of-type(2) td:nth-of-type(4) .fa-calendar-check')
+        .length,
       0
     );
   });
@@ -306,9 +288,7 @@ module('Integration | Component | dashboard agenda', function (hooks) {
     const title = 'h3';
     const body = 'p';
 
-    assert
-      .dom(this.element.querySelector(title))
-      .hasText('My Activities for the next 60 days');
+    assert.dom(this.element.querySelector(title)).hasText('My Activities for the next 60 days');
     assert.dom(this.element.querySelector(body)).hasText('None');
   });
 });

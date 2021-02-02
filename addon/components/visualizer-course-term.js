@@ -19,9 +19,7 @@ export default class VisualizerCourseTerm extends Component {
     const courseSessions = yield course.get('sessions');
     const termSessionIds = term.hasMany('sessions').ids();
 
-    const sessions = courseSessions.filter((session) =>
-      termSessionIds.includes(session.get('id'))
-    );
+    const sessions = courseSessions.filter((session) => termSessionIds.includes(session.get('id')));
     const sessionTypeData = yield map(sessions, async (session) => {
       const hours = await session.get('totalSumDuration');
       const minutes = Math.round(hours * 60);
@@ -52,9 +50,7 @@ export default class VisualizerCourseTerm extends Component {
       return set;
     }, []);
 
-    const totalMinutes = data
-      .mapBy('data')
-      .reduce((total, minutes) => total + minutes, 0);
+    const totalMinutes = data.mapBy('data').reduce((total, minutes) => total + minutes, 0);
 
     this.data = data.map((obj) => {
       const percent = ((obj.data / totalMinutes) * 100).toFixed(1);
@@ -75,9 +71,7 @@ export default class VisualizerCourseTerm extends Component {
     }
     const { label, data, meta } = obj;
 
-    this.tooltipTitle = htmlSafe(
-      `${label} ${data} ${this.intl.t('general.minutes')}`
-    );
+    this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
     this.tooltipContent = meta.sessions.uniq().sort().join(', ');
   }
 }

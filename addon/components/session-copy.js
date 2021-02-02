@@ -55,9 +55,7 @@ export default class SessionCopyComponent extends Component {
     if (!this.allCourses) {
       return null;
     }
-    return this.allCourses
-      .filterBy('year', this.bestSelectedYear)
-      .sortBy('title');
+    return this.allCourses.filterBy('year', this.bestSelectedYear).sortBy('title');
   }
 
   get bestSelectedCourse() {
@@ -124,12 +122,7 @@ export default class SessionCopyComponent extends Component {
       const lm = yield learningMaterialToCopy.learningMaterial;
       const learningMaterial = this.store.createRecord(
         'sessionLearningMaterial',
-        learningMaterialToCopy.getProperties(
-          'notes',
-          'required',
-          'publicNotes',
-          'position'
-        )
+        learningMaterialToCopy.getProperties('notes', 'required', 'publicNotes', 'position')
       );
       learningMaterial.set('learningMaterial', lm);
       learningMaterial.set('session', session);
@@ -152,9 +145,7 @@ export default class SessionCopyComponent extends Component {
     //parse objectives last because it is a many2many relationship
     //and ember data tries to save it too soon
     const relatedSessionObjectives = yield sessionToCopy.sessionObjectives;
-    const sessionObjectivesToCopy = relatedSessionObjectives
-      .sortBy('id')
-      .toArray();
+    const sessionObjectivesToCopy = relatedSessionObjectives.sortBy('id').toArray();
     for (let i = 0, n = sessionObjectivesToCopy.length; i < n; i++) {
       const sessionObjectiveToCopy = sessionObjectivesToCopy[i];
       const meshDescriptors = yield sessionObjectiveToCopy.meshDescriptors;

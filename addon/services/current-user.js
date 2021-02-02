@@ -142,20 +142,12 @@ export default Service.extend({
   isRoot: computed('session.data.authenticated.jwt', function () {
     return this.getBooleanAttributeFromToken('is_root');
   }),
-  performsNonLearnerFunction: computed(
-    'session.data.authenticated.jwt',
-    function () {
-      return this.getBooleanAttributeFromToken('performs_non_learner_function');
-    }
-  ),
-  canCreateOrUpdateUserInAnySchool: computed(
-    'session.data.authenticated.jwt',
-    function () {
-      return this.getBooleanAttributeFromToken(
-        'can_create_or_update_user_in_any_school'
-      );
-    }
-  ),
+  performsNonLearnerFunction: computed('session.data.authenticated.jwt', function () {
+    return this.getBooleanAttributeFromToken('performs_non_learner_function');
+  }),
+  canCreateOrUpdateUserInAnySchool: computed('session.data.authenticated.jwt', function () {
+    return this.getBooleanAttributeFromToken('can_create_or_update_user_in_any_school');
+  }),
   async isDirectingSchool(school) {
     const user = await this.getModel();
     const ids = user.hasMany('directedSchools').ids();
@@ -209,9 +201,7 @@ export default Service.extend({
     const schoolCourseIds = school.hasMany('courses').ids();
 
     const courses = await user.get('allInstructedCourses');
-    const matches = courses.filter((course) =>
-      schoolCourseIds.includes(course.get('id'))
-    );
+    const matches = courses.filter((course) => schoolCourseIds.includes(course.get('id')));
 
     return matches.length > 0;
   },
@@ -285,8 +275,7 @@ export default Service.extend({
 
     const programYears = await user.get('programYears');
     const matches = programYears.filter(
-      (programYear) =>
-        program.get('id') === programYear.belongsTo('program').id()
+      (programYear) => program.get('id') === programYear.belongsTo('program').id()
     );
 
     return matches.length > 0;
@@ -307,10 +296,7 @@ export default Service.extend({
   },
   async getRolesInSchool(school, rolesToCheck = []) {
     const roles = [];
-    if (
-      rolesToCheck.includes('SCHOOL_DIRECTOR') &&
-      (await this.isDirectingSchool(school))
-    ) {
+    if (rolesToCheck.includes('SCHOOL_DIRECTOR') && (await this.isDirectingSchool(school))) {
       roles.pushObject('SCHOOL_DIRECTOR');
     }
     if (
@@ -360,10 +346,7 @@ export default Service.extend({
   },
   async getRolesInCourse(course, rolesToCheck = []) {
     const roles = [];
-    if (
-      rolesToCheck.includes('COURSE_DIRECTOR') &&
-      (await this.isDirectingCourse(course))
-    ) {
+    if (rolesToCheck.includes('COURSE_DIRECTOR') && (await this.isDirectingCourse(course))) {
       roles.pushObject('COURSE_DIRECTOR');
     }
     if (
@@ -378,10 +361,7 @@ export default Service.extend({
     ) {
       roles.pushObject('SESSION_ADMINISTRATOR');
     }
-    if (
-      rolesToCheck.includes('COURSE_INSTRUCTOR') &&
-      (await this.isTeachingCourse(course))
-    ) {
+    if (rolesToCheck.includes('COURSE_INSTRUCTOR') && (await this.isTeachingCourse(course))) {
       roles.pushObject('COURSE_INSTRUCTOR');
     }
 
@@ -395,10 +375,7 @@ export default Service.extend({
     ) {
       roles.pushObject('SESSION_ADMINISTRATOR');
     }
-    if (
-      rolesToCheck.includes('SESSION_INSTRUCTOR') &&
-      (await this.isTeachingSession(session))
-    ) {
+    if (rolesToCheck.includes('SESSION_INSTRUCTOR') && (await this.isTeachingSession(session))) {
       roles.pushObject('SESSION_INSTRUCTOR');
     }
 
@@ -406,10 +383,7 @@ export default Service.extend({
   },
   async getRolesInProgram(program, rolesToCheck = []) {
     const roles = [];
-    if (
-      rolesToCheck.includes('PROGRAM_DIRECTOR') &&
-      (await this.isDirectingProgram(program))
-    ) {
+    if (rolesToCheck.includes('PROGRAM_DIRECTOR') && (await this.isDirectingProgram(program))) {
       roles.pushObject('PROGRAM_DIRECTOR');
     }
     if (

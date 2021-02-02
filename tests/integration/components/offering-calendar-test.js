@@ -35,9 +35,7 @@ module('Integration | Component | offering-calendar', function (hooks) {
     const learnerGroup = this.server.create('learner-group', {
       offerings: [offering1, offering2],
     });
-    const sessionModel = await this.owner
-      .lookup('service:store')
-      .find('session', session.id);
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
     const learnerGroupModel = await this.owner
       .lookup('service:store')
       .find('learner-group', learnerGroup.id);

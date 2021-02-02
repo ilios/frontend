@@ -1,12 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  click,
-  fillIn,
-  find,
-  triggerKeyEvent,
-} from '@ember/test-helpers';
+import { render, click, fillIn, find, triggerKeyEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | Component | search box', function (hooks) {
@@ -40,9 +34,7 @@ module('Integration | Component | search box', function (hooks) {
       assert.ok(true);
     });
     this.set('nothing', () => {});
-    await render(
-      hbs`<SearchBox @search={{action nothing}} @clear={{action clear}} />`
-    );
+    await render(hbs`<SearchBox @search={{action nothing}} @clear={{action clear}} />`);
     await fillIn('input', 'typed it');
     await triggerKeyEvent('input', 'keyup', 27);
   });

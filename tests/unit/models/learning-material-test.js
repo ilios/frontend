@@ -5,9 +5,7 @@ module('Unit | Model | LearningMaterial', function (hooks) {
   setupTest(hooks);
 
   test('it exists', function (assert) {
-    const model = this.owner
-      .lookup('service:store')
-      .createRecord('learning-material');
+    const model = this.owner.lookup('service:store').createRecord('learning-material');
     assert.ok(!!model);
   });
 });

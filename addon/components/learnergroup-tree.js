@@ -30,9 +30,7 @@ export default class LearnergroupTree extends Component {
       filterMatch = filterTitle.match(exp) != null;
     }
     const available =
-      hasUnSelectedChildren ||
-      isEmpty(selectedGroups) ||
-      !selectedGroups.includes(learnerGroup);
+      hasUnSelectedChildren || isEmpty(selectedGroups) || !selectedGroups.includes(learnerGroup);
 
     this.isHidden = !filterMatch || !available;
     this.selectable = available;
@@ -51,10 +49,7 @@ export default class LearnergroupTree extends Component {
         return true;
       }
       const childChildren = await child.children;
-      return this.hasUnSelectedChildren(
-        childChildren.toArray(),
-        selectedGroups
-      );
+      return this.hasUnSelectedChildren(childChildren.toArray(), selectedGroups);
     });
     return unselectedChildren.length > 0;
   }

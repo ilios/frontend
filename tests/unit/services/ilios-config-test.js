@@ -40,10 +40,7 @@ module('Unit | Service | ilios config', function (hooks) {
   test('it gets authentication type', async function (assert) {
     const service = this.owner.lookup('service:ilios-config');
     assert.equal(await service.authenticationType, 'authenticationType-foo');
-    assert.equal(
-      await service.getAuthenticationType(),
-      'authenticationType-foo'
-    );
+    assert.equal(await service.getAuthenticationType(), 'authenticationType-foo');
   });
   test('it gets maxUploadSize', async function (assert) {
     const service = this.owner.lookup('service:ilios-config');

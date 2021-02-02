@@ -137,8 +137,7 @@ export default function (server) {
       programYearId: programYear.id,
       title:
         'Class of ' +
-        (parseInt(programYear.program.duration, 10) +
-          parseInt(programYear.startYear, 10)),
+        (parseInt(programYear.program.duration, 10) + parseInt(programYear.startYear, 10)),
     };
     const cohort = schema.cohorts.create(cohortAttr);
     programYear.cohort = cohort;
@@ -197,13 +196,10 @@ export default function (server) {
 
   server.post('upload', function () {
     let hash = '';
-    const allowedChars =
-      'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    const allowedChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
     for (var i = 0; i < 32; i++) {
-      hash += allowedChars.charAt(
-        Math.floor(Math.random() * allowedChars.length)
-      );
+      hash += allowedChars.charAt(Math.floor(Math.random() * allowedChars.length));
     }
 
     return {

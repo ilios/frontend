@@ -60,23 +60,18 @@ export default Model.extend({
    * @property sortedOfferingsByDate
    * @type {Ember.computed}
    */
-  sortedOfferingsByDate: computed(
-    'offerings.@each.startDate',
-    async function () {
-      const offerings = await this.offerings;
-      const filteredOfferings = offerings.filter((offering) =>
-        isPresent(offering.get('startDate'))
-      );
-      return filteredOfferings.sort((a, b) => {
-        const aDate = moment(a.get('startDate'));
-        const bDate = moment(b.get('startDate'));
-        if (aDate === bDate) {
-          return 0;
-        }
-        return aDate > bDate ? 1 : -1;
-      });
-    }
-  ),
+  sortedOfferingsByDate: computed('offerings.@each.startDate', async function () {
+    const offerings = await this.offerings;
+    const filteredOfferings = offerings.filter((offering) => isPresent(offering.get('startDate')));
+    return filteredOfferings.sort((a, b) => {
+      const aDate = moment(a.get('startDate'));
+      const bDate = moment(b.get('startDate'));
+      if (aDate === bDate) {
+        return 0;
+      }
+      return aDate > bDate ? 1 : -1;
+    });
+  }),
 
   /**
    * The earliest start date of all offerings in this session, or, if this is an ILM session, the ILM's due date.
@@ -116,14 +111,8 @@ export default Model.extend({
         return 0;
       }
       const sortedOfferings = offerings.toArray().sort(function (a, b) {
-        const diffA = moment(a.get('endDate')).diff(
-          moment(a.get('startDate')),
-          'minutes'
-        );
-        const diffB = moment(b.get('endDate')).diff(
-          moment(b.get('startDate')),
-          'minutes'
-        );
+        const diffA = moment(a.get('endDate')).diff(moment(a.get('startDate')), 'minutes');
+        const diffB = moment(b.get('endDate')).diff(moment(b.get('startDate')), 'minutes');
         if (diffA > diffB) {
           return -1;
         } else if (diffA < diffB) {
@@ -161,11 +150,7 @@ export default Model.extend({
         .reduce((total, offering) => {
           return (
             total +
-            moment(offering.get('endDate')).diff(
-              moment(offering.get('startDate')),
-              'hours',
-              true
-            )
+            moment(offering.get('endDate')).diff(moment(offering.get('startDate')), 'hours', true)
           );
         }, 0)
         .toFixed(2);
@@ -178,21 +163,17 @@ export default Model.extend({
    * @property totalSumDuration
    * @type {Ember.computed}
    */
-  totalSumDuration: computed(
-    'totalSumOfferingsDuration',
-    'ilmSession.hours',
-    async function () {
-      const totalSumOfferingsDuration = await this.totalSumOfferingsDuration;
-      const ilmSession = await this.ilmSession;
-      if (!ilmSession) {
-        return totalSumOfferingsDuration;
-      }
-
-      const ilmHours = ilmSession.get('hours');
-
-      return parseFloat(ilmHours) + parseFloat(totalSumOfferingsDuration);
+  totalSumDuration: computed('totalSumOfferingsDuration', 'ilmSession.hours', async function () {
+    const totalSumOfferingsDuration = await this.totalSumOfferingsDuration;
+    const ilmSession = await this.ilmSession;
+    if (!ilmSession) {
+      return totalSumOfferingsDuration;
     }
-  ),
+
+    const ilmHours = ilmSession.get('hours');
+
+    return parseFloat(ilmHours) + parseFloat(totalSumOfferingsDuration);
+  }),
 
   /**
    * The maximum duration in hours (incl. fractions) of any session offerings, plus any ILM hours.
@@ -200,21 +181,17 @@ export default Model.extend({
    * @property totalSumDuration
    * @type {Ember.computed}
    */
-  maxDuration: computed(
-    'maxSingleOfferingDuration',
-    'ilmSession.hours',
-    async function () {
-      const maxSingleOfferingDuration = await this.maxSingleOfferingDuration;
-      const ilmSession = await this.ilmSession;
-      if (!ilmSession) {
-        return maxSingleOfferingDuration;
-      }
-
-      const ilmHours = ilmSession.get('hours');
-
-      return parseFloat(ilmHours) + parseFloat(maxSingleOfferingDuration);
+  maxDuration: computed('maxSingleOfferingDuration', 'ilmSession.hours', async function () {
+    const maxSingleOfferingDuration = await this.maxSingleOfferingDuration;
+    const ilmSession = await this.ilmSession;
+    if (!ilmSession) {
+      return maxSingleOfferingDuration;
     }
-  ),
+
+    const ilmHours = ilmSession.get('hours');
+
+    return parseFloat(ilmHours) + parseFloat(maxSingleOfferingDuration);
+  }),
 
   requiredPublicationIssues: computed(
     'title',
@@ -227,10 +204,7 @@ export default Model.extend({
         this.set('requiredPublicationSetFields', ['title']);
       } else {
         this.set('requiredPublicationLengthFields', []);
-        this.set('requiredPublicationSetFields', [
-          'title',
-          'ilmSession.dueDate',
-        ]);
+        this.set('requiredPublicationSetFields', ['title', 'ilmSession.dueDate']);
       }
       return this.getRequiredPublicationIssues();
     }
@@ -290,38 +264,32 @@ export default Model.extend({
    * @property associatedOfferingLearnerGroups
    * @type {Ember.computed}
    */
-  associatedOfferingLearnerGroups: computed(
-    'offerings.@each.learnerGroups',
-    async function () {
-      const offerings = await this.offerings;
-      const offeringLearnerGroups = await all(offerings.mapBy('learnerGroups'));
-      return offeringLearnerGroups
-        .reduce((array, set) => {
-          array.pushObjects(set.toArray());
-          return array;
-        }, [])
-        .uniq()
-        .sortBy('title');
-    }
-  ),
+  associatedOfferingLearnerGroups: computed('offerings.@each.learnerGroups', async function () {
+    const offerings = await this.offerings;
+    const offeringLearnerGroups = await all(offerings.mapBy('learnerGroups'));
+    return offeringLearnerGroups
+      .reduce((array, set) => {
+        array.pushObjects(set.toArray());
+        return array;
+      }, [])
+      .uniq()
+      .sortBy('title');
+  }),
 
   /**
    * Learner-groups associated with this session via its ILM.
    * @property associatedIlmLearnerGroups
    * @type {Ember.computed}
    */
-  associatedIlmLearnerGroups: computed(
-    'ilmSession.learnerGroups',
-    async function () {
-      const ilmSession = await this.ilmSession;
-      if (!isPresent(ilmSession)) {
-        return [];
-      }
-
-      const learnerGroups = await ilmSession.get('learnerGroups');
-      return learnerGroups.sortBy('title');
+  associatedIlmLearnerGroups: computed('ilmSession.learnerGroups', async function () {
+    const ilmSession = await this.ilmSession;
+    if (!isPresent(ilmSession)) {
+      return [];
     }
-  ),
+
+    const learnerGroups = await ilmSession.get('learnerGroups');
+    return learnerGroups.sortBy('title');
+  }),
 
   /**
    * Learner-groups associated with this session via its ILM and offerings.
@@ -334,9 +302,7 @@ export default Model.extend({
     async function () {
       const ilmLearnerGroups = await this.associatedIlmLearnerGroups;
       const offeringLearnerGroups = await this.associatedOfferingLearnerGroups;
-      const allGroups = []
-        .pushObjects(offeringLearnerGroups)
-        .pushObjects(ilmLearnerGroups);
+      const allGroups = [].pushObjects(offeringLearnerGroups).pushObjects(ilmLearnerGroups);
       return allGroups.uniq().sortBy('title');
     }
   ),
@@ -346,13 +312,10 @@ export default Model.extend({
    * @property sortedSessionObjectives
    * @type {Ember.computed}
    */
-  sortedSessionObjectives: computed(
-    'sessionObjectives.@each.position',
-    async function () {
-      const objectives = await this.sessionObjectives;
-      return objectives.toArray().sort(sortableByPosition);
-    }
-  ),
+  sortedSessionObjectives: computed('sessionObjectives.@each.position', async function () {
+    const objectives = await this.sessionObjectives;
+    return objectives.toArray().sort(sortableByPosition);
+  }),
 
   /**
    * Every instructor associated with the session
@@ -366,17 +329,12 @@ export default Model.extend({
     async function () {
       const offerings = await this.offerings;
       const offeringInstructors = await all(offerings.mapBy('instructors'));
-      const offeringInstructorGroupsArr = await all(
-        offerings.mapBy('instructorGroups')
-      );
+      const offeringInstructorGroupsArr = await all(offerings.mapBy('instructorGroups'));
       const flatten = (flattened, obj) => {
         return flattened.pushObjects(obj.toArray());
       };
 
-      const offeringInstructorGroups = offeringInstructorGroupsArr.reduce(
-        flatten,
-        []
-      );
+      const offeringInstructorGroups = offeringInstructorGroupsArr.reduce(flatten, []);
 
       let ilmInstructorGroups = [];
       let ilmInstructors = [];
@@ -387,12 +345,7 @@ export default Model.extend({
       }
 
       const groupInstructors = await all(
-        []
-          .concat(
-            offeringInstructorGroups.toArray(),
-            ilmInstructorGroups.toArray()
-          )
-          .mapBy('users')
+        [].concat(offeringInstructorGroups.toArray(), ilmInstructorGroups.toArray()).mapBy('users')
       );
 
       const flat = []
@@ -424,9 +377,7 @@ export default Model.extend({
 
   showUnlinkIcon: computed('sessionObjectives.[]', async function () {
     const sessionObjectives = await this.sessionObjectives;
-    const collectionOfCourseObjectives = await all(
-      sessionObjectives.mapBy('courseObjectives')
-    );
+    const collectionOfCourseObjectives = await all(sessionObjectives.mapBy('courseObjectives'));
     return collectionOfCourseObjectives.any((courseObjectives) =>
       isEmpty(courseObjectives.toArray())
     );
@@ -434,11 +385,7 @@ export default Model.extend({
 
   init() {
     this._super(...arguments);
-    this.set('optionalPublicationLengthFields', [
-      'terms',
-      'sessionObjectives',
-      'meshDescriptors',
-    ]);
+    this.set('optionalPublicationLengthFields', ['terms', 'sessionObjectives', 'meshDescriptors']);
     this.set('requiredPublicationSetFields', []);
     this.set('requiredPublicationLengthFields', []);
     this.set('optionalPublicationSetFields', []);

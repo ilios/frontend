@@ -29,10 +29,7 @@ module('Unit | Model | User', function (hooks) {
     model.set('firstName', 'first');
     model.set('lastName', 'last');
     model.set('middleName', 'middle');
-    assert.equal(
-      model.get('fullNameFromFirstMiddleLastName'),
-      'first middle last'
-    );
+    assert.equal(model.get('fullNameFromFirstMiddleLastName'), 'first middle last');
   });
 
   test('fullNameFromFirstMiddleInitialLastName', function (assert) {
@@ -40,10 +37,7 @@ module('Unit | Model | User', function (hooks) {
     model.set('firstName', 'first');
     model.set('lastName', 'last');
     model.set('middleName', 'middle');
-    assert.equal(
-      model.get('fullNameFromFirstMiddleInitialLastName'),
-      'first m. last'
-    );
+    assert.equal(model.get('fullNameFromFirstMiddleInitialLastName'), 'first m. last');
   });
 
   test('fullNameFromFirstLastName', function (assert) {
@@ -642,9 +636,7 @@ module('Unit | Model | User', function (hooks) {
     const tree = [learnerGroup, learnerGroup2, learnerGroup3];
     model.get('learnerGroups').pushObject(learnerGroup);
 
-    const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(
-      tree
-    );
+    const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
     assert.ok(lowestGroup);
     assert.equal(lowestGroup.get('id'), learnerGroup.get('id'));
@@ -670,9 +662,7 @@ module('Unit | Model | User', function (hooks) {
     const tree = [learnerGroup, learnerGroup2, learnerGroup3];
     model.get('learnerGroups').pushObjects([learnerGroup, learnerGroup2]);
 
-    const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(
-      tree
-    );
+    const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
     assert.ok(lowestGroup);
     assert.equal(lowestGroup.get('id'), learnerGroup2.get('id'));
@@ -697,13 +687,9 @@ module('Unit | Model | User', function (hooks) {
       users: [model],
     });
     const tree = [learnerGroup, learnerGroup2, learnerGroup3];
-    model
-      .get('learnerGroups')
-      .pushObjects([learnerGroup, learnerGroup2, learnerGroup3]);
+    model.get('learnerGroups').pushObjects([learnerGroup, learnerGroup2, learnerGroup3]);
 
-    const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(
-      tree
-    );
+    const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
 
     assert.ok(lowestGroup);
     assert.equal(lowestGroup.get('id'), learnerGroup3.get('id'));
@@ -724,9 +710,7 @@ module('Unit | Model | User', function (hooks) {
     });
     const tree = [learnerGroup, learnerGroup2, learnerGroup3];
 
-    const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(
-      tree
-    );
+    const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
     assert.ok(lowestGroup === null);
   });
 
@@ -744,9 +728,7 @@ module('Unit | Model | User', function (hooks) {
       users: [model],
     });
     model.set('primaryCohort', primaryCohort);
-    model
-      .get('cohorts')
-      .pushObjects([primaryCohort, secondaryCohort, anotherCohort]);
+    model.get('cohorts').pushObjects([primaryCohort, secondaryCohort, anotherCohort]);
 
     const cohorts = await model.get('secondaryCohorts');
     assert.equal(cohorts.length, 2);

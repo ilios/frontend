@@ -4,12 +4,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import moment from 'moment';
-import {
-  validatable,
-  Length,
-  AfterDate,
-  NotBlank,
-} from 'ilios-common/decorators/validation';
+import { validatable, Length, AfterDate, NotBlank } from 'ilios-common/decorators/validation';
 
 @validatable
 export default class LearningMaterialManagerComponent extends Component {
@@ -118,11 +113,7 @@ export default class LearningMaterialManagerComponent extends Component {
    * @public
    */
   get isLinkedOnlyOnce() {
-    return (
-      this.courseLearningMaterialIds.length +
-        this.sessionLearningMaterialIds.length ===
-      1
-    );
+    return this.courseLearningMaterialIds.length + this.sessionLearningMaterialIds.length === 1;
   }
 
   get currentStatus() {
@@ -167,8 +158,7 @@ export default class LearningMaterialManagerComponent extends Component {
   *save() {
     this.addErrorDisplayForAllFields();
     const isTitleValid = yield this.isValid('title');
-    const isEndDateValid =
-      this.startDate && this.endDate ? yield this.isValid('endDate') : true;
+    const isEndDateValid = this.startDate && this.endDate ? yield this.isValid('endDate') : true;
     if (!isTitleValid || !isEndDateValid) {
       return false;
     }

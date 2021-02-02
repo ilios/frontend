@@ -16,16 +16,10 @@ module('Integration | Component | weekly events', function (hooks) {
       @toggleOpenWeek={{noop}}
     />`);
     assert.equal(component.topNavigation.title, '2017');
-    assert.equal(
-      component.topNavigation.previousYear.title,
-      'Go to previous year'
-    );
+    assert.equal(component.topNavigation.previousYear.title, 'Go to previous year');
     assert.equal(component.topNavigation.nextYear.title, 'Go to next year');
     assert.equal(component.bottomNavigation.title, '2017');
-    assert.equal(
-      component.bottomNavigation.previousYear.title,
-      'Go to previous year'
-    );
+    assert.equal(component.bottomNavigation.previousYear.title, 'Go to previous year');
     assert.equal(component.bottomNavigation.nextYear.title, 'Go to next year');
     assert.equal(component.weeks.length, 52);
   });

@@ -34,8 +34,6 @@ export default class SessionPostrequisiteEditorComponent extends Component {
       return this.linkablePostrequisites;
     }
     const exp = new RegExp(escapeRegExp(this.filter), 'gi');
-    return this.linkablePostrequisites.filter((session) =>
-      session.title.match(exp)
-    );
+    return this.linkablePostrequisites.filter((session) => session.title.match(exp));
   }
 }

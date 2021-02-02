@@ -1,14 +1,5 @@
-import {
-  clickable,
-  create,
-  hasClass,
-  isVisible,
-  text,
-} from 'ember-cli-page-object';
-import {
-  pageObjectFillInFroalaEditor,
-  pageObjectFroalaEditorValue,
-} from 'ilios-common';
+import { clickable, create, hasClass, isVisible, text } from 'ember-cli-page-object';
+import { pageObjectFillInFroalaEditor, pageObjectFroalaEditorValue } from 'ilios-common';
 import meshManager from './manage-objective-descriptors';
 import parentManager from './manage-objective-parents';
 import meshDescriptors from './objective-list-item-descriptors';

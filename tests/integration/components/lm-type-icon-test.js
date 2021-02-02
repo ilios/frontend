@@ -51,9 +51,7 @@ module('Integration | Component | lm type icon', function (hooks) {
 
     for (let i = 0; i < fixtures.length; i++) {
       this.set('lm', fixtures[i].lm);
-      await render(
-        hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />`
-      );
+      await render(hbs`<LmTypeIcon @type={{this.lm.type}} @mimetype={{this.lm.mimetype}} />`);
       assert.dom(`.${fixtures[i].icon}`).exists();
     }
   });
@@ -78,9 +76,7 @@ module('Integration | Component | lm type icon', function (hooks) {
       'List icon class is not applied by default.'
     );
 
-    await render(
-      hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{false}} />`
-    );
+    await render(hbs`<LmTypeIcon @type={{this.lm.type}} @listItem={{false}} />`);
     assert.dom('.fa-li').doesNotExist();
   });
 });

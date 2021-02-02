@@ -59,15 +59,9 @@ module('Acceptance | Course - Cohorts', function (hooks) {
     await page.visit({ courseId: 1, details: true });
     await page.cohorts.manage();
     assert.equal(page.cohorts.selected.length, 1);
-    assert.equal(
-      page.cohorts.selected[0].name,
-      'school 0 | program 0 | cohort 0'
-    );
+    assert.equal(page.cohorts.selected[0].name, 'school 0 | program 0 | cohort 0');
     assert.equal(page.cohorts.selectable.length, 1);
-    assert.equal(
-      page.cohorts.selectable[0].name,
-      'school 0 | program 0 | cohort 1'
-    );
+    assert.equal(page.cohorts.selectable[0].name, 'school 0 | program 0 | cohort 1');
   });
 
   test('save cohort changes', async function (assert) {
@@ -107,10 +101,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
       courseObjectiveDetails: true,
     });
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].parents.list.length,
-      2
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.equal(
       page.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0'
@@ -125,10 +116,7 @@ module('Acceptance | Course - Cohorts', function (hooks) {
     await page.cohorts.save();
 
     assert.equal(page.objectives.objectiveList.objectives.length, 1);
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].parents.list.length,
-      1
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 1);
     assert.equal(
       page.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 1'

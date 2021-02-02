@@ -94,13 +94,10 @@ export default Model.extend({
   }),
   primaryCohort: belongsTo('cohort', { async: true, inverse: null }),
   pendingUserUpdates: hasMany('pending-user-update', { async: true }),
-  administeredCurriculumInventoryReports: hasMany(
-    'curriculum-inventory-report',
-    {
-      async: true,
-      inverse: 'administrators',
-    }
-  ),
+  administeredCurriculumInventoryReports: hasMany('curriculum-inventory-report', {
+    async: true,
+    inverse: 'administrators',
+  }),
 
   /**
    * Resolves to TRUE if this user has the "Student" role, otherwise FALSE.
@@ -119,20 +116,13 @@ export default Model.extend({
    * @type {Ember.computed}
    * @public
    */
-  isLearner: computed(
-    'cohorts.[]',
-    'offerings.[]',
-    'learnerIlmSessions.[]',
-    function () {
-      const cohorts = this.hasMany('cohorts').ids();
-      const offerings = this.hasMany('offerings').ids();
-      const learnerIlmSessions = this.hasMany('learnerIlmSessions').ids();
+  isLearner: computed('cohorts.[]', 'offerings.[]', 'learnerIlmSessions.[]', function () {
+    const cohorts = this.hasMany('cohorts').ids();
+    const offerings = this.hasMany('offerings').ids();
+    const learnerIlmSessions = this.hasMany('learnerIlmSessions').ids();
 
-      return (
-        !isEmpty(cohorts) || !isEmpty(offerings) || !isEmpty(learnerIlmSessions)
-      );
-    }
-  ),
+    return !isEmpty(cohorts) || !isEmpty(offerings) || !isEmpty(learnerIlmSessions);
+  }),
 
   /**
    * Checks if a user is linked to any non-student things
@@ -156,9 +146,7 @@ export default Model.extend({
       const directedCourses = this.hasMany('directedCourses').ids();
       const administeredCourses = this.hasMany('administeredCourses').ids();
       const administeredSessions = this.hasMany('administeredSessions').ids();
-      const instructedLearnerGroups = this.hasMany(
-        'instructedLearnerGroups'
-      ).ids();
+      const instructedLearnerGroups = this.hasMany('instructedLearnerGroups').ids();
       const instructorGroups = this.hasMany('instructorGroups').ids();
       const instructedOfferings = this.hasMany('instructedOfferings').ids();
       const directedPrograms = this.hasMany('directedPrograms').ids();
@@ -185,15 +173,9 @@ export default Model.extend({
     }
   ),
 
-  fullName: computed(
-    'fullNameFromFirstMiddleInitialLastName',
-    'displayName',
-    function () {
-      return this.displayName
-        ? this.displayName
-        : this.fullNameFromFirstMiddleInitialLastName;
-    }
-  ),
+  fullName: computed('fullNameFromFirstMiddleInitialLastName', 'displayName', function () {
+    return this.displayName ? this.displayName : this.fullNameFromFirstMiddleInitialLastName;
+  }),
 
   fullNameFromFirstMiddleInitialLastName: computed(
     'firstName',
@@ -214,22 +196,17 @@ export default Model.extend({
     }
   ),
 
-  fullNameFromFirstMiddleLastName: computed(
-    'firstName',
-    'middleName',
-    'lastName',
-    function () {
-      if (!this.firstName || !this.lastName) {
-        return '';
-      }
-
-      if (this.middleName) {
-        return `${this.firstName} ${this.middleName} ${this.lastName}`;
-      } else {
-        return `${this.firstName} ${this.lastName}`;
-      }
+  fullNameFromFirstMiddleLastName: computed('firstName', 'middleName', 'lastName', function () {
+    if (!this.firstName || !this.lastName) {
+      return '';
     }
-  ),
+
+    if (this.middleName) {
+      return `${this.firstName} ${this.middleName} ${this.lastName}`;
+    } else {
+      return `${this.firstName} ${this.lastName}`;
+    }
+  }),
 
   fullNameFromFirstLastName: computed('firstName', 'lastName', function () {
     if (!this.firstName || !this.lastName) {
@@ -252,10 +229,8 @@ export default Model.extend({
       // compare the display name to 'first last', then to 'first middle last' and 'first m. last' as a fallbacks.
       return !(
         displayName === this.fullNameFromFirstLastName.trim().toLowerCase() ||
-        displayName ===
-          this.fullNameFromFirstMiddleLastName.trim().toLowerCase() ||
-        displayName ===
-          this.fullNameFromFirstMiddleInitialLastName.trim().toLowerCase()
+        displayName === this.fullNameFromFirstMiddleLastName.trim().toLowerCase() ||
+        displayName === this.fullNameFromFirstMiddleInitialLastName.trim().toLowerCase()
       );
     }
   ),
@@ -320,12 +295,9 @@ export default Model.extend({
       const instructedOfferings = await this.instructedOfferings;
       const instructorIlmSessions = await this.instructorIlmSessions;
 
-      const instructorGroupSessions = await all(
-        instructorGroups.mapBy('sessions'),
-        (sessions) => {
-          return sessions.toArray();
-        }
-      );
+      const instructorGroupSessions = await all(instructorGroups.mapBy('sessions'), (sessions) => {
+        return sessions.toArray();
+      });
 
       // flatten these lists down to one list of sessions, and de-dupe that list
       const flatInstructorGroupSessions = instructorGroupSessions
@@ -336,12 +308,7 @@ export default Model.extend({
         .uniq();
 
       const sessions = await all(
-        []
-          .concat(
-            instructedOfferings.toArray(),
-            instructorIlmSessions.toArray()
-          )
-          .mapBy('session')
+        [].concat(instructedOfferings.toArray(), instructorIlmSessions.toArray()).mapBy('session')
       );
 
       return A().concat(flatInstructorGroupSessions, sessions).uniq();
@@ -370,12 +337,9 @@ export default Model.extend({
       const allInstructedCourses = await this.allInstructedCourses;
 
       // get lists of courses associated with this user's learner-groups
-      const listsOfCourses = await map(
-        learnerGroups.mapBy('courses'),
-        (courses) => {
-          return courses.toArray();
-        }
-      );
+      const listsOfCourses = await map(learnerGroups.mapBy('courses'), (courses) => {
+        return courses.toArray();
+      });
 
       // get a list of sessions associated with this user's offerings and ILMs
       const offeringsAndIlms = [];

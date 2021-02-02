@@ -31,30 +31,16 @@ module('Integration | Component | detail instructors list', function (hooks) {
       users: [instructor2, instructor3],
     });
 
-    this.instructor1 = await this.owner
-      .lookup('service:store')
-      .find('user', instructor1.id);
-    this.instructor2 = await this.owner
-      .lookup('service:store')
-      .find('user', instructor2.id);
-    this.instructor3 = await this.owner
-      .lookup('service:store')
-      .find('user', instructor3.id);
-    this.group1 = await this.owner
-      .lookup('service:store')
-      .find('instructor-group', group1.id);
-    this.group2 = await this.owner
-      .lookup('service:store')
-      .find('instructor-group', group2.id);
+    this.instructor1 = await this.owner.lookup('service:store').find('user', instructor1.id);
+    this.instructor2 = await this.owner.lookup('service:store').find('user', instructor2.id);
+    this.instructor3 = await this.owner.lookup('service:store').find('user', instructor3.id);
+    this.group1 = await this.owner.lookup('service:store').find('instructor-group', group1.id);
+    this.group2 = await this.owner.lookup('service:store').find('instructor-group', group2.id);
   });
 
   test('it renders', async function (assert) {
     this.set('groups', [this.group1, this.group2]);
-    this.set('instructors', [
-      this.instructor1,
-      this.instructor2,
-      this.instructor3,
-    ]);
+    this.set('instructors', [this.instructor1, this.instructor2, this.instructor3]);
 
     await render(
       hbs`<DetailInstructorsList @instructors={{this.instructors}} @instructorGroups={{this.groups}} />`
@@ -76,37 +62,20 @@ module('Integration | Component | detail instructors list', function (hooks) {
     assert.equal(component.instructorGroups.length, 2);
     assert.equal(component.instructorGroups[0].title, 'Alpha');
     assert.equal(component.instructorGroups[0].members.length, 2);
-    assert.equal(
-      component.instructorGroups[0].members[0].userNameInfo.fullName,
-      'Aardvark'
-    );
-    assert.notOk(
-      component.instructorGroups[0].members[0].userNameInfo.isTooltipVisible
-    );
+    assert.equal(component.instructorGroups[0].members[0].userNameInfo.fullName, 'Aardvark');
+    assert.notOk(component.instructorGroups[0].members[0].userNameInfo.isTooltipVisible);
     await component.instructorGroups[0].members[0].userNameInfo.expandTooltip();
-    assert.ok(
-      component.instructorGroups[0].members[0].userNameInfo.isTooltipVisible
-    );
+    assert.ok(component.instructorGroups[0].members[0].userNameInfo.isTooltipVisible);
     assert.equal(
       component.instructorGroups[0].members[0].userNameInfo.tooltipContents,
       'Campus name of record: 2 guy M, Mc2son'
     );
     await component.instructorGroups[0].members[0].userNameInfo.closeTooltip();
-    assert.equal(
-      component.instructorGroups[0].members[1].userNameInfo.fullName,
-      'Jane A. Doe'
-    );
-    assert.notOk(
-      component.instructorGroups[0].members[1].userNameInfo.isTooltipVisible
-    );
+    assert.equal(component.instructorGroups[0].members[1].userNameInfo.fullName, 'Jane A. Doe');
+    assert.notOk(component.instructorGroups[0].members[1].userNameInfo.isTooltipVisible);
     assert.equal(component.instructorGroups[1].members.length, 1);
-    assert.equal(
-      component.instructorGroups[1].members[0].userNameInfo.fullName,
-      'Joe M. Doe'
-    );
-    assert.notOk(
-      component.instructorGroups[1].members[0].userNameInfo.isTooltipVisible
-    );
+    assert.equal(component.instructorGroups[1].members[0].userNameInfo.fullName, 'Joe M. Doe');
+    assert.notOk(component.instructorGroups[1].members[0].userNameInfo.isTooltipVisible);
     assert.equal(component.instructorGroups[1].title, 'Beta');
   });
 });

@@ -12,9 +12,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
 
   test('it renders and is accessible for draft course', async function (assert) {
     this.server.create('course');
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', 1);
+    const courseModel = await this.owner.lookup('service:store').find('course', 1);
     this.set('course', courseModel);
     await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
 
@@ -42,9 +40,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
       published: true,
       publishedAsTbd: true,
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', 1);
+    const courseModel = await this.owner.lookup('service:store').find('course', 1);
     this.set('course', courseModel);
     await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
 
@@ -60,9 +56,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
       published: true,
       publishedAsTbd: false,
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', 1);
+    const courseModel = await this.owner.lookup('service:store').find('course', 1);
     this.set('course', courseModel);
     await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
 
@@ -75,9 +69,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
 
   test('click opens menu', async function (assert) {
     this.server.create('course');
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', 1);
+    const courseModel = await this.owner.lookup('service:store').find('course', 1);
     this.set('course', courseModel);
     await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
     assert.ok(component.menuClosed);
@@ -87,9 +79,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
 
   test('correct actions for unpublished course', async function (assert) {
     this.server.create('course');
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', 1);
+    const courseModel = await this.owner.lookup('service:store').find('course', 1);
     this.set('course', courseModel);
     await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
     await component.toggle.click();
@@ -106,9 +96,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
     this.server.create('course', {
       cohorts: [cohort],
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', 1);
+    const courseModel = await this.owner.lookup('service:store').find('course', 1);
     this.set('course', courseModel);
     await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
     await component.toggle.click();
@@ -125,9 +113,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
       published: true,
       publishedAsTbd: true,
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', 1);
+    const courseModel = await this.owner.lookup('service:store').find('course', 1);
     this.set('course', courseModel);
     await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
     await component.toggle.click();
@@ -146,9 +132,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
       published: true,
       publishedAsTbd: true,
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', 1);
+    const courseModel = await this.owner.lookup('service:store').find('course', 1);
     this.set('course', courseModel);
     await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
     await component.toggle.click();
@@ -165,9 +149,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
       published: true,
       publishedAsTbd: false,
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', 1);
+    const courseModel = await this.owner.lookup('service:store').find('course', 1);
     this.set('course', courseModel);
     await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
     await component.toggle.click();
@@ -181,9 +163,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
 
   test('down opens menu', async function (assert) {
     this.server.create('course');
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', 1);
+    const courseModel = await this.owner.lookup('service:store').find('course', 1);
     this.set('course', courseModel);
     await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
 
@@ -194,9 +174,7 @@ module('Integration | Component | course/publication-menu', function (hooks) {
 
   test('escape closes menu', async function (assert) {
     this.server.create('course');
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', 1);
+    const courseModel = await this.owner.lookup('service:store').find('course', 1);
     this.set('course', courseModel);
     await render(hbs`<Course::PublicationMenu @course={{this.course}} />`);
 

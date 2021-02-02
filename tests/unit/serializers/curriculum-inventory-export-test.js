@@ -5,17 +5,13 @@ module('Unit | Serializer | curriculum inventory export', function (hooks) {
   setupTest(hooks);
 
   test('it serializes records', function (assert) {
-    const record = this.owner
-      .lookup('service:store')
-      .createRecord('curriculum-inventory-export');
+    const record = this.owner.lookup('service:store').createRecord('curriculum-inventory-export');
     const serializedRecord = record.serialize();
     assert.ok(serializedRecord);
   });
 
   test('it removes all non postable fields', function (assert) {
-    var record = this.owner
-      .lookup('service:store')
-      .createRecord('curriculum-inventory-export');
+    var record = this.owner.lookup('service:store').createRecord('curriculum-inventory-export');
     var store = this.owner.lookup('service:store');
     var now = new Date();
     var doc = 'lorem ipsum';

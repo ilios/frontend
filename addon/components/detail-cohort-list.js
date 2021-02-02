@@ -30,8 +30,6 @@ export default class DetailCohortListComponent extends Component {
       };
     });
 
-    this.sortedCohorts = sortProxies
-      .sortBy('schoolTitle', 'displayTitle')
-      .mapBy('cohort');
+    this.sortedCohorts = sortProxies.sortBy('schoolTitle', 'displayTitle').mapBy('cohort');
   }
 }

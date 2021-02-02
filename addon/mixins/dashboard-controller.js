@@ -37,16 +37,12 @@ export default Mixin.create({
   terms: '',
   view: 'week',
 
-  selectedAcademicYear: computed(
-    'academicYear',
-    'model.academicYears.[]',
-    function () {
-      const academicYear = this.academicYear;
-      const { academicYears } = this.model;
+  selectedAcademicYear: computed('academicYear', 'model.academicYears.[]', function () {
+    const academicYear = this.academicYear;
+    const { academicYears } = this.model;
 
-      return academicYears.findBy('id', academicYear);
-    }
-  ),
+    return academicYears.findBy('id', academicYear);
+  }),
 
   selectedSchool: computed('school', 'model.schools.[]', function () {
     const schoolId = this.school;

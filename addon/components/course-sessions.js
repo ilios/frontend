@@ -76,13 +76,9 @@ export default class CourseSessionsComponent extends Component {
       }
       const offerings = await session.offerings;
       sessionObject.offeringCount = offerings.length;
-      sessionObject.objectiveCount = session
-        .hasMany('sessionObjectives')
-        .ids().length;
+      sessionObject.objectiveCount = session.hasMany('sessionObjectives').ids().length;
       sessionObject.termCount = session.hasMany('terms').ids().length;
-      sessionObject.prerequisiteCount = session
-        .hasMany('prerequisites')
-        .ids().length;
+      sessionObject.prerequisiteCount = session.hasMany('prerequisites').ids().length;
       const offeringLearnerGroupCount = offerings.reduce((total, offering) => {
         const count = offering.hasMany('learnerGroups').ids().length;
 
@@ -93,8 +89,7 @@ export default class CourseSessionsComponent extends Component {
         const learnerGroupIds = ilmSession.hasMany('learnerGroups').ids();
         ilmLearnerGroupCount = learnerGroupIds.length;
       }
-      const learnerGroupCount =
-        offeringLearnerGroupCount + ilmLearnerGroupCount;
+      const learnerGroupCount = offeringLearnerGroupCount + ilmLearnerGroupCount;
       sessionObject.learnerGroupCount = learnerGroupCount;
       let status = this.intl.t('general.notPublished');
       if (session.published) {
@@ -107,9 +102,7 @@ export default class CourseSessionsComponent extends Component {
       }
       sessionObject.status = status.toString();
       sessionObject.searchString =
-        sessionObject.title +
-        sessionObject.sessionTypeTitle +
-        sessionObject.status;
+        sessionObject.title + sessionObject.sessionTypeTitle + sessionObject.status;
 
       return sessionObject;
     });
@@ -141,9 +134,7 @@ export default class CourseSessionsComponent extends Component {
   @task
   *closeSession(session) {
     yield timeout(1);
-    this.expandedSessionIds = this.expandedSessionIds.filter(
-      (id) => id !== session.id
-    );
+    this.expandedSessionIds = this.expandedSessionIds.filter((id) => id !== session.id);
   }
 
   @restartableTask

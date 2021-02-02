@@ -50,17 +50,13 @@ module('Acceptance | Session - Objective Create', function (hooks) {
       'session objective 0'
     );
     assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
-    assert.ok(
-      page.objectives.objectiveList.objectives[0].meshDescriptors.empty
-    );
+    assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
     assert.equal(
       page.objectives.objectiveList.objectives[1].description.text,
       newObjectiveDescription
     );
     assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
-    assert.ok(
-      page.objectives.objectiveList.objectives[0].meshDescriptors.empty
-    );
+    assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
   });
 
   test('cancel new objective', async function (assert) {
@@ -86,9 +82,7 @@ module('Acceptance | Session - Objective Create', function (hooks) {
       'session objective 0'
     );
     assert.ok(page.objectives.objectiveList.objectives[0].parents.empty);
-    assert.ok(
-      page.objectives.objectiveList.objectives[0].meshDescriptors.empty
-    );
+    assert.ok(page.objectives.objectiveList.objectives[0].meshDescriptors.empty);
   });
 
   test('empty objective title can not be created', async function (assert) {
@@ -106,14 +100,9 @@ module('Acceptance | Session - Objective Create', function (hooks) {
     );
     await page.objectives.createNew();
     assert.notOk(page.objectives.newObjective.hasValidationError);
-    await page.objectives.newObjective.description(
-      '<p>&nbsp</p><div></div><span>  </span>'
-    );
+    await page.objectives.newObjective.description('<p>&nbsp</p><div></div><span>  </span>');
     await page.objectives.newObjective.save();
     assert.ok(page.objectives.newObjective.hasValidationError);
-    assert.equal(
-      page.objectives.newObjective.validationError,
-      'This field can not be blank'
-    );
+    assert.equal(page.objectives.newObjective.validationError, 'This field can not be blank');
   });
 });

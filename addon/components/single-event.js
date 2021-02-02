@@ -189,10 +189,7 @@ export default class SingleEvent extends Component {
 
   get postrequisiteLink() {
     if (this.args.event.postrequisites.length) {
-      return this.router.urlFor(
-        'events',
-        this.args.event.postrequisites[0].slug
-      );
+      return this.router.urlFor('events', this.args.event.postrequisites[0].slug);
     }
 
     return '';

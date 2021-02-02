@@ -63,14 +63,11 @@ export default Model.extend({
    * @public
    * @todo change name to just "competencies" [ST 2020/07/08]
    */
-  treeCompetencies: computed(
-    'programYearObjectives.@each.competency',
-    async function () {
-      const programYearObjectives = await this.programYearObjectives;
-      const competencies = await all(programYearObjectives.mapBy('competency'));
-      return competencies.uniq();
-    }
-  ),
+  treeCompetencies: computed('programYearObjectives.@each.competency', async function () {
+    const programYearObjectives = await this.programYearObjectives;
+    const competencies = await all(programYearObjectives.mapBy('competency'));
+    return competencies.uniq();
+  }),
 
   /**
    * Unlink any linked program-year objectives from this course objective

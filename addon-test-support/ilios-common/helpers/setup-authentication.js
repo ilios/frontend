@@ -7,16 +7,14 @@ export default async function (
   userObject = { id: defaultUserId },
   performsNonLearnerFunction = false
 ) {
-  const userId =
-    userObject && 'id' in userObject ? userObject.id : defaultUserId;
+  const userId = userObject && 'id' in userObject ? userObject.id : defaultUserId;
   const jwtObject = {
     user_id: userId,
   };
   if (performsNonLearnerFunction) {
     jwtObject['performs_non_learner_function'] = true;
   }
-  const encodedData =
-    window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
+  const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
   const token = {
     jwt: encodedData,
   };

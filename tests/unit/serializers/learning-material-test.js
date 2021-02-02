@@ -5,9 +5,7 @@ module('Unit | Serializer | learning material', function (hooks) {
   setupTest(hooks);
 
   test('it removes all non postable fields', function (assert) {
-    var record = this.owner
-      .lookup('service:store')
-      .createRecord('learning-material');
+    var record = this.owner.lookup('service:store').createRecord('learning-material');
 
     var serializedRecord = record.serialize();
 
@@ -16,9 +14,7 @@ module('Unit | Serializer | learning material', function (hooks) {
   });
 
   test('no filehash usually', function (assert) {
-    var record = this.owner
-      .lookup('service:store')
-      .createRecord('learning-material');
+    var record = this.owner.lookup('service:store').createRecord('learning-material');
 
     var serializedRecord = record.serialize();
 
@@ -26,9 +22,7 @@ module('Unit | Serializer | learning material', function (hooks) {
   });
 
   test('filehash when it is added', function (assert) {
-    var record = this.owner
-      .lookup('service:store')
-      .createRecord('learning-material');
+    var record = this.owner.lookup('service:store').createRecord('learning-material');
     record.set('fileHash', 'BigPhatBass');
     var serializedRecord = record.serialize();
 

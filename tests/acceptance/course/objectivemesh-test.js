@@ -52,10 +52,7 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
       page.objectives.objectiveList.objectives[1].description.text,
       'course objective 1'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
-      5
-    );
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
     assert.equal(
       page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title,
       'descriptor 1'
@@ -78,8 +75,7 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
     );
 
     await page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
-    const m =
-      page.objectives.objectiveList.objectives[1].meshManager.meshManager;
+    const m = page.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.equal(m.selectedTerms.length, 5);
     assert.equal(m.selectedTerms[0].title, 'descriptor 1');
     assert.equal(m.selectedTerms[1].title, 'descriptor 2');
@@ -126,14 +122,10 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
       page.objectives.objectiveList.objectives[1].description.text,
       'course objective 1'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
-      5
-    );
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
     await page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
 
-    const m =
-      page.objectives.objectiveList.objectives[1].meshManager.meshManager;
+    const m = page.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.equal(m.selectedTerms.length, 5);
     await m.search('descriptor');
     await m.runSearch();
@@ -149,10 +141,7 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
     assert.equal(m.selectedTerms[4].title, 'descriptor 5');
 
     await page.objectives.objectiveList.objectives[1].meshDescriptors.save();
-    assert.equal(
-      page.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
-      5
-    );
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
     assert.equal(
       page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title,
       'descriptor 0'
@@ -188,14 +177,10 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
       page.objectives.objectiveList.objectives[1].description.text,
       'course objective 1'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
-      5
-    );
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
     await page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].manage();
 
-    const m =
-      page.objectives.objectiveList.objectives[1].meshManager.meshManager;
+    const m = page.objectives.objectiveList.objectives[1].meshManager.meshManager;
     assert.equal(m.selectedTerms.length, 5);
     await m.search('descriptor');
     await m.runSearch();
@@ -211,10 +196,7 @@ module('Acceptance | Course - Objective Mesh Descriptors', function (hooks) {
     assert.equal(m.selectedTerms[4].title, 'descriptor 5');
 
     await page.objectives.objectiveList.objectives[1].meshDescriptors.cancel();
-    assert.equal(
-      page.objectives.objectiveList.objectives[1].meshDescriptors.list.length,
-      5
-    );
+    assert.equal(page.objectives.objectiveList.objectives[1].meshDescriptors.list.length, 5);
     assert.equal(
       page.objectives.objectiveList.objectives[1].meshDescriptors.list[0].title,
       'descriptor 1'

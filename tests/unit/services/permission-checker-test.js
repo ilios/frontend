@@ -47,10 +47,7 @@ module('Unit | Service | permission-checker', function (hooks) {
     this.owner.register('service:permissionMatrix', permissionMatrixMock);
 
     const service = this.owner.lookup('service:permission-checker');
-    const canChangeInSchool = await service.canChangeInSchool(
-      school,
-      'GO_FORTH'
-    );
+    const canChangeInSchool = await service.canChangeInSchool(school, 'GO_FORTH');
     assert.ok(canChangeInSchool);
   });
 
@@ -71,10 +68,7 @@ module('Unit | Service | permission-checker', function (hooks) {
 
     this.owner.register('service:apiVersion', apiVersionMock);
     const service = this.owner.lookup('service:permission-checker');
-    const canChangeInSchool = await service.canChangeInSchool(
-      school,
-      'GO_FORTH'
-    );
+    const canChangeInSchool = await service.canChangeInSchool(school, 'GO_FORTH');
     assert.notOk(canChangeInSchool);
   });
 
@@ -96,10 +90,7 @@ module('Unit | Service | permission-checker', function (hooks) {
     this.owner.register('service:currentUser', currentUserMock);
 
     const service = this.owner.lookup('service:permission-checker');
-    const canChangeInSchool = await service.canChangeInSchool(
-      school,
-      'GO_FORTH'
-    );
+    const canChangeInSchool = await service.canChangeInSchool(school, 'GO_FORTH');
     assert.ok(canChangeInSchool);
   });
 });

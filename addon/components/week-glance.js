@@ -22,9 +22,7 @@ export default class WeeklyGlance extends Component {
     thursdayOfTheWeek.isoWeek(week);
     thursdayOfTheWeek.hour(0).minute(0).second(0);
 
-    this.midnightAtTheStartOfThisWeek = thursdayOfTheWeek
-      .clone()
-      .subtract(4, 'days');
+    this.midnightAtTheStartOfThisWeek = thursdayOfTheWeek.clone().subtract(4, 'days');
     this.midnightAtTheEndOfThisWeek = thursdayOfTheWeek
       .clone()
       .add(2, 'days')
@@ -42,19 +40,13 @@ export default class WeeklyGlance extends Component {
   }
 
   get title() {
-    if (
-      !this.midnightAtTheStartOfThisWeek ||
-      !this.midnightAtTheEndOfThisWeek
-    ) {
+    if (!this.midnightAtTheStartOfThisWeek || !this.midnightAtTheEndOfThisWeek) {
       return '';
     }
 
     const from = this.midnightAtTheStartOfThisWeek.format('MMMM D');
     let to;
-    if (
-      this.midnightAtTheStartOfThisWeek.month() !==
-      this.midnightAtTheEndOfThisWeek.month()
-    ) {
+    if (this.midnightAtTheStartOfThisWeek.month() !== this.midnightAtTheEndOfThisWeek.month()) {
       to = this.midnightAtTheEndOfThisWeek.format('MMMM D');
       return `${from} - ${to}`;
     }

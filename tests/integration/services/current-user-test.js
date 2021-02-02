@@ -1,10 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import {
-  authenticateSession,
-  invalidateSession,
-} from 'ember-simple-auth/test-support';
+import { authenticateSession, invalidateSession } from 'ember-simple-auth/test-support';
 
 module('Integration | Service | Current User', function (hooks) {
   setupTest(hooks);
@@ -136,9 +133,7 @@ module('Integration | Service | Current User', function (hooks) {
       return schema.courses.all();
     });
     const subject = this.owner.lookup('service:current-user');
-    const activeRelatedCourses = await subject.get(
-      'activeRelatedCoursesInThisYearAndLastYear'
-    );
+    const activeRelatedCourses = await subject.get('activeRelatedCoursesInThisYearAndLastYear');
     assert.ok(activeRelatedCourses.mapBy('id').includes(courses[0].id));
     assert.ok(activeRelatedCourses.mapBy('id').includes(courses[1].id));
   });

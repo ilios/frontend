@@ -69,9 +69,7 @@ export function validatable(target) {
     removeErrorDisplayFor(field) {
       if (this._evdVisibleErrors.includes(field)) {
         this._evdShowAllErrors = false;
-        this._evdVisibleErrors = this._evdVisibleErrors.filter(
-          (f) => f !== field
-        );
+        this._evdVisibleErrors = this._evdVisibleErrors.filter((f) => f !== field);
       }
     }
   };

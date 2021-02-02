@@ -14,12 +14,10 @@ export default class CoursePublicationCheckComponent extends Component {
     if (!this.objectivesRelationship) {
       return false;
     }
-    const objectivesWithoutParents = this.objectivesRelationship.filter(
-      (objective) => {
-        const parentIds = objective.hasMany('programYearObjectives').ids();
-        return parentIds.length === 0;
-      }
-    );
+    const objectivesWithoutParents = this.objectivesRelationship.filter((objective) => {
+      const parentIds = objective.hasMany('programYearObjectives').ids();
+      return parentIds.length === 0;
+    });
 
     return objectivesWithoutParents.length > 0;
   }

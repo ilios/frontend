@@ -92,56 +92,26 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.ok(blocks[0].hasStartTime);
     assert.ok(blocks[0].hasEndTime);
     assert.notOk(blocks[0].hasMultiDay);
-    assert.equal(
-      blocks[0].dayOfWeek,
-      moment(this.offering1.startDate).format('dddd')
-    );
-    assert.equal(
-      blocks[0].dayOfMonth,
-      moment(this.offering1.startDate).format('MMMM Do')
-    );
-    assert.equal(
-      blocks[0].startTime,
-      'Starts: ' + moment(this.offering1.startDate).format('LT')
-    );
-    assert.equal(
-      blocks[0].endTime,
-      'Ends: ' + moment(this.offering1.endDate).format('LT')
-    );
+    assert.equal(blocks[0].dayOfWeek, moment(this.offering1.startDate).format('dddd'));
+    assert.equal(blocks[0].dayOfMonth, moment(this.offering1.startDate).format('MMMM Do'));
+    assert.equal(blocks[0].startTime, 'Starts: ' + moment(this.offering1.startDate).format('LT'));
+    assert.equal(blocks[0].endTime, 'Ends: ' + moment(this.offering1.endDate).format('LT'));
     assert.equal(blocks[0].offerings.length, 1);
 
     assert.ok(blocks[1].hasStartTime);
     assert.ok(blocks[1].hasEndTime);
     assert.notOk(blocks[1].hasMultiDay);
-    assert.equal(
-      blocks[1].dayOfWeek,
-      moment(this.offering2.startDate).format('dddd')
-    );
-    assert.equal(
-      blocks[1].dayOfMonth,
-      moment(this.offering2.startDate).format('MMMM Do')
-    );
-    assert.equal(
-      blocks[1].startTime,
-      'Starts: ' + moment(this.offering2.startDate).format('LT')
-    );
-    assert.equal(
-      blocks[1].endTime,
-      'Ends: ' + moment(this.offering2.endDate).format('LT')
-    );
+    assert.equal(blocks[1].dayOfWeek, moment(this.offering2.startDate).format('dddd'));
+    assert.equal(blocks[1].dayOfMonth, moment(this.offering2.startDate).format('MMMM Do'));
+    assert.equal(blocks[1].startTime, 'Starts: ' + moment(this.offering2.startDate).format('LT'));
+    assert.equal(blocks[1].endTime, 'Ends: ' + moment(this.offering2.endDate).format('LT'));
     assert.equal(blocks[1].offerings.length, 1);
 
     assert.notOk(blocks[2].hasStartTime);
     assert.notOk(blocks[2].hasEndTime);
     assert.ok(blocks[2].hasMultiDay);
-    assert.equal(
-      blocks[2].dayOfWeek,
-      moment(this.offering3.startDate).format('dddd')
-    );
-    assert.equal(
-      blocks[2].dayOfMonth,
-      moment(this.offering3.startDate).format('MMMM Do')
-    );
+    assert.equal(blocks[2].dayOfWeek, moment(this.offering3.startDate).format('dddd'));
+    assert.equal(blocks[2].dayOfMonth, moment(this.offering3.startDate).format('MMMM Do'));
     const expectedText =
       'Multiday ' +
       'Starts ' +
@@ -157,90 +127,36 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
     const blocks = page.offerings.dateBlocks;
     assert.equal(blocks[0].offerings[0].learnerGroups.length, 2);
-    assert.equal(
-      blocks[0].offerings[0].learnerGroups[0].title,
-      'learner group 0'
-    );
-    assert.equal(
-      blocks[0].offerings[0].learnerGroups[1].title,
-      'learner group 1'
-    );
+    assert.equal(blocks[0].offerings[0].learnerGroups[0].title, 'learner group 0');
+    assert.equal(blocks[0].offerings[0].learnerGroups[1].title, 'learner group 1');
     assert.equal(blocks[0].offerings[0].location, this.offering1.room);
     assert.equal(blocks[0].offerings[0].url, this.offering1.url);
     assert.equal(blocks[0].offerings[0].instructors.length, 8);
-    assert.equal(
-      blocks[0].offerings[0].instructors[0].userNameInfo.fullName,
-      '1 guy M. Mc1son'
-    );
-    assert.equal(
-      blocks[0].offerings[0].instructors[1].userNameInfo.fullName,
-      '2 guy M. Mc2son'
-    );
-    assert.equal(
-      blocks[0].offerings[0].instructors[2].userNameInfo.fullName,
-      '3 guy M. Mc3son'
-    );
-    assert.equal(
-      blocks[0].offerings[0].instructors[3].userNameInfo.fullName,
-      '4 guy M. Mc4son'
-    );
-    assert.equal(
-      blocks[0].offerings[0].instructors[4].userNameInfo.fullName,
-      '5 guy M. Mc5son'
-    );
-    assert.equal(
-      blocks[0].offerings[0].instructors[5].userNameInfo.fullName,
-      '6 guy M. Mc6son'
-    );
-    assert.equal(
-      blocks[0].offerings[0].instructors[6].userNameInfo.fullName,
-      '7 guy M. Mc7son'
-    );
-    assert.equal(
-      blocks[0].offerings[0].instructors[7].userNameInfo.fullName,
-      '8 guy M. Mc8son'
-    );
+    assert.equal(blocks[0].offerings[0].instructors[0].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.equal(blocks[0].offerings[0].instructors[1].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.equal(blocks[0].offerings[0].instructors[2].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.equal(blocks[0].offerings[0].instructors[3].userNameInfo.fullName, '4 guy M. Mc4son');
+    assert.equal(blocks[0].offerings[0].instructors[4].userNameInfo.fullName, '5 guy M. Mc5son');
+    assert.equal(blocks[0].offerings[0].instructors[5].userNameInfo.fullName, '6 guy M. Mc6son');
+    assert.equal(blocks[0].offerings[0].instructors[6].userNameInfo.fullName, '7 guy M. Mc7son');
+    assert.equal(blocks[0].offerings[0].instructors[7].userNameInfo.fullName, '8 guy M. Mc8son');
 
     assert.equal(blocks[1].offerings[0].learnerGroups.length, 1);
-    assert.equal(
-      blocks[1].offerings[0].learnerGroups[0].title,
-      'learner group 1'
-    );
+    assert.equal(blocks[1].offerings[0].learnerGroups[0].title, 'learner group 1');
     assert.equal(blocks[1].offerings[0].location, this.offering2.room);
     assert.equal(blocks[1].offerings[0].instructors.length, 4);
-    assert.equal(
-      blocks[1].offerings[0].instructors[0].userNameInfo.fullName,
-      '3 guy M. Mc3son'
-    );
-    assert.equal(
-      blocks[1].offerings[0].instructors[1].userNameInfo.fullName,
-      '4 guy M. Mc4son'
-    );
-    assert.equal(
-      blocks[1].offerings[0].instructors[2].userNameInfo.fullName,
-      '7 guy M. Mc7son'
-    );
-    assert.equal(
-      blocks[1].offerings[0].instructors[3].userNameInfo.fullName,
-      '8 guy M. Mc8son'
-    );
+    assert.equal(blocks[1].offerings[0].instructors[0].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.equal(blocks[1].offerings[0].instructors[1].userNameInfo.fullName, '4 guy M. Mc4son');
+    assert.equal(blocks[1].offerings[0].instructors[2].userNameInfo.fullName, '7 guy M. Mc7son');
+    assert.equal(blocks[1].offerings[0].instructors[3].userNameInfo.fullName, '8 guy M. Mc8son');
 
     assert.equal(blocks[2].offerings[0].learnerGroups.length, 1);
-    assert.equal(
-      blocks[2].offerings[0].learnerGroups[0].title,
-      'learner group 1'
-    );
+    assert.equal(blocks[2].offerings[0].learnerGroups[0].title, 'learner group 1');
     assert.equal(blocks[2].offerings[0].location, this.offering3.room);
     assert.equal(blocks[2].offerings[0].url, this.offering3.url);
     assert.equal(blocks[2].offerings[0].instructors.length, 2);
-    assert.equal(
-      blocks[2].offerings[0].instructors[0].userNameInfo.fullName,
-      '3 guy M. Mc3son'
-    );
-    assert.equal(
-      blocks[2].offerings[0].instructors[1].userNameInfo.fullName,
-      '4 guy M. Mc4son'
-    );
+    assert.equal(blocks[2].offerings[0].instructors[0].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.equal(blocks[2].offerings[0].instructors[1].userNameInfo.fullName, '4 guy M. Mc4son');
   });
 
   test('confirm removal message', async function (assert) {
@@ -311,10 +227,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.equal(block.offerings[0].learnerGroups[1].title, 'learner group 1');
     assert.equal(block.offerings[0].location, 'Rm. 111');
     assert.equal(block.offerings[0].instructors.length, 1);
-    assert.equal(
-      block.offerings[0].instructors[0].userNameInfo.fullName,
-      '0 guy M. Mc0son'
-    );
+    assert.equal(block.offerings[0].instructors[0].userNameInfo.fullName, '0 guy M. Mc0son');
   });
 
   test('users can create a new offering multi-day', async function (assert) {
@@ -357,10 +270,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.equal(block.offerings[0].learnerGroups[1].title, 'learner group 1');
     assert.equal(block.offerings[0].location, 'Rm. 111');
     assert.equal(block.offerings[0].instructors.length, 1);
-    assert.equal(
-      block.offerings[0].instructors[0].userNameInfo.fullName,
-      '0 guy M. Mc0son'
-    );
+    assert.equal(block.offerings[0].instructors[0].userNameInfo.fullName, '0 guy M. Mc0son');
   });
 
   test('users can create a new small group offering', async function (assert) {
@@ -396,31 +306,16 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.equal(block.offerings[0].learnerGroups.length, 1);
     assert.equal(block.offerings[0].learnerGroups[0].title, 'learner group 0');
     assert.equal(block.offerings[0].instructors.length, 1);
-    assert.equal(
-      block.offerings[0].instructors[0].userNameInfo.fullName,
-      '0 guy M. Mc0son'
-    );
+    assert.equal(block.offerings[0].instructors[0].userNameInfo.fullName, '0 guy M. Mc0son');
     assert.equal(block.offerings[0].url, 'https://iliosproject.org/');
 
     assert.equal(block.offerings[1].learnerGroups.length, 1);
     assert.equal(block.offerings[1].learnerGroups[0].title, 'learner group 1');
     assert.equal(block.offerings[1].instructors.length, 4);
-    assert.equal(
-      block.offerings[1].instructors[0].userNameInfo.fullName,
-      '1 guy M. Mc1son'
-    );
-    assert.equal(
-      block.offerings[1].instructors[1].userNameInfo.fullName,
-      '2 guy M. Mc2son'
-    );
-    assert.equal(
-      block.offerings[1].instructors[2].userNameInfo.fullName,
-      '5 guy M. Mc5son'
-    );
-    assert.equal(
-      block.offerings[1].instructors[3].userNameInfo.fullName,
-      '6 guy M. Mc6son'
-    );
+    assert.equal(block.offerings[1].instructors[0].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.equal(block.offerings[1].instructors[1].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.equal(block.offerings[1].instructors[2].userNameInfo.fullName, '5 guy M. Mc5son');
+    assert.equal(block.offerings[1].instructors[3].userNameInfo.fullName, '6 guy M. Mc6son');
     assert.notOk(block.offerings[1].hasUrl);
   });
 
@@ -464,26 +359,11 @@ module('Acceptance | Session - Offerings', function (hooks) {
     assert.equal(offering.learnerGroups.length, 1);
     assert.equal(offering.learnerGroups[0].title, 'learner group 1');
     assert.equal(offering.instructors.length, 5);
-    assert.equal(
-      offering.instructors[0].userNameInfo.fullName,
-      '3 guy M. Mc3son'
-    );
-    assert.equal(
-      offering.instructors[1].userNameInfo.fullName,
-      '4 guy M. Mc4son'
-    );
-    assert.equal(
-      offering.instructors[2].userNameInfo.fullName,
-      '6 guy M. Mc6son'
-    );
-    assert.equal(
-      offering.instructors[3].userNameInfo.fullName,
-      '7 guy M. Mc7son'
-    );
-    assert.equal(
-      offering.instructors[4].userNameInfo.fullName,
-      '8 guy M. Mc8son'
-    );
+    assert.equal(offering.instructors[0].userNameInfo.fullName, '3 guy M. Mc3son');
+    assert.equal(offering.instructors[1].userNameInfo.fullName, '4 guy M. Mc4son');
+    assert.equal(offering.instructors[2].userNameInfo.fullName, '6 guy M. Mc6son');
+    assert.equal(offering.instructors[3].userNameInfo.fullName, '7 guy M. Mc7son');
+    assert.equal(offering.instructors[4].userNameInfo.fullName, '8 guy M. Mc8son');
     assert.equal(offering.location, 'Rm. 111');
     assert.equal(offering.url, 'https://example.org/');
   });
@@ -527,39 +407,18 @@ module('Acceptance | Session - Offerings', function (hooks) {
       assert.equal(block.endTime, 'Ends: 3:23 PM');
       assert.equal(block.offerings.length, 2);
       assert.equal(block.offerings[0].learnerGroups.length, 1);
-      assert.equal(
-        block.offerings[0].learnerGroups[0].title,
-        'learner group 0'
-      );
+      assert.equal(block.offerings[0].learnerGroups[0].title, 'learner group 0');
 
       assert.equal(block.offerings[0].instructors.length, 1);
-      assert.equal(
-        block.offerings[0].instructors[0].userNameInfo.fullName,
-        '0 guy M. Mc0son'
-      );
+      assert.equal(block.offerings[0].instructors[0].userNameInfo.fullName, '0 guy M. Mc0son');
 
       assert.equal(block.offerings[1].learnerGroups.length, 1);
-      assert.equal(
-        block.offerings[1].learnerGroups[0].title,
-        'learner group 1'
-      );
+      assert.equal(block.offerings[1].learnerGroups[0].title, 'learner group 1');
       assert.equal(block.offerings[1].instructors.length, 4);
-      assert.equal(
-        block.offerings[1].instructors[0].userNameInfo.fullName,
-        '1 guy M. Mc1son'
-      );
-      assert.equal(
-        block.offerings[1].instructors[1].userNameInfo.fullName,
-        '2 guy M. Mc2son'
-      );
-      assert.equal(
-        block.offerings[1].instructors[2].userNameInfo.fullName,
-        '5 guy M. Mc5son'
-      );
-      assert.equal(
-        block.offerings[1].instructors[3].userNameInfo.fullName,
-        '6 guy M. Mc6son'
-      );
+      assert.equal(block.offerings[1].instructors[0].userNameInfo.fullName, '1 guy M. Mc1son');
+      assert.equal(block.offerings[1].instructors[1].userNameInfo.fullName, '2 guy M. Mc2son');
+      assert.equal(block.offerings[1].instructors[2].userNameInfo.fullName, '5 guy M. Mc5son');
+      assert.equal(block.offerings[1].instructors[3].userNameInfo.fullName, '6 guy M. Mc6son');
     }
   });
 
@@ -606,14 +465,8 @@ module('Acceptance | Session - Offerings', function (hooks) {
       assert.equal(block.offerings[0].learnerGroups.length, 2);
       assert.equal(block.offerings[0].location, 'Scottsdale Stadium');
       assert.equal(block.offerings[0].url, 'https://zoom.example.edu/');
-      assert.equal(
-        block.offerings[0].learnerGroups[0].title,
-        'learner group 0'
-      );
-      assert.equal(
-        block.offerings[0].learnerGroups[1].title,
-        'learner group 1'
-      );
+      assert.equal(block.offerings[0].learnerGroups[0].title, 'learner group 0');
+      assert.equal(block.offerings[0].learnerGroups[1].title, 'learner group 1');
 
       assert.equal(block.offerings[0].instructors.length, 0);
     }

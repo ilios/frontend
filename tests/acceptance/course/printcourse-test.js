@@ -45,8 +45,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
       statusId: 1,
       userRoleId: 1,
       copyrightPermission: true,
-      citation:
-        'Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955',
+      citation: 'Lathrop, Emmett, Flux Capacitor, Journal of Time Travel, 5 Nov 1955',
       description:
         'The flux capacitor requires 1.21 gigawatts of electrical power to operate, which is roughly equivalent to the power produced by 15 regular jet engines.',
     });
@@ -80,9 +79,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
     await setupAuthentication({ school: this.school });
     await visit('/course/1/print');
 
-    const values = await findAll(
-      '[data-test-course-learningmaterials] .content tbody tr td'
-    );
+    const values = await findAll('[data-test-course-learningmaterials] .content tbody tr td');
     assert.dom(values[0]).hasText('Save the Clock Tower');
     assert.dom(values[1]).hasText('file');
     assert.dom(values[2]).hasText('No');
@@ -211,9 +208,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
 
     await visit('/course/1/print');
 
-    const labels = await findAll(
-      '[data-test-session-objectives] [data-test-header]'
-    );
+    const labels = await findAll('[data-test-session-objectives] [data-test-header]');
     const values = await findAll(
       '[data-test-session-objectives] [data-test-session-objective-list-item] .grid-item'
     );
@@ -263,9 +258,7 @@ module('Acceptance | Course - Print Course', function (hooks) {
 
     await visit('/course/1/print');
 
-    const labels = await findAll(
-      '[data-test-course-objectives] [data-test-header]'
-    );
+    const labels = await findAll('[data-test-course-objectives] [data-test-header]');
     const values = await findAll(
       '[data-test-course-objectives] [data-test-course-objective-list-item] .grid-item'
     );

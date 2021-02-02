@@ -3,11 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask, restartableTask } from 'ember-concurrency-decorators';
-import {
-  validatable,
-  Length,
-  NotBlank,
-} from 'ilios-common/decorators/validation';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { timeout } from 'ember-concurrency';
 import moment from 'moment';
 
@@ -92,10 +88,7 @@ export default class CourseRolloverComponent extends Component {
       data.newCohorts = selectedCohortIds;
     }
 
-    const newCoursesObj = yield this.fetch.postToApi(
-      `courses/${courseId}/rollover`,
-      data
-    );
+    const newCoursesObj = yield this.fetch.postToApi(`courses/${courseId}/rollover`, data);
 
     this.flashMessages.success('general.courseRolloverSuccess');
     this.store.pushPayload(newCoursesObj);
@@ -108,10 +101,7 @@ export default class CourseRolloverComponent extends Component {
     if (!this.allCourses) {
       return [];
     }
-    const existingCoursesWithTitle = this.allCourses.filterBy(
-      'title',
-      this.title
-    );
+    const existingCoursesWithTitle = this.allCourses.filterBy('title', this.title);
     return existingCoursesWithTitle.mapBy('year');
   }
 

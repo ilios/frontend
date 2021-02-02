@@ -25,11 +25,7 @@ export default class IliosCalendarMonthComponent extends Component {
 
   @action
   changeToDayView(date) {
-    if (
-      this.args.areDaysSelectable &&
-      this.args.changeDate &&
-      this.args.changeView
-    ) {
+    if (this.args.areDaysSelectable && this.args.changeDate && this.args.changeView) {
       this.args.changeDate(date);
       this.args.changeView('day');
     }

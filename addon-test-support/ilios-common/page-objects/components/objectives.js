@@ -1,14 +1,5 @@
-import {
-  clickable,
-  collection,
-  isVisible,
-  property,
-  text,
-} from 'ember-cli-page-object';
-import {
-  pageObjectFillInFroalaEditor,
-  pageObjectFroalaEditorValue,
-} from 'ilios-common';
+import { clickable, collection, isVisible, property, text } from 'ember-cli-page-object';
+import { pageObjectFillInFroalaEditor, pageObjectFroalaEditorValue } from 'ilios-common';
 import meshManager from './mesh-manager';
 
 export default {

@@ -21,26 +21,14 @@ module('Integration | Component | detail learner list', function (hooks) {
       middleName: 'Anette',
     });
     const learner3 = this.server.create('user', { displayName: 'Aardvark' });
-    this.learnerModel1 = await this.owner
-      .lookup('service:store')
-      .find('user', learner1.id);
-    this.learnerModel2 = await this.owner
-      .lookup('service:store')
-      .find('user', learner2.id);
-    this.learnerModel3 = await this.owner
-      .lookup('service:store')
-      .find('user', learner3.id);
+    this.learnerModel1 = await this.owner.lookup('service:store').find('user', learner1.id);
+    this.learnerModel2 = await this.owner.lookup('service:store').find('user', learner2.id);
+    this.learnerModel3 = await this.owner.lookup('service:store').find('user', learner3.id);
   });
 
   test('it renders', async function (assert) {
-    this.set('learners', [
-      this.learnerModel1,
-      this.learnerModel2,
-      this.learnerModel3,
-    ]);
-    await render(
-      hbs`<DetailLearnerList @learners={{this.learners}} @isManaging={{false}} />`
-    );
+    this.set('learners', [this.learnerModel1, this.learnerModel2, this.learnerModel3]);
+    await render(hbs`<DetailLearnerList @learners={{this.learners}} @isManaging={{false}} />`);
     assert.equal(component.learners.length, 3);
     assert.equal(component.learners[0].userNameInfo.fullName, 'Aardvark');
     assert.notOk(component.learners[0].isRemovable);
@@ -59,11 +47,7 @@ module('Integration | Component | detail learner list', function (hooks) {
   });
 
   test('it renders in managing mode', async function (assert) {
-    this.set('learners', [
-      this.learnerModel1,
-      this.learnerModel2,
-      this.learnerModel3,
-    ]);
+    this.set('learners', [this.learnerModel1, this.learnerModel2, this.learnerModel3]);
     await render(
       hbs`<DetailLearnerList @learners={{this.learners}} @isManaging={{true}} @remove={{noop}} />`
     );

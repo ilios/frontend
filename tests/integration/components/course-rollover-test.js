@@ -3,14 +3,7 @@ import { resolve } from 'rsvp';
 import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  click,
-  find,
-  findAll,
-  fillIn,
-  blur as emberBlur,
-} from '@ember/test-helpers';
+import { render, click, find, findAll, fillIn, blur as emberBlur } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -26,9 +19,7 @@ module('Integration | Component | course rollover', function (hooks) {
       title: 'old course',
       school,
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<CourseRollover @course={{this.course}} />`);
@@ -54,30 +45,25 @@ module('Integration | Component | course rollover', function (hooks) {
       school,
       startDate: moment().hour(0).minute(0).second(0).toDate(),
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
 
-    this.server.post(
-      `/api/courses/${course.id}/rollover`,
-      function (schema, request) {
-        const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));
-        const data = queryString.parse(request.requestBody);
-        assert.ok('year' in data);
-        assert.equal(data.year, lastYear);
-        assert.equal(data.newCourseTitle, course.title);
-        assert.ok('newStartDate' in data);
-        return this.serialize(
-          schema.courses.create({
-            id: 14,
-            title: data.newCourseTitle,
-            startDate: data.newStartDate,
-            year: data.year,
-          })
-        );
-      }
-    );
+    this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
+      const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));
+      const data = queryString.parse(request.requestBody);
+      assert.ok('year' in data);
+      assert.equal(data.year, lastYear);
+      assert.equal(data.newCourseTitle, course.title);
+      assert.ok('newStartDate' in data);
+      return this.serialize(
+        schema.courses.create({
+          id: 14,
+          title: data.newCourseTitle,
+          startDate: data.newStartDate,
+          year: data.year,
+        })
+      );
+    });
     this.set('visit', (newCourse) => {
       assert.equal(newCourse.id, 14);
     });
@@ -96,30 +82,21 @@ module('Integration | Component | course rollover', function (hooks) {
       school,
       startDate: moment().hour(0).minute(0).second(0).toDate(),
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
 
     const newTitle = course.title + '2';
 
-    this.server.post(
-      `/api/courses/${course.id}/rollover`,
-      function (schema, request) {
-        const data = queryString.parse(request.requestBody);
-        assert.equal(
-          data.newCourseTitle,
-          newTitle,
-          'The new title gets passed.'
-        );
+    this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
+      const data = queryString.parse(request.requestBody);
+      assert.equal(data.newCourseTitle, newTitle, 'The new title gets passed.');
 
-        return this.serialize(
-          schema.courses.create({
-            id: 14,
-          })
-        );
-      }
-    );
+      return this.serialize(
+        schema.courses.create({
+          id: 14,
+        })
+      );
+    });
     await render(hbs`<CourseRollover
       @course={{this.course}}
       @visit={{noop}}
@@ -138,29 +115,24 @@ module('Integration | Component | course rollover', function (hooks) {
       school,
       startDate: moment().hour(0).minute(0).second(0).toDate(),
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
     const selectedYear = parseInt(moment().add(2, 'years').format('YYYY'), 10);
-    this.server.post(
-      `/api/courses/${course.id}/rollover`,
-      function (schema, request) {
-        const data = queryString.parse(request.requestBody);
-        assert.ok('year' in data);
-        assert.equal(data.year, selectedYear);
-        assert.equal(data.newCourseTitle, course.title);
-        assert.ok('newStartDate' in data);
-        return this.serialize(
-          schema.courses.create({
-            id: 14,
-            title: data.newCourseTitle,
-            startDate: data.newStartDate,
-            year: data.year,
-          })
-        );
-      }
-    );
+    this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
+      const data = queryString.parse(request.requestBody);
+      assert.ok('year' in data);
+      assert.equal(data.year, selectedYear);
+      assert.equal(data.newCourseTitle, course.title);
+      assert.ok('newStartDate' in data);
+      return this.serialize(
+        schema.courses.create({
+          id: 14,
+          title: data.newCourseTitle,
+          startDate: data.newStartDate,
+          year: data.year,
+        })
+      );
+    });
     this.set('visit', (newCourse) => {
       assert.equal(newCourse.id, 14);
     });
@@ -195,9 +167,7 @@ module('Integration | Component | course rollover', function (hooks) {
       year: lastYear + 2,
     });
 
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<CourseRollover
       @course={{this.course}}
@@ -221,9 +191,7 @@ module('Integration | Component | course rollover', function (hooks) {
       school,
       year: thisYear,
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', 2);
+    const courseModel = await this.owner.lookup('service:store').find('course', 2);
     this.set('course', courseModel);
     await render(hbs`<CourseRollover
       @course={{this.course}}
@@ -252,29 +220,24 @@ module('Integration | Component | course rollover', function (hooks) {
       school,
       startDate: courseStartDate.toDate(),
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
 
-    this.server.post(
-      `/api/courses/${course.id}/rollover`,
-      function (schema, request) {
-        const data = queryString.parse(request.requestBody);
-        assert.ok('newStartDate' in data, 'A new start date was passed.');
-        const newStartDate = moment(data.newStartDate);
-        assert.equal(
-          newStartDate.format('YYYY-MM-DD'),
-          rolloverDate.format('YYYY-MM-DD'),
-          'New start date is rollover date.'
-        );
-        return this.serialize(
-          schema.courses.create({
-            id: 14,
-          })
-        );
-      }
-    );
+    this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
+      const data = queryString.parse(request.requestBody);
+      assert.ok('newStartDate' in data, 'A new start date was passed.');
+      const newStartDate = moment(data.newStartDate);
+      assert.equal(
+        newStartDate.format('YYYY-MM-DD'),
+        rolloverDate.format('YYYY-MM-DD'),
+        'New start date is rollover date.'
+      );
+      return this.serialize(
+        schema.courses.create({
+          id: 14,
+        })
+      );
+    });
     await render(hbs`<CourseRollover
       @course={{this.course}}
       @visit={{noop}}
@@ -331,29 +294,24 @@ module('Integration | Component | course rollover', function (hooks) {
       school,
       startDate: courseStartDate.toDate(),
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
 
-    this.server.post(
-      `/api/courses/${course.id}/rollover`,
-      function (schema, request) {
-        const data = queryString.parse(request.requestBody);
-        assert.ok('newStartDate' in data, 'A new start date was passed.');
-        const newStartDate = moment(data.newStartDate);
-        assert.equal(
-          newStartDate.format('YYYY-MM-DD'),
-          courseStartDate.format('YYYY-MM-DD'),
-          'New start date is course start date.'
-        );
-        return this.serialize(
-          schema.courses.create({
-            id: 14,
-          })
-        );
-      }
-    );
+    this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
+      const data = queryString.parse(request.requestBody);
+      assert.ok('newStartDate' in data, 'A new start date was passed.');
+      const newStartDate = moment(data.newStartDate);
+      assert.equal(
+        newStartDate.format('YYYY-MM-DD'),
+        courseStartDate.format('YYYY-MM-DD'),
+        'New start date is course start date.'
+      );
+      return this.serialize(
+        schema.courses.create({
+          id: 14,
+        })
+      );
+    });
 
     await render(hbs`<CourseRollover
       @course={{this.course}}
@@ -389,11 +347,7 @@ module('Integration | Component | course rollover', function (hooks) {
   test('rollover start date adjustment with former year course start date', async function (assert) {
     assert.expect(2);
 
-    const courseStartDate = moment('2019-01-15')
-      .hour(0)
-      .minute(0)
-      .subtract(2, 'year')
-      .day(1);
+    const courseStartDate = moment('2019-01-15').hour(0).minute(0).subtract(2, 'year').day(1);
     const rolloverDate = moment()
       .hour(0)
       .minute(0)
@@ -406,9 +360,7 @@ module('Integration | Component | course rollover', function (hooks) {
       school,
       startDate: courseStartDate.toDate(),
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
     await render(hbs`<CourseRollover
       @course={{this.course}}
@@ -445,21 +397,18 @@ module('Integration | Component | course rollover', function (hooks) {
       school,
     });
     const course = await this.owner.lookup('service:store').find('course', 1);
-    this.server.post(
-      `/api/courses/${course.id}/rollover`,
-      function (schema, request) {
-        const data = queryString.parse(request.requestBody, {
-          parseBooleans: true,
-        });
-        assert.ok('skipOfferings' in data);
-        assert.equal(data.skipOfferings, true);
-        return this.serialize(
-          schema.courses.create({
-            id: 14,
-          })
-        );
-      }
-    );
+    this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
+      const data = queryString.parse(request.requestBody, {
+        parseBooleans: true,
+      });
+      assert.ok('skipOfferings' in data);
+      assert.equal(data.skipOfferings, true);
+      return this.serialize(
+        schema.courses.create({
+          id: 14,
+        })
+      );
+    });
 
     this.set('course', course);
     await render(hbs`<CourseRollover
@@ -480,9 +429,7 @@ module('Integration | Component | course rollover', function (hooks) {
     const course = this.server.create('course', {
       school,
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<CourseRollover @course={{this.course}} />`);
@@ -494,9 +441,7 @@ module('Integration | Component | course rollover', function (hooks) {
     const course = this.server.create('course', {
       school,
     });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
 
     await render(hbs`<CourseRollover @course={{this.course}} />`);
@@ -531,21 +476,18 @@ module('Integration | Component | course rollover', function (hooks) {
       school,
     });
     const course = await this.owner.lookup('service:store').find('course', 1);
-    this.server.post(
-      `/api/courses/${course.id}/rollover`,
-      function (schema, request) {
-        const data = queryString.parse(request.requestBody, {
-          arrayFormat: 'bracket',
-        });
-        assert.ok('newCohorts' in data);
-        assert.deepEqual(data.newCohorts, ['1']);
-        return this.serialize(
-          schema.courses.create({
-            id: 14,
-          })
-        );
-      }
-    );
+    this.server.post(`/api/courses/${course.id}/rollover`, function (schema, request) {
+      const data = queryString.parse(request.requestBody, {
+        arrayFormat: 'bracket',
+      });
+      assert.ok('newCohorts' in data);
+      assert.deepEqual(data.newCohorts, ['1']);
+      return this.serialize(
+        schema.courses.create({
+          id: 14,
+        })
+      );
+    });
 
     const mockCurrentUser = EmberObject.create({});
 

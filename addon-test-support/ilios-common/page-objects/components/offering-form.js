@@ -105,16 +105,13 @@ const definition = {
       userNameInfo,
       remove: clickable('.remove'),
     }),
-    selectedInstructorGroups: collection(
-      '[data-test-selected-instructor-group]',
-      {
-        title: text('[data-test-instructor-group-title]'),
-        members: collection('[data-test-instructor-group-member]', {
-          userNameInfo,
-        }),
-        remove: clickable('[data-test-instructor-group-title]'),
-      }
-    ),
+    selectedInstructorGroups: collection('[data-test-selected-instructor-group]', {
+      title: text('[data-test-instructor-group-title]'),
+      members: collection('[data-test-instructor-group-member]', {
+        userNameInfo,
+      }),
+      remove: clickable('[data-test-instructor-group-title]'),
+    }),
     search: fillable('.search-box input'),
     searchResults: collection('.results [data-test-result]', {
       add: clickable(),
@@ -145,10 +142,7 @@ const definition = {
       runSearch: clickable('[data-test-search-box] .search-icon'),
       cohorts: collection('[data-test-cohorts]', {
         title: text('[data-test-title]', { at: 0 }),
-        trees: collection(
-          '[data-test-learnergroup-tree-root=true]',
-          learnergroupTree
-        ),
+        trees: collection('[data-test-learnergroup-tree-root=true]', learnergroupTree),
       }),
     },
     hasError: isPresent('.validation-error-message'),

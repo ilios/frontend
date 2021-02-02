@@ -55,10 +55,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.ok(page.overview.ilmHours.isVisible);
     assert.ok(page.overview.ilmDueDate.isVisible);
     assert.equal(page.overview.ilmHours.value, ilmSession.hours);
-    assert.equal(
-      page.overview.ilmDueDate.value,
-      moment(ilmSession.dueDate).format('M/D/YYYY')
-    );
+    assert.equal(page.overview.ilmDueDate.value, moment(ilmSession.dueDate).format('M/D/YYYY'));
 
     await page.overview.toggleIlm();
 
@@ -136,10 +133,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.overview.ilmDueDate.edit();
     await page.overview.ilmDueDate.set(newDate.toDate());
     await page.overview.ilmDueDate.save();
-    assert.equal(
-      page.overview.ilmDueDate.value,
-      newDate.toDate().toLocaleDateString('en')
-    );
+    assert.equal(page.overview.ilmDueDate.value, newDate.toDate().toLocaleDateString('en'));
   });
 
   test('change title', async function (assert) {
@@ -174,10 +168,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.equal(currentRouteName(), 'session.index');
-    assert.equal(
-      page.overview.lastUpdated,
-      'Last Update Last Update: 07/09/2019 5:00 PM'
-    );
+    assert.equal(page.overview.lastUpdated, 'Last Update Last Update: 07/09/2019 5:00 PM');
   });
 
   test('change type', async function (assert) {
@@ -429,9 +420,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.equal(currentRouteName(), 'session.index');
     assert.equal(page.overview.sessionDescription.value, 'Click to edit');
     await page.overview.sessionDescription.edit();
-    await page.overview.sessionDescription.set(
-      '<p>&nbsp</p><div></div><span>  </span>'
-    );
+    await page.overview.sessionDescription.set('<p>&nbsp</p><div></div><span>  </span>');
     await page.overview.sessionDescription.save();
     assert.equal(page.overview.sessionDescription.value, 'Click to edit');
   });
@@ -449,9 +438,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.equal(currentRouteName(), 'session.index');
     assert.equal(page.overview.sessionDescription.value, session.description);
     await page.overview.sessionDescription.edit();
-    await page.overview.sessionDescription.set(
-      '<p>&nbsp</p><div></div><span>  </span>'
-    );
+    await page.overview.sessionDescription.set('<p>&nbsp</p><div></div><span>  </span>');
     await page.overview.sessionDescription.save();
     assert.equal(page.overview.sessionDescription.value, 'Click to edit');
   });
@@ -470,9 +457,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.equal(currentRouteName(), 'session.index');
     assert.equal(page.overview.sessionDescription.value, 'Click to edit');
     await page.overview.sessionDescription.edit();
-    await page.overview.sessionDescription.set(
-      'something useless this way types'
-    );
+    await page.overview.sessionDescription.set('something useless this way types');
     await page.overview.sessionDescription.cancel();
     assert.equal(page.overview.sessionDescription.value, 'Click to edit');
   });
@@ -553,10 +538,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.overview.instructionalNotes.set(newInstructionalNotes);
     await page.overview.instructionalNotes.save();
     assert.equal(page.overview.instructionalNotes.value, newInstructionalNotes);
-    assert.equal(
-      this.server.db.sessions[0].instructionalNotes,
-      `<p>${newInstructionalNotes}</p>`
-    );
+    assert.equal(this.server.db.sessions[0].instructionalNotes, `<p>${newInstructionalNotes}</p>`);
   });
 
   test('add instructionalNotes', async function (assert) {
@@ -576,10 +558,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     await page.overview.instructionalNotes.set(newInstructionalNotes);
     await page.overview.instructionalNotes.save();
     assert.equal(page.overview.instructionalNotes.value, newInstructionalNotes);
-    assert.equal(
-      this.server.db.sessions[0].instructionalNotes,
-      `<p>${newInstructionalNotes}</p>`
-    );
+    assert.equal(this.server.db.sessions[0].instructionalNotes, `<p>${newInstructionalNotes}</p>`);
   });
 
   test('empty instructionalNotes removes instructionalNotes', async function (assert) {
@@ -595,9 +574,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.equal(currentRouteName(), 'session.index');
     assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
     await page.overview.instructionalNotes.edit();
-    await page.overview.instructionalNotes.set(
-      '<p>&nbsp</p><div></div><span>  </span>'
-    );
+    await page.overview.instructionalNotes.set('<p>&nbsp</p><div></div><span>  </span>');
     await page.overview.instructionalNotes.save();
     assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
     assert.equal(this.server.db.sessions[0].instructionalNotes, null);
@@ -617,9 +594,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.equal(currentRouteName(), 'session.index');
     assert.equal(page.overview.instructionalNotes.value, 'instructional note');
     await page.overview.instructionalNotes.edit();
-    await page.overview.instructionalNotes.set(
-      '<p>&nbsp</p><div></div><span>  </span>'
-    );
+    await page.overview.instructionalNotes.set('<p>&nbsp</p><div></div><span>  </span>');
     await page.overview.instructionalNotes.save();
     assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
   });
@@ -637,9 +612,7 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.equal(currentRouteName(), 'session.index');
     assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
     await page.overview.instructionalNotes.edit();
-    await page.overview.instructionalNotes.set(
-      'something useless this way types'
-    );
+    await page.overview.instructionalNotes.set('something useless this way types');
     await page.overview.instructionalNotes.cancel();
     assert.equal(page.overview.instructionalNotes.value, 'Click to edit');
   });

@@ -12,9 +12,7 @@ export function HtmlNotBlank(validationOptions) {
         validate(value) {
           const text = value || '';
           const noTagsText = text.replace(/(<([^>]+)>)/gi, '');
-          const strippedText = noTagsText
-            .replace(/&nbsp;/gi, '')
-            .replace(/\s/g, '');
+          const strippedText = noTagsText.replace(/&nbsp;/gi, '').replace(/\s/g, '');
 
           return strippedText.trim() !== '';
         },

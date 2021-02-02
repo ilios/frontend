@@ -30,9 +30,7 @@ module('Integration | Component | course/objective-list', function (hooks) {
       terms: [term2],
     });
 
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
 
     await render(
@@ -50,23 +48,11 @@ module('Integration | Component | course/objective-list', function (hooks) {
 
     assert.equal(component.objectives.length, 2);
     assert.equal(component.objectives[0].description.text, 'Objective B');
-    assert.equal(
-      component.objectives[0].selectedTerms.list[0].title,
-      'Vocabulary 1 (school 0)'
-    );
-    assert.equal(
-      component.objectives[0].selectedTerms.list[0].terms[0].name,
-      'term 1'
-    );
+    assert.equal(component.objectives[0].selectedTerms.list[0].title, 'Vocabulary 1 (school 0)');
+    assert.equal(component.objectives[0].selectedTerms.list[0].terms[0].name, 'term 1');
     assert.equal(component.objectives[1].description.text, 'Objective A');
-    assert.equal(
-      component.objectives[1].selectedTerms.list[0].title,
-      'Vocabulary 1 (school 0)'
-    );
-    assert.equal(
-      component.objectives[1].selectedTerms.list[0].terms[0].name,
-      'term 0'
-    );
+    assert.equal(component.objectives[1].selectedTerms.list[0].title, 'Vocabulary 1 (school 0)');
+    assert.equal(component.objectives[1].selectedTerms.list[0].terms[0].name, 'term 0');
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -75,9 +61,7 @@ module('Integration | Component | course/objective-list', function (hooks) {
   test('empty list', async function (assert) {
     assert.expect(2);
     const course = this.server.create('course');
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
 
     await render(
@@ -94,9 +78,7 @@ module('Integration | Component | course/objective-list', function (hooks) {
     assert.expect(3);
     const course = this.server.create('course');
     this.server.create('course-objective', { course, position: 0 });
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
     this.set('course', courseModel);
 
     await render(

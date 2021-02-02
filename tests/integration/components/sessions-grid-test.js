@@ -75,12 +75,8 @@ module('Integration | Component | sessions-grid', function (hooks) {
   // @see issue ilios/common#1820 [ST 2020/12/10]
   test('deletion of session is disabled if it has prerequisites', async function (assert) {
     const sessions = this.server.createList('session', 2);
-    const sessionModel1 = await this.owner
-      .lookup('service:store')
-      .find('session', sessions[0].id);
-    const sessionModel2 = await this.owner
-      .lookup('service:store')
-      .find('session', sessions[0].id);
+    const sessionModel1 = await this.owner.lookup('service:store').find('session', sessions[0].id);
+    const sessionModel2 = await this.owner.lookup('service:store').find('session', sessions[0].id);
 
     this.set('sessions', [
       {
@@ -101,17 +97,9 @@ module('Integration | Component | sessions-grid', function (hooks) {
       @expandSession={{noop}}
     />`);
 
-    assert
-      .dom('[data-test-session]:nth-of-type(1) [data-test-delete-disabled]')
-      .isVisible();
-    assert
-      .dom('[data-test-session]:nth-of-type(1) [data-test-delete]')
-      .isNotVisible();
-    assert
-      .dom('[data-test-session]:nth-of-type(2) [data-test-delete-disabled]')
-      .isNotVisible();
-    assert
-      .dom('[data-test-session]:nth-of-type(2) [data-test-delete]')
-      .isVisible();
+    assert.dom('[data-test-session]:nth-of-type(1) [data-test-delete-disabled]').isVisible();
+    assert.dom('[data-test-session]:nth-of-type(1) [data-test-delete]').isNotVisible();
+    assert.dom('[data-test-session]:nth-of-type(2) [data-test-delete-disabled]').isNotVisible();
+    assert.dom('[data-test-session]:nth-of-type(2) [data-test-delete]').isVisible();
   });
 });

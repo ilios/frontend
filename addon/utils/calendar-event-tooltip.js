@@ -10,20 +10,14 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
     return contents;
   };
 
-  const addInstructorsToContents = function (
-    contents,
-    instructors,
-    etAlPhrase
-  ) {
+  const addInstructorsToContents = function (contents, instructors, etAlPhrase) {
     if (!instructors.length) {
       return contents;
     }
 
     if (3 > instructors.length) {
       contents =
-        contents +
-        '<br /> ' +
-        intl.t('general.taughtBy', { instructors: instructors.join(', ') });
+        contents + '<br /> ' + intl.t('general.taughtBy', { instructors: instructors.join(', ') });
     } else {
       contents =
         contents +
@@ -36,11 +30,7 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
     return contents;
   };
 
-  const addCourseTitleToContents = function (
-    contents,
-    courseTitle,
-    courseTitlePhrase
-  ) {
+  const addCourseTitleToContents = function (contents, courseTitle, courseTitlePhrase) {
     if (courseTitle) {
       contents = contents + `<br />${courseTitlePhrase}: ${courseTitle}`;
     }
@@ -63,17 +53,9 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
     }
     contents = contents + `ILM - ${intl.t('general.dueThisDay')}<br />${name}`;
     if (!isMulti) {
-      contents = addInstructorsToContents(
-        contents,
-        instructors,
-        intl.t('general.etAl')
-      );
+      contents = addInstructorsToContents(contents, instructors, intl.t('general.etAl'));
     }
-    contents = addCourseTitleToContents(
-      contents,
-      courseTitle,
-      intl.t('general.course')
-    );
+    contents = addCourseTitleToContents(contents, courseTitle, intl.t('general.course'));
     if (isMulti) {
       contents = contents + `<br />, ${intl.t('general.multiple')}`;
     }
@@ -83,17 +65,9 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
     }
     contents = contents + `${startTime} - ${endTime}<br />${name}`;
     if (!isMulti) {
-      contents = addInstructorsToContents(
-        contents,
-        instructors,
-        intl.t('general.etAl')
-      );
+      contents = addInstructorsToContents(contents, instructors, intl.t('general.etAl'));
     }
-    contents = addCourseTitleToContents(
-      contents,
-      courseTitle,
-      intl.t('general.course')
-    );
+    contents = addCourseTitleToContents(contents, courseTitle, intl.t('general.course'));
     if (isMulti) {
       contents = contents + `<br />, ${intl.t('general.multiple')}`;
     }

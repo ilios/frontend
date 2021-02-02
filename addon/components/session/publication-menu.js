@@ -47,9 +47,7 @@ export default class SessionPublicationMenuComponent extends Component {
     if (this.router.currentRouteName === 'session.publication_check') {
       return false;
     }
-    return (
-      !this.hideCheckLink && this.args.session.allPublicationIssuesLength > 0
-    );
+    return !this.hideCheckLink && this.args.session.allPublicationIssuesLength > 0;
   }
   get showPublish() {
     return (

@@ -17,9 +17,7 @@ export default Service.extend({
   }),
   async getConfig() {
     if (!this._configPromise) {
-      this._configPromise = this.fetch.getJsonFromApiHost(
-        '/application/config'
-      );
+      this._configPromise = this.fetch.getJsonFromApiHost('/application/config');
     }
     const config = await this._configPromise;
     return config;
@@ -139,18 +137,15 @@ export default Service.extend({
     return '';
   }),
 
-  errorCaptureEnabled: computed(
-    'serverVariables.errorCaptureEnabled',
-    function () {
-      const serverVariables = this.serverVariables;
-      const errorCaptureEnabled = serverVariables.get('errorCaptureEnabled');
-      if (typeof errorCaptureEnabled === 'boolean') {
-        return errorCaptureEnabled;
-      }
-
-      return errorCaptureEnabled === 'true';
+  errorCaptureEnabled: computed('serverVariables.errorCaptureEnabled', function () {
+    const serverVariables = this.serverVariables;
+    const errorCaptureEnabled = serverVariables.get('errorCaptureEnabled');
+    if (typeof errorCaptureEnabled === 'boolean') {
+      return errorCaptureEnabled;
     }
-  ),
+
+    return errorCaptureEnabled === 'true';
+  }),
 
   searchEnabled: computed('config.searchEnabled', async function () {
     deprecate('Async Computed Called', false, {

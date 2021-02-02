@@ -30,18 +30,14 @@ export default Model.extend({
     return courses.uniq();
   }),
 
-  courses: computed(
-    'coursesFromOfferings.[]',
-    'coursesFromIlmSessions.[]',
-    async function () {
-      const offeringCourses = await this.coursesFromOfferings;
-      const ilmCourses = await this.coursesFromIlmSessions;
-      const courses = [];
-      courses.pushObjects(offeringCourses);
-      courses.pushObjects(ilmCourses);
-      return courses.uniqBy('id');
-    }
-  ),
+  courses: computed('coursesFromOfferings.[]', 'coursesFromIlmSessions.[]', async function () {
+    const offeringCourses = await this.coursesFromOfferings;
+    const ilmCourses = await this.coursesFromIlmSessions;
+    const courses = [];
+    courses.pushObjects(offeringCourses);
+    courses.pushObjects(ilmCourses);
+    return courses.uniqBy('id');
+  }),
 
   /**
    * A list of all sessions associated with this group, via offerings or via ILMs.

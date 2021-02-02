@@ -25,14 +25,10 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
       school: this.school,
       programYears: [programYear],
     });
-    const programYearObjectives = this.server.createList(
-      'programYearObjective',
-      3,
-      {
-        programYear,
-        competency,
-      }
-    );
+    const programYearObjectives = this.server.createList('programYearObjective', 3, {
+      programYear,
+      competency,
+    });
 
     const course = this.server.create('course', {
       school: this.school,
@@ -40,10 +36,7 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
     });
 
     this.server.create('courseObjective', {
-      programYearObjectives: [
-        programYearObjectives[0],
-        programYearObjectives[1],
-      ],
+      programYearObjectives: [programYearObjectives[0], programYearObjectives[1]],
       course,
     });
   });
@@ -62,10 +55,7 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
       page.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].parents.list.length,
-      2
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.equal(
       page.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0'
@@ -83,20 +73,11 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
     assert.equal(m.competencies[0].title, 'competency 0');
     assert.ok(m.competencies[0].selected);
     assert.equal(m.competencies[0].objectives.length, 3);
-    assert.equal(
-      m.competencies[0].objectives[0].title,
-      'program-year objective 0'
-    );
+    assert.equal(m.competencies[0].objectives[0].title, 'program-year objective 0');
     assert.ok(m.competencies[0].objectives[0].selected);
-    assert.equal(
-      m.competencies[0].objectives[1].title,
-      'program-year objective 1'
-    );
+    assert.equal(m.competencies[0].objectives[1].title, 'program-year objective 1');
     assert.ok(m.competencies[0].objectives[1].selected);
-    assert.equal(
-      m.competencies[0].objectives[2].title,
-      'program-year objective 2'
-    );
+    assert.equal(m.competencies[0].objectives[2].title, 'program-year objective 2');
     assert.ok(m.competencies[0].objectives[2].notSelected);
   });
 
@@ -126,10 +107,7 @@ module('Acceptance | Course - Multiple Objective  Parents', function (hooks) {
       page.objectives.objectiveList.objectives[0].description.text,
       'course objective 0'
     );
-    assert.equal(
-      page.objectives.objectiveList.objectives[0].parents.list.length,
-      2
-    );
+    assert.equal(page.objectives.objectiveList.objectives[0].parents.list.length, 2);
     assert.equal(
       page.objectives.objectiveList.objectives[0].parents.list[0].text,
       'program-year objective 0'

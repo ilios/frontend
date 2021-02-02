@@ -1,11 +1,4 @@
-import {
-  attribute,
-  create,
-  clickable,
-  fillable,
-  text,
-  isVisible,
-} from 'ember-cli-page-object';
+import { attribute, create, clickable, fillable, text, isVisible } from 'ember-cli-page-object';
 import { flatpickrDatePicker } from 'ilios-common';
 
 const definition = {

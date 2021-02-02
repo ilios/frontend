@@ -12,8 +12,7 @@ export default class DataLoaderService extends Service {
   async loadSchoolForCalendar(id) {
     if (!(id in this.#calendarSchools)) {
       this.#calendarSchools[id] = this.store.findRecord('school', id, {
-        include:
-          'programs.programYears.cohort,sessionTypes,vocabularies.terms,courses',
+        include: 'programs.programYears.cohort,sessionTypes,vocabularies.terms,courses',
         reload: true,
       });
     }

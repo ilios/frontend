@@ -47,19 +47,13 @@ module('Integration | Component | visualizer-course-term', function (hooks) {
       endDate: new Date('2019-12-05T21:00:00'),
     });
 
-    const courseModel = await this.owner
-      .lookup('service:store')
-      .find('course', course.id);
-    const termModel = await this.owner
-      .lookup('service:store')
-      .find('term', term.id);
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('course', courseModel);
     this.set('term', termModel);
 
-    await render(
-      hbs`<VisualizerCourseTerm @course={{course}} @term={{term}} @isIcon={{false}} />`
-    );
+    await render(hbs`<VisualizerCourseTerm @course={{course}} @term={{term}} @isIcon={{false}} />`);
 
     const chartLabels = 'svg .bars text';
     assert.dom(chartLabels).exists({ count: 2 });

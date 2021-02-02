@@ -17,13 +17,10 @@ export default class VisualizerCourseInstructorTerm extends Component {
   @restartableTask
   *load(element, [course, user]) {
     const sessions = yield course.get('sessions');
-    const sessionsWithUser = yield filter(
-      sessions.toArray(),
-      async (session) => {
-        const instructors = await session.get('allInstructors');
-        return instructors.mapBy('id').includes(user.get('id'));
-      }
-    );
+    const sessionsWithUser = yield filter(sessions.toArray(), async (session) => {
+      const instructors = await session.get('allInstructors');
+      return instructors.mapBy('id').includes(user.get('id'));
+    });
 
     const dataMap = yield map(sessionsWithUser, async (session) => {
       const terms = await session.get('terms');
@@ -79,9 +76,8 @@ export default class VisualizerCourseInstructorTerm extends Component {
       })
       .sort((first, second) => {
         return (
-          first.meta.vocabularyTitle.localeCompare(
-            second.meta.vocabularyTitle
-          ) || second.data - first.data
+          first.meta.vocabularyTitle.localeCompare(second.meta.vocabularyTitle) ||
+          second.data - first.data
         );
       });
   }
@@ -96,9 +92,7 @@ export default class VisualizerCourseInstructorTerm extends Component {
     }
     const { label, data, meta } = obj;
 
-    this.tooltipTitle = htmlSafe(
-      `${label} ${data} ${this.intl.t('general.minutes')}`
-    );
+    this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
     this.tooltipContent = meta.sessions.uniq().sort().join();
   }
 }

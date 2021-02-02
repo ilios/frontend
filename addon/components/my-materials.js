@@ -14,26 +14,19 @@ export default class MyMaterials extends Component {
     }
 
     if (isPresent(this.args.courseIdFilter)) {
-      materials = this.args.materials.filterBy(
-        'course',
-        this.args.courseIdFilter
-      );
+      materials = this.args.materials.filterBy('course', this.args.courseIdFilter);
     }
 
     if (isPresent(this.args.filter)) {
-      materials = materials.filter(
-        ({ courseTitle, instructors, sessionTitle, title }) => {
-          let searchString = `${title} ${courseTitle} ${sessionTitle} `;
+      materials = materials.filter(({ courseTitle, instructors, sessionTitle, title }) => {
+        let searchString = `${title} ${courseTitle} ${sessionTitle} `;
 
-          if (isPresent(instructors)) {
-            searchString += instructors.join(' ');
-          }
-
-          return searchString
-            .toLowerCase()
-            .includes(this.args.filter.toLowerCase());
+        if (isPresent(instructors)) {
+          searchString += instructors.join(' ');
         }
-      );
+
+        return searchString.toLowerCase().includes(this.args.filter.toLowerCase());
+      });
     }
     return materials;
   }

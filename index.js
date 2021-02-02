@@ -32,9 +32,7 @@ module.exports = {
     this.import(path.join(froalaPath, 'css', 'themes', 'gray.css'));
     this.import(path.join(froalaPath, 'css', 'plugins', 'code_view.css'));
 
-    this.import(
-      path.join('node_modules', 'flatpickr', 'dist', 'flatpickr.css')
-    );
+    this.import(path.join('node_modules', 'flatpickr', 'dist', 'flatpickr.css'));
   },
 
   setupPreprocessorRegistry: function (type, registry) {
@@ -45,9 +43,7 @@ module.exports = {
     // [ST 2018/09/26]
     // revised [JJ 2020/02/04]
     if (!this.isDevelopingAddon()) {
-      const cpValidationsAddon = this.addons.find(
-        (addon) => addon.name === 'ember-cp-validations'
-      );
+      const cpValidationsAddon = this.addons.find((addon) => addon.name === 'ember-cp-validations');
       if (cpValidationsAddon && cpValidationsAddon.setupPreprocessorRegistry) {
         cpValidationsAddon.setupPreprocessorRegistry(type, registry);
       }
@@ -85,19 +81,13 @@ module.exports = {
     if (publicTree) {
       trees.push(publicTree);
     }
-    const nunitoDir = path.join(
-      path.dirname(require.resolve('typeface-nunito')),
-      'files'
-    );
+    const nunitoDir = path.join(path.dirname(require.resolve('typeface-nunito')), 'files');
     const nunitoTree = new Funnel(nunitoDir, {
       destDir: 'assets/fonts/nunito',
     });
     trees.push(nunitoTree);
 
-    const nunitoSansDir = path.join(
-      path.dirname(require.resolve('typeface-nunito-sans')),
-      'files'
-    );
+    const nunitoSansDir = path.join(path.dirname(require.resolve('typeface-nunito-sans')), 'files');
     const nunitoSansTree = new Funnel(nunitoSansDir, {
       destDir: 'assets/fonts/nunito-sans',
     });

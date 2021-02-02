@@ -97,12 +97,8 @@ export default class VisualizerCourseInstructors extends Component {
     const { label, data, meta } = obj;
     const sessions = meta.sessions.uniq().sort().join();
 
-    this.tooltipTitle = htmlSafe(
-      `${label} ${data} ${this.intl.t('general.minutes')}`
-    );
-    this.tooltipContent = htmlSafe(
-      sessions + '<br /><br />' + this.intl.t('general.clickForMore')
-    );
+    this.tooltipTitle = htmlSafe(`${label} ${data} ${this.intl.t('general.minutes')}`);
+    this.tooltipContent = htmlSafe(sessions + '<br /><br />' + this.intl.t('general.clickForMore'));
   }
 
   @action

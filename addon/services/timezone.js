@@ -11,12 +11,7 @@ export default class TimezoneService extends Service {
    * @returns {string}
    */
   formatTimezone(tz) {
-    return (
-      '(' +
-      moment.tz(tz).format('Z') +
-      ') ' +
-      tz.replace(/\//g, ' - ').replace(/_/g, ' ')
-    );
+    return '(' + moment.tz(tz).format('Z') + ') ' + tz.replace(/\//g, ' - ').replace(/_/g, ' ');
   }
 
   /**

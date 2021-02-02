@@ -12,9 +12,7 @@ module('Integration | Component | save-button', function (hooks) {
   });
 
   test('it displays save percent and spinner when saving', async function (assert) {
-    await render(
-      hbs`<SaveButton @isSaving={{true}} @saveProgressPercent={{11}}>Save</SaveButton>`
-    );
+    await render(hbs`<SaveButton @isSaving={{true}} @saveProgressPercent={{11}}>Save</SaveButton>`);
     assert.dom('[data-icon="spinner"]').exists();
     assert.dom().hasText('11%');
   });
@@ -29,9 +27,7 @@ module('Integration | Component | save-button', function (hooks) {
 
   test('binds passed action', async function (assert) {
     this.set('click', () => assert.ok(true));
-    await render(
-      hbs`<SaveButton data-test-save {{on "click" this.click}}>Save</SaveButton>`
-    );
+    await render(hbs`<SaveButton data-test-save {{on "click" this.click}}>Save</SaveButton>`);
     await click('[data-test-save]');
   });
 });

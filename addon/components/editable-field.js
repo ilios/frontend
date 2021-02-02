@@ -33,9 +33,7 @@ export default class EditableFieldComponent extends Component {
   }
 
   focusFirstControl(element) {
-    const elements = element.querySelectorAll(
-      'input,textarea,select,.fr-element'
-    );
+    const elements = element.querySelectorAll('input,textarea,select,.fr-element');
     if (elements.length) {
       const visibleControls = Array.from(elements).filter((el) => {
         return !el.hidden;

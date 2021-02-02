@@ -100,9 +100,7 @@ export default class PublishAllSessionsComponent extends Component {
   @action
   toggleSession(session) {
     if (this.sessionsToOverride.includes(session)) {
-      this.sessionsToOverride = this.sessionsToOverride.filter(
-        ({ id }) => id !== session.id
-      );
+      this.sessionsToOverride = this.sessionsToOverride.filter(({ id }) => id !== session.id);
     } else {
       this.sessionsToOverride = [...this.sessionsToOverride, session];
     }
@@ -110,10 +108,7 @@ export default class PublishAllSessionsComponent extends Component {
 
   @action
   publishAllAsIs() {
-    this.sessionsToOverride = [
-      ...this.sessionsToOverride,
-      ...this.overridableSessions,
-    ].uniq();
+    this.sessionsToOverride = [...this.sessionsToOverride, ...this.overridableSessions].uniq();
   }
 
   @action

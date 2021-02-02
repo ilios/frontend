@@ -5,26 +5,22 @@ import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios-common/page-objects/components/session-leadership-expanded';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module(
-  'Integration | Component | session leadership expanded',
-  function (hooks) {
-    setupRenderingTest(hooks);
-    setupMirage(hooks);
+module('Integration | Component | session leadership expanded', function (hooks) {
+  setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-    test('it renders', async function (assert) {
-      assert.expect(6);
-      const users = this.server.createList('user', 2);
-      const course = this.server.create('course');
-      const session = this.server.create('session', {
-        course,
-        administrators: users,
-        studentAdvisors: [users[0]],
-      });
-      const sessionModel = await this.owner
-        .lookup('service:store')
-        .find('session', session.id);
-      this.set('session', sessionModel);
-      await render(hbs`<SessionLeadershipExpanded
+  test('it renders', async function (assert) {
+    assert.expect(6);
+    const users = this.server.createList('user', 2);
+    const course = this.server.create('course');
+    const session = this.server.create('session', {
+      course,
+      administrators: users,
+      studentAdvisors: [users[0]],
+    });
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    this.set('session', sessionModel);
+    await render(hbs`<SessionLeadershipExpanded
       @session={{this.session}}
       @canUpdate={{true}}
       @collapse={{noop}}
@@ -33,39 +29,28 @@ module(
       @setIsManaging={{noop}}
     />`);
 
-      assert.equal(component.title, 'Session Administration');
-      assert.equal(component.leadershipList.administrators.length, 2);
-      assert.equal(
-        component.leadershipList.administrators[0].text,
-        '0 guy M. Mc0son'
-      );
-      assert.equal(
-        component.leadershipList.administrators[1].text,
-        '1 guy M. Mc1son'
-      );
-      assert.equal(component.leadershipList.studentAdvisors.length, 1);
-      assert.equal(
-        component.leadershipList.studentAdvisors[0].text,
-        '0 guy M. Mc0son'
-      );
-    });
+    assert.equal(component.title, 'Session Administration');
+    assert.equal(component.leadershipList.administrators.length, 2);
+    assert.equal(component.leadershipList.administrators[0].text, '0 guy M. Mc0son');
+    assert.equal(component.leadershipList.administrators[1].text, '1 guy M. Mc1son');
+    assert.equal(component.leadershipList.studentAdvisors.length, 1);
+    assert.equal(component.leadershipList.studentAdvisors[0].text, '0 guy M. Mc0son');
+  });
 
-    test('clicking the header collapses when there are administrators', async function (assert) {
-      assert.expect(1);
-      const administrators = this.server.createList('user', 1);
-      const course = this.server.create('course');
-      const session = this.server.create('session', {
-        course,
-        administrators,
-      });
-      const sessionModel = await this.owner
-        .lookup('service:store')
-        .find('session', session.id);
-      this.set('session', sessionModel);
-      this.set('click', () => {
-        assert.ok(true, 'Action was fired');
-      });
-      await render(hbs`<SessionLeadershipExpanded
+  test('clicking the header collapses when there are administrators', async function (assert) {
+    assert.expect(1);
+    const administrators = this.server.createList('user', 1);
+    const course = this.server.create('course');
+    const session = this.server.create('session', {
+      course,
+      administrators,
+    });
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    this.set('session', sessionModel);
+    this.set('click', () => {
+      assert.ok(true, 'Action was fired');
+    });
+    await render(hbs`<SessionLeadershipExpanded
       @session={{this.session}}
       @canUpdate={{true}}
       @collapse={{this.click}}
@@ -73,25 +58,23 @@ module(
       @isManaging={{false}}
       @setIsManaging={{noop}}
     />`);
-      await component.collapse();
-    });
+    await component.collapse();
+  });
 
-    test('clicking the header collapses when there are student advisors', async function (assert) {
-      assert.expect(1);
-      const studentAdvisors = this.server.createList('user', 1);
-      const course = this.server.create('course');
-      const session = this.server.create('session', {
-        course,
-        studentAdvisors,
-      });
-      const sessionModel = await this.owner
-        .lookup('service:store')
-        .find('session', session.id);
-      this.set('session', sessionModel);
-      this.set('click', () => {
-        assert.ok(true, 'Action was fired');
-      });
-      await render(hbs`<SessionLeadershipExpanded
+  test('clicking the header collapses when there are student advisors', async function (assert) {
+    assert.expect(1);
+    const studentAdvisors = this.server.createList('user', 1);
+    const course = this.server.create('course');
+    const session = this.server.create('session', {
+      course,
+      studentAdvisors,
+    });
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    this.set('session', sessionModel);
+    this.set('click', () => {
+      assert.ok(true, 'Action was fired');
+    });
+    await render(hbs`<SessionLeadershipExpanded
       @session={{this.session}}
       @canUpdate={{true}}
       @collapse={{this.click}}
@@ -99,20 +82,18 @@ module(
       @isManaging={{false}}
       @setIsManaging={{noop}}
     />`);
-      await component.collapse();
-    });
+    await component.collapse();
+  });
 
-    test('clicking the header does not collapse where there are no linked leaders', async function (assert) {
-      assert.expect(0);
-      const session = this.server.create('session');
-      const sessionModel = await this.owner
-        .lookup('service:store')
-        .find('session', session.id);
-      this.set('session', sessionModel);
-      this.set('click', () => {
-        assert.ok(false);
-      });
-      await render(hbs`<SessionLeadershipExpanded
+  test('clicking the header does not collapse where there are no linked leaders', async function (assert) {
+    assert.expect(0);
+    const session = this.server.create('session');
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    this.set('session', sessionModel);
+    this.set('click', () => {
+      assert.ok(false);
+    });
+    await render(hbs`<SessionLeadershipExpanded
       @session={{this.session}}
       @canUpdate={{true}}
       @collapse={{this.click}}
@@ -120,20 +101,18 @@ module(
       @isManaging={{false}}
       @setIsManaging={{noop}}
     />`);
-      await component.collapse();
-    });
+    await component.collapse();
+  });
 
-    test('clicking manage fires action', async function (assert) {
-      assert.expect(1);
-      const session = this.server.create('session');
-      const sessionModel = await this.owner
-        .lookup('service:store')
-        .find('session', session.id);
-      this.set('session', sessionModel);
-      this.set('click', () => {
-        assert.ok(true, 'Action was fired');
-      });
-      await render(hbs`<SessionLeadershipExpanded
+  test('clicking manage fires action', async function (assert) {
+    assert.expect(1);
+    const session = this.server.create('session');
+    const sessionModel = await this.owner.lookup('service:store').find('session', session.id);
+    this.set('session', sessionModel);
+    this.set('click', () => {
+      assert.ok(true, 'Action was fired');
+    });
+    await render(hbs`<SessionLeadershipExpanded
       @session={{this.session}}
       @canUpdate={{true}}
       @collapse={{this.nothing}}
@@ -141,7 +120,6 @@ module(
       @isManaging={{false}}
       @setIsManaging={{this.click}}
     />`);
-      await component.manage();
-    });
-  }
-);
+    await component.manage();
+  });
+});

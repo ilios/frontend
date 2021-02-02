@@ -1,11 +1,4 @@
-import {
-  clickable,
-  collection,
-  create,
-  fillable,
-  isVisible,
-  text,
-} from 'ember-cli-page-object';
+import { clickable, collection, create, fillable, isVisible, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-learningmaterial-search]',

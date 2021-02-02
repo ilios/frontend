@@ -5,9 +5,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   setupTest(hooks);
 
   test('it exists', function (assert) {
-    const model = this.owner
-      .lookup('service:store')
-      .createRecord('learner-group');
+    const model = this.owner.lookup('service:store').createRecord('learner-group');
     assert.ok(!!model);
   });
 
@@ -72,9 +70,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
 
   test('check allDescendantUsers on empty group', async function (assert) {
     assert.expect(1);
-    const learnerGroup = this.owner
-      .lookup('service:store')
-      .createRecord('learner-group');
+    const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
     const allDescendantUsers = await learnerGroup.get('allDescendantUsers');
     assert.equal(allDescendantUsers.length, 0);
   });
@@ -111,9 +107,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
 
   test('check empty allDescendants', async function (assert) {
     assert.expect(1);
-    const learnerGroup = this.owner
-      .lookup('service:store')
-      .createRecord('learner-group');
+    const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
 
     const groups = await learnerGroup.get('allDescendants');
     assert.equal(groups.length, 0);
@@ -148,9 +142,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
   test('check subgroupNumberingOffset on group with no sub-groups', async function (assert) {
     assert.expect(1);
     const groupTitle = 'Lorem Ipsum';
-    const learnerGroup = this.owner
-      .lookup('service:store')
-      .createRecord('learner-group');
+    const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
     learnerGroup.set('title', groupTitle);
     const offset = await learnerGroup.get('subgroupNumberingOffset');
     assert.equal(offset, 1, 'no subgroups. offset is 1.');
@@ -193,11 +185,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       title: 'not the parent title 4',
     });
     const offset = await learnerGroup.get('subgroupNumberingOffset');
-    assert.equal(
-      offset,
-      4,
-      'subgroup with title-mismatch is ignored, offset is 4 not 5.'
-    );
+    assert.equal(offset, 4, 'subgroup with title-mismatch is ignored, offset is 4 not 5.');
   });
 
   test('check allinstructors', async function (assert) {
@@ -218,9 +206,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     const instructorGroup2 = store.createRecord('instructor-group', {
       users: [user3],
     });
-    learnerGroup
-      .get('instructorGroups')
-      .pushObjects([instructorGroup1, instructorGroup2]);
+    learnerGroup.get('instructorGroups').pushObjects([instructorGroup1, instructorGroup2]);
 
     allInstructors = await learnerGroup.get('allInstructors');
     assert.equal(allInstructors.length, 3);
@@ -385,9 +371,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       parent: subGroup1,
     });
 
-    const groupsToRemove = await subGroup1.removeUserFromGroupAndAllDescendants(
-      user1
-    );
+    const groupsToRemove = await subGroup1.removeUserFromGroupAndAllDescendants(user1);
     assert.equal(groupsToRemove.length, 3);
     assert.notOk(groupsToRemove.includes(learnerGroup));
     assert.ok(groupsToRemove.includes(subGroup1));
@@ -430,9 +414,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
 
   test('has no learners in group without learners and without subgroups', async function (assert) {
     assert.expect(1);
-    const learnerGroup = this.owner
-      .lookup('service:store')
-      .createRecord('learner-group');
+    const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
     const hasLearners = await learnerGroup.get('hasLearnersInGroupOrSubgroups');
     assert.notOk(hasLearners);
   });
@@ -493,11 +475,9 @@ module('Unit | Model | LearnerGroup', function (hooks) {
       subgroups.pushObject(subgroup);
       learnerGroup.get('users').then((learners) => {
         learners.pushObject(learner2);
-        learnerGroup
-          .get('hasLearnersInGroupOrSubgroups')
-          .then((hasLearners) => {
-            assert.ok(hasLearners);
-          });
+        learnerGroup.get('hasLearnersInGroupOrSubgroups').then((hasLearners) => {
+          assert.ok(hasLearners);
+        });
       });
     });
   });
@@ -655,12 +635,8 @@ module('Unit | Model | LearnerGroup', function (hooks) {
 
   test('has no needs in group without subgroups', async function (assert) {
     assert.expect(1);
-    const learnerGroup = this.owner
-      .lookup('service:store')
-      .createRecord('learner-group');
-    const hasNeeds = await learnerGroup.get(
-      'hasSubgroupsInNeedOfAccommodation'
-    );
+    const learnerGroup = this.owner.lookup('service:store').createRecord('learner-group');
+    const hasNeeds = await learnerGroup.get('hasSubgroupsInNeedOfAccommodation');
     assert.notOk(hasNeeds);
   });
 
@@ -677,9 +653,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     learnerGroup.get('children').pushObject(subGroup1);
     learnerGroup.get('children').pushObject(subGroup2);
 
-    const hasNeeds = await learnerGroup.get(
-      'hasSubgroupsInNeedOfAccommodation'
-    );
+    const hasNeeds = await learnerGroup.get('hasSubgroupsInNeedOfAccommodation');
     assert.notOk(hasNeeds);
   });
 
@@ -696,9 +670,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     });
     learnerGroup.get('children').pushObject(subGroup1);
     learnerGroup.get('children').pushObject(subGroup2);
-    const hasNeeds = await learnerGroup.get(
-      'hasSubgroupsInNeedOfAccommodation'
-    );
+    const hasNeeds = await learnerGroup.get('hasSubgroupsInNeedOfAccommodation');
     assert.ok(hasNeeds);
   });
 
@@ -730,9 +702,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     });
     subGroup2.get('children').pushObject(subSubGroup3);
     subGroup2.get('children').pushObject(subSubGroup4);
-    const hasNeeds = await learnerGroup.get(
-      'hasSubgroupsInNeedOfAccommodation'
-    );
+    const hasNeeds = await learnerGroup.get('hasSubgroupsInNeedOfAccommodation');
     assert.notOk(hasNeeds);
   });
 
@@ -765,9 +735,7 @@ module('Unit | Model | LearnerGroup', function (hooks) {
     });
     subGroup2.get('children').pushObject(subSubGroup3);
     subGroup2.get('children').pushObject(subSubGroup4);
-    const hasNeeds = await learnerGroup.get(
-      'hasSubgroupsInNeedOfAccommodation'
-    );
+    const hasNeeds = await learnerGroup.get('hasSubgroupsInNeedOfAccommodation');
     assert.ok(hasNeeds);
   });
 });

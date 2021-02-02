@@ -21,31 +21,19 @@ module('Integration | Component | toggle buttons', function (hooks) {
       @secondLabel="Second"
       @secondIcon="expand"
     />`);
-    assert
-      .dom('[data-test-first]')
-      .hasText('First', 'first label has correct text');
+    assert.dom('[data-test-first]').hasText('First', 'first label has correct text');
     assert.dom(firstRadio).isChecked('first radio is checked');
     assert.dom('[data-test-first][data-test-selected]').exists();
     assert
       .dom('[data-test-first]')
-      .hasAttribute(
-        'for',
-        find(firstRadio).id,
-        'first label is linked to radio correctly'
-      );
+      .hasAttribute('for', find(firstRadio).id, 'first label is linked to radio correctly');
 
-    assert
-      .dom('[data-test-second]')
-      .hasText('Second', 'second label has correct text');
+    assert.dom('[data-test-second]').hasText('Second', 'second label has correct text');
     assert.dom(secondRadio).isNotChecked('second radio is not checked');
     assert.dom('[data-test-second][data-test-selected]').doesNotExist();
     assert
       .dom('[data-test-second]')
-      .hasAttribute(
-        'for',
-        find(secondRadio).id,
-        'second label is linked to radio correctly'
-      );
+      .hasAttribute('for', find(secondRadio).id, 'second label is linked to radio correctly');
   });
 
   test('clicking radio fires toggle action', async function (assert) {

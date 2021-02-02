@@ -50,9 +50,7 @@ module('Unit | Model | session objective', function (hooks) {
 
   test('text only empty title', async function (assert) {
     assert.expect(1);
-    const subject = this.owner
-      .lookup('service:store')
-      .createRecord('session-objective');
+    const subject = this.owner.lookup('service:store').createRecord('session-objective');
     assert.equal('', subject.textTitle);
   });
 });

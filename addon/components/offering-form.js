@@ -153,9 +153,7 @@ export default class OfferingForm extends Component {
 
   @restartableTask()
   *loadData(offering, cohorts) {
-    this.availableInstructorGroups = yield this.loadAvailableInstructorGroups(
-      cohorts
-    );
+    this.availableInstructorGroups = yield this.loadAvailableInstructorGroups(cohorts);
 
     if (isPresent(offering)) {
       yield this.loadAttrsFromOffering.perform(offering);
@@ -174,9 +172,7 @@ export default class OfferingForm extends Component {
   async removeLearnerGroup(learnerGroup) {
     const descendants = await learnerGroup.get('allDescendants');
     const groupsToRemove = [...descendants, learnerGroup];
-    this.learnerGroups = this.learnerGroups.filter(
-      (g) => !groupsToRemove.includes(g)
-    );
+    this.learnerGroups = this.learnerGroups.filter((g) => !groupsToRemove.includes(g));
   }
 
   @action
@@ -230,10 +226,7 @@ export default class OfferingForm extends Component {
     }
     const minutes = this.durationMinutes;
     const hours = this.durationHours;
-    const endDate = startDate
-      .clone()
-      .add(hours, 'hours')
-      .add(minutes, 'minutes');
+    const endDate = startDate.clone().add(hours, 'hours').add(minutes, 'minutes');
 
     this.startDate = startDate.toDate();
     this.endDate = endDate.toDate();
@@ -248,10 +241,7 @@ export default class OfferingForm extends Component {
       .hour(currentStartDate.hour())
       .minute(currentStartDate.minute())
       .toDate();
-    const endDate = moment(startDate)
-      .add(hours, 'hours')
-      .add(minutes, 'minutes')
-      .toDate();
+    const endDate = moment(startDate).add(hours, 'hours').add(minutes, 'minutes').toDate();
 
     this.startDate = startDate;
     this.endDate = endDate;
@@ -315,9 +305,7 @@ export default class OfferingForm extends Component {
     const ids = learnerGroups.mapBy('id');
     return filter(learnerGroups, async (group) => {
       const children = await group.get('allDescendants');
-      const selectedChildren = children.filter((child) =>
-        ids.includes(child.get('id'))
-      );
+      const selectedChildren = children.filter((child) => ids.includes(child.get('id')));
       return selectedChildren.length === 0;
     });
   }
@@ -326,16 +314,8 @@ export default class OfferingForm extends Component {
     if (this.loaded) {
       return;
     }
-    this.startDate = moment(this.defaultStartDate)
-      .hour(8)
-      .minute(0)
-      .second(0)
-      .toDate();
-    this.endDate = moment(this.defaultStartDate)
-      .hour(9)
-      .minute(0)
-      .second(0)
-      .toDate();
+    this.startDate = moment(this.defaultStartDate).hour(8).minute(0).second(0).toDate();
+    this.endDate = moment(this.defaultStartDate).hour(9).minute(0).second(0).toDate();
     this.learnerGroups = [];
     this.learners = [];
     this.recurringDays = [];
@@ -398,16 +378,10 @@ export default class OfferingForm extends Component {
     // adjust timezone
     offerings.forEach((offering) => {
       offering.startDate = moment
-        .tz(
-          moment(offering.startDate).format('Y-MM-DD HH:mm:ss'),
-          this.currentTimezone
-        )
+        .tz(moment(offering.startDate).format('Y-MM-DD HH:mm:ss'), this.currentTimezone)
         .toDate();
       offering.endDate = moment
-        .tz(
-          moment(offering.endDate).format('Y-MM-DD HH:mm:ss'),
-          this.currentTimezone
-        )
+        .tz(moment(offering.endDate).format('Y-MM-DD HH:mm:ss'), this.currentTimezone)
         .toDate();
     });
 
@@ -442,9 +416,7 @@ export default class OfferingForm extends Component {
         }
       );
       savedOfferings = savedOfferings + parts.length;
-      this.saveProgressPercent = Math.floor(
-        (savedOfferings / totalOfferings) * 100
-      );
+      this.saveProgressPercent = Math.floor((savedOfferings / totalOfferings) * 100);
     }
     this.saveProgressPercent = 100;
     yield timeout(500);
@@ -454,9 +426,7 @@ export default class OfferingForm extends Component {
 
   async makeRecurringOfferingObjects() {
     const makeRecurring = this.makeRecurring;
-    const learnerGroups = await this.lowestLearnerGroupLeaves(
-      this.learnerGroups
-    );
+    const learnerGroups = await this.lowestLearnerGroupLeaves(this.learnerGroups);
     const offerings = [];
     offerings.push({
       startDate: this.startDate,
@@ -508,10 +478,7 @@ export default class OfferingForm extends Component {
           instructorGroups: this.instructorGroups,
           instructors: this.instructors,
         };
-        obj.startDate = moment(this.startDate)
-          .day(day)
-          .add(i, 'weeks')
-          .toDate();
+        obj.startDate = moment(this.startDate).day(day).add(i, 'weeks').toDate();
         obj.endDate = moment(this.endDate).day(day).add(i, 'weeks').toDate();
 
         offerings.push(obj);

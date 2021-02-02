@@ -20,12 +20,10 @@ export default class SessionsGrid extends Component {
       return this.args.sessions;
     }
 
-    const filterExpressions = this.args.filterBy
-      .split(' ')
-      .map(function (string) {
-        const clean = escapeRegExp(string);
-        return new RegExp(clean, 'gi');
-      });
+    const filterExpressions = this.args.filterBy.split(' ').map(function (string) {
+      const clean = escapeRegExp(string);
+      return new RegExp(clean, 'gi');
+    });
 
     return this.args.sessions.filter((session) => {
       let matchedSearchTerms = 0;

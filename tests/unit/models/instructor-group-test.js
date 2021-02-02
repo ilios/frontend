@@ -6,9 +6,7 @@ module('Unit | Model | InstructorGroup', function (hooks) {
 
   test('list courses', async function (assert) {
     assert.expect(4);
-    const model = this.owner
-      .lookup('service:store')
-      .createRecord('instructor-group');
+    const model = this.owner.lookup('service:store').createRecord('instructor-group');
     const store = model.store;
     const course1 = store.createRecord('course', { title: 'course1', id: 1 });
     const course2 = store.createRecord('course', { title: 'course2', id: 2 });
@@ -42,9 +40,7 @@ module('Unit | Model | InstructorGroup', function (hooks) {
   });
   test('list sessions', async function (assert) {
     assert.expect(5);
-    const model = this.owner
-      .lookup('service:store')
-      .createRecord('instructor-group');
+    const model = this.owner.lookup('service:store').createRecord('instructor-group');
     const store = model.store;
     const session1 = store.createRecord('session');
     const session2 = store.createRecord('session');

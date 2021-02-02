@@ -15,9 +15,7 @@ export default class CourseObjectiveListComponent extends Component {
 
   @tracked isSorting = false;
 
-  @use courseObjectivesAsync = new ResolveAsyncValue(() => [
-    this.args.course.courseObjectives,
-  ]);
+  @use courseObjectivesAsync = new ResolveAsyncValue(() => [this.args.course.courseObjectives]);
 
   get courseObjectives() {
     if (this.load.lastSuccessful && this.courseObjectivesAsync) {
@@ -27,9 +25,7 @@ export default class CourseObjectiveListComponent extends Component {
     return undefined;
   }
 
-  @use courseCohortsAsync = new ResolveAsyncValue(() => [
-    this.args.course.cohorts,
-  ]);
+  @use courseCohortsAsync = new ResolveAsyncValue(() => [this.args.course.cohorts]);
 
   get courseCohorts() {
     if (this.load.lastSuccessful && this.courseCohortsAsync) {
@@ -75,26 +71,23 @@ export default class CourseObjectiveListComponent extends Component {
         'allowMultipleCourseObjectiveParents'
       );
       const objectives = await programYear.programYearObjectives;
-      const objectiveObjects = await map(
-        objectives.toArray(),
-        async (objective) => {
-          let competencyId = 0;
-          let competencyTitle = intl.t('general.noAssociatedCompetency');
-          const competency = await objective.competency;
-          if (competency) {
-            competencyId = competency.id;
-            competencyTitle = competency.title;
-          }
-          return {
-            id: objective.id,
-            title: objective.textTitle,
-            active: objective.active,
-            competencyId,
-            competencyTitle,
-            cohortId: cohort.id,
-          };
+      const objectiveObjects = await map(objectives.toArray(), async (objective) => {
+        let competencyId = 0;
+        let competencyTitle = intl.t('general.noAssociatedCompetency');
+        const competency = await objective.competency;
+        if (competency) {
+          competencyId = competency.id;
+          competencyTitle = competency.title;
         }
-      );
+        return {
+          id: objective.id,
+          title: objective.textTitle,
+          active: objective.active,
+          competencyId,
+          competencyTitle,
+          cohortId: cohort.id,
+        };
+      });
       const competencies = objectiveObjects.reduce((set, obj) => {
         let existing = set.findBy('id', obj.competencyId);
         if (!existing) {

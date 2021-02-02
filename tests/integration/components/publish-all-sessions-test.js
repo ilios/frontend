@@ -48,14 +48,8 @@ module('Integration | Component | publish all sessions', function (hooks) {
     });
     this.server.create('sessionObjective', { session: completeSession });
     const store = this.owner.lookup('service:store');
-    this.publishableSession = await store.find(
-      'session',
-      publishableSession.id
-    );
-    this.unpublishableSession = await store.find(
-      'session',
-      unpublishableSession.id
-    );
+    this.publishableSession = await store.find('session', publishableSession.id);
+    this.unpublishableSession = await store.find('session', unpublishableSession.id);
     this.completeSession = await store.find('session', completeSession.id);
     this.fullyPublishedByIncompleteSession = await store.find(
       'session',
@@ -76,26 +70,12 @@ module('Integration | Component | publish all sessions', function (hooks) {
     this.set('sessions', sessions);
     this.set('course', this.course);
 
-    await render(
-      hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />`
-    );
+    await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />`);
+    assert.ok(this.element.textContent.search(/Sessions Incomplete: cannot publish \(1\)/) !== -1);
+    assert.ok(this.element.textContent.search(/Sessions Complete: ready to publish \(1\)/) !== -1);
+    assert.ok(this.element.textContent.search(/Sessions Requiring Review \(2\)/) !== -1);
     assert.ok(
-      this.element.textContent.search(
-        /Sessions Incomplete: cannot publish \(1\)/
-      ) !== -1
-    );
-    assert.ok(
-      this.element.textContent.search(
-        /Sessions Complete: ready to publish \(1\)/
-      ) !== -1
-    );
-    assert.ok(
-      this.element.textContent.search(/Sessions Requiring Review \(2\)/) !== -1
-    );
-    assert.ok(
-      this.element.textContent.search(
-        /Publish 2, schedule 1, and ignore 1 sessions/
-      ) !== -1
+      this.element.textContent.search(/Publish 2, schedule 1, and ignore 1 sessions/) !== -1
     );
   });
 
@@ -106,23 +86,11 @@ module('Integration | Component | publish all sessions', function (hooks) {
     const reviewTable = '.publish-all-sessions-overridable table';
     this.set('course', this.course);
 
-    await render(
-      hbs`<PublishAllSessions @sessions={{array}} @course={{this.course}} />`
-    );
+    await render(hbs`<PublishAllSessions @sessions={{array}} @course={{this.course}} />`);
 
-    assert.ok(
-      this.element.textContent.search(
-        /Sessions Incomplete: cannot publish \(0\)/
-      ) !== -1
-    );
-    assert.ok(
-      this.element.textContent.search(
-        /Sessions Complete: ready to publish \(0\)/
-      ) !== -1
-    );
-    assert.ok(
-      this.element.textContent.search(/Sessions Requiring Review \(0\)/) !== -1
-    );
+    assert.ok(this.element.textContent.search(/Sessions Incomplete: cannot publish \(0\)/) !== -1);
+    assert.ok(this.element.textContent.search(/Sessions Complete: ready to publish \(0\)/) !== -1);
+    assert.ok(this.element.textContent.search(/Sessions Requiring Review \(0\)/) !== -1);
     assert
       .dom(reviewButtons)
       .doesNotExist(
@@ -141,12 +109,8 @@ module('Integration | Component | publish all sessions', function (hooks) {
     const sessions = [this.unpublishableSession];
     this.set('sessions', sessions);
     this.set('course', this.course);
-    await render(
-      hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />`
-    );
-    assert
-      .dom('[data-test-unlinked-warning]')
-      .hasText('This course has unlinked objective(s)');
+    await render(hbs`<PublishAllSessions @sessions={{this.sessions}} @course={{this.course}} />`);
+    assert.dom('[data-test-unlinked-warning]').hasText('This course has unlinked objective(s)');
     assert.dom('.fa-unlink').exists();
     assert.dom('.fa-chart-bar').exists();
   });

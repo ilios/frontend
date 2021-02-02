@@ -18,11 +18,7 @@ export default Model.extend({
     }
     return scopeNote;
   }),
-  hasTruncatedScopeNote: computed(
-    'scopeNote.length',
-    'truncatedScopeNote.length',
-    function () {
-      return this.scopeNote.length !== this.truncatedScopeNote.length;
-    }
-  ),
+  hasTruncatedScopeNote: computed('scopeNote.length', 'truncatedScopeNote.length', function () {
+    return this.scopeNote.length !== this.truncatedScopeNote.length;
+  }),
 });
