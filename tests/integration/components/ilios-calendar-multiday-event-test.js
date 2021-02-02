@@ -55,8 +55,7 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
       />
     `);
     assert.dom(this.element).containsText('Cheramie is born');
-
-    await click('[data-test-event-name]');
+    await click('[data-test-ilios-calendar-multiday-event]');
   });
 
   test('action does not fire for scheduled events', async function(assert) {
@@ -76,10 +75,10 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
       />
     `);
     assert.dom(this.element).containsText('Cheramie is born');
-    await click('[data-test-event-name]');
+    await click('[data-test-ilios-calendar-multiday-event]');
   });
 
-  test('action does not fire for unslecatbleEvents events', async function(assert) {
+  test('action does not fire for unselectableEvents events', async function(assert) {
     const event = getEvent();
     event.offering = 1;
 
@@ -96,6 +95,6 @@ module('Integration | Component | ilios calendar multiday event', function(hooks
       />
     `);
     assert.dom(this.element).containsText('Cheramie is born');
-    await click('[data-test-event-name]');
+    await click('[data-test-ilios-calendar-multiday-event]');
   });
 });
