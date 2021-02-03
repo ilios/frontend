@@ -108,9 +108,6 @@ export default class LearningMaterialManagerComponent extends Component {
 
   /**
    * Whether the given learning material is linked to no more than one session or course.
-   * @property isUnlinked
-   * @type {Ember.computed}
-   * @public
    */
   get isLinkedOnlyOnce() {
     return this.courseLearningMaterialIds.length + this.sessionLearningMaterialIds.length === 1;

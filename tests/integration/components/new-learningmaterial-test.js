@@ -11,12 +11,15 @@ module('Integration | Component | new learningmaterial', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('owning user has additional info', async function (assert) {
-    this.school = this.server.create('school');
+  hooks.beforeEach(async function () {
+    const school = this.server.create('school');
     await setupAuthentication({
-      school: this.school,
+      school,
       displayName: 'Clem Chowder',
     });
+  });
+
+  test('owning user has additional info', async function (assert) {
     this.set('type', 'citation');
     await render(hbs`
       <NewLearningmaterial
@@ -38,5 +41,30 @@ module('Integration | Component | new learningmaterial', function (hooks) {
     );
     await component.owningUser.userNameInfo.closeTooltip();
     assert.notOk(component.owningUser.userNameInfo.isTooltipVisible);
+  });
+
+  test('link validation', async function (assert) {
+    this.set('type', 'link');
+    await render(hbs`
+      <NewLearningmaterial
+        @type={{this.type}}
+        @learningMaterialStatuses={{array}}
+        @learningMaterialUserRoles={{array}}
+        @save={{noop}}
+        @cancel={{noop}}
+      />
+   `);
+    assert.equal(component.url.validationErrors.length, 0);
+    await component.save();
+    assert.equal(component.url.validationErrors.length, 1);
+    assert.equal(component.url.validationErrors[0].text, 'This field must be a valid url');
+    await component.url.set('https://validurl.edu/');
+    assert.equal(component.url.validationErrors.length, 0);
+    await component.url.set('https://validurl.edu/but-way-too-long/' + '0123456789'.repeat(25));
+    assert.equal(component.url.validationErrors.length, 1);
+    assert.equal(
+      component.url.validationErrors[0].text,
+      'This field is too long (maximum is 256 characters)'
+    );
   });
 });

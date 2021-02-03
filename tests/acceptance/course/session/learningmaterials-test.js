@@ -195,7 +195,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
         '0 guy M. Mc0son'
       );
       await page.learningMaterials.newLearningMaterial.author(testAuthor);
-      await page.learningMaterials.newLearningMaterial.url(testUrl);
+      await page.learningMaterials.newLearningMaterial.url.set(testUrl);
       await page.learningMaterials.newLearningMaterial.status('2');
       await page.learningMaterials.newLearningMaterial.role('2');
       await page.learningMaterials.newLearningMaterial.description(testDescription);

@@ -1,4 +1,4 @@
-import { clickable, create, fillable, isVisible } from 'ember-cli-page-object';
+import { collection, clickable, create, fillable, isVisible } from 'ember-cli-page-object';
 import { pageObjectFillInFroalaEditor } from 'ilios-common';
 import userNameInfo from './user-name-info';
 
@@ -6,7 +6,11 @@ const definition = {
   scope: '[data-test-new-learningmaterial]',
   name: fillable('input', { at: 0 }),
   author: fillable('input', { at: 1 }),
-  url: fillable('input', { at: 2 }),
+  url: {
+    scope: '[data-test-link]',
+    set: fillable('input'),
+    validationErrors: collection('.validation-error-message'),
+  },
   citation: fillable('textarea'),
   owningUser: {
     scope: '[data-test-owninguser]',

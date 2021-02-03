@@ -24,6 +24,7 @@ export default class NewLearningmaterialComponent extends Component {
   @ValidateIf((o) => o.isLink)
   @NotBlank()
   @IsURL()
+  @Length(1, 256)
   @tracked
   link = DEFAULT_URL_VALUE;
   @ValidateIf((o) => o.isFile && !o.copyrightRationale)
