@@ -1,4 +1,10 @@
+import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default class SessionPublicationCheckRoute extends Route.extend(AuthenticatedRouteMixin) {}
+export default class SessionPublicationCheckRoute extends Route {
+  @service session;
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
+}

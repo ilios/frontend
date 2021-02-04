@@ -1,10 +1,16 @@
+import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default class WeeklyeventsRoute extends Route.extend(AuthenticatedRouteMixin) {
+export default class WeeklyeventsRoute extends Route {
+  @service session;
+
   queryParams = {
     expanded: {
       replace: true,
     },
   };
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
 }

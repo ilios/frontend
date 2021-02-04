@@ -1,10 +1,10 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default class PrintCourseRoute extends Route.extend(AuthenticatedRouteMixin) {
+export default class PrintCourseRoute extends Route {
   @service currentUser;
   @service dataLoader;
+  @service session;
 
   titleToken = 'general.coursesAndSessions';
   canViewUnpublished = false;
@@ -29,5 +29,9 @@ export default class PrintCourseRoute extends Route.extend(AuthenticatedRouteMix
   setupController(controller, model) {
     super.setupController(controller, model);
     controller.set('canViewUnpublished', this.canViewUnpublished);
+  }
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
   }
 }

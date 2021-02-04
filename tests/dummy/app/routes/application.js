@@ -1,14 +1,16 @@
-import Route from '@ember/routing/route';
-import ApplicationRouteMixin from 'ember-simple-auth/mixins/application-route-mixin';
 import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 import { loadPolyfills } from 'ilios-common/utils/load-polyfills';
 
-export default Route.extend(ApplicationRouteMixin, {
-  intl: service(),
-  moment: service(),
-  async beforeModel() {
+export default class ApplicationRoute extends Route {
+  @service session;
+  @service intl;
+  @service moment;
+
+  async beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
     await loadPolyfills();
     this.intl.setLocale('en-us');
     this.moment.setLocale('en');
-  },
-});
+  }
+}

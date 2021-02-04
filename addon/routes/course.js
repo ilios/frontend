@@ -1,11 +1,11 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
 
-export default class CourseRoute extends Route.extend(AuthenticatedRouteMixin) {
+export default class CourseRoute extends Route {
   @service permissionChecker;
   @service dataLoader;
+  @service session;
 
   titleToken = 'general.coursesAndSessions';
   editable = false;
@@ -17,6 +17,10 @@ export default class CourseRoute extends Route.extend(AuthenticatedRouteMixin) {
     const arr = await this.preload(params.course_id);
 
     return arr[0];
+  }
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
   }
 
   async afterModel(course) {

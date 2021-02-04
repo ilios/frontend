@@ -1,8 +1,10 @@
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import { inject as service } from '@ember/service';
 import { all } from 'rsvp';
 
-export default class CourseMaterialsRoute extends Route.extend(AuthenticatedRouteMixin) {
+export default class CourseMaterialsRoute extends Route {
+  @service session;
+
   titleToken = 'general.coursesAndSessions';
 
   afterModel(course) {
@@ -10,6 +12,10 @@ export default class CourseMaterialsRoute extends Route.extend(AuthenticatedRout
       this.loadCourseLearningMaterials(course),
       this.loadSessionLearningMaterials(course),
     ]);
+  }
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
   }
 
   async loadCourseLearningMaterials(course) {

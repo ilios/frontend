@@ -1,10 +1,10 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default class EventsRoute extends Route.extend(AuthenticatedRouteMixin) {
+export default class EventsRoute extends Route {
   @service userEvents;
   @service schoolEvents;
+  @service session;
 
   model(params) {
     const slug = params.slug;
@@ -18,5 +18,9 @@ export default class EventsRoute extends Route.extend(AuthenticatedRouteMixin) {
     }
 
     return eventService.getEventForSlug(slug);
+  }
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
   }
 }
