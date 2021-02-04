@@ -72,4 +72,10 @@
       color: $ilios-red;
     }
   }
+
+  .weblink {
+    span {
+      @include text-wrap;
+    }
+  }
 }
