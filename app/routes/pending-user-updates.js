@@ -2,16 +2,21 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { filter } from 'rsvp';
 
-export default Route.extend({
-  currentUser: service(),
-  permissionChecker: service(),
-  store: service(),
+export default class PendingUserUpdatesRoute extends Route {
+  @service currentUser;
+  @service permissionChecker;
+  @service store;
+  @service session;
 
-  queryParams: {
+  queryParams = {
     filter: {
       replace: true
     }
-  },
+  }
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
 
   async model(){
     const currentUser = this.currentUser;
@@ -24,12 +29,12 @@ export default Route.extend({
     const user = await currentUser.get('model');
     const primarySchool = await user.get('school');
     return { primarySchool, schools };
-  },
+  }
 
   setupController(controller, model) {
-    this._super(controller, model);
+    super.setupController(controller, model);
     controller.set('deletedUpdates', []);
     controller.set('sortSchoolsBy', ['title']);
     controller.set('updatesBeingSaved', []);
   }
-});
+}

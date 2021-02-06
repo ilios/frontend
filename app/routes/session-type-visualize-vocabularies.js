@@ -1,16 +1,24 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Route.extend(AuthenticatedRouteMixin, {
-  store: service(),
-  _dataLoadingPromise: null,
+export default class SessionTypeVisualizeVocabulariesRoute extends Route {
+  @service store;
+  @service session;
+
+  _dataLoadingPromise = null;
+
+  async beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
+
   async model(params) {
     return this.loadModel(params.session_type_id);
-  },
+  }
+
   async afterModel(sessionType) {
     return this.loadModel(sessionType.id);
-  },
+  }
+
   async loadModel(sessionTypeId){
     if (!this._dataLoadingPromise) {
       this._dataLoadingPromise = this.store.findRecord('session-type', sessionTypeId, {
@@ -21,4 +29,4 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
     return await this._dataLoadingPromise;
   }
-});
+}

@@ -3,26 +3,25 @@ import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { Promise } from 'rsvp';
 import EmberConfig from 'ilios/config/environment';
-import UnauthenticatedRouteMixin from 'ember-simple-auth/mixins/unauthenticated-route-mixin';
 
-export default Route.extend(UnauthenticatedRouteMixin, {
-  currentUser: service(),
-  fetch: service(),
-  iliosConfig: service(),
-  session: service(),
+export default class LoginRoute extends Route {
+  @service currentUser;
+  @service fetch;
+  @service iliosConfig;
+  @service session;
 
-  noAccountExistsAccount: null,
-  noAccountExistsError: false,
+  noAccountExistsAccount = null;
+  noAccountExistsError = false;
 
-  beforeModel(transition){
-    this._super(transition);
+  beforeModel(){
+    this.session.prohibitAuthentication('index');
     return this.attemptSSOAuth();
-  },
+  }
 
   setupController(controller) {
     controller.set('noAccountExistsError', this.noAccountExistsError);
     controller.set('noAccountExistsAccount', this.noAccountExistsAccount);
-  },
+  }
 
   async attemptSSOAuth(){
     const type = await this.iliosConfig.getAuthenticationType();
@@ -36,7 +35,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
     if(type === 'cas'){
       return await this.casLogin();
     }
-  },
+  }
 
   async casLogin() {
     const currentUrl = [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
@@ -70,7 +69,7 @@ export default Route.extend(UnauthenticatedRouteMixin, {
       const authenticator = 'authenticator:ilios-jwt';
       this.session.authenticate(authenticator, {jwt: response.jwt});
     }
-  },
+  }
 
   async shibbolethAuth(){
     const loginUrl = '/auth/login';
@@ -97,4 +96,4 @@ export default Route.extend(UnauthenticatedRouteMixin, {
       this.session.authenticate(authenticator, {jwt: response.jwt});
     }
   }
-});
+}

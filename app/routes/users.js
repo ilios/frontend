@@ -1,8 +1,10 @@
+import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Route.extend(AuthenticatedRouteMixin, {
-  queryParams: {
+export default class UsersRoute extends Route {
+  @service session;
+
+  queryParams = {
     query: {
       replace: true
     },
@@ -11,4 +13,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
       replace: true
     }
   }
-});
+
+  async beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
+}

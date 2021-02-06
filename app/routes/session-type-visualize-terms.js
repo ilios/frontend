@@ -1,17 +1,25 @@
 /* eslint-disable ember/avoid-leaking-state-in-ember-objects */
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Route.extend(AuthenticatedRouteMixin, {
-  store: service(),
-  _loadedSessionTypes: {},
+export default class SessionTypeVisualizeTermsRoute extends Route {
+  @service store;
+  @service session;
+
+  _loadedSessionTypes = {};
+
+  async beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
+
   async model(params) {
     return this.loadModel(params.session_type_id, params.vocabulary_id);
-  },
+  }
+
   async afterModel({sessionType, vocabulary}) {
     return this.loadModel(sessionType.id, vocabulary.id);
-  },
+  }
+
   async loadModel(sessionTypeId, vocabularyId){
     if (!( sessionTypeId in this._loadedSessionTypes)) {
       this._loadedSessionTypes[sessionTypeId] = this.store.findRecord('session-type', sessionTypeId, {
@@ -25,5 +33,4 @@ export default Route.extend(AuthenticatedRouteMixin, {
       vocabulary: await this.store.findRecord('vocabulary', vocabularyId),
     };
   }
-
-});
+}

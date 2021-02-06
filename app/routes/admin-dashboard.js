@@ -1,20 +1,21 @@
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { filter } from 'rsvp';
 import { inject as service } from '@ember/service';
 
-export default Route.extend(AuthenticatedRouteMixin, {
-  store: service(),
-  permissionChecker: service(),
-  currentUser: service(),
+export default class AdminDashboardRoute extends Route {
+  @service store;
+  @service permissionChecker;
+  @service currentUser;
+  @service session;
 
-  beforeModel() {
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
     const currentUser = this.currentUser;
     const performsNonLearnerFunction = currentUser.get('performsNonLearnerFunction');
     if (!performsNonLearnerFunction) {
       this.transitionTo('dashboard');
     }
-  },
+  }
 
   async model() {
     const store = this.store;
@@ -32,5 +33,5 @@ export default Route.extend(AuthenticatedRouteMixin, {
       canCreate,
       schoolsWithUpdateUserPermission
     };
-  },
-});
+  }
+}

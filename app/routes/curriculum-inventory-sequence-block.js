@@ -1,13 +1,19 @@
 import RSVP from 'rsvp';
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { inject as service } from '@ember/service';
 
 const { all } = RSVP;
 
-export default Route.extend(AuthenticatedRouteMixin, {
-  permissionChecker: service(),
-  canUpdate: false,
+export default class CurriculumInventorySequenceBlockRoute extends Route {
+  @service permissionChecker;
+  @service session;
+
+  canUpdate = false;
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
+
   async afterModel(model) {
     const permissionChecker = this.permissionChecker;
 
@@ -20,9 +26,10 @@ export default Route.extend(AuthenticatedRouteMixin, {
       model.get('children'),
       model.get('parent'),
     ]);
-  },
+  }
+
   setupController(controller, model) {
-    this._super(controller, model);
+    super.setupController(controller, model);
     controller.set('canUpdate', this.canUpdate);
-  },
-});
+  }
+}
