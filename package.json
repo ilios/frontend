@@ -69,7 +69,7 @@
     "qunit-dom": "^1.6.0",
     "stylelint": "^13.9.0",
     "stylelint-config-recommended-scss": "^4.2.0",
-    "stylelint-scss": "^3.17.2"
+    "stylelint-scss": "^3.19.0"
   },
   "engines": {
     "node": "10.* || >= 12"
