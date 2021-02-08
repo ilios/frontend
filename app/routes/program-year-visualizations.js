@@ -5,7 +5,6 @@ export default class ProgramYearVisualizationsRoute extends Route {
   @service store;
   @service session;
 
-  // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
   _loadedProgramYears = {};
 
   beforeModel(transition) {
