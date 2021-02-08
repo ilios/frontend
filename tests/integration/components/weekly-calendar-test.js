@@ -4,7 +4,7 @@ import { settled, render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
-import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { a11yAudit } from 'ember-a11y-testing/test-support';
 import { component } from 'ilios-common/page-objects/components/weekly-calendar';
 
 module('Integration | Component | weekly-calendar', function (hooks) {
