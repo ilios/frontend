@@ -1,7 +1,7 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-export default class DashboardRoute extends Route {
+export default class InstructorGroupRoute extends Route {
   @service permissionChecker;
   @service session;
 
