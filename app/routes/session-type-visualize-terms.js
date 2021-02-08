@@ -1,4 +1,3 @@
-/* eslint-disable ember/avoid-leaking-state-in-ember-objects */
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
 
