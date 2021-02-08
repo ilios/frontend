@@ -6,7 +6,7 @@ import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/single-event';
-import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { a11yAudit } from 'ember-a11y-testing/test-support';
 
 module('Integration | Component | ilios calendar single event', function (hooks) {
   setupRenderingTest(hooks);
