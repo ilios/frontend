@@ -1,14 +1,20 @@
 import Route from '@ember/routing/route';
 import { hash, all } from 'rsvp';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 
-export default Route.extend(AuthenticatedRouteMixin, {
-  store: service(),
-  currentUser: service(),
-  permissionChecker: service(),
-  iliosConfig: service(),
-  canUpdate: false,
+export default class UserRoute extends Route {
+  @service store;
+  @service currentUser;
+  @service permissionChecker;
+  @service iliosConfig;
+  @service session;
+
+  canUpdate = false;
+
+  async beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
 
   /**
   * Prefetch user relationship data to smooth loading
@@ -30,20 +36,21 @@ export default Route.extend(AuthenticatedRouteMixin, {
     if (userSearchType !== 'ldap') {
       await import('zxcvbn');
     }
-  },
-  setupController(controller, model) {
-    this._super(controller, model);
-    controller.set('canUpdate', this.canUpdate);
-  },
-  actions: {
-    loading(transition) {
-      const controller = this.controllerFor('user');
-      controller.set('isLoading', true);
-      transition.promise.finally(() => {
-        controller.set('isLoading', false);
-      });
+  }
 
-      return true;
-    }
-  },
-});
+  setupController(controller, model) {
+    super.setupController(controller, model);
+    controller.set('canUpdate', this.canUpdate);
+  }
+
+  @action
+  loading(transition) {
+    const controller = this.controllerFor('user');
+    controller.set('isLoading', true);
+    transition.promise.finally(() => {
+      controller.set('isLoading', false);
+    });
+
+    return true;
+  }
+}

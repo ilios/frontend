@@ -1,15 +1,16 @@
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { inject as service } from '@ember/service';
 
-export default Route.extend(AuthenticatedRouteMixin, {
-  currentUser: service(),
-  iliosConfig: service(),
+export default class SearchRoute extends Route {
+  @service currentUser;
+  @service iliosConfig;
+  @service session;
 
-  async beforeModel() {
+  async beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
     const searchEnabled = await this.iliosConfig.searchEnabled;
     if (!searchEnabled || !this.currentUser.performsNonLearnerFunction) {
       this.transitionTo('dashboard');
     }
   }
-});
+}

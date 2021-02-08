@@ -1,24 +1,30 @@
 import Route from '@ember/routing/route';
 import { hash } from 'rsvp';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { inject as service } from '@ember/service';
 
-export default Route.extend(AuthenticatedRouteMixin, {
-  permissionChecker: service(),
-  canUpdateSchool: false,
-  canUpdateCompetency: false,
-  canDeleteCompetency: false,
-  canCreateCompetency: false,
-  canUpdateVocabulary: false,
-  canDeleteVocabulary: false,
-  canCreateVocabulary: false,
-  canUpdateTerm: false,
-  canDeleteTerm: false,
-  canCreateTerm: false,
-  canUpdateSessionType: false,
-  canDeleteSessionType: false,
-  canCreateSessionType: false,
-  canUpdateSchoolConfig: false,
+export default class SchoolRoute extends Route {
+  @service permissionChecker;
+  @service session;
+
+  canUpdateSchool = false;
+  canUpdateCompetency = false;
+  canDeleteCompetency = false;
+  canCreateCompetency = false;
+  canUpdateVocabulary = false;
+  canDeleteVocabulary = false;
+  canCreateVocabulary = false;
+  canUpdateTerm = false;
+  canDeleteTerm = false;
+  canCreateTerm = false;
+  canUpdateSessionType = false;
+  canDeleteSessionType = false;
+  canCreateSessionType = false;
+  canUpdateSchoolConfig = false;
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
+
   async afterModel(school) {
     await this.loadPermissions(school);
 
@@ -32,9 +38,10 @@ export default Route.extend(AuthenticatedRouteMixin, {
       'vocabularies',
       'curriculumInventoryInstitution')
     );
-  },
+  }
+
   setupController(controller, model) {
-    this._super(controller, model);
+    super.setupController(controller, model);
     controller.set('canUpdateSchool', this.canUpdateSchool);
     controller.set('canUpdateCompetency', this.canUpdateCompetency);
     controller.set('canDeleteCompetency', this.canDeleteCompetency);
@@ -49,7 +56,8 @@ export default Route.extend(AuthenticatedRouteMixin, {
     controller.set('canDeleteSessionType', this.canDeleteSessionType);
     controller.set('canCreateSessionType', this.canCreateSessionType);
     controller.set('canUpdateSchoolConfig', this.canUpdateSchoolConfig);
-  },
+  }
+
   async loadPermissions(school) {
     const permissionChecker = this.permissionChecker;
 
@@ -83,4 +91,4 @@ export default Route.extend(AuthenticatedRouteMixin, {
     this.set('canCreateSessionType', canCreateSessionType);
     this.set('canUpdateSchoolConfig', canUpdateSchoolConfig);
   }
-});
+}

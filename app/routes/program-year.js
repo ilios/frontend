@@ -2,9 +2,16 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
 
-export default Route.extend({
-  permissionChecker: service(),
-  canUpdate: false,
+export default class ProgramYearRoute extends Route {
+  @service permissionChecker;
+  @service session;
+
+  canUpdate = false;
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
+
   /**
    * Preload the school configurations
    * to avoid a pop in later
@@ -15,9 +22,10 @@ export default Route.extend({
     this.set('canUpdate', canUpdate);
     //pre load froala so it's available quickly when working in the course
     loadFroalaEditor();
-  },
+  }
+
   setupController(controller, model) {
-    this._super(controller, model);
+    super.setupController(controller, model);
     controller.set('canUpdate', this.canUpdate);
-  },
-});
+  }
+}

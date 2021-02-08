@@ -1,16 +1,20 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { defer } from 'rsvp';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Route.extend(AuthenticatedRouteMixin, {
-  currentUser: service(),
+export default class ProgramsRoute extends Route {
+  @service currentUser;
+  @service session;
 
-  queryParams: {
+  queryParams = {
     titleFilter: {
       replace: true
     }
-  },
+  }
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
 
   model() {
     const rsvpDefer = defer();
@@ -26,4 +30,4 @@ export default Route.extend(AuthenticatedRouteMixin, {
     });
     return rsvpDefer.promise;
   }
-});
+}

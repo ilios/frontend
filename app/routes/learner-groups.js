@@ -1,23 +1,27 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
+import { action } from '@ember/object';
 
-export default Route.extend(AuthenticatedRouteMixin, {
-  dataLoader: service(),
+export default class LearnerGroupsRoute extends Route {
+  @service dataLoader;
+  @service session;
 
-  queryParams: {
+  queryParams = {
     titleFilter: {
       replace: true
     }
-  },
+  }
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
 
   model() {
     return this.dataLoader.loadSchoolsForLearnerGroups();
-  },
-
-  actions: {
-    willTransition() {
-      this.controller.set('newGroup', null);
-    }
   }
-});
+
+  @action
+  willTransition() {
+    this.controller.set('newGroup', null);
+  }
+}

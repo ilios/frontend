@@ -1,18 +1,23 @@
 import Route from '@ember/routing/route';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { hash } from 'rsvp';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Route.extend(AuthenticatedRouteMixin, {
-  currentUser: service(),
-  store: service(),
-  dataLoader: service(),
+export default class CoursesRoute extends Route {
+  @service currentUser;
+  @service store;
+  @service dataLoader;
+  @service session;
 
-  queryParams: {
+  queryParams = {
     titleFilter: {
       replace: true
     }
-  },
+  }
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
 
   async model() {
     const user = await this.currentUser.getModel();
@@ -21,11 +26,10 @@ export default Route.extend(AuthenticatedRouteMixin, {
       primarySchool: this.dataLoader.loadSchoolForCourses(user.belongsTo('school').id()),
       years: this.store.findAll('academic-year'),
     });
-  },
-
-  actions: {
-    willTransition() {
-      this.controller.set('newCourse', null);
-    }
   }
-});
+
+  @action
+  willTransition() {
+    this.controller.set('newCourse', null);
+  }
+}

@@ -1,18 +1,22 @@
 import { inject as service } from '@ember/service';
 import Route from '@ember/routing/route';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Route.extend(AuthenticatedRouteMixin, {
-  currentUser: service(),
-  store: service(),
+export default class CurriculumInventoryReportsRoute extends Route {
+  @service currentUser;
+  @service store;
+  @service session;
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
 
   async model() {
     const store = this.store;
     return store.findAll('school');
-  },
+  }
 
   setupController(controller, model) {
-    this._super(controller, model);
+    super.setupController(controller, model);
     controller.set('sortByTitle', ['title']);
   }
-});
+}

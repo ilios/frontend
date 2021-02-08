@@ -1,18 +1,22 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 import { filter } from 'rsvp';
 
-export default Route.extend(AuthenticatedRouteMixin, {
-  currentUser: service(),
-  permissionChecker: service(),
-  store: service(),
+export default class AssignStudentsRoute extends Route {
+  @service currentUser;
+  @service permissionChecker;
+  @service store;
+  @service session;
 
-  queryParams: {
+  queryParams = {
     query: {
       replace: true
     }
-  },
+  }
+
+  beforeModel(transition) {
+    this.session.requireAuthentication(transition, 'login');
+  }
 
   async model() {
     const currentUser = this.currentUser;
@@ -29,5 +33,5 @@ export default Route.extend(AuthenticatedRouteMixin, {
       primarySchool,
       schools: schoolsWithUpdateUserPermission
     };
-  },
-});
+  }
+}
