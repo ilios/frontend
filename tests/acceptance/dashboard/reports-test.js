@@ -1,7 +1,7 @@
 import { currentRouteName, currentURL } from '@ember/test-helpers';
 import {
   module,
-  test
+  test,
 } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import page from 'ilios/tests/pages/dashboard';
@@ -120,7 +120,7 @@ module('Acceptance | Dashboard Reports', function(hooks) {
     await page.visit();
     assert.equal(page.myReports.reports.length, 2);
     await page.myReports.addNewReport();
-    await page.myReports.newReport.setTitle('New Report');
+    await page.myReports.newReport.setTitle('new report');
     await page.myReports.newReport.chooseSchool('1');
     await page.myReports.newReport.chooseSubject('session');
     await page.myReports.newReport.chooseObjectType('course');
@@ -129,8 +129,7 @@ module('Acceptance | Dashboard Reports', function(hooks) {
 
     assert.equal(page.myReports.reports.length, 3);
     await page.myReports.reports[2].select();
-
-    assert.equal(page.myReports.selectedReport.title, 'New Report');
+    assert.equal(page.myReports.selectedReport.title, 'new report');
     assert.equal(page.myReports.selectedReport.results.length, 1);
     assert.equal(page.myReports.selectedReport.results[0].text, '2015 - 2016 course 0 session 0');
   });
