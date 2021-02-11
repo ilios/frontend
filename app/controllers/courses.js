@@ -40,11 +40,11 @@ export default Controller.extend({
       return [];
     }
 
-    const yearTitle = selectedYear.title;
+    const year = parseInt(selectedYear.id, 10);
     await this.dataLoader.loadSchoolForCourses(selectedSchool.id);
     const courses = await selectedSchool.courses;
     return courses.filter(course => {
-      return course.year === yearTitle && !course.archived;
+      return course.year === year && !course.archived;
     });
   }),
 
@@ -100,7 +100,7 @@ export default Controller.extend({
   selectedYear: computed('model.years.[]', 'yearTitle', function() {
     const years = this.get('model.years');
     if(isPresent(this.yearTitle)){
-      return years.find(year => year.get('title') === parseInt(this.yearTitle, 10));
+      return years.find(year => year.get('id') === this.yearTitle);
     }
     let currentYear = parseInt(moment().format('YYYY'), 10);
     const currentMonth = parseInt(moment().format('M'), 10);

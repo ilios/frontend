@@ -33,7 +33,7 @@
         data-test-year-filter
       >
         {{#each (sort-by "title:desc" @model.years) as |year|}}
-          <option value={{year.year}} selected={{is-equal year this.selectedYear}}>
+          <option value={{year.id}} selected={{is-equal year this.selectedYear}}>
             {{year.title}}
           </option>
         {{/each}}
