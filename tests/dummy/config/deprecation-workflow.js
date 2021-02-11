@@ -9,5 +9,6 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'ember-metal.get-with-default' },
     { handler: 'silence', matchId: 'ember-source.deprecation-without-for' },
     { handler: 'silence', matchId: 'ember-source.deprecation-without-since' },
+    { handler: 'silence', matchId: 'ember-string.htmlsafe-ishtmlsafe' },
   ],
 };
