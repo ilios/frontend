@@ -1,23 +1,27 @@
 import Application from '@ember/application';
-import { run } from '@ember/runloop';
-import InflectorInitializer from '../../../initializers/inflector';
+import { initialize } from 'ilios/initializers/inflector';
 import { module, test } from 'qunit';
-
-let application;
+import Resolver from 'ember-resolver';
+import destroyApp from '../../helpers/destroy-app';
+import { pluralize } from 'ember-inflector';
 
 module('Unit | Initializer | inflector', function(hooks) {
   hooks.beforeEach(function() {
-    run(function() {
-      application = Application.create();
-      application.deferReadiness();
+    this.TestApplication = class TestApplication extends Application {};
+    this.TestApplication.initializer({
+      name: 'inflector initializer',
+      initialize
     });
+    this.application = this.TestApplication.create({ autoboot: false, Resolver });
   });
 
-  // Replace this with your real tests.
-  test('it works', function(assert) {
-    InflectorInitializer.initialize(application);
+  hooks.afterEach(function() {
+    destroyApp(this.application);
+  });
 
-    // you would normally confirm the results of the initializer here
-    assert.ok(true);
+  test('it works', async function(assert) {
+    await this.application.boot();
+    assert.equal(pluralize(2, 'vocabulary'), '2 vocabularies');
+    assert.equal(pluralize(2, 'aamc-pcrs'), '2 aamc-pcrs');
   });
 });
