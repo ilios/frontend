@@ -1,22 +1,13 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  settled,
-  find,
-  click,
-  findAll
-} from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios/tests/pages/components/assign-students';
 
 module('Integration | Component | assign students', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
-
-  test('nothing', function(assert){
-    assert.ok(true);
-  });
 
   test('it renders', async function(assert) {
     const school = this.server.create('school');
@@ -49,27 +40,22 @@ module('Integration | Component | assign students', function(hooks) {
 
     this.set('school', schoolModel);
     this.set('students', students);
-    this.set('setOffset', ()=>{});
-    this.set('setLimit', ()=>{});
-
     await render(hbs`<AssignStudents
-      @students={{students}}
-      @school={{school}}
+      @students={{this.students}}
+      @school={{this.school}}
       @offset={{0}}
       @limit={{10}}
-      @setOffset={{action setOffset}}
-      @setLimit={{action setLimit}}
+      @setOffset={{noop}}
+      @setLimit={{noop}}
     />`);
 
-    const cohortOptions = findAll('select:nth-of-type(1) option');
-    assert.equal(cohortOptions.length, 1);
-    assert.dom(cohortOptions[0]).hasText('program title test cohort');
-
-    assert.dom('tbody tr').exists({ count: 2 });
-    assert.dom('tbody tr:nth-of-type(1) td [data-test-fullname]').hasText('0 guy M. Mc0son');
-    assert.dom('tbody tr:nth-of-type(1) td [data-test-info]').doesNotExist();
-    assert.dom('tbody tr:nth-of-type(2) td [data-test-fullname]').hasText('Aardvark');
-    assert.dom('tbody tr:nth-of-type(2) td [data-test-info]').exists();
+    assert.equal(component.cohorts.options.length, 1);
+    assert.equal(component.cohorts.options[0].text, 'program title test cohort');
+    assert.equal(component.students.length, 2);
+    assert.equal(component.students[0].name.userNameInfo.fullName, '0 guy M. Mc0son');
+    assert.notOk(component.students[0].name.userNameInfo.hasAdditionalInfo);
+    assert.equal(component.students[1].name.userNameInfo.fullName, 'Aardvark');
+    assert.ok(component.students[1].name.userNameInfo.hasAdditionalInfo);
   });
 
   test('check all checks all', async function(assert) {
@@ -84,24 +70,19 @@ module('Integration | Component | assign students', function(hooks) {
 
     this.set('school', schoolModel);
     this.set('students', students);
-    this.set('setOffset', ()=>{});
-    this.set('setLimit', ()=>{});
 
     await render(hbs`<AssignStudents
-      @students={{students}}
-      @school={{school}}
+      @students={{this.students}}
+      @school={{this.school}}
       @offset={{0}}
       @limit={{10}}
-      @setOffset={{action setOffset}}
-      @setLimit={{action setLimit}}
+      @setOffset={{noop}}
+      @setLimit={{noop}}
     />`);
-    const checkAll = 'thead tr:nth-of-type(1) input';
-    const firstStudent = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
-
-    assert.dom(firstStudent).isNotChecked();
-    await click(checkAll);
-    assert.dom(firstStudent).isChecked();
-
+    assert.notOk(component.isToggleAllChecked);
+    assert.notOk(component.students[0].isToggleChecked);
+    await component.toggleAll();
+    assert.notOk(component.students[0].isChecked);
   });
 
   test('check some sets indeterminate state', async function(assert) {
@@ -121,31 +102,24 @@ module('Integration | Component | assign students', function(hooks) {
 
     this.set('school', schoolModel);
     this.set('students', students);
-    this.set('setOffset', ()=>{});
-    this.set('setLimit', ()=>{});
 
     await render(hbs`<AssignStudents
-      @students={{students}}
-      @school={{school}}
+      @students={{this.students}}
+      @school={{this.school}}
       @offset={{0}}
       @limit={{10}}
-      @setOffset={{action setOffset}}
-      @setLimit={{action setLimit}}
+      @setOffset={{noop}}
+      @setLimit={{noop}}
     />`);
-    const checkAll = 'thead tr:nth-of-type(1) input';
-    const firstStudent = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
-    const secondStudent = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
 
-    assert.dom(checkAll).isNotChecked('check all is not initially checked');
-    assert.notOk(find(checkAll).indeterminate, 'check all is not initially indeterminate');
-    assert.dom(firstStudent).isNotChecked('first student is not initiall checked');
-    assert.dom(secondStudent).isNotChecked('second student is not initiall checked');
-
-    await click(firstStudent);
-    assert.ok(find(checkAll).indeterminate, 'check all is indeterminate with one student checked');
-    await click(secondStudent);
-    await settled();
-    assert.dom(checkAll).isChecked('check all is checked with both students checked');
+    assert.notOk(component.isToggleAllChecked, 'check all is not initially checked');
+    assert.notOk(component.isToggleAllIndeterminate, 'check all is not initially indeterminate');
+    assert.notOk(component.students[0].isToggleAllChecked, 'first student is not initially checked');
+    assert.notOk(component.students[1].isToggleAllChecked, 'second student is not initially checked');
+    await component.students[0].toggle();
+    assert.ok(component.isToggleAllIndeterminate, 'check all is indeterminate with one student checked');
+    await component.students[1].toggle();
+    assert.ok(component.isToggleAllChecked, 'check all is checked with both students checked');
   });
 
   test('when some are selected check all checks all', async function(assert) {
@@ -165,29 +139,23 @@ module('Integration | Component | assign students', function(hooks) {
 
     this.set('school', schoolModel);
     this.set('students', students);
-    this.set('setOffset', ()=>{});
-    this.set('setLimit', ()=>{});
 
     await render(hbs`<AssignStudents
-      @students={{students}}
-      @school={{school}}
+      @students={{this.students}}
+      @school={{this.school}}
       @offset={{0}}
       @limit={{10}}
-      @setOffset={{action setOffset}}
-      @setLimit={{action setLimit}}
+      @setOffset={{noop}}
+      @setLimit={{noop}}
     />`);
-    const checkAll = 'thead tr:nth-of-type(1) input';
-    const firstStudent = 'tbody tr:nth-of-type(1) td:nth-of-type(1) input';
-    const secondStudent = 'tbody tr:nth-of-type(2) td:nth-of-type(1) input';
+    assert.notOk(component.isToggleAllChecked, 'check all is not initially checked');
+    assert.notOk(component.students[0].isToggleChecked, 'first student is not initially checked');
+    assert.notOk(component.students[1].isToggleChecked, 'second student is not initially checked');
 
-    assert.dom(checkAll).isNotChecked('check all is not initially checked');
-    assert.dom(firstStudent).isNotChecked('first student is not initiall checked');
-    assert.dom(secondStudent).isNotChecked('second student is not initiall checked');
-
-    await click(firstStudent);
-    await click(checkAll);
-    assert.dom(firstStudent).isChecked('first student still checked after checkall clicked');
-    assert.dom(secondStudent).isChecked('second student checked after checkall clicked');
+    await component.students[0].toggle();
+    await component.toggleAll();
+    assert.ok(component.students[0].isToggleChecked, 'first student still checked after checkall clicked');
+    assert.ok(component.students[1].isToggleChecked, 'second student checked after checkall clicked');
   });
 
   test('save sets primary cohort', async function(assert) {
@@ -217,21 +185,19 @@ module('Integration | Component | assign students', function(hooks) {
 
     this.set('school', schoolModel);
     this.set('students', students);
-    this.set('setOffset', ()=>{});
-    this.set('setLimit', ()=>{});
 
     await render(hbs`<AssignStudents
-      @students={{students}}
-      @school={{school}}
+      @students={{this.students}}
+      @school={{this.school}}
       @offset={{0}}
       @limit={{10}}
-      @setOffset={{action setOffset}}
-      @setLimit={{action setLimit}}
+      @setOffset={{noop}}
+      @setLimit={{noop}}
     />`);
 
     assert.equal(this.server.db.users[0].primaryCohortId, null);
-    await click('thead th input');
-    await click('button.done');
+    await component.toggleAll();
+    await component.save();
     assert.equal(this.server.db.users[0].primaryCohortId, 1);
   });
 });

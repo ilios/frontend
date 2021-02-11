@@ -2,21 +2,22 @@
   class="students"
   {{did-insert (perform this.load) @school}}
   {{did-update (perform this.load) @school}}
+  data-test-assign-students
   ...attributes
 >
   <div class="header">
-    <h2>
+    <h2 data-test-title>
       {{t "general.unassignedStudentsSummaryTitle"}}
     </h2>
   </div>
   <div class="form">
-    <label>
+    <label data-test->
       {{t "general.unassignedStudentsConfirmation" count=this.selectedUserIds.length}}:
     </label>
     {{#if (not (is-array this.cohorts))}}
       <LoadingSpinner />
     {{else if (and this.bestSelectedCohort (gt this.cohorts.length 0))}}
-      <select {{on "change" (pick "target.value" (set this.primaryCohortId))}}>
+      <select {{on "change" (pick "target.value" (set this.primaryCohortId))}} data-test-cohort-selector>
         {{#each (sort-by "title" this.cohorts) as |cohort|}}
           <option
             selected={{eq cohort.id this.bestSelectedCohort.id}}
@@ -34,6 +35,7 @@
           (lt this.cohorts.length 1)
           (eq this.selectedUserIds.length 0)
         }}
+        data-test-submit
         {{on "click" (perform this.save)}}
       >
         {{#if this.save.isRunning}}
@@ -60,6 +62,7 @@
                   (gt this.selectedUserIds.length 0)
                   (lt this.selectedUserIds.length this.filteredStudents.length)
                 }}
+                data-test-toggle-all
                 {{on "click" (action "toggleCheck")}}
               >
               {{t "general.all"}}
@@ -78,27 +81,28 @@
       </thead>
       <tbody>
         {{#each this.filteredStudents as |user|}}
-          <tr class={{if (includes user.id this.selectedUserIds) "highlighted"}}>
-            <td class="text-left" colspan="1">
+          <tr class={{if (includes user.id this.selectedUserIds) "highlighted"}} data-test-student>
+            <td class="text-left" colspan="1" >
               <input type="checkbox"
                 checked={{if (includes user.id this.selectedUserIds) "checked"}}
+                data-test-toggle
                 {{on "click" (action "toggleUserSelection" user.id)}}
               >
             </td>
-            <td class="text-left" colspan="4">
+            <td class="text-left" colspan="4" data-test-name>
               <LinkTo @route="user" @model={{user}}>
                 <UserNameInfo @user={{user}} />
               </LinkTo>
             </td>
-            <td class="text-left" colspan="4">
+            <td class="text-left" colspan="4" data-test-email>
               {{user.email}}
             </td>
-            <td class="text-left" colspan="2">
+            <td class="text-left" colspan="2" data-test-campus-id>
               {{user.campusId}}
             </td>
           </tr>
         {{else}}
-          <tr>
+          <tr data-test-no-result>
             <td colspan="11" class="text-center">
               {{t "general.noResultsFound"}}
             </td>
