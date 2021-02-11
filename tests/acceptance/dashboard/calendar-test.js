@@ -75,7 +75,6 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     });
     this.server.create('academicYear', {
       id: 2015,
-      title: 2015,
     });
     this.server.create('offering', {
       session: session1,

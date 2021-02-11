@@ -19,7 +19,6 @@ module('Integration | Component | session copy', function (hooks) {
     [lastYear, thisYear, nextYear].forEach((year) => {
       this.server.create('academic-year', {
         id: year,
-        title: year,
       });
     });
     const school = this.server.create('school');
@@ -74,7 +73,6 @@ module('Integration | Component | session copy', function (hooks) {
     const thisYear = parseInt(moment().format('YYYY'), 10);
     this.server.create('academic-year', {
       id: thisYear,
-      title: thisYear,
     });
 
     const school = this.server.create('school');
@@ -323,7 +321,6 @@ module('Integration | Component | session copy', function (hooks) {
     const thisYear = parseInt(moment().format('YYYY'), 10);
     this.server.create('academic-year', {
       id: thisYear,
-      title: thisYear,
     });
 
     const school = this.server.create('school');
@@ -376,7 +373,6 @@ module('Integration | Component | session copy', function (hooks) {
     const thisYear = parseInt(moment().format('YYYY'), 10);
     this.server.create('academic-year', {
       id: thisYear,
-      title: thisYear,
     });
 
     const school = this.server.create('school');
@@ -434,7 +430,6 @@ module('Integration | Component | session copy', function (hooks) {
     const thisYear = parseInt(moment().format('YYYY'), 10);
     this.server.create('academic-year', {
       id: thisYear,
-      title: thisYear,
     });
 
     const school = this.server.create('school');
@@ -494,7 +489,6 @@ module('Integration | Component | session copy', function (hooks) {
     const thisYear = parseInt(moment().format('YYYY'), 10);
     this.server.create('academic-year', {
       id: thisYear,
-      title: thisYear,
     });
 
     const school = this.server.create('school');
