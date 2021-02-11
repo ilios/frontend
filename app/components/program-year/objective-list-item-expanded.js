@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { restartableTask } from 'ember-concurrency-decorators';
 import { map } from 'rsvp';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';
 
 export default class ProgramYearObjectiveListItemExpandedComponent extends Component {

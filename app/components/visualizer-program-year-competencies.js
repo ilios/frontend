@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import { filter, map } from 'rsvp';
 import { timeout } from 'ember-concurrency';
 import { restartableTask } from 'ember-concurrency-decorators';
