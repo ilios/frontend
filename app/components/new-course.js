@@ -21,7 +21,6 @@ export default class NewCourseComponent extends Component {
   @service store;
   @service iliosConfig;
 
-  @tracked currentYear;
   @tracked @NotBlank() selectedYear;
   @tracked @NotBlank() @Length(3, 200) title;
   @tracked years = Object.freeze(YEARS);
@@ -53,6 +52,9 @@ export default class NewCourseComponent extends Component {
   *load() {
     this.academicYearCrossesCalendarYearBoundaries
       = yield this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
+    if (this.args.currentYear && this.years.includes(parseInt(this.args.currentYear.id, 10))) {
+      this.setYear(this.args.currentYear.id);
+    }
   }
 
   @dropTask
