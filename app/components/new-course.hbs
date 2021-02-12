@@ -56,6 +56,7 @@
           type="button"
           class="done text"
           disabled={{not this.selectedYear}}
+          data-test-save
           {{on "click" (perform this.saveCourse)}}
         >
           {{#if this.saveCourse.isRunning}}
@@ -64,7 +65,7 @@
             {{t "general.done"}}
           {{/if}}
         </button>
-        <button type="button" class="cancel text" {{on "click" @cancel}}>
+        <button type="button" class="cancel text" data-test-cancel {{on "click" @cancel}}>
           {{t "general.cancel"}}
         </button>
       </div>
