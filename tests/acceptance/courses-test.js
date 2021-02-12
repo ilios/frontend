@@ -135,8 +135,8 @@ module('Acceptance | Courses', function(hooks) {
   });
 
   test('filters by year', async function(assert) {
-    this.server.create('academicYear', {id: 2013});
-    this.server.create('academicYear', {id: 2014});
+    this.server.create('academicYear', { id: 2013 });
+    this.server.create('academicYear', { id: 2014 });
     assert.expect(5);
     const firstCourse = this.server.create('course', {
       year: 2013,
@@ -148,11 +148,11 @@ module('Acceptance | Courses', function(hooks) {
     });
     await page.visit();
     assert.equal(page.courses.courses.length, 1);
-    await page.filterByYear('2013 - 2014');
+    await page.filterByYear('2013');
     assert.equal(page.courses.courses.length, 1);
     assert.equal(page.courses.courses[0].title, firstCourse.title);
 
-    await page.filterByYear('2014 - 2015');
+    await page.filterByYear('2014');
     assert.equal(page.courses.courses.length, 1);
     assert.equal(page.courses.courses[0].title, secondCourse.title);
   });
