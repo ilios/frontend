@@ -1,52 +1,37 @@
-import Component from '@ember/component';
-import { reads } from '@ember/object/computed';
+import Component from '@glimmer/component';
+import { tracked } from "@glimmer/tracking";
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
-import { task } from 'ember-concurrency';
-
-const Validations = buildValidations({
-  currentSchool: validator('presence', true),
-  selectedYear: validator('presence', true),
-  title: [
-    validator('presence', true),
-    validator('length', { min: 3, max: 200 })
-  ]
-});
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { dropTask } from 'ember-concurrency-decorators';
 
 const THIS_YEAR = parseInt(moment().format('YYYY'), 10);
 const YEARS = [
-  THIS_YEAR-2,
-  THIS_YEAR-1,
+  THIS_YEAR - 2,
+  THIS_YEAR - 1,
   THIS_YEAR,
-  THIS_YEAR+1,
-  THIS_YEAR+2
+  THIS_YEAR + 1,
+  THIS_YEAR + 2
 ];
 
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  intl: service(),
-  store: service(),
+@validatable
+export default class NewCourseComponent extends Component {
+  @service intl;
+  @service store;
 
-  classNames: ['new-course'],
+  @tracked currentYear;
+  @tracked @NotBlank() selectedYear;
+  @tracked @NotBlank() @Length(3, 200) title;
+  @tracked years = Object.freeze(YEARS);
 
-  currentSchool: null,
-  currentYear: null,
-  selectedYear: null,
-  title: null,
-  cancel() {},
-  save() {},
-  years: Object.freeze(YEARS),
+  @action
+  setYear(year) {
+    this.selectedYear = parseInt(year, 10);
+  }
 
-  isSaving: reads('saveCourse.isRunning'),
-
-  actions: {
-    setYear(year) {
-      this.set('selectedYear', parseInt(year, 10));
-    }
-  },
-
-  keyUp(event) {
+  @action
+  keyboard(event) {
     const keyCode = event.keyCode;
     const target = event.target;
 
@@ -54,27 +39,28 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       return;
     }
     if (13 === keyCode) {
-      this.send('save');
+      this.saveCourse.perform();
       return;
     }
     if (27 === keyCode) {
-      this.cancel();
+      this.args.cancel();
     }
-  },
+  }
 
-  saveCourse: task(function* () {
-    this.send('addErrorDisplayFor', 'title');
-    const { validations } = yield this.validate();
-
-    if (validations.get('isValid')) {
-      this.send('removeErrorDisplayFor', 'title');
-      const course = this.store.createRecord('course', {
-        level: 1,
-        title: this.title,
-        school: this.currentSchool,
-        year: this.selectedYear
-      });
-      this.save(course);
+  @dropTask
+  *saveCourse() {
+    this.addErrorDisplayFor('title');
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
     }
-  })
-});
+    this.removeErrorDisplayFor('title');
+    const course = this.store.createRecord('course', {
+      level: 1,
+      title: this.title,
+      school: this.args.currentSchool,
+      year: this.selectedYear
+    });
+    yield this.args.save(course);
+  }
+}

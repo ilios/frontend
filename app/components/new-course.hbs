@@ -1,61 +1,63 @@
-<h4>
-  {{t "general.newCourse"}}
-</h4>
-<div data-test-new-course>
-  <div class="item">
-    <label>
-      {{t "general.title"}}:
-    </label>
-    <input
-      class="course-title"
-      data-test-title
-      disabled={{this.isSaving}}
-      placeholder={{t "general.courseTitlePlaceholder"}}
-      type="text"
-      value={{this.title}}
-      oninput={{action (mut this.title) value="target.value"}}
-      onkeyup={{action "addErrorDisplayFor" "title"}}
-    >
-    {{#if
-      (and (v-get this "title" "isInvalid") (includes "title" this.showErrorsFor))
-    }}
-      <span class="validation-error-message">
-        {{v-get this "title" "message"}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item">
-    <label>
-      {{t "general.academicYear"}}:
-    </label>
-    <select data-test-year onchange={{action "setYear" value="target.value"}}>
-      <option disabled="" selected={{is-empty this.selectedYear}} value="">
-        {{t "general.selectAcademicYear"}}
-      </option>
-      {{#each this.years as |year|}}
-        <option selected={{is-equal year this.selectedYear}} value={{year}}>
-          {{year}}
-          -
-          {{inc year}}
-        </option>
+<div class="new-course" data-test-new-course>
+  <h4>
+    {{t "general.newCourse"}}
+  </h4>
+  <div>
+    <div class="item">
+      <label>
+        {{t "general.title"}}:
+      </label>
+      <input
+        class="course-title"
+        disabled={{this.saveCourse.isRunning}}
+        placeholder={{t "general.courseTitlePlaceholder"}}
+        type="text"
+        value={{this.title}}
+        {{on "focusout" (fn this.addErrorDisplayFor "title")}}
+        {{on "keydown" this.keyboard}}
+        {{on "input" (pick "target.value" (set this.title))}}
+        {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+        data-test-title
+      >
+      {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+        <span class="validation-error-message">
+          {{message}}
+        </span>
       {{/each}}
-    </select>
-  </div>
-  <div class="buttons">
-    <button
-      type="button"
-      class="done text"
-      disabled={{not this.selectedYear}}
-      onclick={{perform this.saveCourse}}
-    >
-      {{#if this.isSaving}}
-        <LoadingSpinner />
-      {{else}}
-        {{t "general.done"}}
-      {{/if}}
-    </button>
-    <button type="button" class="cancel text" onclick={{action @cancel}}>
-      {{t "general.cancel"}}
-    </button>
+    </div>
+    <div class="item">
+      <label>
+        {{t "general.academicYear"}}:
+      </label>
+      <select data-test-year {{on "change" (pick "target.value" this.setYear)}}>
+        <option disabled="" selected={{is-empty this.selectedYear}} value="">
+          {{t "general.selectAcademicYear"}}
+        </option>
+        {{#each this.years as |year|}}
+          <option selected={{is-equal year this.selectedYear}} value={{year}}>
+            {{year}}
+            -
+            {{inc year}}
+          </option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="buttons">
+      <button
+        type="button"
+        class="done text"
+        disabled={{not this.selectedYear}}
+        {{on "click" (perform this.saveCourse)}}
+      >
+        {{#if this.saveCourse.isRunning}}
+          <LoadingSpinner />
+        {{else}}
+          {{t "general.done"}}
+        {{/if}}
+      </button>
+      <button type="button" class="cancel text" {{on "click" @cancel}}>
+        {{t "general.cancel"}}
+      </button>
+    </div>
   </div>
 </div>
