@@ -122,7 +122,7 @@ export default Controller.extend({
   actions: {
     async removeCourse(course) {
       const school = await this.selectedSchool;
-      const courses = school.courses;
+      const courses = await school.courses;
       courses.removeObject(course);
       await course.destroyRecord();
       this.set('deletedCourse', course);
