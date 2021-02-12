@@ -50,8 +50,8 @@ export default Controller.extend({
 
   allRelatedCourses: computed('currentUser.model.allRelatedCourses.[]', async function() {
     const currentUser = this.currentUser;
-    const user = await currentUser.get('model');
-    return await user.get('allRelatedCourses');
+    const user = await currentUser.model;
+    return await user.allRelatedCourses;
   }),
 
   filteredCourses: computed(
@@ -69,10 +69,8 @@ export default Controller.extend({
         filteredCourses = courses.sortBy('title');
       } else {
         filteredCourses = courses.filter(course => {
-          return (isPresent(course.get('title')) && course.get('title').trim().toLowerCase().includes(title)) ||
-            (isPresent(course.get('externalId'))
-              && course.get('externalId').trim().toLowerCase().includes(title)
-            );
+          return (isPresent(course.title) && course.title.trim().toLowerCase().includes(title)) ||
+            (isPresent(course.externalId) && course.externalId.trim().toLowerCase().includes(title));
         }).sortBy('title');
       }
       if (filterMyCourses) {
@@ -100,16 +98,16 @@ export default Controller.extend({
   selectedYear: computed('model.years.[]', 'yearTitle', function() {
     const years = this.get('model.years');
     if(isPresent(this.yearTitle)){
-      return years.find(year => year.get('id') === this.yearTitle);
+      return years.find(year => year.id === this.yearTitle);
     }
     let currentYear = parseInt(moment().format('YYYY'), 10);
     const currentMonth = parseInt(moment().format('M'), 10);
     if(currentMonth < 6){
       currentYear--;
     }
-    let defaultYear = years.find(year => parseInt(year.get('id'), 10) === currentYear);
+    let defaultYear = years.find(year => parseInt(year.id, 10) === currentYear);
     if(isEmpty(defaultYear)){
-      defaultYear = years.get('lastObject');
+      defaultYear = years.lastObject;
     }
 
     return defaultYear;
@@ -124,7 +122,7 @@ export default Controller.extend({
   actions: {
     async removeCourse(course) {
       const school = await this.selectedSchool;
-      const courses = school.get('courses');
+      const courses = school.courses;
       courses.removeObject(course);
       await course.destroyRecord();
       this.set('deletedCourse', course);
@@ -140,7 +138,7 @@ export default Controller.extend({
       this.set('showNewCourseForm', false);
       this.set('newCourse', savedCourse);
       const school = await this.selectedSchool;
-      const courses = await school.get('courses');
+      const courses = await school.courses;
       courses.pushObject(savedCourse);
       return savedCourse;
     },
