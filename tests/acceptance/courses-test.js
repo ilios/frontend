@@ -274,9 +274,9 @@ module('Acceptance | Courses', function(hooks) {
 
     await page.visit({ year });
     await page.toggleNewCourseForm();
-    await page.newCourseForm.title('Course 1');
-    await page.newCourseForm.chooseYear(year);
-    await page.newCourseForm.save();
+    await page.newCourse.title('Course 1');
+    await page.newCourse.chooseYear(year);
+    await page.newCourse.save();
 
     assert.equal(page.courses.courses.length, 1);
     assert.equal(page.newCourseLink, 'Course 1', 'new course link');
@@ -303,8 +303,8 @@ module('Acceptance | Courses', function(hooks) {
 
     await page.visit();
     await page.toggleNewCourseForm();
-    await page.newCourseForm.title(newTitle);
-    await page.newCourseForm.save();
+    await page.newCourse.title(newTitle);
+    await page.newCourse.save();
     assert.equal(page.courses.courses.length, 0);
     assert.ok(page.courses.emptyListRowIsVisible);
   });
@@ -319,9 +319,9 @@ module('Acceptance | Courses', function(hooks) {
 
     await page.visit({ year });
     await page.toggleNewCourseForm();
-    await page.newCourseForm.title(courseTitle);
-    await page.newCourseForm.chooseYear(year);
-    await page.newCourseForm.save();
+    await page.newCourse.title(courseTitle);
+    await page.newCourse.chooseYear(year);
+    await page.newCourse.save();
     assert.equal(page.courses.courses.length, 1);
     assert.equal(page.newCourseLink, 'Course 1');
 
@@ -345,9 +345,9 @@ module('Acceptance | Courses', function(hooks) {
     assert.ok(page.courses.emptyListRowIsVisible);
 
     await page.toggleNewCourseForm();
-    await page.newCourseForm.title('Course 1');
-    await page.newCourseForm.chooseYear(year);
-    await page.newCourseForm.save();
+    await page.newCourse.title('Course 1');
+    await page.newCourse.chooseYear(year);
+    await page.newCourse.save();
     assert.equal(page.courses.courses.length, 1);
     assert.equal(page.newCourseLink, 'Course 1');
 
@@ -401,10 +401,10 @@ module('Acceptance | Courses', function(hooks) {
       thisYear + 2
     ];
 
-    assert.equal(page.newCourseForm.years().count, years.length + 1);
-    assert.equal(page.newCourseForm.years(0).text, 'Select Academic Year');
+    assert.equal(page.newCourse.years().count, years.length + 1);
+    assert.equal(page.newCourse.years(0).text, 'Select Academic Year');
     for (let i = 0; i < years.length; i++){
-      assert.equal(page.newCourseForm.years(i + 1).text.substring(0,4), years[i]);
+      assert.equal(page.newCourse.years(i + 1).text.substring(0,4), years[i]);
     }
   });
 

@@ -11,6 +11,7 @@ import {
 } from 'ember-cli-page-object';
 
 import courses from './components/ilios-course-list';
+import newCourse from './components/new-course';
 
 export default create({
   scope: '[data-test-courses]',
@@ -35,21 +36,9 @@ export default create({
   headerTitle: text('[data-test-courses-header-title]'),
   toggleNewCourseForm: clickable('[data-test-expand-collapse-button] button'),
   toggleNewCourseFormExists: isVisible('[data-test-expand-collapse-button]'),
-  newCourseForm: {
-    scope: '[data-test-new-course]',
-    title: fillable('[data-test-title]'),
-    chooseYear: fillable('[data-test-year]'),
-    save: clickable('.done'),
-    years: collection({
-      itemScope: '[data-test-year] option',
-      item: {
-        text: text(),
-        selected: property('selected'),
-      },
-    }),
-  },
-  newCourseLink: text('[data-test-new-course] a'),
-  newCourseLinkIsHidden: isHidden('[data-test-new-course] a'),
-  visitNewCourse: clickable('[data-test-new-course] a'),
+  newCourse,
+  newCourseLink: text('[data-test-newly-saved-course] a'),
+  newCourseLinkIsHidden: isHidden('[data-test-newly-saved-course] a'),
+  visitNewCourse: clickable('[data-test-newly-saved-course] a'),
   courses,
 });
