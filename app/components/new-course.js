@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
-import { dropTask } from 'ember-concurrency-decorators';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 
 const THIS_YEAR = parseInt(moment().format('YYYY'), 10);
 const YEARS = [
@@ -19,11 +19,13 @@ const YEARS = [
 export default class NewCourseComponent extends Component {
   @service intl;
   @service store;
+  @service iliosConfig;
 
   @tracked currentYear;
   @tracked @NotBlank() selectedYear;
   @tracked @NotBlank() @Length(3, 200) title;
   @tracked years = Object.freeze(YEARS);
+  @tracked academicYearCrossesCalendarYearBoundaries;
 
   @action
   setYear(year) {
@@ -45,6 +47,12 @@ export default class NewCourseComponent extends Component {
     if (27 === keyCode) {
       this.args.cancel();
     }
+  }
+
+  @restartableTask
+  *load() {
+    this.academicYearCrossesCalendarYearBoundaries
+      = yield this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
   }
 
   @dropTask
