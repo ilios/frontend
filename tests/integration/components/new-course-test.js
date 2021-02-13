@@ -1,6 +1,7 @@
-import { module, test } from 'qunit';
+import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
+import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios/tests/pages/components/new-course';
@@ -64,6 +65,27 @@ module('Integration | Component | new course', function (hooks) {
     assert.notOk(component.years(3).selected);
     assert.notOk(component.years(4).selected);
     assert.notOk(component.years(5).selected);
+  });
+
+  // currently doesn't work since the injected ilios-config mock service doesn't seem to get picked up [ST 2021/02/12]
+  skip('year options show range if applicable', async function (assert) {
+    assert.expect(6);
+    const iliosConfigMock = Service.extend({
+      itemFromConfig(key) {
+        assert.equal('academicYearCrossesCalendarYearBoundaries', key);
+        return true;
+      }
+    });
+    this.owner.register('service:iliosConfig', iliosConfigMock);
+    const thisYear = (new Date()).getFullYear();
+    await render(
+      hbs`<NewCourse @currentSchool={{this.school}} @save={{noop}} @cancel={{noop}} />`
+    );
+    assert.equal(component.years(1).text, `${thisYear - 2} - ${thisYear - 1}`);
+    assert.equal(component.years(2).text, `${thisYear - 1} - ${thisYear}`);
+    assert.equal(component.years(3).text, `${thisYear} - ${thisYear + 1}`);
+    assert.equal(component.years(4).text, `${thisYear + 1} - ${thisYear + 2}`);
+    assert.equal(component.years(5).text, `${thisYear + 2} - ${thisYear + 3}`);
   });
 
   test('cancel', async function (assert) {
