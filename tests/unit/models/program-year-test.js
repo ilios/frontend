@@ -9,12 +9,6 @@ module('Unit | Model | ProgramYear', function (hooks) {
     assert.ok(!!model);
   });
 
-  test('academic year string', function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('program-year');
-    model.set('startYear', 2000);
-    assert.equal(model.get('academicYear'), '2000 - 2001');
-  });
-
   test('classOf string', async function (assert) {
     assert.expect(3);
     const model = this.owner.lookup('service:store').createRecord('program-year');
