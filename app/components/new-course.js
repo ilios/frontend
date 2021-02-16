@@ -6,15 +6,6 @@ import moment from 'moment';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 
-const THIS_YEAR = parseInt(moment().format('YYYY'), 10);
-const YEARS = [
-  THIS_YEAR - 2,
-  THIS_YEAR - 1,
-  THIS_YEAR,
-  THIS_YEAR + 1,
-  THIS_YEAR + 2
-];
-
 @validatable
 export default class NewCourseComponent extends Component {
   @service intl;
@@ -23,8 +14,20 @@ export default class NewCourseComponent extends Component {
 
   @tracked @NotBlank() selectedYear;
   @tracked @NotBlank() @Length(3, 200) title;
-  @tracked years = Object.freeze(YEARS);
   @tracked academicYearCrossesCalendarYearBoundaries;
+  @tracked years;
+
+  constructor() {
+    super(...arguments);
+    const thisYear = parseInt(moment().format('YYYY'), 10);
+    this.years = [
+      thisYear - 2,
+      thisYear - 1,
+      thisYear,
+      thisYear + 1,
+      thisYear + 2
+    ];
+  }
 
   @action
   setYear(year) {
