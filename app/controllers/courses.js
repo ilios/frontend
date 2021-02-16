@@ -16,7 +16,7 @@ export default Controller.extend({
     schoolId: 'school',
     sortCoursesBy: 'sortBy',
     titleFilter: 'filter',
-    yearTitle: 'year',
+    year: 'year',
     userCoursesOnly: 'mycourses'
   },
 
@@ -29,7 +29,7 @@ export default Controller.extend({
   sortYearsBy: null,
   titleFilter: null,
   userCoursesOnly: false,
-  yearTitle: null,
+  year: null,
 
   hasMoreThanOneSchool: gt('model.schools.length', 1),
 
@@ -95,10 +95,10 @@ export default Controller.extend({
     return primarySchool;
   }),
 
-  selectedYear: computed('model.years.[]', 'yearTitle', function() {
+  selectedYear: computed('model.years.[]', 'year', function() {
     const years = this.get('model.years');
-    if(isPresent(this.yearTitle)){
-      return years.find(year => year.id === this.yearTitle);
+    if(isPresent(this.year)){
+      return years.find(year => year.id === this.year);
     }
     let currentYear = parseInt(moment().format('YYYY'), 10);
     const currentMonth = parseInt(moment().format('M'), 10);
@@ -143,8 +143,8 @@ export default Controller.extend({
       return savedCourse;
     },
 
-    changeSelectedYear(yearTitle) {
-      this.set('yearTitle', yearTitle);
+    changeSelectedYear(year) {
+      this.set('year', year);
     },
 
     changeSelectedSchool(schoolId) {
