@@ -5,6 +5,7 @@ import moment from 'moment';
 import page from 'ilios/tests/pages/courses';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { freezeDateAt, unfreezeDate } from 'ember-mockdate-shim';
 
 module('Acceptance | Courses', function(hooks) {
   setupApplicationTest(hooks);
@@ -634,5 +635,82 @@ module('Acceptance | Courses', function(hooks) {
 
     assert.equal(page.courses.courses[0].removeActionCount, 0, 'privileged user cannot delete course with descendants');
     assert.equal(page.courses.courses[1].removeActionCount, 1, 'privileged user can delete course with ancestors');
+  });
+
+  test('academic year pre-selects last year with calendar-year-boundary-crossing config turned on', async function(assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.user.update({ administeredSchools: [this.school] });
+    freezeDateAt(new Date('1/1/2021'));
+    const year = moment().year();
+    this.server.create('academicYear', { id: year - 1 });
+    this.server.create('academicYear', { id: year });
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: true,
+        apiVersion
+      }};
+    });
+    await page.visit();
+    assert.ok(page.yearFilters(1).selected);
+    assert.equal(page.yearFilters(1).value, (year - 1).toString());
+    unfreezeDate();
+  });
+
+  test('academic year pre-selects this year with calendar-year-boundary-crossing config turned on', async function(assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.user.update({ administeredSchools: [this.school] });
+    freezeDateAt(new Date('10/10/2021'));
+    const year = moment().year();
+    this.server.create('academicYear', { id: year - 1 });
+    this.server.create('academicYear', { id: year });
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: true,
+        apiVersion
+      }};
+    });
+    await page.visit();
+    assert.ok(page.yearFilters(0).selected);
+    assert.equal(page.yearFilters(0).value, (year).toString());
+    unfreezeDate();
+  });
+
+
+  test('academic year always pre-selects this year with calendar-year-boundary-crossing config turned off', async function(assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.user.update({ administeredSchools: [this.school] });
+    freezeDateAt(new Date('1/1/2021'));
+    const year = moment().year();
+    this.server.create('academicYear', { id: year - 1 });
+    this.server.create('academicYear', { id: year });
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: false,
+        apiVersion
+      }};
+    });
+    await page.visit();
+    assert.ok(page.yearFilters(0).selected);
+    assert.equal(page.yearFilters(0).value, (year).toString());
+    unfreezeDate();
+  });
+
+  test('academic STILL always year pre-selects this year with calendar-year-boundary-crossing config turned off', async function(assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.user.update({ administeredSchools: [this.school] });
+    freezeDateAt(new Date('10/10/2021'));
+    const year = moment().year();
+    this.server.create('academicYear', { id: year - 1 });
+    this.server.create('academicYear', { id: year });
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: false,
+        apiVersion
+      }};
+    });
+    await page.visit();
+    assert.ok(page.yearFilters(0).selected);
+    assert.equal(page.yearFilters(0).value, (year).toString());
+    unfreezeDate();
   });
 });
