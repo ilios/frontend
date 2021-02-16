@@ -11,6 +11,7 @@ export default Controller.extend({
   intl: service(),
   permissionChecker: service(),
   dataLoader: service(),
+  iliosConfig: service(),
 
   queryParams: {
     schoolId: 'school',
@@ -35,7 +36,7 @@ export default Controller.extend({
 
   courses: computed('selectedSchool', 'selectedYear', 'deletedCourse', 'newCourse', async function() {
     const selectedSchool = this.selectedSchool;
-    const selectedYear = this.selectedYear;
+    const selectedYear = await this.selectedYear;
     if (isEmpty(selectedSchool) || isEmpty(selectedYear)) {
       return [];
     }
@@ -95,14 +96,16 @@ export default Controller.extend({
     return primarySchool;
   }),
 
-  selectedYear: computed('model.years.[]', 'year', function() {
+  selectedYear: computed('model.years.[]', 'year', async function() {
     const years = this.get('model.years');
     if(isPresent(this.year)){
       return years.find(year => year.id === this.year);
     }
     let currentYear = parseInt(moment().format('YYYY'), 10);
     const currentMonth = parseInt(moment().format('M'), 10);
-    if(currentMonth < 6){
+    const academicYearIsCrossingYearBoundaries
+      = await this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
+    if(academicYearIsCrossingYearBoundaries && currentMonth < 6){
       currentYear--;
     }
     let defaultYear = years.find(year => parseInt(year.id, 10) === currentYear);
