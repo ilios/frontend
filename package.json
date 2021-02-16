@@ -57,7 +57,7 @@
     "ember-cli-string-helpers": "^5.0.0",
     "ember-click-outside": "^2.0.0",
     "ember-composable-helpers": "4.4.1",
-    "ember-concurrency": "^1.0.0",
+    "ember-concurrency": "^2.0.0",
     "ember-concurrency-decorators": "^2.0.0",
     "ember-could-get-used-to-this": "^1.0.1",
     "ember-data": "3.25.0",
