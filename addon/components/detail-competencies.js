@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask } from 'ember-concurrency';
 
 export default class DetailCompetenciesComponent extends Component {
   @tracked competenciesRelationship;

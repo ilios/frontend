@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask } from 'ember-concurrency-decorators';
+import { dropTask } from 'ember-concurrency';
 import { validatable, Length, NotBlank, IsTrue, IsURL } from 'ilios-common/decorators/validation';
 import { ValidateIf } from 'class-validator';
 import { guidFor } from '@ember/object/internals';

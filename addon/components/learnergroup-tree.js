@@ -3,7 +3,7 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { filter } from 'rsvp';
 import { isEmpty, isPresent } from '@ember/utils';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 
 export default class LearnergroupTree extends Component {

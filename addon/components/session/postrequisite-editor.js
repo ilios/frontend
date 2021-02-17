@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { task } from 'ember-concurrency-decorators';
+import { task } from 'ember-concurrency';
 import escapeRegExp from 'ilios-common/utils/escape-reg-exp';
 
 export default class SessionPostrequisiteEditorComponent extends Component {

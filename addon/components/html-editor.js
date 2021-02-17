@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask } from 'ember-concurrency';
 import { loadFroalaEditor } from 'ilios-common/utils/load-froala-editor';
 import { guidFor } from '@ember/object/internals';
 

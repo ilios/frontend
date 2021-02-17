@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { dropTask, restartableTask } from 'ember-concurrency';
 import moment from 'moment';
 import { all, map, hash } from 'rsvp';
 

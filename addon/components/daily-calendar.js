@@ -1,8 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
-import { restartableTask } from 'ember-concurrency-decorators';
-import { timeout } from 'ember-concurrency';
+import { restartableTask, timeout } from 'ember-concurrency';
 import { action, set } from '@ember/object';
 
 export default class DailyCalendarComponent extends Component {

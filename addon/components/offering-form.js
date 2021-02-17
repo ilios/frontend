@@ -5,8 +5,7 @@ import { inject as service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
 import { filter, hash, map } from 'rsvp';
 import moment from 'moment';
-import { timeout } from 'ember-concurrency';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import {
   ArrayNotEmpty,
   IsInt,

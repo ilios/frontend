@@ -3,8 +3,7 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { all } from 'rsvp';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
-import { timeout } from 'ember-concurrency';
+import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 
 export default class PublishAllSessionsComponent extends Component {
   @service router;

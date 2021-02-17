@@ -1,8 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { timeout } from 'ember-concurrency';
-import { restartableTask, dropTask } from 'ember-concurrency-decorators';
+import { restartableTask, dropTask, timeout } from 'ember-concurrency';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 import scrollIntoView from 'scroll-into-view';
 

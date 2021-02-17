@@ -5,7 +5,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { next } from '@ember/runloop';
 import escapeRegExp from '../utils/escape-reg-exp';
-import { dropTask } from 'ember-concurrency-decorators';
+import { dropTask } from 'ember-concurrency';
 
 export default class SessionsGrid extends Component {
   @service router;

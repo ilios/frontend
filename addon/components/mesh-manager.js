@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { dropTask, restartableTask } from 'ember-concurrency';
 import { action } from '@ember/object';
 
 const SEARCH_RESULTS_PER_PAGE = 50;

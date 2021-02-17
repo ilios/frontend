@@ -1,10 +1,9 @@
 import Component from '@glimmer/component';
-import { timeout } from 'ember-concurrency';
+import { restartableTask, timeout } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { restartableTask } from 'ember-concurrency-decorators';
 const DEBOUNCE_DELAY = 250;
 
 export default class CourseMaterialsComponent extends Component {

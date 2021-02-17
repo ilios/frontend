@@ -3,7 +3,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action, computed } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { dropTask } from 'ember-concurrency-decorators';
+import { dropTask } from 'ember-concurrency';
 import { hash } from 'rsvp';
 
 export default class DetailLearnersAndLearnerGroupsComponent extends Component {

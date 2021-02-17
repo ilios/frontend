@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
-import { timeout } from 'ember-concurrency';
+import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
 import { tracked } from '@glimmer/tracking';
 

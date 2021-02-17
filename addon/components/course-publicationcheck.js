@@ -3,7 +3,7 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { computed } from '@ember/object';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask } from 'ember-concurrency';
 
 export default class CoursePublicationCheckComponent extends Component {
   @service router;

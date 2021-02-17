@@ -1,8 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import { dropTask } from 'ember-concurrency-decorators';
-import { timeout } from 'ember-concurrency';
+import { dropTask, timeout } from 'ember-concurrency';
 
 export default class ApiVersionNoticeComponent extends Component {
   @service apiVersion;

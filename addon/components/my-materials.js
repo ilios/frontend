@@ -1,8 +1,7 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { isNone, isPresent } from '@ember/utils';
-import { timeout } from 'ember-concurrency';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask, timeout } from 'ember-concurrency';
 
 const DEBOUNCE_DELAY = 250;
 

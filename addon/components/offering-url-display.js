@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
-import { restartableTask } from 'ember-concurrency-decorators';
-import { timeout } from 'ember-concurrency';
+import { restartableTask, timeout } from 'ember-concurrency';
 
 export default class OfferingUrlDisplayComponent extends Component {
   @restartableTask

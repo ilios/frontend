@@ -2,10 +2,9 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { map } from 'rsvp';
-import { timeout } from 'ember-concurrency';
+import { task, restartableTask, timeout } from 'ember-concurrency';
 import { action, computed } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { task, restartableTask } from 'ember-concurrency-decorators';
 const DEBOUNCE_DELAY = 250;
 
 export default class CourseSessionsComponent extends Component {

@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask } from 'ember-concurrency';
 import { all, map } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
