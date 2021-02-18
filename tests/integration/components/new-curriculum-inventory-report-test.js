@@ -1,98 +1,65 @@
-import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  click,
-  find,
-  findAll,
-  fillIn,
-  triggerKeyEvent
-} from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { component } from 'ilios/tests/pages/components/new-curriculum-inventory-report';
 
 module('Integration | Component | new curriculum inventory report', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   test('it renders', async function(assert) {
-    assert.expect(20);
-
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const currentYear = parseInt(moment().format('YYYY'), 10);
 
     this.set('program', programModel);
-
     await render(hbs`<NewCurriculumInventoryReport @currentProgram={{this.program}} @save={{noop}} @cancel={{noop}} />`);
 
-    const currentYear = parseInt(moment().format('YYYY'), 10);
-    const currentYearLabel = `${currentYear}`;
-    const firstYear = currentYear - 5;
-    const firstYearLabel = `${firstYear}`;
-    const lastYear = currentYear + 5;
-    const lastYearLabel = `${lastYear}`;
-
-    assert.dom('[data-test-program-title] label').hasText('Program:', 'program title is labeled correctly.');
-    assert.dom('[data-test-program-title] span').hasText(program.title, 'Program title is displayed.');
-    assert.dom('[data-test-academic-year] label').hasText('Academic Year:', 'Academic year input is labeled correctly.');
-    assert.dom('[data-test-academic-year] option').exists({ count: 11 }, 'Academic year dropdown has eleven options.');
-    const select = find('[data-test-academic-year] select');
-    assert.equal(
-      select.options[select.selectedIndex].value,
-      currentYear,
-      'Current year is selected by default.'
-    );
-    assert.dom(select.options[select.selectedIndex]).hasText(currentYearLabel, 'Current year label is correct.');
-    assert.dom('[data-test-academic-year] option').hasValue(firstYear.toString(), 'First year in dropdown is five years prior to current year.');
-    assert.dom('[data-test-academic-year] option').hasText(firstYearLabel, 'First year label is correct.');
-    assert.dom(findAll('[data-test-academic-year] option')[10]).hasValue(lastYear.toString(), 'Last year in dropdown is five years ahead of current year.');
-    assert.dom(findAll('[data-test-academic-year] option')[10]).hasText(lastYearLabel, 'Last year label is correct.');
-    assert.dom('[data-test-description] textarea').exists({ count: 1 }, 'Description input is present.');
-    assert.dom('[data-test-description] textarea').hasValue('', 'Description input is initially empty.');
-    assert.dom('[data-test-description] label').hasText('Description:', 'Description input is labeled correctly.');
-    assert.dom('[data-test-name] input').exists({ count: 1 }, 'Name input is present.');
-    assert.dom('[data-test-name] input').hasValue('', 'Name input is initially empty.');
-    assert.dom('[data-test-name] label').hasText('Name:', 'Name input is labeled correctly.');
-    assert.dom('button.done').exists({ count: 1 }, 'Done button is present.');
-    assert.dom('button.done').hasText('Done', 'Done button is labeled correctly.');
-    assert.dom('button.cancel').exists({ count: 1 }, 'Cancel button is present.');
-    assert.dom('button.cancel').hasText('Cancel', 'Cancel button is labeled correctly.');
+    assert.equal(component.programTitle.label, 'Program:', 'program title is labeled correctly.');
+    assert.equal(component.programTitle.title, program.title, 'Program title is displayed.');
+    assert.equal(component.academicYear.label, 'Academic Year:', 'Academic year input is labeled correctly.');
+    assert.equal(component.academicYear.options.length, 11, 'Academic year dropdown has eleven options.');
+    assert.equal(component.academicYear.value, currentYear, 'Current year is selected by default.');
+    assert.equal(component.academicYear.options[0].value, currentYear - 5 , 'First year in dropdown is five years prior to current year.');
+    assert.equal(component.academicYear.options[0].text, currentYear - 5, 'First year label is correct.');
+    assert.equal(component.academicYear.options[10].value, currentYear + 5 , 'Last year in dropdown is five years ahead of current year.');
+    assert.equal(component.academicYear.options[10].text, currentYear + 5, 'Last year label is correct.');
+    assert.equal(component.description.value, '', 'Description input is initially empty.');
+    assert.equal(component.description.label, 'Description:', 'Description input is labeled correctly.');
+    assert.equal(component.name.value, '', 'Name input is initially empty.');
+    assert.equal(component.name.label, 'Name:', 'Name input is labeled correctly.');
   });
 
   test('academic year options labeled as range when app configuration is set to cross calendar-year boundaries', async function(assert) {
+    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const currentYear = parseInt(moment().format('YYYY'), 10);
+
     this.server.get('application/config', function() {
       return { config: {
         academicYearCrossesCalendarYearBoundaries: true,
       }};
     });
-    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
-
     this.set('program', programModel);
 
     await render(hbs`<NewCurriculumInventoryReport @currentProgram={{this.program}} @save={{noop}} @cancel={{noop}} />`);
 
-    const currentYear = parseInt(moment().format('YYYY'), 10);
-    const currentYearLabel = `${currentYear} - ${currentYear + 1}`;
-    const firstYearLabel = `${currentYear - 5} - ${currentYear - 4}`;
-    const lastYearLabel = `${currentYear + 5} - ${currentYear + 6}`;
-    const select = find('[data-test-academic-year] select');
-    assert.dom(select.options[select.selectedIndex]).hasText(currentYearLabel, 'Current year label is correct.');
-    assert.dom('[data-test-academic-year] option').hasText(firstYearLabel, 'First year label is correct.');
-    assert.dom(findAll('[data-test-academic-year] option')[10]).hasText(lastYearLabel, 'Last year label is correct.');
+    assert.equal(component.academicYear.options[0].text, `${currentYear - 5} - ${currentYear - 4}`, 'First year label is correct.');
+    assert.equal(component.academicYear.options[10].text, `${currentYear + 5} - ${currentYear + 6}`, 'Last year label is correct.');
   });
 
   test('save', async function(assert) {
     assert.expect(6);
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
-
-    this.set('program', programModel);
     const currentYear = parseInt(moment().format('YYYY'), 10);
     const expectedSelectedYear = currentYear - 5;
-    this.set('saveReport', (report) => {
+
+    this.set('program', programModel);
+    this.set('save', (report) => {
       assert.equal(report.get('name'), 'new report', 'Name gets passed.');
       assert.equal(report.get('description'), 'lorem ipsum', 'Description gets passed.');
       assert.equal(report.get('year'), expectedSelectedYear, 'Selected academic year gets passed.');
@@ -110,27 +77,27 @@ module('Integration | Component | new curriculum inventory report', function(hoo
       return true;
     });
 
-    await render(hbs`<NewCurriculumInventoryReport @currentProgram={{this.program}} @save={{this.saveReport}} @cancel={{noop}} />`);
-    await fillIn('[data-test-name] input', 'new report');
-    await fillIn('[data-test-description] textarea', 'lorem ipsum');
-    await fillIn('[data-test-academic-year] select', expectedSelectedYear);
-    await click('button.done');
+    await render(hbs`<NewCurriculumInventoryReport @currentProgram={{this.program}} @save={{this.save}} @cancel={{noop}} />`);
+    await component.name.set('new report');
+    await component.description.set('lorem ipsum');
+    await component.academicYear.select(expectedSelectedYear);
+    await component.save();
   });
 
   test('save with academic year crossing calendar-year boundaries', async function(assert) {
     assert.expect(2);
+    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    const currentYear = parseInt(moment().format('YYYY'), 10);
+    const expectedSelectedYear = currentYear - 5;
+
     this.server.get('application/config', function() {
       return { config: {
         academicYearCrossesCalendarYearBoundaries: true,
       }};
     });
-    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
-    const programModel = await this.owner.lookup('service:store').find('program', program.id);
-
     this.set('program', programModel);
-    const currentYear = parseInt(moment().format('YYYY'), 10);
-    const expectedSelectedYear = currentYear - 5;
-    this.set('saveReport', (report) => {
+    this.set('save', (report) => {
       assert.equal(
         moment(report.get('startDate')).format('YYYY-MM-DD'),
         `${expectedSelectedYear}-07-01`,
@@ -144,11 +111,11 @@ module('Integration | Component | new curriculum inventory report', function(hoo
       return true;
     });
 
-    await render(hbs`<NewCurriculumInventoryReport @currentProgram={{this.program}} @save={{this.saveReport}} @cancel={{noop}} />`);
-    await fillIn('[data-test-name] input', 'new report');
-    await fillIn('[data-test-description] textarea', 'lorem ipsum');
-    await fillIn('[data-test-academic-year] select', expectedSelectedYear);
-    await click('button.done');
+    await render(hbs`<NewCurriculumInventoryReport @currentProgram={{this.program}} @save={{this.save}} @cancel={{noop}} />`);
+    await component.name.set('new report');
+    await component.description.set('lorem ipsum');
+    await component.academicYear.select(expectedSelectedYear);
+    await component.save();
   });
 
 
@@ -158,60 +125,54 @@ module('Integration | Component | new curriculum inventory report', function(hoo
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
-    this.set('cancelReport', () => {
+    this.set('cancel', () => {
       assert.ok(true, 'Cancel action got invoked.');
     });
-    await render(hbs`<NewCurriculumInventoryReport @currentProgram={{this.program}} @cancel={{this.cancelReport}} @save={{noop}} />`);
-    await click('button.cancel');
+    await render(hbs`<NewCurriculumInventoryReport @currentProgram={{this.program}} @cancel={{this.cancel}} @save={{noop}} />`);
+    await component.cancel();
   });
 
   test('pressing enter in name input field fires save action', async function(assert) {
     assert.expect(1);
-
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
-    this.set('saveReport', () => {
+    this.set('save', () => {
       assert.ok(true, 'Save action got invoked.');
-      return resolve(true);
+      return true;
     });
 
-    await render(hbs`<NewCurriculumInventoryReport @currentProgram={{this.program}} @save={{this.saveReport}} @cancel={{noop}} />`);
-    await fillIn('[data-test-name] input', 'new report');
-    await triggerKeyEvent('[data-test-name] input', 'keydown', 13);
+    await render(hbs`<NewCurriculumInventoryReport @currentProgram={{this.program}} @save={{this.save}} @cancel={{noop}} />`);
+    await component.name.set('new report');
+    await component.name.submit();
   });
 
   test('validation errors do not show up initially', async function(assert) {
-    assert.expect(1);
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
-
     this.set('program', programModel);
     await render(hbs`<NewCurriculumInventoryReport @currentProgram={{this.program}} @save={{noop}} @cancel={{noop}}/>`);
-    assert.dom('.validation-error-message').doesNotExist();
+    assert.notOk(component.name.hasError);
   });
 
   test('validation errors show up when saving with empty report name', async function(assert) {
-    assert.expect(1);
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
-
     this.set('program', programModel);
     await render(hbs`<NewCurriculumInventoryReport @currentProgram={{this.program}} @save={{noop}} @cancel={{noop}}/>`);
-    await click('button.done');
-    assert.dom('.validation-error-message').exists({ count: 1 });
+    await component.save();
+    assert.ok(component.name.hasError);
   });
 
   test('validation errors show up when saving with a too long report name', async function(assert) {
-    assert.expect(1);
     const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
     this.set('program', programModel);
     await render(hbs`<NewCurriculumInventoryReport @currentProgram={{this.program}} @save={{noop}} @cancel={{noop}}/>`);
-    await fillIn('[data-test-name] input', '0123456789'.repeat(7));
-    await click('button.done');
-    assert.dom('.validation-error-message').exists({ count: 1 });
+    await component.name.set('0123456789'.repeat(7));
+    await component.save();
+    assert.ok(component.name.hasError);
   });
 });

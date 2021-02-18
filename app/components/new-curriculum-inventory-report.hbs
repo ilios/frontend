@@ -1,7 +1,7 @@
 {{! template-lint-disable attribute-indentation }}
 <div
   class="new-curriculum-inventory-report"
-  data-test-new-curriculum-inventory-report-test
+  data-test-new-curriculum-inventory-report
   {{did-insert (perform this.load)}}
 >
   {{#unless this.load.isRunning}}
@@ -59,14 +59,14 @@
         </select>
       </div>
       <div class="buttons">
-        <button type="button" class="done text" {{on "click" (perform this.save)}}>
+        <button type="button" class="done text" {{on "click" (perform this.save)}} data-test-save>
           {{#if this.save.isRunning}}
             <LoadingSpinner />
           {{else}}
             {{t "general.done"}}
           {{/if}}
         </button>
-        <button type="button" class="cancel text" {{on "click" @cancel}}>
+        <button type="button" class="cancel text" {{on "click" @cancel}} data-test-cancel>
           {{t "general.cancel"}}
         </button>
       </div>
