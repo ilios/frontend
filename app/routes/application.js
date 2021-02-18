@@ -2,7 +2,6 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { all } from 'rsvp';
 import * as Sentry from '@sentry/browser';
 import { loadPolyfills } from 'ilios-common/utils/load-polyfills';
 
@@ -29,17 +28,6 @@ export default class AuthenticatedRoute extends Route {
     const locale = this.intl.get('locale');
     this.moment.setLocale(locale);
     window.document.querySelector('html').setAttribute('lang', locale);
-  }
-
-  /**
-   * Preload the schools and user roles
-   * This makes the initial page rendering (especially the navigation) much smoother
-   */
-  async afterModel() {
-    await all([
-      this.store.findAll('userRole'),
-      this.store.findAll('school')
-    ]);
   }
 
   activate() {
