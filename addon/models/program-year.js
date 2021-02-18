@@ -19,9 +19,6 @@ export default Model.extend({
   xObjectives: alias('programYearObjectives'),
   assignableVocabularies: alias('program.school.vocabularies'),
 
-  academicYear: computed('startYear', function () {
-    return this.startYear + ' - ' + (parseInt(this.startYear, 10) + 1);
-  }),
   classOfYear: computed('startYear', 'program.duration', async function () {
     const program = await this.program;
     return parseInt(this.startYear, 10) + parseInt(program.duration, 10);
