@@ -5,6 +5,7 @@ import moment from 'moment';
 import page from 'ilios/tests/pages/courses';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { freezeDateAt, unfreezeDate } from 'ember-mockdate-shim';
 
 module('Acceptance | Courses', function(hooks) {
   setupApplicationTest(hooks);
@@ -135,8 +136,8 @@ module('Acceptance | Courses', function(hooks) {
   });
 
   test('filters by year', async function(assert) {
-    this.server.create('academicYear', {id: 2013});
-    this.server.create('academicYear', {id: 2014});
+    this.server.create('academicYear', { id: 2013 });
+    this.server.create('academicYear', { id: 2014 });
     assert.expect(5);
     const firstCourse = this.server.create('course', {
       year: 2013,
@@ -148,11 +149,11 @@ module('Acceptance | Courses', function(hooks) {
     });
     await page.visit();
     assert.equal(page.courses.courses.length, 1);
-    await page.filterByYear('2013 - 2014');
+    await page.filterByYear('2013');
     assert.equal(page.courses.courses.length, 1);
     assert.equal(page.courses.courses[0].title, firstCourse.title);
 
-    await page.filterByYear('2014 - 2015');
+    await page.filterByYear('2014');
     assert.equal(page.courses.courses.length, 1);
     assert.equal(page.courses.courses[0].title, secondCourse.title);
   });
@@ -274,9 +275,9 @@ module('Acceptance | Courses', function(hooks) {
 
     await page.visit({ year });
     await page.toggleNewCourseForm();
-    await page.newCourseForm.title('Course 1');
-    await page.newCourseForm.chooseYear(year);
-    await page.newCourseForm.save();
+    await page.newCourse.title('Course 1');
+    await page.newCourse.chooseYear(year);
+    await page.newCourse.save();
 
     assert.equal(page.courses.courses.length, 1);
     assert.equal(page.newCourseLink, 'Course 1', 'new course link');
@@ -303,8 +304,8 @@ module('Acceptance | Courses', function(hooks) {
 
     await page.visit();
     await page.toggleNewCourseForm();
-    await page.newCourseForm.title(newTitle);
-    await page.newCourseForm.save();
+    await page.newCourse.title(newTitle);
+    await page.newCourse.save();
     assert.equal(page.courses.courses.length, 0);
     assert.ok(page.courses.emptyListRowIsVisible);
   });
@@ -319,9 +320,9 @@ module('Acceptance | Courses', function(hooks) {
 
     await page.visit({ year });
     await page.toggleNewCourseForm();
-    await page.newCourseForm.title(courseTitle);
-    await page.newCourseForm.chooseYear(year);
-    await page.newCourseForm.save();
+    await page.newCourse.title(courseTitle);
+    await page.newCourse.chooseYear(year);
+    await page.newCourse.save();
     assert.equal(page.courses.courses.length, 1);
     assert.equal(page.newCourseLink, 'Course 1');
 
@@ -345,9 +346,9 @@ module('Acceptance | Courses', function(hooks) {
     assert.ok(page.courses.emptyListRowIsVisible);
 
     await page.toggleNewCourseForm();
-    await page.newCourseForm.title('Course 1');
-    await page.newCourseForm.chooseYear(year);
-    await page.newCourseForm.save();
+    await page.newCourse.title('Course 1');
+    await page.newCourse.chooseYear(year);
+    await page.newCourse.save();
     assert.equal(page.courses.courses.length, 1);
     assert.equal(page.newCourseLink, 'Course 1');
 
@@ -401,10 +402,10 @@ module('Acceptance | Courses', function(hooks) {
       thisYear + 2
     ];
 
-    assert.equal(page.newCourseForm.years().count, years.length + 1);
-    assert.equal(page.newCourseForm.years(0).text, 'Select Academic Year');
+    assert.equal(page.newCourse.years().count, years.length + 1);
+    assert.equal(page.newCourse.years(0).text, 'Select Academic Year');
     for (let i = 0; i < years.length; i++){
-      assert.equal(page.newCourseForm.years(i + 1).text.substring(0,4), years[i]);
+      assert.equal(page.newCourse.years(i + 1).text.substring(0,4), years[i]);
     }
   });
 
@@ -634,5 +635,82 @@ module('Acceptance | Courses', function(hooks) {
 
     assert.equal(page.courses.courses[0].removeActionCount, 0, 'privileged user cannot delete course with descendants');
     assert.equal(page.courses.courses[1].removeActionCount, 1, 'privileged user can delete course with ancestors');
+  });
+
+  test('academic year pre-selects last year with calendar-year-boundary-crossing config turned on', async function(assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.user.update({ administeredSchools: [this.school] });
+    freezeDateAt(new Date('1/1/2021'));
+    const year = moment().year();
+    this.server.create('academicYear', { id: year - 1 });
+    this.server.create('academicYear', { id: year });
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: true,
+        apiVersion
+      }};
+    });
+    await page.visit();
+    assert.ok(page.yearFilters(1).selected);
+    assert.equal(page.yearFilters(1).value, (year - 1).toString());
+    unfreezeDate();
+  });
+
+  test('academic year pre-selects this year with calendar-year-boundary-crossing config turned on', async function(assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.user.update({ administeredSchools: [this.school] });
+    freezeDateAt(new Date('10/10/2021'));
+    const year = moment().year();
+    this.server.create('academicYear', { id: year - 1 });
+    this.server.create('academicYear', { id: year });
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: true,
+        apiVersion
+      }};
+    });
+    await page.visit();
+    assert.ok(page.yearFilters(0).selected);
+    assert.equal(page.yearFilters(0).value, (year).toString());
+    unfreezeDate();
+  });
+
+
+  test('academic year always pre-selects this year with calendar-year-boundary-crossing config turned off', async function(assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.user.update({ administeredSchools: [this.school] });
+    freezeDateAt(new Date('1/1/2021'));
+    const year = moment().year();
+    this.server.create('academicYear', { id: year - 1 });
+    this.server.create('academicYear', { id: year });
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: false,
+        apiVersion
+      }};
+    });
+    await page.visit();
+    assert.ok(page.yearFilters(0).selected);
+    assert.equal(page.yearFilters(0).value, (year).toString());
+    unfreezeDate();
+  });
+
+  test('academic STILL always year pre-selects this year with calendar-year-boundary-crossing config turned off', async function(assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.user.update({ administeredSchools: [this.school] });
+    freezeDateAt(new Date('10/10/2021'));
+    const year = moment().year();
+    this.server.create('academicYear', { id: year - 1 });
+    this.server.create('academicYear', { id: year });
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: false,
+        apiVersion
+      }};
+    });
+    await page.visit();
+    assert.ok(page.yearFilters(0).selected);
+    assert.equal(page.yearFilters(0).value, (year).toString());
+    unfreezeDate();
   });
 });

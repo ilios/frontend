@@ -61,14 +61,14 @@
               </option>
               {{#each
                 (sort-by
-                  "academicYearTitle:desc" this.allAcademicYears
+                  "title:desc" this.allAcademicYears
                 ) as |year|
               }}
                 <option
                   value={{year.id}}
                   selected={{is-equal year.id @selectedYear}}
                 >
-                  {{year.academicYearTitle}}
+                  {{year.title}}
                 </option>
               {{/each}}
             </select>
