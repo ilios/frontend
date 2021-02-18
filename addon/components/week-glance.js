@@ -2,7 +2,7 @@ import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
 import moment from 'moment';
 import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask } from 'ember-concurrency';
 
 export default class WeeklyGlance extends Component {
   @service userEvents;

@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { dropTask } from 'ember-concurrency-decorators';
+import { dropTask } from 'ember-concurrency';
 import flatpickr from 'flatpickr';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';

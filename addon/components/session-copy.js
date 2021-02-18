@@ -1,10 +1,9 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { hash, all, filter } from 'rsvp';
-import { timeout } from 'ember-concurrency';
+import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 import moment from 'moment';
 
 export default class SessionCopyComponent extends Component {

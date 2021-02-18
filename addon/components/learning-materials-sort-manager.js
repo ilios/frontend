@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { dropTask, restartableTask } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 

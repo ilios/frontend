@@ -2,11 +2,10 @@ import Component from '@glimmer/component';
 import { map } from 'rsvp';
 import { isEmpty } from '@ember/utils';
 import { htmlSafe } from '@ember/string';
-import { timeout } from 'ember-concurrency';
+import { restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { restartableTask } from 'ember-concurrency-decorators';
 
 export default class VisualizerCourseSessionTypes extends Component {
   @service router;

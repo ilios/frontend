@@ -1,9 +1,8 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { timeout } from 'ember-concurrency';
+import { dropTask, timeout } from 'ember-concurrency';
 import { next } from '@ember/runloop';
-import { dropTask } from 'ember-concurrency-decorators';
 
 export default class SessionsGridHeader extends Component {
   @tracked isExpanding = false;

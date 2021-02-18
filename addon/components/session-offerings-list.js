@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import OfferingDateBlock from 'ilios-common/utils/offering-date-block';
 import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask } from 'ember-concurrency';
 
 export default class SessionOfferingsListComponent extends Component {
   @service store;

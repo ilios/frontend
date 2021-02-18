@@ -2,8 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { isNone } from '@ember/utils';
-import { timeout } from 'ember-concurrency';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask, timeout } from 'ember-concurrency';
 
 const DEBOUNCE_TIMEOUT = 250;
 

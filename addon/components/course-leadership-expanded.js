@@ -1,8 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { timeout } from 'ember-concurrency';
-import { dropTask } from 'ember-concurrency-decorators';
+import { dropTask, timeout } from 'ember-concurrency';
 import { hash } from 'rsvp';
 
 export default class CourseLeadershipExpandedComponent extends Component {

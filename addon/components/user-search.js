@@ -7,7 +7,7 @@ import { isEmpty } from '@ember/utils';
 const { oneWay } = computed;
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask } from 'ember-concurrency';
 
 const userProxy = ObjectProxy.extend({
   isUser: true,

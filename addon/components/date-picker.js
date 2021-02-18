@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
-import { waitForProperty } from 'ember-concurrency';
+import { dropTask, restartableTask, waitForProperty } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 import flatpickr from 'flatpickr';
 import { later } from '@ember/runloop';
