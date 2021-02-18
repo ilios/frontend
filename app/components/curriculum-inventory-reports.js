@@ -8,7 +8,6 @@ export default class CurriculumInventoryReportsComponent extends Component {
   @service currentUser;
   @service intl;
   @service permissionChecker;
-  @service store;
 
   @tracked showNewCurriculumInventoryReportForm = false;
   @tracked hasMoreThanOneSchool = false;
@@ -71,7 +70,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
 
     if (this.selectedSchool) {
       this.canCreate = yield this.permissionChecker.canCreateCurriculumInventoryReport(this.selectedSchool);
-      const programs = yield this.store.query('program', { school: this.selectedSchool.id });
+      const programs = yield this.selectedSchool.programs;
       this.programs = programs.sortBy('title').toArray();
     }
 
