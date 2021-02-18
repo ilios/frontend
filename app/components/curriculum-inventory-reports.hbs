@@ -6,7 +6,7 @@
 >
   {{#unless this.load.isRunning}}
     <div class="filter-tools">
-      <div class="schoolsfilter">
+      <div class="schoolsfilter" data-test-schools-filter>
         <FaIcon @icon="university" @fixedWidth={{true}} />
         {{#if this.hasMoreThanOneSchool}}
           <select {{on "change" (pick "target.value" this.changeSelectedSchool)}}>
@@ -25,7 +25,7 @@
           {{t "general.none"}}
         {{/if}}
       </div>
-      <div class="programsfilter">
+      <div class="programsfilter" data-test-programs-filter>
         <FaIcon @icon="list-alt" @fixedWidth={{true}} />
         {{#if this.programs.length}}
           <select {{on "change" (pick "target.value" this.changeSelectedProgram)}}>
@@ -67,7 +67,7 @@
           />
         {{/if}}
         {{#if this.newReport}}
-          <div class="saved-result">
+          <div class="saved-result" data-test-saved-results>
             <LinkTo @route="curriculumInventoryReport" @model={{this.newReport}}>
               <FaIcon @icon="external-link-square-alt" />
               {{this.newReport.name}}
