@@ -50,17 +50,6 @@ export default Model.extend({
   }),
 
   /**
-   * A label corresponding to this report's academic year. Returns a string.
-   * @property yearLabel
-   * @type {Ember.computed}
-   * @public
-   */
-  yearLabel: computed('year', function () {
-    const year = this.year;
-    return year + ' - ' + (parseInt(year, 10) + 1);
-  }),
-
-  /**
    * A list of courses that area linked to sequence blocks in this report.
    * Returns a promise that resolves to an array of course objects.
    * @property linkedCourses

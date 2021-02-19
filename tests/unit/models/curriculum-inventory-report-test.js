@@ -41,12 +41,6 @@ module('Unit | Model | CurriculumInventoryReport', function (hooks) {
     assert.ok(model.get('isFinalized'));
   });
 
-  test('get label for academic year', function (assert) {
-    const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
-    model.set('year', 1346);
-    assert.equal(model.get('yearLabel'), '1346 - 1347');
-  });
-
   test('get linked courses', async function (assert) {
     assert.expect(3);
     const model = this.owner.lookup('service:store').createRecord('curriculum-inventory-report');
