@@ -75,8 +75,7 @@ export default class NewUserComponent extends Component {
   @restartableTask
   *loadSchools() {
     const store = this.store;
-    // schools have been pre-fetched in the controller, so we can just access them synchronously from the store.
-    const schools = store.peekAll('school');
+    const schools = yield store.findAll('school');
     return (yield filter(schools.toArray(), async school => {
       return this.permissionChecker.canCreateUser(school);
     }));
