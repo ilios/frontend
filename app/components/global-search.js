@@ -1,59 +1,60 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { task } from 'ember-concurrency';
+import { tracked } from '@glimmer/tracking';
+import { restartableTask } from 'ember-concurrency-decorators';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { use } from 'ember-could-get-used-to-this';
+import { action } from '@ember/object';
 
 const MIN_INPUT = 3;
 
-export default Component.extend({
-  iliosConfig: service(),
-  intl: service(),
-  iliosSearch: service('search'),
-  store: service(),
-  tagName: "",
-  page: null,
-  query: null,
-  selectedYear: null,
-  ignoredSchoolIds: null,
-  size: 10,
-  yearOptions: null,
-  onQuery() {},
-  onSelectPage() {},
-  setIgnoredSchoolIds() {},
-  setSelectedYear() {},
-  isLoading: reads('search.isRunning'),
-  hasResults: reads('results.length'),
-  results: reads('search.lastSuccessful.value'),
-  allSchools: reads('loadSchools.lastSuccessful.value'),
+export default class GlobalSearchComponent extends Component {
+  @service iliosConfig;
+  @service intl;
+  @service('search') iliosSearch;
+  @service store;
 
-  ignoredSchoolTitles: computed('ignoredSchoolIds.[]', 'allSchools.[]', function() {
-    if (!this.ignoredSchoolIds) {
+  size = 10;
+  @tracked results = [];
+
+  get hasResults() {
+    return Boolean(this.results.length);
+  }
+
+  @use allSchools = new ResolveAsyncValue(() => [this.store.findAll('school')]);
+  get schools() {
+    return this.allSchools ?? [];
+  }
+
+  get ignoredSchoolTitles() {
+    if (!this.args.ignoredSchoolIds) {
       return [];
     }
-    return this.ignoredSchoolIds.map(id => {
-      const school = this.allSchools.findBy('id', id);
+    return this.args.ignoredSchoolIds.map(id => {
+      const school = this.schools.findBy('id', id);
       return school ? school.title : '';
     });
-  }),
+  }
 
-  filteredResults: computed('results.[]', 'selectedYear', 'ignoredSchoolTitles.[]', function() {
-    if (this.results) {
-      const yearFilteredResults = this.results.filter(course => this.selectedYear ? course.year === this.selectedYear : true);
-      return yearFilteredResults.filter(course => !this.ignoredSchoolTitles.includes(course.school));
-    } else {
-      return [];
+  get yearFilteredResults() {
+    if (!this.args.selectedYear) {
+      return this.results;
     }
-  }),
 
-  paginatedResults: computed('filteredResults.[]', 'page', 'size', function() {
-    const { page, size } = this.getProperties('page', 'size');
-    return this.filteredResults.slice((page * size) - size, page * size);
-  }),
+    return this.results.filter(course => course.year === Number(this.args.selectedYear));
+  }
 
-  schoolOptions: computed('allSchools.[]', 'results.[]', function () {
-    if (this.results && this.results.length && this.allSchools && this.allSchools.length) {
-      const emptySchools = this.allSchools.map(({id, title}) => {
+  get filteredResults() {
+    return this.yearFilteredResults.filter(course => !this.ignoredSchoolTitles.includes(course.school));
+  }
+
+  get paginatedResults() {
+    return this.filteredResults.slice((this.args.page * this.size) - this.size, this.args.page * this.size);
+  }
+
+  get schoolOptions() {
+    if (this.results.length && this.schools.length) {
+      const emptySchools = this.schools.map(({id, title}) => {
         return {
           id,
           title,
@@ -67,54 +68,42 @@ export default Component.extend({
         return set;
       }, emptySchools);
       return options;
-    } else {
-      return [];
     }
-  }),
 
-  init() {
-    this._super(...arguments);
-    this.loadSchools.perform();
-
-    if (this.query && this.query.length >= MIN_INPUT) {
-      this.search.perform();
-    }
-  },
-
-  actions: {
-    setSelectedYear(year) {
-      this.setSelectedYear(year ? parseInt(year, 10) : null);
-      this.onSelectPage(1);
-    },
-    toggleSchoolSelection(id) {
-      const ignoredSchoolIds = this.ignoredSchoolIds ? [...this.ignoredSchoolIds] : [];
-
-      if (ignoredSchoolIds.includes(id)) {
-        ignoredSchoolIds.removeObject(id);
-      } else {
-        ignoredSchoolIds.pushObject(id);
-      }
-
-      this.onSelectPage(1);
-      this.setIgnoredSchoolIds(ignoredSchoolIds);
-    }
-  },
-
-  search: task(function* () {
-    this.onQuery(this.query);
-    const { courses } = yield this.iliosSearch.forCurriculum(this.query);
-    this.setUpYearFilter(courses.mapBy('year'));
-
-    return courses;
-  }).restartable(),
-
-  loadSchools: task(function* () {
-    const schools = yield this.store.findAll('school');
-    return schools;
-  }),
-
-  setUpYearFilter(years) {
-    const yearOptions = years.uniq().sort().reverse();
-    this.set('yearOptions', yearOptions);
+    return [];
   }
-});
+
+  get yearOptions() {
+    return this.results.mapBy('year').uniq().sort().reverse();
+  }
+
+  @action
+  setSelectedYear(year) {
+    this.args.setSelectedYear(year ? Number(year) : null);
+    this.args.onSelectPage(1);
+  }
+
+  @action
+  toggleSchoolSelection(id) {
+    const ignoredSchoolIds = this.args.ignoredSchoolIds ? [...this.args.ignoredSchoolIds] : [];
+
+    if (ignoredSchoolIds.includes(id)) {
+      ignoredSchoolIds.removeObject(id);
+    } else {
+      ignoredSchoolIds.pushObject(id);
+    }
+
+    this.args.onSelectPage(1);
+    this.args.setIgnoredSchoolIds(ignoredSchoolIds);
+  }
+
+  @restartableTask
+  *search(el, [query]) {
+    this.results = [];
+    if (query?.length > MIN_INPUT) {
+      const { courses } = yield this.iliosSearch.forCurriculum(query);
+
+      this.results = courses;
+    }
+  }
+}

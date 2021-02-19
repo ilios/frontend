@@ -1,80 +1,80 @@
-<div ...attributes>
-  <div
-    class="global-search"
-    {{did-update (perform this.search) @query}}
-    data-test-global-search
+<div
+  class="global-search"
+  {{did-insert (perform this.search) @query}}
+  {{did-update (perform this.search) @query}}
+  data-test-global-search
+  ...attributes
+>
+  <GlobalSearchBox @query={{@query}} @search={{@onQuery}} />
+  <ul
+    class="results {{if (and (not this.search.isRunning) (not this.hasResults)) "hidden"}}"
+    data-test-results
   >
-    <GlobalSearchBox @query={{@query}} @search={{@onQuery}} />
-    <ul
-      class="results {{if (and this.isIdle (not this.hasResults)) "hidden"}}"
-      data-test-results
-    >
-      {{#if this.isLoading}}
-        <li class="searching">
-          <FaIcon @icon="spinner" class="orange" @spin={{true}} />
-          {{t "general.currentlySearchingPrompt"}}
-        </li>
+    {{#if this.search.isRunning}}
+      <li class="searching">
+        <FaIcon @icon="spinner" class="orange" @spin={{true}} />
+        {{t "general.currentlySearchingPrompt"}}
+      </li>
+    {{else}}
+      {{#each this.paginatedResults as |course|}}
+        <CourseSearchResult @course={{course}} />
       {{else}}
-        {{#each this.paginatedResults as |course|}}
-          <CourseSearchResult @course={{course}} />
-        {{else}}
-          <li class="no-results">
-            {{t "general.noSearchResultsPrompt"}}
-          </li>
-        {{/each}}
-      {{/if}}
-    </ul>
-    {{#if this.hasResults}}
-      <fieldset class="filters">
-        <legend>
-          {{t "general.showResultsFor"}}
-        </legend>
-        <div class="year-filters">
-          <select
-            data-test-academic-year-filter
-            onchange={{action "setSelectedYear" value="target.value"}}
-          >
-            <option selected={{is-equal null this.selectedYear}} value="">
-              {{t "general.allAcademicYears"}}
-            </option>
-            {{#each this.yearOptions as |year|}}
-              <option selected={{is-equal year this.selectedYear}} value={{year}}>
-                {{year}}
-                -
-                {{inc year}}
-              </option>
-            {{/each}}
-          </select>
-        </div>
-        {{#if (gt (get allSchools "length") 1)}}
-          <div class="school-filters" data-test-school-filters>
-            {{#each this.schoolOptions as |obj index|}}
-              <span class="filter" data-test-school-filter>
-                <input
-                  id="school={{index}}"
-                  type="checkbox"
-                  checked={{or
-                    (eq obj.results 0)
-                    (not (includes obj.id ignoredSchoolIds))
-                  }}
-                  onclick={{action "toggleSchoolSelection" obj.id}}
-                  disabled={{eq obj.results 0}}
-                >
-                <label for="school={{index}}">
-                  {{obj.title}}
-                  ({{obj.results}})
-                </label>
-              </span>
-            {{/each}}
-          </div>
-        {{/if}}
-      </fieldset>
+        <li class="no-results">
+          {{t "general.noSearchResultsPrompt"}}
+        </li>
+      {{/each}}
     {{/if}}
-  </div>
-  <PaginationLinks
-    @page={{this.page}}
-    @results={{this.filteredResults}}
-    @size={{this.size}}
-    @onSelectPage={{@onSelectPage}}
-  />
+  </ul>
+  {{#if this.hasResults}}
+    <fieldset class="filters">
+      <legend>
+        {{t "general.showResultsFor"}}
+      </legend>
+      <div class="year-filters">
+        <select
+          data-test-academic-year-filter
+          {{on "change" (pick "target.value" @setSelectedYear)}}
+        >
+          <option selected={{is-equal null @selectedYear}} value="">
+            {{t "general.allAcademicYears"}}
+          </option>
+          {{#each this.yearOptions as |year|}}
+            <option selected={{is-equal year @selectedYear}} value={{year}}>
+              {{year}}
+              -
+              {{inc year}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+      {{#if (gt (get this.schools "length") 1)}}
+        <div class="school-filters" data-test-school-filters>
+          {{#each this.schoolOptions as |obj index|}}
+            <span class="filter" data-test-school-filter>
+              <input
+                id="school={{index}}"
+                type="checkbox"
+                checked={{or
+                  (eq obj.results 0)
+                  (not (includes obj.id @ignoredSchoolIds))
+                }}
+                {{on "click" (fn this.toggleSchoolSelection obj.id)}}
+                disabled={{eq obj.results 0}}
+              >
+              <label for="school={{index}}">
+                {{obj.title}}
+                ({{obj.results}})
+              </label>
+            </span>
+          {{/each}}
+        </div>
+      {{/if}}
+    </fieldset>
+  {{/if}}
 </div>
+<PaginationLinks
+  @page={{@page}}
+  @results={{this.filteredResults}}
+  @size={{this.size}}
+  @onSelectPage={{@onSelectPage}}
+/>

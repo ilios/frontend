@@ -12,7 +12,11 @@ module('Integration | Component | global-search', function(hooks) {
   test('it renders', async function(assert) {
     assert.expect(1);
 
-    await render(hbs`<GlobalSearch />`);
+    await render(hbs`<GlobalSearch
+      @onQuery={{noop}}
+      @onSelectPage={{noop}}
+      @setSelectedYear={{noop}}
+    />`);
     assert.dom('[data-test-global-search-box]').exists({ count: 1 });
   });
 
@@ -30,7 +34,12 @@ module('Integration | Component | global-search', function(hooks) {
     });
 
     this.set('query', '');
-    await render(hbs`<GlobalSearch @query={{this.query}} />`);
+    await render(hbs`<GlobalSearch
+      @query={{this.query}}
+      @onQuery={{noop}}
+      @onSelectPage={{noop}}
+      @setSelectedYear={{noop}}
+    />`);
     assert.ok(component.noResultsIsVisible);
     this.set('query', 'hello world');
     assert.notOk(component.noResultsIsVisible);
@@ -50,7 +59,11 @@ module('Integration | Component | global-search', function(hooks) {
     });
 
     this.set('query', (value) => assert.equal(value, 'typed it'));
-    await render(hbs`<GlobalSearch @onQuery={{action this.query}} />`);
+    await render(hbs`<GlobalSearch
+      @onQuery={{fn this.query}}
+      @onSelectPage={{noop}}
+      @setSelectedYear={{noop}}
+    />`);
     await component.input('typed it');
     await component.clickIcon();
   });
@@ -88,8 +101,10 @@ module('Integration | Component | global-search', function(hooks) {
     await render(hbs`<GlobalSearch
       @page="1"
       @query={{this.query}}
+      @onQuery={{noop}}
+      @onSelectPage={{noop}}
       @selectedYear={{this.selectedYear}}
-      @setSelectedYear={{action (mut this.selectedYear)}}
+      @setSelectedYear={{set this.selectedYear}}
     />`);
     assert.equal(component.academicYear, '');
     assert.equal(component.academicYearOptions, 'All Academic Years 2021 - 2022 2020 - 2021 2019 - 2020');
@@ -152,6 +167,8 @@ module('Integration | Component | global-search', function(hooks) {
     await render(hbs`<GlobalSearch
       @page="1"
       @query={{this.query}}
+      @onQuery={{noop}}
+      @onSelectPage={{noop}}
       @ignoredSchoolIds={{this.ignoredSchoolIds}}
       @setIgnoredSchoolIds={{action (mut this.ignoredSchoolIds)}}
     />`);
@@ -241,7 +258,13 @@ module('Integration | Component | global-search', function(hooks) {
     });
 
     this.set('query', 'hello world');
-    await render(hbs`<GlobalSearch @page="1" @query={{this.query}} />`);
+    await render(hbs`<GlobalSearch
+      @page="1"
+      @query={{this.query}}
+      @onQuery={{noop}}
+      @onSelectPage={{noop}}
+      @setSelectedYear={{noop}}
+    />`);
     assert.equal(component.searchResults.length, 1);
     assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
     assert.equal(component.schoolFilters.length, 3);
@@ -272,7 +295,13 @@ module('Integration | Component | global-search', function(hooks) {
     });
 
     this.set('query', 'hello world');
-    await render(hbs`<GlobalSearch @page="1" @query={{this.query}} />`);
+    await render(hbs`<GlobalSearch
+      @page="1"
+      @query={{this.query}}
+      @onQuery={{noop}}
+      @onSelectPage={{noop}}
+      @setSelectedYear={{noop}}
+    />`);
     assert.equal(component.searchResults.length, 1);
     assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
     assert.equal(component.schoolFilters.length, 0);
