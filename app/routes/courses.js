@@ -22,7 +22,7 @@ export default class CoursesRoute extends Route {
   async model() {
     const user = await this.currentUser.getModel();
     return hash({
-      schools: this.store.peekAll('school'),
+      schools: this.store.findAll('school'),
       primarySchool: this.dataLoader.loadSchoolForCourses(user.belongsTo('school').id()),
       years: this.store.findAll('academic-year'),
     });
