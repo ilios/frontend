@@ -56,14 +56,14 @@ module('Integration | Component | curriculum inventory report list', function(ho
     assert.equal(component.reports.length, reports.length, 'All reports are shown in list.');
     assert.equal(component.reports[0].name, reportModel2.name, 'Report name shows.');
     assert.equal(component.reports[0].program, programModel.title, 'Program title shows.');
-    assert.equal(component.reports[0].year, '2016 - 2017', 'Academic year shows.');
+    assert.equal(component.reports[0].year, '2016', 'Academic year shows.');
     assert.equal(component.reports[0].startDate, moment(reportModel2.startDate).format('L'), 'Start date shows.');
     assert.equal(component.reports[0].endDate, moment(reportModel2.endDate).format('L'), 'End date shows.');
     assert.equal(component.reports[0].status, 'Finalized', 'Status shows.');
     assert.notOk(component.reports[0].isDeletable, 'Delete button is disabled for finalized reports.');
     assert.equal(component.reports[1].name, reportModel1.name, 'Report name shows.');
     assert.equal(component.reports[1].program, programModel.title, 'Program title shows.');
-    assert.equal(component.reports[1].year, '2017 - 2018', 'Academic year shows.');
+    assert.equal(component.reports[1].year, '2017', 'Academic year shows.');
     assert.equal(component.reports[1].startDate, moment(reportModel1.startDate).format('L'), 'Start date shows.');
     assert.equal(component.reports[1].endDate, moment(reportModel1.endDate).format('L'), 'End date shows.');
     assert.equal(component.reports[1].status, 'Draft', 'Status shows.');
@@ -183,5 +183,28 @@ module('Integration | Component | curriculum inventory report list', function(ho
     await component.reports[0].clickOnStartDate();
     await component.reports[0].clickOnEndDate();
     await component.reports[0].clickOnStatus();
+  });
+
+  test('academic year shows range depending on application config', async function (assert) {
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report1 = this.server.create('curriculum-inventory-report', {
+      program,
+      name: 'Zeppelin',
+      year: 2017,
+      startDate: moment('2017-07-01').toDate(),
+      endDate: moment('2018-06-30').toDate(),
+    });
+
+    const reportModel1 = await this.owner.lookup('service:store').find('curriculum-inventory-report', report1.id);
+    const reports = [reportModel1];
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: true,
+      }};
+    });
+    this.set('reports', reports);
+    await render(hbs`<CurriculumInventoryReportList @reports={{this.reports}} />`);
+    assert.equal(component.reports[0].year, '2017 - 2018', 'Academic year shows range.');
   });
 });

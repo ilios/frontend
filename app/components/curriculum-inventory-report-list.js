@@ -21,6 +21,14 @@ const ReportProxy = ObjectProxy.extend({
       return false;
     }
     return this.permissionChecker.canDeleteCurriculumInventoryReport(report);
+  }),
+
+  yearLabel: computed('content.year', async function() {
+    const crossesYearBoundaries = await this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
+    if (crossesYearBoundaries) {
+      return this.content.year + ' - ' + (parseInt(this.content.year, 10) + 1);
+    }
+    return this.content.year;
   })
 });
 
@@ -28,6 +36,7 @@ export default class CurriculumInventoryReportListComponent extends Component {
   @service currentUser;
   @service intl;
   @service permissionChecker;
+  @service iliosConfig;
 
   get proxiedReports() {
     if (! this.args.reports) {
@@ -38,7 +47,8 @@ export default class CurriculumInventoryReportListComponent extends Component {
         content: report,
         intl: this.intl,
         currentUser: this.currentUser,
-        permissionChecker: this.permissionChecker
+        permissionChecker: this.permissionChecker,
+        iliosConfig: this.iliosConfig
       });
     });
   }
