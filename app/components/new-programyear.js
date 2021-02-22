@@ -1,26 +1,20 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { task } from 'ember-concurrency';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { dropTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  tagName: "",
+export default class NewProgramyearComponent extends Component {
+  @tracked year;
 
-  availableAcademicYears: null,
-  year: null,
-
-  selectedYear: computed('year', 'availableAcademicYears.[]', function() {
-    const year = this.year;
-    const availableAcademicYears = this.availableAcademicYears;
-    if (!year) {
-      return availableAcademicYears.firstObject;
+  get selectedYear() {
+    if (! this.year) {
+      return this.args.availableAcademicYears.firstObject;
     }
+    return this.args.availableAcademicYears.findBy('value', parseInt(this.year, 10));
+  }
 
-    return availableAcademicYears.findBy('value', parseInt(year, 10));
-  }),
-
-  saveNewYear: task(function* () {
-    const selectedYear = this.selectedYear;
-    const startYear = parseInt(selectedYear.value, 10);
-    yield this.save(startYear);
-  }).drop()
-});
+  @dropTask
+  *saveNewYear() {
+    const startYear = parseInt(this.selectedYear.value, 10);
+    yield this.args.save(startYear);
+  }
+}
