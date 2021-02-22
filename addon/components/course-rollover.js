@@ -21,6 +21,7 @@ export default class CourseRolloverComponent extends Component {
   @tracked skipOfferings = false;
   @tracked allCourses;
   @tracked selectedCohorts = [];
+  @tracked academicYearCrossesCalendarYearBoundaries = false;
 
   constructor() {
     super(...arguments);
@@ -44,6 +45,9 @@ export default class CourseRolloverComponent extends Component {
       },
     });
     this.changeSelectedYear(this.years.firstObject);
+    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+      'academicYearCrossesCalendarYearBoundaries'
+    );
   }
 
   @action
