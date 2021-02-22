@@ -1,13 +1,23 @@
 import { setupRenderingTest } from 'ember-qunit';
-import { render, settled, click, find } from '@ember/test-helpers';
+import { render, click, find } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import Service from '@ember/service';
 
 module('Integration | Component | curriculum inventory report details', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
+
+  hooks.beforeEach(async function() {
+    this.permissionCheckerMock = Service.extend({
+      canCreateCurriculumInventoryReport() {
+        return true;
+      }
+    });
+    this.owner.register('service:permission-checker', this.permissionCheckerMock);
+  });
 
   test('it renders', async function(assert) {
     assert.expect(2);
@@ -37,10 +47,8 @@ module('Integration | Component | curriculum inventory report details', function
       @setManageLeadership={{noop}}
     />`);
 
-    return settled().then(() => {
-      assert.dom('.curriculum-inventory-report-header .title').hasText(report.get('name'), 'Report name is visible in header.');
-      assert.dom('.curriculum-inventory-report-overview .description .editable').hasText(report.get('description'), 'Report description is visible in overview.');
-    });
+    assert.dom('.curriculum-inventory-report-header .title').hasText(report.get('name'), 'Report name is visible in header.');
+    assert.dom('.curriculum-inventory-report-overview .description .editable').hasText(report.get('description'), 'Report description is visible in overview.');
   });
 
   test('finalize report', async function(assert) {
