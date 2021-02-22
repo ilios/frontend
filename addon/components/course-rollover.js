@@ -39,15 +39,15 @@ export default class CourseRolloverComponent extends Component {
     }
     this.title = course.title;
     const school = course.belongsTo('school').id();
+    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+      'academicYearCrossesCalendarYearBoundaries'
+    );
     this.allCourses = yield this.store.query('course', {
       filters: {
         school,
       },
     });
     this.changeSelectedYear(this.years.firstObject);
-    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
-    );
   }
 
   @action
