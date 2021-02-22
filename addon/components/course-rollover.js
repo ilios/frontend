@@ -12,15 +12,13 @@ export default class CourseRolloverComponent extends Component {
   @service store;
   @service flashMessages;
   @service iliosConfig;
+
   @Length(3, 200) @NotBlank() @tracked title;
   @NotBlank() @tracked selectedYear;
-
   @tracked years;
-  @tracked selectedYear;
   @tracked course;
   @tracked startDate;
   @tracked skipOfferings = false;
-  @tracked title;
   @tracked allCourses;
   @tracked selectedCohorts = [];
 
