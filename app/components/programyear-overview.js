@@ -1,42 +1,33 @@
-import Component from '@ember/component';
-import { filterBy, sort } from '@ember/object/computed';
+import Component from '@glimmer/component';
 import config from '../config/environment';
-
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { use } from 'ember-could-get-used-to-this';
+import { enqueueTask } from 'ember-concurrency-decorators';
 const { IliosFeatures: { programYearVisualizations } } = config;
 
-export default Component.extend({
-  tagName: "",
+export default class ProgramYearOverviewComponent extends Component {
+  programYearVisualizations = programYearVisualizations;
 
-  canUpdate: false,
-  directorsSort: null,
-  programYear: null,
-  programYearVisualizations,
+  @use directors = new ResolveAsyncValue(() => [this.args.programYear.directors, []]);
 
-  directorsWithFullName: filterBy('programYear.directors', 'fullName'),
-  sortedDirectors: sort('directorsWithFullName', 'directorsSort'),
-
-  init() {
-    this._super(...arguments);
-    this.set('directorsSort', ['fullName']);
-  },
-
-  actions: {
-    addDirector(user) {
-      const programYear = this.programYear;
-      programYear.get('directors').then(directors => {
-        directors.addObject(user);
-        user.get('programYears').addObject(programYear);
-        programYear.save();
-      });
-    },
-
-    removeDirector(user) {
-      const programYear = this.programYear;
-      programYear.get('directors').then(directors => {
-        directors.removeObject(user);
-        user.get('programYears').removeObject(programYear);
-        programYear.save();
-      });
-    }
+  get directorsWithFullName() {
+    return this.directors.filterBy('fullName');
   }
-});
+  get sortedDirectors() {
+    return this.directorsWithFullName.sortBy('fullName');
+  }
+
+  @enqueueTask
+  * addDirector(user) {
+    const directors = yield this.args.programYear.directors;
+    directors.addObject(user);
+    yield this.args.programYear.save();
+  }
+
+  @enqueueTask
+  * removeDirector(user) {
+    const directors = yield this.args.programYear.directors;
+    directors.removeObject(user);
+    yield this.args.programYear.save();
+  }
+}
