@@ -6,7 +6,7 @@
 >
   {{#unless this.load.isRunning}}
     <div class="report-overview-header">
-      <div class="title">
+      <div class="title" data-test-title>
         {{t "general.overview"}}
       </div>
       <div class="report-overview-actions">
@@ -14,6 +14,7 @@
           @route="verificationPreview"
           @model={{@report}}
           class="verification-preview"
+          data-test-transition-to-verification-preview
         >
           <FaIcon
             @icon="table"
