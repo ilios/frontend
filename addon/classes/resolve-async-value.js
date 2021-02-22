@@ -8,6 +8,11 @@ export default class ResolveAsyncValueResource extends Resource {
   }
 
   async setup() {
+    //when a second value is passed it is the default until the promise gets resolved
+    if (this.args.positional.length > 1) {
+      this.data = this.args.positional[1];
+    }
+
     this.data = await this.args.positional[0];
   }
 }
