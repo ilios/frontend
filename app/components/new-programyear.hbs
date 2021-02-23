@@ -1,4 +1,8 @@
-<div class="new-programyear" ...attributes>
+<div
+  class="new-programyear"
+  {{did-insert this.load}}
+  ...attributes
+>
   <h4 class="title" data-test-newprogramyear-title>
     {{t "general.newProgramYear"}}
   </h4>
@@ -8,7 +12,7 @@
         {{t "general.academicYear"}}:
       </label>
       <select {{on "change" (pick "target.value" (set this.year))}}>
-        {{#each (sort-by "value" @availableAcademicYears) as |obj|}}
+        {{#each (sort-by "value" this.availableAcademicYears) as |obj|}}
           <option value={{obj.value}} selected={{eq obj this.selectedYear}}>
             {{obj.label}}
           </option>

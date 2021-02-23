@@ -4,7 +4,6 @@ import { action, computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
-import moment from 'moment';
 import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 
 export default class ProgramyearListComponent extends Component {
@@ -28,10 +27,6 @@ export default class ProgramyearListComponent extends Component {
     return this.args.programYears.toArray().sortBy('academicYear');
   }
 
-  get existingStartYears() {
-    return this.sortedContent.mapBy('startYear');
-  }
-
   get proxiedProgramYears() {
     const permissionChecker = this.permissionChecker;
     const currentUser = this.currentUser;
@@ -50,19 +45,6 @@ export default class ProgramyearListComponent extends Component {
     this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
-    const firstYear = parseInt(moment().subtract(5, 'years').format('YYYY'), 10);
-    const years = [];
-    for (let i = 0; i < 10; i++) {
-      years.push(firstYear + i);
-    }
-    this.availableAcademicYears = years.filter((year) => {
-      return !this.existingStartYears.includes(year.toString());
-    }).map((startYear) => {
-      return {
-        label: this.academicYearCrossesCalendarYearBoundaries ? `${startYear} - ${startYear + 1}` : startYear.toString(),
-        value: startYear,
-      };
-    });
   }
 
   @action

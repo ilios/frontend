@@ -21,7 +21,8 @@
       <section class="new">
         {{#if this.editorOn}}
           <NewProgramyear
-            @availableAcademicYears={{this.availableAcademicYears}}
+            @programYears={{await @programYears}}
+            @academicYearCrossesCalendarYearBoundaries={{this.academicYearCrossesCalendarYearBoundaries}}
             @save={{perform this.save}}
             @cancel={{this.cancel}}
           />
