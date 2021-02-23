@@ -55,11 +55,11 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     await visit(url);
     var rows = findAll('.programyear-list tbody tr');
     assert.equal(rows.length, 3);
-    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(1) td:nth-of-type(1)'), getText('2010 - 2011'));
+    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(1) td:nth-of-type(1)'), getText('2010'));
     assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(1) td:nth-of-type(2)'), getText('cohort1'));
-    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(2) td:nth-of-type(1)'), getText('2011 - 2012'));
+    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(2) td:nth-of-type(1)'), getText('2011'));
     assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(2) td:nth-of-type(2)'), getText('cohort2'));
-    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(3) td:nth-of-type(1)'), getText('2012 - 2013'));
+    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(3) td:nth-of-type(1)'), getText('2012'));
     assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(3) td:nth-of-type(2)'), getText('cohort0'));
   });
 
@@ -217,9 +217,8 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     const thisYear = new Date().getFullYear();
     await fillIn(selectField, thisYear);
     await click(saveButton);
-    const academicYear = `${thisYear.toString()} - ${(thisYear + 1).toString()}`;
-    assert.dom(getTableDataText(0, 0)).hasText(academicYear, 'academic year shown');
-    const classOfYear = `Class of ${(thisYear + 4).toString()}`;
+    assert.dom(getTableDataText(0, 0)).hasText(thisYear.toString(), 'academic year shown');
+    const classOfYear = `Class of ${(thisYear + 4)}`;
     assert.dom(getTableDataText(0, 1)).hasText(classOfYear, 'cohort class year shown');
     assert.dom(getTableDataText(0, 2, 'svg')).hasClass('fa-exclamation-triangle', 'warning label shown');
     assert.dom(getTableDataText(0, 3, 'svg')).hasClass('fa-exclamation-triangle', 'warning label shown');
@@ -253,9 +252,8 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     const saveButton = '.new-programyear .done';
     const thisYear = new Date().getFullYear();
     await visit(url);
-    const academicYear = `${thisYear.toString()} - ${(thisYear + 1).toString()}`;
 
-    assert.dom(getTableDataText(0, 0)).hasText(academicYear, 'academic year shown');
+    assert.dom(getTableDataText(0, 0)).hasText(thisYear.toString(), 'academic year shown');
     assert.dom(getTableDataText(0, 1)).hasText('cohort 0', 'cohort class year shown');
     assert.dom(getTableDataText(0, 2)).hasText('3');
     assert.dom(getTableDataText(0, 3)).hasText('3');
@@ -265,8 +263,7 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     await click(expandButton);
     await fillIn(selectField, thisYear + 1);
     await click(saveButton);
-    const academicYear2 = `${(thisYear + 1).toString()} - ${(thisYear + 2).toString()}`;
-    assert.dom(getTableDataText(1, 0)).hasText(academicYear2, 'academic year shown');
+    assert.dom(getTableDataText(1, 0)).hasText((thisYear + 1).toString(), 'academic year shown');
     const cohortClassYear = `Class of ${(thisYear + 5).toString()}`;
     assert.dom(getTableDataText(1, 1)).hasText(cohortClassYear, 'cohort class year shown');
     assert.dom(getTableDataText(1, 2)).hasText('3', 'copied correctly from latest program-year');
