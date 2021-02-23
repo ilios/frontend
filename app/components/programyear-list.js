@@ -1,136 +1,136 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { mapBy } from '@ember/object/computed';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action, computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
-import { run } from '@ember/runloop';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
-import { task } from 'ember-concurrency';
 import moment from 'moment';
+import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 
-export default Component.extend({
-  currentUser: service(),
-  permissionChecker: service(),
+export default class ProgramyearListComponent extends Component {
+  @service currentUser;
+  @service permissionChecker;
+  @service store;
+  @service iliosConfig;
 
-  store: service(),
+  @tracked editorOn = false;
+  @tracked itemsToSave = 100;
+  @tracked saved = false;
+  @tracked savedItems;
+  @tracked savedProgramYear;
+  @tracked availableAcademicYears = [];
+  @tracked academicYearCrossesCalendarYearBoundaries = false;
 
-  tagName: "",
-  canCreate: false,
-  editorOn: false,
-  itemsToSave: null,
-  program: null,
-  programYears: null,
-  saved: false,
-  savedItems: null,
-  savedProgramYear: null,
-
-  existingStartYears: mapBy('programYears', 'startYear'),
-
-  sortedContent: computed('programYears.[]', async function() {
-    const programYears = await this.programYears;
-    if (isEmpty(programYears)) {
+  get sortedContent() {
+    if (! this.args.programYears) {
       return [];
     }
-    return programYears.toArray().sortBy('academicYear');
-  }),
+    return this.args.programYears.toArray().sortBy('academicYear');
+  }
 
-  proxiedProgramYears: computed('sortedContent.[]', async function() {
+  get existingStartYears() {
+    return this.sortedContent.mapBy('startYear');
+  }
+
+  get proxiedProgramYears() {
     const permissionChecker = this.permissionChecker;
     const currentUser = this.currentUser;
-    const programYears = await this.sortedContent;
-    return programYears.map(programYear => {
+    return this.sortedContent.map(programYear => {
       return ProgramYearProxy.create({
         content: programYear,
         currentUser,
-        permissionChecker
+        permissionChecker,
+        academicYearCrossesCalendarYearBoundaries: this.academicYearCrossesCalendarYearBoundaries
       });
     });
-  }),
+  }
 
-  availableAcademicYears: computed('existingStartYears.[]', {
-    get() {
-      const firstYear = parseInt(moment().subtract(5, 'years').format('YYYY'), 10);
-      const years = [];
-
-      for (let i = 0; i < 10; i++) {
-        years.pushObject(firstYear + i);
-      }
-
-      return years.filter((year) => {
-        return !this.existingStartYears.includes(year.toString());
-      }).map((startYear) => {
-        return { label: `${startYear} - ${startYear + 1}`, value: startYear };
-      });
+  @restartableTask
+  *load() {
+    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+      'academicYearCrossesCalendarYearBoundaries'
+    );
+    const firstYear = parseInt(moment().subtract(5, 'years').format('YYYY'), 10);
+    const years = [];
+    for (let i = 0; i < 10; i++) {
+      years.push(firstYear + i);
     }
-  }).readOnly(),
+    this.availableAcademicYears = years.filter((year) => {
+      return !this.existingStartYears.includes(year.toString());
+    }).map((startYear) => {
+      return {
+        label: this.academicYearCrossesCalendarYearBoundaries ? `${startYear} - ${startYear + 1}` : startYear.toString(),
+        value: startYear,
+      };
+    });
+  }
 
-  actions: {
-    toggleEditor() {
-      if (this.editorOn) {
-        this.send('cancel');
-      } else {
-        this.setProperties({ editorOn: true, saved: false });
-      }
-    },
+  @action
+  toggleEditor() {
+    if (this.editorOn) {
+      this.args.cancel();
+    } else {
+      this.editorOn = true;
+      this.saved = false;
+    }
+  }
 
-    cancel() {
-      this.set('editorOn', false);
-    },
+  @action
+  cancel() {
+    this.editorOn = false;
+  }
 
-    remove(programYearProxy) {
-      programYearProxy.set('showRemoveConfirmation', true);
-    },
+  @action
+  remove(programYearProxy) {
+    programYearProxy.set('showRemoveConfirmation', true);
+  }
 
-    confirmRemove(programYearProxy) {
-      const programYear = programYearProxy.get('content');
-      programYear.deleteRecord();
-      programYear.save();
-    },
+  @action
+  confirmRemove(programYearProxy) {
+    const programYear = programYearProxy.get('content');
+    programYear.deleteRecord();
+    programYear.save();
+  }
 
-    cancelRemove(programYearProxy) {
-      programYearProxy.set('showRemoveConfirmation', false);
-    },
+  @action
+  cancelRemove(programYearProxy) {
+    programYearProxy.set('showRemoveConfirmation', false);
+  }
 
-    unlockProgramYear(programYearProxy) {
-      programYearProxy.get('userCanUnLock').then(permission => {
-        if (permission) {
-          run(()=>{
-            programYearProxy.set('isSaving', true);
-          });
-          this.unlock(programYearProxy.get('content')).then(()=>{
-            programYearProxy.set('isSaving', false);
-          });
-        }
-      });
-    },
+  @action
+  async unlockProgramYear(programYearProxy) {
+    const canUnlock = await programYearProxy.get('userCanUnLock');
+    if (canUnlock) {
+      programYearProxy.set('isSaving', true);
+      await this.args.unlock(programYearProxy.get('content'));
+      programYearProxy.set('isSaving', false);
+    }
+  }
 
-    lockProgramYear(programYearProxy) {
-      programYearProxy.get('userCanLock').then(permission => {
-        if (permission) {
-          run(()=>{
-            programYearProxy.set('isSaving', true);
-          });
-          this.lock(programYearProxy.get('content')).then(()=>{
-            programYearProxy.set('isSaving', false);
-          });
-        }
-      });
-    },
-  },
+  @action
+  async lockProgramYear(programYearProxy) {
+    const canLock = await programYearProxy.get('userCanLock');
+    if (canLock) {
+      programYearProxy.set('isSaving', true);
+      await this.args.lock(programYearProxy.get('content'));
+      programYearProxy.set('isSaving', false);
+    }
+  }
 
   resetSaveItems() {
-    this.set('itemsToSave', 100);
-    this.set('savedItems', 0);
-  },
+    this.itemsToSave = 100;
+    this.savedItems = 0;
+  }
 
   incrementSavedItems() {
-    this.set('savedItems', this.savedItems + 1);
-  },
+    this.savedItems = this.savedItems + 1;
+  }
 
-  save: task(function* (startYear) {
-    const programYears = yield this.sortedContent;
+  @dropTask
+  *save(startYear) {
+    const programYears = this.sortedContent;
     const latestProgramYear = programYears.get('lastObject');
-    const program = this.program;
+    const program = this.args.program;
     const store = this.store;
     let itemsToSave = 0;
     this.resetSaveItems();
@@ -152,19 +152,19 @@ export default Component.extend({
       itemsToSave++;
       this.incrementSavedItems();
 
-      newProgramYear.get('directors').pushObjects(directors.toArray());
-      newProgramYear.get('competencies').pushObjects(competencies.toArray());
-      newProgramYear.get('terms').pushObjects(terms.toArray());
+      newProgramYear.directors.pushObjects(directors.toArray());
+      newProgramYear.competencies.pushObjects(competencies.toArray());
+      newProgramYear.terms.pushObjects(terms.toArray());
     }
     const savedProgramYear = yield newProgramYear.save();
     itemsToSave++;
     this.incrementSavedItems();
 
     if (latestProgramYear) {
-      const relatedObjectives = yield latestProgramYear.get('programYearObjectives');
+      const relatedObjectives = yield latestProgramYear.programYearObjectives;
       const programYearObjectives = relatedObjectives.sortBy('id').toArray();
       itemsToSave += programYearObjectives.length;
-      this.set('itemsToSave', itemsToSave);
+      this.itemsToSave = itemsToSave;
 
       for (let i = 0; i < programYearObjectives.length; i++) {
         const programYearObjectiveToCopy = programYearObjectives[i];
@@ -190,18 +190,28 @@ export default Component.extend({
         this.incrementSavedItems();
       }
     }
-    this.set('itemsToSave', itemsToSave);
-    this.setProperties({ saved: true, savedProgramYear: newProgramYear });
-    this.send('cancel');
-  }).drop()
-});
+    this.itemsToSave = itemsToSave;
+    this.saved = true;
+    this.savedProgramYear = newProgramYear;
+    this.cancel();
+  }
+}
 
+// @todo convert this into a component. [ST 2021/02/22]
 const ProgramYearProxy = ObjectProxy.extend({
   content: null,
   currentUser: null,
   isSaving: false,
   permissionChecker: null,
   showRemoveConfirmation: false,
+  academicYearCrossesCalendarYearBoundaries: false,
+
+  academicYear: computed('content', 'academicYearCrossesCalendarYearBoundaries', function() {
+    if (this.academicYearCrossesCalendarYearBoundaries) {
+      return this.content.startYear + ' - ' + (parseInt(this.content.startYear, 10) + 1);
+    }
+    return this.content.startYear;
+  }),
 
   userCanDelete: computed('content', 'currentUser.model.programYears.[]', async function() {
     const programYear = this.content;
