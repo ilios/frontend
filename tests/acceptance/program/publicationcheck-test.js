@@ -14,45 +14,36 @@ module('Acceptance | Program - Publication Check', function(hooks) {
   setupMirage(hooks);
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
-    const user = await setupAuthentication({ school });
-    this.server.create('school');
-    this.server.create('term');
-    this.server.create('competency', { school });
-    this.server.create('program', { school });
-    this.fullProgramYear = this.server.create('programYear', {
+    await setupAuthentication({ school });
+    this.fullProgram = this.server.create('program', {
       startYear: 2013,
-      programId: 1,
-      directors: [user],
-      termIds: [1],
-      competencyIds: [1],
+      schoolId: 1,
     });
-    this.server.create('programYearObjective', { programYear: this.fullProgramYear });
-    this.emptyProgramYear = this.server.create('programYear', {
+    this.emptyProgram = this.server.create('program', {
       startYear: 2013,
-      programId: 1
+      schoolId: 1
     });
-    this.server.createList('cohort', 2);
+    this.server.create('programYear', { programId: 1});
+    this.server.create('cohort', { programYearId: 1});
   });
 
   test('full program count', async function(assert) {
-    await visit('/programs/1/programyears/' + this.fullProgramYear.id + '/publicationcheck');
-    assert.equal(currentRouteName(), 'programYear.publicationCheck');
-    var items = findAll('.programyear-publication-check .detail-content table tbody td');
-    assert.equal(await getElementText(items[0]), getText('2013 - 2014'));
-    assert.equal(await getElementText(items[1]), getText('Yes (1)'));
-    assert.equal(await getElementText(items[2]), getText('Yes (1)'));
+    await visit('/programs/' + this.fullProgram.id + '/publicationcheck');
+    assert.equal(currentRouteName(), 'program.publicationCheck');
+    var items = findAll('.program-publication-check .detail-content table tbody td');
+    assert.equal(await getElementText(items[0]), getText('program 0'));
+    assert.equal(await getElementText(items[1]), getText('short_0'));
+    assert.equal(await getElementText(items[2]), 4);
     assert.equal(await getElementText(items[3]), getText('Yes (1)'));
-    assert.equal(await getElementText(items[4]), getText('Yes (1)'));
   });
 
   test('empty program count', async function(assert) {
-    await visit('/programs/1/programyears/' + this.emptyProgramYear.id + '/publicationcheck');
-    assert.equal(currentRouteName(), 'programYear.publicationCheck');
-    var items = findAll('.programyear-publication-check .detail-content table tbody td');
-    assert.equal(await getElementText(items[0]), getText('2013 - 2014'));
-    assert.equal(await getElementText(items[1]), getText('No'));
-    assert.equal(await getElementText(items[2]), getText('No'));
+    await visit('/programs/' + this.emptyProgram.id + '/publicationcheck');
+    assert.equal(currentRouteName(), 'program.publicationCheck');
+    var items = findAll('.program-publication-check .detail-content table tbody td');
+    assert.equal(await getElementText(items[0]), getText('program 1'));
+    assert.equal(await getElementText(items[1]), getText('short_1'));
+    assert.equal(await getElementText(items[2]), 4);
     assert.equal(await getElementText(items[3]), getText('No'));
-    assert.equal(await getElementText(items[4]), getText('No'));
   });
 });
