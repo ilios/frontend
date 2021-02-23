@@ -1,4 +1,4 @@
-<section class="course-visualizations">
+<section class="course-visualizations" data-test-course-visualizations>
   <div class="backtolink">
     <LinkTo @route="course" @model={{@model}}>
       {{t "general.backToCourse"}}
@@ -13,8 +13,8 @@
       {{@model.academicYear}}
     </LinkTo>
   </h3>
-  <div class="visualizations">
-    <div>
+  <div class="visualizations" data-test-visualizations>
+    <div data-test-visualize-objectives>
       <LinkTo @route="course-visualize-objectives" @model={{@model}}>
         <h4>
           {{t "general.objectives"}}
@@ -22,7 +22,7 @@
         <VisualizerCourseObjectives @isIcon={{true}} @course={{@model}} />
       </LinkTo>
     </div>
-    <div>
+    <div data-test-visualize-session-types>
       <LinkTo @route="course-visualize-session-types" @model={{@model}}>
         <h4>
           {{t "general.sessionTypes"}}
@@ -34,7 +34,7 @@
         />
       </LinkTo>
     </div>
-    <div>
+    <div data-test-visualize-vocabularies>
       <LinkTo @route="course-visualize-vocabularies" @model={{@model}}>
         <h4>
           {{t "general.vocabularies"}}
@@ -42,7 +42,7 @@
         <VisualizerCourseVocabularies @isIcon={{true}} @course={{@model}} />
       </LinkTo>
     </div>
-    <div>
+    <div data-test-visualize-instructors>
       <LinkTo @route="course-visualize-instructors" @model={{@model}}>
         <h4>
           {{t "general.instructors"}}

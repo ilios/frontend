@@ -4,6 +4,7 @@ import { all } from 'rsvp';
 
 export default class CourseVisualizationsRoute extends Route {
   @service store;
+  @service session;
 
   titleToken = 'general.coursesAndSessions';
 
