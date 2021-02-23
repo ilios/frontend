@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import { isEmpty } from '@ember/utils';
 import { validatable, Custom, Length, NotBlank } from 'ilios-common/decorators/validation';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { dropTask, restartableTask } from 'ember-concurrency';
 
 @validatable
 export default class SchoolVocabularyTermManagerComponent extends Component {

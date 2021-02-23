@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import { all } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { dropTask, restartableTask } from 'ember-concurrency';
 
 export default class SchoolCompetenciesExpandedComponent extends Component {
   @service store;

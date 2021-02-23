@@ -1,6 +1,5 @@
 import Component from '@glimmer/component';
-import { timeout } from 'ember-concurrency';
-import { dropTask } from 'ember-concurrency-decorators';
+import { dropTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
 export default class SchoolSessionTypesListComponent extends Component {

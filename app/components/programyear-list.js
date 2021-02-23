@@ -4,7 +4,7 @@ import { action, computed } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { dropTask, restartableTask } from 'ember-concurrency';
 
 export default class ProgramyearListComponent extends Component {
   @service currentUser;

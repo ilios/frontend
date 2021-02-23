@@ -2,8 +2,7 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { enqueueTask } from 'ember-concurrency-decorators';
-import { timeout } from 'ember-concurrency';
+import { enqueueTask, timeout } from 'ember-concurrency';
 
 export default class LearnergroupCohortUserManagerComponent extends Component {
   @service currentUser;
