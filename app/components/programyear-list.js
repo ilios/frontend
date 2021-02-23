@@ -24,7 +24,7 @@ export default class ProgramyearListComponent extends Component {
     if (! this.args.programYears) {
       return [];
     }
-    return this.args.programYears.toArray().sortBy('academicYear');
+    return this.args.programYears.toArray().sortBy('startYear');
   }
 
   get proxiedProgramYears() {
