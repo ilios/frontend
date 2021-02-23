@@ -34,7 +34,11 @@
               @models={{array @program this.savedProgramYear}}
             >
               <FaIcon @icon="external-link-square-alt" />
-              {{this.savedProgramYear.academicYear}}
+              {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                {{this.savedProgramYear.startYear}} - {{add this.savedProgramYear.startYear 1}}
+              {{else}}
+                {{this.savedProgramYear.startYear}}
+              {{/if}}
             </LinkTo>
             {{t "general.savedSuccessfully"}}
           </div>
