@@ -12,17 +12,16 @@ export default class CourseRolloverComponent extends Component {
   @service store;
   @service flashMessages;
   @service iliosConfig;
+
   @Length(3, 200) @NotBlank() @tracked title;
   @NotBlank() @tracked selectedYear;
-
   @tracked years;
-  @tracked selectedYear;
   @tracked course;
   @tracked startDate;
   @tracked skipOfferings = false;
-  @tracked title;
   @tracked allCourses;
   @tracked selectedCohorts = [];
+  @tracked academicYearCrossesCalendarYearBoundaries = false;
 
   constructor() {
     super(...arguments);
@@ -40,6 +39,9 @@ export default class CourseRolloverComponent extends Component {
     }
     this.title = course.title;
     const school = course.belongsTo('school').id();
+    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+      'academicYearCrossesCalendarYearBoundaries'
+    );
     this.allCourses = yield this.store.query('course', {
       filters: {
         school,

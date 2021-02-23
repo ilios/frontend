@@ -45,7 +45,11 @@
               value={{year}}
               selected={{is-equal year this.selectedYear}}
             >
-              {{year}} - {{inc year}}
+              {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                {{year}} - {{inc year}}
+              {{else}}
+                {{year}}
+              {{/if}}
               {{#if (includes year this.unavailableYears)}}
                 ({{t "general.courseRolloverYearUnavailable"}})
               {{/if}}

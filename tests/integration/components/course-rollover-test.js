@@ -29,12 +29,37 @@ module('Integration | Component | course rollover', function (hooks) {
     const title = '.title input';
 
     for (let i = 0; i < 6; i++) {
-      assert
-        .dom(`${yearSelect} option:nth-of-type(${i + 1})`)
-        .hasText(`${lastYear + i} - ${lastYear + 1 + i}`);
+      assert.dom(`${yearSelect} option:nth-of-type(${i + 1})`).hasText(`${lastYear + i}`);
     }
     assert.dom(title).exists({ count: 1 });
     assert.equal(find(title).value.trim(), course.title);
+  });
+
+  test('academic year options are labeled with year ranges as applicable by configuration', async function (assert) {
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+        },
+      };
+    });
+    const school = this.server.create('school');
+    const course = this.server.create('course', {
+      title: 'old course',
+      school,
+    });
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
+
+    await render(hbs`<CourseRollover @course={{this.course}} />`);
+
+    const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));
+    const yearSelect = '.year-select select';
+    for (let i = 0; i < 6; i++) {
+      assert
+        .dom(`${yearSelect} option:nth-of-type(${i + 1})`)
+        .hasText(`${lastYear + i} - ${lastYear + i + 1}`);
+    }
   });
 
   test('rollover course', async function (assert) {
