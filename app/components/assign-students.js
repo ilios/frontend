@@ -4,7 +4,7 @@ import { inject as service } from '@ember/service';
 import { all } from 'rsvp';
 import moment from 'moment';
 import { tracked } from '@glimmer/tracking';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { dropTask, restartableTask } from 'ember-concurrency';
 
 export default class AssignStudentsComponent extends Component {
   @service flashMessages;

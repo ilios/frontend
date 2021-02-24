@@ -1,160 +1,170 @@
-<div data-test-ilios-course-list ...attributes>
-  <table>
-    <thead>
-      <tr data-test-course-headings>
-        <SortableTh
-          data-test-course-title-heading
-          @colspan={{3}}
-          @sortedAscending={{this.sortedAscending}}
-          @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
-          @click={{fn this.setSortBy "title"}}
-        >
-          {{t "general.courseTitle"}}
-        </SortableTh>
-        <th class="text-center hide-from-small-screen" colspan="2">
-          {{t "general.school"}}
-        </th>
-        <th class="text-center hide-from-small-screen" colspan="2">
-          {{t "general.year"}}
-        </th>
-        <SortableTh
-          @align="center"
-          @colspan={{1}}
-          @hideFromSmallScreen={{true}}
-          @sortedAscending={{this.sortedAscending}}
-          @sortedBy={{or (eq @sortBy "level") (eq @sortBy "level:desc")}}
-          @sortType="numeric"
-          @click={{fn this.setSortBy "level"}}
-        >
-          {{t "general.level"}}
-        </SortableTh>
-        <SortableTh
-          @align="center"
-          @colspan="2"
-          @hideFromSmallScreen={{true}}
-          @sortedAscending={{this.sortedAscending}}
-          @sortedBy={{or (eq @sortBy "startDate") (eq @sortBy "startDate:desc")}}
-          @sortType="numeric"
-          @click={{fn this.setSortBy "startDate"}}
-        >
-          {{t "general.startDate"}}
-        </SortableTh>
-        <SortableTh
-          @align="center"
-          @colspan="2"
-          @hideFromSmallScreen={{true}}
-          @sortedAscending={{this.sortedAscending}}
-          @sortedBy={{or (eq @sortBy "endDate") (eq @sortBy "endDate:desc")}}
-          @sortType="numeric"
-          @click={{fn this.setSortBy "endDate"}}
-        >
-          {{t "general.endDate"}}
-        </SortableTh>
-        <SortableTh
-          @colspan="3"
-          @sortedAscending={{this.sortedAscending}}
-          @sortedBy={{or (eq @sortBy "status") (eq @sortBy "status:desc")}}
-          @click={{fn this.setSortBy "status"}}
-        >
-          {{t "general.status"}}
-        </SortableTh>
-      </tr>
-    </thead>
-    <tbody data-test-courses>
-      {{#each (sort-by (if this.sortingByStatus (fn this.sortCoursesByStatus) @sortBy) @courses) as |course|}}
-        <tr
-          class={{if (includes course.id this.coursesForRemovalConfirmation) "confirm-removal"}}
-          data-test-active-row
-        >
-          <td class="text-left" colspan="3">
-            <LinkTo @route="course" @model={{course}}>
-              {{course.title}}
-              {{#if course.externalId}}
-                ({{course.externalId}})
+<div
+  data-test-ilios-course-list
+  {{did-insert (perform this.load)}}
+  ...attributes
+>
+  {{#unless this.load.isRunning}}
+    <table>
+      <thead>
+        <tr data-test-course-headings>
+          <SortableTh
+            data-test-course-title-heading
+            @colspan={{3}}
+            @sortedAscending={{this.sortedAscending}}
+            @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
+            @click={{fn this.setSortBy "title"}}
+          >
+            {{t "general.courseTitle"}}
+          </SortableTh>
+          <th class="text-center hide-from-small-screen" colspan="2">
+            {{t "general.school"}}
+          </th>
+          <th class="text-center hide-from-small-screen" colspan="2">
+            {{t "general.year"}}
+          </th>
+          <SortableTh
+            @align="center"
+            @colspan={{1}}
+            @hideFromSmallScreen={{true}}
+            @sortedAscending={{this.sortedAscending}}
+            @sortedBy={{or (eq @sortBy "level") (eq @sortBy "level:desc")}}
+            @sortType="numeric"
+            @click={{fn this.setSortBy "level"}}
+          >
+            {{t "general.level"}}
+          </SortableTh>
+          <SortableTh
+            @align="center"
+            @colspan="2"
+            @hideFromSmallScreen={{true}}
+            @sortedAscending={{this.sortedAscending}}
+            @sortedBy={{or (eq @sortBy "startDate") (eq @sortBy "startDate:desc")}}
+            @sortType="numeric"
+            @click={{fn this.setSortBy "startDate"}}
+          >
+            {{t "general.startDate"}}
+          </SortableTh>
+          <SortableTh
+            @align="center"
+            @colspan="2"
+            @hideFromSmallScreen={{true}}
+            @sortedAscending={{this.sortedAscending}}
+            @sortedBy={{or (eq @sortBy "endDate") (eq @sortBy "endDate:desc")}}
+            @sortType="numeric"
+            @click={{fn this.setSortBy "endDate"}}
+          >
+            {{t "general.endDate"}}
+          </SortableTh>
+          <SortableTh
+            @colspan="3"
+            @sortedAscending={{this.sortedAscending}}
+            @sortedBy={{or (eq @sortBy "status") (eq @sortBy "status:desc")}}
+            @click={{fn this.setSortBy "status"}}
+          >
+            {{t "general.status"}}
+          </SortableTh>
+        </tr>
+      </thead>
+      <tbody data-test-courses>
+        {{#each (sort-by (if this.sortingByStatus (fn this.sortCoursesByStatus) @sortBy) @courses) as |course|}}
+          <tr
+            class={{if (includes course.id this.coursesForRemovalConfirmation) "confirm-removal"}}
+            data-test-active-row
+          >
+            <td class="text-left" colspan="3">
+              <LinkTo @route="course" @model={{course}}>
+                {{course.title}}
+                {{#if course.externalId}}
+                  ({{course.externalId}})
+                {{/if}}
+              </LinkTo>
+            </td>
+            <td class="text-center hide-from-small-screen" colspan="2">
+              {{course.school.title}}
+            </td>
+            <td class="text-center hide-from-small-screen" colspan="2">
+              {{#if this.academicYearCrossesCalendarYearBoundaries}}
+                {{course.year}} - {{add course.year 1}}
+              {{else}}
+                {{course.year}}
               {{/if}}
-            </LinkTo>
-          </td>
-          <td class="text-center hide-from-small-screen" colspan="2">
-            {{course.school.title}}
-          </td>
-          <td class="text-center hide-from-small-screen" colspan="2">
-            {{course.academicYear}}
-          </td>
-          <td class="text-center hide-from-small-screen" colspan="1">
-            {{course.level}}
-          </td>
-          <td class="text-center hide-from-small-screen" colspan="2">
-            {{moment-format course.startDate "L"}}
-          </td>
-          <td class="text-center hide-from-small-screen" colspan="2">
-            {{moment-format course.endDate "L"}}
-          </td>
-          <td class="text-left" colspan="3">
-            {{#if (includes course.id this.savingCourseIds)}}
-              <LoadingSpinner />
-            {{else}}
-              <PublicationStatus @item={{course}} @showText={{true}} @showIcon={{false}} />
-              {{#if course.locked }}
-                {{#if (await (compute (fn this.canUnlock) course))}}
+            </td>
+            <td class="text-center hide-from-small-screen" colspan="1">
+              {{course.level}}
+            </td>
+            <td class="text-center hide-from-small-screen" colspan="2">
+              {{moment-format course.startDate "L"}}
+            </td>
+            <td class="text-center hide-from-small-screen" colspan="2">
+              {{moment-format course.endDate "L"}}
+            </td>
+            <td class="text-left" colspan="3">
+              {{#if (includes course.id this.savingCourseIds)}}
+                <LoadingSpinner />
+              {{else}}
+                <PublicationStatus @item={{course}} @showText={{true}} @showIcon={{false}} />
+                {{#if course.locked }}
+                  {{#if (await (compute (fn this.canUnlock) course))}}
+                    <FaIcon
+                      @icon="lock"
+                      class="clickable enabled"
+                      @click={{perform this.unlockCourse course}}
+                    />
+                  {{else}}
+                    <FaIcon @icon="lock" class="disabled" />
+                  {{/if}}
+                {{else if (await (compute (fn this.canLock) course))}}
                   <FaIcon
-                    @icon="lock"
+                    @icon="unlock"
                     class="clickable enabled"
-                    @click={{perform this.unlockCourse course}}
+                    @click={{perform this.lockCourse course}}
                   />
                 {{else}}
-                  <FaIcon @icon="lock" class="disabled" />
+                  <FaIcon @icon="unlock" class="disabled" />
                 {{/if}}
-              {{else if (await (compute (fn this.canLock) course))}}
-                <FaIcon
-                  @icon="unlock"
-                  class="clickable enabled"
-                  @click={{perform this.lockCourse course}}
-                />
-              {{else}}
-                <FaIcon @icon="unlock" class="disabled" />
+                {{#if (await (compute (fn this.canDelete) course))}}
+                  <span class="clickable remove" role="button" {{on "click" (fn this.confirmRemoval course)}}>
+                    <FaIcon @icon="trash" class="enabled" />
+                  </span>
+                {{else}}
+                  <FaIcon @icon="trash" class="disabled" />
+                {{/if}}
               {{/if}}
-              {{#if (await (compute (fn this.canDelete) course))}}
-                <span class="clickable remove" role="button" {{on "click" (fn this.confirmRemoval course)}}>
-                  <FaIcon @icon="trash" class="enabled" />
-                </span>
-              {{else}}
-                <FaIcon @icon="trash" class="disabled" />
-              {{/if}}
-            {{/if}}
-          </td>
-        </tr>
-        {{#if (includes course.id this.coursesForRemovalConfirmation)}}
-          <tr class="confirm-removal">
-            <td colspan={{if (media "isLaptopAndUp") "15" "6"}}>
-              <div class="confirm-message">
-                {{t
-                  "general.confirmRemoveCourse"
-                  publishedOfferingCount=course.publishedOfferingCount
-                }}
-                <br>
-                <div class="confirm-buttons">
-                  <button {{on "click" (fn @remove course)}} type="button" class="remove text">
-                    {{t "general.yes"}}
-                  </button>
-                  <button
-                    type="button"
-                    class="done text"
-                    onclick={{fn this.cancelRemove course}}
-                  >
-                    {{t "general.cancel"}}
-                  </button>
-                </div>
-              </div>
             </td>
           </tr>
-        {{/if}}
-      {{else}}
-        <tr data-test-empty-list>
-          <td class="text-center" colspan={{if (media "isLaptopAndUp") "15" "6"}}>
-            {{if @query (t "general.noResultsFound") (t "general.none")}}
-          </td>
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
+          {{#if (includes course.id this.coursesForRemovalConfirmation)}}
+            <tr class="confirm-removal">
+              <td colspan={{if (media "isLaptopAndUp") "15" "6"}}>
+                <div class="confirm-message">
+                  {{t
+                    "general.confirmRemoveCourse"
+                    publishedOfferingCount=course.publishedOfferingCount
+                  }}
+                  <br>
+                  <div class="confirm-buttons">
+                    <button {{on "click" (fn @remove course)}} type="button" class="remove text">
+                      {{t "general.yes"}}
+                    </button>
+                    <button
+                      type="button"
+                      class="done text"
+                      onclick={{fn this.cancelRemove course}}
+                    >
+                      {{t "general.cancel"}}
+                    </button>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {{/if}}
+        {{else}}
+          <tr data-test-empty-list>
+            <td class="text-center" colspan={{if (media "isLaptopAndUp") "15" "6"}}>
+              {{if @query (t "general.noResultsFound") (t "general.none")}}
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{/unless}}
 </div>

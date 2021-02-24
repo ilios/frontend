@@ -1,51 +1,33 @@
-import Component from '@ember/component';
-import { task } from 'ember-concurrency';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { dropTask } from 'ember-concurrency';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 
-const Validations = buildValidations({
-  title: [
-    validator('presence', true),
-    validator('length', {
-      min: 3,
-      max: 60
-    })
-  ]
-});
+@validatable
+export default class LearnergroupHeaderComponent extends Component {
 
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  tagName: "",
-  canUpdate: false,
-  learnerGroup: null,
-  title: null,
+  @tracked @NotBlank() @Length(3, 60) title;
 
-  didReceiveAttrs() {
-    this._super(...arguments);
-    const learnerGroup = this.learnerGroup;
-    if (learnerGroup) {
-      this.set('title', learnerGroup.get('title'));
+  @action
+  load() {
+    this.title = this.args.learnerGroup.title;
+  }
+
+  @action
+  revertTitleChanges() {
+    this.title = this.args.learnerGroup.title;
+  }
+
+  @dropTask
+  *changeTitle() {
+    this.addErrorDisplayFor('title');
+    const isValid = yield this.isValid('title');
+    if (! isValid) {
+      return false;
     }
-  },
-
-  actions: {
-    revertTitleChanges() {
-      const learnerGroup = this.learnerGroup;
-      this.set('title', learnerGroup.get('title'));
-    }
-  },
-
-  changeTitle: task(function* () {
-    const learnerGroup = this.learnerGroup;
-    const newTitle = this.title;
-    this.send('addErrorDisplayFor', 'title');
-    const {validations} = yield this.validate();
-    if (validations.get('isValid')) {
-      this.send('removeErrorDisplayFor', 'title');
-      learnerGroup.set('title', newTitle);
-      yield learnerGroup.save();
-      this.set('title', learnerGroup.get('title'));
-    } else {
-      throw false;
-    }
-  })
-});
+    this.removeErrorDisplayFor('title');
+    this.args.learnerGroup.title = this.title;
+    yield this.args.learnerGroup.save();
+  }
+}

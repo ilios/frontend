@@ -283,7 +283,7 @@ module('Acceptance | Courses', function(hooks) {
     assert.equal(page.newCourseLink, 'Course 1', 'new course link');
     assert.equal(page.courses.courses[0].title, 'Course 1', 'course title is correct');
     assert.equal(page.courses.courses[0].school, 'school 0', 'school is correct');
-    assert.equal(page.courses.courses[0].year, `${year} - ${year + 1}`, 'year is correct');
+    assert.equal(page.courses.courses[0].year, year, 'year is correct');
   });
 
   test('new course toggle does not show up for unprivileged users', async function (assert) {
@@ -712,5 +712,21 @@ module('Acceptance | Courses', function(hooks) {
     assert.ok(page.yearFilters(0).selected);
     assert.equal(page.yearFilters(0).value, (year).toString());
     unfreezeDate();
+  });
+
+  test('courses show academic-year as range if applicable by configuration', async function(assert) {
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: true,
+      }};
+    });
+    this.server.create('academicYear', { id: 2014 });
+    this.server.create('course', {
+      year: 2014,
+      schoolId: 1
+    });
+    await page.visit({ year: 2014 });
+    assert.equal(page.courses.courses.length, 1);
+    assert.equal(page.courses.courses[0].year, `2014 - 2015`, 'course year shows as range');
   });
 });

@@ -3,10 +3,12 @@ import Component from '@glimmer/component';
 import { filter, hash } from 'rsvp';
 import moment from 'moment';
 import { tracked } from '@glimmer/tracking';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask } from 'ember-concurrency';
 
 export default class UserProfilePermissionsComponent extends Component {
   @service store;
+  @service iliosConfig;
+
   @tracked selectedSchool;
   @tracked selectedYearId;
   @tracked schoolCollapsed = true;
@@ -18,7 +20,7 @@ export default class UserProfilePermissionsComponent extends Component {
   @tracked academicYears = [];
   @tracked isDirectingSchool = false;
   @tracked isAdministeringSchool = false;
-
+  @tracked academicYearCrossesCalendarYearBoundaries = false;
   @tracked directedPrograms = [];
   @tracked directedProgramYears = [];
   @tracked directedCourses = [];
@@ -31,6 +33,9 @@ export default class UserProfilePermissionsComponent extends Component {
 
   @restartableTask
   *load() {
+    this.academicYearCrossesCalendarYearBoundaries
+      = yield this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
+
     const map = yield hash({
       schools: this.store.findAll('school'),
       academicYears: this.store.findAll('academic-year'),
@@ -42,7 +47,7 @@ export default class UserProfilePermissionsComponent extends Component {
 
     let currentYear = Number(moment().format('YYYY'));
     const currentMonth = Number(moment().format('M'));
-    if(currentMonth < 6){
+    if (this.academicYearCrossesCalendarYearBoundaries && currentMonth < 6) {
       currentYear--;
     }
     let selectedYear = this.academicYears.find(year => Number(year.id) === currentYear);

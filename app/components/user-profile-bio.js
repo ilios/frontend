@@ -3,7 +3,7 @@ import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { all } from 'rsvp';
-import { task, timeout } from 'ember-concurrency';
+import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
 
@@ -144,7 +144,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const user = this.user;
     const isManaging = this.isManaging;
     const manageTask = this.manage;
-    if (user && isManaging && !manageTask.get('lastSuccessfull')){
+    if (user && isManaging && !manageTask.lastSuccessful){
       manageTask.perform();
     }
   },
@@ -179,7 +179,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     }
   },
 
-  manage: task(function* () {
+  @restartableTask
+  *manage() {
     const user = this.user;
     this.setProperties(user.getProperties(
       'firstName',
@@ -200,9 +201,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     this.setIsManaging(true);
     return true;
-  }),
+  },
 
-  save: task(function* () {
+  @dropTask
+  *save() {
     yield timeout(10);
     const store = this.store;
     const canEditUsernameAndPassword = yield this.canEditUsernameAndPassword;
@@ -261,9 +263,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       yield timeout(500);
       this.set('hasSavedRecently', false);
     }
-  }).drop(),
+  },
 
-  directorySync: task(function* () {
+  @dropTask
+  *directorySync() {
     yield timeout(10);
     this.set('updatedFieldsFromSync', []);
     this.set('showSyncErrorMessage', false);
@@ -316,9 +319,10 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       yield timeout(2000);
       this.set('syncComplete', false);
     }
-  }).drop(),
+  },
 
-  cancel: task(function* () {
+  @dropTask
+  *cancel() {
     yield timeout(1);
     this.set('hasSavedRecently', false);
     this.set('updatedFieldsFromSync', []);
@@ -335,5 +339,5 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('phone', null);
     this.set('username', null);
     this.set('password', null);
-  }).drop()
+  }
 });

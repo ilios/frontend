@@ -1,8 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { timeout } from 'ember-concurrency';
+import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 import { action } from '@ember/object';
 
 export default class UserProfileRolesComponent extends Component {

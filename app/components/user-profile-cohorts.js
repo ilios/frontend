@@ -1,8 +1,7 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { timeout, waitForProperty } from 'ember-concurrency';
+import { dropTask, restartableTask, timeout, waitForProperty } from 'ember-concurrency';
 import { action } from '@ember/object';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 import { filter, map } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 

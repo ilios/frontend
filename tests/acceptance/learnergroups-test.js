@@ -329,11 +329,37 @@ module('Acceptance | Learner Groups', function(hooks) {
     assert.ok(page.learnerGroupList.groups[0].actions.canRemove);
 
     await page.learnerGroupList.groups[0].actions.remove();
-    assert.equal(page.learnerGroupList.confirmRemoval.confirmation, 'This group is attached to one course and cannot be deleted. 2013 - 2014 course 0 OK');
+    assert.equal(page.learnerGroupList.confirmRemoval.confirmation, 'This group is attached to one course and cannot be deleted. 2013 course 0 OK');
     assert.notOk(page.learnerGroupList.confirmRemoval.canConfirm);
     assert.ok(page.learnerGroupList.confirmRemoval.canCancel);
     await page.learnerGroupList.confirmRemoval.cancel();
     assert.equal(page.learnerGroupList.groups.length, 1);
+  });
+
+  test('course academic year shows range if applicable by configuration', async function (assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('application/config', function() {
+      return { config: {
+        apiVersion,
+        academicYearCrossesCalendarYearBoundaries: true,
+      }};
+    });
+    this.user.update({administeredSchools: [this.school]});
+
+    const program = this.server.create('program', { school: this.school });
+    const programYear = this.server.create('programYear', { program });
+    const cohort = this.server.create('cohort', { programYear });
+    const course = this.server.create('course');
+    const session = this.server.create('session', { course });
+    const offering = this.server.create('offering', { session });
+    this.server.create('learnerGroup', {
+      cohort,
+      offerings: [ offering ],
+    });
+
+    await page.visit();
+    await page.learnerGroupList.groups[0].actions.remove();
+    assert.equal(page.learnerGroupList.confirmRemoval.confirmation, 'This group is attached to one course and cannot be deleted. 2013 - 2014 course 0 OK');
   });
 
   test('click title takes you to learnergroup route', async function (assert) {

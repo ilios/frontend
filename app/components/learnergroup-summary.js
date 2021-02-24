@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { isPresent } from '@ember/utils';
 import { all, map } from 'rsvp';
-import {enqueueTask, restartableTask, task} from 'ember-concurrency-decorators';
+import {enqueueTask, restartableTask, task} from 'ember-concurrency';
 import { NotBlank, Length, IsURL, validatable } from 'ilios-common/decorators/validation';
 
 const DEFAULT_URL_VALUE = 'https://';

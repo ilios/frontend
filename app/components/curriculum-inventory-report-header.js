@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { NotBlank, Length, validatable } from 'ilios-common/decorators/validation';
-import { restartableTask } from "ember-concurrency-decorators";
+import { restartableTask } from "ember-concurrency";
 
 @validatable
 export default class CurriculumInventoryReportHeaderComponent extends Component {

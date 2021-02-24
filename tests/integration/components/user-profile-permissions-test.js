@@ -5,6 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import moment from 'moment';
 import { component } from 'ilios/tests/pages/components/user-profile-permissions';
+import { freezeDateAt, unfreezeDate } from 'ember-mockdate-shim';
 
 module('Integration | Component | user-profile-permissions', function(hooks) {
   setupRenderingTest(hooks);
@@ -13,7 +14,7 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
   hooks.beforeEach(async function () {
     this.schools = this.server.createList('school', 2);
     this.thisYear = parseInt(moment().format('YYYY'), 10);
-    this.currentAcademicYear = Number(moment().format('M')) >= 6 ? this.thisYear : this.thisYear - 1;
+    this.currentAcademicYear = this.thisYear;
     this.server.create('academic-year', { id: this.thisYear - 1 });
     this.server.create('academic-year', { id: this.thisYear });
     this.server.create('academic-year', { id: this.thisYear + 1 });
@@ -214,19 +215,18 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     assert.ok(component.programYears.notDirecting);
 
     assert.equal(component.courses.title, 'Courses (4)');
-    assert.ok(component.courses.directors.length, 1);
-    assert.ok(component.courses.directors[0].text, 'course 0');
-    assert.ok(component.courses.administrators.length, 1);
-    assert.ok(component.courses.administrators[0].text, 'course 0');
-    assert.ok(component.courses.instructors.length, 1);
-    assert.ok(component.courses.instructors[0].text, 'course 0');
-    assert.ok(component.courses.studentAdvisors.length, 1);
-    assert.ok(component.courses.studentAdvisors[0].text, 'course 0');
-
+    assert.equal(component.courses.directors.length, 1);
+    assert.equal(component.courses.directors[0].text, `${this.currentAcademicYear} course 0`);
+    assert.equal(component.courses.administrators.length, 1);
+    assert.equal(component.courses.administrators[0].text, `${this.currentAcademicYear} course 0`);
+    assert.equal(component.courses.instructors.length, 1);
+    assert.equal(component.courses.instructors[0].text, `${this.currentAcademicYear} course 0`);
+    assert.equal(component.courses.studentAdvisors.length, 1);
+    assert.equal(component.courses.studentAdvisors[0].text, `${this.currentAcademicYear} course 0`);
     assert.equal(component.sessions.title, 'Sessions (1)');
     assert.ok(component.sessions.notAdministrating);
-    assert.ok(component.sessions.instructors.length, 1);
-    assert.ok(component.sessions.instructors[0].text, 'course 0');
+    assert.equal(component.sessions.instructors.length, 1);
+    assert.equal(component.sessions.instructors[0].text, `${this.currentAcademicYear} course 0 » session 0`);
     assert.ok(component.sessions.notStudentAdvising);
   });
 
@@ -260,15 +260,81 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     assert.equal(component.courses.title, 'Courses (1)');
     assert.ok(component.courses.notDirecting);
     assert.ok(component.courses.notAdministrating);
-    assert.ok(component.courses.instructors.length, 1);
-    assert.ok(component.courses.instructors[0].text, 'course 0');
+    assert.equal(component.courses.instructors.length, 1);
+    assert.equal(component.courses.instructors[0].text, `${this.currentAcademicYear} course 0`);
     assert.ok(component.courses.notStudentAdvising);
     assert.equal(component.sessions.title, 'Sessions (3)');
-    assert.ok(component.sessions.administrators.length, 1);
-    assert.ok(component.sessions.administrators[0].text, 'course 0');
-    assert.ok(component.sessions.instructors.length, 1);
-    assert.ok(component.sessions.instructors[0].text, 'course 0');
-    assert.ok(component.sessions.studentAdvisors.length, 1);
-    assert.ok(component.sessions.studentAdvisors[0].text, 'course 0');
+    assert.equal(component.sessions.administrators.length, 1);
+    assert.equal(component.sessions.administrators[0].text, `${this.currentAcademicYear} course 0 » session 0`);
+    assert.equal(component.sessions.instructors.length, 1);
+    assert.equal(component.sessions.instructors[0].text, `${this.currentAcademicYear} course 0 » session 0`);
+    assert.equal(component.sessions.studentAdvisors.length, 1);
+    assert.equal(component.sessions.studentAdvisors[0].text, `${this.currentAcademicYear} course 0 » session 0`);
+  });
+
+  test('if academic year does not cross year boundaries, and its the first half of the year then last year is selected', async function (assert) {
+    freezeDateAt(new Date('1/1/2021'));
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: true,
+      }};
+    });
+    this.currentAcademicYear = (new Date()).getFullYear() - 1;
+    const user = this.server.create('user', {
+      school: this.schools[1],
+    });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    this.set('user', userModel);
+
+    await render(hbs`<UserProfilePermissions @user={{this.user}} />`);
+
+    assert.equal(component.selectedYear, this.currentAcademicYear);
+    unfreezeDate();
+  });
+
+  test('academic year shows range as applicable by configuration', async function (assert) {
+    freezeDateAt(new Date('7/1/2021'));
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: true,
+      }};
+    });
+    const school = this.schools[0];
+    const user = this.server.create('user', {
+      school,
+    });
+    const course = this.server.create('course', {
+      school,
+      directors: [user],
+      administrators: [user],
+      studentAdvisors: [user],
+      year: this.currentAcademicYear,
+    });
+    const session = this.server.create('session', {
+      course,
+      administrators: [user],
+      studentAdvisors: [user],
+    });
+    this.server.create('ilmSession', {
+      session,
+      instructors: [user]
+    });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    this.set('user', userModel);
+
+    await render(hbs`<UserProfilePermissions @user={{this.user}} />`);
+    assert.equal(component.courses.administrators.length, 1);
+    assert.equal(component.courses.administrators[0].text, `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`);
+    assert.equal(component.courses.instructors.length, 1);
+    assert.equal(component.courses.instructors[0].text, `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`);
+    assert.equal(component.courses.studentAdvisors.length, 1);
+    assert.equal(component.courses.studentAdvisors[0].text, `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`);
+    assert.equal(component.sessions.administrators.length, 1);
+    assert.equal(component.sessions.administrators[0].text, `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`);
+    assert.equal(component.sessions.instructors.length, 1);
+    assert.equal(component.sessions.instructors[0].text, `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`);
+    assert.equal(component.sessions.studentAdvisors.length, 1);
+    assert.equal(component.sessions.studentAdvisors[0].text, `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`);
+    unfreezeDate();
   });
 });

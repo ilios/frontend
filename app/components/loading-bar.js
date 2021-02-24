@@ -1,8 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-import { timeout } from 'ember-concurrency';
+import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { htmlSafe } from '@ember/template';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
 
 export default class LoadingBarComponent extends Component {
   @tracked progress = 0;

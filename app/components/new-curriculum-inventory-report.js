@@ -1,97 +1,77 @@
-import Component from '@ember/component';
-import EmberObject from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { dropTask, restartableTask } from 'ember-concurrency';
 
-const Validations = buildValidations({
-  name: [
-    validator('presence', true),
-    validator('length', {
-      max: 60,
-      descriptionKey: 'general.reportName'
-    })
-  ]
-});
+@validatable
+export default class NewCurriculumInventoryReportComponent extends Component {
+  @service store;
+  @service iliosConfig;
 
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: service(),
+  @tracked @NotBlank() @Length(1, 60) name;
+  @tracked description;
+  @tracked selectedYear;
+  @tracked years;
+  @tracked academicYearCrossesCalendarYearBoundaries;
 
-  classNames: ['new-curriculum-inventory-report'],
-
-  currentProgram: null,
-  isSaving: false,
-  selectedYear: null,
-  title: null,
-  years: null,
-
-  didReceiveAttrs() {
-    this._super(...arguments);
+  @restartableTask
+  *load() {
     const years = [];
     const currentYear = new Date().getFullYear();
-    for (let i = currentYear - 5, n = currentYear + 5; i <= n; i++) {
-      const title = i + ' - ' + (i + 1);
-      const year = EmberObject.create({ 'id': i, 'title': title });
+    this.academicYearCrossesCalendarYearBoundaries
+      = yield this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
+    for (let id = currentYear - 5, n = currentYear + 5; id <= n; id++) {
+      let title = id.toString();
+      if (this.academicYearCrossesCalendarYearBoundaries) {
+        title = title + ' - ' + (id + 1);
+      }
+      const year = { id, title };
       years.pushObject(year);
     }
-    const selectedYear = years.findBy('id', currentYear);
-    this.setProperties({
-      years,
-      selectedYear,
-      isSaving: false,
-    });
-  },
+    this.years = years;
+    this.selectedYear = years.findBy('id', currentYear);
+  }
 
-  actions: {
-    save() {
-      this.set('isSaving', true);
-      this.send('addErrorDisplayFor', 'name');
-      this.validate().then(({validations}) => {
-        if (validations.get('isValid')) {
-          const year = parseInt(this.selectedYear.get('id'), 10);
-          const report = this.store.createRecord('curriculumInventoryReport', {
-            name: this.name,
-            program: this.currentProgram,
-            year: year,
-            startDate: new Date(year, 6, 1),
-            endDate: new Date(year +  1, 5, 30),
-            description: this.description
-          });
-          this.save(report).finally(()=>{
-            this.set('isSaving', false);
-          });
-        } else {
-          this.set('isSaving', false);
-        }
-      });
-    },
-
-    cancel() {
-      this.cancel();
-    },
-
-    setSelectedYear(event) {
-      const id = Number(event.target.value);
-      const year = this.years.findBy('id', id);
-      this.set('selectedYear', year);
-    },
-  },
-
-  keyUp(event) {
-    const keyCode = event.keyCode;
-    const target = event.target;
-
-    if ('text' !== target.type) {
-      return;
+  @dropTask
+  *save() {
+    this.addErrorDisplayFor('name');
+    const isValid = yield this.isValid();
+    if (! isValid) {
+      return false;
     }
+    const year = this.selectedYear.id;
+    const startDate = this.academicYearCrossesCalendarYearBoundaries ? new Date(year, 6, 1) : new Date(year, 0, 1);
+    const endDate = this.academicYearCrossesCalendarYearBoundaries ? new Date(year +  1, 5, 30) : new Date(year, 11, 31);
+    const report = this.store.createRecord('curriculumInventoryReport', {
+      name: this.name,
+      program: this.args.currentProgram,
+      year: year,
+      startDate,
+      endDate,
+      description: this.description
+    });
+    yield this.args.save(report);
+  }
+
+  @action
+  setSelectedYear(year) {
+    const id = Number(year);
+    this.selectedYear = this.years.findBy('id', id);
+  }
+
+  @dropTask
+  *keyboard(ev) {
+    const keyCode = ev.keyCode;
 
     if (13 === keyCode) {
-      this.send('save');
+      yield this.save.perform();
       return;
     }
 
     if (27 === keyCode) {
-      this.send('cancel');
+      this.args.cancel();
     }
   }
-});
+}

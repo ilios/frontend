@@ -3,7 +3,7 @@ import { inject as service } from '@ember/service';
 import moment from 'moment';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask } from 'ember-concurrency-decorators';
+import { dropTask } from 'ember-concurrency';
 
 export default class UserProfileCalendar extends Component {
   @service fetch;

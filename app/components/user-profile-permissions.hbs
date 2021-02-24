@@ -112,8 +112,11 @@
       <ul data-test-directors>
         {{#each (sort-by "title" this.directedCourses) as |course|}}
           <li data-test-course>
-            {{course.academicYear}}
-            <LinkTo @route="course" @model={{course}}>
+            {{#if this.academicYearCrossesCalendarYearBoundaries}}
+              {{course.year}} - {{add course.year 1}}
+            {{else}}
+              {{course.year}}
+            {{/if}}            <LinkTo @route="course" @model={{course}}>
               {{course.title}}
             </LinkTo>
           </li>
@@ -129,7 +132,11 @@
       <ul data-test-administrators>
         {{#each (sort-by "title" this.administeredCourses) as |course|}}
           <li data-test-course>
-            {{course.academicYear}}
+            {{#if this.academicYearCrossesCalendarYearBoundaries}}
+              {{course.year}} - {{add course.year 1}}
+            {{else}}
+              {{course.year}}
+            {{/if}}
             <LinkTo @route="course" @model={{course}}>
               {{course.title}}
             </LinkTo>
@@ -146,7 +153,11 @@
       <ul data-test-instructors>
         {{#each (sort-by "title" this.instructedCourses) as |course|}}
           <li data-test-course>
-            {{course.academicYear}}
+            {{#if this.academicYearCrossesCalendarYearBoundaries}}
+              {{course.year}} - {{add course.year 1}}
+            {{else}}
+              {{course.year}}
+            {{/if}}
             <LinkTo @route="course" @model={{course}}>
               {{course.title}}
             </LinkTo>
@@ -163,7 +174,11 @@
       <ul data-test-student-advisors>
         {{#each this.studentAdvisedCourses as |course|}}
           <li data-test-course>
-            {{course.academicYear}}
+            {{#if this.academicYearCrossesCalendarYearBoundaries}}
+              {{course.year}} - {{add course.year 1}}
+            {{else}}
+              {{course.year}}
+            {{/if}}
             <LinkTo @route="course" @model={{course}}>
               {{course.title}}
             </LinkTo>
@@ -187,7 +202,11 @@
         {{#each this.administeredSessions as |session|}}
           {{! template-lint-disable no-bare-strings }}
           <li data-test-course>
-            {{session.course.academicYear}}
+            {{#if this.academicYearCrossesCalendarYearBoundaries}}
+              {{session.course.year}} - {{add (await session.course.year) 1}}
+            {{else}}
+              {{session.course.year}}
+            {{/if}}
             {{session.course.title}}
             &raquo;
             <LinkTo @route="session" @models={{array session.course session}}>
@@ -210,7 +229,11 @@
           ) as |session|
         }}
           <li data-test-course>
-            {{session.course.academicYear}}
+            {{#if this.academicYearCrossesCalendarYearBoundaries}}
+              {{session.course.year}} - {{add (await session.course.year) 1}}
+            {{else}}
+              {{session.course.year}}
+            {{/if}}
             {{session.course.title}}
             &raquo;
             <LinkTo @route="session" @models={{array session.course session}}>
@@ -229,7 +252,11 @@
       <ul data-test-student-advisors>
         {{#each this.studentAdvisedSessions as |session|}}
           <li data-test-course>
-            {{session.course.academicYear}}
+            {{#if this.academicYearCrossesCalendarYearBoundaries}}
+              {{session.course.year}} - {{add (await session.course.year) 1}}
+            {{else}}
+              {{session.course.year}}
+            {{/if}}
             {{session.course.title}}
             &raquo;
             <LinkTo @route="session" @models={{array session.course session}}>

@@ -1,6 +1,6 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { dropTask, restartableTask } from 'ember-concurrency-decorators';
+import { dropTask, restartableTask } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
 export default class SchoolSessionTypeManagerComponent extends Component {

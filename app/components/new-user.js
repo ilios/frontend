@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import {all, filter} from 'rsvp';
-import {dropTask, restartableTask} from 'ember-concurrency-decorators';
+import { dropTask, restartableTask } from 'ember-concurrency';
 import moment from "moment";
 import { validatable, IsEmail, Length, NotBlank } from 'ilios-common/decorators/validation';
 

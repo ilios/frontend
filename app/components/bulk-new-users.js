@@ -6,7 +6,7 @@ import CoreObject from '@ember/object/core';
 import {inject as service} from '@ember/service';
 import {isPresent} from '@ember/utils';
 import {all, filter} from 'rsvp';
-import {dropTask, restartableTask} from 'ember-concurrency-decorators';
+import {dropTask, restartableTask} from 'ember-concurrency';
 import PapaParse from 'papaparse';
 import moment from "moment";
 import { validatable, Length, NotBlank, IsEmail, Custom } from 'ilios-common/decorators/validation';

@@ -10,6 +10,7 @@ export default Service.extend({
   store: service(),
   currentUser: service(),
   intl: service(),
+  iliosConfig: service(),
 
   reportsList: computed('currentUser.model.reports.[]', async function() {
     const user = await this.currentUser.model;
@@ -104,37 +105,39 @@ export default Service.extend({
 
   async coursesResults(results, year){
     const canView = await this.canViewCourses;
-    const mappedResults = results.map(course => {
+    const academicYearCrossesCalendarYearBoundaries
+      = await this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
+    return results.map(course => {
       const rhett = {
-        course
+        course,
+        value: academicYearCrossesCalendarYearBoundaries ?
+          `${course.year} - ${course.year + 1} ${course.title}` : `${course.year} ${course.title}`
       };
-      rhett.value = course.get('academicYear') + ' ' + course.get('title');
-      const externalId = course.get('externalId');
-      if (isPresent(externalId)) {
-        rhett.value += ` (${externalId})`;
+
+      if (isPresent(course.externalId)) {
+        rhett.value += ` (${course.externalId})`;
       }
-      if(canView){
+      if (canView){
         rhett.route = 'course';
         rhett.model = course;
       }
 
       return rhett;
-    });
-
-    return mappedResults.filter(obj => isEmpty(year) || parseInt(obj.course.year, 10) === parseInt(year, 10));
+    }).filter(obj => isEmpty(year) || obj.course.year === parseInt(year, 10));
   },
 
   async coursesArrayResults(results, year) {
     const intl = this.intl;
+    const academicYearCrossesCalendarYearBoundaries
+      = await this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
     const filteredResults = results.filter( course => {
-      const academicYear = course.year;
-      return isEmpty(year) || parseInt(academicYear, 10) === parseInt(year, 10);
+      return isEmpty(year) || course.year === parseInt(year, 10);
     });
     const sortedResults = filteredResults.sortBy('title');
     const mappedResults = sortedResults.map(course => {
       return [
         course.get('title'),
-        course.get('academicYear'),
+        academicYearCrossesCalendarYearBoundaries ? `${course.year} - ${course.year + 1}` : course.year.toString(),
         course.get('externalId'),
       ];
     });
@@ -143,11 +146,14 @@ export default Service.extend({
   },
 
   async sessionsResults(results, year){
+    const academicYearCrossesCalendarYearBoundaries
+      = await this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
     const canView = await this.canViewCourses;
     const mappedResults = await map(results.toArray(), async item => {
       const course = await item.get('course');
       const rhett = { course };
-      rhett.value = course.get('academicYear') + ' ' + course.get('title') + ' ' + item.get('title');
+      rhett.value = academicYearCrossesCalendarYearBoundaries ?
+        `${course.year} - ${course.year + 1} ${course.title} ${item.title}` : `${course.year} ${course.title} ${item.title}`;
       if(canView){
         rhett.route = 'session';
         rhett.model = course;
@@ -161,18 +167,25 @@ export default Service.extend({
   },
 
   async sessionsArrayResults(results, year) {
+    const academicYearCrossesCalendarYearBoundaries
+      = await this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
     const intl = this.intl;
     const filteredResults = await filter(results.toArray(), async session => {
       const course = await session.course;
-      const academicYear = course.year;
-      return isEmpty(year) || parseInt(academicYear, 10) === parseInt(year, 10);
+      return isEmpty(year) || course.year === parseInt(year, 10);
     });
     const sortedResults = filteredResults.sortBy('title');
     const mappedResults = await map(sortedResults, async session => {
       const course = await session.course;
       const sessionDescriptionText = session.textDescription;
       const objectives = await session.sessionObjectives;
-      return  [session.get('title'), course.get('title'), course.get('academicYear'), sessionDescriptionText, objectives.mapBy('textTitle').join()];
+      return [
+        session.get('title'),
+        course.get('title'),
+        academicYearCrossesCalendarYearBoundaries ? `${course.year} - ${course.year + 1}` : course.year.toString(),
+        sessionDescriptionText,
+        objectives.mapBy('textTitle').join(),
+      ];
     });
 
     return [[

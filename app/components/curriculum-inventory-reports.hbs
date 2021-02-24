@@ -1,0 +1,90 @@
+<section
+  class="curriculum-inventory-reports"
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @schoolId @programId}}
+  data-test-curriculum-inventory-reports
+>
+  {{#unless this.load.isRunning}}
+    <div class="filter-tools">
+      <div class="schoolsfilter" data-test-schools-filter>
+        <FaIcon @icon="university" @fixedWidth={{true}} />
+        {{#if this.hasMoreThanOneSchool}}
+          <select {{on "change" (pick "target.value" this.changeSelectedSchool)}}>
+            {{#each this.sortedSchools as |school|}}
+              <option
+                value={{school.id}}
+                selected={{is-equal school (await this.selectedSchool)}}
+              >
+                {{school.title}}
+              </option>
+            {{/each}}
+          </select>
+        {{else if this.selectedSchool}}
+          {{this.selectedSchool.title}}
+        {{else}}
+          {{t "general.none"}}
+        {{/if}}
+      </div>
+      <div class="programsfilter" data-test-programs-filter>
+        <FaIcon @icon="list-alt" @fixedWidth={{true}} />
+        {{#if this.programs.length}}
+          <select {{on "change" (pick "target.value" this.changeSelectedProgram)}}>
+            {{#each this.programs as |program|}}
+              <option value={{program.id}} selected={{is-equal program this.selectedProgram}}>
+                {{program.title}}
+              </option>
+            {{/each}}
+          </select>
+        {{else if this.selectedProgram}}
+          {{this.selectedProgram.title}}
+        {{else}}
+          {{t "general.none"}}
+        {{/if}}
+      </div>
+    </div>
+    <section class="reports">
+      <div class="header">
+        <div class="title">
+          <h2>
+            {{t "general.curriculumInventoryReports"}}
+          </h2>
+        </div>
+        {{#if (and this.canCreate this.selectedProgram)}}
+          <div class="actions">
+            <ExpandCollapseButton
+              @value={{this.showNewCurriculumInventoryReportForm}}
+              @action={{this.toggleNewCurriculumInventoryReportForm}}
+            />
+          </div>
+        {{/if}}
+      </div>
+      <section class="new">
+        {{#if this.showNewCurriculumInventoryReportForm}}
+          <NewCurriculumInventoryReport
+            @currentProgram={{this.selectedProgram}}
+            @save={{this.saveNewCurriculumInventoryReport}}
+            @cancel={{this.cancel}}
+          />
+        {{/if}}
+        {{#if this.newReport}}
+          <div class="saved-result" data-test-saved-results>
+            <LinkTo @route="curriculumInventoryReport" @model={{this.newReport}}>
+              <FaIcon @icon="external-link-square-alt" />
+              {{this.newReport.name}}
+            </LinkTo>
+            {{t "general.savedSuccessfully"}}
+          </div>
+        {{/if}}
+      </section>
+      <div class="list">
+        <CurriculumInventoryReportList
+          @reports={{if this.selectedProgram (await this.selectedProgram.curriculumInventoryReports) null}}
+          @sortBy={{@sortReportsBy}}
+          @edit={{@editCurriculumInventoryReport}}
+          @remove={{perform this.removeCurriculumInventoryReport}}
+          @setSortBy={{@setSortBy}}
+        />
+      </div>
+    </section>
+  {{/unless}}
+</section>

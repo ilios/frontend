@@ -127,11 +127,41 @@ module('Integration | Component | learner group list', function(hooks) {
     assert.equal(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canRemove);
     await component.groups[0].actions.remove();
-    assert.equal(component.confirmRemoval.confirmation, 'This group is attached to 3 courses and cannot be deleted. 2013 - 2014 course 0 2013 - 2014 course 1 2013 - 2014 course 2 OK');
+    assert.equal(component.confirmRemoval.confirmation, 'This group is attached to 3 courses and cannot be deleted. 2013 course 0 2013 course 1 2013 course 2 OK');
     assert.notOk(component.confirmRemoval.canConfirm);
     assert.ok(component.confirmRemoval.canCancel);
     await component.confirmRemoval.cancel();
     assert.equal(component.groups.length, 1);
+  });
+
+  test('course academic year shows range if applicable by configuration', async function (assert) {
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: true,
+      }};
+    });
+    const courses = this.server.createList('course', 4);
+    const course1Session = this.server.create('session', { course: courses[0] });
+    const course2Session = this.server.create('session', { course: courses[1] });
+    const course2Session2 = this.server.create('session', { course: courses[1] });
+    const course3Session = this.server.create('session', { course: courses[2] });
+    const offering1 = this.server.create('offering', { session: course1Session });
+    const offering2 = this.server.create('offering', { session: course2Session });
+    const offering3 = this.server.create('offering', { session: course2Session2 });
+    const offering4 = this.server.create('offering', { session: course3Session });
+
+    const parent = this.server.create('learner-group', { offerings: [offering1, offering2, offering3] });
+
+    this.server.create('learner-group', { parent, offerings: [offering4] });
+    const model = await this.owner.lookup('service:store').find('learner-group', parent.id);
+    this.set('learnerGroups', [model]);
+    await render(hbs`<LearnergroupList
+      @learnerGroups={{this.learnerGroups}}
+      @canDelete={{true}}
+    />`);
+
+    await component.groups[0].actions.remove();
+    assert.equal(component.confirmRemoval.confirmation, 'This group is attached to 3 courses and cannot be deleted. 2013 - 2014 course 0 2013 - 2014 course 1 2013 - 2014 course 2 OK');
   });
 
   test('can copy group with learners when canCopyWithLearners is enabled', async function (assert) {

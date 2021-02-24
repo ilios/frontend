@@ -78,11 +78,31 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     assert.equal(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canRemove);
     await component.groups[0].actions.remove();
-    assert.equal(component.confirmRemoval.confirmation, 'This group is attached to one course and cannot be deleted. 2013 - 2014 course 0 OK');
+    assert.equal(component.confirmRemoval.confirmation, 'This group is attached to one course and cannot be deleted. 2013 course 0 OK');
     assert.notOk(component.confirmRemoval.canConfirm);
     assert.ok(component.confirmRemoval.canCancel);
     await component.confirmRemoval.cancel();
     assert.equal(component.groups.length, 1);
+  });
+
+  test('course academic year shows range if applicable by configuration', async function (assert) {
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: true,
+      }};
+    });
+    const course = this.server.create('course');
+    const session = this.server.create('session', { course });
+    const offering = this.server.create('offering', { session });
+    const parent = this.server.create('learner-group');
+    this.server.create('learner-group', { parent, offerings: [offering] });
+    const model = await this.owner.lookup('service:store').find('learner-group', parent.id);
+    this.set('parentGroup', model);
+
+    await render(hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{this.parentGroup}} />`);
+
+    await component.groups[0].actions.remove();
+    assert.equal(component.confirmRemoval.confirmation, 'This group is attached to one course and cannot be deleted. 2013 - 2014 course 0 OK');
   });
 
   test('add new group', async function (assert) {

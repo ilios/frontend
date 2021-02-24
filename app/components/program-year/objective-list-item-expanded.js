@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { htmlSafe } from '@ember/template';
 import { tracked } from '@glimmer/tracking';

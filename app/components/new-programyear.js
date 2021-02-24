@@ -1,26 +1,46 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { task } from 'ember-concurrency';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { dropTask } from 'ember-concurrency';
 
-export default Component.extend({
-  tagName: "",
+export default class NewProgramyearComponent extends Component {
+  @tracked year;
+  @tracked availableAcademicYears = [];
 
-  availableAcademicYears: null,
-  year: null,
-
-  selectedYear: computed('year', 'availableAcademicYears.[]', function() {
-    const year = this.year;
-    const availableAcademicYears = this.availableAcademicYears;
-    if (!year) {
-      return availableAcademicYears.firstObject;
+  get existingStartYears() {
+    if (! this.args.programYears) {
+      return [];
     }
+    return this.args.programYears.mapBy('startYear');
+  }
 
-    return availableAcademicYears.findBy('value', parseInt(year, 10));
-  }),
+  get selectedYear() {
+    if (! this.year) {
+      return this.availableAcademicYears.firstObject;
+    }
+    return this.availableAcademicYears.findBy('value', parseInt(this.year, 10));
+  }
 
-  saveNewYear: task(function* () {
-    const selectedYear = this.selectedYear;
-    const startYear = parseInt(selectedYear.value, 10);
-    yield this.save(startYear);
-  }).drop()
-});
+  @action
+  load() {
+    const firstYear = new Date().getFullYear() - 5;
+    const years = [];
+    for (let i = 0; i < 10; i++) {
+      years.push(firstYear + i);
+    }
+    this.availableAcademicYears = years.filter(year => {
+      return ! this.existingStartYears.includes(year.toString());
+    }).map((startYear) => {
+      return {
+        label: this.args.academicYearCrossesCalendarYearBoundaries ? `${startYear} - ${startYear + 1}` : startYear.toString(),
+        value: startYear,
+      };
+    });
+  }
+
+  @dropTask
+  *saveNewYear() {
+    const startYear = parseInt(this.selectedYear.value, 10);
+    yield this.args.save(startYear);
+  }
+}

@@ -14,9 +14,4 @@ export default class CurriculumInventoryReportsRoute extends Route {
     const store = this.store;
     return store.findAll('school');
   }
-
-  setupController(controller, model) {
-    super.setupController(controller, model);
-    controller.set('sortByTitle', ['title']);
-  }
 }

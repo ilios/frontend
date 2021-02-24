@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask } from 'ember-concurrency';
 import { ValidateIf } from "class-validator";
 import { validatable, IsInt, Gte, Lte, NotBlank, AfterDate } from 'ilios-common/decorators/validation';
 

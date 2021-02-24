@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { restartableTask } from 'ember-concurrency-decorators';
+import { restartableTask } from 'ember-concurrency';
 import { tracked } from '@glimmer/tracking';
 
 export default class SchoolSessionTypesCollapseComponent extends Component {

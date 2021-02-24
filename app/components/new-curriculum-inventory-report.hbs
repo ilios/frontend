@@ -1,67 +1,75 @@
 {{! template-lint-disable attribute-indentation }}
-{{#unless loadAttr.isRunning}}
-  <h4>
-    {{t "general.newCurriculumInventoryReport"}}
-  </h4>
-  <div class="form">
-    <div class="item" data-test-name>
-      <label>
-        {{t "general.name"}}:
-      </label>
-      <input
-        type="text"
-        value={{name}}
-        oninput={{action (mut name) value="target.value"}}
-        disabled={{isSaving}}
-        onkeyup={{action "addErrorDisplayFor" "name"}}
-        placeholder={{t "general.reportNamePlaceholder"}}
-      >
-      {{#if (and (v-get this "name" "isInvalid") (includes "name" showErrorsFor))}}
-        <span class="validation-error-message">
-          {{v-get this "name" "message"}}
-        </span>
-      {{/if}}
-    </div>
-    <div class="item" data-test-description>
-      <label>
-        {{t "general.description"}}:
-      </label>
-      <textarea
-        value={{description}}
-        oninput={{action (mut description) value="target.value"}}
-        disabled={{isSaving}}
-        placeholder={{t "general.reportDescriptionPlaceholder"}}
-      ></textarea>
-    </div>
-    <div class="item" data-test-program-title>
-      <label>
-        {{t "general.program"}}:
-      </label>
-      <span>
-        {{@currentProgram.title}}
-      </span>
-    </div>
-    <div class="item" data-test-academic-year>
-      <label>
-        {{t "general.academicYear"}}:
-      </label>
-      <select disabled={{this.isSaving}} {{on "change" (action "setSelectedYear")}}>
-        {{#each this.years as |year|}}
-          <option value={{year.id}} selected={{eq year.id this.selectedYear.id}}>{{year.title}}</option>
+<div
+  class="new-curriculum-inventory-report"
+  data-test-new-curriculum-inventory-report
+  {{did-insert (perform this.load)}}
+>
+  {{#unless this.load.isRunning}}
+    <h4>
+      {{t "general.newCurriculumInventoryReport"}}
+    </h4>
+    <div class="form">
+      <div class="item" data-test-name>
+        <label>
+          {{t "general.name"}}:
+        </label>
+        <input
+          type="text"
+          value={{this.name}}
+          disabled={{this.save.isRunning}}
+          placeholder={{t "general.reportNamePlaceholder"}}
+          {{on "focusout" (fn this.addErrorDisplayFor "name")}}
+          {{on "keydown" (perform this.keyboard)}}
+          {{on "input" (pick "target.value" (set this.name))}}
+          {{on "keyup" (fn this.addErrorDisplayFor "name")}}
+        >
+        {{#each (await (compute (fn this.getErrorsFor) "name")) as |message|}}
+          <span class="validation-error-message">
+            {{message}}
+          </span>
         {{/each}}
-      </select>
+      </div>
+      <div class="item" data-test-description>
+        <label>
+          {{t "general.description"}}:
+        </label>
+        <textarea
+          value={{this.description}}
+          disabled={{this.save.isRunning}}
+          placeholder={{t "general.reportDescriptionPlaceholder"}}
+          {{on "input" (pick "target.value" (set this.description))}}
+        ></textarea>
+      </div>
+      <div class="item" data-test-program-title>
+        <label>
+          {{t "general.program"}}:
+        </label>
+        <span>
+          {{@currentProgram.title}}
+        </span>
+      </div>
+      <div class="item" data-test-academic-year>
+        <label>
+          {{t "general.academicYear"}}:
+        </label>
+        <select disabled={{this.save.isRunning}} {{on "change" (pick "target.value" this.setSelectedYear)}}>
+          {{#each this.years as |year|}}
+            <option value={{year.id}} selected={{eq year.id this.selectedYear.id}}>{{year.title}}</option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="buttons">
+        <button type="button" class="done text" {{on "click" (perform this.save)}} data-test-save>
+          {{#if this.save.isRunning}}
+            <LoadingSpinner />
+          {{else}}
+            {{t "general.done"}}
+          {{/if}}
+        </button>
+        <button type="button" class="cancel text" {{on "click" @cancel}} data-test-cancel>
+          {{t "general.cancel"}}
+        </button>
+      </div>
     </div>
-    <div class="buttons">
-      <button type="button" class="done text" {{action "save"}}>
-        {{#if isSaving}}
-          <LoadingSpinner />
-        {{else}}
-          {{t "general.done"}}
-        {{/if}}
-      </button>
-      <button type="button" class="cancel text" {{action "cancel"}}>
-        {{t "general.cancel"}}
-      </button>
-    </div>
-  </div>
-{{/unless}}
+  {{/unless}}
+</div>

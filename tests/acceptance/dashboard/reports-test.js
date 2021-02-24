@@ -79,6 +79,23 @@ module('Acceptance | Dashboard Reports', function(hooks) {
     await page.myReports.reports[1].select();
     assert.equal(page.myReports.selectedReport.title, 'my report 0');
     assert.equal(page.myReports.selectedReport.results.length, 1);
+    assert.equal(page.myReports.selectedReport.results[0].text, '2015 course 0 session 0');
+    assert.equal(currentURL(), '/dashboard?report=1', 'report query param works');
+  });
+
+  test('academic years is shown as range as applicable by configuration', async function(assert) {
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: true,
+        apiVersion
+      }};
+    });
+    await page.visit();
+    assert.equal(page.myReports.reports.length, 2);
+    await page.myReports.reports[1].select();
+    assert.equal(page.myReports.selectedReport.title, 'my report 0');
+    assert.equal(page.myReports.selectedReport.results.length, 1);
     assert.equal(page.myReports.selectedReport.results[0].text, '2015 - 2016 course 0 session 0');
     assert.equal(currentURL(), '/dashboard?report=1', 'report query param works');
   });
@@ -97,8 +114,8 @@ module('Acceptance | Dashboard Reports', function(hooks) {
     await page.myReports.reports[0].select();
     assert.equal(page.myReports.selectedReport.title, 'All Sessions for term 0 in school 0');
     assert.equal(page.myReports.selectedReport.results.length, 2);
-    assert.equal(page.myReports.selectedReport.results[0].text, '2015 - 2016 course 0 session 0');
-    assert.equal(page.myReports.selectedReport.results[1].text, '2016 - 2017 course 1 session 1');
+    assert.equal(page.myReports.selectedReport.results[0].text, '2015 course 0 session 0');
+    assert.equal(page.myReports.selectedReport.results[1].text, '2016 course 1 session 1');
     assert.equal(currentURL(), '/dashboard?report=2', 'report query param works');
   });
 
@@ -112,7 +129,7 @@ module('Acceptance | Dashboard Reports', function(hooks) {
     assert.equal(page.myReports.selectedReport.results.length, 2);
     await page.myReports.selectedReport.chooseYear('2016');
     assert.equal(page.myReports.selectedReport.results.length, 1);
-    assert.equal(page.myReports.selectedReport.results[0].text, '2016 - 2017 course 1 session 1');
+    assert.equal(page.myReports.selectedReport.results[0].text, '2016 course 1 session 1');
     assert.equal(currentURL(), '/dashboard?report=2&reportYear=2016', 'reportYear query param works');
   });
 
@@ -131,7 +148,7 @@ module('Acceptance | Dashboard Reports', function(hooks) {
     await page.myReports.reports[2].select();
     assert.equal(page.myReports.selectedReport.title, 'new report');
     assert.equal(page.myReports.selectedReport.results.length, 1);
-    assert.equal(page.myReports.selectedReport.results[0].text, '2015 - 2016 course 0 session 0');
+    assert.equal(page.myReports.selectedReport.results[0].text, '2015 course 0 session 0');
   });
 
   test('filter courses by year in new report form', async function (assert) {
@@ -153,7 +170,7 @@ module('Acceptance | Dashboard Reports', function(hooks) {
 
     assert.equal(page.myReports.selectedReport.title, 'All Sessions for course 1 in school 0');
     assert.equal(page.myReports.selectedReport.results.length, 1);
-    assert.equal(page.myReports.selectedReport.results[0].text, '2016 - 2017 course 1 session 1');
+    assert.equal(page.myReports.selectedReport.results[0].text, '2016 course 1 session 1');
   });
 
   test('filter session by year in new report form', async function (assert) {
@@ -202,8 +219,8 @@ module('Acceptance | Dashboard Reports', function(hooks) {
 
     assert.equal(page.myReports.selectedReport.title, 'All Courses for descriptor 0 in school 0');
     assert.equal(page.myReports.selectedReport.results.length, 2);
-    assert.equal(page.myReports.selectedReport.results[0].text, '2015 - 2016 course 0 (Theoretical Phys Ed)');
-    assert.equal(page.myReports.selectedReport.results[1].text, '2016 - 2017 course 1');
+    assert.equal(page.myReports.selectedReport.results[0].text, '2015 course 0 (Theoretical Phys Ed)');
+    assert.equal(page.myReports.selectedReport.results[1].text, '2016 course 1');
   });
 
   test('Prepositional object resets when a new type is selected', async function (assert) {
@@ -260,7 +277,7 @@ module('Acceptance | Dashboard Reports', function(hooks) {
 
     assert.equal(page.myReports.selectedReport.title, 'All Courses in All Schools');
     assert.equal(page.myReports.selectedReport.results.length, 2);
-    assert.equal(page.myReports.selectedReport.results[0].text, '2015 - 2016 course 0 (Theoretical Phys Ed)');
-    assert.equal(page.myReports.selectedReport.results[1].text, '2016 - 2017 course 1');
+    assert.equal(page.myReports.selectedReport.results[0].text, '2015 course 0 (Theoretical Phys Ed)');
+    assert.equal(page.myReports.selectedReport.results[1].text, '2016 course 1');
   });
 });
