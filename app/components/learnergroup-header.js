@@ -5,7 +5,7 @@ import { dropTask } from 'ember-concurrency';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 
 @validatable
-export default class ProgramyearHeaderComponent extends Component {
+export default class LearnergroupHeaderComponent extends Component {
 
   @tracked @NotBlank() @Length(3, 60) title;
 
