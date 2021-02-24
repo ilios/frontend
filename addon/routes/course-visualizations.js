@@ -9,7 +9,7 @@ export default class CourseVisualizationsRoute extends Route {
   titleToken = 'general.coursesAndSessions';
 
   /**
-   * Prefetch related data to limit network requests
+   * Prefetch related data to limit network requestscourse-visualiz
    */
   afterModel(model) {
     const courses = [model.get('id')];

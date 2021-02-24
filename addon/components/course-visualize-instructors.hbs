@@ -1,0 +1,35 @@
+<section
+  class="course-visualize-instructors"
+  data-test-course-visualize-instructors
+  {{did-insert (perform this.load)}}
+>
+  {{#unless this.load.isRunning}}
+    <div class="backtolink">
+      <LinkTo @route="course-visualizations" @model={{@model}}>
+        {{t "general.otherVisualizations"}}
+      </LinkTo>
+    </div>
+    <h2 class="clickable" data-test-title>
+      <LinkTo @route="course" @model={{@model}}>
+        {{@model.title}}
+        {{#if this.academicYearCrossesCalendarYearBoundaries}}
+          {{@model.year}} - {{add @model.year 1}}
+        {{else}}
+          {{@model.year}}
+        {{/if}}
+      </LinkTo>
+    </h2>
+    <h3>
+      {{t "general.instructors"}}
+    </h3>
+    <div class="filter">
+      <input
+        type="search"
+        value={{this.name}}
+        placeholder={{t "general.filterPlaceholder"}}
+        oninput={{perform this.setName value="target.value"}}
+      >
+    </div>
+    <VisualizerCourseInstructors @filter={{this.name}} @course={{@model}} />
+  {{/unless}}
+</section>
