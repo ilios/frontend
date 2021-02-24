@@ -715,14 +715,18 @@ module('Acceptance | Courses', function(hooks) {
   });
 
   test('courses show academic-year as range if applicable by configuration', async function(assert) {
-    this.server.create('academicYear', {id: 2014});
-    assert.expect(7);
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: true,
+      }};
+    });
+    this.server.create('academicYear', { id: 2014 });
     this.server.create('course', {
       year: 2014,
       schoolId: 1
     });
     await page.visit({ year: 2014 });
     assert.equal(page.courses.courses.length, 1);
-    assert.equal(page.courses.courses[0].year, `2014 - 2015 `, 'course year shows as range');
+    assert.equal(page.courses.courses[0].year, `2014 - 2015`, 'course year shows as range');
   });
 });
