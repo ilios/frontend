@@ -2,15 +2,18 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { task } from 'ember-concurrency';
+import { restartableTask, task } from 'ember-concurrency';
 import { map } from 'rsvp';
 
 export default class LearnerGroupListComponent extends Component {
   @service intl;
+  @service iliosConfig;
+
   @tracked toCopy = [];
   @tracked toRemove = [];
   @tracked preparingToRemove = [];
   @tracked localSortBy = 'title';
+  @tracked academicYearCrossesCalendarYearBoundaries = false;
 
   get sortBy() {
     return this.args.sortBy ?? this.localSortBy;
@@ -23,6 +26,12 @@ export default class LearnerGroupListComponent extends Component {
   @action
   cancelRemove(learnerGroup) {
     this.toRemove = this.toRemove.filter(({ id }) => id !== learnerGroup.id);
+  }
+
+  @restartableTask
+  *load() {
+    this.academicYearCrossesCalendarYearBoundaries
+      = yield this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
   }
 
   @task
