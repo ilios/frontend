@@ -37,9 +37,9 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
 
     assert.equal(component.title, 'My Courses');
     assert.equal(component.courses.length, 3);
-    assert.equal(component.courses[0].text, '2013 - 2014 course 0 (ABC123)');
-    assert.equal(component.courses[1].text, '2013 - 2014 course 1');
-    assert.equal(component.courses[2].text, '2013 - 2014 course 2');
+    assert.equal(component.courses[0].text, '2013 course 0 (ABC123)');
+    assert.equal(component.courses[1].text, '2013 course 1');
+    assert.equal(component.courses[2].text, '2013 course 2');
     assert.ok(component.courses[0].isLinked);
     assert.ok(component.courses[1].isLinked);
     assert.ok(component.courses[2].isLinked);
@@ -71,9 +71,9 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
     await render(hbs`<DashboardMycourses />`);
 
     assert.equal(component.courses.length, 3);
-    assert.equal(component.courses[0].text, '2013 - 2014 course 0');
-    assert.equal(component.courses[1].text, '2013 - 2014 course 1');
-    assert.equal(component.courses[2].text, '2013 - 2014 course 2');
+    assert.equal(component.courses[0].text, '2013 course 0');
+    assert.equal(component.courses[1].text, '2013 course 1');
+    assert.equal(component.courses[2].text, '2013 course 2');
     assert.notOk(component.courses[0].isLinked);
     assert.notOk(component.courses[1].isLinked);
     assert.notOk(component.courses[2].isLinked);
@@ -90,5 +90,75 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
 
     assert.equal(component.courses.length, 1);
     assert.equal(component.courses[0].text, 'None');
+  });
+
+  test('show academic-year range for privileged users', async function(assert) {
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: true,
+      }};
+    });
+    const user = this.server.create('user');
+    const jwtObject = {
+      'user_id': user.id,
+      'performs_non_learner_function': true,
+    };
+    const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
+    await authenticateSession({
+      jwt: encodedData
+    });
+
+    this.server.create('course', {
+      directors: [user],
+      externalId: 'ABC123',
+    });
+    this.server.createList('course', 2, {
+      directors: [user]
+    });
+    this.server.get('/api/courses', (schema, { queryParams }) => {
+      assert.ok('my' in queryParams);
+      return schema.courses.all();
+    });
+
+    await render(hbs`<DashboardMycourses />`);
+
+    assert.equal(component.courses[0].text, '2013 - 2014 course 0 (ABC123)');
+    assert.equal(component.courses[1].text, '2013 - 2014 course 1');
+    assert.equal(component.courses[2].text, '2013 - 2014 course 2');
+  });
+
+  test('show academic-year range for un-privileged users', async function(assert) {
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: true,
+      }};
+    });
+    const user = this.server.create('user');
+    const jwtObject = {
+      'user_id': user.id,
+      'performs_non_learner_function': false,
+    };
+    const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
+    await authenticateSession({
+      jwt: encodedData
+    });
+
+    this.server.create('course', {
+      directors: [user],
+      externalId: 'ABC123',
+    });
+    this.server.createList('course', 2, {
+      directors: [user]
+    });
+    this.server.get('/api/courses', (schema, { queryParams }) => {
+      assert.ok('my' in queryParams);
+      return schema.courses.all();
+    });
+
+    await render(hbs`<DashboardMycourses />`);
+
+    assert.equal(component.courses[0].text, '2013 - 2014 course 0');
+    assert.equal(component.courses[1].text, '2013 - 2014 course 1');
+    assert.equal(component.courses[2].text, '2013 - 2014 course 2');
   });
 });
