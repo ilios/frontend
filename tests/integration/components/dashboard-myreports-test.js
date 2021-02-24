@@ -114,7 +114,42 @@ module('Integration | Component | dashboard myreports', function(hooks) {
     assert.equal(component.selectedReport.results.length, 2);
     await component.selectedReport.chooseYear('2016');
     assert.equal(component.selectedReport.results.length, 1);
-    assert.equal(component.selectedReport.results[0].text, '2016 - 2017 course 1');
+    assert.equal(component.selectedReport.results[0].text, '2016 course 1');
+  });
+
+
+  test('report results show academic year as range if applicable by configuration', async function(assert) {
+    this.server.get('application/config', function() {
+      return { config: {
+        academicYearCrossesCalendarYearBoundaries: true,
+      }};
+    });
+    //override default handler to just return all courses
+    this.server.get('api/courses', (schema) => {
+      return schema.courses.all();
+    });
+    const year = 2016;
+    this.server.create('academic-year', { id: year });
+    const school = this.server.create('school');
+    this.server.create('course', { school, year });
+    const report = this.server.create('report', {
+      title: 'my report 0',
+      subject: 'course',
+      prepositionalObject: 'school',
+      prepositionalObjectTableRowId: school.id,
+      user: this.user,
+      school,
+    });
+    const reportModel = await this.owner.lookup('service:store').find('report', report.id);
+    this.set('selectedReport', reportModel);
+    this.set('selectedYear', year);
+    await render(hbs`<DashboardMyreports
+      @selectedReport={{this.selectedReport}}
+      @selectedYear={{this.selectedYear}}
+      @onReportSelect={{noop}}
+      @onReportYearSelect={{noop}}
+    />`);
+    assert.equal(component.selectedReport.results[0].text, '2016 - 2017 course 0');
   });
 
   test('changing year changes select #3839', async function(assert) {
