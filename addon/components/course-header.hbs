@@ -1,47 +1,53 @@
 <div
   class="course-header"
   data-test-course-header
-  {{did-insert this.revertTitleChanges}}
+  {{did-insert (perform this.load)}}
   {{did-update this.revertTitleChanges}}
 >
-  <span class="title" data-test-title>
-    {{#if @editable}}
-      <EditableField
-        @value={{this.courseTitle}}
-        @save={{perform this.changeTitle}}
-        @close={{this.revertTitleChanges}}
-        @saveOnEnter={{true}}
-        @closeOnEscape={{true}} as |isSaving|
-      >
-        <Input
-          type="text"
+  {{#unless this.load.isRunning}}
+    <span class="title" data-test-title>
+      {{#if @editable}}
+        <EditableField
           @value={{this.courseTitle}}
-          @key-press={{fn this.addErrorDisplayFor "courseTitle"}}
-          disabled={{isSaving}}
-        />
-        {{#each (await (compute (fn this.getErrorsFor) "courseTitle")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
-      </EditableField>
-    {{else}}
-      <h2>
-        {{#if @course.locked}}
-          <FaIcon @icon="lock" />
+          @save={{perform this.changeTitle}}
+          @close={{this.revertTitleChanges}}
+          @saveOnEnter={{true}}
+          @closeOnEscape={{true}} as |isSaving|
+        >
+          <Input
+            type="text"
+            @value={{this.courseTitle}}
+            @key-press={{fn this.addErrorDisplayFor "courseTitle"}}
+            disabled={{isSaving}}
+          />
+          {{#each (await (compute (fn this.getErrorsFor) "courseTitle")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
+        </EditableField>
+      {{else}}
+        <h2>
+          {{#if @course.locked}}
+            <FaIcon @icon="lock" />
+          {{/if}}
+          {{@course.title}}
+        </h2>
+      {{/if}}
+      <h3 class="academic-year" data-test-academic-year>
+        {{#if this.academicYearCrossesCalendarYearBoundaries}}
+          {{@course.year}} -  {{add @course.year 1}}
+        {{else}}
+          {{@course.year}}
         {{/if}}
-        {{@course.title}}
-      </h2>
-    {{/if}}
-    <h3 class="academic-year">
-      {{@course.academicYear}}
-    </h3>
-  </span>
-  <span class="course-publication">
-    {{#if @editable}}
-      <Course::PublicationMenu @course={{@course}} />
-    {{else}}
-      <PublicationStatus @item={{@course}} @showIcon={{true}} @showText={{true}} />
-    {{/if}}
-  </span>
+      </h3>
+    </span>
+    <span class="course-publication">
+      {{#if @editable}}
+        <Course::PublicationMenu @course={{@course}} />
+      {{else}}
+        <PublicationStatus @item={{@course}} @showIcon={{true}} @showText={{true}} />
+      {{/if}}
+    </span>
+  {{/unless}}
 </div>

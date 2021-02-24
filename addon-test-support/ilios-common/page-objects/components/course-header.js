@@ -11,6 +11,7 @@ const definition = {
     cancel: clickable('.cancel'),
     hasError: isVisible('.validation-error-message'),
   },
+  academicYear: text('[data-test-academic-year]'),
 };
 
 export default definition;
