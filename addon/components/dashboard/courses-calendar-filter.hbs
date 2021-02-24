@@ -34,7 +34,7 @@
             }}
           >
             <button type="button" {{on "click" (fn this.toggleYear year.year)}}>
-              {{year.academicYear}}
+              {{year.label}}
             </button>
           </h6>
           {{#if (includes year.year this.expandedYears)}}
@@ -54,7 +54,6 @@
                 </li>
               {{/each}}
             </ul>
-
           {{/if}}
         </div>
       {{/each}}
