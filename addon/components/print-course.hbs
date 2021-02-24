@@ -5,11 +5,15 @@
   ...attributes
 >
   <div class="header" data-test-course-header>
-    <h2>
+    <h2 data-test-course-title>
       {{@course.title}}
     </h2>
-    <h4>
-      {{@course.academicYear}}
+    <h4 data-test-course-year>
+      {{#if this.academicYearCrossesCalendarYearBoundaries}}
+        {{@course.year}} -  {{add @course.year 1}}
+      {{else}}
+        {{@course.year}}
+      {{/if}}
     </h4>
     <PublicationStatus @item={{@course}} @showIcon={{true}} @showText={{true}} />
   </div>

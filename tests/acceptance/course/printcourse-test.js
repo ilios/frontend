@@ -61,10 +61,25 @@ module('Acceptance | Course - Print Course', function (hooks) {
   });
 
   test('print course header', async function (assert) {
-    assert.expect(1);
     await setupAuthentication({ school: this.school });
     await visit('/course/1/print');
-    assert.dom('[data-test-course-header] h2').hasText('Back to the Future');
+    assert.dom('[data-test-course-header] [data-test-course-title]').hasText('Back to the Future');
+    assert.dom('[data-test-course-header] [data-test-course-year]').hasText('2013');
+  });
+
+  test('course year shows as range if applicable by configuration', async function (assert) {
+    await setupAuthentication({ school: this.school });
+    const { apiVersion } = this.owner.resolveRegistration('config:environment');
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+          apiVersion,
+        },
+      };
+    });
+    await visit('/course/1/print');
+    assert.dom('[data-test-course-header] [data-test-course-year]').hasText('2013 - 2014');
   });
 
   test('print course mesh terms', async function (assert) {
