@@ -35,9 +35,9 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     />`);
 
     assert.equal(component.years.length, 3);
-    assert.equal(component.years[0].title, `${thisYear - 1} - ${thisYear}`);
-    assert.equal(component.years[1].title, `${thisYear} - ${thisYear + 1}`);
-    assert.equal(component.years[2].title, `${thisYear + 1} - ${thisYear + 2}`);
+    assert.equal(component.years[0].title, thisYear - 1);
+    assert.equal(component.years[1].title, thisYear);
+    assert.equal(component.years[2].title, thisYear + 1);
 
     assert.equal(component.years[0].courses.length, 0);
     assert.equal(component.years[1].courses.length, 0);
@@ -47,6 +47,42 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('course years are shown as ranges if applicable by configuration', async function (assert) {
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+        },
+      };
+    });
+    const thisYear = 2019;
+    const school = this.server.create('school');
+    this.server.createList('course', 2, {
+      school,
+      year: thisYear,
+    });
+    this.server.createList('course', 2, {
+      school,
+      year: thisYear + 1,
+      externalId: 1,
+    });
+    this.server.createList('course', 2, {
+      school,
+      year: thisYear - 1,
+    });
+    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
+    this.set('school', schoolModel);
+    await render(hbs`<Dashboard::CoursesCalendarFilter
+      @school={{this.school}}
+      @add={{noop}}
+      @remove={{noop}}
+    />`);
+
+    assert.equal(component.years[0].title, `${thisYear - 1} - ${thisYear}`);
+    assert.equal(component.years[1].title, `${thisYear} - ${thisYear + 1}`);
+    assert.equal(component.years[2].title, `${thisYear + 1} - ${thisYear + 2}`);
   });
 
   test('clicking year toggles', async function (assert) {
@@ -115,8 +151,8 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     />`);
 
     assert.equal(component.years.length, 2);
-    assert.equal(component.years[0].title, `2014 - 2015`);
-    assert.equal(component.years[1].title, `2015 - 2016`);
+    assert.equal(component.years[0].title, `2014`);
+    assert.equal(component.years[1].title, `2015`);
 
     assert.equal(component.years[0].courses.length, 0);
     assert.equal(component.years[1].courses.length, 2);

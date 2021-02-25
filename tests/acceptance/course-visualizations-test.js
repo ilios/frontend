@@ -21,9 +21,9 @@ module('Acceptance | course visualizations', function (hooks) {
   test('visiting /data/courses/1', async function (assert) {
     await page.visit({ courseId: 1 });
     assert.equal(currentURL(), '/data/courses/1');
-    assert.ok(page.objectives.isVisible);
-    assert.ok(page.sessionTypes.isVisible);
-    assert.ok(page.vocabularies.isVisible);
-    assert.ok(page.instructors.isVisible);
+    assert.ok(page.visualizations.objectives.isVisible);
+    assert.ok(page.visualizations.sessionTypes.isVisible);
+    assert.ok(page.visualizations.vocabularies.isVisible);
+    assert.ok(page.visualizations.instructors.isVisible);
   });
 });

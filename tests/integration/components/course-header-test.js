@@ -20,7 +20,7 @@ module('Integration | Component | course-header', function (hooks) {
     });
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseHeader @course={{course}} @editable={{true}} />`);
+    await render(hbs`<CourseHeader @course={{this.course}} @editable={{true}} />`);
     await a11yAudit(this.element);
     assert.ok(true, 'not a11y violations');
   });
@@ -31,7 +31,7 @@ module('Integration | Component | course-header', function (hooks) {
     });
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseHeader @course={{course}} @editable={{false}} />`);
+    await render(hbs`<CourseHeader @course={{this.course}} @editable={{false}} />`);
     await a11yAudit(this.element);
     assert.ok(true, 'not a11y violations');
   });
@@ -40,7 +40,7 @@ module('Integration | Component | course-header', function (hooks) {
     const course = this.server.create('course');
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseHeader @course={{course}} @editable={{true}} />`);
+    await render(hbs`<CourseHeader @course={{this.course}} @editable={{true}} />`);
 
     assert.ok(component.title.isVisible);
     assert.equal(component.title.value, 'course 0');
@@ -55,7 +55,7 @@ module('Integration | Component | course-header', function (hooks) {
     const course = this.server.create('course');
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseHeader @course={{course}} @editable={{true}} />`);
+    await render(hbs`<CourseHeader @course={{this.course}} @editable={{true}} />`);
 
     assert.ok(component.title.isVisible);
     assert.equal(component.title.value, 'course 0');
@@ -70,7 +70,7 @@ module('Integration | Component | course-header', function (hooks) {
     const course = this.server.create('course');
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseHeader @course={{course}} @editable={{true}} />`);
+    await render(hbs`<CourseHeader @course={{this.course}} @editable={{true}} />`);
 
     assert.ok(component.title.isVisible);
     assert.equal(component.title.value, 'course 0');
@@ -85,7 +85,7 @@ module('Integration | Component | course-header', function (hooks) {
     const course = this.server.create('course');
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseHeader @course={{course}} @editable={{true}} />`);
+    await render(hbs`<CourseHeader @course={{this.course}} @editable={{true}} />`);
 
     assert.ok(component.title.isVisible);
     assert.equal(component.title.value, 'course 0');
@@ -100,7 +100,7 @@ module('Integration | Component | course-header', function (hooks) {
     const course = this.server.create('course');
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseHeader @course={{course}} @editable={{true}} />`);
+    await render(hbs`<CourseHeader @course={{this.course}} @editable={{true}} />`);
 
     assert.ok(component.title.isVisible);
     assert.equal(component.title.value, 'course 0');
@@ -115,7 +115,7 @@ module('Integration | Component | course-header', function (hooks) {
     const course = this.server.create('course');
     const courseModel = await this.store.find('course', course.id);
     this.set('course', courseModel);
-    await render(hbs`<CourseHeader @course={{course}} @editable={{true}} />`);
+    await render(hbs`<CourseHeader @course={{this.course}} @editable={{true}} />`);
 
     assert.ok(component.title.isVisible);
     assert.equal(component.title.value, 'course 0');
@@ -123,5 +123,28 @@ module('Integration | Component | course-header', function (hooks) {
     await component.title.set('blue fish');
     await component.title.cancel();
     assert.equal(component.title.value, 'course 0');
+  });
+
+  test('course academic year', async function (assert) {
+    const course = this.server.create('course', { year: 2021 });
+    const courseModel = await this.store.find('course', course.id);
+    this.set('course', courseModel);
+    await render(hbs`<CourseHeader @course={{this.course}} @editable={{true}} />`);
+    assert.equal(component.academicYear, '2021');
+  });
+
+  test('course academic year shows range if applicable by configuration', async function (assert) {
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+        },
+      };
+    });
+    const course = this.server.create('course', { year: 2021 });
+    const courseModel = await this.store.find('course', course.id);
+    this.set('course', courseModel);
+    await render(hbs`<CourseHeader @course={{this.course}} @editable={{true}} />`);
+    assert.equal(component.academicYear, '2021 - 2022');
   });
 });

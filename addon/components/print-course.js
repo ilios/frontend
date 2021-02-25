@@ -6,16 +6,21 @@ import sortableByPosition from 'ilios-common/utils/sortable-by-position';
 
 export default class PrintCourseComponent extends Component {
   @service store;
+  @service iliosConfig;
 
   @tracked sortTitle;
   @tracked sortDirectorsBy;
   @tracked courseLearningMaterialsRelationship;
   @tracked sessionsRelationship;
+  @tracked academicYearCrossesCalendarYearBoundaries = false;
 
   @dropTask
   *load() {
     this.courseLearningMaterialsRelationship = yield this.args.course.learningMaterials;
     this.sessionsRelationship = yield this.args.course.sessions;
+    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+      'academicYearCrossesCalendarYearBoundaries'
+    );
   }
 
   get courseLearningMaterials() {

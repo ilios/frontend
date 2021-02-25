@@ -53,10 +53,6 @@ export default Model.extend({
   publishedSessionOfferingCounts: mapBy('publishedSessionOfferings', 'length'),
   publishedOfferingCount: sum('publishedSessionOfferingCounts'),
 
-  academicYear: computed('year', function () {
-    return this.year + ' - ' + (parseInt(this.year, 10) + 1);
-  }),
-
   /**
    * All competencies linked to this course via its objectives.
    * @property competencies

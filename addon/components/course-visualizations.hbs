@@ -1,0 +1,68 @@
+<section
+  class="course-visualizations"
+  data-test-course-visualizations
+  {{did-insert (perform this.load)}}
+>
+  {{#unless this.load.isRunning}}
+    <div class="backtolink">
+      <LinkTo @route="course" @model={{@model}}>
+        {{t "general.backToCourse"}}
+      </LinkTo>
+    </div>
+    <h2>
+      {{t "general.courseVisualizations"}}
+    </h2>
+    <h3 class="clickable" data-test-title>
+      <LinkTo @route="course" @model={{@model}}>
+        {{@model.title}}
+        {{#if this.academicYearCrossesCalendarYearBoundaries}}
+          {{@model.year}} - {{add @model.year 1}}
+        {{else}}
+          {{@model.year}}
+        {{/if}}
+      </LinkTo>
+    </h3>
+    <div class="visualizations" data-test-visualizations>
+      <div data-test-visualize-objectives>
+        <LinkTo @route="course-visualize-objectives" @model={{@model}}>
+          <h4>
+            {{t "general.objectives"}}
+          </h4>
+          <VisualizerCourseObjectives @isIcon={{true}} @course={{@model}} />
+        </LinkTo>
+      </div>
+      <div data-test-visualize-session-types>
+        <LinkTo @route="course-visualize-session-types" @model={{@model}}>
+          <h4>
+            {{t "general.sessionTypes"}}
+          </h4>
+          <VisualizerCourseSessionTypes
+            @isIcon={{true}}
+            @course={{@model}}
+            @chartType="donut"
+          />
+        </LinkTo>
+      </div>
+      <div data-test-visualize-vocabularies>
+        <LinkTo @route="course-visualize-vocabularies" @model={{@model}}>
+          <h4>
+            {{t "general.vocabularies"}}
+          </h4>
+          <VisualizerCourseVocabularies @isIcon={{true}} @course={{@model}} />
+        </LinkTo>
+      </div>
+      <div data-test-visualize-instructors>
+        <LinkTo @route="course-visualize-instructors" @model={{@model}}>
+          <h4>
+            {{t "general.instructors"}}
+          </h4>
+          <VisualizerCourseInstructors
+            @isIcon={{true}}
+            @course={{@model}}
+            @chartType="donut"
+          />
+        </LinkTo>
+      </div>
+    </div>
+  {{/unless}}
+</section>

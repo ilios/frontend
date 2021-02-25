@@ -7,11 +7,14 @@ import moment from 'moment';
 
 export default class DashboardCoursesCalendarFilterComponent extends Component {
   @service dataLoader;
+  @service iliosConfig;
+
   @tracked _expandedYears;
   @tracked el;
   @tracked yearsInView = [];
   @tracked titlesInView = [];
   @tracked coursesRelationship;
+  @tracked academicYearCrossesCalendarYearBoundaries = false;
 
   get academicYear() {
     const today = moment();
@@ -45,9 +48,12 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
     return this.courses
       .reduce((acc, course) => {
         let year = acc.find(({ year }) => year === course.year);
+        const label = this.academicYearCrossesCalendarYearBoundaries
+          ? `${course.year} - ${course.year + 1}`
+          : course.year.toString();
         if (!year) {
           year = {
-            academicYear: course.academicYear,
+            label,
             year: course.year,
             courses: [],
           };
@@ -78,6 +84,9 @@ export default class DashboardCoursesCalendarFilterComponent extends Component {
 
   @restartableTask
   *load() {
+    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+      'academicYearCrossesCalendarYearBoundaries'
+    );
     if (this.args.school) {
       yield this.dataLoader.loadSchoolForCalendar(this.args.school.id);
       this.coursesRelationship = yield this.args.school.courses;
