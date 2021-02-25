@@ -5,7 +5,6 @@ import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios-common/page-objects/components/course-visualize-vocabularies';
 
-// @todo flesh this out [ST 2021/02/24]
 module('Integration | Component | course-visualize-vocabularies', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
