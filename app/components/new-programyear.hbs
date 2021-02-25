@@ -1,6 +1,7 @@
 <div
   class="new-programyear"
   {{did-insert this.load}}
+  {{did-update (fn this.load) @programYears}}
   ...attributes
 >
   <h4 class="title" data-test-newprogramyear-title>
