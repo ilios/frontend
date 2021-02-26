@@ -15,7 +15,7 @@ import {
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { getElementText, getText } from 'ilios-common';
+import { getElementText } from 'ilios-common';
 
 const url = '/programs/1';
 module('Acceptance | Program - ProgramYear List', function(hooks) {
@@ -27,40 +27,47 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
   });
 
   test('check list', async function(assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    const thisYear = (new Date()).getFullYear();
     this.server.create('program', {
       schoolId: 1
     });
     this.server.createList('cohort', 4);
     this.server.create('programYear', {
       programId: 1,
-      startYear: 2012,
+      startYear: thisYear,
       cohortId: 1,
     });
     this.server.create('programYear', {
       programId: 1,
-      startYear: 2010,
+      startYear: thisYear - 2,
       cohortId: 2,
     });
     this.server.create('programYear', {
       programId: 1,
-      startYear: 2011,
+      startYear: thisYear -1 ,
       cohortId: 3,
     });
     this.server.create('programYear', {
       programId: 1,
-      startYear: 2009,
+      startYear: thisYear - 3,
       cohortId: 4,
       archived: true
     });
     await visit(url);
-    var rows = findAll('.programyear-list tbody tr');
+
+    const rows = findAll('.programyear-list tbody tr');
+    const expandButton = '.expand-collapse-button button';
+    const yearOptions = '.startyear-select option';
     assert.equal(rows.length, 3);
-    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(1) td:nth-of-type(1)'), getText('2010'));
-    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(1) td:nth-of-type(2)'), getText('cohort1'));
-    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(2) td:nth-of-type(1)'), getText('2011'));
-    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(2) td:nth-of-type(2)'), getText('cohort2'));
-    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(3) td:nth-of-type(1)'), getText('2012'));
-    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(3) td:nth-of-type(2)'), getText('cohort0'));
+    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(1) td:nth-of-type(1)'), `${thisYear - 2}`);
+    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(1) td:nth-of-type(2)'), 'cohort1');
+    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(2) td:nth-of-type(1)'), `${thisYear - 1}`);
+    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(2) td:nth-of-type(2)'), 'cohort2');
+    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(3) td:nth-of-type(1)'), `${thisYear}`);
+    assert.equal(await getElementText('.programyear-list tbody tr:nth-of-type(3) td:nth-of-type(2)'), 'cohort0');
+    await click(expandButton);
+    assert.dom(yearOptions).exists({ count: 6 });
   });
 
   test('check competencies', async function (assert) {
@@ -227,7 +234,7 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
   });
 
   test('can add a program-year (with pre-existing program-year)', async function(assert) {
-    assert.expect(12);
+    assert.expect(14);
     this.user.update({ administeredSchools: [this.school] });
     const directors = this.server.createList('user', 3);
     const competencies = this.server.createList('competency', 3);
@@ -249,6 +256,7 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
 
     const expandButton = '.expand-collapse-button button';
     const selectField = '.startyear-select select';
+    const yearOptions = '.startyear-select option';
     const saveButton = '.new-programyear .done';
     const thisYear = new Date().getFullYear();
     await visit(url);
@@ -261,6 +269,7 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     assert.dom(getTableDataText(0, 5)).hasText('3');
 
     await click(expandButton);
+    assert.dom(yearOptions).exists({ count: 9 });
     await fillIn(selectField, thisYear + 1);
     await click(saveButton);
     assert.dom(getTableDataText(1, 0)).hasText((thisYear + 1).toString(), 'academic year shown');
@@ -270,6 +279,8 @@ module('Acceptance | Program - ProgramYear List', function(hooks) {
     assert.dom(getTableDataText(1, 3)).hasText('3', 'copied correctly from latest program-year');
     assert.dom(getTableDataText(1, 4)).hasText('3', 'copied correctly from latest program-year');
     assert.dom(getTableDataText(1, 5)).hasText('3', 'copied correctly from latest program-year');
+    await click(expandButton);
+    assert.dom(yearOptions).exists({ count: 8 });
   });
 
   test('privileged users can lock and unlock program-year', async function(assert) {
