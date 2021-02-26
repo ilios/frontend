@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 
 export default class NewProgramyearComponent extends Component {
-  @tracked allYears;
+  allYears;
   @tracked year;
   @tracked availableAcademicYears = [];
 
