@@ -94,7 +94,7 @@
     "ember-source": "3.23.1",
     "ember-template-lint": "^2.20.0",
     "ember-web-app": "^5.0.0",
-    "eslint": "^7.19.0",
+    "eslint": "^7.21.0",
     "file-saver": "^2.0.5",
     "ilios-common": "^54.2.0",
     "loader.js": "^4.7.0",
