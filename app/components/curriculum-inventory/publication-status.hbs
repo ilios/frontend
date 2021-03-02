@@ -1,6 +1,6 @@
-<span class="status publication-status {{if @item.isPublished "published" "notpublished"}}">
+<span class="status publication-status {{if @item.isFinalized "published" "notpublished"}}">
   <span data-test-text>
-    {{#if @item.isPublished}}
+    {{#if @item.isFinalized}}
       {{t "general.finalized"}}
     {{else}}
       {{t "general.draft"}}

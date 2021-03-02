@@ -1,4 +1,5 @@
-import { clickable, create, collection, hasClass, isVisible, text } from 'ember-cli-page-object';
+import { clickable, create, collection, text } from 'ember-cli-page-object';
+import item from './curriculum-inventory-report-list-item';
 
 const definition = {
   scope: '[data-test-curriculum-inventory-report-list]',
@@ -14,27 +15,14 @@ const definition = {
     clickOnName: clickable('th', { at: 0 }),
     clickOnYear: clickable('th', { at: 2 }),
   },
-  reports: collection('table tbody [data-test-report]', {
-    name: text('[data-test-name]'),
-    program: text('[data-test-program]'),
-    year: text('[data-test-year]'),
-    startDate: text('[data-test-start-date]'),
-    endDate: text('[data-test-end-date]'),
-    status: text('[data-test-status]'),
-    clickOnName: clickable('[data-test-name]'),
-    clickOnProgram: clickable('[data-test-program]'),
-    clickOnYear: clickable('[data-test-year]'),
-    clickOnStartDate: clickable('[data-test-start-date]'),
-    clickOnEndDate: clickable('[data-test-end-date]'),
-    clickOnStatus: clickable('[data-test-status]'),
-    remove: clickable('[data-icon="trash"]', { scope: '[data-test-actions]' }),
-    isDeletable: hasClass('enabled', '[data-test-actions] [data-icon="trash"]'),
+  reports: collection({
+    itemScope: '[data-test-curriculum-inventory-report-list-item]',
+    item,
   }),
   confirmRemoval: {
     scope: '[data-test-confirm-removal]',
     confirm: clickable('[data-test-confirm]'),
     cancel: clickable('[data-test-cancel]'),
-    isVisible: isVisible(),
   },
   emptyList: {
     scope: '[data-test-empty-list]',
