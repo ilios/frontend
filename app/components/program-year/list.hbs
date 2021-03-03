@@ -1,0 +1,97 @@
+<div
+  class="program-year-list"
+  data-test-program-year-list
+  ...attributes
+>
+  <section class="program-years" data-test-years>
+    <div class="header">
+      <div class="title">
+        {{t "general.programYears"}}
+      </div>
+      {{#if @canCreate}}
+        <div class="actions">
+          <ExpandCollapseButton
+            @value={{this.editorOn}}
+            @action={{set this.editorOn (not this.editorOn)}}
+          />
+        </div>
+      {{/if}}
+    </div>
+    <section class="new">
+      {{#if this.editorOn}}
+        <ProgramYear::New
+          @programYears={{this.programYears}}
+          @academicYearCrossesCalendarYearBoundaries={{this.academicYearCrossesCalendarYearBoundaries}}
+          @save={{perform this.saveNew}}
+          @cancel={{set this.editorOn false}}
+        />
+      {{/if}}
+      {{#if this.savedProgramYear}}
+        <div class="saved-result">
+          <LinkTo
+            @route="programYear.index"
+            @models={{array @program this.savedProgramYear}}
+          >
+            <FaIcon @icon="external-link-square-alt" />
+            {{#if this.academicYearCrossesCalendarYearBoundaries}}
+              {{this.savedProgramYear.startYear}} - {{add this.savedProgramYear.startYear 1}}
+            {{else}}
+              {{this.savedProgramYear.startYear}}
+            {{/if}}
+          </LinkTo>
+          {{t "general.savedSuccessfully"}}
+        </div>
+      {{/if}}
+    </section>
+    <div class="list">
+      {{#if this.sortedProgramYears.length}}
+        <table>
+          <thead>
+            <tr>
+              <th class="text-left">
+                {{t "general.matriculationYear"}}
+              </th>
+              <th class="text-left hide-from-small-screen">
+                {{t "general.cohort"}}
+              </th>
+              <th class="text-left hide-from-small-screen">
+                {{t "general.competencies"}}
+              </th>
+              <th class="text-left hide-from-small-screen">
+                {{t "general.objectives"}}
+              </th>
+              <th class="text-left hide-from-small-screen">
+                {{t "general.directors"}}
+              </th>
+              <th class="text-left hide-from-small-screen">
+                {{t "general.terms"}}
+              </th>
+              <th class="text-right" colspan="2">
+                {{t "general.actions"}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each this.sortedProgramYears as |programYear|}}
+              <ProgramYear::ListItem
+                @programYear={{programYear}}
+                @academicYearCrossesCalendarYearBoundaries={{this.academicYearCrossesCalendarYearBoundaries}}
+              />
+            {{/each}}
+          </tbody>
+        </table>
+      {{else}}
+        <span class="default-message">
+          {{t "general.noProgramYears"}}
+        </span>
+      {{/if}}
+    </div>
+    {{#if this.save.isRunning}}
+      <WaitSaving
+        @showProgress={{true}}
+        @totalProgress={{this.itemsToSave}}
+        @currentProgress={{this.savedItems}}
+      />
+    {{/if}}
+  </section>
+</div>

@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import config from '../config/environment';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import { use } from 'ember-could-get-used-to-this';
-import { enqueueTask } from 'ember-concurrency-decorators';
+import { enqueueTask } from 'ember-concurrency';
 const { IliosFeatures: { programYearVisualizations } } = config;
 
 export default class ProgramYearOverviewComponent extends Component {
