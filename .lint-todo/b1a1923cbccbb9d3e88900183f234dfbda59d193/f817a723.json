@@ -1,0 +1,1 @@
+{"engine":"ember-template-lint","filePath":"addon/components/course-header.hbs","ruleId":"no-unknown-arguments-for-builtin-components","line":20,"column":12,"createdDate":1614758400000,"warnDate":1617346800000,"errorDate":1619938800000}
