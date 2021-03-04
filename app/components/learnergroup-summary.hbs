@@ -44,7 +44,7 @@
                 @key-press={{fn this.addErrorDisplayFor "location"}}
                 disabled={{isSaving}}
               />
-              {{#each (await (compute (fn this.getErrorsFor) "location")) as |message|}}
+              {{#each (await (compute this.getErrorsFor "location")) as |message|}}
                 <span class="validation-error-message">
                   {{message}}
                 </span>
@@ -78,10 +78,10 @@
                 inputmode="url"
                 {{on "input" (pick "target.value" this.changeUrl)}}
                 {{on "keyup" (fn this.addErrorDisplayFor "url")}}
-                {{on "focus" (fn this.selectAllText)}}
+                {{on "focus" this.selectAllText}}
                 disabled={{isSaving}}
               >
-              {{#each (await (compute (fn this.getErrorsFor) "url")) as |message|}}
+              {{#each (await (compute this.getErrorsFor "url")) as |message|}}
                 <span class="validation-error-message">
                   {{message}}
                 </span>

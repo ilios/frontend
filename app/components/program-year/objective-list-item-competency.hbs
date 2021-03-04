@@ -31,7 +31,7 @@
           class="link-button"
           data-test-competency
           data-test-manage
-          {{on "click" (fn @manage)}}
+          {{on "click" @manage}}
         >
           {{get (await @objective.competency) "title"}}
         </button>

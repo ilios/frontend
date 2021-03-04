@@ -55,7 +55,7 @@
                 @change={{queue (set this.startDate) (fn this.addErrorDisplayFor "startDate")}}
                 data-test-start-date-picker
               />
-              {{#each (await (compute (fn this.getErrorsFor) "startDate")) as |message|}}
+              {{#each (await (compute this.getErrorsFor "startDate")) as |message|}}
                 <span class="validation-error-message">
                   {{message}}
                 </span>
@@ -82,7 +82,7 @@
                 @change={{queue (set this.endDate) (fn this.addErrorDisplayFor "endDate")}}
                 data-test-end-date-picker
               />
-              {{#each (await (compute (fn this.getErrorsFor) "endDate")) as |message|}}
+              {{#each (await (compute this.getErrorsFor "endDate")) as |message|}}
                 <span class="validation-error-message">
                   {{message}}
                 </span>
@@ -147,7 +147,7 @@
               >
                 {{this.description}}
               </textarea>
-              {{#each (await (compute (fn this.getErrorsFor) "description")) as |message|}}
+              {{#each (await (compute this.getErrorsFor "description")) as |message|}}
                 <span class="validation-error-message">
                   {{message}}
                 </span>

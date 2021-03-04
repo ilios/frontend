@@ -6,7 +6,7 @@
     <EditableField
       @value={{this.title}}
       @save={{perform this.save}}
-      @close={{fn this.revert}}
+      @close={{this.revert}}
       @saveOnEnter={{true}}
       data-test-title
       @closeOnEscape={{true}} as |isSaving|
@@ -18,7 +18,7 @@
         disabled={{isSaving}}
       />
     </EditableField>
-    {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+    {{#each (await (compute this.getErrorsFor "title")) as |message|}}
       <span class="validation-error-message">
         {{message}}
       </span>

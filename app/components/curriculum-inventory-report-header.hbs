@@ -20,7 +20,7 @@
           @key-press={{fn this.addErrorDisplayFor "name"}}
           disabled={{isSaving}}
         />
-        {{#each (await (compute (fn this.getErrorsFor) "name")) as |message|}}
+        {{#each (await (compute this.getErrorsFor "name")) as |message|}}
           <span class="validation-error-message">
             {{message}}
           </span>

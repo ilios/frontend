@@ -123,35 +123,35 @@
                     <input
                       type="checkbox"
                       checked={{and
-                        (await (compute (fn obj.isValid)))
+                        (await (compute obj.isValid))
                         (includes obj this.selectedUsers)
                       }}
                       {{on "click" (fn this.toggleUserSelection obj)}}
-                      disabled={{await (compute (fn obj.isInvalid))}}
+                      disabled={{await (compute obj.isInvalid)}}
                     >
                   </td>
-                  <td class={{if (await (compute (fn obj.hasErrorFor) "firstName")) "error"}}>
+                  <td class={{if (await (compute obj.hasErrorFor "firstName")) "error"}}>
                     {{obj.firstName}}
                   </td>
-                  <td class={{if (await (compute (fn obj.hasErrorFor) "lastName")) "error"}}>
+                  <td class={{if (await (compute obj.hasErrorFor "lastName")) "error"}}>
                     {{obj.lastName}}
                   </td>
-                  <td class={{if (await (compute (fn obj.hasErrorFor) "middleName")) "error"}}>
+                  <td class={{if (await (compute obj.hasErrorFor "middleName")) "error"}}>
                     {{obj.middleName}}
                   </td>
                   <td>
                     {{obj.phone}}
                   </td>
-                  <td class={{if (await (compute (fn obj.hasErrorFor) "email")) "error"}}>
+                  <td class={{if (await (compute obj.hasErrorFor "email")) "error"}}>
                     {{obj.email}}
                   </td>
-                  <td class={{if (await (compute (fn obj.hasErrorFor) "campusId")) "error"}}>
+                  <td class={{if (await (compute obj.hasErrorFor "campusId")) "error"}}>
                     {{obj.campusId}}
                   </td>
-                  <td class={{if (await (compute (fn obj.hasErrorFor) "otherId")) "error"}}>
+                  <td class={{if (await (compute obj.hasErrorFor "otherId")) "error"}}>
                     {{obj.otherId}}
                   </td>
-                  <td class={{if (await (compute (fn obj.hasErrorFor) "username")) "error"}}>
+                  <td class={{if (await (compute obj.hasErrorFor "username")) "error"}}>
                     {{obj.username}}
                   </td>
                   <td>

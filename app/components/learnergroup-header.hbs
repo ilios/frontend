@@ -21,7 +21,7 @@
               {{on "input" (pick "target.value" (set this.title))}}
               {{on "keyup" (fn this.addErrorDisplayFor "title")}}
             >
-            {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+            {{#each (await (compute this.getErrorsFor "title")) as |message|}}
               <span class="validation-error-message">
                 {{message}}
               </span>

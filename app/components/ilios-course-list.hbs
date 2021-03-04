@@ -66,7 +66,7 @@
         </tr>
       </thead>
       <tbody data-test-courses>
-        {{#each (sort-by (if this.sortingByStatus (fn this.sortCoursesByStatus) @sortBy) @courses) as |course|}}
+        {{#each (sort-by (if this.sortingByStatus this.sortCoursesByStatus @sortBy) @courses) as |course|}}
           <tr
             class={{if (includes course.id this.coursesForRemovalConfirmation) "confirm-removal"}}
             data-test-active-row
@@ -104,7 +104,7 @@
               {{else}}
                 <PublicationStatus @item={{course}} @showText={{true}} @showIcon={{false}} />
                 {{#if course.locked }}
-                  {{#if (await (compute (fn this.canUnlock) course))}}
+                  {{#if (await (compute this.canUnlock course))}}
                     <FaIcon
                       @icon="lock"
                       class="clickable enabled"
@@ -113,7 +113,7 @@
                   {{else}}
                     <FaIcon @icon="lock" class="disabled" />
                   {{/if}}
-                {{else if (await (compute (fn this.canLock) course))}}
+                {{else if (await (compute this.canLock course))}}
                   <FaIcon
                     @icon="unlock"
                     class="clickable enabled"
@@ -122,7 +122,7 @@
                 {{else}}
                   <FaIcon @icon="unlock" class="disabled" />
                 {{/if}}
-                {{#if (await (compute (fn this.canDelete) course))}}
+                {{#if (await (compute this.canDelete course))}}
                   <span class="clickable remove" role="button" {{on "click" (fn this.confirmRemoval course)}}>
                     <FaIcon @icon="trash" class="enabled" />
                   </span>

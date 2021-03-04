@@ -23,7 +23,7 @@
           {{on "input" (pick "target.value" (set this.name))}}
           {{on "keyup" (fn this.addErrorDisplayFor "name")}}
         >
-        {{#each (await (compute (fn this.getErrorsFor) "name")) as |message|}}
+        {{#each (await (compute this.getErrorsFor "name")) as |message|}}
           <span class="validation-error-message">
             {{message}}
           </span>
