@@ -1,0 +1,14 @@
+{{#if (not (includes @group @currentlyActiveInstructorGroups))}}
+  <li
+    class="active"
+    role="button"
+    data-test-result
+    {{on "click" (fn @addInstructorGroup @group)}}
+  >
+    {{@group.title}}
+  </li>
+{{else}}
+  <li class="inactive" data-test-result>
+    {{@group.title}}
+  </li>
+{{/if}}

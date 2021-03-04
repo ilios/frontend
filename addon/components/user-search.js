@@ -1,42 +1,37 @@
-/* eslint-disable ember/no-computed-properties-in-native-classes */
 import { inject as service } from '@ember/service';
-import ObjectProxy from '@ember/object/proxy';
 import Component from '@glimmer/component';
-import { computed } from '@ember/object';
-import { isEmpty } from '@ember/utils';
-const { oneWay } = computed;
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask } from 'ember-concurrency';
-
-const userProxy = ObjectProxy.extend({
-  isUser: true,
-  currentlyActiveUsers: null,
-  sortTerm: oneWay('content.fullName'),
-  isActive: computed('content', 'currentlyActiveUsers.[]', function () {
-    const user = this.get('content');
-    if (!user.get('enabled')) {
-      return false;
-    }
-    return !this.get('currentlyActiveUsers').includes(user);
-  }),
-});
-const instructorGroupProxy = ObjectProxy.extend({
-  isInstructorGroup: true,
-  currentlyActiveInstructorGroups: null,
-  sortTerm: oneWay('content.title'),
-  isActive: computed('content', 'currentlyActiveInstructorGroups.[]', function () {
-    return !this.get('currentlyActiveInstructorGroups').includes(this.get('content'));
-  }),
-});
 
 export default class UserSearch extends Component {
   @service store;
   @service intl;
   @tracked showMoreInputPrompt = false;
   @tracked searchReturned = false;
-  @tracked currentlyActiveUsers;
-  @tracked currentlyActiveInstructorGroups;
+  @tracked userResults = [];
+  @tracked instructorGroupResults = [];
+
+  get currentlyActiveInstructorGroups() {
+    return this.args.currentlyActiveInstructorGroups || [];
+  }
+
+  get currentlyActiveUsers() {
+    return this.args.currentlyActiveUsers || [];
+  }
+
+  get availableInstructorGroups() {
+    return this.args.availableInstructorGroups || [];
+  }
+
+  get sortedResults() {
+    const results = [...this.userResults, ...this.instructorGroupResults];
+    const locale = this.intl.get('locale');
+    results.sort((a, b) => {
+      return a.sortTerm.localeCompare(b.sortTerm, locale, { numeric: true });
+    });
+    return results;
+  }
 
   get roles() {
     return this.args.roles || '';
@@ -44,38 +39,15 @@ export default class UserSearch extends Component {
 
   @action
   addUser(user) {
-    //don't send actions to the calling component if the user is already in the list
-    //prevents a complicated if/else on the template.
-    if (!this.currentlyActiveUsers.includes(user)) {
-      if (this.args.addUser) {
-        this.args.addUser(user);
-      }
-    }
-  }
-
-  @action
-  load(element, [currentlyActiveUsers, currentlyActiveInstructorGroups]) {
-    if (currentlyActiveUsers) {
-      this.currentlyActiveUsers = currentlyActiveUsers;
-    } else {
-      this.currentlyActiveUsers = [];
-    }
-
-    if (currentlyActiveInstructorGroups) {
-      this.currentlyActiveInstructorGroups = currentlyActiveInstructorGroups;
-    } else {
-      this.currentlyActiveInstructorGroups = [];
+    if (this.args.addUser) {
+      this.args.addUser(user);
     }
   }
 
   @action
   addInstructorGroup(group) {
-    //don't send actions to the calling component if the user is already in the list
-    //prevents a complicated if/else on the template.
-    if (!this.currentlyActiveInstructorGroups.includes(group)) {
-      if (this.args.addInstructorGroup) {
-        this.args.addInstructorGroup(group);
-      }
+    if (this.args.addInstructorGroup) {
+      this.args.addInstructorGroup(group);
     }
   }
 
@@ -83,13 +55,32 @@ export default class UserSearch extends Component {
   *search(searchTerms = '') {
     this.showMoreInputPrompt = false;
     this.searchReturned = false;
+    this.userResults = [];
+    this.instructorGroupResults = [];
     const noWhiteSpaceTerm = searchTerms.replace(/ /g, '');
     if (noWhiteSpaceTerm.length === 0) {
-      return [];
+      return;
     } else if (noWhiteSpaceTerm.length < 3) {
       this.showMoreInputPrompt = true;
-      return [];
+      return;
     }
+    this.userResults = yield this.searchUsers(searchTerms);
+    this.instructorGroupResults = this.searchInstructorGroups(searchTerms);
+    this.searchReturned = true;
+  }
+
+  searchInstructorGroups(searchTerms) {
+    const fragment = searchTerms.toLowerCase().trim();
+    const filteredGroups = this.availableInstructorGroups.filter((group) => {
+      return group.title?.toLowerCase().includes(fragment);
+    });
+
+    return filteredGroups.map((group) => {
+      return { group, type: 'group', sortTerm: group.title };
+    });
+  }
+
+  async searchUsers(searchTerms) {
     const query = {
       q: searchTerms,
       limit: 100,
@@ -99,39 +90,9 @@ export default class UserSearch extends Component {
         roles: this.roles.split(','),
       };
     }
-    const users = yield this.store.query('user', query);
-    const results = users.map((user) => {
-      return userProxy.create({
-        content: user,
-        currentlyActiveUsers: this.currentlyActiveUsers,
-      });
+    const users = await this.store.query('user', query);
+    return users.map((user) => {
+      return { user, type: 'user', sortTerm: user.fullName };
     });
-
-    const availableInstructorGroups = yield this.args.availableInstructorGroups;
-    if (!isEmpty(availableInstructorGroups)) {
-      const fragment = searchTerms.toLowerCase().trim();
-
-      const filteredGroups = availableInstructorGroups.filter((group) => {
-        return group.get('title') && group.get('title').toLowerCase().includes(fragment);
-      });
-
-      const instructorGroupProxies = filteredGroups.map((group) => {
-        return instructorGroupProxy.create({
-          content: group,
-          currentlyActiveInstructorGroups: this.currentlyActiveInstructorGroups,
-        });
-      });
-
-      results.pushObjects(instructorGroupProxies);
-    }
-    const locale = this.intl.get('locale');
-    results.sort((a, b) => {
-      const sortTermA = a.get('sortTerm');
-      const sortTermB = b.get('sortTerm');
-
-      return sortTermA.localeCompare(sortTermB, locale, { numeric: true });
-    });
-    this.searchReturned = true;
-    return results;
   }
 }
