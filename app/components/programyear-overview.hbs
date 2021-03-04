@@ -4,10 +4,10 @@
       {{t "general.overview"}}
     </h5>
     <div class="programyear-overview-actions">
-      {{#if programYearVisualizations}}
+      {{#if this.programYearVisualizations}}
         <LinkTo
           @route="program-year-visualizations"
-          @model={{programYear}}
+          @model={{@programYear}}
           @title={{t "general.programYearVisualizations"}}
         >
           <FaIcon @icon="chart-bar" />
@@ -20,10 +20,10 @@
       {{t "general.directors"}}:
     </label>
     <div>
-      {{#if canUpdate}}
+      {{#if @canUpdate}}
         <ul class="removable-directors">
-          {{#each sortedDirectors as |user|}}
-            <li role="button" {{action "removeDirector" user}}>
+          {{#each this.sortedDirectors as |user|}}
+            <li role="button" {{on "click" (perform this.removeDirector user)}}>
               <UserNameInfo @user={{user}} />
               <FaIcon @icon="times" class="remove" />
             </li>
@@ -31,7 +31,7 @@
         </ul>
       {{else}}
         <ul class="directors">
-          {{#each sortedDirectors as |user|}}
+          {{#each this.sortedDirectors as |user|}}
             <li>
               <UserNameInfo @user={{user}} />
             </li>
@@ -41,10 +41,10 @@
         </ul>
       {{/if}}
     </div>
-    {{#if canUpdate}}
+    {{#if @canUpdate}}
       <UserSearch
-        @addUser={{action "addDirector"}}
-        @currentlyActiveUsers={{await programYear.directors}}
+        @addUser={{perform this.addDirector}}
+        @currentlyActiveUsers={{this.directors}}
       />
     {{/if}}
   </div>

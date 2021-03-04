@@ -67,7 +67,6 @@
 @import 'components/new-learnergroup';
 @import 'components/new-myreport';
 @import 'components/new-program';
-@import 'components/new-programyear';
 @import 'components/new-user';
 @import 'components/pagedlist-controls';
 @import 'components/pagination-links';
@@ -79,7 +78,6 @@
 @import 'components/programyear-competencies';
 @import 'components/programyear-details';
 @import 'components/programyear-header';
-@import 'components/programyear-list';
 @import 'components/programyear-overview';
 @import 'components/school-competencies-collapsed';
 @import 'components/school-competencies-expanded';
@@ -124,6 +122,8 @@
 @import 'components/visualizer-session-type-vocabularies';
 
 @import 'components/program-year/collapsed-objectives';
+@import 'components/program-year/list';
+@import 'components/program-year/new';
 @import 'components/program-year/objectives';
 @import 'components/program-year/manage-objective-descriptors';
 @import 'components/program-year/manage-objective-competency';
