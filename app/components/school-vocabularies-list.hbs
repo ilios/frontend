@@ -29,7 +29,7 @@
             {{on "keyup" (queue (fn this.addErrorDisplayFor "newVocabularyTitle") (perform this.saveOrCancel))}}
             data-test-title
           >
-          {{#each (await (compute (fn this.getErrorsFor) "newVocabularyTitle")) as |message|}}
+          {{#each (await (compute this.getErrorsFor "newVocabularyTitle")) as |message|}}
             <span class="validation-error-message">
               {{message}}
             </span>

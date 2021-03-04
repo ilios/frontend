@@ -12,7 +12,7 @@
     data-level="toggle"
     data-test-toggle
     {{on "click" (toggle "isOpen" this)}}
-    {{on "keydown" (fn this.toggleMenu)}}
+    {{on "keydown" this.toggleMenu}}
   >
     <FaIcon @icon="globe" />
     <span id="{{this.uniqueId}}-locale-chooser-title">
@@ -35,8 +35,8 @@
           data-level="item"
           data-test-item
           {{on "click" (fn this.changeLocale loc.id)}}
-          {{on "keydown" (fn this.moveFocus)}}
-          {{on "mouseenter" (fn this.clearFocus)}}
+          {{on "keydown" this.moveFocus}}
+          {{on "mouseenter" this.clearFocus}}
         >
           {{loc.text}}
         </button>

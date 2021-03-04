@@ -30,7 +30,7 @@
                       (not (includes this.selectableUsers this.selectedUsers))
                       this.selectedUsers.length
                     }}
-                    {{on "click" (fn this.toggleUserSelectionAllOrNone)}}
+                    {{on "click" this.toggleUserSelectionAllOrNone}}
                   />
                 {{/if}}
               </th>

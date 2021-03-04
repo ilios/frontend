@@ -20,7 +20,7 @@
             {{on "input" (pick "target.value" (set this.title))}}
             {{on "keyup" (queue (fn this.addErrorDisplayFor "title") (perform this.saveOrCancel))}}
           >
-          {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+          {{#each (await (compute this.getErrorsFor "title")) as |message|}}
               <span class="validation-error-message">
                 {{message}}
               </span>
@@ -70,7 +70,7 @@
             {{on "input" (pick "target.value" (set this.calendarColor))}}
             {{on "keyup" (queue (fn this.addErrorDisplayFor "calendarColor") (perform this.saveOrCancel))}}
           >
-          {{#each (await (compute (fn this.getErrorsFor) "calendarColor")) as |message|}}
+          {{#each (await (compute this.getErrorsFor "calendarColor")) as |message|}}
             <span class="validation-error-message">
               {{message}}
             </span>

@@ -30,7 +30,7 @@
         {{on "input" (pick "target.value" (set this.firstName))}}
         {{on "keyup" (queue (fn this.addErrorDisplayFor "firstName") (perform this.saveOrCancel))}}
       >
-      {{#each (await (compute (fn this.getErrorsFor) "firstName")) as |message|}}
+      {{#each (await (compute this.getErrorsFor "firstName")) as |message|}}
         <span class="validation-error-message">
           {{message}}
         </span>
@@ -46,7 +46,7 @@
         {{on "input" (pick "target.value" (set this.middleName))}}
         {{on "keyup" (queue (fn this.addErrorDisplayFor "middleName") (perform this.saveOrCancel))}}
       >
-      {{#each (await (compute (fn this.getErrorsFor) "middleName")) as |message|}}
+      {{#each (await (compute this.getErrorsFor "middleName")) as |message|}}
         <span class="validation-error-message">
           {{message}}
         </span>
@@ -62,7 +62,7 @@
         {{on "input" (pick "target.value" (set this.lastName))}}
         {{on "keyup" (queue (fn this.addErrorDisplayFor "lastName") (perform this.saveOrCancel))}}
       >
-      {{#each (await (compute (fn this.getErrorsFor) "lastName")) as |message|}}
+      {{#each (await (compute this.getErrorsFor "lastName")) as |message|}}
         <span class="validation-error-message">
           {{message}}
         </span>
@@ -78,7 +78,7 @@
         {{on "input" (pick "target.value" (set this.campusId))}}
         {{on "keyup" (queue (fn this.addErrorDisplayFor "campusId") (perform this.saveOrCancel))}}
       >
-      {{#each (await (compute (fn this.getErrorsFor) "campusId")) as |message|}}
+      {{#each (await (compute this.getErrorsFor "campusId")) as |message|}}
         <span class="validation-error-message">
           {{message}}
         </span>
@@ -94,7 +94,7 @@
         {{on "input" (pick "target.value" (set this.otherId))}}
         {{on "keyup" (queue (fn this.addErrorDisplayFor "otherId") (perform this.saveOrCancel))}}
       >
-      {{#each (await (compute (fn this.getErrorsFor) "otherId")) as |message|}}
+      {{#each (await (compute this.getErrorsFor "otherId")) as |message|}}
         <span class="validation-error-message">
           {{message}}
         </span>
@@ -110,7 +110,7 @@
         {{on "input" (pick "target.value" (set this.email))}}
         {{on "keyup" (queue (fn this.addErrorDisplayFor "email") (perform this.saveOrCancel))}}
       >
-      {{#each (await (compute (fn this.getErrorsFor) "email")) as |message|}}
+      {{#each (await (compute this.getErrorsFor "email")) as |message|}}
         <span class="validation-error-message">
           {{message}}
         </span>
@@ -126,7 +126,7 @@
         {{on "input" (pick "target.value" (set this.phone))}}
         {{on "keyup" (queue (fn this.addErrorDisplayFor "phone") (perform this.saveOrCancel))}}
       >
-      {{#each (await (compute (fn this.getErrorsFor) "phone")) as |message|}}
+      {{#each (await (compute this.getErrorsFor "phone")) as |message|}}
         <span class="validation-error-message">
           {{message}}
         </span>
@@ -142,7 +142,7 @@
         {{on "input" (pick "target.value" (set this.username))}}
         {{on "keyup" (queue (fn this.addErrorDisplayFor "username") (perform this.saveOrCancel))}}
       >
-      {{#each (await (compute (fn this.getErrorsFor) "username")) as |message|}}
+      {{#each (await (compute this.getErrorsFor "username")) as |message|}}
         <span class="validation-error-message">
           {{message}}
         </span>
@@ -158,7 +158,7 @@
         {{on "input" (pick "target.value" (set this.password))}}
         {{on "keyup" (queue (fn this.addErrorDisplayFor "password") (perform this.saveOrCancel))}}
       >
-      {{#each (await (compute (fn this.getErrorsFor) "password")) as |message|}}
+      {{#each (await (compute this.getErrorsFor "password")) as |message|}}
         <span class="validation-error-message">
           {{message}}
         </span>
