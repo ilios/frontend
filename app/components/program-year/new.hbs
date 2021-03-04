@@ -8,16 +8,18 @@
   </h4>
   <div class="form">
     <div class="startyear-select" data-test-start-year>
-      <label>
-        {{t "general.academicYear"}}:
-      </label>
-      <select {{on "change" (pick "target.value" (set this.year))}} data-test-year>
-        {{#each (sort-by "value" this.availableAcademicYears) as |obj|}}
-          <option value={{obj.value}} selected={{eq obj this.selectedYear}}>
-            {{obj.label}}
-          </option>
-        {{/each}}
-      </select>
+      {{#let (unique-id) as |yearId|}}
+        <label for={{yearId}}>
+          {{t "general.academicYear"}}:
+        </label>
+        <select id={{yearId}} {{on "change" (pick "target.value" (set this.year))}} data-test-year>
+          {{#each (sort-by "value" this.availableAcademicYears) as |obj|}}
+            <option value={{obj.value}} selected={{eq obj this.selectedYear}}>
+              {{obj.label}}
+            </option>
+          {{/each}}
+        </select>
+      {{/let}}
     </div>
     <div class="buttons">
       <button type="button" class="done text" {{on "click" (perform this.saveNewYear)}} data-test-done>
