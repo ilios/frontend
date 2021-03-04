@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, click, fillIn, find } from '@ember/test-helpers';
+import { render, click, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -35,12 +35,9 @@ module('Integration | Component | user search', function (hooks) {
     await render(hbs`<UserSearch />`);
 
     await fillIn('input', 'search words');
-
-    assert.dom('li').hasText('1 Results');
-    assert.equal(
-      find(findAll('li')[1]).textContent.replace(/[\t\n\s]+/g, ''),
-      '0guyM.Mc0sonuser@example.edu'
-    );
+    assert.dom('li').exists({ count: 2 });
+    assert.dom('li:nth-of-type(1)').hasText('1 Results');
+    assert.dom('li:nth-of-type(2)').hasText('0 guy M. Mc0son user@example.edu');
   });
 
   test('no results displays messages', async function (assert) {
@@ -54,12 +51,13 @@ module('Integration | Component | user search', function (hooks) {
     this.server.createList('instructor-group', 2);
     const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
-    await render(hbs`<UserSearch @availableInstructorGroups={{availableInstructorGroups}} />`);
+    await render(hbs`<UserSearch @availableInstructorGroups={{this.availableInstructorGroups}} />`);
 
     await fillIn('input', 'group');
-    assert.dom('li').hasText('2 Results');
-    assert.dom(findAll('li')[1]).hasText('instructor group 0');
-    assert.dom(findAll('li')[2]).hasText('instructor group 1');
+    assert.dom('li').exists({ count: 3 });
+    assert.dom('li:nth-of-type(1)').hasText('2 Results');
+    assert.dom('li:nth-of-type(2)').hasText('instructor group 0');
+    assert.dom('li:nth-of-type(3)').hasText('instructor group 1');
   });
 
   test('click user fires add user', async function (assert) {
@@ -68,32 +66,35 @@ module('Integration | Component | user search', function (hooks) {
     this.set('action', (passedUser) => {
       assert.equal(user.id, passedUser.id);
     });
-    await render(hbs`<UserSearch @addUser={{action action}} />`);
+    await render(hbs`<UserSearch @addUser={{fn this.action}} />`);
 
     await fillIn('input', 'test');
-    assert.equal(
-      findAll('li')[1].textContent.replace(/[\t\n\s]+/g, ''),
-      '0guyM.Mc0sonuser@example.edu'
-    );
-    await click(findAll('li')[1]);
+    assert.dom('li').exists({ count: 2 });
+    assert.dom('li:nth-of-type(1)').hasText('1 Results');
+    assert.dom('li:nth-of-type(2)').hasText('0 guy M. Mc0son user@example.edu');
+    await click('[data-test-result]');
   });
 
   test('click group fires add group', async function (assert) {
+    assert.expect(5);
     this.set('action', (group) => {
-      assert.equal(1, group.id);
+      assert.equal(group.id, 1);
     });
     this.server.createList('instructor-group', 2);
     const instructorGroups = this.owner.lookup('service:store').findAll('instructor-group');
     this.set('availableInstructorGroups', instructorGroups);
 
     await render(hbs`<UserSearch
-      @availableInstructorGroups={{availableInstructorGroups}}
-      @addInstructorGroup={{action action}}
+      @availableInstructorGroups={{this.availableInstructorGroups}}
+      @addInstructorGroup={{fn this.action}}
     />`);
 
     await fillIn('input', 'group');
-    assert.dom(findAll('li')[1]).hasText('instructor group 0');
-    await click(findAll('li')[1]);
+    assert.dom('li').exists({ count: 3 });
+    assert.dom('li:nth-of-type(1)').hasText('2 Results');
+    assert.dom('li:nth-of-type(2)').hasText('instructor group 0');
+    assert.dom('li:nth-of-type(3)').hasText('instructor group 1');
+    await click('[data-test-result]');
   });
 
   test('sorting is natural', async function (assert) {
@@ -115,19 +116,12 @@ module('Integration | Component | user search', function (hooks) {
 
     await render(hbs`<UserSearch />`);
     await fillIn('input', 'person');
-
-    const items = '.results li';
-    const first = `${items}:nth-of-type(1)`;
-    const second = `${items}:nth-of-type(2)`;
-    const third = `${items}:nth-of-type(3)`;
-    const fourth = `${items}:nth-of-type(4)`;
-    const fifth = `${items}:nth-of-type(5)`;
-
-    assert.dom(first).hasText('4 Results');
-    assert.dom(second).includesText('person');
-    assert.dom(third).includesText('3');
-    assert.dom(fourth).includesText('10');
-    assert.dom(fifth).includesText('20');
+    assert.dom('li').exists({ count: 5 });
+    assert.dom('li:nth-of-type(1)').containsText('4 Results');
+    assert.dom('li:nth-of-type(2)').containsText('person');
+    assert.dom('li:nth-of-type(3)').containsText('3');
+    assert.dom('li:nth-of-type(4)').containsText('10');
+    assert.dom('li:nth-of-type(5)').containsText('20');
   });
 
   test('reads currentlyActiveUsers', async function (assert) {

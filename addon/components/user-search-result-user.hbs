@@ -1,0 +1,24 @@
+{{#if (and @user.enabled (not (includes @user @currentlyActiveUsers)))}}
+  <li
+    class="active"
+    role="button"
+    data-test-result
+    {{on "click" (fn @addUser @user)}}
+  >
+    <div class="name">
+      {{@user.fullName}}
+    </div>
+    <div class="email">
+      {{@user.email}}
+    </div>
+  </li>
+{{else}}
+  <li class="inactive" data-test-result>
+    <div class="name">
+      {{@user.fullName}}
+    </div>
+    <div class="email">
+      {{@user.email}}
+    </div>
+  </li>
+{{/if}}
