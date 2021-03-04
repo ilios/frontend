@@ -27,7 +27,7 @@
         placeholder={{t "general.courseTitlePlaceholder"}}
         data-test-title
       />
-      {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+      {{#each (await (compute this.getErrorsFor "title")) as |message|}}
         <span class="validation-error-message">
           {{message}}
         </span>
@@ -59,7 +59,7 @@
       {{else}}
         <LoadingSpinner />
       {{/if}}
-      {{#each (await (compute (fn this.getErrorsFor) "selectedYear")) as |message|}}
+      {{#each (await (compute this.getErrorsFor "selectedYear")) as |message|}}
         <span class="validation-error-message">
           {{message}}
         </span>

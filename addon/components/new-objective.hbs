@@ -5,7 +5,7 @@
       {{t "general.description"}}:
     </label>
     <HtmlEditor @content={{this.title}} @update={{this.changeTitle}} />
-    {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+    {{#each (await (compute this.getErrorsFor "title")) as |message|}}
       <span class="validation-error-message">
         {{message}}
       </span>

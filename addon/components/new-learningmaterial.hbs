@@ -10,7 +10,7 @@
         @focus-out={{fn this.addErrorDisplayFor "title"}}
         disabled={{this.prepareSave.isRunning}}
       />
-      {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+      {{#each (await (compute this.getErrorsFor "title")) as |message|}}
         <span class="validation-error-message">
           {{message}}
         </span>
@@ -22,7 +22,7 @@
       {{t "general.status"}}:
     </label>
     <span>
-      <select {{on "change" (fn this.changeStatusId)}}>
+      <select {{on "change" this.changeStatusId}}>
         {{#each @learningMaterialStatuses as |lmStatus|}}
           <option
             value={{lmStatus.id}}
@@ -53,7 +53,7 @@
         @focus-out={{fn this.addErrorDisplayFor "originalAuthor"}}
         disabled={{this.prepareSave.isRunning}}
       />
-      {{#each (await (compute (fn this.getErrorsFor) "originalAuthor")) as |message|}}
+      {{#each (await (compute this.getErrorsFor "originalAuthor")) as |message|}}
         <span class="validation-error-message">
           {{message}}
         </span>
@@ -65,7 +65,7 @@
       {{t "general.userRole"}}:
     </label>
     <span>
-      <select {{on "change" (fn this.changeUserRoleId)}}>
+      <select {{on "change" this.changeUserRoleId}}>
         {{#each @learningMaterialUserRoles as |role|}}
           <option value={{role.id}} selected={{is-equal role this.selectedUserRole}}>
             {{role.title}}
@@ -89,9 +89,9 @@
           disabled={{this.prepareSave.isRunning}}
           {{on "input" (pick "target.value" this.changeLink)}}
           {{on "keyup" (fn this.addErrorDisplayFor "link")}}
-          {{on "focus" (fn this.selectAllText)}}
+          {{on "focus" this.selectAllText}}
         >
-        {{#each (await (compute (fn this.getErrorsFor) "link")) as |message|}}
+        {{#each (await (compute this.getErrorsFor "link")) as |message|}}
           <span class="validation-error-message">
             {{message}}
           </span>
@@ -110,7 +110,7 @@
           @focus-out={{fn this.addErrorDisplayFor "citation"}}
           disabled={{this.prepareSave.isRunning}}
         />
-        {{#each (await (compute (fn this.getErrorsFor) "citation")) as |message|}}
+        {{#each (await (compute this.getErrorsFor "citation")) as |message|}}
           <span class="validation-error-message">
             {{message}}
           </span>
@@ -140,7 +140,7 @@
             data-test-copyright-agreement
           >
           {{t "general.copyrightAgreement"}}
-          {{#if (await (compute (fn this.hasErrorFor) "copyrightPermission"))}}
+          {{#if (await (compute this.hasErrorFor "copyrightPermission"))}}
             <br>
             <span class="validation-error-message" data-test-agreement-validation-error-message>
               {{t "errors.agreementRequired"}}
@@ -160,7 +160,7 @@
             @focus-out={{fn this.addErrorDisplayFor "copyrightRationale"}}
             data-test-copyright-rationale
           />
-        {{#each (await (compute (fn this.getErrorsFor) "copyrightRationale")) as |message|}}
+        {{#each (await (compute this.getErrorsFor "copyrightRationale")) as |message|}}
           <span class="validation-error-message">
             {{message}}
           </span>
@@ -177,7 +177,7 @@
         @setFilename={{set this.filename}}
         @setFileHash={{set this.fileHash}}
       />
-      {{#each (await (compute (fn this.getErrorsFor) "filename")) as |message|}}
+      {{#each (await (compute this.getErrorsFor "filename")) as |message|}}
         <span class="validation-error-message">
           {{message}}
         </span>

@@ -3,7 +3,7 @@
 >
   <div class="material-list">
     <span class="course-filter">
-      <select {{on "change" (fn this.changeCourseIdFilter)}}>
+      <select {{on "change" this.changeCourseIdFilter}}>
         <option value="">
           {{t "general.allCourses"}}
         </option>
@@ -151,7 +151,7 @@
                   @length={{25}}
                   @text={{join
                     ", "
-                    (sort-by (fn this.sortString) lmObject.instructors)
+                    (sort-by this.sortString lmObject.instructors)
                   }}
                 />
               </td>

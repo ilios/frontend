@@ -22,7 +22,7 @@
         <label>
           {{t "general.selectVocabulary"}}:
         </label>
-        <select {{on "change" (fn this.changeSelectedVocabulary)}}>
+        <select {{on "change" this.changeSelectedVocabulary}}>
           {{#each this.assignableVocabularies as |vocab|}}
             <option value={{vocab.id}} selected={{if (eq vocab.id this.vocabId) "selected"}}>
               {{vocab.title}} ({{vocab.school.title}})

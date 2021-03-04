@@ -41,8 +41,8 @@
   {{/if}}
 
   <UserSearch
-    @addUser={{fn @addInstructor}}
-    @addInstructorGroup={{fn @addInstructorGroup}}
+    @addUser={{@addInstructor}}
+    @addInstructorGroup={{@addInstructorGroup}}
     @currentlyActiveUsers={{@instructors}}
     @placeholder={{t "general.findInstructorOrGroup"}}
     @availableInstructorGroups={{await @availableInstructorGroups}}
