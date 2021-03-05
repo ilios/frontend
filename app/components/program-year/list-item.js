@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
-import AsyncProcess from 'ilios-common/classes/async-process';
+import PermissionChecker from 'ilios/classes/permission-checker';
 import { use } from 'ember-could-get-used-to-this';
 import { inject as service } from '@ember/service';
 import { dropTask } from 'ember-concurrency';
@@ -14,18 +14,9 @@ export default class ProgramYearListItemComponent extends Component {
 
   @use program = new ResolveAsyncValue(() => [this.args.programYear.program]);
   @use cohort = new ResolveAsyncValue(() => [this.args.programYear.cohort]);
-  @use canDeletePermission = new AsyncProcess(() => [
-    this.permissionChecker.canDeleteProgramYear,
-    this.args.programYear,
-  ]);
-  @use canLock = new AsyncProcess(() => [
-    this.permissionChecker.canLockProgramYear,
-    this.args.programYear,
-  ]);
-  @use canUnlock = new AsyncProcess(() => [
-    this.permissionChecker.canUnlockProgramYear,
-    this.args.programYear,
-  ]);
+  @use canDeletePermission = new PermissionChecker(() => ["canDeleteProgramYear", this.args.programYear]);
+  @use canLock = new PermissionChecker(() => ["canLockProgramYear", this.args.programYear]);
+  @use canUnlock = new PermissionChecker(() => ["canUnlockProgramYear", this.args.programYear]);
 
   get canDelete() {
     if (!this.cohort) {
