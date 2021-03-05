@@ -11,4 +11,7 @@ export default JSONAPISerializer.extend({
   keyForRelationship(key) {
     return camelize(key);
   },
+  typeKeyForModel(model) {
+    return camelize(this._container.inflector.pluralize(model.modelName));
+  },
 });
