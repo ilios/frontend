@@ -9,11 +9,7 @@ const definition = {
   endDate: text('[data-test-end-date]'),
   status: text('[data-test-status]'),
   clickOnName: clickable('[data-test-name]'),
-  clickOnProgram: clickable('[data-test-program]'),
-  clickOnYear: clickable('[data-test-year]'),
-  clickOnStartDate: clickable('[data-test-start-date]'),
-  clickOnEndDate: clickable('[data-test-end-date]'),
-  clickOnStatus: clickable('[data-test-status]'),
+  edit: clickable('[data-test-edit]'),
   remove: clickable('[data-test-remove]'),
   isDeletable: isPresent('[data-test-remove]'),
   confirmRemoval: {

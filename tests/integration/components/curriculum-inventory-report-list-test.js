@@ -15,12 +15,6 @@ module('Integration | Component | curriculum inventory report list', function (h
   hooks.beforeEach(async function() {
     const school = this.server.create('school');
     this.program = this.server.create('program', { school });
-    this.permissionCheckerMock = Service.extend({
-      canDeleteCurriculumInventoryReport() {
-        return true;
-      }
-    });
-    this.owner.register('service:permission-checker', this.permissionCheckerMock);
   });
 
   test('it renders', async function (assert) {
@@ -87,15 +81,12 @@ module('Integration | Component | curriculum inventory report list', function (h
   });
 
   test('report cannot be deleted', async function (assert) {
-    this.permissionCheckerMock.reopen({
-      canDeleteCurriculumInventoryReport() {
-        return false;
-      }
-    });
+    const reportExport = this.server.create('curriculum-inventory-export');
     const report = this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
       year: 2017,
+      export: reportExport,
       startDate: moment('2017-07-01').toDate(),
       endDate: moment('2018-06-30').toDate(),
     });
@@ -193,8 +184,8 @@ module('Integration | Component | curriculum inventory report list', function (h
     await component.headers.clickOnYear();
   });
 
-  test('edit', async function (assert) {
-    assert.expect(5);
+  test('edit', async function(assert) {
+    assert.expect(2);
     const report = this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
@@ -209,11 +200,7 @@ module('Integration | Component | curriculum inventory report list', function (h
     });
     await render(hbs`<CurriculumInventoryReportList @reports={{this.reports}} @edit={{this.editAction}} @remove={{noop}} />`);
     await component.reports(0).clickOnName();
-    await component.reports(0).clickOnProgram();
-    await component.reports(0).clickOnYear();
-    await component.reports(0).clickOnStartDate();
-    await component.reports(0).clickOnEndDate();
-    await component.reports(0).clickOnStatus();
+    await component.reports(0).edit();
   });
 
   test('academic year shows range depending on application config', async function (assert) {
