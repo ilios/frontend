@@ -78,6 +78,7 @@
             @icon="trash"
             class="clickable remove enabled"
             @click={{set this.showRemoveConfirmation true}}
+            data-test-remove
           />
         {{else}}
           <FaIcon @icon="trash" class="disabled" />

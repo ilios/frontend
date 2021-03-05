@@ -84,4 +84,40 @@ module('Integration | Component | program-year/list-item', function(hooks) {
     />`);
     assert.equal(component.link.text, '2012 - 2013');
   });
+
+
+  test('can be deleted', async function(assert) {
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const cohort = this.server.create('cohort');
+    const programYear = this.server.create('program-year', { program, cohort });
+    const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
+
+    this.set('programYear', programYearModel);
+    await render(hbs`<ProgramYear::ListItem
+      @programYear={{this.programYear}}
+      @academicYearCrossesCalendarYearBoundaries={{false}}
+    />`);
+    assert.ok(component.canBeDeleted);
+  });
+
+  test('cannot be deleted', async function(assert) {
+    this.permissionCheckerMock.reopen({
+      canDeleteProgramYear() {
+        return false;
+      },
+    });
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const cohort = this.server.create('cohort');
+    const programYear = this.server.create('program-year', { program, cohort });
+    const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
+
+    this.set('programYear', programYearModel);
+    await render(hbs`<ProgramYear::ListItem
+      @programYear={{this.programYear}}
+      @academicYearCrossesCalendarYearBoundaries={{false}}
+    />`);
+    assert.notOk(component.canBeDeleted);
+  });
 });
