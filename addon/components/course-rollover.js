@@ -89,7 +89,7 @@ export default class CourseRolloverComponent extends Component {
       data.newCohorts = selectedCohortIds;
     }
 
-    const newCoursesObj = yield this.fetch.postToApi(`courses/${courseId}/rollover`, data);
+    const newCoursesObj = yield this.fetch.postQueryToApi(`courses/${courseId}/rollover`, data);
 
     this.flashMessages.success('general.courseRolloverSuccess');
     this.store.pushPayload(newCoursesObj);

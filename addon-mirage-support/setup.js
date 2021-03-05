@@ -1,5 +1,6 @@
 import moment from 'moment';
 import { getAll, filterResults } from './get-all';
+import { postAll } from './post-all';
 import parseJsonData from './parse-json-data';
 
 export default function (server) {
@@ -70,7 +71,7 @@ export default function (server) {
     server.get(`api/${obj.route}/:id`, obj.name);
     server.patch(`api/${obj.route}/:id`, obj.name);
     server.del(`api/${obj.route}/:id`, obj.name);
-    server.post(`api/${obj.route}`, obj.name);
+    server.post(`api/${obj.route}`, postAll);
   });
 
   server.get('api/cohorts', (schema, request) => {

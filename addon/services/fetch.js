@@ -38,14 +38,11 @@ export default class Fetch extends Service {
     return response.json();
   }
 
-  async postToApiHost(relativePath, data) {
+  async postToApiHost(relativePath, body, contentType) {
     const url = this.apiHostUrlFromPath(relativePath);
     const headers = this.authHeaders;
-    headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    headers['Content-Type'] = contentType;
     headers['Accept'] = 'application/vnd.api+json';
-    const body = queryString.stringify(data, {
-      arrayFormat: 'bracket',
-    });
     const response = await fetch(url, {
       method: 'POST',
       headers,
@@ -54,8 +51,17 @@ export default class Fetch extends Service {
     return response.json();
   }
 
-  async postToApi(path, data) {
+  async postQueryToApi(path, data) {
     const apiPath = `/${this.iliosConfig.apiNameSpace}/${path}`;
-    return this.postToApiHost(apiPath, data);
+    const body = queryString.stringify(data, {
+      arrayFormat: 'bracket',
+    });
+    return this.postToApiHost(apiPath, body, 'application/x-www-form-urlencoded');
+  }
+
+  async postManyToApi(path, items) {
+    const apiPath = `/${this.iliosConfig.apiNameSpace}/${path}`;
+    const body = JSON.stringify({ data: items });
+    return this.postToApiHost(apiPath, body, 'application/vnd.api+json');
   }
 }
