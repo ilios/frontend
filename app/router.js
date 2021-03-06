@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-capital-letters-in-routes */
 import { inject as service } from '@ember/service';
 import EmberRouter from '@ember/routing/router';
 import config from 'ilios/config/environment';

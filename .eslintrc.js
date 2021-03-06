@@ -15,7 +15,16 @@ module.exports = {
   env: {
     browser: true,
   },
-  rules: {},
+  rules: {
+    'ember/no-classic-classes': 0,
+    'ember/require-tagless-components': 0,
+    'ember/classic-decorator-no-classic-methods': 0,
+    'ember/no-mixins': 0,
+    'ember/no-actions-hash': 0,
+    'ember/no-classic-components': 0,
+    'ember/no-component-lifecycle-hooks': 0,
+    'ember/no-new-mixins': 0,
+  },
   overrides: [
     // node files
     {
