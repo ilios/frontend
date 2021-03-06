@@ -21,7 +21,7 @@ module('Integration | Component | manage users summary', function (hooks) {
    * [JJ 3/2017]
    */
   skip('it renders URLs', function (assert) {
-    this.render(hbs`<ManageUsersSummary />`);
+    render(hbs`<ManageUsersSummary />`);
 
     assert.notEqual(find('a').href.search(/\/users$/), -1, `${find('a').href} links to /users`);
     assert.notEqual(

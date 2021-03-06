@@ -1,5 +1,5 @@
 import { setupRenderingTest } from 'ember-qunit';
-import { findAll, click, find } from '@ember/test-helpers';
+import { findAll, click, find, render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { setupIntl } from 'ember-intl/test-support';
@@ -74,7 +74,7 @@ module(
       this.set('sessions', sessionModels);
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'title');
-      await this.render(hbs`<CurriculumInventorySequenceBlockSessionList
+      await render(hbs`<CurriculumInventorySequenceBlockSessionList
       @sessions={{sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{noop}}
@@ -184,7 +184,7 @@ module(
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'title');
       this.set('setSortBy', function () {});
-      await this.render(hbs`<CurriculumInventorySequenceBlockSessionList
+      await render(hbs`<CurriculumInventorySequenceBlockSessionList
       @sessions={{await sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}
@@ -215,7 +215,7 @@ module(
       this.set('setSortBy', function (what) {
         assert.equal(what, 'title', 'Sorting callback gets called for session titles.');
       });
-      await this.render(hbs`<CurriculumInventorySequenceBlockSessionList
+      await render(hbs`<CurriculumInventorySequenceBlockSessionList
       @sessions={{await sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}
@@ -248,7 +248,7 @@ module(
           'Sorting callback gets called for session type titles.'
         );
       });
-      await this.render(hbs`<CurriculumInventorySequenceBlockSessionList
+      await render(hbs`<CurriculumInventorySequenceBlockSessionList
       @sessions={{sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}
@@ -281,7 +281,7 @@ module(
           'Sorting callback gets called for offerings length.'
         );
       });
-      await this.render(hbs`<CurriculumInventorySequenceBlockSessionList
+      await render(hbs`<CurriculumInventorySequenceBlockSessionList
       @sessions={{await sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}
