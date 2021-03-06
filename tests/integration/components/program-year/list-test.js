@@ -1,5 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
+import Service from '@ember/service';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -8,6 +9,21 @@ import { component } from 'ilios/tests/pages/components/program-year/list';
 module('Integration | Component | program-year/list', function(hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
+
+  hooks.beforeEach(async function() {
+    this.permissionCheckerMock = Service.extend({
+      canDeleteProgramYear() {
+        return true;
+      },
+      canLockProgramYear() {
+        return true;
+      },
+      canUnlockProgramYear() {
+        return true;
+      }
+    });
+    this.owner.register('service:permissionChecker', this.permissionCheckerMock);
+  });
 
   test('it renders short year', async function(assert) {
     this.server.get('application/config', function() {
