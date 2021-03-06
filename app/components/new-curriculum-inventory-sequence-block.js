@@ -35,7 +35,7 @@ const Validations = buildValidations({
       dependentKeys: ['model.startDate', 'model.duration'],
       after: reads('model.startDate'),
       disabled: computed('model.duration', 'model.startDate', function () {
-        return this.get('model.duration') > 0 && !this.get('model.startDate');
+        return this.model.duration > 0 && !this.model.startDate;
       }),
     }),
     validator('presence', {
@@ -43,7 +43,7 @@ const Validations = buildValidations({
       dependentKeys: ['model.startDate', 'model.duration'],
       after: reads('model.startDate'),
       disabled: computed('model.duration', 'model.startDate', function () {
-        return this.get('model.duration') > 0 && !this.get('model.startDate');
+        return this.model.duration > 0 && !this.model.startDate;
       }),
     }),
   ],
@@ -60,7 +60,7 @@ const Validations = buildValidations({
       allowString: true,
       integer: true,
       gte: computed('model.minimum', function () {
-        const min = this.get('model.minimum') || 0;
+        const min = this.model.minimum || 0;
         return Math.max(0, min);
       }),
     }),

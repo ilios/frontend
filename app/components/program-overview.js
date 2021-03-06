@@ -30,8 +30,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   didReceiveAttrs() {
     this._super(...arguments);
-    this.set('shortTitle', this.get('program.shortTitle'));
-    this.set('duration', this.program.get('duration'));
+    this.set('shortTitle', this.program.shortTitle);
+    this.set('duration', this.program.duration);
   },
 
   actions: {

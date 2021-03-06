@@ -99,8 +99,8 @@ export default Controller.extend({
     'primarySchool',
     'schoolId',
     function () {
-      const schools = this.get('model.schools');
-      const primarySchool = this.get('model.primarySchool');
+      const schools = this.model.schools;
+      const primarySchool = this.model.primarySchool;
       const schoolId = this.schoolId;
       if (isPresent(schoolId)) {
         const school = schools.findBy('id', schoolId);
@@ -114,7 +114,7 @@ export default Controller.extend({
   ),
 
   selectedYear: computed('model.years.[]', 'year', async function () {
-    const years = this.get('model.years');
+    const years = this.model.years;
     if (isPresent(this.year)) {
       return years.find((year) => year.id === this.year);
     }

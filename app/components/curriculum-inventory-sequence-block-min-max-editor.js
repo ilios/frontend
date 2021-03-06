@@ -17,7 +17,7 @@ const Validations = buildValidations({
       allowString: true,
       integer: true,
       gte: computed('model.minimum', function () {
-        const min = this.get('model.minimum') || 0;
+        const min = this.model.minimum || 0;
         return Math.max(0, min);
       }),
     }),

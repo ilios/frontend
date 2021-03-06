@@ -78,8 +78,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.set('isSaving', false);
       return;
     }
-    const reportId = this.get('report.id');
-    const year = this.selectedYear.get('id');
+    const reportId = this.report.id;
+    const year = this.selectedYear.id;
     const description = this.description;
     const name = this.name;
     const data = {

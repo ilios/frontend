@@ -23,7 +23,7 @@ export default Controller.extend({
   sortedSchools: sort('model.schools', 'sortSchoolsBy'),
 
   selectedSchool: computed('model.schools.[]', 'model.primarySchool', 'school', function () {
-    const schools = this.get('model.schools');
+    const schools = this.model.schools;
     const schoolId = this.school;
     if (isPresent(schoolId)) {
       const school = schools.findBy('id', schoolId);
@@ -31,7 +31,7 @@ export default Controller.extend({
         return school;
       }
     }
-    return this.get('model.primarySchool');
+    return this.model.primarySchool;
   }),
 
   allUpdates: computed('selectedSchool', async function () {
@@ -50,12 +50,11 @@ export default Controller.extend({
     'limit',
     'deletedUpdates.[]',
     async function () {
-      const { limit, offset } = this.getProperties('limit', 'offset');
-      const end = limit + offset;
+      const end = this.limit + this.offset;
       const allUpdates = await this.allUpdates;
       return allUpdates
         .sortBy('user.fullName')
-        .slice(offset, end)
+        .slice(this.offset, end)
         .filter((update) => {
           const isNotDeleted = !this.deletedUpdates.includes(update);
           const noUpdateName = isEmpty(update.get('user.fullName'));

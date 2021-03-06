@@ -49,8 +49,8 @@ export default Controller.extend({
     'primarySchool',
     'schoolId',
     function () {
-      const schools = this.get('model.schools');
-      const primarySchool = this.get('model.primarySchool');
+      const schools = this.model.schools;
+      const primarySchool = this.model.primarySchool;
       if (isPresent(this.schoolId)) {
         const schoolId = this.schoolId;
         const school = schools.findBy('id', schoolId);
@@ -64,7 +64,7 @@ export default Controller.extend({
   ),
 
   programs: computed('deletedProgram', 'newProgram', 'selectedSchool', 'store', async function () {
-    const schoolId = this.selectedSchool.get('id');
+    const schoolId = this.selectedSchool.id;
     if (isEmpty(schoolId)) {
       return resolve([]);
     }

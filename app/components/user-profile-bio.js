@@ -77,7 +77,7 @@ const Validations = buildValidations({
   password: {
     dependentKeys: ['model.canEditUsernameAndPassword', 'model.changeUserPassword'],
     disabled: computed('model.canEditUsernameAndPassword', 'model.changeUserPassword', function () {
-      return this.get('model.canEditUsernameAndPassword') && !this.get('model.changeUserPassword');
+      return this.model.canEditUsernameAndPassword && !this.model.changeUserPassword;
     }),
     validators: [
       validator('presence', true),
@@ -231,20 +231,16 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const { validations } = yield this.validate();
     if (validations.get('isValid')) {
       const user = this.user;
+      user.set('firstName', this.firstName);
+      user.set('middleName', this.middleName);
+      user.set('lastName', this.lastName);
+      user.set('campusId', this.campusId);
+      user.set('otherId', this.otherId);
+      user.set('email', this.email);
+      user.set('displayName', this.displayName);
+      user.set('preferredEmail', this.preferredEmail);
+      user.set('phone', this.phone);
 
-      user.setProperties(
-        this.getProperties(
-          'firstName',
-          'middleName',
-          'lastName',
-          'campusId',
-          'otherId',
-          'email',
-          'displayName',
-          'preferredEmail',
-          'phone'
-        )
-      );
       let auth = yield user.get('authentication');
       if (!auth) {
         auth = store.createRecord('authentication', {
@@ -279,7 +275,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('updatedFieldsFromSync', []);
     this.set('showSyncErrorMessage', false);
     this.set('syncComplete', false);
-    const userId = this.get('user.id');
+    const userId = this.user.id;
     const url = `/application/directory/find/${userId}`;
     try {
       const data = yield this.fetch.getJsonFromApiHost(url);

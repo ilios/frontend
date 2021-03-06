@@ -23,19 +23,21 @@ const PrepositionObject = EmberObject.extend({
 
   value: oneWay('model.id'),
 
-  label: computed('model', 'type', async function () {
-    const { model, type } = this.getProperties('model', 'type');
-
-    if (type === 'mesh term') {
-      return model.name;
-    } else if (type === 'term') {
-      const vocabulary = await model.get('vocabulary');
-      const titleWithParentTitles = await model.titleWithParentTitles;
-      return `${vocabulary.title} > ${titleWithParentTitles}`;
-    } else {
-      return model.title;
+  label: computed(
+    'model.{name,title,titleWithParentTitles}',
+    'type',
+    async function () {
+      if (this.type === 'mesh term') {
+        return this.model.name;
+      } else if (this.type === 'term') {
+        const vocabulary = await this.model.get('vocabulary');
+        const titleWithParentTitles = await this.model.titleWithParentTitles;
+        return `${vocabulary.title} > ${titleWithParentTitles}`;
+      } else {
+        return this.model.title;
+      }
     }
-  }),
+  ),
 
   active: computed('model', 'type', function () {
     const type = this.type;

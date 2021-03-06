@@ -76,7 +76,7 @@ export default Component.extend({
     },
 
     collapse() {
-      this.get('programYear.competencies').then((competencies) => {
+      this.programYear.competencies.then((competencies) => {
         if (competencies.get('length')) {
           this.collapse();
         }

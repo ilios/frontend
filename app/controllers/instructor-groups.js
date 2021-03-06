@@ -66,8 +66,8 @@ export default Controller.extend({
     'primarySchool',
     'schoolId',
     function () {
-      const schools = this.get('model.schools');
-      const primarySchool = this.get('model.primarySchool');
+      const schools = this.model.schools;
+      const primarySchool = this.model.primarySchool;
       const schoolId = this.schoolId;
       if (isPresent(schoolId)) {
         const school = schools.findBy('id', schoolId);

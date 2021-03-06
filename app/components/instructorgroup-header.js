@@ -24,7 +24,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   didReceiveAttrs() {
     this._super(...arguments);
-    this.set('title', this.get('instructorGroup.title'));
+    this.set('title', this.instructorGroup.title);
   },
 
   actions: {

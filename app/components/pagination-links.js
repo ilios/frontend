@@ -19,8 +19,9 @@ export default Component.extend({
   }),
 
   pages: computed('lastPage', 'page', 'totalPages', function () {
-    const { lastPage, page } = this.getProperties('lastPage', 'page');
-    return lastPage <= 7 ? this.simplePages(lastPage) : this.complexPages(lastPage, page);
+    return this.lastPage <= 7
+      ? this.simplePages(this.lastPage)
+      : this.complexPages(this.lastPage, this.page);
   }),
 
   actions: {

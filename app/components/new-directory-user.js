@@ -12,7 +12,7 @@ const Validations = buildValidations({
       presence: true,
       dependentKeys: ['model.allowCustomUserName'],
       disabled: computed('model.allowCustomUserName', function () {
-        return this.get('model.allowCustomUserName').then((allowCustomUserName) => {
+        return this.model.allowCustomUserName.then((allowCustomUserName) => {
           return allowCustomUserName;
         });
       }),
@@ -26,7 +26,7 @@ const Validations = buildValidations({
       presence: true,
       dependentKeys: ['model.allowCustomUserName'],
       disabled: computed('model.allowCustomUserName', function () {
-        return this.get('model.allowCustomUserName').then((allowCustomUserName) => {
+        return this.model.allowCustomUserName.then((allowCustomUserName) => {
           return allowCustomUserName;
         });
       }),
