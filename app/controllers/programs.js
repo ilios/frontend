@@ -63,18 +63,24 @@ export default Controller.extend({
     }
   ),
 
-  programs: computed('deletedProgram', 'newProgram', 'selectedSchool', 'store', async function () {
-    const schoolId = this.selectedSchool.id;
-    if (isEmpty(schoolId)) {
-      return resolve([]);
-    }
+  programs: computed(
+    'deletedProgram',
+    'newProgram',
+    'selectedSchool.id',
+    'store',
+    async function () {
+      const schoolId = this.selectedSchool.id;
+      if (isEmpty(schoolId)) {
+        return resolve([]);
+      }
 
-    return await this.store.query('program', {
-      filters: {
-        school: schoolId,
-      },
-    });
-  }),
+      return await this.store.query('program', {
+        filters: {
+          school: schoolId,
+        },
+      });
+    }
+  ),
 
   canCreate: computed('selectedSchool', async function () {
     const permissionChecker = this.permissionChecker;

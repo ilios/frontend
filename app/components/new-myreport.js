@@ -24,21 +24,17 @@ const PrepositionObject = EmberObject.extend({
 
   value: oneWay('model.id'),
 
-  label: computed(
-    'model.{name,title,titleWithParentTitles}',
-    'type',
-    async function () {
-      if (this.type === 'mesh term') {
-        return this.model.name;
-      } else if (this.type === 'term') {
-        const vocabulary = await this.model.get('vocabulary');
-        const titleWithParentTitles = await this.model.titleWithParentTitles;
-        return `${vocabulary.title} > ${titleWithParentTitles}`;
-      } else {
-        return this.model.title;
-      }
+  label: computed('model.{name,title,titleWithParentTitles}', 'type', async function () {
+    if (this.type === 'mesh term') {
+      return this.model.name;
+    } else if (this.type === 'term') {
+      const vocabulary = await this.model.get('vocabulary');
+      const titleWithParentTitles = await this.model.titleWithParentTitles;
+      return `${vocabulary.title} > ${titleWithParentTitles}`;
+    } else {
+      return this.model.title;
     }
-  ),
+  }),
 
   active: computed('model', 'type', function () {
     const type = this.type;
@@ -107,135 +103,113 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     return list;
   }),
 
-  prepositionalObjectList: computed(
-    'intl.locale',
-    'currentSubject',
-    function () {
-      const list = [
-        {
-          value: 'course',
-          label: this.intl.t('general.course'),
-          subjects: [
-            'session',
-            'program',
-            'program year',
-            'instructor',
-            'instructor group',
-            'learning material',
-            'competency',
-            'mesh term',
-            'session type',
-            'term',
-          ],
-        },
-        {
-          value: 'session',
-          label: this.intl.t('general.session'),
-          subjects: [
-            'course',
-            'program',
-            'program year',
-            'instructor',
-            'instructor group',
-            'learning material',
-            'competency',
-            'mesh term',
-            'term',
-          ],
-        },
-        {
-          value: 'program year',
-          label: this.intl.t('general.programYear'),
-          subjects: ['term'],
-        },
-        {
-          value: 'program',
-          label: this.intl.t('general.program'),
-          subjects: ['course', 'session', 'session type', 'term'],
-        },
-        {
-          value: 'instructor',
-          label: this.intl.t('general.instructor'),
-          subjects: [
-            'course',
-            'session',
-            'instructor group',
-            'learning material',
-            'session type',
-            'term',
-          ],
-        },
-        {
-          value: 'instructor group',
-          label: this.intl.t('general.instructorGroup'),
-          subjects: [
-            'course',
-            'session',
-            'instructor',
-            'learning material',
-            'session type',
-          ],
-        },
-        {
-          value: 'learning material',
-          label: this.intl.t('general.learningMaterial'),
-          subjects: [
-            'course',
-            'session',
-            'instructor',
-            'instructor group',
-            'mesh term',
-            'session type',
-            'term',
-          ],
-        },
-        {
-          value: 'competency',
-          label: this.intl.t('general.competency'),
-          subjects: ['course', 'session', 'session type', 'term'],
-        },
-        {
-          value: 'mesh term',
-          label: this.intl.t('general.meshTerm'),
-          subjects: [
-            'course',
-            'session',
-            'learning material',
-            'session type',
-            'term',
-          ],
-        },
-        {
-          value: 'session type',
-          label: this.intl.t('general.sessionType'),
-          subjects: [
-            'session',
-            'instructor',
-            'instructor group',
-            'learning material',
-            'competency',
-            'mesh term',
-            'term',
-          ],
-        },
-        {
-          value: 'term',
-          label: this.intl.t('general.term'),
-          subjects: [
-            'course',
-            'session',
-            'program',
-            'program year',
-            'session type',
-          ],
-        },
-      ];
+  prepositionalObjectList: computed('intl.locale', 'currentSubject', function () {
+    const list = [
+      {
+        value: 'course',
+        label: this.intl.t('general.course'),
+        subjects: [
+          'session',
+          'program',
+          'program year',
+          'instructor',
+          'instructor group',
+          'learning material',
+          'competency',
+          'mesh term',
+          'session type',
+          'term',
+        ],
+      },
+      {
+        value: 'session',
+        label: this.intl.t('general.session'),
+        subjects: [
+          'course',
+          'program',
+          'program year',
+          'instructor',
+          'instructor group',
+          'learning material',
+          'competency',
+          'mesh term',
+          'term',
+        ],
+      },
+      {
+        value: 'program year',
+        label: this.intl.t('general.programYear'),
+        subjects: ['term'],
+      },
+      {
+        value: 'program',
+        label: this.intl.t('general.program'),
+        subjects: ['course', 'session', 'session type', 'term'],
+      },
+      {
+        value: 'instructor',
+        label: this.intl.t('general.instructor'),
+        subjects: [
+          'course',
+          'session',
+          'instructor group',
+          'learning material',
+          'session type',
+          'term',
+        ],
+      },
+      {
+        value: 'instructor group',
+        label: this.intl.t('general.instructorGroup'),
+        subjects: ['course', 'session', 'instructor', 'learning material', 'session type'],
+      },
+      {
+        value: 'learning material',
+        label: this.intl.t('general.learningMaterial'),
+        subjects: [
+          'course',
+          'session',
+          'instructor',
+          'instructor group',
+          'mesh term',
+          'session type',
+          'term',
+        ],
+      },
+      {
+        value: 'competency',
+        label: this.intl.t('general.competency'),
+        subjects: ['course', 'session', 'session type', 'term'],
+      },
+      {
+        value: 'mesh term',
+        label: this.intl.t('general.meshTerm'),
+        subjects: ['course', 'session', 'learning material', 'session type', 'term'],
+      },
+      {
+        value: 'session type',
+        label: this.intl.t('general.sessionType'),
+        subjects: [
+          'session',
+          'instructor',
+          'instructor group',
+          'learning material',
+          'competency',
+          'mesh term',
+          'term',
+        ],
+      },
+      {
+        value: 'term',
+        label: this.intl.t('general.term'),
+        subjects: ['course', 'session', 'program', 'program year', 'session type'],
+      },
+    ];
 
-      const subject = this.currentSubject;
+    const subject = this.currentSubject;
 
-      return list.filter((item) => item.subjects.includes(subject));
-    }
-  ),
+    return list.filter((item) => item.subjects.includes(subject));
+  }),
 
   /**
    * A list of prepositional objects. Each object has a id and label property.
@@ -316,9 +290,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     'prepositionalObjectIdList.[]',
     'selectedYear',
     async function () {
-      const selectedYear = this.selectedYear
-        ? parseInt(this.selectedYear, 10)
-        : null;
+      const selectedYear = this.selectedYear ? parseInt(this.selectedYear, 10) : null;
       const objects = await this.prepositionalObjectIdList;
       const type = this.currentPrepositionalObject;
 
@@ -332,46 +304,29 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
   ),
 
-  currentSubjectLabel: computed(
-    'currentSubject',
-    'subjectList.[]',
-    function () {
-      const currentSubjectValue = this.currentSubject;
-      const currentSubject = this.subjectList.find((subject) => {
-        return subject.value === currentSubjectValue;
-      });
+  currentSubjectLabel: computed('currentSubject', 'subjectList.[]', function () {
+    const currentSubjectValue = this.currentSubject;
+    const currentSubject = this.subjectList.find((subject) => {
+      return subject.value === currentSubjectValue;
+    });
 
-      return currentSubject.label;
-    }
-  ),
+    return currentSubject.label;
+  }),
 
-  selectedUser: computed(
-    'currentPrepositionalObject',
-    'currentPrepositionalObjectId',
-    function () {
-      if (
-        this.currentPrepositionalObject === 'instructor' &&
-        this.currentPrepositionalObjectId
-      ) {
-        return this.store.peekRecord('user', this.currentPrepositionalObjectId);
-      } else {
-        return null;
-      }
+  selectedUser: computed('currentPrepositionalObject', 'currentPrepositionalObjectId', function () {
+    if (this.currentPrepositionalObject === 'instructor' && this.currentPrepositionalObjectId) {
+      return this.store.peekRecord('user', this.currentPrepositionalObjectId);
+    } else {
+      return null;
     }
-  ),
+  }),
 
   selectedMeshTerm: computed(
     'currentPrepositionalObject',
     'currentPrepositionalObjectId',
     function () {
-      if (
-        this.currentPrepositionalObject === 'mesh term' &&
-        this.currentPrepositionalObjectId
-      ) {
-        return this.store.peekRecord(
-          'mesh-descriptor',
-          this.currentPrepositionalObjectId
-        );
+      if (this.currentPrepositionalObject === 'mesh term' && this.currentPrepositionalObjectId) {
+        return this.store.peekRecord('mesh-descriptor', this.currentPrepositionalObjectId);
       } else {
         return null;
       }
