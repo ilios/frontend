@@ -11,7 +11,11 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
   @service store;
   @service flashMessages;
   @service intl;
-  @tracked @NotBlank() @Length(1, 200) @Custom('validateTitleCallback', 'validateTitleMessageCallback') title;
+  @tracked
+  @NotBlank()
+  @Length(1, 200)
+  @Custom('validateTitleCallback', 'validateTitleMessageCallback')
+  title;
   @tracked isActive = false;
   @tracked description;
   @tracked newTerm;
@@ -37,7 +41,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
   *changeTitle() {
     this.addErrorDisplayFor('title');
     const isValid = yield this.isValid();
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('title');
@@ -46,7 +50,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
   }
 
   @action
-  revertTitleChanges(){
+  revertTitleChanges() {
     this.removeErrorDisplayFor('title');
     this.title = this.args.term.title;
   }
@@ -58,7 +62,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
   }
 
   @action
-  revertDescriptionChanges(){
+  revertDescriptionChanges() {
     this.description = this.args.term.description;
   }
 
@@ -70,7 +74,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
       vocabulary: this.args.vocabulary,
       active: true,
     });
-    this.newTerm  = await term.save();
+    this.newTerm = await term.save();
   }
 
   @dropTask
@@ -88,7 +92,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
   }
 
   @action
-  clearVocabAndTerm(){
+  clearVocabAndTerm() {
     this.args.manageVocabulary(null);
     this.args.manageTerm(null);
   }
@@ -102,7 +106,7 @@ export default class SchoolVocabularyTermManagerComponent extends Component {
 
   async validateTitleCallback() {
     const terms = await this.args.term.children;
-    return ! terms.mapBy('title').includes(this.title);
+    return !terms.mapBy('title').includes(this.title);
   }
 
   validateTitleMessageCallback() {

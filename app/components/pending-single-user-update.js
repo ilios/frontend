@@ -6,7 +6,7 @@ import { inject as service } from '@ember/service';
 export default Component.extend({
   flashMessages: service(),
 
-  tagName: "",
+  tagName: '',
   isSaving: false,
   user: null,
 
@@ -31,7 +31,7 @@ export default Component.extend({
       const user = this.user;
       user.set('enabled', false);
       user.save().then(() => {
-        user.get('pendingUserUpdates').then(updates => {
+        user.get('pendingUserUpdates').then((updates) => {
           updates.invoke('deleteRecord');
           all(updates.invoke('save')).then(() => {
             this.set('isSaving', false);
@@ -46,7 +46,7 @@ export default Component.extend({
       const user = this.user;
       user.set('userSyncIgnore', true);
       user.save().then(() => {
-        user.get('pendingUserUpdates').then(updates => {
+        user.get('pendingUserUpdates').then((updates) => {
           updates.invoke('deleteRecord');
           all(updates.invoke('save')).then(() => {
             this.set('isSaving', false);
@@ -54,6 +54,6 @@ export default Component.extend({
           });
         });
       });
-    }
-  }
+    },
+  },
 });

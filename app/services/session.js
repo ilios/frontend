@@ -16,15 +16,15 @@ export default class SessionService extends ESASessionService {
       }
     }
     const user = await this.currentUser.get('model');
-    Sentry.setUser({id: user.id});
+    Sentry.setUser({ id: user.id });
   }
 
   async handleInvalidation() {
-    Sentry.configureScope(scope => scope.clear());
+    Sentry.configureScope((scope) => scope.clear());
     if (config.environment !== 'test') {
       const logoutUrl = '/auth/logout';
-      return this.fetch.getJsonFromApiHost(logoutUrl).then(response => {
-        if(response.status === 'redirect'){
+      return this.fetch.getJsonFromApiHost(logoutUrl).then((response) => {
+        if (response.status === 'redirect') {
           window.location.replace(response.logoutUrl);
         } else {
           window.location.replace(config.rootURL);

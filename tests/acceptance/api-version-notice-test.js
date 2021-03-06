@@ -8,7 +8,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios-common/page-objects/components/api-version-notice';
 
-module('Acceptance | API Version Check', function(hooks) {
+module('Acceptance | API Version Check', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
@@ -16,30 +16,34 @@ module('Acceptance | API Version Check', function(hooks) {
     await setupAuthentication({ school });
   });
 
-  test('No warning shows up when api versions match', async function(assert) {
+  test('No warning shows up when api versions match', async function (assert) {
     assert.expect(3);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     assert.ok(apiVersion);
-    this.server.get('application/config', function() {
+    this.server.get('application/config', function () {
       assert.ok(true, 'our config override was called');
-      return { config: {
-        type: 'form',
-        apiVersion
-      }};
+      return {
+        config: {
+          type: 'form',
+          apiVersion,
+        },
+      };
     });
 
     await visit(url);
     assert.ok(component.notMismatched);
   });
 
-  test('Warning shows up when api versions do not match', async function(assert) {
+  test('Warning shows up when api versions do not match', async function (assert) {
     assert.expect(2);
-    this.server.get('application/config', function() {
+    this.server.get('application/config', function () {
       assert.ok(true, 'our config override was called');
-      return { config: {
-        type: 'form',
-        apiVersion: 'v0.bad'
-      }};
+      return {
+        config: {
+          type: 'form',
+          apiVersion: 'v0.bad',
+        },
+      };
     });
 
     await visit(url);

@@ -5,10 +5,10 @@ import hbs from 'htmlbars-inline-precompile';
 import component from 'ilios/tests/pages/components/locale-chooser';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
-module('Integration | Component | locale-chooser', function(hooks) {
+module('Integration | Component | locale-chooser', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders and is accessible', async function(assert) {
+  test('it renders and is accessible', async function (assert) {
     await render(hbs`<LocaleChooser />`);
 
     await a11yAudit(this.element);
@@ -19,16 +19,15 @@ module('Integration | Component | locale-chooser', function(hooks) {
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('click opens menu', async function(assert) {
+  test('click opens menu', async function (assert) {
     await render(hbs`<LocaleChooser />`);
 
     assert.equal(component.locales.length, 0);
     await component.toggle.click();
     assert.equal(component.locales.length, 3);
-
   });
 
-  test('down opens menu', async function(assert) {
+  test('down opens menu', async function (assert) {
     await render(hbs`<LocaleChooser />`);
 
     assert.equal(component.locales.length, 0);
@@ -36,7 +35,7 @@ module('Integration | Component | locale-chooser', function(hooks) {
     assert.equal(component.locales.length, 3);
   });
 
-  test('escape closes menu', async function(assert) {
+  test('escape closes menu', async function (assert) {
     await render(hbs`<LocaleChooser />`);
 
     await component.toggle.down();
@@ -45,7 +44,7 @@ module('Integration | Component | locale-chooser', function(hooks) {
     assert.equal(component.locales.length, 0);
   });
 
-  test('click closes menu', async function(assert) {
+  test('click closes menu', async function (assert) {
     await render(hbs`<LocaleChooser />`);
 
     await component.toggle.down();
@@ -54,7 +53,7 @@ module('Integration | Component | locale-chooser', function(hooks) {
     assert.equal(component.locales.length, 0);
   });
 
-  test('change locale closes menu', async function(assert) {
+  test('change locale closes menu', async function (assert) {
     await render(hbs`<LocaleChooser />`);
 
     await component.toggle.click();

@@ -2,8 +2,8 @@ import Controller from '@ember/controller';
 
 export default Controller.extend({
   actions: {
-    loadReport(newReport){
+    loadReport(newReport) {
       this.transitionToRoute('curriculumInventoryReport', newReport);
-    }
-  }
+    },
+  },
 });

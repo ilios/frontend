@@ -19,7 +19,7 @@ export default class LearnerGroupListComponent extends Component {
     return this.args.sortBy ?? this.localSortBy;
   }
 
-  get sortedAscending(){
+  get sortedAscending() {
     return this.sortBy.search(/desc/) === -1;
   }
 
@@ -30,8 +30,9 @@ export default class LearnerGroupListComponent extends Component {
 
   @restartableTask
   *load() {
-    this.academicYearCrossesCalendarYearBoundaries
-      = yield this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
+    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+      'academicYearCrossesCalendarYearBoundaries'
+    );
   }
 
   @task
@@ -39,12 +40,12 @@ export default class LearnerGroupListComponent extends Component {
     this.preparingToRemove = [...this.preparingToRemove, learnerGroup];
     const deletableGroup = yield this.createDeletableGroup(learnerGroup);
     this.toRemove = [...this.toRemove, deletableGroup];
-    this.preparingToRemove = this.preparingToRemove.filter(lg => lg !== learnerGroup);
+    this.preparingToRemove = this.preparingToRemove.filter((lg) => lg !== learnerGroup);
   }
 
   @action
   cancelCopy(learnerGroup) {
-    this.toCopy = this.toCopy.filter(lg => lg !== learnerGroup);
+    this.toCopy = this.toCopy.filter((lg) => lg !== learnerGroup);
   }
 
   @action
@@ -60,7 +61,7 @@ export default class LearnerGroupListComponent extends Component {
 
   @action
   setSortBy(what) {
-    if(this.sortBy === what){
+    if (this.sortBy === what) {
       what += ':desc';
     }
     if (this.args.setSortBy) {
@@ -73,9 +74,9 @@ export default class LearnerGroupListComponent extends Component {
   sortByTitle(learnerGroupA, learnerGroupB) {
     const locale = this.intl.get('locale');
     if ('title:desc' === this.sortBy) {
-      return learnerGroupB.title.localeCompare(learnerGroupA.title, locale, {numeric: true});
+      return learnerGroupB.title.localeCompare(learnerGroupA.title, locale, { numeric: true });
     }
-    return learnerGroupA.title.localeCompare(learnerGroupB.title, locale, {numeric: true});
+    return learnerGroupA.title.localeCompare(learnerGroupB.title, locale, { numeric: true });
   }
 
   async getCoursesForGroup(learnerGroup) {

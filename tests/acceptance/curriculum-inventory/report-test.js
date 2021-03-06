@@ -1,8 +1,4 @@
-import {
-  click,
-  currentRouteName,
-  visit
-} from '@ember/test-helpers';
+import { click, currentRouteName, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
@@ -12,20 +8,20 @@ import { getElementText, getText } from 'ilios-common';
 
 const url = '/curriculum-inventory-reports/1';
 
-module('Acceptance | Curriculum Inventory: Report', function(hooks) {
+module('Acceptance | Curriculum Inventory: Report', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication( { school: this.school } );
+    this.user = await setupAuthentication({ school: this.school });
   });
 
-  test('create new sequence block Issue #2108', async function(assert) {
+  test('create new sequence block Issue #2108', async function (assert) {
     this.user.update({ directedSchools: [this.school] });
-    const program = this.server.create('program', {school: this.school});
-    const report = this.server.create('curriculumInventoryReport', {program});
-    this.server.create('curriculumInventorySequence', {report});
+    const program = this.server.create('program', { school: this.school });
+    const report = this.server.create('curriculumInventoryReport', { program });
+    this.server.create('curriculumInventorySequence', { report });
 
     const sequenceBlockList = '.curriculum-inventory-sequence-block-list';
     const addSequenceBlock = `${sequenceBlockList} .expand-button`;
@@ -42,12 +38,11 @@ module('Acceptance | Curriculum Inventory: Report', function(hooks) {
     assert.equal(await getElementText(newFormTitle), getText('New Sequence Block'));
   });
 
-
-  test('rollover hidden from unprivileged users', async function(assert) {
+  test('rollover hidden from unprivileged users', async function (assert) {
     this.server.create('program', {
       id: 1,
       school: this.school,
-      'title': 'Doctor of Medicine',
+      title: 'Doctor of Medicine',
     });
     this.server.create('curriculumInventoryReport', {
       year: 2013,
@@ -68,7 +63,7 @@ module('Acceptance | Curriculum Inventory: Report', function(hooks) {
     this.server.create('program', {
       id: 1,
       school: this.school,
-      'title': 'Doctor of Medicine',
+      title: 'Doctor of Medicine',
     });
     this.server.create('curriculumInventoryReport', {
       year: 2013,
@@ -83,12 +78,12 @@ module('Acceptance | Curriculum Inventory: Report', function(hooks) {
     assert.dom(rollover).exists({ count: 1 });
   });
 
-  test('rollover hidden on rollover route', async function(assert) {
+  test('rollover hidden on rollover route', async function (assert) {
     this.user.update({ directedSchools: [this.school] });
     this.server.create('program', {
       id: 1,
       school: this.school,
-      'title': 'Doctor of Medicine',
+      title: 'Doctor of Medicine',
     });
     this.server.create('curriculumInventoryReport', {
       year: 2013,

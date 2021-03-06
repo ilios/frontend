@@ -17,10 +17,7 @@ export default class ProgramIndexRoute extends Route {
     const canCreate = await permissionChecker.canCreateProgramYear(program);
     this.set('canCreate', canCreate);
 
-    await all([
-      program.get('programYears'),
-      program.get('allPublicationIssuesLength')
-    ]);
+    await all([program.get('programYears'), program.get('allPublicationIssuesLength')]);
   }
 
   setupController(controller, model) {

@@ -9,9 +9,9 @@ const Validations = buildValidations({
       allowString: true,
       integer: true,
       gt: 0,
-      lte: 50
-    })
-  ]
+      lte: 50,
+    }),
+  ],
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
@@ -23,7 +23,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   actions: {
     save() {
       this.send('addErrorDisplayFor', 'numSubGroups');
-      this.validate().then(({validations}) => {
+      this.validate().then(({ validations }) => {
         if (validations.get('isValid')) {
           const num = this.numSubGroups;
           this.generateNewLearnerGroups(num);
@@ -45,8 +45,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       return;
     }
 
-    if(27 === keyCode) {
+    if (27 === keyCode) {
       this.cancel();
     }
-  }
+  },
 });

@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/learnergroup-list';
 
-module('Integration | Component | learner group list', function(hooks) {
+module('Integration | Component | learner group list', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -13,12 +13,16 @@ module('Integration | Component | learner group list', function(hooks) {
     const users = this.server.createList('user', 2);
     const firstGroup = this.server.create('learner-group', { needsAccommodation: true });
     const secondGroup = this.server.create('learner-group', {
-      users
+      users,
     });
     this.server.create('learner-group', { parent: firstGroup });
     this.server.create('learner-group', { parent: firstGroup, needsAccommodation: true });
-    const firstGroupModel = await this.owner.lookup('service:store').find('learner-group', firstGroup.id);
-    const secondGroupModel = await this.owner.lookup('service:store').find('learner-group', secondGroup.id);
+    const firstGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', firstGroup.id);
+    const secondGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', secondGroup.id);
 
     this.set('learnerGroups', [firstGroupModel, secondGroupModel]);
     await render(hbs`<LearnergroupList @learnerGroups={{this.learnerGroups}} />`);
@@ -41,7 +45,6 @@ module('Integration | Component | learner group list', function(hooks) {
     assert.equal(component.groups[1].members, '2');
     assert.equal(component.groups[1].subgroups, '0');
     assert.notOk(component.groups[1].hasSubgroupsInNeedOfAccommodation);
-
   });
 
   test('can remove group', async function (assert) {
@@ -102,7 +105,7 @@ module('Integration | Component | learner group list', function(hooks) {
     assert.notOk(component.groups[0].actions.canRemove);
   });
 
-  test('cannot remove group with courses', async function(assert) {
+  test('cannot remove group with courses', async function (assert) {
     assert.expect(6);
     const courses = this.server.createList('course', 4);
     const course1Session = this.server.create('session', { course: courses[0] });
@@ -114,7 +117,9 @@ module('Integration | Component | learner group list', function(hooks) {
     const offering3 = this.server.create('offering', { session: course2Session2 });
     const offering4 = this.server.create('offering', { session: course3Session });
 
-    const parent = this.server.create('learner-group', { offerings: [offering1, offering2, offering3] });
+    const parent = this.server.create('learner-group', {
+      offerings: [offering1, offering2, offering3],
+    });
 
     this.server.create('learner-group', { parent, offerings: [offering4] });
     const model = await this.owner.lookup('service:store').find('learner-group', parent.id);
@@ -127,7 +132,10 @@ module('Integration | Component | learner group list', function(hooks) {
     assert.equal(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canRemove);
     await component.groups[0].actions.remove();
-    assert.equal(component.confirmRemoval.confirmation, 'This group is attached to 3 courses and cannot be deleted. 2013 course 0 2013 course 1 2013 course 2 OK');
+    assert.equal(
+      component.confirmRemoval.confirmation,
+      'This group is attached to 3 courses and cannot be deleted. 2013 course 0 2013 course 1 2013 course 2 OK'
+    );
     assert.notOk(component.confirmRemoval.canConfirm);
     assert.ok(component.confirmRemoval.canCancel);
     await component.confirmRemoval.cancel();
@@ -135,10 +143,12 @@ module('Integration | Component | learner group list', function(hooks) {
   });
 
   test('course academic year shows range if applicable by configuration', async function (assert) {
-    this.server.get('application/config', function() {
-      return { config: {
-        academicYearCrossesCalendarYearBoundaries: true,
-      }};
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+        },
+      };
     });
     const courses = this.server.createList('course', 4);
     const course1Session = this.server.create('session', { course: courses[0] });
@@ -150,7 +160,9 @@ module('Integration | Component | learner group list', function(hooks) {
     const offering3 = this.server.create('offering', { session: course2Session2 });
     const offering4 = this.server.create('offering', { session: course3Session });
 
-    const parent = this.server.create('learner-group', { offerings: [offering1, offering2, offering3] });
+    const parent = this.server.create('learner-group', {
+      offerings: [offering1, offering2, offering3],
+    });
 
     this.server.create('learner-group', { parent, offerings: [offering4] });
     const model = await this.owner.lookup('service:store').find('learner-group', parent.id);
@@ -161,7 +173,10 @@ module('Integration | Component | learner group list', function(hooks) {
     />`);
 
     await component.groups[0].actions.remove();
-    assert.equal(component.confirmRemoval.confirmation, 'This group is attached to 3 courses and cannot be deleted. 2013 - 2014 course 0 2013 - 2014 course 1 2013 - 2014 course 2 OK');
+    assert.equal(
+      component.confirmRemoval.confirmation,
+      'This group is attached to 3 courses and cannot be deleted. 2013 - 2014 course 0 2013 - 2014 course 1 2013 - 2014 course 2 OK'
+    );
   });
 
   test('can copy group with learners when canCopyWithLearners is enabled', async function (assert) {
@@ -249,7 +264,7 @@ module('Integration | Component | learner group list', function(hooks) {
     assert.notOk(component.confirmCopy.canCopyWithLearners);
   });
 
-  test('sorting', async function(assert) {
+  test('sorting', async function (assert) {
     const users = this.server.createList('user', 2);
     const group1 = this.server.create('learner-group', { title: 'Group 10' });
     const group2 = this.server.create('learner-group', { title: 'Group 2', users });
@@ -257,7 +272,7 @@ module('Integration | Component | learner group list', function(hooks) {
     const groupModel1 = await this.owner.lookup('service:store').find('learner-group', group1.id);
     const groupModel2 = await this.owner.lookup('service:store').find('learner-group', group2.id);
 
-    this.set('learnerGroups', [ groupModel1, groupModel2 ]);
+    this.set('learnerGroups', [groupModel1, groupModel2]);
     await render(hbs`<LearnergroupList @learnerGroups={{this.learnerGroups}} />`);
     assert.ok(component.isSortedByTitleAscending, 'Default sort order is by title ascending');
     assert.ok(component.isNotSortedByMembers);

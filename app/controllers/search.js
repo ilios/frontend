@@ -18,11 +18,11 @@ export default Controller.extend({
     this._super(...arguments);
   },
 
-  ignoredSchoolIdsArray: computed('ignoredSchoolIds.[]', function() {
+  ignoredSchoolIdsArray: computed('ignoredSchoolIds.[]', function () {
     return this.ignoredSchoolIds ? this.ignoredSchoolIds.split('-') : [];
   }),
 
-  selectedYearInt: computed('selectedYear', function() {
+  selectedYearInt: computed('selectedYear', function () {
     return this.selectedYear ? parseInt(this.selectedYear, 10) : null;
   }),
 
@@ -36,6 +36,6 @@ export default Controller.extend({
     setIgnoredSchools(schools) {
       const str = schools.length ? schools.join('-') : null;
       this.set('ignoredSchoolIds', str);
-    }
-  }
+    },
+  },
 });

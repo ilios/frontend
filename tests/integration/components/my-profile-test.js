@@ -7,11 +7,11 @@ import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/my-profile';
 
-module('Integration | Component | my profile', function(hooks) {
+module('Integration | Component | my profile', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     const school = this.server.create('school');
     const program1 = this.server.create('program', { school });
     const program2 = this.server.create('program', { school });
@@ -20,22 +20,22 @@ module('Integration | Component | my profile', function(hooks) {
     const programYear3 = this.server.create('program-year', { program: program2 });
     const cohort1 = this.server.create('cohort', {
       title: 'test cohort',
-      programYear: programYear1
+      programYear: programYear1,
     });
     const cohort2 = this.server.create('cohort', {
       title: 'second cohort',
-      programYear: programYear2
+      programYear: programYear2,
     });
     const cohort3 = this.server.create('cohort', {
       title: 'a third cohort',
-      programYear: programYear3
+      programYear: programYear3,
     });
     const studentRole = this.server.create('user-role', {
       title: 'Student',
     });
     const user = this.server.create('user', {
       displayName: 'test name',
-      roles: [ studentRole ],
+      roles: [studentRole],
       school,
       primaryCohort: cohort1,
       cohorts: [cohort1, cohort2, cohort3],
@@ -59,7 +59,7 @@ module('Integration | Component | my profile', function(hooks) {
     assert.ok(component.tokenInfoLink.includes('/api'));
   });
 
-  test('it renders all no', async function(assert) {
+  test('it renders all no', async function (assert) {
     const user = this.server.create('user', {
       displayName: 'test name',
       userSyncIgnore: false,
@@ -80,7 +80,7 @@ module('Integration | Component | my profile', function(hooks) {
     assert.equal(component.secondaryCohorts[0].text, 'Unassigned');
   });
 
-  test('generates token when asked with good expiration date', async function(assert) {
+  test('generates token when asked with good expiration date', async function (assert) {
     assert.expect(6);
 
     this.server.get(`/auth/token`, (scheme, { queryParams }) => {
@@ -92,7 +92,7 @@ module('Integration | Component | my profile', function(hooks) {
       assert.ok(duration.seconds() < 60);
 
       return {
-        jwt: 'new token'
+        jwt: 'new token',
       };
     });
 
@@ -112,12 +112,12 @@ module('Integration | Component | my profile', function(hooks) {
     assert.equal(component.newTokenResult.value, 'new token');
   });
 
-  test('clear and reset from new token screen', async function(assert) {
+  test('clear and reset from new token screen', async function (assert) {
     assert.expect(3);
 
     this.server.get(`/auth/token`, () => {
       return {
-        jwt: 'new token'
+        jwt: 'new token',
       };
     });
 
@@ -141,7 +141,7 @@ module('Integration | Component | my profile', function(hooks) {
     await component.newTokenResult.reset();
   });
 
-  test('clicking button fires show token event', async function(assert) {
+  test('clicking button fires show token event', async function (assert) {
     assert.expect(1);
 
     const school = this.server.create('school');
@@ -149,7 +149,7 @@ module('Integration | Component | my profile', function(hooks) {
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
     this.set('user', userModel);
-    this.set('toggle', ()=> {
+    this.set('toggle', () => {
       assert.ok(true);
     });
     await render(hbs`<MyProfile
@@ -161,7 +161,7 @@ module('Integration | Component | my profile', function(hooks) {
     await component.showCreateNewTokenForm();
   });
 
-  test('Setting date changes request length', async function(assert) {
+  test('Setting date changes request length', async function (assert) {
     assert.expect(5);
 
     this.server.get(`/auth/token`, (scheme, { queryParams }) => {
@@ -173,7 +173,7 @@ module('Integration | Component | my profile', function(hooks) {
       assert.ok(duration.seconds() < 60);
 
       return {
-        jwt: 'new token'
+        jwt: 'new token',
       };
     });
 
@@ -194,14 +194,14 @@ module('Integration | Component | my profile', function(hooks) {
     await component.newTokenForm.submit();
   });
 
-  test('clicking button fires invalidate tokens event', async function(assert) {
+  test('clicking button fires invalidate tokens event', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school');
     const user = this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
     this.set('user', userModel);
-    this.set('toggle', ()=> {
+    this.set('toggle', () => {
       assert.ok(true);
     });
     await render(hbs`<MyProfile
@@ -213,21 +213,21 @@ module('Integration | Component | my profile', function(hooks) {
     await component.showInvalidateTokensForm();
   });
 
-  test('invalidate tokens when asked', async function(assert) {
+  test('invalidate tokens when asked', async function (assert) {
     assert.expect(4);
 
     this.server.get(`/auth/invalidatetokens`, () => {
       assert.ok(true, 'route is hit');
       return {
-        jwt: 'new token'
+        jwt: 'new token',
       };
     });
     const sessionMock = Service.extend({
-      authenticate(how, obj){
+      authenticate(how, obj) {
         assert.equal(how, 'authenticator:ilios-jwt');
         assert.ok(obj.jwt);
         assert.equal(obj.jwt, 'new token');
-      }
+      },
     });
     this.owner.register('service:session', sessionMock);
     this.session = this.owner.lookup('service:session');

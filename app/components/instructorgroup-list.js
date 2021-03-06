@@ -3,21 +3,21 @@ import ObjectProxy from '@ember/object/proxy';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-  tagName: "",
+  tagName: '',
   canDelete: false,
   instructorGroups: null,
   query: null,
   remove() {},
 
-  proxiedInstructorGroups: computed('instructorGroups.[]', function() {
+  proxiedInstructorGroups: computed('instructorGroups.[]', function () {
     const instructorGroups = this.instructorGroups;
     if (!instructorGroups) {
       return [];
     }
-    return instructorGroups.map(instructorGroup => {
+    return instructorGroups.map((instructorGroup) => {
       return ObjectProxy.create({
         content: instructorGroup,
-        showRemoveConfirmation: false
+        showRemoveConfirmation: false,
       });
     });
   }),
@@ -33,6 +33,6 @@ export default Component.extend({
 
     confirmRemove(instructorGroupProxy) {
       instructorGroupProxy.set('showRemoveConfirmation', true);
-    }
-  }
+    },
+  },
 });

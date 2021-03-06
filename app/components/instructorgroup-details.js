@@ -1,7 +1,7 @@
 import Component from '@ember/component';
 
 export default Component.extend({
-  tagName: "",
+  tagName: '',
 
   canUpdate: false,
   instructorGroup: null,
@@ -19,6 +19,6 @@ export default Component.extend({
       instructorGroup.get('users').removeObject(user);
       user.get('instructorGroups').removeObject(instructorGroup);
       instructorGroup.save();
-    }
-  }
+    },
+  },
 });

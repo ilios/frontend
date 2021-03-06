@@ -24,7 +24,7 @@ export default Helper.extend({
   },
 
   /* eslint ember/no-observers: 0 */
-  recomputeOnArrayChange: observer('values.[]', function() {
+  recomputeOnArrayChange: observer('values.[]', function () {
     this.recompute();
-  })
+  }),
 });

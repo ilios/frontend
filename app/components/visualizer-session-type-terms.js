@@ -12,31 +12,31 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
   @restartableTask
   *load(element, [sessionType, vocabulary]) {
     const sessions = (yield sessionType.sessions).toArray();
-    const terms = yield map(sessions, async session => {
+    const terms = yield map(sessions, async (session) => {
       const sessionTerms = (await session.terms).toArray();
       const course = await session.course;
       const courseTerms = (await course.terms).toArray();
 
-      const sessionTermsInThisVocabulary = await filter(sessionTerms, async term => {
+      const sessionTermsInThisVocabulary = await filter(sessionTerms, async (term) => {
         const termVocab = await term.vocabulary;
         return termVocab.id === vocabulary.id;
       });
-      const courseTermsInThisVocabulary = await filter(courseTerms.toArray(), async term => {
+      const courseTermsInThisVocabulary = await filter(courseTerms.toArray(), async (term) => {
         const termVocab = await term.vocabulary;
         return termVocab.id === vocabulary.id;
       });
-      const sessionTermsObjects = sessionTermsInThisVocabulary.map(term => {
+      const sessionTermsObjects = sessionTermsInThisVocabulary.map((term) => {
         return {
           term,
           session,
-          course: null
+          course: null,
         };
       });
-      const courseTermsObjects = courseTermsInThisVocabulary.map(term => {
+      const courseTermsObjects = courseTermsInThisVocabulary.map((term) => {
         return {
           term,
           course,
-          session: null
+          session: null,
         };
       });
 
@@ -52,7 +52,7 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
             term: term.title,
             courses: [],
             sessions: [],
-          }
+          },
         };
       }
       termObjects[id].data++;
@@ -65,8 +65,8 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
     const termData = Object.values(termObjects);
 
     const totalLinks = termData.mapBy('data').reduce((total, count) => total + count, 0);
-    this.data = termData.map(obj => {
-      const percent = (obj.data / totalLinks * 100).toFixed(1);
+    this.data = termData.map((obj) => {
+      const percent = ((obj.data / totalLinks) * 100).toFixed(1);
       obj.label = `${percent}%`;
 
       return obj;
@@ -74,7 +74,7 @@ export default class VisualizerSessionTypeTermsComponent extends Component {
   }
 
   @restartableTask
-  * donutHover(obj) {
+  *donutHover(obj) {
     yield timeout(100);
     if (this.args.isIcon || !obj || obj.empty) {
       this.tooltipTitle = null;

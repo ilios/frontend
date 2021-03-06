@@ -18,7 +18,7 @@ export default Component.extend({
 
   alert: gt('_updatesProxy.length', 0),
 
-  selectedSchool: computed('currentUser', 'schoolId', async function() {
+  selectedSchool: computed('currentUser', 'schoolId', 'schools', async function () {
     const schools = this.schools;
     const currentUser = this.currentUser;
     const schoolId = this.schoolId;
@@ -47,10 +47,10 @@ export default Component.extend({
    * @type {Ember.computed}
    * @private
    */
-  _updatesProxy: computed('updates', function() {
+  _updatesProxy: computed('updates', function () {
     const ArrayPromiseProxy = ArrayProxy.extend(PromiseProxyMixin);
     return ArrayPromiseProxy.create({
-      promise: this.updates
+      promise: this.updates,
     });
   }),
 
@@ -60,13 +60,13 @@ export default Component.extend({
    * @type {Ember.computed}
    * @public
    */
-  updates: computed('selectedSchool', async function() {
+  updates: computed('selectedSchool', async function () {
     const store = this.store;
     const school = await this.selectedSchool;
     const updates = await store.query('pending-user-update', {
       filters: {
-        schools: [school.get('id')]
-      }
+        schools: [school.get('id')],
+      },
     });
 
     return updates;
@@ -80,6 +80,6 @@ export default Component.extend({
   actions: {
     changeSelectedSchool(schoolId) {
       this.set('schoolId', schoolId);
-    }
-  }
+    },
+  },
 });

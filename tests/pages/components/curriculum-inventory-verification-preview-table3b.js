@@ -1,8 +1,4 @@
-import {
-  create,
-  collection,
-  text,
-} from 'ember-cli-page-object';
+import { create, collection, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-curriculum-inventory-verification-preview-table3b]',
@@ -11,10 +7,10 @@ const definition = {
     scope: 'table',
     headings: collection('thead tr th'),
     rows: collection('tbody tr', {
-      title: text('td', {at: 0}),
-      level: text('td', {at: 1}),
-      weeks: text('td', {at: 2}),
-      avg: text('td', {at: 3}),
+      title: text('td', { at: 0 }),
+      level: text('td', { at: 1 }),
+      weeks: text('td', { at: 2 }),
+      avg: text('td', { at: 3 }),
     }),
   },
 };

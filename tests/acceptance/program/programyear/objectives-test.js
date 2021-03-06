@@ -1,13 +1,10 @@
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/program-year';
 
-module('Acceptance | Program Year - Objectives', function(hooks) {
+module('Acceptance | Program Year - Objectives', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
@@ -23,7 +20,7 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
       program,
     });
     this.server.create('cohort', {
-      programYear
+      programYear,
     });
     const parent = this.server.create('competency', {
       school: this.school,
@@ -53,46 +50,85 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
       programYear,
       competency: competency1,
       meshDescriptors: [meshDescriptors[0], meshDescriptors[1]],
-      terms: [ term1 ]
+      terms: [term1],
     });
     this.server.create('programYearObjective', {
       programYear,
       competency: competency4,
       active: false,
-      terms: [ term2 ]
+      terms: [term2],
     });
     this.server.create('programYearObjective', { programYear });
     const course = this.server.create('course');
-    this.server.create('courseObjective', { course, programYearObjectives: [ programYearObjective ] });
+    this.server.create('courseObjective', {
+      course,
+      programYearObjectives: [programYearObjective],
+    });
   });
 
-  test('list editable', async function(assert) {
+  test('list editable', async function (assert) {
     assert.expect(25);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'program-year objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'program-year objective 0'
+    );
     assert.ok(page.objectives.objectiveList.objectives[0].competency.hasCompetency);
-    assert.equal(page.objectives.objectiveList.objectives[0].competency.competencyTitle, 'competency 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].competency.competencyTitle,
+      'competency 1'
+    );
     assert.ok(page.objectives.objectiveList.objectives[0].competency.hasDomain);
-    assert.equal(page.objectives.objectiveList.objectives[0].competency.domainTitle, '(competency 0)');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].competency.domainTitle,
+      '(competency 0)'
+    );
     assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].text, 'descriptor 0');
-    assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list[1].text, 'descriptor 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].text,
+      'descriptor 0'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].meshDescriptors.list[1].text,
+      'descriptor 1'
+    );
     assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].title, 'Vocabulary 1 (school 0)');
-    assert.equal(page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name, 'term 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].title,
+      'Vocabulary 1 (school 0)'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].selectedTerms.list[0].terms[0].name,
+      'term 0'
+    );
 
-    assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'program-year objective 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].description.text,
+      'program-year objective 1'
+    );
     assert.ok(page.objectives.objectiveList.objectives[1].competency.hasCompetency);
-    assert.equal(page.objectives.objectiveList.objectives[1].competency.competencyTitle, 'competency 3');
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].competency.competencyTitle,
+      'competency 3'
+    );
     assert.notOk(page.objectives.objectiveList.objectives[1].competency.hasDomain);
     assert.ok(page.objectives.objectiveList.objectives[1].meshDescriptors.isEmpty);
     assert.equal(page.objectives.objectiveList.objectives[1].selectedTerms.list.length, 1);
-    assert.equal(page.objectives.objectiveList.objectives[1].selectedTerms.list[0].title, 'Vocabulary 1 (school 0)');
-    assert.equal(page.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms[0].name, 'term 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].selectedTerms.list[0].title,
+      'Vocabulary 1 (school 0)'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].selectedTerms.list[0].terms[0].name,
+      'term 1'
+    );
 
-    assert.equal(page.objectives.objectiveList.objectives[2].description.text, 'program-year objective 2');
+    assert.equal(
+      page.objectives.objectiveList.objectives[2].description.text,
+      'program-year objective 2'
+    );
     assert.notOk(page.objectives.objectiveList.objectives[2].competency.hasCompetency);
     assert.notOk(page.objectives.objectiveList.objectives[2].competency.hasDomain);
     assert.ok(page.objectives.objectiveList.objectives[2].meshDescriptors.isEmpty);
@@ -102,36 +138,69 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
   test('list not editable', async function (assert) {
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'program-year objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'program-year objective 0'
+    );
     assert.ok(page.objectives.objectiveList.objectives[0].competency.hasCompetency);
-    assert.equal(page.objectives.objectiveList.objectives[0].competency.competencyTitle, 'competency 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].competency.competencyTitle,
+      'competency 1'
+    );
     assert.ok(page.objectives.objectiveList.objectives[0].competency.hasDomain);
-    assert.equal(page.objectives.objectiveList.objectives[0].competency.domainTitle, '(competency 0)');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].competency.domainTitle,
+      '(competency 0)'
+    );
     assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].text, 'descriptor 0');
-    assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list[1].text, 'descriptor 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].text,
+      'descriptor 0'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].meshDescriptors.list[1].text,
+      'descriptor 1'
+    );
 
-    assert.equal(page.objectives.objectiveList.objectives[1].description.text, 'program-year objective 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].description.text,
+      'program-year objective 1'
+    );
     assert.ok(page.objectives.objectiveList.objectives[1].competency.hasCompetency);
-    assert.equal(page.objectives.objectiveList.objectives[1].competency.competencyTitle, 'competency 3');
+    assert.equal(
+      page.objectives.objectiveList.objectives[1].competency.competencyTitle,
+      'competency 3'
+    );
     assert.notOk(page.objectives.objectiveList.objectives[1].competency.hasDomain);
     assert.ok(page.objectives.objectiveList.objectives[1].meshDescriptors.isEmpty);
 
-    assert.equal(page.objectives.objectiveList.objectives[2].description.text, 'program-year objective 2');
+    assert.equal(
+      page.objectives.objectiveList.objectives[2].description.text,
+      'program-year objective 2'
+    );
     assert.notOk(page.objectives.objectiveList.objectives[2].competency.hasCompetency);
     assert.notOk(page.objectives.objectiveList.objectives[2].competency.hasDomain);
     assert.ok(page.objectives.objectiveList.objectives[2].meshDescriptors.isEmpty);
   });
 
-  test('manage MeSH terms', async function(assert) {
+  test('manage MeSH terms', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'program-year objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'program-year objective 0'
+    );
     assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].title, 'descriptor 0');
-    assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list[1].title, 'descriptor 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].title,
+      'descriptor 0'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].meshDescriptors.list[1].title,
+      'descriptor 1'
+    );
 
     await page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].manage();
     const m = page.objectives.objectiveList.objectives[0].meshManager.meshManager;
@@ -161,12 +230,15 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.equal(m.selectedTerms[1].title, 'descriptor 2');
   });
 
-  test('save MeSH terms', async function(assert) {
+  test('save MeSH terms', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'program-year objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'program-year objective 0'
+    );
     assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list.length, 2);
     await page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].manage();
 
@@ -184,16 +256,25 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
 
     await page.objectives.objectiveList.objectives[0].meshDescriptors.save();
     assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].title, 'descriptor 1');
-    assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list[1].title, 'descriptor 2');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].title,
+      'descriptor 1'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].meshDescriptors.list[1].title,
+      'descriptor 2'
+    );
   });
 
-  test('cancel changes', async function(assert) {
+  test('cancel changes', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'program-year objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'program-year objective 0'
+    );
     assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list.length, 2);
     await page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].manage();
 
@@ -211,11 +292,17 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
 
     await page.objectives.objectiveList.objectives[0].meshDescriptors.cancel();
     assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list.length, 2);
-    assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].title, 'descriptor 0');
-    assert.equal(page.objectives.objectiveList.objectives[0].meshDescriptors.list[1].title, 'descriptor 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].meshDescriptors.list[0].title,
+      'descriptor 0'
+    );
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].meshDescriptors.list[1].title,
+      'descriptor 1'
+    );
   });
 
-  test('manage competency', async function(assert) {
+  test('manage competency', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(12);
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
@@ -250,12 +337,20 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.ok(m.domains[0].competencies[1].selected);
     await page.objectives.objectiveList.objectives[0].competency.save();
 
-
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'program-year objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'program-year objective 0'
+    );
     assert.ok(page.objectives.objectiveList.objectives[0].competency.hasCompetency);
-    assert.equal(page.objectives.objectiveList.objectives[0].competency.competencyTitle, 'competency 2');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].competency.competencyTitle,
+      'competency 2'
+    );
     assert.ok(page.objectives.objectiveList.objectives[0].competency.hasDomain);
-    assert.equal(page.objectives.objectiveList.objectives[0].competency.domainTitle, '(competency 0)');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].competency.domainTitle,
+      '(competency 0)'
+    );
   });
 
   test('save no competency', async function (assert) {
@@ -269,7 +364,10 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.ok(m.domains[0].competencies[0].notSelected);
     await page.objectives.objectiveList.objectives[0].competency.save();
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'program-year objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'program-year objective 0'
+    );
     assert.notOk(page.objectives.objectiveList.objectives[0].competency.hasCompetency);
   });
 
@@ -285,11 +383,20 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.ok(m.domains[0].competencies[1].selected);
     await page.objectives.objectiveList.objectives[0].competency.cancel();
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'program-year objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'program-year objective 0'
+    );
     assert.ok(page.objectives.objectiveList.objectives[0].competency.hasCompetency);
-    assert.equal(page.objectives.objectiveList.objectives[0].competency.competencyTitle, 'competency 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].competency.competencyTitle,
+      'competency 1'
+    );
     assert.ok(page.objectives.objectiveList.objectives[0].competency.hasDomain);
-    assert.equal(page.objectives.objectiveList.objectives[0].competency.domainTitle, '(competency 0)');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].competency.domainTitle,
+      '(competency 0)'
+    );
   });
 
   test('cancel remove competency change', async function (assert) {
@@ -304,18 +411,30 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.ok(m.domains[0].competencies[1].notSelected);
     await page.objectives.objectiveList.objectives[0].competency.cancel();
 
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'program-year objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'program-year objective 0'
+    );
     assert.ok(page.objectives.objectiveList.objectives[0].competency.hasCompetency);
-    assert.equal(page.objectives.objectiveList.objectives[0].competency.competencyTitle, 'competency 1');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].competency.competencyTitle,
+      'competency 1'
+    );
     assert.ok(page.objectives.objectiveList.objectives[0].competency.hasDomain);
-    assert.equal(page.objectives.objectiveList.objectives[0].competency.domainTitle, '(competency 0)');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].competency.domainTitle,
+      '(competency 0)'
+    );
   });
 
   test('add competency', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(10);
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
-    assert.equal(page.objectives.objectiveList.objectives[2].description.text, 'program-year objective 2');
+    assert.equal(
+      page.objectives.objectiveList.objectives[2].description.text,
+      'program-year objective 2'
+    );
     assert.notOk(page.objectives.objectiveList.objectives[2].competency.hasCompetency);
 
     await page.objectives.objectiveList.objectives[2].competency.manage();
@@ -326,11 +445,20 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.ok(m.domains[0].competencies[1].selected);
     await page.objectives.objectiveList.objectives[2].competency.save();
 
-    assert.equal(page.objectives.objectiveList.objectives[2].description.text, 'program-year objective 2');
+    assert.equal(
+      page.objectives.objectiveList.objectives[2].description.text,
+      'program-year objective 2'
+    );
     assert.ok(page.objectives.objectiveList.objectives[2].competency.hasCompetency);
-    assert.equal(page.objectives.objectiveList.objectives[2].competency.competencyTitle, 'competency 2');
+    assert.equal(
+      page.objectives.objectiveList.objectives[2].competency.competencyTitle,
+      'competency 2'
+    );
     assert.ok(page.objectives.objectiveList.objectives[2].competency.hasDomain);
-    assert.equal(page.objectives.objectiveList.objectives[2].competency.domainTitle, '(competency 0)');
+    assert.equal(
+      page.objectives.objectiveList.objectives[2].competency.domainTitle,
+      '(competency 0)'
+    );
   });
 
   test('empty objective title can not be saved', async function (assert) {
@@ -338,7 +466,10 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.expect(5);
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 3);
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'program-year objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'program-year objective 0'
+    );
     await page.objectives.createNew();
     assert.notOk(page.objectives.newObjective.hasValidationError);
     await page.objectives.newObjective.description('<p>&nbsp</p><div></div><span>  </span>');
@@ -347,16 +478,22 @@ module('Acceptance | Program Year - Objectives', function(hooks) {
     assert.equal(page.objectives.newObjective.validationError, 'This field can not be blank');
   });
 
-  test('expand objective and view links', async function(assert) {
+  test('expand objective and view links', async function (assert) {
     assert.expect(6);
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
-    assert.equal(page.objectives.objectiveList.objectives[0].description.text, 'program-year objective 0');
+    assert.equal(
+      page.objectives.objectiveList.objectives[0].description.text,
+      'program-year objective 0'
+    );
     assert.equal(page.objectives.objectiveList.expanded.length, 0);
     await page.objectives.objectiveList.objectives[0].toggleExpandCollapse();
     assert.equal(page.objectives.objectiveList.expanded.length, 1);
     assert.equal(page.objectives.objectiveList.expanded[0].courseTitle, 'course 0');
     assert.equal(page.objectives.objectiveList.expanded[0].objectives.length, 1);
-    assert.equal(page.objectives.objectiveList.expanded[0].objectives[0].text, 'course objective 0');
+    assert.equal(
+      page.objectives.objectiveList.expanded[0].objectives[0].text,
+      'course objective 0'
+    );
   });
 
   test('activate and deactivate', async function (assert) {

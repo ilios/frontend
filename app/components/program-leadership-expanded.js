@@ -4,7 +4,7 @@ import { reads } from '@ember/object/computed';
 import { task, timeout } from 'ember-concurrency';
 
 export default Component.extend({
-  tagName: "",
+  tagName: '',
   canUpdate: null,
   program: null,
   isManaging: false,
@@ -13,13 +13,18 @@ export default Component.extend({
   setIsManaging() {},
   isSaving: reads('save.isRunning'),
 
-  directors: computed('directorsToAdd.[]', 'directorsToRemove.[]', 'program', async function() {
-    const directors = await this.program.directors;
-    return directors
-      .toArray()
-      .concat(this.directorsToAdd)
-      .filter((user) => !this.directorsToRemove.includes(user));
-  }),
+  directors: computed(
+    'directorsToAdd.[]',
+    'directorsToRemove.[]',
+    'program.directors',
+    async function () {
+      const directors = await this.program.directors;
+      return directors
+        .toArray()
+        .concat(this.directorsToAdd)
+        .filter((user) => !this.directorsToRemove.includes(user));
+    }
+  ),
 
   init() {
     this._super(...arguments);
@@ -40,7 +45,7 @@ export default Component.extend({
     cancel() {
       this.setIsManaging(false);
       this.setProperties({ directorsToAdd: [], directorsToRemove: [] });
-    }
+    },
   },
 
   save: task(function* () {
@@ -51,5 +56,5 @@ export default Component.extend({
     this.expand();
     yield program.save();
     this.setIsManaging(false);
-  })
+  }),
 });

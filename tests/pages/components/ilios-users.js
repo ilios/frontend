@@ -24,7 +24,7 @@ const definition = {
   // @todo replace with page object. [ST 2020/12/02]
   newDirectoryUserForm: {
     scope: '.new-directory-user',
-    cancel: clickable('.buttons button.cancel')
+    cancel: clickable('.buttons button.cancel'),
   },
   // @todo replace with page object. [ST 2020/12/02]
   newBulkUserForm: {

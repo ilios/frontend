@@ -6,18 +6,18 @@ import { render, settled, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 
-module('Integration | Component | learnergroup calendar', function(hooks) {
+module('Integration | Component | learnergroup calendar', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('shows events', async function(assert) {
+  test('shows events', async function (assert) {
     assert.expect(1);
     const today = moment().hour(8);
     const course = EmberObject.create({
-      title: 'course title'
+      title: 'course title',
     });
     const session = EmberObject.create({
       title: 'session title',
-      course: resolve(course)
+      course: resolve(course),
     });
 
     const offering1 = EmberObject.create({
@@ -25,24 +25,24 @@ module('Integration | Component | learnergroup calendar', function(hooks) {
       startDate: today.format(),
       endDate: today.clone().add('1', 'hour').format(),
       location: 123,
-      session: resolve(session)
+      session: resolve(session),
     });
     const offering2 = EmberObject.create({
       id: 2,
       startDate: today.format(),
       endDate: today.clone().add('1', 'hour').format(),
       location: 123,
-      session: resolve(session)
+      session: resolve(session),
     });
     const subGroup = EmberObject.create({
       id: 1,
       offerings: resolve([offering2]),
-      allDescendants: resolve([])
+      allDescendants: resolve([]),
     });
     const learnerGroup = EmberObject.create({
       id: 1,
       offerings: resolve([offering1]),
-      allDescendants: resolve([subGroup])
+      allDescendants: resolve([subGroup]),
     });
     this.set('learnerGroup', learnerGroup);
     await render(hbs`<LearnergroupCalendar @learnerGroup={{learnerGroup}} />`);
@@ -52,15 +52,15 @@ module('Integration | Component | learnergroup calendar', function(hooks) {
     assert.dom(events).exists({ count: 1 });
   });
 
-  test('shows subgroup events', async function(assert) {
+  test('shows subgroup events', async function (assert) {
     assert.expect(1);
     const today = moment().hour(8);
     const course = EmberObject.create({
-      title: 'course title'
+      title: 'course title',
     });
     const session = EmberObject.create({
       title: 'session title',
-      course: resolve(course)
+      course: resolve(course),
     });
 
     const offering1 = EmberObject.create({
@@ -68,34 +68,35 @@ module('Integration | Component | learnergroup calendar', function(hooks) {
       startDate: today.format(),
       endDate: today.clone().add('1', 'hour').format(),
       location: 123,
-      session: resolve(session)
+      session: resolve(session),
     });
     const offering2 = EmberObject.create({
       id: 2,
       startDate: today.format(),
       endDate: today.clone().add('1', 'hour').format(),
       location: 123,
-      session: resolve(session)
+      session: resolve(session),
     });
     const subGroup = EmberObject.create({
       id: 1,
       offerings: resolve([offering2]),
-      allDescendants: resolve([])
+      allDescendants: resolve([]),
     });
     const learnerGroup = EmberObject.create({
       id: 1,
       offerings: resolve([offering1]),
-      allDescendants: resolve([subGroup])
+      allDescendants: resolve([subGroup]),
     });
 
     this.set('learnerGroup', learnerGroup);
     await render(hbs`<LearnergroupCalendar @learnerGroup={{learnerGroup}} />`);
     const events = '[data-test-calendar-event]';
-    const subgroupEventsToggle = '[data-test-learnergroup-calendar-toggle-subgroup-events] label:nth-of-type(1)';
+    const subgroupEventsToggle =
+      '[data-test-learnergroup-calendar-toggle-subgroup-events] label:nth-of-type(1)';
     await settled();
 
     await click(subgroupEventsToggle);
-    await settled();
+
     assert.dom(events).exists({ count: 2 });
   });
 });

@@ -13,7 +13,7 @@ export default class LoginRoute extends Route {
   noAccountExistsAccount = null;
   noAccountExistsError = false;
 
-  beforeModel(){
+  beforeModel() {
     this.session.prohibitAuthentication('index');
     return this.attemptSSOAuth();
   }
@@ -23,30 +23,38 @@ export default class LoginRoute extends Route {
     controller.set('noAccountExistsAccount', this.noAccountExistsAccount);
   }
 
-  async attemptSSOAuth(){
+  async attemptSSOAuth() {
     const type = await this.iliosConfig.getAuthenticationType();
-    if(type === 'form' || type === 'ldap'){
+    if (type === 'form' || type === 'ldap') {
       return;
     }
-    if(type === 'shibboleth'){
+    if (type === 'shibboleth') {
       return await this.shibbolethAuth();
     }
 
-    if(type === 'cas'){
+    if (type === 'cas') {
       return await this.casLogin();
     }
   }
 
   async casLogin() {
-    const currentUrl = [window.location.protocol, '//', window.location.host, window.location.pathname].join('');
+    const currentUrl = [
+      window.location.protocol,
+      '//',
+      window.location.host,
+      window.location.pathname,
+    ].join('');
     let loginUrl = `/auth/login?service=${currentUrl}`;
 
     const queryParams = {};
     if (window.location.search.length > 1) {
-      window.location.search.substr(1).split('&').forEach(str => {
-        const arr = str.split('=');
-        queryParams[arr[0]] = arr[1];
-      });
+      window.location.search
+        .substr(1)
+        .split('&')
+        .forEach((str) => {
+          const arr = str.split('=');
+          queryParams[arr[0]] = arr[1];
+        });
     }
 
     if (isPresent(queryParams.ticket)) {
@@ -60,24 +68,24 @@ export default class LoginRoute extends Route {
         window.location.replace(`${casLoginUrl}?service=${currentUrl}`);
       });
     }
-    if(response.status === 'noAccountExists'){
+    if (response.status === 'noAccountExists') {
       this.set('noAccountExistsError', true);
       this.set('noAccountExistsAccount', response.userId);
       return;
     }
-    if(response.status === 'success'){
+    if (response.status === 'success') {
       const authenticator = 'authenticator:ilios-jwt';
-      this.session.authenticate(authenticator, {jwt: response.jwt});
+      this.session.authenticate(authenticator, { jwt: response.jwt });
     }
   }
 
-  async shibbolethAuth(){
+  async shibbolethAuth() {
     const loginUrl = '/auth/login';
     const response = await this.fetch.getJsonFromApiHost(loginUrl);
     const status = response.status;
-    if(status === 'redirect'){
+    if (status === 'redirect') {
       let shibbolethLoginUrl = await this.iliosConfig.itemFromConfig('loginUrl');
-      if(EmberConfig.redirectAfterShibLogin){
+      if (EmberConfig.redirectAfterShibLogin) {
         const attemptedRoute = encodeURIComponent(window.location.href);
         shibbolethLoginUrl += '?target=' + attemptedRoute;
       }
@@ -86,14 +94,14 @@ export default class LoginRoute extends Route {
         window.location.replace(shibbolethLoginUrl);
       });
     }
-    if(status === 'noAccountExists'){
+    if (status === 'noAccountExists') {
       this.set('noAccountExistsError', true);
       this.set('noAccountExistsAccount', response.userId);
       return;
     }
-    if(status === 'success'){
+    if (status === 'success') {
       const authenticator = 'authenticator:ilios-jwt';
-      this.session.authenticate(authenticator, {jwt: response.jwt});
+      this.session.authenticate(authenticator, { jwt: response.jwt });
     }
   }
 }

@@ -8,7 +8,7 @@ import {
   property,
   triggerable,
   text,
-  value
+  value,
 } from 'ember-cli-page-object';
 
 const definition = {
@@ -21,7 +21,7 @@ const definition = {
     submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
     cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
     inputControlIsVisible: isVisible('input'),
-    readonlyValue: text('.value')
+    readonlyValue: text('.value'),
   },
   aamcMethod: {
     scope: '[data-test-aamc-method]',
@@ -31,7 +31,7 @@ const definition = {
       selected: property('selected'),
     }),
     inputControlIsVisible: isVisible('select'),
-    readonlyValue: text('.value')
+    readonlyValue: text('.value'),
   },
   calendarColor: {
     scope: '[data-test-color]',
@@ -42,14 +42,14 @@ const definition = {
     cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
     inputControlIsVisible: isVisible('input'),
     readonlyValue: text('.value'),
-    colorboxStyle: attribute('style', '[data-test-colorbox]')
+    colorboxStyle: attribute('style', '[data-test-colorbox]'),
   },
   assessment: {
     scope: '[data-test-assessment]',
     toggle: clickable('[data-test-toggle-yesno] [data-test-handle]'),
     inputControlIsVisible: isVisible('[data-test-toggle-yesno]'),
     readonlyValue: text('.value'),
-    isAssessment: property('checked', 'input')
+    isAssessment: property('checked', 'input'),
   },
   assessmentSelector: {
     scope: '[data-test-assessment-options]',
@@ -59,14 +59,14 @@ const definition = {
       selected: property('selected'),
     }),
     inputControlIsVisible: isVisible('select'),
-    readonlyValue: text('.value')
+    readonlyValue: text('.value'),
   },
   active: {
     scope: '[data-test-active]',
     toggle: clickable('[data-test-toggle-yesno] [data-test-handle]'),
     readonlyValue: text('.value'),
     inputControlIsVisible: isVisible('[data-test-toggle-yesno]'),
-    isActive: property('checked', 'input')
+    isActive: property('checked', 'input'),
   },
   submit: {
     scope: '[data-test-submit]',
@@ -76,7 +76,7 @@ const definition = {
   },
   close: {
     scope: '[data-test-close]',
-  }
+  },
 };
 
 export default definition;

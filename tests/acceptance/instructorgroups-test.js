@@ -1,35 +1,29 @@
-import {
-  currentURL,
-  currentRouteName
-} from '@ember/test-helpers';
-import {
-  module,
-  test
-} from 'qunit';
+import { currentURL, currentRouteName } from '@ember/test-helpers';
+import { module, test } from 'qunit';
 
 import page from 'ilios/tests/pages/instructor-groups';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Acceptance | Instructor Groups', function(hooks) {
+module('Acceptance | Instructor Groups', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
   module('User in single school', function (hooks) {
     hooks.beforeEach(async function () {
       this.school = this.server.create('school');
-      this.user = await setupAuthentication( { school: this.school } );
+      this.user = await setupAuthentication({ school: this.school });
     });
 
-    test('visiting /instructorgroups', async function(assert) {
+    test('visiting /instructorgroups', async function (assert) {
       await page.visit();
       assert.equal(currentRouteName(), 'instructorGroups');
     });
 
-    test('list groups', async function(assert) {
+    test('list groups', async function (assert) {
       this.server.createList('user', 5);
-      this.server.createList('course', 2, {school: this.school});
+      this.server.createList('course', 2, { school: this.school });
       this.server.create('session', {
         courseId: 1,
       });
@@ -38,24 +32,24 @@ module('Acceptance | Instructor Groups', function(hooks) {
       });
       const firstInstructorgroup = this.server.create('instructorGroup', {
         school: this.school,
-        userIds: [2, 3, 4, 5, 6]
+        userIds: [2, 3, 4, 5, 6],
       });
       const secondInstructorgroup = this.server.create('instructorGroup', {
-        school: this.school
+        school: this.school,
       });
       this.server.create('offering', {
         instructorGroupIds: [1],
-        sessionId: 1
+        sessionId: 1,
       });
       this.server.create('offering', {
         instructorGroupIds: [1],
-        sessionId: 2
+        sessionId: 2,
       });
 
       assert.expect(7);
       await page.visit();
       assert.equal(page.instructorGroups().count, 2);
-      assert.equal(page.instructorGroups(0).title , firstInstructorgroup.title);
+      assert.equal(page.instructorGroups(0).title, firstInstructorgroup.title);
       assert.equal(page.instructorGroups(0).members, 5);
       assert.equal(page.instructorGroups(0).courses, 2);
       assert.equal(page.instructorGroups(1).title, secondInstructorgroup.title);
@@ -63,7 +57,7 @@ module('Acceptance | Instructor Groups', function(hooks) {
       assert.equal(page.instructorGroups(1).courses, 0);
     });
 
-    test('filters by title', async function(assert) {
+    test('filters by title', async function (assert) {
       this.server.create('school');
       const firstInstructorgroup = this.server.create('instructorGroup', {
         title: 'specialfirstinstructorgroup',
@@ -71,53 +65,53 @@ module('Acceptance | Instructor Groups', function(hooks) {
       });
       const secondInstructorgroup = this.server.create('instructorGroup', {
         title: 'specialsecondinstructorgroup',
-        school: this.school
+        school: this.school,
       });
       const regularInstructorgroup = this.server.create('instructorGroup', {
         title: 'regularinstructorgroup',
-        school: this.school
+        school: this.school,
       });
       const regexInstructorgroup = this.server.create('instructorGroup', {
         title: '\\yoo hoo',
-        school: this.school
+        school: this.school,
       });
       await page.visit();
-      assert.equal(page.instructorGroups().count,  4);
+      assert.equal(page.instructorGroups().count, 4);
       assert.equal(page.instructorGroups(0).title, regexInstructorgroup.title);
       assert.equal(page.instructorGroups(1).title, regularInstructorgroup.title);
       assert.equal(page.instructorGroups(2).title, firstInstructorgroup.title);
       assert.equal(page.instructorGroups(3).title, secondInstructorgroup.title);
 
       await page.filterByTitle('first');
-      assert.equal(page.instructorGroups().count,  1);
+      assert.equal(page.instructorGroups().count, 1);
       assert.equal(page.instructorGroups(0).title, firstInstructorgroup.title);
 
       await page.filterByTitle('  first   ');
-      assert.equal(page.instructorGroups().count,  1);
+      assert.equal(page.instructorGroups().count, 1);
       assert.equal(page.instructorGroups(0).title, firstInstructorgroup.title);
 
       await page.filterByTitle('second');
-      assert.equal(page.instructorGroups().count,  1);
+      assert.equal(page.instructorGroups().count, 1);
       assert.equal(page.instructorGroups(0).title, secondInstructorgroup.title);
 
       await page.filterByTitle('special');
-      assert.equal(page.instructorGroups().count,  2);
+      assert.equal(page.instructorGroups().count, 2);
       assert.equal(page.instructorGroups(0).title, firstInstructorgroup.title);
       assert.equal(page.instructorGroups(1).title, secondInstructorgroup.title);
 
       await page.filterByTitle('\\');
-      assert.equal(page.instructorGroups().count,  1);
+      assert.equal(page.instructorGroups().count, 1);
       assert.equal(page.instructorGroups(0).title, regexInstructorgroup.title);
 
       await page.filterByTitle('');
-      assert.equal(page.instructorGroups().count,  4);
+      assert.equal(page.instructorGroups().count, 4);
       assert.equal(page.instructorGroups(0).title, regexInstructorgroup.title);
       assert.equal(page.instructorGroups(1).title, regularInstructorgroup.title);
       assert.equal(page.instructorGroups(2).title, firstInstructorgroup.title);
       assert.equal(page.instructorGroups(3).title, secondInstructorgroup.title);
     });
 
-    test('add new instructorgroup', async function(assert) {
+    test('add new instructorgroup', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       assert.expect(5);
       await page.visit();
@@ -132,7 +126,7 @@ module('Acceptance | Instructor Groups', function(hooks) {
       assert.equal(page.instructorGroups(0).courses, 0);
     });
 
-    test('cancel adding new instructorgroup', async function(assert) {
+    test('cancel adding new instructorgroup', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       assert.expect(6);
       this.server.create('instructorGroup', {
@@ -149,7 +143,7 @@ module('Acceptance | Instructor Groups', function(hooks) {
       assert.equal(page.instructorGroups(0).title, 'instructor group 0');
     });
 
-    test('remove instructorgroup', async function(assert) {
+    test('remove instructorgroup', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       assert.expect(4);
       this.server.create('instructorGroup', {
@@ -164,7 +158,7 @@ module('Acceptance | Instructor Groups', function(hooks) {
       assert.ok(page.emptyListRowIsVisible);
     });
 
-    test('cancel remove instructorgroup', async function(assert) {
+    test('cancel remove instructorgroup', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       assert.expect(4);
       this.server.create('instructorGroup', {
@@ -179,7 +173,7 @@ module('Acceptance | Instructor Groups', function(hooks) {
       assert.equal(page.instructorGroups(0).title, 'instructor group 0');
     });
 
-    test('confirmation of remove message', async function(assert) {
+    test('confirmation of remove message', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       const users = this.server.createList('user', 5);
       this.server.create('instructorGroup', {
@@ -198,7 +192,7 @@ module('Acceptance | Instructor Groups', function(hooks) {
       );
     });
 
-    test('click title takes you to instructorgroup route', async function(assert) {
+    test('click title takes you to instructorgroup route', async function (assert) {
       assert.expect(1);
       this.server.create('instructorGroup', {
         school: this.school,
@@ -208,7 +202,7 @@ module('Acceptance | Instructor Groups', function(hooks) {
       assert.equal(currentURL(), '/instructorgroups/1');
     });
 
-    test('title filter escapes regex', async function(assert) {
+    test('title filter escapes regex', async function (assert) {
       assert.expect(4);
       this.server.create('instructorGroup', {
         title: 'yes\\no',
@@ -222,7 +216,7 @@ module('Acceptance | Instructor Groups', function(hooks) {
       assert.equal(page.instructorGroups(0).title, 'yes\\no');
     });
 
-    test('cannot delete instructorgroup with attached courses #3767', async function(assert) {
+    test('cannot delete instructorgroup with attached courses #3767', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       assert.expect(5);
       const group1 = this.server.create('instructorGroup', {
@@ -245,7 +239,7 @@ module('Acceptance | Instructor Groups', function(hooks) {
     });
   });
 
-  test('filters options', async function(assert) {
+  test('filters options', async function (assert) {
     assert.expect(5);
     const schools = this.server.createList('school', 2);
     await setupAuthentication({

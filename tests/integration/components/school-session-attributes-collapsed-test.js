@@ -4,10 +4,10 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios/tests/pages/components/school-session-attributes-collapsed';
 
-module('Integration | Component | school session attributes collapsed', function(hooks) {
+module('Integration | Component | school session attributes collapsed', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     this.set('showSessionAttendanceRequired', false);
     this.set('showSessionSupplemental', true);
     this.set('showSessionSpecialAttireRequired', false);
@@ -30,7 +30,7 @@ module('Integration | Component | school session attributes collapsed', function
     assert.ok(component.specialEquipmentRequired.isDisabled);
   });
 
-  test('expand', async function(assert) {
+  test('expand', async function (assert) {
     assert.expect(1);
     this.set('expand', () => {
       assert.ok(true, 'expand triggered.');

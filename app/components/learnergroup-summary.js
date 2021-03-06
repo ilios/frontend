@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { isPresent } from '@ember/utils';
 import { all, map } from 'rsvp';
-import {enqueueTask, restartableTask, task} from 'ember-concurrency';
+import { enqueueTask, restartableTask, task } from 'ember-concurrency';
 import { NotBlank, Length, IsURL, validatable } from 'ilios-common/decorators/validation';
 
 const DEFAULT_URL_VALUE = 'https://';
@@ -42,7 +42,7 @@ export default class LearnergroupSummaryComponent extends Component {
     if (isPresent(learnerGroup)) {
       this.location = learnerGroup.location;
       this.url = learnerGroup.url;
-      this.learnerGroupId =learnerGroup.id;
+      this.learnerGroupId = learnerGroup.id;
       this.learnerGroupTitle = learnerGroup.title;
       const cohort = yield learnerGroup.cohort;
       this.cohortTitle = cohort.title;
@@ -178,13 +178,13 @@ export default class LearnergroupSummaryComponent extends Component {
     } else {
       users = yield this.args.learnerGroup.usersOnlyAtThisLevel;
     }
-    return yield map(users.toArray(), async user => {
+    return yield map(users.toArray(), async (user) => {
       const lowestGroupInTree = await user.getLowestMemberGroupInALearnerGroupTree(this.treeGroups);
       return ObjectProxy.create({
         content: user,
         lowestGroupInTree,
         //special sorting property
-        lowestGroupInTreeTitle: lowestGroupInTree.title
+        lowestGroupInTreeTitle: lowestGroupInTree.title,
       });
     });
   }
@@ -196,9 +196,7 @@ export default class LearnergroupSummaryComponent extends Component {
     const topLevelGroup = yield learnerGroup.topLevelGroup;
     const currentUsers = yield topLevelGroup.allDescendantUsers;
     const users = yield cohort.users;
-    return users.filter(
-      user => !currentUsers.includes(user)
-    );
+    return users.filter((user) => !currentUsers.includes(user));
   }
 
   @restartableTask
@@ -215,7 +213,7 @@ export default class LearnergroupSummaryComponent extends Component {
     const sessions = await Promise.all(arr.mapBy('session'));
     const filteredSessions = sessions.filter(Boolean).uniq();
     const courses = await Promise.all(filteredSessions.mapBy('course'));
-    const courseObjects = courses.map(course => {
+    const courseObjects = courses.map((course) => {
       const obj = {
         id: course.id,
         courseTitle: course.title,
@@ -238,7 +236,7 @@ export default class LearnergroupSummaryComponent extends Component {
         courseObj = {
           id: obj.id,
           courseTitle: obj.courseTitle,
-          groups: []
+          groups: [],
         };
         arr.push(courseObj);
       }

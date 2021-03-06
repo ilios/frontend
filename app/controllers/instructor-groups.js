@@ -13,7 +13,7 @@ export default Controller.extend({
 
   queryParams: {
     schoolId: 'school',
-    titleFilter: 'filter'
+    titleFilter: 'filter',
   },
 
   deletedInstructorGroup: null,
@@ -24,55 +24,69 @@ export default Controller.extend({
 
   hasMoreThanOneSchool: gt('model.schools.length', 1),
 
-  instructorGroups: computed('selectedSchool', 'deletedInstructorGroup', 'newInstructorGroup', async function() {
-    const schoolId = this.selectedSchool.get('id');
-    if(isEmpty(schoolId)) {
-      resolve([]);
-    }
-    return await this.store.query('instructor-group', {
-      filters: {
-        school: schoolId
+  instructorGroups: computed(
+    'deletedInstructorGroup',
+    'newInstructorGroup',
+    'selectedSchool',
+    'store',
+    async function () {
+      const schoolId = this.selectedSchool.get('id');
+      if (isEmpty(schoolId)) {
+        resolve([]);
       }
-    });
-  }),
+      return await this.store.query('instructor-group', {
+        filters: {
+          school: schoolId,
+        },
+      });
+    }
+  ),
 
-  filteredInstructorGroups: computed('titleFilter', 'instructorGroups.[]', async function() {
+  filteredInstructorGroups: computed('titleFilter', 'instructorGroups.[]', async function () {
     const titleFilter = this.titleFilter;
     const title = isBlank(titleFilter) ? '' : titleFilter.trim().toLowerCase();
     const instructorGroups = await this.instructorGroups;
     let filteredInstructorGroups;
-    if(isEmpty(title)){
+    if (isEmpty(title)) {
       filteredInstructorGroups = instructorGroups;
     } else {
-      filteredInstructorGroups = instructorGroups.filter(instructorGroup => {
-        return isPresent(instructorGroup.get('title'))
-          && instructorGroup.get('title').trim().toLowerCase().includes(title);
+      filteredInstructorGroups = instructorGroups.filter((instructorGroup) => {
+        return (
+          isPresent(instructorGroup.get('title')) &&
+          instructorGroup.get('title').trim().toLowerCase().includes(title)
+        );
       });
     }
     return filteredInstructorGroups.sortBy('title');
   }),
 
-  selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function() {
-    const schools = this.get('model.schools');
-    const primarySchool = this.get('model.primarySchool');
-    const schoolId = this.schoolId;
-    if(isPresent(schoolId)){
-      const school =  schools.findBy('id', schoolId);
-      if(school){
-        return school;
+  selectedSchool: computed(
+    'model.primarySchool',
+    'model.schools.[]',
+    'primarySchool',
+    'schoolId',
+    function () {
+      const schools = this.get('model.schools');
+      const primarySchool = this.get('model.primarySchool');
+      const schoolId = this.schoolId;
+      if (isPresent(schoolId)) {
+        const school = schools.findBy('id', schoolId);
+        if (school) {
+          return school;
+        }
       }
+
+      return primarySchool;
     }
+  ),
 
-    return primarySchool;
-  }),
-
-  canCreate: computed('selectedSchool', async function() {
+  canCreate: computed('selectedSchool', async function () {
     const permissionChecker = this.permissionChecker;
     const selectedSchool = this.selectedSchool;
     return permissionChecker.canCreateInstructorGroup(selectedSchool);
   }),
 
-  canDelete: computed('selectedSchool', async function() {
+  canDelete: computed('selectedSchool', async function () {
     const permissionChecker = this.permissionChecker;
     const selectedSchool = this.selectedSchool;
     return permissionChecker.canDeleteInstructorGroupInSchool(selectedSchool);
@@ -107,12 +121,12 @@ export default Controller.extend({
 
     toggleNewInstructorGroupForm() {
       this.set('showNewInstructorGroupForm', !this.showNewInstructorGroupForm);
-    }
+    },
   },
 
   changeTitleFilter: task(function* (value) {
     this.set('titleFilter', value);
     yield timeout(250);
     return value;
-  }).restartable()
+  }).restartable(),
 });

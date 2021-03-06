@@ -9,7 +9,7 @@ export default class SchoolsRoute extends Route {
     this.session.requireAuthentication(transition, 'login');
   }
 
-  model(){
+  model() {
     return this.store.findAll('school');
   }
 }

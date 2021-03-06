@@ -6,11 +6,11 @@ import { hbs } from 'ember-cli-htmlbars';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios/tests/pages/components/program-year/list';
 
-module('Integration | Component | program-year/list', function(hooks) {
+module('Integration | Component | program-year/list', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     this.permissionCheckerMock = Service.extend({
       canDeleteProgramYear() {
         return true;
@@ -20,16 +20,18 @@ module('Integration | Component | program-year/list', function(hooks) {
       },
       canUnlockProgramYear() {
         return true;
-      }
+      },
     });
     this.owner.register('service:permissionChecker', this.permissionCheckerMock);
   });
 
-  test('it renders short year', async function(assert) {
-    this.server.get('application/config', function() {
-      return { config: {
-        academicYearCrossesCalendarYearBoundaries: false,
-      }};
+  test('it renders short year', async function (assert) {
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: false,
+        },
+      };
     });
     const school = this.server.create('school');
     const programYears = [1, 2, 3].map(() => {
@@ -47,11 +49,13 @@ module('Integration | Component | program-year/list', function(hooks) {
     assert.equal(component.items[2].link.text, '2014');
   });
 
-  test('it renders long year', async function(assert) {
-    this.server.get('application/config', function() {
-      return { config: {
-        academicYearCrossesCalendarYearBoundaries: true,
-      }};
+  test('it renders long year', async function (assert) {
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+        },
+      };
     });
     const school = this.server.create('school');
     const programYears = [1, 2, 3].map(() => {

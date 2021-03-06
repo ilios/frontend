@@ -35,32 +35,32 @@ export default class UserMenuComponent extends Component {
     }
 
     switch (evt.key) {
-    case 'ArrowDown':
-      if (evt.target.tagName.toLowerCase() === 'button') {
-        this.openMenuAndSelectTheFirstItem();
-      } else {
-        if (item.nextElementSibling) {
-          item.nextElementSibling.querySelector('a').focus();
+      case 'ArrowDown':
+        if (evt.target.tagName.toLowerCase() === 'button') {
+          this.openMenuAndSelectTheFirstItem();
         } else {
-          schedule('afterRender', () => {
-            this.element.querySelector('.menu li:nth-of-type(1) a').focus();
-          });
+          if (item.nextElementSibling) {
+            item.nextElementSibling.querySelector('a').focus();
+          } else {
+            schedule('afterRender', () => {
+              this.element.querySelector('.menu li:nth-of-type(1) a').focus();
+            });
+          }
         }
-      }
-      break;
-    case 'ArrowUp':
-      if (item.previousElementSibling) {
-        item.previousElementSibling.querySelector('a').focus();
-      } else {
-        this.element.querySelector('.menu li:last-of-type a').focus();
-      }
-      break;
-    case 'Escape':
-    case 'Tab':
-    case 'ArrowRight':
-    case 'ArrowLeft':
-      this.isOpen = false;
-      break;
+        break;
+      case 'ArrowUp':
+        if (item.previousElementSibling) {
+          item.previousElementSibling.querySelector('a').focus();
+        } else {
+          this.element.querySelector('.menu li:last-of-type a').focus();
+        }
+        break;
+      case 'Escape':
+      case 'Tab':
+      case 'ArrowRight':
+      case 'ArrowLeft':
+        this.isOpen = false;
+        break;
     }
 
     return true;

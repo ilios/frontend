@@ -2,26 +2,20 @@ import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import {
-  render,
-  settled,
-  findAll,
-  click,
-  find
-} from '@ember/test-helpers';
+import { render, settled, findAll, click, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | program list', function(hooks) {
+module('Integration | Component | program list', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert){
+  test('it renders', async function (assert) {
     assert.expect(11);
     const som = this.server.create('school', {
-      title: 'Medicine'
+      title: 'Medicine',
     });
     const sod = this.server.create('school', {
-      title: 'Dentistry'
+      title: 'Dentistry',
     });
     const program1 = this.server.create('program', {
       school: som,
@@ -42,17 +36,17 @@ module('Integration | Component | program list', function(hooks) {
       },
       async canUpdateProgram() {
         return true;
-      }
+      },
     });
 
     const programModel1 = await this.owner.lookup('service:store').find('program', program1.id);
     const programModel2 = await this.owner.lookup('service:store').find('program', program2.id);
 
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    this.set('programs', [ programModel1, programModel2 ]);
+    this.set('programs', [programModel1, programModel2]);
 
     await render(hbs`<ProgramList @programs={{programs}} />`);
-    await settled();
+
     assert.dom('thead tr:nth-of-type(1) th').hasText('Program Title');
     assert.dom(findAll('thead tr:nth-of-type(1) th')[1]).hasText('School');
     assert.dom(findAll('thead tr:nth-of-type(1) th')[2]).hasText('Actions');
@@ -68,21 +62,21 @@ module('Integration | Component | program list', function(hooks) {
     assert.dom('tbody tr:nth-of-type(2) td:nth-of-type(3) .remove .fa-trash').exists({ count: 1 });
   });
 
-  test('empty list', async function(assert){
+  test('empty list', async function (assert) {
     assert.expect(3);
 
     this.set('programs', []);
     await render(hbs`<ProgramList @programs={{programs}} />`);
-    await settled();
+
     assert.dom('tbody').exists({ count: 1 });
     assert.dom('tbody [data-test-active-row]').doesNotExist();
     assert.dom('tbody [data-test-empty-list]').exists();
   });
 
-  test('edit', async function(assert){
+  test('edit', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school', {
-      title: 'Medicine'
+      title: 'Medicine',
     });
     const program = this.server.create('program', {
       school,
@@ -90,20 +84,20 @@ module('Integration | Component | program list', function(hooks) {
     });
     const programModel = await this.owner.lookup('service:store').find('program', program.id);
 
-    this.set('programs', [ programModel ]);
+    this.set('programs', [programModel]);
     this.set('editAction', (program) => {
-      assert.equal(program, programModel );
+      assert.equal(program, programModel);
     });
 
     await render(hbs`<ProgramList @programs={{programs}} @edit={{editAction}} />`);
-    await settled();
+
     await click(findAll('tbody tr:nth-of-type(1) td')[1]);
   });
 
-  test('remove and cancel', async function(assert){
+  test('remove and cancel', async function (assert) {
     assert.expect(5);
     const school = this.server.create('school', {
-      title: 'Medicine'
+      title: 'Medicine',
     });
     const program = this.server.create('program', {
       school,
@@ -114,31 +108,35 @@ module('Integration | Component | program list', function(hooks) {
       async canDeleteProgram(program) {
         assert.equal(program, programModel);
         return true;
-      }
+      },
     });
 
     this.owner.register('service:permissionChecker', permissionCheckerMock);
-    this.set('programs', [ programModel ]);
+    this.set('programs', [programModel]);
     this.set('removeAction', () => {
       assert.ok(false, 'This function should never be called.');
     });
 
     await render(hbs`<ProgramList @programs={{programs}} @remove={{removeAction}} />`);
-    await settled();
+
     assert.dom('tbody tr').exists({ count: 1 });
     await click('tbody tr:nth-of-type(1) td:nth-of-type(3) .remove');
-    await settled();
+
     assert.dom('tbody tr').exists({ count: 2 });
-    assert.ok(find('tbody tr:nth-of-type(2) td').textContent.includes('Are you sure you want to delete this program?'));
+    assert.ok(
+      find('tbody tr:nth-of-type(2) td').textContent.includes(
+        'Are you sure you want to delete this program?'
+      )
+    );
     await click('tbody tr:nth-of-type(2) .done');
-    await settled();
+
     assert.dom('tbody tr').exists({ count: 1 });
   });
 
-  test('remove and confirm', async function(assert){
+  test('remove and confirm', async function (assert) {
     assert.expect(4);
     const school = this.server.create('school', {
-      title: 'Medicine'
+      title: 'Medicine',
     });
     const program = this.server.create('program', {
       school,
@@ -155,22 +153,26 @@ module('Integration | Component | program list', function(hooks) {
     this.set('removeAction', (program) => {
       assert.equal(program, programModel);
     });
-    this.set('programs', [ programModel ]);
+    this.set('programs', [programModel]);
 
     await render(hbs`<ProgramList @programs={{programs}} @remove={{removeAction}} />`);
-    await settled();
+
     assert.dom('tbody tr').exists({ count: 1 });
     await click('tbody tr:nth-of-type(1) td:nth-of-type(3) .remove');
-    await settled();
+
     assert.dom('tbody tr').exists({ count: 2 });
-    assert.ok(find('tbody tr:nth-of-type(2) td').textContent.includes('Are you sure you want to delete this program?'));
+    assert.ok(
+      find('tbody tr:nth-of-type(2) td').textContent.includes(
+        'Are you sure you want to delete this program?'
+      )
+    );
     await click('tbody tr:nth-of-type(2) .remove');
   });
 
-  test('trash is disabled for unprivileged users', async function(assert){
+  test('trash is disabled for unprivileged users', async function (assert) {
     assert.expect(2);
     const school = this.server.create('school', {
-      title: 'Medicine'
+      title: 'Medicine',
     });
     const program = this.server.create('program', {
       school,
@@ -180,14 +182,14 @@ module('Integration | Component | program list', function(hooks) {
     const permissionCheckerMock = Service.extend({
       async canDeleteProgram() {
         return false;
-      }
+      },
     });
 
-    this.set('programs', [ programModel ]);
+    this.set('programs', [programModel]);
     this.owner.register('service:permissionChecker', permissionCheckerMock);
 
     await render(hbs`<ProgramList @programs={{programs}} />`);
-    await settled();
+
     assert.dom('tbody tr').exists({ count: 1 });
     assert.dom('tbody tr:nth-of-type(1) td:nth-of-type(3) .fa-trash.disabled').exists({ count: 1 });
   });

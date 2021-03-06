@@ -4,7 +4,7 @@ import { task } from 'ember-concurrency';
 
 export default Component.extend({
   session: service(),
-  tagName: "",
+  tagName: '',
   noAccountExistsError: false,
   noAccountExistsAccount: null,
   username: null,
@@ -17,8 +17,8 @@ export default Component.extend({
       const authenticator = 'authenticator:ilios-jwt';
       yield session.authenticate(authenticator, credentials);
     } catch (response) {
-      const keys = response.json.errors.map(key => {
-        return ('general.' + key);
+      const keys = response.json.errors.map((key) => {
+        return 'general.' + key;
       });
       this.set('error', { keys });
     }

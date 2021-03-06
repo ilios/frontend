@@ -15,7 +15,7 @@ const definition = {
   addNewReport: clickable('[data-test-expand-collapse-button] button'),
   reports: collection('[data-test-saved-reports] li', {
     title: text(),
-    select: clickable('button')
+    select: clickable('button'),
   }),
   selectedReport: {
     scope: '[data-test-selected-report]',
@@ -40,11 +40,10 @@ const definition = {
     runMeshSearch: clickable('[data-test-mesh-manager] [data-test-search-box] .search-icon'),
     meshSearchResults: collection('[data-test-search-results] li', {
       name: text('[data-test-name]'),
-      pick: clickable()
+      pick: clickable(),
     }),
     save: clickable('[data-test-report-save]'),
-  }
-
+  },
 };
 
 export default definition;

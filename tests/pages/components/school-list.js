@@ -7,7 +7,7 @@ import {
   fillable,
   text,
   triggerable,
-  value
+  value,
 } from 'ember-cli-page-object';
 
 const definition = {
@@ -23,28 +23,28 @@ const definition = {
       set: fillable('input'),
       value: value('input'),
       hasError: isVisible('.validation-error-message'),
-      submit: triggerable('keyup', 'input', {eventProperties: {key: 'Enter'}}),
-      cancel: triggerable('keyup', 'input', {eventProperties: {key: 'Escape'}}),
+      submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
+      cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
     },
     email: {
       scope: '[data-test-email]',
       set: fillable('input'),
       value: value('input'),
       hasError: isVisible('.validation-error-message'),
-      submit: triggerable('keyup', 'input', {eventProperties: {key: 'Enter'}}),
-      cancel: triggerable('keyup', 'input', {eventProperties: {key: 'Escape'}}),
+      submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
+      cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
     },
     submit: clickable('[data-test-submit]'),
     cancel: clickable('[data-test-cancel]'),
   },
   savedSchool: {
     scope: '[data-test-new-school]',
-    link:  attribute('href', 'a'),
+    link: attribute('href', 'a'),
   },
   schools: collection('[data-test-school]', {
     title: text('[data-test-title]'),
     titleLink: attribute('href', '[data-test-title] a'),
-    editLink:  attribute('href', '[data-test-edit] a'),
+    editLink: attribute('href', '[data-test-edit] a'),
   }),
 };
 

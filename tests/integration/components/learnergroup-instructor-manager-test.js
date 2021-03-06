@@ -1,15 +1,15 @@
-import { module,  test } from 'qunit';
+import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/learnergroup-instructor-manager';
 
-module('Integration | Component | learnergroup instructor manager', function(hooks) {
+module('Integration | Component | learnergroup instructor manager', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const programYear = this.server.create('programYear', { program });
@@ -17,18 +17,35 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
     this.school = school;
   });
 
-  test('it renders', async function(assert) {
-    const instructor = this.server.create('user', { firstName: 'test', lastName: 'person', middleName: '' });
-    const instructor2 = this.server.create('user', { firstName: 'zeb', lastName: 'z00ber', displayName: 'aardvark' });
-    const instructor3 = this.server.create('user', { firstName: 'test', lastName: 'person2', middleName: '' });
-    const instructorGroup = this.server.create('instructorGroup', { title: 'test group', users: [ instructor3 ]});
+  test('it renders', async function (assert) {
+    const instructor = this.server.create('user', {
+      firstName: 'test',
+      lastName: 'person',
+      middleName: '',
+    });
+    const instructor2 = this.server.create('user', {
+      firstName: 'zeb',
+      lastName: 'z00ber',
+      displayName: 'aardvark',
+    });
+    const instructor3 = this.server.create('user', {
+      firstName: 'test',
+      lastName: 'person2',
+      middleName: '',
+    });
+    const instructorGroup = this.server.create('instructorGroup', {
+      title: 'test group',
+      users: [instructor3],
+    });
     const learnerGroup = this.server.create('learnerGroup', {
       title: 'this group',
       cohort: this.cohort,
-      instructors: [ instructor, instructor2 ],
-      instructorGroups: [ instructorGroup ]
+      instructors: [instructor, instructor2],
+      instructorGroups: [instructorGroup],
     });
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learnerGroup', learnerGroup.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learnerGroup', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupInstructorManager
@@ -57,18 +74,23 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
     assert.equal(component.selectedInstructorGroups.length, 1);
     assert.equal(component.selectedInstructorGroups[0].title, 'test group');
     assert.equal(component.selectedInstructorGroups[0].members.length, 1);
-    assert.equal(component.selectedInstructorGroups[0].members[0].userNameInfo.fullName, 'test person2');
+    assert.equal(
+      component.selectedInstructorGroups[0].members[0].userNameInfo.fullName,
+      'test person2'
+    );
     assert.ok(component.saveButton.isVisible);
     assert.ok(component.cancelButton.isVisible);
     assert.notOk(component.manageButton.isVisible);
   });
 
-  test('no selected instructors', async function(assert) {
+  test('no selected instructors', async function (assert) {
     const learnerGroup = this.server.create('learnerGroup', {
       title: 'this group',
       cohort: this.cohort,
     });
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learnerGroup', learnerGroup.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learnerGroup', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupInstructorManager
@@ -80,15 +102,25 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
     assert.ok(component.hasNoAssignedInstructors);
   });
 
-  test('read-only mode', async function(assert) {
-    const instructor = this.server.create('user', { firstName: 'test', lastName: 'person', middleName: '' });
-    const instructor2 = this.server.create('user', { firstName: 'zeb', lastName: 'z00ber', displayName: 'aardvark' });
+  test('read-only mode', async function (assert) {
+    const instructor = this.server.create('user', {
+      firstName: 'test',
+      lastName: 'person',
+      middleName: '',
+    });
+    const instructor2 = this.server.create('user', {
+      firstName: 'zeb',
+      lastName: 'z00ber',
+      displayName: 'aardvark',
+    });
     const learnerGroup = this.server.create('learnerGroup', {
       title: 'this group',
       cohort: this.cohort,
-      instructors: [ instructor, instructor2 ],
+      instructors: [instructor, instructor2],
     });
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learnerGroup', learnerGroup.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learnerGroup', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupInstructorManager
@@ -100,16 +132,26 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
     assert.notOk(component.manageButton.isVisible);
   });
 
-  test('edit and cancel', async function(assert) {
-    const instructor = this.server.create('user', { firstName: 'test', lastName: 'person', middleName: '' });
-    const instructor2 = this.server.create('user', { firstName: 'zeb', lastName: 'z00ber', displayName: 'aardvark' });
+  test('edit and cancel', async function (assert) {
+    const instructor = this.server.create('user', {
+      firstName: 'test',
+      lastName: 'person',
+      middleName: '',
+    });
+    const instructor2 = this.server.create('user', {
+      firstName: 'zeb',
+      lastName: 'z00ber',
+      displayName: 'aardvark',
+    });
     const learnerGroup = this.server.create('learnerGroup', {
       title: 'this group',
       cohort: this.cohort,
-      instructors: [ instructor, instructor2 ],
+      instructors: [instructor, instructor2],
     });
 
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learnerGroup', learnerGroup.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learnerGroup', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnergroupInstructorManager
@@ -126,20 +168,37 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
     assert.equal(component.assignedInstructors.length, 2);
   });
 
-  test('edit and save', async function(assert) {
+  test('edit and save', async function (assert) {
     assert.expect(9);
-    const instructor = this.server.create('user', { firstName: 'test', lastName: 'person', middleName: '' });
-    const instructor2 = this.server.create('user', { firstName: 'zeb', lastName: 'z00ber', displayName: 'aardvark' });
-    const instructor3 = this.server.create('user', { firstName: 'test', lastName: 'person2', middleName: '' });
-    const instructorGroup = this.server.create('instructorGroup', { title: 'test group', users: [ instructor3 ] });
+    const instructor = this.server.create('user', {
+      firstName: 'test',
+      lastName: 'person',
+      middleName: '',
+    });
+    const instructor2 = this.server.create('user', {
+      firstName: 'zeb',
+      lastName: 'z00ber',
+      displayName: 'aardvark',
+    });
+    const instructor3 = this.server.create('user', {
+      firstName: 'test',
+      lastName: 'person2',
+      middleName: '',
+    });
+    const instructorGroup = this.server.create('instructorGroup', {
+      title: 'test group',
+      users: [instructor3],
+    });
     const instructorGroup2 = this.server.create('instructorGroup', { title: 'test group 2' });
     const learnerGroup = this.server.create('learnerGroup', {
       title: 'this group',
       cohort: this.cohort,
-      instructors: [ instructor, instructor2 ],
-      instructorGroups: [ instructorGroup, instructorGroup2 ]
+      instructors: [instructor, instructor2],
+      instructorGroups: [instructorGroup, instructorGroup2],
     });
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learnerGroup', learnerGroup.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learnerGroup', learnerGroup.id);
 
     this.set('save', (users, groups) => {
       assert.equal(users.length, 1);
@@ -166,13 +225,15 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
     await component.save();
   });
 
-  test('search and add instructor group', async function(assert) {
+  test('search and add instructor group', async function (assert) {
     this.server.create('instructorGroup', { title: 'test group', school: this.school });
     const learnerGroup = this.server.create('learnerGroup', {
       title: 'this group',
       cohort: this.cohort,
     });
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learnerGroup', learnerGroup.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learnerGroup', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupInstructorManager
@@ -188,7 +249,7 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
     assert.equal(component.selectedInstructorGroups[0].text, 'test group');
   });
 
-  test('search and add instructor', async function(assert) {
+  test('search and add instructor', async function (assert) {
     this.server.get('api/users', (schema) => {
       return schema.users.all();
     });
@@ -198,7 +259,9 @@ module('Integration | Component | learnergroup instructor manager', function(hoo
       title: 'this group',
       cohort: this.cohort,
     });
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learnerGroup', learnerGroup.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learnerGroup', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupInstructorManager

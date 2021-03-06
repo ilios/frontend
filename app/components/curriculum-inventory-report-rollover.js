@@ -11,9 +11,9 @@ const Validations = buildValidations({
     validator('presence', true),
     validator('length', {
       min: 3,
-      max: 200
-    })
-  ]
+      max: 200,
+    }),
+  ],
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
@@ -44,11 +44,11 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
         continue;
       }
       const title = i + ' - ' + (i + 1);
-      const year = EmberObject.create({ 'id': i, 'title': title });
+      const year = EmberObject.create({ id: i, title: title });
       years.pushObject(year);
     }
     let selectedYear = years.findBy('id', startYear + 1);
-    if (! selectedYear) {
+    if (!selectedYear) {
       selectedYear = years.findBy('id', reportYear + 1);
     }
     this.set('name', report.get('name'));
@@ -58,7 +58,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   },
 
   actions: {
-    changeName(newName){
+    changeName(newName) {
       this.set('name', newName);
     },
     setSelectedYear(event) {
@@ -72,7 +72,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('isSaving', true);
     yield timeout(10);
     this.send('addErrorDisplaysFor', ['name']);
-    const {validations} = yield this.validate();
+    const { validations } = yield this.validate();
 
     if (validations.get('isInvalid')) {
       this.set('isSaving', false);
@@ -111,5 +111,5 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     if (13 === keyCode) {
       this.save.perform();
     }
-  }
+  },
 });

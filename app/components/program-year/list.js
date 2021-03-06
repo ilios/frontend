@@ -17,7 +17,7 @@ export default class ProgramYearListComponent extends Component {
     return this.programYears.sortBy('startYear');
   }
   @use academicYearCrossesCalendarYearBoundaries = new ResolveAsyncValue(() => [
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   ]);
 
   @dropTask

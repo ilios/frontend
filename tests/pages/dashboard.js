@@ -1,7 +1,4 @@
-import {
-  create,
-  visitable
-} from 'ember-cli-page-object';
+import { create, visitable } from 'ember-cli-page-object';
 import myReports from './components/dashboard-myreports';
 
 export default create({

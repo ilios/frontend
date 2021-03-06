@@ -3,10 +3,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { findAll, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | global-search-tags', function(hooks) {
+module('Integration | Component | global-search-tags', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it displays tags properly', async function(assert) {
+  test('it displays tags properly', async function (assert) {
     assert.expect(4);
 
     this.set('tags', ['terms', 'meshdescriptors', 'id', 'learningmaterials']);

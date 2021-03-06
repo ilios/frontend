@@ -24,9 +24,9 @@ export default class DashboardController extends CommonDashboardController {
   report = null;
   reportYear = '';
 
-  @computed('report')
+  @computed('report', 'store')
   get selectedReport() {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (!this.report) {
         return null;
       }

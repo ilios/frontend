@@ -1,4 +1,12 @@
-import { clickable, collection, create, fillable, isPresent, property, text } from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  fillable,
+  isPresent,
+  property,
+  text,
+} from 'ember-cli-page-object';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
 
 const definition = {
@@ -19,13 +27,13 @@ const definition = {
     select: clickable('td:eq(0) input'),
     name: {
       scope: 'td:eq(1)',
-      userNameInfo
+      userNameInfo,
     },
-    campusId: text('td', {at: 2}),
+    campusId: text('td', { at: 2 }),
     isDisabled: isPresent('td:nth-of-type(1) [data-test-is-disabled]'),
-    email: text('td', {at: 3}),
+    email: text('td', { at: 3 }),
     remove: clickable('.no.clickable'),
-    canBeRemoved: isPresent('.no.clickable')
+    canBeRemoved: isPresent('.no.clickable'),
   }),
   usersNotInCurrentGroup: collection('[data-test-users-not-in-current-group] tr', {
     isSelected: property('checked', 'td:eq(0) input'),
@@ -33,14 +41,13 @@ const definition = {
     select: clickable('td:eq(0) input'),
     name: {
       scope: 'td:eq(1)',
-      userNameInfo
+      userNameInfo,
     },
-    campusId: text('td', {at: 2}),
+    campusId: text('td', { at: 2 }),
     isDisabled: isPresent('td:nth-of-type(1) [data-test-is-disabled]'),
-    email: text('td', {at: 3}),
+    email: text('td', { at: 3 }),
     add: clickable('.yes.clickable'),
-    canBeAdded: isPresent('.yes.clickable')
-
+    canBeAdded: isPresent('.yes.clickable'),
   }),
   add: clickable('button.done'),
   addButtonText: text('button.done'),
@@ -48,7 +55,6 @@ const definition = {
   removeButtonText: text('button.cancel'),
   membersCanBeAdded: isPresent('button.done'),
   membersCanBeRemoved: isPresent('button.cancel'),
-
 };
 
 export default definition;

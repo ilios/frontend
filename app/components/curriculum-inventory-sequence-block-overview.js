@@ -40,7 +40,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     if (isPresent(this.parent) && this.parent.isOrdered) {
       this.isInOrderedSequence = true;
       const siblings = yield this.parent.children;
-      for (let i = 0, n = (siblings.toArray().length); i < n; i++) {
+      for (let i = 0, n = siblings.toArray().length; i < n; i++) {
         const num = i + 1;
         this.orderInSequenceOptions.push(num);
       }
@@ -63,14 +63,14 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
 
   get requiredLabel() {
     switch (this.required) {
-    case '1':
-      return this.intl.t('general.required');
-    case '2':
-      return this.intl.t('general.optionalElective');
-    case '3':
-      return this.intl.t('general.requiredInTrack');
-    default:
-      return null;
+      case '1':
+        return this.intl.t('general.required');
+      case '2':
+        return this.intl.t('general.optionalElective');
+      case '3':
+        return this.intl.t('general.requiredInTrack');
+      default:
+        return null;
     }
   }
 
@@ -89,14 +89,14 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
 
   get childSequenceOrderLabel() {
     switch (this.childSequenceOrder) {
-    case '1':
-      return this.intl.t('general.ordered');
-    case '2':
-      return this.intl.t('general.unordered');
-    case '3':
-      return this.intl.t('general.parallel');
-    default:
-      return null;
+      case '1':
+        return this.intl.t('general.ordered');
+      case '2':
+        return this.intl.t('general.unordered');
+      case '3':
+        return this.intl.t('general.parallel');
+      default:
+        return null;
     }
   }
 
@@ -113,8 +113,8 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
       filters: {
         published: true,
         school: [schoolId],
-        year: report.get('year')
-      }
+        year: report.get('year'),
+      },
     });
     const linkedCourses = await report.linkedCourses;
     // Filter out all courses that are linked to (sequence blocks in) this report.
@@ -133,13 +133,13 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
    * Returns a list of published sessions that belong to a given course.
    */
   async getSessions(course) {
-    if (! course) {
+    if (!course) {
       return [];
     }
     const sessions = await this.store.query('session', {
       filters: {
         course: course.get('id'),
-        published: true
+        published: true,
       },
     });
     return sessions.toArray();
@@ -307,7 +307,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @action
   updateCourse(event) {
     const value = event.target.value;
-    if (! value) {
+    if (!value) {
       this.course = null;
     } else {
       this.course = this.linkableCourses.findBy('id', value);

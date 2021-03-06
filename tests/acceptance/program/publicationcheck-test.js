@@ -1,15 +1,12 @@
 import { currentRouteName, findAll, visit } from '@ember/test-helpers';
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios-common';
 
-module('Acceptance | Program - Publication Check', function(hooks) {
+module('Acceptance | Program - Publication Check', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
@@ -21,13 +18,13 @@ module('Acceptance | Program - Publication Check', function(hooks) {
     });
     this.emptyProgram = this.server.create('program', {
       startYear: 2013,
-      schoolId: 1
+      schoolId: 1,
     });
-    this.server.create('programYear', { programId: 1});
-    this.server.create('cohort', { programYearId: 1});
+    this.server.create('programYear', { programId: 1 });
+    this.server.create('cohort', { programYearId: 1 });
   });
 
-  test('full program count', async function(assert) {
+  test('full program count', async function (assert) {
     await visit('/programs/' + this.fullProgram.id + '/publicationcheck');
     assert.equal(currentRouteName(), 'program.publicationCheck');
     var items = findAll('.program-publication-check .detail-content table tbody td');
@@ -37,7 +34,7 @@ module('Acceptance | Program - Publication Check', function(hooks) {
     assert.equal(await getElementText(items[3]), getText('Yes (1)'));
   });
 
-  test('empty program count', async function(assert) {
+  test('empty program count', async function (assert) {
     await visit('/programs/' + this.emptyProgram.id + '/publicationcheck');
     assert.equal(currentRouteName(), 'program.publicationCheck');
     var items = findAll('.program-publication-check .detail-content table tbody td');

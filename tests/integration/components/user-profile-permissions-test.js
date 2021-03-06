@@ -7,7 +7,7 @@ import moment from 'moment';
 import { component } from 'ilios/tests/pages/components/user-profile-permissions';
 import { freezeDateAt, unfreezeDate } from 'ember-mockdate-shim';
 
-module('Integration | Component | user-profile-permissions', function(hooks) {
+module('Integration | Component | user-profile-permissions', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -84,14 +84,14 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
 
     this.server.create('course', {
       school: this.schools[1],
-      directors: [ user ],
-      year: this.currentAcademicYear
+      directors: [user],
+      year: this.currentAcademicYear,
     });
 
     this.server.create('course', {
       school: this.schools[1],
-      administrators: [ user ],
-      year: this.currentAcademicYear + 1
+      administrators: [user],
+      year: this.currentAcademicYear + 1,
     });
 
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
@@ -165,7 +165,7 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     });
     const programYear = this.server.create('program-year', {
       program,
-      directors: [user]
+      directors: [user],
     });
     this.server.create('cohort', { programYear });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
@@ -203,7 +203,7 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     });
     this.server.create('ilmSession', {
       session,
-      instructors: [user]
+      instructors: [user],
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('user', userModel);
@@ -226,7 +226,10 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     assert.equal(component.sessions.title, 'Sessions (1)');
     assert.ok(component.sessions.notAdministrating);
     assert.equal(component.sessions.instructors.length, 1);
-    assert.equal(component.sessions.instructors[0].text, `${this.currentAcademicYear} course 0 » session 0`);
+    assert.equal(
+      component.sessions.instructors[0].text,
+      `${this.currentAcademicYear} course 0 » session 0`
+    );
     assert.ok(component.sessions.notStudentAdvising);
   });
 
@@ -246,7 +249,7 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     });
     this.server.create('ilmSession', {
       session,
-      instructors: [user]
+      instructors: [user],
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('user', userModel);
@@ -265,21 +268,32 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     assert.ok(component.courses.notStudentAdvising);
     assert.equal(component.sessions.title, 'Sessions (3)');
     assert.equal(component.sessions.administrators.length, 1);
-    assert.equal(component.sessions.administrators[0].text, `${this.currentAcademicYear} course 0 » session 0`);
+    assert.equal(
+      component.sessions.administrators[0].text,
+      `${this.currentAcademicYear} course 0 » session 0`
+    );
     assert.equal(component.sessions.instructors.length, 1);
-    assert.equal(component.sessions.instructors[0].text, `${this.currentAcademicYear} course 0 » session 0`);
+    assert.equal(
+      component.sessions.instructors[0].text,
+      `${this.currentAcademicYear} course 0 » session 0`
+    );
     assert.equal(component.sessions.studentAdvisors.length, 1);
-    assert.equal(component.sessions.studentAdvisors[0].text, `${this.currentAcademicYear} course 0 » session 0`);
+    assert.equal(
+      component.sessions.studentAdvisors[0].text,
+      `${this.currentAcademicYear} course 0 » session 0`
+    );
   });
 
   test('if academic year does not cross year boundaries, and its the first half of the year then last year is selected', async function (assert) {
     freezeDateAt(new Date('1/1/2021'));
-    this.server.get('application/config', function() {
-      return { config: {
-        academicYearCrossesCalendarYearBoundaries: true,
-      }};
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+        },
+      };
     });
-    this.currentAcademicYear = (new Date()).getFullYear() - 1;
+    this.currentAcademicYear = new Date().getFullYear() - 1;
     const user = this.server.create('user', {
       school: this.schools[1],
     });
@@ -294,10 +308,12 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
 
   test('academic year shows range as applicable by configuration', async function (assert) {
     freezeDateAt(new Date('7/1/2021'));
-    this.server.get('application/config', function() {
-      return { config: {
-        academicYearCrossesCalendarYearBoundaries: true,
-      }};
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+        },
+      };
     });
     const school = this.schools[0];
     const user = this.server.create('user', {
@@ -317,24 +333,42 @@ module('Integration | Component | user-profile-permissions', function(hooks) {
     });
     this.server.create('ilmSession', {
       session,
-      instructors: [user]
+      instructors: [user],
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('user', userModel);
 
     await render(hbs`<UserProfilePermissions @user={{this.user}} />`);
     assert.equal(component.courses.administrators.length, 1);
-    assert.equal(component.courses.administrators[0].text, `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`);
+    assert.equal(
+      component.courses.administrators[0].text,
+      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`
+    );
     assert.equal(component.courses.instructors.length, 1);
-    assert.equal(component.courses.instructors[0].text, `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`);
+    assert.equal(
+      component.courses.instructors[0].text,
+      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`
+    );
     assert.equal(component.courses.studentAdvisors.length, 1);
-    assert.equal(component.courses.studentAdvisors[0].text, `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`);
+    assert.equal(
+      component.courses.studentAdvisors[0].text,
+      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0`
+    );
     assert.equal(component.sessions.administrators.length, 1);
-    assert.equal(component.sessions.administrators[0].text, `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`);
+    assert.equal(
+      component.sessions.administrators[0].text,
+      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`
+    );
     assert.equal(component.sessions.instructors.length, 1);
-    assert.equal(component.sessions.instructors[0].text, `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`);
+    assert.equal(
+      component.sessions.instructors[0].text,
+      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`
+    );
     assert.equal(component.sessions.studentAdvisors.length, 1);
-    assert.equal(component.sessions.studentAdvisors[0].text, `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`);
+    assert.equal(
+      component.sessions.studentAdvisors[0].text,
+      `${this.currentAcademicYear} - ${this.currentAcademicYear + 1} course 0 » session 0`
+    );
     unfreezeDate();
   });
 });

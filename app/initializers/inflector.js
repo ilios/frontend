@@ -7,5 +7,5 @@ export function initialize() {
 
 export default {
   name: 'inflector',
-  initialize
+  initialize,
 };

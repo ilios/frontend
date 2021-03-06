@@ -14,7 +14,7 @@ export default Component.extend({
   router: service(),
   search: service(),
   store: service(),
-  tagName: "",
+  tagName: '',
   canCreate: false,
   searchValue: null,
 
@@ -43,7 +43,7 @@ export default Component.extend({
     return users;
   },
 
-  searchForUsers: task(function * (query) {
+  searchForUsers: task(function* (query) {
     const intl = this.intl;
 
     const q = cleanQuery(query);
@@ -54,31 +54,35 @@ export default Component.extend({
     yield timeout(DEBOUNCE_MS);
 
     if (q.length < MIN_INPUT) {
-      return [{
-        type: 'text',
-        text: intl.t('general.moreInputRequiredPrompt')
-      }];
+      return [
+        {
+          type: 'text',
+          text: intl.t('general.moreInputRequiredPrompt'),
+        },
+      ];
     }
     const searchEnabled = yield this.iliosConfig.searchEnabled;
-    const searchResults = searchEnabled ? (yield this.indexSearch(q)) : (yield this.apiSearch(q));
+    const searchResults = searchEnabled ? yield this.indexSearch(q) : yield this.apiSearch(q);
 
     if (searchResults.length === 0) {
-      return [{
-        type: 'text',
-        text: intl.t('general.noSearchResultsPrompt')
-      }];
+      return [
+        {
+          type: 'text',
+          text: intl.t('general.noSearchResultsPrompt'),
+        },
+      ];
     }
-    const mappedResults = searchResults.map(user => {
+    const mappedResults = searchResults.map((user) => {
       return {
         type: 'user',
-        user
+        user,
       };
     });
     const results = [
       {
         type: 'summary',
-        text: intl.t('general.resultsCount', {count: mappedResults.length})
-      }
+        text: intl.t('general.resultsCount', { count: mappedResults.length }),
+      },
     ];
     results.pushObjects(mappedResults);
 
@@ -92,10 +96,10 @@ export default Component.extend({
         isManagingRoles: Ember.DEFAULT_VALUE,
         isManagingCohorts: Ember.DEFAULT_VALUE,
         isManagingIcs: Ember.DEFAULT_VALUE,
-        isManagingSchools: Ember.DEFAULT_VALUE
-      }
+        isManagingSchools: Ember.DEFAULT_VALUE,
+      },
     });
     this.set('searchValue', null);
     yield this.searchForUsers.perform(null);
-  }).drop()
+  }).drop(),
 });

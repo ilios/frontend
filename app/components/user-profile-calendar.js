@@ -28,7 +28,9 @@ export default class UserProfileCalendar extends Component {
     }
     url += '/userevents/' + this.args.user.get('id') + '?from=' + from + '&to=' + to;
     const data = yield this.fetch.getJsonFromApiHost(url);
-    this.calendarEvents = data.userEvents.map(obj => this.userEvents.createEventFromData(obj, true)).sortBy('startDate', 'name');
+    this.calendarEvents = data.userEvents
+      .map((obj) => this.userEvents.createEventFromData(obj, true))
+      .sortBy('startDate', 'name');
   }
   @action
   goForward() {
@@ -47,5 +49,4 @@ export default class UserProfileCalendar extends Component {
     const newDate = moment().toDate();
     this.date = newDate;
   }
-
 }

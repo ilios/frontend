@@ -16,10 +16,9 @@ export default class SchoolListComponent extends Component {
   @tracked isSavingNewSchool = false;
   @tracked showNewSchoolForm = false;
 
-
   @action
   toggleNewSchoolForm() {
-    this.showNewSchoolForm = ! this.showNewSchoolForm;
+    this.showNewSchoolForm = !this.showNewSchoolForm;
     this.newSchool = null;
     this.title = null;
     this.iliosAdministratorEmail = null;
@@ -36,12 +35,12 @@ export default class SchoolListComponent extends Component {
   *save() {
     this.addErrorDisplaysFor(['title', 'iliosAdministratorEmail']);
     const isValid = yield this.isValid();
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     const newSchool = this.store.createRecord('school', {
       title: this.title,
-      iliosAdministratorEmail: this.iliosAdministratorEmail
+      iliosAdministratorEmail: this.iliosAdministratorEmail,
     });
     this.newSchool = yield newSchool.save();
     this.clearErrorDisplay();
@@ -66,4 +65,3 @@ export default class SchoolListComponent extends Component {
     }
   }
 }
-

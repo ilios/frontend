@@ -6,7 +6,7 @@ import { component } from 'ilios/tests/pages/components/program-year/objectives'
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | program-year/objectives', function(hooks) {
+module('Integration | Component | program-year/objectives', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -22,7 +22,9 @@ module('Integration | Component | program-year/objectives', function(hooks) {
     this.server.create('programYearObjective', { programYear, competency: competencies[0] });
     this.server.create('programYearObjective', { programYear });
 
-    const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
+    const programYearModel = await this.owner
+      .lookup('service:store')
+      .find('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::Objectives
@@ -33,13 +35,19 @@ module('Integration | Component | program-year/objectives', function(hooks) {
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 2);
-    assert.equal(component.objectiveList.objectives[0].description.text, 'program-year objective 0');
+    assert.equal(
+      component.objectiveList.objectives[0].description.text,
+      'program-year objective 0'
+    );
     assert.ok(component.objectiveList.objectives[0].competency.hasCompetency);
     assert.equal(component.objectiveList.objectives[0].competency.competencyTitle, 'competency 2');
     assert.equal(component.objectiveList.objectives[0].competency.domainTitle, '(competency 0)');
     assert.ok(component.objectiveList.objectives[0].meshDescriptors.isEmpty);
 
-    assert.equal(component.objectiveList.objectives[1].description.text, 'program-year objective 1');
+    assert.equal(
+      component.objectiveList.objectives[1].description.text,
+      'program-year objective 1'
+    );
     assert.notOk(component.objectiveList.objectives[1].competency.hasCompetency);
     assert.ok(component.objectiveList.objectives[1].meshDescriptors.isEmpty);
 
@@ -79,7 +87,9 @@ module('Integration | Component | program-year/objectives', function(hooks) {
       parent: domain3,
     });
     this.server.create('program-year-objective', { programYear, competency: competencies[0] });
-    const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
+    const programYearModel = await this.owner
+      .lookup('service:store')
+      .find('program-year', programYear.id);
 
     this.set('programYear', programYearModel);
     await render(hbs`<ProgramYear::Objectives
@@ -90,7 +100,10 @@ module('Integration | Component | program-year/objectives', function(hooks) {
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 1);
-    assert.equal(component.objectiveList.objectives[0].description.text, 'program-year objective 0');
+    assert.equal(
+      component.objectiveList.objectives[0].description.text,
+      'program-year objective 0'
+    );
     assert.ok(component.objectiveList.objectives[0].competency.hasCompetency);
     await component.objectiveList.objectives[0].competency.manage();
     const m = component.objectiveList.objectives[0].competencyManager;

@@ -1,11 +1,10 @@
 import Component from '@glimmer/component';
-import { tracked } from "@glimmer/tracking";
+import { tracked } from '@glimmer/tracking';
 import { dropTask } from 'ember-concurrency';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 
 @validatable
 export default class NewCompetencyComponent extends Component {
-
   @tracked @NotBlank() @Length(1, 200) title;
 
   @dropTask
@@ -17,7 +16,7 @@ export default class NewCompetencyComponent extends Component {
       return;
     }
 
-    if(27 === keyCode) {
+    if (27 === keyCode) {
       this.removeErrorDisplayFor('title');
       this.title = null;
     }
@@ -27,7 +26,7 @@ export default class NewCompetencyComponent extends Component {
   *save() {
     this.addErrorDisplayFor('title');
     const isValid = yield this.isValid();
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     const title = this.title;

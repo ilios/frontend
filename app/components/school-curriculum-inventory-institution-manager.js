@@ -17,7 +17,7 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
   @tracked @Length(1, 2) @NotBlank() addressCountryCode;
 
   @action
-  load(){
+  load() {
     if (this.args.institution) {
       this.name = this.args.institution?.name;
       this.aamcCode = this.args.institution?.aamcCode;
@@ -49,21 +49,21 @@ export default class SchoolCurriculumInventoryInstitutionManagerComponent extend
       'addressCountryCode',
     ]);
     const isValid = yield this.isValid();
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
 
     let institution = this.args.institution;
-    if (! institution) {
+    if (!institution) {
       institution = this.store.createRecord('curriculum-inventory-institution');
     }
-    institution.set("name", this.name);
-    institution.set("aamcCode", this.aamcCode);
-    institution.set("addressStreet", this.addressStreet);
-    institution.set("addressCity", this.addressCity);
-    institution.set("addressStateOrProvince", this.addressStateOrProvince);
-    institution.set("addressZipCode", this.addressZipCode);
-    institution.set("addressCountryCode", this.addressCountryCode);
+    institution.set('name', this.name);
+    institution.set('aamcCode', this.aamcCode);
+    institution.set('addressStreet', this.addressStreet);
+    institution.set('addressCity', this.addressCity);
+    institution.set('addressStateOrProvince', this.addressStateOrProvince);
+    institution.set('addressZipCode', this.addressZipCode);
+    institution.set('addressCountryCode', this.addressCountryCode);
     yield this.args.save(institution);
     this.clearErrorDisplay();
     this.args.manage(false);

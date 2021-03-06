@@ -17,9 +17,9 @@ export default class UserRoute extends Route {
   }
 
   /**
-  * Prefetch user relationship data to smooth loading
-  **/
-  async afterModel(user){
+   * Prefetch user relationship data to smooth loading
+   **/
+  async afterModel(user) {
     const permissionChecker = this.permissionChecker;
     const obj = await hash({
       cohorts: user.get('cohorts'),

@@ -8,19 +8,19 @@ const Validations = buildValidations({
     validator('number', {
       allowString: true,
       integer: true,
-      gte: 0
-    })
+      gte: 0,
+    }),
   ],
   maximum: [
     validator('number', {
       dependentKeys: ['model.minimum'],
       allowString: true,
       integer: true,
-      gte: computed('model.minimum', function() {
+      gte: computed('model.minimum', function () {
         const min = this.get('model.minimum') || 0;
         return Math.max(0, min);
-      })
-    })
+      }),
+    }),
   ],
 });
 
@@ -37,7 +37,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     save() {
       this.set('isSaving', true);
       this.send('addErrorDisplaysFor', ['minimum', 'maximum']);
-      this.validate().then(({validations}) => {
+      this.validate().then(({ validations }) => {
         if (validations.get('isValid')) {
           const min = this.minimum;
           const max = this.maximum;
@@ -50,7 +50,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     cancel() {
       this.cancel();
-    }
+    },
   },
 
   keyUp(event) {
@@ -69,5 +69,5 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     if (27 === keyCode) {
       this.send('cancel');
     }
-  }
+  },
 });

@@ -6,7 +6,7 @@ const definition = {
   users: collection('[data-test-user]', {
     isDisabled: hasClass('disabled-user-account'),
     disabledUserIcon: {
-      scope: '[data-test-disabled-user-icon]'
+      scope: '[data-test-disabled-user-icon]',
     },
     userNameInfo,
     campusId: {
@@ -17,8 +17,8 @@ const definition = {
     },
     school: {
       scope: '[data-test-school]',
-    }
-  })
+    },
+  }),
 };
 
 export default definition;

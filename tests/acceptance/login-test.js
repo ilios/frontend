@@ -4,7 +4,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Acceptance | login', function(hooks) {
+module('Acceptance | login', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 

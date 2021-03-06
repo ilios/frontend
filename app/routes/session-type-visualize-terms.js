@@ -15,16 +15,20 @@ export default class SessionTypeVisualizeTermsRoute extends Route {
     return this.loadModel(params.session_type_id, params.vocabulary_id);
   }
 
-  async afterModel({sessionType, vocabulary}) {
+  async afterModel({ sessionType, vocabulary }) {
     return this.loadModel(sessionType.id, vocabulary.id);
   }
 
-  async loadModel(sessionTypeId, vocabularyId){
-    if (!( sessionTypeId in this._loadedSessionTypes)) {
-      this._loadedSessionTypes[sessionTypeId] = this.store.findRecord('session-type', sessionTypeId, {
-        include: 'school,sessions.terms.vocabulary,sessions.course.terms.vocabulary',
-        reload: true,
-      });
+  async loadModel(sessionTypeId, vocabularyId) {
+    if (!(sessionTypeId in this._loadedSessionTypes)) {
+      this._loadedSessionTypes[sessionTypeId] = this.store.findRecord(
+        'session-type',
+        sessionTypeId,
+        {
+          include: 'school,sessions.terms.vocabulary,sessions.course.terms.vocabulary',
+          reload: true,
+        }
+      );
     }
 
     return {

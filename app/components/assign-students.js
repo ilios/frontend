@@ -28,13 +28,13 @@ export default class AssignStudentsComponent extends Component {
     }
   }
 
-  get filteredStudents(){
+  get filteredStudents() {
     return this.args.students
       ? this.args.students.filter((user) => !this.savedUserIds.includes(user.id))
       : [];
   }
 
-  get totalUnassignedStudents(){
+  get totalUnassignedStudents() {
     return this.args.students.length - this.savedUserIds.length;
   }
 
@@ -53,11 +53,11 @@ export default class AssignStudentsComponent extends Component {
     cohorts = cohorts.toArray();
     const allCohorts = [];
 
-    for(let i = 0; i < cohorts.length; i++){
+    for (let i = 0; i < cohorts.length; i++) {
       const cohort = cohorts[i];
       const obj = {
         id: cohort.id,
-        model: cohort
+        model: cohort,
       };
       const programYear = yield cohort.programYear;
       const program = yield programYear.program;
@@ -69,7 +69,7 @@ export default class AssignStudentsComponent extends Component {
     }
 
     const lastYear = Number(moment().subtract(1, 'year').format('YYYY'));
-    this.cohorts = allCohorts.filter(obj=> {
+    this.cohorts = allCohorts.filter((obj) => {
       const finalYear = Number(obj.startYear) + Number(obj.duration);
       return finalYear > lastYear;
     });
@@ -79,15 +79,14 @@ export default class AssignStudentsComponent extends Component {
   toggleCheck() {
     const currentlySelected = this.selectedUserIds.length;
     const totalDisplayed = this.filteredStudents.length;
-    this.selectedUserIds = currentlySelected < totalDisplayed
-      ? this.filteredStudents.mapBy('id')
-      : [];
+    this.selectedUserIds =
+      currentlySelected < totalDisplayed ? this.filteredStudents.mapBy('id') : [];
   }
 
   @action
-  toggleUserSelection(userId){
+  toggleUserSelection(userId) {
     if (this.selectedUserIds.includes(userId)) {
-      this.selectedUserIds = this.selectedUserIds.filter(id => id !== userId);
+      this.selectedUserIds = this.selectedUserIds.filter((id) => id !== userId);
     } else {
       this.selectedUserIds = [...this.selectedUserIds, userId];
     }
@@ -99,7 +98,7 @@ export default class AssignStudentsComponent extends Component {
     const ids = this.selectedUserIds;
     const cohort = this.bestSelectedCohort;
     const students = this.args.students;
-    const studentsToModify = students.filter(user => {
+    const studentsToModify = students.filter((user) => {
       return ids.includes(user.get('id'));
     });
     if (!cohort || studentsToModify.length < 1) {
@@ -107,7 +106,7 @@ export default class AssignStudentsComponent extends Component {
     }
     studentsToModify.setEach('primaryCohort', cohort.model);
 
-    while (studentsToModify.get('length') > 0){
+    while (studentsToModify.get('length') > 0) {
       const parts = studentsToModify.splice(0, 3);
       yield all(parts.invoke('save'));
       this.savedUserIds.pushObjects(parts.mapBy('id'));

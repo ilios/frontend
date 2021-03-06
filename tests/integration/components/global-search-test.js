@@ -5,11 +5,11 @@ import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios/tests/pages/components/global-search';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Integration | Component | global-search', function(hooks) {
+module('Integration | Component | global-search', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(1);
 
     await render(hbs`<GlobalSearch
@@ -20,16 +20,16 @@ module('Integration | Component | global-search', function(hooks) {
     assert.dom('[data-test-global-search-box]').exists({ count: 1 });
   });
 
-  test('handles empty and non-empty query', async function(assert) {
+  test('handles empty and non-empty query', async function (assert) {
     assert.expect(4);
-    this.server.get('api/search/v1/curriculum', (schema, { queryParams: { q , onlySuggest} }) => {
+    this.server.get('api/search/v1/curriculum', (schema, { queryParams: { q, onlySuggest } }) => {
       assert.equal(q, 'hello world');
       assert.notOk(onlySuggest);
       return {
         results: {
           autocomplete: [],
-          courses: []
-        }
+          courses: [],
+        },
       };
     });
 
@@ -45,16 +45,16 @@ module('Integration | Component | global-search', function(hooks) {
     assert.notOk(component.noResultsIsVisible);
   });
 
-  test('bubbles action properly', async function(assert) {
+  test('bubbles action properly', async function (assert) {
     assert.expect(3);
-    this.server.get('api/search/v1/curriculum', (schema, { queryParams: { q , onlySuggest} }) => {
+    this.server.get('api/search/v1/curriculum', (schema, { queryParams: { q, onlySuggest } }) => {
       assert.equal(q, 'typed it');
       assert.ok(onlySuggest);
       return {
         results: {
           autocomplete: [],
-          courses: []
-        }
+          courses: [],
+        },
       };
     });
 
@@ -68,31 +68,36 @@ module('Integration | Component | global-search', function(hooks) {
     await component.clickIcon();
   });
 
-  test('academic year filter works properly', async function(assert) {
+  test('academic year filter works properly', async function (assert) {
     assert.expect(16);
 
     this.server.get('api/search/v1/curriculum', () => {
       return {
         results: {
           autocomplete: ['first', 'second', 'third'],
-          courses: [{
-            title: 'Course 1',
-            year: 2019,
-            sessions: []
-          }, {
-            title: 'Course 2',
-            year: 2020,
-            sessions: []
-          }, {
-            title: 'Course 3',
-            year: 2021,
-            sessions: []
-          }, {
-            title: 'Course 4',
-            year: 2021,
-            sessions: []
-          }]
-        }
+          courses: [
+            {
+              title: 'Course 1',
+              year: 2019,
+              sessions: [],
+            },
+            {
+              title: 'Course 2',
+              year: 2020,
+              sessions: [],
+            },
+            {
+              title: 'Course 3',
+              year: 2021,
+              sessions: [],
+            },
+            {
+              title: 'Course 4',
+              year: 2021,
+              sessions: [],
+            },
+          ],
+        },
       };
     });
 
@@ -107,7 +112,10 @@ module('Integration | Component | global-search', function(hooks) {
       @setSelectedYear={{set this.selectedYear}}
     />`);
     assert.equal(component.academicYear, '');
-    assert.equal(component.academicYearOptions, 'All Academic Years 2021 - 2022 2020 - 2021 2019 - 2020');
+    assert.equal(
+      component.academicYearOptions,
+      'All Academic Years 2021 - 2022 2020 - 2021 2019 - 2020'
+    );
     assert.equal(component.searchResults.length, 4);
     assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
     assert.equal(component.searchResults[1].courseTitle, '2020 Course 2');
@@ -127,7 +135,7 @@ module('Integration | Component | global-search', function(hooks) {
     assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
   });
 
-  test('school filter works properly', async function(assert) {
+  test('school filter works properly', async function (assert) {
     assert.expect(51);
     this.server.create('school', { title: 'Medicine' });
     this.server.create('school', { title: 'Dentistry' });
@@ -137,28 +145,33 @@ module('Integration | Component | global-search', function(hooks) {
       return {
         results: {
           autocomplete: ['first', 'second', 'third'],
-          courses: [{
-            title: 'Course 1',
-            year: 2019,
-            school: 'Medicine',
-            sessions: []
-          }, {
-            title: 'Course 2',
-            year: 2020,
-            school: 'Medicine',
-            sessions: []
-          }, {
-            title: 'Course 3',
-            year: 2021,
-            school: 'Pharmacy',
-            sessions: []
-          }, {
-            title: 'Course 4',
-            year: 2021,
-            school: 'Dentistry',
-            sessions: []
-          }]
-        }
+          courses: [
+            {
+              title: 'Course 1',
+              year: 2019,
+              school: 'Medicine',
+              sessions: [],
+            },
+            {
+              title: 'Course 2',
+              year: 2020,
+              school: 'Medicine',
+              sessions: [],
+            },
+            {
+              title: 'Course 3',
+              year: 2021,
+              school: 'Pharmacy',
+              sessions: [],
+            },
+            {
+              title: 'Course 4',
+              year: 2021,
+              school: 'Dentistry',
+              sessions: [],
+            },
+          ],
+        },
       };
     });
 
@@ -239,7 +252,7 @@ module('Integration | Component | global-search', function(hooks) {
     assert.ok(component.schoolFilters[2].isSelected);
   });
 
-  test('all schools show up in filter', async function(assert) {
+  test('all schools show up in filter', async function (assert) {
     assert.expect(9);
     this.server.createList('school', 3);
 
@@ -247,13 +260,15 @@ module('Integration | Component | global-search', function(hooks) {
       return {
         results: {
           autocomplete: ['first', 'second', 'third'],
-          courses: [{
-            title: 'Course 1',
-            year: 2019,
-            school: 'school 1',
-            sessions: []
-          }]
-        }
+          courses: [
+            {
+              title: 'Course 1',
+              year: 2019,
+              school: 'school 1',
+              sessions: [],
+            },
+          ],
+        },
       };
     });
 
@@ -276,7 +291,7 @@ module('Integration | Component | global-search', function(hooks) {
     assert.ok(component.schoolFilters[2].isDisabled);
   });
 
-  test('if only one school in system no school filter', async function(assert) {
+  test('if only one school in system no school filter', async function (assert) {
     assert.expect(3);
     this.server.create('school');
 
@@ -284,13 +299,15 @@ module('Integration | Component | global-search', function(hooks) {
       return {
         results: {
           autocomplete: ['first', 'second', 'third'],
-          courses: [{
-            title: 'Course 1',
-            year: 2019,
-            school: 'school 1',
-            sessions: []
-          }]
-        }
+          courses: [
+            {
+              title: 'Course 1',
+              year: 2019,
+              school: 'school 1',
+              sessions: [],
+            },
+          ],
+        },
       };
     });
 

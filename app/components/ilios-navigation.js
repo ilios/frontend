@@ -8,9 +8,7 @@ export default Component.extend({
   tagName: 'nav',
   classNameBindings: [':ilios-navigation', 'expanded'],
   expanded: false,
-  attributeBindings: [
-    'ariaLabel:aria-label',
-  ],
+  attributeBindings: ['ariaLabel:aria-label'],
   ariaLabel: computed('intl.locale', function () {
     return this.intl.t('general.primary');
   }),

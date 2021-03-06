@@ -10,9 +10,9 @@ export default class AssignStudentsRoute extends Route {
 
   queryParams = {
     query: {
-      replace: true
-    }
-  }
+      replace: true,
+    },
+  };
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
@@ -25,13 +25,13 @@ export default class AssignStudentsRoute extends Route {
     const user = await currentUser.get('model');
     const schools = await store.findAll('school');
     const primarySchool = await user.get('school');
-    const schoolsWithUpdateUserPermission = await filter(schools.toArray(), async school => {
+    const schoolsWithUpdateUserPermission = await filter(schools.toArray(), async (school) => {
       return permissionChecker.canUpdateUserInSchool(school);
     });
 
     return {
       primarySchool,
-      schools: schoolsWithUpdateUserPermission
+      schools: schoolsWithUpdateUserPermission,
     };
   }
 }

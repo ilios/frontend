@@ -5,11 +5,10 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | program leadership expanded', function(hooks) {
+module('Integration | Component | program leadership expanded', function (hooks) {
   setupRenderingTest(hooks);
 
-
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(4);
 
     const user1 = EmberObject.create({
@@ -26,16 +25,16 @@ module('Integration | Component | program leadership expanded', function(hooks) 
     });
     const program = EmberObject.create({
       directors: resolve([user1, user2]),
-      hasMany(what){
+      hasMany(what) {
         if (what === 'directors') {
           return {
-            ids(){
+            ids() {
               return [1, 2];
-            }
+            },
           };
         }
         assert.ok(false);
-      }
+      },
     });
 
     this.set('program', program);
@@ -60,19 +59,19 @@ module('Integration | Component | program leadership expanded', function(hooks) 
     assert.dom(secondDirector).hasText('b a person');
   });
 
-  test('clicking the header collapses', async function(assert) {
+  test('clicking the header collapses', async function (assert) {
     assert.expect(1);
     const program = EmberObject.create({
       directors: resolve([]),
-      hasMany(what){
+      hasMany(what) {
         if (what === 'directors') {
           return {
-            ids(){
+            ids() {
               return [];
-            }
+            },
           };
         }
-      }
+      },
     });
 
     this.set('program', program);
@@ -93,19 +92,19 @@ module('Integration | Component | program leadership expanded', function(hooks) 
     await click(title);
   });
 
-  test('clicking manage fires action', async function(assert) {
+  test('clicking manage fires action', async function (assert) {
     assert.expect(1);
     const program = EmberObject.create({
       directors: resolve([]),
-      hasMany(what){
+      hasMany(what) {
         if (what === 'directors') {
           return {
-            ids(){
+            ids() {
               return [];
-            }
+            },
           };
         }
-      }
+      },
     });
 
     this.set('program', program);

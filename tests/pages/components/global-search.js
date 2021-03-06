@@ -6,7 +6,7 @@ import {
   isVisible,
   property,
   text,
-  value
+  value,
 } from 'ember-cli-page-object';
 
 import courseSearchResult from './course-search-result';

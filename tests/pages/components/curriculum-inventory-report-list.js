@@ -27,7 +27,7 @@ const definition = {
     clickOnStartDate: clickable('[data-test-start-date]'),
     clickOnEndDate: clickable('[data-test-end-date]'),
     clickOnStatus: clickable('[data-test-status]'),
-    remove: clickable('[data-icon="trash"]', { scope: '[data-test-actions]'}),
+    remove: clickable('[data-icon="trash"]', { scope: '[data-test-actions]' }),
     isDeletable: hasClass('enabled', '[data-test-actions] [data-icon="trash"]'),
   }),
   confirmRemoval: {
@@ -38,8 +38,8 @@ const definition = {
   },
   emptyList: {
     scope: '[data-test-empty-list]',
-    text: text()
-  }
+    text: text(),
+  },
 };
 
 export default definition;

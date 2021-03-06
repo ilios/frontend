@@ -1,14 +1,14 @@
 import Component from '@ember/component';
 
 export default Component.extend({
-  tagName: "",
+  tagName: '',
   multiModeSupported: false,
   fillModeSupported: false,
   singleMode: true,
 
   actions: {
-    generateNewLearnerGroups(num){
+    generateNewLearnerGroups(num) {
       this.generateNewLearnerGroups(num);
-    }
-  }
+    },
+  },
 });

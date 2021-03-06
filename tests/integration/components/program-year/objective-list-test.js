@@ -6,11 +6,11 @@ import { component } from 'ilios/tests/pages/components/program-year/objective-l
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | program-year/objective-list', function(hooks) {
+module('Integration | Component | program-year/objective-list', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders and is accessible', async function(assert) {
+  test('it renders and is accessible', async function (assert) {
     assert.expect(14);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
@@ -22,15 +22,17 @@ module('Integration | Component | program-year/objective-list', function(hooks) 
       programYear,
       title: 'Objective A',
       position: 0,
-      terms: [ term1 ]
+      terms: [term1],
     });
     this.server.create('programYearObjective', {
       programYear,
       title: 'Objective B',
       position: 0,
-      terms: [ term2 ]
+      terms: [term2],
     });
-    const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
+    const programYearModel = await this.owner
+      .lookup('service:store')
+      .find('program-year', programYear.id);
     this.set('programYear', programYearModel);
 
     await render(
@@ -58,12 +60,14 @@ module('Integration | Component | program-year/objective-list', function(hooks) 
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('empty list', async function(assert) {
+  test('empty list', async function (assert) {
     assert.expect(2);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const programYear = this.server.create('programYear', { program });
-    const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
+    const programYearModel = await this.owner
+      .lookup('service:store')
+      .find('program-year', programYear.id);
     this.set('programYear', programYearModel);
 
     await render(
@@ -76,13 +80,15 @@ module('Integration | Component | program-year/objective-list', function(hooks) 
     assert.equal(component.text, '');
   });
 
-  test('no "sort objectives" button in list with one item', async function(assert) {
+  test('no "sort objectives" button in list with one item', async function (assert) {
     assert.expect(3);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const programYear = this.server.create('programYear', { program });
     this.server.create('programYearObjective', { programYear, position: 0 });
-    const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
+    const programYearModel = await this.owner
+      .lookup('service:store')
+      .find('program-year', programYear.id);
     this.set('programYear', programYearModel);
 
     await render(

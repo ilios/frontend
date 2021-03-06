@@ -4,10 +4,10 @@ import { findAll, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios/tests/pages/components/pagination-links';
 
-module('Integration | Component | pagination-links', function(hooks) {
+module('Integration | Component | pagination-links', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it displays pagination links properly', async function(assert) {
+  test('it displays pagination links properly', async function (assert) {
     assert.expect(63);
 
     this.setProperties({ page: 1, results: [1], size: 1 });
@@ -19,8 +19,14 @@ module('Integration | Component | pagination-links', function(hooks) {
       @size={{this.size}}
       @onSelectPage={{action (mut this.page)}}
     />`);
-    assert.ok(component.nextIsHidden, 'results array length needs to be greater than size for pagination to show');
-    assert.ok(component.prevIsHidden, 'results array length needs to be greater than size for pagination to show');
+    assert.ok(
+      component.nextIsHidden,
+      'results array length needs to be greater than size for pagination to show'
+    );
+    assert.ok(
+      component.prevIsHidden,
+      'results array length needs to be greater than size for pagination to show'
+    );
     this.set('results', [1, 1]);
     assert.ok(component.prevDisabled, 'prev is inactive as it is page 1');
     assert.notOk(component.nextDisabled, 'next is active as it is page 1');

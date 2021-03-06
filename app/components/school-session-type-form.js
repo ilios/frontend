@@ -18,9 +18,9 @@ export default class SchoolSessionTypeFormComponent extends Component {
   @tracked aamcMethods = [];
 
   get filteredAamcMethods() {
-    return this.aamcMethods.filter(aamcMethod => {
+    return this.aamcMethods.filter((aamcMethod) => {
       const id = aamcMethod.get('id');
-      if (id !== this.selectedAamcMethodId && ! aamcMethod.get('active')) {
+      if (id !== this.selectedAamcMethodId && !aamcMethod.get('active')) {
         return false;
       }
       if (this.assessment) {
@@ -41,8 +41,8 @@ export default class SchoolSessionTypeFormComponent extends Component {
 
   get selectedAssessmentOption() {
     if (this.assessment) {
-      const assessmentOption = this.selectedAssessmentOptionId ?
-        this.assessmentOptions.findBy('id', this.selectedAssessmentOptionId)
+      const assessmentOption = this.selectedAssessmentOptionId
+        ? this.assessmentOptions.findBy('id', this.selectedAssessmentOptionId)
         : this.assessmentOptions.sortBy('name').get('firstObject');
       return assessmentOption ?? null;
     }
@@ -71,7 +71,7 @@ export default class SchoolSessionTypeFormComponent extends Component {
   *saveSessionType() {
     this.addErrorDisplaysFor(['title', 'calendarColor']);
     const isValid = yield this.isValid();
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     yield this.args.save(

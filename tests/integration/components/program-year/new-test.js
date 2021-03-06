@@ -5,12 +5,12 @@ import hbs from 'htmlbars-inline-precompile';
 import { setupIntl } from 'ember-intl/test-support';
 import { component } from 'ilios/tests/pages/components/program-year/new';
 
-module('Integration | Component | program-year/new', function(hooks) {
+module('Integration | Component | program-year/new', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks);
 
-  hooks.beforeEach(function() {
-    this.currentYear = (new Date()).getFullYear();
+  hooks.beforeEach(function () {
+    this.currentYear = new Date().getFullYear();
   });
 
   test('it renders', async function (assert) {
@@ -55,7 +55,7 @@ module('Integration | Component | program-year/new', function(hooks) {
     await component.cancel.click();
   });
 
-  test('save', async function(assert) {
+  test('save', async function (assert) {
     assert.expect(1);
     this.set('save', async (startYear) => {
       assert.equal(startYear, (this.currentYear - 5).toString());
@@ -69,7 +69,7 @@ module('Integration | Component | program-year/new', function(hooks) {
     await component.done.click();
   });
 
-  test('academic-years dropdown shows year ranges if application config enables it', async function(assert) {
+  test('academic-years dropdown shows year ranges if application config enables it', async function (assert) {
     await render(hbs`<ProgramYear::New
       @programYears={{array}}
       @save={{noop}}

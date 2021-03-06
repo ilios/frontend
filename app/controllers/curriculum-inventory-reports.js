@@ -2,12 +2,14 @@ import Controller from '@ember/controller';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 
-export default class CurriculumInventoryReportsController extends Controller{
-  queryParams = [{
-    programId: 'program',
-    schoolId: 'school',
-    sortReportsBy: 'sortBy'
-  }];
+export default class CurriculumInventoryReportsController extends Controller {
+  queryParams = [
+    {
+      programId: 'program',
+      schoolId: 'school',
+      sortReportsBy: 'sortBy',
+    },
+  ];
 
   @tracked programId = null;
   @tracked schoolId = null;

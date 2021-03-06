@@ -68,7 +68,7 @@ export default class SchoolSessionAttributesExpandedComponent extends Component 
       showSessionAttendanceRequired: this.showSessionAttendanceRequired,
       showSessionSupplemental: this.showSessionSupplemental,
       showSessionSpecialAttireRequired: this.showSessionSpecialAttireRequired,
-      showSessionSpecialEquipmentRequired: this.showSessionSpecialEquipmentRequired
+      showSessionSpecialEquipmentRequired: this.showSessionSpecialEquipmentRequired,
     });
     this.resetFlipped();
   }

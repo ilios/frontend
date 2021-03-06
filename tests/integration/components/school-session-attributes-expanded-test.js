@@ -4,11 +4,10 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios/tests/pages/components/school-session-attributes-expanded';
 
-module('Integration | Component | school session attributes expanded', function(hooks) {
+module('Integration | Component | school session attributes expanded', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
-
+  test('it renders', async function (assert) {
     this.set('showSessionAttendanceRequired', false);
     this.set('showSessionSupplemental', true);
     this.set('showSessionSpecialAttireRequired', false);
@@ -33,7 +32,7 @@ module('Integration | Component | school session attributes expanded', function(
     assert.notOk(component.manager.isVisible);
   });
 
-  test('collapse', async function(assert) {
+  test('collapse', async function (assert) {
     assert.expect(1);
     this.set('collapse', () => {
       assert.ok(true, 'Collapse triggered.');
@@ -50,7 +49,7 @@ module('Integration | Component | school session attributes expanded', function(
     await component.collapse();
   });
 
-  test('manage', async function(assert) {
+  test('manage', async function (assert) {
     assert.expect(1);
     this.set('manage', () => {
       assert.ok(true, 'Manage triggered.');
@@ -68,14 +67,13 @@ module('Integration | Component | school session attributes expanded', function(
     await component.manage();
   });
 
-  test('save', async function(assert) {
+  test('save', async function (assert) {
     assert.expect(8);
     this.set('save', (attributes) => {
       assert.ok(attributes.showSessionAttendanceRequired);
       assert.ok(attributes.showSessionSupplemental);
       assert.ok(attributes.showSessionSpecialAttireRequired);
       assert.ok(attributes.showSessionSpecialEquipmentRequired);
-
     });
     await render(hbs`<SchoolSessionAttributesExpanded
       @showSessionAttendanceRequired={{false}}

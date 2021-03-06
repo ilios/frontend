@@ -1,11 +1,4 @@
-import {
-  click,
-  fillIn,
-  currentURL,
-  find,
-  triggerEvent,
-  visit
-} from '@ember/test-helpers';
+import { click, fillIn, currentURL, find, triggerEvent, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
@@ -14,13 +7,13 @@ const url = '/users';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Acceptance | Users', function(hooks) {
+module('Acceptance | Users', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     const school = this.server.create('school');
-    this.user = await setupAuthentication( { school, campusId: '123' } );
+    this.user = await setupAuthentication({ school, campusId: '123' });
     this.server.createList('user', 90, { schoolId: 1, campusId: '555' });
     this.server.createList('authentication', 90);
   });
@@ -29,7 +22,7 @@ module('Acceptance | Users', function(hooks) {
     return find(`tbody tr td:nth-of-type(${i + 1})`).textContent.trim();
   }
 
-  test('can see list of users and transition to user route', async function(assert) {
+  test('can see list of users and transition to user route', async function (assert) {
     const firstStudent = 'tbody tr td:nth-of-type(2) a';
 
     await visit(url);
@@ -43,7 +36,7 @@ module('Acceptance | Users', function(hooks) {
     assert.equal(currentURL(), `/users/${this.user.id}`, 'tranistioned to `user` route');
   });
 
-  test('can page through list of users', async function(assert) {
+  test('can page through list of users', async function (assert) {
     const leftArrow = '.backward';
     const rightArrow = '.forward';
 
@@ -61,7 +54,7 @@ module('Acceptance | Users', function(hooks) {
     assert.equal(currentURL(), '/users', 'back to first page');
   });
 
-  test('can search for a user and transition to user route', async function(assert) {
+  test('can search for a user and transition to user route', async function (assert) {
     this.server.createList('user', 40, { firstName: 'Test', lastName: 'Name', schoolId: 1 });
 
     const userSearch = '.user-search input';
@@ -76,6 +69,5 @@ module('Acceptance | Users', function(hooks) {
 
     await click(firstStudent);
     assert.equal(currentURL(), `/users/${this.user.id}`, 'tranistioned to `user` route');
-
   });
 });

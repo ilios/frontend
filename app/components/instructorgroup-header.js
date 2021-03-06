@@ -9,15 +9,15 @@ const Validations = buildValidations({
     validator('presence', true),
     validator('length', {
       min: 3,
-      max: 60
-    })
-  ]
+      max: 60,
+    }),
+  ],
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
   store: service(),
 
-  tagName: "",
+  tagName: '',
 
   canUpdate: false,
   title: null,
@@ -48,6 +48,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     revertTitleChanges() {
       const group = this.instructorGroup;
       this.set('title', group.get('title'));
-    }
-  }
+    },
+  },
 });

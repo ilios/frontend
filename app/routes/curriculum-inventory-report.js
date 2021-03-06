@@ -10,7 +10,7 @@ export default class CurriculumInventoryReportReport extends Route {
     this.session.requireAuthentication(transition, 'login');
   }
 
-  async afterModel(report){
+  async afterModel(report) {
     const permissionChecker = this.permissionChecker;
 
     const canUpdate = await permissionChecker.canUpdateCurriculumInventoryReport(report);

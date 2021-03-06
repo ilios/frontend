@@ -7,13 +7,13 @@ const Validations = buildValidations({
     validator('presence', true),
     validator('length', {
       min: 3,
-      max: 200
-    })
-  ]
+      max: 200,
+    }),
+  ],
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  tagName: "",
+  tagName: '',
 
   canUpdate: false,
   program: null,
@@ -45,5 +45,5 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       const program = this.program;
       this.set('programTitle', program.get('title'));
     },
-  }
+  },
 });

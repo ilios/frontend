@@ -6,29 +6,28 @@ import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/school-list';
 
-module('Integration | Component | school list', function(hooks) {
+module('Integration | Component | school list', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     const school1 = this.server.create('school');
     const school2 = this.server.create('school');
     this.school1 = await this.owner.lookup('service:store').find('school', school1.id);
     this.school2 = await this.owner.lookup('service:store').find('school', school2.id);
   });
 
-  test('it renders', async function(assert) {
-    this.set('schools', [ this.school1, this.school2 ]);
+  test('it renders', async function (assert) {
+    this.set('schools', [this.school1, this.school2]);
     await render(hbs`<SchoolList @schools={{this.schools}} />`);
     assert.equal(component.schools.length, 2);
     assert.equal(component.schools[0].title, 'school 0');
     assert.equal(component.schools[1].title, 'school 1');
-
   });
 
-  test('create school button is visible to root', async function(assert) {
+  test('create school button is visible to root', async function (assert) {
     const currentUserMock = Service.extend({
-      isRoot: true
+      isRoot: true,
     });
     this.owner.register('service:current-user', currentUserMock);
     this.set('schools', []);
@@ -36,9 +35,9 @@ module('Integration | Component | school list', function(hooks) {
     assert.ok(component.expandCollapseButton.isVisible);
   });
 
-  test('create school button is not visible to non root users', async function(assert) {
+  test('create school button is not visible to non root users', async function (assert) {
     const currentUserMock = Service.extend({
-      isRoot: false
+      isRoot: false,
     });
     this.owner.register('service:current-user', currentUserMock);
     this.set('schools', []);
@@ -46,9 +45,9 @@ module('Integration | Component | school list', function(hooks) {
     assert.notOk(component.expandCollapseButton.isVisible);
   });
 
-  test('toggle visibility of new school form', async function(assert) {
+  test('toggle visibility of new school form', async function (assert) {
     const currentUserMock = Service.extend({
-      isRoot: true
+      isRoot: true,
     });
     this.owner.register('service:current-user', currentUserMock);
     this.set('schools', []);
@@ -64,9 +63,9 @@ module('Integration | Component | school list', function(hooks) {
     assert.notOk(component.newSchoolForm.isVisible);
   });
 
-  test('create new school', async function(assert) {
+  test('create new school', async function (assert) {
     const currentUserMock = Service.extend({
-      isRoot: true
+      isRoot: true,
     });
     this.owner.register('service:current-user', currentUserMock);
     this.set('schools', []);
@@ -87,9 +86,9 @@ module('Integration | Component | school list', function(hooks) {
     assert.equal(schools[2].iliosAdministratorEmail, 'rocketsurgeongeneral@hoekacademy.edu');
   });
 
-  test('submit empty form fails', async function(assert) {
+  test('submit empty form fails', async function (assert) {
     const currentUserMock = Service.extend({
-      isRoot: true
+      isRoot: true,
     });
     this.owner.register('service:current-user', currentUserMock);
     this.set('schools', []);
@@ -102,9 +101,9 @@ module('Integration | Component | school list', function(hooks) {
     assert.ok(component.newSchoolForm.email.hasError);
   });
 
-  test('email validation works', async function(assert) {
+  test('email validation works', async function (assert) {
     const currentUserMock = Service.extend({
-      isRoot: true
+      isRoot: true,
     });
     this.owner.register('service:current-user', currentUserMock);
     this.set('schools', []);

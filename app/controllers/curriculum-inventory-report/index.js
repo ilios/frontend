@@ -8,5 +8,5 @@ export default Controller.extend({
         report.reload();
       });
     },
-  }
+  },
 });

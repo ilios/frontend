@@ -23,11 +23,13 @@ export default class UserProfileCohortsComponent extends Component {
   }
 
   get assignableCohorts() {
-    return this.allCohortsWithRelationships.filter(obj => !this.selectedCohorts.includes(obj.cohort));
+    return this.allCohortsWithRelationships.filter(
+      (obj) => !this.selectedCohorts.includes(obj.cohort)
+    );
   }
 
   get assignableCohortsForSelectedSchool() {
-    return this.assignableCohorts.filter(obj => {
+    return this.assignableCohorts.filter((obj) => {
       return obj.school.id === this.selectedSchoolId;
     });
   }
@@ -37,7 +39,7 @@ export default class UserProfileCohortsComponent extends Component {
       return this.selectedCohorts;
     }
 
-    return this.selectedCohorts.filter(cohort => {
+    return this.selectedCohorts.filter((cohort) => {
       return cohort.id != this.primaryCohort.id;
     });
   }
@@ -48,11 +50,11 @@ export default class UserProfileCohortsComponent extends Component {
   }
   @action
   removeSelectedCohort(cohort) {
-    this.selectedCohorts = this.selectedCohorts.filter(({id}) => id !== cohort.id);
+    this.selectedCohorts = this.selectedCohorts.filter(({ id }) => id !== cohort.id);
   }
 
   @restartableTask
-  *load(element, [user]){
+  *load(element, [user]) {
     yield waitForProperty(user, 'isLoaded'); //wait for promise to resolve because save() task modifies this relationship
     this.selectedCohorts = (yield user.cohorts).toArray();
     this.primaryCohort = yield user.primaryCohort;
@@ -61,7 +63,7 @@ export default class UserProfileCohortsComponent extends Component {
     this.selectedSchoolId = (yield sessionUser.school).id;
 
     const allCohorts = (yield this.store.findAll('cohort')).toArray();
-    this.allCohortsWithRelationships = yield map(allCohorts, async cohort => {
+    this.allCohortsWithRelationships = yield map(allCohorts, async (cohort) => {
       const programYear = await cohort.programYear;
       const program = await programYear.program;
       const school = await program.school;
@@ -70,11 +72,11 @@ export default class UserProfileCohortsComponent extends Component {
         cohort,
         programYear,
         program,
-        school
+        school,
       };
     });
     const allSchools = (yield this.store.findAll('school')).toArray();
-    this.schools = yield filter(allSchools, async school => {
+    this.schools = yield filter(allSchools, async (school) => {
       return this.permissionChecker.canUpdateUserInSchool(school);
     });
   }

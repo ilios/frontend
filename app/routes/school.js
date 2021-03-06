@@ -29,14 +29,16 @@ export default class SchoolRoute extends Route {
     await this.loadPermissions(school);
 
     //preload relationships to improve the user experience
-    return hash(school.getProperties(
-      'administrators',
-      'competencies',
-      'configurations',
-      'directors',
-      'sessionTypes',
-      'vocabularies',
-      'curriculumInventoryInstitution')
+    return hash(
+      school.getProperties(
+        'administrators',
+        'competencies',
+        'configurations',
+        'directors',
+        'sessionTypes',
+        'vocabularies',
+        'curriculumInventoryInstitution'
+      )
     );
   }
 

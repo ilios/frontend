@@ -3,12 +3,7 @@ import EmberObject from '@ember/object';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  click,
-  fillIn,
-  waitFor
-} from '@ember/test-helpers';
+import { render, click, fillIn, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
@@ -16,7 +11,7 @@ let user;
 let authentication;
 let school;
 
-module('Integration | Component | user profile bio', function(hooks) {
+module('Integration | Component | user profile bio', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -24,11 +19,11 @@ module('Integration | Component | user profile bio', function(hooks) {
     await import('zxcvbn');
   });
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     authentication = EmberObject.create({
       username: 'test-username',
       user: 13,
-      password: null
+      password: null,
     });
     school = EmberObject.create({
       id: 1,
@@ -51,14 +46,13 @@ module('Integration | Component | user profile bio', function(hooks) {
       primaryCohort: resolve(null),
       authentication: resolve(authentication),
       school: resolve(school),
-      pendingUserUpdates: []
+      pendingUserUpdates: [],
     });
   });
 
-
-  test('it renders for ldap user search', async function(assert) {
+  test('it renders for ldap user search', async function (assert) {
     const iliosConfigMock = Service.extend({
-      userSearchType: resolve('ldap')
+      userSearchType: resolve('ldap'),
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
     this.set('user', user);
@@ -76,7 +70,9 @@ module('Integration | Component | user profile bio', function(hooks) {
     const phone = `${fields}:nth-of-type(9) span`;
     const username = `${fields}:nth-of-type(10) span`;
 
-    assert.dom(primarySchool).hasText('Primary School: ' + school.title, 'primary school is correct');
+    assert
+      .dom(primarySchool)
+      .hasText('Primary School: ' + school.title, 'primary school is correct');
     assert.dom(fields).exists({ count: 10 });
     assert.dom(firstName).hasText('Test Person', 'first name is displayed');
     assert.dom(middleName).hasText('Name', 'middle name is displayed');
@@ -90,9 +86,9 @@ module('Integration | Component | user profile bio', function(hooks) {
     assert.dom(username).hasText('test-username', 'username is displayed');
   });
 
-  test('it renders for non ldap user search', async function(assert) {
+  test('it renders for non ldap user search', async function (assert) {
     const iliosConfigMock = Service.extend({
-      userSearchType: resolve('local')
+      userSearchType: resolve('local'),
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
     this.set('user', user);
@@ -125,45 +121,47 @@ module('Integration | Component | user profile bio', function(hooks) {
     assert.dom(password).hasText('*********', 'password placeholder is displayed');
   });
 
-  test('clicking manage sends the action', async function(assert) {
+  test('clicking manage sends the action', async function (assert) {
     const iliosConfigMock = Service.extend({
-      userSearchType: resolve('ldap')
+      userSearchType: resolve('ldap'),
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
     assert.expect(1);
     this.set('user', user);
-    this.set('click', (what) =>{
+    this.set('click', (what) => {
       assert.ok(what, 'received boolean true value');
     });
-    await render(hbs`<UserProfileBio @user={{user}} @isManageable={{true}} @setIsManaging={{action click}} />`);
+    await render(
+      hbs`<UserProfileBio @user={{user}} @isManageable={{true}} @setIsManaging={{action click}} />`
+    );
     const manage = 'button.manage';
     await click(manage);
   });
 
-  test('can edit user bio for ldap config', async function(assert) {
+  test('can edit user bio for ldap config', async function (assert) {
     assert.expect(25);
     const iliosConfigMock = Service.extend({
-      userSearchType: resolve('ldap')
+      userSearchType: resolve('ldap'),
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
     const pendingUpdate1 = EmberObject.create({
       destroyRecord() {
         assert.ok(true, 'pending updates are removed');
         return resolve();
-      }
+      },
     });
     const pendingUpdate2 = EmberObject.create({
       destroyRecord() {
         assert.ok(true, 'pending updates are removed');
         return resolve();
-      }
+      },
     });
     user.get('pendingUserUpdates').pushObject(pendingUpdate1);
     user.get('pendingUserUpdates').pushObject(pendingUpdate2);
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    user.set('save', ()=> {
+    user.set('save', () => {
       assert.equal(user.get('firstName'), 'new first', 'first name is saved');
       assert.equal(user.get('middleName'), 'new middle', 'middel is saved');
       assert.equal(user.get('lastName'), 'new last', 'last is saved');
@@ -182,7 +180,9 @@ module('Integration | Component | user profile bio', function(hooks) {
       assert.equal(authentication.get('password'), undefined, 'password is saved');
     });
 
-    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
+    await render(
+      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+    );
     const inputs = 'input';
     const firstName = `[data-test-first-name-input]`;
     const middleName = `[data-test-middle-name-input]`;
@@ -220,10 +220,10 @@ module('Integration | Component | user profile bio', function(hooks) {
     await click('.bigadd');
   });
 
-  test('can edit non-ldap without setting a password', async function(assert) {
+  test('can edit non-ldap without setting a password', async function (assert) {
     assert.expect(23);
     const iliosConfigMock = Service.extend({
-      userSearchType: resolve('local')
+      userSearchType: resolve('local'),
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
     authentication.set('save', () => {
@@ -233,7 +233,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    user.set('save', ()=> {
+    user.set('save', () => {
       assert.equal(user.get('firstName'), 'new first', 'first name is saved');
       assert.equal(user.get('middleName'), 'new middle', 'middel is saved');
       assert.equal(user.get('lastName'), 'new last', 'last is saved');
@@ -247,7 +247,9 @@ module('Integration | Component | user profile bio', function(hooks) {
       return resolve(user);
     });
 
-    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
+    await render(
+      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+    );
     const inputs = 'input';
     const firstName = `[data-test-first-name-input]`;
     const middleName = `[data-test-middle-name-input]`;
@@ -286,10 +288,10 @@ module('Integration | Component | user profile bio', function(hooks) {
     await click('.bigadd');
   });
 
-  test('can edit user bio for non-ldap config', async function(assert) {
+  test('can edit user bio for non-ldap config', async function (assert) {
     assert.expect(24);
     const iliosConfigMock = Service.extend({
-      userSearchType: resolve('local')
+      userSearchType: resolve('local'),
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
     authentication.set('save', () => {
@@ -299,7 +301,7 @@ module('Integration | Component | user profile bio', function(hooks) {
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    user.set('save', ()=> {
+    user.set('save', () => {
       assert.equal(user.get('firstName'), 'new first', 'first name is saved');
       assert.equal(user.get('middleName'), 'new middle', 'middel is saved');
       assert.equal(user.get('lastName'), 'new last', 'last is saved');
@@ -313,7 +315,9 @@ module('Integration | Component | user profile bio', function(hooks) {
       return resolve(user);
     });
 
-    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
+    await render(
+      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+    );
     const inputs = 'input';
     const firstName = `[data-test-first-name-input]`;
     const middleName = `[data-test-middle-name-input]`;
@@ -357,20 +361,22 @@ module('Integration | Component | user profile bio', function(hooks) {
     await click('.bigadd');
   });
 
-  const setupConfigAndAuth = function(context){
+  const setupConfigAndAuth = function (context) {
     const iliosConfigMock = Service.extend({
-      userSearchType: resolve('local')
+      userSearchType: resolve('local'),
     });
     context.owner.register('service:iliosConfig', iliosConfigMock);
   };
 
-  test('closing password box clears input', async function(assert) {
+  test('closing password box clears input', async function (assert) {
     assert.expect(4);
     setupConfigAndAuth(this);
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
+    await render(
+      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+    );
     const inputs = 'input';
     const password = `[data-test-password-input]`;
     const activatePasswordField = '.activate-password-field';
@@ -387,13 +393,15 @@ module('Integration | Component | user profile bio', function(hooks) {
     assert.dom(password).hasValue('', 'password is blank again');
   });
 
-  test('password strength 0 display', async function(assert) {
+  test('password strength 0 display', async function (assert) {
     assert.expect(3);
     setupConfigAndAuth(this);
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
+    await render(
+      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+    );
     const passwordStrengthMeter = '[data-test-password-strength-meter]';
     const passwordStrengthText = '[data-test-password-strength-text]';
     const passwordInput = '[data-test-password-input]';
@@ -402,17 +410,23 @@ module('Integration | Component | user profile bio', function(hooks) {
     await fillIn(passwordInput, '12345');
     await waitFor('[data-test-password-strength-text]');
     assert.dom(passwordStrengthMeter).hasValue(0, 'meter is intially at 0');
-    assert.dom(passwordStrengthText).hasText('Try Harder', 'try harder is displayed for level 0 password');
-    assert.dom(passwordStrengthText).hasClass('strength-0', 'correct strength is applied to the meter');
+    assert
+      .dom(passwordStrengthText)
+      .hasText('Try Harder', 'try harder is displayed for level 0 password');
+    assert
+      .dom(passwordStrengthText)
+      .hasClass('strength-0', 'correct strength is applied to the meter');
   });
 
-  test('password strength 1 display', async function(assert) {
+  test('password strength 1 display', async function (assert) {
     assert.expect(3);
     setupConfigAndAuth(this);
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
+    await render(
+      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+    );
     const passwordStrengthMeter = '[data-test-password-strength-meter]';
     const passwordStrengthText = '[data-test-password-strength-text]';
     const passwordInput = '[data-test-password-input]';
@@ -422,17 +436,20 @@ module('Integration | Component | user profile bio', function(hooks) {
     await waitFor('[data-test-password-strength-text]');
     assert.dom(passwordStrengthMeter).hasValue(1, 'meter is intially at 1');
     assert.dom(passwordStrengthText).hasText('Bad', 'bad is displayed for level 1 password');
-    assert.dom(passwordStrengthText).hasClass('strength-1', 'correct strength is applied to the meter');
-
+    assert
+      .dom(passwordStrengthText)
+      .hasClass('strength-1', 'correct strength is applied to the meter');
   });
 
-  test('password strength 2 display', async function(assert) {
+  test('password strength 2 display', async function (assert) {
     assert.expect(3);
     setupConfigAndAuth(this);
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
+    await render(
+      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+    );
     const passwordStrengthMeter = '[data-test-password-strength-meter]';
     const passwordStrengthText = '[data-test-password-strength-text]';
     const passwordInput = '[data-test-password-input]';
@@ -442,17 +459,20 @@ module('Integration | Component | user profile bio', function(hooks) {
     await waitFor('[data-test-password-strength-text]');
     assert.dom(passwordStrengthMeter).hasValue(2, 'meter is intially at 2');
     assert.dom(passwordStrengthText).hasText('Weak', 'weak is displayed for level 2 password');
-    assert.dom(passwordStrengthText).hasClass('strength-2', 'correct strength is applied to the meter');
-
+    assert
+      .dom(passwordStrengthText)
+      .hasClass('strength-2', 'correct strength is applied to the meter');
   });
 
-  test('password strength 3 display', async function(assert) {
+  test('password strength 3 display', async function (assert) {
     assert.expect(3);
     setupConfigAndAuth(this);
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
+    await render(
+      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+    );
     const passwordStrengthMeter = '[data-test-password-strength-meter]';
     const passwordStrengthText = '[data-test-password-strength-text]';
     const passwordInput = '[data-test-password-input]';
@@ -462,17 +482,20 @@ module('Integration | Component | user profile bio', function(hooks) {
     await waitFor('[data-test-password-strength-text]');
     assert.dom(passwordStrengthMeter).hasValue(3, 'meter is intially at 3');
     assert.dom(passwordStrengthText).hasText('Good', 'good is displayed for level 3 password');
-    assert.dom(passwordStrengthText).hasClass('strength-3', 'correct strength is applied to the meter');
-
+    assert
+      .dom(passwordStrengthText)
+      .hasClass('strength-3', 'correct strength is applied to the meter');
   });
 
-  test('password strength 4 display', async function(assert) {
+  test('password strength 4 display', async function (assert) {
     assert.expect(3);
     setupConfigAndAuth(this);
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
+    await render(
+      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+    );
     const passwordStrengthMeter = '[data-test-password-strength-meter]';
     const passwordStrengthText = '[data-test-password-strength-text]';
     const passwordInput = '[data-test-password-input]';
@@ -482,14 +505,15 @@ module('Integration | Component | user profile bio', function(hooks) {
     await waitFor('[data-test-password-strength-text]');
     assert.dom(passwordStrengthMeter).hasValue(4, 'meter is intially at 4');
     assert.dom(passwordStrengthText).hasText('Strong', 'strong is displayed for level 4 password');
-    assert.dom(passwordStrengthText).hasClass('strength-4', 'correct strength is applied to the meter');
+    assert
+      .dom(passwordStrengthText)
+      .hasClass('strength-4', 'correct strength is applied to the meter');
   });
 
-
-  test('sync user from directory', async function(assert) {
+  test('sync user from directory', async function (assert) {
     assert.expect(30);
     const iliosConfigMock = Service.extend({
-      userSearchType: resolve('ldap')
+      userSearchType: resolve('ldap'),
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
 
@@ -506,13 +530,15 @@ module('Integration | Component | user profile bio', function(hooks) {
           phone: 'new-phone',
           campusId: 'new-campus-id',
           username: 'new-username',
-        }
+        },
       };
     });
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
+    await render(
+      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+    );
     const items = '.item';
     const firstName = `${items}:nth-of-type(1)`;
     const middleName = `${items}:nth-of-type(2)`;
@@ -538,7 +564,6 @@ module('Integration | Component | user profile bio', function(hooks) {
 
     const syncBUtton = 'button.directory-sync';
 
-
     assert.dom(items).exists({ count: 10 }, 'correct number of inputs');
     assert.dom(firstNameInput).hasValue('Test Person', 'firstname is set');
     assert.dom(middleNameInput).hasValue('Name', 'middlename is set');
@@ -559,7 +584,9 @@ module('Integration | Component | user profile bio', function(hooks) {
     assert.dom(otherIdInput).hasValue('idO', 'otherId is set');
     assert.dom(emailInput).hasValue('new-email', 'email is updated');
     assert.dom(displayNameInput).hasValue('new-best-name', 'display name is updated');
-    assert.dom(preferredEmailInput).hasValue('test2@test.com', 'preferred email does not get updated via sync');
+    assert
+      .dom(preferredEmailInput)
+      .hasValue('test2@test.com', 'preferred email does not get updated via sync');
     assert.dom(phoneInput).hasValue('new-phone', 'phone is updated');
     assert.dom(usernameInput).hasValue('new-username', 'username is updated');
 
@@ -567,43 +594,49 @@ module('Integration | Component | user profile bio', function(hooks) {
     assert.dom(lastName).hasClass('synced-from-directory', 'lastName has updated class applied');
     assert.dom(phone).hasClass('synced-from-directory', 'phone has updated class applied');
     assert.dom(email).hasClass('synced-from-directory', 'email has updated class applied');
-    assert.dom(displayName).hasClass('synced-from-directory', 'display name has updated class applied');
+    assert
+      .dom(displayName)
+      .hasClass('synced-from-directory', 'display name has updated class applied');
     assert.dom(campusId).hasClass('synced-from-directory', 'campusId has updated class applied');
     assert.dom(username).hasClass('synced-from-directory', 'username has updated class applied');
   });
 
-  test('preferred email can be blanked', async function(assert) {
+  test('preferred email can be blanked', async function (assert) {
     assert.expect(2);
     setupConfigAndAuth(this);
     authentication.set('save', () => {});
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    user.set('save', ()=> {
+    user.set('save', () => {
       assert.equal(user.get('preferredEmail'), '', 'blank value for preferred email is saved');
       return resolve(user);
     });
 
-    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
+    await render(
+      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+    );
     const preferredEmailInput = '[data-test-preferred-email-input]';
     assert.dom(preferredEmailInput).hasValue('test2@test.com', 'preferred email is set');
     await fillIn(preferredEmailInput, '');
     await click('.bigadd');
   });
 
-  test('display name can be blanked', async function(assert) {
+  test('display name can be blanked', async function (assert) {
     assert.expect(2);
     setupConfigAndAuth(this);
     authentication.set('save', () => {});
     this.set('user', user);
     this.set('nothing', parseInt);
 
-    user.set('save', ()=> {
+    user.set('save', () => {
       assert.equal(user.get('displayName'), '', 'blank value for display name is saved');
       return resolve(user);
     });
 
-    await render(hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
+    await render(
+      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+    );
     const displayNameInput = '[data-test-display-name-input]';
     assert.dom(displayNameInput).hasValue('Best Name', 'preferred email is set');
     await fillIn(displayNameInput, '');

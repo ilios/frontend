@@ -1,14 +1,5 @@
-import {
-  clickable,
-  create,
-  hasClass,
-  isVisible,
-  text,
-} from 'ember-cli-page-object';
-import {
-  pageObjectFillInFroalaEditor,
-  pageObjectFroalaEditorValue
-} from 'ilios-common';
+import { clickable, create, hasClass, isVisible, text } from 'ember-cli-page-object';
+import { pageObjectFillInFroalaEditor, pageObjectFroalaEditorValue } from 'ilios-common';
 import meshManager from './manage-objective-descriptors';
 import competencyManager from './manage-objective-competency';
 import meshDescriptors from './objective-list-item-descriptors';
@@ -31,11 +22,11 @@ const definition = {
   },
   competency,
   meshDescriptors,
-  remove: clickable('[data-icon="trash"]', { scope: '[data-test-actions]'}),
+  remove: clickable('[data-icon="trash"]', { scope: '[data-test-actions]' }),
   hasTrashCan: isVisible('[data-icon="trash"]', { scope: '[data-test-actions]' }),
-  activate: clickable('[data-test-activate]', { scope: '[data-test-actions]'}),
+  activate: clickable('[data-test-activate]', { scope: '[data-test-actions]' }),
   isActive: isVisible('[data-icon="lightbulb-on"]', { scope: '[data-test-actions]' }),
-  deactivate: clickable('[data-test-deactivate]', { scope: '[data-test-actions]'}),
+  deactivate: clickable('[data-test-deactivate]', { scope: '[data-test-actions]' }),
   isInactive: isVisible('[data-icon="lightbulb-slash"]', { scope: '[data-test-actions]' }),
   confirmRemoval: {
     scope: '[data-test-confirm-removal]',

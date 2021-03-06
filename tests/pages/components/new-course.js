@@ -1,4 +1,13 @@
-import { clickable, collection, create, fillable, isPresent, property, text, triggerable } from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  fillable,
+  isPresent,
+  property,
+  text,
+  triggerable,
+} from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-new-course]',

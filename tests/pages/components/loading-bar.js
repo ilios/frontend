@@ -5,5 +5,5 @@ export default create({
   bar: {
     scope: '[data-test-bar]',
     value: attribute('data-value'),
-  }
+  },
 });

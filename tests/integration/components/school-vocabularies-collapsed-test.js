@@ -5,17 +5,17 @@ import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios/tests/pages/components/school-vocabularies-collapsed';
 
-module('Integration | Component | school vocabularies collapsed', function(hooks) {
+module('Integration | Component | school vocabularies collapsed', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     const school = this.server.create('school');
-    const  vocabulary1 = this.server.create('vocabulary', {
+    const vocabulary1 = this.server.create('vocabulary', {
       title: 'Vocabulary 1',
       school,
     });
-    const  vocabulary2 = this.server.create('vocabulary', {
+    const vocabulary2 = this.server.create('vocabulary', {
       title: 'Vocabulary 2',
       school,
     });
@@ -38,7 +38,7 @@ module('Integration | Component | school vocabularies collapsed', function(hooks
     assert.equal(component.vocabularies[1].summary, 'There is 1 term');
   });
 
-  test('expand', async function(assert) {
+  test('expand', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school');
     this.server.create('vocabulary', {
@@ -50,7 +50,9 @@ module('Integration | Component | school vocabularies collapsed', function(hooks
     this.set('expand', () => {
       assert.ok(true, 'expand triggered.');
     });
-    await render(hbs`<SchoolVocabulariesCollapsed @school={{this.school}} @expand={{this.expand}} />`);
+    await render(
+      hbs`<SchoolVocabulariesCollapsed @school={{this.school}} @expand={{this.expand}} />`
+    );
 
     await component.expand();
   });

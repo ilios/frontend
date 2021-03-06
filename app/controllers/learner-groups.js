@@ -18,7 +18,7 @@ export default Controller.extend({
     programYearId: 'programYear',
     schoolId: 'school',
     sortLearnerGroupsBy: 'sortBy',
-    titleFilter: 'filter'
+    titleFilter: 'filter',
   },
 
   currentGroupsSaved: 0,
@@ -32,32 +32,37 @@ export default Controller.extend({
   titleFilter: null,
   totalGroupsToSave: 0,
 
-  programs: computed('selectedSchool', async function() {
+  programs: computed('selectedSchool', async function () {
     const school = await this.selectedSchool;
-    if(isEmpty(school)){
+    if (isEmpty(school)) {
       return [];
     }
     return school.programs;
   }),
 
-  programYears: computed('selectedProgram', 'selectedProgram.programYears.[]', async function() {
+  programYears: computed('selectedProgram', 'selectedProgram.programYears.[]', async function () {
     const program = await this.selectedProgram;
-    if(isEmpty(program)){
+    if (isEmpty(program)) {
       return [];
     }
     return program.programYears;
   }),
 
-  learnerGroups: computed('selectedProgramYear.cohort.rootLevelLearnerGroups.[]', 'newGroup', 'deletedGroup', async function() {
-    const programYear = await this.selectedProgramYear;
-    if(isEmpty(programYear)) {
-      return [];
+  learnerGroups: computed(
+    'selectedProgramYear.cohort.rootLevelLearnerGroups.[]',
+    'newGroup',
+    'deletedGroup',
+    async function () {
+      const programYear = await this.selectedProgramYear;
+      if (isEmpty(programYear)) {
+        return [];
+      }
+      const cohort = await programYear.cohort;
+      return await cohort.get('rootLevelLearnerGroups');
     }
-    const cohort = await programYear.cohort;
-    return await cohort.get('rootLevelLearnerGroups');
-  }),
+  ),
 
-  filteredLearnerGroups: computed('titleFilter', 'learnerGroups.[]', async function() {
+  filteredLearnerGroups: computed('titleFilter', 'learnerGroups.[]', async function () {
     const titleFilter = this.titleFilter;
     const title = isBlank(titleFilter) ? '' : titleFilter.trim().toLowerCase();
     const learnerGroups = await this.learnerGroups;
@@ -65,26 +70,28 @@ export default Controller.extend({
     if (isEmpty(title)) {
       filteredGroups = learnerGroups.sortBy('title');
     } else {
-      filteredGroups = learnerGroups.filter(learnerGroup => {
-        return isPresent(learnerGroup.get('title'))
-          && learnerGroup.get('title').trim().toLowerCase().includes(title);
+      filteredGroups = learnerGroups.filter((learnerGroup) => {
+        return (
+          isPresent(learnerGroup.get('title')) &&
+          learnerGroup.get('title').trim().toLowerCase().includes(title)
+        );
       });
     }
     return filteredGroups.sortBy('title');
   }),
 
-  selectedSchool: computed('model.[]', 'schoolId', async function() {
+  selectedSchool: computed('model.[]', 'schoolId', async function () {
     const user = await this.currentUser.getModel();
     const schoolId = this.schoolId ?? user.belongsTo('school').id();
 
     return this.model.findBy('id', schoolId);
   }),
 
-  selectedProgram: computed('programs.[]', 'programId', async function() {
+  selectedProgram: computed('programs.[]', 'programId', async function () {
     const programs = (await this.programs).toArray();
-    if(isPresent(this.programId)){
+    if (isPresent(this.programId)) {
       const program = programs.findBy('id', this.programId);
-      if(program){
+      if (program) {
         return program;
       }
     }
@@ -92,7 +99,7 @@ export default Controller.extend({
     return this.findBestDefaultProgram(programs);
   }),
 
-  selectedProgramYear: computed('programYears.[]', 'programYearId', async function() {
+  selectedProgramYear: computed('programYears.[]', 'programYearId', async function () {
     const programYears = await this.programYears;
     const programYearId = this.programYearId;
     if (isPresent(programYearId)) {
@@ -112,13 +119,13 @@ export default Controller.extend({
     return null;
   }),
 
-  canCreate: computed('selectedSchool', async function() {
+  canCreate: computed('selectedSchool', async function () {
     const permissionChecker = this.permissionChecker;
     const selectedSchool = await this.selectedSchool;
     return permissionChecker.canCreateLearnerGroup(selectedSchool);
   }),
 
-  canDelete: computed('selectedSchool', async function() {
+  canDelete: computed('selectedSchool', async function () {
     const permissionChecker = this.permissionChecker;
     const selectedSchool = await this.selectedSchool;
     return permissionChecker.canDeleteLearnerGroupInSchool(selectedSchool);
@@ -134,7 +141,7 @@ export default Controller.extend({
       const cohort = await programYear.get('cohort');
       const learnerGroups = await cohort.get('learnerGroups');
       const descendants = await learnerGroup.get('allDescendants');
-      descendants.forEach(descendant => {
+      descendants.forEach((descendant) => {
         learnerGroups.removeObject(descendant);
       });
       learnerGroups.removeObject(learnerGroup);
@@ -195,7 +202,7 @@ export default Controller.extend({
       this.set('schoolId', schoolId);
       this.set('programId', null);
       this.set('programYearId', null);
-    }
+    },
   },
 
   changeTitleFilter: task(function* (value) {
@@ -233,18 +240,21 @@ export default Controller.extend({
           groupCount,
         };
       });
-      return sorters.reduce((obj, sorter) => {
-        if (sorter.distanceFromThisYear < obj.distance) {
-          obj.distance = sorter.distanceFromThisYear;
+      return sorters.reduce(
+        (obj, sorter) => {
+          if (sorter.distanceFromThisYear < obj.distance) {
+            obj.distance = sorter.distanceFromThisYear;
+          }
+          obj.totalGroups += sorter.groupCount;
+          return obj;
+        },
+        {
+          title: program.title,
+          program,
+          totalGroups: 0,
+          distance: 100,
         }
-        obj.totalGroups += sorter.groupCount;
-        return obj;
-      }, {
-        title: program.title,
-        program,
-        totalGroups: 0,
-        distance: 100,
-      });
+      );
     });
     const sorted = sortingPrograms.sort((a, b) => {
       if (a.distance !== b.distance) {
@@ -258,5 +268,5 @@ export default Controller.extend({
     });
 
     return sorted[0].program;
-  }
+  },
 });

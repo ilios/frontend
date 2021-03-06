@@ -11,32 +11,32 @@ const Validations = buildValidations({
     validator('presence', {
       presence: true,
       dependentKeys: ['model.allowCustomUserName'],
-      disabled: computed('model.allowCustomUserName', function(){
-        return this.get('model.allowCustomUserName').then(allowCustomUserName => {
+      disabled: computed('model.allowCustomUserName', function () {
+        return this.get('model.allowCustomUserName').then((allowCustomUserName) => {
           return allowCustomUserName;
         });
-      })
+      }),
     }),
     validator('length', {
-      max: 100
-    })
+      max: 100,
+    }),
   ],
   password: [
     validator('presence', {
       presence: true,
       dependentKeys: ['model.allowCustomUserName'],
-      disabled: computed('model.allowCustomUserName', function(){
-        return this.get('model.allowCustomUserName').then(allowCustomUserName => {
+      disabled: computed('model.allowCustomUserName', function () {
+        return this.get('model.allowCustomUserName').then((allowCustomUserName) => {
           return allowCustomUserName;
         });
-      })
-    })
+      }),
+    }),
   ],
   otherId: [
     validator('length', {
-      max: 16
-    })
-  ]
+      max: 16,
+    }),
+  ],
 });
 
 export default Component.extend(NewUser, Validations, {
@@ -53,7 +53,7 @@ export default Component.extend(NewUser, Validations, {
   selectedUser: false,
   tooManyResults: false,
 
-  allowCustomUserName: computed('iliosConfig.authenticationType', async function() {
+  allowCustomUserName: computed('iliosConfig.authenticationType', async function () {
     const type = await this.iliosConfig.authenticationType;
     return type === 'form';
   }),
@@ -86,7 +86,7 @@ export default Component.extend(NewUser, Validations, {
       this.set('campusId', null);
       this.set('phone', null);
       this.set('username', null);
-    }
+    },
   },
 
   keyUp(event) {
@@ -99,7 +99,7 @@ export default Component.extend(NewUser, Validations, {
         return;
       }
 
-      if(27 === keyCode) {
+      if (27 === keyCode) {
         this.close();
       }
       return;
@@ -124,8 +124,12 @@ export default Component.extend(NewUser, Validations, {
       this.set('isSearching', true);
       const url = '/application/directory/search?limit=51&searchTerms=' + searchTerms;
       const data = yield this.fetch.getJsonFromApiHost(url);
-      const mappedResults = data.results.map(result => {
-        result.addable = isPresent(result.firstName) && isPresent(result.lastName) && isPresent(result.email) && isPresent(result.campusId);
+      const mappedResults = data.results.map((result) => {
+        result.addable =
+          isPresent(result.firstName) &&
+          isPresent(result.lastName) &&
+          isPresent(result.email) &&
+          isPresent(result.campusId);
         return result;
       });
       this.set('tooManyResults', mappedResults.length > 50);

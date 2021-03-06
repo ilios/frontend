@@ -15,14 +15,14 @@ const definition = {
     label: text('label'),
     value: value('input'),
     set: flatpickrDatePicker('input'),
-    hasError: isVisible('.validation-error-message')
+    hasError: isVisible('.validation-error-message'),
   },
   endDate: {
     scope: '[data-test-enddate]',
     label: text('label'),
     value: value('input'),
     set: flatpickrDatePicker('input'),
-    hasError: isVisible('.validation-error-message', { multiple: true })
+    hasError: isVisible('.validation-error-message', { multiple: true }),
   },
   save: clickable('.done'),
   cancel: clickable('.cancel'),

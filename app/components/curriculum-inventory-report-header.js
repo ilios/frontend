@@ -2,14 +2,14 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { NotBlank, Length, validatable } from 'ilios-common/decorators/validation';
-import { restartableTask } from "ember-concurrency";
+import { restartableTask } from 'ember-concurrency';
 
 @validatable
 export default class CurriculumInventoryReportHeaderComponent extends Component {
   @NotBlank() @Length(3, 200) @tracked name;
 
   @action
-  load(element, [ report ]){
+  load(element, [report]) {
     this.name = report?.name;
   }
 

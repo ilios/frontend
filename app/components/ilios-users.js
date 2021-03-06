@@ -32,7 +32,7 @@ export default class IliosUsersComponent extends Component {
       q,
       offset: this.args.offset,
       'order_by[lastName]': 'ASC',
-      'order_by[firstName]': 'ASC'
+      'order_by[firstName]': 'ASC',
     });
   }
 }

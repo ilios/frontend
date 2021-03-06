@@ -1,8 +1,4 @@
-import {
-  create,
-  isPresent,
-  text
-} from 'ember-cli-page-object';
+import { create, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-ilios-header]',

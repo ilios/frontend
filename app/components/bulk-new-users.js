@@ -1,14 +1,14 @@
 import Component from '@glimmer/component';
-import {tracked} from '@glimmer/tracking';
+import { tracked } from '@glimmer/tracking';
 import { getOwner } from '@ember/application';
 import { action } from '@ember/object';
 import CoreObject from '@ember/object/core';
-import {inject as service} from '@ember/service';
-import {isPresent} from '@ember/utils';
-import {all, filter} from 'rsvp';
-import {dropTask, restartableTask} from 'ember-concurrency';
+import { inject as service } from '@ember/service';
+import { isPresent } from '@ember/utils';
+import { all, filter } from 'rsvp';
+import { dropTask, restartableTask } from 'ember-concurrency';
 import PapaParse from 'papaparse';
-import moment from "moment";
+import moment from 'moment';
 import { validatable, Length, NotBlank, IsEmail, Custom } from 'ilios-common/decorators/validation';
 
 export default class BulkNewUsersComponent extends Component {
@@ -33,9 +33,19 @@ export default class BulkNewUsersComponent extends Component {
   @tracked savingUserErrors = [];
   @tracked selectedUsers = [];
 
-  get sampleData(){
-    const sampleUploadFields = ['First', 'Last', 'Middle', 'Phone', 'Email', 'CampusID', 'OtherID', 'Username', 'Password'];
-    const str = sampleUploadFields.join("\t");
+  get sampleData() {
+    const sampleUploadFields = [
+      'First',
+      'Last',
+      'Middle',
+      'Phone',
+      'Email',
+      'CampusID',
+      'OtherID',
+      'Username',
+      'Password',
+    ];
+    const str = sampleUploadFields.join('\t');
     return window.btoa(str);
   }
 
@@ -63,7 +73,7 @@ export default class BulkNewUsersComponent extends Component {
   }
 
   @restartableTask
-  *load(){
+  *load() {
     const user = yield this.currentUser.model;
     this.primarySchool = yield user.school;
     this.schools = yield this.loadSchools.perform();
@@ -71,7 +81,7 @@ export default class BulkNewUsersComponent extends Component {
   }
 
   @action
-  toggleUserSelection(obj){
+  toggleUserSelection(obj) {
     if (this.selectedUsers.includes(obj)) {
       this.selectedUsers.removeObject(obj);
     } else {
@@ -80,10 +90,9 @@ export default class BulkNewUsersComponent extends Component {
   }
 
   @action
-  setPrimaryCohort(id){
+  setPrimaryCohort(id) {
     this.primaryCohortId = id;
   }
-
 
   async existingUsernames() {
     const authentications = await this.store.findAll('authentication');
@@ -96,41 +105,45 @@ export default class BulkNewUsersComponent extends Component {
    *
    * @return array
    **/
-  async getFileContents(file){
+  async getFileContents(file) {
     this.fileUploadError = false;
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const allowedFileTypes = ['text/plain', 'text/csv', 'text/tab-separated-values'];
       if (!allowedFileTypes.includes(file.type)) {
         const intl = this.intl;
         this.set('fileUploadError', true);
-        throw new Error(intl.t('general.fileTypeError', {fileType: file.type}));
+        throw new Error(intl.t('general.fileTypeError', { fileType: file.type }));
       }
-      const complete = ({data}) => {
-        const proposedUsers = data.map(arr => {
+      const complete = ({ data }) => {
+        const proposedUsers = data.map((arr) => {
           return ProposedUser.create(getOwner(this).ownerInjection(), {
-            firstName: isPresent(arr[0])?arr[0]:null,
-            lastName: isPresent(arr[1])?arr[1]:null,
-            middleName: isPresent(arr[2])?arr[2]:null,
-            phone: isPresent(arr[3])?arr[3]:null,
-            email: isPresent(arr[4])?arr[4]:null,
-            campusId: isPresent(arr[5])?arr[5]:null,
-            otherId: isPresent(arr[6])?arr[6]:null,
-            username: isPresent(arr[7])?arr[7]:null,
-            password: isPresent(arr[8])?arr[8]:null
+            firstName: isPresent(arr[0]) ? arr[0] : null,
+            lastName: isPresent(arr[1]) ? arr[1] : null,
+            middleName: isPresent(arr[2]) ? arr[2] : null,
+            phone: isPresent(arr[3]) ? arr[3] : null,
+            email: isPresent(arr[4]) ? arr[4] : null,
+            campusId: isPresent(arr[5]) ? arr[5] : null,
+            otherId: isPresent(arr[6]) ? arr[6] : null,
+            username: isPresent(arr[7]) ? arr[7] : null,
+            password: isPresent(arr[8]) ? arr[8] : null,
           });
         });
-        const notHeaderRow = proposedUsers.filter(obj => String(obj.firstName).toLowerCase() !== 'first' || String(obj.lastName).toLowerCase() !== 'last');
+        const notHeaderRow = proposedUsers.filter(
+          (obj) =>
+            String(obj.firstName).toLowerCase() !== 'first' ||
+            String(obj.lastName).toLowerCase() !== 'last'
+        );
         resolve(notHeaderRow);
       };
 
       PapaParse.parse(file, {
-        complete
+        complete,
       });
     });
   }
 
   @restartableTask
-  *updateSelectedFile(files){
+  *updateSelectedFile(files) {
     // Check for the various File API support.
     if (window.File && window.FileReader && window.FileList && window.Blob) {
       if (files.length > 0) {
@@ -142,7 +155,7 @@ export default class BulkNewUsersComponent extends Component {
   }
 
   @restartableTask
-  *setSchool(id){
+  *setSchool(id) {
     this.schoolId = id;
     this.cohorts = yield this.loadCohorts.perform(this.bestSelectedSchool);
   }
@@ -151,12 +164,12 @@ export default class BulkNewUsersComponent extends Component {
   *parseFile(file) {
     const proposedUsers = yield this.getFileContents(file);
     const existingUsernames = yield this.existingUsernames();
-    const filledOutUsers = proposedUsers.map(obj => {
+    const filledOutUsers = proposedUsers.map((obj) => {
       obj.existingUsernames = existingUsernames;
 
       return obj;
     });
-    const validUsers = yield filter(filledOutUsers, async obj => {
+    const validUsers = yield filter(filledOutUsers, async (obj) => {
       return await obj.isValid();
     });
 
@@ -175,12 +188,24 @@ export default class BulkNewUsersComponent extends Component {
 
     const proposedUsers = this.selectedUsers;
 
-    const validUsers = yield filter(proposedUsers, async obj => {
+    const validUsers = yield filter(proposedUsers, async (obj) => {
       return obj.isValid();
     });
 
-    const records = validUsers.map(userInput => {
-      const { firstName, lastName, middleName, phone, email, campusId, otherId, addedViaIlios, enabled, username, password } = userInput;
+    const records = validUsers.map((userInput) => {
+      const {
+        firstName,
+        lastName,
+        middleName,
+        phone,
+        email,
+        campusId,
+        otherId,
+        addedViaIlios,
+        enabled,
+        username,
+        password,
+      } = userInput;
       const user = this.store.createRecord('user', {
         firstName,
         lastName,
@@ -190,7 +215,7 @@ export default class BulkNewUsersComponent extends Component {
         campusId,
         otherId,
         addedViaIlios,
-        enabled
+        enabled,
       });
       user.set('school', selectedSchool);
 
@@ -205,7 +230,7 @@ export default class BulkNewUsersComponent extends Component {
         authentication.set('user', user);
       }
 
-      const rhett =  {user, userInput};
+      const rhett = { user, userInput };
       if (authentication) {
         rhett.authentication = authentication;
       }
@@ -213,7 +238,7 @@ export default class BulkNewUsersComponent extends Component {
       return rhett;
     });
     let parts;
-    while (records.length > 0){
+    while (records.length > 0) {
       try {
         parts = records.splice(0, 10);
         const users = parts.mapBy('user');
@@ -221,14 +246,18 @@ export default class BulkNewUsersComponent extends Component {
         const authentications = parts.mapBy('authentication');
         yield all(authentications.invoke('save'));
       } catch (e) {
-        const userErrors = parts.filter(obj => obj.user.get('isError'));
-        const authenticationErrors = parts.filter(obj => !userErrors.includes(obj) && isPresent(obj.authentication) && obj.authentication.get('isError'));
+        const userErrors = parts.filter((obj) => obj.user.get('isError'));
+        const authenticationErrors = parts.filter(
+          (obj) =>
+            !userErrors.includes(obj) &&
+            isPresent(obj.authentication) &&
+            obj.authentication.get('isError')
+        );
         this.savingUserErrors.pushObjects(userErrors);
         this.savingAuthenticationErrors.pushObjects(authenticationErrors);
       } finally {
         this.savedUserIds.pushObjects(parts.mapBy('user').mapBy('id'));
       }
-
     }
 
     if (this.savingUserErrors.length || this.savingAuthenticationErrors.length) {
@@ -244,7 +273,7 @@ export default class BulkNewUsersComponent extends Component {
   @restartableTask
   *loadSchools() {
     const schools = yield this.store.findAll('school', { reload: true });
-    return filter(schools.toArray(), async school => {
+    return filter(schools.toArray(), async (school) => {
       return this.permissionChecker.canCreateUser(school);
     });
   }
@@ -253,29 +282,31 @@ export default class BulkNewUsersComponent extends Component {
   *loadCohorts(school) {
     const cohorts = yield this.store.query('cohort', {
       filters: {
-        schools: [ school.id ],
-      }
+        schools: [school.id],
+      },
     });
 
     //prefetch programYears and programs so that ember data will coalesce these requests.
     const programYears = yield all(cohorts.getEach('programYear'));
     yield all(programYears.getEach('program'));
 
-    const objects = yield all(cohorts.toArray().map(async cohort => {
-      const obj = {
-        id: cohort.get('id')
-      };
-      const programYear = await cohort.programYear;
-      const program = await programYear.program;
-      obj.title = program.title + ' ' + cohort.title;
-      obj.startYear = programYear.startYear;
-      obj.duration = program.duration;
+    const objects = yield all(
+      cohorts.toArray().map(async (cohort) => {
+        const obj = {
+          id: cohort.get('id'),
+        };
+        const programYear = await cohort.programYear;
+        const program = await programYear.program;
+        obj.title = program.title + ' ' + cohort.title;
+        obj.startYear = programYear.startYear;
+        obj.duration = program.duration;
 
-      return obj;
-    }));
+        return obj;
+      })
+    );
 
     const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
-    return objects.filter(obj => {
+    return objects.filter((obj) => {
       const finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
       return finalYear > lastYear;
     });
@@ -313,7 +344,7 @@ class ProposedUser extends CoreObject {
   }
 
   async validateUsernameCallback() {
-    return ! this.existingUsernames.includes(this.username);
+    return !this.existingUsernames.includes(this.username);
   }
 
   validateUsernameMessageCallback() {

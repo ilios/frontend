@@ -11,7 +11,7 @@ const definition = {
   cancel: clickable('[data-test-cancel]'),
   manage: clickable('[data-test-manage]'),
   competenciesManager,
-  competenciesList
+  competenciesList,
 };
 
 export default definition;

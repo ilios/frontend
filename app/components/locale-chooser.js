@@ -16,9 +16,12 @@ export default class LocaleChooserComponent extends Component {
   }
 
   get locales() {
-    return this.intl.get('locales').uniq().map(locale => {
-      return { id: locale, text: this.intl.t('general.language.' + locale) };
-    });
+    return this.intl
+      .get('locales')
+      .uniq()
+      .map((locale) => {
+        return { id: locale, text: this.intl.t('general.language.' + locale) };
+      });
   }
 
   get uniqueId() {
@@ -48,47 +51,47 @@ export default class LocaleChooserComponent extends Component {
   moveFocus(event) {
     const { key, target } = event;
     switch (key) {
-    case 'ArrowDown':
-      event.preventDefault();
-      if (target.nextElementSibling) {
-        target.nextElementSibling.focus();
-      } else {
-        this.menuElement.querySelector('button:nth-of-type(1)').focus();
-      }
-      break;
-    case 'ArrowUp':
-      event.preventDefault();
-      if (target.previousElementSibling) {
-        target.previousElementSibling.focus();
-      } else {
-        this.menuElement.querySelector('button:last-of-type').focus();
-      }
-      break;
-    case 'Escape':
-    case 'Tab':
-    case 'ArrowRight':
-    case 'ArrowLeft':
-      this.isOpen = false;
-      break;
+      case 'ArrowDown':
+        event.preventDefault();
+        if (target.nextElementSibling) {
+          target.nextElementSibling.focus();
+        } else {
+          this.menuElement.querySelector('button:nth-of-type(1)').focus();
+        }
+        break;
+      case 'ArrowUp':
+        event.preventDefault();
+        if (target.previousElementSibling) {
+          target.previousElementSibling.focus();
+        } else {
+          this.menuElement.querySelector('button:last-of-type').focus();
+        }
+        break;
+      case 'Escape':
+      case 'Tab':
+      case 'ArrowRight':
+      case 'ArrowLeft':
+        this.isOpen = false;
+        break;
     }
   }
   @action
   clearFocus() {
     const buttons = this.menuElement.querySelectorAll('button');
-    buttons.forEach(el => el.blur());
+    buttons.forEach((el) => el.blur());
   }
   @action
   toggleMenu({ key }) {
     switch (key) {
-    case 'ArrowDown':
-      this.isOpen = true;
-      break;
-    case 'Escape':
-    case 'Tab':
-    case 'ArrowRight':
-    case 'ArrowLeft':
-      this.isOpen = false;
-      break;
+      case 'ArrowDown':
+        this.isOpen = true;
+        break;
+      case 'Escape':
+      case 'Tab':
+      case 'ArrowRight':
+      case 'ArrowLeft':
+        this.isOpen = false;
+        break;
     }
   }
 }

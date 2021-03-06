@@ -6,19 +6,21 @@ import { component } from 'ilios/tests/pages/components/program-year/objective-l
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | program-year/objective-list-item', function(hooks) {
+module('Integration | Component | program-year/objective-list-item', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const programYear = this.server.create('programYear', { program });
     const programYearObjective = this.server.create('programYearObjective', { programYear });
-    this.model = await this.owner.lookup('service:store').find('program-year-objective', programYearObjective.id);
+    this.model = await this.owner
+      .lookup('service:store')
+      .find('program-year-objective', programYearObjective.id);
   });
 
-  test('it renders and is accessible', async function(assert) {
+  test('it renders and is accessible', async function (assert) {
     assert.expect(7);
     this.set('programYearObjective', this.model);
     await render(
@@ -39,7 +41,7 @@ module('Integration | Component | program-year/objective-list-item', function(ho
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('can change title', async function(assert) {
+  test('can change title', async function (assert) {
     assert.expect(2);
     this.set('programYearObjective', this.model);
     await render(
@@ -119,7 +121,7 @@ module('Integration | Component | program-year/objective-list-item', function(ho
     assert.ok(component.hasRemoveConfirmation);
   });
 
-  test('can de-activate', async function(assert) {
+  test('can de-activate', async function (assert) {
     assert.expect(2);
     this.set('programYearObjective', this.model);
     await render(
@@ -135,7 +137,7 @@ module('Integration | Component | program-year/objective-list-item', function(ho
     assert.ok(component.isInactive);
   });
 
-  test('can activate', async function(assert) {
+  test('can activate', async function (assert) {
     assert.expect(2);
     this.model.set('active', false);
     this.set('programYearObjective', this.model);

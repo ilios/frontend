@@ -12,59 +12,59 @@ const Validations = buildValidations({
     validator('presence', true),
     validator('length', {
       max: 200,
-      descriptionKey: 'general.title'
-    })
+      descriptionKey: 'general.title',
+    }),
   ],
   duration: [
     validator('number', {
       allowString: true,
       integer: true,
       gte: 0,
-      lte: 1200
-    })
+      lte: 1200,
+    }),
   ],
   startDate: [
     validator('presence', {
       presence: true,
       dependentKeys: ['model.duration'],
-      disabled: gt('model.duration', 0)
-    })
+      disabled: gt('model.duration', 0),
+    }),
   ],
   endDate: [
     validator('date', {
       dependentKeys: ['model.startDate', 'model.duration'],
       after: reads('model.startDate'),
-      disabled: computed('model.duration', 'model.startDate', function(){
+      disabled: computed('model.duration', 'model.startDate', function () {
         return this.get('model.duration') > 0 && !this.get('model.startDate');
-      })
+      }),
     }),
     validator('presence', {
       presence: true,
       dependentKeys: ['model.startDate', 'model.duration'],
       after: reads('model.startDate'),
-      disabled: computed('model.duration', 'model.startDate', function(){
+      disabled: computed('model.duration', 'model.startDate', function () {
         return this.get('model.duration') > 0 && !this.get('model.startDate');
-      })
-    })
+      }),
+    }),
   ],
   minimum: [
     validator('number', {
       allowString: true,
       integer: true,
-      gte: 0
-    })
+      gte: 0,
+    }),
   ],
   maximum: [
     validator('number', {
       dependentKeys: ['minimum'],
       allowString: true,
       integer: true,
-      gte: computed('model.minimum', function() {
+      gte: computed('model.minimum', function () {
         const min = this.get('model.minimum') || 0;
         return Math.max(0, min);
-      })
-    })
-  ]
+      }),
+    }),
+  ],
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
@@ -104,7 +104,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @type {Ember.computed}
    * @public
    */
-  linkableCourses: computed('report.year', 'report.linkedCourses.[]', async function(){
+  linkableCourses: computed('report.year', 'report.linkedCourses.[]', async function () {
     const report = this.report;
     const program = await report.get('program');
     const schoolId = program.belongsTo('school').id();
@@ -114,11 +114,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         school: [schoolId],
         published: true,
         year: report.get('year'),
-      }
+      },
     });
     // Filter out all courses that are linked to (sequence blocks in) this report.
-    return allLinkableCourses.filter(course => {
-      return ! linkedCourses.includes(course);
+    return allLinkableCourses.filter((course) => {
+      return !linkedCourses.includes(course);
     });
   }),
 
@@ -140,8 +140,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   actions: {
     save() {
       this.set('isSaving', true);
-      this.send('addErrorDisplaysFor', ['title', 'duration', 'startDate', 'endDate', 'minimum', 'maximum']);
-      this.validate().then(({validations}) => {
+      this.send('addErrorDisplaysFor', [
+        'title',
+        'duration',
+        'startDate',
+        'endDate',
+        'minimum',
+        'maximum',
+      ]);
+      this.validate().then(({ validations }) => {
         if (validations.get('isValid')) {
           const block = this.store.createRecord('curriculumInventorySequenceBlock', {
             title: this.title,
@@ -158,16 +165,16 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
             maximum: this.maximum,
             course: this.course,
             duration: this.duration || 0,
-            report: this.report
+            report: this.report,
           });
-          this.save(block).finally(()=> {
+          this.save(block).finally(() => {
             const parent = this.parent;
             if (parent) {
-              parent.get('children').then(children => {
+              parent.get('children').then((children) => {
                 children.pushObject(block);
               });
             }
-            if (! this.isDestroyed) {
+            if (!this.isDestroyed) {
               this.set('isSaving', false);
             }
           });
@@ -233,7 +240,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const keyCode = event.keyCode;
     const target = event.target;
 
-    if (! ['text', 'textarea'].includes(target.type)) {
+    if (!['text', 'textarea'].includes(target.type)) {
       return;
     }
 
@@ -242,7 +249,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       return;
     }
 
-    if(27 === keyCode) {
+    if (27 === keyCode) {
       this.send('cancel');
     }
   },
@@ -257,7 +264,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     if (isPresent(parent) && parent.get('isOrdered')) {
       isInOrderedSequence = true;
       const siblings = yield parent.get('children');
-      for (let i = 0, n = (siblings.toArray().length + 1); i < n; i++) {
+      for (let i = 0, n = siblings.toArray().length + 1; i < n; i++) {
         orderInSequenceOptions.push(i + 1);
       }
       orderInSequence = 1;
@@ -268,14 +275,14 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     }
     const intl = this.intl;
     const childSequenceOrderOptions = [
-      EmberObject.create({ 'id' : 1, 'title': intl.t('general.ordered') }),
-      EmberObject.create({ 'id' : 2, 'title': intl.t('general.unordered') }),
-      EmberObject.create({ 'id' : 3, 'title': intl.t('general.parallel') })
+      EmberObject.create({ id: 1, title: intl.t('general.ordered') }),
+      EmberObject.create({ id: 2, title: intl.t('general.unordered') }),
+      EmberObject.create({ id: 3, title: intl.t('general.parallel') }),
     ];
     const requiredOptions = [
-      EmberObject.create({ 'id' : 1, 'title': intl.t('general.required') }),
-      EmberObject.create({ 'id' : 2, 'title': intl.t('general.optionalElective') }),
-      EmberObject.create({ 'id' : 3, 'title': intl.t('general.requiredInTrack') })
+      EmberObject.create({ id: 1, title: intl.t('general.required') }),
+      EmberObject.create({ id: 2, title: intl.t('general.optionalElective') }),
+      EmberObject.create({ id: 3, title: intl.t('general.requiredInTrack') }),
     ];
     const required = requiredOptions[0];
     const childSequenceOrder = childSequenceOrderOptions[0];
@@ -291,5 +298,5 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       childSequenceOrder,
     });
     this.set('isLoaded', true);
-  }).restartable()
+  }).restartable(),
 });

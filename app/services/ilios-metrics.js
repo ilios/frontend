@@ -16,11 +16,13 @@ export default Service.extend({
     if (!trackingEnabled || isEmpty(trackingCode)) {
       return false;
     } else {
-      metrics.activateAdapters([{
-        name: 'GoogleAnalytics',
-        environments: ['all'],
-        config: { id: trackingCode }
-      }]);
+      metrics.activateAdapters([
+        {
+          name: 'GoogleAnalytics',
+          environments: ['all'],
+          config: { id: trackingCode },
+        },
+      ]);
       return true;
     }
   },
@@ -41,5 +43,5 @@ export default Service.extend({
       }
     };
     scheduleOnce('afterRender', this, setContext);
-  }
+  },
 });

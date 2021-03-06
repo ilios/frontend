@@ -4,7 +4,7 @@ import { render, waitUntil } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import component from 'ilios/tests/pages/components/loading-bar';
 
-module('Integration | Component | loading bar', function(hooks) {
+module('Integration | Component | loading bar', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {

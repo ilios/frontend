@@ -1,11 +1,21 @@
-import { clickable, collection, create, fillable, isVisible, property, text, triggerable, value } from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  fillable,
+  isVisible,
+  property,
+  text,
+  triggerable,
+  value,
+} from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-new-curriculum-inventory-report]',
   programTitle: {
     scope: '[data-test-program-title]',
     label: text('label'),
-    title: text('span')
+    title: text('span'),
   },
   academicYear: {
     scope: '[data-test-academic-year]',
@@ -20,7 +30,7 @@ const definition = {
     scope: '[data-test-description]',
     value: text('textarea'),
     label: text('label'),
-    set: fillable('textarea')
+    set: fillable('textarea'),
   },
   name: {
     scope: '[data-test-name]',
@@ -28,10 +38,10 @@ const definition = {
     label: text('label'),
     set: fillable('input'),
     submit: triggerable('keydown', 'input', { eventProperties: { key: 'Enter' } }),
-    hasError: isVisible('.validation-error-message')
+    hasError: isVisible('.validation-error-message'),
   },
   save: clickable('[data-test-save]'),
-  cancel: clickable('[data-test-cancel]')
+  cancel: clickable('[data-test-cancel]'),
 };
 
 export default definition;

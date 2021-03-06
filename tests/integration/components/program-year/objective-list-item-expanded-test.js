@@ -6,27 +6,33 @@ import { component } from 'ilios/tests/pages/components/program-year/objective-l
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | program-year/objective-list-item-expanded', function(hooks) {
+module('Integration | Component | program-year/objective-list-item-expanded', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders and is accessible', async function(assert) {
+  test('it renders and is accessible', async function (assert) {
     assert.expect(14);
     const programYear = this.server.create('programYear');
     const programYearObjective = this.server.create('programYearObjective', { programYear });
     const course1 = this.server.create('course');
     const course2 = this.server.create('course');
-    this.server.createList('courseObjective', 3, { course: course1, programYearObjectives: [ programYearObjective ] });
-    this.server.createList('courseObjective', 3, { course: course2, programYearObjectives: [ programYearObjective ] });
+    this.server.createList('courseObjective', 3, {
+      course: course1,
+      programYearObjectives: [programYearObjective],
+    });
+    this.server.createList('courseObjective', 3, {
+      course: course2,
+      programYearObjectives: [programYearObjective],
+    });
 
-    const model = await this.owner.lookup('service:store').find('program-year-objective', programYearObjective.id);
+    const model = await this.owner
+      .lookup('service:store')
+      .find('program-year-objective', programYearObjective.id);
     this.set('objective', model);
 
-    await render(
-      hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{this.objective}} />`
-    );
-    assert.equal(component.headers[0].text, "Courses");
-    assert.equal(component.headers[1].text, "Objectives");
+    await render(hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{this.objective}} />`);
+    assert.equal(component.headers[0].text, 'Courses');
+    assert.equal(component.headers[1].text, 'Objectives');
 
     assert.equal(component.courses.length, 2);
     assert.equal(component.courses[0].title, 'course 0');
@@ -44,17 +50,17 @@ module('Integration | Component | program-year/objective-list-item-expanded', fu
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('it renders empty and is accessible', async function(assert) {
+  test('it renders empty and is accessible', async function (assert) {
     assert.expect(4);
     const programYear = this.server.create('program-year');
     const programYearObjective = this.server.create('program-year-objective', { programYear });
-    const model = await this.owner.lookup('service:store').find('program-year-objective', programYearObjective.id);
+    const model = await this.owner
+      .lookup('service:store')
+      .find('program-year-objective', programYearObjective.id);
     this.set('objective', model);
-    await render(
-      hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{this.objective}} />`
-    );
-    assert.equal(component.headers[0].text, "Courses");
-    assert.equal(component.headers[1].text, "Objectives");
+    await render(hbs`<ProgramYear::ObjectiveListItemExpanded @objective={{this.objective}} />`);
+    assert.equal(component.headers[0].text, 'Courses');
+    assert.equal(component.headers[1].text, 'Objectives');
     assert.ok(component.hasNone);
 
     await a11yAudit(this.element);

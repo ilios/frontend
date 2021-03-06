@@ -41,7 +41,7 @@ export default class AuthenticatedRoute extends Route {
       });
     }
     if (this.currentUser.currentUserId) {
-      Sentry.setUser({id: this.currentUser.currentUserId});
+      Sentry.setUser({ id: this.currentUser.currentUserId });
     }
   }
 

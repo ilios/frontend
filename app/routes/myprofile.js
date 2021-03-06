@@ -9,7 +9,7 @@ export default class MyprofileRoute extends Route {
     this.session.requireAuthentication(transition, 'login');
   }
 
-  model(){
+  model() {
     return this.currentUser.get('model');
   }
 }

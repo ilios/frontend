@@ -7,7 +7,7 @@ const definition = {
   domains: collection('[data-test-domain]', {
     details: {
       scope: '[data-test-domain-details]',
-      editor
+      editor,
     },
     remove: clickable('[data-test-remove-domain]'),
     isRemovable: isVisible('[data-test-remove-domain]'),
@@ -17,12 +17,12 @@ const definition = {
       objectivesCount: text('[data-test-objectives-count]'),
       editor,
     }),
-    newCompetency
+    newCompetency,
   }),
   newDomain: {
     scope: '[data-test-new-domain]',
-    newCompetency
-  }
+    newCompetency,
+  },
 };
 
 export default definition;

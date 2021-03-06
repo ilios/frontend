@@ -16,7 +16,7 @@ export default class ProgramYearRoute extends Route {
    * Preload the school configurations
    * to avoid a pop in later
    */
-  async afterModel(programYear){
+  async afterModel(programYear) {
     const permissionChecker = this.permissionChecker;
     const canUpdate = await permissionChecker.canUpdateProgramYear(programYear);
     this.set('canUpdate', canUpdate);

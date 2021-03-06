@@ -14,9 +14,12 @@ export default class ProgramYearListItemComponent extends Component {
 
   @use program = new ResolveAsyncValue(() => [this.args.programYear.program]);
   @use cohort = new ResolveAsyncValue(() => [this.args.programYear.cohort]);
-  @use canDeletePermission = new PermissionChecker(() => ["canDeleteProgramYear", this.args.programYear]);
-  @use canLock = new PermissionChecker(() => ["canLockProgramYear", this.args.programYear]);
-  @use canUnlock = new PermissionChecker(() => ["canUnlockProgramYear", this.args.programYear]);
+  @use canDeletePermission = new PermissionChecker(() => [
+    'canDeleteProgramYear',
+    this.args.programYear,
+  ]);
+  @use canLock = new PermissionChecker(() => ['canLockProgramYear', this.args.programYear]);
+  @use canUnlock = new PermissionChecker(() => ['canUnlockProgramYear', this.args.programYear]);
 
   get canDelete() {
     if (!this.cohort) {
@@ -51,7 +54,7 @@ export default class ProgramYearListItemComponent extends Component {
   async checkerPermissions(programYear, program, cohort) {
     let canDelete = false;
     const canLock = await this.permissionChecker.canLockProgramYear(programYear);
-    const canUnlock = await this. permissionChecker.canUnlockProgramYear(programYear);
+    const canUnlock = await this.permissionChecker.canUnlockProgramYear(programYear);
 
     const cohortUsers = cohort.hasMany('users').ids();
     if (cohortUsers.length === 0) {

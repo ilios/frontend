@@ -4,14 +4,14 @@ import { setupTest } from 'ember-qunit';
 import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Unit | Utility | build-report-title', function(hooks) {
+module('Unit | Utility | build-report-title', function (hooks) {
   setupTest(hooks);
   setupIntl(hooks);
   setupMirage(hooks);
 
-  test('custom title', async function(assert) {
+  test('custom title', async function (assert) {
     const report = this.server.create('report', {
-      title: 'Lorem Ipsum'
+      title: 'Lorem Ipsum',
     });
 
     const store = this.owner.lookup('service:store');
@@ -20,9 +20,9 @@ module('Unit | Utility | build-report-title', function(hooks) {
     assert.equal(title, report.title);
   });
 
-  test('all competencies in all schools', async function(assert) {
+  test('all competencies in all schools', async function (assert) {
     const report = this.server.create('report', {
-      subject: 'competency'
+      subject: 'competency',
     });
 
     const store = this.owner.lookup('service:store');
@@ -31,7 +31,7 @@ module('Unit | Utility | build-report-title', function(hooks) {
     assert.equal(title, 'All Competencies in All Schools');
   });
 
-  test('all competencies in school X', async function(assert) {
+  test('all competencies in school X', async function (assert) {
     const school = this.server.create('school', { title: 'School of Schools' });
     const report = this.server.create('report', {
       school,
@@ -44,7 +44,7 @@ module('Unit | Utility | build-report-title', function(hooks) {
     assert.equal(title, 'All Competencies in ' + school.title);
   });
 
-  test('all competencies for user X in school Y', async function(assert) {
+  test('all competencies for user X in school Y', async function (assert) {
     const school = this.server.create('school', { title: 'School of Schools' });
     const user = this.server.create('user', {
       firstName: 'Chip',
@@ -61,10 +61,10 @@ module('Unit | Utility | build-report-title', function(hooks) {
     const reportModel = await store.find('report', report.id);
     const userModel = await store.find('user', user.id);
     const title = await buildReportTitle(reportModel, store, this.intl);
-    assert.equal(title, 'All Competencies for ' + userModel.fullName +  ' in ' + school.title);
+    assert.equal(title, 'All Competencies for ' + userModel.fullName + ' in ' + school.title);
   });
 
-  test('broken report', async function(assert) {
+  test('broken report', async function (assert) {
     const school = this.server.create('school', { title: 'School of Schools' });
     const report = this.server.create('report', {
       school,

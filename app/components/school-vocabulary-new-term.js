@@ -8,13 +8,17 @@ import { dropTask } from 'ember-concurrency';
 export default class SchoolVocabularyNewTermComponent extends Component {
   @service store;
   @service intl;
-  @tracked @NotBlank() @Length(1, 200) @Custom('validateTitleCallback', 'validateTitleMessageCallback') title;
+  @tracked
+  @NotBlank()
+  @Length(1, 200)
+  @Custom('validateTitleCallback', 'validateTitleMessageCallback')
+  title;
 
   @dropTask
-  *save(){
+  *save() {
     this.addErrorDisplayFor('title');
     const isValid = yield this.isValid();
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('title');
@@ -31,8 +35,10 @@ export default class SchoolVocabularyNewTermComponent extends Component {
   }
 
   async validateTitleCallback() {
-    const terms = this.args.term ? (await this.args.term.children) : (await this.args.vocabulary.topLevelTerms);
-    return ! terms.mapBy('title').includes(this.title);
+    const terms = this.args.term
+      ? await this.args.term.children
+      : await this.args.vocabulary.topLevelTerms;
+    return !terms.mapBy('title').includes(this.title);
   }
 
   validateTitleMessageCallback() {

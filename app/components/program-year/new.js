@@ -11,17 +11,20 @@ export default class NewProgramYearComponent extends Component {
   }
 
   get selectedYear() {
-    if (! this.year) {
+    if (!this.year) {
       return this.availableAcademicYears.firstObject;
     }
     return this.availableAcademicYears.findBy('value', this.year);
   }
 
   get availableAcademicYears() {
-    return this.allYears.filter(year => ! this.existingStartYears.includes(year))
+    return this.allYears
+      .filter((year) => !this.existingStartYears.includes(year))
       .map((startYear) => {
         return {
-          label: this.args.academicYearCrossesCalendarYearBoundaries ? `${startYear} - ${startYear + 1}` : startYear.toString(),
+          label: this.args.academicYearCrossesCalendarYearBoundaries
+            ? `${startYear} - ${startYear + 1}`
+            : startYear.toString(),
           value: startYear.toString(),
         };
       });

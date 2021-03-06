@@ -4,11 +4,11 @@ import { render, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | school competencies expanded', function(hooks) {
+module('Integration | Component | school competencies expanded', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(5);
     const school = this.server.create('school');
     const domain = this.server.create('competency', {

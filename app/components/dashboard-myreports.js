@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import { dropTask , timeout, restartableTask } from 'ember-concurrency';
+import { dropTask, timeout, restartableTask } from 'ember-concurrency';
 import PapaParse from 'papaparse';
 import createDownloadFile from '../utils/create-download-file';
 import { later } from '@ember/runloop';
@@ -29,11 +29,11 @@ export default class DashboardMyreportsComponent extends Component {
 
   constructor() {
     super(...arguments);
-    this.currentUser.getModel().then(user => this.user = user);
+    this.currentUser.getModel().then((user) => (this.user = user));
   }
 
   @restartableTask
-  * load(element, [reports, selectedReport, selectedYear]) {
+  *load(element, [reports, selectedReport, selectedYear]) {
     if (!reports) {
       return;
     }
@@ -53,13 +53,13 @@ export default class DashboardMyreportsComponent extends Component {
     return map(reports, async (report) => {
       return {
         title: await buildReportTitle(report, this.store, this.intl),
-        report
+        report,
       };
     });
   }
 
   get showAcademicYearFilter() {
-    if(!this.args.selectedReport){
+    if (!this.args.selectedReport) {
       return false;
     }
     const { subject, prepositionalObject } = this.args.selectedReport;
@@ -93,7 +93,7 @@ export default class DashboardMyreportsComponent extends Component {
   }
 
   @dropTask
-  * downloadReport() {
+  *downloadReport() {
     const report = this.args.selectedReport;
     const title = this.selectedReportTitle;
     const year = this.args.selectedYear;

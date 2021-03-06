@@ -39,12 +39,12 @@ export default class LearnergroupInstructorManager extends Component {
 
   @action
   removeInstructor(user) {
-    this.instructors = this.instructors.filter(instructor => instructor !== user);
+    this.instructors = this.instructors.filter((instructor) => instructor !== user);
   }
 
   @action
   removeInstructorGroup(instructorGroup) {
-    this.instructorGroups = this.instructorGroups.filter(group => group !== instructorGroup);
+    this.instructorGroups = this.instructorGroups.filter((group) => group !== instructorGroup);
   }
 
   @dropTask

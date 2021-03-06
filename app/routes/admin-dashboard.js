@@ -21,17 +21,17 @@ export default class AdminDashboardRoute extends Route {
     const store = this.store;
     const permissionChecker = this.permissionChecker;
     const schools = await store.findAll('school');
-    const schoolsWithCreateUserPermission = await filter(schools.toArray(), async school => {
+    const schoolsWithCreateUserPermission = await filter(schools.toArray(), async (school) => {
       return permissionChecker.canCreateUser(school);
     });
     const canCreate = schoolsWithCreateUserPermission.length > 0;
-    const schoolsWithUpdateUserPermission = await filter(schools.toArray(), async school => {
+    const schoolsWithUpdateUserPermission = await filter(schools.toArray(), async (school) => {
       return permissionChecker.canUpdateUserInSchool(school);
     });
 
     return {
       canCreate,
-      schoolsWithUpdateUserPermission
+      schoolsWithUpdateUserPermission,
     };
   }
 }

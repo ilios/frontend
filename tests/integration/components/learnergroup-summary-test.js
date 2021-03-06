@@ -4,11 +4,11 @@ import { render, click, fillIn } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Integration | Component | learnergroup summary', function(hooks) {
+module('Integration | Component | learnergroup summary', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     this.programYear = this.server.create('programYear', { program });
@@ -20,13 +20,21 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     const user2 = this.server.create('user');
     const user3 = this.server.create('user');
     const user4 = this.server.create('user');
-    const user5 = this.server.create('user', { firstName: 'Walther', middleName: 'von der', lastName: 'Vogelweide' });
-    const user6 = this.server.create('user', { firstName: 'Zeb', lastName: 'Zoober', displayName: 'Aardvark' });
+    const user5 = this.server.create('user', {
+      firstName: 'Walther',
+      middleName: 'von der',
+      lastName: 'Vogelweide',
+    });
+    const user6 = this.server.create('user', {
+      firstName: 'Zeb',
+      lastName: 'Zoober',
+      displayName: 'Aardvark',
+    });
 
     const cohort = this.server.create('cohort', {
       title: 'this cohort',
       users: [user1, user2, user3, user4],
-      programYear: this.programYear
+      programYear: this.programYear,
     });
     const subGroup = this.server.create('learner-group', {
       title: 'test sub-group',
@@ -50,7 +58,9 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       ilmSessions: [ilm],
       cohort,
     });
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
 
@@ -72,14 +82,21 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     assert.dom(instructors).exists({ count: 2 });
     assert.dom(`${instructors}:nth-of-type(1) [data-test-fullname]`).hasText('Aardvark');
     assert.dom(`${instructors}:nth-of-type(1) [data-test-info]`).exists();
-    assert.dom(`${instructors}:nth-of-type(2) [data-test-fullname]`).hasText('Walther v. Vogelweide');
+    assert
+      .dom(`${instructors}:nth-of-type(2) [data-test-fullname]`)
+      .hasText('Walther v. Vogelweide');
     assert.dom(`${instructors}:nth-of-type(2) [data-test-info]`).doesNotExist();
     assert.dom(coursesList).hasText('course 0 course 1');
   });
 
-  test('Needs accommodation', async function(assert) {
-    const learnerGroup = this.server.create('learner-group', { needsAccommodation: true, cohort: this.cohort });
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+  test('Needs accommodation', async function (assert) {
+    const learnerGroup = this.server.create('learner-group', {
+      needsAccommodation: true,
+      cohort: this.cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupSummary
       @setIsEditing={{noop}}
@@ -93,9 +110,14 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     assert.dom('[data-test-needs-accommodation] input').isChecked();
   });
 
-  test('Does not need accommodation', async function(assert) {
-    const learnerGroup = this.server.create('learner-group', { needsAccommodation: false, cohort: this.cohort });
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+  test('Does not need accommodation', async function (assert) {
+    const learnerGroup = this.server.create('learner-group', {
+      needsAccommodation: false,
+      cohort: this.cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupSummary
       @setIsEditing={{noop}}
@@ -109,9 +131,14 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     assert.dom('[data-test-needs-accommodation] input').isNotChecked();
   });
 
-  test('Read-only: Needs accommodation', async function(assert) {
-    const learnerGroup = this.server.create('learner-group', { needsAccommodation: true, cohort: this.cohort });
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+  test('Read-only: Needs accommodation', async function (assert) {
+    const learnerGroup = this.server.create('learner-group', {
+      needsAccommodation: true,
+      cohort: this.cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupSummary
       @setIsEditing={{noop}}
@@ -122,12 +149,19 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       @isBulkAssigning={{false}}
       @canUpdate={{false}}
     />`);
-    assert.dom('[data-test-needs-accommodation]').hasText('Accommodation is required for learners in this group: Yes');
+    assert
+      .dom('[data-test-needs-accommodation]')
+      .hasText('Accommodation is required for learners in this group: Yes');
   });
 
-  test('Read-only: Does not need accommodation', async function(assert) {
-    const learnerGroup = this.server.create('learner-group', { needsAccommodation: false, cohort: this.cohort });
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+  test('Read-only: Does not need accommodation', async function (assert) {
+    const learnerGroup = this.server.create('learner-group', {
+      needsAccommodation: false,
+      cohort: this.cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupSummary
       @setIsEditing={{noop}}
@@ -138,12 +172,19 @@ module('Integration | Component | learnergroup summary', function(hooks) {
       @isBulkAssigning={{false}}
       @canUpdate={{false}}
     />`);
-    assert.dom('[data-test-needs-accommodation]').hasText('Accommodation is required for learners in this group: No');
+    assert
+      .dom('[data-test-needs-accommodation]')
+      .hasText('Accommodation is required for learners in this group: No');
   });
 
-  test('Toggle needs accommodations', async function(assert) {
-    const learnerGroup = this.server.create('learner-group', { needsAccommodation: false, cohort: this.cohort });
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+  test('Toggle needs accommodations', async function (assert) {
+    const learnerGroup = this.server.create('learner-group', {
+      needsAccommodation: false,
+      cohort: this.cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupSummary
       @setIsEditing={{noop}}
@@ -161,14 +202,16 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     assert.dom('[data-test-needs-accommodation] input').isChecked();
   });
 
-  test('Update location', async function(assert) {
+  test('Update location', async function (assert) {
     assert.expect(2);
 
     const learnerGroup = this.server.create('learner-group', {
       location: 'test location',
-      cohort: this.cohort
+      cohort: this.cohort,
     });
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnergroupSummary
@@ -183,8 +226,8 @@ module('Integration | Component | learnergroup summary', function(hooks) {
 
     const defaultLocation = '[data-test-overview] .defaultlocation span:nth-of-type(1)';
     const editLocation = `${defaultLocation} .editable`;
-    const input =  `${defaultLocation} input`;
-    const save =  `${defaultLocation} .done`;
+    const input = `${defaultLocation} input`;
+    const save = `${defaultLocation} .done`;
     assert.dom(defaultLocation).hasText('test location');
     await click(editLocation);
     await fillIn(input, 'new location name');
@@ -195,7 +238,7 @@ module('Integration | Component | learnergroup summary', function(hooks) {
   test('each course is only shown once', async function (assert) {
     const cohort = this.server.create('cohort', {
       title: 'this cohort',
-      programYear: this.programYear
+      programYear: this.programYear,
     });
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
@@ -206,16 +249,18 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     const offering2 = this.server.create('offering', { session: session3 });
     const learnerGroup = this.server.create('learner-group', {
       cohort,
-      offerings: [offering1, offering2]
+      offerings: [offering1, offering2],
     });
     for (let i = 0; i < 3; i++) {
       this.server.create('learner-group', {
         offerings: [offerings[i]],
-        parent: learnerGroup
+        parent: learnerGroup,
       });
     }
 
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
 
     this.set('learnerGroup', learnerGroupModel);
 
@@ -234,14 +279,16 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     assert.dom(coursesList).hasText('course 0');
   });
 
-  test('Update default URL', async function(assert) {
+  test('Update default URL', async function (assert) {
     assert.expect(2);
 
     const learnerGroup = this.server.create('learner-group', {
       url: 'https://iliosproject.org/',
-      cohort: this.cohort
+      cohort: this.cohort,
     });
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnergroupSummary
@@ -256,8 +303,8 @@ module('Integration | Component | learnergroup summary', function(hooks) {
 
     const defaultUrl = '[data-test-overview] .defaulturl span:nth-of-type(1)';
     const editUrl = `${defaultUrl} .editable`;
-    const input =  `${defaultUrl} input`;
-    const save =  `${defaultUrl} .done`;
+    const input = `${defaultUrl} input`;
+    const save = `${defaultUrl} .done`;
     assert.dom(defaultUrl).hasText('https://iliosproject.org/');
     await click(editUrl);
     await fillIn(input, 'https://github.com/ilios/ilios');
@@ -265,11 +312,13 @@ module('Integration | Component | learnergroup summary', function(hooks) {
     assert.dom(defaultUrl).hasText('https://github.com/ilios/ilios');
   });
 
-  test('URL input validation', async function(assert) {
+  test('URL input validation', async function (assert) {
     const learnerGroup = this.server.create('learner-group', {
-      cohort: this.cohort
+      cohort: this.cohort,
     });
-    const learnerGroupModel = await this.owner.lookup('service:store').find('learner-group', learnerGroup.id);
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnergroupSummary
@@ -284,8 +333,8 @@ module('Integration | Component | learnergroup summary', function(hooks) {
 
     const defaultUrl = '[data-test-overview] .defaulturl span:nth-of-type(1)';
     const editUrl = `${defaultUrl} .editable`;
-    const input =  `${defaultUrl} input`;
-    const save =  `${defaultUrl} .done`;
+    const input = `${defaultUrl} input`;
+    const save = `${defaultUrl} .done`;
     const errors = `${defaultUrl} .validation-error-message`;
     assert.dom(editUrl).hasText('Click to edit');
     await click(editUrl);

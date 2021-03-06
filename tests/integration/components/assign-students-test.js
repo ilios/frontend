@@ -5,24 +5,24 @@ import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/assign-students';
 
-module('Integration | Component | assign students', function(hooks) {
+module('Integration | Component | assign students', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', {
       duration: 20,
       title: 'program title',
-      school
+      school,
     });
     const programYear = this.server.create('programYear', {
       program,
-      startYear: 2020
+      startYear: 2020,
     });
     this.server.create('cohort', {
       title: 'test cohort',
-      programYear
+      programYear,
     });
     this.server.create('user', {
       id: 1,
@@ -33,7 +33,7 @@ module('Integration | Component | assign students', function(hooks) {
       id: 2,
       email: '2nd@.com',
       campusId: '123ID',
-      displayName: 'Aardvark'
+      displayName: 'Aardvark',
     });
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
     const students = await this.owner.lookup('service:store').findAll('user');
@@ -58,7 +58,7 @@ module('Integration | Component | assign students', function(hooks) {
     assert.ok(component.students[1].name.userNameInfo.hasAdditionalInfo);
   });
 
-  test('check all checks all', async function(assert) {
+  test('check all checks all', async function (assert) {
     const school = this.server.create('school');
     this.server.create('user', {
       id: 1,
@@ -85,7 +85,7 @@ module('Integration | Component | assign students', function(hooks) {
     assert.notOk(component.students[0].isChecked);
   });
 
-  test('check some sets indeterminate state', async function(assert) {
+  test('check some sets indeterminate state', async function (assert) {
     const school = this.server.create('school');
     this.server.create('user', {
       id: 1,
@@ -114,15 +114,24 @@ module('Integration | Component | assign students', function(hooks) {
 
     assert.notOk(component.isToggleAllChecked, 'check all is not initially checked');
     assert.notOk(component.isToggleAllIndeterminate, 'check all is not initially indeterminate');
-    assert.notOk(component.students[0].isToggleAllChecked, 'first student is not initially checked');
-    assert.notOk(component.students[1].isToggleAllChecked, 'second student is not initially checked');
+    assert.notOk(
+      component.students[0].isToggleAllChecked,
+      'first student is not initially checked'
+    );
+    assert.notOk(
+      component.students[1].isToggleAllChecked,
+      'second student is not initially checked'
+    );
     await component.students[0].toggle();
-    assert.ok(component.isToggleAllIndeterminate, 'check all is indeterminate with one student checked');
+    assert.ok(
+      component.isToggleAllIndeterminate,
+      'check all is indeterminate with one student checked'
+    );
     await component.students[1].toggle();
     assert.ok(component.isToggleAllChecked, 'check all is checked with both students checked');
   });
 
-  test('when some are selected check all checks all', async function(assert) {
+  test('when some are selected check all checks all', async function (assert) {
     const school = this.server.create('school');
     this.server.create('user', {
       id: 1,
@@ -154,25 +163,31 @@ module('Integration | Component | assign students', function(hooks) {
 
     await component.students[0].toggle();
     await component.toggleAll();
-    assert.ok(component.students[0].isToggleChecked, 'first student still checked after checkall clicked');
-    assert.ok(component.students[1].isToggleChecked, 'second student checked after checkall clicked');
+    assert.ok(
+      component.students[0].isToggleChecked,
+      'first student still checked after checkall clicked'
+    );
+    assert.ok(
+      component.students[1].isToggleChecked,
+      'second student checked after checkall clicked'
+    );
   });
 
-  test('save sets primary cohort', async function(assert) {
+  test('save sets primary cohort', async function (assert) {
     const school = this.server.create('school');
     const program = this.server.create('program', {
       duration: 20,
       title: 'program title',
-      school
+      school,
     });
     const programYear = this.server.create('programYear', {
       program,
-      startYear: 2020
+      startYear: 2020,
     });
     this.server.create('cohort', {
       id: 1,
       title: 'test cohort',
-      programYear
+      programYear,
     });
 
     this.server.create('user', {

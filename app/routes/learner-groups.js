@@ -8,9 +8,9 @@ export default class LearnerGroupsRoute extends Route {
 
   queryParams = {
     titleFilter: {
-      replace: true
-    }
-  }
+      replace: true,
+    },
+  };
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');

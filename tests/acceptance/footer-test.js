@@ -7,11 +7,11 @@ import ENV from 'ilios/config/environment';
 import { versionRegExp } from 'ember-cli-app-version/utils/regexp';
 const { version } = ENV.APP;
 
-module('Acceptance | footer', function(hooks) {
+module('Acceptance | footer', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     const school = this.server.create('school');
     this.user = await setupAuthentication({ school });
   });

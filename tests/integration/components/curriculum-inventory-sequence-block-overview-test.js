@@ -1,28 +1,22 @@
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  click,
-  find,
-  findAll,
-  fillIn
-} from '@ember/test-helpers';
+import { render, click, find, findAll, fillIn } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 // @todo use page objects here [ST 2020/08/11]
-module('Integration | Component | curriculum inventory sequence block overview', function(hooks) {
+module('Integration | Component | curriculum inventory sequence block overview', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(37);
 
     const school = this.server.create('school');
     const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
     const program = this.server.create('program', {
-      school
+      school,
     });
     const clerkshipType = this.server.create('course-clerkship-type', { title: 'Block' });
 
@@ -32,14 +26,14 @@ module('Integration | Component | curriculum inventory sequence block overview',
       endDate: new Date('2015-03-30'),
       clerkshipType,
       level: 4,
-      school
+      school,
     });
 
     const report = this.server.create('curriculum-inventory-report', {
       academicLevels,
       year: '2016',
       program,
-      isFinalized: false
+      isFinalized: false,
     });
 
     const parentBlock = this.server.create('curriculum-inventory-sequence-block', {
@@ -88,11 +82,15 @@ module('Integration | Component | curriculum inventory sequence block overview',
       track: true,
       minimum: 2,
       maximum: 15,
-      academicLevel
+      academicLevel,
     });
 
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
-    const sequenceBlockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', 2);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', 2);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -107,7 +105,9 @@ module('Integration | Component | curriculum inventory sequence block overview',
       @setSortBy={{setSortBy}}
     />`);
     assert.dom('.description label').hasText('Description:', 'Description label is correct.');
-    assert.dom('.description .editinplace').hasText(block.description, 'Block description is visible.');
+    assert
+      .dom('.description .editinplace')
+      .hasText(block.description, 'Block description is visible.');
     assert.dom('.course label').hasText('Course:', 'Course label is correct.');
     assert.dom('.course .editinplace').hasText(course.title, 'Course title is visible.');
     const details = find('[data-test-course-details]').textContent.trim();
@@ -131,54 +131,83 @@ module('Integration | Component | curriculum inventory sequence block overview',
     assert.dom('.track label').hasText('Is Track:', 'Track label is correct.');
     assert.dom('.track input').isChecked('Track toggle is set to "yes"');
     assert.dom('.start-date label').hasText('Start:', 'Start date label is correct.');
-    assert.dom('.start-date .editinplace').hasText(moment(block.startDate).format('L'), 'Start date is visible.');
+    assert
+      .dom('.start-date .editinplace')
+      .hasText(moment(block.startDate).format('L'), 'Start date is visible.');
     assert.dom('.end-date label').hasText('End:', 'End date label is correct.');
-    assert.dom('.end-date .editinplace').hasText(moment(block.endDate).format('L'), 'End date is visible.');
+    assert
+      .dom('.end-date .editinplace')
+      .hasText(moment(block.endDate).format('L'), 'End date is visible.');
     assert.dom('.duration label').hasText('Duration (in Days):', 'Duration label is correct.');
     assert.dom('.duration .editinplace').hasText(block.duration.toString(), 'Duration is visible.');
-    assert.dom('.child-sequence-order label').hasText('Child Sequence Order:', 'Child sequence order label is correct.');
-    assert.dom('.child-sequence-order .editinplace').hasText('Ordered', 'Child sequence order is visible.');
-    assert.dom('.order-in-sequence label').hasText('Order in Sequence:', 'Order in sequence label is visible.');
-    assert.dom('.order-in-sequence .editinplace').hasText(block.orderInSequence.toString(), 'Order in sequence is visible.');
+    assert
+      .dom('.child-sequence-order label')
+      .hasText('Child Sequence Order:', 'Child sequence order label is correct.');
+    assert
+      .dom('.child-sequence-order .editinplace')
+      .hasText('Ordered', 'Child sequence order is visible.');
+    assert
+      .dom('.order-in-sequence label')
+      .hasText('Order in Sequence:', 'Order in sequence label is visible.');
+    assert
+      .dom('.order-in-sequence .editinplace')
+      .hasText(block.orderInSequence.toString(), 'Order in sequence is visible.');
     assert.dom('.minimum label').hasText('Minimum:', 'Minimum label is correct.');
     assert.dom('.minimum .editinplace').hasText(block.minimum.toString(), 'Minimum is visible.');
     assert.dom('.maximum label').hasText('Maximum:', 'Maximum label is correct.');
     assert.dom('.maximum .editinplace').hasText(block.maximum.toString(), 'Maximum is visible.');
-    assert.dom('.academic-level label').hasText('Academic Level:', 'Academic level label is correct.');
-    assert.dom('.academic-level .editinplace').hasText(academicLevel.name, 'Academic level is visible.');
-    assert.dom('.sessions label').hasText('Sessions (3)', 'List is labeled with number of linkable sessions');
-    assert.dom('.sessions .actions button').hasText('Manage', 'Manage button for sessions is visible.');
+    assert
+      .dom('.academic-level label')
+      .hasText('Academic Level:', 'Academic level label is correct.');
+    assert
+      .dom('.academic-level .editinplace')
+      .hasText(academicLevel.name, 'Academic level is visible.');
+    assert
+      .dom('.sessions label')
+      .hasText('Sessions (3)', 'List is labeled with number of linkable sessions');
+    assert
+      .dom('.sessions .actions button')
+      .hasText('Manage', 'Manage button for sessions is visible.');
     // we're just going to peak at the list items here,
     // any other tests are performed in the respective integration test for the list component.
-    assert.dom('.curriculum-inventory-sequence-block-session-list tbody tr').exists({ count: 3 }, 'All linkable sessions are visible');
+    assert
+      .dom('.curriculum-inventory-sequence-block-session-list tbody tr')
+      .exists({ count: 3 }, 'All linkable sessions are visible');
     assert.ok(
       find(
         findAll('.curriculum-inventory-sequence-block-session-list tbody tr:nth-of-type(1) td')[2]
-      ).textContent.trim().startsWith('(ILM)'),
+      )
+        .textContent.trim()
+        .startsWith('(ILM)'),
       'ILM is labeled as such.'
     );
 
     assert.ok(
       find(
         findAll('.curriculum-inventory-sequence-block-session-list tbody tr:nth-of-type(1) td')[2]
-      ).textContent.trim().endsWith('Session A'),
+      )
+        .textContent.trim()
+        .endsWith('Session A'),
       'Sessions are sorted by title.'
     );
 
-    assert.dom(
-      findAll('.curriculum-inventory-sequence-block-session-list tbody tr:nth-of-type(2) td')[2]
-    ).hasText('Session B', 'Sessions are sorted by title.');
-    assert.dom(
-      findAll('.curriculum-inventory-sequence-block-session-list tbody tr:nth-of-type(3) td')[2]
-    ).hasText('Session C', 'Sessions are sorted by title.');
-
+    assert
+      .dom(
+        findAll('.curriculum-inventory-sequence-block-session-list tbody tr:nth-of-type(2) td')[2]
+      )
+      .hasText('Session B', 'Sessions are sorted by title.');
+    assert
+      .dom(
+        findAll('.curriculum-inventory-sequence-block-session-list tbody tr:nth-of-type(3) td')[2]
+      )
+      .hasText('Session C', 'Sessions are sorted by title.');
   });
 
-  test('order in sequence is n/a for top level block', async function(assert) {
+  test('order in sequence is n/a for top level block', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school');
     const program = this.server.create('program', {
-      school
+      school,
     });
     const academicLevel = this.server.create('curriculum-inventory-academic-level');
 
@@ -200,11 +229,15 @@ module('Integration | Component | curriculum inventory sequence block overview',
       track: true,
       minimum: 0,
       maximum: 0,
-      academicLevel
+      academicLevel,
     });
 
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
-    const sequenceBlockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', 2);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', 2);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -220,12 +253,12 @@ module('Integration | Component | curriculum inventory sequence block overview',
     assert.dom('.order-in-sequence > span').hasText('n/a');
   });
 
-  test('order in sequence is n/a for nested sequence block in non-ordered sequence ', async function(assert) {
+  test('order in sequence is n/a for nested sequence block in non-ordered sequence ', async function (assert) {
     assert.expect(1);
 
     const school = this.server.create('school');
     const program = this.server.create('program', {
-      school
+      school,
     });
     const academicLevel = this.server.create('curriculum-inventory-academic-level');
 
@@ -252,11 +285,15 @@ module('Integration | Component | curriculum inventory sequence block overview',
       track: true,
       minimum: 0,
       maximum: 0,
-      academicLevel
+      academicLevel,
     });
 
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
-    const sequenceBlockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', 2);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', 2);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -273,12 +310,11 @@ module('Integration | Component | curriculum inventory sequence block overview',
     assert.dom('.order-in-sequence > span').hasText('n/a');
   });
 
-
-  test('change course', async function(assert) {
+  test('change course', async function (assert) {
     assert.expect(11);
     const school = this.server.create('school');
     const program = this.server.create('program', {
-      school
+      school,
     });
     const academicLevel = this.server.create('curriculum-inventory-academic-level');
     const clerkshipType = this.server.create('course-clerkship-type');
@@ -324,8 +360,12 @@ module('Integration | Component | curriculum inventory sequence block overview',
       academicLevel,
     });
 
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
-    const sequenceBlockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', 1);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', 1);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -340,15 +380,24 @@ module('Integration | Component | curriculum inventory sequence block overview',
     />`);
 
     await click('.course .editinplace .clickable');
-    assert.dom('.course option').exists({ count: 4 }, 'Linkable courses dropdown contains four options.');
+    assert
+      .dom('.course option')
+      .exists({ count: 4 }, 'Linkable courses dropdown contains four options.');
     assert.dom('.course option').hasText('Select a Course', 'First option is placeholder');
-    assert.dom(findAll('.course option')[1]).hasText('course 0', 'Options are sorted by course title');
-    assert.dom(findAll('.course option')[2]).hasText('course 1', 'Options are sorted by course title');
-    assert.dom(findAll('.course option')[3]).hasText('course 2', 'Options are sorted by course title');
+    assert
+      .dom(findAll('.course option')[1])
+      .hasText('course 0', 'Options are sorted by course title');
+    assert
+      .dom(findAll('.course option')[2])
+      .hasText('course 1', 'Options are sorted by course title');
+    assert
+      .dom(findAll('.course option')[3])
+      .hasText('course 2', 'Options are sorted by course title');
     assert.dom('.course option:checked').hasText(course.title, 'The linked course is selected.');
     await fillIn('.course select', newCourse.id);
     const details = find('[data-test-course-details]').textContent.trim();
-    assert.ok(details.indexOf('Level: ' + newCourse.level) === 0,
+    assert.ok(
+      details.indexOf('Level: ' + newCourse.level) === 0,
       'Linked course details: level has been updated.'
     );
     assert.ok(
@@ -367,11 +416,11 @@ module('Integration | Component | curriculum inventory sequence block overview',
     assert.dom('.course .editinplace').hasText(newCourse.title, 'Course title has been updated.');
   });
 
-  test('change description', async function(assert) {
+  test('change description', async function (assert) {
     assert.expect(3);
     const school = this.server.create('school');
     const program = this.server.create('program', {
-      school
+      school,
     });
     const academicLevel = this.server.create('curriculum-inventory-academic-level');
 
@@ -394,8 +443,12 @@ module('Integration | Component | curriculum inventory sequence block overview',
       academicLevel,
     });
 
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
-    const sequenceBlockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', 1);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', 1);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -418,11 +471,11 @@ module('Integration | Component | curriculum inventory sequence block overview',
     assert.equal(sequenceBlockModel.get('description'), newDescription);
   });
 
-  test('change required', async function(assert) {
+  test('change required', async function (assert) {
     assert.expect(3);
     const school = this.server.create('school');
     const program = this.server.create('program', {
-      school
+      school,
     });
     const academicLevel = this.server.create('curriculum-inventory-academic-level');
 
@@ -445,8 +498,12 @@ module('Integration | Component | curriculum inventory sequence block overview',
       academicLevel,
     });
 
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
-    const sequenceBlockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', 1);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', 1);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -469,11 +526,11 @@ module('Integration | Component | curriculum inventory sequence block overview',
     assert.equal(sequenceBlockModel.get('required'), newVal);
   });
 
-  test('change track', async function(assert) {
+  test('change track', async function (assert) {
     assert.expect(2);
     const school = this.server.create('school');
     const program = this.server.create('program', {
-      school
+      school,
     });
     const academicLevel = this.server.create('curriculum-inventory-academic-level');
 
@@ -496,8 +553,12 @@ module('Integration | Component | curriculum inventory sequence block overview',
       academicLevel,
     });
 
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
-    const sequenceBlockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', 1);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', 1);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -516,11 +577,11 @@ module('Integration | Component | curriculum inventory sequence block overview',
     assert.dom('.track input').isNotChecked('Track toggle is now set to "no"');
   });
 
-  test('change child sequence order', async function(assert) {
+  test('change child sequence order', async function (assert) {
     assert.expect(3);
     const school = this.server.create('school');
     const program = this.server.create('program', {
-      school
+      school,
     });
     const academicLevel = this.server.create('curriculum-inventory-academic-level');
 
@@ -543,8 +604,12 @@ module('Integration | Component | curriculum inventory sequence block overview',
       academicLevel,
     });
 
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
-    const sequenceBlockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', 1);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', 1);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -566,12 +631,12 @@ module('Integration | Component | curriculum inventory sequence block overview',
     assert.equal(sequenceBlockModel.get('childSequenceOrder'), newVal);
   });
 
-  test('change order in sequence', async function(assert) {
+  test('change order in sequence', async function (assert) {
     assert.expect(7);
 
     const school = this.server.create('school');
     const program = this.server.create('program', {
-      school
+      school,
     });
     const academicLevel = this.server.create('curriculum-inventory-academic-level');
 
@@ -599,7 +664,7 @@ module('Integration | Component | curriculum inventory sequence block overview',
       track: true,
       minimum: 2,
       maximum: 15,
-      academicLevel
+      academicLevel,
     });
 
     this.server.create('curriculum-inventory-sequence-block', {
@@ -608,8 +673,12 @@ module('Integration | Component | curriculum inventory sequence block overview',
       parent,
     });
 
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
-    const sequenceBlockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', block.id);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -623,12 +692,21 @@ module('Integration | Component | curriculum inventory sequence block overview',
       @sortBy={{sortBy}}
       @setSortBy={{setSortBy}}
     />`);
-    assert.dom('.order-in-sequence .editinplace').hasText(sequenceBlockModel.get('orderInSequence').toString());
+    assert
+      .dom('.order-in-sequence .editinplace')
+      .hasText(sequenceBlockModel.get('orderInSequence').toString());
     await click('.order-in-sequence .editinplace .clickable');
     assert.dom('.order-in-sequence option').exists({ count: 2 }, 'There should be two options');
     assert.dom('.order-in-sequence option').hasValue('1', 'First option has the correct value.');
-    assert.dom(findAll('.order-in-sequence option')[1]).hasValue('2', 'Second option has the correct value.');
-    assert.dom('.order-in-sequence option:checked').hasValue(sequenceBlockModel.get('orderInSequence').toString(), 'Correct option is selected.');
+    assert
+      .dom(findAll('.order-in-sequence option')[1])
+      .hasValue('2', 'Second option has the correct value.');
+    assert
+      .dom('.order-in-sequence option:checked')
+      .hasValue(
+        sequenceBlockModel.get('orderInSequence').toString(),
+        'Correct option is selected.'
+      );
     const newVal = 2;
     await fillIn('.order-in-sequence select', newVal);
     await click('.order-in-sequence .actions .done');
@@ -636,11 +714,11 @@ module('Integration | Component | curriculum inventory sequence block overview',
     assert.equal(sequenceBlockModel.get('orderInSequence'), newVal);
   });
 
-  test('change academic level', async function(assert) {
+  test('change academic level', async function (assert) {
     assert.expect(2);
     const school = this.server.create('school');
     const program = this.server.create('program', {
-      school
+      school,
     });
     const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
 
@@ -663,8 +741,12 @@ module('Integration | Component | curriculum inventory sequence block overview',
       academicLevel: academicLevels[0],
     });
 
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
-    const sequenceBlockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', 1);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', 1);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -686,13 +768,13 @@ module('Integration | Component | curriculum inventory sequence block overview',
     assert.dom('.academic-level .editinplace').hasText(`Year ${newVal - 1}`);
   });
 
-  test('manage sessions', async function(assert) {
+  test('manage sessions', async function (assert) {
     assert.expect(5);
 
     const school = this.server.create('school');
     const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
     const program = this.server.create('program', {
-      school
+      school,
     });
     const clerkshipType = this.server.create('course-clerkship-type', { title: 'Block' });
 
@@ -702,14 +784,14 @@ module('Integration | Component | curriculum inventory sequence block overview',
       endDate: new Date('2015-03-30'),
       clerkshipType,
       level: 4,
-      school
+      school,
     });
 
     const report = this.server.create('curriculum-inventory-report', {
       academicLevels,
       year: '2016',
       program,
-      isFinalized: false
+      isFinalized: false,
     });
 
     const parentBlock = this.server.create('curriculum-inventory-sequence-block', {
@@ -746,11 +828,15 @@ module('Integration | Component | curriculum inventory sequence block overview',
       track: true,
       minimum: 2,
       maximum: 15,
-      academicLevel: academicLevels[0]
+      academicLevel: academicLevels[0],
     });
 
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
-    const sequenceBlockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', 2);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', 2);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -764,22 +850,26 @@ module('Integration | Component | curriculum inventory sequence block overview',
       @sortBy={{sortBy}}
       @setSortBy={{setSortBy}}
     />`);
-    assert.dom('.curriculum-inventory-sequence-block-session-manager').doesNotExist('Sessions-manager is initially not visible.');
+    assert
+      .dom('.curriculum-inventory-sequence-block-session-manager')
+      .doesNotExist('Sessions-manager is initially not visible.');
     assert.dom('.sessions').exists({ count: 1 }, 'Sessions-list is initially visible.');
 
     await click('.sessions .actions button');
-    assert.dom('.curriculum-inventory-sequence-block-session-manager').exists({ count: 1 }, 'Sessions-manager is visible.');
+    assert
+      .dom('.curriculum-inventory-sequence-block-session-manager')
+      .exists({ count: 1 }, 'Sessions-manager is visible.');
     assert.dom('.sessions').doesNotExist('Sessions-list is not visible.');
     assert.dom('.sessions .actions button').doesNotExist('Manage button is not visible.');
   });
 
-  test('read-only mode', async function(assert) {
+  test('read-only mode', async function (assert) {
     assert.expect(22);
 
     const school = this.server.create('school');
     const academicLevels = this.server.createList('curriculum-inventory-academic-level', 10);
     const program = this.server.create('program', {
-      school
+      school,
     });
     const clerkshipType = this.server.create('course-clerkship-type', { title: 'Block' });
 
@@ -789,14 +879,14 @@ module('Integration | Component | curriculum inventory sequence block overview',
       endDate: new Date('2015-03-30'),
       clerkshipType,
       level: 4,
-      school
+      school,
     });
 
     const report = this.server.create('curriculum-inventory-report', {
       academicLevels,
       year: '2016',
       program,
-      isFinalized: false
+      isFinalized: false,
     });
 
     const parentBlock = this.server.create('curriculum-inventory-sequence-block', {
@@ -845,11 +935,15 @@ module('Integration | Component | curriculum inventory sequence block overview',
       track: true,
       minimum: 2,
       maximum: 15,
-      academicLevel
+      academicLevel,
     });
 
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
-    const sequenceBlockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', 2);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', 2);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -883,33 +977,52 @@ module('Integration | Component | curriculum inventory sequence block overview',
     assert.dom('.description > span').hasText(block.description, 'Description is visible.');
     assert.dom('.required > span').hasText('Optional (elective)', 'Required is visible.');
     assert.ok(find('.track > span').textContent.trim(), 'Is Track is visible.');
-    assert.dom('.start-date > span').hasText(moment(block.startDate).format('L'), 'Start date is visible.');
-    assert.dom('.end-date > span').hasText(moment(block.endDate).format('L'), 'End date is visible.');
+    assert
+      .dom('.start-date > span')
+      .hasText(moment(block.startDate).format('L'), 'Start date is visible.');
+    assert
+      .dom('.end-date > span')
+      .hasText(moment(block.endDate).format('L'), 'End date is visible.');
     assert.dom('.duration > span').hasText(block.duration.toString(), 'Duration is visible.');
-    assert.dom('.child-sequence-order > span').hasText('Ordered', 'Child sequence order is visible.');
-    assert.dom('.order-in-sequence > span').hasText(block.orderInSequence.toString(), 'Order in sequence is visible.');
+    assert
+      .dom('.child-sequence-order > span')
+      .hasText('Ordered', 'Child sequence order is visible.');
+    assert
+      .dom('.order-in-sequence > span')
+      .hasText(block.orderInSequence.toString(), 'Order in sequence is visible.');
     assert.dom('.minimum > span').hasText(block.minimum.toString(), 'Minimum is visible.');
     assert.dom('.maximum > span').hasText(block.maximum.toString(), 'Maximum is visible.');
     assert.dom('.academic-level > span').hasText(academicLevel.name, 'Academic level is visible.');
-    assert.notOk(findAll('.sessions .actions button').length, 'Manage button for sessions is visible.');
-    assert.dom('.curriculum-inventory-sequence-block-session-list tbody tr').exists({ count: 3 }, 'All linkable sessions are visible');
+    assert.notOk(
+      findAll('.sessions .actions button').length,
+      'Manage button for sessions is visible.'
+    );
+    assert
+      .dom('.curriculum-inventory-sequence-block-session-list tbody tr')
+      .exists({ count: 3 }, 'All linkable sessions are visible');
     assert.ok(
-      findAll('.curriculum-inventory-sequence-block-session-list tbody tr:nth-of-type(1) td')[2].textContent.trim().endsWith('Session A'),
+      findAll('.curriculum-inventory-sequence-block-session-list tbody tr:nth-of-type(1) td')[2]
+        .textContent.trim()
+        .endsWith('Session A'),
       'Sessions are sorted by title.'
     );
-    assert.dom(
-      findAll('.curriculum-inventory-sequence-block-session-list tbody tr:nth-of-type(2) td')[2]
-    ).hasText('Session B', 'Sessions are sorted by title.');
-    assert.dom(
-      findAll('.curriculum-inventory-sequence-block-session-list tbody tr:nth-of-type(3) td')[2]
-    ).hasText('Session C', 'Sessions are sorted by title.');
+    assert
+      .dom(
+        findAll('.curriculum-inventory-sequence-block-session-list tbody tr:nth-of-type(2) td')[2]
+      )
+      .hasText('Session B', 'Sessions are sorted by title.');
+    assert
+      .dom(
+        findAll('.curriculum-inventory-sequence-block-session-list tbody tr:nth-of-type(3) td')[2]
+      )
+      .hasText('Session C', 'Sessions are sorted by title.');
   });
 
-  test('flagging block as elective sets minimum value to 0', async function(assert) {
+  test('flagging block as elective sets minimum value to 0', async function (assert) {
     assert.expect(3);
     const school = this.server.create('school');
     const program = this.server.create('program', {
-      school
+      school,
     });
     const academicLevel = this.server.create('curriculum-inventory-academic-level');
 
@@ -932,8 +1045,12 @@ module('Integration | Component | curriculum inventory sequence block overview',
       academicLevel,
     });
 
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
-    const sequenceBlockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', 1);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', 1);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -949,16 +1066,16 @@ module('Integration | Component | curriculum inventory sequence block overview',
 
     assert.dom('.minimum .editinplace').hasText('10');
     await click('.required .editinplace .clickable');
-    await fillIn('.required select', "2");
+    await fillIn('.required select', '2');
     assert.dom('.minimum .editinplace').isNotVisible();
     assert.dom('.minimum span').hasText('0');
   });
 
-  test('selectives are indicated as such', async function(assert) {
+  test('selectives are indicated as such', async function (assert) {
     assert.expect(6);
     const school = this.server.create('school');
     const program = this.server.create('program', {
-      school
+      school,
     });
     const academicLevel = this.server.create('curriculum-inventory-academic-level');
 
@@ -981,8 +1098,12 @@ module('Integration | Component | curriculum inventory sequence block overview',
       academicLevel,
     });
 
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
-    const sequenceBlockModel = await this.owner.lookup('service:store').find('curriculum-inventory-sequence-block', 1);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', 1);
 
     this.set('report', reportModel);
     this.set('sequenceBlock', sequenceBlockModel);
@@ -1000,13 +1121,13 @@ module('Integration | Component | curriculum inventory sequence block overview',
     assert.dom('.is-selective').hasText('This sequence block has been marked as a selective.');
     await click('.required .editinplace .clickable');
     await click('.minimum .editinplace .editable');
-    await fillIn('.required select', "2"); // selected "elective"
+    await fillIn('.required select', '2'); // selected "elective"
     assert.dom('.is-selective').hasClass('hidden');
-    await fillIn('.required select', "1"); // switch back to "required"
+    await fillIn('.required select', '1'); // switch back to "required"
     assert.dom('.is-selective').hasNoClass('hidden');
-    await fillIn('.minimum input', "20"); // set min to equal max value
+    await fillIn('.minimum input', '20'); // set min to equal max value
     assert.dom('.is-selective').hasClass('hidden');
-    await fillIn('.minimum input', "0"); // set min to less than 1
+    await fillIn('.minimum input', '0'); // set min to less than 1
     assert.dom('.is-selective').hasClass('hidden');
   });
 });

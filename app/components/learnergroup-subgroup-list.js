@@ -10,7 +10,7 @@ export default Component.extend({
   flashMessages: service(),
   intl: service(),
   store: service(),
-  tagName: "",
+  tagName: '',
   canCreate: false,
   canDelete: false,
   isSaving: false,
@@ -29,7 +29,9 @@ export default Component.extend({
       const { parentGroup, store } = this;
       const cohort = await parentGroup.cohort;
       const newLearnerGroup = await store.createRecord('learner-group', {
-        cohort, parent: parentGroup, title
+        cohort,
+        parent: parentGroup,
+        title,
       });
       const savedLearnerGroup = await newLearnerGroup.save();
       this.set('showNewLearnerGroupForm', false);
@@ -50,7 +52,7 @@ export default Component.extend({
         const newGroup = await store.createRecord('learner-group', {
           cohort,
           parent: parentGroup,
-          title: `${parentTitle} ${pad(offset + i, padBy)}`
+          title: `${parentTitle} ${pad(offset + i, padBy)}`,
         });
         groups.pushObject(newGroup);
       }
@@ -59,7 +61,7 @@ export default Component.extend({
         const chunk = groupsToSave.splice(0, 6);
         await all(chunk.invoke('save'));
 
-        if (groupsToSave.length){
+        if (groupsToSave.length) {
           this.set('currentGroupsSaved', this.currentGroupsSaved + chunk.length);
           await saveSomeGroups(groupsToSave);
         } else {
@@ -74,7 +76,7 @@ export default Component.extend({
 
     removeLearnerGroup(learnerGroup) {
       return learnerGroup.destroyRecord();
-    }
+    },
   },
 
   copyGroup: task(function* (withLearners, learnerGroup) {
@@ -83,7 +85,13 @@ export default Component.extend({
     const intl = this.intl;
     const cohort = yield learnerGroup.get('cohort');
     const parentGroup = yield learnerGroup.get('parent');
-    const newGroups = yield cloneLearnerGroup(store, learnerGroup, cohort, withLearners, parentGroup);
+    const newGroups = yield cloneLearnerGroup(
+      store,
+      learnerGroup,
+      cohort,
+      withLearners,
+      parentGroup
+    );
     // indicate that the top group is a copy
     newGroups[0].set('title', newGroups[0].get('title') + ` (${intl.t('general.copy')})`);
     this.set('totalGroupsToSave', newGroups.length);
@@ -94,5 +102,5 @@ export default Component.extend({
     }
     this.set('saved', true);
     this.set('savedGroup', newGroups[0]);
-  })
+  }),
 });

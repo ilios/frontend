@@ -11,57 +11,57 @@ const Validations = buildValidations({
   firstName: [
     validator('presence', true),
     validator('length', {
-      max: 50
-    })
+      max: 50,
+    }),
   ],
   middleName: [
     validator('length', {
-      max: 20
-    })
+      max: 20,
+    }),
   ],
   lastName: [
     validator('presence', true),
     validator('length', {
-      max: 50
-    })
+      max: 50,
+    }),
   ],
   campusId: [
     validator('length', {
-      max: 16
-    })
+      max: 16,
+    }),
   ],
   otherId: [
     validator('length', {
-      max: 16
-    })
+      max: 16,
+    }),
   ],
   email: [
     validator('presence', true),
     validator('length', {
-      max: 100
+      max: 100,
     }),
     validator('format', {
-      type: 'email'
-    })
+      type: 'email',
+    }),
   ],
   displayName: [
     validator('length', {
-      max: 200
-    })
+      max: 200,
+    }),
   ],
   preferredEmail: [
     validator('length', {
-      max: 100
+      max: 100,
     }),
     validator('format', {
       allowBlank: true,
       type: 'email',
-    })
+    }),
   ],
   phone: [
     validator('length', {
-      max: 20
-    })
+      max: 20,
+    }),
   ],
   username: {
     descriptionKey: 'general.username',
@@ -71,21 +71,21 @@ const Validations = buildValidations({
       }),
       validator('format', {
         regex: /^[a-z0-9_\-()@.]*$/i,
-      })
-    ]
+      }),
+    ],
   },
   password: {
     dependentKeys: ['model.canEditUsernameAndPassword', 'model.changeUserPassword'],
-    disabled: computed('model.canEditUsernameAndPassword', 'model.changeUserPassword', function() {
+    disabled: computed('model.canEditUsernameAndPassword', 'model.changeUserPassword', function () {
       return this.get('model.canEditUsernameAndPassword') && !this.get('model.changeUserPassword');
     }),
     validators: [
       validator('presence', true),
       validator('length', {
-        min: 5
-      })
-    ]
-  }
+        min: 5,
+      }),
+    ],
+  },
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
@@ -94,7 +94,11 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   fetch: service(),
   store: service(),
 
-  classNameBindings: [':user-profile-bio', ':small-component', 'hasSavedRecently:has-saved:has-not-saved'],
+  classNameBindings: [
+    ':user-profile-bio',
+    ':small-component',
+    'hasSavedRecently:has-saved:has-not-saved',
+  ],
 
   'data-test-user-profile-bio': true,
 
@@ -117,19 +121,19 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   user: null,
   username: null,
 
-  canEditUsernameAndPassword: computed('iliosConfig.userSearchType', async function() {
+  canEditUsernameAndPassword: computed('iliosConfig.userSearchType', async function () {
     const userSearchType = await this.iliosConfig.userSearchType;
     return userSearchType !== 'ldap';
   }),
 
-  passwordStrengthScore: computed('password', async function() {
+  passwordStrengthScore: computed('password', async function () {
     const { default: zxcvbn } = await import('zxcvbn');
     const password = isEmpty(this.password) ? '' : this.password;
     const obj = zxcvbn(password);
     return obj.score;
   }),
 
-  usernameMissing: computed('user.authentication', async function() {
+  usernameMissing: computed('user.authentication', async function () {
     const authentication = await this.user.authentication;
     return isEmpty(authentication) || isEmpty(authentication.username);
   }),
@@ -144,7 +148,7 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     const user = this.user;
     const isManaging = this.isManaging;
     const manageTask = this.manage;
-    if (user && isManaging && !manageTask.lastSuccessful){
+    if (user && isManaging && !manageTask.lastSuccessful) {
       manageTask.perform();
     }
   },
@@ -154,14 +158,14 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       this.set('changeUserPassword', false);
       this.set('password', null);
       this.send('removeErrorDisplayFor', 'password');
-    }
+    },
   },
 
   keyUp(event) {
     const keyCode = event.keyCode;
     const target = event.target;
 
-    if (! ['text', 'password'].includes(target.type)) {
+    if (!['text', 'password'].includes(target.type)) {
       return;
     }
 
@@ -182,17 +186,19 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   @restartableTask
   *manage() {
     const user = this.user;
-    this.setProperties(user.getProperties(
-      'firstName',
-      'middleName',
-      'lastName',
-      'campusId',
-      'otherId',
-      'email',
-      'displayName',
-      'preferredEmail',
-      'phone'
-    ));
+    this.setProperties(
+      user.getProperties(
+        'firstName',
+        'middleName',
+        'lastName',
+        'campusId',
+        'otherId',
+        'email',
+        'displayName',
+        'preferredEmail',
+        'phone'
+      )
+    );
     const auth = yield user.get('authentication');
     if (auth) {
       this.set('username', auth.get('username'));
@@ -220,27 +226,29 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       'preferredEmail',
       'phone',
       'username',
-      'password'
+      'password',
     ]);
-    const {validations} = yield this.validate();
+    const { validations } = yield this.validate();
     if (validations.get('isValid')) {
       const user = this.user;
 
-      user.setProperties(this.getProperties(
-        'firstName',
-        'middleName',
-        'lastName',
-        'campusId',
-        'otherId',
-        'email',
-        'displayName',
-        'preferredEmail',
-        'phone'
-      ));
+      user.setProperties(
+        this.getProperties(
+          'firstName',
+          'middleName',
+          'lastName',
+          'campusId',
+          'otherId',
+          'email',
+          'displayName',
+          'preferredEmail',
+          'phone'
+        )
+      );
       let auth = yield user.get('authentication');
       if (!auth) {
         auth = store.createRecord('authentication', {
-          user
+          user,
         });
       }
       //always set and send the username in case it was updated in the sync
@@ -339,5 +347,5 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     this.set('phone', null);
     this.set('username', null);
     this.set('password', null);
-  }
+  },
 });

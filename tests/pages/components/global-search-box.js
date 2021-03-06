@@ -26,7 +26,7 @@ const definition = {
     down: triggerable('keyup', '', { eventProperties: { key: 'ArrowDown' } }),
     up: triggerable('keyup', '', { eventProperties: { key: 'ArrowUp' } }),
     escape: triggerable('keyup', '', { eventProperties: { key: 'Escape' } }),
-  }
+  },
 };
 
 export default definition;

@@ -6,7 +6,6 @@ export default class PermissionCheckerResource extends Resource {
   @service permissionChecker;
   @tracked data;
 
-
   get value() {
     return this.data;
   }

@@ -34,7 +34,7 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
   *load(element, [school]) {
     yield this.loadSchool(school.id);
     const vocabularies = (yield school.vocabularies).toArray();
-    this.schoolVocabularies = yield map(vocabularies, async vocabulary => {
+    this.schoolVocabularies = yield map(vocabularies, async (vocabulary) => {
       const terms = await vocabulary.terms;
       return {
         vocabulary,
@@ -44,7 +44,7 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
   }
 
   get managedVocabulary() {
-    if (!this.args.managedVocabularyId || ! this.schoolVocabularies.length) {
+    if (!this.args.managedVocabularyId || !this.schoolVocabularies.length) {
       return null;
     }
 
@@ -56,7 +56,11 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
   }
 
   get managedTerm() {
-    if (! this.schoolVocabularies.length || !this.args.managedVocabularyId || !this.args.managedTermId) {
+    if (
+      !this.schoolVocabularies.length ||
+      !this.args.managedVocabularyId ||
+      !this.args.managedTermId
+    ) {
       return null;
     }
 

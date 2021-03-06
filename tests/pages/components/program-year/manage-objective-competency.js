@@ -19,7 +19,7 @@ const definition = {
       title: text(),
       selected: hasClass('selected', 'label'),
       notSelected: notHasClass('selected', 'label'),
-      toggle: clickable('input')
+      toggle: clickable('input'),
     }),
   }),
   hasNoCompetenciesMessage: isPresent('[data-test-no-competencies-message]'),

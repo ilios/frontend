@@ -4,8 +4,8 @@ import { isArray } from '@ember/array';
 import Helper from '@ember/component/helper';
 import { observer } from '@ember/object';
 
-export function intersectionCount([a, b]/*, hash*/) {
-  if (! isArray(a) || ! isArray(b) || isEmpty(a) || isEmpty(b)) {
+export function intersectionCount([a, b] /*, hash*/) {
+  if (!isArray(a) || !isArray(b) || isEmpty(a) || isEmpty(b)) {
     return 0;
   }
 
@@ -36,7 +36,7 @@ export default Helper.extend({
   },
 
   /* eslint ember/no-observers: 0 */
-  recomputeOnArrayChange: observer('a.[]', 'b.[]', function() {
+  recomputeOnArrayChange: observer('a.[]', 'b.[]', function () {
     this.recompute();
-  })
+  }),
 });

@@ -28,8 +28,8 @@ export default class UnassignedStudentsSummaryComponent extends Component {
         cohorts: null,
         enabled: true,
         roles: [4],
-        school: this.selectedSchool.id
-      }
+        school: this.selectedSchool.id,
+      },
     });
   }
 }

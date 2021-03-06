@@ -4,17 +4,19 @@ import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Integration | Component | curriculum inventory leadership expanded', function(hooks) {
+module('Integration | Component | curriculum inventory leadership expanded', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(4);
     const users = this.server.createList('user', 2);
     const report = this.server.create('curriculum-inventory-report', {
       administrators: users,
     });
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', report.id);
 
     this.set('report', reportModel);
     await render(hbs`<CurriculumInventoryLeadershipExpanded
@@ -37,10 +39,12 @@ module('Integration | Component | curriculum inventory leadership expanded', fun
     assert.dom(secondAdministrator).hasText('1 guy M. Mc1son');
   });
 
-  test('clicking the header collapses', async function(assert) {
+  test('clicking the header collapses', async function (assert) {
     assert.expect(1);
     const report = this.server.create('curriculum-inventory-report');
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', report.id);
 
     this.set('report', reportModel);
     this.set('click', () => {
@@ -59,10 +63,12 @@ module('Integration | Component | curriculum inventory leadership expanded', fun
     await click(title);
   });
 
-  test('clicking manage fires action', async function(assert) {
+  test('clicking manage fires action', async function (assert) {
     assert.expect(1);
     const report = this.server.create('curriculum-inventory-report');
-    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', report.id);
 
     this.set('report', reportModel);
     this.set('click', () => {

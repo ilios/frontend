@@ -8,13 +8,13 @@ const Validations = buildValidations({
     validator('length', {
       min: 2,
       max: 10,
-      allowBlank: true
-    })
-  ]
+      allowBlank: true,
+    }),
+  ],
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  tagName: "",
+  tagName: '',
 
   canUpdate: false,
   duration: null,
@@ -72,6 +72,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     setDuration(event) {
       this.set('duration', Number(event.target.value));
-    }
-  }
+    },
+  },
 });
