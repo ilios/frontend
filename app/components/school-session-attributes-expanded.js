@@ -2,6 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
+import { capitalize } from '@ember/string';
 
 export default class SchoolSessionAttributesExpandedComponent extends Component {
   @tracked flippedShowSessionAttendanceRequired = false;
@@ -52,13 +53,13 @@ export default class SchoolSessionAttributesExpandedComponent extends Component 
 
   @action
   enableSessionAttributeConfig(name) {
-    const bufferName = 'flipped' + name.capitalize();
+    const bufferName = 'flipped' + capitalize(name);
     this[bufferName] = !this.args[name];
   }
 
   @action
   disableSessionAttributeConfig(name) {
-    const bufferName = 'flipped' + name.capitalize();
+    const bufferName = 'flipped' + capitalize(name);
     this[bufferName] = this.args[name];
   }
 

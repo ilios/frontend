@@ -1,3 +1,5 @@
+import { dasherize } from '@ember/string';
+
 export default async function buildReportTitle(report, store, intl) {
   const title = report.title;
   if (title) {
@@ -9,10 +11,10 @@ export default async function buildReportTitle(report, store, intl) {
   const prepositionalObject = report.prepositionalObject;
 
   const school = await report.school;
-  const schoolTitle = school ? school.get('title') : intl.t('general.allSchools');
+  const schoolTitle = school ? school.title : intl.t('general.allSchools');
 
   if (prepositionalObject) {
-    let model = prepositionalObject.dasherize();
+    let model = dasherize(prepositionalObject);
     if (model === 'instructor') {
       model = 'user';
     }

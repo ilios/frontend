@@ -3,6 +3,7 @@ import RSVP from 'rsvp';
 import { computed } from '@ember/object';
 import { isEmpty, isPresent } from '@ember/utils';
 import { singularize, pluralize } from 'ember-inflector';
+import { capitalize, camelize, dasherize } from '@ember/string';
 
 const { filter, resolve, map } = RSVP;
 
@@ -23,13 +24,16 @@ export default Service.extend({
     const object = report.prepositionalObject;
     const objectId = report.prepositionalObjectTableRowId;
     const school = await report.school;
-    return store.query(this.getModel(subject), this.getQuery(subject, object, objectId, school));
+    return store.query(
+      this.getModel(subject),
+      this.getQuery(subject, object, objectId, school)
+    );
   },
 
   async getResults(report, year) {
     const subject = report.subject;
     const results = await this.findResults(report);
-    const mapper = pluralize(subject.camelize()) + 'Results';
+    const mapper = pluralize(camelize(subject)) + 'Results';
     const mappedResults = await this[mapper](results, year);
     return mappedResults.sortBy('value');
   },
@@ -38,12 +42,12 @@ export default Service.extend({
     const subject = report.get('subject');
 
     const results = await this.findResults(report);
-    const mapper = pluralize(subject.camelize()) + 'ArrayResults';
+    const mapper = pluralize(camelize(subject)) + 'ArrayResults';
     return this[mapper](results, year);
   },
 
   getModel(subject) {
-    let model = subject.dasherize();
+    let model = dasherize(subject);
     if (model === 'instructor') {
       model = 'user';
     }
@@ -60,7 +64,7 @@ export default Service.extend({
     };
 
     if (object && objectId) {
-      let what = pluralize(object.camelize());
+      let what = pluralize(camelize(object));
       if (object === 'mesh term') {
         what = 'meshDescriptors';
       }
@@ -72,9 +76,14 @@ export default Service.extend({
         }
       }
       if (subject === 'instructor') {
-        const specialInstructed = ['learningMaterials', 'sessionTypes', 'courses', 'sessions'];
+        const specialInstructed = [
+          'learningMaterials',
+          'sessionTypes',
+          'courses',
+          'sessions',
+        ];
         if (specialInstructed.includes(what)) {
-          what = 'instructed' + what.capitalize();
+          what = 'instructed' + capitalize(what);
         }
       }
       if (subject === 'learning material' && object === 'course') {
@@ -95,15 +104,21 @@ export default Service.extend({
     return query;
   },
 
-  canViewCourses: computed('currentUser.performsNonLearnerFunction', async function () {
-    const currentUser = this.currentUser;
-    return currentUser.get('performsNonLearnerFunction');
-  }),
+  canViewCourses: computed(
+    'currentUser.performsNonLearnerFunction',
+    async function () {
+      const currentUser = this.currentUser;
+      return currentUser.get('performsNonLearnerFunction');
+    }
+  ),
 
-  canViewPrograms: computed('currentUser.performsNonLearnerFunction', async function () {
-    const currentUser = this.currentUser;
-    return currentUser.get('performsNonLearnerFunction');
-  }),
+  canViewPrograms: computed(
+    'currentUser.performsNonLearnerFunction',
+    async function () {
+      const currentUser = this.currentUser;
+      return currentUser.get('performsNonLearnerFunction');
+    }
+  ),
 
   async coursesResults(results, year) {
     const canView = await this.canViewCourses;
@@ -152,7 +167,11 @@ export default Service.extend({
     });
 
     return [
-      [intl.t('general.courses'), intl.t('general.academicYear'), intl.t('general.externalId')],
+      [
+        intl.t('general.courses'),
+        intl.t('general.academicYear'),
+        intl.t('general.externalId'),
+      ],
     ].concat(mappedResults);
   },
 
@@ -177,7 +196,8 @@ export default Service.extend({
     });
 
     return mappedResults.filter(
-      (obj) => isEmpty(year) || parseInt(obj.course.year, 10) === parseInt(year, 10)
+      (obj) =>
+        isEmpty(year) || parseInt(obj.course.year, 10) === parseInt(year, 10)
     );
   },
 
@@ -236,12 +256,17 @@ export default Service.extend({
   async programsArrayResults(results) {
     const intl = this.intl;
     const sortedResults = results.sortBy('title');
-    const mappedResults = await map(sortedResults.toArray(), async (program) => {
-      const school = await program.get('school');
-      return [program.get('title'), school.get('title')];
-    });
+    const mappedResults = await map(
+      sortedResults.toArray(),
+      async (program) => {
+        const school = await program.get('school');
+        return [program.get('title'), school.get('title')];
+      }
+    );
 
-    return [[intl.t('general.program'), intl.t('general.school')]].concat(mappedResults);
+    return [[intl.t('general.program'), intl.t('general.school')]].concat(
+      mappedResults
+    );
   },
 
   async programYearsResults(results) {
@@ -252,7 +277,8 @@ export default Service.extend({
       const school = await program.get('school');
       const classOfYear = await item.get('classOfYear');
 
-      rhett.value = school.get('title') + ' ' + program.get('title') + ' ' + classOfYear;
+      rhett.value =
+        school.get('title') + ' ' + program.get('title') + ' ' + classOfYear;
       if (canView) {
         rhett.route = 'programYear';
         rhett.model = program;
@@ -283,9 +309,13 @@ export default Service.extend({
       }
     );
 
-    return [[intl.t('general.year'), intl.t('general.program'), intl.t('general.school')]].concat(
-      mappedResults
-    );
+    return [
+      [
+        intl.t('general.year'),
+        intl.t('general.program'),
+        intl.t('general.school'),
+      ],
+    ].concat(mappedResults);
   },
 
   instructorsResults(results) {
