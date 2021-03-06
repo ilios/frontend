@@ -14,15 +14,6 @@ export default class AuthenticatedRoute extends Route {
 
   @tracked event;
 
-  constructor() {
-    super(...arguments);
-    this.router.on('routeWillChange', () => {
-      const controller = this.controllerFor('application');
-      controller.set('errors', []);
-      controller.set('showErrorDisplay', false);
-    });
-  }
-
   async beforeModel() {
     await loadPolyfills();
     const locale = this.intl.get('locale');
@@ -47,6 +38,8 @@ export default class AuthenticatedRoute extends Route {
 
   @action
   loading(transition) {
+    //@todo investigate if this is still a good pattern [JJ 3/21]
+    // eslint-disable-next-line ember/no-controller-access-in-routes
     const controller = this.controllerFor('application');
     controller.set('currentlyLoading', true);
     transition.promise.finally(() => {

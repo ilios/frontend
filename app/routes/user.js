@@ -45,6 +45,8 @@ export default class UserRoute extends Route {
 
   @action
   loading(transition) {
+    //@todo refactor away from doing this work in the route [JJ 3/21]
+    // eslint-disable-next-line ember/no-controller-access-in-routes
     const controller = this.controllerFor('user');
     controller.set('isLoading', true);
     transition.promise.finally(() => {
