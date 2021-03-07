@@ -203,11 +203,4 @@
       </table>
     {{/if}}
   </div>
-  {{#if this.saveSortOrder.isRunning}}
-    <WaitSaving
-      @showProgress={{true}}
-      @totalProgress={{this.totalMaterialsToSave}}
-      @currentProgress={{this.currentMaterialsSaved}}
-    />
-  {{/if}}
 </section>

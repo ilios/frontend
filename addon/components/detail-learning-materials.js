@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { dropTask, restartableTask } from 'ember-concurrency';
 import { all } from 'rsvp';
 import ObjectProxy from '@ember/object/proxy';
 import sortableByPosition from 'ilios-common/utils/sortable-by-position';
@@ -110,15 +110,17 @@ export default class DetailCohortsComponent extends Component {
 
   @dropTask
   *saveSortOrder(learningMaterials) {
-    yield timeout(1); //move out of the thread to allow the save indicator to show up
+    const materialsToSave = [];
     for (let i = 0, n = learningMaterials.length; i < n; i++) {
       const lm = learningMaterials[i];
-      lm.set('position', i + 1);
+      const position = i + 1;
+      if (lm.position != position) {
+        lm.set('position', position);
+        materialsToSave.push(lm);
+      }
     }
-    this.totalMaterialsToSave = learningMaterials.length;
-    this.currentMaterialsSaved = 0;
 
-    yield this.saveSomeMaterials(learningMaterials);
+    yield this.saveSomeMaterials(materialsToSave);
     this.isSorting = false;
   }
 
@@ -159,7 +161,6 @@ export default class DetailCohortsComponent extends Component {
     const savedMaterials = await all(chunk.invoke('save'));
     let moreMaterials = [];
     if (arr.length) {
-      this.currentMaterialsSaved = this.currentMaterialsSaved + chunk.length;
       moreMaterials = await this.saveSomeMaterials(arr);
     }
 
