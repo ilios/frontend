@@ -298,8 +298,8 @@ class ProposedUser extends CoreObject {
   addedViaIlios = true;
   enabled = true;
 
-  init(data) {
-    super.init(...arguments);
+  constructor(data) {
+    super(...arguments);
     this.firstName = data.firstName;
     this.lastName = data.lastName;
     this.middleName = data.middleName;
