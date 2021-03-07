@@ -69,7 +69,7 @@ Router.map(function () {
       this.route(
         'programYear',
         {
-          path: '/programyears/:program-year_id',
+          path: '/programyears/:program_year_id',
           resetNamespace: true,
         },
         function () {
@@ -129,7 +129,7 @@ Router.map(function () {
     path: 'data/courses/:course_id/terms/:term_id',
   });
   this.route('course-visualize-session-type', {
-    path: 'data/courses/:course_id/session-types/:session-type_id',
+    path: 'data/courses/:course_id/session-types/:session_type_id',
   });
   this.route('course-visualize-instructors', {
     path: 'data/courses/:course_id/instructors',
