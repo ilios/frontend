@@ -11,17 +11,17 @@ module('Integration | Component | program-year/list', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    this.permissionCheckerMock = Service.extend({
-      canDeleteProgramYear() {
+    this.permissionCheckerMock = class extends Service {
+      async canDeleteProgramYear() {
         return true;
-      },
-      canLockProgramYear() {
+      }
+      async canLockProgramYear() {
         return true;
-      },
-      canUnlockProgramYear() {
+      }
+      async canUnlockProgramYear() {
         return true;
-      },
-    });
+      }
+    };
     this.owner.register('service:permissionChecker', this.permissionCheckerMock);
   });
 
