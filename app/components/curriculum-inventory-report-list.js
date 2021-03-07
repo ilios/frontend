@@ -1,9 +1,11 @@
+/* eslint-disable ember/no-computed-properties-in-native-classes */
 import Component from '@glimmer/component';
 import ObjectProxy from '@ember/object/proxy';
 import { action, computed } from '@ember/object';
 import { alias, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
+// @todo replace this object proxy [JJ 3/21]
 const ReportProxy = ObjectProxy.extend({
   content: null,
   currentUser: null,

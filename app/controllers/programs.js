@@ -44,8 +44,7 @@ export default Controller.extend({
   }),
 
   selectedSchool: computed(
-    'model.primarySchool',
-    'model.schools.[]',
+    'model.{primarySchool,schools.[]}',
     'primarySchool',
     'schoolId',
     function () {

@@ -22,7 +22,7 @@ export default Controller.extend({
   hasMoreThanOneSchool: gt('model.schools.length', 1),
   sortedSchools: sort('model.schools', 'sortSchoolsBy'),
 
-  selectedSchool: computed('model.schools.[]', 'model.primarySchool', 'school', function () {
+  selectedSchool: computed('model.{primarySchool,schools.[]}', 'school', function () {
     const schools = this.model.schools;
     const schoolId = this.school;
     if (isPresent(schoolId)) {

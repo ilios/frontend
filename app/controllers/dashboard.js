@@ -1,3 +1,4 @@
+/* eslint-disable ember/no-computed-properties-in-native-classes */
 import CommonDashboardController from 'ilios-common/controllers/dashboard';
 import { computed } from '@ember/object';
 
@@ -24,6 +25,7 @@ export default class DashboardController extends CommonDashboardController {
   report = null;
   reportYear = '';
 
+  //@todo replace with a Resource [JJ 3/21]
   @computed('report', 'store')
   get selectedReport() {
     return new Promise((resolve) => {

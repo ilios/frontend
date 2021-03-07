@@ -34,7 +34,7 @@ const Validations = buildValidations({
     validator('date', {
       dependentKeys: ['model.startDate', 'model.duration'],
       after: reads('model.startDate'),
-      disabled: computed('model.duration', 'model.startDate', function () {
+      disabled: computed('model.{duration,startDate}', function () {
         return this.model.duration > 0 && !this.model.startDate;
       }),
     }),
@@ -42,7 +42,7 @@ const Validations = buildValidations({
       presence: true,
       dependentKeys: ['model.startDate', 'model.duration'],
       after: reads('model.startDate'),
-      disabled: computed('model.duration', 'model.startDate', function () {
+      disabled: computed('model.{duration,startDate}', function () {
         return this.model.duration > 0 && !this.model.startDate;
       }),
     }),
@@ -104,7 +104,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @type {Ember.computed}
    * @public
    */
-  linkableCourses: computed('report.year', 'report.linkedCourses.[]', async function () {
+  linkableCourses: computed('report.{year,linkedCourses.[]}', async function () {
     const report = this.report;
     const program = await report.get('program');
     const schoolId = program.belongsTo('school').id();
