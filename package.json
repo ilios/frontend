@@ -32,7 +32,7 @@
     "@ilios/ember-template-lint-plugin": "^2.0.1",
     "@ilios/eslint-config-ember": "^2.5.0",
     "@sentry/browser": "^6.2.1",
-    "@sentry/integrations": "^6.2.0",
+    "@sentry/integrations": "^6.2.1",
     "autoprefixer": "^9.8.6",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "^3.0.0",
