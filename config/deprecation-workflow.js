@@ -17,5 +17,6 @@ window.deprecationWorkflow.config = {
     { handler: 'silence', matchId: 'common.async-computed' },
     { handler: 'silence', matchId: 'ember-metal.get-with-default' },
     { handler: 'silence', matchId: 'ember-test-helpers.trigger-event.options-blob-array' },
+    { handler: 'silence', matchId: 'ember-string.htmlsafe-ishtmlsafe' },
   ],
 };
