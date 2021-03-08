@@ -320,6 +320,7 @@ module('Acceptance | Courses', function (hooks) {
 
     await page.visit();
     await page.toggleNewCourseForm();
+    await page.newCourse.chooseYear(new Date().getFullYear() - 1);
     await page.newCourse.title(newTitle);
     await page.newCourse.save();
     assert.equal(page.courses.courses.length, 0);
