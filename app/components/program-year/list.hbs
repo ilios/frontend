@@ -86,12 +86,5 @@
         </span>
       {{/if}}
     </div>
-    {{#if this.save.isRunning}}
-      <WaitSaving
-        @showProgress={{true}}
-        @totalProgress={{this.itemsToSave}}
-        @currentProgress={{this.savedItems}}
-      />
-    {{/if}}
   </section>
 </div>

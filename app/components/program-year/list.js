@@ -9,10 +9,8 @@ export default class ProgramYearListComponent extends Component {
   @service store;
   @service iliosConfig;
   @tracked editorOn = false;
-
-  @tracked itemsToSave;
-  @tracked savedItems;
   @tracked savedProgramYear;
+  @service fetch;
 
   @use programYears = new ResolveAsyncValue(() => [this.args.program.programYears, []]);
   get sortedProgramYears() {
@@ -25,14 +23,10 @@ export default class ProgramYearListComponent extends Component {
   @dropTask
   *saveNew(startYear) {
     const latestProgramYear = this.sortedProgramYears.get('lastObject');
-    this.itemsToSave = 0;
-    this.savedItems = 0;
-
     const newProgramYear = this.store.createRecord('program-year', {
       program: this.args.program,
       startYear,
     });
-    this.itemsToSave++;
 
     if (latestProgramYear) {
       newProgramYear.directors.pushObjects(yield latestProgramYear.directors);
@@ -40,39 +34,66 @@ export default class ProgramYearListComponent extends Component {
       newProgramYear.terms.pushObjects(yield latestProgramYear.terms);
     }
     const savedProgramYear = yield newProgramYear.save();
-    this.savedItems++;
-
     if (latestProgramYear) {
       const relatedObjectives = yield latestProgramYear.programYearObjectives;
-      const programYearObjectives = relatedObjectives.sortBy('id').toArray();
-      this.itemsToSave += programYearObjectives.length;
+      const programYearObjectives = relatedObjectives.sortBy('id');
 
-      for (let i = 0; i < programYearObjectives.length; i++) {
-        const programYearObjectiveToCopy = programYearObjectives[i];
-        const terms = yield programYearObjectiveToCopy.terms;
-        const meshDescriptors = yield programYearObjectiveToCopy.meshDescriptors;
-        const competency = yield programYearObjectiveToCopy.competency;
-        let ancestor = yield programYearObjectiveToCopy.ancestor;
+      const newObjectiveObjects = programYearObjectives.map((pyoToCopy) => {
+        const terms = pyoToCopy.hasMany('terms').ids().map((id) => {
+          return {
+            id,
+            type: 'programYearObjectives'
+          };
+        });
+        const meshDescriptors = pyoToCopy.hasMany('meshDescriptors').ids().map((id) => {
+          return {
+            id,
+            type: 'meshDescriptors'
+          };
+        });
 
-        if (!ancestor) {
-          ancestor = programYearObjectiveToCopy;
+        const  ancestorId = pyoToCopy.belongsTo('ancestor').id() ?? pyoToCopy.id;
+
+        const rhett =  {
+          type: 'programYearObjectives',
+          attributes: {
+            position: pyoToCopy.position,
+            title: pyoToCopy.title,
+            active: true,
+          },
+          relationships: {
+            programYear: {
+              data: {
+                type: 'programYear',
+                id: savedProgramYear.id,
+              },
+            },
+            ancestor: {
+              data: {
+                type: 'programYearObjective',
+                id: ancestorId,
+              },
+            },
+            meshDescriptors: { data: meshDescriptors },
+            terms: { data: terms }
+          },
+        };
+        const competencyId = pyoToCopy.belongsTo('competency').id();
+        if (competencyId) {
+          rhett.relationships.competency = {
+            data: {
+              type: 'competency',
+              id: competencyId,
+            },
+          };
         }
 
-        const newProgramYearObjective = this.store.createRecord('program-year-objective', {
-          position: programYearObjectiveToCopy.position,
-          programYear: savedProgramYear,
-          title: programYearObjectiveToCopy.title,
-          ancestor,
-          meshDescriptors,
-          competency,
-          terms
-        });
-        yield newProgramYearObjective.save();
-        this.savedItems++;
-      }
+        return rhett;
+      });
+      const newProgramYearObjectives = yield this.fetch.postManyToApi(`programyearobjectives`, newObjectiveObjects);
+      this.store.pushPayload(newProgramYearObjectives);
     }
     this.savedProgramYear = newProgramYear;
     this.editorOn = false;
   }
-
 }

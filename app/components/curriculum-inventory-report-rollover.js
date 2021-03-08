@@ -1,6 +1,5 @@
 import Component from '@ember/component';
 import EmberObject from '@ember/object';
-import { reads } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
@@ -31,9 +30,6 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
   report: null,
   selectedYear: null,
   years: null,
-
-  host: reads('iliosConfig.apiHost'),
-  namespace: reads('iliosConfig.apiNameSpace'),
 
   didReceiveAttrs() {
     this._super(...arguments);
@@ -92,8 +88,8 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       year,
     };
 
-    const url = `${this.namespace}/curriculuminventoryreports/${reportId}/rollover`;
-    const newReportObj = yield this.fetch.postToApiHost(url, data);
+    const url = `curriculuminventoryreports/${reportId}/rollover`;
+    const newReportObj = yield this.fetch.postQueryToApi(url, data);
 
     const flashMessages = this.flashMessages;
     const store = this.store;
