@@ -24,8 +24,8 @@
       data-test-user-upload
     >
   {{/if}}
-  {{#if parseFile.isRunning}}
-    <LoadingSpinner @tagName="div" class="loading-file" />
+  {{#if this.parseFile.isRunning}}
+    <LoadingSpinner class="loading-file" />
   {{/if}}
   {{#if invalidUsers}}
     <p class="error">

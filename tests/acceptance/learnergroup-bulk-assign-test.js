@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { settled, triggerEvent } from '@ember/test-helpers';
+import { triggerEvent, waitFor } from '@ember/test-helpers';
 import setupAuthentication from '../helpers/setup-authentication';
 import page from '../pages/learner-group';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
@@ -53,14 +53,13 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     return file;
   };
 
-  const triggerUpload = async function(users, selector){
+  const triggerUpload = async function(users){
     const file = createFile(users);
     await triggerEvent(
-      selector,
+      '[data-test-user-upload]',
       'change',
       [file]
     );
-    await settled();
   };
 
   test('upload users', async function (assert) {
@@ -82,7 +81,8 @@ module('Acceptance | learner group bulk assign', function(hooks) {
       ['jasper', 'johnson', '1234567890', '123Test'],
       ['jackson', 'johnson', '12345'],
     ];
-    await triggerUpload(users, '[data-test-user-upload]');
+    await triggerUpload(users);
+    await waitFor('[data-test-upload-data-valid-users]');
 
     assert.equal(page.bulkAssign.validUploadedUsers().count, 2);
     assert.ok(page.bulkAssign.validUploadedUsers(0).isValid);
@@ -118,7 +118,8 @@ module('Acceptance | learner group bulk assign', function(hooks) {
       ['jasper J', 'johnson', '1234567890', '123Test'],
       ['jackson', 'johnson the seconds', '12345'],
     ];
-    await triggerUpload(users, '[data-test-user-upload]');
+    await triggerUpload(users);
+    await waitFor('[data-test-upload-data-valid-users]');
 
     assert.equal(page.bulkAssign.validUploadedUsers().count, 2);
     assert.ok(page.bulkAssign.validUploadedUsers(0).hasWarning);
@@ -184,7 +185,8 @@ module('Acceptance | learner group bulk assign', function(hooks) {
       ['j', 'johnson', '1234567890', 'anothergroup' ],
       ['dabney', 'middlefield', '232323' ]
     ];
-    await triggerUpload(users, '[data-test-user-upload]');
+    await triggerUpload(users);
+    await waitFor('[data-test-upload-data-invalid-users]');
 
     assert.equal(page.bulkAssign.invalidUploadedUsers().count, 6);
     assert.equal(page.bulkAssign.invalidUploadedUsers(0).errors, 'First Name is required');
@@ -215,7 +217,8 @@ module('Acceptance | learner group bulk assign', function(hooks) {
       ['jasper', 'johnson', '1234567890', '123Test'],
       ['jackson', 'johnson', '12345', '123Test'],
     ];
-    await triggerUpload(users, '[data-test-user-upload]');
+    await triggerUpload(users);
+    await waitFor('[data-test-upload-data-valid-users]');
     assert.equal(page.bulkAssign.validUploadedUsers().count, 2);
     await page.bulkAssign.confirmUploadedUsers();
     assert.equal(page.bulkAssign.groupsToMatch().count, 1);
@@ -243,7 +246,8 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     await page.visit({ learnerGroupId: 1 });
     await page.activateBulkAssign();
 
-    await triggerUpload(users, '[data-test-user-upload]');
+    await triggerUpload(users);
+    await waitFor('[data-test-upload-data-valid-users]');
     assert.equal(page.bulkAssign.validUploadedUsers().count, 2);
     await page.bulkAssign.confirmUploadedUsers();
     assert.equal(page.bulkAssign.groupsToMatch().count, 1);
@@ -283,7 +287,8 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     await page.visit({ learnerGroupId: 1 });
     await page.activateBulkAssign();
 
-    await triggerUpload(users, '[data-test-user-upload]');
+    await triggerUpload(users);
+    await waitFor('[data-test-upload-data-valid-users]');
     assert.equal(page.bulkAssign.validUploadedUsers().count, 1);
     await page.bulkAssign.confirmUploadedUsers();
     assert.equal(page.bulkAssign.groupsToMatch().count, 1);
@@ -323,7 +328,8 @@ module('Acceptance | learner group bulk assign', function(hooks) {
     data[1].pushObject('group 1 child 1');
     data[2].pushObject('group 1 child 1 ');
     data[3].pushObject(' group 1 child 1');
-    await triggerUpload(data, '[data-test-user-upload]');
+    await triggerUpload(data);
+    await waitFor('[data-test-upload-data-valid-users]');
     await page.bulkAssign.confirmUploadedUsers();
     assert.equal(page.bulkAssign.groupsToMatch().count, 2);
   });
@@ -344,7 +350,8 @@ module('Acceptance | learner group bulk assign', function(hooks) {
       [' ', '   ', '', '  '],
       ['', '   ', '', '  '],
     ];
-    await triggerUpload(users, '[data-test-user-upload]');
+    await triggerUpload(users);
+    await waitFor('[data-test-upload-data-valid-users]');
 
     assert.equal(page.bulkAssign.validUploadedUsers().count, 1);
     assert.ok(page.bulkAssign.validUploadedUsers(0).isValid);
