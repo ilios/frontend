@@ -54,7 +54,7 @@ module('Integration | Component | unassigned students summary', function (hooks)
     assert.dom(options[1]).hasText('school 1');
 
     assert.dom('[data-test-manage-link]').exists({ count: 1 });
-    assert.dom('div:nth-of-type(2)').hasClass('alert');
+    assert.dom('[data-test-unassigned-students-summary]').hasClass('alert');
   });
 
   test('it renders empty', async function (assert) {
@@ -73,7 +73,7 @@ module('Integration | Component | unassigned students summary', function (hooks)
       .hasText(
         'Students Requiring Cohort Assignment school 0 There are 0 students needing assignment to a cohort'
       );
-    assert.dom('div:nth-of-type(2)').hasNoClass('alert');
+    assert.dom('[data-test-unassigned-students-summary]').hasNoClass('alert');
     assert.dom('[data-test-manage-link]').doesNotExist();
   });
 });

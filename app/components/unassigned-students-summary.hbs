@@ -2,6 +2,7 @@
   class="unassigned-students-summary small-component {{if this.hasUnassignedStudents "alert"}}"
   {{did-insert (perform this.load) this.schoolId}}
   {{did-update (perform this.load) this.schoolId}}
+  data-test-unassigned-students-summary
 >
   <h3>
     {{#if this.hasUnassignedStudents}}
