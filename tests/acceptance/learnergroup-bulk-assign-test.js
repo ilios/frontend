@@ -55,7 +55,7 @@ module('Acceptance | learner group bulk assign', function (hooks) {
 
   const triggerUpload = async function (users) {
     const file = createFile(users);
-    await triggerEvent('[data-test-user-upload]', 'change', [file]);
+    await triggerEvent('[data-test-user-upload]', 'change', { files: [file] });
   };
 
   test('upload users', async function (assert) {
