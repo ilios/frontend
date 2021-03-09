@@ -7,11 +7,11 @@ import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory-report-list-item';
 
-module('Integration | Component | curriculum-inventory-report-list-item', function(hooks) {
+module('Integration | Component | curriculum-inventory-report-list-item', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     const school = this.server.create('school');
     this.program = this.server.create('program', { school });
     const report = this.server.create('curriculum-inventory-report', {
@@ -21,7 +21,9 @@ module('Integration | Component | curriculum-inventory-report-list-item', functi
       startDate: new Date('2017-07-01'),
       endDate: new Date('2018-06-30'),
     });
-    this.report = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
+    this.report = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', report.id);
     this.permissionCheckerMock = class extends Service {
       async canDeleteCurriculumInventoryReport() {
         return true;
@@ -30,11 +32,12 @@ module('Integration | Component | curriculum-inventory-report-list-item', functi
     this.owner.register('service:permission-checker', this.permissionCheckerMock);
   });
 
-
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     this.set('report', this.report);
 
-    await render(hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{noop}} @remove={{noop}}/>`);
+    await render(
+      hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{noop}} @remove={{noop}}/>`
+    );
 
     assert.equal(component.name, 'CI Report');
     assert.equal(component.program, 'program 0');
@@ -46,71 +49,87 @@ module('Integration | Component | curriculum-inventory-report-list-item', functi
     assert.notOk(component.confirmRemoval.isVisible);
   });
 
-  test('delete', async function(assert) {
+  test('delete', async function (assert) {
     assert.expect(3);
     this.set('report', this.report);
     this.set('remove', (r) => {
       assert.equal(r, this.report);
     });
-    await render(hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{noop}} @remove={{this.remove}}/>`);
+    await render(
+      hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{noop}} @remove={{this.remove}}/>`
+    );
     assert.notOk(component.confirmRemoval.isVisible);
     await component.remove();
     assert.ok(component.confirmRemoval.isVisible);
     await component.confirmRemoval.confirm();
   });
 
-  test('cannot delete', async function(assert) {
+  test('cannot delete', async function (assert) {
     this.permissionCheckerMock.reopen({
       canDeleteCurriculumInventoryReport() {
         return false;
-      }
+      },
     });
     this.set('report', this.report);
 
-    await render(hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{noop}} @remove={{this.remove}}/>`);
+    await render(
+      hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{noop}} @remove={{this.remove}}/>`
+    );
 
     assert.notOk(component.isDeletable);
   });
 
-  test('clicking on report name fires edit action', async function(assert) {
+  test('clicking on report name fires edit action', async function (assert) {
     assert.expect(1);
     this.set('report', this.report);
     this.set('edit', (r) => {
       assert.equal(r, this.report);
     });
-    await render(hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{this.edit}} @remove={{noop}}/>`);
+    await render(
+      hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{this.edit}} @remove={{noop}}/>`
+    );
     await component.clickOnName();
   });
 
-  test('clicking edit button fires edit action', async function(assert) {
+  test('clicking edit button fires edit action', async function (assert) {
     assert.expect(1);
     this.set('report', this.report);
     this.set('edit', (r) => {
       assert.equal(r, this.report);
     });
-    await render(hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{this.edit}} @remove={{noop}}/>`);
+    await render(
+      hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{this.edit}} @remove={{noop}}/>`
+    );
     await component.edit();
   });
 
-  test('report with export shows as "finalized"', async function(assert) {
+  test('report with export shows as "finalized"', async function (assert) {
     const reportExport = this.server.create('curriculum-inventory-export');
-    this.report.export = await this.owner.lookup('service:store').find('curriculum-inventory-export', reportExport.id);
+    this.report.export = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-export', reportExport.id);
     this.set('report', this.report);
 
-    await render(hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{noop}} @remove={{noop}}/>`);
+    await render(
+      hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{noop}} @remove={{noop}}/>`
+    );
 
     assert.equal(component.status, 'Finalized');
   });
 
   test('academic year shows as range depending on application config', async function (assert) {
-    this.server.get('application/config', function() {
-      return { config: {
-        academicYearCrossesCalendarYearBoundaries: true,
-      }};
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+        },
+      };
     });
     this.set('report', this.report);
 
-    await render(hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{noop}} @remove={{noop}}/>`);
+    await render(
+      hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{noop}} @remove={{noop}}/>`
+    );
 
     assert.equal(component.year, '2017 - 2018');
   });

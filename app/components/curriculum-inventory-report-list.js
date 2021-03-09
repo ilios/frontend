@@ -18,7 +18,7 @@ export default class CurriculumInventoryReportListComponent extends Component {
 
   @action
   setSortBy(what) {
-    if (this.sortBy === what){
+    if (this.sortBy === what) {
       what += ':desc';
     }
     this.args.setSortBy(what);
