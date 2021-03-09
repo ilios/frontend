@@ -5,7 +5,7 @@ import ObjectProxy from '@ember/object/proxy';
 import { isPresent } from '@ember/utils';
 import { all, map } from 'rsvp';
 import { enqueueTask, restartableTask, task } from 'ember-concurrency';
-import { NotBlank, Length, IsURL, validatable } from 'ilios-common/decorators/validation';
+import { Length, IsURL, validatable } from 'ilios-common/decorators/validation';
 
 const DEFAULT_URL_VALUE = 'https://';
 
@@ -15,7 +15,7 @@ export default class LearnergroupSummaryComponent extends Component {
   @tracked currentGroupsSaved = 0;
   @tracked learnerGroupId = null;
   @tracked learnerGroupTitle = null;
-  @NotBlank() @Length(2, 100) @tracked location = null;
+  @Length(2, 100) @tracked location = null;
   @IsURL() @Length(2, 2000) @tracked url = null;
   @tracked topLevelGroupTitle = null;
   @tracked totalGroupsToSave = 0;
