@@ -44,7 +44,7 @@
       <div class="calendar-options-control calendar-school-picker">
         <FaIcon @icon="university" />
         {{#if this.hasMoreThanOneSchool}}
-          <select {{on "change" (fn this.changeSchool)}}>
+          <select {{on "change" this.changeSchool}}>
             {{#each (sort-by "title" @allSchools) as |school|}}
               <option
                 value={{school.id}}

@@ -20,7 +20,7 @@
               @key-press={{fn this.addErrorDisplayFor "title"}}
               disabled={{isSaving}}
             />
-            {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+            {{#each (await (compute this.getErrorsFor "title")) as |message|}}
               <span class="validation-error-message">
                 {{message}}
               </span>
@@ -71,7 +71,7 @@
                 @save={{this.changeSessionType}}
                 @close={{this.revertSessionTypeChanges}}
               >
-                <select {{on "change" (fn this.setSessionType)}}>
+                <select {{on "change" this.setSessionType}}>
                   {{#each this.sortedSessionTypes as |sessionType|}}
                     <option
                       value={{sessionType.id}}
@@ -190,7 +190,7 @@
                     @key-press={{fn this.addErrorDisplayFor "hours"}}
                     disabled={{isSaving}}
                   />
-                  {{#each (await (compute (fn this.getErrorsFor) "hours")) as |message|}}
+                  {{#each (await (compute this.getErrorsFor "hours")) as |message|}}
                     <span class="validation-error-message">
                       {{message}}
                     </span>
@@ -215,7 +215,7 @@
                       @value={{this.dueDate}}
                       @change={{pipe (set this.dueDate) (fn this.addErrorDisplayFor "dueDate")}}
                     />
-                    {{#each (await (compute (fn this.getErrorsFor) "dueDate")) as |message|}}
+                    {{#each (await (compute this.getErrorsFor "dueDate")) as |message|}}
                       <span class="validation-error-message">
                         {{message}}
                       </span>
@@ -296,13 +296,13 @@
               <EditableField
                 @value={{this.description}}
                 @renderHtml={{true}}
-                @isSaveDisabled={{await (compute (fn this.hasErrorFor) "description")}}
+                @isSaveDisabled={{await (compute this.hasErrorFor "description")}}
                 @save={{perform this.saveDescription}}
                 @close={{this.revertDescriptionChanges}}
                 @clickPrompt={{t "general.clickToEdit"}}
               >
                 <HtmlEditor @content={{this.description}} @update={{this.changeDescription}} />
-                {{#each (await (compute (fn this.getErrorsFor) "description")) as |message|}}
+                {{#each (await (compute this.getErrorsFor "description")) as |message|}}
                   <span class="validation-error-message">
                     {{message}}
                   </span>
@@ -321,13 +321,13 @@
               <EditableField
                 @value={{@session.instructionalNotes}}
                 @renderHtml={{true}}
-                @isSaveDisabled={{await (compute (fn this.hasErrorFor) "instructionalNotes")}}
+                @isSaveDisabled={{await (compute this.hasErrorFor "instructionalNotes")}}
                 @save={{perform this.saveInstructionalNotes}}
                 @close={{this.revertInstructionalNotesChanges}}
                 @clickPrompt={{t "general.clickToEdit"}}
               >
                 <HtmlEditor @content={{this.instructionalNotes}} @update={{this.changeInstructionalNotes}} />
-                {{#each (await (compute (fn this.getErrorsFor) "instructionalNotes")) as |message|}}
+                {{#each (await (compute this.getErrorsFor "instructionalNotes")) as |message|}}
                   <span class="validation-error-message">
                     {{message}}
                   </span>

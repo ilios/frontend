@@ -64,7 +64,7 @@
               @key-press={{fn this.addErrorDisplayFor "externalId"}}
               disabled={{isSaving}}
             />
-            {{#each (await (compute (fn this.getErrorsFor) "externalId")) as |message|}}
+            {{#each (await (compute this.getErrorsFor "externalId")) as |message|}}
               <span class="validation-error-message">
                 {{message}}
               </span>
@@ -84,7 +84,7 @@
             @save={{this.changeClerkshipType}}
             @close={{perform this.revertClerkshipTypeChanges}}
           >
-            <select {{on "change" (fn this.setCourseClerkshipType)}}>
+            <select {{on "change" this.setCourseClerkshipType}}>
               <option
                 value="null"
                 selected={{is-empty this.selectedClerkshipType}}
@@ -124,7 +124,7 @@
               @value={{this.startDate}}
               @change={{pipe (set this.startDate) (fn this.addErrorDisplayFor "startDate")}}
             />
-            {{#each (await (compute (fn this.getErrorsFor) "startDate")) as |message|}}
+            {{#each (await (compute this.getErrorsFor "startDate")) as |message|}}
               <span class="validation-error-message">
                 {{message}}
               </span>
@@ -148,7 +148,7 @@
               @value={{this.endDate}}
               @change={{pipe (set this.endDate) (fn this.addErrorDisplayFor "endDate")}}
             />
-            {{#each (await (compute (fn this.getErrorsFor) "endDate")) as |message|}}
+            {{#each (await (compute this.getErrorsFor "endDate")) as |message|}}
               <span class="validation-error-message">
                 {{message}}
               </span>
@@ -168,7 +168,7 @@
             @save={{this.changeLevel}}
             @close={{this.revertLevelChanges}}
           >
-            <select {{on "change" (fn this.setLevel)}}>
+            <select {{on "change" this.setLevel}}>
               {{#each this.levelOptions as |levelOption|}}
                 <option
                   value={{levelOption}}

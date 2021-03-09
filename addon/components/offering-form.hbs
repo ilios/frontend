@@ -55,7 +55,7 @@
                     {{on "input" (perform this.updateDurationHours value="target.value")}}
                     {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
                   >
-                  {{#each (await (compute (fn this.getErrorsFor) "durationHours")) as |message|}}
+                  {{#each (await (compute this.getErrorsFor "durationHours")) as |message|}}
                     <span class="validation-error-message">
                       {{message}}
                     </span>
@@ -76,7 +76,7 @@
                     {{on "input" (perform this.updateDurationMinutes value="target.value")}}
                     {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
                   >
-                  {{#each (await (compute (fn this.getErrorsFor) "durationMinutes")) as |message|}}
+                  {{#each (await (compute this.getErrorsFor "durationMinutes")) as |message|}}
                     <span class="validation-error-message">
                       {{message}}
                     </span>
@@ -104,7 +104,7 @@
             </label>
             {{#if this.isEditingTimezone}}
               <div class="picker">
-                <select {{on "change" (fn this.changeTimezone)}}>
+                <select {{on "change" this.changeTimezone}}>
                   {{#each this.timezones as |timezone|}}
                     <option value={{timezone.value}} selected={{is-equal timezone.value this.currentTimezone}}>
                       {{timezone.label}}
@@ -173,13 +173,13 @@
                       <input type="text"
                         value={{this.numberOfWeeks}}
                         class="make-recurring-input"
-                        {{on "input" (fn this.changeNumberOfWeeks)}}
+                        {{on "input" this.changeNumberOfWeeks}}
                         {{on "keyup" (fn this.addErrorDisplayFor "numberOfWeeks")}}
                       >
                       <label class="make-recurring-input-label">
                         {{t "general.weeks"}}
                       </label>
-                      {{#each (await (compute (fn this.getErrorsFor) "numberOfWeeks")) as |message|}}
+                      {{#each (await (compute this.getErrorsFor "numberOfWeeks")) as |message|}}
                         <span class="validation-error-message">
                           {{message}}
                         </span>
@@ -202,11 +202,11 @@
                 type="text"
                 value={{this.room}}
                 disabled={{this.saveOffering.isRunning}}
-                {{on "input" (fn this.changeRoom)}}
+                {{on "input" this.changeRoom}}
                 {{on "keyup" (fn this.addErrorDisplayFor "room")}}
                 {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
               >
-              {{#each (await (compute (fn this.getErrorsFor) "room")) as |message|}}
+              {{#each (await (compute this.getErrorsFor "room")) as |message|}}
                 <span class="validation-error-message">
                   {{message}}
                 </span>
@@ -228,10 +228,10 @@
                   disabled={{this.saveOffering.isRunning}}
                   {{on "input" (pick "target.value" this.changeURL)}}
                   {{on "keyup" (fn this.addErrorDisplayFor "url")}}
-                  {{on "focus" (fn this.selectAllText)}}
+                  {{on "focus" this.selectAllText}}
                   {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
               >
-              {{#each (await (compute (fn this.getErrorsFor) "url")) as |message|}}
+              {{#each (await (compute this.getErrorsFor "url")) as |message|}}
                 <span class="validation-error-message">
                   {{message}}
                 </span>
@@ -382,7 +382,7 @@
               {{t "general.noAvailableLearnerGroups"}}
             </div>
           {{/if}}
-          {{#each (await (compute (fn this.getErrorsFor) "learnerGroups")) as |message|}}
+          {{#each (await (compute this.getErrorsFor "learnerGroups")) as |message|}}
             <p class="validation-error-message">
               {{message}}
             </p>

@@ -17,7 +17,7 @@
           disabled={{this.save.isRunning}}
           @key-press={{fn this.addErrorDisplayFor "title"}}
         />
-        {{#each (await (compute (fn this.getErrorsFor) "title")) as |message|}}
+        {{#each (await (compute this.getErrorsFor "title")) as |message|}}
           <span class="validation-error-message" data-test-title-validation-error-message>
             {{message}}
           </span>
@@ -288,7 +288,7 @@
             {{format-date this.endDate  hour12=true hour="numeric" minute="numeric"}}
           {{/if}}
         </div>
-        {{#each (await (compute (fn this.getErrorsFor) "endDate")) as |message|}}
+        {{#each (await (compute this.getErrorsFor "endDate")) as |message|}}
           <span class="validation-error-message" data-test-end-date-validation-error-message>
             {{message}}
           </span>

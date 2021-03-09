@@ -4,7 +4,7 @@
     id={{concat "first-toggle-" this.uniqueId}}
     name={{concat "toggle-" this.uniqueId}}
     checked={{eq @firstOptionSelected true}}
-    {{on "click" (fn this.firstChoice)}}
+    {{on "click" this.firstChoice}}
   >
   <label
     for={{concat "first-toggle-" this.uniqueId}}
@@ -18,7 +18,7 @@
     id={{concat "second-toggle-" this.uniqueId}}
     name={{concat "toggle-" this.uniqueId}}
     checked={{eq @firstOptionSelected false}}
-    {{on "click" (fn this.secondChoice)}}
+    {{on "click" this.secondChoice}}
   >
   <label
     for={{concat "second-toggle-" this.uniqueId}}

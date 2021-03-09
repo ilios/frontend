@@ -13,7 +13,7 @@
     type="button"
     data-test-toggle
     {{on "click" (toggle "isOpen" this)}}
-    {{on "keydown" (fn this.toggleMenu)}}
+    {{on "keydown" this.toggleMenu}}
   >
     <FaIcon @icon={{this.icon}} />
     <span>
@@ -35,8 +35,8 @@
           tabindex="-1"
           type="button"
           {{on "click" this.publish}}
-          {{on "keydown" (fn this.moveFocus)}}
-          {{on "mouseenter" (fn this.clearFocus)}}
+          {{on "keydown" this.moveFocus}}
+          {{on "mouseenter" this.clearFocus}}
           data-test-publish-as-is
         >
           {{t "general.publishAsIs"}}
@@ -49,8 +49,8 @@
           tabindex="-1"
           type="button"
           {{on "click" this.publish}}
-          {{on "keydown" (fn this.moveFocus)}}
-          {{on "mouseenter" (fn this.clearFocus)}}
+          {{on "keydown" this.moveFocus}}
+          {{on "mouseenter" this.clearFocus}}
           data-test-publish
         >
           {{t "general.publishCourse"}}
@@ -63,8 +63,8 @@
           tabindex="-1"
           type="button"
           {{on "click" this.scrollToCoursePublication}}
-          {{on "keydown" (fn this.moveFocus)}}
-          {{on "mouseenter" (fn this.clearFocus)}}
+          {{on "keydown" this.moveFocus}}
+          {{on "mouseenter" this.clearFocus}}
           data-test-review
         >
           {{t
@@ -80,8 +80,8 @@
           tabindex="-1"
           type="button"
           {{on "click" this.publishAsTbd}}
-          {{on "keydown" (fn this.moveFocus)}}
-          {{on "mouseenter" (fn this.clearFocus)}}
+          {{on "keydown" this.moveFocus}}
+          {{on "mouseenter" this.clearFocus}}
           data-test-tbd
         >
           {{t "general.markAsScheduled"}}
@@ -94,8 +94,8 @@
           tabindex="-1"
           type="button"
           {{on "click" this.unpublish}}
-          {{on "keydown" (fn this.moveFocus)}}
-          {{on "mouseenter" (fn this.clearFocus)}}
+          {{on "keydown" this.moveFocus}}
+          {{on "mouseenter" this.clearFocus}}
           data-test-un-publish
         >
           {{t "general.unPublishCourse"}}
