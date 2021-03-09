@@ -6,4 +6,7 @@ export default class WaitSaving extends Component {
     const current = this.args.currentProgress || 0;
     return Math.floor((current / total) * 100);
   }
+  get applicationElement() {
+    return document.querySelector('.ember-application');
+  }
 }

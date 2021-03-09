@@ -1,0 +1,22 @@
+.wait-saving {
+  z-index: 102;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.95);
+  display: grid;
+  justify-content: center;
+  align-content: center;
+
+  .content {
+    background-color: $background-grey;
+    padding: 2em;
+    border-radius: 1em;
+
+    &:focus {
+      outline: 0;
+    }
+  }
+}
