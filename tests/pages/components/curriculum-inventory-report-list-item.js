@@ -13,6 +13,7 @@ const definition = {
   remove: clickable('[data-test-remove]'),
   isDeletable: isPresent('[data-test-remove]'),
   confirmRemoval: {
+    resetScope: true,
     scope: '[data-test-confirm-removal]',
     confirm: clickable('[data-test-confirm]'),
     cancel: clickable('[data-test-cancel]'),
