@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render } from '@ember/test-helpers';
+import { fillIn, render, waitFor } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupIntl } from 'ember-intl/test-support';
 
@@ -10,10 +10,25 @@ module('Integration | Component | wait saving', function (hooks) {
 
   test('it renders', async function (assert) {
     assert.expect(1);
-    const modalDialogService = this.owner.lookup('service:modal-dialog');
-    modalDialogService.set('destinationElementId', 'modal-testing-div');
-    await render(hbs`<div id="modal-testing-div"></div><WaitSaving />`);
+    await render(hbs`<WaitSaving />`);
 
     assert.dom(this.element).hasText('saving... one moment...');
+  });
+
+  test('it traps focus and returns it', async function (assert) {
+    await render(hbs`
+      {{#if this.show}}
+        <WaitSaving />
+      {{/if}}
+      <input type="text" />
+    `);
+    await fillIn('input', 'text');
+    assert.dom('input').isFocused();
+    this.set('show', true);
+    await waitFor('[data-test-wait-saving]');
+    assert.dom('input').isNotFocused();
+    assert.dom('[data-test-wait-saving] [data-test-content]').isFocused();
+    this.set('show', false);
+    assert.dom('input').isFocused();
   });
 });

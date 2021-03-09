@@ -1,11 +1,18 @@
-<div data-test-wait-saving>
-  <ModalDialog @translucentOverlay={{true}} @animatable={{false}}>
-    <PulseLoader />
-    <h2 class="page-title">
-      {{t "general.waitSaving"}}
-    </h2>
-    {{#if @showProgress}}
-      <ProgressBar @percentage={{this.progress}} />
-    {{/if}}
-  </ModalDialog>
-</div>
+{{#in-element this.applicationElement insertBefore=null}}
+  <div
+    class="wait-saving"
+    data-test-wait-saving
+    ...attributes
+    {{focus-trap focusTrapOptions=(hash fallbackFocus=this.contentElement)}}
+  >
+    <div tabindex="-1" class="content" data-test-content {{did-insert (set this.contentElement)}}>
+      <PulseLoader />
+      <h2 class="page-title">
+        {{t "general.waitSaving"}}
+      </h2>
+      {{#if @showProgress}}
+        <ProgressBar @percentage={{this.progress}} />
+      {{/if}}
+    </div>
+  </div>
+{{/in-element}}
