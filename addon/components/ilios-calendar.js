@@ -2,9 +2,26 @@ import Component from '@glimmer/component';
 import moment from 'moment';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { ensureSafeComponent } from '@embroider/util';
+import IliosCalendarDay from './ilios-calendar-day';
+import IliosCalendarWeek from './ilios-calendar-week';
+import IliosCalendarMonth from './ilios-calendar-month';
 
 export default class IliosCalendarComponent extends Component {
   @tracked showIcsFeed = false;
+
+  get calendarViewComponent() {
+    let calendar = IliosCalendarDay;
+    if (this.args.selectedView === 'week') {
+      calendar = IliosCalendarWeek;
+    }
+    if (this.args.selectedView === 'month') {
+      calendar = IliosCalendarMonth;
+    }
+
+    return ensureSafeComponent(calendar, this);
+  }
+
   get compiledCalendarEvents() {
     if (this.args.selectedView === 'day') {
       return this.args.calendarEvents;

@@ -40,16 +40,14 @@
       {{t "general.loadingEvents"}}
       ...
     </h1>
-    {{#let (component (concat "ilios-calendar-" @selectedView)) as |Calendar|}}
-      <Calendar
-        @calendarEvents={{this.sortedEvents}}
-        @date={{@selectedDate}}
-        @selectEvent={{@selectEvent}}
-        @changeDate={{@changeDate}}
-        @changeView={{@changeView}}
-        @areDaysSelectable={{true}}
-        @areEventsSelectable={{true}}
-      />
-    {{/let}}
+    <this.calendarViewComponent
+      @calendarEvents={{this.sortedEvents}}
+      @date={{@selectedDate}}
+      @selectEvent={{@selectEvent}}
+      @changeDate={{@changeDate}}
+      @changeView={{@changeView}}
+      @areDaysSelectable={{true}}
+      @areEventsSelectable={{true}}
+    />
   </div>
 </div>
