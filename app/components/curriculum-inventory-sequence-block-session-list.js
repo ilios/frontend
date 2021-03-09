@@ -3,14 +3,14 @@ import { computed } from '@ember/object';
 import { task } from 'ember-concurrency';
 
 export default Component.extend({
-  tagName: "",
+  tagName: '',
   excludedSessions: null,
   linkedSessions: null,
   sessions: null,
   sessionsBuffer: null,
   sortBy: 'title',
 
-  sortedAscending: computed('sortBy', function() {
+  sortedAscending: computed('sortBy', function () {
     const sortBy = this.sortBy;
     return sortBy.search(/desc/) === -1;
   }),
@@ -25,7 +25,7 @@ export default Component.extend({
   actions: {
     sortBy(what) {
       const sortBy = this.sortBy;
-      if(sortBy === what){
+      if (sortBy === what) {
         what += ':desc';
       }
       this.setSortBy(what);
@@ -38,7 +38,7 @@ export default Component.extend({
     this.setProperties({
       linkedSessions,
       excludedSessions,
-      sessionsBuffer: sessions
+      sessionsBuffer: sessions,
     });
-  })
+  }),
 });

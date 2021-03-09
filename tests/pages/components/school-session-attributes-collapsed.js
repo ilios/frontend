@@ -26,7 +26,7 @@ const definition = {
     label: text('td:nth-of-type(1)'),
     isEnabled: hasClass('fa-check', 'td:nth-of-type(2) svg'),
     isDisabled: hasClass('fa-ban', 'td:nth-of-type(2) svg'),
-  }
+  },
 };
 
 export default definition;

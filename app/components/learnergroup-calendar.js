@@ -35,7 +35,7 @@ export default class IliosCalendarWeekComponent extends Component {
   }
 
   async getCalendarEvents(offerings) {
-    return await map(offerings, async offering => {
+    return await map(offerings, async (offering) => {
       const session = await offering.session;
       const course = await session.course;
       return {
@@ -45,7 +45,7 @@ export default class IliosCalendarWeekComponent extends Component {
         name: session.title,
         offering: offering.id,
         location: offering.location,
-        color: "#84c444",
+        color: '#84c444',
         prerequisites: [],
         postrequisites: [],
       };
@@ -53,15 +53,15 @@ export default class IliosCalendarWeekComponent extends Component {
   }
 
   @action
-  goForward(){
+  goForward() {
     this.selectedDate = moment(this.selectedDate).add(1, 'week').toDate();
   }
   @action
-  goBack(){
+  goBack() {
     this.selectedDate = moment(this.selectedDate).subtract(1, 'week').toDate();
   }
   @action
-  gotoToday(){
+  gotoToday() {
     this.selectedDate = moment().toDate();
   }
 }

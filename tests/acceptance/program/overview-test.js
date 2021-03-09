@@ -1,22 +1,12 @@
-import {
-  click,
-  fillIn,
-  find,
-  findAll,
-  currentRouteName,
-  visit
-} from '@ember/test-helpers';
-import {
-  module,
-  test
-} from 'qunit';
+import { click, fillIn, find, findAll, currentRouteName, visit } from '@ember/test-helpers';
+import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios-common';
 
 const url = '/programs/1';
-module('Acceptance | Program - Overview', function(hooks) {
+module('Acceptance | Program - Overview', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
@@ -24,13 +14,16 @@ module('Acceptance | Program - Overview', function(hooks) {
     this.user = await setupAuthentication({ school: this.school });
   });
 
-  test('check fields', async function(assert) {
+  test('check fields', async function (assert) {
     var program = this.server.create('program', {
       schoolId: 1,
     });
     await visit(url);
     assert.equal(currentRouteName(), 'program.index');
-    assert.equal(await getElementText('.program-overview .programtitleshort span'), getText(program.shortTitle));
+    assert.equal(
+      await getElementText('.program-overview .programtitleshort span'),
+      getText(program.shortTitle)
+    );
     assert.equal(await getElementText('.program-overview .programduration span'), program.duration);
   });
 
@@ -56,7 +49,7 @@ module('Acceptance | Program - Overview', function(hooks) {
     assert.equal(await getElementText(title), getText('test new title'));
   });
 
-  test('change short title', async function(assert) {
+  test('change short title', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     const program = this.server.create('program', {
       schoolId: 1,
@@ -78,7 +71,7 @@ module('Acceptance | Program - Overview', function(hooks) {
     assert.equal(await getElementText(shortTitle), getText('test title'));
   });
 
-  test('change duration', async function(assert) {
+  test('change duration', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     const program = this.server.create('program', {
       schoolId: 1,
@@ -97,16 +90,15 @@ module('Acceptance | Program - Overview', function(hooks) {
 
     const durations = findAll(options);
     assert.equal(durations.length, 10);
-    for(let i = 0; i < 10; i++){
-      assert.equal(await getElementText(durations[i]), i+1);
+    for (let i = 0; i < 10; i++) {
+      assert.equal(await getElementText(durations[i]), i + 1);
     }
     await fillIn(select, '9');
     await click(done);
     assert.equal(await getElementText(duration), '9');
   });
 
-
-  test('leave duration at 1', async function(assert) {
+  test('leave duration at 1', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     const program = this.server.create('program', {
       schoolId: 1,

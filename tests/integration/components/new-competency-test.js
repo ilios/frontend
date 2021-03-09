@@ -4,10 +4,10 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios/tests/pages/components/new-competency';
 
-module('Integration | Component | new competency', function(hooks) {
+module('Integration | Component | new competency', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('save', async function(assert) {
+  test('save', async function (assert) {
     assert.expect(1);
     const title = 'new co';
     this.set('add', (value) => {
@@ -18,7 +18,7 @@ module('Integration | Component | new competency', function(hooks) {
     await component.save();
   });
 
-  test('validation fails if title is too short', async function(assert) {
+  test('validation fails if title is too short', async function (assert) {
     await render(hbs`<NewCompetency @add={{noop}}/>`);
     assert.notOk(component.hasError);
     await component.title.set('');
@@ -26,7 +26,7 @@ module('Integration | Component | new competency', function(hooks) {
     assert.ok(component.hasError);
   });
 
-  test('validation fails if title is too long', async function(assert) {
+  test('validation fails if title is too long', async function (assert) {
     await render(hbs`<NewCompetency @add={{noop}}/>`);
     assert.notOk(component.hasError);
     await component.title.set('0123456789'.repeat(21));
@@ -34,7 +34,7 @@ module('Integration | Component | new competency', function(hooks) {
     assert.ok(component.hasError);
   });
 
-  test('pressing escape in input element clears value and error messages', async function(assert) {
+  test('pressing escape in input element clears value and error messages', async function (assert) {
     await render(hbs`<NewCompetency @add={{noop}}/>`);
     assert.notOk(component.hasError);
     await component.title.set('0123456789'.repeat(21));

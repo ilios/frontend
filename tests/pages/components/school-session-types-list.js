@@ -1,11 +1,19 @@
-import { attribute, collection, clickable, create, hasClass, isVisible, text } from 'ember-cli-page-object';
+import {
+  attribute,
+  collection,
+  clickable,
+  create,
+  hasClass,
+  isVisible,
+  text,
+} from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-school-session-types-list]',
   sessionTypes: collection('[data-test-session-type]', {
     title: {
       scope: '[data-test-title]',
-      edit: clickable('button')
+      edit: clickable('button'),
     },
     sessionCount: text('[data-test-sessions-count]'),
     isAssessment: hasClass('yes', '[data-test-is-assessment] svg'),
@@ -15,7 +23,7 @@ const definition = {
     manage: clickable('[data-test-manage]'),
     delete: clickable('[data-test-delete]'),
     isDeletable: isVisible('[data-test-delete]'),
-  })
+  }),
 };
 
 export default definition;

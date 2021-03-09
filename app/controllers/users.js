@@ -2,14 +2,16 @@ import Controller from '@ember/controller';
 import { action } from '@ember/object';
 
 export default class UsersController extends Controller {
-  queryParams = [{
-    offset: 'offset',
-    limit: 'limit',
-    query: 'filter',
-    showNewUserForm: 'addUser',
-    showBulkNewUserForm: 'addUsers',
-    searchTerms: 'search',
-  }];
+  queryParams = [
+    {
+      offset: 'offset',
+      limit: 'limit',
+      query: 'filter',
+      showNewUserForm: 'addUser',
+      showBulkNewUserForm: 'addUsers',
+      searchTerms: 'search',
+    },
+  ];
   offset = 0;
   limit = 25;
   query = null;
@@ -18,7 +20,7 @@ export default class UsersController extends Controller {
   searchTerms = null;
 
   @action
-  transitionToUser(userId){
+  transitionToUser(userId) {
     this.transitionToRoute('user', userId);
   }
 }

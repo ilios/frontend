@@ -7,7 +7,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios-common';
 const url = '/programs/1/programyears/1';
 
-module('Acceptance | Program Year - Overview', function(hooks) {
+module('Acceptance | Program Year - Overview', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
@@ -20,14 +20,14 @@ module('Acceptance | Program Year - Overview', function(hooks) {
     this.server.create('program', { school: this.school });
     this.server.create('programYear', {
       programId: 1,
-      directorIds: [2, 3, 4]
+      directorIds: [2, 3, 4],
     });
     this.server.create('cohort', {
-      programYearId: 1
+      programYearId: 1,
     });
   });
 
-  test('list directors', async function(assert) {
+  test('list directors', async function (assert) {
     await visit(url);
     assert.equal(currentRouteName(), 'programYear.index');
     const directors = '.programyear-overview .directors li';
@@ -40,7 +40,7 @@ module('Acceptance | Program Year - Overview', function(hooks) {
     assert.dom(`${directors}:nth-of-type(3) [data-test-info]`).exists();
   });
 
-  test('list directors with privileges', async function(assert) {
+  test('list directors with privileges', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
 
@@ -52,7 +52,7 @@ module('Acceptance | Program Year - Overview', function(hooks) {
     assert.dom(`${directors}:nth-of-type(3) [data-test-fullname]`).hasText('Zeppelin');
   });
 
-  test('search directors', async function(assert) {
+  test('search directors', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
 
@@ -61,21 +61,36 @@ module('Acceptance | Program Year - Overview', function(hooks) {
     const searchResults = findAll('.programyear-overview .results li');
     assert.equal(searchResults.length, 7);
     assert.equal(await getElementText(searchResults[0]), getText('6 Results'));
-    assert.equal(await getElementText(searchResults[1]), getText('0 guy M. Mc0son user@example.edu'));
+    assert.equal(
+      await getElementText(searchResults[1]),
+      getText('0 guy M. Mc0son user@example.edu')
+    );
     assert.dom(searchResults[1]).hasClass('active');
-    assert.equal(await getElementText(searchResults[2]), getText('1 guy M. Mc1son user@example.edu'));
+    assert.equal(
+      await getElementText(searchResults[2]),
+      getText('1 guy M. Mc1son user@example.edu')
+    );
     assert.dom(searchResults[2]).hasClass('inactive');
-    assert.equal(await getElementText(searchResults[3]), getText('3 guy M. Mc3son user@example.edu'));
+    assert.equal(
+      await getElementText(searchResults[3]),
+      getText('3 guy M. Mc3son user@example.edu')
+    );
     assert.dom(searchResults[3]).hasClass('inactive');
-    assert.equal(await getElementText(searchResults[4]), getText('4 guy M. Mc4son user@example.edu'));
+    assert.equal(
+      await getElementText(searchResults[4]),
+      getText('4 guy M. Mc4son user@example.edu')
+    );
     assert.dom(searchResults[4]).hasClass('active');
-    assert.equal(await getElementText(searchResults[5]), getText('5 guy M. Mc5son user@example.edu'));
+    assert.equal(
+      await getElementText(searchResults[5]),
+      getText('5 guy M. Mc5son user@example.edu')
+    );
     assert.dom(searchResults[5]).hasClass('active');
     assert.equal(await getElementText(searchResults[6]), getText('Zeppelin user@example.edu'));
     assert.dom(searchResults[6]).hasClass('inactive');
   });
 
-  test('add director', async function(assert) {
+  test('add director', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
 
@@ -96,7 +111,7 @@ module('Acceptance | Program Year - Overview', function(hooks) {
     assert.dom(`${directors}:nth-of-type(4) [data-test-fullname]`).hasText('Zeppelin');
   });
 
-  test('remove director', async function(assert) {
+  test('remove director', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
 
@@ -108,15 +123,15 @@ module('Acceptance | Program Year - Overview', function(hooks) {
     assert.dom(`${directors}:nth-of-type(2) [data-test-fullname]`).hasText('Zeppelin');
   });
 
-  test('first director added is disabled #2770', async function(assert) {
+  test('first director added is disabled #2770', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
     this.server.create('programYear', {
       programId: 1,
-      directorIds: []
+      directorIds: [],
     });
     this.server.create('cohort', {
-      programYearId: 2
+      programYearId: 2,
     });
     const overview = '.programyear-overview';
     const directors = `${overview} .removable-directors li`;
@@ -134,6 +149,5 @@ module('Acceptance | Program Year - Overview', function(hooks) {
     await click(firstResult);
     assert.dom(directors).exists({ count: 1 }, 'director is selected');
     assert.dom(firstResult).hasClass('inactive', 'the first user is now marked as inactive');
-
   });
 });

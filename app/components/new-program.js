@@ -9,9 +9,9 @@ const Validations = buildValidations({
     validator('length', {
       min: 3,
       max: 200,
-      descriptionKey: 'general.title'
-    })
-  ]
+      descriptionKey: 'general.title',
+    }),
+  ],
 });
 
 export default Component.extend(ValidationErrorDisplay, Validations, {
@@ -26,19 +26,19 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     save() {
       this.set('isSaving', true);
       this.send('addErrorDisplayFor', 'title');
-      this.validate().then(({validations}) => {
+      this.validate().then(({ validations }) => {
         if (validations.get('isValid')) {
           const program = this.store.createRecord('program', {
-            title: this.title
+            title: this.title,
           });
-          this.save(program).finally(()=>{
+          this.save(program).finally(() => {
             this.set('isSaving', false);
           });
         } else {
           this.set('isSaving', false);
         }
       });
-    }
+    },
   },
 
   keyUp(event) {
@@ -57,5 +57,5 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
     if (27 === keyCode) {
       this.cancel();
     }
-  }
+  },
 });

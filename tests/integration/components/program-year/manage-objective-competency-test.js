@@ -6,15 +6,17 @@ import { component } from 'ilios/tests/pages/components/program-year/manage-obje
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | program-year/manage-objective-competency', function(hooks) {
+module('Integration | Component | program-year/manage-objective-competency', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const domain = this.server.create('competency', { title: "domain 0" });
-    const competency = this.server.create('competency', { title: "competency 0", parent: domain });
+    const domain = this.server.create('competency', { title: 'domain 0' });
+    const competency = this.server.create('competency', { title: 'competency 0', parent: domain });
     this.domainModel = await this.owner.lookup('service:store').find('competency', domain.id);
-    this.competencyModel = await this.owner.lookup('service:store').find('competency', competency.id);
+    this.competencyModel = await this.owner
+      .lookup('service:store')
+      .find('competency', competency.id);
   });
 
   test('it renders and is accessible', async function (assert) {
@@ -26,9 +28,9 @@ module('Integration | Component | program-year/manage-objective-competency', fun
           {
             id: this.competencyModel.id,
             title: this.competencyModel.title,
-          }
-        ]
-      }
+          },
+        ],
+      },
     ];
     this.set('domains', domains);
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
@@ -55,8 +57,8 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       {
         title: this.domainModel.title,
         id: this.domainModel.id,
-        competencies: []
-      }
+        competencies: [],
+      },
     ];
     this.set('selected', this.domainModel);
     this.set('domains', domains);
@@ -79,11 +81,11 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       {
         title: this.domainModel.title,
         id: this.domainModel.id,
-        competencies: []
-      }
+        competencies: [],
+      },
     ];
     this.set('domains', domains);
-    this.set('add', id => {
+    this.set('add', (id) => {
       assert.equal(id, this.domainModel.id);
     });
     await render(hbs`<ProgramYear::ManageObjectiveCompetency

@@ -4,7 +4,7 @@ import Route from '@ember/routing/route';
 export default class LogoutRoute extends Route {
   @service session;
 
-  beforeModel(){
+  beforeModel() {
     if (this.session.isAuthenticated) {
       return this.session.invalidate();
     }

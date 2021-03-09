@@ -22,10 +22,7 @@ export default class CurriculumInventorySequenceBlockRoute extends Route {
     this.set('canUpdate', canUpdate);
 
     //preload data to speed up rendering later
-    return all([
-      model.get('children'),
-      model.get('parent'),
-    ]);
+    return all([model.get('children'), model.get('parent')]);
   }
 
   setupController(controller, model) {

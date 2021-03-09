@@ -5,21 +5,21 @@ import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/school-manager';
 
-module('Integration | Component | school manager', function(hooks) {
+module('Integration | Component | school manager', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     const school = this.server.create('school');
-    this.server.create('user', { school, administeredSchools: [ school ]});
-    this.server.create('user', { school, administeredSchools: [ school ]});
+    this.server.create('user', { school, administeredSchools: [school] });
+    this.server.create('user', { school, administeredSchools: [school] });
     this.server.createList('vocabulary', 2, { school });
     this.server.createList('sessionType', 2, { school });
     this.server.createList('competency', 2, { school });
     this.school = await this.owner.lookup('service:store').find('school', school.id);
   });
 
-  test('it renders expanded', async function(assert) {
+  test('it renders expanded', async function (assert) {
     this.set('school', this.school);
     await render(hbs`<SchoolManager
       @school={{this.school}}
@@ -79,7 +79,7 @@ module('Integration | Component | school manager', function(hooks) {
     assert.notOk(component.schoolCurriculumInventoryInstitutionDetails.isVisible);
   });
 
-  test('it renders collapsed', async function(assert) {
+  test('it renders collapsed', async function (assert) {
     this.set('school', this.school);
     await render(hbs`<SchoolManager
       @school={{this.school}}
@@ -139,7 +139,7 @@ module('Integration | Component | school manager', function(hooks) {
     assert.ok(component.schoolCurriculumInventoryInstitutionDetails.isVisible);
   });
 
-  test('change title', async function(assert) {
+  test('change title', async function (assert) {
     const newTitle = 'foo bar';
     this.set('school', this.school);
     await render(hbs`<SchoolManager
@@ -196,7 +196,7 @@ module('Integration | Component | school manager', function(hooks) {
     assert.equal(component.title.text, newTitle);
   });
 
-  test('cancel title changes', async function(assert) {
+  test('cancel title changes', async function (assert) {
     const newTitle = 'foo bar';
     this.set('school', this.school);
     await render(hbs`<SchoolManager
@@ -251,7 +251,7 @@ module('Integration | Component | school manager', function(hooks) {
     assert.equal(component.title.text, 'school 0');
   });
 
-  test('validation fails if title is too short', async function(assert) {
+  test('validation fails if title is too short', async function (assert) {
     this.set('school', this.school);
     await render(hbs`<SchoolManager
       @school={{this.school}}
@@ -305,7 +305,7 @@ module('Integration | Component | school manager', function(hooks) {
     assert.ok(component.title.hasError);
   });
 
-  test('validation fails if title is too long', async function(assert) {
+  test('validation fails if title is too long', async function (assert) {
     this.set('school', this.school);
     await render(hbs`<SchoolManager
       @school={{this.school}}

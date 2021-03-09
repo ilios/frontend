@@ -9,14 +9,20 @@ import { dropTask, restartableTask } from 'ember-concurrency';
 export default class SchoolVocabularyManagerComponent extends Component {
   @service store;
   @service intl;
-  @tracked @NotBlank() @Length(1, 200) @Custom('validateTitleCallback', 'validateTitleMessageCallback') title;
+  @tracked
+  @NotBlank()
+  @Length(1, 200)
+  @Custom('validateTitleCallback', 'validateTitleMessageCallback')
+  title;
   @tracked isActive = false;
   @tracked newTerm;
   @tracked termsRelationship;
 
   get sortedTerms() {
     if (this.termsRelationship) {
-      return this.termsRelationship.toArray().filterBy('isTopLevel')
+      return this.termsRelationship
+        .toArray()
+        .filterBy('isTopLevel')
         .filterBy('isNew', false)
         .filterBy('isDeleted', false)
         .sortBy('title');
@@ -35,7 +41,7 @@ export default class SchoolVocabularyManagerComponent extends Component {
   *changeTitle() {
     this.addErrorDisplayFor('title');
     const isValid = yield this.isValid();
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('title');
@@ -44,29 +50,29 @@ export default class SchoolVocabularyManagerComponent extends Component {
   }
 
   @action
-  revertTitleChanges(){
+  revertTitleChanges() {
     this.removeErrorDisplayFor('title');
     this.title = this.args.vocabulary.title;
   }
 
   @action
-  async createTerm(title){
+  async createTerm(title) {
     const term = this.store.createRecord('term', {
       title: title,
       vocabulary: this.args.vocabulary,
-      active: true
+      active: true,
     });
-    this.newTerm  = await term.save();
+    this.newTerm = await term.save();
   }
 
   async validateTitleCallback() {
     const school = await this.args.vocabulary.school;
     const allVocabsInSchool = await school.vocabularies;
-    const siblings = allVocabsInSchool.toArray().filter(vocab => {
+    const siblings = allVocabsInSchool.toArray().filter((vocab) => {
       return vocab !== this.args.vocabulary;
     });
     const siblingTitles = siblings.mapBy('title');
-    return ! siblingTitles.includes(this.title);
+    return !siblingTitles.includes(this.title);
   }
 
   validateTitleMessageCallback() {

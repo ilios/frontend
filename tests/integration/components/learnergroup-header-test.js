@@ -2,40 +2,36 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  settled,
-  click,
-  fillIn,
-  find,
-  triggerEvent
-} from '@ember/test-helpers';
+import { render, click, fillIn, find, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
 
-module('Integration | Component | learnergroup header', function(hooks) {
+module('Integration | Component | learnergroup header', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     const learnerGroup = EmberObject.create({
       title: 'our group',
-      allParents: resolve([{title: 'parent group'}])
+      allParents: resolve([{ title: 'parent group' }]),
     });
 
     this.set('learnerGroup', learnerGroup);
     await render(hbs`<LearnergroupHeader @learnerGroup={{learnerGroup}} />`);
 
     assert.dom('.title').hasText('our group');
-    assert.equal(find('.breadcrumbs').textContent.replace(/\s/g,''), 'LearnerGroupsparentgroupourgroup');
+    assert.equal(
+      find('.breadcrumbs').textContent.replace(/\s/g, ''),
+      'LearnerGroupsparentgroupourgroup'
+    );
   });
 
-  test('can change title', async function(assert) {
+  test('can change title', async function (assert) {
     const learnerGroup = EmberObject.create({
       title: 'our group',
-      save(){
-        assert.equal(this.get('title'), 'new title');
-      }
+      save() {
+        assert.equal(this.title, 'new title');
+      },
     });
 
     this.set('learnerGroup', learnerGroup);
@@ -46,13 +42,12 @@ module('Integration | Component | learnergroup header', function(hooks) {
     await fillIn('.title input', 'new title');
     await triggerEvent('.title input', 'input');
     await click('.title .done');
-    await settled();
   });
 
-  test('counts members correctly', async function(assert) {
+  test('counts members correctly', async function (assert) {
     const cohort = EmberObject.create({
       title: 'test group',
-      users: [1, 2]
+      users: [1, 2],
     });
     const subGroup = EmberObject.create({
       title: 'test sub-group',
@@ -63,7 +58,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
       title: 'test group',
       usersOnlyAtThisLevel: [1],
       cohort,
-      children: resolve([subGroup])
+      children: resolve([subGroup]),
     });
 
     this.set('learnerGroup', learnerGroup);
@@ -72,7 +67,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
     assert.dom('header .info').hasText('Members: 1 / 2');
   });
 
-  test('validate title length', async function(assert) {
+  test('validate title length', async function (assert) {
     assert.expect(4);
     const title = '.title';
     const edit = `${title} .editable`;
@@ -82,9 +77,9 @@ module('Integration | Component | learnergroup header', function(hooks) {
 
     const learnerGroup = EmberObject.create({
       title: 'our group',
-      save(){
+      save() {
         assert.ok(false, 'should not be called');
-      }
+      },
     });
 
     this.set('learnerGroup', learnerGroup);
@@ -96,7 +91,7 @@ module('Integration | Component | learnergroup header', function(hooks) {
     const longTitle = 'x'.repeat(61);
     await fillIn(input, longTitle);
     await click(done);
-    await settled();
+
     assert.dom(errors).exists({ count: 1 }, 'there is now an error');
     assert.ok(find(errors).textContent.search(/too long/) > -1, 'it is the correct error');
   });

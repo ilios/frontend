@@ -5,16 +5,16 @@ import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/school-session-types-expanded';
 
-module('Integration | Component | school session types expanded', function(hooks) {
+module('Integration | Component | school session types expanded', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     this.server.create('assessment-option', {
-      name: 'formative'
+      name: 'formative',
     });
     this.summative = this.server.create('assessment-option', {
-      name: 'summative'
+      name: 'summative',
     });
     const sessionType = this.server.create('session-type', {
       id: 1,
@@ -24,13 +24,15 @@ module('Integration | Component | school session types expanded', function(hooks
     });
     const school = this.server.create('school', {
       id: 1,
-      sessionTypes: [sessionType]
+      sessionTypes: [sessionType],
     });
     this.school = await this.owner.lookup('service:store').find('school', school.id);
-    this.sessionType = await this.owner.lookup('service:store').find('session-type', sessionType.id);
+    this.sessionType = await this.owner
+      .lookup('service:store')
+      .find('session-type', sessionType.id);
   });
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     this.set('school', this.school);
     await render(hbs`<SchoolSessionTypesExpanded
       @school={{this.school}}
@@ -47,7 +49,7 @@ module('Integration | Component | school session types expanded', function(hooks
     assert.equal(component.list.sessionTypes.length, 1);
   });
 
-  test('it renders as manager', async function(assert) {
+  test('it renders as manager', async function (assert) {
     this.set('school', this.school);
     this.set('sessionType', this.sessionType);
     await render(hbs`<SchoolSessionTypesExpanded
@@ -65,10 +67,10 @@ module('Integration | Component | school session types expanded', function(hooks
     assert.ok(component.manager.isVisible);
   });
 
-  test('editing session type fires action', async function(assert) {
+  test('editing session type fires action', async function (assert) {
     assert.expect(1);
     this.set('school', this.school);
-    this.set('click', id => {
+    this.set('click', (id) => {
       assert.equal(id, 1);
     });
     await render(hbs`<SchoolSessionTypesExpanded
@@ -86,10 +88,10 @@ module('Integration | Component | school session types expanded', function(hooks
     await component.list.sessionTypes[0].manage();
   });
 
-  test('clicking add new session fires action', async function(assert) {
+  test('clicking add new session fires action', async function (assert) {
     assert.expect(1);
     this.set('school', this.school);
-    this.set('click', isExpanded => {
+    this.set('click', (isExpanded) => {
       assert.equal(isExpanded, true);
     });
     await render(hbs`<SchoolSessionTypesExpanded
@@ -107,11 +109,11 @@ module('Integration | Component | school session types expanded', function(hooks
     await component.createNew();
   });
 
-  test('close fires action', async function(assert) {
+  test('close fires action', async function (assert) {
     assert.expect(1);
     this.set('school', this.school);
     this.set('sessionType', this.sessionType);
-    this.set('click', id => {
+    this.set('click', (id) => {
       assert.equal(id, null);
     });
     await render(hbs`<SchoolSessionTypesExpanded
@@ -129,7 +131,7 @@ module('Integration | Component | school session types expanded', function(hooks
     await component.newSessionType.cancel.click();
   });
 
-  test('collapse fires action', async function(assert) {
+  test('collapse fires action', async function (assert) {
     assert.expect(1);
     this.set('school', this.school);
     this.set('click', () => {

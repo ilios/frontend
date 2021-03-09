@@ -5,19 +5,21 @@ import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory-report-header';
 
-module('Integration | Component | curriculum inventory report header', function(hooks) {
+module('Integration | Component | curriculum inventory report header', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     const report = this.server.create('CurriculumInventoryReport', {
       absoluteFileUri: 'https://iliosinstance.com/foo/bar',
-      name: 'Report name'
+      name: 'Report name',
     });
-    this.report = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
+    this.report = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', report.id);
   });
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     await render(hbs`<CurriculumInventoryReportHeader
       @report={{this.report}}
       @canUpdate={{true}}
@@ -27,10 +29,14 @@ module('Integration | Component | curriculum inventory report header', function(
     assert.ok(component.name.isEditable, 'Report name is editable.');
     assert.notOk(component.finalizeButtonIsDisabled, 'Finalize button is not disabled.');
     assert.ok(component.canBeDownloaded, 'Download link shows.');
-    assert.equal(this.report.absoluteFileUri, component.downloadLink.link, 'Download link target is correct');
+    assert.equal(
+      this.report.absoluteFileUri,
+      component.downloadLink.link,
+      'Download link target is correct'
+    );
   });
 
-  test('non updatable reports render in read-only mode.', async function(assert) {
+  test('non updatable reports render in read-only mode.', async function (assert) {
     await render(hbs`<CurriculumInventoryReportHeader
       @report={{this.report}}
       @canUpdate={{false}}
@@ -43,7 +49,7 @@ module('Integration | Component | curriculum inventory report header', function(
     assert.ok(component.finalizeButtonIsDisabled, 'Finalize button is not disabled.');
   });
 
-  test('change name', async function(assert) {
+  test('change name', async function (assert) {
     const newName = 'new name';
     await render(hbs`<CurriculumInventoryReportHeader
       @report={{this.report}}
@@ -58,7 +64,7 @@ module('Integration | Component | curriculum inventory report header', function(
     assert.equal(newName, component.name.value);
   });
 
-  test('change name fails on empty value', async function(assert) {
+  test('change name fails on empty value', async function (assert) {
     this.set('report', this.report);
     await render(hbs`<CurriculumInventoryReportHeader
       @report={{this.report}}
@@ -72,7 +78,7 @@ module('Integration | Component | curriculum inventory report header', function(
     assert.ok(component.name.hasError);
   });
 
-  test('change name fails if name is too short', async function(assert) {
+  test('change name fails if name is too short', async function (assert) {
     this.set('report', this.report);
     await render(hbs`<CurriculumInventoryReportHeader
       @report={{this.report}}
@@ -86,7 +92,7 @@ module('Integration | Component | curriculum inventory report header', function(
     assert.ok(component.name.hasError);
   });
 
-  test('change name fails if name is too long', async function(assert) {
+  test('change name fails if name is too long', async function (assert) {
     this.set('report', this.report);
     await render(hbs`<CurriculumInventoryReportHeader
       @report={{this.report}}
@@ -100,7 +106,7 @@ module('Integration | Component | curriculum inventory report header', function(
     assert.ok(component.name.hasError);
   });
 
-  test('clicking on finalize button fires action', async function(assert) {
+  test('clicking on finalize button fires action', async function (assert) {
     assert.expect(1);
     this.set('finalize', () => {
       assert.ok(true, 'Finalize action was invoked.');

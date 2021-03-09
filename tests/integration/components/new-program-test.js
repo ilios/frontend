@@ -4,7 +4,7 @@ import { render, click, fillIn, find } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupIntl } from 'ember-intl/test-support';
 
-module('Integration | Component | new program', function(hooks) {
+module('Integration | Component | new program', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks);
 

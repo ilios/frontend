@@ -25,7 +25,7 @@ export default class ConnectionStatusComponent extends Component {
   }
 
   @restartableTask
-  * changeConnectionState(isOnline) {
+  *changeConnectionState(isOnline) {
     this.timer = 5;
     this.multiplier = 1;
     this.stopAttemptingToReconnect = false;
@@ -38,7 +38,7 @@ export default class ConnectionStatusComponent extends Component {
   }
 
   @restartableTask
-  * reconnect(force) {
+  *reconnect(force) {
     if (navigator.onLine) {
       this.changeConnectionState.perform(true);
     }

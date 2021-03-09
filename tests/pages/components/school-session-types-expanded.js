@@ -9,7 +9,7 @@ const definition = {
   createNew: clickable('[data-test-expand-collapse-button] button'),
   newSessionType,
   manager,
-  list
+  list,
 };
 
 export default definition;

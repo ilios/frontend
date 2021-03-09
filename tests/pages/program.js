@@ -1,9 +1,4 @@
-import {
-  clickable,
-  create,
-  text,
-  visitable
-} from 'ember-cli-page-object';
+import { clickable, create, text, visitable } from 'ember-cli-page-object';
 
 import leadershipCollapsed from 'ilios-common/page-objects/components/leadership-collapsed';
 import leadershipList from 'ilios-common/page-objects/components/leadership-list';

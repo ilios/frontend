@@ -8,13 +8,13 @@ const Validations = buildValidations({
     validator('length', {
       min: 2,
       max: 10,
-      allowBlank: true
-    })
-  ]
+      allowBlank: true,
+    }),
+  ],
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
-  tagName: "",
+  tagName: '',
 
   canUpdate: false,
   duration: null,
@@ -30,8 +30,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   didReceiveAttrs() {
     this._super(...arguments);
-    this.set('shortTitle', this.get('program.shortTitle'));
-    this.set('duration', this.program.get('duration'));
+    this.set('shortTitle', this.program.shortTitle);
+    this.set('duration', this.program.duration);
   },
 
   actions: {
@@ -72,6 +72,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     setDuration(event) {
       this.set('duration', Number(event.target.value));
-    }
-  }
+    },
+  },
 });

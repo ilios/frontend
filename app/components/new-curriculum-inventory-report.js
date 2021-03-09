@@ -20,8 +20,9 @@ export default class NewCurriculumInventoryReportComponent extends Component {
   *load() {
     const years = [];
     const currentYear = new Date().getFullYear();
-    this.academicYearCrossesCalendarYearBoundaries
-      = yield this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
+    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+      'academicYearCrossesCalendarYearBoundaries'
+    );
     for (let id = currentYear - 5, n = currentYear + 5; id <= n; id++) {
       let title = id.toString();
       if (this.academicYearCrossesCalendarYearBoundaries) {
@@ -38,19 +39,23 @@ export default class NewCurriculumInventoryReportComponent extends Component {
   *save() {
     this.addErrorDisplayFor('name');
     const isValid = yield this.isValid();
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     const year = this.selectedYear.id;
-    const startDate = this.academicYearCrossesCalendarYearBoundaries ? new Date(year, 6, 1) : new Date(year, 0, 1);
-    const endDate = this.academicYearCrossesCalendarYearBoundaries ? new Date(year +  1, 5, 30) : new Date(year, 11, 31);
+    const startDate = this.academicYearCrossesCalendarYearBoundaries
+      ? new Date(year, 6, 1)
+      : new Date(year, 0, 1);
+    const endDate = this.academicYearCrossesCalendarYearBoundaries
+      ? new Date(year + 1, 5, 30)
+      : new Date(year, 11, 31);
     const report = this.store.createRecord('curriculumInventoryReport', {
       name: this.name,
       program: this.args.currentProgram,
       year: year,
       startDate,
       endDate,
-      description: this.description
+      description: this.description,
     });
     yield this.args.save(report);
   }

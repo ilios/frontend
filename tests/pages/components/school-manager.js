@@ -32,7 +32,7 @@ const definition = {
   schoolSessionTypesCollapsed,
   schoolSessionAttributes,
   schoolCurriculumInventoryInstitutionManager,
-  schoolCurriculumInventoryInstitutionDetails
+  schoolCurriculumInventoryInstitutionDetails,
 };
 
 export default definition;

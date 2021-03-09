@@ -2,7 +2,7 @@ import Component from '@ember/component';
 import { computed } from '@ember/object';
 
 export default Component.extend({
-  tagName: "",
+  tagName: '',
   matches: null,
   groups: null,
   groupName: null,
@@ -35,7 +35,6 @@ export default Component.extend({
       } else {
         setMatch(groupName, learnerGroupId);
       }
-
-    }
-  }
+    },
+  },
 });

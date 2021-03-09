@@ -8,7 +8,6 @@ if (existsSync(dotEnvPath)) {
 }
 
 module.exports = function (environment) {
-
   const ENV = {
     modulePrefix: 'ilios',
     environment,
@@ -16,19 +15,25 @@ module.exports = function (environment) {
     locationType: 'auto',
     redirectAfterShibLogin: true,
     contentSecurityPolicy: {
-      'default-src':  ["'none'"],
-      'script-src':   ["'self'", "'unsafe-eval'", 'www.google-analytics.com'],
-      'font-src':     ["'self'", 'fonts.gstatic.com'],
-      'connect-src':  ["'self'", 'www.google-analytics.com', 'sentry.io'],
-      'img-src':      ["'self'", 'data:', 'www.google-analytics.com', 'cdnjs.cloudflare.com/ajax/libs/browser-logos/', 'sentry.io'],
-      'style-src':    ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
-      'media-src':    ["'self'"],
+      'default-src': ["'none'"],
+      'script-src': ["'self'", "'unsafe-eval'", 'www.google-analytics.com'],
+      'font-src': ["'self'", 'fonts.gstatic.com'],
+      'connect-src': ["'self'", 'www.google-analytics.com', 'sentry.io'],
+      'img-src': [
+        "'self'",
+        'data:',
+        'www.google-analytics.com',
+        'cdnjs.cloudflare.com/ajax/libs/browser-logos/',
+        'sentry.io',
+      ],
+      'style-src': ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
+      'media-src': ["'self'"],
       'manifest-src': ["'self'"],
     },
     flashMessageDefaults: {
       timeout: 3000,
       extendedTimeout: 1000,
-      types: [ 'success', 'warning', 'info', 'alert' ]
+      types: ['success', 'warning', 'info', 'alert'],
     },
     'ember-simple-auth-token': {
       serverTokenEndpoint: '/auth/login',
@@ -37,10 +42,10 @@ module.exports = function (environment) {
       refreshTokenPropertyName: 'jwt',
       authorizationHeaderName: 'X-JWT-Authorization',
       authorizationPrefix: 'Token ',
-      refreshLeeway: 60
+      refreshLeeway: 60,
     },
     i18n: {
-      defaultLocale: 'en'
+      defaultLocale: 'en',
     },
     serverVariables: {
       tagPrefix: 'iliosconfig',
@@ -48,11 +53,12 @@ module.exports = function (environment) {
       defaults: {
         'api-name-space': process.env.ILIOS_FRONTEND_API_NAMESPACE || 'api/v3',
         'api-host': process.env.ILIOS_FRONTEND_API_HOST || null,
-        'error-capture-enabled': process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENABLED || environment === 'production',
-      }
+        'error-capture-enabled':
+          process.env.ILIOS_FRONTEND_ERROR_CAPTURE_ENABLED || environment === 'production',
+      },
     },
     'ember-metrics': {
-      includeAdapters: ['google-analytics']
+      includeAdapters: ['google-analytics'],
     },
     'ember-qunit-nice-errors': {
       completeExistingMessages: true,
@@ -73,7 +79,7 @@ module.exports = function (environment) {
       environment,
     },
     noScript: {
-      'placeIn': 'body-footer'
+      placeIn: 'body-footer',
     },
     EmberENV: {
       FEATURES: {
@@ -81,11 +87,9 @@ module.exports = function (environment) {
         // e.g. EMBER_NATIVE_DECORATOR_SUPPORT: true
       },
       EXTEND_PROTOTYPES: {
-        String: true,
-        Array: true,
-        Function: false,
+        // Prevent Ember Data from overriding Date.parse.
         Date: false,
-      }
+      },
     },
 
     APP: {
@@ -94,12 +98,12 @@ module.exports = function (environment) {
     },
     //Hide a feature while it is in development
     IliosFeatures: {
-      programYearVisualizations: false
+      programYearVisualizations: false,
     },
     featureFlags: {
       sessionLinkingAdminUi: true,
       globalSearch: true,
-    }
+    },
   };
 
   if (environment === 'development') {
@@ -140,7 +144,6 @@ module.exports = function (environment) {
     ENV.serverVariables.defaults['api-host'] = '';
     ENV.featureFlags['globalSearch'] = true;
 
-
     ENV.APP.autoboot = false;
   }
 
@@ -156,13 +159,12 @@ module.exports = function (environment) {
 
     //Remove mirage
     ENV['ember-cli-mirage'] = {
-      enabled: false
+      enabled: false,
     };
   }
 
   //add our API host to the list of acceptable data sources
   ENV.contentSecurityPolicy['connect-src'].push(ENV.serverVariables.defaults['api-host']);
-
 
   return ENV;
 };

@@ -14,13 +14,13 @@ export default class SchoolSessionTypeManagerComponent extends Component {
     const selectedAssessmentOptionId = assessmentOption?.id;
     const firstAamcMethod = yield this.args.sessionType.firstAamcMethod;
     const selectedAamcMethodId = firstAamcMethod?.id;
-    this. readonlySessionType = {
+    this.readonlySessionType = {
       title,
       calendarColor,
       assessment,
       selectedAssessmentOptionId,
       selectedAamcMethodId,
-      isActive
+      isActive,
     };
   }
 

@@ -4,13 +4,13 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { click, fillIn, render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | program header', function(hooks) {
+module('Integration | Component | program header', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(2);
-    const school = this.server.create('school', {} );
+    const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,
       title: 'Aardvark',
@@ -25,9 +25,9 @@ module('Integration | Component | program header', function(hooks) {
     assert.dom('.title h4 .clickable').exists();
   });
 
-  test('read-only', async function(assert) {
+  test('read-only', async function (assert) {
     assert.expect(3);
-    const school = this.server.create('school', {} );
+    const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,
       title: 'Aardvark',
@@ -43,9 +43,9 @@ module('Integration | Component | program header', function(hooks) {
     assert.dom('.program-publication button').doesNotExist();
   });
 
-  test('update title fails - title too short', async function(assert) {
+  test('update title fails - title too short', async function (assert) {
     assert.expect(2);
-    const school = this.server.create('school', {} );
+    const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,
       title: 'Aardvark',
@@ -60,12 +60,14 @@ module('Integration | Component | program header', function(hooks) {
     assert.dom('.validation-error-message').doesNotExist();
     fillIn('.title h4 input', 'ab');
     await click('.title h4 .done');
-    assert.dom('.validation-error-message').hasText('This field is too short (minimum is 3 characters)');
+    assert
+      .dom('.validation-error-message')
+      .hasText('This field is too short (minimum is 3 characters)');
   });
 
-  test('update title fails - blank input', async function(assert) {
+  test('update title fails - blank input', async function (assert) {
     assert.expect(2);
-    const school = this.server.create('school', {} );
+    const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,
       title: 'Aardvark',
@@ -83,9 +85,9 @@ module('Integration | Component | program header', function(hooks) {
     assert.dom('.validation-error-message').hasText('This field can not be blank');
   });
 
-  test('update title fails - title too long', async function(assert) {
+  test('update title fails - title too long', async function (assert) {
     assert.expect(2);
-    const school = this.server.create('school', {} );
+    const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,
       title: 'Aardvark',
@@ -100,12 +102,14 @@ module('Integration | Component | program header', function(hooks) {
     assert.dom('.validation-error-message').doesNotExist();
     fillIn('.title h4 input', '0123456789'.repeat(21));
     await click('.title h4 .done');
-    assert.dom('.validation-error-message').hasText('This field is too long (maximum is 200 characters)');
+    assert
+      .dom('.validation-error-message')
+      .hasText('This field is too long (maximum is 200 characters)');
   });
 
-  test('update title, then save', async function(assert) {
+  test('update title, then save', async function (assert) {
     assert.expect(3);
-    const school = this.server.create('school', {} );
+    const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,
       title: 'Aardvark',
@@ -124,9 +128,9 @@ module('Integration | Component | program header', function(hooks) {
     assert.equal(programModel.get('title'), 'Zeppelin');
   });
 
-  test('update title, then cancel', async function(assert) {
+  test('update title, then cancel', async function (assert) {
     assert.expect(3);
-    const school = this.server.create('school', {} );
+    const school = this.server.create('school', {});
     const program = this.server.create('program', {
       school,
       title: 'Aardvark',

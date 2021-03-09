@@ -5,23 +5,25 @@ import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios/tests/pages/components/school-vocabulary-manager';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Integration | Component | school vocabulary manager', function(hooks) {
+module('Integration | Component | school vocabulary manager', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(6);
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', { school });
     this.server.create('term', {
-      vocabulary
+      vocabulary,
     });
     this.server.create('term', {
       active: true,
-      vocabulary
+      vocabulary,
     });
 
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
@@ -37,12 +39,14 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
     assert.equal(component.terms.list[1].text, 'term 1 (0)');
   });
 
-  test('change vocabulary title', async function(assert) {
+  test('change vocabulary title', async function (assert) {
     assert.expect(2);
 
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', { school });
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
@@ -58,12 +62,14 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
     assert.equal(this.server.db.vocabularies[0].title, 'new title');
   });
 
-  test('cant set empty vocabulary title', async function(assert) {
+  test('cant set empty vocabulary title', async function (assert) {
     assert.expect(5);
 
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', { school });
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
@@ -82,7 +88,7 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
     assert.equal(this.server.db.vocabularies[0].title, 'Vocabulary 1');
   });
 
-  test('prevent duplicate vocabulary title', async function(assert) {
+  test('prevent duplicate vocabulary title', async function (assert) {
     assert.expect(5);
 
     const school = this.server.create('school');
@@ -91,7 +97,9 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
       school,
       title: 'duplicate one',
     });
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
@@ -110,12 +118,14 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
     assert.equal(this.server.db.vocabularies[0].title, 'Vocabulary 1');
   });
 
-  test('add term', async function(assert) {
+  test('add term', async function (assert) {
     assert.expect(5);
 
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', { school });
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
@@ -135,12 +145,14 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
     assert.equal(this.server.db.terms[0].vocabularyId, vocabulary.id);
   });
 
-  test('cant add term with empty title', async function(assert) {
+  test('cant add term with empty title', async function (assert) {
     assert.expect(6);
 
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', { school });
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager
@@ -160,15 +172,17 @@ module('Integration | Component | school vocabulary manager', function(hooks) {
     assert.equal(component.terms.list.length, 0);
   });
 
-  test('cant add term with duplicate title', async function(assert) {
+  test('cant add term with duplicate title', async function (assert) {
     assert.expect(6);
 
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', { school });
     this.server.create('term', {
-      vocabulary
+      vocabulary,
     });
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyManager

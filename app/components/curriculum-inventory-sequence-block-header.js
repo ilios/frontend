@@ -11,7 +11,7 @@ export default class CurriculumInventorySequenceBlockHeader extends Component {
   @tracked @NotBlank() @Length(3, 200) title;
 
   @action
-  load(element, [ sequenceBlock ]) {
+  load(element, [sequenceBlock]) {
     this.title = sequenceBlock.title;
   }
 
@@ -32,4 +32,3 @@ export default class CurriculumInventorySequenceBlockHeader extends Component {
     yield this.args.sequenceBlock.save();
   }
 }
-

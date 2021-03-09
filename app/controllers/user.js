@@ -24,10 +24,9 @@ export default Controller.extend({
 
   canCreate: computed('currentUser', async function () {
     const schools = await this.store.findAll('school');
-    const schoolsWithCreateUserPermission = await filter(schools.toArray(), async school => {
+    const schoolsWithCreateUserPermission = await filter(schools.toArray(), async (school) => {
       return this.permissionChecker.canCreateUser(school);
     });
     return schoolsWithCreateUserPermission.length > 0;
   }),
-
 });

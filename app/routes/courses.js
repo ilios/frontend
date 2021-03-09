@@ -11,9 +11,9 @@ export default class CoursesRoute extends Route {
 
   queryParams = {
     titleFilter: {
-      replace: true
-    }
-  }
+      replace: true,
+    },
+  };
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
@@ -30,6 +30,8 @@ export default class CoursesRoute extends Route {
 
   @action
   willTransition() {
+    //@todo refactor away from doing this work in the route [JJ 3/21]
+    // eslint-disable-next-line ember/no-controller-access-in-routes
     this.controller.set('newCourse', null);
   }
 }

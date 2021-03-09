@@ -5,11 +5,11 @@ import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
-module('Integration | Component | unassigned students summary', function(hooks) {
+module('Integration | Component | unassigned students summary', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     const school = this.server.create('school', {
       id: 1,
       title: 'school 0',
@@ -25,11 +25,11 @@ module('Integration | Component | unassigned students summary', function(hooks) 
 
     const studentRole = this.server.create('user-role', {
       id: 4,
-      title: 'Student'
+      title: 'Student',
     });
     this.server.createList('user', 5, {
       school,
-      roles: [studentRole]
+      roles: [studentRole],
     });
 
     this.server.get('api/users', (schema, { queryParams }) => {
@@ -42,7 +42,11 @@ module('Integration | Component | unassigned students summary', function(hooks) 
     this.set('schools', schoolModels);
     await render(hbs`<UnassignedStudentsSummary @schools={{this.schools}} />`);
 
-    assert.dom(this.element).hasText('Students Requiring Cohort Assignment school 0 school 1 There are 5 students needing assignment to a cohort Manage');
+    assert
+      .dom(this.element)
+      .hasText(
+        'Students Requiring Cohort Assignment school 0 school 1 There are 5 students needing assignment to a cohort Manage'
+      );
 
     const options = findAll('option');
     assert.equal(options.length, 2);
@@ -50,10 +54,10 @@ module('Integration | Component | unassigned students summary', function(hooks) 
     assert.dom(options[1]).hasText('school 1');
 
     assert.dom('[data-test-manage-link]').exists({ count: 1 });
-    assert.dom('div:nth-of-type(2)').hasClass('alert');
+    assert.dom('[data-test-unassigned-students-summary]').hasClass('alert');
   });
 
-  test('it renders empty', async function(assert) {
+  test('it renders empty', async function (assert) {
     const school = this.server.create('school', {
       id: 1,
       title: 'school 0',
@@ -64,8 +68,12 @@ module('Integration | Component | unassigned students summary', function(hooks) 
     const schoolModels = await this.owner.lookup('service:store').findAll('school');
     this.set('schools', schoolModels);
     await render(hbs`<UnassignedStudentsSummary @schools={{this.schools}} />`);
-    assert.dom(this.element).hasText('Students Requiring Cohort Assignment school 0 There are 0 students needing assignment to a cohort');
-    assert.dom('div:nth-of-type(2)').hasNoClass('alert');
+    assert
+      .dom(this.element)
+      .hasText(
+        'Students Requiring Cohort Assignment school 0 There are 0 students needing assignment to a cohort'
+      );
+    assert.dom('[data-test-unassigned-students-summary]').hasNoClass('alert');
     assert.dom('[data-test-manage-link]').doesNotExist();
   });
 });

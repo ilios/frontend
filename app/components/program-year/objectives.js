@@ -12,7 +12,7 @@ export default class ProgramYearObjectivesComponent extends Component {
   @tracked newObjectiveTitle;
   @tracked objectiveCount;
 
-  get showCollapsible(){
+  get showCollapsible() {
     return this.hasObjectives && !this.isManaging;
   }
 
@@ -28,7 +28,9 @@ export default class ProgramYearObjectivesComponent extends Component {
   @dropTask
   *saveNewObjective(title) {
     const programYearObjectives = yield this.args.programYear.programYearObjectives;
-    const position = programYearObjectives.length ? programYearObjectives.sortBy('position').lastObject.position + 1 : 0;
+    const position = programYearObjectives.length
+      ? programYearObjectives.sortBy('position').lastObject.position + 1
+      : 0;
 
     const newProgramYearObjective = this.store.createRecord('program-year-objective');
     newProgramYearObjective.set('title', title);

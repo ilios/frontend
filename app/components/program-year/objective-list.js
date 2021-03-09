@@ -21,12 +21,9 @@ export default class ProgramYearObjectiveListComponent extends Component {
       return;
     }
     this.programYearObjectiveCount = programYear.hasMany('programYearObjectives').ids().length;
-    const {
-      programYearObjectives,
-      programYearCompetencies
-    } = yield hash({
+    const { programYearObjectives, programYearCompetencies } = yield hash({
       programYearObjectives: programYear.sortedProgramYearObjectives,
-      programYearCompetencies: programYear.competencies
+      programYearCompetencies: programYear.competencies,
     });
     this.programYearObjectives = programYearObjectives;
     this.programYearCompetencies = programYearCompetencies.toArray();
@@ -35,22 +32,22 @@ export default class ProgramYearObjectiveListComponent extends Component {
 
   async getProgramYearDomains(programYearCompetencies) {
     const domains = programYearCompetencies.filterBy('isDomain').toArray();
-    return await map(domains, async domain => {
-      const competencies = (await domain.children).map(competency => {
+    return await map(domains, async (domain) => {
+      const competencies = (await domain.children).map((competency) => {
         return {
           id: competency.id,
-          title: competency.title
+          title: competency.title,
         };
       });
       return {
         id: domain.id,
         title: domain.title,
-        competencies
+        competencies,
       };
     });
   }
 
-  get authHeaders(){
+  get authHeaders() {
     const { jwt } = this.session?.data?.authenticated;
     const headers = {};
     if (jwt) {
@@ -69,7 +66,7 @@ export default class ProgramYearObjectiveListComponent extends Component {
     const { saveAs } = yield import('file-saver');
 
     const response = yield fetch(url, {
-      headers: this.authHeaders
+      headers: this.authHeaders,
     });
     const blob = yield response.blob();
     saveAs(blob, 'report.csv');

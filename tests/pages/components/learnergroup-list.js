@@ -1,11 +1,4 @@
-import {
-  clickable,
-  create,
-  collection,
-  hasClass,
-  isPresent,
-  text,
-} from 'ember-cli-page-object';
+import { clickable, create, collection, hasClass, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-learnergroup-list]',
@@ -31,7 +24,9 @@ const definition = {
     visit: clickable('td:nth-of-type(1) a'),
     members: text('td', { at: 1 }),
     subgroups: text('td:nth-of-type(3) [data-test-children-count]'),
-    hasSubgroupsInNeedOfAccommodation: isPresent('td:nth-of-type(3) [data-icon="universal-access"]'),
+    hasSubgroupsInNeedOfAccommodation: isPresent(
+      'td:nth-of-type(3) [data-icon="universal-access"]'
+    ),
     courses: text('td', { at: 3 }),
     hasRemoveStyle: hasClass('confirm-removal'),
     actions: {
@@ -57,7 +52,6 @@ const definition = {
     canCopyWithLearners: isPresent('[data-test-confirm-with-learners]'),
     canCopyWithoutLearners: isPresent('[data-test-confirm-without-learners]'),
   },
-
 };
 
 export default definition;

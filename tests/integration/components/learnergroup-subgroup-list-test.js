@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/learnergroup-subgroup-list';
 
-module('Integration | Component | learnergroup subgroup list', function(hooks) {
+module('Integration | Component | learnergroup subgroup list', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -15,11 +15,11 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     this.server.create('learner-group', {
       title: 'first',
       users,
-      parent
+      parent,
     });
     const subGroup2 = this.server.create('learner-group', {
       title: 'second',
-      parent
+      parent,
     });
     this.server.createList('learner-group', 2, { parent: subGroup2 });
     const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
@@ -47,12 +47,14 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     const parent = this.server.create('learner-group');
     this.server.create('learner-group', {
       title: 'first',
-      parent
+      parent,
     });
     const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
 
     this.set('parentGroup', parentGroup);
-    await render(hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{parentGroup}} />`);
+    await render(
+      hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{parentGroup}} />`
+    );
     assert.equal(this.server.schema.learnerGroups.all().length, 2);
     assert.equal(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canRemove);
@@ -74,11 +76,16 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     const model = await this.owner.lookup('service:store').find('learner-group', parent.id);
     this.set('parentGroup', model);
 
-    await render(hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{this.parentGroup}} />`);
+    await render(
+      hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{this.parentGroup}} />`
+    );
     assert.equal(component.groups.length, 1);
     assert.ok(component.groups[0].actions.canRemove);
     await component.groups[0].actions.remove();
-    assert.equal(component.confirmRemoval.confirmation, 'This group is attached to one course and cannot be deleted. 2013 course 0 OK');
+    assert.equal(
+      component.confirmRemoval.confirmation,
+      'This group is attached to one course and cannot be deleted. 2013 course 0 OK'
+    );
     assert.notOk(component.confirmRemoval.canConfirm);
     assert.ok(component.confirmRemoval.canCancel);
     await component.confirmRemoval.cancel();
@@ -86,10 +93,12 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
   });
 
   test('course academic year shows range if applicable by configuration', async function (assert) {
-    this.server.get('application/config', function() {
-      return { config: {
-        academicYearCrossesCalendarYearBoundaries: true,
-      }};
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+        },
+      };
     });
     const course = this.server.create('course');
     const session = this.server.create('session', { course });
@@ -99,29 +108,36 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     const model = await this.owner.lookup('service:store').find('learner-group', parent.id);
     this.set('parentGroup', model);
 
-    await render(hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{this.parentGroup}} />`);
+    await render(
+      hbs`<LearnergroupSubgroupList @canDelete={{true}} @parentGroup={{this.parentGroup}} />`
+    );
 
     await component.groups[0].actions.remove();
-    assert.equal(component.confirmRemoval.confirmation, 'This group is attached to one course and cannot be deleted. 2013 - 2014 course 0 OK');
+    assert.equal(
+      component.confirmRemoval.confirmation,
+      'This group is attached to one course and cannot be deleted. 2013 - 2014 course 0 OK'
+    );
   });
 
   test('add new group', async function (assert) {
     const cohort = this.server.create('cohort');
     const users = this.server.createList('user', 2);
     const parent = this.server.create('learner-group', {
-      cohort
+      cohort,
     });
     this.server.create('learner-group', {
       title: 'first',
       parent,
-      users
+      users,
     });
 
     const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
     const newTitle = 'new group';
 
     this.set('parentGroup', parentGroup);
-    await render(hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`);
+    await render(
+      hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`
+    );
 
     assert.equal(component.groups.length, 1);
     assert.equal(component.groups[0].title, 'first');
@@ -137,24 +153,26 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     assert.equal(newGroup.belongsTo('parent').id(), parent.id);
   });
 
-  test('add multiple new groups', async function(assert) {
+  test('add multiple new groups', async function (assert) {
     assert.expect(6);
     const cohort = this.server.create('cohort');
     const users = this.server.createList('user', 2);
     const parent = this.server.create('learner-group', {
       title: 'group',
-      cohort
+      cohort,
     });
     this.server.create('learner-group', {
       title: 'group 1',
       parent,
-      users
+      users,
     });
 
     const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
     this.set('parentGroup', parentGroup);
 
-    await render(hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`);
+    await render(
+      hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`
+    );
 
     assert.equal(component.groups.length, 1);
     assert.equal(component.groups[0].title, 'group 1');
@@ -171,7 +189,7 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     assert.equal(newGroup.belongsTo('parent').id(), parent.id);
   });
 
-  test('truncates multiple group with long name', async function(assert) {
+  test('truncates multiple group with long name', async function (assert) {
     assert.expect(6);
     const longTitle = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit ames';
     const expectedGroupTitle = longTitle.substring(0, 58) + ' 1';
@@ -179,13 +197,15 @@ module('Integration | Component | learnergroup subgroup list', function(hooks) {
     const cohort = this.server.create('cohort');
     const parent = this.server.create('learner-group', {
       title: longTitle,
-      cohort
+      cohort,
     });
 
     const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
     this.set('parentGroup', parentGroup);
 
-    await render(hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`);
+    await render(
+      hbs`<LearnergroupSubgroupList @parentGroup={{parentGroup}} @canCreate={{true}} />`
+    );
 
     assert.equal(component.groups.length, 0);
     await component.toggleNewForm();

@@ -21,21 +21,21 @@ export default create({
     hasMany: isPresent('select'),
     filter: fillable('select'),
     filterValue: value('select'),
-    list: collection('select option')
+    list: collection('select option'),
   },
   programFilter: {
     scope: '[data-test-program-filter]',
     hasMany: isPresent('select'),
     filter: fillable('select'),
     filterValue: value('select'),
-    list: collection('select option')
+    list: collection('select option'),
   },
   programYearFilter: {
     scope: '[data-test-program-year-filter]',
     hasMany: isPresent('select'),
     filter: fillable('select'),
     filterValue: value('select'),
-    list: collection('select option')
+    list: collection('select option'),
   },
   learnerGroupList,
   newLearnerGroupForm: {

@@ -1,14 +1,23 @@
-import { clickable, collection, create, fillable, isVisible, property, text, value } from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  fillable,
+  isVisible,
+  property,
+  text,
+  value,
+} from 'ember-cli-page-object';
 import { flatpickrDatePicker } from 'ilios-common';
 
 const definition = {
   scope: '[data-test-curriculum-inventory-report-overview]',
   title: text('[data-test-title]'),
   verificationPreviewLink: {
-    scope: '[data-test-transition-to-verification-preview]'
+    scope: '[data-test-transition-to-verification-preview]',
   },
   rolloverLink: {
-    scope: '[data-test-transition-to-rollover]'
+    scope: '[data-test-transition-to-rollover]',
   },
   startDate: {
     scope: '[data-test-start-date]',
@@ -48,7 +57,7 @@ const definition = {
   program: {
     scope: '[data-test-program]',
     label: text('label'),
-    text: text('span')
+    text: text('span'),
   },
   description: {
     scope: '[data-test-description]',
@@ -60,7 +69,7 @@ const definition = {
     save: clickable('.done'),
     hasError: isVisible('.validation-error-message'),
     readOnlyText: text('span'),
-  }
+  },
 };
 
 export default definition;

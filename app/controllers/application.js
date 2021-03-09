@@ -22,11 +22,11 @@ export default Controller.extend({
     clearErrors() {
       this.set('errors', []);
       this.set('showErrorDisplay', false);
-    }
+    },
   },
 
   addError(error) {
     this.errors.pushObject(error);
     this.set('showErrorDisplay', true);
-  }
+  },
 });

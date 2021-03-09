@@ -1,8 +1,4 @@
-import {
-  create,
-  collection,
-  triggerable
-} from 'ember-cli-page-object';
+import { create, collection, triggerable } from 'ember-cli-page-object';
 
 export default create({
   scope: '[data-test-locale-chooser]',
@@ -12,6 +8,5 @@ export default create({
     down: triggerable('keydown', '', { eventProperties: { key: 'ArrowDown' } }),
     esc: triggerable('keydown', '', { eventProperties: { key: 'Escape' } }),
   },
-  locales: collection('[data-test-item]', {
-  })
+  locales: collection('[data-test-item]', {}),
 });

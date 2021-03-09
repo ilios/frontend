@@ -2,34 +2,34 @@ module.exports = {
   scenarios: [
     {
       name: 'ilios-current',
-      dependencies: {}
+      dependencies: {},
     },
     {
       name: 'ember-release',
       dependencies: {
-        "ember": "ember#release"
+        ember: 'ember#release',
       },
       resolutions: {
-        "ember": "release"
-      }
+        ember: 'release',
+      },
     },
     {
       name: 'ember-beta',
       dependencies: {
-        "ember": "ember#beta"
+        ember: 'ember#beta',
       },
       resolutions: {
-        "ember": "beta"
-      }
+        ember: 'beta',
+      },
     },
     {
       name: 'ember-canary',
       dependencies: {
-        "ember": "ember#canary"
+        ember: 'ember#canary',
       },
       resolutions: {
-        "ember": "canary"
-      }
-    }
-  ]
+        ember: 'canary',
+      },
+    },
+  ],
 };

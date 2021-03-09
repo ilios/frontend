@@ -19,7 +19,7 @@ const definition = {
     list: collection('[data-test-term-list] [data-test-term]', {
       title: text(),
     }),
-    newTermForm
+    newTermForm,
   },
 };
 

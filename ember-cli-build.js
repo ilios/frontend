@@ -2,9 +2,9 @@
 /* eslint camelcase: 0 */
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
-const broccoliAssetRevDefaults = require( 'broccoli-asset-rev/lib/default-options' );
+const broccoliAssetRevDefaults = require('broccoli-asset-rev/lib/default-options');
 
-module.exports = function(defaults) {
+module.exports = function (defaults) {
   const env = EmberApp.env() || 'development';
   const isProductionLikeBuild = ['production', 'staging', 'preview'].indexOf(env) > -1;
   const isTestBuild = env === 'test';
@@ -23,14 +23,14 @@ module.exports = function(defaults) {
     tests: env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
     hinting: isTestBuild,
     babel: {
-      plugins: [ require('ember-auto-import/babel-plugin') ]
+      plugins: [require('ember-auto-import/babel-plugin')],
     },
     'ember-cli-image-transformer': {
       images: [
         {
           inputFilename: 'lib/images/sunburst.svg',
           outputFileName: 'sunburst-white-background',
-          background: {r: 255, g: 255, b: 255, alpha: 1},
+          background: { r: 255, g: 255, b: 255, alpha: 1 },
           convertTo: 'png',
           sizes: [48, 96, 180, 192],
         },
@@ -40,10 +40,10 @@ module.exports = function(defaults) {
           convertTo: 'png',
           sizes: [16, 32, 48, 96, 150, 512],
         },
-      ]
+      ],
     },
     'ember-cli-qunit': {
-      useLintTree: false
+      useLintTree: false,
     },
     'ember-service-worker': {
       immediateClaim: true,
@@ -51,13 +51,11 @@ module.exports = function(defaults) {
     },
     'esw-cache-first': {
       version: '4',
-      patterns: [
-        'https://fonts.gstatic.com/(.+)',
-      ],
+      patterns: ['https://fonts.gstatic.com/(.+)'],
     },
     newVersion: {
       enabled: true,
-      useAppVersion: true
+      useAppVersion: true,
     },
     postcssOptions: {
       compile: {
@@ -68,22 +66,22 @@ module.exports = function(defaults) {
           {
             module: require('@csstools/postcss-sass'),
           },
-        ]
+        ],
       },
       filter: {
         enabled: true,
         plugins: [
           {
             module: require('autoprefixer'),
-          }
-        ]
-      }
+          },
+        ],
+      },
     },
     autoImport: {
-      publicAssetURL: '/assets'
+      publicAssetURL: '/assets',
     },
     'ember-fetch': {
-      preferNative: true
+      preferNative: true,
     },
   });
 

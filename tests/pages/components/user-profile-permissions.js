@@ -10,7 +10,7 @@ import {
 
 const definition = {
   scope: '[data-test-user-profile-permissions]',
-  title: text('[data-test-title]', { at: 0}),
+  title: text('[data-test-title]', { at: 0 }),
   schools: collection('[data-test-select-school] option'),
   selectedSchool: value('[data-test-select-school]'),
   changeSchool: fillable('[data-test-select-school]'),
@@ -22,21 +22,21 @@ const definition = {
     title: text('[data-test-title]'),
     director: text('[data-test-director] [data-test-yes-no]'),
     administrator: text('[data-test-administrator] [data-test-yes-no]'),
-    toggle: clickable()
+    toggle: clickable(),
   },
   programs: {
     scope: '[data-test-program-permissions]',
     title: text('[data-test-title]'),
     directors: collection('[data-test-directors] [data-test-program]'),
     notDirecting: isPresent('[data-test-directors] [data-test-none]'),
-    toggle: clickable()
+    toggle: clickable(),
   },
   programYears: {
     scope: '[data-test-program-year-permissions]',
     title: text('[data-test-title]'),
     directors: collection('[data-test-directors] [data-test-program]'),
     notDirecting: isPresent('[data-test-directors] [data-test-none]'),
-    toggle: clickable()
+    toggle: clickable(),
   },
   courses: {
     scope: '[data-test-course-permissions]',
@@ -49,7 +49,7 @@ const definition = {
     notInstructing: isPresent('[data-test-instructors] [data-test-none]'),
     studentAdvisors: collection('[data-test-student-advisors] [data-test-course]'),
     notStudentAdvising: isPresent('[data-test-student-advisors] [data-test-none]'),
-    toggle: clickable()
+    toggle: clickable(),
   },
   sessions: {
     scope: '[data-test-session-permissions]',
@@ -60,7 +60,7 @@ const definition = {
     notInstructing: isPresent('[data-test-instructors] [data-test-none]'),
     studentAdvisors: collection('[data-test-student-advisors] [data-test-course]'),
     notStudentAdvising: isPresent('[data-test-student-advisors] [data-test-none]'),
-    toggle: clickable()
+    toggle: clickable(),
   },
 };
 

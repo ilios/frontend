@@ -1,9 +1,11 @@
+/* eslint-disable ember/no-computed-properties-in-native-classes */
 import Component from '@glimmer/component';
 import ObjectProxy from '@ember/object/proxy';
 import { action, computed } from '@ember/object';
 import { alias, not } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 
+// @todo replace this object proxy [JJ 3/21]
 const ReportProxy = ObjectProxy.extend({
   content: null,
   currentUser: null,
@@ -15,7 +17,7 @@ const ReportProxy = ObjectProxy.extend({
   isNotPublished: not('isPublished'),
   isPublished: alias('isFinalized'),
 
-  userCanDelete: computed('content', 'content.isFinalized', 'currentUser.model', async function() {
+  userCanDelete: computed('content', 'content.isFinalized', 'currentUser.model', async function () {
     const report = this.content;
     if (report.isFinalized) {
       return false;
@@ -23,13 +25,15 @@ const ReportProxy = ObjectProxy.extend({
     return this.permissionChecker.canDeleteCurriculumInventoryReport(report);
   }),
 
-  yearLabel: computed('content.year', async function() {
-    const crossesYearBoundaries = await this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
+  yearLabel: computed('content.year', async function () {
+    const crossesYearBoundaries = await this.iliosConfig.itemFromConfig(
+      'academicYearCrossesCalendarYearBoundaries'
+    );
     if (crossesYearBoundaries) {
       return this.content.year + ' - ' + (parseInt(this.content.year, 10) + 1);
     }
     return this.content.year;
-  })
+  }),
 });
 
 export default class CurriculumInventoryReportListComponent extends Component {
@@ -39,16 +43,16 @@ export default class CurriculumInventoryReportListComponent extends Component {
   @service iliosConfig;
 
   get proxiedReports() {
-    if (! this.args.reports) {
+    if (!this.args.reports) {
       return [];
     }
-    return this.args.reports.toArray().map(report => {
+    return this.args.reports.toArray().map((report) => {
       return ReportProxy.create({
         content: report,
         intl: this.intl,
         currentUser: this.currentUser,
         permissionChecker: this.permissionChecker,
-        iliosConfig: this.iliosConfig
+        iliosConfig: this.iliosConfig,
       });
     });
   }
@@ -82,8 +86,8 @@ export default class CurriculumInventoryReportListComponent extends Component {
   }
 
   @action
-  setSortBy(what){
-    if(this.sortBy === what){
+  setSortBy(what) {
+    if (this.sortBy === what) {
       what += ':desc';
     }
     this.args.setSortBy(what);

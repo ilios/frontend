@@ -17,9 +17,9 @@ export default class UserRoute extends Route {
   }
 
   /**
-  * Prefetch user relationship data to smooth loading
-  **/
-  async afterModel(user){
+   * Prefetch user relationship data to smooth loading
+   **/
+  async afterModel(user) {
     const permissionChecker = this.permissionChecker;
     const obj = await hash({
       cohorts: user.get('cohorts'),
@@ -45,6 +45,8 @@ export default class UserRoute extends Route {
 
   @action
   loading(transition) {
+    //@todo refactor away from doing this work in the route [JJ 3/21]
+    // eslint-disable-next-line ember/no-controller-access-in-routes
     const controller = this.controllerFor('user');
     controller.set('isLoading', true);
     transition.promise.finally(() => {

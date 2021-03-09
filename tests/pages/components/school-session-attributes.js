@@ -5,7 +5,7 @@ import expanded from './school-session-attributes-expanded';
 const definition = {
   scope: '[data-test-school-session-attributes]',
   collapsed,
-  expanded
+  expanded,
 };
 
 export default definition;

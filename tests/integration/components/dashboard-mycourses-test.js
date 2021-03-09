@@ -6,19 +6,19 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { component } from 'ilios/tests/pages/components/dashboard-mycourses';
 
-module('Integration | Component | dashboard mycourses', function(hooks) {
+module('Integration | Component | dashboard mycourses', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('list courses for privileged users', async function(assert) {
+  test('list courses for privileged users', async function (assert) {
     const user = this.server.create('user');
     const jwtObject = {
-      'user_id': user.id,
-      'performs_non_learner_function': true,
+      user_id: user.id,
+      performs_non_learner_function: true,
     };
     const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
     await authenticateSession({
-      jwt: encodedData
+      jwt: encodedData,
     });
 
     this.server.create('course', {
@@ -26,7 +26,7 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
       externalId: 'ABC123',
     });
     this.server.createList('course', 2, {
-      directors: [user]
+      directors: [user],
     });
     this.server.get('/api/courses', (schema, { queryParams }) => {
       assert.ok('my' in queryParams);
@@ -45,15 +45,15 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
     assert.ok(component.courses[2].isLinked);
   });
 
-  test('list courses for un-privileged users', async function(assert) {
+  test('list courses for un-privileged users', async function (assert) {
     const user = this.server.create('user');
     const jwtObject = {
-      'user_id': user.id,
-      'performs_non_learner_function': false,
+      user_id: user.id,
+      performs_non_learner_function: false,
     };
     const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
     await authenticateSession({
-      jwt: encodedData
+      jwt: encodedData,
     });
 
     this.server.create('course', {
@@ -61,7 +61,7 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
       externalId: 'ABC123',
     });
     this.server.createList('course', 2, {
-      directors: [user]
+      directors: [user],
     });
     this.server.get('/api/courses', (schema, { queryParams }) => {
       assert.ok('my' in queryParams);
@@ -79,7 +79,7 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
     assert.notOk(component.courses[2].isLinked);
   });
 
-  test('display none when no courses', async function(assert) {
+  test('display none when no courses', async function (assert) {
     await authenticateSession();
     this.server.get('/api/courses', (schema, { queryParams }) => {
       assert.ok('my' in queryParams);
@@ -92,20 +92,22 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
     assert.equal(component.courses[0].text, 'None');
   });
 
-  test('show academic-year range for privileged users', async function(assert) {
-    this.server.get('application/config', function() {
-      return { config: {
-        academicYearCrossesCalendarYearBoundaries: true,
-      }};
+  test('show academic-year range for privileged users', async function (assert) {
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+        },
+      };
     });
     const user = this.server.create('user');
     const jwtObject = {
-      'user_id': user.id,
-      'performs_non_learner_function': true,
+      user_id: user.id,
+      performs_non_learner_function: true,
     };
     const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
     await authenticateSession({
-      jwt: encodedData
+      jwt: encodedData,
     });
 
     this.server.create('course', {
@@ -113,7 +115,7 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
       externalId: 'ABC123',
     });
     this.server.createList('course', 2, {
-      directors: [user]
+      directors: [user],
     });
     this.server.get('/api/courses', (schema, { queryParams }) => {
       assert.ok('my' in queryParams);
@@ -127,20 +129,22 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
     assert.equal(component.courses[2].text, '2013 - 2014 course 2');
   });
 
-  test('show academic-year range for un-privileged users', async function(assert) {
-    this.server.get('application/config', function() {
-      return { config: {
-        academicYearCrossesCalendarYearBoundaries: true,
-      }};
+  test('show academic-year range for un-privileged users', async function (assert) {
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+        },
+      };
     });
     const user = this.server.create('user');
     const jwtObject = {
-      'user_id': user.id,
-      'performs_non_learner_function': false,
+      user_id: user.id,
+      performs_non_learner_function: false,
     };
     const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
     await authenticateSession({
-      jwt: encodedData
+      jwt: encodedData,
     });
 
     this.server.create('course', {
@@ -148,7 +152,7 @@ module('Integration | Component | dashboard mycourses', function(hooks) {
       externalId: 'ABC123',
     });
     this.server.createList('course', 2, {
-      directors: [user]
+      directors: [user],
     });
     this.server.get('/api/courses', (schema, { queryParams }) => {
       assert.ok('my' in queryParams);

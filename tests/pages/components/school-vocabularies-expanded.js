@@ -9,7 +9,7 @@ const definition = {
   collapse: clickable('[data-test-vocabularies-title]'),
   termManager,
   vocabularyManager,
-  vocabulariesList
+  vocabulariesList,
 };
 
 export default definition;

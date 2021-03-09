@@ -3,7 +3,6 @@ import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { restartableTask } from 'ember-concurrency';
 
-
 export default class ProgramyearHeaderComponent extends Component {
   @service iliosConfig;
   @tracked academicYearCrossesCalendarYearBoundaries = false;

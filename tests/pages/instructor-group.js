@@ -7,7 +7,7 @@ import {
   hasClass,
   text,
   value,
-  visitable
+  visitable,
 } from 'ember-cli-page-object';
 
 export default create({
@@ -63,5 +63,5 @@ export default create({
       visit: clickable('a'),
     }),
     text: text(),
-  }
+  },
 });

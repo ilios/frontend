@@ -6,7 +6,7 @@ import {
   isVisible,
   property,
   triggerable,
-  value
+  value,
 } from 'ember-cli-page-object';
 
 import clickChoiceButtons from 'ilios-common/page-objects/components/click-choice-buttons';
@@ -101,7 +101,7 @@ const definition = {
     }),
   },
   submit: clickable('[data-test-submit]'),
-  cancel: clickable(['[data-test-cancel]'])
+  cancel: clickable(['[data-test-cancel]']),
 };
 
 export default definition;

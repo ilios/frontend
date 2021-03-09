@@ -27,10 +27,11 @@ function startSentry(config) {
       }
 
       // ignore aborted ajax calls, these happen when users navigate quickly between routes
-      if (error && (
-        error.message === 'The ajax operation was aborted' ||
-        error.message === 'The adapter operation was aborted'
-      )) {
+      if (
+        error &&
+        (error.message === 'The ajax operation was aborted' ||
+          error.message === 'The adapter operation was aborted')
+      ) {
         return null;
       }
 
@@ -47,11 +48,9 @@ function isErrorCaptureEnabled(config) {
   const varName = 'error-capture-enabled';
   const { modulePrefix, serverVariables } = config;
   const prefix = serverVariables.tagPrefix || modulePrefix;
-  const tag = document ?  document.querySelector(`head meta[name=${prefix}-${varName}]`) : null;
+  const tag = document ? document.querySelector(`head meta[name=${prefix}-${varName}]`) : null;
   const content = tag ? tag.content : serverVariables.defaults[varName];
   return JSON.parse(content);
 }
 
-export {
-  startSentry,
-};
+export { startSentry };

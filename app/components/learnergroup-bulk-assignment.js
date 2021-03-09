@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 
 export default Component.extend({
   store: service(),
-  tagName: "",
+  tagName: '',
   user: null,
   validUsers: null,
 
@@ -17,12 +17,15 @@ export default Component.extend({
     if (!validUsers) {
       return [];
     }
-    return validUsers.mapBy('subGroupName').uniq().filter(str => isPresent(str));
+    return validUsers
+      .mapBy('subGroupName')
+      .uniq()
+      .filter((str) => isPresent(str));
   }),
   allUnmatchedGroupsMatched: computed('unmatchedGroups.[]', 'matchedGroups.[]', function () {
     const unmatchedGroups = this.unmatchedGroups;
     const matchedGroups = this.matchedGroups;
-    const groupsStillNotMatched = unmatchedGroups.filter(groupName => {
+    const groupsStillNotMatched = unmatchedGroups.filter((groupName) => {
       const match = matchedGroups.findBy('name', groupName);
       return isEmpty(match);
     });
@@ -34,7 +37,7 @@ export default Component.extend({
     return await learnerGroup.get('allDescendants');
   }),
 
-  init(){
+  init() {
     this._super(...arguments);
     this.set('matchedGroups', []);
   },
@@ -48,10 +51,12 @@ export default Component.extend({
       if (match) {
         match.set('group', group);
       } else {
-        matchedGroups.pushObject(EmberObject.create({
-          name: groupName,
-          group,
-        }));
+        matchedGroups.pushObject(
+          EmberObject.create({
+            name: groupName,
+            group,
+          })
+        );
       }
 
       this.set('matchedGroups', matchedGroups);
@@ -72,22 +77,24 @@ export default Component.extend({
       const group = store.createRecord('learner-group', {
         title,
         cohort,
-        parent: learnerGroup
+        parent: learnerGroup,
       });
       const savedGroup = await group.save();
       learnerGroup.get('children').pushObject(savedGroup);
 
       const matchedGroups = this.matchedGroups.toArray();
-      matchedGroups.pushObject(EmberObject.create({
-        name: title,
-        group: savedGroup,
-      }));
+      matchedGroups.pushObject(
+        EmberObject.create({
+          name: title,
+          group: savedGroup,
+        })
+      );
 
       this.set('matchedGroups', matchedGroups);
     },
     clear() {
       this.set('validUsers', null);
       this.set('matchedGroups', null);
-    }
+    },
   },
 });

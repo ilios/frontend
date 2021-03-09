@@ -6,7 +6,6 @@ import { validatable, Length, NotBlank } from 'ilios-common/decorators/validatio
 
 @validatable
 export default class LearnergroupHeaderComponent extends Component {
-
   @tracked @NotBlank() @Length(3, 60) title;
 
   @action
@@ -23,7 +22,7 @@ export default class LearnergroupHeaderComponent extends Component {
   *changeTitle() {
     this.addErrorDisplayFor('title');
     const isValid = yield this.isValid('title');
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('title');

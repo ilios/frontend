@@ -1,4 +1,4 @@
-import {clickable, create, fillable, isPresent, text, triggerable} from 'ember-cli-page-object';
+import { clickable, create, fillable, isPresent, text, triggerable } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-new-competency]',

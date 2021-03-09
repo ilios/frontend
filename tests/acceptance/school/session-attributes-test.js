@@ -1,15 +1,12 @@
 import { click, visit } from '@ember/test-helpers';
-import {
-  module,
-  test
-} from 'qunit';
+import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios-common';
 
 const url = '/schools/1';
-module('Acceptance | School - Session Attributes', function(hooks) {
+module('Acceptance | School - Session Attributes', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
@@ -17,18 +14,18 @@ module('Acceptance | School - Session Attributes', function(hooks) {
     await setupAuthentication({ school });
   });
 
-  test('check fields collapsed', async function(assert) {
+  test('check fields collapsed', async function (assert) {
     assert.expect(12);
     this.server.create('school');
     this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionAttendanceRequired',
-      value: false
+      value: false,
     });
     this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSupplemental',
-      value: true
+      value: true,
     });
     await visit(url);
 
@@ -54,23 +51,26 @@ module('Acceptance | School - Session Attributes', function(hooks) {
     assert.dom(specialAttireEnabled).hasClass('no');
     assert.dom(specialAttireEnabled).hasClass('fa-ban');
 
-    assert.equal(await getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
+    assert.equal(
+      await getElementText(specialEquipmentTitle),
+      getText('Special Equipment Required')
+    );
     assert.dom(specialEquipmentEnabled).hasClass('no');
     assert.dom(specialEquipmentEnabled).hasClass('fa-ban');
   });
 
-  test('check fields expanded', async function(assert) {
+  test('check fields expanded', async function (assert) {
     assert.expect(12);
     this.server.create('school');
     this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionAttendanceRequired',
-      value: false
+      value: false,
     });
     this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSupplemental',
-      value: true
+      value: true,
     });
     await visit(`${url}?schoolSessionAttributesDetails=true`);
 
@@ -96,23 +96,26 @@ module('Acceptance | School - Session Attributes', function(hooks) {
     assert.dom(specialAttireEnabled).hasClass('no');
     assert.dom(specialAttireEnabled).hasClass('fa-ban');
 
-    assert.equal(await getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
+    assert.equal(
+      await getElementText(specialEquipmentTitle),
+      getText('Special Equipment Required')
+    );
     assert.dom(specialEquipmentEnabled).hasClass('no');
     assert.dom(specialEquipmentEnabled).hasClass('fa-ban');
   });
 
-  test('manage session attributes', async function(assert) {
+  test('manage session attributes', async function (assert) {
     assert.expect(23);
     this.server.create('school');
     this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionAttendanceRequired',
-      value: false
+      value: false,
     });
     this.server.create('schoolConfig', {
       schoolId: 1,
       name: 'showSessionSupplemental',
-      value: true
+      value: true,
     });
     await visit(`${url}?schoolSessionAttributesDetails=true&schoolManageSessionAttributes=true`);
 
@@ -131,7 +134,6 @@ module('Acceptance | School - Session Attributes', function(hooks) {
     const specialAttireEnabled = `${rows}:nth-of-type(3) td:nth-of-type(2) svg`;
     const specialEquipmentEnabled = `${rows}:nth-of-type(4) td:nth-of-type(2) svg`;
 
-
     assert.equal(await getElementText(attendanceTitle), getText('Attendance Required'));
     assert.dom(attendanceCheckbox).isNotChecked();
 
@@ -141,7 +143,10 @@ module('Acceptance | School - Session Attributes', function(hooks) {
     assert.equal(await getElementText(specialAttireTitle), getText('Special Attire Required'));
     assert.dom(specialAttireCheckbox).isNotChecked();
 
-    assert.equal(await getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
+    assert.equal(
+      await getElementText(specialEquipmentTitle),
+      getText('Special Equipment Required')
+    );
     assert.dom(specialEquipmentCheckbox).isNotChecked();
 
     await click(attendanceCheckbox);
@@ -166,10 +171,11 @@ module('Acceptance | School - Session Attributes', function(hooks) {
     assert.dom(specialAttireEnabled).hasClass('no');
     assert.dom(specialAttireEnabled).hasClass('fa-ban');
 
-    assert.equal(await getElementText(specialEquipmentTitle), getText('Special Equipment Required'));
+    assert.equal(
+      await getElementText(specialEquipmentTitle),
+      getText('Special Equipment Required')
+    );
     assert.dom(specialEquipmentEnabled).hasClass('yes');
     assert.dom(specialEquipmentEnabled).hasClass('fa-check');
-
-
   });
 });

@@ -7,7 +7,7 @@ import {
   isVisible,
   property,
   text,
-  visitable
+  visitable,
 } from 'ember-cli-page-object';
 
 import courses from './components/ilios-course-list';

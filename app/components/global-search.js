@@ -30,7 +30,7 @@ export default class GlobalSearchComponent extends Component {
     if (!this.args.ignoredSchoolIds) {
       return [];
     }
-    return this.args.ignoredSchoolIds.map(id => {
+    return this.args.ignoredSchoolIds.map((id) => {
       const school = this.schools.findBy('id', id);
       return school ? school.title : '';
     });
@@ -41,26 +41,33 @@ export default class GlobalSearchComponent extends Component {
       return this.results;
     }
 
-    return this.results.filter(course => course.year === Number(this.args.selectedYear));
+    return this.results.filter((course) => course.year === Number(this.args.selectedYear));
   }
 
   get filteredResults() {
-    return this.yearFilteredResults.filter(course => !this.ignoredSchoolTitles.includes(course.school));
+    return this.yearFilteredResults.filter(
+      (course) => !this.ignoredSchoolTitles.includes(course.school)
+    );
   }
 
   get paginatedResults() {
-    return this.filteredResults.slice((this.args.page * this.size) - this.size, this.args.page * this.size);
+    return this.filteredResults.slice(
+      this.args.page * this.size - this.size,
+      this.args.page * this.size
+    );
   }
 
   get schoolOptions() {
     if (this.results.length && this.schools.length) {
-      const emptySchools = this.schools.map(({id, title}) => {
-        return {
-          id,
-          title,
-          results: 0
-        };
-      }).sortBy('title');
+      const emptySchools = this.schools
+        .map(({ id, title }) => {
+          return {
+            id,
+            title,
+            results: 0,
+          };
+        })
+        .sortBy('title');
       const options = this.results.reduce((set, course) => {
         const schoolOption = set.findBy('title', course.school);
         schoolOption.results++;

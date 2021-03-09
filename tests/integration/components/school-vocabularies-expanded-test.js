@@ -5,11 +5,11 @@ import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios/tests/pages/components/school-vocabularies-expanded';
 
-module('Integration | Component | school vocabularies expanded', function(hooks) {
+module('Integration | Component | school vocabularies expanded', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     const school = this.server.create('school');
     this.server.createList('vocabulary', 2, { school });
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
@@ -30,7 +30,7 @@ module('Integration | Component | school vocabularies expanded', function(hooks)
     assert.notOk(component.termManager.isVisible);
   });
 
-  test('collapse', async function(assert) {
+  test('collapse', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school');
     this.server.createList('vocabulary', 2, { school });
@@ -50,7 +50,7 @@ module('Integration | Component | school vocabularies expanded', function(hooks)
     await component.collapse();
   });
 
-  test('manage vocabulary', async function(assert) {
+  test('manage vocabulary', async function (assert) {
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', { school });
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
@@ -70,7 +70,7 @@ module('Integration | Component | school vocabularies expanded', function(hooks)
     assert.notOk(component.termManager.isVisible);
   });
 
-  test('manage term', async function(assert) {
+  test('manage term', async function (assert) {
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', { school });
     const term = this.server.create('term', { vocabulary });

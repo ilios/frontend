@@ -7,16 +7,16 @@ import { all } from 'rsvp';
 
 export default Component.extend({
   flashMessages: service(),
-  tagName: "",
+  tagName: '',
   users: null,
   matchedGroups: null,
   learnerGroup: null,
 
-  finalData: computed('users.[]', 'matchedGroups.[]', 'learnerGroup', function(){
+  finalData: computed('users.[]', 'matchedGroups.[]', 'learnerGroup', function () {
     const users = this.users;
     const learnerGroup = this.learnerGroup;
     const matchedGroups = this.matchedGroups;
-    return users.map(obj => {
+    return users.map((obj) => {
       let selectedGroup = learnerGroup;
       if (obj.subGroupName) {
         const match = matchedGroups.findBy('name', obj.subGroupName);
@@ -26,7 +26,7 @@ export default Component.extend({
       }
       return {
         user: obj.userRecord,
-        learnerGroup: selectedGroup
+        learnerGroup: selectedGroup,
       };
     });
   }),
@@ -48,5 +48,5 @@ export default Component.extend({
     yield all(groupsToSave.invoke('save'));
     flashMessages.success('general.savedSuccessfully');
     done();
-  })
+  }),
 });

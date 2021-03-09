@@ -5,9 +5,9 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { component } from  'ilios/tests/pages/components/new-user';
+import { component } from 'ilios/tests/pages/components/new-user';
 
-module('Integration | Component | new user', function(hooks) {
+module('Integration | Component | new user', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -26,18 +26,17 @@ module('Integration | Component | new user', function(hooks) {
       model: resolve(user),
       async canCreateUser() {
         return resolve(true);
-      }
+      },
     });
 
     this.permissionCheckerMock = Service.extend({
       async canCreateUser() {
         return resolve(true);
-      }
+      },
     });
     this.owner.register('service:current-user', this.currentUserMock);
     this.owner.register('service:permissionChecker', this.permissionCheckerMock);
   });
-
 
   test('it renders', async function (assert) {
     await render(hbs`<NewUser @close={{noop}} />`);
@@ -49,7 +48,7 @@ module('Integration | Component | new user', function(hooks) {
     assert.equal(component.school.options[2].text, 'school 2');
   });
 
-  test('errors do not show up initially', async function(assert) {
+  test('errors do not show up initially', async function (assert) {
     await render(hbs`<NewUser @close={{noop}} />`);
 
     assert.notOk(component.firstName.hasError);
@@ -63,7 +62,7 @@ module('Integration | Component | new user', function(hooks) {
     assert.notOk(component.password.hasError);
   });
 
-  test('submit empty form', async function(assert) {
+  test('submit empty form', async function (assert) {
     await render(hbs`<NewUser @close={{noop}} />`);
     await component.submit();
 
@@ -78,14 +77,14 @@ module('Integration | Component | new user', function(hooks) {
     assert.ok(component.password.hasError);
   });
 
-  test('create new user', async function(assert) {
+  test('create new user', async function (assert) {
     assert.expect(11);
     const studentRole = this.server.create('user-role', {
       id: 4,
-      title: 'Student'
+      title: 'Student',
     });
 
-    this.set('transitionToUser', (userId)=>{
+    this.set('transitionToUser', (userId) => {
       assert.equal(userId, 2);
     });
     await render(hbs`<NewUser @close={{noop}} @transitionToUser={{this.transitionToUser}} />`);
@@ -117,20 +116,20 @@ module('Integration | Component | new user', function(hooks) {
     assert.equal(authentication.password, 'password123', 'with the correct password');
   });
 
-  test('create new student user', async function(assert) {
+  test('create new student user', async function (assert) {
     assert.expect(12);
     const studentRole = this.server.create('user-role', {
       id: 4,
-      title: 'Student'
+      title: 'Student',
     });
     const program = this.server.create('program', { school: this.schools[0] });
     const programYear = this.server.create('programYear', {
       program,
-      startYear: new Date().getFullYear()
+      startYear: new Date().getFullYear(),
     });
     const cohort = this.server.create('cohort', { programYear });
 
-    this.set('transitionToUser', (userId)=>{
+    this.set('transitionToUser', (userId) => {
       assert.equal(userId, 2);
     });
     await render(hbs`<NewUser @close={{noop}} @transitionToUser={{this.transitionToUser}} />`);
@@ -165,7 +164,7 @@ module('Integration | Component | new user', function(hooks) {
     assert.equal(primaryCohort.id, cohort.id);
   });
 
-  test('cancel', async function(assert) {
+  test('cancel', async function (assert) {
     assert.expect(1);
     this.set('cancel', () => {
       assert.ok(true, 'cancel event fired.');
@@ -174,11 +173,11 @@ module('Integration | Component | new user', function(hooks) {
     await component.cancel();
   });
 
-  test('change school', async function(assert) {
+  test('change school', async function (assert) {
     const program1 = this.server.create('program', { school: this.schools[0] });
     const programYear1 = this.server.create('programYear', {
       program: program1,
-      startYear: new Date().getFullYear()
+      startYear: new Date().getFullYear(),
     });
     this.server.create('cohort', { programYear: programYear1 });
 
@@ -186,7 +185,7 @@ module('Integration | Component | new user', function(hooks) {
     const programYear2 = this.server.create('programYear', {
       program: program2,
       startYear: new Date().getFullYear() - 1,
-      duration: 4
+      duration: 4,
     });
     this.server.create('cohort', { programYear: programYear2 });
     // this program is too old and will not show as option in the dropdown
@@ -213,7 +212,7 @@ module('Integration | Component | new user', function(hooks) {
     assert.ok(component.cohort.options[0].selected);
   });
 
-  test('validate email address', async function(assert) {
+  test('validate email address', async function (assert) {
     await render(hbs`<NewUser @close={{noop}}  />`);
     await component.cancel();
     assert.notOk(component.email.hasError);

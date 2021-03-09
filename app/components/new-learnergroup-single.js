@@ -7,9 +7,9 @@ const Validations = buildValidations({
     validator('presence', true),
     validator('length', {
       min: 3,
-      max: 60
-    })
-  ]
+      max: 60,
+    }),
+  ],
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
@@ -23,17 +23,19 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   actions: {
     save() {
       this.send('addErrorDisplayFor', 'title');
-      this.validate().then(({validations}) => {
-        this.set('isSaving', true);
-        if (validations.get('isValid')) {
-          const title = this.title;
-          const fillWithCohort = this.fillWithCohort;
-          return this.save(title, fillWithCohort);
-        }
-      }).finally(()=>{
-        this.set('isSaving', false);
-      });
-    }
+      this.validate()
+        .then(({ validations }) => {
+          this.set('isSaving', true);
+          if (validations.get('isValid')) {
+            const title = this.title;
+            const fillWithCohort = this.fillWithCohort;
+            return this.save(title, fillWithCohort);
+          }
+        })
+        .finally(() => {
+          this.set('isSaving', false);
+        });
+    },
   },
 
   keyUp(event) {
@@ -49,8 +51,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       return;
     }
 
-    if(27 === keyCode) {
+    if (27 === keyCode) {
       this.cancel();
     }
-  }
+  },
 });

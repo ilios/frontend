@@ -17,7 +17,7 @@ export default class ProgramYearListComponent extends Component {
     return this.programYears.sortBy('startYear');
   }
   @use academicYearCrossesCalendarYearBoundaries = new ResolveAsyncValue(() => [
-    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
   ]);
 
   @dropTask
@@ -39,22 +39,28 @@ export default class ProgramYearListComponent extends Component {
       const programYearObjectives = relatedObjectives.sortBy('id');
 
       const newObjectiveObjects = programYearObjectives.map((pyoToCopy) => {
-        const terms = pyoToCopy.hasMany('terms').ids().map((id) => {
-          return {
-            id,
-            type: 'programYearObjectives'
-          };
-        });
-        const meshDescriptors = pyoToCopy.hasMany('meshDescriptors').ids().map((id) => {
-          return {
-            id,
-            type: 'meshDescriptors'
-          };
-        });
+        const terms = pyoToCopy
+          .hasMany('terms')
+          .ids()
+          .map((id) => {
+            return {
+              id,
+              type: 'programYearObjectives',
+            };
+          });
+        const meshDescriptors = pyoToCopy
+          .hasMany('meshDescriptors')
+          .ids()
+          .map((id) => {
+            return {
+              id,
+              type: 'meshDescriptors',
+            };
+          });
 
-        const  ancestorId = pyoToCopy.belongsTo('ancestor').id() ?? pyoToCopy.id;
+        const ancestorId = pyoToCopy.belongsTo('ancestor').id() ?? pyoToCopy.id;
 
-        const rhett =  {
+        const rhett = {
           type: 'programYearObjectives',
           attributes: {
             position: pyoToCopy.position,
@@ -75,7 +81,7 @@ export default class ProgramYearListComponent extends Component {
               },
             },
             meshDescriptors: { data: meshDescriptors },
-            terms: { data: terms }
+            terms: { data: terms },
           },
         };
         const competencyId = pyoToCopy.belongsTo('competency').id();
@@ -90,7 +96,10 @@ export default class ProgramYearListComponent extends Component {
 
         return rhett;
       });
-      const newProgramYearObjectives = yield this.fetch.postManyToApi(`programyearobjectives`, newObjectiveObjects);
+      const newProgramYearObjectives = yield this.fetch.postManyToApi(
+        `programyearobjectives`,
+        newObjectiveObjects
+      );
       this.store.pushPayload(newProgramYearObjectives);
     }
     this.savedProgramYear = newProgramYear;

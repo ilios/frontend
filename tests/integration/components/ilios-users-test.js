@@ -7,11 +7,11 @@ import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/ilios-users';
 
-module('Integration | Component | ilios users', function(hooks) {
+module('Integration | Component | ilios users', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     await render(hbs`<IliosUsers
       @limit=25
       @offset=25
@@ -28,13 +28,13 @@ module('Integration | Component | ilios users', function(hooks) {
     assert.equal(component.title.text, 'Users');
   });
 
-  test('param passing', async function(assert) {
+  test('param passing', async function (assert) {
     assert.expect(2);
 
     const value = 'nothing';
     const newValue = 'test';
     this.set('value', value);
-    this.set('setQuery', query => {
+    this.set('setQuery', (query) => {
       assert.equal(query, newValue);
     });
     await render(hbs`<IliosUsers
@@ -55,21 +55,21 @@ module('Integration | Component | ilios users', function(hooks) {
     await component.search.set(newValue);
   });
 
-  test('add user form renders when configured to', async function(assert) {
+  test('add user form renders when configured to', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     assert.ok(apiVersion);
-    this.server.get('application/config', function() {
+    this.server.get('application/config', function () {
       return {
         config: {
           type: 'form',
           userSearchType: 'form',
-          apiVersion
-        }
+          apiVersion,
+        },
       };
     });
     const school = this.server.create('school');
     const user = this.server.create('user', {
-      school
+      school,
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
@@ -77,7 +77,7 @@ module('Integration | Component | ilios users', function(hooks) {
       model: resolve(userModel),
       getRolesInSchool() {
         return [];
-      }
+      },
     });
     this.owner.register('service:currentUser', currentUserMock);
     await render(hbs`<IliosUsers
@@ -92,25 +92,28 @@ module('Integration | Component | ilios users', function(hooks) {
       @transitionToUser={{noop}}
     />`);
     assert.ok(component.newUserForm.isPresent, 'the new user form is present');
-    assert.notOk(component.newDirectoryUserForm.isPresent, 'the new directory user form is not present');
+    assert.notOk(
+      component.newDirectoryUserForm.isPresent,
+      'the new directory user form is not present'
+    );
   });
 
-  test('directory search renders when configured to', async function(assert) {
+  test('directory search renders when configured to', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
     assert.ok(apiVersion);
-    this.server.get('application/config', function() {
+    this.server.get('application/config', function () {
       return {
         config: {
           type: 'form',
           userSearchType: 'ldap',
-          apiVersion
-        }
+          apiVersion,
+        },
       };
     });
 
     const school = this.server.create('school');
     const user = this.server.create('user', {
-      school
+      school,
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
@@ -118,7 +121,7 @@ module('Integration | Component | ilios users', function(hooks) {
       model: resolve(userModel),
       getRolesInSchool() {
         return [];
-      }
+      },
     });
     this.owner.register('service:currentUser', currentUserMock);
 
@@ -137,21 +140,21 @@ module('Integration | Component | ilios users', function(hooks) {
     assert.ok(component.newDirectoryUserForm.isPresent, 'the new directory form is present');
   });
 
-  test('close bulk new users form callback fires', async function(assert) {
+  test('close bulk new users form callback fires', async function (assert) {
     assert.expect(1);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function() {
+    this.server.get('application/config', function () {
       return {
         config: {
           type: 'form',
           userSearchType: 'form',
-          apiVersion
-        }
+          apiVersion,
+        },
       };
     });
     const school = this.server.create('school');
     const user = this.server.create('user', {
-      school
+      school,
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
@@ -159,7 +162,7 @@ module('Integration | Component | ilios users', function(hooks) {
       model: resolve(userModel),
       getRolesInSchool() {
         return [];
-      }
+      },
     });
     this.owner.register('service:currentUser', currentUserMock);
 
@@ -180,21 +183,21 @@ module('Integration | Component | ilios users', function(hooks) {
     await component.newBulkUserForm.cancel();
   });
 
-  test('close new user form callback fires', async function(assert) {
+  test('close new user form callback fires', async function (assert) {
     assert.expect(1);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function() {
+    this.server.get('application/config', function () {
       return {
         config: {
           type: 'form',
           userSearchType: 'form',
-          apiVersion
-        }
+          apiVersion,
+        },
       };
     });
     const school = this.server.create('school');
     const user = this.server.create('user', {
-      school
+      school,
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
@@ -202,7 +205,7 @@ module('Integration | Component | ilios users', function(hooks) {
       model: resolve(userModel),
       getRolesInSchool() {
         return [];
-      }
+      },
     });
     this.owner.register('service:currentUser', currentUserMock);
     this.set('setShowNewUserForm', (value) => {
@@ -222,22 +225,22 @@ module('Integration | Component | ilios users', function(hooks) {
     await component.newUserForm.cancel();
   });
 
-  test('collapse button fires', async function(assert) {
+  test('collapse button fires', async function (assert) {
     assert.expect(1);
     assert.expect(1);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function() {
+    this.server.get('application/config', function () {
       return {
         config: {
           type: 'form',
           userSearchType: 'form',
-          apiVersion
-        }
+          apiVersion,
+        },
       };
     });
     const school = this.server.create('school');
     const user = this.server.create('user', {
-      school
+      school,
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
@@ -245,7 +248,7 @@ module('Integration | Component | ilios users', function(hooks) {
       model: resolve(userModel),
       getRolesInSchool() {
         return [];
-      }
+      },
     });
     this.owner.register('service:currentUser', currentUserMock);
 

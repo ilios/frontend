@@ -1,6 +1,13 @@
-import { clickable, create, collection, isPresent, fillable, property, text } from 'ember-cli-page-object';
+import {
+  clickable,
+  create,
+  collection,
+  isPresent,
+  fillable,
+  property,
+  text,
+} from 'ember-cli-page-object';
 import newTermForm from './school-vocabulary-new-term';
-
 
 const definition = {
   scope: '[data-test-school-vocabulary-term-manager]',
@@ -31,7 +38,6 @@ const definition = {
     }),
     newTermForm,
   },
-
 };
 
 export default definition;

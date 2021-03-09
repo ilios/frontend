@@ -6,7 +6,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { getElementText, getText } from 'ilios-common';
 
 // @todo flesh this acceptance test out, use page objects [ST 2020/08/14]
-module('Acceptance | assign students', function(hooks) {
+module('Acceptance | assign students', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
@@ -19,19 +19,25 @@ module('Acceptance | assign students', function(hooks) {
     this.server.create('school');
   });
 
-  test('visiting /admin/assignstudents', async function(assert) {
+  test('visiting /admin/assignstudents', async function (assert) {
     await visit('/admin/assignstudents');
     assert.equal(await getElementText('.schoolsfilter'), getText('school 0'));
     assert.equal(currentURL(), '/admin/assignstudents');
   });
 
-  test('users are listed in full name by default', async function(assert) {
+  test('users are listed in full name by default', async function (assert) {
     await visit('/admin/assignstudents?schoolId=1');
-    assert.dom('.students .list tbody tr:nth-of-type(1) td:nth-of-type(2) [data-test-fullname]')
+    assert
+      .dom('.students .list tbody tr:nth-of-type(1) td:nth-of-type(2) [data-test-fullname]')
       .hasText('Aardvark');
-    assert.dom('.students .list tbody tr:nth-of-type(1) td:nth-of-type(2) [data-test-info]').exists();
-    assert.dom('.students .list tbody tr:nth-of-type(2) td:nth-of-type(2) [data-test-fullname]')
+    assert
+      .dom('.students .list tbody tr:nth-of-type(1) td:nth-of-type(2) [data-test-info]')
+      .exists();
+    assert
+      .dom('.students .list tbody tr:nth-of-type(2) td:nth-of-type(2) [data-test-fullname]')
       .hasText('Clem M. Chowder');
-    assert.dom('.students .list tbody tr:nth-of-type(2) td:nth-of-type(2) [data-test-info]').doesNotExist();
+    assert
+      .dom('.students .list tbody tr:nth-of-type(2) td:nth-of-type(2) [data-test-info]')
+      .doesNotExist();
   });
 });

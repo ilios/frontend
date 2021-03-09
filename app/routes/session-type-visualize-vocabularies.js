@@ -19,7 +19,7 @@ export default class SessionTypeVisualizeVocabulariesRoute extends Route {
     return this.loadModel(sessionType.id);
   }
 
-  async loadModel(sessionTypeId){
+  async loadModel(sessionTypeId) {
     if (!this._dataLoadingPromise) {
       this._dataLoadingPromise = this.store.findRecord('session-type', sessionTypeId, {
         include: 'sessions.terms.vocabulary,sessions.course.terms.vocabulary',

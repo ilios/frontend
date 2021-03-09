@@ -4,10 +4,10 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios/tests/pages/components/course-search-result';
 
-module('Integration | Component | course-search-result', function(hooks) {
+module('Integration | Component | course-search-result', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it display course and session info properly', async function(assert) {
+  test('it display course and session info properly', async function (assert) {
     assert.expect(9);
 
     const course = {
@@ -15,15 +15,24 @@ module('Integration | Component | course-search-result', function(hooks) {
       title: 'Course 1',
       school: 'Medicine',
       year: '1980',
-      sessions: [{
-        id: 1, title: 'Session 1'
-      }, {
-        id: 2, title: 'Session 2'
-      }, {
-        id: 3, title: 'Session 3'
-      }, {
-        id: 4, title: 'Session 4'
-      }]
+      sessions: [
+        {
+          id: 1,
+          title: 'Session 1',
+        },
+        {
+          id: 2,
+          title: 'Session 2',
+        },
+        {
+          id: 3,
+          title: 'Session 3',
+        },
+        {
+          id: 4,
+          title: 'Session 4',
+        },
+      ],
     };
     this.set('course', course);
     await render(hbs`<CourseSearchResult @course={{course}} />`);

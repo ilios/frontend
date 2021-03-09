@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { tracked } from "@glimmer/tracking";
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import moment from 'moment';
@@ -20,13 +20,7 @@ export default class NewCourseComponent extends Component {
   constructor() {
     super(...arguments);
     const thisYear = parseInt(moment().format('YYYY'), 10);
-    this.years = [
-      thisYear - 2,
-      thisYear - 1,
-      thisYear,
-      thisYear + 1,
-      thisYear + 2
-    ];
+    this.years = [thisYear - 2, thisYear - 1, thisYear, thisYear + 1, thisYear + 2];
   }
 
   @action
@@ -53,8 +47,9 @@ export default class NewCourseComponent extends Component {
 
   @restartableTask
   *load() {
-    this.academicYearCrossesCalendarYearBoundaries
-      = yield this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
+    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+      'academicYearCrossesCalendarYearBoundaries'
+    );
     if (this.args.currentYear && this.years.includes(parseInt(this.args.currentYear.id, 10))) {
       this.setYear(this.args.currentYear.id);
     }
@@ -72,7 +67,7 @@ export default class NewCourseComponent extends Component {
       level: 1,
       title: this.title,
       school: this.args.currentSchool,
-      year: this.selectedYear
+      year: this.selectedYear,
     });
     yield this.args.save(course);
   }

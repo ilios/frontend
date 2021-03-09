@@ -3,15 +3,17 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | error display', function(hooks) {
+module('Integration | Component | error display', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('the detail link toggles properly', async function(assert) {
+  test('the detail link toggles properly', async function (assert) {
     assert.expect(3);
 
-    const errors = [{
-      message: 'this is an error'
-    }];
+    const errors = [
+      {
+        message: 'this is an error',
+      },
+    ];
 
     this.set('errors', errors);
     await render(hbs`<ErrorDisplay @errors={{this.errors}} @clearErrors={{noop}} />`);
@@ -24,12 +26,14 @@ module('Integration | Component | error display', function(hooks) {
     assert.dom('.error-detail-action').hasText('Show Details');
   });
 
-  test('404 error works', async function(assert) {
+  test('404 error works', async function (assert) {
     assert.expect(1);
 
-    const errors = [{
-      statusCode: '404'
-    }];
+    const errors = [
+      {
+        statusCode: '404',
+      },
+    ];
 
     this.set('errors', errors);
     await render(hbs`<ErrorDisplay @errors={{this.errors}} @clearErrors={{noop}} />`);
@@ -37,12 +41,14 @@ module('Integration | Component | error display', function(hooks) {
     assert.dom('.error-main').includesText('Rats!');
   });
 
-  test('clicking clear button fires action', async function(assert) {
+  test('clicking clear button fires action', async function (assert) {
     assert.expect(1);
 
-    const errors = [{
-      message: 'this is an error'
-    }];
+    const errors = [
+      {
+        message: 'this is an error',
+      },
+    ];
 
     this.set('errors', errors);
     this.set('clearErrors', () => {
@@ -51,5 +57,4 @@ module('Integration | Component | error display', function(hooks) {
     await render(hbs`<ErrorDisplay @errors={{errors}} @clearErrors={{action clearErrors}} />`);
     await click('.clear-errors button');
   });
-
 });

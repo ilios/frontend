@@ -3,7 +3,9 @@ import config from '../config/environment';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import { use } from 'ember-could-get-used-to-this';
 import { enqueueTask } from 'ember-concurrency';
-const { IliosFeatures: { programYearVisualizations } } = config;
+const {
+  IliosFeatures: { programYearVisualizations },
+} = config;
 
 export default class ProgramYearOverviewComponent extends Component {
   programYearVisualizations = programYearVisualizations;
@@ -18,14 +20,14 @@ export default class ProgramYearOverviewComponent extends Component {
   }
 
   @enqueueTask
-  * addDirector(user) {
+  *addDirector(user) {
     const directors = yield this.args.programYear.directors;
     directors.addObject(user);
     yield this.args.programYear.save();
   }
 
   @enqueueTask
-  * removeDirector(user) {
+  *removeDirector(user) {
     const directors = yield this.args.programYear.directors;
     directors.removeObject(user);
     yield this.args.programYear.save();

@@ -13,7 +13,7 @@ export default Controller.extend({
 
   queryParams: {
     schoolId: 'school',
-    titleFilter: 'filter'
+    titleFilter: 'filter',
   },
 
   deletedProgram: null,
@@ -24,50 +24,64 @@ export default Controller.extend({
 
   hasMoreThanOneSchool: gt('model.schools.length', 1),
 
-  filteredPrograms: computed('titleFilter', 'programs.[]', async function() {
+  filteredPrograms: computed('titleFilter', 'programs.[]', async function () {
     const titleFilter = this.titleFilter;
-    const title = isBlank(titleFilter) ? '' : titleFilter.trim().toLowerCase() ;
+    const title = isBlank(titleFilter) ? '' : titleFilter.trim().toLowerCase();
 
     const programs = await this.programs;
     let filteredPrograms;
-    if(isEmpty(title)){
+    if (isEmpty(title)) {
       filteredPrograms = programs;
     } else {
-      filteredPrograms = programs.filter(program => {
-        return isPresent(program.get('title')) && program.get('title').trim().toLowerCase().includes(title);
+      filteredPrograms = programs.filter((program) => {
+        return (
+          isPresent(program.get('title')) &&
+          program.get('title').trim().toLowerCase().includes(title)
+        );
       });
     }
     return filteredPrograms.sortBy('title');
   }),
 
-  selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function() {
-    const schools = this.get('model.schools');
-    const primarySchool = this.get('model.primarySchool');
-    if(isPresent(this.schoolId)){
-      const schoolId = this.schoolId;
-      const school = schools.findBy('id', schoolId);
-      if(school){
-        return school;
+  selectedSchool: computed(
+    'model.{primarySchool,schools.[]}',
+    'primarySchool',
+    'schoolId',
+    function () {
+      const schools = this.model.schools;
+      const primarySchool = this.model.primarySchool;
+      if (isPresent(this.schoolId)) {
+        const schoolId = this.schoolId;
+        const school = schools.findBy('id', schoolId);
+        if (school) {
+          return school;
+        }
       }
+
+      return primarySchool;
     }
+  ),
 
-    return primarySchool;
-  }),
-
-  programs: computed('selectedSchool', 'deletedProgram', 'newProgram', async function() {
-    const schoolId = this.selectedSchool.get('id');
-    if(isEmpty(schoolId)) {
-      return resolve([]);
-    }
-
-    return await this.store.query('program', {
-      filters: {
-        school: schoolId
+  programs: computed(
+    'deletedProgram',
+    'newProgram',
+    'selectedSchool.id',
+    'store',
+    async function () {
+      const schoolId = this.selectedSchool.id;
+      if (isEmpty(schoolId)) {
+        return resolve([]);
       }
-    });
-  }),
 
-  canCreate: computed('selectedSchool', async function() {
+      return await this.store.query('program', {
+        filters: {
+          school: schoolId,
+        },
+      });
+    }
+  ),
+
+  canCreate: computed('selectedSchool', async function () {
     const permissionChecker = this.permissionChecker;
     const selectedSchool = this.selectedSchool;
     return permissionChecker.canCreateProgram(selectedSchool);
@@ -101,7 +115,7 @@ export default Controller.extend({
     async saveNewProgram(newProgram) {
       const school = await this.selectedSchool;
       const duration = 4;
-      newProgram.setProperties({school, duration});
+      newProgram.setProperties({ school, duration });
       const savedProgram = await newProgram.save();
       this.set('showNewProgramForm', false);
       this.set('newProgram', savedProgram);
@@ -116,12 +130,12 @@ export default Controller.extend({
 
     changeSelectedSchool(schoolId) {
       this.set('schoolId', schoolId);
-    }
+    },
   },
 
   changeTitleFilter: task(function* (value) {
     this.set('titleFilter', value);
     yield timeout(250);
     return value;
-  }).restartable()
+  }).restartable(),
 });

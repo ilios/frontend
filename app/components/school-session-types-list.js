@@ -12,7 +12,7 @@ export default class SchoolSessionTypesListComponent extends Component {
       yield timeout(10);
       sessionType.deleteRecord();
       yield sessionType.save();
-      this.deletedSessionTypes = this.deletedSessionTypes.filter(id => id !== sessionType.id);
+      this.deletedSessionTypes = this.deletedSessionTypes.filter((id) => id !== sessionType.id);
     }
   }
 }

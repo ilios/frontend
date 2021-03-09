@@ -7,14 +7,15 @@ import { map } from 'rsvp';
 import { task } from 'ember-concurrency';
 import { validator, buildValidations } from 'ember-cp-validations';
 import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import { dasherize } from '@ember/string';
 
 const Validations = buildValidations({
   title: [
     validator('length', {
       max: 240,
-      descriptionKey: 'general.title'
-    })
-  ]
+      descriptionKey: 'general.title',
+    }),
+  ],
 });
 
 const PrepositionObject = EmberObject.extend({
@@ -23,21 +24,19 @@ const PrepositionObject = EmberObject.extend({
 
   value: oneWay('model.id'),
 
-  label: computed('model', 'type', async function() {
-    const { model, type } = this.getProperties('model', 'type');
-
-    if (type === 'mesh term') {
-      return model.name;
-    } else if (type === 'term') {
-      const vocabulary = await model.get('vocabulary');
-      const titleWithParentTitles = await model.titleWithParentTitles;
+  label: computed('model.{name,title,titleWithParentTitles}', 'type', async function () {
+    if (this.type === 'mesh term') {
+      return this.model.name;
+    } else if (this.type === 'term') {
+      const vocabulary = await this.model.get('vocabulary');
+      const titleWithParentTitles = await this.model.titleWithParentTitles;
       return `${vocabulary.title} > ${titleWithParentTitles}`;
     } else {
-      return model.title;
+      return this.model.title;
     }
   }),
 
-  active: computed('model', 'type', function() {
+  active: computed('model', 'type', function () {
     const type = this.type;
     if (['session type', 'term'].includes(type)) {
       return this.model.get('active');
@@ -45,7 +44,7 @@ const PrepositionObject = EmberObject.extend({
     return true;
   }),
 
-  academicYear: computed('model', 'type', async function() {
+  academicYear: computed('model', 'type', async function () {
     const type = this.type;
     const model = this.model;
     if (type === 'course') {
@@ -57,7 +56,7 @@ const PrepositionObject = EmberObject.extend({
     }
 
     return null;
-  })
+  }),
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
@@ -80,42 +79,136 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   isCourse: equal('currentPrepositionalObject', 'course'),
   isSession: equal('currentPrepositionalObject', 'session'),
 
-  subjectList: computed('intl.locale', function() {
+  subjectList: computed('intl.locale', function () {
     const list = [
-      {value: 'course', label: this.intl.t('general.courses')},
-      {value: 'session', label: this.intl.t('general.sessions')},
-      {value: 'program', label: this.intl.t('general.programs')},
-      {value: 'program year', label: this.intl.t('general.programYears')},
-      {value: 'instructor', label: this.intl.t('general.instructors')},
-      {value: 'instructor group', label: this.intl.t('general.instructorGroups')},
-      {value: 'learning material', label: this.intl.t('general.learningMaterials')},
-      {value: 'competency', label: this.intl.t('general.competencies')},
-      {value: 'mesh term', label: this.intl.t('general.meshTerms')},
-      {value: 'term', label: this.intl.t('general.terms')},
-      {value: 'session type', label: this.intl.t('general.sessionTypes')},
+      { value: 'course', label: this.intl.t('general.courses') },
+      { value: 'session', label: this.intl.t('general.sessions') },
+      { value: 'program', label: this.intl.t('general.programs') },
+      { value: 'program year', label: this.intl.t('general.programYears') },
+      { value: 'instructor', label: this.intl.t('general.instructors') },
+      {
+        value: 'instructor group',
+        label: this.intl.t('general.instructorGroups'),
+      },
+      {
+        value: 'learning material',
+        label: this.intl.t('general.learningMaterials'),
+      },
+      { value: 'competency', label: this.intl.t('general.competencies') },
+      { value: 'mesh term', label: this.intl.t('general.meshTerms') },
+      { value: 'term', label: this.intl.t('general.terms') },
+      { value: 'session type', label: this.intl.t('general.sessionTypes') },
     ];
 
     return list;
   }),
 
-  prepositionalObjectList: computed('intl.locale', 'currentSubject', function() {
+  prepositionalObjectList: computed('intl.locale', 'currentSubject', function () {
     const list = [
-      {value: 'course', label: this.intl.t('general.course'), subjects: ['session', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'session type', 'term']},
-      {value: 'session', label: this.intl.t('general.session'), subjects: ['course', 'program', 'program year', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'term']},
-      {value: 'program year', label: this.intl.t('general.programYear'), subjects: ['term']},
-      {value: 'program', label: this.intl.t('general.program'), subjects: ['course', 'session', 'session type', 'term']},
-      {value: 'instructor', label: this.intl.t('general.instructor'), subjects: ['course', 'session', 'instructor group', 'learning material', 'session type', 'term']},
-      {value: 'instructor group', label: this.intl.t('general.instructorGroup'), subjects: ['course', 'session', 'instructor', 'learning material', 'session type']},
-      {value: 'learning material', label: this.intl.t('general.learningMaterial'), subjects: ['course', 'session', 'instructor', 'instructor group', 'mesh term', 'session type', 'term']},
-      {value: 'competency', label: this.intl.t('general.competency'), subjects: ['course', 'session', 'session type', 'term']},
-      {value: 'mesh term', label: this.intl.t('general.meshTerm'), subjects: ['course', 'session', 'learning material', 'session type', 'term']},
-      {value: 'session type', label: this.intl.t('general.sessionType'), subjects: ['session', 'instructor', 'instructor group', 'learning material', 'competency', 'mesh term', 'term']},
-      {value: 'term', label: this.intl.t('general.term'), subjects: ['course', 'session', 'program', 'program year', 'session type']},
+      {
+        value: 'course',
+        label: this.intl.t('general.course'),
+        subjects: [
+          'session',
+          'program',
+          'program year',
+          'instructor',
+          'instructor group',
+          'learning material',
+          'competency',
+          'mesh term',
+          'session type',
+          'term',
+        ],
+      },
+      {
+        value: 'session',
+        label: this.intl.t('general.session'),
+        subjects: [
+          'course',
+          'program',
+          'program year',
+          'instructor',
+          'instructor group',
+          'learning material',
+          'competency',
+          'mesh term',
+          'term',
+        ],
+      },
+      {
+        value: 'program year',
+        label: this.intl.t('general.programYear'),
+        subjects: ['term'],
+      },
+      {
+        value: 'program',
+        label: this.intl.t('general.program'),
+        subjects: ['course', 'session', 'session type', 'term'],
+      },
+      {
+        value: 'instructor',
+        label: this.intl.t('general.instructor'),
+        subjects: [
+          'course',
+          'session',
+          'instructor group',
+          'learning material',
+          'session type',
+          'term',
+        ],
+      },
+      {
+        value: 'instructor group',
+        label: this.intl.t('general.instructorGroup'),
+        subjects: ['course', 'session', 'instructor', 'learning material', 'session type'],
+      },
+      {
+        value: 'learning material',
+        label: this.intl.t('general.learningMaterial'),
+        subjects: [
+          'course',
+          'session',
+          'instructor',
+          'instructor group',
+          'mesh term',
+          'session type',
+          'term',
+        ],
+      },
+      {
+        value: 'competency',
+        label: this.intl.t('general.competency'),
+        subjects: ['course', 'session', 'session type', 'term'],
+      },
+      {
+        value: 'mesh term',
+        label: this.intl.t('general.meshTerm'),
+        subjects: ['course', 'session', 'learning material', 'session type', 'term'],
+      },
+      {
+        value: 'session type',
+        label: this.intl.t('general.sessionType'),
+        subjects: [
+          'session',
+          'instructor',
+          'instructor group',
+          'learning material',
+          'competency',
+          'mesh term',
+          'term',
+        ],
+      },
+      {
+        value: 'term',
+        label: this.intl.t('general.term'),
+        subjects: ['course', 'session', 'program', 'program year', 'session type'],
+      },
     ];
 
     const subject = this.currentSubject;
 
-    return list.filter(item =>item.subjects.includes(subject));
+    return list.filter((item) => item.subjects.includes(subject));
   }),
 
   /**
@@ -124,61 +217,67 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @type {Ember.computed}
    * @public
    */
-  prepositionalObjectIdList: computed('currentPrepositionalObject', 'currentSchool', async function() {
-    const type = this.currentPrepositionalObject;
-    if (isEmpty(type) || type === 'instructor' || type === 'mesh term') {
-      return [];
-    }
+  prepositionalObjectIdList: computed(
+    'currentPrepositionalObject',
+    'currentSchool',
+    'isCourse',
+    'isSession',
+    async function () {
+      const type = this.currentPrepositionalObject;
+      if (isEmpty(type) || type === 'instructor' || type === 'mesh term') {
+        return [];
+      }
 
-    const model = type.dasherize();
-    const store = this.store;
-    const school = await this.currentSchool;
-    const query = {
-      filters: {}
-    };
-    if (isPresent(school)) {
-      const schoolScopedModels = [
-        'session',
-        'course',
-        'program',
-        'session-type',
-        'instructor-group',
-        'competency',
-        'term',
-      ];
-      if (schoolScopedModels.includes(model)) {
-        if ('session' === model || 'term' == model) {
-          query.filters.schools = [school.get('id')];
-        } else {
-          query.filters.school = school.get('id');
+      const model = dasherize(type);
+      const store = this.store;
+      const school = await this.currentSchool;
+      const query = {
+        filters: {},
+      };
+      if (isPresent(school)) {
+        const schoolScopedModels = [
+          'session',
+          'course',
+          'program',
+          'session-type',
+          'instructor-group',
+          'competency',
+          'term',
+        ];
+        if (schoolScopedModels.includes(model)) {
+          if ('session' === model || 'term' == model) {
+            query.filters.schools = [school.get('id')];
+          } else {
+            query.filters.school = school.get('id');
+          }
         }
       }
-    }
-    const objects = await store.query(model, query);
-    const values = objects.map(object => {
-      return PrepositionObject.create({
-        type,
-        model: object,
+      const objects = await store.query(model, query);
+      const values = objects.map((object) => {
+        return PrepositionObject.create({
+          type,
+          model: object,
+        });
       });
-    });
 
-    return await map(values, async (obj) => {
-      const academicYear = await obj.academicYear;
-      const label = await obj.label;
-      const { active, value } = obj;
-      const payload = { academicYear, active, label, value };
+      return await map(values, async (obj) => {
+        const academicYear = await obj.academicYear;
+        const label = await obj.label;
+        const { active, value } = obj;
+        const payload = { academicYear, active, label, value };
 
-      if (this.isCourse) {
-        payload.externalId = obj.model.externalId;
-      }
+        if (this.isCourse) {
+          payload.externalId = obj.model.externalId;
+        }
 
-      if (this.isSession) {
-        payload.courseTitle = obj.model.course.get('title');
-      }
+        if (this.isSession) {
+          payload.courseTitle = obj.model.course.get('title');
+        }
 
-      return payload;
-    });
-  }),
+        return payload;
+      });
+    }
+  ),
 
   /**
    * Filtered List of prepositional objects
@@ -186,50 +285,53 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @type {Ember.computed}
    * @public
    */
-  filteredPrepositionalObjectIdList: computed('prepositionalObjectIdList.[]', 'selectedYear', async function() {
-    const selectedYear = this.selectedYear?parseInt(this.selectedYear, 10): null;
-    const objects = await this.prepositionalObjectIdList;
-    const type = this.currentPrepositionalObject;
+  filteredPrepositionalObjectIdList: computed(
+    'currentPrepositionalObject',
+    'prepositionalObjectIdList.[]',
+    'selectedYear',
+    async function () {
+      const selectedYear = this.selectedYear ? parseInt(this.selectedYear, 10) : null;
+      const objects = await this.prepositionalObjectIdList;
+      const type = this.currentPrepositionalObject;
 
-    return objects.filter(obj => {
-      if (isEmpty(selectedYear) || !['course', 'session'].includes(type)) {
-        return true;
-      }
+      return objects.filter((obj) => {
+        if (isEmpty(selectedYear) || !['course', 'session'].includes(type)) {
+          return true;
+        }
 
-      return obj.academicYear === selectedYear;
-    });
-  }),
+        return obj.academicYear === selectedYear;
+      });
+    }
+  ),
 
-  currentSubjectLabel: computed('currentSubject', 'subjectList.[]', function() {
+  currentSubjectLabel: computed('currentSubject', 'subjectList.[]', function () {
     const currentSubjectValue = this.currentSubject;
-    const currentSubject = this.subjectList.find(subject => {
+    const currentSubject = this.subjectList.find((subject) => {
       return subject.value === currentSubjectValue;
     });
 
     return currentSubject.label;
   }),
 
-  selectedUser: computed('currentPrepositionalObject', 'currentPrepositionalObjectId', function() {
-    if(
-      this.currentPrepositionalObject === 'instructor' &&
-      this.currentPrepositionalObjectId
-    ){
+  selectedUser: computed('currentPrepositionalObject', 'currentPrepositionalObjectId', function () {
+    if (this.currentPrepositionalObject === 'instructor' && this.currentPrepositionalObjectId) {
       return this.store.peekRecord('user', this.currentPrepositionalObjectId);
     } else {
       return null;
     }
   }),
 
-  selectedMeshTerm: computed('currentPrepositionalObject', 'currentPrepositionalObjectId', function() {
-    if(
-      this.currentPrepositionalObject === 'mesh term' &&
-      this.currentPrepositionalObjectId
-    ){
-      return this.store.peekRecord('mesh-descriptor', this.currentPrepositionalObjectId);
-    } else {
-      return null;
+  selectedMeshTerm: computed(
+    'currentPrepositionalObject',
+    'currentPrepositionalObjectId',
+    function () {
+      if (this.currentPrepositionalObject === 'mesh term' && this.currentPrepositionalObjectId) {
+        return this.store.peekRecord('mesh-descriptor', this.currentPrepositionalObjectId);
+      } else {
+        return null;
+      }
     }
-  }),
+  ),
 
   /**
    * All schools, sorted by title.
@@ -237,33 +339,38 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @type {Ember.computed}
    * @public
    */
-  schoolList: computed(async function() {
+  schoolList: computed(async function () {
     const store = this.store;
 
     const schools = await store.findAll('school');
     return schools.sortBy('title');
   }),
 
-  currentSchool: computed('currentUser.model.school', 'selectedSchool', async function() {
-    const selectedSchool = this.selectedSchool;
-    const schoolChanged = this.schoolChanged;
-    if (isPresent(selectedSchool)) {
-      return selectedSchool;
+  currentSchool: computed(
+    'currentUser.model.school',
+    'schoolChanged',
+    'selectedSchool',
+    async function () {
+      const selectedSchool = this.selectedSchool;
+      const schoolChanged = this.schoolChanged;
+      if (isPresent(selectedSchool)) {
+        return selectedSchool;
+      }
+
+      //if the school has been set to null intentionally
+      if (schoolChanged) {
+        return null;
+      }
+
+      const currentUser = this.currentUser;
+      const user = await currentUser.get('model');
+      const school = await user.get('school');
+
+      return school;
     }
+  ),
 
-    //if the school has been set to null intentionally
-    if (schoolChanged) {
-      return null;
-    }
-
-    const currentUser = this.currentUser;
-    const user = await currentUser.get('model');
-    const school = await user.get('school');
-
-    return school;
-  }),
-
-  allAcademicYears: computed(async function() {
+  allAcademicYears: computed(async function () {
     const store = this.store;
     const years = await store.findAll('academic-year');
 
@@ -303,7 +410,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     closeEditor() {
       this.close();
-    }
+    },
   },
 
   keyUp(event) {
@@ -314,15 +421,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       return;
     }
 
-    if(27 === keyCode) {
+    if (27 === keyCode) {
       this.close();
     }
   },
 
-  save: task(function*() {
+  save: task(function* () {
     this.set('isSaving', true);
     this.send('addErrorDisplayFor', 'title');
-    const {validations} = yield this.validate();
+    const { validations } = yield this.validate();
     if (validations.get('isInvalid')) {
       return;
     }
@@ -346,9 +453,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         return;
       }
     }
-    if (
-      object && isEmpty(prepositionalObjectTableRowId)
-    ) {
+    if (object && isEmpty(prepositionalObjectTableRowId)) {
       if (object === 'instructor') {
         flashMessages.alert('general.reportMissingInstructor');
       }
@@ -364,7 +469,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       subject,
       prepositionalObject,
       prepositionalObjectTableRowId,
-      school
+      school,
     });
     yield report.save();
     this.send('clearErrorDisplay', 'title');
@@ -381,8 +486,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
   resetCurrentPrepositionalObjectId: task(function* () {
     const list = yield this.filteredPrepositionalObjectIdList;
     const first = list.get('firstObject');
-    if(first){
+    if (first) {
       this.set('currentPrepositionalObjectId', first.value);
     }
-  }).restartable()
+  }).restartable(),
 });

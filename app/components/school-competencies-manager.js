@@ -3,23 +3,23 @@ import { action } from '@ember/object';
 
 export default class SchoolCompetenciesManagerComponent extends Component {
   get domains() {
-    if(!this.args.competencies){
+    if (!this.args.competencies) {
       return [];
     }
     const domains = this.args.competencies.filterBy('isDomain');
-    const objs = domains.uniq().map(domain => {
-      if (! domain.id) {
+    const objs = domains.uniq().map((domain) => {
+      if (!domain.id) {
         return {
           domain,
-          competencies: []
+          competencies: [],
         };
       }
       const domainCompetencies = this.args.competencies.filter(
-        competency => competency.belongsTo('parent').id() === domain.id
+        (competency) => competency.belongsTo('parent').id() === domain.id
       );
       return {
         domain,
-        competencies: domainCompetencies.sortBy('title')
+        competencies: domainCompetencies.sortBy('title'),
       };
     });
 

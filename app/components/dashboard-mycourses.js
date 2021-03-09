@@ -15,7 +15,8 @@ export default class DashboardMyCoursesComponent extends Component {
   *load() {
     this.canEditCourses = this.currentUser.performsNonLearnerFunction;
     this.listOfCourses = yield this.currentUser.getActiveRelatedCoursesInThisYearAndLastYear();
-    this.academicYearCrossesCalendarYearBoundaries
-      = yield this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
+    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+      'academicYearCrossesCalendarYearBoundaries'
+    );
   }
 }

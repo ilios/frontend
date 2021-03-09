@@ -4,7 +4,9 @@ import {
   collection,
   fillable,
   text,
-  value, isVisible, triggerable,
+  value,
+  isVisible,
+  triggerable,
 } from 'ember-cli-page-object';
 
 const definition = {
@@ -24,7 +26,7 @@ const definition = {
       cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
     },
     submit: clickable('[data-test-submit]'),
-    cancel: clickable('[data-test-cancel]')
+    cancel: clickable('[data-test-cancel]'),
   },
   savedVocabulary: {
     scope: '[data-test-saved-vocabulary]',
@@ -37,13 +39,13 @@ const definition = {
     termsCount: text('[data-test-terms-count]'),
     manage: clickable('[data-test-manage]'),
     delete: clickable('[data-test-delete]'),
-    hasDeleteButton: isVisible('[data-test-delete]')
+    hasDeleteButton: isVisible('[data-test-delete]'),
   }),
   deletionConfirmation: {
     scope: '[data-test-confirm-removal]',
     submit: clickable('[data-test-submit-removal]'),
     cancel: clickable('[data-test-cancel-removal]'),
-  }
+  },
 };
 
 export default definition;

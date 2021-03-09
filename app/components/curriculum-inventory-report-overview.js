@@ -36,20 +36,20 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
     return this.year;
   }
 
-
   @restartableTask
   *load() {
     const currentYear = new Date().getFullYear();
     const program = yield this.args.report.program;
     const school = yield program.school;
-    this.academicYearCrossesCalendarYearBoundaries
-      = yield this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
+    this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
+      'academicYearCrossesCalendarYearBoundaries'
+    );
     this.canRollover = yield this.permissionChecker.canCreateCurriculumInventoryReport(school);
     const yearOptions = [];
     for (let i = currentYear - 5, n = currentYear + 5; i <= n; i++) {
       yearOptions.push({
         id: `${i}`,
-        title: this.academicYearCrossesCalendarYearBoundaries ? `${i} - ${i + 1}` : `${i}`
+        title: this.academicYearCrossesCalendarYearBoundaries ? `${i} - ${i + 1}` : `${i}`,
       });
     }
     this.yearOptions = yearOptions;
@@ -57,14 +57,13 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
     this.year = this.args.report.year;
     this.startDate = this.args.report.startDate;
     this.endDate = this.args.report.endDate;
-
   }
 
   @dropTask
   *changeStartDate() {
     this.addErrorDisplayFor('startDate');
     const isValid = yield this.isValid();
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('startDate');
@@ -82,7 +81,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
   *changeEndDate() {
     this.addErrorDisplayFor('endDate');
     const isValid = yield this.isValid();
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('endDate');
@@ -103,7 +102,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
   }
 
   @action
-  revertYearChanges(){
+  revertYearChanges() {
     this.year = this.args.report.year;
   }
 
@@ -111,7 +110,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
   *changeDescription() {
     this.addErrorDisplayFor('description');
     const isValid = yield this.isValid();
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('description');
@@ -120,7 +119,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
   }
 
   @action
-  revertDescriptionChanges(){
+  revertDescriptionChanges() {
     this.description = this.args.report.description;
   }
 

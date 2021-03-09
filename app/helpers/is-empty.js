@@ -11,16 +11,16 @@ export function isEmpty(params) {
 export default Helper.extend({
   value1: null,
 
-  compute([ value1 ]) {
+  compute([value1]) {
     this.setProperties({ value1 });
 
-    return isEmpty([ value1 ]);
+    return isEmpty([value1]);
   },
 
   /* eslint ember/no-observers: 0 */
-  recomputeOnArrayChange: observer('value1', function() {
+  recomputeOnArrayChange: observer('value1', function () {
     once(this, () => {
       this.recompute();
     });
-  })
+  }),
 });

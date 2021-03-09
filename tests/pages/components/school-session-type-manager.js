@@ -5,7 +5,7 @@ import form from 'ilios/tests/pages/components/school-session-type-form';
 const definition = {
   scope: '[data-test-school-session-type-manager]',
   title: text('[data-test-school-session-type-manager-title]'),
-  form
+  form,
 };
 
 export default definition;

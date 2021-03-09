@@ -4,11 +4,11 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Integration | Component | visualizer-program-year-competencies', function(hooks) {
+module('Integration | Component | visualizer-program-year-competencies', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     const domain1 = this.server.create('competency');
     const domain2 = this.server.create('competency');
     const competency1 = this.server.create('competency', {
@@ -30,19 +30,19 @@ module('Integration | Component | visualizer-program-year-competencies', functio
     });
     const programYearObjective1 = this.server.create('program-year-objective', {
       programYear,
-      competency: competency1
+      competency: competency1,
     });
     const programYearObjective2 = this.server.create('program-year-objective', {
       programYear,
-      competency: competency2
+      competency: competency2,
     });
     const programYearObjective3 = this.server.create('program-year-objective', {
       programYear,
-      competency: competency3
+      competency: competency3,
     });
     const programYearObjective4 = this.server.create('program-year-objective', {
       programYear,
-      competency: competency1
+      competency: competency1,
     });
     const course = this.server.create('course', {
       cohorts: [cohort],
@@ -64,13 +64,15 @@ module('Integration | Component | visualizer-program-year-competencies', functio
     });
     this.server.create('session-objective', {
       session,
-      courseObjectives: [courseObjective1]
+      courseObjectives: [courseObjective1],
     });
     this.server.create('session-objective', {
       session,
-      courseObjectives: [courseObjective2]
+      courseObjectives: [courseObjective2],
     });
-    const programYearModel = await this.owner.lookup('service:store').find('program-year', programYear.id);
+    const programYearModel = await this.owner
+      .lookup('service:store')
+      .find('program-year', programYear.id);
     this.set('programYear', programYearModel);
     await render(hbs`<VisualizerProgramYearCompetencies @programYear={{this.programYear}} />`);
 

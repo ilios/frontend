@@ -6,15 +6,15 @@ module.exports = function (deployTarget) {
     build: {},
     pipeline: {
       runOrder: {
-        'archive': { after: ['gzip', 'brotli'] },
+        archive: { after: ['gzip', 'brotli'] },
       },
     },
     's3-index': {
       region: 'us-west-2',
-      filePattern(context){
+      filePattern(context) {
         return context.archiveName;
       },
-      distDir(context){
+      distDir(context) {
         return context.archivePath;
       },
     },
@@ -25,7 +25,7 @@ module.exports = function (deployTarget) {
       archiveName: 'frontend.tar.gz',
     },
     cloudfront: {
-      objectPaths(context){
+      objectPaths(context) {
         return `/${context.archiveName}`;
       },
     },
@@ -56,7 +56,7 @@ module.exports = function (deployTarget) {
         };
 
         return jsonBlueprint;
-      }
+      },
     },
     gzip: {
       filePattern: '**/*.{js,css,json,ico,map,xml,txt,svg,eot,ttf,webmanifest}',
@@ -86,7 +86,7 @@ module.exports = function (deployTarget) {
   if (deployTarget === 'development') {
     ENV.pipeline.disabled = {
       's3-index': true,
-      'cloudfront': true,
+      cloudfront: true,
     };
   }
 

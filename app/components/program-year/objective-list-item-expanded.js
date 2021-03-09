@@ -13,13 +13,13 @@ export default class ProgramYearObjectiveListItemExpandedComponent extends Compo
       return;
     }
     const courseObjectives = (yield programYearObjective.courseObjectives).toArray();
-    const objectiveObjects = yield map(courseObjectives, async courseObjective => {
+    const objectiveObjects = yield map(courseObjectives, async (courseObjective) => {
       const course = await courseObjective.course;
       return {
         title: courseObjective.title,
         courseId: course.id,
         courseTitle: course.title,
-        courseExternalId: course.externalId
+        courseExternalId: course.externalId,
       };
     });
     this.courseObjects = objectiveObjects.reduce((set, obj) => {
@@ -32,12 +32,12 @@ export default class ProgramYearObjectiveListItemExpandedComponent extends Compo
         existing = {
           id: obj.courseId,
           title,
-          objectives: []
+          objectives: [],
         };
         set.pushObject(existing);
       }
       existing.objectives.pushObject({
-        title: htmlSafe(obj.title)
+        title: htmlSafe(obj.title),
       });
       return set;
     }, []);

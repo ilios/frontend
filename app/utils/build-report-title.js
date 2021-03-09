@@ -1,3 +1,5 @@
+import { dasherize } from '@ember/string';
+
 export default async function buildReportTitle(report, store, intl) {
   const title = report.title;
   if (title) {
@@ -9,14 +11,14 @@ export default async function buildReportTitle(report, store, intl) {
   const prepositionalObject = report.prepositionalObject;
 
   const school = await report.school;
-  const schoolTitle = school?school.get('title'):intl.t('general.allSchools');
+  const schoolTitle = school ? school.title : intl.t('general.allSchools');
 
   if (prepositionalObject) {
-    let model = prepositionalObject.dasherize();
-    if(model === 'instructor'){
+    let model = dasherize(prepositionalObject);
+    if (model === 'instructor') {
       model = 'user';
     }
-    if(model === 'mesh-term'){
+    if (model === 'mesh-term') {
       model = 'mesh-descriptor';
     }
     const prepositionalObjectTableRowId = report.get('prepositionalObjectTableRowId');
@@ -29,9 +31,9 @@ export default async function buildReportTitle(report, store, intl) {
     }
 
     let object;
-    if(model === 'user'){
+    if (model === 'user') {
       object = record.fullName;
-    } else if(model === 'mesh-descriptor'){
+    } else if (model === 'mesh-descriptor') {
       object = record.name;
     } else {
       object = record.title;
@@ -40,26 +42,26 @@ export default async function buildReportTitle(report, store, intl) {
     return intl.t('general.reportDisplayTitleWithObject', {
       subject: subjectTranslation,
       object,
-      school: schoolTitle
+      school: schoolTitle,
     });
   }
 
   return intl.t('general.reportDisplayTitleWithoutObject', {
     subject: subjectTranslation,
-    school: schoolTitle
+    school: schoolTitle,
   });
 }
 
 const subjectTranslations = {
-  'course': 'general.courses',
-  'session': 'general.sessions',
-  'program': 'general.programs',
+  course: 'general.courses',
+  session: 'general.sessions',
+  program: 'general.programs',
   'program year': 'general.programYears',
-  'instructor': 'general.instructors',
+  instructor: 'general.instructors',
   'instructor group': 'general.instructorGroups',
   'learning material': 'general.learningMaterials',
-  'competency': 'general.competencies',
+  competency: 'general.competencies',
   'mesh term': 'general.meshTerms',
-  'term': 'general.terms',
+  term: 'general.terms',
   'session type': 'general.sessionTypes',
 };

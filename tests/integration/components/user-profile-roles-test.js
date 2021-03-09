@@ -4,16 +4,16 @@ import { render, click, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Integration | Component | user profile roles', function(hooks) {
+module('Integration | Component | user profile roles', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     this.formerStudentRole = this.server.create('user-role', {
-      title: 'Former Student'
+      title: 'Former Student',
     });
     this.studentRole = this.server.create('user-role', {
-      title: 'Student'
+      title: 'Student',
     });
   });
 
@@ -51,7 +51,7 @@ module('Integration | Component | user profile roles', function(hooks) {
   });
 
   // @link https://github.com/ilios/frontend/issues/3899
-  test('check root flag', async function(assert) {
+  test('check root flag', async function (assert) {
     const user = this.server.create('user', {
       root: true,
       roles: [this.studentRole],
@@ -66,7 +66,7 @@ module('Integration | Component | user profile roles', function(hooks) {
     assert.dom(root).hasClass('yes');
   });
 
-  test('clicking manage sends the action', async function(assert) {
+  test('clicking manage sends the action', async function (assert) {
     assert.expect(1);
     const user = this.server.create('user', {
       root: true,
@@ -74,15 +74,17 @@ module('Integration | Component | user profile roles', function(hooks) {
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
     this.set('user', userModel);
-    this.set('click', (what) =>{
+    this.set('click', (what) => {
       assert.ok(what, 'recieved boolean true value');
     });
-    await render(hbs`<UserProfileRoles @user={{user}} @isManageable={{true}} @setIsManaging={{action click}} />`);
+    await render(
+      hbs`<UserProfileRoles @user={{user}} @isManageable={{true}} @setIsManaging={{action click}} />`
+    );
     const manage = 'button.manage';
     await click(manage);
   });
 
-  test('can edit user roles', async function(assert) {
+  test('can edit user roles', async function (assert) {
     assert.expect(8);
     const user = this.server.create('user', {
       root: true,
@@ -93,7 +95,9 @@ module('Integration | Component | user profile roles', function(hooks) {
     this.set('user', userModel);
     this.set('nothing', parseInt);
 
-    await render(hbs`<UserProfileRoles @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`);
+    await render(
+      hbs`<UserProfileRoles @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+    );
     const inputs = findAll('input');
     const formerStudent = '[data-test-former-student] input';
     const enabled = '[data-test-enabled] input';

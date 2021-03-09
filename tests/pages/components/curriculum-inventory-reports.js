@@ -1,4 +1,13 @@
-import { clickable, collection, create, fillable, isPresent, property, text, value } from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  fillable,
+  isPresent,
+  property,
+  text,
+  value,
+} from 'ember-cli-page-object';
 import newReport from './new-curriculum-inventory-report';
 import reports from './curriculum-inventory-report-list';
 
@@ -14,7 +23,7 @@ const definition = {
     }),
     select: fillable('select'),
     value: value('select'),
-    isSelectable: isPresent('select')
+    isSelectable: isPresent('select'),
   },
   programs: {
     scope: '[data-test-programs-filter]',
@@ -23,7 +32,7 @@ const definition = {
     }),
     select: fillable('select'),
     value: value('select'),
-    isSelectable: isPresent('select')
+    isSelectable: isPresent('select'),
   },
   savedResult: text('[data-test-saved-results]'),
 };

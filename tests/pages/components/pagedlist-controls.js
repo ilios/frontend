@@ -1,4 +1,11 @@
-import { clickable, collection, create, fillable, isPresent, property } from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  fillable,
+  isPresent,
+  property,
+} from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-pagedlist-controls]',
@@ -7,15 +14,15 @@ const definition = {
   canGoBack: isPresent('[data-test-go-back]'),
   canGoForward: isPresent('[data-test-go-forward]'),
   pagerDetails: {
-    scope: '[data-test-paged-results-count]'
+    scope: '[data-test-paged-results-count]',
   },
   limit: {
     scope: '[data-test-limits]',
     set: fillable(),
     options: collection('[data-test-limit]', {
-      selected: property('selected')
+      selected: property('selected'),
     }),
-  }
+  },
 };
 
 export default definition;

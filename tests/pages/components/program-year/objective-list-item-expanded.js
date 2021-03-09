@@ -1,9 +1,4 @@
-import {
-  create,
-  collection,
-  isPresent,
-  text,
-} from 'ember-cli-page-object';
+import { create, collection, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   headers: collection('thead th'),

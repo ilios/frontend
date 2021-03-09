@@ -19,7 +19,7 @@ export default class SchoolManagerComponent extends Component {
   *changeTitle() {
     this.addErrorDisplayFor('title');
     const isValid = yield this.isValid();
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     this.removeErrorDisplayFor('title');
@@ -36,7 +36,7 @@ export default class SchoolManagerComponent extends Component {
 
   @action
   async saveInstitution(institution) {
-    if (! institution.belongsTo('school').id()) {
+    if (!institution.belongsTo('school').id()) {
       institution.school = this.args.school;
     }
     await institution.save();

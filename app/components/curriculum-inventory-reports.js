@@ -55,21 +55,23 @@ export default class CurriculumInventoryReportsComponent extends Component {
 
   @restartableTask
   *load() {
-    if (! this.args.schools) {
+    if (!this.args.schools) {
       return;
     }
     this.sortedSchools = this.args.schools.sortBy('title').toArray();
     this.hasMoreThanOneSchool = this.sortedSchools.length > 1;
 
-    if (! this.args.schoolId) {
+    if (!this.args.schoolId) {
       const user = yield this.currentUser.model;
-      this.selectedSchool =  yield user.school;
+      this.selectedSchool = yield user.school;
     } else {
       this.selectedSchool = this.args.schools.findBy('id', this.args.schoolId);
     }
 
     if (this.selectedSchool) {
-      this.canCreate = yield this.permissionChecker.canCreateCurriculumInventoryReport(this.selectedSchool);
+      this.canCreate = yield this.permissionChecker.canCreateCurriculumInventoryReport(
+        this.selectedSchool
+      );
       const programs = yield this.selectedSchool.programs;
       this.programs = programs.sortBy('title').toArray();
     }

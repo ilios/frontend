@@ -22,19 +22,19 @@ export default Controller.extend({
   hasMoreThanOneSchool: gt('model.schools.length', 1),
   sortedSchools: sort('model.schools', 'sortSchoolsBy'),
 
-  selectedSchool: computed('model.schools.[]', 'model.primarySchool', 'school', function() {
-    const schools = this.get('model.schools');
+  selectedSchool: computed('model.{primarySchool,schools.[]}', 'school', function () {
+    const schools = this.model.schools;
     const schoolId = this.school;
-    if(isPresent(schoolId)){
+    if (isPresent(schoolId)) {
       const school = schools.findBy('id', schoolId);
-      if(school){
+      if (school) {
         return school;
       }
     }
-    return this.get('model.primarySchool');
+    return this.model.primarySchool;
   }),
 
-  allUpdates: computed('selectedSchool', async function() {
+  allUpdates: computed('selectedSchool', async function () {
     const school = this.selectedSchool;
     const filters = { schools: [school.id] };
     const updates = await this.store.query('pending-user-update', { filters });
@@ -43,24 +43,30 @@ export default Controller.extend({
     return updates;
   }),
 
-  displayedUpdates: computed('allUpdates.@each.user', 'filter', 'offset', 'limit', 'deletedUpdates.[]', async function() {
-    const { limit, offset } = this.getProperties('limit', 'offset');
-    const end = limit + offset;
-    const allUpdates = await this.allUpdates;
-    return allUpdates
-      .sortBy('user.fullName')
-      .slice(offset, end)
-      .filter((update) => {
-        const isNotDeleted = !this.deletedUpdates.includes(update);
-        const noUpdateName = isEmpty(update.get('user.fullName'));
-        const filterMatch = update
-          .get('user.fullName')
-          .trim()
-          .toLowerCase()
-          .includes(this.filter.trim().toLowerCase());
-        return isNotDeleted && (noUpdateName || filterMatch);
-      });
-  }),
+  displayedUpdates: computed(
+    'allUpdates.@each.user',
+    'filter',
+    'offset',
+    'limit',
+    'deletedUpdates.[]',
+    async function () {
+      const end = this.limit + this.offset;
+      const allUpdates = await this.allUpdates;
+      return allUpdates
+        .sortBy('user.fullName')
+        .slice(this.offset, end)
+        .filter((update) => {
+          const isNotDeleted = !this.deletedUpdates.includes(update);
+          const noUpdateName = isEmpty(update.get('user.fullName'));
+          const filterMatch = update
+            .get('user.fullName')
+            .trim()
+            .toLowerCase()
+            .includes(this.filter.trim().toLowerCase());
+          return isNotDeleted && (noUpdateName || filterMatch);
+        });
+    }
+  ),
 
   actions: {
     changeSelectedSchool(schoolId) {
@@ -69,7 +75,7 @@ export default Controller.extend({
 
     updateEmailAddress(update) {
       this.updatesBeingSaved.pushObject(update);
-      update.get('user').then(user => {
+      update.get('user').then((user) => {
         user.set('email', update.get('value'));
         user.save().then(() => {
           update.deleteRecord();
@@ -84,10 +90,10 @@ export default Controller.extend({
 
     disableUser(update) {
       this.updatesBeingSaved.pushObject(update);
-      update.get('user').then(user => {
+      update.get('user').then((user) => {
         user.set('enabled', false);
         user.save().then(() => {
-          user.get('pendingUserUpdates').then(updates => {
+          user.get('pendingUserUpdates').then((updates) => {
             updates.invoke('deleteRecord');
             all(updates.invoke('save')).then(() => {
               this.deletedUpdates.pushObject(update);
@@ -101,10 +107,10 @@ export default Controller.extend({
 
     excludeFromSync(update) {
       this.updatesBeingSaved.pushObject(update);
-      update.get('user').then(user => {
+      update.get('user').then((user) => {
         user.set('userSyncIgnore', true);
         user.save().then(() => {
-          user.get('pendingUserUpdates').then(updates => {
+          user.get('pendingUserUpdates').then((updates) => {
             updates.invoke('deleteRecord');
             all(updates.invoke('save')).then(() => {
               this.deletedUpdates.pushObject(update);
@@ -114,6 +120,6 @@ export default Controller.extend({
           });
         });
       });
-    }
-  }
+    },
+  },
 });

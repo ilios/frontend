@@ -1,8 +1,4 @@
-import {
-  create,
-  collection,
-  text,
-} from 'ember-cli-page-object';
+import { create, collection, text } from 'ember-cli-page-object';
 import table1 from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table1';
 import table2 from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table2';
 import table3a from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table3a';

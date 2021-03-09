@@ -5,26 +5,26 @@ import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/school-vocabulary-term-manager';
 
-module('Integration | Component | school vocabulary term manager', function(hooks) {
+module('Integration | Component | school vocabulary term manager', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(11);
 
     const vocabulary = this.server.create('vocabulary');
     const grandParent = this.server.create('term', {
       title: 'grandparent',
-      vocabulary
+      vocabulary,
     });
     const parent = this.server.create('term', {
       vocabulary,
-      parent: grandParent
+      parent: grandParent,
     });
     const term = this.server.create('term', {
       vocabulary,
       parent,
-      description: 'some description'
+      description: 'some description',
     });
     this.server.create('term', {
       parent: term,
@@ -35,7 +35,9 @@ module('Integration | Component | school vocabulary term manager', function(hook
       active: true,
     });
 
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
     const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('term', termModel);
@@ -64,14 +66,16 @@ module('Integration | Component | school vocabulary term manager', function(hook
     assert.equal(component.subTerms.list[1].text, 'term 4 (0)');
   });
 
-  test('activate inactive term', async function(assert) {
+  test('activate inactive term', async function (assert) {
     assert.expect(3);
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', {
       vocabulary,
       active: false,
     });
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
     const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('term', termModel);
@@ -91,14 +95,16 @@ module('Integration | Component | school vocabulary term manager', function(hook
     assert.ok(this.server.db.terms[0].active);
   });
 
-  test('inactivate active term', async function(assert) {
+  test('inactivate active term', async function (assert) {
     assert.expect(3);
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', {
       vocabulary,
       active: true,
     });
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
     const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('term', termModel);
@@ -118,7 +124,7 @@ module('Integration | Component | school vocabulary term manager', function(hook
     assert.notOk(this.server.db.terms[0].active);
   });
 
-  test('change title', async function(assert) {
+  test('change title', async function (assert) {
     assert.expect(2);
 
     const vocabulary = this.server.create('vocabulary');
@@ -126,7 +132,9 @@ module('Integration | Component | school vocabulary term manager', function(hook
       vocabulary,
       active: true,
     });
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
     const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
@@ -147,7 +155,7 @@ module('Integration | Component | school vocabulary term manager', function(hook
     assert.equal(this.server.db.terms[0].title, 'new title');
   });
 
-  test("can't set empty term title", async function(assert) {
+  test("can't set empty term title", async function (assert) {
     assert.expect(5);
 
     const vocabulary = this.server.create('vocabulary');
@@ -155,7 +163,9 @@ module('Integration | Component | school vocabulary term manager', function(hook
       vocabulary,
       active: true,
     });
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
     const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
@@ -179,7 +189,7 @@ module('Integration | Component | school vocabulary term manager', function(hook
     assert.equal(this.server.db.terms[0].title, 'term 0');
   });
 
-  test('prevent duplicate term title', async function(assert) {
+  test('prevent duplicate term title', async function (assert) {
     assert.expect(5);
 
     const vocabulary = this.server.create('vocabulary');
@@ -192,7 +202,9 @@ module('Integration | Component | school vocabulary term manager', function(hook
       title: 'duplicate one',
       vocabulary,
     });
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
     const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
@@ -216,14 +228,16 @@ module('Integration | Component | school vocabulary term manager', function(hook
     assert.equal(this.server.db.terms[0].title, 'term 0');
   });
 
-  test('add term', async function(assert) {
+  test('add term', async function (assert) {
     assert.expect(5);
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', {
       vocabulary,
       active: true,
     });
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
     const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
@@ -248,14 +262,16 @@ module('Integration | Component | school vocabulary term manager', function(hook
     assert.equal(this.server.db.terms[1].vocabularyId, vocabulary.id);
   });
 
-  test("can't add term with empty title", async function(assert) {
+  test("can't add term with empty title", async function (assert) {
     assert.expect(6);
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', {
       vocabulary,
       active: true,
     });
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
     const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('vocabulary', vocabularyModel);
@@ -280,7 +296,7 @@ module('Integration | Component | school vocabulary term manager', function(hook
     assert.equal(component.subTerms.newTermForm.errorMessage, 'This field can not be blank');
   });
 
-  test("can't add term with duplicate title", async function(assert) {
+  test("can't add term with duplicate title", async function (assert) {
     assert.expect(6);
     const vocabulary = this.server.create('vocabulary');
     const term = this.server.create('term', {
@@ -293,8 +309,9 @@ module('Integration | Component | school vocabulary term manager', function(hook
       parent: term,
     });
 
-
-    const vocabularyModel = await this.owner.lookup('service:store').find('vocabulary', vocabulary.id);
+    const vocabularyModel = await this.owner
+      .lookup('service:store')
+      .find('vocabulary', vocabulary.id);
     const termModel = await this.owner.lookup('service:store').find('term', term.id);
 
     this.set('vocabulary', vocabularyModel);

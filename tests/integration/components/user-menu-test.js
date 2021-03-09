@@ -7,7 +7,7 @@ import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | user-menu', function(hooks) {
+module('Integration | Component | user-menu', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -15,7 +15,7 @@ module('Integration | Component | user-menu', function(hooks) {
     await setupAuthentication();
   });
 
-  test('it renders and is accessible', async function(assert) {
+  test('it renders and is accessible', async function (assert) {
     await render(hbs`<UserMenu />`);
 
     await a11yAudit(this.element);
@@ -26,16 +26,15 @@ module('Integration | Component | user-menu', function(hooks) {
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('click opens menu', async function(assert) {
+  test('click opens menu', async function (assert) {
     await render(hbs`<UserMenu />`);
 
     assert.equal(component.links.length, 0);
     await component.toggle.click();
     assert.equal(component.links.length, 3);
-
   });
 
-  test('down opens menu', async function(assert) {
+  test('down opens menu', async function (assert) {
     await render(hbs`<UserMenu />`);
 
     assert.equal(component.links.length, 0);
@@ -43,7 +42,7 @@ module('Integration | Component | user-menu', function(hooks) {
     assert.equal(component.links.length, 3);
   });
 
-  test('escape closes menu', async function(assert) {
+  test('escape closes menu', async function (assert) {
     await render(hbs`<UserMenu />`);
 
     await component.toggle.down();
@@ -52,7 +51,7 @@ module('Integration | Component | user-menu', function(hooks) {
     assert.equal(component.links.length, 0);
   });
 
-  test('click closes menu', async function(assert) {
+  test('click closes menu', async function (assert) {
     await render(hbs`<UserMenu />`);
 
     await component.toggle.down();

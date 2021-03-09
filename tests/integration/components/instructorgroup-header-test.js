@@ -2,26 +2,19 @@ import EmberObject from '@ember/object';
 import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  settled,
-  click,
-  fillIn,
-  find,
-  triggerEvent
-} from '@ember/test-helpers';
+import { render, click, fillIn, find, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
 
-module('Integration | Component | instructorgroup header', function(hooks) {
+module('Integration | Component | instructorgroup header', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(3);
     const instructorGroup = EmberObject.create({
       title: 'lorem ipsum',
-      school: {title: 'medicine'},
+      school: { title: 'medicine' },
       users: [{}, {}, {}],
     });
 
@@ -30,17 +23,17 @@ module('Integration | Component | instructorgroup header', function(hooks) {
 
     assert.dom('.school-title').hasText('medicine >');
     assert.dom('[data-test-group-title]').hasText('lorem ipsum');
-    assert.equal(find('.info').textContent.replace(/\s/g,''), 'Members:3');
+    assert.equal(find('.info').textContent.replace(/\s/g, ''), 'Members:3');
   });
 
-  test('can change title', async function(assert) {
+  test('can change title', async function (assert) {
     assert.expect(3);
     const instructorGroup = EmberObject.create({
       title: 'lorem ipsum',
-      save(){
-        assert.equal(this.get('title'), 'new title');
+      save() {
+        assert.equal(this.title, 'new title');
         return resolve(this);
-      }
+      },
     });
 
     this.set('instructorGroup', instructorGroup);
@@ -55,7 +48,6 @@ module('Integration | Component | instructorgroup header', function(hooks) {
     await triggerEvent('[data-test-group-title] input', 'input');
     await click('[data-test-group-title] .done');
 
-    await settled();
     assert.dom('[data-test-group-title]').hasText('new title');
   });
 });

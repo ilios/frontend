@@ -6,11 +6,11 @@ import { all } from 'rsvp';
 
 const SequenceBlockProxy = ObjectProxy.extend({
   content: null,
-  showRemoveConfirmation: false
+  showRemoveConfirmation: false,
 });
 
 export default Component.extend({
-  tagName: "",
+  tagName: '',
   canUpdate: false,
   editorOn: false,
   isSaving: null,
@@ -20,39 +20,43 @@ export default Component.extend({
   savedBlock: null,
   sequenceBlocks: null,
 
-  isInOrderedSequence: computed('parent', function() {
+  isInOrderedSequence: computed('parent', function () {
     const parent = this.parent;
     return isPresent(parent) && parent.get('isOrdered');
   }),
 
-  sortedBlocks: computed('sequenceBlocks.@each.orderInSequence', 'parent.childSequenceOrder', async function() {
-    const parent = this.parent;
-    const sequenceBlocks = this.sequenceBlocks;
+  sortedBlocks: computed(
+    'sequenceBlocks.@each.orderInSequence',
+    'parent.childSequenceOrder',
+    async function () {
+      const parent = this.parent;
+      const sequenceBlocks = this.sequenceBlocks;
 
-    if (isPresent(parent) && parent.isOrdered) {
-      return sequenceBlocks
-        .sortBy('orderInSequence', 'title', 'id')
-        .map((block) => SequenceBlockProxy.create({ content: block }));
-    } else {
-      if (!sequenceBlocks.length) {
-        return sequenceBlocks;
+      if (isPresent(parent) && parent.isOrdered) {
+        return sequenceBlocks
+          .sortBy('orderInSequence', 'title', 'id')
+          .map((block) => SequenceBlockProxy.create({ content: block }));
       } else {
-        const blockProxies = await all(sequenceBlocks.map(async (block) => {
-          const proxy = ObjectProxy.create({ content: block, level: null });
-          const academicLevel = await block.academicLevel;
-          proxy.set('level', academicLevel.level);
-          return proxy;
-        }));
-        return blockProxies
-          .sortBy('level', 'startDate', 'title', 'id')
-          .map((sortedProxy) => {
+        if (!sequenceBlocks.length) {
+          return sequenceBlocks;
+        } else {
+          const blockProxies = await all(
+            sequenceBlocks.map(async (block) => {
+              const proxy = ObjectProxy.create({ content: block, level: null });
+              const academicLevel = await block.academicLevel;
+              proxy.set('level', academicLevel.level);
+              return proxy;
+            })
+          );
+          return blockProxies.sortBy('level', 'startDate', 'title', 'id').map((sortedProxy) => {
             return SequenceBlockProxy.create({
-              content: sortedProxy.content
+              content: sortedProxy.content,
             });
           });
+        }
       }
     }
-  }),
+  ),
 
   init() {
     this._super(...arguments);
@@ -89,17 +93,17 @@ export default Component.extend({
       const report = this.report;
       const parent = this.parent;
       return block.save().then((savedBlock) => {
-        if (! this.isDestroyed) {
-          this.setProperties({saved: true, savedBlock, isSaving: false, editorOn: false});
+        if (!this.isDestroyed) {
+          this.setProperties({ saved: true, savedBlock, isSaving: false, editorOn: false });
         }
         report.reload().then(() => {
           if (isPresent(parent)) {
-            parent.get('children').then(children => {
+            parent.get('children').then((children) => {
               children.invoke('reload');
             });
           }
         });
       });
-    }
-  }
+    },
+  },
 });

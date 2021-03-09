@@ -10,7 +10,7 @@ const definition = {
   cancel: clickable('[data-test-cancel]'),
   manage: clickable('[data-test-manage]'),
   leadershipManager,
-  leadershipList
+  leadershipList,
 };
 
 export default definition;

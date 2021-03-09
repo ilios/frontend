@@ -5,17 +5,17 @@ import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios/tests/pages/components/school-competencies-list';
 
-module('Integration | Component | school competencies list', function(hooks) {
+module('Integration | Component | school competencies list', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     const domain = this.server.create('competency', { title: 'domain 0' });
     this.server.create('competency', { title: 'competency 0', parent: domain });
     this.server.create('competency', { title: 'competency 1', parent: domain });
     const domainModel = await this.owner.lookup('service:store').find('competency', domain.id);
 
-    this.set('domains', [ domainModel ]);
+    this.set('domains', [domainModel]);
     await render(hbs`<SchoolCompetenciesList @domains={{this.domains}} />`);
 
     assert.equal(component.domains.length, 1);

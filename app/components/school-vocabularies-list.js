@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
-import {dropTask, restartableTask} from 'ember-concurrency';
+import { dropTask, restartableTask } from 'ember-concurrency';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 
 @validatable
@@ -15,7 +15,7 @@ export default class SchoolVocabulariesListComponent extends Component {
   @tracked showNewVocabularyForm = false;
 
   get sortedVocabularies() {
-    if (! this.vocabulariesRelationship) {
+    if (!this.vocabulariesRelationship) {
       return [];
     }
     return this.vocabulariesRelationship.filterBy('isNew', false).sortBy('title').toArray();
@@ -56,18 +56,18 @@ export default class SchoolVocabulariesListComponent extends Component {
   *saveNew() {
     this.addErrorDisplaysFor(['newVocabularyTitle']);
     const isValid = yield this.isValid();
-    if (! isValid) {
+    if (!isValid) {
       return false;
     }
     const vocabulary = this.store.createRecord('vocabulary', {
       title: this.newVocabularyTitle,
       school: this.args.school,
-      active: true
+      active: true,
     });
     const savedVocabulary = yield vocabulary.save();
     this.clearErrorDisplay();
-    this.showNewVocabularyForm =  false;
-    this.newVocabularyTitle =  null;
+    this.showNewVocabularyForm = false;
+    this.newVocabularyTitle = null;
     this.newVocabulary = savedVocabulary;
   }
 

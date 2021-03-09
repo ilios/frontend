@@ -1,18 +1,12 @@
 import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import {
-  render,
-  findAll,
-  find,
-  fillIn,
-  triggerEvent
-} from '@ember/test-helpers';
+import { render, findAll, find, fillIn, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | manage users summary', function(hooks) {
+module('Integration | Component | manage users summary', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     await render(hbs`<ManageUsersSummary @canCreate={{true}} />`);
 
     assert.ok(find('h2').textContent.trim().startsWith('Ilios Users'));
@@ -26,15 +20,23 @@ module('Integration | Component | manage users summary', function(hooks) {
    * have to inject a working router which blows up ember-simple-auth
    * [JJ 3/2017]
    */
-  skip('it renders URLs', function(assert) {
-    this.render(hbs`<ManageUsersSummary />`);
+  skip('it renders URLs', function (assert) {
+    render(hbs`<ManageUsersSummary />`);
 
     assert.notEqual(find('a').href.search(/\/users$/), -1, `${find('a').href} links to /users`);
-    assert.notEqual(findAll('a')[1].href.search(/\/users\?addUser=true$/), -1, `${findAll('a')[1].href} links to /users?addUser=true`);
-    assert.notEqual(findAll('a')[2].href.search(/\/users\?addUsers=true$/), -1, `${findAll('a')[2].href} links to /users?addUsers=true`);
+    assert.notEqual(
+      findAll('a')[1].href.search(/\/users\?addUser=true$/),
+      -1,
+      `${findAll('a')[1].href} links to /users?addUser=true`
+    );
+    assert.notEqual(
+      findAll('a')[2].href.search(/\/users\?addUsers=true$/),
+      -1,
+      `${findAll('a')[2].href} links to /users?addUsers=true`
+    );
   });
 
-  test('show more input prompt', async function(assert) {
+  test('show more input prompt', async function (assert) {
     await render(hbs`<ManageUsersSummary />`);
 
     const userSearch = '.user-search input';

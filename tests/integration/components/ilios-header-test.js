@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'ilios/tests/pages/components/ilios-header';
 
-module('Integration | Component | ilios-header', function(hooks) {
+module('Integration | Component | ilios-header', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders and is accessible', async function (assert) {

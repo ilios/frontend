@@ -8,8 +8,7 @@ export default class ProgramPublicationCheckRoute extends Route {
     this.session.requireAuthentication(transition, 'login');
   }
 
-  async afterModel(model){
+  async afterModel(model) {
     await model.get('programYears');
   }
 }
-

@@ -1,4 +1,4 @@
-import {clickable, create, hasClass, text} from 'ember-cli-page-object';
+import { clickable, create, hasClass, text } from 'ember-cli-page-object';
 import manager from './school-session-attributes-manager';
 
 const definition = {
@@ -32,7 +32,7 @@ const definition = {
       label: text('td:nth-of-type(1)'),
       isEnabled: hasClass('fa-check', 'td:nth-of-type(2) svg'),
       isDisabled: hasClass('fa-ban', 'td:nth-of-type(2) svg'),
-    }
+    },
   },
   manager,
 };

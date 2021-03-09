@@ -14,7 +14,7 @@ export default Controller.extend({
     'schoolSessionTypeDetails',
     'schoolManagedSessionType',
     'schoolNewSessionType',
-    'schoolManageInstitution'
+    'schoolManageInstitution',
   ],
   schoolCompetencyDetails: false,
   schoolManageCompetencies: false,

@@ -3,32 +3,31 @@ import { computed } from '@ember/object';
 import { equal } from '@ember/object/computed';
 
 export default Component.extend({
-  tagName: "",
+  tagName: '',
   page: null,
   results: null,
   size: null,
   onSelectPage() {},
   disablePrev: equal('page', 1),
 
-  disableNext: computed('lastPage', 'page', function() {
+  disableNext: computed('lastPage', 'page', function () {
     return this.lastPage === this.page;
   }),
 
-  lastPage: computed('results', 'size', function() {
+  lastPage: computed('results.length', 'size', function () {
     return Math.ceil(this.results.length / this.size);
   }),
 
-  pages: computed('lastPage', 'page', 'totalPages', function() {
-    const { lastPage, page } = this.getProperties('lastPage', 'page');
-    return lastPage <= 7
-      ? this.simplePages(lastPage)
-      : this.complexPages(lastPage, page);
+  pages: computed('lastPage', 'page', 'totalPages', function () {
+    return this.lastPage <= 7
+      ? this.simplePages(this.lastPage)
+      : this.complexPages(this.lastPage, this.page);
   }),
 
   actions: {
     selectPage(value) {
       this.onSelectPage(this.page + value);
-    }
+    },
   },
 
   simplePages(lastPage) {
@@ -46,10 +45,10 @@ export default Component.extend({
       return [1, 2, 3, 4, 5, '...', lastPage];
     }
 
-    if (page >= (lastPage - 3)) {
+    if (page >= lastPage - 3) {
       return [1, '...', lastPage - 4, lastPage - 3, lastPage - 2, lastPage - 1, lastPage];
     }
 
     return [1, '...', page - 1, page, page + 1, page + 2, '...', lastPage];
-  }
+  },
 });

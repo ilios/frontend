@@ -14,16 +14,16 @@ export default Helper.extend({
   value1: null,
   value2: null,
 
-  compute([ value1 = null, value2 = null ]) {
+  compute([value1 = null, value2 = null]) {
     this.setProperties({ value1, value2 });
 
-    return isEqual([ value1, value2 ]);
+    return isEqual([value1, value2]);
   },
 
   /* eslint ember/no-observers: 0 */
-  recomputeOnArrayChange: observer('value1', 'value2', function() {
+  recomputeOnArrayChange: observer('value1', 'value2', function () {
     once(this, () => {
       this.recompute();
     });
-  })
+  }),
 });

@@ -19,12 +19,17 @@ export default class ProgramYearVisualizationsRoute extends Route {
     return this.loadModel(programYear.id);
   }
 
-  async loadModel(programYearId){
-    if (!( programYearId in this._loadedProgramYears)) {
-      this._loadedProgramYears[programYearId] = this.store.findRecord('program-year', programYearId, {
-        include: 'program,competencies,programYearObjectives.courseObjectives.sessionObjectives.sessions,cohort.courses.courseObjectives,cohort.courses.sessions.sessionObjectives',
-        reload: true,
-      });
+  async loadModel(programYearId) {
+    if (!(programYearId in this._loadedProgramYears)) {
+      this._loadedProgramYears[programYearId] = this.store.findRecord(
+        'program-year',
+        programYearId,
+        {
+          include:
+            'program,competencies,programYearObjectives.courseObjectives.sessionObjectives.sessions,cohort.courses.courseObjectives,cohort.courses.sessions.sessionObjectives',
+          reload: true,
+        }
+      );
     }
 
     return this._loadedProgramYears[programYearId];

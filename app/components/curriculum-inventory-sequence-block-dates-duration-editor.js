@@ -2,18 +2,24 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { restartableTask } from 'ember-concurrency';
-import { ValidateIf } from "class-validator";
-import { validatable, IsInt, Gte, Lte, NotBlank, AfterDate } from 'ilios-common/decorators/validation';
+import { ValidateIf } from 'class-validator';
+import {
+  validatable,
+  IsInt,
+  Gte,
+  Lte,
+  NotBlank,
+  AfterDate,
+} from 'ilios-common/decorators/validation';
 
 @validatable
-export default class CurriculumInventorySequenceBlockDatesDurationEditor extends Component
-{
+export default class CurriculumInventorySequenceBlockDatesDurationEditor extends Component {
   @tracked @NotBlank() @IsInt() @Gte(0) @Lte(1200) duration = null;
-  @tracked @ValidateIf(o => o.hasZeroDuration) @NotBlank() startDate = null;
+  @tracked @ValidateIf((o) => o.hasZeroDuration) @NotBlank() startDate = null;
   @tracked
-  @ValidateIf(o => o.hasZeroDuration || o.startDate)
+  @ValidateIf((o) => o.hasZeroDuration || o.startDate)
   @NotBlank()
-  @AfterDate('startDate', { granularity: 'day'})
+  @AfterDate('startDate', { granularity: 'day' })
   endDate = null;
 
   get hasZeroDuration() {
@@ -21,11 +27,11 @@ export default class CurriculumInventorySequenceBlockDatesDurationEditor extends
     if (Number.isNaN(num)) {
       return false;
     }
-    return (0 === num);
+    return 0 === num;
   }
 
   @action
-  load(element, [ sequenceBlock ]) {
+  load(element, [sequenceBlock]) {
     this.startDate = sequenceBlock.startDate;
     this.endDate = sequenceBlock.endDate;
     this.duration = sequenceBlock.duration;

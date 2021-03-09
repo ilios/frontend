@@ -15,7 +15,7 @@ export default Mixin.create(ValidationErrorDisplay, {
   flashMessages: service(),
   permissionChecker: service(),
 
-  init(){
+  init() {
     this._super(...arguments);
     this.loadCohorts.perform();
   },
@@ -35,16 +35,16 @@ export default Mixin.create(ValidationErrorDisplay, {
   isSaving: false,
   nonStudentMode: true,
 
-  schools: computed(async function(){
+  schools: computed(async function () {
     const permissionChecker = this.permissionChecker;
     const store = this.store;
-    const schools = await store.findAll('school', {reload: true});
-    return filter(schools.toArray(), async school => {
+    const schools = await store.findAll('school', { reload: true });
+    return filter(schools.toArray(), async (school) => {
       return permissionChecker.canCreateUser(school);
     });
   }),
 
-  bestSelectedSchool: computed('schoolId', 'schools.[]', async function() {
+  bestSelectedSchool: computed('currentUser.model', 'schoolId', 'schools.[]', async function () {
     const schoolId = this.schoolId;
     const schools = await this.schools;
 
@@ -60,29 +60,33 @@ export default Mixin.create(ValidationErrorDisplay, {
     return user.school;
   }),
 
-  bestSelectedCohort: computed('bestSelectedSchool.cohorts.[]', 'primaryCohortId', async function() {
-    const primaryCohortId = this.primaryCohortId;
-    const school = await this.bestSelectedSchool;
-    const cohorts = await school.cohorts;
+  bestSelectedCohort: computed(
+    'bestSelectedSchool.cohorts.[]',
+    'primaryCohortId',
+    async function () {
+      const primaryCohortId = this.primaryCohortId;
+      const school = await this.bestSelectedSchool;
+      const cohorts = await school.cohorts;
 
-    if (primaryCohortId) {
-      const currentCohort = cohorts.findBy('id', primaryCohortId);
+      if (primaryCohortId) {
+        const currentCohort = cohorts.findBy('id', primaryCohortId);
 
-      if (currentCohort) {
-        return currentCohort;
+        if (currentCohort) {
+          return currentCohort;
+        }
       }
-    }
 
-    return cohorts.lastObject;
-  }),
+      return cohorts.lastObject;
+    }
+  ),
 
   cohorts: oneWay('loadCohorts.lastSuccessful.value'),
-  loadCohorts: task(function * () {
+  loadCohorts: task(function* () {
     const school = yield this.bestSelectedSchool;
     let cohorts = yield this.store.query('cohort', {
       filters: {
         schools: [school.get('id')],
-      }
+      },
     });
 
     //prefetch programYears and programs so that ember data will coalesce these requests.
@@ -92,10 +96,10 @@ export default Mixin.create(ValidationErrorDisplay, {
     cohorts = cohorts.toArray();
     const all = [];
 
-    for(let i = 0; i < cohorts.length; i++){
+    for (let i = 0; i < cohorts.length; i++) {
       const cohort = cohorts[i];
       const obj = {
-        id: cohort.get('id')
+        id: cohort.get('id'),
       };
       const programYear = yield cohort.get('programYear');
       const program = yield programYear.get('program');
@@ -107,16 +111,25 @@ export default Mixin.create(ValidationErrorDisplay, {
     }
 
     const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
-    return all.filter(obj=> {
+    return all.filter((obj) => {
       const finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
       return finalYear > lastYear;
     });
-
   }).restartable(),
 
-  save: task(function * (){
-    this.send('addErrorDisplaysFor', ['firstName', 'middleName', 'lastName', 'campusId', 'otherId', 'email', 'phone', 'username', 'password']);
-    const {validations} = yield this.validate();
+  save: task(function* () {
+    this.send('addErrorDisplaysFor', [
+      'firstName',
+      'middleName',
+      'lastName',
+      'campusId',
+      'otherId',
+      'email',
+      'phone',
+      'username',
+      'password',
+    ]);
+    const { validations } = yield this.validate();
     if (validations.get('isInvalid')) {
       return;
     }
@@ -131,7 +144,7 @@ export default Mixin.create(ValidationErrorDisplay, {
       username,
       password,
       store,
-      nonStudentMode
+      nonStudentMode,
     } = this;
     const roles = yield store.findAll('user-role');
     const school = yield this.bestSelectedSchool;
@@ -146,7 +159,7 @@ export default Mixin.create(ValidationErrorDisplay, {
       phone,
       school,
       enabled: true,
-      root: false
+      root: false,
     });
     if (!nonStudentMode) {
       user.set('primaryCohort', primaryCohort);
@@ -157,7 +170,7 @@ export default Mixin.create(ValidationErrorDisplay, {
     const authentication = this.store.createRecord('authentication', {
       user,
       username,
-      password
+      password,
     });
     yield authentication.save();
     this.flashMessages.success('general.saved');
@@ -166,12 +179,12 @@ export default Mixin.create(ValidationErrorDisplay, {
   }).drop(),
 
   actions: {
-    setSchool(id){
+    setSchool(id) {
       this.set('schoolId', id);
       this.loadCohorts.perform();
     },
-    setPrimaryCohort(id){
+    setPrimaryCohort(id) {
       this.set('primaryCohortId', id);
-    }
-  }
+    },
+  },
 });

@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios/tests/pages/components/global-search-box';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Integration | Component | global search box', function(hooks) {
+module('Integration | Component | global search box', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -13,20 +13,20 @@ module('Integration | Component | global search box', function(hooks) {
     this.server.get('api/search/v1/curriculum', () => {
       return {
         results: {
-          autocomplete: ['first', 'second', 'third']
-        }
+          autocomplete: ['first', 'second', 'third'],
+        },
       };
     });
   });
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     assert.expect(1);
 
     await render(hbs`<GlobalSearchBox />`);
     assert.dom('input[type=search]').exists({ count: 1 });
   });
 
-  test('clicking search icon focuses input', async function(assert) {
+  test('clicking search icon focuses input', async function (assert) {
     assert.expect(1);
 
     await render(hbs`<GlobalSearchBox />`);
@@ -34,7 +34,7 @@ module('Integration | Component | global search box', function(hooks) {
     assert.ok(component.inputHasFocus);
   });
 
-  test('clicking search searches if there is content', async function(assert) {
+  test('clicking search searches if there is content', async function (assert) {
     assert.expect(1);
 
     this.set('search', (value) => assert.equal(value, 'typed it'));
@@ -43,7 +43,7 @@ module('Integration | Component | global search box', function(hooks) {
     await component.clickIcon();
   });
 
-  test('displays initial passed down value', async function(assert) {
+  test('displays initial passed down value', async function (assert) {
     assert.expect(1);
 
     await render(hbs`<GlobalSearchBox @query="course" />`);
@@ -63,8 +63,8 @@ module('Integration | Component | global search box', function(hooks) {
 
       return {
         results: {
-          autocomplete: ['one', 'two', 'three']
-        }
+          autocomplete: ['one', 'two', 'three'],
+        },
       };
     });
 
@@ -77,7 +77,7 @@ module('Integration | Component | global search box', function(hooks) {
     assert.equal(component.autocompleteResults.length, 3);
   });
 
-  test('clicking enter triggers search', async function(assert) {
+  test('clicking enter triggers search', async function (assert) {
     assert.expect(3);
 
     this.set('search', (value) => {
@@ -90,7 +90,7 @@ module('Integration | Component | global search box', function(hooks) {
     assert.equal(component.autocompleteResults.length, 0);
   });
 
-  test('escape calls clears query', async function(assert) {
+  test('escape calls clears query', async function (assert) {
     assert.expect(3);
 
     await render(hbs`<GlobalSearchBox />`);
@@ -101,7 +101,7 @@ module('Integration | Component | global search box', function(hooks) {
     assert.equal(component.inputValue, '');
   });
 
-  test('vertical triggers work', async function(assert) {
+  test('vertical triggers work', async function (assert) {
     assert.expect(38);
 
     let inputValue = 'first';
@@ -164,7 +164,7 @@ module('Integration | Component | global search box', function(hooks) {
     await component.keyUp.enter();
   });
 
-  test('can empty with backspace', async function(assert) {
+  test('can empty with backspace', async function (assert) {
     assert.expect(3);
     this.set('query', 'test value');
     await render(hbs`<GlobalSearchBox @query={{this.query}} />`);
@@ -175,7 +175,7 @@ module('Integration | Component | global search box', function(hooks) {
     assert.equal(component.inputValue, '');
   });
 
-  test('can empty with backspace after choosing autocomplete', async function(assert) {
+  test('can empty with backspace after choosing autocomplete', async function (assert) {
     assert.expect(4);
     this.set('query', 'test value');
     await render(hbs`<GlobalSearchBox @query={{this.query}} />`);

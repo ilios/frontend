@@ -6,11 +6,11 @@ import a11yAudit from 'ember-a11y-testing/test-support/audit';
 import { component } from 'ilios/tests/pages/components/program-year/objective-list-item-descriptors';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | program-year/objective-list-item-descriptors', function(hooks) {
+module('Integration | Component | program-year/objective-list-item-descriptors', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders and is accessible when managing', async function(assert) {
+  test('it renders and is accessible when managing', async function (assert) {
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
       @objective={{null}}
       @editable={{false}}
@@ -26,9 +26,11 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
     assert.ok(true, 'no a11y errors found!');
   });
 
-  test('it renders and is accessible empty and un-editable', async function(assert) {
+  test('it renders and is accessible empty and un-editable', async function (assert) {
     const objective = this.server.create('programYearObjective');
-    const objectiveModel = await this.owner.lookup('service:store').find('program-year-objective', objective.id);
+    const objectiveModel = await this.owner
+      .lookup('service:store')
+      .find('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
       @objective={{this.objective}}
@@ -49,7 +51,9 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
     const objective = this.server.create('programYearObjective', {
       meshDescriptors,
     });
-    const objectiveModel = await this.owner.lookup('service:store').find('program-year-objective', objective.id);
+    const objectiveModel = await this.owner
+      .lookup('service:store')
+      .find('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
       @objective={{this.objective}}
@@ -72,7 +76,9 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
     const objective = this.server.create('programYearObjective', {
       meshDescriptors,
     });
-    const objectiveModel = await this.owner.lookup('service:store').find('program-year-objective', objective.id);
+    const objectiveModel = await this.owner
+      .lookup('service:store')
+      .find('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
       @objective={{this.objective}}
@@ -96,7 +102,9 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
     const objective = this.server.create('programYearObjective', {
       meshDescriptors,
     });
-    const objectiveModel = await this.owner.lookup('service:store').find('program-year-objective', objective.id);
+    const objectiveModel = await this.owner
+      .lookup('service:store')
+      .find('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     this.set('save', () => {
       assert.ok(true);
@@ -119,7 +127,9 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
     const objective = this.server.create('programYearObjective', {
       meshDescriptors,
     });
-    const objectiveModel = await this.owner.lookup('service:store').find('program-year-objective', objective.id);
+    const objectiveModel = await this.owner
+      .lookup('service:store')
+      .find('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     this.set('cancel', () => {
       assert.ok(true);
@@ -142,7 +152,9 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
     const objective = this.server.create('programYearObjective', {
       meshDescriptors,
     });
-    const objectiveModel = await this.owner.lookup('service:store').find('program-year-objective', objective.id);
+    const objectiveModel = await this.owner
+      .lookup('service:store')
+      .find('program-year-objective', objective.id);
     this.set('objective', objectiveModel);
     this.set('manage', () => {
       assert.ok(true);

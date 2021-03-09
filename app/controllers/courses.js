@@ -18,7 +18,7 @@ export default Controller.extend({
     sortCoursesBy: 'sortBy',
     titleFilter: 'filter',
     year: 'year',
-    userCoursesOnly: 'mycourses'
+    userCoursesOnly: 'mycourses',
   },
 
   deletedCourse: null,
@@ -34,22 +34,28 @@ export default Controller.extend({
 
   hasMoreThanOneSchool: gt('model.schools.length', 1),
 
-  courses: computed('selectedSchool', 'selectedYear', 'deletedCourse', 'newCourse', async function() {
-    const selectedSchool = this.selectedSchool;
-    const selectedYear = await this.selectedYear;
-    if (isEmpty(selectedSchool) || isEmpty(selectedYear)) {
-      return [];
+  courses: computed(
+    'selectedSchool',
+    'selectedYear',
+    'deletedCourse',
+    'newCourse',
+    async function () {
+      const selectedSchool = this.selectedSchool;
+      const selectedYear = await this.selectedYear;
+      if (isEmpty(selectedSchool) || isEmpty(selectedYear)) {
+        return [];
+      }
+
+      const year = parseInt(selectedYear.id, 10);
+      await this.dataLoader.loadSchoolForCourses(selectedSchool.id);
+      const courses = await selectedSchool.courses;
+      return courses.filter((course) => {
+        return course.year === year && !course.archived;
+      });
     }
+  ),
 
-    const year = parseInt(selectedYear.id, 10);
-    await this.dataLoader.loadSchoolForCourses(selectedSchool.id);
-    const courses = await selectedSchool.courses;
-    return courses.filter(course => {
-      return course.year === year && !course.archived;
-    });
-  }),
-
-  allRelatedCourses: computed('currentUser.model.allRelatedCourses.[]', async function() {
+  allRelatedCourses: computed('currentUser.model.allRelatedCourses.[]', async function () {
     const currentUser = this.currentUser;
     const user = await currentUser.model;
     return await user.allRelatedCourses;
@@ -60,63 +66,74 @@ export default Controller.extend({
     'courses.[]',
     'userCoursesOnly',
     'allRelatedCourses.[]',
-    async function() {
+    async function () {
       const titleFilter = this.titleFilter;
-      const title = isBlank(titleFilter) ? '' : titleFilter.trim().toLowerCase() ;
+      const title = isBlank(titleFilter) ? '' : titleFilter.trim().toLowerCase();
       const filterMyCourses = this.userCoursesOnly;
       const courses = await this.courses;
       let filteredCourses;
       if (isEmpty(title)) {
         filteredCourses = courses.sortBy('title');
       } else {
-        filteredCourses = courses.filter(course => {
-          return (isPresent(course.title) && course.title.trim().toLowerCase().includes(title)) ||
-            (isPresent(course.externalId) && course.externalId.trim().toLowerCase().includes(title));
-        }).sortBy('title');
+        filteredCourses = courses
+          .filter((course) => {
+            return (
+              (isPresent(course.title) && course.title.trim().toLowerCase().includes(title)) ||
+              (isPresent(course.externalId) &&
+                course.externalId.trim().toLowerCase().includes(title))
+            );
+          })
+          .sortBy('title');
       }
       if (filterMyCourses) {
         const allRelatedCourses = await this.allRelatedCourses;
-        filteredCourses = filteredCourses.filter(course => allRelatedCourses.includes(course));
+        filteredCourses = filteredCourses.filter((course) => allRelatedCourses.includes(course));
       }
       return filteredCourses;
     }
   ),
 
-  selectedSchool: computed('model.schools.[]', 'schoolId', 'primarySchool', function() {
-    const schools = this.get('model.schools');
-    const primarySchool = this.get('model.primarySchool');
-    const schoolId = this.schoolId;
-    if(isPresent(schoolId)){
-      const school = schools.findBy('id', schoolId);
-      if(school){
-        return school;
+  selectedSchool: computed(
+    'model.{primarySchool,schools.[]}',
+    'primarySchool',
+    'schoolId',
+    function () {
+      const schools = this.model.schools;
+      const primarySchool = this.model.primarySchool;
+      const schoolId = this.schoolId;
+      if (isPresent(schoolId)) {
+        const school = schools.findBy('id', schoolId);
+        if (school) {
+          return school;
+        }
       }
+
+      return primarySchool;
     }
+  ),
 
-    return primarySchool;
-  }),
-
-  selectedYear: computed('model.years.[]', 'year', async function() {
-    const years = this.get('model.years');
-    if(isPresent(this.year)){
-      return years.find(year => year.id === this.year);
+  selectedYear: computed('model.years.[]', 'year', async function () {
+    const years = this.model.years;
+    if (isPresent(this.year)) {
+      return years.find((year) => year.id === this.year);
     }
     let currentYear = parseInt(moment().format('YYYY'), 10);
     const currentMonth = parseInt(moment().format('M'), 10);
-    const academicYearIsCrossingYearBoundaries
-      = await this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries');
-    if(academicYearIsCrossingYearBoundaries && currentMonth < 6){
+    const academicYearIsCrossingYearBoundaries = await this.iliosConfig.itemFromConfig(
+      'academicYearCrossesCalendarYearBoundaries'
+    );
+    if (academicYearIsCrossingYearBoundaries && currentMonth < 6) {
       currentYear--;
     }
-    let defaultYear = years.find(year => parseInt(year.id, 10) === currentYear);
-    if(isEmpty(defaultYear)){
+    let defaultYear = years.find((year) => parseInt(year.id, 10) === currentYear);
+    if (isEmpty(defaultYear)) {
       defaultYear = years.lastObject;
     }
 
     return defaultYear;
   }),
 
-  canCreateCourse: computed('selectedSchool', async function() {
+  canCreateCourse: computed('selectedSchool', async function () {
     const permissionChecker = this.permissionChecker;
     const selectedSchool = this.selectedSchool;
     return permissionChecker.canCreateCourse(selectedSchool);
@@ -166,12 +183,12 @@ export default Controller.extend({
     unlockCourse(course) {
       course.set('locked', false);
       return course.save();
-    }
+    },
   },
 
   changeTitleFilter: task(function* (value) {
     this.set('titleFilter', value);
     yield timeout(250);
     return value;
-  }).restartable()
+  }).restartable(),
 });

@@ -6,45 +6,45 @@ module.exports = function (/* environment, appConfig */) {
   // See https://zonkyio.github.io/ember-web-app for a list of supported properties
 
   return {
-    name: "Ilios",
-    short_name: "Ilios",
-    description: "Curriculum management for the health professions",
-    start_url: "/dashboard",
-    display: "standalone",
-    background_color: "#ffffff",
-    theme_color: "#cc6600",
+    name: 'Ilios',
+    short_name: 'Ilios',
+    description: 'Curriculum management for the health professions',
+    start_url: '/dashboard',
+    display: 'standalone',
+    background_color: '#ffffff',
+    theme_color: '#cc6600',
     icons: [
       //favicon icons get a transparent background
-      ...[16, 32, 48, 96].map(size => ({
+      ...[16, 32, 48, 96].map((size) => ({
         src: `/assets/icons/sunburst-transparent${size}.png`,
         sizes: `${size}x${size}`,
-        type: "image/png",
+        type: 'image/png',
         targets: ['favicon'],
       })),
-      ...[48, 96, 192].map(size => ({
+      ...[48, 96, 192].map((size) => ({
         src: `/assets/icons/sunburst-white-background${size}.png`,
         sizes: `${size}x${size}`,
-        type: "image/png",
+        type: 'image/png',
         targets: ['manifest'],
       })),
       {
-        src: "/assets/icons/sunburst-transparent512.png",
-        sizes: "512x512",
-        type: "image/png",
+        src: '/assets/icons/sunburst-transparent512.png',
+        sizes: '512x512',
+        type: 'image/png',
         targets: ['manifest'],
       },
       // apple icons end up in index.html as link tags so we should limit them to specific ones
       {
-        src: "/assets/icons/sunburst-white-background192.png",
-        sizes: "192x192",
-        type: "image/png",
+        src: '/assets/icons/sunburst-white-background192.png',
+        sizes: '192x192',
+        type: 'image/png',
         targets: ['apple'],
       },
       // MS requires special icon sizes
       {
-        src: "/assets/icons/sunburst-transparent150.png",
-        sizes: "150x150",
-        type: "image/png",
+        src: '/assets/icons/sunburst-transparent150.png',
+        sizes: '150x150',
+        type: 'image/png',
         element: 'square150x150logo',
         targets: ['ms'],
       },
@@ -56,7 +56,7 @@ module.exports = function (/* environment, appConfig */) {
     },
 
     ms: {
-      tileColor: '#2d89ef'
-    }
+      tileColor: '#2d89ef',
+    },
   };
 };

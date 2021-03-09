@@ -2,7 +2,7 @@ import { clickable, collection, create, isVisible, text, value } from 'ember-cli
 import { flatpickrDatePicker } from 'ilios-common';
 
 const definition = {
-  scope: "[data-test-my-profile]",
+  scope: '[data-test-my-profile]',
   name: text('[data-test-name]'),
   userIsStudent: isVisible('[data-test-is-student]'),
   primarySchool: text('[data-test-primary-school]'),
@@ -23,7 +23,7 @@ const definition = {
   invalidateTokensForm: {
     scope: '[data-test-invalidate-tokens-form]',
     submit: clickable('[data-test-invalidate-tokens-submit]'),
-    cancel: clickable('[data-test-invalidate-tokens-cancel]')
+    cancel: clickable('[data-test-invalidate-tokens-cancel]'),
   },
   showCreateNewTokenForm: clickable('[data-test-show-create-new-token]'),
   showInvalidateTokensForm: clickable('[data-test-show-invalidate-tokens]'),

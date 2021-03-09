@@ -6,26 +6,26 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { component } from 'ilios/tests/pages/components/dashboard-myreports';
 
-module('Integration | Component | dashboard myreports', function(hooks) {
+module('Integration | Component | dashboard myreports', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     this.user = this.server.create('user');
     const jwtObject = {
-      'user_id': this.user.id
+      user_id: this.user.id,
     };
     const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
     await authenticateSession({
-      jwt: encodedData
+      jwt: encodedData,
     });
   });
 
-  test('list reports', async function(assert) {
+  test('list reports', async function (assert) {
     assert.expect(4);
     const course = this.server.create('course');
     const session = this.server.create('session', {
-      course
+      course,
     });
     this.server.create('report', {
       title: 'report 0',
@@ -53,7 +53,7 @@ module('Integration | Component | dashboard myreports', function(hooks) {
     assert.equal(component.reports[1].title, 'report 1');
   });
 
-  test('display none when no reports', async function(assert) {
+  test('display none when no reports', async function (assert) {
     assert.expect(3);
     await render(hbs`<DashboardMyreports />`);
     assert.equal(component.title, 'My Reports');
@@ -61,13 +61,13 @@ module('Integration | Component | dashboard myreports', function(hooks) {
     assert.equal(component.reports[0].title, 'None');
   });
 
-  test('year filter works', async function(assert) {
+  test('year filter works', async function (assert) {
     assert.expect(9);
     this.server.create('academic-year', {
-      id: 2015
+      id: 2015,
     });
     this.server.create('academic-year', {
-      id: 2016
+      id: 2016,
     });
     const school = this.server.create('school');
     this.server.create('course', {
@@ -117,12 +117,13 @@ module('Integration | Component | dashboard myreports', function(hooks) {
     assert.equal(component.selectedReport.results[0].text, '2016 course 1');
   });
 
-
-  test('report results show academic year as range if applicable by configuration', async function(assert) {
-    this.server.get('application/config', function() {
-      return { config: {
-        academicYearCrossesCalendarYearBoundaries: true,
-      }};
+  test('report results show academic year as range if applicable by configuration', async function (assert) {
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+        },
+      };
     });
     //override default handler to just return all courses
     this.server.get('api/courses', (schema) => {
@@ -152,10 +153,10 @@ module('Integration | Component | dashboard myreports', function(hooks) {
     assert.equal(component.selectedReport.results[0].text, '2016 - 2017 course 0');
   });
 
-  test('changing year changes select #3839', async function(assert) {
+  test('changing year changes select #3839', async function (assert) {
     assert.expect(5);
     this.server.create('academic-year', {
-      id: 2015
+      id: 2015,
     });
     const school = this.server.create('school');
     this.server.create('course', {

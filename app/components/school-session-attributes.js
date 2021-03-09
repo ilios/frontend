@@ -4,7 +4,6 @@ import { all } from 'rsvp';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, restartableTask } from 'ember-concurrency';
 
-
 export default class SchoolSessionAttributesComponent extends Component {
   @service store;
   @tracked showSessionAttendanceRequiredConfig;
@@ -15,10 +14,19 @@ export default class SchoolSessionAttributesComponent extends Component {
   @restartableTask
   *load(element, [school]) {
     const schoolConfigs = yield school.configurations;
-    this.showSessionAttendanceRequiredConfig = schoolConfigs.findBy('name', 'showSessionAttendanceRequired');
+    this.showSessionAttendanceRequiredConfig = schoolConfigs.findBy(
+      'name',
+      'showSessionAttendanceRequired'
+    );
     this.showSessionSupplementalConfig = schoolConfigs.findBy('name', 'showSessionSupplemental');
-    this.showSessionSpecialAttireRequiredConfig = schoolConfigs.findBy('name', 'showSessionSpecialAttireRequired');
-    this.showSessionSpecialEquipmentRequiredConfig = schoolConfigs.findBy('name', 'showSessionSpecialEquipmentRequired');
+    this.showSessionSpecialAttireRequiredConfig = schoolConfigs.findBy(
+      'name',
+      'showSessionSpecialAttireRequired'
+    );
+    this.showSessionSpecialEquipmentRequiredConfig = schoolConfigs.findBy(
+      'name',
+      'showSessionSpecialEquipmentRequired'
+    );
   }
 
   get showSessionAttendanceRequired() {

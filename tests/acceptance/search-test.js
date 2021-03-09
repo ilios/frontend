@@ -5,20 +5,22 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import page from 'ilios/tests/pages/search';
 
-module('Acceptance | search', function(hooks) {
+module('Acceptance | search', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(async function() {
+  hooks.beforeEach(async function () {
     await setupAuthentication({}, true);
-    this.server.get('application/config', function() {
-      return { config: {
-        searchEnabled: true,
-      }};
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          searchEnabled: true,
+        },
+      };
     });
   });
 
-  test('visiting /search', async function(assert) {
+  test('visiting /search', async function (assert) {
     assert.expect(8);
     const input = 'hello';
 
@@ -29,8 +31,8 @@ module('Acceptance | search', function(hooks) {
       return {
         results: {
           autocomplete: [],
-          courses: []
-        }
+          courses: [],
+        },
       };
     });
 
@@ -43,7 +45,7 @@ module('Acceptance | search', function(hooks) {
     assert.equal(currentURL(), `/search?q=${input}`, 'triggering search updates query param');
   });
 
-  test('search with special chars #4752', async function(assert) {
+  test('search with special chars #4752', async function (assert) {
     assert.expect(4);
 
     const input = 'H&L+foo=bar';
@@ -52,8 +54,8 @@ module('Acceptance | search', function(hooks) {
       return {
         results: {
           autocomplete: [],
-          courses: []
-        }
+          courses: [],
+        },
       };
     });
 
@@ -66,7 +68,7 @@ module('Acceptance | search', function(hooks) {
     assert.equal(find('input.global-search-input').value, input);
   });
 
-  test('search with special chars from dashboard #4752', async function(assert) {
+  test('search with special chars from dashboard #4752', async function (assert) {
     assert.expect(3);
 
     const input = 'H&L+foo=bar';
@@ -75,8 +77,8 @@ module('Acceptance | search', function(hooks) {
       return {
         results: {
           autocomplete: [],
-          courses: []
-        }
+          courses: [],
+        },
       };
     });
     const headerSearchBox = '[data-test-ilios-header] [data-test-global-search-box] input';
@@ -90,7 +92,7 @@ module('Acceptance | search', function(hooks) {
     assert.equal(find(searchBox).value, input);
   });
 
-  test('clicking back from course to search works #4768', async function(assert) {
+  test('clicking back from course to search works #4768', async function (assert) {
     assert.expect(8);
 
     const school = this.server.create('school');
@@ -102,7 +104,7 @@ module('Acceptance | search', function(hooks) {
         title: `course ${i}`,
         year: 2019,
         school: school.title,
-        sessions: []
+        sessions: [],
       });
     }
     const firstInput = 'first';
@@ -111,8 +113,8 @@ module('Acceptance | search', function(hooks) {
       return {
         results: {
           autocomplete: [],
-          courses
-        }
+          courses,
+        },
       };
     });
     await page.visit();
@@ -128,13 +130,13 @@ module('Acceptance | search', function(hooks) {
     assert.equal(currentURL(), `/courses/11`);
     await page.visit({
       page: 2,
-      q: firstInput
+      q: firstInput,
     });
     assert.equal(page.globalSearch.searchResults.length, 10);
     assert.equal(page.globalSearch.searchResults[0].courseTitle, '2019 course 11');
   });
 
-  test('clicking back on search updates results and input #4759', async function(assert) {
+  test('clicking back on search updates results and input #4759', async function (assert) {
     assert.expect(11);
 
     const firstInput = 'first';
@@ -144,26 +146,26 @@ module('Acceptance | search', function(hooks) {
     this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
       if (!queryParams.onlySuggest) {
         switch (searchRun) {
-        case 0:
-          assert.equal(queryParams.q, firstInput, 'first time, first input');
-          break;
-        case 1:
-          assert.equal(queryParams.q, secondInput, 'second time, second input');
-          break;
-        case 2:
-          assert.equal(queryParams.q, firstInput, 'third time, first input');
-          break;
-        default:
-          assert.ok(false, 'Search called too many times');
-          break;
+          case 0:
+            assert.equal(queryParams.q, firstInput, 'first time, first input');
+            break;
+          case 1:
+            assert.equal(queryParams.q, secondInput, 'second time, second input');
+            break;
+          case 2:
+            assert.equal(queryParams.q, firstInput, 'third time, first input');
+            break;
+          default:
+            assert.ok(false, 'Search called too many times');
+            break;
         }
         searchRun++;
       }
       return {
         results: {
           autocomplete: [queryParams.q],
-          courses: []
-        }
+          courses: [],
+        },
       };
     });
     await page.visit();
@@ -182,7 +184,7 @@ module('Acceptance | search', function(hooks) {
     assert.equal(page.searchBox.autocompleteResults.length, 0);
   });
 
-  test('search requires three chars #4769', async function(assert) {
+  test('search requires three chars #4769', async function (assert) {
     assert.expect(3);
     const input = 'br';
 
@@ -194,7 +196,7 @@ module('Acceptance | search', function(hooks) {
     assert.equal(page.searchBox.autocompleteResults[0].text, 'keep typing...');
   });
 
-  test('search requires three chars in URL #4769', async function(assert) {
+  test('search requires three chars in URL #4769', async function (assert) {
     assert.expect(2);
     const input = 'br';
 
@@ -204,7 +206,7 @@ module('Acceptance | search', function(hooks) {
     assert.equal(page.globalSearch.searchResults.length, 0);
   });
 
-  test('school filter in query param', async function(assert) {
+  test('school filter in query param', async function (assert) {
     assert.expect(9);
 
     const schools = this.server.createList('school', 3);
@@ -214,7 +216,7 @@ module('Acceptance | search', function(hooks) {
         title: `Course ${i}`,
         year: 2019,
         school: schools[i].title,
-        sessions: []
+        sessions: [],
       });
     }
 
@@ -222,14 +224,14 @@ module('Acceptance | search', function(hooks) {
       return {
         results: {
           autocomplete: [],
-          courses
-        }
+          courses,
+        },
       };
     });
 
     await page.visit({
       q: 'something',
-      ignoredSchools: '1-3'
+      ignoredSchools: '1-3',
     });
     assert.equal(page.globalSearch.searchResults.length, 1);
     assert.equal(page.globalSearch.searchResults[0].courseTitle, '2019 Course 1');
@@ -242,7 +244,7 @@ module('Acceptance | search', function(hooks) {
     assert.notOk(page.globalSearch.schoolFilters[2].isSelected);
   });
 
-  test('year filter in query param', async function(assert) {
+  test('year filter in query param', async function (assert) {
     assert.expect(3);
 
     this.server.get('api/search/v1/curriculum', () => {
@@ -254,22 +256,22 @@ module('Acceptance | search', function(hooks) {
               title: 'course 1',
               year: 2019,
               school: 'school 1',
-              sessions: []
+              sessions: [],
             },
             {
               title: 'course 2',
               year: 2020,
               school: 'school 1',
-              sessions: []
-            }
-          ]
-        }
+              sessions: [],
+            },
+          ],
+        },
       };
     });
 
     await page.visit({
       q: 'something',
-      year: '2020'
+      year: '2020',
     });
     assert.equal(page.globalSearch.searchResults.length, 1);
     assert.equal(page.globalSearch.searchResults[0].courseTitle, '2020 course 2');

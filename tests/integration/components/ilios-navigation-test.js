@@ -5,7 +5,7 @@ import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
-module('Integration | Component | ilios-navigation', function(hooks) {
+module('Integration | Component | ilios-navigation', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {

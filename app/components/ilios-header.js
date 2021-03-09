@@ -11,7 +11,7 @@ export default Component.extend({
   pageTitleList: service(),
   router: service(),
   iliosConfig: service(),
-  tagName: "",
+  tagName: '',
   title: null,
 
   showSearch: computed(
@@ -21,10 +21,12 @@ export default Component.extend({
     'iliosConfig.searchEnabled',
     async function () {
       const searchEnabled = await this.iliosConfig.searchEnabled;
-      return searchEnabled &&
+      return (
+        searchEnabled &&
         this.session.isAuthenticated &&
         this.router.currentRouteName !== 'search' &&
-        this.currentUser.performsNonLearnerFunction;
+        this.currentUser.performsNonLearnerFunction
+      );
     }
   ),
 
@@ -32,22 +34,25 @@ export default Component.extend({
    * We have to use an observer here
    * otherwise we get errors when the property is double set
    */
-  titleChangeObserver: on('init', observer('pageTitleList.sortedTokens.[]', function () {
-    const pageTitleList = this.pageTitleList;
-    const setTitle = function () {
-      const tokens = pageTitleList.get('sortedTokens');
-      if (tokens.length) {
-        this.set('title', tokens[0].title);
-      }
-    };
-    once(this, setTitle);
-  })),
+  titleChangeObserver: on(
+    'init',
+    observer('pageTitleList.sortedTokens.[]', function () {
+      const pageTitleList = this.pageTitleList;
+      const setTitle = function () {
+        const tokens = pageTitleList.get('sortedTokens');
+        if (tokens.length) {
+          this.set('title', tokens[0].title);
+        }
+      };
+      once(this, setTitle);
+    })
+  ),
 
   actions: {
     search(q) {
       this.router.transitionTo('search', {
-        queryParams: { q }
+        queryParams: { q },
       });
-    }
-  }
+    },
+  },
 });

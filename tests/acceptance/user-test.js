@@ -1,10 +1,4 @@
-import {
-  click,
-  fillIn,
-  currentURL,
-  triggerEvent,
-  visit
-} from '@ember/test-helpers';
+import { click, fillIn, currentURL, triggerEvent, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
@@ -12,7 +6,7 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/user';
 
-module('Acceptance | User', function(hooks) {
+module('Acceptance | User', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
@@ -26,18 +20,18 @@ module('Acceptance | User', function(hooks) {
       primaryCohortId: 1,
       cohortIds: [1, 2, 3],
       learnerGroupIds: [3, 5],
-      school: this.school
+      school: this.school,
     };
     this.server.create('program', { school: this.school });
-    this.server.createList('programYear', 3, { programId: 1});
+    this.server.createList('programYear', 3, { programId: 1 });
     this.server.create('cohort', { title: 'Medicine', programYearId: 1 });
     this.server.create('cohort', { programYearId: 2 });
     this.server.create('cohort', { programYearId: 3 });
     this.server.createList('learnerGroup', 5, { title: 'Group 1', cohortId: 1 });
-    await setupAuthentication( userObject );
+    await setupAuthentication(userObject);
   });
 
-  test('can search for users', async function(assert) {
+  test('can search for users', async function (assert) {
     this.server.createList('user', 20, { email: 'user@example.edu', school: this.school });
     this.server.createList('authentication', 20);
 
@@ -69,12 +63,12 @@ module('Acceptance | User', function(hooks) {
       enabled: true,
       userSyncIgnore: true,
       roles: [studentRole, formerStudentRole],
-      school: this.school
+      school: this.school,
     });
     const user2 = this.server.create('user', {
       enabled: false,
       userSyncIgnore: false,
-      school: this.school
+      school: this.school,
     });
     await page.visit({ userId: user1.id });
     assert.equal(page.roles.student.value, 'Yes');
@@ -116,7 +110,7 @@ module('Acceptance | User', function(hooks) {
       enabled: true,
       userSyncIgnore: true,
       roles: [studentRole, formerStudentRole],
-      school: this.school
+      school: this.school,
     });
     await page.visit({ userId: user.id });
     assert.equal(page.roles.student.value, 'Yes');
@@ -144,6 +138,5 @@ module('Acceptance | User', function(hooks) {
     assert.equal(page.roles.formerStudent.value, 'No');
     assert.equal(page.roles.enabled.value, 'No');
     assert.equal(page.roles.excludeFromSync.value, 'No');
-
   });
 });

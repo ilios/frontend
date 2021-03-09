@@ -42,7 +42,7 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
       assessment,
       assessmentOption,
       aamcMethods,
-      active: isActive
+      active: isActive,
     });
 
     yield sessionType.save();

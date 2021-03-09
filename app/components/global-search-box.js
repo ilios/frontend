@@ -20,16 +20,16 @@ export default Component.extend({
   query: null,
   classNames: ['global-search-box'],
   'data-test-global-search-box': true,
-  search() { },
+  search() {},
 
   hasResults: reads('results.length'),
   results: reads('autocomplete.lastSuccessful.value'),
 
   computedQuery: computed('autocompleteSelectedQuery', 'query', 'internalQuery', function () {
-    if (typeof (this.autocompleteSelectedQuery) === 'string') {
+    if (typeof this.autocompleteSelectedQuery === 'string') {
       return this.autocompleteSelectedQuery;
     }
-    if (typeof (this.internalQuery) === 'string') {
+    if (typeof this.internalQuery === 'string') {
       return this.internalQuery;
     }
     return this.query;
@@ -181,7 +181,7 @@ export default Component.extend({
       const possibleMatches = this.autocompleteCache.findBy('q', newQuery);
 
       if (possibleMatches) {
-        const matches = possibleMatches.autocomplete.filter(text => {
+        const matches = possibleMatches.autocomplete.filter((text) => {
           return text.substring(newQuery.length, newQuery.length + 1) === removedChar;
         });
 
@@ -191,7 +191,7 @@ export default Component.extend({
       return set;
     }, []);
 
-    return allMatches.filter(text => text.indexOf(q) === 0);
+    return allMatches.filter((text) => text.indexOf(q) === 0);
   },
 
   autocomplete: task(function* () {
@@ -202,14 +202,16 @@ export default Component.extend({
     }
 
     if (q.length < MIN_INPUT) {
-      return [{
-        text: this.intl.t('general.moreInputRequiredPrompt')
-      }];
+      return [
+        {
+          text: this.intl.t('general.moreInputRequiredPrompt'),
+        },
+      ];
     }
 
     const cachedResults = this.findCachedAutocomplete(this.internalQuery);
     if (cachedResults.length) {
-      return cachedResults.map(text => {
+      return cachedResults.map((text) => {
         return { text };
       });
     }
@@ -219,8 +221,8 @@ export default Component.extend({
     const { autocomplete } = yield this.iliosSearch.forCurriculum(this.internalQuery, true);
     this.autocompleteCache.pushObject({ q: this.internalQuery, autocomplete });
 
-    return autocomplete.map(text => {
+    return autocomplete.map((text) => {
       return { text };
     });
-  }).restartable()
+  }).restartable(),
 });

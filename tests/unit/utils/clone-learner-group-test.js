@@ -5,16 +5,16 @@ import { module, test } from 'qunit';
 
 const { resolve } = RSVP;
 
-module('Unit | Utility | clone learner group', function() {
+module('Unit | Utility | clone learner group', function () {
   test('clones empty group', async function (assert) {
     const store = EmberObject.create({
-      createRecord(what, {title, location:loc}) {
+      createRecord(what, { title, location: loc }) {
         assert.equal(what, 'learner-group');
         assert.equal(title, 'to clone');
         assert.equal(loc, 'over the rainbow');
 
-        return EmberObject.create({ title, location: loc});
-      }
+        return EmberObject.create({ title, location: loc });
+      },
     });
     const instructor = EmberObject.create();
     const group = EmberObject.create({
@@ -23,9 +23,7 @@ module('Unit | Utility | clone learner group', function() {
       children: resolve([]),
       instructors: resolve([instructor]),
     });
-    const cohort = EmberObject.create({
-
-    });
+    const cohort = EmberObject.create({});
     const groups = await cloneLearnerGroup(store, group, cohort, false);
     assert.equal(groups.length, 1);
     const result = groups[0];

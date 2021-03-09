@@ -17,7 +17,7 @@ export default class UserProfileRolesComponent extends Component {
   @restartableTask
   *load() {
     const roles = yield this.args.user.roles;
-    this.roleTitles = roles.map(role => role.title.toLowerCase());
+    this.roleTitles = roles.map((role) => role.title.toLowerCase());
   }
 
   get isStudent() {
@@ -27,7 +27,10 @@ export default class UserProfileRolesComponent extends Component {
 
   get isFormerStudent() {
     const originallyYes = this.roleTitles.includes('former student');
-    return (originallyYes && !this.isFormerStudentFlipped) || (!originallyYes && this.isFormerStudentFlipped);
+    return (
+      (originallyYes && !this.isFormerStudentFlipped) ||
+      (!originallyYes && this.isFormerStudentFlipped)
+    );
   }
 
   get isEnabled() {
@@ -37,7 +40,10 @@ export default class UserProfileRolesComponent extends Component {
 
   get isUserSyncIgnored() {
     const originallyYes = this.args.user.get('userSyncIgnore');
-    return (originallyYes && !this.isUserSyncIgnoredFlipped) || (!originallyYes && this.isUserSyncIgnoredFlipped);
+    return (
+      (originallyYes && !this.isUserSyncIgnoredFlipped) ||
+      (!originallyYes && this.isUserSyncIgnoredFlipped)
+    );
   }
   @action
   cancel() {

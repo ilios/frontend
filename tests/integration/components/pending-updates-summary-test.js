@@ -8,11 +8,11 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 let currentUserMock;
 
-module('Integration | Component | pending updates summary', function(hooks) {
+module('Integration | Component | pending updates summary', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     currentUserMock = Service.extend({});
     this.owner.register('service:currentUser', currentUserMock);
   });
@@ -28,7 +28,7 @@ module('Integration | Component | pending updates summary', function(hooks) {
     }
 
     currentUserMock.reopen({
-      model: resolve(userModel)
+      model: resolve(userModel),
     });
 
     const schools = await this.owner.lookup('service:store').findAll('school');

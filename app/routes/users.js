@@ -6,13 +6,13 @@ export default class UsersRoute extends Route {
 
   queryParams = {
     query: {
-      replace: true
+      replace: true,
     },
 
     searchTerms: {
-      replace: true
-    }
-  }
+      replace: true,
+    },
+  };
 
   async beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');

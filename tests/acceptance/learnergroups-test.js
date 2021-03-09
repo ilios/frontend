@@ -7,17 +7,17 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/learner-groups';
 import learnerGroupPage from 'ilios/tests/pages/learner-group';
 
-module('Acceptance | Learner Groups', function(hooks) {
+module('Acceptance | Learner Groups', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
     this.school = this.server.create('school');
-    this.user = await setupAuthentication({school: this.school});
+    this.user = await setupAuthentication({ school: this.school });
   });
 
   test('visiting /learnergroups', async function (assert) {
-    this.server.create('user', {id: 4136});
+    this.server.create('user', { id: 4136 });
     this.server.create('school');
     await page.visit();
     assert.equal(currentRouteName(), 'learnerGroups');
@@ -111,11 +111,11 @@ module('Acceptance | Learner Groups', function(hooks) {
     });
     this.server.create('learnerGroup', {
       parent: firstLearnerGroup,
-      userIds: [9, 10]
+      userIds: [9, 10],
     });
     this.server.create('learnerGroup', {
       parent: firstChildGroup,
-      userIds: [11, 12]
+      userIds: [11, 12],
     });
     this.server.createList('offering', 2, {
       learnerGroups: [firstLearnerGroup],
@@ -137,15 +137,15 @@ module('Acceptance | Learner Groups', function(hooks) {
     const cohort = this.server.create('cohort', { programYear });
     const firstLearnerGroup = this.server.create('learnerGroup', {
       title: 'specialfirstlearnergroup',
-      cohort
+      cohort,
     });
     const secondLearnerGroup = this.server.create('learnerGroup', {
       title: 'specialsecondlearnergroup',
-      cohort
+      cohort,
     });
     const regularLearnerGroup = this.server.create('learnerGroup', {
       title: 'regularlearnergroup',
-      cohort
+      cohort,
     });
     await page.visit();
     assert.equal(page.learnerGroupList.groups.length, 3);
@@ -178,7 +178,7 @@ module('Acceptance | Learner Groups', function(hooks) {
   });
 
   test('add new learnergroup', async function (assert) {
-    this.user.update({administeredSchools: [this.school]});
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(9);
 
     const program = this.server.create('program', { school: this.school });
@@ -204,7 +204,7 @@ module('Acceptance | Learner Groups', function(hooks) {
   });
 
   test('cancel adding new learnergroup', async function (assert) {
-    this.user.update({administeredSchools: [this.school]});
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(6);
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
@@ -225,7 +225,7 @@ module('Acceptance | Learner Groups', function(hooks) {
   });
 
   test('remove learnergroup', async function (assert) {
-    this.user.update({administeredSchools: [this.school]});
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(6);
 
     const program = this.server.create('program', { school: this.school });
@@ -247,7 +247,7 @@ module('Acceptance | Learner Groups', function(hooks) {
   });
 
   test('cancel remove learnergroup', async function (assert) {
-    this.user.update({administeredSchools: [this.school]});
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(5);
 
     const program = this.server.create('program', { school: this.school });
@@ -266,7 +266,7 @@ module('Acceptance | Learner Groups', function(hooks) {
   });
 
   test('confirmation of remove message', async function (assert) {
-    this.user.update({administeredSchools: [this.school]});
+    this.user.update({ administeredSchools: [this.school] });
 
     this.server.createList('user', 5);
     const program = this.server.create('program', { school: this.school });
@@ -275,7 +275,7 @@ module('Acceptance | Learner Groups', function(hooks) {
     const parent = this.server.create('learnerGroup', { cohort });
     this.server.createList('learnerGroup', 2, { parent });
     this.server.createList('offering', 2, {
-      learnerGroups: [parent]
+      learnerGroups: [parent],
     });
     assert.expect(5);
 
@@ -285,11 +285,14 @@ module('Acceptance | Learner Groups', function(hooks) {
     assert.ok(page.learnerGroupList.groups[0].actions.canRemove);
     await page.learnerGroupList.groups[0].actions.remove();
     assert.ok(page.learnerGroupList.groups[0].hasRemoveStyle);
-    assert.equal(page.learnerGroupList.confirmRemoval.confirmation, 'Are you sure you want to delete this learner group, with 2 subgroups? This action cannot be undone. Yes Cancel');
+    assert.equal(
+      page.learnerGroupList.confirmRemoval.confirmation,
+      'Are you sure you want to delete this learner group, with 2 subgroups? This action cannot be undone. Yes Cancel'
+    );
   });
 
   test('populated learner groups are not deletable', async function (assert) {
-    this.user.update({administeredSchools: [this.school]});
+    this.user.update({ administeredSchools: [this.school] });
 
     this.server.createList('user', 5);
     const program = this.server.create('program', { school: this.school });
@@ -310,7 +313,7 @@ module('Acceptance | Learner Groups', function(hooks) {
 
   test('learner groups with courses cannot be deleted', async function (assert) {
     assert.expect(7);
-    this.user.update({administeredSchools: [this.school]});
+    this.user.update({ administeredSchools: [this.school] });
 
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
@@ -320,7 +323,7 @@ module('Acceptance | Learner Groups', function(hooks) {
     const offering = this.server.create('offering', { session });
     this.server.create('learnerGroup', {
       cohort,
-      offerings: [ offering ],
+      offerings: [offering],
     });
 
     await page.visit();
@@ -329,7 +332,10 @@ module('Acceptance | Learner Groups', function(hooks) {
     assert.ok(page.learnerGroupList.groups[0].actions.canRemove);
 
     await page.learnerGroupList.groups[0].actions.remove();
-    assert.equal(page.learnerGroupList.confirmRemoval.confirmation, 'This group is attached to one course and cannot be deleted. 2013 course 0 OK');
+    assert.equal(
+      page.learnerGroupList.confirmRemoval.confirmation,
+      'This group is attached to one course and cannot be deleted. 2013 course 0 OK'
+    );
     assert.notOk(page.learnerGroupList.confirmRemoval.canConfirm);
     assert.ok(page.learnerGroupList.confirmRemoval.canCancel);
     await page.learnerGroupList.confirmRemoval.cancel();
@@ -338,13 +344,15 @@ module('Acceptance | Learner Groups', function(hooks) {
 
   test('course academic year shows range if applicable by configuration', async function (assert) {
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function() {
-      return { config: {
-        apiVersion,
-        academicYearCrossesCalendarYearBoundaries: true,
-      }};
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          apiVersion,
+          academicYearCrossesCalendarYearBoundaries: true,
+        },
+      };
     });
-    this.user.update({administeredSchools: [this.school]});
+    this.user.update({ administeredSchools: [this.school] });
 
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
@@ -354,12 +362,15 @@ module('Acceptance | Learner Groups', function(hooks) {
     const offering = this.server.create('offering', { session });
     this.server.create('learnerGroup', {
       cohort,
-      offerings: [ offering ],
+      offerings: [offering],
     });
 
     await page.visit();
     await page.learnerGroupList.groups[0].actions.remove();
-    assert.equal(page.learnerGroupList.confirmRemoval.confirmation, 'This group is attached to one course and cannot be deleted. 2013 - 2014 course 0 OK');
+    assert.equal(
+      page.learnerGroupList.confirmRemoval.confirmation,
+      'This group is attached to one course and cannot be deleted. 2013 - 2014 course 0 OK'
+    );
   });
 
   test('click title takes you to learnergroup route', async function (assert) {
@@ -380,12 +391,12 @@ module('Acceptance | Learner Groups', function(hooks) {
   test('add new learnergroup with full cohort', async function (assert) {
     assert.expect(9);
 
-    this.user.update({administeredSchools: [this.school]});
+    this.user.update({ administeredSchools: [this.school] });
     const program = this.server.create('program', { school: this.school });
     const programYear = this.server.create('programYear', { program });
     const cohort = this.server.create('cohort', { programYear });
     this.server.createList('user', 5, {
-      cohorts: [cohort]
+      cohorts: [cohort],
     });
 
     const newTitle = 'A New Test Title';
@@ -407,7 +418,7 @@ module('Acceptance | Learner Groups', function(hooks) {
   });
 
   test('no add button when there is no cohort', async function (assert) {
-    this.user.update({administeredSchools: [this.school]});
+    this.user.update({ administeredSchools: [this.school] });
 
     await page.visit();
     assert.equal(currentRouteName(), 'learnerGroups');
@@ -436,7 +447,7 @@ module('Acceptance | Learner Groups', function(hooks) {
   });
 
   test('copy learnergroup without learners', async function (assert) {
-    this.user.update({administeredSchools: [this.school]});
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(23);
 
     const program = this.server.create('program', { school: this.school });
@@ -453,7 +464,7 @@ module('Acceptance | Learner Groups', function(hooks) {
     });
     this.server.create('learnerGroup', {
       cohort,
-      parent: parent2
+      parent: parent2,
     });
 
     await page.visit();
@@ -492,7 +503,7 @@ module('Acceptance | Learner Groups', function(hooks) {
   });
 
   test('copy learnergroup with learners', async function (assert) {
-    this.user.update({administeredSchools: [this.school]});
+    this.user.update({ administeredSchools: [this.school] });
     assert.expect(23);
 
     this.server.createList('user', 10);
@@ -501,22 +512,22 @@ module('Acceptance | Learner Groups', function(hooks) {
     const cohort = this.server.create('cohort', { programYear });
     const parent = this.server.create('learnerGroup', {
       cohort,
-      userIds: [2, 3, 4, 5, 6, 7, 8]
+      userIds: [2, 3, 4, 5, 6, 7, 8],
     });
     const parent2 = this.server.create('learnerGroup', {
       cohort,
       parent,
-      userIds: [8]
+      userIds: [8],
     });
     this.server.create('learnerGroup', {
       cohort,
       parent,
-      userIds: [5, 6, 7]
+      userIds: [5, 6, 7],
     });
     this.server.create('learnerGroup', {
       cohort,
       parent: parent2,
-      userIds: [8]
+      userIds: [8],
     });
 
     await page.visit();

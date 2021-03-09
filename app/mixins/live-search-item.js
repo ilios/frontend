@@ -5,5 +5,5 @@ export default Mixin.create({
   isActive: true,
   targetObject: null,
   sortTerm: '',
-  isALiveSearchItem: true
+  isALiveSearchItem: true,
 });

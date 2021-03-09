@@ -1,10 +1,4 @@
-import {
-  clickable,
-  create,
-  property,
-  text,
-  visitable,
-} from 'ember-cli-page-object';
+import { clickable, create, property, text, visitable } from 'ember-cli-page-object';
 
 export default create({
   scope: '[data-test-user-profile]',
@@ -23,21 +17,21 @@ export default create({
       label: text('label'),
       value: text('.value'),
       selected: property('checked', 'input'),
-      click: clickable('input')
+      click: clickable('input'),
     },
     enabled: {
       scope: '.item:nth-of-type(3)',
       label: text('label'),
       value: text('.value'),
       selected: property('checked', 'input'),
-      click: clickable('input')
+      click: clickable('input'),
     },
     excludeFromSync: {
       scope: '.item:nth-of-type(4)',
       label: text('label'),
       value: text('.value'),
       selected: property('checked', 'input'),
-      click: clickable('input')
+      click: clickable('input'),
     },
   },
 });

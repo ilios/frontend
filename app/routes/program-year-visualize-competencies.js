@@ -12,7 +12,7 @@ export default class ProgramYearVisualizeCompetenciesRoute extends Route {
 
   /**
    * Prefetch related data to limit network requests
-  */
+   */
   async afterModel(model) {
     const store = this.store;
     const cohort = await model.get('cohort');

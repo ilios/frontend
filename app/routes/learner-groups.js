@@ -8,9 +8,9 @@ export default class LearnerGroupsRoute extends Route {
 
   queryParams = {
     titleFilter: {
-      replace: true
-    }
-  }
+      replace: true,
+    },
+  };
 
   beforeModel(transition) {
     this.session.requireAuthentication(transition, 'login');
@@ -22,6 +22,9 @@ export default class LearnerGroupsRoute extends Route {
 
   @action
   willTransition() {
-    this.controller.set('newGroup', null);
+    //@todo refactor away from doing this work in the route [JJ 3/21]
+    // eslint-disable-next-line ember/no-controller-access-in-routes
+    const controller = this.controllerFor('user');
+    controller.set('newGroup', null);
   }
 }

@@ -7,18 +7,18 @@ import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Integration | Component | user profile calendar', function(hooks) {
+module('Integration | Component | user profile calendar', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.beforeEach(function() {
+  hooks.beforeEach(function () {
     const iliosConfigMock = Service.extend({
-      namespace: ''
+      namespace: '',
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
   });
 
-  test('shows events for this week', async function(assert) {
+  test('shows events for this week', async function (assert) {
     assert.expect(12);
 
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
@@ -35,16 +35,37 @@ module('Integration | Component | user profile calendar', function(hooks) {
       assert.equal(queryParams.to, to);
 
       const userEvents = [
-        {name: 'first', startDate: today.format(), location: 123, lastModified: today.format(), prerequisites: [], postrequisites: []},
-        {name: 'second', startDate: today.format(), location: 456, lastModified: today.format(), prerequisites: [], postrequisites: []},
-        {name: 'third', startDate: today.format(), location: 789, lastModified: today.format(), prerequisites: [], postrequisites: []},
+        {
+          name: 'first',
+          startDate: today.format(),
+          location: 123,
+          lastModified: today.format(),
+          prerequisites: [],
+          postrequisites: [],
+        },
+        {
+          name: 'second',
+          startDate: today.format(),
+          location: 456,
+          lastModified: today.format(),
+          prerequisites: [],
+          postrequisites: [],
+        },
+        {
+          name: 'third',
+          startDate: today.format(),
+          location: 789,
+          lastModified: today.format(),
+          prerequisites: [],
+          postrequisites: [],
+        },
       ];
 
       return { userEvents };
     });
 
     const user = EmberObject.create({
-      id: 13
+      id: 13,
     });
     this.set('user', user);
     await render(hbs`<UserProfileCalendar @user={{user}} />`);
@@ -59,10 +80,9 @@ module('Integration | Component | user profile calendar', function(hooks) {
     assert.dom(secondEventTitle).doesNotHaveClass('clickable');
     assert.dom(thirdEventTitle).hasText('third');
     assert.dom(thirdEventTitle).doesNotHaveClass('clickable');
-
   });
 
-  test('clicking forward goes to next week', async function(assert) {
+  test('clicking forward goes to next week', async function (assert) {
     assert.expect(12);
 
     let called = 0;
@@ -94,14 +114,14 @@ module('Integration | Component | user profile calendar', function(hooks) {
       return { userEvents: [] };
     });
     const user = EmberObject.create({
-      id: 13
+      id: 13,
     });
     this.set('user', user);
     await render(hbs`<UserProfileCalendar @user={{user}} />`);
     await click('[data-test-go-forward]');
   });
 
-  test('clicking backward goes to last week', async function(assert) {
+  test('clicking backward goes to last week', async function (assert) {
     assert.expect(12);
     let called = 0;
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
@@ -133,7 +153,7 @@ module('Integration | Component | user profile calendar', function(hooks) {
     });
 
     const user = EmberObject.create({
-      id: 13
+      id: 13,
     });
     this.set('user', user);
     await render(hbs`<UserProfileCalendar @user={{user}} />`);

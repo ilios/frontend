@@ -8,9 +8,9 @@ const Validations = buildValidations({
     validator('presence', true),
     validator('length', {
       max: 60,
-      descriptionKey: 'general.title'
-    })
-  ]
+      descriptionKey: 'general.title',
+    }),
+  ],
 });
 
 export default Component.extend(Validations, ValidationErrorDisplay, {
@@ -26,13 +26,13 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     save() {
       this.set('isSaving', true);
       this.send('addErrorDisplayFor', 'title');
-      this.validate().then(({validations}) => {
+      this.validate().then(({ validations }) => {
         if (validations.get('isValid')) {
           const instructorGroup = this.store.createRecord('instructorGroup', {
             title: this.title,
-            school: this.currentSchool
+            school: this.currentSchool,
           });
-          this.save(instructorGroup).finally(()=>{
+          this.save(instructorGroup).finally(() => {
             this.set('isSaving', false);
           });
         }
@@ -41,7 +41,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
     cancel() {
       this.cancel();
-    }
+    },
   },
 
   keyUp(event) {
@@ -57,8 +57,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       return;
     }
 
-    if(27 === keyCode) {
+    if (27 === keyCode) {
       this.send('cancel');
     }
-  }
+  },
 });

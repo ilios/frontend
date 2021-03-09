@@ -6,53 +6,57 @@ import { task } from 'ember-concurrency';
 
 export default Component.extend({
   store: service(),
-  tagName: "",
+  tagName: '',
   excludedSessionsBuffer: null,
   linkedSessionsBuffer: null,
   sessionsBuffer: null,
   sortBy: 'title',
 
-  allSelected: computed('linkedSessionsBuffer.[]', 'sessionsBuffer.[]', function() {
+  allSelected: computed('linkedSessionsBuffer.[]', 'sessionsBuffer.[]', function () {
     const linkedSessions = this.linkedSessionsBuffer;
     const sessions = this.sessionsBuffer;
     if (isEmpty(linkedSessions) || isEmpty(sessions) || linkedSessions.length < sessions.length) {
       return false;
     }
-    sessions.forEach(session => {
-      if (! linkedSessions.includes(session)) {
+    sessions.forEach((session) => {
+      if (!linkedSessions.includes(session)) {
         return false;
       }
     });
     return true;
   }),
 
-  allExcluded: computed('excludedSessionsBuffer.[]', 'sessionsBuffer.[]', function() {
+  allExcluded: computed('excludedSessionsBuffer.[]', 'sessionsBuffer.[]', function () {
     const excludedSessions = this.excludedSessionsBuffer;
     const sessions = this.sessionsBuffer;
-    if (isEmpty(excludedSessions) || isEmpty(sessions) || excludedSessions.length < sessions.length) {
+    if (
+      isEmpty(excludedSessions) ||
+      isEmpty(sessions) ||
+      excludedSessions.length < sessions.length
+    ) {
       return false;
     }
-    sessions.forEach(session => {
-      if (! excludedSessions.includes(session)) {
+    sessions.forEach((session) => {
+      if (!excludedSessions.includes(session)) {
         return false;
       }
     });
     return true;
   }),
 
-  someSelected: computed('allSelected', 'noneSelected', function() {
+  someSelected: computed('allSelected', 'noneSelected', function () {
     const allSelected = this.allSelected;
     const noneSelected = this.noneSelected;
-    return (!allSelected && !noneSelected);
+    return !allSelected && !noneSelected;
   }),
 
-  someExcluded: computed('allExcluded', 'noneExcluded', function() {
+  someExcluded: computed('allExcluded', 'noneExcluded', function () {
     const allExcluded = this.allExcluded;
     const noneExcluded = this.noneExcluded;
-    return (!allExcluded && !noneExcluded);
+    return !allExcluded && !noneExcluded;
   }),
 
-  noneSelected: computed('linkedSessionsBuffer.[]', 'sessionsBuffer.[]', function() {
+  noneSelected: computed('linkedSessionsBuffer.[]', 'sessionsBuffer.[]', function () {
     const linkedSessions = this.linkedSessionsBuffer;
     const sessions = this.sessionsBuffer;
 
@@ -61,7 +65,7 @@ export default Component.extend({
     }
 
     let isSelected = false;
-    linkedSessions.forEach(linkedSession => {
+    linkedSessions.forEach((linkedSession) => {
       if (sessions.includes(linkedSession)) {
         isSelected = true;
       }
@@ -69,7 +73,7 @@ export default Component.extend({
     return !isSelected;
   }),
 
-  noneExcluded: computed('excludedSessionsBuffer.[]', 'sessionsBuffer.[]', function() {
+  noneExcluded: computed('excludedSessionsBuffer.[]', 'sessionsBuffer.[]', function () {
     const excludedSessions = this.excludedSessionsBuffer;
     const sessions = this.sessionsBuffer;
 
@@ -78,7 +82,7 @@ export default Component.extend({
     }
 
     let isSelected = false;
-    excludedSessions.forEach(session => {
+    excludedSessions.forEach((session) => {
       if (sessions.includes(session)) {
         isSelected = true;
       }
@@ -86,7 +90,7 @@ export default Component.extend({
     return !isSelected;
   }),
 
-  sortedAscending: computed('sortBy', function() {
+  sortedAscending: computed('sortBy', function () {
     const sortBy = this.sortBy;
     return sortBy.search(/desc/) === -1;
   }),
@@ -126,9 +130,11 @@ export default Component.extend({
     toggleSelectAll() {
       const allSelected = this.allSelected;
 
-      if (allSelected) { // un-select all sessions
+      if (allSelected) {
+        // un-select all sessions
         this.set('linkedSessionsBuffer', []);
-      } else { //select all sessions
+      } else {
+        //select all sessions
         this.set('linkedSessionsBuffer', this.sessionsBuffer.toArray());
       }
     },
@@ -136,16 +142,18 @@ export default Component.extend({
     toggleExcludeAll() {
       const allSelected = this.allExcluded;
 
-      if (allSelected) { // un-select all sessions
+      if (allSelected) {
+        // un-select all sessions
         this.set('excludedSessionsBuffer', []);
-      } else { //select all sessions
+      } else {
+        //select all sessions
         this.set('excludedSessionsBuffer', this.sessionsBuffer.toArray());
       }
     },
 
     sortBy(what) {
       const sortBy = this.sortBy;
-      if(sortBy === what){
+      if (sortBy === what) {
         what += ':desc';
       }
       this.setSortBy(what);
@@ -153,7 +161,7 @@ export default Component.extend({
 
     close() {
       this.cancel();
-    }
+    },
   },
 
   loadAttr: task(function* (sequenceBlock, sessions) {
@@ -173,5 +181,5 @@ export default Component.extend({
     const sessions = this.linkedSessionsBuffer;
     const excludedSessions = this.excludedSessionsBuffer;
     yield this.save(sessions, excludedSessions);
-  })
+  }),
 });

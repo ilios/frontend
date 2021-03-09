@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 
 export default class PagedlistControlsComponent extends Component {
-
   get offset() {
     return this.args.offset ? parseInt(this.args.offset, 10) : 0;
   }
@@ -26,7 +25,7 @@ export default class PagedlistControlsComponent extends Component {
   get end() {
     const total = this.total;
     let end = this.offset + this.limit;
-    if(end > total) {
+    if (end > total) {
       end = total;
     }
 
@@ -35,8 +34,8 @@ export default class PagedlistControlsComponent extends Component {
 
   get offsetOptions() {
     const total = this.args.limitless ? 1000 : this.total;
-    const available = [ 10, 25, 50, 100, 200, 400, 1000 ];
-    const options = available.filter(option => {
+    const available = [10, 25, 50, 100, 200, 400, 1000];
+    const options = available.filter((option) => {
       return option < total;
     });
     options.push(available[options.length]);
@@ -48,7 +47,7 @@ export default class PagedlistControlsComponent extends Component {
     if (this.args.limitless) {
       return false;
     }
-    return (this.offset + this.limit) >= this.total;
+    return this.offset + this.limit >= this.total;
   }
 
   @action

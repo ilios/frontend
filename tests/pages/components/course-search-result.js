@@ -1,11 +1,4 @@
-import {
-  clickable,
-  collection,
-  create,
-  isHidden,
-  isVisible,
-  text
-} from 'ember-cli-page-object';
+import { clickable, collection, create, isHidden, isVisible, text } from 'ember-cli-page-object';
 
 const definition = {
   schoolTitle: text('[data-test-school-title]'),
@@ -14,7 +7,7 @@ const definition = {
   sessions: collection('.session-title-link'),
   showMoreIsVisible: isVisible('.show-more'),
   showMoreIsHidden: isHidden('.show-more'),
-  showMore: clickable('.show-more')
+  showMore: clickable('.show-more'),
 };
 
 export default definition;

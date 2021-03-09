@@ -5,11 +5,11 @@ import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { component } from 'ilios/tests/pages/components/school-session-attributes';
 
-module('Integration | Component | school session attributes', function(hooks) {
+module('Integration | Component | school session attributes', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders collapsed', async function(assert) {
+  test('it renders collapsed', async function (assert) {
     const school = this.server.create('school');
     this.server.create('school-config', {
       name: 'showSessionSupplemental',
@@ -32,7 +32,7 @@ module('Integration | Component | school session attributes', function(hooks) {
     assert.notOk(component.collapsed.specialEquipmentRequired.isEnabled);
   });
 
-  test('it renders expanded', async function(assert) {
+  test('it renders expanded', async function (assert) {
     const school = this.server.create('school');
     this.server.create('school-config', {
       name: 'showSessionSupplemental',
@@ -56,7 +56,7 @@ module('Integration | Component | school session attributes', function(hooks) {
     assert.notOk(component.expanded.attributes.specialEquipmentRequired.isEnabled);
   });
 
-  test('clicking expand fires action', async function(assert) {
+  test('clicking expand fires action', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
@@ -74,7 +74,7 @@ module('Integration | Component | school session attributes', function(hooks) {
     await component.collapsed.expand();
   });
 
-  test('clicking collapse fires action', async function(assert) {
+  test('clicking collapse fires action', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);

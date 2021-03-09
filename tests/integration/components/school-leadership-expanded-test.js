@@ -5,11 +5,11 @@ import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/school-leadership-expanded';
 
-module('Integration | Component | school leadership expanded', function(hooks) {
+module('Integration | Component | school leadership expanded', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     const user1 = this.server.create('user');
     const user2 = this.server.create('user');
     const school = this.server.create('school', {
@@ -35,7 +35,7 @@ module('Integration | Component | school leadership expanded', function(hooks) {
     assert.equal(component.leadershipList.administrators[1].text, '1 guy M. Mc1son');
   });
 
-  test('clicking the header collapses', async function(assert) {
+  test('clicking the header collapses', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school', {});
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
@@ -55,7 +55,7 @@ module('Integration | Component | school leadership expanded', function(hooks) {
     await component.collapse();
   });
 
-  test('clicking manage fires action', async function(assert) {
+  test('clicking manage fires action', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school', {});
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
@@ -76,7 +76,7 @@ module('Integration | Component | school leadership expanded', function(hooks) {
   });
 
   // @link https://github.com/ilios/frontend/issues/5732
-  test('managing mode', async function(assert) {
+  test('managing mode', async function (assert) {
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
     this.set('school', schoolModel);

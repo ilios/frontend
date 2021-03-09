@@ -7,13 +7,12 @@ import hbs from 'htmlbars-inline-precompile';
 
 const { resolve } = RSVP;
 
-const school = EmberObject.create({
-});
+const school = EmberObject.create({});
 const program = EmberObject.create({
-  school: resolve(school)
+  school: resolve(school),
 });
 const programYear = EmberObject.create({
-  program: resolve(program)
+  program: resolve(program),
 });
 const domain1 = EmberObject.create({
   id: 1,
@@ -42,11 +41,10 @@ domain1.set('treeChildren', resolve([competency1, competency2]));
 school.set('competencies', resolve([domain1, competency1, competency2]));
 programYear.set('competencies', resolve([competency1, competency2]));
 
-
-module('Integration | Component | programyear competencies', function(hooks) {
+module('Integration | Component | programyear competencies', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     this.set('programYear', programYear);
     this.set('nothing', parseInt);
     await render(hbs`<ProgramyearCompetencies
@@ -63,17 +61,16 @@ module('Integration | Component | programyear competencies', function(hooks) {
 
     assert.dom(title).hasText('Competencies (2)');
     assert.dom(button).hasText('Manage Competencies');
-    assert.equal(find(list).textContent.replace(/[\t\n\s]+/g, ""), 'domain1competency1competency2');
-
+    assert.equal(find(list).textContent.replace(/[\t\n\s]+/g, ''), 'domain1competency1competency2');
   });
 
-  test('clicking manage fires action', async function(assert) {
+  test('clicking manage fires action', async function (assert) {
     assert.expect(1);
     this.set('programYear', programYear);
     this.set('nothing', parseInt);
-    this.set('setIsManaging', (b => {
+    this.set('setIsManaging', (b) => {
       assert.ok(b === true);
-    }));
+    });
     await render(hbs`<ProgramyearCompetencies
       @programYear={{programYear}}
       @canUpdate={{true}}
@@ -87,13 +84,13 @@ module('Integration | Component | programyear competencies', function(hooks) {
     await click(button);
   });
 
-  test('clicking collapse fires action', async function(assert) {
+  test('clicking collapse fires action', async function (assert) {
     assert.expect(1);
     this.set('programYear', programYear);
     this.set('nothing', parseInt);
-    this.set('collapse', (() => {
+    this.set('collapse', () => {
       assert.ok(true);
-    }));
+    });
     await render(hbs`<ProgramyearCompetencies
       @programYear={{programYear}}
       @isManaging={{false}}

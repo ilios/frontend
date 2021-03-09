@@ -5,31 +5,31 @@ import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/school-session-type-form';
 
-module('Integration | Component | school session type form', function(hooks) {
+module('Integration | Component | school session type form', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function(assert) {
+  test('it renders', async function (assert) {
     this.server.create('aamc-method', {
       id: 'AM001',
-      description: "lorem ipsum",
+      description: 'lorem ipsum',
       active: true,
     });
     this.server.create('aamc-method', {
       id: 'AM002',
-      description: "dolor sit",
+      description: 'dolor sit',
       active: false,
     });
     this.server.create('aamc-method', {
       id: 'IM001',
-      description: "amet",
+      description: 'amet',
       active: true,
     });
     this.server.create('assessment-option', {
-      name: 'formative'
+      name: 'formative',
     });
     const summative = this.server.create('assessment-option', {
-      name: 'summative'
+      name: 'summative',
     });
     this.set('assessmentOptionId', summative.id);
     this.set('title', 'one');
@@ -74,20 +74,20 @@ module('Integration | Component | school session type form', function(hooks) {
   test('changing assessment changes available aamcMethods', async function (assert) {
     this.server.create('aamc-method', {
       id: 'AM001',
-      description: "lorem ipsum",
+      description: 'lorem ipsum',
       active: true,
     });
     this.server.create('aamc-method', {
       id: 'IM001',
-      description: "dolor sit",
+      description: 'dolor sit',
       active: true,
     });
 
     this.server.create('assessment-option', {
-      name: 'formative'
+      name: 'formative',
     });
     this.server.create('assessment-option', {
-      name: 'summative'
+      name: 'summative',
     });
     const assessmentOptions = await this.owner.lookup('service:store').findAll('assessment-option');
 
@@ -123,7 +123,7 @@ module('Integration | Component | school session type form', function(hooks) {
     assert.notOk(component.aamcMethod.options[1].selected);
   });
 
-  test('assessment option hidden when assessment is false', async function(assert) {
+  test('assessment option hidden when assessment is false', async function (assert) {
     await render(hbs`<SchoolSessionTypeForm
       @assessment={{false}}
       @assessmentOption={{null}}
@@ -138,9 +138,9 @@ module('Integration | Component | school session type form', function(hooks) {
     assert.notOk(component.assessmentSelector.isVisible);
   });
 
-  test('cancel fires action', async function(assert) {
+  test('cancel fires action', async function (assert) {
     assert.expect(1);
-    this.set('cancel', ()=>{
+    this.set('cancel', () => {
       assert.ok(true);
     });
     await render(hbs`<SchoolSessionTypeForm
@@ -152,9 +152,9 @@ module('Integration | Component | school session type form', function(hooks) {
     await component.cancel.click();
   });
 
-  test('close fires action', async function(assert) {
+  test('close fires action', async function (assert) {
     assert.expect(1);
-    this.set('close', ()=>{
+    this.set('close', () => {
       assert.ok(true);
     });
     await render(hbs`<SchoolSessionTypeForm
@@ -164,21 +164,22 @@ module('Integration | Component | school session type form', function(hooks) {
     />`);
 
     await component.close.click();
-
   });
 
-  test('save fires save', async function(assert) {
+  test('save fires save', async function (assert) {
     assert.expect(8);
     const method = this.server.create('aamc-method', {
       id: 'AM001',
-      description: "lorem ipsum",
+      description: 'lorem ipsum',
       active: true,
     });
     const formative = this.server.create('assessment-option', {
-      name: 'formative'
+      name: 'formative',
     });
     const aamcMethodModel = await this.owner.lookup('service:store').find('aamc-method', method.id);
-    const assessmentOptionModel = await this.owner.lookup('service:store').find('assessment-option', formative.id);
+    const assessmentOptionModel = await this.owner
+      .lookup('service:store')
+      .find('assessment-option', formative.id);
 
     this.set('save', (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
       assert.equal(title, 'new title', 'title is correct');
@@ -214,15 +215,15 @@ module('Integration | Component | school session type form', function(hooks) {
     await component.submit.click();
   });
 
-  test('read-only mode works correctly', async function(assert) {
+  test('read-only mode works correctly', async function (assert) {
     this.server.create('aamc-method', {
       id: 'AM001',
-      description: "lorem ipsum",
+      description: 'lorem ipsum',
       active: true,
     });
 
     this.server.create('assessment-option', {
-      name: 'formative'
+      name: 'formative',
     });
 
     await render(hbs`<SchoolSessionTypeForm
@@ -258,15 +259,15 @@ module('Integration | Component | school session type form', function(hooks) {
     assert.equal(component.active.readonlyValue, 'Yes');
   });
 
-  test('inactive method is labeled as such in dropdown', async function(assert) {
+  test('inactive method is labeled as such in dropdown', async function (assert) {
     this.server.create('aamc-method', {
       id: 'AM001',
-      description: "lorem ipsum",
+      description: 'lorem ipsum',
       active: false,
     });
 
     this.server.create('assessment-option', {
-      name: 'formative'
+      name: 'formative',
     });
 
     await render(hbs`<SchoolSessionTypeForm
@@ -281,17 +282,17 @@ module('Integration | Component | school session type form', function(hooks) {
     assert.equal(component.aamcMethod.options[1].text, 'lorem ipsum (inactive)');
   });
 
-  test('inactive method is labeled as such in read-only mode', async function(assert) {
+  test('inactive method is labeled as such in read-only mode', async function (assert) {
     const aamcMethodId = 'AM001';
 
     this.server.create('aamc-method', {
       id: aamcMethodId,
-      description: "lorem ipsum",
+      description: 'lorem ipsum',
       active: false,
     });
 
     this.server.create('assessment-option', {
-      name: 'formative'
+      name: 'formative',
     });
 
     this.set('aamcMethodId', aamcMethodId);
@@ -309,7 +310,7 @@ module('Integration | Component | school session type form', function(hooks) {
 
   // Skipped as it appears impossible to provide invalid input to color input fields.
   // @todo: check if we can get rid of validation modifiers for this field altogether.[ST 2020/12/08]
-  skip('calendar color input validation', async function(assert) {
+  skip('calendar color input validation', async function (assert) {
     await render(hbs`<SchoolSessionTypeForm
       @assessment={{false}}
       @assessmentOption={{null}}

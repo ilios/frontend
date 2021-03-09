@@ -29,12 +29,11 @@ export default create({
       title: text('td', { at: 0 }),
       members: text('td', { at: 1 }),
       courses: text('td', { at: 2 }),
-      remove: clickable('.remove', {scope: 'td:eq(3)'}),
-      edit: clickable('.edit', {scope: 'td:eq(3)'}),
-      clickTitle: clickable('a', {scope: 'td:eq(0)'}),
-      canBeDeleted: isPresent('.remove', {scope: 'td:eq(3)'}),
+      remove: clickable('.remove', { scope: 'td:eq(3)' }),
+      edit: clickable('.edit', { scope: 'td:eq(3)' }),
+      clickTitle: clickable('a', { scope: 'td:eq(0)' }),
+      canBeDeleted: isPresent('.remove', { scope: 'td:eq(3)' }),
     },
-
   }),
   newInstructorGroupForm: {
     scope: '[data-test-new-instructor-group]',
@@ -43,9 +42,15 @@ export default create({
     cancel: clickable('.cancel'),
     isVisible: isVisible(),
   },
-  confirmInstructorGroupRemoval: clickable('[data-test-instructor-groups-list] .confirm-removal button.remove'),
-  cancelInstructorGroupRemoval: clickable('[data-test-instructor-groups-list] .confirm-removal button.done'),
-  removalConfirmationMessage: text('[data-test-instructor-groups-list] .confirm-removal .confirm-message'),
+  confirmInstructorGroupRemoval: clickable(
+    '[data-test-instructor-groups-list] .confirm-removal button.remove'
+  ),
+  cancelInstructorGroupRemoval: clickable(
+    '[data-test-instructor-groups-list] .confirm-removal button.done'
+  ),
+  removalConfirmationMessage: text(
+    '[data-test-instructor-groups-list] .confirm-removal .confirm-message'
+  ),
   emptyListRowIsVisible: isVisible('[data-test-empty-list]'),
   savedResult: text('.saved-result'),
   toggleNewInstructorGroupForm: clickable('[data-test-expand-collapse-button] button'),

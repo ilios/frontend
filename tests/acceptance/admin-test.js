@@ -1,11 +1,4 @@
-import {
-  click,
-  fillIn,
-  currentURL,
-  triggerEvent,
-  visit,
-  waitFor
-} from '@ember/test-helpers';
+import { click, fillIn, currentURL, triggerEvent, visit, waitFor } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
@@ -14,7 +7,7 @@ const url = '/admin';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Acceptance | Admin', function(hooks) {
+module('Acceptance | Admin', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
@@ -22,7 +15,7 @@ module('Acceptance | Admin', function(hooks) {
     await setupAuthentication({ school, administeredSchools: [school] }, true);
   });
 
-  test('can transition to `users` route', async function(assert) {
+  test('can transition to `users` route', async function (assert) {
     const button = '.manage-users-summary a:nth-of-type(1)';
 
     await visit(url);
@@ -30,8 +23,8 @@ module('Acceptance | Admin', function(hooks) {
     assert.equal(currentURL(), '/users', 'transition occurred');
   });
 
-  test('can search for users', async function(assert) {
-    this.server.createList('user', 20, {schoolId: 1});
+  test('can search for users', async function (assert) {
+    this.server.createList('user', 20, { schoolId: 1 });
     this.server.createList('authentication', 20);
 
     const userSearch = '.user-search input';
@@ -55,14 +48,16 @@ module('Acceptance | Admin', function(hooks) {
   test('api lookup when search is disabled', async function (assert) {
     assert.expect(4);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function() {
-      return { config: {
-        type: 'form',
-        apiVersion,
-        searchEnabled: false,
-      }};
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          type: 'form',
+          apiVersion,
+          searchEnabled: false,
+        },
+      };
     });
-    this.server.createList('user', 2, {schoolId: 1});
+    this.server.createList('user', 2, { schoolId: 1 });
     this.server.createList('authentication', 2);
 
     const userSearch = '.user-search input';
@@ -84,14 +79,16 @@ module('Acceptance | Admin', function(hooks) {
   test('index search when search is enabled', async function (assert) {
     assert.expect(6);
     const { apiVersion } = this.owner.resolveRegistration('config:environment');
-    this.server.get('application/config', function() {
-      return { config: {
-        type: 'form',
-        apiVersion,
-        searchEnabled: true,
-      }};
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          type: 'form',
+          apiVersion,
+          searchEnabled: true,
+        },
+      };
     });
-    this.server.createList('user', 2, {schoolId: 1});
+    this.server.createList('user', 2, { schoolId: 1 });
     this.server.createList('authentication', 2);
 
     const userSearch = '.user-search input';
@@ -108,8 +105,8 @@ module('Acceptance | Admin', function(hooks) {
       return {
         results: {
           autocomplete: [],
-          users: db.users
-        }
+          users: db.users,
+        },
       };
     });
 

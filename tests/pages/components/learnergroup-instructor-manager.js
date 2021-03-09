@@ -1,4 +1,12 @@
-import { clickable, collection, create, fillable, hasClass, isVisible, text } from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  fillable,
+  hasClass,
+  isVisible,
+  text,
+} from 'ember-cli-page-object';
 import userNameInfo from 'ilios-common/page-objects/components/user-name-info';
 
 const definition = {
@@ -18,17 +26,17 @@ const definition = {
   },
   hasNoAssignedInstructors: isVisible('[data-test-no-assigned-instructors]'),
   assignedInstructors: collection('[data-test-assigned-instructor]', {
-    userNameInfo
+    userNameInfo,
   }),
   selectedInstructors: collection('[data-test-selected-instructor]', {
     userNameInfo,
-    remove: clickable()
+    remove: clickable(),
   }),
   selectedInstructorGroups: collection('[data-test-selected-instructor-group]', {
     title: text('[data-test-instructor-group-title]'),
     remove: clickable('[data-test-instructor-group-title]'),
     members: collection('[data-test-instructor-group-member]', {
-      userNameInfo
+      userNameInfo,
     }),
   }),
   search: fillable('.search-box input'),
