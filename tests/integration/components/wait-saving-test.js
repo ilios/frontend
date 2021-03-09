@@ -15,6 +15,17 @@ module('Integration | Component | wait saving', function (hooks) {
     assert.dom(this.element).hasText('saving... one moment...');
   });
 
+  test('it in block form', async function (assert) {
+    assert.expect(1);
+    await render(hbs`
+      <WaitSaving>
+        template block text
+      </WaitSaving>
+    `);
+
+    assert.dom(this.element).hasText('template block text');
+  });
+
   test('it traps focus and returns it', async function (assert) {
     await render(hbs`
       {{#if this.show}}

@@ -8,7 +8,11 @@
     <div tabindex="-1" class="content" data-test-content {{did-insert (set this.contentElement)}}>
       <PulseLoader />
       <h2 class="page-title">
-        {{t "general.waitSaving"}}
+        {{#if (has-block)}}
+          {{yield}}
+        {{else}}
+          {{t "general.waitSaving"}}
+        {{/if}}
       </h2>
       {{#if @showProgress}}
         <ProgressBar @percentage={{this.progress}} />
