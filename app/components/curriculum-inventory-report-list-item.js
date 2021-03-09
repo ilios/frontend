@@ -9,17 +9,12 @@ export default class CurriculumInventoryReportListItemComponent extends Componen
   @service iliosConfig;
   @service permissionChecker;
 
-  @tracked userCanDelete = false;
   @tracked showConfirmRemoval;
 
-  @use canDeletePermission = new PermissionChecker(() => ["canDeleteCurriculumInventoryReport", this.args.report]);
+  @use canDelete = new PermissionChecker(() => ["canDeleteCurriculumInventoryReport", this.args.report]);
   @use academicYearCrossesCalendarYearBoundaries = new ResolveAsyncValue(() => [
     this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries')
   ]);
-
-  get canDelete() {
-    return this.canDeletePermission;
-  }
 
   get yearLabel() {
     if (this.academicYearCrossesCalendarYearBoundaries) {
