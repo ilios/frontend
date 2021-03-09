@@ -1,4 +1,3 @@
-import { resolve } from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
@@ -15,6 +14,12 @@ module('Integration | Component | curriculum inventory report list', function (h
   hooks.beforeEach(async function() {
     const school = this.server.create('school');
     this.program = this.server.create('program', { school });
+    this.permissionCheckerMock = class extends Service{
+      async canDeleteCurriculumInventoryReport() {
+        return true;
+      }
+    };
+    this.owner.register('service:permission-checker', this.permissionCheckerMock);
   });
 
   test('it renders', async function (assert) {
@@ -81,6 +86,11 @@ module('Integration | Component | curriculum inventory report list', function (h
   });
 
   test('report cannot be deleted', async function (assert) {
+    this.permissionCheckerMock.reopen({
+      async canDeleteCurriculumInventoryReport() {
+        return false;
+      }
+    });
     const reportExport = this.server.create('curriculum-inventory-export');
     const report = this.server.create('curriculum-inventory-report', {
       program: this.program,
@@ -129,15 +139,7 @@ module('Integration | Component | curriculum inventory report list', function (h
       program: this.program,
       name: 'Zeppelin',
     });
-    const permissionCheckerMock = Service.extend({
-      canDeleteCurriculumInventoryReport() {
-        return resolve(true);
-      },
-    });
-    this.owner.register('service:permission-checker', permissionCheckerMock);
-    const reportModel = await this.owner
-      .lookup('service:store')
-      .find('curriculum-inventory-report', report.id);
+    const reportModel = await this.owner.lookup('service:store').find('curriculum-inventory-report', report.id);
 
     this.set('reports', [reportModel]);
     this.set('removeAction', () => {
