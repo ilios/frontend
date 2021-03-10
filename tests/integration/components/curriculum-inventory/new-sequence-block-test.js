@@ -571,7 +571,6 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       .lookup('service:store')
       .find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
     await render(hbs`<CurriculumInventory::NewSequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
@@ -602,7 +601,6 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       .lookup('service:store')
       .find('curriculum-inventory-report', report.id);
     this.set('report', reportModel);
-    await render(hbs`{{new-curriculum-inventory-sequence-block report=report}}`);
     await render(hbs`<CurriculumInventory::NewSequenceBlock @report={{report}} />`);
     await fillIn('.title input', 'Foo Bar');
     await fillIn('.description textarea', 'Lorem Ipsum');
