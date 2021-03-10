@@ -235,6 +235,37 @@ module('Integration | Component | learnergroup summary', function (hooks) {
     assert.dom(defaultLocation).hasText('new location name');
   });
 
+  test('Default location can be blank', async function (assert) {
+    const learnerGroup = this.server.create('learner-group', {
+      location: 'test location',
+      cohort: this.cohort,
+    });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
+
+    await render(hbs`<LearnergroupSummary
+      @canUpdate={{true}}
+      @setIsEditing={{noop}}
+      @setSortUsersBy={{noop}}
+      @setIsBulkAssigning={{noop}}
+      @learnerGroup={{this.learnerGroup}}
+      @isEditing={{false}}
+      @isBulkAssigning={{false}}
+    />`);
+
+    const defaultLocation = '[data-test-overview] .defaultlocation span:nth-of-type(1)';
+    const editLocation = `${defaultLocation} .editable`;
+    const input = `${defaultLocation} input`;
+    const save = `${defaultLocation} .done`;
+    assert.dom(defaultLocation).hasText('test location');
+    await click(editLocation);
+    await fillIn(input, '');
+    await click(save);
+    assert.dom(defaultLocation).hasText('Click to edit');
+  });
+
   test('each course is only shown once', async function (assert) {
     const cohort = this.server.create('cohort', {
       title: 'this cohort',
