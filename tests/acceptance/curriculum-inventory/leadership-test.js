@@ -4,7 +4,7 @@ import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/curriculum-inventory-report';
 
-module('Acceptance | Curriculum Inventory Report - Leadership', function (hooks) {
+module('Acceptance | curriculum inventory leadership', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {

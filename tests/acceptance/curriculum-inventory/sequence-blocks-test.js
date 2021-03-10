@@ -5,7 +5,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/curriculum-inventory-report';
 import moment from 'moment';
 
-module('Acceptance | Curriculum Inventory Report - Sequence Blocks', function (hooks) {
+module('Acceptance | curriculum inventory sequence blocks', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
   hooks.beforeEach(async function () {
