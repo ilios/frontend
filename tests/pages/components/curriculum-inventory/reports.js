@@ -8,7 +8,7 @@ import {
   text,
   value,
 } from 'ember-cli-page-object';
-import newReport from './new-curriculum-inventory-report';
+import newReport from '../new-curriculum-inventory-report';
 import reports from './curriculum-inventory-report-list';
 
 const definition = {
