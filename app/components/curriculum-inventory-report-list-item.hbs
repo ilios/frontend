@@ -1,0 +1,104 @@
+<tr
+  class={{if this.showRemoveConfirmation "confirm-removal"}}
+  data-test-active-row
+  data-test-curriculum-inventory-report-list-item
+>
+  <td
+    class="text-left clickable"
+    colspan="4"
+    role="button"
+    data-test-name
+    {{on "click" (fn @edit @report)}}
+  >
+    {{@report.name}}
+  </td>
+  <td
+    class="text-center hide-from-small-screen"
+    colspan="2"
+    data-test-program
+  >
+    {{@report.program.title}}
+  </td>
+  <td
+    class="text-center hide-from-small-screen"
+    colspan="2"
+    data-test-year
+  >
+    {{this.yearLabel}}
+  </td>
+  <td
+    class="text-center hide-from-small-screen"
+    colspan="2"
+    data-test-start-date
+  >
+    {{moment-format @report.startDate "L"}}
+  </td>
+  <td
+    class="text-center hide-from-small-screen"
+    colspan="2"
+    data-test-end-date
+  >
+    {{moment-format @report.endDate "L"}}
+  </td>
+  <td
+    class="text-center"
+    colspan="2"
+    data-test-status
+  >
+    {{#if @report.isFinalized}}
+      <FaIcon @icon="lock" class="enabled" />
+    {{/if}}
+    <CurriculumInventory::PublicationStatus @item={{@report}} />
+  </td>
+  <td class="text-right report-actions" colspan="2" data-test-actions>
+    <FaIcon
+      @icon="edit"
+      class="enabled clickable"
+      @click={{fn @edit @report}}
+      data-test-edit
+    />
+    <span>
+      <a
+        download="report.xml"
+        href={{@report.absoluteFileUri}}
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        <FaIcon @icon="download" class="enabled" />
+      </a>
+    </span>
+    {{#if this.canDelete}}
+      <FaIcon
+        @icon="trash"
+        class="enabled clickable"
+        @click={{set this.showRemoveConfirmation true}}
+        data-test-remove
+      />
+    {{else}}
+      <FaIcon @icon="trash" class="disabled" />
+    {{/if}}
+  </td>
+</tr>
+{{#if this.showRemoveConfirmation}}
+  <tr class="confirm-removal" data-test-confirm-removal>
+    <td colspan="16">
+      <div class="confirm-message">
+        {{t "general.reportConfirmRemove"}}
+        <br>
+        <div class="confirm-buttons">
+          <button type="button" class="remove text" {{on "click" (fn @remove @report)}} data-test-confirm>
+            {{t "general.yes"}}
+          </button>
+          <button
+            type="button"
+            class="done text"
+            {{on "click" (set this.showRemoveConfirmation false)}}
+            data-test-cancel
+          >
+            {{t "general.cancel"}}
+          </button>
+        </div>
+      </div>
+    </td>
+  </tr>
+{{/if}}

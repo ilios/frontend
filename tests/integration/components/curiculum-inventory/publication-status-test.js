@@ -7,8 +7,8 @@ import a11yAudit from 'ember-a11y-testing/test-support/audit';
 module('Integration | Component | curriculum-inventory/publication-status', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders published and is accessible', async function (assert) {
-    this.set('item', { isPublished: true, isScheduled: false });
+  test('it renders finalized and is accessible', async function (assert) {
+    this.set('item', { isFinalized: true });
     await render(hbs`<CurriculumInventory::PublicationStatus
       @item={{this.item}}
     />`);
@@ -18,7 +18,7 @@ module('Integration | Component | curriculum-inventory/publication-status', func
     assert.ok(true, 'no a11y errors found!');
   });
   test('it renders draft and is accessible', async function (assert) {
-    this.set('item', { isPublished: false, isScheduled: false });
+    this.set('item', { isFinalized: false });
     await render(hbs`<CurriculumInventory::PublicationStatus
       @item={{this.item}}
     />`);
