@@ -56,7 +56,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
       assert.equal(r, this.report);
     });
     await render(
-      hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{noop}} @remove={{this.remove}}/>`
+      hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @edit={{noop}} @remove={{this.remove}}/>`
     );
     assert.notOk(component.confirmRemoval.isVisible);
     await component.remove();
@@ -73,7 +73,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
     this.set('report', this.report);
 
     await render(
-      hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{noop}} @remove={{this.remove}}/>`
+      hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @edit={{noop}} @remove={{this.remove}}/>`
     );
 
     assert.notOk(component.isDeletable);
@@ -86,7 +86,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
       assert.equal(r, this.report);
     });
     await render(
-      hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{this.edit}} @remove={{noop}}/>`
+      hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @edit={{this.edit}} @remove={{noop}}/>`
     );
     await component.clickOnName();
   });
@@ -98,7 +98,7 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
       assert.equal(r, this.report);
     });
     await render(
-      hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{this.edit}} @remove={{noop}}/>`
+      hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @edit={{this.edit}} @remove={{noop}}/>`
     );
     await component.edit();
   });

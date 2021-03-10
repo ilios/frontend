@@ -37,7 +37,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
   });
 
   test('non updatable reports render in read-only mode.', async function (assert) {
-    await render(hbs`<CurriculumInventoryReportHeader
+    await render(hbs`<CurriculumInventory::ReportHeader
       @report={{this.report}}
       @canUpdate={{false}}
       @finalize={{noop}}
@@ -51,7 +51,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
 
   test('change name', async function (assert) {
     const newName = 'new name';
-    await render(hbs`<CurriculumInventoryReportHeader
+    await render(hbs`<CurriculumInventory::ReportHeader
       @report={{this.report}}
       @canUpdate={{true}}
       @finalize={{noop}}
@@ -66,7 +66,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
 
   test('change name fails on empty value', async function (assert) {
     this.set('report', this.report);
-    await render(hbs`<CurriculumInventoryReportHeader
+    await render(hbs`<CurriculumInventory::ReportHeader
       @report={{this.report}}
       @canUpdate={{true}}
       @finalize={{noop}}
@@ -80,7 +80,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
 
   test('change name fails if name is too short', async function (assert) {
     this.set('report', this.report);
-    await render(hbs`<CurriculumInventoryReportHeader
+    await render(hbs`<CurriculumInventory::ReportHeader
       @report={{this.report}}
       @canUpdate={{true}}
       @finalize={{noop}}
@@ -94,7 +94,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
 
   test('change name fails if name is too long', async function (assert) {
     this.set('report', this.report);
-    await render(hbs`<CurriculumInventoryReportHeader
+    await render(hbs`<CurriculumInventory::ReportHeader
       @report={{this.report}}
       @canUpdate={{true}}
       @finalize={{noop}}
@@ -111,7 +111,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
     this.set('finalize', () => {
       assert.ok(true, 'Finalize action was invoked.');
     });
-    await render(hbs`<CurriculumInventoryReportHeader
+    await render(hbs`<CurriculumInventory::ReportHeader
       @report={{this.report}}
       @canUpdate={{true}}
       @finalize={{this.finalize}}

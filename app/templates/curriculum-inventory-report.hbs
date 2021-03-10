@@ -4,7 +4,7 @@
     {{t "general.backToReports"}}
   </LinkTo>
 </div>
-<CurriculumInventoryReportDetails
+<CurriculumInventory::ReportDetails
   @report={{@model}}
   @canUpdate={{and (not @model.isFinalized) this.canUpdate}}
   @leadershipDetails={{this.leadershipDetails}}

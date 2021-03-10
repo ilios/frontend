@@ -152,14 +152,14 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       },
     });
     await render(
-      hbs`<CurriculumInventoryReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
     assert.notOk(component.rolloverLink.isVisible, 'Rollover course button is not visible.');
   });
 
   test('change start date', async function (assert) {
     await render(
-      hbs`<CurriculumInventoryReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
 
     await component.startDate.edit();
@@ -185,7 +185,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
 
   test('validation fails if given start date follows end date', async function (assert) {
     await render(
-      hbs`<CurriculumInventoryReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
 
     await component.startDate.edit();
@@ -198,7 +198,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
 
   test('change end date', async function (assert) {
     await render(
-      hbs`<CurriculumInventoryReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
 
     await component.endDate.edit();
@@ -224,7 +224,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
 
   test('validation fails if given end date precedes end date', async function (assert) {
     await render(
-      hbs`<CurriculumInventoryReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
 
     await component.endDate.edit();
@@ -237,7 +237,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
 
   test('change academic year', async function (assert) {
     await render(
-      hbs`<CurriculumInventoryReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
 
     await component.academicYear.edit();
@@ -284,7 +284,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     this.report.description = null;
 
     await render(
-      hbs`<CurriculumInventoryReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
 
     assert.equal(component.description.text, 'Click to edit');
@@ -300,7 +300,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     this.report.description = null;
 
     await render(
-      hbs`<CurriculumInventoryReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
 
     assert.equal(component.description.text, 'Click to edit');

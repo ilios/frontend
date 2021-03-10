@@ -20,12 +20,12 @@
       </div>
     </div>
   {{/if}}
-  <CurriculumInventoryReportOverview
+  <CurriculumInventory::ReportOverview
     @report={{@report}}
     @canUpdate={{@canUpdate}}
   />
   {{#if @leadershipDetails}}
-    <CurriculumInventoryLeadershipExpanded
+    <CurriculumInventory::LeadershipExpanded
       @report={{@report}}
       @canUpdate={{@canUpdate}}
       @collapse={{fn @setLeadershipDetails false}}

@@ -168,7 +168,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
 
   test('empty list', async function (assert) {
     await render(
-      hbs`<CurriculumInventoryReportList @reports={{array}} @edit={{noop}} @remove={{noop}}/>`
+      hbs`<CurriculumInventory::ReportList @reports={{array}} @edit={{noop}} @remove={{noop}}/>`
     );
     assert.equal(component.emptyList.text, 'None');
   });

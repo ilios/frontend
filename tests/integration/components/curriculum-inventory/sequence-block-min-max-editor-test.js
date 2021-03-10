@@ -60,7 +60,7 @@ module(
       this.set('minimum', minimum);
       this.set('maximum', maximum);
       this.set('cancelAction', cancelAction);
-      await render(hbs`<CurriculumInventorySequenceBlockMinMaxEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockMinMaxEditor
       @minimum={{minimum}}
       @maximum={{maximum}}
       @cancel={{cancelAction}}
@@ -78,7 +78,7 @@ module(
       this.set('minimum', minimum);
       this.set('maximum', maximum);
       this.set('saveAction', saveAction);
-      await render(hbs`<CurriculumInventorySequenceBlockMinMaxEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockMinMaxEditor
       @minimum={{minimum}}
       @maximum={{maximum}}
       @save={{saveAction}}
@@ -104,7 +104,7 @@ module(
       this.set('minimum', minimum);
       this.set('maximum', maximum);
       this.set('saveAction', saveAction);
-      await render(hbs`<CurriculumInventorySequenceBlockMinMaxEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockMinMaxEditor
       @minimum={{minimum}}
       @maximum={{maximum}}
       @save={{saveAction}}
@@ -130,7 +130,7 @@ module(
       this.set('minimum', minimum);
       this.set('maximum', maximum);
       this.set('saveAction', saveAction);
-      await render(hbs`<CurriculumInventorySequenceBlockMinMaxEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockMinMaxEditor
       @minimum={{minimum}}
       @maximum={{maximum}}
       @save={{saveAction}}
@@ -156,7 +156,7 @@ module(
       this.set('minimum', minimum);
       this.set('maximum', maximum);
       this.set('saveAction', saveAction);
-      await render(hbs`<CurriculumInventorySequenceBlockMinMaxEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockMinMaxEditor
       @minimum={{minimum}}
       @maximum={{maximum}}
       @save={{saveAction}}
@@ -184,7 +184,7 @@ module(
       this.set('maximum', maximum);
       this.set('isElective', isElective);
       this.set('saveAction', saveAction);
-      await render(hbs`<CurriculumInventorySequenceBlockMinMaxEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockMinMaxEditor
       @minimum={{minimum}}
       @maximum={{maximum}}
       @save={{saveAction}}
