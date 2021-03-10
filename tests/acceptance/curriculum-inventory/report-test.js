@@ -25,7 +25,7 @@ module('Acceptance | curriculum inventory report', function (hooks) {
 
     const sequenceBlockList = '.curriculum-inventory-sequence-block-list';
     const addSequenceBlock = `${sequenceBlockList} .expand-button`;
-    const newBlockForm = '.new-curriculum-inventory-sequence-block';
+    const newBlockForm = '.curriculum-inventory-new-sequence-block';
     const newFormTitle = `${newBlockForm} h2.title`;
 
     await visit(url);
