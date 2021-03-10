@@ -1,0 +1,1 @@
+{"engine":"ember-template-lint","filePath":"app/components/curriculum-inventory/sequence-block-session-list.hbs","ruleId":"no-implicit-this","line":16,"column":33,"createdDate":1615276800000,"warnDate":1617865200000,"errorDate":1620457200000}

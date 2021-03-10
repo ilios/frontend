@@ -1,0 +1,1 @@
+{"engine":"ember-template-lint","filePath":"app/components/curriculum-inventory/report-list.hbs","ruleId":"no-passed-in-event-handlers","line":26,"column":10,"createdDate":1615276800000,"warnDate":1617865200000,"errorDate":1620457200000}
