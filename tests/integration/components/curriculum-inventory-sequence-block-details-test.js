@@ -71,7 +71,7 @@ module('Integration | Component | curriculum inventory sequence block details', 
     this.set('sortBy', 'title');
     this.set('canUpdate', true);
 
-    await render(hbs`<CurriculumInventorySequenceBlockDetails
+    await render(hbs`<CurriculumInventory:SequenceBlockDetails
       @report={{this.report}}
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{this.canUpdate}}

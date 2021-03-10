@@ -20,7 +20,7 @@ module('Integration | Component | curriculum inventory report header', function 
   });
 
   test('it renders', async function (assert) {
-    await render(hbs`<CurriculumInventoryReportHeader
+    await render(hbs`<CurriculumInventory:ReportHeader
       @report={{this.report}}
       @canUpdate={{true}}
       @finalize={{noop}}

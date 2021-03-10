@@ -18,7 +18,7 @@ module(
       ];
 
       this.set('data', data);
-      await render(hbs`<CurriculumInventoryVerificationPreviewTable3a @data={{this.data}} />`);
+      await render(hbs`<CurriculumInventory:VerificationPreviewTable3a @data={{this.data}} />`);
       assert.equal(component.title, 'Table 3-A: Non-Clerkship Sequence Block Instructional Time');
       assert.equal(component.table.headings.length, 4);
       assert.equal(component.table.headings.objectAt(0).text, 'Non-Clerkship Sequence Blocks');

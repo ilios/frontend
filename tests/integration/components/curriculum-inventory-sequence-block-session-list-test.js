@@ -74,7 +74,7 @@ module(
       this.set('sessions', sessionModels);
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'title');
-      await render(hbs`<CurriculumInventorySequenceBlockSessionList
+      await render(hbs`<CurriculumInventory:SequenceBlockSessionList
       @sessions={{sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{noop}}
@@ -184,7 +184,7 @@ module(
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'title');
       this.set('setSortBy', function () {});
-      await render(hbs`<CurriculumInventorySequenceBlockSessionList
+      await render(hbs`<CurriculumInventory:SequenceBlockSessionList
       @sessions={{await sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}
@@ -215,7 +215,7 @@ module(
       this.set('setSortBy', function (what) {
         assert.equal(what, 'title', 'Sorting callback gets called for session titles.');
       });
-      await render(hbs`<CurriculumInventorySequenceBlockSessionList
+      await render(hbs`<CurriculumInventory:SequenceBlockSessionList
       @sessions={{await sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}
@@ -248,7 +248,7 @@ module(
           'Sorting callback gets called for session type titles.'
         );
       });
-      await render(hbs`<CurriculumInventorySequenceBlockSessionList
+      await render(hbs`<CurriculumInventory:SequenceBlockSessionList
       @sessions={{sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}
@@ -281,7 +281,7 @@ module(
           'Sorting callback gets called for offerings length.'
         );
       });
-      await render(hbs`<CurriculumInventorySequenceBlockSessionList
+      await render(hbs`<CurriculumInventory:SequenceBlockSessionList
       @sessions={{await sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}

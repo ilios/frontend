@@ -21,7 +21,7 @@ module('Integration | Component | Curriculum Inventory Sequence Block Header', f
   test('it renders', async function (assert) {
     this.set('sequenceBlock', this.blockModel);
     await render(
-      hbs`<CurriculumInventorySequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory:SequenceBlockHeader @sequenceBlock={{this.sequenceBlock}} @canUpdate={{true}} />`
     );
     assert.ok(component.title.isVisible);
     assert.equal(component.title.value, this.blockModel.title);

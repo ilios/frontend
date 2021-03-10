@@ -84,7 +84,7 @@ module(
       this.set('sequenceBlock', block);
       this.set('sortBy', 'title');
       this.set('setSortBy', function () {});
-      await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      await render(hbs`<CurriculumInventory:SequenceBlockSessionManager
       @sessions={{sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}
@@ -206,7 +206,7 @@ module(
       this.set('sequenceBlock', block);
       this.set('sortBy', 'title');
       this.set('setSortBy', function () {});
-      await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      await render(hbs`<CurriculumInventory:SequenceBlockSessionManager
       @sessions={{sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}
@@ -238,7 +238,7 @@ module(
       this.set('setSortBy', function (what) {
         assert.equal(what, 'title', 'Sorting callback gets called for session titles.');
       });
-      await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      await render(hbs`<CurriculumInventory:SequenceBlockSessionManager
       @sessions={{sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}
@@ -273,7 +273,7 @@ module(
           'Sorting callback gets called for session type titles.'
         );
       });
-      await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      await render(hbs`<CurriculumInventory:SequenceBlockSessionManager
       @sessions={{sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}
@@ -308,7 +308,7 @@ module(
           'Sorting callback gets called for offerings length.'
         );
       });
-      await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      await render(hbs`<CurriculumInventory:SequenceBlockSessionManager
       @sessions={{sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}
@@ -340,7 +340,7 @@ module(
       this.set('sequenceBlock', block);
       this.set('sortBy', 'id');
       this.set('setSortBy', function () {});
-      await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      await render(hbs`<CurriculumInventory:SequenceBlockSessionManager
       @sessions={{sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}
@@ -384,7 +384,7 @@ module(
       this.set('sessions', resolve([session1, session2]));
       this.set('sequenceBlock', block);
 
-      await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      await render(hbs`<CurriculumInventory:SequenceBlockSessionManager
       @sessions={{sessions}}
       @sequenceBlock={{sequenceBlock}}
     />`);
@@ -448,7 +448,7 @@ module(
         assert.ok(excludedSessions.includes(session1));
         assert.ok(excludedSessions.includes(session2));
       });
-      await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      await render(hbs`<CurriculumInventory:SequenceBlockSessionManager
       @sessions={{sessions}}
       @sortBy={{sortBy}}
       @sequenceBlock={{sequenceBlock}}
@@ -484,7 +484,7 @@ module(
       this.set('cancel', () => {
         assert.ok(true, 'Cancel action fired.');
       });
-      await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      await render(hbs`<CurriculumInventory:SequenceBlockSessionManager
       @sessions={{sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}
@@ -555,7 +555,7 @@ module(
       this.set('sequenceBlock', block);
       this.set('sortBy', 'title');
       this.set('setSortBy', function () {});
-      await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      await render(hbs`<CurriculumInventory:SequenceBlockSessionManager
       @sessions={{sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}
@@ -675,7 +675,7 @@ module(
       this.set('sequenceBlock', block);
       this.set('sortBy', 'title');
       this.set('setSortBy', function () {});
-      await render(hbs`<CurriculumInventorySequenceBlockSessionManager
+      await render(hbs`<CurriculumInventory:SequenceBlockSessionManager
       @sessions={{sessions}}
       @sequenceBlock={{sequenceBlock}}
       @sortBy={{sortBy}}

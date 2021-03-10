@@ -36,7 +36,7 @@ module('Integration | Component | curriculum-inventory-report-list-item', functi
     this.set('report', this.report);
 
     await render(
-      hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{noop}} @remove={{noop}}/>`
+      hbs`<CurriculumInventory:ReportListItem @report={{this.report}} @edit={{noop}} @remove={{noop}}/>`
     );
 
     assert.equal(component.name, 'CI Report');
@@ -111,7 +111,7 @@ module('Integration | Component | curriculum-inventory-report-list-item', functi
     this.set('report', this.report);
 
     await render(
-      hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{noop}} @remove={{noop}}/>`
+      hbs`<CurriculumInventory:ReportListItem @report={{this.report}} @edit={{noop}} @remove={{noop}}/>`
     );
 
     assert.equal(component.status, 'Finalized');
@@ -128,7 +128,7 @@ module('Integration | Component | curriculum-inventory-report-list-item', functi
     this.set('report', this.report);
 
     await render(
-      hbs`<CurriculumInventoryReportListItem @report={{this.report}} @edit={{noop}} @remove={{noop}}/>`
+      hbs`<CurriculumInventory:ReportListItem @report={{this.report}} @edit={{noop}} @remove={{noop}}/>`
     );
 
     assert.equal(component.year, '2017 - 2018');
