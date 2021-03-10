@@ -36,25 +36,25 @@ export default Component.extend({
         return sequenceBlocks
           .sortBy('orderInSequence', 'title', 'id')
           .map((block) => SequenceBlockProxy.create({ content: block }));
-      } else {
-        if (!sequenceBlocks.length) {
-          return sequenceBlocks;
-        } else {
-          const blockProxies = await all(
-            sequenceBlocks.map(async (block) => {
-              const proxy = ObjectProxy.create({ content: block, level: null });
-              const academicLevel = await block.academicLevel;
-              proxy.set('level', academicLevel.level);
-              return proxy;
-            })
-          );
-          return blockProxies.sortBy('level', 'startDate', 'title', 'id').map((sortedProxy) => {
-            return SequenceBlockProxy.create({
-              content: sortedProxy.content,
-            });
-          });
-        }
       }
+
+      if (!sequenceBlocks.length) {
+        return sequenceBlocks;
+      }
+
+      const blockProxies = await all(
+        sequenceBlocks.map(async (block) => {
+          const proxy = ObjectProxy.create({ content: block, level: null });
+          const academicLevel = await block.academicLevel;
+          proxy.set('level', academicLevel.level);
+          return proxy;
+        })
+      );
+      return blockProxies.sortBy('level', 'startDate', 'title', 'id').map((sortedProxy) => {
+        return SequenceBlockProxy.create({
+          content: sortedProxy.content,
+        });
+      });
     }
   ),
 
