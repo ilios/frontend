@@ -6,7 +6,7 @@ import { restartableTask } from 'ember-concurrency';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 
 @validatable
-export default class CurriculumInventorySequenceBlockHeader extends Component {
+export default class CurriculumInventorySequenceBlockHeaderComponent extends Component {
   @service store;
   @tracked @NotBlank() @Length(3, 200) title;
 

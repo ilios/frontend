@@ -13,7 +13,7 @@ import {
 } from 'ilios-common/decorators/validation';
 
 @validatable
-export default class CurriculumInventorySequenceBlockDatesDurationEditor extends Component {
+export default class CurriculumInventorySequenceBlockDatesDurationEditorComponent extends Component {
   @tracked @NotBlank() @IsInt() @Gte(0) @Lte(1200) duration = null;
   @tracked @ValidateIf((o) => o.hasZeroDuration) @NotBlank() startDate = null;
   @tracked
