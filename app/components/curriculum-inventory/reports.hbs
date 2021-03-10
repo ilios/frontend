@@ -77,7 +77,7 @@
         {{/if}}
       </section>
       <div class="list">
-        <CurriculumInventoryReportList
+        <CurriculumInventory:ReportList
           @reports={{if this.selectedProgram (await this.selectedProgram.curriculumInventoryReports) null}}
           @sortBy={{@sortReportsBy}}
           @edit={{@editCurriculumInventoryReport}}
