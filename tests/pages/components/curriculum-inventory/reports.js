@@ -9,7 +9,7 @@ import {
   value,
 } from 'ember-cli-page-object';
 import newReport from '../new-curriculum-inventory-report';
-import reports from './curriculum-inventory-report-list';
+import reports from './report-list';
 
 const definition = {
   scope: '[data-test-curriculum-inventory-reports]',

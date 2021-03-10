@@ -5,7 +5,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { component } from 'ilios/tests/pages/components/curriculum-inventory-report-list-item';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory/report-list-item';
 
 module('Integration | Component | curriculum-inventory/report-list-item', function (hooks) {
   setupRenderingTest(hooks);

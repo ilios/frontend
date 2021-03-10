@@ -1,5 +1,5 @@
 import { clickable, create, collection, text } from 'ember-cli-page-object';
-import item from './curriculum-inventory-report-list-item';
+import item from './report-list-item';
 
 const definition = {
   scope: '[data-test-curriculum-inventory-report-list]',

@@ -4,7 +4,7 @@ import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { component } from 'ilios/tests/pages/components/curriculum-inventory-sequence-block-dates-duration-editor';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-dates-duration-editor';
 
 module(
   'Integration | Component | curriculum-inventory/sequence-block-dates-duration-editor',

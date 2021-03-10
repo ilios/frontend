@@ -2,7 +2,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
-import { component } from 'ilios/tests/pages/components/curriculum-inventory-sequence-block-header';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-header';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 module('Integration | Component | curriculum-inventory/sequence-block-header', function (hooks) {

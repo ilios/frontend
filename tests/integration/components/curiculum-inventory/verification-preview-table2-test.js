@@ -3,7 +3,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { component } from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table2';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory/verification-preview-table2';
 
 module(
   'Integration | Component | curriculum-inventory/verification-preview-table2',
