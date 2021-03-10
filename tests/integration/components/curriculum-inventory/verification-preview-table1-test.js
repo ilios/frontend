@@ -16,7 +16,7 @@ module(
         { title: 'foo', pcrs: [] },
       ];
       this.set('data', data);
-      await render(hbs`<CurriculumInventory:VerificationPreviewTable1 @data={{this.data}} />`);
+      await render(hbs`<CurriculumInventory::VerificationPreviewTable1 @data={{this.data}} />`);
       assert.equal(component.title, 'Table 1: Program Expectations Mapped to PCRS');
       assert.equal(component.table.headings.length, 3);
       assert.equal(component.table.headings.objectAt(0).text, 'Program Expectations ID');

@@ -47,7 +47,7 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
   });
 
   test('it renders', async function (assert) {
-    await render(hbs`<CurriculumInventory:Reports
+    await render(hbs`<CurriculumInventory::Reports
       @editCurriculumInventoryReport={{noop}}
       @schools={{this.schools}}
       @sortReportsBy="name"

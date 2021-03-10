@@ -48,7 +48,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
 
   test('it renders', async function (assert) {
     await render(
-      hbs`<CurriculumInventory:ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
 
     assert.equal(component.title, 'Overview', 'Component title is visible.');
@@ -80,7 +80,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
 
   test('read-only', async function (assert) {
     await render(
-      hbs`<CurriculumInventory:ReportOverview @report={{this.report}} @canUpdate={{false}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{false}} />`
     );
 
     assert.equal(
@@ -119,7 +119,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
       };
     });
     await render(
-      hbs`<CurriculumInventory:ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
     assert.equal(
       component.academicYear.text,
@@ -137,7 +137,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     });
 
     await render(
-      hbs`<CurriculumInventory:ReportOverview @report={{this.report}} @canUpdate={{false}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{false}} />`
     );
     assert.equal(
       component.academicYear.readOnlyText,
@@ -270,7 +270,7 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     this.report.sequenceBlocks.pushObject(sequenceBlockModel);
 
     await render(
-      hbs`<CurriculumInventory:ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
     );
 
     assert.equal(

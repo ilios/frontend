@@ -97,7 +97,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     this.set('sortBy', 'title');
     this.set('setSortBy', null);
 
-    await render(hbs`<CurriculumInventory:SequenceBlockOverview
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
       @report={{report}}
       @sequenceBlock={{sequenceBlock}}
       @canUpdate={{true}}
@@ -243,7 +243,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`<CurriculumInventory:SequenceBlockOverview
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
       @report={{report}}
       @sequenceBlock={{sequenceBlock}}
       @canUpdate={{true}}
@@ -299,7 +299,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`<CurriculumInventory:SequenceBlockOverview
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
       @report={{report}}
       @sequenceBlock={{sequenceBlock}}
       @canUpdate={{true}}
@@ -371,7 +371,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`<CurriculumInventory:SequenceBlockOverview
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
       @report={{report}}
       @sequenceBlock={{sequenceBlock}}
       @canUpdate={{true}}
@@ -454,7 +454,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`<CurriculumInventory:SequenceBlockOverview
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
       @report={{report}}
       @sequenceBlock={{sequenceBlock}}
       @canUpdate={{true}}
@@ -509,7 +509,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`<CurriculumInventory:SequenceBlockOverview
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
       @report={{report}}
       @sequenceBlock={{sequenceBlock}}
       @canUpdate={{true}}
@@ -564,7 +564,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`<CurriculumInventory:SequenceBlockOverview
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
       @report={{report}}
       @sequenceBlock={{sequenceBlock}}
       @canUpdate={{true}}
@@ -615,7 +615,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`<CurriculumInventory:SequenceBlockOverview
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
       @report={{report}}
       @sequenceBlock={{sequenceBlock}}
       @canUpdate={{true}}
@@ -685,7 +685,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     this.set('sortBy', 'title');
     this.set('setSortBy', null);
 
-    await render(hbs`<CurriculumInventory:SequenceBlockOverview
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
       @report={{report}}
       @sequenceBlock={{sequenceBlock}}
       @canUpdate={{true}}
@@ -752,7 +752,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`<CurriculumInventory:SequenceBlockOverview
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
       @report={{report}}
       @sequenceBlock={{sequenceBlock}}
       @canUpdate={{true}}
@@ -843,7 +843,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     this.set('sortBy', 'title');
     this.set('setSortBy', null);
 
-    await render(hbs`<CurriculumInventory:SequenceBlockOverview
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
       @report={{report}}
       @sequenceBlock={{sequenceBlock}}
       @canUpdate={{true}}
@@ -950,7 +950,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     this.set('sortBy', 'title');
     this.set('setSortBy', null);
 
-    await render(hbs`<CurriculumInventory:SequenceBlockOverview
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
       @report={{report}}
       @sequenceBlock={{sequenceBlock}}
       @canUpdate={{false}}
@@ -1056,7 +1056,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`<CurriculumInventory:SequenceBlockOverview
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
       @report={{report}}
       @sequenceBlock={{sequenceBlock}}
       @canUpdate={{true}}
@@ -1109,7 +1109,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     this.set('sequenceBlock', sequenceBlockModel);
     this.set('sortBy', null);
     this.set('setSortBy', null);
-    await render(hbs`<CurriculumInventory:SequenceBlockOverview
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
       @report={{report}}
       @sequenceBlock={{sequenceBlock}}
       @canUpdate={{true}}

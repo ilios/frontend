@@ -20,7 +20,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
     this.set('report', report);
 
-    await render(hbs`<CurriculumInventory:ReportRollover @report={{report}} />`);
+    await render(hbs`<CurriculumInventory::ReportRollover @report={{report}} />`);
 
     const yearSelect = '.years select';
     const name = '.name input';
@@ -69,7 +69,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       assert.equal(newReport.id, 14);
     });
     await render(
-      hbs`<CurriculumInventory:ReportRollover @report={{report}} @visit={{action visit}} />`
+      hbs`<CurriculumInventory::ReportRollover @report={{report}} @visit={{action visit}} />`
     );
     await click('.done');
   });
@@ -109,7 +109,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     this.set('visit', () => {});
 
     await render(
-      hbs`<CurriculumInventory:ReportRollover @report={{report}} @visit={{action visit}} />`
+      hbs`<CurriculumInventory::ReportRollover @report={{report}} @visit={{action visit}} />`
     );
 
     const input = `.name input`;
@@ -126,7 +126,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
     this.set('report', report);
 
-    await render(hbs`<CurriculumInventory:ReportRollover @report={{report}} />`);
+    await render(hbs`<CurriculumInventory::ReportRollover @report={{report}} />`);
     assert.dom('.validation-error-message').doesNotExist();
   });
 
@@ -136,7 +136,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
 
     this.set('report', report);
 
-    await render(hbs`<CurriculumInventory:ReportRollover @report={{report}} />`);
+    await render(hbs`<CurriculumInventory::ReportRollover @report={{report}} />`);
 
     const name = '.name';
     const input = `${name} input`;

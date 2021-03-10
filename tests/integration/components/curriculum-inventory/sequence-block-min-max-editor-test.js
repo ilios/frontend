@@ -13,7 +13,7 @@ module(
       const maximum = '10';
       this.set('minimum', minimum);
       this.set('maximum', maximum);
-      await render(hbs`<CurriculumInventory:SequenceBlockMinMaxEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockMinMaxEditor
       @minimum={{minimum}}
       @maximum={{maximum}}
     />`);
@@ -38,7 +38,7 @@ module(
       this.set('minimum', minimum);
       this.set('maximum', maximum);
       this.set('saveAction', saveAction);
-      await render(hbs`<CurriculumInventory:SequenceBlockMinMaxEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockMinMaxEditor
       @minimum={{minimum}}
       @maximum={{maximum}}
       @save={{saveAction}}

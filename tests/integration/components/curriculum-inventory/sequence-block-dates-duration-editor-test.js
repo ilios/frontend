@@ -22,7 +22,7 @@ module(
         .lookup('service:store')
         .find('curriculum-inventory-sequence-block', block.id);
       this.set('sequenceBlock', blockModel);
-      await render(hbs`<CurriculumInventory:SequenceBlockDatesDurationEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockDatesDurationEditor
       @sequenceBlock={{this.sequenceBlock}}
       @save={{noop}}
       @cancel={{noop}}
@@ -70,7 +70,7 @@ module(
         assert.equal(endDate.getTime(), newEndDate.getTime(), 'New end date on save.');
         assert.equal(duration, newDuration, 'New duration on save');
       });
-      await render(hbs`<CurriculumInventory:SequenceBlockDatesDurationEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockDatesDurationEditor
       @sequenceBlock={{this.sequenceBlock}}
       @save={{this.save}}
       @cancel={{noop}}
@@ -96,7 +96,7 @@ module(
         assert.equal(endDate.getTime(), newEndDate.getTime(), 'New end date on save.');
         assert.equal(duration, newDuration, 'New duration on save');
       });
-      await render(hbs`<CurriculumInventory:SequenceBlockDatesDurationEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockDatesDurationEditor
       @sequenceBlock={{this.sequenceBlock}}
       @save={{this.save}}
       @cancel={{noop}}
@@ -120,7 +120,7 @@ module(
         assert.equal(endDate, null, 'NULL for end date on save.');
         assert.equal(duration, newDuration, 'New duration on save.');
       });
-      await render(hbs`<CurriculumInventory:SequenceBlockDatesDurationEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockDatesDurationEditor
       @sequenceBlock={{this.sequenceBlock}}
       @save={{this.save}}
       @cancel={{noop}}
@@ -143,7 +143,7 @@ module(
       this.set('cancel', () => {
         assert.ok(true, 'Cancel action got invoked.');
       });
-      await render(hbs`<CurriculumInventory:SequenceBlockDatesDurationEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockDatesDurationEditor
       @sequenceBlock={{this.sequenceBlock}}
       @save={{noop}}
       @cancel={{this.cancel}}
@@ -163,7 +163,7 @@ module(
       this.set('save', () => {
         assert.ok(false, 'Save action should have not been invoked.');
       });
-      await render(hbs`<CurriculumInventory:SequenceBlockDatesDurationEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockDatesDurationEditor
       @sequenceBlock={{this.sequenceBlock}}
       @save={{this.save}}
       @cancel={{noop}}
@@ -189,7 +189,7 @@ module(
       this.set('save', () => {
         assert.ok(false, 'Save action should have not been invoked.');
       });
-      await render(hbs`<CurriculumInventory:SequenceBlockDatesDurationEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockDatesDurationEditor
       @sequenceBlock={{this.sequenceBlock}}
       @save={{this.save}}
       @cancel={{noop}}
@@ -214,7 +214,7 @@ module(
       this.set('save', () => {
         assert.ok(false, 'Save action should have not been invoked.');
       });
-      await render(hbs`<CurriculumInventory:SequenceBlockDatesDurationEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockDatesDurationEditor
       @sequenceBlock={{this.sequenceBlock}}
       @save={{this.save}}
       @cancel={{noop}}
@@ -235,7 +235,7 @@ module(
       this.set('save', () => {
         assert.ok(false, 'Save action should have not been invoked.');
       });
-      await render(hbs`<CurriculumInventory:SequenceBlockDatesDurationEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockDatesDurationEditor
       @sequenceBlock={{this.sequenceBlock}}
       @save={{this.save}}
       @cancel={{noop}}
@@ -257,7 +257,7 @@ module(
       this.set('save', () => {
         assert.ok(false, 'Save action should have not been invoked.');
       });
-      await render(hbs`<CurriculumInventory:SequenceBlockDatesDurationEditor
+      await render(hbs`<CurriculumInventory::SequenceBlockDatesDurationEditor
       @sequenceBlock={{this.sequenceBlock}}
       @save={{this.save}}
       @cancel={{noop}}

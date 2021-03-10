@@ -60,7 +60,7 @@
       </div>
       <section class="new">
         {{#if this.showNewCurriculumInventoryReportForm}}
-          <CurriculumInventory:NewReport
+          <CurriculumInventory::NewReport
             @currentProgram={{this.selectedProgram}}
             @save={{this.saveNewCurriculumInventoryReport}}
             @cancel={{this.cancel}}
@@ -77,7 +77,7 @@
         {{/if}}
       </section>
       <div class="list">
-        <CurriculumInventory:ReportList
+        <CurriculumInventory::ReportList
           @reports={{if this.selectedProgram (await this.selectedProgram.curriculumInventoryReports) null}}
           @sortBy={{@sortReportsBy}}
           @edit={{@editCurriculumInventoryReport}}

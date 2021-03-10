@@ -29,7 +29,7 @@ module(
       ];
 
       this.set('data', data);
-      await render(hbs`<CurriculumInventory:VerificationPreviewTable4 @data={{this.data}} />`);
+      await render(hbs`<CurriculumInventory::VerificationPreviewTable4 @data={{this.data}} />`);
       assert.equal(component.title, 'Table 4: Instructional Method Counts');
       assert.equal(component.table.headings.length, 4);
       assert.equal(component.table.headings.objectAt(0).text, 'Item Code');

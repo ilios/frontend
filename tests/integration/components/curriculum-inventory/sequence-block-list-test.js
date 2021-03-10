@@ -71,7 +71,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
 
     this.set('report', report);
     this.set('removeSequenceBlock', function () {});
-    await render(hbs`<CurriculumInventory:SequenceBlockList
+    await render(hbs`<CurriculumInventory::SequenceBlockList
       @report={{report}}
       @sequenceBlocks={{await report.topLevelSequenceBlocks}}
       @canUpdate={{true}}
@@ -212,7 +212,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
 
     this.set('parent', parentBlock);
     this.set('removeSequenceBlock', function () {});
-    await render(hbs`<CurriculumInventory:SequenceBlockList
+    await render(hbs`<CurriculumInventory::SequenceBlockList
       @parent={{parent}}
       @report={{await parent.report}}
       @sequenceBlocks={{await parent.children}}
@@ -304,7 +304,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
 
     this.set('report', report);
     this.set('removeSequenceBlock', function () {});
-    await render(hbs`<CurriculumInventory:SequenceBlockList
+    await render(hbs`<CurriculumInventory::SequenceBlockList
       @report={{report}}
       @sequenceBlocks={{await report.topLevelSequenceBlocks}}
       @canUpdate={{false}}
@@ -364,7 +364,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       assert.equal(block, block1, 'Remove action was invoked, and sequence block was passed.');
       report.set('toLevelSequenceBlocks', resolve([block1])); // fake deletion.
     });
-    await render(hbs`<CurriculumInventory:SequenceBlockList
+    await render(hbs`<CurriculumInventory::SequenceBlockList
       @report={{report}}
       @sequenceBlocks={{await report.topLevelSequenceBlocks}}
       @canUpdate={{true}}
@@ -426,7 +426,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     });
 
     this.set('report', report);
-    await render(hbs`<CurriculumInventory:SequenceBlockList
+    await render(hbs`<CurriculumInventory::SequenceBlockList
       @report={{report}}
       @sequenceBlocks={{await report.topLevelSequenceBlocks}}
       @canUpdate={{true}}
@@ -471,7 +471,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
 
     this.set('report', report);
     await render(
-      hbs`<CurriculumInventory:SequenceBlockList @report={{report}} @canUpdate={{true}} />`
+      hbs`<CurriculumInventory::SequenceBlockList @report={{report}} @canUpdate={{true}} />`
     );
     return settled().then(() => {
       assert
@@ -527,7 +527,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     parentBlock.set('report', resolve(report));
 
     this.set('parent', parentBlock);
-    await render(hbs`<CurriculumInventory:SequenceBlockList
+    await render(hbs`<CurriculumInventory::SequenceBlockList
       @parent={{parent}}
       @report={{await parent.report}}
       @sequenceBlocks={{await parent.children}}

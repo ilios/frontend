@@ -19,7 +19,7 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
       .find('curriculum-inventory-report', report.id);
 
     this.set('report', reportModel);
-    await render(hbs`<CurriculumInventory:LeadershipExpanded
+    await render(hbs`<CurriculumInventory::LeadershipExpanded
       @report={{this.report}}
       @canUpdate={{true}}
       @collapse={{noop}}
@@ -50,7 +50,7 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`<CurriculumInventory:LeadershipExpanded
+    await render(hbs`<CurriculumInventory::LeadershipExpanded
       @report={{this.report}}
       @canUpdate={{true}}
       @collapse={{action click}}
@@ -74,7 +74,7 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
     this.set('click', () => {
       assert.ok(true, 'Action was fired');
     });
-    await render(hbs`<CurriculumInventory:LeadershipExpanded
+    await render(hbs`<CurriculumInventory::LeadershipExpanded
       @report={{this.report}}
       @canUpdate={{true}}
       @collapse={{noop}}

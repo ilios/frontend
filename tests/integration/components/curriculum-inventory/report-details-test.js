@@ -40,7 +40,7 @@ module('Integration | Component | curriculum-inventory/report-details', function
 
     this.set('report', report);
 
-    await render(hbs`<CurriculumInventory:ReportDetails
+    await render(hbs`<CurriculumInventory::ReportDetails
       @report={{this.report}}
       @canUpdate={{true}}
       @setLeadershipDetails={{noop}}
@@ -76,7 +76,7 @@ module('Integration | Component | curriculum-inventory/report-details', function
     this.set('report', report);
     this.set('canUpdate', true);
 
-    await render(hbs`<CurriculumInventory:ReportDetails
+    await render(hbs`<CurriculumInventory::ReportDetails
       @report={{this.report}}
       @canUpdate={{this.canUpdate}}
       @setLeadershipDetails={{noop}}
@@ -126,7 +126,7 @@ module('Integration | Component | curriculum-inventory/report-details', function
 
     this.set('report', report);
 
-    await render(hbs`<CurriculumInventory:ReportDetails
+    await render(hbs`<CurriculumInventory::ReportDetails
       @report={{this.report}}
       @canUpdate={{true}}
       @setLeadershipDetails={{noop}}
