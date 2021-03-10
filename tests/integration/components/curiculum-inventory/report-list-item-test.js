@@ -7,7 +7,7 @@ import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory-report-list-item';
 
-module('Integration | Component | curriculum-inventory-report-list-item', function (hooks) {
+module('Integration | Component | curriculum-inventory/report-list-item', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 

@@ -7,7 +7,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import moment from 'moment';
 
 module(
-  'Integration | Component | curriculum inventory sequence block session list',
+  'Integration | Component | curriculum-inventory/sequence-block-session-list',
   function (hooks) {
     setupRenderingTest(hooks);
     setupIntl(hooks);

@@ -7,7 +7,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory-sequence-block-dates-duration-editor';
 
 module(
-  'Integration | Component | curriculum inventory sequence block dates duration editor',
+  'Integration | Component | curriculum-inventory/sequence-block-dates-duration-editor',
   function (hooks) {
     setupRenderingTest(hooks);
     setupMirage(hooks);

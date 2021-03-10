@@ -4,7 +4,7 @@ import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 
 module(
-  'Integration | Component | curriculum inventory sequence block min max editor',
+  'Integration | Component | curriculum-inventory/sequence-block-min-max-editor',
   function (hooks) {
     setupRenderingTest(hooks);
 

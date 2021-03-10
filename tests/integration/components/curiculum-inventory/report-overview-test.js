@@ -8,7 +8,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory-report-overview';
 
-module('Integration | Component | curriculum inventory report overview', function (hooks) {
+module('Integration | Component | curriculum-inventory/report-overview', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
   setupIntl(hooks);

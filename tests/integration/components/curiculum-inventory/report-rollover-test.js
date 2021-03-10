@@ -6,7 +6,7 @@ import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import queryString from 'query-string';
 
-module('Integration | Component | curriculum inventory report rollover', function (hooks) {
+module('Integration | Component | curriculum-inventory/report-rollover', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 

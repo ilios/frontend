@@ -8,7 +8,7 @@ import moment from 'moment';
 
 const { resolve } = RSVP;
 
-module('Integration | Component | curriculum inventory sequence block list', function (hooks) {
+module('Integration | Component | curriculum-inventory/sequence-block-list', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders with top-level sequence blocks', async function (assert) {

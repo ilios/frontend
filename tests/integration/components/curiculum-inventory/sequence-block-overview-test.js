@@ -6,7 +6,7 @@ import moment from 'moment';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 // @todo use page objects here [ST 2020/08/11]
-module('Integration | Component | curriculum inventory sequence block overview', function (hooks) {
+module('Integration | Component | curriculum-inventory/sequence-block-overview', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 

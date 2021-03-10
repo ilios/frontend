@@ -4,7 +4,7 @@ import { render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Integration | Component | curriculum inventory leadership expanded', function (hooks) {
+module('Integration | Component | curriculum-inventory/leadership-expanded', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 

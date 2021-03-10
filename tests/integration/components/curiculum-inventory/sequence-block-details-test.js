@@ -7,7 +7,7 @@ import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
 // @todo use a page object here [ST 2020/08/10]
-module('Integration | Component | curriculum inventory sequence block details', function (hooks) {
+module('Integration | Component | curriculum-inventory/sequence-block-details', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks);
   setupMirage(hooks);

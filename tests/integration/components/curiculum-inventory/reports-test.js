@@ -6,7 +6,7 @@ import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory-reports';
 
-module('Integration | Component | curriculum-inventory-reports', function (hooks) {
+module('Integration | Component | curriculum-inventory/reports', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 

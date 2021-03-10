@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory-sequence-block-header';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 
-module('Integration | Component | Curriculum Inventory Sequence Block Header', function (hooks) {
+module('Integration | Component | curriculum-inventory/sequence-block-header', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 

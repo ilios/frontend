@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { component } from 'ilios/tests/pages/components/curriculum-inventory-verification-preview-table1';
 
 module(
-  'Integration | Component | curriculum-inventory-verification-preview-table1',
+  'Integration | Component | curriculum-inventory/verification-preview-table1',
   function (hooks) {
     setupRenderingTest(hooks);
 

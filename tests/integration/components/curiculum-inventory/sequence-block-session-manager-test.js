@@ -8,7 +8,7 @@ import hbs from 'htmlbars-inline-precompile';
 const { resolve } = RSVP;
 
 module(
-  'Integration | Component | curriculum inventory sequence block session manager',
+  'Integration | Component | curriculum-inventory/sequence-block-session-manager',
   function (hooks) {
     setupRenderingTest(hooks);
 
