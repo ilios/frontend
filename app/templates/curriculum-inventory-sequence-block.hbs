@@ -1,11 +1,11 @@
 {{page-title (t "general.curriculumInventoryReports")}}
-<CurriculumInventorySequenceBlockDetails
+<CurriculumInventory::SequenceBlockDetails
   @sequenceBlock={{@model}}
   @canUpdate={{this.canUpdate}}
   @sortSessionsBy={{this.sortSessionsBy}}
   @setSortSessionBy={{action (mut this.sortSessionsBy)}}
 />
-<CurriculumInventorySequenceBlockList
+<CurriculumInventory::SequenceBlockList
   @report={{await @model.report}}
   @parent={{@model}}
   @canUpdate={{this.canUpdate}}

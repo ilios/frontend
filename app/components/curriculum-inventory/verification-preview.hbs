@@ -1,0 +1,157 @@
+<div
+  class="curriculum-inventory-verification-preview"
+  data-test-curriculum-inventory-verification-preview
+  {{did-insert (perform this.load) @report}}
+  {{did-update (perform this.load) @report}}
+  ...attributes
+>
+  {{#if this.tables}}
+    <ul
+      class="table-of-contents"
+      data-test-table-of-contents
+      {{did-insert this.setScrollTarget "toc"}}
+    >
+      <li>
+        <span class="link clickable" role="button" {{on "click" (fn this.scrollTo "table1")}}>
+          {{t "general.table1ProgramExpectationsMappedToPcrs"}}
+        </span>
+      </li>
+      <li>
+        <span class="link clickable" role="button" {{on "click" (fn this.scrollTo "table2")}}>
+          {{t "general.table2PrimaryInstructionalMethodByNonClerkshipSequenceBlock"}}
+        </span>
+      </li>
+      <li>
+        <span class="link clickable" role="button" {{on "click" (fn this.scrollTo "table3a")}}>
+          {{t "general.table3aNonClerkshipSequenceBlockInstructionalTime"}}
+        </span>
+      </li>
+      <li>
+        <span class="link clickable" role="button" {{on "click" (fn this.scrollTo "table3b")}}>
+          {{t "general.table3bClerkshipSequenceBlockInstructionalTime"}}
+        </span>
+      </li>
+      <li>
+        <span class="link clickable" role="button" {{on "click" (fn this.scrollTo "table4")}}>
+          {{t "general.table4InstructionalMethodCounts"}}
+        </span>
+      </li>
+      <li>
+        <span class="link clickable" role="button" {{on "click" (fn this.scrollTo "table5")}}>
+          {{t "general.table5NonClerkshipSequenceBlockAssessmentMethods"}}
+        </span>
+      </li>
+      <li>
+        <span class="link clickable" role="button" {{on "click" (fn this.scrollTo "table6")}}>
+          {{t "general.table6ClerkshipSequenceBlockAssessmentMethods"}}
+        </span>
+      </li>
+      <li>
+        <span class="link clickable" role="button" {{on "click" (fn this.scrollTo "table7")}}>
+          {{t "general.table7AllEventsWithAssessmentsTaggedAsFormativeOrSummative"
+          }}
+        </span>
+      </li>
+      <li>
+        <span class="link clickable" role="button" {{on "click" (fn this.scrollTo "table8")}}>
+          {{t "general.table8AllResourceTypes"}}
+        </span>
+      </li>
+    </ul>
+    <CurriculumInventory::VerificationPreviewTable1
+      @data={{this.tables.program_expectations_mapped_to_pcrs}}
+      {{did-insert this.setScrollTarget "table1"}}
+    />
+    <span
+      class="link clickable back-to-toc"
+      role="button" {{on "click" (fn this.scrollTo "toc")}}
+      {{did-insert this.setScrollTarget "table2"}}
+    >
+      {{t "general.backToTableOfContents"}}
+    </span>
+    <CurriculumInventory::VerificationPreviewTable2
+      @data={{this.tables.primary_instructional_methods_by_non_clerkship_sequence_blocks}}
+    />
+    <span
+      class="link clickable back-to-toc"
+      role="button"
+      {{on "click" (fn this.scrollTo "toc")}}
+      {{did-insert this.setScrollTarget "table3a"}}
+    >
+      {{t "general.backToTableOfContents"}}
+    </span>
+    <CurriculumInventory::VerificationPreviewTable3a
+      @data={{this.tables.non_clerkship_sequence_block_instructional_time}}
+    />
+    <span
+      class="link clickable back-to-toc"
+      role="button"
+      {{on "click" (fn this.scrollTo "toc")}}
+      {{did-insert this.setScrollTarget "table3b"}}
+    >
+      {{t "general.backToTableOfContents"}}
+    </span>
+    <CurriculumInventory::VerificationPreviewTable3b
+      @data={{this.tables.clerkship_sequence_block_instructional_time}}
+    />
+    <span
+      class="link clickable back-to-toc"
+      role="button" {{on "click" (fn this.scrollTo "toc")}}
+      {{did-insert this.setScrollTarget "table4"}}
+    >
+      {{t "general.backToTableOfContents"}}
+    </span>
+    <CurriculumInventory::VerificationPreviewTable4
+      @data={{this.tables.instructional_method_counts}}
+    />
+    <span
+      class="link clickable back-to-toc"
+      role="button"
+      {{on "click" (fn this.scrollTo "toc")}}
+      {{did-insert this.setScrollTarget "table5"}}
+    >
+      {{t "general.backToTableOfContents"}}
+    </span>
+    <CurriculumInventory::VerificationPreviewTable5
+      @data={{this.tables.non_clerkship_sequence_block_assessment_methods}}
+    />
+    <span
+      class="link clickable back-to-toc"
+      role="button"
+      {{on "click" (fn this.scrollTo "toc")}}
+      {{did-insert this.setScrollTarget "table6"}}
+    >
+      {{t "general.backToTableOfContents"}}
+    </span>
+    <CurriculumInventory::VerificationPreviewTable6
+      @data={{this.tables.clerkship_sequence_block_assessment_methods}}
+    />
+    <span
+      class="link clickable back-to-toc"
+      role="button"
+      {{on "click" (fn this.scrollTo "toc")}}
+      {{did-insert this.setScrollTarget "table7"}}
+    >
+      {{t "general.backToTableOfContents"}}
+    </span>
+    <CurriculumInventory::VerificationPreviewTable7
+      @data={{this.tables.all_events_with_assessments_tagged_as_formative_or_summative}}
+    />
+    <span
+      class="link clickable back-to-toc"
+      role="button"
+      {{on "click" (fn this.scrollTo "toc")}}
+      {{did-insert this.setScrollTarget "table8"}}
+    >
+      {{t "general.backToTableOfContents"}}
+    </span>
+    <CurriculumInventory::VerificationPreviewTable8
+      @data={{this.tables.all_resource_types}}
+    />
+    <span class="link clickable back-to-toc" role="button" {{on "click" (fn this.scrollTo "toc")}}>
+      {{t "general.backToTableOfContents"}}
+    </span>
+  {{else}}
+    <LoadingSpinner />
+  {{/if}}
+</div>

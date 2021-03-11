@@ -8,7 +8,7 @@ import { getElementText, getText } from 'ilios-common';
 
 const url = '/curriculum-inventory-reports/1';
 
-module('Acceptance | Curriculum Inventory: Report', function (hooks) {
+module('Acceptance | curriculum inventory report', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
 
@@ -25,7 +25,7 @@ module('Acceptance | Curriculum Inventory: Report', function (hooks) {
 
     const sequenceBlockList = '.curriculum-inventory-sequence-block-list';
     const addSequenceBlock = `${sequenceBlockList} .expand-button`;
-    const newBlockForm = '.new-curriculum-inventory-sequence-block';
+    const newBlockForm = '.curriculum-inventory-new-sequence-block';
     const newFormTitle = `${newBlockForm} h2.title`;
 
     await visit(url);

@@ -1,6 +1,6 @@
 import { create, visitable } from 'ember-cli-page-object';
 
-import blocks from 'ilios/tests/pages/components/curriculum-inventory-sequence-block-list';
+import blocks from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-list';
 
 export default create({
   visit: visitable('/curriculum-inventory-sequence-block/:blockId'),
