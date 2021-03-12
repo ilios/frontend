@@ -1,109 +1,91 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import ObjectProxy from '@ember/object/proxy';
-import { isPresent } from '@ember/utils';
-import { all } from 'rsvp';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { dropTask } from 'ember-concurrency';
 
-const SequenceBlockProxy = ObjectProxy.extend({
-  content: null,
-  showRemoveConfirmation: false,
-});
+export default class SequenceBlockListComponent extends Component {
+  @tracked editorOn = false;
+  @tracked savedBlock;
 
-export default Component.extend({
-  tagName: '',
-  canUpdate: false,
-  editorOn: false,
-  isSaving: null,
-  parent: null,
-  report: null,
-  saved: false,
-  savedBlock: null,
-  sequenceBlocks: null,
+  get isInOrderedSequence() {
+    return this.args.parent && this.args.parent.isOrdered;
+  }
 
-  isInOrderedSequence: computed('parent', function () {
-    const parent = this.parent;
-    return isPresent(parent) && parent.get('isOrdered');
-  }),
+  @action
+  toggleEditor() {
+    this.editorOn = !this.editorOn;
+    this.savedBlock = null;
+  }
 
-  sortedBlocks: computed(
-    'sequenceBlocks.@each.orderInSequence',
-    'parent.childSequenceOrder',
-    async function () {
-      const parent = this.parent;
-      const sequenceBlocks = this.sequenceBlocks;
+  @action
+  cancel() {
+    this.editorOn = false;
+  }
 
-      if (isPresent(parent) && parent.isOrdered) {
-        return sequenceBlocks
-          .sortBy('orderInSequence', 'title', 'id')
-          .map((block) => SequenceBlockProxy.create({ content: block }));
-      }
-
-      if (!sequenceBlocks.length) {
-        return sequenceBlocks;
-      }
-
-      const blockProxies = await all(
-        sequenceBlocks.map(async (block) => {
-          const proxy = ObjectProxy.create({ content: block, level: null });
-          const academicLevel = await block.academicLevel;
-          proxy.set('level', academicLevel.level);
-          return proxy;
-        })
-      );
-      return blockProxies.sortBy('level', 'startDate', 'title', 'id').map((sortedProxy) => {
-        return SequenceBlockProxy.create({
-          content: sortedProxy.content,
-        });
-      });
+  @action
+  async sortUnordered(a, b) {
+    // sort in the following order:
+    // 1. sequenceBlock.academicLevel.level, ascending
+    // 2. sequenceBlock.title, ascending
+    // 3. sequenceBlock.startDate, ascending
+    // 4. sequenceBlock.id, ascending
+    const academicLevelA = await a.academicLevel;
+    const academicLevelB = await b.academicLevel;
+    if (academicLevelA.level > academicLevelB.level) {
+      return 1;
+    } else if (academicLevelA.level < academicLevelB.level) {
+      return -1;
     }
-  ),
 
-  init() {
-    this._super(...arguments);
-    this.set('sequenceBlocks', []);
-  },
+    const titleComparison = a.title.localeCompare(b.title);
+    if (0 !== titleComparison) {
+      return titleComparison;
+    }
 
-  actions: {
-    remove(proxy) {
-      this.remove(proxy.get('content'));
-    },
+    if (a.startDate > b.startDate) {
+      return 1;
+    } else if (a.startDate < b.startDate) {
+      return -1;
+    }
 
-    cancelRemove(proxy) {
-      proxy.set('showRemoveConfirmation', false);
-    },
+    if (a.id > b.id) {
+      return 1;
+    } else if (a.id < b.id) {
+      return -1;
+    }
 
-    confirmRemove(proxy) {
-      proxy.set('showRemoveConfirmation', true);
-    },
+    return 0;
+  }
 
-    toggleEditor() {
-      if (this.editorOn) {
-        this.set('editorOn', false);
-      } else {
-        this.setProperties({ editorOn: true, saved: false });
-      }
-    },
+  @action
+  sortOrdered(a, b) {
+    // sort in the following order:
+    // 1. sequenceBlock.orderInSequence, ascending
+    // 2. sequenceBlock.title, ascending
+    // 3. sequenceBlock.id, ascending
+    if (a.orderInSequence > b.orderInSequence) {
+      return 1;
+    } else if (a.orderInSequence < b.orderInSequence) {
+      return -1;
+    }
 
-    cancel() {
-      this.set('editorOn', false);
-    },
+    const titleComparison = a.title.localeCompare(b.title);
+    if (0 !== titleComparison) {
+      return titleComparison;
+    }
 
-    save(block) {
-      this.set('isSaving', true);
-      const report = this.report;
-      const parent = this.parent;
-      return block.save().then((savedBlock) => {
-        if (!this.isDestroyed) {
-          this.setProperties({ saved: true, savedBlock, isSaving: false, editorOn: false });
-        }
-        report.reload().then(() => {
-          if (isPresent(parent)) {
-            parent.get('children').then((children) => {
-              children.invoke('reload');
-            });
-          }
-        });
-      });
-    },
-  },
-});
+    if (a.id > b.id) {
+      return 1;
+    } else if (a.id < b.id) {
+      return -1;
+    }
+
+    return 0;
+  }
+
+  @dropTask
+  *save(block) {
+    this.editorOn = false;
+    this.savedBlock = yield block.save();
+  }
+}

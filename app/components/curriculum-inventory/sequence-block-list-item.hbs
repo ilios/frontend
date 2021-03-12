@@ -1,0 +1,87 @@
+<tr
+  class={{if this.showRemoveConfirmation "confirm-removal"}}
+  data-test-curriculum-inventory-sequence-block-list-item
+>
+  <td class="text-left" colspan="5">
+    <LinkTo
+      @route="curriculumInventorySequenceBlock"
+      @model={{@sequenceBlock}}
+    >
+      {{@sequenceBlock.title}}
+    </LinkTo>
+  </td>
+  <td class="text-center" colspan="1">
+    {{get (await @sequenceBlock.academicLevel) "level"}}
+  </td>
+  <td class="text-center" colspan="2">
+    {{#if @isInOrderedSequence}}
+       {{@sequenceBlock.orderInSequence}}
+    {{else}}
+      {{t "general.notApplicableAbbr"}}
+    {{/if}}
+  </td>
+  <td class="text-center hide-from-small-screen" colspan="2">
+    {{#if @sequenceBlock.startDate}}
+      {{moment-format @sequenceBlock.startDate "L"}}
+    {{else}}
+      {{t "general.notApplicableAbbr"}}
+    {{/if}}
+  </td>
+  <td class="text-center hide-from-small-screen" colspan="2">
+    {{#if @sequenceBlock.endDate}}
+      {{moment-format @sequenceBlock.endDate "L"}}
+    {{else}}
+      {{t "general.notApplicableAbbr"}}
+    {{/if}}
+  </td>
+  <td class="text-center hide-from-small-screen" colspan="2">
+    {{#if (await @sequenceBlock.course)}}
+      {{get (await @sequenceBlock.course) "title"}}
+    {{else}}
+      {{t "general.notApplicableAbbr"}}
+    {{/if}}
+  </td>
+  <td class="text-center" colspan="1">
+    <LinkTo
+      @route="curriculumInventorySequenceBlock"
+      @model={{@sequenceBlock}}
+      class="edit"
+    >
+      <FaIcon @icon="edit" class="enabled" />
+    </LinkTo>
+    {{#if @canUpdate}}
+      <span
+        class="clickable remove"
+        role="button"
+        {{on "click" (set this.showRemoveConfirmation true)}}
+      >
+        <FaIcon @icon="trash" class="enabled" />
+      </span>
+    {{else}}
+      <FaIcon @icon="trash" class="disabled" />
+    {{/if}}
+  </td>
+</tr>
+{{#if this.showRemoveConfirmation}}
+  <tr class="confirm-removal" data-test-confirm-removal>
+    <td colspan="15">
+      <div class="confirm-message">
+        {{t "general.sequenceBlockConfirmRemove"}}
+        <br>
+        <div class="confirm-buttons">
+          <button type="button" class="remove text" {{on "click" (fn @remove @sequenceBlock)}} data-test-confirm>
+            {{t "general.yes"}}
+          </button>
+          <button
+            type="button"
+            class="done text"
+            {{on "click" (set this.showRemoveConfirmation false)}}
+            data-test-cancel
+          >
+            {{t "general.cancel"}}
+          </button>
+        </div>
+      </div>
+    </td>
+  </tr>
+{{/if}}
