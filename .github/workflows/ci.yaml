@@ -55,7 +55,8 @@ jobs:
       matrix:
         ember-try-scenario:
          - embroider-safe
-         - embroider-optimized
+        # Blocked on https://github.com/san650/ember-cli-page-object/issues/539
+        #  - embroider-optimized
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
