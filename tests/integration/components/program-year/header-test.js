@@ -4,7 +4,7 @@ import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 
-module('Integration | Component | programyear header', function (hooks) {
+module('Integration | Component | program-year/header', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
@@ -30,7 +30,7 @@ module('Integration | Component | programyear header', function (hooks) {
     this.set('canUpdate', true);
 
     await render(
-      hbs`<ProgramyearHeader @programYear={{this.programYear}} @canUpdate={{this.canUpdate}} />`
+      hbs`<ProgramYear::Header @programYear={{this.programYear}} @canUpdate={{this.canUpdate}} />`
     );
     assert.dom('.backtolink').hasText('Back to Program Years');
     assert.dom('header .fa-lock').doesNotExist();
@@ -64,7 +64,7 @@ module('Integration | Component | programyear header', function (hooks) {
     this.set('canUpdate', true);
 
     await render(
-      hbs`<ProgramyearHeader @programYear={{this.programYear}} @canUpdate={{this.canUpdate}} />`
+      hbs`<ProgramYear::Header @programYear={{this.programYear}} @canUpdate={{this.canUpdate}} />`
     );
 
     assert.dom('header .title').hasText('Matriculation Year 2019 - 2020 Lorem Ipsum');
@@ -92,7 +92,7 @@ module('Integration | Component | programyear header', function (hooks) {
     this.set('canUpdate', true);
 
     await render(
-      hbs`<ProgramyearHeader @programYear={{this.programYear}} @canUpdate={{this.canUpdate}} />`
+      hbs`<ProgramYear::Header @programYear={{this.programYear}} @canUpdate={{this.canUpdate}} />`
     );
     assert.dom('header .title').hasText('Matriculation Year 2019 Class of 2023');
   });
@@ -119,7 +119,7 @@ module('Integration | Component | programyear header', function (hooks) {
     this.set('canUpdate', false);
 
     await render(
-      hbs`<ProgramyearHeader @programYear={{this.programYear}} @canUpdate={{this.canUpdate}} />`
+      hbs`<ProgramYear::Header @programYear={{this.programYear}} @canUpdate={{this.canUpdate}} />`
     );
     assert.dom('.programyear-publication button').doesNotExist();
   });
@@ -147,7 +147,7 @@ module('Integration | Component | programyear header', function (hooks) {
     this.set('canUpdate', false);
 
     await render(
-      hbs`<ProgramyearHeader @programYear={{this.programYear}} @canUpdate={{this.canUpdate}} />`
+      hbs`<ProgramYear::Header @programYear={{this.programYear}} @canUpdate={{this.canUpdate}} />`
     );
     assert.dom('header .fa-lock').exists();
   });
