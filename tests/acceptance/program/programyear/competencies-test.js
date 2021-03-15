@@ -1,11 +1,9 @@
-import { click, find, findAll, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { getElementText, getText } from 'ilios-common';
-const url = '/programs/1/programyears/1?pyCompetencyDetails=true';
+import page from 'ilios/tests/pages/program-year';
 
 module('Acceptance | Program Year - Competencies', function (hooks) {
   setupApplicationTest(hooks);
@@ -40,40 +38,97 @@ module('Acceptance | Program Year - Competencies', function (hooks) {
   });
 
   test('list', async function (assert) {
-    await visit(url);
-    assert.equal(
-      await getElementText(find('.programyear-competencies .title')),
-      getText('Competencies (2)')
-    );
-    const competencies = 'competency 0 competency 1 competency 2';
-    assert.equal(
-      await getElementText(find('.programyear-competencies .programyear-competencies-content')),
-      getText(competencies)
-    );
+    await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
+    assert.equal(page.competencies.title, 'Competencies (2)');
+    assert.equal(page.competencies.list.domains.length, 1);
+    assert.equal(page.competencies.list.domains[0].title, 'competency 0');
+    assert.equal(page.competencies.list.domains[0].competencies.length, 2);
+    assert.equal(page.competencies.list.domains[0].competencies[0].text, 'competency 1');
+    assert.equal(page.competencies.list.domains[0].competencies[1].text, 'competency 2');
   });
 
-  test('manager', async function (assert) {
+  test('list with permission to edit', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    await visit(url);
-    await click('.programyear-competencies .programyear-competencies-actions button');
-    const checkboxes = findAll('.programyear-competencies input[type=checkbox]');
-    assert.equal(checkboxes.length, 6);
-    assert.ok(checkboxes[0].indeterminate);
-    assert.ok(!checkboxes[0].checked);
-    assert.ok(checkboxes[1].checked);
-    assert.ok(checkboxes[2].checked);
-    assert.ok(!checkboxes[3].checked);
-    assert.ok(!checkboxes[4].checked);
-    assert.ok(!checkboxes[5].checked);
+    await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
+    assert.equal(page.competencies.title, 'Competencies (2)');
+    assert.equal(page.competencies.list.domains.length, 1);
+    assert.equal(page.competencies.list.domains[0].title, 'competency 0');
+    assert.equal(page.competencies.list.domains[0].competencies.length, 2);
+    assert.equal(page.competencies.list.domains[0].competencies[0].text, 'competency 1');
+    assert.equal(page.competencies.list.domains[0].competencies[1].text, 'competency 2');
+  });
 
-    await click(findAll('.programyear-competencies input[type=checkbox]')[1]);
-    await click(findAll('.programyear-competencies input[type=checkbox]')[4]);
-    await click('.programyear-competencies .bigadd');
+  test('manager list', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
+    await page.competencies.manage();
 
-    const competencies = 'competency 0 competency 2 competency 3 competency 4';
-    assert.equal(
-      await getElementText('.programyear-competencies .programyear-competencies-content'),
-      getText(competencies)
-    );
+    const { manager } = page.competencies;
+
+    assert.equal(manager.domains.length, 2);
+    assert.equal(manager.domains[0].title, 'competency 0');
+    assert.ok(manager.domains[0].isIndeterminate);
+    assert.equal(manager.domains[0].competencies.length, 2);
+    assert.equal(manager.domains[0].competencies[0].text, 'competency 1');
+    assert.ok(manager.domains[0].competencies[0].isChecked);
+    assert.equal(manager.domains[0].competencies[1].text, 'competency 2');
+    assert.ok(manager.domains[0].competencies[1].isChecked);
+  });
+
+  test('change and save', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
+    await page.competencies.manage();
+
+    const { manager } = page.competencies;
+
+    assert.equal(manager.domains[1].title, 'competency 3');
+    assert.equal(manager.domains[1].competencies.length, 2);
+    assert.equal(manager.domains[1].competencies[0].text, 'competency 4');
+    assert.notOk(manager.domains[1].competencies[0].isChecked);
+    assert.equal(manager.domains[1].competencies[1].text, 'competency 5');
+    assert.notOk(manager.domains[1].competencies[1].isChecked);
+
+    await manager.domains[1].click();
+    await manager.domains[1].competencies[0].click();
+    await manager.domains[0].competencies[1].click();
+    await page.competencies.save();
+
+    assert.equal(page.competencies.title, 'Competencies (3)');
+    assert.equal(page.competencies.list.domains.length, 2);
+    assert.equal(page.competencies.list.domains[0].title, 'competency 0');
+    assert.equal(page.competencies.list.domains[0].competencies.length, 1);
+    assert.equal(page.competencies.list.domains[0].competencies[0].text, 'competency 1');
+
+    assert.equal(page.competencies.list.domains[1].title, 'competency 3');
+    assert.equal(page.competencies.list.domains[1].competencies.length, 1);
+    assert.equal(page.competencies.list.domains[1].competencies[0].text, 'competency 5');
+  });
+
+  test('change and cancel', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    await page.visit({ programId: 1, programYearId: 1, pyCompetencyDetails: true });
+    await page.competencies.manage();
+
+    const { manager } = page.competencies;
+
+    assert.equal(manager.domains[1].title, 'competency 3');
+    assert.equal(manager.domains[1].competencies.length, 2);
+    assert.equal(manager.domains[1].competencies[0].text, 'competency 4');
+    assert.notOk(manager.domains[1].competencies[0].isChecked);
+    assert.equal(manager.domains[1].competencies[1].text, 'competency 5');
+    assert.notOk(manager.domains[1].competencies[1].isChecked);
+
+    await manager.domains[1].click();
+    await manager.domains[1].competencies[0].click();
+    await manager.domains[0].competencies[1].click();
+    await page.competencies.cancel();
+
+    assert.equal(page.competencies.title, 'Competencies (2)');
+    assert.equal(page.competencies.list.domains.length, 1);
+    assert.equal(page.competencies.list.domains[0].title, 'competency 0');
+    assert.equal(page.competencies.list.domains[0].competencies.length, 2);
+    assert.equal(page.competencies.list.domains[0].competencies[0].text, 'competency 1');
+    assert.equal(page.competencies.list.domains[0].competencies[1].text, 'competency 2');
   });
 });
