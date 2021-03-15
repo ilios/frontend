@@ -47,3 +47,24 @@ jobs:
       run: npm install --no-package-lock
     - name: test
       run: npm run test:ember
+
+  test-embroider:
+    name: ember-try
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        ember-try-scenario:
+         - embroider-safe
+        # Blocked on https://github.com/san650/ember-cli-page-object/issues/539
+        #  - embroider-optimized
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - name: install dependencies
+      run: npm ci
+    - name: test
+      env:
+        EMBER_TRY_SCENARIO: ${{ matrix.ember-try-scenario }}
+      run: node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO
