@@ -132,9 +132,11 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
 
   didReceiveAttrs() {
     this._super(...arguments);
-    const report = this.report;
-    const parent = this.parent;
-    this.loadAttr.perform(report, parent);
+    if (this.report) {
+      const report = this.report;
+      const parent = this.parent;
+      this.loadAttr.perform(report, parent);
+    }
   },
 
   actions: {
