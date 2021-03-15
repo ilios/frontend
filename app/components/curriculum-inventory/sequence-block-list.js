@@ -2,13 +2,58 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
+import { use } from 'ember-could-get-used-to-this';
+import { Task } from 'ember-resource-tasks';
+import { map } from 'rsvp';
 
 export default class SequenceBlockListComponent extends Component {
   @tracked editorOn = false;
   @tracked savedBlock;
 
+  @use sortedBlocks = new Task(() => {
+    return {
+      named: {
+        args: [this.isInOrderedSequence, this.args.sequenceBlocks],
+        fn: this.sort,
+      },
+    };
+  });
+
   get isInOrderedSequence() {
     return this.args.parent && this.args.parent.isOrdered;
+  }
+
+  get sequenceBlocks() {
+    if (!this.sortedBlocks.value) {
+      return [];
+    }
+    return this.sortedBlocks.value;
+  }
+
+  @action
+  async sort(isOrderedInSequence, sequenceBlocks) {
+    if (!sequenceBlocks) {
+      return [];
+    }
+    const blocks = sequenceBlocks.toArray();
+
+    if (isOrderedInSequence) {
+      blocks.sort(this.sortOrdered);
+      return blocks;
+    }
+
+    const proxies = await map(blocks, async (block) => {
+      const academicLevel = await block.academicLevel;
+      const level = academicLevel.level;
+      return {
+        level,
+        block,
+      };
+    });
+    proxies.sort(this.sortUnordered);
+    return proxies.map((proxy) => {
+      return proxy.block;
+    });
   }
 
   @action
@@ -22,42 +67,47 @@ export default class SequenceBlockListComponent extends Component {
     this.editorOn = false;
   }
 
-  @action
-  async sortUnordered(a, b) {
-    // sort in the following order:
+  @dropTask
+  *save(block) {
+    this.editorOn = false;
+    this.savedBlock = yield block.save();
+  }
+
+  sortUnordered(a, b) {
+    // Sort in the following order:
     // 1. sequenceBlock.academicLevel.level, ascending
     // 2. sequenceBlock.title, ascending
     // 3. sequenceBlock.startDate, ascending
     // 4. sequenceBlock.id, ascending
-    const academicLevelA = await a.academicLevel;
-    const academicLevelB = await b.academicLevel;
-    if (academicLevelA.level > academicLevelB.level) {
+    // We're working with proxy objects here,
+    // so sequenceBlock.academicLevel.level is mapped to proxy.level,
+    // and sequenceBlock is mapped to proxy.block.
+    if (a.level > b.level) {
       return 1;
-    } else if (academicLevelA.level < academicLevelB.level) {
+    } else if (a.level < b.level) {
       return -1;
     }
 
-    const titleComparison = a.title.localeCompare(b.title);
+    const titleComparison = a.block.title.localeCompare(b.block.title);
     if (0 !== titleComparison) {
       return titleComparison;
     }
 
-    if (a.startDate > b.startDate) {
+    if (a.block.startDate > b.block.startDate) {
       return 1;
-    } else if (a.startDate < b.startDate) {
+    } else if (a.block.startDate < b.block.startDate) {
       return -1;
     }
 
-    if (a.id > b.id) {
+    if (a.block.id > b.block.id) {
       return 1;
-    } else if (a.id < b.id) {
+    } else if (a.block.id < b.block.id) {
       return -1;
     }
 
     return 0;
   }
 
-  @action
   sortOrdered(a, b) {
     // sort in the following order:
     // 1. sequenceBlock.orderInSequence, ascending
@@ -81,11 +131,5 @@ export default class SequenceBlockListComponent extends Component {
     }
 
     return 0;
-  }
-
-  @dropTask
-  *save(block) {
-    this.editorOn = false;
-    this.savedBlock = yield block.save();
   }
 }

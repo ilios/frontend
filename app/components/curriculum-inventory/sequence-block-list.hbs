@@ -61,7 +61,7 @@
           </tr>
         </thead>
         <tbody>
-          {{#each (await (sort-by (if this.isInOrderedSequence this.sortOrdered this.sortUnordered) @sequenceBlocks)) as |sequenceBlock|}}
+          {{#each this.sequenceBlocks as |sequenceBlock|}}
             <CurriculumInventory::SequenceBlockListItem
               @sequenceBlock={{sequenceBlock}}
               @canUpdate={{@canUpdate}}
