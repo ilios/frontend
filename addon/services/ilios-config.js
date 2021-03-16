@@ -11,7 +11,9 @@ export default Service.extend({
   config: computed('apiHost', function () {
     deprecate('Async Computed Called', false, {
       id: 'common.async-computed',
-      until: '40',
+      for: 'ilios-common',
+      until: '56',
+      since: '39.0.2',
     });
     return this.getConfig();
   }),
@@ -32,7 +34,9 @@ export default Service.extend({
   userSearchType: computed('config.userSearchType', function () {
     deprecate('Async Computed Called', false, {
       id: 'common.async-computed',
-      until: '40',
+      for: 'ilios-common',
+      until: '56',
+      since: '39.0.2',
     });
     return this.getUserSearchType();
   }),
@@ -43,7 +47,9 @@ export default Service.extend({
   authenticationType: computed('config.type', function () {
     deprecate('Async Computed Called', false, {
       id: 'common.async-computed',
-      until: '40',
+      for: 'ilios-common',
+      until: '56',
+      since: '39.0.2',
     });
     return this.getAuthenticationType();
   }),
@@ -54,7 +60,9 @@ export default Service.extend({
   maxUploadSize: computed('config.maxUploadSize', function () {
     deprecate('Async Computed Called', false, {
       id: 'common.async-computed',
-      until: '40',
+      for: 'ilios-common',
+      until: '56',
+      since: '39.0.2',
     });
     return this.getMaxUploadSize();
   }),
@@ -65,7 +73,9 @@ export default Service.extend({
   apiVersion: computed('config.apiVersion', function () {
     deprecate('Async Computed Called', false, {
       id: 'common.async-computed',
-      until: '40',
+      for: 'ilios-common',
+      until: '56',
+      since: '39.0.2',
     });
     return this.getApiVersion();
   }),
@@ -76,7 +86,9 @@ export default Service.extend({
   trackingEnabled: computed('config.trackingEnabled', function () {
     deprecate('Async Computed Called', false, {
       id: 'common.async-computed',
-      until: '40',
+      for: 'ilios-common',
+      until: '56',
+      since: '39.0.2',
     });
     return this.getTrackingEnabled();
   }),
@@ -87,7 +99,9 @@ export default Service.extend({
   trackingCode: computed('config.trackingCode', function () {
     deprecate('Async Computed Called', false, {
       id: 'common.async-computed',
-      until: '40',
+      for: 'ilios-common',
+      until: '56',
+      since: '39.0.2',
     });
     return this.getTrackingCode();
   }),
@@ -98,7 +112,9 @@ export default Service.extend({
   loginUrl: computed('config.loginUrl', function () {
     deprecate('Async Computed Called', false, {
       id: 'common.async-computed',
-      until: '40',
+      for: 'ilios-common',
+      until: '56',
+      since: '39.0.2',
     });
     return this.getLoginUrl();
   }),
@@ -109,7 +125,9 @@ export default Service.extend({
   casLoginUrl: computed('config.casLoginUrl', function () {
     deprecate('Async Computed Called', false, {
       id: 'common.async-computed',
-      until: '40',
+      for: 'ilios-common',
+      until: '56',
+      since: '39.0.2',
     });
     return this.getCasLoginUrl();
   }),
@@ -150,7 +168,9 @@ export default Service.extend({
   searchEnabled: computed('config.searchEnabled', async function () {
     deprecate('Async Computed Called', false, {
       id: 'common.async-computed',
-      until: '40',
+      for: 'ilios-common',
+      until: '56',
+      since: '39.0.2',
     });
     return this.getSearchEnabled();
   }),
