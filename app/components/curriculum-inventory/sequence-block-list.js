@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import { use } from 'ember-could-get-used-to-this';
 import { Task } from 'ember-resource-tasks';
-import { map } from 'rsvp';
+import { all, map } from 'rsvp';
 
 export default class SequenceBlockListComponent extends Component {
   @tracked editorOn = false;
@@ -71,6 +71,14 @@ export default class SequenceBlockListComponent extends Component {
   *save(block) {
     this.editorOn = false;
     this.savedBlock = yield block.save();
+    // adding/updating a sequence block will have side-effects on its siblings if the given block is nested
+    // inside an "ordered" sequence block. they all get re-sorted server-side.
+    // therefore, we must reload them here in order to get those updated sort order values.
+    // [ST 2021/03/16]
+    if (this.args.parent) {
+      const blocks = yield this.args.parent.children;
+      yield all(blocks.invoke('reload'));
+    }
   }
 
   sortUnordered(a, b) {
