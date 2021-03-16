@@ -16,11 +16,4 @@ module('Integration | Component | ilios-header', function (hooks) {
 
     await a11yAudit(this.element);
   });
-
-  test('title is hidden when not set', async function (assert) {
-    await render(hbs`<IliosHeader />`);
-    assert.ok(!component.hasTitle);
-
-    await a11yAudit(this.element);
-  });
 });

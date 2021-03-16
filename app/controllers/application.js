@@ -6,6 +6,7 @@ export default Controller.extend({
   currentUser: service(),
   intl: service(),
   session: service(),
+  pageTitle: service(),
 
   currentlyLoading: false,
   errors: null,
