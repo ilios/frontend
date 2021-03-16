@@ -1,6 +1,6 @@
 <div class="programyear-details" data-test-program-year-details ...attributes>
   {{#if (or (eq @programYear.competencies.length 0) @pyCompetencyDetails)}}
-    <ProgramyearCompetencies
+    <ProgramYear::Competencies
       @programYear={{@programYear}}
       @canUpdate={{@canUpdate}}
       @isManaging={{@managePyCompetencies}}

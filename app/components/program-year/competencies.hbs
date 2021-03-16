@@ -1,0 +1,125 @@
+<div class="program-year-competencies" ...attributes data-test-program-year-competencies>
+  <div class="header" data-test-header>
+    {{#if @isManaging}}
+      <div class="title" data-test-title>
+        <span class="specific-title">
+          {{t "general.competenciesManageTitle"}}
+        </span>
+      </div>
+    {{else}}
+      <div
+        class="title {{if this.programYearCompetencies "clickable collapsible"}}"
+        role="button"
+        {{on "click" (if this.programYearCompetencies @collapse (noop))}}
+        data-test-title
+      >
+        {{t "general.competencies"}}
+        ({{this.programYearCompetencies.length}})
+      </div>
+    {{/if}}
+    <div class="actions" data-test-actions>
+      {{#if @canUpdate}}
+        {{#if @isManaging}}
+          <button type="button" class="bigadd" onclick={{perform this.save}} data-test-save>
+            <FaIcon
+              @icon={{if this.save.isRunning "spinner" "check"}}
+              @spin={{this.save.isRunning}}
+            />
+          </button>
+          <button type="button" class="bigcancel" {{on "click" this.cancel}} data-test-cancel>
+            <FaIcon @icon="undo" />
+          </button>
+        {{else}}
+          <button type="button" {{on "click" (fn @setIsManaging true)}} data-test-manage>
+            {{t "general.competenciesManageTitle"}}
+          </button>
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
+  <div class="content">
+    {{#if @isManaging}}
+      <ul class="managed-competency-list" data-test-managed-list>
+        {{#each (sort-by "title" this.domains) as |domain|}}
+          <li data-test-domain>
+            {{#let (includes (get domain "id") (map-by "id" this.selectedCompetencies))
+              as |isSelected|
+            }}
+              <label
+                class="clickable"
+                data-test-domain-label
+                data-test-is-selected={{isSelected}}
+              >
+                <input
+                  type="checkbox"
+                  checked={{isSelected}}
+                  indeterminate={{and
+                    (not isSelected)
+                    (includes domain this.competenciesWithSelectedChildren)
+                  }}
+                  {{on "click" (perform (if isSelected this.removeCompetencyFromBuffer this.addCompetencyToBuffer) domain)}}
+                >
+                {{domain.title}}
+              </label>
+            {{/let}}
+            <ul>
+              {{#each (sort-by "title" this.competencies) as |competency|}}
+                {{#if (includes competency (await domain.treeChildren))}}
+                  <li>
+                    {{#let (includes (get competency "id") (map-by "id" this.selectedCompetencies))
+                      as |isSelected|
+                    }}
+                      <label
+                        class="clickable"
+                        data-test-competency
+                        data-test-is-selected={{isSelected}}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={{isSelected}}
+                          {{on "click" (perform (if isSelected this.removeCompetencyFromBuffer this.addCompetencyToBuffer) competency)}}
+                        >
+                        {{competency.title}}
+                      </label>
+                    {{/let}}
+                  </li>
+                {{/if}}
+              {{/each}}
+            </ul>
+          </li>
+        {{/each}}
+      </ul>
+    {{else if this.programYearCompetencies.length}}
+      <ul class="competency-list" data-test-list>
+        {{#each (sort-by "title" this.domains) as |domain|}}
+          {{#if
+            (or
+              (includes domain.id (map-by "id" this.selectedCompetencies))
+              (includes domain this.competenciesWithSelectedChildren)
+            )
+          }}
+            <li data-test-domain>
+              <span data-test-title>{{domain.title}}</span>
+              <ul>
+                {{#each (sort-by "title" this.competencies) as |competency|}}
+                  {{#if
+                    (and
+                      (includes competency (await domain.treeChildren))
+                      (includes
+                        competency.id (map-by "id" this.selectedCompetencies)
+                      )
+                    )
+                  }}
+                    <li data-test-competency>
+                      {{competency.title}}
+                    </li>
+                  {{/if}}
+                {{/each}}
+              </ul>
+            </li>
+          {{/if}}
+        {{/each}}
+      </ul>
+    {{/if}}
+  </div>
+</div>

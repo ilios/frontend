@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import config from '../config/environment';
+import config from '../../config/environment';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import { use } from 'ember-could-get-used-to-this';
 import { enqueueTask } from 'ember-concurrency';
