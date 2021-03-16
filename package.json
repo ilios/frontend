@@ -94,7 +94,7 @@
     "@ember/edition-utils": "^1.1.1",
     "@ember/optional-features": "^2.0.0",
     "@ember/test-helpers": "^2.1.4",
-    "@embroider/test-setup": "^0.36.0",
+    "@embroider/test-setup": "^0.37.0",
     "@embroider/util": "^0.37.0",
     "@ilios/ember-template-lint-plugin": "^2.0.1",
     "babel-eslint": "^10.1.0",
