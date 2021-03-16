@@ -11,8 +11,10 @@ export default class CurriculumInventorySequenceBlockController extends Controll
   @action
   async removeChildSequenceBlock(block) {
     await block.destroyRecord();
-    // @todo is all of this below still necessary? [ST 2021/03/15]
-    await this.model.reload();
+    // removing a nested sequence block will have side-effects on its siblings if the given block is nested
+    // inside an "ordered" sequence block. they all get re-sorted server-side.
+    // therefore, we must reload them here in order to get those updated sort order values.
+    // [ST 2021/03/16]
     const children = await this.model.children;
     await all(children.invoke('reload'));
   }
