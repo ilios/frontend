@@ -1,32 +1,17 @@
 .ilios-header {
-  align-items: baseline;
+  align-items: center;
   background-color: $ilios-orange;
   display: grid;
-  grid-template-areas:
-  'logo tools'
-  'heading heading';
+  grid-template-areas: 'logo tools';
+  height: 45px;
+  grid-template-columns: 100px auto;
 
-  @include for-tablet-and-up {
-    grid-template-areas:
-    'logo heading tools';
-    grid-template-columns: 1fr 4fr 2fr;
-    grid-template-rows: 60px;
-  }
-
-  @include for-tablet-and-up {
-    grid-template-columns: 200px 4fr 2fr;
-  }
-
-  @include for-desktop-and-up {
-    grid-template-columns: 240px 4fr 2fr;
-  }
 
   @media print {
     display: none;
   }
 
   .logo {
-    align-self: start;
     grid-area: logo;
 
     .image {
@@ -34,21 +19,11 @@
       background-repeat: no-repeat;
       display: block;
       height: 42px;
-      width: 84px;
     }
-  }
-
-  h1 {
-    align-self: center;
-    color: $white;
-    font-size: 3vmax;
-    grid-area: heading;
-    text-align: center;
   }
 
   // Elements on the far right
   .tools {
-    align-self: center;
     background: transparent;
     display: flex;
     grid-area: tools;

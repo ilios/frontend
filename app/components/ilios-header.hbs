@@ -1,21 +1,16 @@
 <header class="ilios-header" data-test-ilios-header ...attributes>
-  <LinkTo @route="dashboard" @classNames="logo" @title={{t "general.dashboard"}}>
-    <h1 class="visually-hidden">
-      {{t "general.ilios"}}
+  <LinkTo @route="dashboard" class="logo" title={{t "general.dashboard"}}>
+    <h1 class="visually-hidden" data-test-title>
+      {{@title}}
     </h1>
     <span class="image"></span>
   </LinkTo>
-  {{#if @title}}
-    <h1 data-test-title>
-      {{@title}}
-    </h1>
-  {{/if}}
   <div class="tools">
-    {{#if (await showSearch)}}
-      <GlobalSearchBox @search={{action "search"}} />
+    {{#if this.showSearch}}
+      <GlobalSearchBox @search={{this.search}} />
     {{/if}}
     <LocaleChooser />
-    {{#if session.isAuthenticated}}
+    {{#if this.session.isAuthenticated}}
       <UserMenu />
     {{/if}}
   </div>
