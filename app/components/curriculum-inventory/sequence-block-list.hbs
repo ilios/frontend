@@ -1,6 +1,6 @@
 <div class="curriculum-inventory-sequence-block-list" data-test-curriculum-inventory-sequence-block-list ...attributes>
-  <div class="header">
-    <div class="title">
+  <div class="header" data-test-header>
+    <div class="title" data-test-title>
       {{t "general.sequenceBlocks"}}
       ({{@sequenceBlocks.length}})
     </div>
@@ -33,7 +33,7 @@
     {{/if}}
   </div>
   {{#if @sequenceBlocks.length}}
-    <div class="list">
+    <div class="list" data-test-list>
       <table>
         <thead>
           <tr>
@@ -73,11 +73,11 @@
       </table>
     </div>
   {{else if @parent}}
-    <div class="default-message">
+    <div class="default-message" data-test-no-sub-sequence-blocks>
       {{t "general.noSubSequenceBlocks"}}
     </div>
   {{else}}
-    <div class="default-message">
+    <div class="default-message" data-test-no-sequence-blocks>
       {{t "general.noSequenceBlocks"}}
     </div>
   {{/if}}
