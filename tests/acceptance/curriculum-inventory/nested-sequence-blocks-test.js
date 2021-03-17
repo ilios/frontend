@@ -3,7 +3,6 @@ import { setupApplicationTest } from 'ember-qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import page from 'ilios/tests/pages/curriculum-inventory-sequence-block';
-import moment from 'moment';
 
 module('Acceptance | curriculum inventory nested sequence blocks', function (hooks) {
   setupApplicationTest(hooks);
@@ -30,8 +29,6 @@ module('Acceptance | curriculum inventory nested sequence blocks', function (hoo
       description: 'lorem ipsum',
       report: this.report,
       duration: 12,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
       childSequenceOrder: 2,
       orderInSequence: 0,
       required: 2,
@@ -43,29 +40,30 @@ module('Acceptance | curriculum inventory nested sequence blocks', function (hoo
   });
 
   test('delete sub-sequence block', async function (assert) {
-    assert.expect(2);
-
-    this.server.createList('curriculum-inventory-sequence-block', 2, {
+    this.server.create('curriculum-inventory-sequence-block', {
       parent: this.block,
+      title: 'alpha',
       description: 'lorem ipsum',
       report: this.report,
-      duration: 12,
-      startDate: moment('2015-01-02'),
-      endDate: moment('2015-04-30'),
       childSequenceOrder: 1,
       orderInSequence: 0,
-      required: 2,
-      track: true,
-      minimum: 2,
-      maximum: 15,
+      academicLevel: this.academicLevels[0],
+    });
+    this.server.create('curriculum-inventory-sequence-block', {
+      parent: this.block,
+      title: 'beta',
+      description: 'lorem ipsum',
+      report: this.report,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
       academicLevel: this.academicLevels[0],
     });
 
     await page.visit({ blockId: 1 });
 
-    assert.equal(page.blocks.list.length, 2);
-    await page.blocks.list[0].remove();
-    await page.blocks.list[1].confirmRemoval();
-    assert.equal(page.blocks.list.length, 1);
+    assert.equal(page.blocks.list.items.length, 2);
+    await page.blocks.list.items[0].remove();
+    await page.blocks.list.items[0].confirmRemoval.confirm();
+    assert.equal(page.blocks.list.items.length, 1);
   });
 });
