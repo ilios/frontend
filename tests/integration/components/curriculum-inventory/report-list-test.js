@@ -253,7 +253,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
   });
 
   test('edit', async function (assert) {
-    assert.expect(2);
+    assert.expect(1);
     const report = this.server.create('curriculum-inventory-report', {
       program: this.program,
       name: 'Zeppelin',
@@ -269,7 +269,6 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     await render(
       hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @edit={{this.editAction}} @remove={{noop}} />`
     );
-    await component.reports(0).clickOnName();
     await component.reports(0).edit();
   });
 

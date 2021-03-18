@@ -79,18 +79,6 @@ module('Integration | Component | curriculum-inventory/report-list-item', functi
     assert.notOk(component.isDeletable);
   });
 
-  test('clicking on report name fires edit action', async function (assert) {
-    assert.expect(1);
-    this.set('report', this.report);
-    this.set('edit', (r) => {
-      assert.equal(r, this.report);
-    });
-    await render(
-      hbs`<CurriculumInventory::ReportListItem @report={{this.report}} @edit={{this.edit}} @remove={{noop}}/>`
-    );
-    await component.clickOnName();
-  });
-
   test('clicking edit button fires edit action', async function (assert) {
     assert.expect(1);
     this.set('report', this.report);

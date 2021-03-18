@@ -1,8 +1,9 @@
-import { clickable, create, isPresent, text } from 'ember-cli-page-object';
+import { attribute, clickable, create, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-curriculum-inventory-report-list-item]',
   name: text('[data-test-name]'),
+  nameLink: attribute('href', '[data-test-name] a'),
   program: text('[data-test-program]'),
   year: text('[data-test-year]'),
   startDate: text('[data-test-start-date]'),
