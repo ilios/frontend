@@ -1,15 +1,13 @@
-import { attribute, clickable, create, isPresent, text } from 'ember-cli-page-object';
+import { clickable, create, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-curriculum-inventory-report-list-item]',
-  name: text('[data-test-name]'),
-  nameLink: attribute('href', '[data-test-name] a'),
-  program: text('[data-test-program]'),
-  year: text('[data-test-year]'),
+  scope: '[data-test-curriculum-inventory-sequence-block-list-item]',
+  title: text('[data-test-title]'),
+  academicLevel: text('[data-test-academic-level]'),
+  orderInSequence: text('[data-test-order-in-sequence]'),
   startDate: text('[data-test-start-date]'),
   endDate: text('[data-test-end-date]'),
-  status: text('[data-test-status]'),
-  clickOnName: clickable('[data-test-name]'),
+  course: text('[data-test-course]'),
   edit: clickable('[data-test-edit]'),
   remove: clickable('[data-test-remove]'),
   isDeletable: isPresent('[data-test-remove]'),
