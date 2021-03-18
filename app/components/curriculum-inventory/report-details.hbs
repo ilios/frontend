@@ -43,11 +43,6 @@
     />
   {{/if}}
   {{#if this.finalize.isRunning}}
-    <ModalDialog @translucentOverlay={{true}} @animatable={{false}}>
-      <PulseLoader />
-      <h2 class="page-title">
-        {{t "general.finalizingReport"}}
-      </h2>
-    </ModalDialog>
+    <WaitSaving>{{t "general.finalizingReport"}}</WaitSaving>
   {{/if}}
 </div>
