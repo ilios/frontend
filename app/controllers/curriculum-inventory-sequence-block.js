@@ -1,7 +1,6 @@
 import { tracked } from '@glimmer/tracking';
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
-import { all } from 'rsvp';
 
 export default class CurriculumInventorySequenceBlockController extends Controller {
   queryParams = ['sortSessionsBy'];
@@ -15,7 +14,9 @@ export default class CurriculumInventorySequenceBlockController extends Controll
     // inside an "ordered" sequence block. they all get re-sorted server-side.
     // therefore, we must reload them here in order to get those updated sort order values.
     // [ST 2021/03/16]
-    const children = await this.model.children;
-    await all(children.invoke('reload'));
+    await this.store.findRecord('curriculum_inventory_sequence_block', this.model.id, {
+      include: 'children',
+      reload: true,
+    });
   }
 }
