@@ -30,7 +30,7 @@
     "@ember/edition-utils": "^1.2.0",
     "@ember/jquery": "^1.1.0",
     "@ember/optional-features": "^2.0.0",
-    "@ember/test-helpers": "^2.2.0",
+    "@ember/test-helpers": "^2.2.4",
     "@glimmer/component": "^1.0.3",
     "@glimmer/tracking": "^1.0.3",
     "@ilios/ember-template-lint-plugin": "^2.0.1",
