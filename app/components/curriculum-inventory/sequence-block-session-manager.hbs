@@ -1,13 +1,19 @@
-<section class="curriculum-inventory-sequence-block-session-manager resultslist" ...attributes>
-  {{#unless loadAttr.isRunning}}
+<section
+  class="curriculum-inventory-sequence-block-session-manager resultslist"
+  data-test-curriculum-inventory-sequence-block-session-manager
+  ...attributes
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @sessions}}
+>
+  {{#unless this.load.isRunning}}
     <div class="actions">
-      <button type="button" class="bigadd" {{action (perform saveChanges)}}>
+      <button type="button" class="bigadd" {{on "click" (perform this.saveChanges)}}>
         <FaIcon
-          @icon={{if saveChanges.isRunning "spinner" "check"}}
-          @spin={{if saveChanges.isRunning true false}}
+          @icon={{if this.saveChanges.isRunning "spinner" "check"}}
+          @spin={{if this.saveChanges.isRunning true false}}
         />
       </button>
-      <button type="button" class="bigcancel" {{action "close"}}>
+      <button type="button" class="bigcancel" {{on "click" this.close}}>
         <FaIcon @icon="undo" />
       </button>
     </div>
@@ -18,37 +24,37 @@
             <th class="text-center count-as-one-header" colspan="2">
               <input
                 type="checkbox"
-                checked={{allSelected}}
-                onclick={{action "toggleSelectAll" value="target.value"}}
-                indeterminate={{someSelected}}
+                checked={{this.allSelected}}
+                indeterminate={{this.someSelected}}
+                {{on "click" (pick "target.value" this.toggleSelectAll)}}
               >
               {{t "general.countAsOneOffering"}}
             </th>
             <th class="text-center count-as-one-header" colspan="2">
               <input
                 type="checkbox"
-                checked={{allExcluded}}
-                onclick={{action "toggleExcludeAll" value="target.value"}}
-                indeterminate={{someExcluded}}
+                checked={{this.allExcluded}}
+                indeterminate={{this.someExcluded}}
+                {{on "click" (pick "target.value" this.toggleExcludeAll)}}
               >
               {{t "general.exclude"}}
             </th>
             <SortableTh
               @colspan={{3}}
-              @click={{action "sortBy" "title"}}
-              @sortedBy={{or (eq sortBy "title") (eq sortBy "title:desc")}}
-              @sortedAscending={{sortedAscending}}
+              @click={{fn this.changeSortOrder "title"}}
+              @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
+              @sortedAscending={{this.sortedAscending}}
             >
               {{t "general.sessionTitle"}}
             </SortableTh>
             <SortableTh
               @colspan={{3}}
-              @click={{action "sortBy" "sessionType.title"}}
+              @click={{fn this.changeSortOrder "sessionType.title"}}
               @sortedBy={{or
-                (eq sortBy "sessionType.title")
-                (eq sortBy "sessionType.title:desc")
+                (eq @sortBy "sessionType.title")
+                (eq @sortBy "sessionType.title:desc")
               }}
-              @sortedAscending={{sortedAscending}}
+              @sortedAscending={{this.sortedAscending}}
             >
               {{t "general.sessionType"}}
             </SortableTh>
@@ -57,12 +63,12 @@
             </th>
             <SortableTh
               @colspan={{1}}
-              @click={{action "sortBy" "offerings.length"}}
+              @click={{fn this.changeSortOrder "offerings.length"}}
               @sortedBy={{or
-                (eq sortBy "offerings.length")
-                (eq sortBy "offerings.length:desc")
+                (eq @sortBy "offerings.length")
+                (eq @sortBy "offerings.length:desc")
               }}
-              @sortedAscending={{sortedAscending}}
+              @sortedAscending={{this.sortedAscending}}
               @sortType="numeric"
             >
               {{t "general.offerings"}}
@@ -70,20 +76,20 @@
           </tr>
         </thead>
         <tbody>
-          {{#each (sort-by sortBy sessionsBuffer) as |session|}}
+          {{#each (sort-by @sortBy this.sessions) as |session|}}
             <tr>
               <td class="text-center" colspan="2">
                 <Input
                   @type="checkbox"
-                  @checked={{includes session linkedSessionsBuffer}}
-                  @change={{action "changeSession" session}}
+                  @checked={{includes session this.linkedSessions}}
+                  {{on "change" (fn this.changeSession session)}}
                 />
               </td>
               <td class="text-center" colspan="2">
                 <Input
                   @type="checkbox"
-                  @checked={{includes session excludedSessionsBuffer}}
-                  @change={{action "excludeSession" session}}
+                  @checked={{includes session this.excludedSessions}}
+                  {{on "change" (fn this.excludeSession session)}}
                 />
               </td>
               <td class="text-left" colspan="3">
@@ -98,7 +104,7 @@
                 {{get (await session.sessionType) "title"}}
               </td>
               <td class="text-center" colspan="1">
-                {{#if (includes session linkedSessionsBuffer)}}
+                {{#if (includes session this.linkedSessions)}}
                   {{#if (is-pending session.maxDuration)}}
                     <LoadingSpinner />
                   {{else}}
