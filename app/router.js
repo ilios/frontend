@@ -1,5 +1,5 @@
 import { inject as service } from '@ember/service';
-import EmberRouter from '@ember/routing/router';
+import EmberRouter from '@embroider/router';
 import config from 'ilios/config/environment';
 
 export default class Router extends EmberRouter {
