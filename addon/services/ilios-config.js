@@ -9,7 +9,7 @@ export default Service.extend({
   _configPromise: null,
 
   config: computed('apiHost', function () {
-    deprecate('Async Computed Called', false, {
+    deprecate('config Computed Called', false, {
       id: 'common.async-computed',
       for: 'ilios-common',
       until: '56',
@@ -32,7 +32,7 @@ export default Service.extend({
   },
 
   userSearchType: computed('config.userSearchType', function () {
-    deprecate('Async Computed Called', false, {
+    deprecate('userSearchType Computed Called', false, {
       id: 'common.async-computed',
       for: 'ilios-common',
       until: '56',
@@ -45,7 +45,7 @@ export default Service.extend({
   },
 
   authenticationType: computed('config.type', function () {
-    deprecate('Async Computed Called', false, {
+    deprecate('authenticationType Computed Called', false, {
       id: 'common.async-computed',
       for: 'ilios-common',
       until: '56',
@@ -58,7 +58,7 @@ export default Service.extend({
   },
 
   maxUploadSize: computed('config.maxUploadSize', function () {
-    deprecate('Async Computed Called', false, {
+    deprecate('maxUploadSize Computed Called', false, {
       id: 'common.async-computed',
       for: 'ilios-common',
       until: '56',
@@ -71,7 +71,7 @@ export default Service.extend({
   },
 
   apiVersion: computed('config.apiVersion', function () {
-    deprecate('Async Computed Called', false, {
+    deprecate('apiVersion Computed Called', false, {
       id: 'common.async-computed',
       for: 'ilios-common',
       until: '56',
@@ -84,7 +84,7 @@ export default Service.extend({
   },
 
   trackingEnabled: computed('config.trackingEnabled', function () {
-    deprecate('Async Computed Called', false, {
+    deprecate('trackingEnabled Computed Called', false, {
       id: 'common.async-computed',
       for: 'ilios-common',
       until: '56',
@@ -97,7 +97,7 @@ export default Service.extend({
   },
 
   trackingCode: computed('config.trackingCode', function () {
-    deprecate('Async Computed Called', false, {
+    deprecate('trackingCode Computed Called', false, {
       id: 'common.async-computed',
       for: 'ilios-common',
       until: '56',
@@ -110,7 +110,7 @@ export default Service.extend({
   },
 
   loginUrl: computed('config.loginUrl', function () {
-    deprecate('Async Computed Called', false, {
+    deprecate('loginUrl Computed Called', false, {
       id: 'common.async-computed',
       for: 'ilios-common',
       until: '56',
@@ -123,7 +123,7 @@ export default Service.extend({
   },
 
   casLoginUrl: computed('config.casLoginUrl', function () {
-    deprecate('Async Computed Called', false, {
+    deprecate('casLoginUrl Computed Called', false, {
       id: 'common.async-computed',
       for: 'ilios-common',
       until: '56',
@@ -166,7 +166,7 @@ export default Service.extend({
   }),
 
   searchEnabled: computed('config.searchEnabled', async function () {
-    deprecate('Async Computed Called', false, {
+    deprecate('searchEnabled Computed Called', false, {
       id: 'common.async-computed',
       for: 'ilios-common',
       until: '56',

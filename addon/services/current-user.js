@@ -24,9 +24,11 @@ export default Service.extend({
   }),
 
   model: computed('currentUserId', async function () {
-    deprecate('Async Computed Called', false, {
+    deprecate('model Computed Called', false, {
       id: 'common.async-computed',
-      until: '40',
+      for: 'ilios-common',
+      until: '56',
+      since: '39.0.2',
     });
     return this.getModel();
   }),
@@ -47,9 +49,11 @@ export default Service.extend({
   },
 
   userRoleTitles: computed('model.roles.[]', async function () {
-    deprecate('Async Computed Called', false, {
+    deprecate('userRoleTitles Computed Called', false, {
       id: 'common.async-computed',
-      until: '40',
+      for: 'ilios-common',
+      until: '56',
+      since: '39.0.2',
     });
     return this.getUserRoleTitles();
   }),
@@ -63,9 +67,11 @@ export default Service.extend({
   },
 
   userIsStudent: computed('useRoleTitles.[]', async function () {
-    deprecate('Async Computed Called', false, {
+    deprecate('userIsStudent Computed Called', false, {
       id: 'common.async-computed',
-      until: '40',
+      for: 'ilios-common',
+      until: '56',
+      since: '39.0.2',
     });
     return this.getIsStudent();
   }),
@@ -75,9 +81,11 @@ export default Service.extend({
   },
 
   userIsFormerStudent: computed('useRoleTitles.[]', async function () {
-    deprecate('Async Computed Called', false, {
+    deprecate('userIsFormerStudent Computed Called', false, {
       id: 'common.async-computed',
-      until: '40',
+      for: 'ilios-common',
+      until: '56',
+      since: '39.0.2',
     });
     return this.isFormerStudent();
   }),
@@ -95,9 +103,11 @@ export default Service.extend({
     'model.administeredCourses.[]',
     'model.instructorIlmSessions.[]',
     async function () {
-      deprecate('Async Computed Called', false, {
+      deprecate('activeRelatedCoursesInThisYearAndLastYear Computed Called', false, {
         id: 'common.async-computed',
-        until: '40',
+        for: 'ilios-common',
+        until: '56',
+        since: '39.0.2',
       });
       return this.getActiveRelatedCoursesInThisYearAndLastYear();
     }
