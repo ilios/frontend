@@ -6,9 +6,11 @@ export default Service.extend({
   store: service(),
   _permissionMatrixPromise: null,
   permissionMatrix: computed(async function () {
-    deprecate('Async Computed Called', false, {
+    deprecate('permissionMatrix Computed Called', false, {
       id: 'common.async-computed',
-      until: '40',
+      for: 'ilios-common',
+      until: '56',
+      since: '39.0.2',
     });
     return this.getPermissionMatrix();
   }),
