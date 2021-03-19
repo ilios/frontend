@@ -101,7 +101,11 @@
                 {{session.title}}
               </td>
               <td class="text-left" colspan="3">
-                {{get (await session.sessionType) "title"}}
+                {{#if (is-pending session.sessionType)}}
+                  <LoadingSpinner />
+                {{else}}
+                  {{get (await session.sessionType) "title"}}
+                {{/if}}
               </td>
               <td class="text-center" colspan="1">
                 {{#if (includes session this.linkedSessions)}}
@@ -119,7 +123,11 @@
                 {{/if}}
               </td>
               <td class="text-center" colspan="1">
-                {{get (await session.offerings) "length"}}
+                {{#if (is-pending session.offerings)}}
+                  <LoadingSpinner />
+                {{else}}
+                  {{get (await session.offerings) "length"}}
+                {{/if}}
               </td>
             </tr>
           {{/each}}
