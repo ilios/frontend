@@ -1,11 +1,11 @@
-.programs-list {
+.programs-root {
   @include main-list;
 
   .filters {
     @include main-list-filters;
 
-    .schoolsfilter,
-    .titlefilter {
+    .schools,
+    .title {
       @include main-list-filter;
     }
   }
@@ -14,7 +14,7 @@
     @include main-list-saved-new;
   }
 
-  .programs {
+  .main-list {
     @include main-list-box;
 
     .header {
@@ -32,13 +32,5 @@
         @include main-list-box-header-actions;
       }
     }
-  }
-
-  .list {
-    @include main-list-box-table;
-  }
-
-  .fa-edit, .fa-trash {
-    @include icon;
   }
 }

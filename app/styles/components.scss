@@ -49,7 +49,6 @@
 @import 'components/program-leadership-expanded';
 @import 'components/program-overview';
 @import 'components/program-publication-check';
-@import 'components/programs-list';
 @import 'components/programyear-details';
 @import 'components/programyear-header';
 @import 'components/programyear-overview';
@@ -94,6 +93,10 @@
 @import 'components/visualizer-program-year-competencies';
 @import 'components/visualizer-session-type-terms';
 @import 'components/visualizer-session-type-vocabularies';
+
+@import 'components/programs/root';
+@import 'components/programs/list';
+@import 'components/programs/list-item';
 
 @import 'components/program-year/collapsed-objectives';
 @import 'components/program-year/competencies';

@@ -1,9 +1,7 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import { hash } from 'rsvp';
 
 export default class ProgramsRoute extends Route {
-  @service currentUser;
   @service session;
 
   queryParams = {
@@ -17,10 +15,9 @@ export default class ProgramsRoute extends Route {
   }
 
   async model() {
-    const user = await this.currentUser.getModel();
-    return hash({
-      schools: this.store.findAll('school'),
-      primarySchool: user.school,
+    return this.store.findAll('school', {
+      include: 'programs.programYears.cohort',
+      reload: true,
     });
   }
 }
