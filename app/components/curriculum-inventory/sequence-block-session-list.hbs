@@ -97,7 +97,11 @@
               {{/if}}
             </td>
             <td class="text-center" colspan="1">
-              {{get (await session.offerings) "length"}}
+              {{#if (is-pending session.offerings)}}
+                <LoadingSpinner />
+              {{else}}
+                {{get (await session.offerings) "length"}}
+              {{/if}}
             </td>
           </tr>
         {{/each}}
