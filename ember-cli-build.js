@@ -3,6 +3,7 @@
 
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
 const broccoliAssetRevDefaults = require('broccoli-asset-rev/lib/default-options');
+const { Webpack } = require('@embroider/webpack');
 
 module.exports = function (defaults) {
   const env = EmberApp.env() || 'development';
@@ -23,7 +24,7 @@ module.exports = function (defaults) {
     tests: env.EMBER_CLI_TEST_COMMAND || !isProductionLikeBuild,
     hinting: isTestBuild,
     babel: {
-      plugins: [require('ember-auto-import/babel-plugin')],
+      plugins: [require.resolve('ember-auto-import/babel-plugin')],
     },
     'ember-cli-image-transformer': {
       images: [
@@ -85,5 +86,38 @@ module.exports = function (defaults) {
     },
   });
 
-  return app.toTree();
+  return require('@embroider/compat').compatBuild(app, Webpack, {
+    staticAddonTestSupportTrees: true,
+    staticAddonTrees: true,
+    staticHelpers: true,
+    staticComponents: true,
+    splitAtRoutes: [
+      'courses',
+      'course',
+      'print_course',
+      'course-materials',
+      'instructorGroups',
+      'instructorGroup',
+      'programs',
+      'program',
+      'learnerGroups',
+      'learnerGroup',
+      'admin-dashboard',
+      'users',
+      'user',
+      'schools',
+      'school',
+      'assign-students',
+      'pending-user-updates',
+      'course-rollover',
+      'verificationPreview',
+      'curriculumInventoryReports',
+      'curriculumInventoryReport',
+      'curriculumInventorySequenceBlock',
+      'course-visualizations',
+      'course-visualize-.*',
+      'session-type-visualize-.*',
+      'program-year-visualize-competencies',
+    ],
+  });
 };
