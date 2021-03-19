@@ -1,10 +1,11 @@
 import { setupRenderingTest } from 'ember-qunit';
-import { findAll, click, find, render } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
 import { setupIntl } from 'ember-intl/test-support';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import moment from 'moment';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-session-list';
 
 module(
   'Integration | Component | curriculum-inventory/sequence-block-session-list',
@@ -14,7 +15,6 @@ module(
     setupMirage(hooks);
 
     test('it renders', async function (assert) {
-      assert.expect(31);
       const now = moment().toDate();
       const in15Hours = moment().add(15, 'hours').toDate();
       const in30Hours = moment().add(30, 'hours').toDate();
@@ -34,7 +34,7 @@ module(
 
       const sessionType1 = this.server.create('session-type', { title: 'Lecture' });
       const sessionType2 = this.server.create('session-type', { title: 'Ceremony' });
-      const sessionType3 = this.server.create('session-type', { title: 'Small Group' });
+      const sessionType3 = this.server.create('session-type', { title: 'Small Groups' });
       const sessionType4 = this.server.create('session-type', { title: 'Rocket Surgery' });
 
       const session1 = this.server.create('session', {
@@ -56,7 +56,7 @@ module(
       const ilmSession = this.server.create('ilm-session', {
         hours: 0,
       });
-      const session4 = this.server.create('session', {
+      this.server.create('session', {
         title: 'Zwickzange',
         sessionType: sessionType4,
         ilmSession,
@@ -75,105 +75,100 @@ module(
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'title');
       await render(hbs`<CurriculumInventory::SequenceBlockSessionList
-      @sessions={{sessions}}
-      @sequenceBlock={{sequenceBlock}}
-      @sortBy={{noop}}
-      @setSortBy={{setSortBy}}
+      @sessions={{this.sessions}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{noop}}
     />`);
-      assert
-        .dom('thead th')
-        .hasText('Count as one offering', 'Column header is labeled correctly.');
-      assert.dom(findAll('thead th')[1]).hasText('Exclude', 'Column header is labeled correctly.');
-      assert
-        .dom(findAll('thead th')[2])
-        .hasText('Session Title', 'Column header is labeled correctly.');
-      assert
-        .dom(findAll('thead th')[3])
-        .hasText('Session Type', 'Column header is labeled correctly.');
-      assert
-        .dom(findAll('thead th')[4])
-        .hasText('Total time', 'Column header is labeled correctly.');
-      assert
-        .dom(findAll('thead th')[5])
-        .hasText('Offerings', 'Column header is labeled correctly.');
-
-      assert
-        .dom('tbody tr:nth-of-type(1) td')
-        .hasText('Yes', 'All offerings in session are counted as one.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(1) td')[1])
-        .hasText('No', 'Excluded value is shown.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(1) td')[2])
-        .hasText(session1.title, 'Session title is shown.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(1) td')[3])
-        .hasText(sessionType1.title, 'Session type title is shown.');
-      assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText('30.00', 'Total time is shown.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(1) td')[5])
-        .hasText('2', 'Number of offerings is shown.');
-
-      assert
-        .dom('tbody tr:nth-of-type(2) td')
-        .hasText('No', 'All offerings are counted individually.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(2) td')[1])
-        .hasText('Yes', 'Excluded value is shown.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(2) td')[2])
-        .hasText(session2.title, 'Title is visible.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(2) td')[3])
-        .hasText(sessionType2.title, 'Session type is visible.');
-      assert.dom(findAll('tbody tr:nth-of-type(2) td')[4]).hasText('15.00', 'Total time is shown.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(2) td')[5])
-        .hasText('1', 'Number of offerings is shown.');
-
-      assert
-        .dom('tbody tr:nth-of-type(3) td')
-        .hasText('Yes', 'All offerings in session are counted as one.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(3) td')[1])
-        .hasText('No', 'Excluded value is shown.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(3) td')[2])
-        .hasText(session3.title, 'Title is visible.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(3) td')[3])
-        .hasText(sessionType3.title, 'Session type is visible.');
-      assert.dom(findAll('tbody tr:nth-of-type(3) td')[4]).hasText('0', 'Total time is shown.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(3) td')[5])
-        .hasText('0', 'Number of offerings is shown.');
-
-      assert
-        .dom('tbody tr:nth-of-type(4) td')
-        .hasText('No', 'All offerings are counted individually.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(4) td')[1])
-        .hasText('No', 'Excluded value is shown.');
-      assert.ok(
-        find(findAll('tbody tr:nth-of-type(4) td')[2]).textContent.trim().startsWith('(ILM)'),
-        'ILMs is labeled as such.'
+      assert.equal(
+        component.header.countAsOneOffering.text,
+        'Count as one offering',
+        'Column header is labeled correctly.'
       );
-      assert.ok(
-        find(findAll('tbody tr:nth-of-type(4) td')[2]).textContent.trim().endsWith(session4.title),
-        'Title is visible.'
+      assert.equal(component.header.exclude.text, 'Exclude', 'Column header is labeled correctly.');
+      assert.equal(
+        component.header.title.text,
+        'Session Title',
+        'Column header is labeled correctly.'
       );
-      assert
-        .dom(findAll('tbody tr:nth-of-type(4) td')[3])
-        .hasText(sessionType4.title, 'Session type is visible.');
-      assert.dom(findAll('tbody tr:nth-of-type(4) td')[4]).hasText('0', 'Total time is shown.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(4) td')[5])
-        .hasText('0', 'Number of offerings is shown.');
+      assert.equal(
+        component.header.sessionType.text,
+        'Session Type',
+        'Column header is labeled correctly.'
+      );
+      assert.equal(
+        component.header.totalTime.text,
+        'Total time',
+        'Column header is labeled correctly.'
+      );
+      assert.equal(
+        component.header.offeringsCount.text,
+        'Offerings',
+        'Column header is labeled correctly.'
+      );
+      assert.equal(
+        component.sessions[0].countAsOneOffering.text,
+        'Yes',
+        'All offerings in session are counted as one.'
+      );
+      assert.equal(component.sessions[0].exclude.text, 'No', 'Excluded value is shown.');
+      assert.equal(component.sessions[0].title.text, 'Aardvark', 'Session title is shown.');
+      assert.equal(
+        component.sessions[0].sessionType.text,
+        'Lecture',
+        'Session type title is shown.'
+      );
+      assert.equal(component.sessions[0].totalTime.text, '30.00', 'Total time is shown.');
+      assert.equal(component.sessions[0].offeringsCount.text, '2', 'Number of offerings is shown.');
+      assert.equal(
+        component.sessions[1].countAsOneOffering.text,
+        'No',
+        'All offerings are counted individually.'
+      );
+      assert.equal(component.sessions[1].exclude.text, 'Yes', 'Excluded value is shown.');
+      assert.equal(component.sessions[1].title.text, 'Bluebird', 'Session title is shown.');
+      assert.equal(
+        component.sessions[1].sessionType.text,
+        'Ceremony',
+        'Session type title is shown.'
+      );
+      assert.equal(component.sessions[1].totalTime.text, '15.00', 'Total time is shown.');
+      assert.equal(component.sessions[1].offeringsCount.text, '1', 'Number of offerings is shown.');
+      assert.equal(
+        component.sessions[2].countAsOneOffering.text,
+        'Yes',
+        'All offerings in session are counted as one.'
+      );
+      assert.equal(component.sessions[2].exclude.text, 'No', 'Excluded value is shown.');
+      assert.equal(component.sessions[2].title.text, 'Zeppelin', 'Session title is shown.');
+      assert.equal(
+        component.sessions[2].sessionType.text,
+        'Small Groups',
+        'Session type title is shown.'
+      );
+      assert.equal(component.sessions[2].totalTime.text, '0', 'Total time is shown.');
+      assert.equal(component.sessions[2].offeringsCount.text, '0', 'Number of offerings is shown.');
+      assert.equal(
+        component.sessions[3].countAsOneOffering.text,
+        'No',
+        'All offerings in session are counted individually.'
+      );
+      assert.equal(component.sessions[3].exclude.text, 'No', 'Excluded value is shown.');
+      assert.equal(
+        component.sessions[3].title.text,
+        '(ILM) Zwickzange',
+        'Session title is shown and ILM is indicated.'
+      );
+      assert.equal(
+        component.sessions[3].sessionType.text,
+        'Rocket Surgery',
+        'Session type title is shown.'
+      );
+      assert.equal(component.sessions[3].totalTime.text, '0', 'Total time is shown.');
+      assert.equal(component.sessions[3].offeringsCount.text, '0', 'Number of offerings is shown.');
     });
 
     test('empty list', async function (assert) {
-      assert.expect(2);
-
       const block = this.server.create('curriculum-inventory-sequence-block');
       const blockModel = await this.owner
         .lookup('service:store')
@@ -183,20 +178,18 @@ module(
       this.set('sessions', sessionModels);
       this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'title');
-      this.set('setSortBy', function () {});
       await render(hbs`<CurriculumInventory::SequenceBlockSessionList
-      @sessions={{await sessions}}
-      @sequenceBlock={{sequenceBlock}}
-      @sortBy={{sortBy}}
-      @setSortBy={{setSortBy}}
+      @sessions={{await this.sessions}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{noop}}
     />`);
-      assert.dom('thead tr').exists({ count: 1 }, 'Table header is visible,');
-      assert.dom('tbody tr').doesNotExist('but table body is empty.');
+      assert.ok(component.header.exclude.isVisible, 'Table header is visible,');
+      assert.equal(component.sessions.length, 0, 'but table body is empty.');
     });
 
     test('sort by title', async function (assert) {
       assert.expect(1);
-
       const session = this.server.create('session', {
         title: 'Zeppelin',
         sessionType: this.server.create('session-type', { title: 'Lecture' }),
@@ -216,12 +209,12 @@ module(
         assert.equal(what, 'title', 'Sorting callback gets called for session titles.');
       });
       await render(hbs`<CurriculumInventory::SequenceBlockSessionList
-      @sessions={{await sessions}}
-      @sequenceBlock={{sequenceBlock}}
-      @sortBy={{sortBy}}
-      @setSortBy={{setSortBy}}
+      @sessions={{await this.sessions}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{this.setSortBy}}
     />`);
-      await click(findAll('thead th')[2]);
+      await component.header.title.click();
     });
 
     test('sort by session type', async function (assert) {
@@ -249,12 +242,12 @@ module(
         );
       });
       await render(hbs`<CurriculumInventory::SequenceBlockSessionList
-      @sessions={{sessions}}
-      @sequenceBlock={{sequenceBlock}}
-      @sortBy={{sortBy}}
-      @setSortBy={{setSortBy}}
-    />`);
-      await click(findAll('thead th')[3]);
+        @sessions={{this.sessions}}
+        @sequenceBlock={{this.sequenceBlock}}
+        @sortBy={{this.sortBy}}
+        @setSortBy={{this.setSortBy}}
+      />`);
+      await component.header.sessionType.click();
     });
 
     test('sort by offerings total', async function (assert) {
@@ -282,12 +275,12 @@ module(
         );
       });
       await render(hbs`<CurriculumInventory::SequenceBlockSessionList
-      @sessions={{await sessions}}
-      @sequenceBlock={{sequenceBlock}}
-      @sortBy={{sortBy}}
-      @setSortBy={{setSortBy}}
+      @sessions={{await this.sessions}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{this.setSortBy}}
     />`);
-      await click(findAll('thead th')[5]);
+      await component.header.offeringsCount.click();
     });
   }
 );
