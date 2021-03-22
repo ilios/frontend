@@ -1,736 +1,514 @@
-import RSVP from 'rsvp';
-import EmberObject from '@ember/object';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll, click } from '@ember/test-helpers';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
+import moment from 'moment';
 import hbs from 'htmlbars-inline-precompile';
-
-const { resolve } = RSVP;
+import { component } from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-session-manager';
 
 module(
   'Integration | Component | curriculum-inventory/sequence-block-session-manager',
   function (hooks) {
     setupRenderingTest(hooks);
+    setupMirage(hooks);
 
     test('it renders', async function (assert) {
-      assert.expect(33);
-
-      const offering1 = EmberObject.create({ id: 1 });
-      const offering2 = EmberObject.create({ id: 2 });
-      const offering3 = EmberObject.create({ id: 3 });
-
-      const offerings1 = [offering1, offering2];
-      const offerings2 = [offering3];
-      const offerings3 = [];
-      const offerings4 = [];
-
-      const sessionType1 = EmberObject.create({ title: 'Lecture' });
-      const sessionType2 = EmberObject.create({ title: 'Ceremony' });
-      const sessionType3 = EmberObject.create({ title: 'Small Group' });
-      const sessionType4 = EmberObject.create({ title: 'Rocket Surgery' });
-
-      const totalTime1 = (30).toFixed(2);
-      const totalTime2 = (15).toFixed(2);
-      const totalTime3 = (0).toFixed(2);
-      const totalTime4 = (0).toFixed(2);
-
-      const session1 = EmberObject.create({
-        id: 1,
+      const now = moment().toDate();
+      const in15Hours = moment().add(15, 'hours').toDate();
+      const in30Hours = moment().add(30, 'hours').toDate();
+      const offering1 = this.server.create('offering', {
+        startDate: now,
+        endDate: in30Hours,
+      });
+      const offering2 = this.server.create('offering', {
+        startDate: now,
+        endDate: in15Hours,
+      });
+      const offering3 = this.server.create('offering', {
+        startDate: now,
+        endDate: in15Hours,
+      });
+      const sessionType1 = this.server.create('session-type', { title: 'Lecture' });
+      const sessionType2 = this.server.create('session-type', { title: 'Ceremony' });
+      const sessionType3 = this.server.create('session-type', { title: 'Small Groups' });
+      const sessionType4 = this.server.create('session-type', { title: 'Rocket Surgery' });
+      const session1 = this.server.create('session', {
         title: 'Aardvark',
-        offerings: resolve(offerings1),
-        sessionType: resolve(sessionType1),
-        isIndependentLearning: false,
-        maxDuration: resolve(totalTime1),
+        offerings: [offering1],
+        sessionType: sessionType1,
       });
-
-      const session2 = EmberObject.create({
-        id: 2,
+      const session2 = this.server.create('session', {
         title: 'Bluebird',
-        offerings: resolve(offerings2),
-        sessionType: resolve(sessionType2),
-        isIndependentLearning: false,
-        totalSumDuration: resolve(totalTime2),
+        offerings: [offering2, offering3],
+        sessionType: sessionType2,
       });
 
-      const session3 = EmberObject.create({
-        id: 3,
+      const session3 = this.server.create('session', {
         title: 'Zeppelin',
-        offerings: resolve(offerings3),
-        sessionType: resolve(sessionType3),
-        isIndependentLearning: false,
-        maxDuration: resolve(totalTime3),
+        sessionType: sessionType3,
       });
-
-      const session4 = EmberObject.create({
-        id: 4,
+      const ilmSession = this.server.create('ilm-session', {
+        hours: 0,
+      });
+      this.server.create('session', {
         title: 'Zwickzange',
-        offerings: resolve(offerings4),
-        sessionType: resolve(sessionType4),
-        isIndependentLearning: true,
-        totalSumDuration: resolve(totalTime4),
+        sessionType: sessionType4,
+        ilmSession,
       });
-
-      const linkedSessions = [session1, session3];
-      const excludedSessions = [session4];
-      const sessions = [session1, session2, session3, session4];
-
-      const block = EmberObject.create({
-        id: 1,
-        sessions: resolve(linkedSessions),
-        excludedSessions: resolve(excludedSessions),
+      const block = this.server.create('curriculum-inventory-sequence-block', {
+        sessions: [session1, session3],
+        excludedSessions: [session2],
       });
+      const blockModel = await this.owner
+        .lookup('service:store')
+        .find('curriculum-inventory-sequence-block', block.id);
+      const sessionModels = await this.owner.lookup('service:store').findAll('session');
 
-      this.set('sessions', resolve(sessions));
-      this.set('sequenceBlock', block);
+      this.set('sessions', sessionModels);
+      this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'title');
-      this.set('setSortBy', function () {});
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-      @sessions={{sessions}}
-      @sequenceBlock={{sequenceBlock}}
-      @sortBy={{sortBy}}
-      @setSortBy={{setSortBy}}
-    />`);
+        @sessions={{this.sessions}}
+        @sequenceBlock={{this.sequenceBlock}}
+        @sortBy={{this.sortBy}}
+        @setSortBy={{noop}}
+      />`);
 
-      assert.dom('.actions .bigadd').exists({ count: 1 }, 'Save button is visible.');
-      assert.dom('.actions .bigcancel').exists({ count: 1 }, 'Cancel button is visible.');
-
-      assert
-        .dom('thead th')
-        .hasText('Count as one offering', 'Column header is labeled correctly.');
-      assert.dom(findAll('thead th')[1]).hasText('Exclude', 'Column header is labeled correctly.');
-      assert
-        .dom(findAll('thead th')[2])
-        .hasText('Session Title', 'Column header is labeled correctly.');
-      assert
-        .dom(findAll('thead th')[3])
-        .hasText('Session Type', 'Column header is labeled correctly.');
-      assert
-        .dom(findAll('thead th')[4])
-        .hasText('Total time', 'Column header is labeled correctly.');
-      assert
-        .dom(findAll('thead th')[5])
-        .hasText('Offerings', 'Column header is labeled correctly.');
-
-      assert
-        .dom('tbody tr:nth-of-type(1) td:nth-of-type(1) input')
-        .isChecked('Count offerings as one is checked.');
-      assert
-        .dom('tbody tr:nth-of-type(1) td:nth-of-type(2) input')
-        .isNotChecked('Excluded is not checked.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(1) td')[2])
-        .hasText(session1.get('title'), 'Session title is shown.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(1) td')[3])
-        .hasText(sessionType1.get('title'), 'Session type is visible.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(1) td')[4])
-        .hasText(totalTime1, 'Total time is shown.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(1) td')[5])
-        .hasText(offerings1.length.toString(), 'Number of offerings is shown.');
-
-      assert
-        .dom('tbody tr:nth-of-type(2) td:nth-of-type(1) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(2) td:nth-of-type(2) input')
-        .isNotChecked('Excluded is not checked.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(2) td')[2])
-        .hasText(session2.get('title'), 'Title is visible.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(2) td')[3])
-        .hasText(sessionType2.get('title'), 'Session type is visible.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(2) td')[4])
-        .hasText(totalTime2, 'Total time is shown.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(2) td')[5])
-        .hasText(offerings2.length.toString(), 'Number of offerings is shown.');
-
-      assert
-        .dom('tbody tr:nth-of-type(3) td:nth-of-type(1) input')
-        .isChecked('Count offerings as one is checked.');
-      assert
-        .dom('tbody tr:nth-of-type(3) td:nth-of-type(2) input')
-        .isNotChecked('Excluded is not checked.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(3) td')[2])
-        .hasText(session3.get('title'), 'Title is visible.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(3) td')[3])
-        .hasText(sessionType3.get('title'), 'Session type is visible.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(3) td')[4])
-        .hasText(totalTime3, 'Total time is shown.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(3) td')[5])
-        .hasText(offerings3.length.toString(), 'Number of offerings is shown.');
-
-      assert
-        .dom('tbody tr:nth-of-type(4) td:nth-of-type(1) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(4) td:nth-of-type(2) input')
-        .isChecked('Excluded is checked.');
-      assert.ok(
-        findAll('tbody tr:nth-of-type(4) td')[2].textContent.trim().startsWith('(ILM)'),
-        'ILM is labeled as such.'
+      assert.equal(
+        component.header.countAsOneOffering.text,
+        'Count as one offering',
+        'Column header is labeled correctly.'
+      );
+      assert.equal(component.header.exclude.text, 'Exclude', 'Column header is labeled correctly.');
+      assert.equal(
+        component.header.title.text,
+        'Session Title',
+        'Column header is labeled correctly.'
+      );
+      assert.equal(
+        component.header.sessionType.text,
+        'Session Type',
+        'Column header is labeled correctly.'
+      );
+      assert.equal(
+        component.header.totalTime.text,
+        'Total time',
+        'Column header is labeled correctly.'
+      );
+      assert.equal(
+        component.header.offeringsCount.text,
+        'Offerings',
+        'Column header is labeled correctly.'
+      );
+      assert.notOk(
+        component.header.countAsOneOffering.isChecked,
+        'Not all sessions have their offerings counted as one.'
       );
       assert.ok(
-        findAll('tbody tr:nth-of-type(4) td')[2].textContent.trim().endsWith(session4.get('title')),
-        'Title is visible.'
+        component.header.countAsOneOffering.isPartiallyChecked,
+        'Some sessions have their offerings counted as one.'
       );
-      assert
-        .dom(findAll('tbody tr:nth-of-type(4) td')[3])
-        .hasText(sessionType4.get('title'), 'Session type is visible.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(4) td')[4])
-        .hasText(totalTime4, 'Total time is shown.');
-      assert
-        .dom(findAll('tbody tr:nth-of-type(4) td')[5])
-        .hasText(offerings4.length.toString(), 'Number of offerings is shown.');
+      assert.notOk(component.header.exclude.isChecked, 'Not all sessions are excluded.');
+      assert.ok(component.header.exclude.isPartiallyChecked, 'Some sessions are excluded.');
+      assert.equal(component.sessions.length, 4);
+      assert.equal(component.sessions[0].title.text, 'Aardvark', 'Session title is shown.');
+      assert.equal(component.sessions[0].sessionType.text, 'Lecture', 'Session type is shown.');
+      assert.equal(component.sessions[0].totalTime.text, '30.00', 'Total time is shown.');
+      assert.equal(component.sessions[0].offeringsCount.text, '1', 'Number of offerings is shown.');
+      assert.ok(
+        component.sessions[0].countAsOneOffering.isChecked,
+        'Session offerings are counted as one.'
+      );
+      assert.notOk(component.sessions[0].exclude.isChecked, 'Session is not excluded.');
+      assert.equal(component.sessions[1].title.text, 'Bluebird', 'Session title is shown.');
+      assert.equal(component.sessions[1].sessionType.text, 'Ceremony', 'Session type is shown.');
+      assert.equal(component.sessions[1].totalTime.text, '30.00', 'Total time is shown.');
+      assert.equal(component.sessions[1].offeringsCount.text, '2', 'Number of offerings is shown.');
+      assert.notOk(
+        component.sessions[1].countAsOneOffering.isChecked,
+        'Session offerings are not counted as one.'
+      );
+      assert.ok(component.sessions[1].exclude.isChecked, 'Session is excluded.');
+      assert.equal(component.sessions[2].title.text, 'Zeppelin', 'Session title is shown.');
+      assert.equal(
+        component.sessions[2].sessionType.text,
+        'Small Groups',
+        'Session type is shown.'
+      );
+      assert.equal(component.sessions[2].totalTime.text, '0', 'Total time is shown.');
+      assert.equal(component.sessions[2].offeringsCount.text, '0', 'Number of offerings is shown.');
+      assert.ok(
+        component.sessions[2].countAsOneOffering.isChecked,
+        'Session offerings are counted as one.'
+      );
+      assert.notOk(component.sessions[2].exclude.isChecked, 'Session are not excluded.');
+      assert.equal(
+        component.sessions[3].title.text,
+        '(ILM) Zwickzange',
+        'Session title is shown, ILM indicated as such.'
+      );
+      assert.equal(
+        component.sessions[3].sessionType.text,
+        'Rocket Surgery',
+        'Session type is shown.'
+      );
+      assert.equal(component.sessions[3].totalTime.text, '0', 'Total time is shown.');
+      assert.equal(component.sessions[3].offeringsCount.text, '0', 'Number of offerings is shown.');
+      assert.notOk(
+        component.sessions[3].countAsOneOffering.isChecked,
+        'Session offerings not counted as one.'
+      );
+      assert.notOk(component.sessions[3].exclude.isChecked, 'Session are not excluded.');
     });
 
     test('empty list', async function (assert) {
-      assert.expect(2);
-
-      const block = EmberObject.create({
-        id: 1,
-        sessions: resolve([]),
-        excludedSessions: resolve([]),
-      });
-
-      this.set('sessions', resolve([]));
-      this.set('sequenceBlock', block);
+      const block = this.server.create('curriculum-inventory-sequence-block');
+      const blockModel = await this.owner
+        .lookup('service:store')
+        .find('curriculum-inventory-sequence-block', block.id);
+      this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'title');
-      this.set('setSortBy', function () {});
+
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-      @sessions={{sessions}}
-      @sequenceBlock={{sequenceBlock}}
-      @sortBy={{sortBy}}
-      @setSortBy={{setSortBy}}
-    />`);
-      assert.dom('thead tr').exists({ count: 1 }, 'Table header is visible,');
-      assert.dom('tbody tr').doesNotExist('but table body is empty.');
+        @sessions={{array}}
+        @sequenceBlock={{this.sequenceBlock}}
+        @sortBy={{this.sortBy}}
+        @setSortBy={{noop}}
+      />`);
+
+      assert.ok(component.header.isVisible);
+      assert.equal(component.sessions.length, 0);
     });
 
     test('sort by title', async function (assert) {
       assert.expect(1);
-      const session = EmberObject.create({
-        id: 1,
+      const sessionType = this.server.create('session-type');
+      const session = this.server.create('session', {
         title: 'Zeppelin',
-        offerings: resolve([]),
-        sessionType: resolve(EmberObject.create({ title: 'Lecture' })),
-        maxDuration: resolve(0),
+        sessionType,
+        maxDuration: 0,
       });
-
-      const block = EmberObject.create({
-        id: 1,
-        sessions: resolve([session]),
-        excludedSessions: resolve([]),
+      const block = this.server.create('curriculum-inventory-sequence-block', {
+        sessions: [session],
       });
-
-      this.set('sessions', resolve([session]));
-      this.set('sequenceBlock', block);
+      const blockModel = await this.owner
+        .lookup('service:store')
+        .find('curriculum-inventory-sequence-block', block.id);
+      const sessionModels = await this.owner.lookup('service:store').findAll('session');
+      this.set('sessions', sessionModels);
+      this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'id');
       this.set('setSortBy', function (what) {
         assert.equal(what, 'title', 'Sorting callback gets called for session titles.');
       });
+
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-      @sessions={{sessions}}
-      @sequenceBlock={{sequenceBlock}}
-      @sortBy={{sortBy}}
-      @setSortBy={{setSortBy}}
-    />`);
-      await click(findAll('thead th')[2]);
+        @sessions={{this.sessions}}
+        @sequenceBlock={{this.sequenceBlock}}
+        @sortBy={{this.sortBy}}
+        @setSortBy={{this.setSortBy}}
+      />`);
+
+      await component.header.title.click();
     });
 
     test('sort by session type', async function (assert) {
       assert.expect(1);
-      const session = EmberObject.create({
-        id: 1,
+      const sessionType = this.server.create('session-type');
+      const session = this.server.create('session', {
         title: 'Zeppelin',
-        offerings: resolve([]),
-        sessionType: resolve(EmberObject.create({ title: 'Lecture' })),
-        maxDuration: resolve(0),
+        sessionType,
+        maxDuration: 0,
       });
-
-      const block = EmberObject.create({
-        id: 1,
-        sessions: resolve([session]),
-        excludedSessions: resolve([]),
+      const block = this.server.create('curriculum-inventory-sequence-block', {
+        sessions: [session],
       });
-
-      this.set('sessions', resolve([session]));
-      this.set('sequenceBlock', block);
+      const blockModel = await this.owner
+        .lookup('service:store')
+        .find('curriculum-inventory-sequence-block', block.id);
+      const sessionModels = await this.owner.lookup('service:store').findAll('session');
+      this.set('sessions', sessionModels);
+      this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'id');
       this.set('setSortBy', function (what) {
-        assert.equal(
-          what,
-          'sessionType.title',
-          'Sorting callback gets called for session type titles.'
-        );
+        assert.equal(what, 'sessionType.title', 'Sorting callback gets called for session types.');
       });
+
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-      @sessions={{sessions}}
-      @sequenceBlock={{sequenceBlock}}
-      @sortBy={{sortBy}}
-      @setSortBy={{setSortBy}}
-    />`);
-      await click(findAll('thead th')[3]);
+        @sessions={{this.sessions}}
+        @sequenceBlock={{this.sequenceBlock}}
+        @sortBy={{this.sortBy}}
+        @setSortBy={{this.setSortBy}}
+      />`);
+
+      await component.header.sessionType.click();
     });
 
-    test('sort by offerings total', async function (assert) {
+    test('sort by offerings count', async function (assert) {
       assert.expect(1);
-      const session = EmberObject.create({
-        id: 1,
+      const sessionType = this.server.create('session-type');
+      const session = this.server.create('session', {
         title: 'Zeppelin',
-        offerings: resolve([]),
-        sessionType: resolve(EmberObject.create({ title: 'Lecture' })),
-        maxDuration: resolve(0),
+        sessionType,
+        maxDuration: 0,
       });
-
-      const block = EmberObject.create({
-        id: 1,
-        sessions: resolve([session]),
-        excludedSessions: resolve([]),
+      const block = this.server.create('curriculum-inventory-sequence-block', {
+        sessions: [session],
       });
-
-      this.set('sessions', resolve([session]));
-      this.set('sequenceBlock', block);
+      const blockModel = await this.owner
+        .lookup('service:store')
+        .find('curriculum-inventory-sequence-block', block.id);
+      const sessionModels = await this.owner.lookup('service:store').findAll('session');
+      this.set('sessions', sessionModels);
+      this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'id');
       this.set('setSortBy', function (what) {
-        assert.equal(
-          what,
-          'offerings.length',
-          'Sorting callback gets called for offerings length.'
-        );
+        assert.equal(what, 'offerings.length', 'Sorting callback gets called for offerings count.');
       });
+
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-      @sessions={{sessions}}
-      @sequenceBlock={{sequenceBlock}}
-      @sortBy={{sortBy}}
-      @setSortBy={{setSortBy}}
-    />`);
-      await click(findAll('thead th')[5]);
+        @sessions={{this.sessions}}
+        @sequenceBlock={{this.sequenceBlock}}
+        @sortBy={{this.sortBy}}
+        @setSortBy={{this.setSortBy}}
+      />`);
+
+      await component.header.offeringsCount.click();
     });
 
     test('change count as one offering', async function (assert) {
-      assert.expect(3);
-      const maxDuration = (20).toFixed(2);
-      const totalSumDuration = (15).toFixed(2);
-      const session = EmberObject.create({
-        id: 1,
+      const now = moment().toDate();
+      const in15Hours = moment().add(15, 'hours').toDate();
+      const in30Hours = moment().add(30, 'hours').toDate();
+      const offering1 = this.server.create('offering', {
+        startDate: now,
+        endDate: in30Hours,
+      });
+      const offering2 = this.server.create('offering', {
+        startDate: now,
+        endDate: in15Hours,
+      });
+      const sessionType = this.server.create('session-type');
+      const session = this.server.create('session', {
         title: 'Zeppelin',
-        offerings: resolve([]),
-        sessionType: resolve(EmberObject.create({ title: 'Lecture' })),
-        maxDuration: resolve(maxDuration),
-        totalSumDuration: resolve(totalSumDuration),
+        sessionType,
+        offerings: [offering1, offering2],
       });
-
-      const block = EmberObject.create({
-        id: 1,
-        sessions: resolve([session]),
-        excludedSessions: resolve([]),
+      const block = this.server.create('curriculum-inventory-sequence-block', {
+        sessions: [session],
       });
-
-      this.set('sessions', resolve([session]));
-      this.set('sequenceBlock', block);
+      const blockModel = await this.owner
+        .lookup('service:store')
+        .find('curriculum-inventory-sequence-block', block.id);
+      const sessionModels = await this.owner.lookup('service:store').findAll('session');
+      this.set('sessions', sessionModels);
+      this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'id');
-      this.set('setSortBy', function () {});
+
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-      @sessions={{sessions}}
-      @sequenceBlock={{sequenceBlock}}
-      @sortBy={{sortBy}}
-      @setSortBy={{setSortBy}}
-    />`);
-      assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(maxDuration);
-      await click('tbody tr:nth-of-type(1) td:nth-of-type(1) input');
-      assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(totalSumDuration);
-      await click('tbody tr:nth-of-type(1) td:nth-of-type(1) input');
-      assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(maxDuration);
+        @sessions={{this.sessions}}
+        @sequenceBlock={{this.sequenceBlock}}
+        @sortBy={{this.sortBy}}
+        @setSortBy={{noop}}
+      />`);
+
+      assert.equal(component.sessions[0].totalTime.text, '30.00');
+      assert.ok(component.header.countAsOneOffering.isChecked);
+      assert.notOk(component.header.countAsOneOffering.isPartiallyChecked);
+      assert.ok(component.sessions[0].countAsOneOffering.isChecked);
+      await component.sessions[0].countAsOneOffering.toggle();
+      assert.equal(component.sessions[0].totalTime.text, '45.00');
+      assert.notOk(component.header.countAsOneOffering.isChecked);
+      assert.notOk(component.header.countAsOneOffering.isPartiallyChecked);
+      assert.notOk(component.sessions[0].countAsOneOffering.isChecked);
     });
 
-    test('change count as one offering for all sessions', async function (assert) {
-      assert.expect(6);
-      const maxDuration = (20).toFixed(2);
-      const totalSumDuration = (15).toFixed(2);
-      const session1 = EmberObject.create({
-        id: 1,
+    test('check all/uncheck count offerings as one', async function (assert) {
+      const now = moment().toDate();
+      const in15Hours = moment().add(15, 'hours').toDate();
+      const in30Hours = moment().add(30, 'hours').toDate();
+      const offering1 = this.server.create('offering', {
+        startDate: now,
+        endDate: in30Hours,
+      });
+      const offering2 = this.server.create('offering', {
+        startDate: now,
+        endDate: in15Hours,
+      });
+      const offering3 = this.server.create('offering', {
+        startDate: now,
+        endDate: in30Hours,
+      });
+      const offering4 = this.server.create('offering', {
+        startDate: now,
+        endDate: in30Hours,
+      });
+      const sessionType = this.server.create('session-type');
+      const session1 = this.server.create('session', {
         title: 'Alpha',
-        offerings: resolve([]),
-        sessionType: resolve(EmberObject.create({ title: 'Lecture' })),
-        maxDuration: resolve(maxDuration),
-        totalSumDuration: resolve(totalSumDuration),
+        sessionType: sessionType,
+        offerings: [offering1, offering2],
       });
-
-      const session2 = EmberObject.create({
-        id: 2,
+      this.server.create('session', {
         title: 'Omega',
-        offerings: resolve([]),
-        sessionType: resolve(EmberObject.create({ title: 'Lecture' })),
-        maxDuration: resolve(maxDuration),
-        totalSumDuration: resolve(totalSumDuration),
+        sessionType: sessionType,
+        offerings: [offering3, offering4],
       });
-
-      const block = EmberObject.create({
-        id: 1,
-        sessions: resolve([session1]),
-        excludedSessions: resolve([]),
+      const block = this.server.create('curriculum-inventory-sequence-block', {
+        sessions: [session1],
       });
-
-      this.set('sessions', resolve([session1, session2]));
-      this.set('sequenceBlock', block);
+      const blockModel = await this.owner
+        .lookup('service:store')
+        .find('curriculum-inventory-sequence-block', block.id);
+      const sessionModels = await this.owner.lookup('service:store').findAll('session');
+      this.set('sessions', sessionModels);
+      this.set('sequenceBlock', blockModel);
+      this.set('sortBy', 'id');
 
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-      @sessions={{sessions}}
-      @sequenceBlock={{sequenceBlock}}
-    />`);
+        @sessions={{this.sessions}}
+        @sequenceBlock={{this.sequenceBlock}}
+        @sortBy={{this.sortBy}}
+        @setSortBy={{noop}}
+      />`);
 
-      assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(maxDuration);
-      assert.dom(findAll('tbody tr:nth-of-type(2) td')[4]).hasText(totalSumDuration);
+      assert.notOk(component.header.countAsOneOffering.isChecked);
+      assert.ok(component.header.countAsOneOffering.isPartiallyChecked);
+      assert.ok(component.sessions[0].countAsOneOffering.isChecked);
+      assert.equal(component.sessions[0].totalTime.text, '30.00');
+      assert.notOk(component.sessions[1].countAsOneOffering.isChecked);
+      assert.equal(component.sessions[1].totalTime.text, '60.00');
+      await component.header.countAsOneOffering.toggle();
+      assert.ok(component.header.countAsOneOffering.isChecked);
+      assert.notOk(component.header.countAsOneOffering.isPartiallyChecked);
+      assert.ok(component.sessions[0].countAsOneOffering.isChecked);
+      assert.equal(component.sessions[0].totalTime.text, '30.00');
+      assert.ok(component.sessions[1].countAsOneOffering.isChecked);
+      assert.equal(component.sessions[1].totalTime.text, '30.00');
+      await component.header.countAsOneOffering.toggle();
+      assert.notOk(component.header.countAsOneOffering.isChecked);
+      assert.notOk(component.header.countAsOneOffering.isPartiallyChecked);
+      assert.notOk(component.sessions[0].countAsOneOffering.isChecked);
+      assert.equal(component.sessions[0].totalTime.text, '45.00');
+      assert.notOk(component.sessions[1].countAsOneOffering.isChecked);
+      assert.equal(component.sessions[1].totalTime.text, '60.00');
+    });
 
-      await click('thead tr:nth-of-type(1) th:nth-of-type(1) input');
-      assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(maxDuration);
-      assert.dom(findAll('tbody tr:nth-of-type(2) td')[4]).hasText(maxDuration);
+    test('check all/uncheck all excluded', async function (assert) {
+      const sessionType = this.server.create('session-type');
+      const session1 = this.server.create('session', {
+        title: 'Alpha',
+        sessionType: sessionType,
+      });
+      const session2 = this.server.create('session', {
+        title: 'Omega',
+        sessionType: sessionType,
+      });
+      const block = this.server.create('curriculum-inventory-sequence-block', {
+        excludedSessions: [session1],
+        sessions: [session2],
+      });
+      const blockModel = await this.owner
+        .lookup('service:store')
+        .find('curriculum-inventory-sequence-block', block.id);
+      const sessionModels = await this.owner.lookup('service:store').findAll('session');
+      this.set('sessions', sessionModels);
+      this.set('sequenceBlock', blockModel);
+      this.set('sortBy', 'id');
 
-      await click('thead tr:nth-of-type(1) th:nth-of-type(1) input');
-      assert.dom(findAll('tbody tr:nth-of-type(1) td')[4]).hasText(totalSumDuration);
-      assert.dom(findAll('tbody tr:nth-of-type(2) td')[4]).hasText(totalSumDuration);
+      await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
+        @sessions={{this.sessions}}
+        @sequenceBlock={{this.sequenceBlock}}
+        @sortBy={{this.sortBy}}
+        @setSortBy={{noop}}
+        @save={{this.save}}
+      />`);
+
+      assert.notOk(component.header.exclude.isChecked);
+      assert.ok(component.header.exclude.isPartiallyChecked);
+      assert.ok(component.sessions[0].exclude.isChecked);
+      assert.notOk(component.sessions[1].exclude.isChecked);
+      await component.header.exclude.toggle();
+      assert.ok(component.header.exclude.isChecked);
+      assert.notOk(component.header.exclude.isPartiallyChecked);
+      assert.ok(component.sessions[0].exclude.isChecked);
+      assert.ok(component.sessions[1].exclude.isChecked);
+      await component.header.exclude.toggle();
+      assert.notOk(component.header.exclude.isChecked);
+      assert.notOk(component.header.exclude.isPartiallyChecked);
+      assert.notOk(component.sessions[0].exclude.isChecked);
+      assert.notOk(component.sessions[1].exclude.isChecked);
     });
 
     test('save', async function (assert) {
-      assert.expect(6);
-
-      const session1 = EmberObject.create({
-        id: 1,
+      assert.expect(8);
+      const sessionType = this.server.create('session-type');
+      const session1 = this.server.create('session', {
         title: 'Alpha',
-        offerings: resolve([]),
-        sessionType: resolve(EmberObject.create({ title: 'Lecture' })),
-        maxDuration: resolve(0),
-        totalSumDuration: resolve(0),
+        sessionType: sessionType,
       });
-
-      const session2 = EmberObject.create({
-        id: 2,
+      const session2 = this.server.create('session', {
         title: 'Omega',
-        offerings: resolve([]),
-        sessionType: resolve(EmberObject.create({ title: 'Lecture' })),
-        maxDuration: resolve(0),
-        totalSumDuration: resolve(0),
+        sessionType: sessionType,
+      });
+      const block = this.server.create('curriculum-inventory-sequence-block', {
+        sessions: [session1],
+        excludedSessions: [session2],
+      });
+      const blockModel = await this.owner
+        .lookup('service:store')
+        .find('curriculum-inventory-sequence-block', block.id);
+      const sessionModels = await this.owner.lookup('service:store').findAll('session');
+      this.set('sessions', sessionModels);
+      this.set('sequenceBlock', blockModel);
+      this.set('sortBy', 'id');
+      this.set('save', (countAsOneOfferingSessions, excludedSessions) => {
+        assert.equal(countAsOneOfferingSessions.length, 1);
+        assert.equal(countAsOneOfferingSessions[0].title, 'Omega');
+        assert.equal(excludedSessions.length, 1);
+        assert.equal(excludedSessions[0].title, 'Alpha');
       });
 
-      const session3 = EmberObject.create({
-        id: 3,
-        title: 'Zeppelin',
-        offerings: resolve([]),
-        sessionType: resolve(EmberObject.create({ title: 'Thing' })),
-        maxDuration: resolve(0),
-        totalSumDuration: resolve(0),
-      });
-
-      const block = EmberObject.create({
-        id: 1,
-        sessions: resolve([session1]),
-        excludedSessions: resolve([session2, session3]),
-      });
-
-      this.set('sessions', resolve([session1, session2, session3]));
-      this.set('sequenceBlock', block);
-      this.set('sortBy', 'title');
-      this.set('save', (sessions, excludedSessions) => {
-        assert.equal(sessions.length, 2);
-        assert.ok(sessions.includes(session1));
-        assert.ok(sessions.includes(session2));
-        assert.equal(excludedSessions.length, 2);
-        assert.ok(excludedSessions.includes(session1));
-        assert.ok(excludedSessions.includes(session2));
-      });
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-      @sessions={{sessions}}
-      @sortBy={{sortBy}}
-      @sequenceBlock={{sequenceBlock}}
-      @save={{action save}}
-    />`);
-      await click('tbody tr:nth-of-type(2) td:nth-of-type(1) input');
-      await click('tbody tr:nth-of-type(1) td:nth-of-type(2) input');
-      await click('tbody tr:nth-of-type(3) td:nth-of-type(2) input');
-      await click('.actions .bigadd');
+        @sessions={{this.sessions}}
+        @sequenceBlock={{this.sequenceBlock}}
+        @sortBy={{this.sortBy}}
+        @setSortBy={{noop}}
+        @save={{this.save}}
+      />`);
+
+      assert.ok(component.sessions[0].countAsOneOffering.isChecked);
+      assert.notOk(component.sessions[0].exclude.isChecked);
+      assert.notOk(component.sessions[1].countAsOneOffering.isChecked);
+      assert.ok(component.sessions[1].exclude.isChecked);
+      await component.sessions[0].countAsOneOffering.toggle();
+      await component.sessions[0].exclude.toggle();
+      await component.sessions[1].countAsOneOffering.toggle();
+      await component.sessions[1].exclude.toggle();
+      await component.save();
     });
 
     test('cancel', async function (assert) {
       assert.expect(1);
+      const block = this.server.create('curriculum-inventory-sequence-block');
+      const blockModel = await this.owner
+        .lookup('service:store')
+        .find('curriculum-inventory-sequence-block', block.id);
 
-      const session = EmberObject.create({
-        id: 1,
-        title: 'Alpha',
-        offerings: resolve([]),
-        sessionType: resolve(EmberObject.create({ title: 'Lecture' })),
-        maxDuration: resolve(0),
-        totalSumDuration: resolve(0),
-      });
-
-      const block = EmberObject.create({
-        id: 1,
-        sessions: resolve([session]),
-        excludedSessions: resolve([]),
-      });
-
-      this.set('sessions', resolve([session]));
-      this.set('sequenceBlock', block);
+      this.set('sequenceBlock', blockModel);
       this.set('sortBy', 'title');
       this.set('cancel', () => {
         assert.ok(true, 'Cancel action fired.');
       });
+
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-      @sessions={{sessions}}
-      @sequenceBlock={{sequenceBlock}}
-      @sortBy={{sortBy}}
-      @cancel={{action cancel}}
-    />`);
-      await click('.actions .bigcancel');
-    });
+        @sessions={{array}}
+        @sequenceBlock={{this.sequenceBlock}}
+        @sortBy={{this.sortBy}}
+        @cancel={{this.cancel}}
+      />`);
 
-    test('check all/uncheck all count-as-one', async function (assert) {
-      assert.expect(15);
-
-      const sessionType = EmberObject.create({ title: 'Lecture' });
-
-      const session1 = EmberObject.create({
-        id: 1,
-        title: 'Aardvark',
-        offerings: resolve([]),
-        sessionType: resolve(sessionType),
-        isIndependentLearning: false,
-        totalSumDuration: resolve(0),
-      });
-
-      const session2 = EmberObject.create({
-        id: 2,
-        title: 'Bluebird',
-        offerings: resolve([]),
-        sessionType: resolve(sessionType),
-        isIndependentLearning: false,
-        totalSumDuration: resolve(0),
-      });
-
-      const session3 = EmberObject.create({
-        id: 3,
-        title: 'Zeppelin',
-        offerings: resolve([]),
-        sessionType: resolve(sessionType),
-        isIndependentLearning: false,
-        totalSumDuration: resolve(0),
-      });
-
-      const session4 = EmberObject.create({
-        id: 4,
-        title: 'Zwickzange',
-        offerings: resolve([]),
-        sessionType: resolve(sessionType),
-        isIndependentLearning: true,
-        totalSumDuration: resolve(0),
-      });
-
-      const session5 = EmberObject.create({
-        id: 4,
-        title: 'Zylinder',
-        offerings: resolve([]),
-        sessionType: resolve(sessionType),
-        isIndependentLearning: true,
-        totalSumDuration: resolve(0),
-      });
-
-      const sessions = [session1, session2, session3, session4, session5];
-
-      const block = EmberObject.create({
-        id: 1,
-        sessions: resolve([session5]),
-        excludedSessions: resolve([]),
-      });
-
-      this.set('sessions', resolve(sessions));
-      this.set('sequenceBlock', block);
-      this.set('sortBy', 'title');
-      this.set('setSortBy', function () {});
-      await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-      @sessions={{sessions}}
-      @sequenceBlock={{sequenceBlock}}
-      @sortBy={{sortBy}}
-      @setSortBy={{setSortBy}}
-    />`);
-
-      assert
-        .dom('tbody tr:nth-of-type(1) td:nth-of-type(1) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(2) td:nth-of-type(1) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(3) td:nth-of-type(1) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(4) td:nth-of-type(1) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(5) td:nth-of-type(1) input')
-        .isChecked('Count offerings as one is checked.');
-
-      await click('thead tr:nth-of-type(1) th:nth-of-type(1) input');
-      assert
-        .dom('tbody tr:nth-of-type(1) td:nth-of-type(1) input')
-        .isChecked('Count offerings as one is checked.');
-      assert
-        .dom('tbody tr:nth-of-type(2) td:nth-of-type(1) input')
-        .isChecked('Count offerings as one is checked.');
-      assert
-        .dom('tbody tr:nth-of-type(3) td:nth-of-type(1) input')
-        .isChecked('Count offerings as one is checked.');
-      assert
-        .dom('tbody tr:nth-of-type(4) td:nth-of-type(1) input')
-        .isChecked('Count offerings as one is checked.');
-      assert
-        .dom('tbody tr:nth-of-type(5) td:nth-of-type(1) input')
-        .isChecked('Count offerings as one is checked.');
-
-      await click('thead tr:nth-of-type(1) th:nth-of-type(1) input');
-      assert
-        .dom('tbody tr:nth-of-type(1) td:nth-of-type(1) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(2) td:nth-of-type(1) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(3) td:nth-of-type(1) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(4) td:nth-of-type(1) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(5) td:nth-of-type(1) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-    });
-
-    test('check all/uncheck all excluded', async function (assert) {
-      assert.expect(15);
-
-      const sessionType = EmberObject.create({ title: 'Lecture' });
-
-      const session1 = EmberObject.create({
-        id: 1,
-        title: 'Aardvark',
-        offerings: resolve([]),
-        sessionType: resolve(sessionType),
-        isIndependentLearning: false,
-        totalSumDuration: resolve(0),
-      });
-
-      const session2 = EmberObject.create({
-        id: 2,
-        title: 'Bluebird',
-        offerings: resolve([]),
-        sessionType: resolve(sessionType),
-        isIndependentLearning: false,
-        totalSumDuration: resolve(0),
-      });
-
-      const session3 = EmberObject.create({
-        id: 3,
-        title: 'Zeppelin',
-        offerings: resolve([]),
-        sessionType: resolve(sessionType),
-        isIndependentLearning: false,
-        totalSumDuration: resolve(0),
-      });
-
-      const session4 = EmberObject.create({
-        id: 4,
-        title: 'Zwickzange',
-        offerings: resolve([]),
-        sessionType: resolve(sessionType),
-        isIndependentLearning: true,
-        totalSumDuration: resolve(0),
-      });
-
-      const session5 = EmberObject.create({
-        id: 4,
-        title: 'Zylinder',
-        offerings: resolve([]),
-        sessionType: resolve(sessionType),
-        isIndependentLearning: true,
-        totalSumDuration: resolve(0),
-      });
-
-      const sessions = [session1, session2, session3, session4, session5];
-
-      const block = EmberObject.create({
-        id: 1,
-        sessions: resolve([]),
-        excludedSessions: resolve([session5]),
-      });
-
-      this.set('sessions', resolve(sessions));
-      this.set('sequenceBlock', block);
-      this.set('sortBy', 'title');
-      this.set('setSortBy', function () {});
-      await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-      @sessions={{sessions}}
-      @sequenceBlock={{sequenceBlock}}
-      @sortBy={{sortBy}}
-      @setSortBy={{setSortBy}}
-    />`);
-
-      assert
-        .dom('tbody tr:nth-of-type(1) td:nth-of-type(2) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(2) td:nth-of-type(2) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(3) td:nth-of-type(2) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(4) td:nth-of-type(2) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(5) td:nth-of-type(2) input')
-        .isChecked('Count offerings as one is checked.');
-
-      await click('thead tr:nth-of-type(1) th:nth-of-type(2) input');
-      assert
-        .dom('tbody tr:nth-of-type(1) td:nth-of-type(2) input')
-        .isChecked('Count offerings as one is checked.');
-      assert
-        .dom('tbody tr:nth-of-type(2) td:nth-of-type(2) input')
-        .isChecked('Count offerings as one is checked.');
-      assert
-        .dom('tbody tr:nth-of-type(3) td:nth-of-type(2) input')
-        .isChecked('Count offerings as one is checked.');
-      assert
-        .dom('tbody tr:nth-of-type(4) td:nth-of-type(2) input')
-        .isChecked('Count offerings as one is checked.');
-      assert
-        .dom('tbody tr:nth-of-type(5) td:nth-of-type(2) input')
-        .isChecked('Count offerings as one is checked.');
-
-      await click('thead tr:nth-of-type(1) th:nth-of-type(2) input');
-      assert
-        .dom('tbody tr:nth-of-type(1) td:nth-of-type(2) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(2) td:nth-of-type(2) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(3) td:nth-of-type(2) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(4) td:nth-of-type(2) input')
-        .isNotChecked('Count offerings as one is un-checked.');
-      assert
-        .dom('tbody tr:nth-of-type(5) td:nth-of-type(2) input')
-        .isNotChecked('Count offerings as one is un-checked.');
+      await component.cancel();
     });
   }
 );

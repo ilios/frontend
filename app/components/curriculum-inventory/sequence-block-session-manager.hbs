@@ -7,13 +7,13 @@
 >
   {{#unless this.load.isRunning}}
     <div class="actions">
-      <button type="button" class="bigadd" {{on "click" (perform this.saveChanges)}}>
+      <button type="button" class="bigadd" {{on "click" (perform this.saveChanges)}} data-test-save>
         <FaIcon
           @icon={{if this.saveChanges.isRunning "spinner" "check"}}
           @spin={{if this.saveChanges.isRunning true false}}
         />
       </button>
-      <button type="button" class="bigcancel" {{on "click" this.close}}>
+      <button type="button" class="bigcancel" {{on "click" this.close}} data-test-cancel>
         <FaIcon @icon="undo" />
       </button>
     </div>
