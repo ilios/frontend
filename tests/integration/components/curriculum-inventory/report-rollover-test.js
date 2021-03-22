@@ -27,6 +27,38 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     const description = '.description textarea';
 
     for (let i = 1; i < 4; i++) {
+      assert.dom(`${yearSelect} option:nth-of-type(${i})`).hasText(`${thisYear + i}`);
+    }
+    assert.dom(name).exists({ count: 1 });
+    assert.equal(find(name).value.trim(), report.get('name'));
+    assert.dom(description).exists({ count: 1 });
+    assert.equal(find(description).value.trim(), report.get('description'));
+  });
+
+  test('academic years labeled as range if configured accordingly', async function (assert) {
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+        },
+      };
+    });
+    const thisYear = parseInt(moment().format('YYYY'), 10);
+    this.server.create('curriculum-inventory-report', {
+      name: 'old report',
+      description: 'this is an old report',
+      year: thisYear,
+    });
+    const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
+    this.set('report', report);
+
+    await render(hbs`<CurriculumInventory::ReportRollover @report={{report}} />`);
+
+    const yearSelect = '.years select';
+    const name = '.name input';
+    const description = '.description textarea';
+
+    for (let i = 1; i < 4; i++) {
       assert
         .dom(`${yearSelect} option:nth-of-type(${i})`)
         .hasText(`${thisYear + i} - ${thisYear + 1 + i}`);
@@ -130,7 +162,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     assert.dom('.validation-error-message').doesNotExist();
   });
 
-  test('input validation fails on blank reort name', async function (assert) {
+  test('input validation fails on blank report name', async function (assert) {
     this.server.create('curriculum-inventory-report');
     const report = await this.owner.lookup('service:store').find('curriculum-inventory-report', 1);
 
@@ -141,6 +173,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     const name = '.name';
     const input = `${name} input`;
     await fillIn(input, '');
+    await click('.done');
     assert.dom('.validation-error-message').exists({ count: 1 });
     assert.ok(find('.validation-error-message').textContent.includes('blank'));
   });
