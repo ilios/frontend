@@ -18,121 +18,131 @@
       </button>
     </div>
     <div class="list">
-      <table>
-        <thead>
-          <tr>
-            <th class="text-center count-as-one-header" colspan="2">
-              <input
-                type="checkbox"
-                checked={{this.allSelected}}
-                indeterminate={{this.someSelected}}
-                {{on "click" (pick "target.value" this.toggleSelectAll)}}
-              >
-              {{t "general.countAsOneOffering"}}
-            </th>
-            <th class="text-center count-as-one-header" colspan="2">
-              <input
-                type="checkbox"
-                checked={{this.allExcluded}}
-                indeterminate={{this.someExcluded}}
-                {{on "click" (pick "target.value" this.toggleExcludeAll)}}
-              >
-              {{t "general.exclude"}}
-            </th>
-            <SortableTh
-              @colspan={{3}}
-              @click={{fn this.changeSortOrder "title"}}
-              @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
-              @sortedAscending={{this.sortedAscending}}
-            >
-              {{t "general.sessionTitle"}}
-            </SortableTh>
-            <SortableTh
-              @colspan={{3}}
-              @click={{fn this.changeSortOrder "sessionType.title"}}
-              @sortedBy={{or
-                (eq @sortBy "sessionType.title")
-                (eq @sortBy "sessionType.title:desc")
-              }}
-              @sortedAscending={{this.sortedAscending}}
-            >
-              {{t "general.sessionType"}}
-            </SortableTh>
-            <th class="text-center" colspan="1">
-              {{t "general.totalTime"}}
-            </th>
-            <SortableTh
-              @colspan={{1}}
-              @click={{fn this.changeSortOrder "offerings.length"}}
-              @sortedBy={{or
-                (eq @sortBy "offerings.length")
-                (eq @sortBy "offerings.length:desc")
-              }}
-              @sortedAscending={{this.sortedAscending}}
-              @sortType="numeric"
-            >
-              {{t "general.offerings"}}
-            </SortableTh>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each (sort-by @sortBy this.sessions) as |session|}}
+      {{#let (unique-id) (unique-id) as |countAsOneLabelId excludedLabelId|}}
+        <table>
+          <thead>
             <tr>
-              <td class="text-center" colspan="2">
-                <Input
-                  @type="checkbox"
-                  @checked={{includes session this.linkedSessions}}
-                  {{on "change" (fn this.changeSession session)}}
-                />
-              </td>
-              <td class="text-center" colspan="2">
-                <Input
-                  @type="checkbox"
-                  @checked={{includes session this.excludedSessions}}
-                  {{on "change" (fn this.excludeSession session)}}
-                />
-              </td>
-              <td class="text-left" colspan="3">
-                {{#if session.isIndependentLearning}}
-                  <strong>
-                    ({{t "general.ilm"}})
-                  </strong>
-                {{/if}}
-                {{session.title}}
-              </td>
-              <td class="text-left" colspan="3">
-                {{#if (is-pending session.sessionType)}}
-                  <LoadingSpinner />
-                {{else}}
-                  {{get (await session.sessionType) "title"}}
-                {{/if}}
-              </td>
-              <td class="text-center" colspan="1">
-                {{#if (includes session this.linkedSessions)}}
-                  {{#if (is-pending session.maxDuration)}}
-                    <LoadingSpinner />
-                  {{else}}
-                    {{await session.maxDuration}}
-                  {{/if}}
-                {{else}}
-                  {{#if (is-pending session.totalSumDuration)}}
-                    <LoadingSpinner />
-                  {{else}}
-                    {{await session.totalSumDuration}}
-                  {{/if}}
-                {{/if}}
-              </td>
-              <td class="text-center" colspan="1">
-                {{#if (is-pending session.offerings)}}
-                  <LoadingSpinner />
-                {{else}}
-                  {{get (await session.offerings) "length"}}
-                {{/if}}
-              </td>
+              <th class="text-center count-as-one-header" colspan="2">
+                <input
+                  type="checkbox"
+                  checked={{this.allSelected}}
+                  indeterminate={{this.someSelected}}
+                  aria-labelledby={{countAsOneLabelId}}
+                  {{on "click" (pick "target.value" this.toggleSelectAll)}}
+                >
+                <label id={{countAsOneLabelId}}>{{t "general.countAsOneOffering"}}</label>
+              </th>
+              <th class="text-center count-as-one-header" colspan="2">
+                <input
+                  type="checkbox"
+                  checked={{this.allExcluded}}
+                  indeterminate={{this.someExcluded}}
+                  aria-labelledby={{excludedLabelId}}
+                  {{on "click" (pick "target.value" this.toggleExcludeAll)}}
+                >
+                <label id={{excludedLabelId}}>{{t "general.exclude"}}</label>
+              </th>
+              <SortableTh
+                @colspan={{3}}
+                @click={{fn this.changeSortOrder "title"}}
+                @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
+                @sortedAscending={{this.sortedAscending}}
+              >
+                {{t "general.sessionTitle"}}
+              </SortableTh>
+              <SortableTh
+                @colspan={{3}}
+                @click={{fn this.changeSortOrder "sessionType.title"}}
+                @sortedBy={{or
+                  (eq @sortBy "sessionType.title")
+                  (eq @sortBy "sessionType.title:desc")
+                }}
+                @sortedAscending={{this.sortedAscending}}
+              >
+                {{t "general.sessionType"}}
+              </SortableTh>
+              <th class="text-center" colspan="1">
+                {{t "general.totalTime"}}
+              </th>
+              <SortableTh
+                @colspan={{1}}
+                @click={{fn this.changeSortOrder "offerings.length"}}
+                @sortedBy={{or
+                  (eq @sortBy "offerings.length")
+                  (eq @sortBy "offerings.length:desc")
+                }}
+                @sortedAscending={{this.sortedAscending}}
+                @sortType="numeric"
+              >
+                {{t "general.offerings"}}
+              </SortableTh>
             </tr>
-          {{/each}}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {{#each (sort-by @sortBy this.sessions) as |session|}}
+              {{#let (unique-id) as |sessionTitleLabelId|}}
+                <tr>
+                  <td class="text-center" colspan="2">
+                    <Input
+                      @type="checkbox"
+                      @checked={{includes session this.linkedSessions}}
+                      aria-labelledby={{concat countAsOneLabelId " " sessionTitleLabelId}}
+                      {{on "change" (fn this.changeSession session)}}
+                    />
+                  </td>
+                  <td class="text-center" colspan="2">
+                    <Input
+                      @type="checkbox"
+                      @checked={{includes session this.excludedSessions}}
+                      aria-labelledby={{concat excludedLabelId " " sessionTitleLabelId}}
+                      {{on "change" (fn this.excludeSession session)}}
+                    />
+                  </td>
+                  <td class="text-left" colspan="3">
+                    <label id={{sessionTitleLabelId}}>
+                      {{#if session.isIndependentLearning}}
+                        <strong>
+                          ({{t "general.ilm"}})
+                        </strong>
+                      {{/if}}
+                      {{session.title}}
+                    </label>
+                  </td>
+                  <td class="text-left" colspan="3">
+                    {{#if (is-pending session.sessionType)}}
+                      <LoadingSpinner />
+                    {{else}}
+                      {{get (await session.sessionType) "title"}}
+                    {{/if}}
+                  </td>
+                  <td class="text-center" colspan="1">
+                    {{#if (includes session this.linkedSessions)}}
+                      {{#if (is-pending session.maxDuration)}}
+                        <LoadingSpinner />
+                      {{else}}
+                        {{await session.maxDuration}}
+                      {{/if}}
+                    {{else}}
+                      {{#if (is-pending session.totalSumDuration)}}
+                        <LoadingSpinner />
+                      {{else}}
+                        {{await session.totalSumDuration}}
+                      {{/if}}
+                    {{/if}}
+                  </td>
+                  <td class="text-center" colspan="1">
+                    {{#if (is-pending session.offerings)}}
+                      <LoadingSpinner />
+                    {{else}}
+                      {{get (await session.offerings) "length"}}
+                    {{/if}}
+                  </td>
+                </tr>
+              {{/let}}
+            {{/each}}
+          </tbody>
+        </table>
+      {{/let}}
     </div>
   {{/unless}}
 </section>
