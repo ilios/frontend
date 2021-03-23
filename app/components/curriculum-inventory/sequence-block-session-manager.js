@@ -1,185 +1,145 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { isEmpty } from '@ember/utils';
-import { task } from 'ember-concurrency';
+import { dropTask, restartableTask } from 'ember-concurrency';
 
-export default Component.extend({
-  store: service(),
-  tagName: '',
-  excludedSessionsBuffer: null,
-  linkedSessionsBuffer: null,
-  sessionsBuffer: null,
-  sortBy: 'title',
+export default class SequenceBlockSessionManagerComponent extends Component {
+  @service store;
+  @tracked excludedSessions = [];
+  @tracked linkedSessions = [];
+  @tracked sessions = [];
 
-  allSelected: computed('linkedSessionsBuffer.[]', 'sessionsBuffer.[]', function () {
-    const linkedSessions = this.linkedSessionsBuffer;
-    const sessions = this.sessionsBuffer;
-    if (isEmpty(linkedSessions) || isEmpty(sessions) || linkedSessions.length < sessions.length) {
-      return false;
-    }
-    sessions.forEach((session) => {
-      if (!linkedSessions.includes(session)) {
-        return false;
-      }
-    });
-    return true;
-  }),
-
-  allExcluded: computed('excludedSessionsBuffer.[]', 'sessionsBuffer.[]', function () {
-    const excludedSessions = this.excludedSessionsBuffer;
-    const sessions = this.sessionsBuffer;
+  get allSelected() {
     if (
-      isEmpty(excludedSessions) ||
-      isEmpty(sessions) ||
-      excludedSessions.length < sessions.length
+      !this.linkedSessions ||
+      !this.sessions ||
+      this.linkedSessions.length < this.sessions.length
     ) {
       return false;
     }
-    sessions.forEach((session) => {
-      if (!excludedSessions.includes(session)) {
+    this.sessions.forEach((session) => {
+      if (!this.linkedSessions.includes(session)) {
         return false;
       }
     });
     return true;
-  }),
+  }
 
-  someSelected: computed('allSelected', 'noneSelected', function () {
-    const allSelected = this.allSelected;
-    const noneSelected = this.noneSelected;
-    return !allSelected && !noneSelected;
-  }),
+  get allExcluded() {
+    if (
+      !this.excludedSessions ||
+      !this.sessions ||
+      this.excludedSessions.length < this.sessions.length
+    ) {
+      return false;
+    }
+    this.sessions.forEach((session) => {
+      if (!this.excludedSessions.includes(session)) {
+        return false;
+      }
+    });
+    return true;
+  }
 
-  someExcluded: computed('allExcluded', 'noneExcluded', function () {
-    const allExcluded = this.allExcluded;
-    const noneExcluded = this.noneExcluded;
-    return !allExcluded && !noneExcluded;
-  }),
+  get someSelected() {
+    return !this.allSelected && !this.noneSelected;
+  }
 
-  noneSelected: computed('linkedSessionsBuffer.[]', 'sessionsBuffer.[]', function () {
-    const linkedSessions = this.linkedSessionsBuffer;
-    const sessions = this.sessionsBuffer;
+  get someExcluded() {
+    return !this.allExcluded && !this.noneExcluded;
+  }
 
-    if (isEmpty(linkedSessions) || isEmpty(sessions)) {
+  get noneSelected() {
+    if (!this.linkedSessions || !this.sessions) {
       return true;
     }
 
     let isSelected = false;
-    linkedSessions.forEach((linkedSession) => {
-      if (sessions.includes(linkedSession)) {
+    this.linkedSessions.forEach((linkedSession) => {
+      if (this.sessions.includes(linkedSession)) {
         isSelected = true;
       }
     });
     return !isSelected;
-  }),
+  }
 
-  noneExcluded: computed('excludedSessionsBuffer.[]', 'sessionsBuffer.[]', function () {
-    const excludedSessions = this.excludedSessionsBuffer;
-    const sessions = this.sessionsBuffer;
-
-    if (isEmpty(excludedSessions) || isEmpty(sessions)) {
+  get noneExcluded() {
+    if (!this.excludedSessions || !this.sessions) {
       return true;
     }
 
     let isSelected = false;
-    excludedSessions.forEach((session) => {
-      if (sessions.includes(session)) {
+    this.excludedSessions.forEach((session) => {
+      if (this.sessions.includes(session)) {
         isSelected = true;
       }
     });
     return !isSelected;
-  }),
+  }
 
-  sortedAscending: computed('sortBy', function () {
-    const sortBy = this.sortBy;
-    return sortBy.search(/desc/) === -1;
-  }),
+  get sortedAscending() {
+    return this.args.sortBy.search(/desc/) === -1;
+  }
 
-  init() {
-    this._super(...arguments);
-    this.set('linkedSessionsBuffer', []);
-    this.set('linkableSessionsBuffer', []);
-  },
+  @action
+  changeSession(session) {
+    if (this.linkedSessions.includes(session)) {
+      this.linkedSessions.removeObject(session);
+    } else {
+      this.linkedSessions.addObject(session);
+    }
+  }
 
-  didReceiveAttrs() {
-    this._super(...arguments);
-    const sequenceBlock = this.sequenceBlock;
-    const sessions = this.sessions;
-    this.loadAttr.perform(sequenceBlock, sessions);
-  },
+  @action
+  excludeSession(session) {
+    if (this.excludedSessions.includes(session)) {
+      this.excludedSessions.removeObject(session);
+    } else {
+      this.excludedSessions.addObject(session);
+    }
+  }
 
-  actions: {
-    changeSession(session) {
-      const sessions = this.linkedSessionsBuffer;
-      if (sessions.includes(session)) {
-        sessions.removeObject(session);
-      } else {
-        sessions.addObject(session);
-      }
-    },
+  @action
+  toggleSelectAll() {
+    if (this.allSelected) {
+      this.linkedSessions = [];
+    } else {
+      this.linkedSessions = this.sessions.toArray();
+    }
+  }
 
-    excludeSession(session) {
-      const sessions = this.excludedSessionsBuffer;
-      if (sessions.includes(session)) {
-        sessions.removeObject(session);
-      } else {
-        sessions.addObject(session);
-      }
-    },
+  @action
+  toggleExcludeAll() {
+    if (this.allExcluded) {
+      this.excludedSessions = [];
+    } else {
+      this.excludedSessions = this.sessions.toArray();
+    }
+  }
 
-    toggleSelectAll() {
-      const allSelected = this.allSelected;
+  @action
+  changeSortOrder(what) {
+    if (this.args.sortBy === what) {
+      what += ':desc';
+    }
+    this.args.setSortBy(what);
+  }
 
-      if (allSelected) {
-        // un-select all sessions
-        this.set('linkedSessionsBuffer', []);
-      } else {
-        //select all sessions
-        this.set('linkedSessionsBuffer', this.sessionsBuffer.toArray());
-      }
-    },
+  @action
+  close() {
+    this.args.cancel();
+  }
 
-    toggleExcludeAll() {
-      const allSelected = this.allExcluded;
+  @restartableTask
+  *load() {
+    this.linkedSessions = (yield this.args.sequenceBlock.sessions).toArray();
+    this.excludedSessions = (yield this.args.sequenceBlock.excludedSessions).toArray();
+    this.sessions = (yield this.args.sessions).toArray();
+  }
 
-      if (allSelected) {
-        // un-select all sessions
-        this.set('excludedSessionsBuffer', []);
-      } else {
-        //select all sessions
-        this.set('excludedSessionsBuffer', this.sessionsBuffer.toArray());
-      }
-    },
-
-    sortBy(what) {
-      const sortBy = this.sortBy;
-      if (sortBy === what) {
-        what += ':desc';
-      }
-      this.setSortBy(what);
-    },
-
-    close() {
-      this.cancel();
-    },
-  },
-
-  loadAttr: task(function* (sequenceBlock, sessions) {
-    let linkedSessionsBuffer = yield sequenceBlock.get('sessions');
-    linkedSessionsBuffer = linkedSessionsBuffer.toArray();
-    let excludedSessionsBuffer = yield sequenceBlock.get('excludedSessions');
-    excludedSessionsBuffer = excludedSessionsBuffer.toArray();
-    const sessionsBuffer = yield sessions;
-    this.setProperties({
-      linkedSessionsBuffer,
-      excludedSessionsBuffer,
-      sessionsBuffer,
-    });
-  }),
-
-  saveChanges: task(function* () {
-    const sessions = this.linkedSessionsBuffer;
-    const excludedSessions = this.excludedSessionsBuffer;
-    yield this.save(sessions, excludedSessions);
-  }),
-});
+  @dropTask
+  *saveChanges() {
+    yield this.args.save(this.linkedSessions, this.excludedSessions);
+  }
+}
