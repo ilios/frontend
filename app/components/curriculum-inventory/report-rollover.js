@@ -59,8 +59,8 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
   }
 
   @action
-  async saveOnEnter(keyCode) {
-    if (13 === keyCode) {
+  async saveOnEnter(event) {
+    if (13 === event.keyCode) {
       await this.save.perform();
     }
   }

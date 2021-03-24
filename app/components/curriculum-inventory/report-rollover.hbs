@@ -12,7 +12,7 @@
       <p class="rollover-summary">
         {{t "general.curriculumInventoryReportRolloverSummary"}}
       </p>
-      <div class="item name">
+      <div class="item name" data-test-name>
         {{#let (unique-id) as |nameId|}}
           <label for={{nameId}}>
             {{t "general.name"}}:
@@ -24,7 +24,7 @@
             disabled={{this.save.isRunning}}
             placeholder={{t "general.reportNamePlaceholder"}}
             {{on "input" (pick "target.value" this.changeName)}}
-            {{on "keyup" (queue (fn this.addErrorDisplayFor "name") (pick "target.keyCode" this.saveOnEnter))}}
+            {{on "keyup" (queue (fn this.addErrorDisplayFor "name") this.saveOnEnter)}}
           >
         {{/let}}
         {{#each (await (compute this.getErrorsFor "name")) as |message|}}
@@ -33,7 +33,7 @@
           </span>
         {{/each}}
       </div>
-      <div class="item description">
+      <div class="item description" data-test-description>
         {{#let (unique-id) as |descriptionId|}}
           <label for={{descriptionId}}>
             {{t "general.description"}}:
@@ -46,7 +46,7 @@
           >{{this.description}}</textarea>
         {{/let}}
       </div>
-      <div class="item years">
+      <div class="item years" data-test-years>
         {{#let (unique-id) as |yearId|}}
           <label for={{yearId}}>
             {{t "general.academicYear"}}:
