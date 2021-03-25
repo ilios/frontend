@@ -37,7 +37,7 @@
     "browserslist": "^4.16.1",
     "caniuse-db": "^1.0.30001204",
     "ember-ajax": "^5.0.0",
-    "ember-auto-import": "^1.10.1",
+    "ember-auto-import": "^1.11.2",
     "ember-cli": "~3.23.0",
     "ember-cli-app-version": "^4.0.0",
     "ember-cli-babel": "^7.23.0",
