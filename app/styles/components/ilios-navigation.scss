@@ -65,6 +65,12 @@
     }
   }
 
+  @include for-smaller-than-laptop {
+    a.active {
+      background-color: $grey;
+    }
+  }
+
   @include for-laptop-and-up {
     border-right: 1px solid $header-grey;
     box-shadow: 2px 1px 3px rgba($black, .19), inset 1px 0 2px rgba($black, .34);
