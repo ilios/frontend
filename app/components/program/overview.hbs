@@ -1,0 +1,61 @@
+<div class="program-overview" ...attributes data-test-program-overview>
+  <h2>
+    {{t "general.overview"}}
+  </h2>
+  <div class="program-overview-content">
+    <div class="block programtitleshort" data-test-short-title>
+      <label for={{concat this.id "short-title"}}>
+        {{t "general.programTitleShort"}}:
+      </label>
+      <span>
+        {{#if @canUpdate}}
+          <EditableField
+            @value={{this.shortTitle}}
+            @save={{perform this.changeShortTitle}}
+            @close={{set this.duration @program.duration}}
+            @saveOnEnter={{true}}
+            @clickPrompt={{t "general.clickToEdit"}}
+            @closeOnEscape={{true}} as |isSaving|
+          >
+            <Input
+              id={{concat this.id "short-title"}}
+              @type="text"
+              @value={{this.shortTitle}}
+              {{on "keypress" (fn this.addErrorDisplayFor "shortTitle")}}
+              disabled={{isSaving}}
+            />
+          </EditableField>
+          {{#each (await (compute this.getErrorsFor "shortTitle")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
+        {{else}}
+          {{this.shortTitle}}
+        {{/if}}
+      </span>
+    </div>
+    <div class="block programduration" data-test-duration>
+      <label for={{concat this.id "duration"}}>
+        {{t "general.durationInYears"}}:
+      </label>
+      <span>
+        {{#if @canUpdate}}
+          <EditableField
+            @value={{this.duration}}
+            @save={{perform this.changeDuration}}
+            @close={{set this.duration @program.duration}}
+          >
+            <select id={{concat this.id "duration"}} {{on "change" (pick "target.value" (set this.duration))}}>
+              {{#each (array 1 2 3 4 5 6 7 8 9 10) as |val|}}
+                <option value={{val}} selected={{eq val this.duration}}>{{val}}</option>
+              {{/each}}
+            </select>
+          </EditableField>
+        {{else}}
+          {{this.duration}}
+        {{/if}}
+      </span>
+    </div>
+  </div>
+</div>

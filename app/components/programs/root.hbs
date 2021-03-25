@@ -1,0 +1,63 @@
+<section class="programs-root" data-test-programs>
+  <div class="filters">
+    <div class="schools" data-test-school-filter>
+      <FaIcon @icon="university" @fixedWidth={{true}} />
+      {{#if (gt @schools.length 1)}}
+        <select
+          {{on "change" (pick "target.value" (set this.selectedSchoolId))}}
+          aria-label={{t "general.schools"}}
+          data-test-school-selector
+        >
+          {{#each (sort-by "title" @schools) as |school|}}
+            <option
+              selected={{eq school.id this.bestSelectedSchool.id}}
+              value={{school.id}}
+            >
+              {{school.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{this.bestSelectedSchool.title}}
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="main-list">
+    <div class="header">
+      <div class="title">
+        <h2>
+          {{t "general.programs"}}
+        </h2>
+      </div>
+      <div class="actions">
+        {{#if this.canCreate}}
+          <ExpandCollapseButton
+            @value={{this.showNewProgramForm}}
+            @action={{set this.showNewProgramForm (not this.showNewProgramForm)}}
+          />
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="new">
+      {{#if this.showNewProgramForm}}
+        <NewProgram
+          @save={{perform this.saveNewProgram}}
+          @cancel={{set this.showNewProgramForm false}}
+        />
+      {{/if}}
+      {{#if this.newProgram}}
+        <div class="saved-result">
+          <LinkTo @route="program" @model={{this.newProgram}}>
+            <FaIcon @icon="external-link-square-alt" />
+            {{this.newProgram.title}}
+          </LinkTo>
+          {{t "general.savedSuccessfully"}}
+        </div>
+      {{/if}}
+    </div>
+
+    <Programs::List @programs={{sort-by "title" this.programs}} />
+  </div>
+</section>

@@ -1,18 +1,10 @@
-import {
-  click,
-  fillIn,
-  find,
-  findAll,
-  currentURL,
-  currentRouteName,
-  visit,
-} from '@ember/test-helpers';
+import { click, fillIn, find, currentURL, currentRouteName, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { getElementText, getText } from 'ilios-common';
+import page from 'ilios/tests/pages/programs';
 
 module('Acceptance | Programs', function (hooks) {
   setupApplicationTest(hooks);
@@ -25,99 +17,8 @@ module('Acceptance | Programs', function (hooks) {
     });
 
     test('visiting /programs', async function (assert) {
-      await visit('/programs');
+      await page.visit();
       assert.equal(currentRouteName(), 'programs');
-    });
-
-    test('filters by title', async function (assert) {
-      const firstProgram = this.server.create('program', {
-        title: 'specialfirstprogram',
-        school: this.school,
-      });
-      const secondProgram = this.server.create('program', {
-        title: 'specialsecondprogram',
-        school: this.school,
-      });
-      const regularProgram = this.server.create('program', {
-        title: 'regularprogram',
-        school: this.school,
-      });
-      const regexProgram = this.server.create('program', {
-        title: '\\yoo hoo',
-        school: this.school,
-      });
-      await visit('/programs');
-      assert.equal(4, findAll('.list tbody [data-test-active-row]').length);
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),
-        getText(regexProgram.title)
-      );
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(2) td'))),
-        getText(regularProgram.title)
-      );
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(3) td'))),
-        getText(firstProgram.title)
-      );
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(4) td'))),
-        getText(secondProgram.title)
-      );
-
-      await fillIn('.titlefilter input', 'first');
-      assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),
-        getText(firstProgram.title)
-      );
-      await fillIn('.titlefilter input', '   first    ');
-      assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),
-        getText(firstProgram.title)
-      );
-      await fillIn('.titlefilter input', 'second');
-      assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),
-        getText(secondProgram.title)
-      );
-      await fillIn('.titlefilter input', 'special');
-      assert.equal(2, findAll('.list tbody [data-test-active-row]').length);
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),
-        getText(firstProgram.title)
-      );
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(2) td'))),
-        getText(secondProgram.title)
-      );
-      await fillIn('.titlefilter input', '\\');
-      assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),
-        getText(regexProgram.title)
-      );
-
-      await fillIn('.titlefilter input', '');
-      assert.equal(4, findAll('.list tbody [data-test-active-row]').length);
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),
-        getText(regexProgram.title)
-      );
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(2) td'))),
-        getText(regularProgram.title)
-      );
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(3) td'))),
-        getText(firstProgram.title)
-      );
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(4) td'))),
-        getText(secondProgram.title)
-      );
     });
 
     test('add new program', async function (assert) {
@@ -144,42 +45,35 @@ module('Acceptance | Programs', function (hooks) {
 
     test('remove program', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      assert.expect(5);
+      assert.expect(6);
       this.server.create('program', {
         school: this.school,
       });
-      await visit('/programs');
-      assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),
-        getText('program 0')
-      );
-      await click('.list tbody tr:nth-of-type(1) td:nth-of-type(3) .remove');
-      await click('.confirm-buttons .remove');
+      await page.visit();
+      assert.equal(this.server.db.programs.length, 1);
+      assert.equal(page.list.items.length, 1);
+      assert.equal(page.list.items[0].title, 'program 0');
+      await page.list.items[0].remove();
+      await page.list.confirmRemoval.confirm();
+      assert.equal(this.server.db.programs.length, 0);
+      assert.equal(page.list.items.length, 0);
       assert.dom('.flash-messages').exists({ count: 1 });
-      assert.equal(0, findAll('.list tbody [data-test-active-row]').length);
-      assert.dom('.list tbody [data-test-empty-list]').exists();
     });
 
     test('cancel remove program', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
-      assert.expect(4);
+      assert.expect(5);
       this.server.create('program', {
         school: this.school,
       });
-      await visit('/programs');
-      assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),
-        getText('program 0')
-      );
-      await click('.list tbody tr:nth-of-type(1) td:nth-of-type(3) .remove');
-      await click('.confirm-buttons .done');
-      assert.equal(1, findAll('.list tbody [data-test-active-row]').length);
-      assert.equal(
-        await getElementText(find(find('.list tbody tr:nth-of-type(1) td'))),
-        getText('program 0')
-      );
+      await page.visit();
+      assert.equal(this.server.db.programs.length, 1);
+      assert.equal(page.list.items.length, 1);
+      assert.equal(page.list.items[0].title, 'program 0');
+      await page.list.items[0].remove();
+      await page.list.confirmRemoval.cancel();
+      assert.equal(this.server.db.programs.length, 1);
+      assert.equal(page.list.items.length, 1);
     });
 
     test('click edit takes you to program route', async function (assert) {
@@ -187,7 +81,7 @@ module('Acceptance | Programs', function (hooks) {
       this.server.create('program', {
         school: this.school,
       });
-      await visit('/programs');
+      await page.visit();
       await click('.list tbody tr:nth-of-type(1) td:nth-of-type(3) .edit');
       assert.equal(currentURL(), '/programs/1');
     });
@@ -197,43 +91,20 @@ module('Acceptance | Programs', function (hooks) {
       this.server.create('program', {
         school: this.school,
       });
-      await visit('/programs');
+      await page.visit();
       await click('.list tbody tr:nth-of-type(1) td:nth-of-type(1) a');
       assert.equal(currentURL(), '/programs/1');
-    });
-
-    test('title filter escapes regex', async function (assert) {
-      assert.expect(4);
-      this.server.create('program', {
-        title: 'yes\\no',
-        school: this.school,
-      });
-
-      const programs = '.list tbody [data-test-active-row]';
-      const firstProgramTitle = `${programs}:nth-of-type(1) td:nth-of-type(1)`;
-      const filter = '.titlefilter input';
-      await visit('/programs');
-
-      assert.dom(programs).exists({ count: 1 });
-      assert.equal(await getElementText(firstProgramTitle), 'yes\\no');
-      await fillIn(filter, '\\');
-      assert.dom(programs).exists({ count: 1 });
-      assert.equal(await getElementText(firstProgramTitle), 'yes\\no');
     });
   });
 
   test('filters options', async function (assert) {
     assert.expect(4);
-
     const schools = this.server.createList('school', 2);
     await setupAuthentication({ school: schools[1] });
-    const schoolSelect = '.schoolsfilter select';
-
-    await visit('/programs');
-    const schoolOptions = findAll(`${schoolSelect} option`);
-    assert.equal(schoolOptions.length, 2);
-    assert.equal(await getElementText(schoolOptions[0]), 'school0');
-    assert.equal(await getElementText(schoolOptions[1]), 'school1');
-    assert.dom(schoolSelect).hasValue('2');
+    await page.visit();
+    assert.equal(page.schoolFilter.schools.length, 2);
+    assert.equal(page.schoolFilter.schools[0].text, 'school 0');
+    assert.equal(page.schoolFilter.schools[1].text, 'school 1');
+    assert.equal(page.schoolFilter.selectedSchool, '2');
   });
 });

@@ -1,11 +1,10 @@
-import { click, fillIn, find, findAll, currentRouteName, visit } from '@ember/test-helpers';
+import { currentRouteName } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { getElementText, getText } from 'ilios-common';
+import page from 'ilios/tests/pages/program';
 
-const url = '/programs/1';
 module('Acceptance | Program - Overview', function (hooks) {
   setupApplicationTest(hooks);
   setupMirage(hooks);
@@ -14,106 +13,84 @@ module('Acceptance | Program - Overview', function (hooks) {
     this.user = await setupAuthentication({ school: this.school });
   });
 
-  test('check fields', async function (assert) {
-    var program = this.server.create('program', {
-      schoolId: 1,
+  test('non editable fields', async function (assert) {
+    this.server.create('program', {
+      school: this.school,
     });
-    await visit(url);
+    await page.visit({ programId: 1 });
     assert.equal(currentRouteName(), 'program.index');
-    assert.equal(
-      await getElementText('.program-overview .programtitleshort span'),
-      getText(program.shortTitle)
-    );
-    assert.equal(await getElementText('.program-overview .programduration span'), program.duration);
+    assert.equal(page.overview.shortTitle.text, 'Program Title (short): short_0');
+    assert.equal(page.overview.duration.text, 'Duration (in Years): 4');
+  });
+
+  test('editable fields', async function (assert) {
+    this.user.update({ administeredSchools: [this.school] });
+    this.server.create('program', {
+      school: this.school,
+    });
+    await page.visit({ programId: 1 });
+    assert.equal(currentRouteName(), 'program.index');
+    assert.equal(page.overview.shortTitle.text, 'Program Title (short): short_0');
+    assert.equal(page.overview.duration.text, 'Duration (in Years): 4');
   });
 
   test('change title', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     this.server.create('program', {
-      schoolId: 1,
+      school: this.school,
     });
-    const container = '.program-details';
-    const header = `${container} .program-header`;
-    const title = `${header} .title`;
-    const edit = `${title} .editable`;
-    const input = `${title} input`;
-    const done = `${title} .done`;
+    await page.visit({ programId: 1 });
 
-    await visit(url);
-    assert.equal(await getElementText(title), getText('program 0'));
-    await click(edit);
-    const field = await find(input);
-    assert.equal(getText(field.value), getText('program 0'));
-    await fillIn(field, 'test new title');
-    await click(done);
-    assert.equal(await getElementText(title), getText('test new title'));
+    assert.equal(page.title.text, 'program 0');
+    await page.title.edit();
+    await page.title.set('test new title');
+    await page.title.save();
+    assert.equal(page.title.text, 'test new title');
   });
 
   test('change short title', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    const program = this.server.create('program', {
-      schoolId: 1,
+    this.server.create('program', {
+      school: this.school,
     });
-    const container = '.program-details';
-    const overview = `${container} .program-overview`;
-    const shortTitle = `${overview} .programtitleshort > span`;
-    const edit = `${shortTitle} .editable`;
-    const input = `${shortTitle} input`;
-    const done = `${shortTitle} .done`;
+    await page.visit({ programId: 1 });
 
-    await visit(url);
-    assert.equal(await getElementText(shortTitle), getText(program.shortTitle));
-    await click(edit);
-    const field = await find(input);
-    assert.equal(getText(field.value), getText(program.shortTitle));
-    await fillIn(field, 'test title');
-    await click(done);
-    assert.equal(await getElementText(shortTitle), getText('test title'));
+    assert.equal(page.overview.shortTitle.text, 'Program Title (short): short_0');
+    await page.overview.shortTitle.edit();
+    await page.overview.shortTitle.set('newshort');
+    await page.overview.shortTitle.save();
+    assert.equal(page.overview.shortTitle.text, 'Program Title (short): newshort');
   });
 
   test('change duration', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    const program = this.server.create('program', {
-      schoolId: 1,
+    this.server.create('program', {
+      school: this.school,
     });
-    const container = '.program-details';
-    const overview = `${container} .program-overview`;
-    const duration = `${overview} .programduration > span`;
-    const edit = `${duration} .editable`;
-    const select = `${duration} select`;
-    const options = `${select} option`;
-    const done = `${duration} .done`;
+    await page.visit({ programId: 1 });
 
-    await visit(url);
-    assert.equal(await getElementText(duration), program.duration);
-    await click(edit);
-
-    const durations = findAll(options);
-    assert.equal(durations.length, 10);
+    assert.equal(page.overview.duration.text, 'Duration (in Years): 4');
+    await page.overview.duration.edit();
+    assert.equal(page.overview.duration.options.length, 10);
     for (let i = 0; i < 10; i++) {
-      assert.equal(await getElementText(durations[i]), i + 1);
+      assert.equal(page.overview.duration.options[i].text, i + 1);
     }
-    await fillIn(select, '9');
-    await click(done);
-    assert.equal(await getElementText(duration), '9');
+    await page.overview.duration.set(9);
+    await page.overview.duration.save();
+    assert.equal(page.overview.duration.text, 'Duration (in Years): 9');
   });
 
   test('leave duration at 1', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    const program = this.server.create('program', {
-      schoolId: 1,
+    this.server.create('program', {
+      school: this.school,
       duration: 1,
     });
-    const container = '.program-details';
-    const overview = `${container} .program-overview`;
-    const duration = `${overview} .programduration > span`;
-    const edit = `${duration} .editable`;
-    const done = `${duration} .done`;
+    await page.visit({ programId: 1 });
 
-    await visit(url);
-    assert.equal(await getElementText(duration), program.duration);
-    await click(edit);
-    await click(done);
-    assert.equal(await getElementText(duration), '1');
+    assert.equal(page.overview.duration.text, 'Duration (in Years): 1');
+    await page.overview.duration.edit();
+    await page.overview.duration.save();
+    assert.equal(page.overview.duration.text, 'Duration (in Years): 1');
   });
 });
