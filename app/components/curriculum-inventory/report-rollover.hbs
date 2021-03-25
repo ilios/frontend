@@ -1,69 +1,91 @@
-<div class="rollover-form">
-  <h3 class="title">
-    {{t "general.curriculumInventoryReportRollover"}}
-  </h3>
-  <p class="rollover-summary">
-    {{t "general.curriculumInventoryReportRolloverSummary"}}
-  </p>
-  <div class="item name">
-    <label>
-      {{t "general.name"}}:
-    </label>
-    <input
-      type="text"
-      value={{name}}
-      oninput={{pipe
-        (action "changeName" value="target.value")
-        (action "addErrorDisplayFor" "name")
-      }}
-      disabled={{isSaving}}
-      onkeyup={{action "addErrorDisplayFor" "name"}}
-      placeholder={{t "general.reportNamePlaceholder"}}
-    >
-    {{#if (and (v-get this "name" "isInvalid") (includes "name" showErrorsFor))}}
-      <span class="validation-error-message">
-        {{v-get this "name" "message"}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item description">
-    <label>
-      {{t "general.description"}}:
-    </label>
-    <textarea
-      value={{description}}
-      oninput={{action (mut description) value="target.value"}}
-      disabled={{isSaving}}
-      placeholder={{t "general.reportDescriptionPlaceholder"}}
-    ></textarea>
-  </div>
-  <div class="item years">
-    <label>
-      {{t "general.academicYear"}}:
-    </label>
-    <select disabled={{this.isSaving}} {{on "change" (action "setSelectedYear")}}>
-      {{#each this.years as |year|}}
-        <option value={{year.id}} selected={{eq year.id this.selectedYear.id}}>{{year.title}}</option>
-      {{/each}}
-    </select>
-  </div>
-  <div class="buttons">
-    <button
-      type="button"
-      class="done text"
-      disabled={{if isSaving true}}
-      {{action (perform save)}}
-    >
-      {{#if isSaving}}
-        <LoadingSpinner />
-      {{else}}
-        {{t "general.done"}}
-      {{/if}}
-    </button>
-    <LinkTo @route="curriculumInventoryReport" @model={{report}}>
-      <button  type="button" class="cancel text">
-        {{t "general.cancel"}}
-      </button>
-    </LinkTo>
-  </div>
+<div
+  class="curriculum-inventory-report-rollover"
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @report}}
+  data-test-curriculum-inventory-report-rollover
+>
+  {{#unless this.load.isRunning}}
+    <div class="rollover-form">
+      <h3 class="title">
+        {{t "general.curriculumInventoryReportRollover"}}
+      </h3>
+      <p class="rollover-summary">
+        {{t "general.curriculumInventoryReportRolloverSummary"}}
+      </p>
+      <div class="item name" data-test-name>
+        {{#let (unique-id) as |nameId|}}
+          <label for={{nameId}}>
+            {{t "general.name"}}:
+          </label>
+          <input
+            id={{nameId}}
+            type="text"
+            value={{this.name}}
+            disabled={{this.save.isRunning}}
+            placeholder={{t "general.reportNamePlaceholder"}}
+            {{on "input" (pick "target.value" this.changeName)}}
+            {{on "keyup" (queue (fn this.addErrorDisplayFor "name") this.saveOnEnter)}}
+          >
+        {{/let}}
+        {{#each (await (compute this.getErrorsFor "name")) as |message|}}
+          <span class="validation-error-message">
+            {{message}}
+          </span>
+        {{/each}}
+      </div>
+      <div class="item description" data-test-description>
+        {{#let (unique-id) as |descriptionId|}}
+          <label for={{descriptionId}}>
+            {{t "general.description"}}:
+          </label>
+          <textarea
+            id={{descriptionId}}
+            {{on "input" (pick "target.value" (set this.description))}}
+            disabled={{this.save.isRunning}}
+            placeholder={{t "general.reportDescriptionPlaceholder"}}
+          >{{this.description}}</textarea>
+        {{/let}}
+      </div>
+      <div class="item years" data-test-years>
+        {{#let (unique-id) as |yearId|}}
+          <label for={{yearId}}>
+            {{t "general.academicYear"}}:
+          </label>
+          <select
+            id={{yearId}}
+            disabled={{this.save.isRunning}}
+            {{on "change" (pick "target.value" this.setSelectedYear)}}
+          >
+            {{#each this.years as |obj|}}
+              <option value={{obj.year}} selected={{eq obj.year this.selectedYear}}>{{obj.title}}</option>
+            {{/each}}
+          </select>
+        {{/let}}
+      </div>
+      <div class="buttons">
+        <button
+          type="button"
+          class="done text"
+          disabled={{this.save.isRunning}}
+          {{on "click" (perform this.save)}}
+          data-test-save
+        >
+          {{#if this.save.isRunning}}
+            <LoadingSpinner />
+          {{else}}
+            {{t "general.done"}}
+          {{/if}}
+        </button>
+        <LinkTo @route="curriculumInventoryReport" @model={{@report}}>
+          <button
+            type="button"
+            class="cancel text"
+            data-test-cancel
+          >
+            {{t "general.cancel"}}
+          </button>
+        </LinkTo>
+      </div>
+    </div>
+  {{/unless}}
 </div>
