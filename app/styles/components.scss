@@ -45,7 +45,6 @@
 @import 'components/new-user';
 @import 'components/pagedlist-controls';
 @import 'components/pagination-links';
-@import 'components/program-header';
 @import 'components/program-leadership-expanded';
 @import 'components/program-overview';
 @import 'components/program-publication-check';
@@ -77,7 +76,6 @@
 @import 'components/simple-chart-tooltip';
 @import 'components/pending-single-user-updates';
 @import 'components/pending-user-updates';
-@import 'components/program-details';
 @import 'components/program-year-visualizations';
 @import 'components/unassigned-students-summary';
 @import 'components/update-notification';
@@ -97,6 +95,9 @@
 @import 'components/programs/root';
 @import 'components/programs/list';
 @import 'components/programs/list-item';
+
+@import 'components/program/root';
+@import 'components/program/header';
 
 @import 'components/program-year/collapsed-objectives';
 @import 'components/program-year/competencies';
