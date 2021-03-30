@@ -1,0 +1,33 @@
+{{#let (unique-id) as |id|}}
+  <div class="program-header" ...attributes data-test-program-header>
+    <div class="title" data-test-title>
+      <h4>
+        {{#if @canUpdate}}
+          <EditableField
+            @value={{this.title}}
+            @save={{perform this.changeTitle}}
+            @close={{set this.title @program.title}}
+            @saveOnEnter={{true}}
+            @clickPrompt={{t "general.clickToEdit"}}
+            @closeOnEscape={{true}} as |isSaving|
+          >
+            <Input
+              id="{{id}}-title"
+              @type="text"
+              @value={{this.title}}
+              {{on "keypress" (fn this.addErrorDisplayFor "title")}}
+              disabled={{isSaving}}
+            />
+          </EditableField>
+          {{#each (await (compute this.getErrorsFor "title")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
+        {{else}}
+          {{@program.title}}
+        {{/if}}
+      </h4>
+    </div>
+  </div>
+{{/let}}

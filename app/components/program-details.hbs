@@ -4,24 +4,24 @@
       {{t "general.backToPrograms"}}
     </LinkTo>
   </div>
-  <ProgramHeader @program={{program}} @canUpdate={{canUpdate}} />
-  <Program::Overview @program={{program}} @canUpdate={{canUpdate}} />
-  {{#if leadershipDetails}}
+  <Program::Header @program={{@program}} @canUpdate={{@canUpdate}} />
+  <Program::Overview @program={{@program}} @canUpdate={{@canUpdate}} />
+  {{#if @leadershipDetails}}
     <ProgramLeadershipExpanded
-      @program={{program}}
-      @canUpdate={{canUpdate}}
-      @collapse={{action setLeadershipDetails false}}
-      @expand={{action setLeadershipDetails true}}
-      @isManaging={{manageLeadership}}
-      @setIsManaging={{setManageLeadership}}
+      @program={{@program}}
+      @canUpdate={{@canUpdate}}
+      @collapse={{fn @setLeadershipDetails false}}
+      @expand={{fn @setLeadershipDetails true}}
+      @isManaging={{@manageLeadership}}
+      @setIsManaging={{@setManageLeadership}}
     />
   {{else}}
     <LeadershipCollapsed
       @title={{t "general.programLeadership"}}
       @showAdministrators={{false}}
       @showDirectors={{true}}
-      @directorsCount={{has-many-length program "directors"}}
-      @expand={{action setLeadershipDetails true}}
+      @directorsCount={{has-many-length @program "directors"}}
+      @expand={{fn @setLeadershipDetails true}}
     />
   {{/if}}
 </section>
