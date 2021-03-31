@@ -1,73 +1,65 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { dropTask } from 'ember-concurrency';
+import { validatable, Custom, IsInt, Gte, NotBlank } from 'ilios-common/decorators/validation';
 
-const Validations = buildValidations({
-  minimum: [
-    validator('number', {
-      allowString: true,
-      integer: true,
-      gte: 0,
-    }),
-  ],
-  maximum: [
-    validator('number', {
-      dependentKeys: ['model.minimum'],
-      allowString: true,
-      integer: true,
-      gte: computed('model.minimum', function () {
-        const min = this.model.minimum || 0;
-        return Math.max(0, min);
-      }),
-    }),
-  ],
-});
+@validatable
+export default class SequenceBlockMinMaxEditorComponent extends Component {
+  @service intl;
 
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  classNames: ['curriculum-inventory-sequence-block-min-max-editor'],
-  tagName: 'section',
+  @tracked @NotBlank() @IsInt() @Gte(0) minimum;
+  @tracked
+  @NotBlank()
+  @IsInt()
+  @Gte(0)
+  @Custom('validateMaximumCallback', 'validateMaximumMessageCallback')
+  maximum;
 
-  isSaving: false,
-  maximum: null,
-  minimum: null,
-  sequenceBlock: null,
+  @action
+  load() {
+    this.minimum = this.args.minimum;
+    this.maximum = this.args.maximum;
+  }
 
-  actions: {
-    save() {
-      this.set('isSaving', true);
-      this.send('addErrorDisplaysFor', ['minimum', 'maximum']);
-      this.validate().then(({ validations }) => {
-        if (validations.get('isValid')) {
-          const min = this.minimum;
-          const max = this.maximum;
-          this.save(min, max);
-        } else {
-          this.set('isSaving', false);
-        }
-      });
-    },
-
-    cancel() {
-      this.cancel();
-    },
-  },
-
-  keyUp(event) {
-    const keyCode = event.keyCode;
-    const target = event.target;
-
-    if ('text' !== target.type) {
-      return;
-    }
-
+  @action
+  async saveOrCancel(ev) {
+    const keyCode = ev.keyCode;
     if (13 === keyCode) {
-      this.send('save');
+      await this.save.perform();
       return;
     }
 
     if (27 === keyCode) {
-      this.send('cancel');
+      this.args.cancel();
     }
-  },
-});
+  }
+
+  @action
+  validateMaximumCallback() {
+    const max = parseInt(this.maximum, 10) || 0;
+    const min = parseInt(this.minimum, 10) || 0;
+    return max >= min;
+  }
+
+  @action
+  validateMaximumMessageCallback() {
+    return this.intl.t('errors.greaterThanOrEqualTo', {
+      gte: this.intl.t('general.minimum'),
+      description: this.intl.t('general.term'),
+    });
+  }
+
+  @dropTask
+  *save() {
+    this.addErrorDisplaysFor(['minimum', 'maximum']);
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
+    }
+    const min = this.minimum;
+    const max = this.maximum;
+    yield this.args.save(min, max);
+  }
+}

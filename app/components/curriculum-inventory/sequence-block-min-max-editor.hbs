@@ -1,48 +1,69 @@
-<div class="item minimum">
-  <label>
-    {{t "general.minimum"}}:
-  </label>
-  <input
-    type="text"
-    value={{if isElective "0" minimum}}
-    oninput={{action (mut minimum) value="target.value"}}
-    disabled={{or isSaving isElective}}
-    onkeyup={{action "addErrorDisplayFor" "minimum"}}
-  >
-  {{#if (and (v-get this "minimum" "isInvalid") (includes "minimum" showErrorsFor))
-  }}
-    <span class="validation-error-message">
-      {{v-get this "minimum" "message"}}
-    </span>
-  {{/if}}
-</div>
-<div class="item maximum">
-  <label>
-    {{t "general.maximum"}}:
-  </label>
-  <input
-    type="text"
-    value={{maximum}}
-    oninput={{action (mut maximum) value="target.value"}}
-    disabled={{isSaving}}
-    onkeyup={{action "addErrorDisplayFor" "maximum"}}
-  >
-  {{#if (and (v-get this "maximum" "isInvalid") (includes "maximum" showErrorsFor))
-  }}
-    <span class="validation-error-message">
-      {{v-get this "maximum" "message"}}
-    </span>
-  {{/if}}
-</div>
-<div class="buttons">
-  <button type="button" class="done text" disabled={{or isSaving}} {{action "save"}}>
-    {{#if isSaving}}
-      <LoadingSpinner />
-    {{else}}
-      {{t "general.done"}}
-    {{/if}}
-  </button>
-  <button type="button" class="cancel text" {{action "cancel"}}>
-    {{t "general.cancel"}}
-  </button>
-</div>
+<section
+  class="curriculum-inventory-sequence-block-min-max-editor"
+  data-test-curriculum-inventory-sequence-block-min-max-editor
+  {{did-insert this.load}}
+  {{did-update this.load @minimum @maximum}}
+>
+  {{#let (unique-id) as |template-id|}}
+    <div class="item minimum" data-test-minimum>
+      <label for="minimum-{{template-id}}">
+        {{t "general.minimum"}}:
+      </label>
+      <input
+        id="minimum-{{template-id}}"
+        type="text"
+        value={{if @isElective "0" this.minimum}}
+        disabled={{or @isElective this.save.isRunning}}
+        {{on "input" (pick "target.value" (set this.minimum))}}
+        {{on "keyup" (queue (fn this.addErrorDisplayFor "minimum") this.saveOrCancel)}}
+      >
+      {{#each (await (compute this.getErrorsFor "minimum")) as |message|}}
+        <span class="validation-error-message">
+          {{message}}
+        </span>
+      {{/each}}
+    </div>
+    <div class="item maximum" data-test-maximum>
+      <label for="maximum-{{template-id}}">
+        {{t "general.maximum"}}:
+      </label>
+      <input
+        id="maximum-{{template-id}}"
+        type="text"
+        value={{this.maximum}}
+        disabled={{this.save.isRunning}}
+        {{on "input" (pick "target.value" (set this.maximum))}}
+        {{on "keyup" (queue (fn this.addErrorDisplayFor "maximum") this.saveOrCancel)}}
+      >
+      {{#each (await (compute this.getErrorsFor "maximum")) as |message|}}
+        <span class="validation-error-message">
+          {{message}}
+        </span>
+      {{/each}}
+    </div>
+    <div class="buttons">
+      <button
+        type="button"
+        class="done text"
+        disabled={{this.save.isRunning}}
+        data-test-save
+        {{on "click" (perform this.save)}}
+      >
+        {{#if this.save.isRunning}}
+          <LoadingSpinner />
+        {{else}}
+          {{t "general.done"}}
+        {{/if}}
+      </button>
+      <button
+        type="button"
+        class="cancel text"
+        data-test-cancel
+        disabled={{this.save.isRunning}}
+        {{on "click" @cancel}}
+      >
+        {{t "general.cancel"}}
+      </button>
+    </div>
+  {{/let}}
+</section>

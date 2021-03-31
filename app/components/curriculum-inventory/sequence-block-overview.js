@@ -268,8 +268,10 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
 
   @dropTask
   *changeMinMax(minimum, maximum) {
-    this.args.sequenceBlock.set('minimum', minimum);
-    this.args.sequenceBlock.set('maximum', maximum);
+    this.args.sequenceBlock.minimum = minimum;
+    this.args.sequenceBlock.maximum = maximum;
+    this.minimum = minimum;
+    this.maximum = maximum;
     yield this.args.sequenceBlock.save();
     this.isEditingMinMax = false;
   }
@@ -281,9 +283,9 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
 
   @action
   cancelMinMaxEditing() {
-    this.args.sequenceBlock.set('isEditingMinMax', false);
     this.minimum = this.args.sequenceBlock.get('minimum');
     this.maximum = this.args.sequenceBlock.get('maximum');
+    this.isEditingMinMax = false;
   }
 
   @action

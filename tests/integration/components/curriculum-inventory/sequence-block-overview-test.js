@@ -1120,14 +1120,125 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.dom('.is-selective').hasNoClass('hidden');
     assert.dom('.is-selective').hasText('This sequence block has been marked as a selective.');
     await click('.required .editinplace .clickable');
-    await click('.minimum .editinplace .editable');
     await fillIn('.required select', '2'); // selected "elective"
     assert.dom('.is-selective').hasClass('hidden');
     await fillIn('.required select', '1'); // switch back to "required"
     assert.dom('.is-selective').hasNoClass('hidden');
+    await click('.minimum .editinplace .editable');
     await fillIn('.minimum input', '20'); // set min to equal max value
+    await click('[data-test-curriculum-inventory-sequence-block-min-max-editor] [data-test-save]');
     assert.dom('.is-selective').hasClass('hidden');
+    await click('.minimum .editinplace .editable');
     await fillIn('.minimum input', '0'); // set min to less than 1
+    await click('[data-test-curriculum-inventory-sequence-block-min-max-editor] [data-test-save]');
     assert.dom('.is-selective').hasClass('hidden');
+  });
+
+  test('edit minimum and maximum values, then save', async function (assert) {
+    const school = this.server.create('school');
+    const program = this.server.create('program', {
+      school,
+    });
+    const academicLevel = this.server.create('curriculum-inventory-academic-level');
+    const report = this.server.create('curriculum-inventory-report', {
+      academicLevels: [academicLevel],
+      year: '2016',
+      program,
+    });
+
+    this.server.create('curriculum-inventory-sequence-block', {
+      report,
+      duration: 0,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 10,
+      maximum: 20,
+      academicLevel,
+    });
+
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', 1);
+
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{noop}}
+      @setSortBy={{noop}}
+    />`);
+
+    assert.dom('.minimum').hasText('Minimum: 10');
+    assert.dom('.maximum').hasText('Maximum: 20');
+    await click('.minimum .editinplace .editable');
+    assert.dom('.minimum input').hasValue('10');
+    assert.dom('.maximum input').hasValue('20');
+    await fillIn('.minimum input', '111');
+    await fillIn('.maximum input', '555');
+    await click('[data-test-curriculum-inventory-sequence-block-min-max-editor] [data-test-save]');
+    assert.dom('.minimum').hasText('Minimum: 111');
+    assert.dom('.maximum').hasText('Maximum: 555');
+  });
+
+  test('edit minimum and maximum values, then cancel', async function (assert) {
+    const school = this.server.create('school');
+    const program = this.server.create('program', {
+      school,
+    });
+    const academicLevel = this.server.create('curriculum-inventory-academic-level');
+    const report = this.server.create('curriculum-inventory-report', {
+      academicLevels: [academicLevel],
+      year: '2016',
+      program,
+    });
+
+    this.server.create('curriculum-inventory-sequence-block', {
+      report,
+      duration: 0,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 10,
+      maximum: 20,
+      academicLevel,
+    });
+
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', 1);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', 1);
+
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{noop}}
+      @setSortBy={{noop}}
+    />`);
+
+    assert.dom('.minimum').hasText('Minimum: 10');
+    assert.dom('.maximum').hasText('Maximum: 20');
+    await click('.minimum .editinplace .editable');
+    assert.dom('.minimum input').hasValue('10');
+    assert.dom('.maximum input').hasValue('20');
+    await fillIn('.minimum input', '111');
+    await fillIn('.maximum input', '555');
+    await click(
+      '[data-test-curriculum-inventory-sequence-block-min-max-editor] [data-test-cancel]'
+    );
+    assert.dom('.minimum').hasText('Minimum: 10');
+    assert.dom('.maximum').hasText('Maximum: 20');
   });
 });
