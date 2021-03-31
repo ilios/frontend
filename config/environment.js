@@ -81,6 +81,10 @@ module.exports = function (environment) {
     noScript: {
       placeIn: 'body-footer',
     },
+    'ember-cli-memory-leak-detector': {
+      enabled: process.env.DETECT_MEMORY_LEAKS || false,
+      timeout: 90000,
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
