@@ -1,7 +1,8 @@
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll, fillIn, triggerEvent } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import hbs from 'htmlbars-inline-precompile';
+import { component } from 'ilios/tests/pages/components/curriculum-inventory/sequence-block-min-max-editor';
 
 module(
   'Integration | Component | curriculum-inventory/sequence-block-min-max-editor',
@@ -19,12 +20,11 @@ module(
       @save={{noop}}
       @cancel={{noop}}
     />`);
-      assert.dom('.minimum label').hasText('Minimum:', 'Minimum is labeled correctly.');
-      assert.dom('.minimum input').hasValue(minimum, 'Minimum input has correct value.');
-      assert.dom('.maximum label').hasText('Maximum:', 'Maximum input is labeled correctly.');
-      assert.dom('.maximum input').hasValue(maximum, 'Maximum input has correct value.');
-      assert.dom('.buttons .done').exists({ count: 1 }, 'Done button is present.');
-      assert.dom('.buttons .cancel').exists({ count: 1 }, 'Cancel button is present.');
+      assert.equal(component.minimum.label, 'Minimum:', 'Minimum is labeled correctly.');
+      assert.equal(component.minimum.value, minimum, 'Minimum input has correct value.');
+      assert.notOk(component.minimum.isDisabled);
+      assert.equal(component.maximum.label, 'Maximum:', 'Maximum is labeled correctly.');
+      assert.equal(component.maximum.value, maximum, 'Maximum input has correct value.');
     });
 
     test('save', async function (assert) {
@@ -45,11 +45,10 @@ module(
         @save={{this.save}}
         @cancel={{noop}}
       />`);
-      await fillIn('.minimum input', newMinimum);
-      await triggerEvent('.minimum input', 'input');
-      await fillIn('.maximum input', newMaximum);
-      await triggerEvent('.maximum input', 'input');
-      await click('.buttons .done');
+
+      await component.minimum.set(newMinimum);
+      await component.maximum.set(newMaximum);
+      await component.save();
     });
 
     test('cancel', async function (assert) {
@@ -67,7 +66,7 @@ module(
         @save={{noop}}
         @cancel={{this.cancel}}
       />`);
-      await click('.buttons .cancel');
+      await component.cancel();
     });
 
     test('save fails when minimum is larger than maximum', async function (assert) {
@@ -81,13 +80,12 @@ module(
         @save={{noop}}
         @cancel={{noop}}
       />`);
-      assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
-      await fillIn('.minimum input', '100');
-      await triggerEvent('.minimum input', 'input');
-      await fillIn('.maximum input', '50');
-      await triggerEvent('.maximum input', 'input');
-      await click('.buttons .done');
-      assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+
+      assert.notOk(component.maximum.hasError);
+      await component.minimum.set('100');
+      await component.maximum.set('50');
+      await component.save();
+      assert.ok(component.maximum.hasError);
     });
 
     test('save fails when minimum is less than zero', async function (assert) {
@@ -101,13 +99,10 @@ module(
         @save={{noop}}
         @cancel={{noop}}
       />`);
-      assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
-      await fillIn('.minimum input', '-1');
-      await triggerEvent('.minimum input', 'input');
-      await fillIn('.maximum input', '50');
-      await triggerEvent('.maximum input', 'input');
-      await click('.buttons .done');
-      assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+      assert.notOk(component.minimum.hasError);
+      await component.minimum.set('-1');
+      await component.save();
+      assert.ok(component.minimum.hasError);
     });
 
     test('save fails when minimum is empty', async function (assert) {
@@ -121,13 +116,10 @@ module(
         @save={{noop}}
         @cancel={{noop}}
       />`);
-      assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
-      await fillIn('.minimum input', '');
-      await triggerEvent('.minimum input', 'input');
-      await fillIn('.maximum input', '50');
-      await triggerEvent('.maximum input', 'input');
-      await click('.buttons .done');
-      assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+      assert.notOk(component.minimum.hasError);
+      await component.minimum.set('');
+      await component.save();
+      assert.ok(component.minimum.hasError);
     });
 
     test('save fails when maximum is empty', async function (assert) {
@@ -141,36 +133,27 @@ module(
         @save={{noop}}
         @cancel={{noop}}
       />`);
-      assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
-      await fillIn('.minimum input', '0');
-      await triggerEvent('.minimum input', 'input');
-      await fillIn('.maximum input', '');
-      await triggerEvent('.maximum input', 'input');
-      await click('.buttons .done');
-      assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+      assert.notOk(component.maximum.hasError);
+      await component.maximum.set('');
+      await component.save();
+      assert.ok(component.maximum.hasError);
     });
 
     test('minimum field is set to 0 and disabled for electives', async function (assert) {
       const minimum = '0';
       const maximum = '20';
-      const isElective = true;
       this.set('minimum', minimum);
       this.set('maximum', maximum);
-      this.set('isElective', isElective);
+      this.set('isElective', true);
       await render(hbs`<CurriculumInventory::SequenceBlockMinMaxEditor
         @minimum={{this.minimum}}
         @maximum={{this.maximum}}
         @save={{this.save}}
         @cancel={{noop}}
-        @isElective={{isElective}}
+        @isElective={{this.isElective}}
       />`);
-      assert.dom('.validation-error-message').doesNotExist('No initial validation errors.');
-      assert.dom('.minimum input').hasValue('0');
-      assert.dom('.minimum input').hasAttribute('disabled');
-      await fillIn('.maximum input', '');
-      await triggerEvent('.maximum input', 'input');
-      await click('.buttons .done');
-      assert.equal(findAll('.validation-error-message').length, 1, 'Validation error shows.');
+      assert.equal(component.minimum.value, '0');
+      assert.ok(component.minimum.isDisabled);
     });
   }
 );
