@@ -5,7 +5,7 @@ import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 import { use } from 'ember-could-get-used-to-this';
 import { action } from '@ember/object';
 
-export default class ProgramLeadershipComponent extends Component {
+export default class ProgramLeadershipExpandedComponent extends Component {
   @tracked directorsToAdd = [];
   @tracked directorsToRemove = [];
   @use programDirectors = new ResolveAsyncValue(() => [this.args.program.directors]);

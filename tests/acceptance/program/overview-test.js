@@ -41,11 +41,11 @@ module('Acceptance | Program - Overview', function (hooks) {
     });
     await page.visit({ programId: 1 });
 
-    assert.equal(page.title.text, 'program 0');
-    await page.title.edit();
-    await page.title.set('test new title');
-    await page.title.save();
-    assert.equal(page.title.text, 'test new title');
+    assert.equal(page.header.title.text, 'program 0');
+    await page.header.title.edit();
+    await page.header.title.set('test new title');
+    await page.header.title.save();
+    assert.equal(page.header.title.text, 'test new title');
   });
 
   test('change short title', async function (assert) {
