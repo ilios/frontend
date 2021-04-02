@@ -10,7 +10,6 @@ import {
   value,
 } from 'ember-cli-page-object';
 
-import minMaxEditor from './sequence-block-min-max-editor';
 import durationEditor from './sequence-block-dates-duration-editor';
 import sessionManager from './sequence-block-session-manager';
 import sessionList from './sequence-block-session-list';
@@ -154,7 +153,26 @@ const definition = {
         scope: 'button',
       },
     },
-    minMaxEditor,
+    minMaxEditor: {
+      scope: '[data-test-curriculum-inventory-sequence-block-min-max-editor]',
+      minimum: {
+        scope: '[data-test-minimum]',
+        label: text('label'),
+        value: value('input'),
+        set: fillable('input'),
+        isDisabled: property('disabled', 'input'),
+        hasError: isVisible('.validation-error-message'),
+      },
+      maximum: {
+        scope: '[data-test-maximum]',
+        label: text('label'),
+        value: value('input'),
+        set: fillable('input'),
+        hasError: isVisible('.validation-error-message'),
+      },
+      save: clickable('[data-test-save]'),
+      cancel: clickable('[data-test-cancel]'),
+    },
     durationEditor,
   },
   sessionList,

@@ -806,7 +806,6 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       maximum: 20,
       academicLevel: this.academicLevels[0],
     });
-
     const reportModel = await this.owner
       .lookup('service:store')
       .find('curriculum-inventory-report', this.report.id);
@@ -866,7 +865,6 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       maximum: 20,
       academicLevel: this.academicLevels[0],
     });
-
     const reportModel = await this.owner
       .lookup('service:store')
       .find('curriculum-inventory-report', this.report.id);
@@ -909,7 +907,6 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       maximum: 20,
       academicLevel: this.academicLevels[0],
     });
-
     const reportModel = await this.owner
       .lookup('service:store')
       .find('curriculum-inventory-report', this.report.id);
@@ -938,5 +935,190 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     await component.overview.minMaxEditor.cancel();
     assert.equal(component.overview.minimum.text, 'Minimum: 10');
     assert.equal(component.overview.maximum.text, 'Maximum: 20');
+  });
+
+  test('save fails when minimum is larger than maximum', async function (assert) {
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      report: this.report,
+      duration: 0,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 10,
+      maximum: 20,
+      academicLevel: this.academicLevels[0],
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
+
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', 'title');
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{noop}}
+    />`);
+
+    await component.overview.minimum.edit();
+    assert.notOk(component.overview.minMaxEditor.maximum.hasError);
+    await component.overview.minMaxEditor.minimum.set('100');
+    await component.overview.minMaxEditor.maximum.set('50');
+    await component.overview.minMaxEditor.save();
+    assert.ok(component.overview.minMaxEditor.maximum.hasError);
+  });
+
+  test('save fails when minimum is less than zero', async function (assert) {
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      report: this.report,
+      duration: 0,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 10,
+      maximum: 20,
+      academicLevel: this.academicLevels[0],
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
+
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', 'title');
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{noop}}
+    />`);
+
+    await component.overview.minimum.edit();
+    assert.notOk(component.overview.minMaxEditor.minimum.hasError);
+    await component.overview.minMaxEditor.minimum.set('-1');
+    await component.overview.minMaxEditor.save();
+    assert.ok(component.overview.minMaxEditor.minimum.hasError);
+  });
+
+  test('save fails when minimum is empty', async function (assert) {
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      report: this.report,
+      duration: 0,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 10,
+      maximum: 20,
+      academicLevel: this.academicLevels[0],
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
+
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', 'title');
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{noop}}
+    />`);
+
+    await component.overview.minimum.edit();
+    assert.notOk(component.overview.minMaxEditor.minimum.hasError);
+    await component.overview.minMaxEditor.minimum.set('');
+    await component.overview.minMaxEditor.save();
+    assert.ok(component.overview.minMaxEditor.minimum.hasError);
+  });
+
+  test('save fails when maximum is empty', async function (assert) {
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      report: this.report,
+      duration: 0,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 0,
+      maximum: 20,
+      academicLevel: this.academicLevels[0],
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
+
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', 'title');
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{noop}}
+    />`);
+
+    await component.overview.maximum.edit();
+    assert.notOk(component.overview.minMaxEditor.maximum.hasError);
+    await component.overview.minMaxEditor.maximum.set('');
+    await component.overview.minMaxEditor.save();
+    assert.ok(component.overview.minMaxEditor.maximum.hasError);
+  });
+
+  test('minimum field is set to 0 and disabled for electives', async function (assert) {
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      report: this.report,
+      duration: 0,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 2,
+      track: true,
+      minimum: 0,
+      maximum: 20,
+      academicLevel: this.academicLevels[0],
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
+
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', 'title');
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{noop}}
+    />`);
+
+    assert.notOk(component.overview.minimum.isEditable);
+    await component.overview.maximum.edit();
+    assert.equal(component.overview.minMaxEditor.minimum.value, '0');
+    assert.ok(component.overview.minMaxEditor.minimum.isDisabled);
   });
 });

@@ -4,7 +4,9 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { dropTask, restartableTask } from 'ember-concurrency';
+import { validatable, Custom, IsInt, Gte, NotBlank } from 'ilios-common/decorators/validation';
 
+@validatable
 export default class CurriculumInventorySequenceBlockOverviewComponent extends Component {
   @service intl;
   @service store;
@@ -19,8 +21,13 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @tracked isEditingMinMax = false;
   @tracked isManagingSessions = false;
   @tracked linkableCourses = [];
-  @tracked maximum = 0;
-  @tracked minimum = 0;
+  @tracked @NotBlank() @IsInt() @Gte(0) minimum;
+  @tracked
+  @NotBlank()
+  @IsInt()
+  @Gte(0)
+  @Custom('validateMaximumCallback', 'validateMaximumMessageCallback')
+  maximum;
   @tracked isInOrderedSequence;
   @tracked orderInSequence;
   @tracked orderInSequenceOptions = [];
@@ -266,16 +273,6 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     this.isEditingDatesAndDuration = false;
   }
 
-  @dropTask
-  *changeMinMax(minimum, maximum) {
-    this.args.sequenceBlock.minimum = minimum;
-    this.args.sequenceBlock.maximum = maximum;
-    this.minimum = minimum;
-    this.maximum = maximum;
-    yield this.args.sequenceBlock.save();
-    this.isEditingMinMax = false;
-  }
-
   @action
   editMinMax() {
     this.isEditingMinMax = true;
@@ -324,5 +321,44 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @action
   updateOrderInSequence(event) {
     this.orderInSequence = event.target.value;
+  }
+
+  @action
+  async saveOrCancelMinMax(ev) {
+    const keyCode = ev.keyCode;
+    if (13 === keyCode) {
+      await this.save.perform();
+      return;
+    }
+
+    if (27 === keyCode) {
+      this.isEditingMinMax = false;
+    }
+  }
+
+  @action
+  validateMaximumCallback() {
+    const max = parseInt(this.maximum, 10) || 0;
+    const min = parseInt(this.minimum, 10) || 0;
+    return max >= min;
+  }
+
+  @action
+  validateMaximumMessageCallback() {
+    return this.intl.t('errors.greaterThanOrEqualTo', {
+      gte: this.intl.t('general.minimum'),
+      description: this.intl.t('general.term'),
+    });
+  }
+
+  @dropTask
+  *saveMinMax() {
+    this.addErrorDisplaysFor(['minimum', 'maximum']);
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
+    }
+    yield this.args.sequenceBlock.save();
+    this.isEditingMinMax = false;
   }
 }
