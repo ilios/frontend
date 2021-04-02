@@ -9,8 +9,7 @@ import {
   text,
   value,
 } from 'ember-cli-page-object';
-
-import durationEditor from './sequence-block-dates-duration-editor';
+import { flatpickrDatePicker } from 'ilios-common';
 import sessionManager from './sequence-block-session-manager';
 import sessionList from './sequence-block-session-list';
 
@@ -168,12 +167,37 @@ const definition = {
         label: text('label'),
         value: value('input'),
         set: fillable('input'),
-        hasError: isVisible('.validation-error-message'),
+        hasError: isVisible('.validation-error-message', { multiple: true }),
       },
       save: clickable('[data-test-save]'),
       cancel: clickable('[data-test-cancel]'),
     },
-    durationEditor,
+    durationEditor: {
+      scope: '[data-test-curriculum-inventory-sequence-block-dates-duration-editor]',
+      duration: {
+        scope: '[data-test-duration]',
+        label: text('label'),
+        value: value('input'),
+        set: fillable('input'),
+        hasError: isVisible('.validation-error-message'),
+      },
+      startDate: {
+        scope: '[data-test-startdate]',
+        label: text('label'),
+        value: value('input'),
+        set: flatpickrDatePicker('input'),
+        hasError: isVisible('.validation-error-message'),
+      },
+      endDate: {
+        scope: '[data-test-enddate]',
+        label: text('label'),
+        value: value('input'),
+        set: flatpickrDatePicker('input'),
+        hasError: isVisible('.validation-error-message', { multiple: true }),
+      },
+      save: clickable('[data-test-save]'),
+      cancel: clickable('[data-test-cancel]'),
+    },
   },
   sessionList,
   sessionManager,

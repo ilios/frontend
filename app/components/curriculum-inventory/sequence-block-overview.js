@@ -4,7 +4,17 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import { dropTask, restartableTask } from 'ember-concurrency';
-import { validatable, Custom, IsInt, Gte, NotBlank } from 'ilios-common/decorators/validation';
+import { all } from 'rsvp';
+import { ValidateIf } from 'class-validator';
+import {
+  validatable,
+  AfterDate,
+  Custom,
+  IsInt,
+  Gte,
+  Lte,
+  NotBlank,
+} from 'ilios-common/decorators/validation';
 
 @validatable
 export default class CurriculumInventorySequenceBlockOverviewComponent extends Component {
@@ -15,8 +25,6 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @tracked childSequenceOrder;
   @tracked course;
   @tracked description;
-  @tracked duration;
-  @tracked endDate;
   @tracked isEditingDatesAndDuration = false;
   @tracked isEditingMinMax = false;
   @tracked isManagingSessions = false;
@@ -35,7 +43,21 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   @tracked report;
   @tracked required;
   @tracked sessions = [];
-  @tracked startDate;
+  @tracked @NotBlank() @IsInt() @Gte(0) @Lte(1200) duration;
+  @tracked @ValidateIf((o) => o.hasZeroDuration) @NotBlank() startDate;
+  @tracked
+  @ValidateIf((o) => o.hasZeroDuration || o.startDate)
+  @NotBlank()
+  @AfterDate('startDate', { granularity: 'day' })
+  endDate;
+
+  get hasZeroDuration() {
+    const num = Number(this.duration);
+    if (Number.isNaN(num)) {
+      return false;
+    }
+    return 0 === num;
+  }
 
   @restartableTask
   *load(element, [sequenceBlock]) {
@@ -154,9 +176,9 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
 
   @dropTask
   *changeRequired() {
-    this.args.sequenceBlock.set('required', parseInt(this.required, 10));
+    this.args.sequenceBlock.required = parseInt(this.required, 10);
     if ('2' === this.required) {
-      this.args.sequenceBlock.set('minimum', 0);
+      this.args.sequenceBlock.minimum = 0;
     }
     yield this.args.sequenceBlock.save();
   }
@@ -167,14 +189,14 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     if ('2' === required) {
       this.minimum = 0;
     } else {
-      this.minimum = this.args.sequenceBlock.get('minimum');
+      this.minimum = this.args.sequenceBlock.minimum;
     }
   }
 
   @action
   revertRequiredChanges() {
-    this.required = this.args.sequenceBlock.get('required').toString();
-    this.minimum = this.args.sequenceBlock.get('minimum');
+    this.required = this.args.sequenceBlock.required.toString();
+    this.minimum = this.args.sequenceBlock.minimum;
   }
 
   @dropTask
@@ -244,33 +266,14 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   *changeOrderInSequence() {
     this.args.sequenceBlock.set('orderInSequence', this.orderInSequence);
     const savedBlock = yield this.args.sequenceBlock.save();
-    const parent = yield savedBlock.get('parent');
-    const children = yield parent.get('children');
-    yield children.invoke('reload');
+    const parent = yield savedBlock.parent;
+    const children = yield parent.children;
+    yield all(children.invoke('reload'));
   }
 
   @action
   revertOrderInSequenceChanges() {
-    this.orderInSequence = this.args.sequenceBlock.get('orderInSequence');
-  }
-
-  @dropTask
-  *changeDatesAndDuration(start, end, duration) {
-    this.args.sequenceBlock.set('startDate', start);
-    this.args.sequenceBlock.set('endDate', end);
-    this.args.sequenceBlock.set('duration', duration);
-    yield this.args.sequenceBlock.save();
-    this.isEditingDatesAndDuration = false;
-  }
-
-  @action
-  editDatesAndDuration() {
-    this.isEditingDatesAndDuration = true;
-  }
-
-  @action
-  cancelDateAndDurationEditing() {
-    this.isEditingDatesAndDuration = false;
+    this.orderInSequence = this.args.sequenceBlock.orderInSequence;
   }
 
   @action
@@ -280,8 +283,8 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
 
   @action
   cancelMinMaxEditing() {
-    this.minimum = this.args.sequenceBlock.get('minimum');
-    this.maximum = this.args.sequenceBlock.get('maximum');
+    this.minimum = this.args.sequenceBlock.minimum;
+    this.maximum = this.args.sequenceBlock.maximum;
     this.isEditingMinMax = false;
   }
 
@@ -327,7 +330,7 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
   async saveOrCancelMinMax(ev) {
     const keyCode = ev.keyCode;
     if (13 === keyCode) {
-      await this.save.perform();
+      await this.saveMinMax.perform();
       return;
     }
 
@@ -358,7 +361,55 @@ export default class CurriculumInventorySequenceBlockOverviewComponent extends C
     if (!isValid) {
       return false;
     }
+    this.args.sequenceBlock.minimum = this.minimum;
+    this.args.sequenceBlock.maximum = this.maximum;
+
     yield this.args.sequenceBlock.save();
     this.isEditingMinMax = false;
+  }
+
+  @action
+  changeStartDate(startDate) {
+    this.startDate = startDate;
+  }
+
+  @action
+  changeEndDate(endDate) {
+    this.endDate = endDate;
+  }
+
+  @dropTask
+  *saveDuration() {
+    this.addErrorDisplaysFor(['startDate', 'endDate', 'duration']);
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
+    }
+    this.args.sequenceBlock.startDate = this.startDate;
+    this.args.sequenceBlock.endDate = this.endDate;
+    this.args.sequenceBlock.duration = this.duration;
+    yield this.args.sequenceBlock.save();
+    this.isEditingDatesAndDuration = false;
+  }
+
+  @action
+  cancelDurationEditing() {
+    this.startDate = this.args.sequenceBlock.startDate;
+    this.endDate = this.args.sequenceBlock.endDate;
+    this.duration = this.args.sequenceBlock.duration;
+    this.isEditingDatesAndDuration = false;
+  }
+
+  @action
+  async saveOrCancelDuration(ev) {
+    const keyCode = ev.keyCode;
+    if (13 === keyCode) {
+      await this.saveDuration.perform();
+      return;
+    }
+
+    if (27 === keyCode) {
+      this.isEditingDatesAndDuration = false;
+    }
   }
 }

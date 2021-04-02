@@ -101,11 +101,83 @@
             {{/if}}
           </div>
           {{#if this.isEditingDatesAndDuration}}
-            <CurriculumInventory::SequenceBlockDatesDurationEditor
-              @sequenceBlock={{@sequenceBlock}}
-              @save={{perform this.changeDatesAndDuration}}
-              @cancel={{this.cancelDateAndDurationEditing}}
-            />
+            <section
+              class="curriculum-inventory-sequence-block-dates-duration-editor"
+              data-test-curriculum-inventory-sequence-block-dates-duration-editor
+            >
+              <div class="item start-date" data-test-startdate>
+                <label for="startdate-{{templateId}}">
+                  {{t "general.start"}}:
+                </label>
+                <DatePicker
+                  id="startdate-{{templateId}}"
+                  @value={{this.startDate}}
+                  @change={{this.changeStartDate}}
+                />
+                {{#each (await (compute this.getErrorsFor "startDate")) as |message|}}
+                  <span class="validation-error-message">
+                    {{message}}
+                  </span>
+                {{/each}}
+              </div>
+              <div class="item end-date" data-test-enddate>
+                <label for="enddate-{{templateId}}">
+                  {{t "general.end"}}:
+                </label>
+                <DatePicker
+                  id="enddate-{{templateId}}"
+                  @value={{this.endDate}}
+                  @change={{this.changeEndDate}}
+                />
+                {{#each (await (compute this.getErrorsFor "endDate")) as |message|}}
+                  <span class="validation-error-message">
+                    {{message}}
+                  </span>
+                {{/each}}
+              </div>
+              <div class="item duration" data-test-duration>
+                <label for="duration-{{templateId}}">
+                  {{t "general.durationInDays"}}:
+                </label>
+                <input
+                  id="duration-{{templateId}}"
+                  type="text"
+                  value={{this.duration}}
+                  disabled={{this.saveDuration.isRunning}}
+                  {{on "input" (pick "target.value" (set this.duration))}}
+                  {{on "keyup" (queue (fn this.addErrorDisplayFor "duration") this.saveOrCancelDuration)}}
+                >
+                {{#each (await (compute this.getErrorsFor "duration")) as |message|}}
+                  <span class="validation-error-message">
+                    {{message}}
+                  </span>
+                {{/each}}
+              </div>
+              <div class="buttons">
+                <button
+                  type="button"
+                  class="done text"
+                  disabled={{this.saveDuration.isRunning}}
+                  data-test-save
+                  {{on "click" (perform this.saveDuration)}}
+                >
+                  {{#if this.saveDuration.isRunning}}
+                    <LoadingSpinner />
+                  {{else}}
+                    {{t "general.done"}}
+                  {{/if}}
+                </button>
+                <button
+                  type="button"
+                  class="cancel text"
+                  disabled={{this.saveDuration.isRunning}}
+                  data-test-cancel
+                  {{on "click" this.cancelDurationEditing}}
+                >
+                  {{t "general.cancel"}}
+                </button>
+              </div>
+            </section>
           {{else}}
             <div class="block start-date" data-test-start-date>
               <label>{{t "general.start"}}:</label>
@@ -114,7 +186,7 @@
                   <span
                     class="editable"
                     role="button"
-                    {{on "click" this.editDatesAndDuration}}
+                    {{on "click" (set this.isEditingDatesAndDuration true)}}
                     data-test-edit
                   >
                     {{#if @sequenceBlock.startDate}}
@@ -141,7 +213,7 @@
                   <span
                     class="editable"
                     role="button"
-                    {{on "click" this.editDatesAndDuration}}
+                    {{on "click" (set this.isEditingDatesAndDuration true)}}
                     data-test-edit
                   >
                     {{#if @sequenceBlock.endDate}}
@@ -168,7 +240,7 @@
                   <span
                     class="editable"
                     role="button"
-                    {{on "click" this.editDatesAndDuration}}
+                    {{on "click" (set this.isEditingDatesAndDuration true)}}
                     data-test-edit
                   >
                     {{@sequenceBlock.duration}}
