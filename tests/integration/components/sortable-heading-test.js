@@ -32,7 +32,7 @@ module('Integration | Component | sortable heading', function (hooks) {
             @colspan={{this.colspan}}
             @align={{this.align}}
             @title={{this.title}}
-            @click={{this.click}}
+            @onClick={{this.click}}
             @hideFromSmallScreen={{this.hideFromSmallScreen}}
             @sortedBy={{this.sortedBy}}
             @sortedAscending={{this.sortedAscending}}
@@ -53,7 +53,7 @@ module('Integration | Component | sortable heading', function (hooks) {
     this.set('click', () => {
       assert.ok(true);
     });
-    await render(hbs`<SortableHeading @click={{this.click}}>Foo</SortableHeading>`);
+    await render(hbs`<SortableHeading @onClick={{this.click}}>Foo</SortableHeading>`);
     await click(find('span'));
   });
 });
