@@ -34,7 +34,7 @@ module('Integration | Component | sortable th', function (hooks) {
             @colspan={{this.colspan}}
             @align={{this.align}}
             @title={{this.title}}
-            @click={{this.click}}
+            @onClick={{this.click}}
             @hideFromSmallScreen={{this.hideFromSmallScreen}}
             @sortedBy={{this.sortedBy}}
             @sortedAscending={{this.sortedAscending}}
@@ -81,7 +81,7 @@ module('Integration | Component | sortable th', function (hooks) {
     this.set('click', () => {
       assert.ok(true);
     });
-    await render(hbs`<SortableTh @click={{this.click}}>Foo</SortableTh>`);
+    await render(hbs`<SortableTh @onClick={{this.click}}>Foo</SortableTh>`);
     await click(find('th'));
   });
 });
