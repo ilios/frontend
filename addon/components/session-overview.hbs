@@ -213,7 +213,7 @@
                   >
                     <DatePicker
                       @value={{this.dueDate}}
-                      @change={{pipe (set this.dueDate) (fn this.addErrorDisplayFor "dueDate")}}
+                      @onChange={{pipe (set this.dueDate) (fn this.addErrorDisplayFor "dueDate")}}
                     />
                     {{#each (await (compute this.getErrorsFor "dueDate")) as |message|}}
                       <span class="validation-error-message">
