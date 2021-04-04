@@ -41,7 +41,7 @@ export default class DatePickerComponent extends Component {
       locale,
       defaultDate: this.args.value,
       formatDate: (dateObj) => dateObj.toLocaleDateString(currentLocale),
-      onChange: (selectedDates) => this.args.change(selectedDates[0]),
+      onChange: (selectedDates) => this.args.onChange(selectedDates[0]),
       onOpen: () => {
         later(() => {
           this.isOpen = true;
