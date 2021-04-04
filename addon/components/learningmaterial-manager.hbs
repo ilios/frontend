@@ -225,7 +225,7 @@
           {{#if @editable}}
             <DatePicker
               @value={{this.startDate}}
-              @change={{fn this.updateDate "startDate"}}
+              @onChange={{fn this.updateDate "startDate"}}
             />
           {{else}}
             {{format-date this.startDate}}
@@ -269,7 +269,7 @@
           {{#if @editable}}
             <DatePicker
               @value={{this.endDate}}
-              @change={{fn this.updateDate "endDate"}}
+              @onChange={{fn this.updateDate "endDate"}}
             />
           {{else}}
             {{format-date this.endDate}}

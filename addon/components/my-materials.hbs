@@ -36,7 +36,7 @@
               (eq @sortBy "sessionTitle")
               (eq @sortBy "sessionTitle:desc")
             }}
-            @click={{fn this.sortBy "sessionTitle"}}
+            @onClick={{fn this.sortBy "sessionTitle"}}
           >
             {{t "general.session"}}
           </SortableTh>
@@ -47,7 +47,7 @@
               (eq @sortBy "courseTitle")
               (eq @sortBy "courseTitle:desc")
             }}
-            @click={{fn this.sortBy "courseTitle"}}
+            @onClick={{fn this.sortBy "courseTitle"}}
           >
             {{t "general.course"}}
           </SortableTh>
@@ -55,7 +55,7 @@
             @colspan={{3}}
             @sortedAscending={{this.sortedAscending}}
             @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
-            @click={{fn this.sortBy "title"}}
+            @onClick={{fn this.sortBy "title"}}
           >
             {{t "general.title"}}
           </SortableTh>
@@ -70,7 +70,7 @@
               (eq @sortBy "firstOfferingDate:desc")
             }}
             @sortType="numeric"
-            @click={{fn this.sortBy "firstOfferingDate"}}
+            @onClick={{fn this.sortBy "firstOfferingDate"}}
           >
             {{t "general.date"}}
           </SortableTh>

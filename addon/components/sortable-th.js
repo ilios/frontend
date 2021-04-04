@@ -48,8 +48,8 @@ export default class SortableTh extends Component {
 
   @action
   click() {
-    if (this.args.click) {
-      this.args.click();
+    if (this.args.onClick) {
+      this.args.onClick();
     }
   }
 }
