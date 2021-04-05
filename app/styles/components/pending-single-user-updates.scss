@@ -1,12 +1,14 @@
 .pending-single-user-updates {
-  margin: auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
 
   .update {
     border: 1px solid $ilios-orange;
     border-radius: 1rem;
     display: block;
     margin: 1rem auto;
-    padding: 0 1rem .75rem;
+    padding: 1rem;
     width: 75%;
 
     .explanation {
@@ -19,8 +21,17 @@
 
     .actions {
       margin-top: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
 
-      span {
+      @include for-tablet-and-up {
+        flex-direction: row;
+        justify-content: space-around;
+      }
+
+      button {
+        @include ilios-button-reset;
         margin-right: 1rem;
       }
     }

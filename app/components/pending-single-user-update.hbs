@@ -1,62 +1,67 @@
-<div class="pending-single-user-updates" ...attributes>
-  {{#if updates.isFulfilled}}
-    {{#if isSaving}}
-      <LoadingSpinner @tagName="h2" />
-    {{else}}
-      {{#each updates as |update|}}
-        <div class="update">
-          <div class="explanation">
-            <h2>
-              <FaIcon @icon="exclamation-triangle" class="no" />
-            </h2>
-            {{#if (eq update.type "emailMismatch")}}
-              {{t
-                "general.pendingUserUpdates.emailMismatch"
-                value=update.value
-                email=update.user.email
-              }}
-            {{else}}
-              {{t (concat "general.pendingUserUpdates." update.type)}}
-            {{/if}}
-          </div>
-          <div class="actions">
-            {{#if (eq update.type "emailMismatch")}}
-              <span
-                class="clickable link"
-                role="button"
-                onclick={{action "updateEmailAddress" update}}
-              >
-                <FaIcon
-                  @icon="arrow-circle-up"
-                  class="yes"
-                  @title={{t "general.update"}}
-                />
-                {{t "general.pendingUserUpdates.updateIlios"}}
-              </span>
-            {{/if}}
-            <span
-              class="clickable link"
-              role="button"
-              onclick={{action "excludeFromSync" update}}
+<div
+  class="pending-single-user-updates"
+  data-test-pending-single-user-update
+  ...attributes
+>
+
+  {{#each this.updates as |update|}}
+    <div class="update" data-test-update>
+      <div class="explanation" data-test-explanation>
+        <FaIcon @icon="exclamation-triangle" class="no" />
+        {{#if (eq update.type "emailMismatch")}}
+          {{t
+            "general.pendingUserUpdates.emailMismatch"
+            value=update.value
+            email=(get (await update.user) "email")
+          }}
+        {{else}}
+          {{t (concat "general.pendingUserUpdates." update.type)}}
+        {{/if}}
+      </div>
+      <div class="actions" data-test-actions>
+        {{#if this.isSaving}}
+          <LoadingSpinner />
+        {{else}}
+          {{#if (eq update.type "emailMismatch")}}
+            <button
+              type="button"
+              {{on "click" (perform this.updateEmailAddress update)}}
+              data-test-update-email
             >
               <FaIcon
-                @icon="ban"
-                class="no"
-                @title={{t "general.excludeFromSync"}}
+                @icon="arrow-circle-up"
+                class="yes"
+                @title={{t "general.update"}}
               />
-              {{t "general.excludeFromSync"}}
-            </span>
-            <span class="clickable link" role="button" onclick={{action "disableUser" update}}>
-              <FaIcon
-                @icon="times"
-                class="no"
-                @title={{t "general.disableUser"}}
-              />
-              {{t "general.disableUser"}}
-            </span>
-          </div>
-        </div>
-      {{/each}}
-    {{/if}}
-  {{/if}}
+              {{t "general.pendingUserUpdates.updateIlios"}}
+            </button>
+          {{/if}}
+          <button
+            type="button"
+            {{on "click" (perform this.excludeFromSync)}}
+            data-test-exclude-from-sync
+          >
+            <FaIcon
+              @icon="ban"
+              class="no"
+              @title={{t "general.excludeFromSync"}}
+            />
+            {{t "general.excludeFromSync"}}
+          </button>
+          <button
+            type="button"
+            {{on "click" (perform this.disableUser)}}
+            data-test-disable
+          >
+            <FaIcon
+              @icon="times"
+              class="no"
+              @title={{t "general.disableUser"}}
+            />
+            {{t "general.disableUser"}}
+          </button>
+        {{/if}}
+      </div>
+    </div>
+  {{/each}}
 </div>
