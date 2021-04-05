@@ -7,6 +7,7 @@ import {
   isVisible,
   property,
   text,
+  triggerable,
   value,
 } from 'ember-cli-page-object';
 import { flatpickrDatePicker } from 'ilios-common';
@@ -159,6 +160,8 @@ const definition = {
       set: fillable('input'),
       isDisabled: property('disabled', 'input'),
       hasError: isVisible('.validation-error-message'),
+      save: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
+      cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
     },
     maximum: {
       scope: '[data-test-maximum]',
@@ -166,6 +169,8 @@ const definition = {
       value: value('input'),
       set: fillable('input'),
       hasError: isVisible('.validation-error-message', { multiple: true }),
+      save: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
+      cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
     },
     save: clickable('[data-test-save]'),
     cancel: clickable('[data-test-cancel]'),
@@ -179,6 +184,8 @@ const definition = {
       value: value('input'),
       set: fillable('input'),
       hasError: isVisible('.validation-error-message'),
+      save: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
+      cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
     },
     startDate: {
       scope: '[data-test-startdate]',

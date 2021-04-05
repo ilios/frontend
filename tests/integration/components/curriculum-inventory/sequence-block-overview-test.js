@@ -1507,4 +1507,232 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     await component.durationEditor.save();
     assert.ok(component.durationEditor.endDate.hasError);
   });
+
+  test('cancel editing on escape in minimum input', async function (assert) {
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      report: this.report,
+      duration: 5,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 5,
+      maximum: 20,
+      academicLevel: this.academicLevels[0],
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', 'title');
+
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{noop}}
+    />`);
+
+    assert.ok(component.minimum.text, 'Minimum: 5');
+    await component.minimum.edit();
+    await component.minMaxEditor.minimum.set('2');
+    await component.minMaxEditor.minimum.cancel();
+    assert.notOk(component.minMaxEditor.isVisible);
+    assert.ok(component.minimum.text, 'Minimum: 5');
+  });
+
+  test('save on enter in minimum input', async function (assert) {
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      report: this.report,
+      duration: 5,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 5,
+      maximum: 20,
+      academicLevel: this.academicLevels[0],
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', 'title');
+
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{noop}}
+    />`);
+
+    assert.ok(component.minimum.text, 'Minimum: 5');
+    await component.minimum.edit();
+    await component.minMaxEditor.minimum.set('2');
+    await component.minMaxEditor.minimum.save();
+    assert.notOk(component.minMaxEditor.isVisible);
+    assert.ok(component.minimum.text, 'Minimum: 2');
+  });
+
+  test('cancel editing on escape in maximum input', async function (assert) {
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      report: this.report,
+      duration: 5,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 5,
+      maximum: 20,
+      academicLevel: this.academicLevels[0],
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', 'title');
+
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{noop}}
+    />`);
+
+    assert.ok(component.maximum.text, 'Maximum: 20');
+    await component.maximum.edit();
+    await component.minMaxEditor.maximum.set('100');
+    await component.minMaxEditor.minimum.cancel();
+    assert.notOk(component.minMaxEditor.isVisible);
+    assert.ok(component.maximum.text, 'Minimum: 20');
+  });
+
+  test('save on enter in maximum input', async function (assert) {
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      report: this.report,
+      duration: 5,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 5,
+      maximum: 20,
+      academicLevel: this.academicLevels[0],
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', 'title');
+
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{noop}}
+    />`);
+
+    assert.ok(component.maximum.text, 'Maximum: 20');
+    await component.maximum.edit();
+    await component.minMaxEditor.maximum.set('100');
+    await component.minMaxEditor.minimum.save();
+    assert.notOk(component.minMaxEditor.isVisible);
+    assert.ok(component.maximum.text, 'Minimum: 100');
+  });
+
+  test('cancel editing on escape in duration input', async function (assert) {
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      report: this.report,
+      duration: 5,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 5,
+      maximum: 20,
+      academicLevel: this.academicLevels[0],
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', 'title');
+
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{noop}}
+    />`);
+
+    assert.ok(component.duration.text, 'Duration: 5');
+    await component.duration.edit();
+    await component.durationEditor.duration.set('100');
+    await component.durationEditor.duration.cancel();
+    assert.notOk(component.durationEditor.isVisible);
+    assert.ok(component.duration.text, 'Duration: 5');
+  });
+
+  test('save on enter in duration input', async function (assert) {
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      report: this.report,
+      duration: 5,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 5,
+      maximum: 20,
+      academicLevel: this.academicLevels[0],
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', 'title');
+
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{noop}}
+    />`);
+
+    assert.ok(component.duration.text, 'Duration: 5');
+    await component.duration.edit();
+    await component.durationEditor.duration.set('100');
+    await component.durationEditor.duration.save();
+    assert.notOk(component.durationEditor.isVisible);
+    assert.ok(component.duration.text, 'Duration: 100');
+  });
 });
