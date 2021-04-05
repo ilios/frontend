@@ -1,46 +1,54 @@
-<h3>
-  {{#if (gt (get (await updates) "length") 1)}}
-    <FaIcon @icon="exclamation-triangle" class="no" />
-  {{/if}}
-  {{t "general.pendingUpdatesSummaryTitle"}}
-</h3>
-<div id="schoolsfilter" class="filter">
-  <label class="inline-label">
-    <FaIcon @icon="university" />
-  </label>
-  <div id="school-selection" class="inline-data">
-    {{#if (gt (get schools "length") 1)}}
-      <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-        {{#each (sort-by "title" schools) as |school|}}
-          <option
-            value={{school.id}}
-            selected={{is-equal school (await selectedSchool)}}
+{{#let (unique-id) as |template-id|}}
+  <div
+    class="pending-updates-summary small-component {{if this.haveUpdates "alert"}}"
+    data-test-pending-updates-summary
+    ...attributes
+  >
+    <h3 data-test-title>
+      {{#if this.haveUpdates}}
+        <FaIcon @icon="exclamation-triangle" class="no" />
+      {{/if}}
+      {{t "general.pendingUpdatesSummaryTitle"}}
+    </h3>
+    <div id="schoolsfilter" class="filter" data-test-schools>
+      <label class="inline-label" for="schools-{{template-id}}">
+        <FaIcon @icon="university" @title={{t "general.school"}} />
+      </label>
+      <div id="school-selection" class="inline-data">
+        {{#if (gt @schools.length 1)}}
+          <select id="schools-{{template-id}}" {{on "change" (pick "target.value" (set this.selectedSchoolId))}}>
+            {{#each (sort-by "title" @schools) as |school|}}
+              <option
+                value={{school.id}}
+                selected={{is-equal school.id this.bestSelectedSchool.id}}
+              >
+                {{school.title}}
+              </option>
+            {{/each}}
+          </select>
+        {{else}}
+          {{this.bestSelectedSchool.title}}
+        {{/if}}
+      </div>
+    </div>
+    {{#if this.areUpdatesLoaded}}
+      <p data-test-summary>
+        {{t "general.pendingUpdatesSummary" count=(get this.updates "length")}}
+      </p>
+      {{#if (get this.updates "length")}}
+        <div class="actions">
+          <LinkTo
+            @route="pending-user-updates"
+            @query={{hash school=(this.bestSelectedSchool.id)}}
           >
-            {{school.title}}
-          </option>
-        {{/each}}
-      </select>
+            <button type="button">
+              {{t "general.manage"}}
+            </button>
+          </LinkTo>
+        </div>
+      {{/if}}
     {{else}}
-      {{get (await selectedSchool) "title"}}
+      <LoadingSpinner />
     {{/if}}
   </div>
-</div>
-{{#if (is-fulfilled updates)}}
-  <p>
-    {{t "general.pendingUpdatesSummary" count=(get (await updates) "length")}}
-  </p>
-  {{#if (get (await updates) "length")}}
-    <div class="actions">
-      <LinkTo
-        @route="pending-user-updates"
-        @query={{hash school=(get (await selectedSchool) "id")}}
-      >
-        <button type="button">
-          {{t "general.manage"}}
-        </button>
-      </LinkTo>
-    </div>
-  {{/if}}
-{{else}}
-  <LoadingSpinner />
-{{/if}}
+{{/let}}

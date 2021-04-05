@@ -1,7 +1,7 @@
 import { create, collection, isPresent, text } from 'ember-cli-page-object';
 
 const definition = {
-  scope: '[data-test-dashboard-mycourses]',
+  scope: '[data-test-pending-updates-summary]',
   title: text('[data-test-title]'),
   courses: collection('[data-test-course]', {
     isLinked: isPresent('a'),
