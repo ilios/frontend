@@ -429,7 +429,7 @@
         {{#unless this.isManagingSessions}}
           <div class="block sessions" data-test-session-list-controls>
             <label>{{t "general.sessions"}} ({{this.sessions.length}})</label>
-            {{#if (and (not this.isManagingSessions) @canUpdate)}}
+            {{#if (and (not this.isManagingSessions) @canUpdate this.sessions.length)}}
               <div class="actions">
                 <button type="button" {{on "click" this.toggleManagingSessions}}>{{t "general.manage"}}</button>
               </div>
@@ -438,7 +438,7 @@
         {{/unless}}
       </div>
     </div>
-    {{#if this.sessions}}
+    {{#if this.sessions.length}}
       {{#if this.isManagingSessions}}
         <CurriculumInventory::SequenceBlockSessionManager
           @sequenceBlock={{@sequenceBlock}}

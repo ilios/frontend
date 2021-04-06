@@ -1735,4 +1735,74 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.notOk(component.durationEditor.isVisible);
     assert.ok(component.duration.text, 'Duration: 100');
   });
+
+  test('manage-sessions button is not available if no course is linked', async function (assert) {
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      report: this.report,
+      duration: 5,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 5,
+      maximum: 20,
+      academicLevel: this.academicLevels[0],
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', 'title');
+
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{noop}}
+    />`);
+
+    assert.equal(component.sessions.label, 'Sessions (0)');
+    assert.notOk(component.sessions.editButton.isVisible);
+  });
+
+  test('manage-sessions button is not available if linked course has no sessions', async function (assert) {
+    const course = this.server.create('course', { school: this.school });
+    const block = this.server.create('curriculum-inventory-sequence-block', {
+      report: this.report,
+      duration: 5,
+      childSequenceOrder: 1,
+      orderInSequence: 0,
+      required: 1,
+      track: true,
+      minimum: 5,
+      maximum: 20,
+      academicLevel: this.academicLevels[0],
+      course,
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', this.report.id);
+    const sequenceBlockModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-sequence-block', block.id);
+    this.set('report', reportModel);
+    this.set('sequenceBlock', sequenceBlockModel);
+    this.set('sortBy', 'title');
+
+    await render(hbs`<CurriculumInventory::SequenceBlockOverview
+      @report={{this.report}}
+      @sequenceBlock={{this.sequenceBlock}}
+      @canUpdate={{true}}
+      @sortBy={{this.sortBy}}
+      @setSortBy={{noop}}
+    />`);
+
+    assert.equal(component.sessions.label, 'Sessions (0)');
+    assert.notOk(component.sessions.editButton.isVisible);
+  });
 });
