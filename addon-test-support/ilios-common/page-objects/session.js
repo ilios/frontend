@@ -25,6 +25,7 @@ import leadershipExpanded from './components/session-leadership-expanded';
 import postrequisiteEditor from './components/session/postrequisite-editor';
 import detailLearnersAndLearnerGroups from './components/detail-learners-and-learner-groups';
 import userNameInfo from './components/user-name-info';
+import yesNoToggle from './components/toggle-yesno';
 
 export default create({
   scope: '[data-test-session-details]',
@@ -90,27 +91,24 @@ export default create({
     },
     supplemental: {
       scope: '.sessionsupplemental',
-      isActive: property('checked', 'input'),
-      click: clickable('[data-test-toggle-yesno] [data-test-handle]'),
+      yesNoToggle,
     },
     specialAttire: {
       scope: '.sessionspecialattire',
-      isActive: property('checked', 'input'),
-      click: clickable('[data-test-toggle-yesno] [data-test-handle]'),
+      yesNoToggle,
     },
     specialEquipment: {
       scope: '.sessionspecialequipment',
-      isActive: property('checked', 'input'),
-      click: clickable('[data-test-toggle-yesno] [data-test-handle]'),
+      yesNoToggle,
     },
     attendanceRequired: {
       scope: '.sessionattendancerequired',
-      isActive: property('checked', 'input'),
-      click: clickable('[data-test-toggle-yesno] [data-test-handle]'),
+      yesNoToggle,
     },
-    toggleIlm: clickable('[data-test-toggle-yesno] [data-test-handle]', {
+    toggleIlm: {
       scope: '.independentlearningcontrol',
-    }),
+      yesNoToggle,
+    },
     prerequisites: {
       scope: '.prerequisites',
     },

@@ -383,7 +383,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.duration.hours.set(13);
     await form.duration.minutes.set(8);
 
-    await form.recurring.toggle();
+    await form.recurring.yesNoToggle.click();
     await form.recurring.setWeeks(4);
 
     await form.learnerManager.availableLearnerGroups.cohorts[0].trees[0].add();
@@ -439,7 +439,7 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await form.location.set('Scottsdale Stadium');
     await form.url.set('https://zoom.example.edu');
 
-    await form.recurring.toggle();
+    await form.recurring.yesNoToggle.click();
     await form.recurring.setWeeks(4);
 
     await form.learnerManager.availableLearnerGroups.cohorts[0].trees[0].add();
