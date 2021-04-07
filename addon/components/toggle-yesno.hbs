@@ -1,16 +1,17 @@
-<span class="toggle-yesno" data-test-toggle-yesno>
-  <input
-    checked={{this.yes}}
-    type="checkbox"
-    class="switch-input"
-    disabled="disabled"
-  >
+<button
+  aria-checked="{{if this.yes "true" "false"}}"
+  aria-label="{{if this.yes (t "general.yes") (t "general.no")}}"
+  class="toggle-yesno"
+  data-test-toggle-yesno
+  role="switch"
+  type="button"
+  {{on "click" this.click}}
+>
   <span
     class="switch-label"
-    role="button"
     data-on={{t "general.yes"}}
     data-off={{t "general.no"}}
-    {{on "click" this.click}}
+    data-test-label
   ></span>
-  <span class="switch-handle" role="button" {{on "click" this.click}} data-test-handle></span>
-</span>
+  <span class="switch-handle" data-test-handle></span>
+</button>
