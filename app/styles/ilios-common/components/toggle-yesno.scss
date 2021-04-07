@@ -5,21 +5,14 @@
   cursor: pointer;
   display: inline-block;
   height: 20px;
+  outline-color: transparent;
   padding: 3px;
   position: relative;
   vertical-align: top;
   width: 56px;
 
-  .switch-input {
-    display: none;
-    left: 0;
-    opacity: 0;
-    position: absolute;
-    top: 0;
-  }
-
   .switch-label {
-    background: $switch-label-blue;
+    background: $toggle-background-grey;
     border-radius: inherit;
     box-shadow: inset 0 1px 2px $almost-visible-black, inset 0 0 2px $almost-visible-black;
     display: block;
@@ -57,20 +50,16 @@
     text-shadow: 0 1px $more-visible-black;
   }
 
-  & > .switch-input ~ .switch-label {
-    background: $toggle-background-grey;
-  }
-
-  .switch-input:checked ~ .switch-label {
+  &[aria-checked="true"] .switch-label {
     background: $switch-label-green;
     box-shadow: inset 0 1px 2px $almost-visible-black, inset 0 0 3px $more-visible-black;
   }
 
-  .switch-input:checked ~ .switch-label::before {
+  &[aria-checked="true"] .switch-label::before {
     opacity: 0;
   }
 
-  .switch-input:checked ~ .switch-label::after {
+  &[aria-checked="true"] .switch-label::after {
     opacity: 1;
   }
 
@@ -101,7 +90,7 @@
     width: 12px;
   }
 
-  .switch-input:checked ~ .switch-handle {
+  &[aria-checked="true"] .switch-handle {
     box-shadow: -1px 1px 5px $more-visible-black;
     left: 33px;
   }

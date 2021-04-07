@@ -73,7 +73,7 @@ module('Integration | Component | offering form', function (hooks) {
 
   test('recurring options has all the days of the week', async function (assert) {
     await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
-    await component.recurring.toggle();
+    await component.recurring.yesNoToggle.click();
     assert.ok(component.recurring.weekdays[0].label, 'Sunday');
     assert.ok(component.recurring.weekdays[1].label, 'Monday');
     assert.ok(component.recurring.weekdays[2].label, 'Tuesday');
@@ -85,13 +85,13 @@ module('Integration | Component | offering form', function (hooks) {
 
   test('recurring numberOfWeeks validation errors do not show up initially', async function (assert) {
     await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
-    await component.recurring.toggle();
+    await component.recurring.yesNoToggle.click();
     assert.notOk(component.recurring.hasError);
   });
 
   test('recurring numberOfWeeks validation errors show up when saving', async function (assert) {
     await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
-    await component.recurring.toggle();
+    await component.recurring.yesNoToggle.click();
     await component.recurring.setWeeks('0');
     await component.save();
     assert.ok(component.recurring.hasError);
@@ -100,7 +100,7 @@ module('Integration | Component | offering form', function (hooks) {
   test('recurring default day is disabled and checked', async function (assert) {
     await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
     const dayToday = moment().day();
-    await component.recurring.toggle();
+    await component.recurring.yesNoToggle.click();
     assert.ok(component.recurring.weekdays[dayToday].input.isSelected);
     assert.ok(component.recurring.weekdays[dayToday].input.isDisabled);
   });
@@ -267,7 +267,7 @@ module('Integration | Component | offering form', function (hooks) {
       @showMakeRecurring={{true}}
       @save={{this.save}}
     />`);
-    await component.recurring.toggle();
+    await component.recurring.yesNoToggle.click();
     await component.startDate.set(newStartDate);
     await component.recurring.weekdays[tuesday].input.toggle();
     await component.recurring.weekdays[thursday].input.toggle();
@@ -322,7 +322,7 @@ module('Integration | Component | offering form', function (hooks) {
       @showMakeRecurring={{true}}
       @save={{this.save}}
     />`);
-    await component.recurring.toggle();
+    await component.recurring.yesNoToggle.click();
     await component.recurring.setWeeks('3');
     await component.startDate.set(newStartDate);
     await component.recurring.weekdays[tuesday].input.toggle();

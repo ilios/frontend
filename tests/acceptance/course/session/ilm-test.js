@@ -355,12 +355,12 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
     assert.ok(page.learnersAreVisible);
     assert.ok(page.instructorsAreVisible);
 
-    await page.overview.toggleIlm();
+    await page.overview.toggleIlm.yesNoToggle.click();
 
     assert.notOk(page.learnersAreVisible);
     assert.notOk(page.instructorsAreVisible);
 
-    await page.overview.toggleIlm();
+    await page.overview.toggleIlm.yesNoToggle.click();
 
     assert.ok(page.learnersAreVisible);
     assert.ok(page.instructorsAreVisible);

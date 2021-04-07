@@ -15,6 +15,7 @@ import { flatpickrDatePicker } from 'ilios-common';
 import userNameInfo from './user-name-info';
 import detailLearnergroupsList from './detail-learnergroups-list';
 import learnergroupTree from './learnergroup-tree';
+import yesNoToggle from './toggle-yesno';
 
 const definition = {
   scope: '[data-test-offering-form]',
@@ -86,7 +87,7 @@ const definition = {
   },
   recurring: {
     scope: '.make-recurring',
-    toggle: clickable('[data-test-toggle-yesno] [data-test-handle]'),
+    yesNoToggle,
     setWeeks: fillable('.make-recurring-input'),
     hasError: isVisible('.validation-error-message'),
     weekdays: collection('[data-test-make-recurring-day]', {
