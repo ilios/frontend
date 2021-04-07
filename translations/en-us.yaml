@@ -278,7 +278,7 @@ general:
   pendingUpdatesSummaryTitle: "Updates from the Campus Directory"
   pendingUserUpdates:
     filterBy: "Filter by user name"
-    missingFromDirectory: "Unable to find user in the directory, please update, disable, or exclude their account from syncronization."
+    missingFromDirectory: "Unable to find user in the directory, please update, disable, or exclude their account from synchronization."
     emailMismatch: "The email address in the directory ({value}) does not match the email in ilios ({email})."
     updateIlios: "Update Ilios"
   people: People

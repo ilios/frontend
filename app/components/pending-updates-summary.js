@@ -1,85 +1,63 @@
-import Component from '@ember/component';
-import ArrayProxy from '@ember/array/proxy';
-import { computed } from '@ember/object';
-import { gt } from '@ember/object/computed';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import PromiseProxyMixin from '@ember/object/promise-proxy-mixin';
+import { tracked } from '@glimmer/tracking';
+import { filter } from 'rsvp';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import AsyncProcess from 'ilios-common/classes/async-process';
 
-export default Component.extend({
-  currentUser: service(),
-  store: service(),
+export default class PendingUpdatesSummaryComponent extends Component {
+  @service currentUser;
+  @service store;
+  @tracked selectedSchoolId;
+  @use user = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
 
-  classNameBindings: [':pending-updates-summary', ':small-component', 'alert'],
+  allUpdatesPromise = this.store.query('pending-user-update', {
+    filters: { schools: this.args.schools.mapBy('id') },
+    include: 'user',
+  });
+  @use allUpdates = new ResolveAsyncValue(() => [this.allUpdatesPromise]);
+  @use updatesForSchool = new AsyncProcess(() => [
+    this.getUpdatesForSchool,
+    this.allUpdatesArray,
+    this.bestSelectedSchool,
+  ]);
 
-  'data-test-pending-updates-summary': true,
+  get haveUpdates() {
+    return this.updates?.length > 0;
+  }
 
-  schoolId: null,
-  schools: null,
-
-  alert: gt('_updatesProxy.length', 0),
-
-  selectedSchool: computed('currentUser', 'schoolId', 'schools', async function () {
-    const schools = this.schools;
-    const currentUser = this.currentUser;
-    const schoolId = this.schoolId;
-
-    if (schoolId) {
-      return schools.findBy('id', schoolId);
+  get bestSelectedSchool() {
+    const id = this.selectedSchoolId ?? this.user?.belongsTo('school').id();
+    if (id) {
+      const school = this.args.schools.findBy('id', id);
+      if (school) {
+        return school;
+      }
     }
-    const user = await currentUser.get('model');
-    const school = await user.get('school');
-    const defaultSchool = schools.findBy('id', school.get('id'));
-    if (defaultSchool) {
-      return defaultSchool;
+    return this.args.schools.firstObject;
+  }
+
+  get areUpdatesLoaded() {
+    return Boolean(this.allUpdates);
+  }
+
+  get allUpdatesArray() {
+    if (!this.allUpdates) {
+      return [];
     }
 
-    return schools.get('firstObject');
-  }),
+    return this.allUpdates.toArray();
+  }
 
-  /**
-   * Create a proxy object to drive the alerts CP.  This is hopefully a temporary
-   * way to address this problem of needed the value of a promise to drive a computed property
-   *
-   * @todo We might be able to use https://github.com/kellyselden/ember-awesome-macros/pull/260 to get the Promise
-   * results and use those in the alert CP.  JJ 3/2017
-   *
-   * @property updates
-   * @type {Ember.computed}
-   * @private
-   */
-  _updatesProxy: computed('updates', function () {
-    const ArrayPromiseProxy = ArrayProxy.extend(PromiseProxyMixin);
-    return ArrayPromiseProxy.create({
-      promise: this.updates,
+  get updates() {
+    return this.updatesForSchool ?? [];
+  }
+
+  async getUpdatesForSchool(allUpdates, selectedSchool) {
+    return filter(allUpdates.toArray(), async (update) => {
+      const user = await update.user;
+      return user.belongsTo('school').id() === selectedSchool.id;
     });
-  }),
-
-  /**
-   * A list of pending user updates.
-   * @property updates
-   * @type {Ember.computed}
-   * @public
-   */
-  updates: computed('selectedSchool', async function () {
-    const store = this.store;
-    const school = await this.selectedSchool;
-    const updates = await store.query('pending-user-update', {
-      filters: {
-        schools: [school.get('id')],
-      },
-    });
-
-    return updates;
-  }),
-
-  init() {
-    this._super(...arguments);
-    this.set('sortSchoolsBy', ['title']);
-  },
-
-  actions: {
-    changeSelectedSchool(schoolId) {
-      this.set('schoolId', schoolId);
-    },
-  },
-});
+  }
+}
