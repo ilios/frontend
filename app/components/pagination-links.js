@@ -1,34 +1,29 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { equal } from '@ember/object/computed';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  tagName: '',
-  page: null,
-  results: null,
-  size: null,
-  onSelectPage() {},
-  disablePrev: equal('page', 1),
+export default class PaginationLinksComponent extends Component {
+  get disablePrev() {
+    return this.args.page === 1;
+  }
 
-  disableNext: computed('lastPage', 'page', function () {
-    return this.lastPage === this.page;
-  }),
+  get disableNext() {
+    return this.lastPage === this.args.page;
+  }
 
-  lastPage: computed('results.length', 'size', function () {
-    return Math.ceil(this.results.length / this.size);
-  }),
+  get lastPage() {
+    return Math.ceil(this.args.results.length / this.args.size);
+  }
 
-  pages: computed('lastPage', 'page', 'totalPages', function () {
+  get pages() {
     return this.lastPage <= 7
       ? this.simplePages(this.lastPage)
-      : this.complexPages(this.lastPage, this.page);
-  }),
+      : this.complexPages(this.lastPage, this.args.page);
+  }
 
-  actions: {
-    selectPage(value) {
-      this.onSelectPage(this.page + value);
-    },
-  },
+  @action
+  selectPage(value) {
+    this.args.onSelectPage(this.args.page + value);
+  }
 
   simplePages(lastPage) {
     const pageNumbers = [];
@@ -38,7 +33,7 @@ export default Component.extend({
     }
 
     return pageNumbers;
-  },
+  }
 
   complexPages(lastPage, page) {
     if (page <= 4) {
@@ -50,5 +45,5 @@ export default Component.extend({
     }
 
     return [1, '...', page - 1, page, page + 1, page + 2, '...', lastPage];
-  },
-});
+  }
+}

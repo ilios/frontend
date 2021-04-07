@@ -3,38 +3,34 @@
   margin: 2rem 0;
   text-align: center;
 
-  span {
+  .link-button {
+    @include ilios-link-button;
     text-transform: uppercase;
 
-    &.inactive {
+    &:disabled {
       color: $dark-grey;
-      pointer-events: none;
+      cursor: default;
     }
-  }
 
-  .prev-link {
-    margin-right: 1rem;
-    position: relative;
-    top: 1px;
-
-    .fa-angle-left {
-      font-size: 1.25rem;
-      margin-right: .25rem;
-      position: relative;
-      top: 2px;
+    &:enabled {
+      &:hover {
+        text-decoration: underline;
+      }
     }
-  }
 
-  .next-link {
-    margin-left: 1rem;
-    position: relative;
-    top: 1px;
-
-    .fa-angle-right {
+    svg {
       font-size: 1.25rem;
       margin-left: .25rem;
       position: relative;
       top: 2px;
+    }
+
+    &.prev-link {
+      margin-right: 1rem;
+    }
+
+    &.next-link {
+      margin-left: 1rem;
     }
   }
 
@@ -53,27 +49,15 @@
       color: $white;
     }
 
-    @media only screen and (max-width: 550px) {
+    @include for-phone-only {
       display: none;
     }
 
-    &.inactive {
+    &:disabled {
       background: $white;
       border: none;
-      color: $darker-grey;
-      pointer-events: none;
-
-      @media only screen and (max-width: 550px) {
-        display: inline-block;
-      }
-    }
-  }
-
-  .ellipsis {
-    margin: 0 .5rem;
-
-    @media only screen and (max-width: 550px) {
-      display: none;
+      color: $text-grey;
+      cursor: default;
     }
   }
 }
