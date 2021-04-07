@@ -5,12 +5,12 @@ import {
   fillable,
   isPresent,
   isVisible,
-  property,
   text,
   value,
   visitable,
 } from 'ember-cli-page-object';
 import learnerGroupList from './components/learnergroup-list';
+import newLearnerGroup from './components/learner-groups/new';
 
 export default create({
   scope: '[data-test-learner-groups-list]',
@@ -38,16 +38,7 @@ export default create({
     list: collection('select option'),
   },
   learnerGroupList,
-  newLearnerGroupForm: {
-    scope: '[data-test-new-learner-group]',
-    title: fillable('[data-test-title]'),
-    save: clickable('.done'),
-    cancel: clickable('.cancel'),
-    isVisible: isVisible(),
-    willFill: property('checked', '[data-test-fill] input'),
-    fillWithCohort: clickable('[data-test-fill]'),
-    doNotFillWithCohort: clickable('[data-test-no-fill]'),
-  },
+  newLearnerGroup,
   emptyListRowIsVisible: isVisible('[data-test-empty-list]'),
   savedResult: text('.saved-result'),
   toggleNewLearnerGroupForm: clickable('[data-test-expand-collapse-button] button'),
