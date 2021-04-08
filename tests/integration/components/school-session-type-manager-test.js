@@ -39,7 +39,7 @@ module('Integration | Component | school session type manager', function (hooks)
     assert.equal(component.title, 'one');
     assert.equal(component.form.title.value, 'one');
     assert.equal(component.form.calendarColor.value, '#ffffff');
-    assert.ok(component.form.assessment.isAssessment);
+    assert.equal(component.form.assessment.yesNoToggle.checked, 'true');
     assert.ok(component.form.assessmentSelector.value, '2');
   });
 

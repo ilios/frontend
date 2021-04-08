@@ -89,9 +89,9 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canDelete={{true}}
       @canCreate={{true}}
     />`);
-    assert.notOk(component.isActive.active);
-    await component.isActive.toggle();
-    assert.ok(component.isActive.active);
+    assert.equal(component.isActive.yesNoToggle.checked, 'false');
+    await component.isActive.yesNoToggle.click();
+    assert.equal(component.isActive.yesNoToggle.checked, 'true');
     assert.ok(this.server.db.terms[0].active);
   });
 
@@ -118,9 +118,9 @@ module('Integration | Component | school vocabulary term manager', function (hoo
       @canDelete={{true}}
       @canCreate={{true}}
     />`);
-    assert.ok(component.isActive.active);
-    await component.isActive.toggle();
-    assert.notOk(component.isActive.active);
+    assert.equal(component.isActive.yesNoToggle.checked, 'true');
+    await component.isActive.yesNoToggle.click();
+    assert.equal(component.isActive.yesNoToggle.checked, 'false');
     assert.notOk(this.server.db.terms[0].active);
   });
 

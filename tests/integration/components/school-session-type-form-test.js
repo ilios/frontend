@@ -59,8 +59,8 @@ module('Integration | Component | school session type form', function (hooks) {
     assert.equal(component.aamcMethod.options[1].text, 'lorem ipsum');
     assert.notOk(component.aamcMethod.options[1].selected);
     assert.equal(component.calendarColor.value, '#ffffff');
-    assert.ok(component.assessment.isAssessment);
-    assert.ok(component.active.isActive);
+    assert.equal(component.assessment.yesNoToggle.checked, 'true');
+    assert.equal(component.active.yesNoToggle.checked, 'true');
     assert.equal(component.assessmentSelector.value, '2');
     assert.equal(component.assessmentSelector.options.length, 2);
     assert.equal(component.assessmentSelector.options[0].value, '1');
@@ -112,7 +112,7 @@ module('Integration | Component | school session type form', function (hooks) {
     assert.equal(component.aamcMethod.options[1].text, 'lorem ipsum');
     assert.notOk(component.aamcMethod.options[1].selected);
 
-    await component.assessment.toggle();
+    await component.assessment.yesNoToggle.click();
 
     assert.equal(component.aamcMethod.value, '');
     assert.equal(component.aamcMethod.options.length, 2);
@@ -166,7 +166,7 @@ module('Integration | Component | school session type form', function (hooks) {
     await component.close.click();
   });
 
-  test('save fires save', async function (assert) {
+  test('save fires action', async function (assert) {
     assert.expect(8);
     const method = this.server.create('aamc-method', {
       id: 'AM001',
@@ -205,13 +205,13 @@ module('Integration | Component | school session type form', function (hooks) {
       @close={{noop}}
     />`);
 
-    assert.ok(component.active.isActive);
+    assert.equal(component.active.yesNoToggle.checked, 'true');
     await component.title.set('new title');
     await component.aamcMethod.select(aamcMethodModel.id);
     await component.calendarColor.set('#a1b2c3');
     await component.assessmentSelector.select(assessmentOptionModel.id);
-    await component.active.toggle();
-    assert.notOk(component.active.isActive);
+    await component.active.yesNoToggle.click();
+    assert.equal(component.active.yesNoToggle.checked, 'false');
     await component.submit.click();
   });
 
@@ -246,9 +246,9 @@ module('Integration | Component | school session type form', function (hooks) {
     assert.notOk(component.title.inputControlIsVisible);
     assert.notOk(component.aamcMethod.inputControlIsVisible);
     assert.notOk(component.calendarColor.inputControlIsVisible);
-    assert.notOk(component.assessment.inputControlIsVisible);
+    assert.notOk(component.assessment.yesNoToggle.isVisible);
     assert.notOk(component.assessmentSelector.inputControlIsVisible);
-    assert.notOk(component.active.inputControlIsVisible);
+    assert.notOk(component.active.yesNoToggle.isVisible);
 
     assert.equal(component.title.readonlyValue, 'one');
     assert.equal(component.aamcMethod.readonlyValue, 'lorem ipsum');
