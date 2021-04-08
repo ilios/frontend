@@ -9,7 +9,7 @@
           @colspan={{4}}
           @sortedAscending={{this.sortedAscending}}
           @sortedBy={{or (eq this.sortBy "name") (eq this.sortBy "name:desc")}}
-          @click={{fn this.setSortBy "name"}}
+          @onClick={{fn this.setSortBy "name"}}
         >
           {{t "general.reportName"}}
         </SortableTh>
@@ -23,7 +23,7 @@
           @sortedAscending={{this.sortedAscending}}
           @sortedBy={{or (eq this.sortBy "year") (eq this.sortBy "year:desc")}}
           @sortType="numeric"
-          @click={{fn this.setSortBy "year"}}
+          @onClick={{fn this.setSortBy "year"}}
         >
           {{t "general.academicYear"}}
         </SortableTh>

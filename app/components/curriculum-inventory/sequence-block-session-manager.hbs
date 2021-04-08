@@ -44,7 +44,7 @@
               </th>
               <SortableTh
                 @colspan={{3}}
-                @click={{fn this.changeSortOrder "title"}}
+                @onClick={{fn this.changeSortOrder "title"}}
                 @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
                 @sortedAscending={{this.sortedAscending}}
               >
@@ -52,7 +52,7 @@
               </SortableTh>
               <SortableTh
                 @colspan={{3}}
-                @click={{fn this.changeSortOrder "sessionType.title"}}
+                @onClick={{fn this.changeSortOrder "sessionType.title"}}
                 @sortedBy={{or
                   (eq @sortBy "sessionType.title")
                   (eq @sortBy "sessionType.title:desc")
@@ -66,7 +66,7 @@
               </th>
               <SortableTh
                 @colspan={{1}}
-                @click={{fn this.changeSortOrder "offerings.length"}}
+                @onClick={{fn this.changeSortOrder "offerings.length"}}
                 @sortedBy={{or
                   (eq @sortBy "offerings.length")
                   (eq @sortBy "offerings.length:desc")

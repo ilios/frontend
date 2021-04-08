@@ -12,7 +12,7 @@
             @colspan={{3}}
             @sortedAscending={{this.sortedAscending}}
             @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
-            @click={{fn this.setSortBy "title"}}
+            @onClick={{fn this.setSortBy "title"}}
           >
             {{t "general.courseTitle"}}
           </SortableTh>
@@ -29,7 +29,7 @@
             @sortedAscending={{this.sortedAscending}}
             @sortedBy={{or (eq @sortBy "level") (eq @sortBy "level:desc")}}
             @sortType="numeric"
-            @click={{fn this.setSortBy "level"}}
+            @onClick={{fn this.setSortBy "level"}}
           >
             {{t "general.level"}}
           </SortableTh>
@@ -40,7 +40,7 @@
             @sortedAscending={{this.sortedAscending}}
             @sortedBy={{or (eq @sortBy "startDate") (eq @sortBy "startDate:desc")}}
             @sortType="numeric"
-            @click={{fn this.setSortBy "startDate"}}
+            @onClick={{fn this.setSortBy "startDate"}}
           >
             {{t "general.startDate"}}
           </SortableTh>
@@ -51,7 +51,7 @@
             @sortedAscending={{this.sortedAscending}}
             @sortedBy={{or (eq @sortBy "endDate") (eq @sortBy "endDate:desc")}}
             @sortType="numeric"
-            @click={{fn this.setSortBy "endDate"}}
+            @onClick={{fn this.setSortBy "endDate"}}
           >
             {{t "general.endDate"}}
           </SortableTh>
@@ -59,7 +59,7 @@
             @colspan="3"
             @sortedAscending={{this.sortedAscending}}
             @sortedBy={{or (eq @sortBy "status") (eq @sortBy "status:desc")}}
-            @click={{fn this.setSortBy "status"}}
+            @onClick={{fn this.setSortBy "status"}}
           >
             {{t "general.status"}}
           </SortableTh>
