@@ -82,7 +82,7 @@
       </label>
       <DatePicker
         @value={{this.startDate}}
-        @change={{action "changeStartDate"}}
+        @onChange={{action "changeStartDate"}}
         data-test-start-date-picker
       />
       {{#if
@@ -101,7 +101,7 @@
       </label>
       <DatePicker
         @value={{this.endDate}}
-        @change={{action "changeEndDate"}}
+        @onChange={{action "changeEndDate"}}
         data-test-end-date-picker
       />
       {{#if

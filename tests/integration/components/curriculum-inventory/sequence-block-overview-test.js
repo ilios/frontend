@@ -118,7 +118,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.equal(component.required.text, 'Required: Required In Track');
     assert.ok(component.required.isEditable);
     assert.equal(component.track.label, 'Is Track:');
-    assert.ok(component.track.isTrack);
+    assert.equal(component.track.yesNoToggle.checked, 'true');
     assert.ok(component.track.isEditable);
     assert.equal(
       component.startDate.text,
@@ -418,9 +418,9 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @setSortBy={{noop}}
     />`);
 
-    assert.ok(component.track.isTrack);
-    await component.track.toggle();
-    assert.notOk(component.track.isTrack);
+    assert.equal(component.track.yesNoToggle.checked, 'true');
+    await component.track.yesNoToggle.click();
+    assert.equal(component.track.yesNoToggle.checked, 'false');
     assert.equal(sequenceBlockModel.track, false);
   });
 

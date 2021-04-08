@@ -52,7 +52,7 @@
             >
               <DatePicker
                 @value={{this.startDate}}
-                @change={{queue (set this.startDate) (fn this.addErrorDisplayFor "startDate")}}
+                @onChange={{queue (set this.startDate) (fn this.addErrorDisplayFor "startDate")}}
                 data-test-start-date-picker
               />
               {{#each (await (compute this.getErrorsFor "startDate")) as |message|}}
@@ -79,7 +79,7 @@
             >
               <DatePicker
                 @value={{this.endDate}}
-                @change={{queue (set this.endDate) (fn this.addErrorDisplayFor "endDate")}}
+                @onChange={{queue (set this.endDate) (fn this.addErrorDisplayFor "endDate")}}
                 data-test-end-date-picker
               />
               {{#each (await (compute this.getErrorsFor "endDate")) as |message|}}

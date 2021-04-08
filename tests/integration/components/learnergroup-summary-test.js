@@ -107,7 +107,9 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       @isBulkAssigning={{false}}
       @canUpdate={{true}}
     />`);
-    assert.dom('[data-test-needs-accommodation] input').isChecked();
+    assert
+      .dom('[data-test-needs-accommodation] [data-test-toggle-yesno]')
+      .hasAria('checked', 'true');
   });
 
   test('Does not need accommodation', async function (assert) {
@@ -128,7 +130,9 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       @isBulkAssigning={{false}}
       @canUpdate={{true}}
     />`);
-    assert.dom('[data-test-needs-accommodation] input').isNotChecked();
+    assert
+      .dom('[data-test-needs-accommodation] [data-test-toggle-yesno]')
+      .hasAria('checked', 'false');
   });
 
   test('Read-only: Needs accommodation', async function (assert) {
@@ -195,11 +199,15 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       @isBulkAssigning={{false}}
       @canUpdate={{true}}
     />`);
-    assert.dom('[data-test-needs-accommodation] input').isNotChecked();
+    assert
+      .dom('[data-test-needs-accommodation] [data-test-toggle-yesno]')
+      .hasAria('checked', 'false');
     assert.notOk(learnerGroupModel.needsAccommodation);
-    await click('[data-test-needs-accommodation] .switch-handle');
+    await click('[data-test-needs-accommodation] [data-test-toggle-yesno]');
     assert.ok(learnerGroupModel.needsAccommodation);
-    assert.dom('[data-test-needs-accommodation] input').isChecked();
+    assert
+      .dom('[data-test-needs-accommodation] [data-test-toggle-yesno]')
+      .hasAria('checked', 'true');
   });
 
   test('Update location', async function (assert) {

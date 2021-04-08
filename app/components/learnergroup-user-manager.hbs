@@ -36,7 +36,7 @@
               </th>
               <SortableTh
                 @colspan={{4}}
-                @click={{fn this.setSortBy "fullName"}}
+                @onClick={{fn this.setSortBy "fullName"}}
                 @sortedBy={{or (eq @sortBy "fullName") (eq @sortBy "fullName:desc")}}
                 @sortedAscending={{this.sortedAscending}}
               >
@@ -51,7 +51,7 @@
               {{#if @isEditing}}
                 <SortableTh
                   @colspan={{2}}
-                  @click={{fn this.setSortBy "lowestGroupInTreeTitle"}}
+                  @onClick={{fn this.setSortBy "lowestGroupInTreeTitle"}}
                   @sortedBy={{or (eq @sortBy "lowestGroupInTreeTitle") (eq @sortBy "lowestGroupInTreeTitle:desc")}}
                   @sortedAscending={{this.sortedAscending}}
                 >

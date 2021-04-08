@@ -112,7 +112,7 @@
                 <DatePicker
                   id="startdate-{{templateId}}"
                   @value={{this.startDate}}
-                  @change={{this.changeStartDate}}
+                  @onChange={{this.changeStartDate}}
                 />
                 {{#each (await (compute this.getErrorsFor "startDate")) as |message|}}
                   <span class="validation-error-message">
@@ -127,7 +127,7 @@
                 <DatePicker
                   id="enddate-{{templateId}}"
                   @value={{this.endDate}}
-                  @change={{this.changeEndDate}}
+                  @onChange={{this.changeEndDate}}
                 />
                 {{#each (await (compute this.getErrorsFor "endDate")) as |message|}}
                   <span class="validation-error-message">

@@ -1,6 +1,5 @@
 import {
   attribute,
-  clickable,
   collection,
   create,
   isVisible,
@@ -10,6 +9,7 @@ import {
   text,
   value,
 } from 'ember-cli-page-object';
+import yesNoToggle from 'ilios-common/page-objects/components/toggle-yesno';
 
 const definition = {
   scope: '[data-test-school-session-type-form]',
@@ -46,10 +46,8 @@ const definition = {
   },
   assessment: {
     scope: '[data-test-assessment]',
-    toggle: clickable('[data-test-toggle-yesno] [data-test-handle]'),
-    inputControlIsVisible: isVisible('[data-test-toggle-yesno]'),
+    yesNoToggle,
     readonlyValue: text('.value'),
-    isAssessment: property('checked', 'input'),
   },
   assessmentSelector: {
     scope: '[data-test-assessment-options]',
@@ -63,10 +61,8 @@ const definition = {
   },
   active: {
     scope: '[data-test-active]',
-    toggle: clickable('[data-test-toggle-yesno] [data-test-handle]'),
+    yesNoToggle,
     readonlyValue: text('.value'),
-    inputControlIsVisible: isVisible('[data-test-toggle-yesno]'),
-    isActive: property('checked', 'input'),
   },
   submit: {
     scope: '[data-test-submit]',

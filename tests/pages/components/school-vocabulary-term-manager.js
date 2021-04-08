@@ -1,13 +1,6 @@
-import {
-  clickable,
-  create,
-  collection,
-  isPresent,
-  fillable,
-  property,
-  text,
-} from 'ember-cli-page-object';
+import { clickable, create, collection, isPresent, fillable, text } from 'ember-cli-page-object';
 import newTermForm from './school-vocabulary-new-term';
+import yesNoToggle from 'ilios-common/page-objects/components/toggle-yesno';
 
 const definition = {
   scope: '[data-test-school-vocabulary-term-manager]',
@@ -28,8 +21,7 @@ const definition = {
   },
   isActive: {
     scope: '[data-test-is-active]',
-    active: property('checked', 'input'),
-    toggle: clickable('[data-test-toggle-yesno] .switch-handle'),
+    yesNoToggle,
   },
   subTerms: {
     scope: '[data-test-sub-terms]',

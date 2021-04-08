@@ -33,7 +33,7 @@
             </th>
             <SortableTh
               @colspan={{4}}
-              @click={{fn this.setSortBy "fullName"}}
+              @onClick={{fn this.setSortBy "fullName"}}
               @sortedBy={{or (eq @sortBy "fullName") (eq @sortBy "fullName:desc")}}
               @sortedAscending={{this.sortedAscending}}
             >

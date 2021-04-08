@@ -13,6 +13,7 @@ import {
 import { flatpickrDatePicker } from 'ilios-common';
 import sessionManager from './sequence-block-session-manager';
 import sessionList from './sequence-block-session-list';
+import yesNoToggle from 'ilios-common/page-objects/components/toggle-yesno';
 
 const definition = {
   scope: '[data-test-curriculum-inventory-sequence-block-overview]',
@@ -74,8 +75,7 @@ const definition = {
     scope: '[data-test-overview] [data-test-track]',
     label: text('label'),
     isEditable: isVisible('[data-test-toggle-yesno]'),
-    toggle: clickable('[data-test-toggle-yesno] [data-test-handle]'),
-    isTrack: property('checked', 'input'),
+    yesNoToggle,
     save: clickable('.done'),
     cancel: clickable('.cancel'),
   },
