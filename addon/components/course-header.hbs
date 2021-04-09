@@ -19,6 +19,7 @@
             disabled={{isSaving}}
             type="text"
             value={{this.courseTitle}}
+            {{on "input" (pick "target.value" (set this.courseTitle))}}
             {{on "keypress" (fn this.addErrorDisplayFor "courseTitle")}}
           >
           {{#each (await (compute this.getErrorsFor "courseTitle")) as |message|}}
