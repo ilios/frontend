@@ -1,230 +1,268 @@
-<h2 class="title">
-  {{t "general.newSequenceBlock"}}
-</h2>
-{{#if isLoaded}}
-  <div class="form">
-    <div class="item title">
-      <label>
-        {{t "general.title"}}:
-      </label>
-      <input
-        type="text"
-        value={{title}}
-        oninput={{action (mut title) value="target.value"}}
-        disabled={{isSaving}}
-        onkeyup={{action "addErrorDisplayFor" "title"}}
-        placeholder={{t "general.sequenceBlockTitlePlaceholder"}}
-      >
-      {{#if (and (v-get this "title" "isInvalid") (includes "title" showErrorsFor))
-      }}
-        <span class="validation-error-message">
-          {{v-get this "title" "message"}}
-        </span>
-      {{/if}}
-    </div>
-    <div class="item course">
-      <label>
-        {{t "general.course"}}:
-      </label>
-      <select
-        disabled={{this.saveCourseChange.isRunning}}
-        {{on "change" (action "setCourse")}}
-      >
-        <option value="" selected={{is-empty this.course}}>{{t "general.selectCourse"}}</option>
-        {{#each (sort-by "title" (await this.linkableCourses)) as |obj|}}
-          <option value={{obj.id}} selected={{eq obj this.course}}>{{obj.title}}</option>
-        {{/each}}
-      </select>
-      {{#if course}}
-        <span class="details">
-          {{t "general.level"}}:
-          {{this.course.level}},
-          {{t "general.startDate"}}:
-          {{moment-format course.startDate "YYYY-MM-DD"}},
-          {{t "general.endDate"}}:
-          {{moment-format course.endDate "YYYY-MM-DD"}}
-          {{#if course.clerkshipType}}
-            -{{t "general.clerkship"}} ({{this.course.clerkshipType.title}})
-          {{/if}}
-        </span>
-      {{/if}}
-    </div>
-    <div class="item description">
-      <label>
-        {{t "general.description"}}:
-      </label>
-      <textarea
-        value={{description}}
-        oninput={{action (mut description) value="target.value"}}
-        disabled={{isSaving}}
-        placeholder={{t "general.sequenceBlockDescriptionPlaceholder"}}
-      ></textarea>
-    </div>
-    <div class="item required">
-      <label>
-        {{t "general.required"}}:
-      </label>
-      <select {{on "change" (action "setRequired")}}>
-        {{#each requiredOptions as |obj|}}
-          <option value={{obj.id}} selected={{eq obj.id this.required.id}}>{{obj.title}}</option>
-        {{/each}}
-      </select>
-    </div>
-    <div class="item track">
-      <label>
-        {{t "general.isTrack"}}?
-      </label>
-      <ToggleYesno @yes={{track}} @toggle={{action "changeTrack"}} />
-    </div>
-    <div class="item start-date">
-      <label>
-        {{t "general.startDate"}}:
-      </label>
-      <DatePicker
-        @value={{this.startDate}}
-        @onChange={{action "changeStartDate"}}
-        data-test-start-date-picker
-      />
-      {{#if
-        (and
-          (v-get this "startDate" "isInvalid") (includes "startDate" showErrorsFor)
-        )
-      }}
-        <span class="validation-error-message">
-          {{v-get this "startDate" "message"}}
-        </span>
-      {{/if}}
-    </div>
-    <div class="item end-date">
-      <label>
-        {{t "general.endDate"}}:
-      </label>
-      <DatePicker
-        @value={{this.endDate}}
-        @onChange={{action "changeEndDate"}}
-        data-test-end-date-picker
-      />
-      {{#if
-        (and (v-get this "endDate" "isInvalid") (includes "endDate" showErrorsFor))
-      }}
-        <span class="validation-error-message">
-          {{v-get this "endDate" "message"}}
-        </span>
-      {{/if}}
-    </div>
-    <div class="item duration">
-      <label>
-        {{t "general.durationInDays"}}:
-      </label>
-      <input
-        type="text"
-        value={{duration}}
-        oninput={{action (mut duration) value="target.value"}}
-        disabled={{isSaving}}
-        onkeyup={{action "addErrorDisplayFor" "duration"}}
-      >
-      {{#if
-        (and
-          (v-get this "duration" "isInvalid") (includes "duration" showErrorsFor)
-        )
-      }}
-        <span class="validation-error-message">
-          {{v-get this "duration" "message"}}
-        </span>
-      {{/if}}
-    </div>
-    <div class="item clear-dates">
-      <button type="button" {{action "clearDates"}}>
-        {{t "general.clearDates"}}
-      </button>
-    </div>
-    <div class="item selective">
-      <label>
-        {{t "general.isSelective"}}
-        ?
-      </label>
-    </div>
-    <div class="item minimum">
-      <label>
-        {{t "general.minimum"}}:
-      </label>
-      <input
-        type="text"
-        value={{minimum}}
-        oninput={{action (mut minimum) value="target.value"}}
-        disabled={{isSaving}}
-        onkeyup={{action "addErrorDisplayFor" "minimum"}}
-      >
-      {{#if
-        (and (v-get this "minimum" "isInvalid") (includes "minimum" showErrorsFor))
-      }}
-        <span class="validation-error-message">
-          {{v-get this "minimum" "message"}}
-        </span>
-      {{/if}}
-    </div>
-    <div class="item maximum">
-      <label>
-        {{t "general.maximum"}}:
-      </label>
-      <input
-        type="text"
-        value={{maximum}}
-        oninput={{action (mut maximum) value="target.value"}}
-        disabled={{isSaving}}
-        onkeyup={{action "addErrorDisplayFor" "maximum"}}
-      >
-      {{#if
-        (and (v-get this "maximum" "isInvalid") (includes "maximum" showErrorsFor))
-      }}
-        <span class="validation-error-message">
-          {{v-get this "maximum" "message"}}
-        </span>
-      {{/if}}
-    </div>
-    <div class="item academic-level">
-      <label>
-        {{t "general.academicLevel"}}:
-      </label>
-      <select {{on "change" (action "setAcademicLevel")}}>
-        {{#each (sort-by "level" this.academicLevels) as |obj|}}
-          <option value={{obj.id}} selected={{eq obj.id this.academicLevel.id}}>{{obj.name}}</option>
-        {{/each}}
-      </select>
-    </div>
-    <div class="item child-sequence-order">
-      <label>
-        {{t "general.childSequenceOrder"}}:
-      </label>
-      <select {{on "change" (action "setChildSequenceOrder")}}>
-        {{#each this.childSequenceOrderOptions as |obj|}}
-          <option value={{obj.id}} selected={{eq obj.id this.childSequenceOrder.id}}>{{obj.title}}</option>
-        {{/each}}
-      </select>
-    </div>
-    {{#if isInOrderedSequence}}
-      <div class="item order-in-sequence">
-        <label>
-          {{t "general.orderInSequence"}}:
-        </label>
-        <select {{on "change" (action "setOrderInSequence")}}>
-          {{#each this.orderInSequenceOptions as |val|}}
-            <option value={{val}} selected={{eq val this.orderInSequence}}>{{val}}</option>
+<section
+  class="curriculum-inventory-new-sequence-block"
+  data-test-curriculum-inventory-new-sequence-block
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.reload) @parent.course}}
+>
+  <h2 class="title" data-test-title>
+    {{t "general.newSequenceBlock"}}
+  </h2>
+  {{#if this.isLoading}}
+      <LoadingSpinner />
+  {{else}}
+    {{#let (unique-id) as |templateId|}}
+      <div class="form">
+        <div class="item title" data-test-title>
+          <label for="title-{{templateId}}">
+            {{t "general.title"}}:
+          </label>
+          <input
+            id="title-{{templateId}}"
+            type="text"
+            value={{this.title}}
+            disabled={{this.save.isRunning}}
+            placeholder={{t "general.sequenceBlockTitlePlaceholder"}}
+            {{on "keyup" (queue (fn this.addErrorDisplayFor "title") this.saveOrCancel)}}
+            {{on "input" (pick "target.value" (set this.title))}}
+          >
+          {{#each (await (compute this.getErrorsFor "title")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
           {{/each}}
-        </select>
-      </div>
-    {{/if}}
-    <div class="buttons">
-      <button type="button" class="done text" disabled={{or isSaving}} {{action "save"}}>
-        {{#if isSaving}}
-          <LoadingSpinner />
-        {{else}}
-          {{t "general.done"}}
+        </div>
+        <div class="item course" data-test-course>
+          <label for="course-{{templateId}}">
+            {{t "general.course"}}:
+          </label>
+          <select
+            id="course-{{templateId}}"
+            disabled={{this.save.isRunning}}
+            {{on "change" (pick "target.value" this.setCourse)}}
+          >
+            <option value="" selected={{is-empty this.course}}>{{t "general.selectCourse"}}</option>
+            {{#each (sort-by "title" this.linkableCourses) as |obj|}}
+              <option value={{obj.id}} selected={{eq obj this.course}}>{{obj.title}}</option>
+            {{/each}}
+          </select>
+          {{#if this.course}}
+            <span class="details" data-test-course-details>
+              {{t "general.level"}}:
+              {{this.course.level}},
+              {{t "general.startDate"}}:
+              {{moment-format this.course.startDate "YYYY-MM-DD"}},
+              {{t "general.endDate"}}:
+              {{moment-format this.course.endDate "YYYY-MM-DD"}}
+              {{#if this.course.clerkshipType}}
+                -{{t "general.clerkship"}} ({{this.course.clerkshipType.title}})
+              {{/if}}
+            </span>
+          {{/if}}
+        </div>
+        <div class="item description" data-test-description>
+          <label for="description-{{templateId}}">
+            {{t "general.description"}}:
+          </label>
+          <textarea
+            id="description-{{templateId}}"
+            disabled={{this.save.isRunning}}
+            placeholder={{t "general.sequenceBlockDescriptionPlaceholder"}}
+            {{on "input" (pick "target.value" (set this.description))}}
+          >{{this.description}}</textarea>
+        </div>
+        <div class="item required" data-test-required>
+          <label for="required-{{templateId}}">
+            {{t "general.required"}}:
+          </label>
+          <select
+            id="required-{{templateId}}"
+            disabled={{this.save.isRunning}}
+            {{on "change" (pick "target.value" this.setRequired)}}
+          >
+            {{#each this.requiredOptions as |obj|}}
+              <option value={{obj.id}} selected={{eq obj.id this.required.id}}>{{obj.title}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="item track" data-test-track>
+          <label for="is-track-{{templateId}}">
+            {{t "general.isTrack"}}?
+          </label>
+          <ToggleYesno
+            id="is-track-{{templateId}}"
+            @yes={{this.track}}
+            @toggle={{this.changeTrack}}
+          />
+        </div>
+        <div class="item start-date" data-test-startdate>
+          <label for="start-date-{{templateId}}">
+            {{t "general.startDate"}}:
+          </label>
+          <DatePicker
+            id="start-date-{{templateId}}"
+            @value={{this.startDate}}
+            @onChange={{this.changeStartDate}}
+            data-test-start-date-picker
+          />
+          {{#each (await (compute this.getErrorsFor "startDate")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
+        </div>
+        <div class="item end-date" data-test-enddate>
+          <label for="end-date-{{templateId}}">
+            {{t "general.endDate"}}:
+          </label>
+          <DatePicker
+            id="end-date-{{templateId}}"
+            @value={{this.endDate}}
+            @onChange={{this.changeEndDate}}
+            data-test-end-date-picker
+          />
+          {{#each (await (compute this.getErrorsFor "endDate")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
+        </div>
+        <div class="item duration" data-test-duration>
+          <label for="duration-{{templateId}}">
+            {{t "general.durationInDays"}}:
+          </label>
+          <input
+            id="duration-{{templateId}}"
+            type="text"
+            value={{this.duration}}
+            disabled={{this.save.isRunning}}
+            {{on "keyup" (queue (fn this.addErrorDisplayFor "duration") this.saveOrCancel)}}
+            {{on "input" (pick "target.value" (set this.duration))}}
+          >
+          {{#each (await (compute this.getErrorsFor "duration")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
+        </div>
+        <div class="item clear-dates">
+          <button
+            type="button"
+            {{on "click" this.clearDates}}
+            data-test-clear-dates
+          >
+            {{t "general.clearDates"}}
+          </button>
+        </div>
+        <div class="item selective">
+          <span>
+            {{t "general.isSelective"}}
+            ?
+          </span>
+        </div>
+        <div class="item minimum" data-test-minimum>
+          <label for="minimum-{{templateId}}">
+            {{t "general.minimum"}}:
+          </label>
+          <input
+            id="minimum-{{templateId}}"
+            type="text"
+            value={{this.minimum}}
+            disabled={{this.save.isRunning}}
+            {{on "keyup" (queue (fn this.addErrorDisplayFor "minimum") this.saveOrCancel)}}
+            {{on "input" (pick "target.value" (set this.minimum))}}
+          >
+          {{#each (await (compute this.getErrorsFor "minimum")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
+        </div>
+        <div class="item maximum" data-test-maximum>
+          <label for="maximum-{{templateId}}">
+            {{t "general.maximum"}}:
+          </label>
+          <input
+            id="maximum-{{templateId}}"
+            type="text"
+            value={{this.maximum}}
+            disabled={{this.save.isRunning}}
+            {{on "keyup" (queue (fn this.addErrorDisplayFor "maximum") this.saveOrCancel)}}
+            {{on "input" (pick "target.value" (set this.maximum))}}
+          >
+          {{#each (await (compute this.getErrorsFor "maximum")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
+        </div>
+        <div class="item academic-level" data-test-academic-level>
+          <label for="academic-level-{{templateId}}">
+            {{t "general.academicLevel"}}:
+          </label>
+          <select
+            id="academic-level-{{templateId}}"
+            disabled={{this.save.isRunning}}
+            {{on "change" (pick "target.value" this.setAcademicLevel)}}
+          >
+            {{#each (sort-by "level" this.academicLevels) as |obj|}}
+              <option value={{obj.id}} selected={{eq obj.id this.academicLevel.id}}>{{obj.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="item child-sequence-order" data-test-child-sequence-order>
+          <label for="child-sequence-order-{{templateId}}">
+            {{t "general.childSequenceOrder"}}:
+          </label>
+          <select
+            id="child-sequence-order-{{templateId}}"
+            disabled={{this.save.isRunning}}
+            {{on "change" (pick "target.value" this.setChildSequenceOrder)}}
+          >
+            {{#each this.childSequenceOrderOptions as |obj|}}
+              <option value={{obj.id}} selected={{eq obj.id this.childSequenceOrder.id}}>{{obj.title}}</option>
+            {{/each}}
+          </select>
+        </div>
+        {{#if (and @parent (await @parent.isOrdered))}}
+          <div class="item order-in-sequence" data-test-order-in-sequence>
+            <label for="order-in-sequence-{{templateId}}">
+              {{t "general.orderInSequence"}}:
+            </label>
+            <select
+              id="order-in-sequence-{{templateId}}"
+              disabled={{this.save.isRunning}}
+              {{on "change" (pick "target.value" this.setOrderInSequence)}}
+            >
+              {{#each this.orderInSequenceOptions as |val|}}
+                <option value={{val}} selected={{eq val this.orderInSequence}}>{{val}}</option>
+              {{/each}}
+            </select>
+          </div>
         {{/if}}
-      </button>
-      <button type="button" class="cancel text" {{action "cancel"}}>
-        {{t "general.cancel"}}
-      </button>
-    </div>
-  </div>
-{{/if}}
+        <div class="buttons">
+          <button
+            type="button"
+            class="done text"
+            disabled={{this.save.isRunning}}
+            data-test-save
+            {{on "click" (perform this.save)}}
+          >
+            {{#if this.save.isRunning}}
+              <LoadingSpinner />
+            {{else}}
+              {{t "general.done"}}
+            {{/if}}
+          </button>
+          <button
+            type="button"
+            class="cancel text"
+            data-test-cancel
+            {{on "click" @cancel}}
+          >
+            {{t "general.cancel"}}
+          </button>
+        </div>
+      </div>
+    {{/let}}
+  {{/if}}
+</section>
