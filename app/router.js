@@ -128,8 +128,9 @@ Router.map(function () {
   this.route('course-visualize-term', {
     path: 'data/courses/:course_id/terms/:term_id',
   });
+  /* eslint ember/routes-segments-snake-case: 0 */
   this.route('course-visualize-session-type', {
-    path: 'data/courses/:course_id/session-types/:session_type_id',
+    path: 'data/courses/:course_id/session-types/:session-type_id',
   });
   this.route('course-visualize-instructors', {
     path: 'data/courses/:course_id/instructors',
