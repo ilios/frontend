@@ -121,7 +121,7 @@ module('Acceptance | search', function (hooks) {
     assert.equal(currentURL(), '/search');
     await page.searchBox.input(firstInput);
     await page.searchBox.clickIcon();
-    await page.paginationLinks[1].click();
+    await page.paginationLinks.pageLinks[1].click();
     assert.equal(page.globalSearch.searchResults.length, 10);
     assert.equal(page.globalSearch.searchResults[0].courseTitle, '2019 course 11');
     assert.equal(page.searchBox.inputValue, firstInput);
