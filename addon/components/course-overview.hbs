@@ -4,194 +4,203 @@
   {{did-insert (perform this.load) @course}}
   {{did-update (perform this.load) @course}}
 >
-  <div class="course-overview-header">
-    <div class="title">
-      {{t "general.overview"}}
-    </div>
-    <div class="course-overview-actions">
-      <LinkTo @route="course-materials" @model={{@course}} class="materials">
-        <FaIcon
-          @icon="archive"
-          @title={{t "general.learningMaterialsSummary"}}
-          @fixedWidth={{true}}
-        />
-      </LinkTo>
-      <LinkTo
-        @route="print_course"
-        @model={{@course}}
-        @query={{hash unpublished=true}}
-        class="print"
-      >
-        <FaIcon
-          @icon="print"
-          @title={{t "general.printSummary"}}
-          @fixedWidth={{true}}
-        />
-      </LinkTo>
-      {{#if this.showRollover}}
-        <LinkTo @route="course.rollover" @model={{@course}} class="rollover">
+  {{#let (unique-id) as |templateId|}}
+    <div class="course-overview-header">
+      <div class="title">
+        {{t "general.overview"}}
+      </div>
+      <div class="course-overview-actions">
+        <LinkTo @route="course-materials" @model={{@course}} class="materials">
           <FaIcon
-              @icon="random"
-              @fixedWidth={{true}}
-              @title={{t "general.courseRollover"}}
+            @icon="archive"
+            @title={{t "general.learningMaterialsSummary"}}
+            @fixedWidth={{true}}
           />
         </LinkTo>
-      {{/if}}
-      <LinkTo
-        @route="course-visualizations"
-        @model={{@course}}
-        @title={{t "general.courseVisualizations"}}
-      >
-        <FaIcon @icon="chart-bar" />
-      </LinkTo>
-    </div>
-  </div>
-  <div class="course-overview-content">
-    <div class="block courseexternalid">
-      <label>{{t "general.externalId"}}:</label>
-      <span>
-        {{#if @editable}}
-          <EditableField
-            @value={{if this.externalId this.externalId (t "general.clickToEdit")}}
-            @save={{perform this.changeExternalId}}
-            @close={{this.revertExternalIdChanges}}
-            @saveOnEnter={{true}}
-            @closeOnEscape={{true}} as |isSaving|
-          >
-            <Input
-              type="text"
-              @value={{this.externalId}}
-              @key-press={{fn this.addErrorDisplayFor "externalId"}}
-              disabled={{isSaving}}
+        <LinkTo
+          @route="print_course"
+          @model={{@course}}
+          @query={{hash unpublished=true}}
+          class="print"
+        >
+          <FaIcon
+            @icon="print"
+            @title={{t "general.printSummary"}}
+            @fixedWidth={{true}}
+          />
+        </LinkTo>
+        {{#if this.showRollover}}
+          <LinkTo @route="course.rollover" @model={{@course}} class="rollover">
+            <FaIcon
+                @icon="random"
+                @fixedWidth={{true}}
+                @title={{t "general.courseRollover"}}
             />
-            {{#each (await (compute this.getErrorsFor "externalId")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
-          </EditableField>
-        {{else}}
-          {{this.externalId}}&nbsp;
+          </LinkTo>
         {{/if}}
-      </span>
+        <LinkTo
+          @route="course-visualizations"
+          @model={{@course}}
+          @title={{t "general.courseVisualizations"}}
+        >
+          <FaIcon @icon="chart-bar" />
+        </LinkTo>
+      </div>
     </div>
-    <div class="block clerkshiptype">
-      <label>{{t "general.clerkshipType"}}:</label>
-      <span>
-        {{#if @editable}}
-          <EditableField
-            @value={{this.clerkshipTypeTitle}}
-            @save={{this.changeClerkshipType}}
-            @close={{perform this.revertClerkshipTypeChanges}}
-          >
-            <select {{on "change" this.setCourseClerkshipType}}>
-              <option
-                value="null"
-                selected={{is-empty this.selectedClerkshipType}}
+    <div class="course-overview-content">
+      <div class="block courseexternalid">
+        <label for="external-id-{{templateId}}">{{t "general.externalId"}}:</label>
+        <span>
+          {{#if @editable}}
+            <EditableField
+              @value={{if this.externalId this.externalId (t "general.clickToEdit")}}
+              @save={{perform this.changeExternalId}}
+              @close={{this.revertExternalIdChanges}}
+              @saveOnEnter={{true}}
+              @closeOnEscape={{true}} as |isSaving|
+            >
+              <input
+                id="external-id-{{templateId}}"
+                disabled={{isSaving}}
+                type="text"
+                {{on "input" (pick "target.value" (set this.externalId))}}
+                {{on "key-press" (fn this.addErrorDisplayFor "externalId")}}
+              />
+              {{#each (await (compute this.getErrorsFor "externalId")) as |message|}}
+                <span class="validation-error-message">
+                  {{message}}
+                </span>
+              {{/each}}
+            </EditableField>
+          {{else}}
+            {{this.externalId}}&nbsp;
+          {{/if}}
+        </span>
+      </div>
+      <div class="block clerkshiptype">
+        <label for="clerkship-type-{{templateId}}">{{t "general.clerkshipType"}}:</label>
+        <span>
+          {{#if @editable}}
+            <EditableField
+              @value={{this.clerkshipTypeTitle}}
+              @save={{this.changeClerkshipType}}
+              @close={{perform this.revertClerkshipTypeChanges}}
+            >
+              <select
+                id="clerkship-type-{{templateId}}"
+                {{on "change" this.setCourseClerkshipType}}
               >
-                {{t "general.notAClerkship"}}
-              </option>
-              {{#each
-                (sort-by "title" this.clerkshipTypeOptions) as |clerkshipType|
-              }}
                 <option
-                  value={{clerkshipType.id}}
-                  selected={{eq clerkshipType this.selectedClerkshipType
-                  }}
+                  value="null"
+                  selected={{is-empty this.selectedClerkshipType}}
                 >
-                  {{clerkshipType.title}}
+                  {{t "general.notAClerkship"}}
                 </option>
+                {{#each
+                  (sort-by "title" this.clerkshipTypeOptions) as |clerkshipType|
+                }}
+                  <option
+                    value={{clerkshipType.id}}
+                    selected={{eq clerkshipType this.selectedClerkshipType
+                    }}
+                  >
+                    {{clerkshipType.title}}
+                  </option>
+                {{/each}}
+              </select>
+            </EditableField>
+          {{else if @course.clerkshipType}}
+            {{@course.clerkshipType.title}}
+          {{else}}
+            {{t "general.notAClerkship"}}
+          {{/if}}
+        </span>
+      </div>
+      <div class="block coursestartdate">
+        <label>{{t "general.start"}}:</label>
+        <span>
+          {{#if @editable}}
+            <EditableField
+              @value={{format-date @course.startDate}}
+              @save={{perform this.changeStartDate}}
+              @close={{this.revertStartDateChanges}}
+            >
+              <DatePicker
+                @value={{this.startDate}}
+                @onChange={{pipe (set this.startDate) (fn this.addErrorDisplayFor "startDate")}}
+              />
+              {{#each (await (compute this.getErrorsFor "startDate")) as |message|}}
+                <span class="validation-error-message">
+                  {{message}}
+                </span>
               {{/each}}
-            </select>
-          </EditableField>
-        {{else if @course.clerkshipType}}
-          {{@course.clerkshipType.title}}
-        {{else}}
-          {{t "general.notAClerkship"}}
-        {{/if}}
-      </span>
-    </div>
-    <div class="block coursestartdate">
-      <label>{{t "general.start"}}:</label>
-      <span>
-        {{#if @editable}}
-          <EditableField
-            @value={{format-date @course.startDate}}
-            @save={{perform this.changeStartDate}}
-            @close={{this.revertStartDateChanges}}
-          >
-            <DatePicker
-              @value={{this.startDate}}
-              @onChange={{pipe (set this.startDate) (fn this.addErrorDisplayFor "startDate")}}
-            />
-            {{#each (await (compute this.getErrorsFor "startDate")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
-          </EditableField>
-        {{else}}
-          {{format-date @course.startDate}}&nbsp;
-        {{/if}}
-      </span>
-    </div>
-    <div class="block courseenddate">
-      <label>{{t "general.end"}}:</label>
-      <span>
-        {{#if @editable}}
-          <EditableField
-            @value={{format-date @course.endDate}}
-            @save={{perform this.changeEndDate}}
-            @close={{this.revertEndDateChanges}}
-          >
-            <DatePicker
-              @value={{this.endDate}}
-              @onChange={{pipe (set this.endDate) (fn this.addErrorDisplayFor "endDate")}}
-            />
-            {{#each (await (compute this.getErrorsFor "endDate")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
-          </EditableField>
-        {{else}}
-          {{format-date @course.endDate}}&nbsp;
-        {{/if}}
-      </span>
-    </div>
-    <div class="block courselevel">
-      <label>{{t "general.level"}}:</label>
-      <span>
-        {{#if @editable}}
-          <EditableField
-            @value={{this.level}}
-            @save={{this.changeLevel}}
-            @close={{this.revertLevelChanges}}
-          >
-            <select {{on "change" this.setLevel}}>
-              {{#each this.levelOptions as |levelOption|}}
-                <option
-                  value={{levelOption}}
-                  selected={{eq levelOption this.level
-                  }}
-                >
-                  {{levelOption}}
-                </option>
+            </EditableField>
+          {{else}}
+            {{format-date @course.startDate}}&nbsp;
+          {{/if}}
+        </span>
+      </div>
+      <div class="block courseenddate">
+        <label>{{t "general.end"}}:</label>
+        <span>
+          {{#if @editable}}
+            <EditableField
+              @value={{format-date @course.endDate}}
+              @save={{perform this.changeEndDate}}
+              @close={{this.revertEndDateChanges}}
+            >
+              <DatePicker
+                @value={{this.endDate}}
+                @onChange={{pipe (set this.endDate) (fn this.addErrorDisplayFor "endDate")}}
+              />
+              {{#each (await (compute this.getErrorsFor "endDate")) as |message|}}
+                <span class="validation-error-message">
+                  {{message}}
+                </span>
               {{/each}}
-            </select>
-          </EditableField>
-        {{else}}
-          {{this.level}}&nbsp;
-        {{/if}}
-      </span>
+            </EditableField>
+          {{else}}
+            {{format-date @course.endDate}}&nbsp;
+          {{/if}}
+        </span>
+      </div>
+      <div class="block courselevel">
+        <label for="level-{{templateId}}">{{t "general.level"}}:</label>
+        <span>
+          {{#if @editable}}
+            <EditableField
+              @value={{this.level}}
+              @save={{this.changeLevel}}
+              @close={{this.revertLevelChanges}}
+            >
+              <select
+                id="level-{{templateId}}"
+                {{on "change" this.setLevel}}
+              >
+                {{#each this.levelOptions as |levelOption|}}
+                  <option
+                    value={{levelOption}}
+                    selected={{eq levelOption this.level
+                    }}
+                  >
+                    {{levelOption}}
+                  </option>
+                {{/each}}
+              </select>
+            </EditableField>
+          {{else}}
+            {{this.level}}&nbsp;
+          {{/if}}
+        </span>
+      </div>
+      <div class="block">
+        <label>{{t "general.universalLocator"}}:</label>
+        <span class="universallocator">
+          <strong>
+            {{concat this.universalLocator @course.id}}
+          </strong>
+        </span>
+      </div>
     </div>
-    <div class="block">
-      <label>{{t "general.universalLocator"}}:</label>
-      <span class="universallocator">
-        <strong>
-          {{concat this.universalLocator @course.id}}
-        </strong>
-      </span>
-    </div>
-  </div>
+  {{/let}}
 </section>
