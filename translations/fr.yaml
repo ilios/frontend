@@ -227,6 +227,7 @@ general:
   parentGroup: "Mère groupe"
   parentGroups: "Mères groupes"
   parentObjectives: "Objectifs Mères"
+  pickADate: "Choisis une date"
   prerequisites: "Conditions préalables"
   preWork: "Préalable"
   printSummary: "Empreinte Résumé"

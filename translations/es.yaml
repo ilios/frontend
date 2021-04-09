@@ -227,6 +227,7 @@ general:
   parentGroup: "Principal grupo"
   parentGroups: "Grupos principales"
   parentObjectives: "Objetivos de Matriz"
+  pickADate: "Elija una fecha"
   prerequisites: "Prerrequisitos"
   preWork: "Pre Trabajo"
   printSummary: "Sumario Printado"
