@@ -30,6 +30,7 @@ general:
   backToDashboard: "Detrás a Tablero"
   backToSessionList: "Atrás a La Lista de Sesiones"
   backToTitle: "Atrás a {title}"
+  beforeOrAfterMidday: "Antes o después del mediodía"
   calendar: Calendario
   campusNameOfRecord: "Nombre de registro del registrador"
   cancel: Cancelar
@@ -126,6 +127,7 @@ general:
   groups: Grupos
   hideCalendar: "Esconda Calendario"
   hideFilters: "Esconde Filtros"
+  hour: Hora
   hours: Horas
   icsInstructions: "Para agregar tu calendario a otra aplicación o servicio, utiliza esta URL.  Esta URL es como una contraseña.  ¡Cualquiera persona que la sepa puede ver tu calendario!"
   ilm: ILM
@@ -170,6 +172,7 @@ general:
   meshManageTitle: "Administrar MeSH"
   meshSearchPlaceholder: "Buscar MeSH"
   meshTerms: "Terminos de MeSH"
+  minute: Minuto
   minutes: Minutos
   missingCohortMessage: "Favor de agregar por lo menos un Clase de La Graduación a este curso."
   missingCompetenciesMessage: "Favor de agregar por lo menos una competencia para este año de programa."

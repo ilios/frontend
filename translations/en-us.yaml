@@ -30,6 +30,7 @@ general:
   backToDashboard: "Back to Dashboard"
   backToSessionList: "Back to Session List"
   backToTitle: "Back to {title}"
+  beforeOrAfterMidday: "Before or after midday"
   calendar: Calendar
   campusNameOfRecord: "Campus name of record"
   cancel: Cancel
@@ -126,6 +127,7 @@ general:
   groups: Groups
   hideCalendar: "Hide Calendar"
   hideFilters: "Hide Filters"
+  hour: Hour
   hours: Hours
   icsInstructions: "To add your Ilios calendar to another application or service, use this URL.  This URL is like a password. Anyone who knows it can view your calendar!"
   ilm: ILM
@@ -170,6 +172,7 @@ general:
   meshManageTitle: "Manage MeSH"
   meshSearchPlaceholder: "Search MeSH"
   meshTerms: "MeSH Terms"
+  minute: Minute
   minutes: Minutes
   missingCohortMessage: "Please add at least one cohort to this course."
   missingCompetenciesMessage: "Please add at least one competency to this program year."
