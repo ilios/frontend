@@ -191,10 +191,10 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.equal(page.learnerGroupList.groups.length, 1);
     assert.equal(page.learnerGroupList.groups[0].title, 'None');
     await page.toggleNewLearnerGroupForm();
-    assert.ok(page.newLearnerGroup.isVisible);
-    await page.newLearnerGroup.title(newTitle);
-    assert.notOk(page.newLearnerGroup.willFill);
-    await page.newLearnerGroup.save();
+    assert.ok(page.newLearnerGroup.single.isVisible);
+    await page.newLearnerGroup.single.title(newTitle);
+    assert.notOk(page.newLearnerGroup.single.willFill);
+    await page.newLearnerGroup.single.save();
 
     assert.equal(page.savedResult, `${newTitle} Saved Successfully`);
     assert.equal(page.learnerGroupList.groups.length, 1);
@@ -404,11 +404,11 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.equal(page.learnerGroupList.groups.length, 1);
     assert.equal(page.learnerGroupList.groups[0].title, 'None');
     await page.toggleNewLearnerGroupForm();
-    assert.ok(page.newLearnerGroup.isVisible);
-    await page.newLearnerGroup.title(newTitle);
-    await page.newLearnerGroup.fillWithCohort();
-    assert.ok(page.newLearnerGroup.willFill);
-    await page.newLearnerGroup.save();
+    assert.ok(page.newLearnerGroup.single.isVisible);
+    await page.newLearnerGroup.single.title(newTitle);
+    await page.newLearnerGroup.single.fillWithCohort();
+    assert.ok(page.newLearnerGroup.single.willFill);
+    await page.newLearnerGroup.single.save();
 
     assert.equal(page.savedResult, `${newTitle} Saved Successfully`);
     assert.equal(page.learnerGroupList.groups.length, 1);
