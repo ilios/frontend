@@ -1,8 +1,12 @@
 .curriculum-inventory-reports {
   @include main-list;
 
-  .filter-tools {
+  .filters {
     @include main-list-filters;
+
+    @include for-laptop-and-up {
+      justify-content: flex-start;
+    }
 
     .schoolsfilter,
     .programsfilter {
