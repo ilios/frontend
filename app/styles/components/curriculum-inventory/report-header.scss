@@ -20,21 +20,16 @@
     }
   }
 
+  h2 {
+    @include ilios-heading-h4;
+  }
+
   .title {
-    display: flex;
-    flex-direction: column;
+    @include ilios-heading-h4;
+    flex-grow: 2;
 
-    @include for-tablet-and-up {
-      flex-direction: row;
-    }
-
-    .editable {
-      display: block;
-      font-size: 1.5rem;
-
-      @include for-laptop-and-up {
-        display: inline;
-      }
+    input {
+      width: 90%;
     }
   }
 }
