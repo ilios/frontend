@@ -1,4 +1,6 @@
 <input
+  aria-label={{t "general.pickADate"}}
+  data-test-date-picker
   {{did-insert (perform this.setupPicker)}}
   {{did-update (perform this.updatePicker) @value @maxDate @minDate}}
   ...attributes
