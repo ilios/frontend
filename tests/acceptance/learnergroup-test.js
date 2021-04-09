@@ -109,8 +109,8 @@ module('Acceptance | Learnergroup', function (hooks) {
     assert.ok(page.subgroups.newForm.singleGroupSelected);
     assert.notOk(page.subgroups.newForm.multipleGroupSelected);
     await page.subgroups.newForm.chooseMultipleGroups();
-    await page.subgroups.newForm.setNumberOfGroups(5);
-    await page.subgroups.newForm.save();
+    await page.subgroups.newForm.multiple.setNumberOfGroups(5);
+    await page.subgroups.newForm.multiple.save();
 
     assert.equal(page.subgroups.groups.length, 7);
     assert.equal(page.subgroups.groups[0].title, 'learner group 0 1');
@@ -124,8 +124,8 @@ module('Acceptance | Learnergroup', function (hooks) {
     // add two more subgroups
     await page.subgroups.toggleNewForm();
     await page.subgroups.newForm.chooseMultipleGroups();
-    await page.subgroups.newForm.setNumberOfGroups(2);
-    await page.subgroups.newForm.save();
+    await page.subgroups.newForm.multiple.setNumberOfGroups(2);
+    await page.subgroups.newForm.multiple.save();
 
     assert.equal(page.subgroups.groups.length, 9);
     assert.equal(page.subgroups.groups[0].title, 'learner group 0 1');

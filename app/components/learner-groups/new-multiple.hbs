@@ -1,0 +1,38 @@
+{{#let (unique-id) as |templateId|}}
+  <div class="form" data-test-learner-group-new-multiple>
+    <div class="item">
+      <label for="groups-{{templateId}}">
+        {{t "general.numberOfGroups"}}:
+      </label>
+      <input
+        id="groups-{{templateId}}"
+        type="text"
+        disabled={{this.save.isRunning}}
+        placeholder={{t "general.numberOfGroupsToGenerate"}}
+        value={{this.numberOfGroups}}
+        {{on "focusout" (fn this.addErrorDisplayFor "numberOfGroups")}}
+        {{on "keyup" this.keyboard}}
+        {{on "keyup" (fn this.addErrorDisplayFor "numberOfGroups")}}
+        {{on "input" (pick "target.value" (set this.numberOfGroups))}}
+        data-test-number-of-groups
+      >
+      {{#each (await (compute this.getErrorsFor "numberOfGroups")) as |message|}}
+        <span class="validation-error-message">
+          {{message}}
+        </span>
+      {{/each}}
+    </div>
+    <div class="buttons">
+      <button type="button" class="done text" {{on "click" (perform this.save)}} data-test-save>
+        {{#if this.save.isRunning}}
+          <LoadingSpinner />
+        {{else}}
+          {{t "general.done"}}
+        {{/if}}
+      </button>
+      <button type="button" class="cancel text" {{on "click" @cancel}} data-test-cancel>
+        {{t "general.cancel"}}
+      </button>
+    </div>
+  </div>
+{{/let}}

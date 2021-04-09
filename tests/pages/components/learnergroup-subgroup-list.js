@@ -3,11 +3,11 @@ import {
   create,
   collection,
   hasClass,
-  fillable,
   isPresent,
   isVisible,
   text,
 } from 'ember-cli-page-object';
+import newForm from './learner-groups/new';
 
 const definition = {
   scope: '[data-test-learnergroup-subgroup-list]',
@@ -44,18 +44,7 @@ const definition = {
     canCopyWithLearners: isPresent('[data-test-confirm-with-learners]'),
     canCopyWithoutLearners: isPresent('[data-test-confirm-without-learners]'),
   },
-  newForm: {
-    scope: '[data-test-new-learner-group]',
-    title: fillable('[data-test-title]'),
-    save: clickable('.done'),
-    cancel: clickable('.cancel'),
-    isVisible: isVisible(),
-    singleGroupSelected: isPresent('[data-test-first-button].active'),
-    multipleGroupSelected: isPresent('[data-test-second-button].active'),
-    chooseSingleGroups: clickable('[data-test-first-button]'),
-    chooseMultipleGroups: clickable('[data-test-second-button]'),
-    setNumberOfGroups: fillable('[data-test-number-of-groups]'),
-  },
+  newForm,
   emptyListRowIsVisible: isVisible('[data-test-empty-list]'),
   savedResult: text('.saved-result'),
   toggleNewForm: clickable('[data-test-expand-collapse-button] button'),

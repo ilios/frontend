@@ -216,9 +216,9 @@ module('Acceptance | Learner Groups', function (hooks) {
     assert.equal(page.learnerGroupList.groups.length, 1);
     assert.equal(page.learnerGroupList.groups[0].title, 'learner group 0');
     await page.toggleNewLearnerGroupForm();
-    assert.ok(page.newLearnerGroup.isVisible);
-    await page.newLearnerGroup.cancel();
-    assert.notOk(page.newLearnerGroup.isVisible);
+    assert.ok(page.newLearnerGroup.single.isVisible);
+    await page.newLearnerGroup.single.cancel();
+    assert.notOk(page.newLearnerGroup.single.isVisible);
 
     assert.equal(page.learnerGroupList.groups.length, 1);
     assert.equal(page.learnerGroupList.groups[0].title, 'learner group 0');

@@ -142,8 +142,8 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
     assert.equal(component.groups.length, 1);
     assert.equal(component.groups[0].title, 'first');
     await component.toggleNewForm();
-    await component.newForm.title(newTitle);
-    await component.newForm.save();
+    await component.newForm.single.title(newTitle);
+    await component.newForm.single.save();
     assert.equal(component.savedResult, newTitle + ' Saved Successfully');
 
     assert.equal(component.groups.length, 2);
@@ -178,8 +178,8 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
     assert.equal(component.groups[0].title, 'group 1');
     await component.toggleNewForm();
     await component.newForm.chooseMultipleGroups();
-    await component.newForm.setNumberOfGroups(1);
-    await component.newForm.save();
+    await component.newForm.multiple.setNumberOfGroups(1);
+    await component.newForm.multiple.save();
 
     assert.equal(component.groups.length, 2);
     assert.equal(component.groups[1].title, 'group 2');
@@ -210,8 +210,8 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
     assert.equal(component.groups.length, 0);
     await component.toggleNewForm();
     await component.newForm.chooseMultipleGroups();
-    await component.newForm.setNumberOfGroups(1);
-    await component.newForm.save();
+    await component.newForm.multiple.setNumberOfGroups(1);
+    await component.newForm.multiple.save();
 
     assert.equal(component.groups.length, 1);
     assert.equal(component.groups[0].title, expectedGroupTitle);
