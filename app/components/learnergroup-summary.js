@@ -15,7 +15,7 @@ export default class LearnergroupSummaryComponent extends Component {
   @tracked currentGroupsSaved = 0;
   @tracked learnerGroupId = null;
   @tracked learnerGroupTitle = null;
-  @Length(2, 100) @tracked location = null;
+  @tracked location = null;
   @IsURL() @Length(2, 2000) @tracked url = null;
   @tracked topLevelGroupTitle = null;
   @tracked totalGroupsToSave = 0;
