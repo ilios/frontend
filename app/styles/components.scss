@@ -41,7 +41,6 @@
 @import 'components/new-instructorgroup';
 @import 'components/new-learnergroup';
 @import 'components/new-myreport';
-@import 'components/new-program';
 @import 'components/new-user';
 @import 'components/pagedlist-controls';
 @import 'components/pagination-links';
@@ -98,6 +97,7 @@
 
 @import 'components/program/root';
 @import 'components/program/header';
+@import 'components/program/new';
 
 @import 'components/program-year/collapsed-objectives';
 @import 'components/program-year/competencies';

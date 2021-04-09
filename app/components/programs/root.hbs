@@ -42,7 +42,7 @@
 
     <div class="new">
       {{#if this.showNewProgramForm}}
-        <NewProgram
+        <Program::New
           @save={{perform this.saveNewProgram}}
           @cancel={{set this.showNewProgramForm false}}
         />

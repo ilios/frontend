@@ -10,16 +10,15 @@
   .form {
     @include ilios-form;
 
-    .item {
+    .title {
       @include ilios-form-item;
+      input {
+        min-width: 400px;
+      }
     }
 
     .buttons {
       @include ilios-form-buttons;
-    }
-
-    .newprogram-title input {
-      min-width: 400px;
     }
   }
 }

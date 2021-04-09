@@ -97,7 +97,7 @@
     </div>
     <section class="new">
       {{#if this.showNewLearnerGroupForm}}
-        <NewLearnergroup
+        <LearnerGroups::New
           @save={{action "saveNewLearnerGroup"}}
           @cancel={{action "cancel"}}
           @fillModeSupported={{true}}

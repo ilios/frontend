@@ -23,7 +23,7 @@
   <div class="learnergroup-subgroup-list-content">
     <section class="learnergroup-subgroup-list-new">
       {{#if showNewLearnerGroupForm}}
-        <NewLearnergroup
+        <LearnerGroups::New
           @save={{action "saveNewLearnerGroup"}}
           @cancel={{action (toggle "showNewLearnerGroupForm" this)}}
           @generateNewLearnerGroups={{action "generateNewLearnerGroups"}}

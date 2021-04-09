@@ -1,35 +1,40 @@
 <div class="pagination-links" data-test-pagination-links ...attributes>
   {{#if (gt @results.length @size)}}
-    <span
-      class="prev-link link clickable {{if this.disablePrev "inactive"}}"
-      role="button"
-      {{action "selectPage" -1}}
+    <button
+      type="button"
+      class="link-button prev"
+      {{on "click" (fn this.selectPage -1)}}
+      disabled={{this.disablePrev}}
+      data-test-prev
     >
       <FaIcon @icon="angle-left" />
       {{t "general.prev"}}
-    </span>
+    </button>
     {{#each this.pages as |pageNumber|}}
       {{#if (eq pageNumber "...")}}
-        <span class="ellipsis">
-          . . .
-        </span>
+        <FaIcon @icon="ellipsis-h" />
       {{else}}
         <button
           type="button"
-          class="page-button {{if (eq @page pageNumber) "inactive"}}"
-          {{action @onSelectPage pageNumber}}
+          class="page-button"
+          disabled={{eq @page pageNumber}}
+          {{on "click" (fn @onSelectPage pageNumber)}}
+          data-test-page-button
+          data-test-page-{{pageNumber}}
         >
           {{pageNumber}}
         </button>
       {{/if}}
     {{/each}}
-    <span
-      class="next-link link clickable {{if this.disableNext "inactive"}}"
-      role="button"
-      {{action "selectPage" 1}}
+    <button
+      type="button"
+      class="link-button next"
+      disabled={{this.disableNext}}
+      {{on "click" (fn this.selectPage 1)}}
+      data-test-next
     >
       {{t "general.next"}}
       <FaIcon @icon="angle-right" />
-    </span>
+    </button>
   {{/if}}
 </div>

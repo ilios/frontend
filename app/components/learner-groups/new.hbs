@@ -1,7 +1,7 @@
 <div class="new-learnergroup" data-test-new-learner-group ...attributes>
   <div class="detail-content">
-    {{#if multiModeSupported}}
-      <div class="multi-mode-chooser">
+    {{#if @multiModeSupported}}
+      <div class="multi-mode-chooser" data-test-multi-chooser>
         <label>
           {{t "general.createNew"}}:
         </label>
@@ -18,15 +18,15 @@
       </h4>
     {{/if}}
     {{#if this.singleMode}}
-      <NewLearnergroupSingle
-        @save={{save}}
-        @cancel={{cancel}}
-        @fillModeSupported={{fillModeSupported}}
+      <LearnerGroups::NewSingle
+        @save={{@save}}
+        @cancel={{@cancel}}
+        @fillModeSupported={{@fillModeSupported}}
       />
     {{else}}
-      <NewLearnergroupMultiple
-        @generateNewLearnerGroups={{action "generateNewLearnerGroups"}}
-        @cancel={{cancel}}
+      <LearnerGroups::NewMultiple
+        @generateNewLearnerGroups={{@generateNewLearnerGroups}}
+        @cancel={{@cancel}}
       />
     {{/if}}
   </div>
