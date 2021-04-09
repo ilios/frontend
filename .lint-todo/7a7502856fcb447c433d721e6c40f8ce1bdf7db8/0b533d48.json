@@ -1,0 +1,1 @@
+{"engine":"ember-template-lint","filePath":"addon/components/course-rollover.hbs","ruleId":"no-passed-in-event-handlers","line":86,"column":12,"createdDate":1617951600000,"warnDate":1620543600000,"errorDate":1623135600000}
