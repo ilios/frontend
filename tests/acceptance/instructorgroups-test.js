@@ -117,8 +117,8 @@ module('Acceptance | Instructor Groups', function (hooks) {
       await page.visit();
       const newTitle = 'new test title';
       await page.toggleNewInstructorGroupForm();
-      await page.newInstructorGroupForm.title(newTitle);
-      await page.newInstructorGroupForm.save();
+      await page.newInstructorGroupForm.title.set(newTitle);
+      await page.newInstructorGroupForm.done.click();
       assert.equal(page.savedResult, newTitle + ' Saved Successfully');
       assert.equal(page.instructorGroups().count, 1);
       assert.equal(page.instructorGroups(0).title, newTitle);
@@ -137,7 +137,7 @@ module('Acceptance | Instructor Groups', function (hooks) {
       assert.equal(page.instructorGroups(0).title, 'instructor group 0');
       await page.toggleNewInstructorGroupForm();
       assert.ok(page.newInstructorGroupForm.isVisible);
-      await page.newInstructorGroupForm.cancel();
+      await page.newInstructorGroupForm.cancel.click();
       assert.notOk(page.newInstructorGroupForm.isVisible);
       assert.equal(page.instructorGroups().count, 1);
       assert.equal(page.instructorGroups(0).title, 'instructor group 0');

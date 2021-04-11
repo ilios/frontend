@@ -45,7 +45,7 @@
     </div>
     <section class="new">
       {{#if this.showNewInstructorGroupForm}}
-        <NewInstructorgroup
+        <InstructorGroups::New
           @currentSchool={{this.selectedSchool}}
           @save={{action "saveNewInstructorGroup"}}
           @cancel={{action "toggleNewInstructorGroupForm"}}

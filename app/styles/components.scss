@@ -38,7 +38,6 @@
 @import 'components/my-profile';
 @import 'components/new-course';
 @import 'components/new-directory-user';
-@import 'components/new-instructorgroup';
 @import 'components/new-learnergroup';
 @import 'components/new-myreport';
 @import 'components/new-user';
@@ -90,6 +89,8 @@
 @import 'components/visualizer-program-year-competencies';
 @import 'components/visualizer-session-type-terms';
 @import 'components/visualizer-session-type-vocabularies';
+
+@import 'components/instructor-groups/new';
 
 @import 'components/programs/root';
 @import 'components/programs/list';

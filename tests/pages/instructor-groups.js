@@ -9,6 +9,7 @@ import {
   text,
   visitable,
 } from 'ember-cli-page-object';
+import newInstructorGroupForm from './components/instructor-groups/new';
 
 export default create({
   scope: '[data-test-instructor-groups-list]',
@@ -35,13 +36,7 @@ export default create({
       canBeDeleted: isPresent('.remove', { scope: 'td:eq(3)' }),
     },
   }),
-  newInstructorGroupForm: {
-    scope: '[data-test-new-instructor-group]',
-    title: fillable('[data-test-title]'),
-    save: clickable('.done'),
-    cancel: clickable('.cancel'),
-    isVisible: isVisible(),
-  },
+  newInstructorGroupForm,
   confirmInstructorGroupRemoval: clickable(
     '[data-test-instructor-groups-list] .confirm-removal button.remove'
   ),

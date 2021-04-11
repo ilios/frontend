@@ -1,4 +1,4 @@
-.new-instructorgroup {
+.new-instructor-group {
   border: 1px solid $header-grey;
   margin: .5rem;
   padding: 1rem;
@@ -18,7 +18,7 @@
       @include ilios-form-buttons;
     }
 
-    .newinstructorgroup-title input {
+    .title input {
       min-width: 400px;
     }
   }
