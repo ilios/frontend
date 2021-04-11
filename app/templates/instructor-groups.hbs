@@ -1,77 +1,8 @@
 {{page-title (t "general.instructorGroups")}}
-<section class="instructorgroups-list" data-test-instructor-groups-list>
-  <div class="filters">
-    <div class="schoolsfilter" data-test-school-filter>
-      <FaIcon @icon="university" @fixedWidth={{true}} />
-      {{#if this.hasMoreThanOneSchool}}
-        <select onchange={{action "changeSelectedSchool" value="target.value"}}>
-          {{#each (sort-by "title" @model.schools) as |school|}}
-            <option
-              value={{school.id}}
-              selected={{is-equal school this.selectedSchool}}
-            >
-              {{school.title}}
-            </option>
-          {{/each}}
-        </select>
-      {{else}}
-        {{this.selectedSchool.title}}
-      {{/if}}
-    </div>
-    <div class="titlefilter">
-      <input
-        value={{this.titleFilter}}
-        oninput={{action (perform this.changeTitleFilter) value="target.value"}}
-        placeholder={{t "general.instructorGroupTitleFilterPlaceholder"}}
-        data-test-title-filter
-      >
-    </div>
-  </div>
-  <section class="instructorgroups">
-    <div class="header">
-      <div class="title">
-        <h2>
-          {{t "general.instructorGroups"}}
-        </h2>
-      </div>
-      <div class="actions">
-        {{#if (await this.canCreate)}}
-          <ExpandCollapseButton
-            @value={{this.showNewInstructorGroupForm}}
-            @action={{action "toggleNewInstructorGroupForm"}}
-          />
-        {{/if}}
-      </div>
-    </div>
-    <section class="new">
-      {{#if this.showNewInstructorGroupForm}}
-        <InstructorGroups::New
-          @currentSchool={{this.selectedSchool}}
-          @save={{action "saveNewInstructorGroup"}}
-          @cancel={{action "toggleNewInstructorGroupForm"}}
-        />
-      {{/if}}
-      {{#if this.newInstructorGroup}}
-        <div class="saved-result">
-          <LinkTo @route="instructorGroup" @model={{this.newInstructorGroup}}>
-            <FaIcon @icon="external-link-square-alt" />
-            {{this.newInstructorGroup.title}}
-          </LinkTo>
-          {{t "general.savedSuccessfully"}}
-        </div>
-      {{/if}}
-    </section>
-    <div class="list" data-test-instructor-groups-list>
-      {{#if (is-fulfilled this.filteredInstructorGroups)}}
-        <InstructorgroupList
-          @canDelete={{await this.canDelete}}
-          @instructorGroups={{await this.filteredInstructorGroups}}
-          @query={{this.titleFilter}}
-          @remove={{action "removeInstructorGroup"}}
-        />
-      {{else}}
-        <PulseLoader />
-      {{/if}}
-    </div>
-  </section>
-</section>
+<InstructorGroups::Root
+  @setTitleFilter={{perform this.changeTitleFilter}}
+  @titleFilter={{this.titleFilter}}
+  @setSchoolId={{set this.schoolId}}
+  @schoolId={{this.schoolId}}
+  @schools={{this.model}}
+/>

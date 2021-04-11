@@ -1,9 +1,7 @@
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-import { hash } from 'rsvp';
 
 export default class InstructorGroupsRoute extends Route {
-  @service currentUser;
   @service store;
   @service session;
 
@@ -18,10 +16,6 @@ export default class InstructorGroupsRoute extends Route {
   }
 
   async model() {
-    const user = await this.currentUser.getModel();
-    return hash({
-      schools: this.store.findAll('school'),
-      primarySchool: user.school,
-    });
+    return this.store.findAll('school');
   }
 }

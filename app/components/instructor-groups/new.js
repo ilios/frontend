@@ -6,7 +6,7 @@ import { dropTask } from 'ember-concurrency';
 import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
 
 @validatable
-export default class instructorGroupsNewComponent extends Component {
+export default class InstructorGroupsNewComponent extends Component {
   @service store;
   @tracked @Length(3, 60) @NotBlank() title;
 
@@ -20,7 +20,6 @@ export default class instructorGroupsNewComponent extends Component {
     this.removeErrorDisplayFor('title');
     const instructorGroup = this.store.createRecord('instructor-group', {
       title: this.title,
-      school: this.args.currentSchool,
     });
     yield this.args.save(instructorGroup);
   }
