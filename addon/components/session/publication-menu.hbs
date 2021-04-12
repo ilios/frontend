@@ -13,7 +13,7 @@
     type="button"
     data-test-toggle
     {{on "click" (toggle "isOpen" this)}}
-    {{on "keydown" this.toggleMenu}}
+    {{on "keyup" this.toggleMenu}}
   >
     <FaIcon @icon={{this.icon}} />
     <span>
@@ -35,7 +35,7 @@
           tabindex="-1"
           type="button"
           {{on "click" this.publish}}
-          {{on "keydown" this.moveFocus}}
+          {{on "keyup" this.moveFocus}}
           {{on "mouseenter" this.clearFocus}}
           data-test-publish-as-is
         >
@@ -49,7 +49,7 @@
           tabindex="-1"
           type="button"
           {{on "click" this.publish}}
-          {{on "keydown" this.moveFocus}}
+          {{on "keyup" this.moveFocus}}
           {{on "mouseenter" this.clearFocus}}
           data-test-publish
         >
@@ -63,7 +63,7 @@
           tabindex="-1"
           type="button"
           {{on "click" this.scrollToSessionPublication}}
-          {{on "keydown" this.moveFocus}}
+          {{on "keyup" this.moveFocus}}
           {{on "mouseenter" this.clearFocus}}
           data-test-review
         >
@@ -80,7 +80,7 @@
           tabindex="-1"
           type="button"
           {{on "click" this.publishAsTbd}}
-          {{on "keydown" this.moveFocus}}
+          {{on "keyup" this.moveFocus}}
           {{on "mouseenter" this.clearFocus}}
           data-test-tbd
         >
@@ -94,7 +94,7 @@
           tabindex="-1"
           type="button"
           {{on "click" this.unpublish}}
-          {{on "keydown" this.moveFocus}}
+          {{on "keyup" this.moveFocus}}
           {{on "mouseenter" this.clearFocus}}
           data-test-un-publish
         >
