@@ -25,6 +25,10 @@
     }
   }
 
+  .link-button {
+    @include ilios-link-button;
+  }
+
   .pre-work {
     h2 {
       @include ilios-heading-h5;
