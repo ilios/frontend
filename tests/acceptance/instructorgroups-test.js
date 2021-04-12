@@ -30,11 +30,11 @@ module('Acceptance | Instructor Groups', function (hooks) {
       this.server.create('session', {
         courseId: 2,
       });
-      const firstInstructorgroup = this.server.create('instructorGroup', {
+      const firstInstructorGroup = this.server.create('instructorGroup', {
         school: this.school,
         userIds: [2, 3, 4, 5, 6],
       });
-      const secondInstructorgroup = this.server.create('instructorGroup', {
+      const secondInstructorGroup = this.server.create('instructorGroup', {
         school: this.school,
       });
       this.server.create('offering', {
@@ -48,67 +48,67 @@ module('Acceptance | Instructor Groups', function (hooks) {
 
       assert.expect(7);
       await page.visit();
-      assert.equal(page.instructorGroups().count, 2);
-      assert.equal(page.instructorGroups(0).title, firstInstructorgroup.title);
-      assert.equal(page.instructorGroups(0).members, 5);
-      assert.equal(page.instructorGroups(0).courses, 2);
-      assert.equal(page.instructorGroups(1).title, secondInstructorgroup.title);
-      assert.equal(page.instructorGroups(1).members, 0);
-      assert.equal(page.instructorGroups(1).courses, 0);
+      assert.equal(page.list.items.length, 2);
+      assert.equal(page.list.items[0].title, firstInstructorGroup.title);
+      assert.equal(page.list.items[0].users, 5);
+      assert.equal(page.list.items[0].courses, 2);
+      assert.equal(page.list.items[1].title, secondInstructorGroup.title);
+      assert.equal(page.list.items[1].users, 0);
+      assert.equal(page.list.items[1].courses, 0);
     });
 
     test('filters by title', async function (assert) {
       this.server.create('school');
-      const firstInstructorgroup = this.server.create('instructorGroup', {
+      const firstInstructorGroup = this.server.create('instructorGroup', {
         title: 'specialfirstinstructorgroup',
         school: this.school,
       });
-      const secondInstructorgroup = this.server.create('instructorGroup', {
+      const secondInstructorGroup = this.server.create('instructorGroup', {
         title: 'specialsecondinstructorgroup',
         school: this.school,
       });
-      const regularInstructorgroup = this.server.create('instructorGroup', {
+      const regularInstructorGroup = this.server.create('instructorGroup', {
         title: 'regularinstructorgroup',
         school: this.school,
       });
-      const regexInstructorgroup = this.server.create('instructorGroup', {
+      const regexInstructorGroup = this.server.create('instructorGroup', {
         title: '\\yoo hoo',
         school: this.school,
       });
       await page.visit();
-      assert.equal(page.instructorGroups().count, 4);
-      assert.equal(page.instructorGroups(0).title, regexInstructorgroup.title);
-      assert.equal(page.instructorGroups(1).title, regularInstructorgroup.title);
-      assert.equal(page.instructorGroups(2).title, firstInstructorgroup.title);
-      assert.equal(page.instructorGroups(3).title, secondInstructorgroup.title);
+      assert.equal(page.list.items.length, 4);
+      assert.equal(page.list.items[0].title, regexInstructorGroup.title);
+      assert.equal(page.list.items[1].title, regularInstructorGroup.title);
+      assert.equal(page.list.items[2].title, firstInstructorGroup.title);
+      assert.equal(page.list.items[3].title, secondInstructorGroup.title);
 
-      await page.filterByTitle('first');
-      assert.equal(page.instructorGroups().count, 1);
-      assert.equal(page.instructorGroups(0).title, firstInstructorgroup.title);
+      await page.setTitleFilter('first');
+      assert.equal(page.list.items.length, 1);
+      assert.equal(page.list.items[0].title, firstInstructorGroup.title);
 
-      await page.filterByTitle('  first   ');
-      assert.equal(page.instructorGroups().count, 1);
-      assert.equal(page.instructorGroups(0).title, firstInstructorgroup.title);
+      await page.setTitleFilter('  first   ');
+      assert.equal(page.list.items.length, 1);
+      assert.equal(page.list.items[0].title, firstInstructorGroup.title);
 
-      await page.filterByTitle('second');
-      assert.equal(page.instructorGroups().count, 1);
-      assert.equal(page.instructorGroups(0).title, secondInstructorgroup.title);
+      await page.setTitleFilter('second');
+      assert.equal(page.list.items.length, 1);
+      assert.equal(page.list.items[0].title, secondInstructorGroup.title);
 
-      await page.filterByTitle('special');
-      assert.equal(page.instructorGroups().count, 2);
-      assert.equal(page.instructorGroups(0).title, firstInstructorgroup.title);
-      assert.equal(page.instructorGroups(1).title, secondInstructorgroup.title);
+      await page.setTitleFilter('special');
+      assert.equal(page.list.items.length, 2);
+      assert.equal(page.list.items[0].title, firstInstructorGroup.title);
+      assert.equal(page.list.items[1].title, secondInstructorGroup.title);
 
-      await page.filterByTitle('\\');
-      assert.equal(page.instructorGroups().count, 1);
-      assert.equal(page.instructorGroups(0).title, regexInstructorgroup.title);
+      await page.setTitleFilter('\\');
+      assert.equal(page.list.items.length, 1);
+      assert.equal(page.list.items[0].title, regexInstructorGroup.title);
 
-      await page.filterByTitle('');
-      assert.equal(page.instructorGroups().count, 4);
-      assert.equal(page.instructorGroups(0).title, regexInstructorgroup.title);
-      assert.equal(page.instructorGroups(1).title, regularInstructorgroup.title);
-      assert.equal(page.instructorGroups(2).title, firstInstructorgroup.title);
-      assert.equal(page.instructorGroups(3).title, secondInstructorgroup.title);
+      await page.setTitleFilter('');
+      assert.equal(page.list.items.length, 4);
+      assert.equal(page.list.items[0].title, regexInstructorGroup.title);
+      assert.equal(page.list.items[1].title, regularInstructorGroup.title);
+      assert.equal(page.list.items[2].title, firstInstructorGroup.title);
+      assert.equal(page.list.items[3].title, secondInstructorGroup.title);
     });
 
     test('add new instructorgroup', async function (assert) {
@@ -117,60 +117,60 @@ module('Acceptance | Instructor Groups', function (hooks) {
       await page.visit();
       const newTitle = 'new test title';
       await page.toggleNewInstructorGroupForm();
-      await page.newInstructorGroupForm.title(newTitle);
-      await page.newInstructorGroupForm.save();
+      await page.newInstructorGroupForm.title.set(newTitle);
+      await page.newInstructorGroupForm.done.click();
       assert.equal(page.savedResult, newTitle + ' Saved Successfully');
-      assert.equal(page.instructorGroups().count, 1);
-      assert.equal(page.instructorGroups(0).title, newTitle);
-      assert.equal(page.instructorGroups(0).members, 0);
-      assert.equal(page.instructorGroups(0).courses, 0);
+      assert.equal(page.list.items.length, 1);
+      assert.equal(page.list.items[0].title, newTitle);
+      assert.equal(page.list.items[0].users, 0);
+      assert.equal(page.list.items[0].courses, 0);
     });
 
-    test('cancel adding new instructorgroup', async function (assert) {
+    test('cancel adding new instructor group', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       assert.expect(6);
       this.server.create('instructorGroup', {
         school: this.school,
       });
       await page.visit();
-      assert.equal(page.instructorGroups().count, 1);
-      assert.equal(page.instructorGroups(0).title, 'instructor group 0');
+      assert.equal(page.list.items.length, 1);
+      assert.equal(page.list.items[0].title, 'instructor group 0');
       await page.toggleNewInstructorGroupForm();
       assert.ok(page.newInstructorGroupForm.isVisible);
-      await page.newInstructorGroupForm.cancel();
+      await page.newInstructorGroupForm.cancel.click();
       assert.notOk(page.newInstructorGroupForm.isVisible);
-      assert.equal(page.instructorGroups().count, 1);
-      assert.equal(page.instructorGroups(0).title, 'instructor group 0');
+      assert.equal(page.list.items.length, 1);
+      assert.equal(page.list.items[0].title, 'instructor group 0');
     });
 
-    test('remove instructorgroup', async function (assert) {
+    test('remove instructor group', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       assert.expect(4);
       this.server.create('instructorGroup', {
         school: this.school,
       });
       await page.visit();
-      assert.equal(page.instructorGroups().count, 1);
-      assert.equal(page.instructorGroups(0).title, 'instructor group 0');
-      await page.instructorGroups(0).remove();
-      await page.confirmInstructorGroupRemoval();
-      assert.equal(page.instructorGroups().count, 0);
+      assert.equal(page.list.items.length, 1);
+      assert.equal(page.list.items[0].title, 'instructor group 0');
+      await page.list.items[0].remove();
+      await page.list.confirmRemoval.confirm();
+      assert.equal(page.list.items.length, 0);
       assert.ok(page.emptyListRowIsVisible);
     });
 
-    test('cancel remove instructorgroup', async function (assert) {
+    test('cancel remove instructor group', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       assert.expect(4);
       this.server.create('instructorGroup', {
         school: this.school,
       });
       await page.visit();
-      assert.equal(page.instructorGroups().count, 1);
-      assert.equal(page.instructorGroups(0).title, 'instructor group 0');
-      await page.instructorGroups(0).remove();
-      await page.cancelInstructorGroupRemoval();
-      assert.equal(page.instructorGroups().count, 1);
-      assert.equal(page.instructorGroups(0).title, 'instructor group 0');
+      assert.equal(page.list.items.length, 1);
+      assert.equal(page.list.items[0].title, 'instructor group 0');
+      await page.list.items[0].remove();
+      await page.list.confirmRemoval.cancel();
+      assert.equal(page.list.items.length, 1);
+      assert.equal(page.list.items[0].title, 'instructor group 0');
     });
 
     test('confirmation of remove message', async function (assert) {
@@ -183,22 +183,22 @@ module('Acceptance | Instructor Groups', function (hooks) {
 
       assert.expect(3);
       await page.visit();
-      assert.equal(page.instructorGroups().count, 1);
-      assert.equal(page.instructorGroups(0).title, 'instructor group 0');
-      await page.instructorGroups(0).remove();
+      assert.equal(page.list.items.length, 1);
+      assert.equal(page.list.items[0].title, 'instructor group 0');
+      await page.list.items[0].remove();
       assert.equal(
-        page.removalConfirmationMessage,
+        page.list.removalConfirmationMessage,
         'Are you sure you want to delete this instructor group, with 5 instructors? This action cannot be undone. Yes Cancel'
       );
     });
 
-    test('click title takes you to instructorgroup route', async function (assert) {
+    test('click title takes you to instructor group route', async function (assert) {
       assert.expect(1);
       this.server.create('instructorGroup', {
         school: this.school,
       });
       await page.visit();
-      await page.instructorGroups(0).clickTitle();
+      await page.list.items[0].clickTitle();
       assert.equal(currentURL(), '/instructorgroups/1');
     });
 
@@ -209,14 +209,14 @@ module('Acceptance | Instructor Groups', function (hooks) {
         school: this.school,
       });
       await page.visit();
-      assert.equal(page.instructorGroups().count, 1);
-      assert.equal(page.instructorGroups(0).title, 'yes\\no');
-      await page.filterByTitle('\\');
-      assert.equal(page.instructorGroups().count, 1);
-      assert.equal(page.instructorGroups(0).title, 'yes\\no');
+      assert.equal(page.list.items.length, 1);
+      assert.equal(page.list.items[0].title, 'yes\\no');
+      await page.setTitleFilter('\\');
+      assert.equal(page.list.items.length, 1);
+      assert.equal(page.list.items[0].title, 'yes\\no');
     });
 
-    test('cannot delete instructorgroup with attached courses #3767', async function (assert) {
+    test('cannot delete instructor group with attached courses #3767', async function (assert) {
       this.user.update({ administeredSchools: [this.school] });
       assert.expect(5);
       const group1 = this.server.create('instructorGroup', {
@@ -231,26 +231,25 @@ module('Acceptance | Instructor Groups', function (hooks) {
       this.server.create('ilm-session', { session: session1, instructorGroups: [group1] });
       this.server.create('offering', { session: session2, instructorGroups: [group2] });
       await page.visit();
-      assert.equal(page.instructorGroups().count, 2);
-      assert.equal(page.instructorGroups(0).title, 'instructor group 0');
-      assert.equal(page.instructorGroups(1).title, 'instructor group 1');
-      assert.notOk(page.instructorGroups(0).canBeDeleted);
-      assert.notOk(page.instructorGroups(1).canBeDeleted);
+      assert.equal(page.list.items.length, 2);
+      assert.equal(page.list.items[0].title, 'instructor group 0');
+      assert.equal(page.list.items[1].title, 'instructor group 1');
+      assert.notOk(page.list.items[0].canBeDeleted);
+      assert.notOk(page.list.items[1].canBeDeleted);
     });
   });
 
   test('filters options', async function (assert) {
-    assert.expect(5);
+    assert.expect(4);
     const schools = this.server.createList('school', 2);
     await setupAuthentication({
       school: schools[1],
     });
 
     await page.visit();
-    assert.equal(page.schoolFilters().count, 2);
-    assert.equal(page.schoolFilters(0).text, 'school 0');
-    assert.equal(page.schoolFilters(1).text, 'school 1');
-    assert.notOk(page.schoolFilters(0).selected);
-    assert.ok(page.schoolFilters(1).selected);
+    assert.equal(page.schoolFilter.schools.length, 2);
+    assert.equal(page.schoolFilter.schools[0].text, 'school 0');
+    assert.equal(page.schoolFilter.schools[1].text, 'school 1');
+    assert.equal(page.schoolFilter.selectedSchool, 2);
   });
 });

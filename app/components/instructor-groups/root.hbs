@@ -1,0 +1,79 @@
+<section class="instructor-groups-root" data-test-instructor-groups>
+  <div class="filters">
+    <div class="schools" data-test-school-filter>
+      <FaIcon @icon="university" @fixedWidth={{true}} />
+      {{#if (gt @schools.length 1)}}
+        <select
+          {{on "change" (pick "target.value" @setSchoolId)}}
+          aria-label={{t "general.schools"}}
+          data-test-school-selector
+        >
+          {{#each (sort-by "title" @schools) as |school|}}
+            <option
+              selected={{eq school.id this.bestSelectedSchool.id}}
+              value={{school.id}}
+            >
+              {{school.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{this.bestSelectedSchool.title}}
+      {{/if}}
+    </div>
+    <div class="title" data-test-title-filter>
+      <input
+        aria-label={{t "general.instructorGroupTitleFilterPlaceholder"}}
+        value={{@titleFilter}}
+        {{on "input" (pick "target.value" @setTitleFilter)}}
+        placeholder={{t "general.instructorGroupTitleFilterPlaceholder"}}
+        data-test-title-filter
+      >
+    </div>
+  </div>
+
+  <div class="main-list">
+    <div class="header">
+      <div class="title">
+        <h2>
+          {{t "general.instructorGroups"}}
+        </h2>
+      </div>
+      <div class="actions">
+        {{#if this.canCreate}}
+          <ExpandCollapseButton
+            @value={{this.showNewInstructorGroupForm}}
+            @action={{set this.showNewInstructorGroupForm (not this.showNewInstructorGroupForm)}}
+            @expandButtonLabel={{t "general.expand"}}
+            @collapseButtonLabel={{t "general.close"}}
+          />
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="new">
+      {{#if this.showNewInstructorGroupForm}}
+        <InstructorGroups::New
+          @save={{perform this.saveNewInstructorGroup}}
+          @cancel={{set this.showNewInstructorGroupForm false}}
+        />
+      {{/if}}
+      {{#if this.newInstructorGroup}}
+        <div class="saved-result">
+          <LinkTo @route="instructorGroup" @model={{this.newInstructorGroup}}>
+            <FaIcon @icon="external-link-square-alt" />
+            {{this.newInstructorGroup.title}}
+          </LinkTo>
+          {{t "general.savedSuccessfully"}}
+        </div>
+      {{/if}}
+    </div>
+    <div class="list">
+      {{#if this.isLoaded}}
+        <InstructorGroups::List @instructorGroups={{sort-by "title" this.filteredInstructorGroups}} />
+      {{else}}
+        <InstructorGroups::Loading @count={{this.countForSelectedSchool}} />
+      {{/if}}
+    </div>
+  </div>
+</section>

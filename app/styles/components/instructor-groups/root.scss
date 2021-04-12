@@ -1,18 +1,12 @@
-.instructorgroups-list {
+.instructor-groups-root {
   @include main-list;
 
   .filters {
     @include main-list-filters;
 
-    .schoolsfilter,
-    .titlefilter {
+    .schools,
+    .title {
       @include main-list-filter;
-    }
-
-    .titlefilter {
-      @include for-laptop-and-up {
-        width: 400px;
-      }
     }
   }
 
@@ -20,7 +14,7 @@
     @include main-list-saved-new;
   }
 
-  .instructorgroups {
+  .main-list {
     @include main-list-box;
 
     .header {
@@ -38,13 +32,15 @@
         @include main-list-box-header-actions;
       }
     }
-  }
 
-  .list {
-    @include main-list-box-table;
-  }
+    .list {
+      @include main-list-box-table;
 
-  .fa-trash {
-    @include icon;
+      .remove-button {
+        @include ilios-button-reset;
+        background-color: $white;
+        color: $ilios-remove-color;
+      }
+    }
   }
 }
