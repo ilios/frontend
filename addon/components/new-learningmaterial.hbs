@@ -1,200 +1,215 @@
 <div class="new-learningmaterial" data-test-new-learningmaterial>
-  <div class="item">
-    <label>
-      {{t "general.displayName"}}:
-    </label>
-    <span>
-      <Input
-        type="text"
-        @value={{this.title}}
-        @focus-out={{fn this.addErrorDisplayFor "title"}}
-        disabled={{this.prepareSave.isRunning}}
-      />
-      {{#each (await (compute this.getErrorsFor "title")) as |message|}}
-        <span class="validation-error-message">
-          {{message}}
-        </span>
-      {{/each}}
-    </span>
-  </div>
-  <div class="item">
-    <label>
-      {{t "general.status"}}:
-    </label>
-    <span>
-      <select {{on "change" this.changeStatusId}}>
-        {{#each @learningMaterialStatuses as |lmStatus|}}
-          <option
-            value={{lmStatus.id}}
-            selected={{is-equal lmStatus this.selectedStatus}}
-          >
-            {{lmStatus.title}}
-          </option>
-        {{/each}}
-      </select>
-    </span>
-  </div>
-  <div class="item" data-test-owninguser>
-    <label>
-      {{t "general.owner"}}:
-    </label>
-    <span class="owninguser">
-      <UserNameInfo @user={{await this.currentUser.model}} />
-    </span>
-  </div>
-  <div class="item">
-    <label>
-      {{t "general.contentAuthor"}}:
-    </label>
-    <span>
-      <Input
-        type="text"
-        @value={{this.originalAuthor}}
-        @focus-out={{fn this.addErrorDisplayFor "originalAuthor"}}
-        disabled={{this.prepareSave.isRunning}}
-      />
-      {{#each (await (compute this.getErrorsFor "originalAuthor")) as |message|}}
-        <span class="validation-error-message">
-          {{message}}
-        </span>
-      {{/each}}
-    </span>
-  </div>
-  <div class="item">
-    <label>
-      {{t "general.userRole"}}:
-    </label>
-    <span>
-      <select {{on "change" this.changeUserRoleId}}>
-        {{#each @learningMaterialUserRoles as |role|}}
-          <option value={{role.id}} selected={{is-equal role this.selectedUserRole}}>
-            {{role.title}}
-          </option>
-        {{/each}}
-      </select>
-    </span>
-  </div>
-  {{#if this.isLink}}
-    <div class="item" data-test-link>
-      <label>
-        {{t "general.url"}}:
+  {{#let (unique-id) as |templateId|}}
+    <div class="item">
+      <label for="display-name-{{templateId}}">
+        {{t "general.displayName"}}:
       </label>
       <span>
-        {{! template-lint-disable no-bare-strings}}
         <input
+          id="display-name-{{templateId}}"
+          disabled={{this.prepareSave.isRunning}}
           type="text"
-          placeholder="https://example.com"
-          value={{this.bestLink}}
-          inputmode="url"
-          disabled={{this.prepareSave.isRunning}}
-          {{on "input" (pick "target.value" this.changeLink)}}
-          {{on "keyup" (fn this.addErrorDisplayFor "link")}}
-          {{on "focus" this.selectAllText}}
-        >
-        {{#each (await (compute this.getErrorsFor "link")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
-      </span>
-    </div>
-  {{/if}}
-  {{#if this.isCitation}}
-    <div class="item">
-      <label>
-        {{t "general.citation"}}:
-      </label>
-      <span class="citation">
-        <Textarea
-          @value={{this.citation}}
-          @focus-out={{fn this.addErrorDisplayFor "citation"}}
-          disabled={{this.prepareSave.isRunning}}
+          value={{this.title}}
+          {{on "focus-out" (fn this.addErrorDisplayFor "title")}}
+          {{on "input" (pick "target.value" (set this.title))}}
         />
-        {{#each (await (compute this.getErrorsFor "citation")) as |message|}}
+        {{#each (await (compute this.getErrorsFor "title")) as |message|}}
           <span class="validation-error-message">
             {{message}}
           </span>
         {{/each}}
       </span>
     </div>
-  {{/if}}
-  <div class="item">
-    <label>
-      {{t "general.description"}}:
-    </label>
-    <span>
-      <HtmlEditor @content={{this.description}} @update={{fn (mut this.description)}} />
-    </span>
-  </div>
-  {{#if this.isFile}}
     <div class="item">
-      <label>
-        {{t "general.copyrightPermission"}}:
+      <label for="status-{{templateId}}">
+        {{t "general.status"}}:
       </label>
       <span>
-        <p id="lm-copyright-agreement-text">
-          <input
-            type="checkbox"
-            checked={{this.copyrightPermission}}
-            {{on "click" (set this.copyrightPermission (not this.copyrightPermission))}}
-            data-test-copyright-agreement
-          >
-          {{t "general.copyrightAgreement"}}
-          {{#if (await (compute this.hasErrorFor "copyrightPermission"))}}
-            <br>
-            <span class="validation-error-message" data-test-agreement-validation-error-message>
-              {{t "errors.agreementRequired"}}
-            </span>
-          {{/if}}
-        </p>
+        <select
+          id="status-{{templateId}}"
+          {{on "change" this.changeStatusId}}
+        >
+          {{#each @learningMaterialStatuses as |lmStatus|}}
+            <option
+              value={{lmStatus.id}}
+              selected={{is-equal lmStatus this.selectedStatus}}
+            >
+              {{lmStatus.title}}
+            </option>
+          {{/each}}
+        </select>
       </span>
     </div>
-    {{#unless this.copyrightPermission}}
-      <div class="item">
-        <label>
-          {{t "general.copyrightRationale"}}:
+    <div class="item" data-test-owninguser>
+      <label>
+        {{t "general.owner"}}:
+      </label>
+      <span class="owninguser">
+        <UserNameInfo @user={{await this.currentUser.model}} />
+      </span>
+    </div>
+    <div class="item">
+      <label for="original-author-{{templateId}}">
+        {{t "general.contentAuthor"}}:
+      </label>
+      <span>
+        <input
+          id="original-author-{{templateId}}"
+          disabled={{this.prepareSave.isRunning}}
+          type="text"
+          value={{this.originalAuthor}}
+          {{on "focus-out" (fn this.addErrorDisplayFor "originalAuthor")}}
+          {{on "input" (pick "target.value" (set this.originalAuthor))}}
+        />
+        {{#each (await (compute this.getErrorsFor "originalAuthor")) as |message|}}
+          <span class="validation-error-message">
+            {{message}}
+          </span>
+        {{/each}}
+      </span>
+    </div>
+    <div class="item">
+      <label for="user-role-{{templateId}}">
+        {{t "general.userRole"}}:
+      </label>
+      <span>
+        <select
+          id="user-role-{{templateId}}"
+          {{on "change" this.changeUserRoleId}}
+        >
+          {{#each @learningMaterialUserRoles as |role|}}
+            <option value={{role.id}} selected={{is-equal role this.selectedUserRole}}>
+              {{role.title}}
+            </option>
+          {{/each}}
+        </select>
+      </span>
+    </div>
+    {{#if this.isLink}}
+      <div class="item" data-test-link>
+        <label for="url-{{templateId}}">
+          {{t "general.url"}}:
         </label>
         <span>
-          <Textarea
-            @value={{this.copyrightRationale}}
-            @focus-out={{fn this.addErrorDisplayFor "copyrightRationale"}}
-            data-test-copyright-rationale
-          />
-        {{#each (await (compute this.getErrorsFor "copyrightRationale")) as |message|}}
+          {{! template-lint-disable no-bare-strings}}
+          <input
+            id="url-{{templateId}}"
+            type="text"
+            placeholder="https://example.com"
+            value={{this.bestLink}}
+            inputmode="url"
+            disabled={{this.prepareSave.isRunning}}
+            {{on "input" (pick "target.value" this.changeLink)}}
+            {{on "keyup" (fn this.addErrorDisplayFor "link")}}
+            {{on "focus" this.selectAllText}}
+          >
+          {{#each (await (compute this.getErrorsFor "link")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
+        </span>
+      </div>
+    {{/if}}
+    {{#if this.isCitation}}
+      <div class="item">
+        <label for="citation-{{templateId}}">
+          {{t "general.citation"}}:
+        </label>
+        <span class="citation">
+          <textarea
+            id="citation-{{templateId}}"
+            disabled={{this.prepareSave.isRunning}}
+            {{on "focus-out" (fn this.addErrorDisplayFor "citation")}}
+            {{on "input" (pick "target.value" (set this.citation))}}
+          >{{this.citation}}</textarea>
+          {{#each (await (compute this.getErrorsFor "citation")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
+        </span>
+      </div>
+    {{/if}}
+    <div class="item">
+      <label>
+        {{t "general.description"}}:
+      </label>
+      <span>
+        <HtmlEditor @content={{this.description}} @update={{fn (mut this.description)}} />
+      </span>
+    </div>
+    {{#if this.isFile}}
+      <div class="item">
+        <label for="copyright-permission-{{templateId}}">
+          {{t "general.copyrightPermission"}}:
+        </label>
+        <span>
+          <p id="lm-copyright-agreement-text">
+            <input
+              id="copyright-permission-{{templateId}}"
+              type="checkbox"
+              checked={{this.copyrightPermission}}
+              {{on "click" (set this.copyrightPermission (not this.copyrightPermission))}}
+              data-test-copyright-agreement
+            >
+            {{t "general.copyrightAgreement"}}
+            {{#if (await (compute this.hasErrorFor "copyrightPermission"))}}
+              <br>
+              <span class="validation-error-message" data-test-agreement-validation-error-message>
+                {{t "errors.agreementRequired"}}
+              </span>
+            {{/if}}
+          </p>
+        </span>
+      </div>
+      {{#unless this.copyrightPermission}}
+        <div class="item">
+          <label for="copyright-rationale-{{templateId}}">
+            {{t "general.copyrightRationale"}}:
+          </label>
+          <span>
+            <textarea
+              id="copyright-rationale-{{templateId}}"
+              {{on "focus-out" (fn this.addErrorDisplayFor "copyrightRationale")}}
+              {{on "input" (pick "target.value" (set this.copyrightRationale))}}
+              data-test-copyright-rationale
+            >{{this.copyrightRationale}}</textarea>
+          {{#each (await (compute this.getErrorsFor "copyrightRationale")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
+          </span>
+        </div>
+      {{/unless}}
+      <div class="item">
+        <label for="file-upload-{{this.templateId}}">
+          {{t "general.file"}}:
+        </label>
+        <LearningMaterialUploader
+          @for="file-upload-{{this.templateId}}"
+          @setFilename={{set this.filename}}
+          @setFileHash={{set this.fileHash}}
+        />
+        {{#each (await (compute this.getErrorsFor "filename")) as |message|}}
           <span class="validation-error-message">
             {{message}}
           </span>
         {{/each}}
-        </span>
       </div>
-    {{/unless}}
-    <div class="item">
-      <label for={{concat this.uniqueId "file-upload"}}>
-        {{t "general.file"}}:
-      </label>
-      <LearningMaterialUploader
-        @for={{concat this.uniqueId "file-upload"}}
-        @setFilename={{set this.filename}}
-        @setFileHash={{set this.fileHash}}
-      />
-      {{#each (await (compute this.getErrorsFor "filename")) as |message|}}
-        <span class="validation-error-message">
-          {{message}}
-        </span>
-      {{/each}}
+    {{/if}}
+    <div class="buttons">
+      <button class="done text" type="button" {{on "click" (perform this.prepareSave)}}>
+        {{#if this.prepareSave.isRunning}}
+          <LoadingSpinner />
+        {{else}}
+          {{t "general.done"}}
+        {{/if}}
+      </button>
+      <button class="cancel text" type="button" {{on "click" @cancel}}>
+        {{t "general.cancel"}}
+      </button>
     </div>
-  {{/if}}
-  <div class="buttons">
-    <button class="done text" type="button" {{on "click" (perform this.prepareSave)}}>
-      {{#if this.prepareSave.isRunning}}
-        <LoadingSpinner />
-      {{else}}
-        {{t "general.done"}}
-      {{/if}}
-    </button>
-    <button class="cancel text" type="button" {{on "click" @cancel}}>
-      {{t "general.cancel"}}
-    </button>
-  </div>
-
+  {{/let}}
 </div>

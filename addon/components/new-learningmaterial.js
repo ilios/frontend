@@ -5,7 +5,6 @@ import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import { validatable, Length, NotBlank, IsTrue, IsURL } from 'ilios-common/decorators/validation';
 import { ValidateIf } from 'class-validator';
-import { guidFor } from '@ember/object/internals';
 
 const DEFAULT_URL_VALUE = 'https://';
 
@@ -35,10 +34,6 @@ export default class NewLearningmaterialComponent extends Component {
   @tracked owner;
   @ValidateIf((o) => o.isCitation) @NotBlank() @tracked citation;
   @tracked fileUploadErrorMessage = false;
-
-  get uniqueId() {
-    return guidFor(this);
-  }
 
   get isFile() {
     return this.args.type === 'file';
