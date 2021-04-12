@@ -34,7 +34,9 @@
       z-index: 10;
     }
 
-
+    .link-button {
+      @include ilios-link-button;
+    }
   }
 
   .offering-block {
