@@ -14,7 +14,7 @@ export default {
     learners: text('td', { at: 2 }),
     learnerGroups: text('td', { at: 3 }),
     instructors: text('td', { at: 4 }),
-    edit: clickable('[data-test-edit]'),
+    edit: clickable('[data-test-actions] [data-test-edit]'),
     offeringForm,
   }),
 };
