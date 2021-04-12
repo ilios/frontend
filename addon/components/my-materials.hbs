@@ -3,7 +3,10 @@
 >
   <div class="material-list">
     <span class="course-filter">
-      <select {{on "change" this.changeCourseIdFilter}}>
+      <select
+        aria-label={{t "general.selectCourse"}}
+        {{on "change" this.changeCourseIdFilter}}
+      >
         <option value="">
           {{t "general.allCourses"}}
         </option>
@@ -19,6 +22,7 @@
     </span>
     <span class="filter">
       <input
+        aria-label={{t "general.filterPlaceholder"}}
         data-test-filter-input
         placeholder={{t "general.filterPlaceholder"}}
         type="text"

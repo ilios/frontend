@@ -261,6 +261,7 @@ general:
   searchForIliosUsers: "Find Ilios Users..."
   searchPlaceholder: "Find Learning Material"
   selectCohortsToAttach: "Select the cohort of students you wish to attach to the new course"
+  selectCourse: "Select a course"
   selectedInstructorGroups: "Selected Instructors Groups"
   selectedInstructors: "Selected Instructors"
   selectedLearnerGroups: "Selected Learner Groups"
