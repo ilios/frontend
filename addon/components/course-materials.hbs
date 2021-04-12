@@ -11,6 +11,7 @@
     </h3>
     <span class="filter-course-lms">
       <input
+        aria-label={{t "general.filterPlaceholder"}}
         placeholder={{t "general.filterPlaceholder"}}
         value={{this.courseQuery}}
         {{on "input" (perform this.setCourseQuery value="target.value")}}
@@ -102,6 +103,7 @@
     </h3>
     <span class="filter-session-lms">
       <input
+        aria-label={{t "general.filterPlaceholder"}}
         placeholder={{t "general.filterPlaceholder"}}
         value={{this.sessionQuery}}
         {{on "input" (perform this.setSessionQuery value="target.value")}}

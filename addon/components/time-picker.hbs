@@ -1,19 +1,31 @@
 <div class="time-picker">
-  <select class="hour" {{on "change" this.changeHour}}>
+  <select
+    class="hour"
+    aria-label={{t "general.hour"}}
+    {{on "change" this.changeHour}}
+  >
     {{#each this.hours as |listHour|}}
       <option value={{listHour}} selected={{is-equal listHour this.hour}}>
         {{listHour}}
       </option>
     {{/each}}
   </select>
-  <select class="minute" {{on "change" this.changeMinute}}>
+  <select
+    class="minute"
+    aria-label={{t "general.minute"}}
+    {{on "change" this.changeMinute}}
+  >
     {{#each this.minutes as |listMinute|}}
       <option value={{listMinute}} selected={{is-equal listMinute this.minute}}>
         {{listMinute}}
       </option>
     {{/each}}
   </select>
-  <select class="ampm" {{on "change" this.changeAmPm}}>
+  <select
+    class="ampm"
+    aria-label={{t "general.beforeOrAfterMidday"}}
+    {{on "change" this.changeAmPm}}
+  >
     {{#each this.ampms as |listAmPm|}}
       <option value={{listAmPm}} selected={{is-equal listAmPm this.ampm}}>
         {{listAmPm}}

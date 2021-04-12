@@ -46,7 +46,7 @@ export default class CourseRolloverDatePickerComponent extends Component {
         if (!selectedDate) {
           selectedDate = course.startDate;
         }
-        this.args.change(selectedDate);
+        this.args.onChange(selectedDate);
       },
       onOpen: () => {
         later(() => {
