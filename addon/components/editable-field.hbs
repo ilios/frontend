@@ -4,12 +4,17 @@
       <span>
         {{#if @value}}
           {{#if this.looksEmpty}}
-            <FaIcon
-              @icon="edit"
-              class="enabled"
+            <button
+              class="link-button"
+              type="button"
               data-test-edit
-              @click={{set this.isEditing true}}
-            />
+              {{on "click" (set this.isEditing true)}}
+            >
+              <FaIcon
+                @icon="edit"
+                class="enabled"
+              />
+            </button>
           {{else}}
             <TruncateText
               @renderHtml={{@renderHtml}}
@@ -57,7 +62,7 @@
         class="editor"
         {{did-insert this.focusFirstControl}}
         {{! template-lint-disable no-invalid-interactive}}
-        {{on "keydown" this.keydown}}
+        {{on "keyup" this.keyup}}
       >
         {{yield this.saveData.isRunning (perform this.saveData) (perform this.closeEditor)}}
         <span class="actions">

@@ -71,4 +71,8 @@
     @include ilios-link-button;
     display: inline;
   }
+
+  .link-button {
+    @include ilios-link-button;
+  }
 }
