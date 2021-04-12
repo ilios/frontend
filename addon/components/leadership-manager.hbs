@@ -26,11 +26,16 @@
             <ul>
               {{#each (sort-by "fullName" @directors) as |user|}}
                 <li>
-                  <FaIcon
-                    @icon="times"
-                    class="clickable remove"
-                    @click={{fn @removeDirector user}}
-                  />
+                  <button
+                    class="link-button"
+                    type="button"
+                    {{on "click" (fn @removeDirector user)}}
+                    >
+                    <FaIcon
+                      @icon="times"
+                      class="clickable remove"
+                    />
+                  </button>
                   {{#unless user.enabled}}
                     <FaIcon
                       @icon="user-times"
@@ -51,11 +56,16 @@
             <ul>
               {{#each (sort-by "fullName" @administrators) as |user|}}
                 <li>
-                  <FaIcon
-                    @icon="times"
-                    class="clickable remove"
-                    @click={{fn @removeAdministrator user}}
-                  />
+                  <button
+                    class="link-button"
+                    type="button"
+                    {{on "click" (fn @removeAdministrator user)}}
+                  >
+                    <FaIcon
+                      @icon="times"
+                      class="clickable remove"
+                    />
+                  </button>
                   {{#unless user.enabled}}
                     <FaIcon
                       @icon="user-times"
@@ -76,11 +86,16 @@
             <ul>
               {{#each (sort-by "fullName" @studentAdvisors) as |user|}}
                 <li>
-                  <FaIcon
-                    @icon="times"
-                    class="clickable remove"
-                    @click={{fn @removeStudentAdvisor user}}
-                  />
+                  <button
+                    class="link-button"
+                    type="button"
+                    {{on "click" (fn @removeStudentAdvisor user)}}
+                  >
+                    <FaIcon
+                      @icon="times"
+                      class="clickable remove"
+                    />
+                  </button>
                   {{#unless user.enabled}}
                     <FaIcon
                       @icon="user-times"
@@ -125,5 +140,4 @@
       </tr>
     </tbody>
   </table>
-
 </div>

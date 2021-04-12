@@ -12,6 +12,10 @@
     }
   }
 
+  .link-button {
+    @include ilios-link-button;
+  }
+
   .user-search {
     clear: both;
     margin: auto;
