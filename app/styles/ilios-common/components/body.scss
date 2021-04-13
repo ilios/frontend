@@ -104,3 +104,7 @@ select {
 .backtolink {
   margin: 1rem 0;
 }
+
+.link-button {
+  @include ilios-link-button;
+}
