@@ -16,6 +16,10 @@
     cursor: pointer;
   }
 
+  .link-button {
+    @include ilios-link-button;
+  }
+
   .week-glance {
     border-bottom: 1px solid $ilios-orange;
     margin-bottom: 1em;
