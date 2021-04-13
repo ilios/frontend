@@ -20,6 +20,7 @@
             <button
               class="link-button"
               type="button"
+              data-test-collapse
               {{on "click" (fn @closeSession obj.session)}}
             >
               <FaIcon
@@ -31,6 +32,7 @@
               class="link-button {{if (eq obj.offeringCount 0) "disabled"}}"
               disabled={{if (eq obj.offeringCount 0) "disabled"}}
               type="button"
+              data-test-expand
               {{on "click" (fn this.expandSession obj)}}
             >
               <FaIcon
@@ -127,12 +129,12 @@
               class="link-button"
               type="button"
               {{on "click" (fn this.confirmDelete obj.session.id)}}
+              data-test-delete
             >
               <FaIcon
                 @icon="trash"
                 @ariaHidden={{false}}
-                class="clickable remove enabled"
-                data-test-delete
+                class="remove enabled"
                 @title={{t "general.remove"}}
               />
             </button>

@@ -1,11 +1,12 @@
-import { clickable, collection, hasClass, isPresent, text } from 'ember-cli-page-object';
+import { clickable, collection, notHasClass, isPresent, text } from 'ember-cli-page-object';
 import offerings from './sessions-grid-offering-table';
 
 export default {
   scope: '[data-test-sessions-grid]',
   sessions: collection('[data-test-session]', {
-    expandCollapse: clickable('span:nth-of-type(1) .link'),
-    canExpand: hasClass('link', '[data-test-expand-collapse-control] svg'),
+    expand: clickable('[data-test-expand-collapse-control] [data-test-expand]'),
+    collapse: clickable('[data-test-expand-collapse-control] [data-test-collapse]'),
+    canExpand: notHasClass('disabled', '[data-test-expand-collapse-control] [data-test-expand]'),
     expandTitle: text('[data-test-expand-collapse-control] title'),
     title: text('span', { at: 1 }),
     visit: clickable('span:nth-of-type(2) a'),

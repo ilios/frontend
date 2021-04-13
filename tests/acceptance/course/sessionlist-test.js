@@ -135,7 +135,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     const { sessions } = page.sessionsList;
 
     assert.equal(sessions.length, 4);
-    await sessions[0].expandCollapse();
+    await sessions[0].expand();
     const { offerings } = sessions[0];
 
     const offering1StartDate = moment(this.server.db.offerings[0].startDate);
@@ -190,9 +190,9 @@ module('Acceptance | Course - Session List', function (hooks) {
     const { sessions, expandedSessions } = page.sessionsList;
     assert.equal(sessions.length, 4);
     assert.equal(expandedSessions.length, 0);
-    await sessions[0].expandCollapse();
+    await sessions[0].expand();
     assert.equal(expandedSessions.length, 1);
-    await sessions[0].expandCollapse();
+    await sessions[0].collapse();
     assert.equal(expandedSessions.length, 0);
   });
 
@@ -200,7 +200,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     assert.expect(1);
     await page.visit({ courseId: 1, details: true });
     const { sessions, expandedSessions } = page.sessionsList;
-    await sessions[0].expandCollapse();
+    await sessions[0].expand();
     assert.equal(expandedSessions[0].lastUpdated, 'Last Update Last Update: 07/09/2019 5:00 PM');
   });
 
@@ -245,7 +245,7 @@ module('Acceptance | Course - Session List', function (hooks) {
     const { sessions, expandedSessions } = page.sessionsList;
     assert.equal(sessions.length, 4);
     assert.equal(expandedSessions.length, 0);
-    await sessions[0].expandCollapse();
+    await sessions[0].expand();
     assert.equal(expandedSessions.length, 1);
     await page.expandCollapseAllSessions();
     assert.equal(expandedSessions.length, 4);
@@ -261,10 +261,10 @@ module('Acceptance | Course - Session List', function (hooks) {
     const { sessions, expandedSessions } = page.sessionsList;
     assert.equal(sessions.length, 4);
     assert.equal(expandedSessions.length, 0);
-    await sessions[0].expandCollapse();
-    await sessions[1].expandCollapse();
-    await sessions[2].expandCollapse();
-    await sessions[3].expandCollapse();
+    await sessions[0].expand();
+    await sessions[1].expand();
+    await sessions[2].expand();
+    await sessions[3].expand();
     assert.equal(expandedSessions.length, 4);
     assert.ok(page.showsAllSessionsExpanded);
     await page.expandCollapseAllSessions();
@@ -339,7 +339,7 @@ module('Acceptance | Course - Session List', function (hooks) {
         minute: 'numeric',
       })
     );
-    await sessions[0].expandCollapse();
+    await sessions[0].expand();
     await offerings[0].edit();
     const { offeringForm: form } = offerings[0];
     const newDate = moment(new Date(2011, 8, 11)).hour(2).minute(15);
@@ -419,7 +419,7 @@ module('Acceptance | Course - Session List', function (hooks) {
         minute: 'numeric',
       })
     );
-    await sessions[0].expandCollapse();
+    await sessions[0].expand();
     await offerings[0].edit();
     const { offeringForm: form } = offerings[0];
     await form.url.set('https://zoom.example.edu');
