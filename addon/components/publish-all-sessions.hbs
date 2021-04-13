@@ -62,11 +62,16 @@
                     <td class="yes">
                       {{t "general.yes"}} ({{session.objectives.length}})
                       {{#if session.showUnlinkIcon}}
-                        <FaIcon
-                          @icon="unlink"
-                          class="clickable"
-                          @click={{fn this.transitionToSession session}}
-                        />
+                        <button
+                          class="link-button"
+                          type="button"
+                          {{on "click" (fn this.transitionToSession session)}}
+                        >
+                          <FaIcon
+                            @icon="unlink"
+                            class="clickable"
+                          />
+                        </button>
                       {{/if}}
                     </td>
                   {{else}}
@@ -148,11 +153,16 @@
                     <td class="yes">
                       {{t "general.yes"}} ({{session.objectives.length}})
                       {{#if session.showUnlinkIcon}}
-                        <FaIcon
-                          @icon="unlink"
-                          class="clickable"
-                          @click={{fn this.transitionToSession session}}
-                        />
+                        <button
+                          class="link-button"
+                          type="button"
+                          {{on "click" (fn this.transitionToSession session)}}
+                        >
+                          <FaIcon
+                            @icon="unlink"
+                            class="clickable"
+                          />
+                        </button>
                       {{/if}}
                     </td>
                   {{else}}
@@ -263,11 +273,16 @@
                     <td class="yes">
                       {{t "general.yes"}} ({{session.objectives.length}})
                       {{#if session.showUnlinkIcon}}
-                        <FaIcon
-                          @icon="unlink"
-                          class="clickable"
-                          @click={{fn this.transitionToSession session}}
-                        />
+                        <button
+                          class="link-button"
+                          type="button"
+                          {{on "click" (fn this.transitionToSession session)}}
+                        >
+                          <FaIcon
+                            @icon="unlink"
+                            class="clickable"
+                          />
+                        </button>
                       {{/if}}
                     </td>
                   {{else}}
@@ -296,16 +311,26 @@
         <span class="unlinked-warning" data-test-unlinked-warning>
           {{t "general.unlinkedObjectives"}}
         </span>
-        <FaIcon
-          @icon="unlink"
-          class="clickable"
-          @click={{this.transitionToCourse}}
-        />
-        <FaIcon
-          @icon="chart-bar"
-          class="clickable"
-          @click={{this.transitionToVisualizeObjectives}}
-        />
+        <button
+          class="link-button"
+          type="button"
+          {{on "click" this.transitionToCourse}}
+        >
+          <FaIcon
+            @icon="unlink"
+            class="clickable"
+          />
+        </button>
+        <button
+          class="link-button"
+          type="button"
+          {{on "click" this.transitionToVisualizeObjectives}}
+        >
+          <FaIcon
+            @icon="chart-bar"
+            class="clickable"
+          />
+        </button>
       {{/if}}
       <p>
         {{t

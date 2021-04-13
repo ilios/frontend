@@ -16,6 +16,10 @@
     }
   }
 
+  .link-button {
+    @include ilios-link-button;
+  }
+
   .publish-all-sessions-unpublishable,
   .publish-all-sessions-publishable {
     .title {
