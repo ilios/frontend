@@ -47,12 +47,14 @@
           @saveOnEnter={{true}}
           @closeOnEscape={{true}} as |isSaving|
         >
-          <Input
+          <input
+            aria-label={{t "general.room"}}
             type="text"
             class="change-room"
-            @value={{this.room}}
+            value={{this.room}}
             disabled={{isSaving}}
-            @key-press={{fn this.addErrorDisplayFor "room"}}
+            {{on "key-press" (fn this.addErrorDisplayFor "room")}}
+            {{on "input" (pick "target.value" (set this.room))}}
           />
           {{#each (await (compute this.getErrorsFor "room")) as |message|}}
             <span class="validation-error-message">
@@ -119,14 +121,18 @@
       }}
     </td>
     {{#if @canUpdate}}
-      <td class="text-center">
-        <FaIcon
-          @icon="pencil-alt"
-          class="link"
-          @title={{t "general.edit"}}
-          @click={{set this.isEditing (not this.isEditing)}}
-          @ariaHidden={{false}}
-        />
+      <td class="text-center" data-test-actions>
+        <button
+          class="link-button"
+          data-test-edit
+          type="button"
+          {{on "click" (set this.isEditing (not this.isEditing))}}>
+          <FaIcon
+            @icon="pencil-alt"
+            @title={{t "general.edit"}}
+            @ariaHidden={{false}}
+          />
+        </button>
       </td>
     {{/if}}
   {{/if}}

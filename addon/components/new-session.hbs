@@ -3,65 +3,71 @@
   data-test-new-session
   ...attributes
 >
-  <h4>{{t "general.newSession"}}</h4>
-  <div class="new-session-content">
-    <div class="item">
-      <label>
-        {{t "general.title"}}:
-      </label>
-      <input
-        type="text"
-        value={{this.title}}
-        {{on "focusout" (fn this.addErrorDisplayFor "title")}}
-        {{on "keydown" this.keyboard}}
-        {{on "input" this.changeTitle}}
-        {{on "keyup" (fn this.addErrorDisplayFor "title")}}
-        class={{if (await (compute this.hasErrorFor "title")) "has-error"}}
-        disabled={{this.saveNewSession.isRunning}}
-        data-test-title
-      >
-      {{#each (await (compute this.getErrorsFor "title")) as |message|}}
-        <span class="validation-error-message">
-          {{message}}
-        </span>
-      {{/each}}
-    </div>
-    <div class="item">
-      <label>
-        {{t "general.sessionType"}}:
-      </label>
-      {{#if (is-array this.activeSessionTypes)}}
-        <select data-test-session-types {{on "change" this.changeSelectedSessionTypeId}}>
-          {{#each (sort-by "title" this.activeSessionTypes) as |sessionType|}}
-            <option
-              value={{sessionType.id}}
-              selected={{eq sessionType.id this.selectedSessionType.id}}
-              data-test-session-type
-            >
-              {{sessionType.title}}
-            </option>
-          {{/each}}
-        </select>
-      {{else}}
-        <LoadingSpinner />
-      {{/if}}
-    </div>
-    <div class="buttons">
-      <button
-        class="done text"
-        type="button"
-        data-test-save
-        {{on "click" (perform this.saveNewSession)}}
-      >
-        {{#if this.saveNewSession.isRunning}}
-          <LoadingSpinner />
+  {{#let (unique-id) as |templateId|}}
+    <h4>{{t "general.newSession"}}</h4>
+    <div class="new-session-content">
+      <div class="item">
+        <label for="title-{{templateId}}">
+          {{t "general.title"}}:
+        </label>
+        <input
+          id="title-{{templateId}}"
+          type="text"
+          value={{this.title}}
+          {{on "focusout" (fn this.addErrorDisplayFor "title")}}
+          {{on "input" this.changeTitle}}
+          {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+          {{on "keyup" this.keyboard}}
+          class={{if (await (compute this.hasErrorFor "title")) "has-error"}}
+          disabled={{this.saveNewSession.isRunning}}
+          data-test-title
+        >
+        {{#each (await (compute this.getErrorsFor "title")) as |message|}}
+          <span class="validation-error-message">
+            {{message}}
+          </span>
+        {{/each}}
+      </div>
+      <div class="item">
+        <label for="session-type-{{templateId}}">
+          {{t "general.sessionType"}}:
+        </label>
+        {{#if (is-array this.activeSessionTypes)}}
+          <select
+            id="session-type-{{templateId}}"
+            data-test-session-types {{on "change" this.changeSelectedSessionTypeId}}
+          >
+            {{#each (sort-by "title" this.activeSessionTypes) as |sessionType|}}
+              <option
+                value={{sessionType.id}}
+                selected={{eq sessionType.id this.selectedSessionType.id}}
+                data-test-session-type
+              >
+                {{sessionType.title}}
+              </option>
+            {{/each}}
+          </select>
         {{else}}
-          {{t "general.save"}}
+          <LoadingSpinner />
         {{/if}}
-      </button>
-      <button class="cancel text" type="button" data-test-cancel {{on "click" @cancel}}>
-        {{t "general.cancel"}}
-      </button>
+      </div>
+      <div class="buttons">
+        <button
+          class="done text"
+          type="button"
+          data-test-save
+          {{on "click" (perform this.saveNewSession)}}
+        >
+          {{#if this.saveNewSession.isRunning}}
+            <LoadingSpinner />
+          {{else}}
+            {{t "general.save"}}
+          {{/if}}
+        </button>
+        <button class="cancel text" type="button" data-test-cancel {{on "click" @cancel}}>
+          {{t "general.cancel"}}
+        </button>
+      </div>
     </div>
-  </div>
+  {{/let}}
 </div>

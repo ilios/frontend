@@ -3,49 +3,54 @@
   {{did-insert this.load @vocabulary}}
   data-test-taxonomy-manager
 >
-
-  {{#if @selectedTerms}}
-    <div class="selected-terms">
-      {{#each this.listableVocabularies as |vocab|}}
-        <DetailTermsList
-          @vocabulary={{vocab}}
-          @terms={{@selectedTerms}}
-          @canEdit={{true}}
+  {{#let (unique-id) as |templateId|}}
+    {{#if @selectedTerms}}
+      <div class="selected-terms">
+        {{#each this.listableVocabularies as |vocab|}}
+          <DetailTermsList
+            @vocabulary={{vocab}}
+            @terms={{@selectedTerms}}
+            @canEdit={{true}}
+            @remove={{@remove}}
+          />
+        {{/each}}
+      </div>
+    {{/if}}
+    {{#if this.assignableVocabularies.length}}
+      <div class="vocabulary-picker">
+        <div>
+          <label for="vocabulary-{{templateId}}">
+            {{t "general.selectVocabulary"}}:
+          </label>
+          <select
+            id="vocabulary-{{templateId}}"
+            {{on "change" this.changeSelectedVocabulary}}
+          >
+            {{#each this.assignableVocabularies as |vocab|}}
+              <option value={{vocab.id}} selected={{if (eq vocab.id this.vocabId) "selected"}}>
+                {{vocab.title}} ({{vocab.school.title}})
+              </option>
+            {{/each}}
+          </select>
+        </div>
+        <input
+          aria-label={{t "general.filterPlaceholder"}}
+          type="search"
+          value={{this.termFilter}}
+          placeholder={{t "general.filterPlaceholder"}}
+          {{on "input" (perform this.setTermFilter value="target.value")}}
+          data-test-filter
+        >
+      </div>
+      <div class="terms-picker tag-tree">
+        <SelectableTermsList
+          @selectedTerms={{@selectedTerms}}
+          @vocabulary={{this.selectedVocabulary}}
+          @termFilter={{this.termFilter}}
+          @add={{@add}}
           @remove={{@remove}}
         />
-      {{/each}}
-    </div>
-  {{/if}}
-  {{#if this.assignableVocabularies.length}}
-    <div class="vocabulary-picker">
-      <div>
-        <label>
-          {{t "general.selectVocabulary"}}:
-        </label>
-        <select {{on "change" this.changeSelectedVocabulary}}>
-          {{#each this.assignableVocabularies as |vocab|}}
-            <option value={{vocab.id}} selected={{if (eq vocab.id this.vocabId) "selected"}}>
-              {{vocab.title}} ({{vocab.school.title}})
-            </option>
-          {{/each}}
-        </select>
       </div>
-      <input
-        type="search"
-        value={{this.termFilter}}
-        placeholder={{t "general.filterPlaceholder"}}
-        {{on "input" (perform this.setTermFilter value="target.value")}}
-        data-test-filter
-      >
-    </div>
-    <div class="terms-picker tag-tree">
-      <SelectableTermsList
-        @selectedTerms={{@selectedTerms}}
-        @vocabulary={{this.selectedVocabulary}}
-        @termFilter={{this.termFilter}}
-        @add={{@add}}
-        @remove={{@remove}}
-      />
-    </div>
-  {{/if}}
+    {{/if}}
+  {{/let}}
 </section>

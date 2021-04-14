@@ -42,7 +42,7 @@ export default class EditableFieldComponent extends Component {
   }
 
   @action
-  keydown(event) {
+  keyup(event) {
     const keyCode = event.keyCode;
     const target = event.target;
 

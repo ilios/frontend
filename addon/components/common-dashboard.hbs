@@ -1,5 +1,5 @@
 <div class="common-dashboard" data-test-common-dashboard>
-  <DashboardViewPicker @show={{@show}} @change={{@setShow}} />
+  <DashboardViewPicker @show={{@show}} @onChange={{@setShow}} />
   {{#if (eq @show "calendar")}}
     <DashboardCalendar
       @allSchools={{@allSchools}}

@@ -69,11 +69,16 @@
               <td class="yes">
                 {{t "general.yes"}} ({{has-many-length @session "sessionObjectives"}})
                 {{#if this.showUnlinkIcon}}
-                  <FaIcon
-                    @icon="unlink"
-                    class="clickable"
-                    @click={{this.transitionToSession}}
-                  />
+                  <button
+                    class="link-button"
+                    type="button"
+                    {{on "click" this.transitionToSession}}
+                    data-test-go-to-session
+                  >
+                    <FaIcon
+                      @icon="unlink"
+                    />
+                  </button>
                 {{/if}}
               </td>
             {{else}}

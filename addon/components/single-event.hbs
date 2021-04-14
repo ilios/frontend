@@ -115,13 +115,17 @@
         <h2>
           {{t "general.sessionLearningMaterials"}}
           {{#if (and @event.isUserEvent (await this.currentUser.userIsStudent))}}
-            <FaIcon
-              @icon="archive"
-              class="link"
-              @title={{t "general.accessAllMaterialsForThisCourse"}}
-              @click={{this.transitionToMyMaterials}}
+            <button
+              class="link-button"
+              type="button"
               data-test-link-to-all-materials
-            />
+              {{on "click" this.transitionToMyMaterials}}
+            >
+              <FaIcon
+                @icon="archive"
+                @title={{t "general.accessAllMaterialsForThisCourse"}}
+              />
+            </button>
           {{/if}}
         </h2>
         <SingleEventLearningmaterialList

@@ -61,7 +61,7 @@ module('Integration | Component | editable field', function (hooks) {
       `
     );
     await click('[data-test-edit]');
-    await triggerKeyEvent('.editinplace input', 'keydown', 13);
+    await triggerKeyEvent('.editinplace input', 'keyup', 13);
   });
 
   test('close on escape', async function (assert) {
@@ -81,7 +81,7 @@ module('Integration | Component | editable field', function (hooks) {
       `
     );
     await click('[data-test-edit]');
-    await triggerKeyEvent('.editinplace input', 'keydown', 27);
+    await triggerKeyEvent('.editinplace input', 'keyup', 27);
   });
 
   test('focus when editor opens on input', async function (assert) {

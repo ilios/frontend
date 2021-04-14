@@ -13,7 +13,7 @@ const definition = {
   title: {
     scope: '[data-test-title]',
     set: fillable(),
-    submit: triggerable('keydown', '', { eventProperties: { key: 'Enter' } }),
+    submit: triggerable('keyup', '', { eventProperties: { key: 'Enter' } }),
   },
   sessionTypes: collection('[data-test-session-type]', {
     title: text(),

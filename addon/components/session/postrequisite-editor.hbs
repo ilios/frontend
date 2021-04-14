@@ -20,9 +20,12 @@
         <span data-test-title>{{t "general.none"}}</span>
       {{/if}}
     </span>
-    <Input
+    <input
+      aria-label={{t "general.filterPlaceholder"}}
       placeholder={{t "general.filterPlaceholder"}}
-      @value={{this.filter}}
+      type="text"
+      value={{this.filter}}
+      {{on "input" (pick "target.value" (set this.filter))}}
       data-test-filter
     />
   </div>

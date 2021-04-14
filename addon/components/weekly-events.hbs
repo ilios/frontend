@@ -1,23 +1,29 @@
 <div class="weekly-events" data-test-weekly-events>
   <div class="year" data-test-top-nav>
     <h2>
-      <FaIcon
-        @icon="backward"
-        @title={{t "general.goToPreviousYear"}}
-        @click={{this.decrementYear}}
-        role="button"
-        class="clickable link"
+      <button
+        class="link-button"
+        type="button"
+        {{on "click" this.decrementYear}}
         data-test-previous
-      />
+      >
+        <FaIcon
+          @icon="backward"
+          @title={{t "general.goToPreviousYear"}}
+        />
+      </button>
       <span data-test-year>{{@year}}</span>
-      <FaIcon
-        @icon="forward"
-        @title={{t "general.goToNextYear"}}
-        @click={{this.incrementYear}}
-        role="button"
-        class="clickable link"
+      <button
+        class="link-button"
+        type="button"
+        {{on "click" this.incrementYear}}
         data-test-next
-      />
+      >
+        <FaIcon
+          @icon="forward"
+          @title={{t "general.goToNextYear"}}
+        />
+      </button>
     </h2>
   </div>
   {{#each this.weeksInYear as |week|}}
@@ -31,23 +37,30 @@
   {{/each}}
   <div class="year" data-test-bottom-nav>
     <h2>
-      <FaIcon
-        @icon="backward"
-        @title={{t "general.goToPreviousYear"}}
-        @click={{this.decrementYear}}
-        role="button"
-        class="clickable link"
+      <button
+        class="link-button"
+        type="button"
+        {{on "click" this.decrementYear}}
         data-test-previous
-      />
+      >
+        <FaIcon
+          @icon="backward"
+          @title={{t "general.goToPreviousYear"}}
+
+        />
+      </button>
       <span data-test-year>{{@year}}</span>
-      <FaIcon
-        @icon="forward"
-        @title={{t "general.goToNextYear"}}
-        @click={{this.incrementYear}}
-        role="button"
-        class="clickable link"
+      <button
+        class="link-button"
+        type="button"
+        {{on "click" this.incrementYear}}
         data-test-next
-      />
+      >
+        <FaIcon
+          @icon="forward"
+          @title={{t "general.goToNextYear"}}
+        />
+      </button>
     </h2>
   </div>
 </div>

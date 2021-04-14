@@ -257,10 +257,12 @@ general:
   scheduledSuccessfully: "Programdo con Éxito"
   scheduling: Programación
   school: Escuela
+  schools: Escuelas
   search: Buscar
   searchForIliosUsers: "Encuentre Usuarios de Ilios..."
   searchPlaceholder: "encontrar material de aprendizaje"
   selectCohortsToAttach: "Seleccione la cohorte de estudiantes que desea adjuntar al nuevo curso"
+  selectCourse: "Seleccione un curso "
   selectedInstructorGroups: "Grupos de Instructores Seleccionados"
   selectedInstructors: "Instructores Seleccionados"
   selectedLearnerGroups: "Grupos de Aprendizaje Seleccionados"
