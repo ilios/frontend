@@ -63,6 +63,7 @@
                 id="external-id-{{templateId}}"
                 disabled={{isSaving}}
                 type="text"
+                value={{this.externalId}}
                 {{on "input" (pick "target.value" (set this.externalId))}}
                 {{on "key-press" (fn this.addErrorDisplayFor "externalId")}}
               />

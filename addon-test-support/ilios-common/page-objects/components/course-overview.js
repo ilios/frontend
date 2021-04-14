@@ -1,4 +1,12 @@
-import { attribute, create, clickable, fillable, text, isVisible } from 'ember-cli-page-object';
+import {
+  attribute,
+  create,
+  clickable,
+  fillable,
+  text,
+  isVisible,
+  value,
+} from 'ember-cli-page-object';
 import { flatpickrDatePicker } from 'ilios-common';
 
 const definition = {
@@ -11,7 +19,7 @@ const definition = {
   },
   externalId: {
     scope: '.courseexternalid',
-    value: text('span', { at: 0 }),
+    value: value('input'),
     edit: clickable('[data-test-edit]'),
     set: fillable('input'),
     save: clickable('.done'),
@@ -19,15 +27,15 @@ const definition = {
   },
   startDate: {
     scope: '.coursestartdate',
-    value: text('span', { at: 0 }),
     edit: clickable('[data-test-edit]'),
     set: flatpickrDatePicker('input'),
+    value: value('input'),
     save: clickable('.done'),
     hasError: isVisible('.validation-error-message'),
   },
   endDate: {
     scope: '.courseenddate',
-    value: text('span', { at: 0 }),
+    value: value('input'),
     edit: clickable('[data-test-edit]'),
     set: flatpickrDatePicker('input'),
     save: clickable('.done'),
@@ -35,7 +43,7 @@ const definition = {
   },
   level: {
     scope: '.courselevel',
-    value: text('span', { at: 0 }),
+    value: value('select'),
     edit: clickable('[data-test-edit]'),
     set: fillable('select'),
     save: clickable('.done'),
@@ -44,7 +52,7 @@ const definition = {
   universalLocator: text('.universallocator'),
   clerkshipType: {
     scope: '.clerkshiptype',
-    value: text('span', { at: 0 }),
+    value: value('select'),
     edit: clickable('[data-test-edit]'),
     set: fillable('select'),
     save: clickable('.done'),
