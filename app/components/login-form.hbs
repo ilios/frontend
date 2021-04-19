@@ -1,52 +1,68 @@
-<div class="login-form" ...attributes>
-  {{#if noAccountExistsError}}
-    <div class="error">
-      {{t "general.noAccountExists" accountName=noAccountExistsAccount}}
-    </div>
-  {{else}}
-    <h2>
-      {{t "general.login"}}
-    </h2>
-    {{#each error.keys as |key|}}
-      <div class="error">
-        {{t key}}
+<div
+  class="login-form"
+  data-test-login-form
+  ...attributes
+>
+  {{#let (unique-id) as |templateId|}}
+    {{#if @noAccountExistsError}}
+      <div class="error" data-test-error>
+        {{t "general.noAccountExists" accountName=@noAccountExistsAccount}}
       </div>
-    {{/each}}
-    <form {{action (perform authenticate) on="submit"}}>
-      <div class="item">
-        <label for={{concat elementId "-username-input"}}>
-          {{t "general.username"}}:
-        </label>
-        <input
-          autocapitalize="off"
-          autocorrect="off"
-          autofocus=""
-          id={{concat elementId "-username-input"}}
-          type="text"
-          value={{username}}
-          oninput={{action (mut username) value="target.value"}}
-        >
-      </div>
-      <div class="item">
-        <label for={{concat elementId "-password-input"}}>
-          {{t "general.password"}}:
-        </label>
-        <input
-          id={{concat elementId "-password-input"}}
-          type="password"
-          value={{password}}
-          oninput={{action (mut password) value="target.value"}}
-        >
-      </div>
-      <div class="buttons">
-        <button type="submit" class="done {{if authenticate.isRunning "active"}}">
-          {{#if authenticate.isRunning}}
-            <LoadingSpinner />
-          {{else}}
-            {{t "general.login"}}
-          {{/if}}
-        </button>
-      </div>
-    </form>
-  {{/if}}
+    {{else}}
+      <h2 data-test-title>
+        {{t "general.login"}}
+      </h2>
+      {{#each this.error.keys as |key|}}
+        <div class="error" data-test-error>
+          {{t key}}
+        </div>
+      {{/each}}
+      <form data-test-form>
+        <div class="item" data-test-username>
+          <label for="username-{{templateId}}">
+            {{t "general.username"}}:
+          </label>
+          <input
+            autocapitalize="off"
+            autocorrect="off"
+            autofocus=""
+            id="username-{{templateId}}"
+            type="text"
+            disabled={{if this.authenticate.isRunning "disabled"}}
+            value={{this.username}}
+            {{on "input" (pick "target.value" (set this.username))}}
+            {{on "keyup" this.submitOnEnter}}
+          >
+        </div>
+        <div class="item" data-test-password>
+          <label for="password-{{templateId}}">
+            {{t "general.password"}}:
+          </label>
+          <input
+            id="password-{{templateId}}"
+            type="password"
+            disabled={{if this.authenticate.isRunning "disabled"}}
+            value={{this.password}}
+            {{on "input" (pick "target.value" (set this.password))}}
+            {{on "keyup" this.submitOnEnter}}
+          >
+        </div>
+        <div class="buttons">
+          <button
+            type="button"
+            class="done {{if this.authenticate.isRunning "active"}}"
+            disabled={{if this.authenticate.isRunning "disabled"}}
+            {{on "click" (perform this.authenticate)}}
+            data-test-login
+          >
+            {{#if this.authenticate.isRunning}}
+              <LoadingSpinner />
+            {{else}}
+              {{t "general.login"}}
+            {{/if}}
+          </button>
+        </div>
+      </form>
+    {{/if}}
+  {{/let}}
 </div>
