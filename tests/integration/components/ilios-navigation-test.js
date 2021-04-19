@@ -4,11 +4,12 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { component } from 'ilios/tests/pages/components/ilios-navigation';
 
 module('Integration | Component | ilios-navigation', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function (assert) {
+  test('it renders for privileged user', async function (assert) {
     const currentUserMock = Service.extend({
       performsNonLearnerFunction: true,
     });
@@ -16,18 +17,32 @@ module('Integration | Component | ilios-navigation', function (hooks) {
 
     await render(hbs`<IliosNavigation />`);
     await a11yAudit(this.element);
-    const link = '.navigation-links li:nth-of-type';
 
-    assert.dom(`${link}(1)`).includesText('Dashboard');
-    assert.dom(`${link}(2)`).includesText('Courses');
-    assert.dom(`${link}(3)`).includesText('Learner Groups');
-    assert.dom(`${link}(4)`).includesText('Instructor Groups');
-    assert.dom(`${link}(5)`).includesText('Schools');
-    assert.dom(`${link}(6)`).includesText('Programs');
-    assert.dom(`${link}(7)`).includesText('Curriculum Inventory');
+    assert.ok(component.expandCollapse.isPresent);
+    assert.equal(component.links.length, 7);
+    assert.equal(component.links[0].text, 'Dashboard');
+    assert.equal(component.links[1].text, 'Courses and Sessions');
+    assert.equal(component.links[2].text, 'Learner Groups');
+    assert.equal(component.links[3].text, 'Instructor Groups');
+    assert.equal(component.links[4].text, 'Schools');
+    assert.equal(component.links[5].text, 'Programs');
+    assert.equal(component.links[6].text, 'Curriculum Inventory');
   });
 
-  test('Privileged Users can access Admin', async function (assert) {
+  test('navigation does not render for non-privileged user', async function (assert) {
+    const currentUserMock = Service.extend({
+      performsNonLearnerFunction: false,
+    });
+    this.owner.register('service:currentUser', currentUserMock);
+
+    await render(hbs`<IliosNavigation />`);
+    await a11yAudit(this.element);
+
+    assert.notOk(component.expandCollapse.isPresent);
+    assert.equal(component.links.length, 0);
+  });
+
+  test('Super-privileged Users can access Admin', async function (assert) {
     const currentUserMock = Service.extend({
       performsNonLearnerFunction: true,
       canCreateOrUpdateUserInAnySchool: true,
@@ -36,15 +51,15 @@ module('Integration | Component | ilios-navigation', function (hooks) {
 
     await render(hbs`<IliosNavigation />`);
     await a11yAudit(this.element);
-    const link = '.navigation-links li:nth-of-type';
 
-    assert.dom(`${link}(1)`).includesText('Dashboard');
-    assert.dom(`${link}(2)`).includesText('Courses');
-    assert.dom(`${link}(3)`).includesText('Learner Groups');
-    assert.dom(`${link}(4)`).includesText('Instructor Groups');
-    assert.dom(`${link}(5)`).includesText('Schools');
-    assert.dom(`${link}(6)`).includesText('Programs');
-    assert.dom(`${link}(7)`).includesText('Admin');
-    assert.dom(`${link}(8)`).includesText('Curriculum Inventory');
+    assert.equal(component.links.length, 8);
+    assert.equal(component.links[0].text, 'Dashboard');
+    assert.equal(component.links[1].text, 'Courses and Sessions');
+    assert.equal(component.links[2].text, 'Learner Groups');
+    assert.equal(component.links[3].text, 'Instructor Groups');
+    assert.equal(component.links[4].text, 'Schools');
+    assert.equal(component.links[5].text, 'Programs');
+    assert.equal(component.links[6].text, 'Admin');
+    assert.equal(component.links[7].text, 'Curriculum Inventory');
   });
 });
