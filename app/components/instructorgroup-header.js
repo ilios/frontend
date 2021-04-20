@@ -1,53 +1,34 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
-import { reject } from 'rsvp';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import { action } from '@ember/object';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { dropTask } from 'ember-concurrency';
 
-const Validations = buildValidations({
-  title: [
-    validator('presence', true),
-    validator('length', {
-      min: 3,
-      max: 60,
-    }),
-  ],
-});
+@validatable
+export default class InstructorgroupHeaderComponent extends Component {
+  @service store;
+  @tracked @NotBlank() @Length(3, 60) title;
 
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  store: service(),
+  @action
+  load() {
+    this.title = this.args.instructorGroup.title;
+  }
 
-  tagName: '',
+  @dropTask
+  *changeTitle() {
+    this.addErrorDisplayFor('title');
+    const isValid = yield this.isValid('title');
+    if (!isValid) {
+      return false;
+    }
+    this.removeErrorDisplayFor('title');
+    this.args.instructorGroup.title = this.title;
+    yield this.args.instructorGroup.save();
+    this.title = this.args.instructorGroup.title;
+  }
 
-  canUpdate: false,
-  title: null,
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.set('title', this.instructorGroup.title);
-  },
-
-  actions: {
-    async changeTitle() {
-      const group = this.instructorGroup;
-      const newTitle = this.title;
-      this.send('addErrorDisplayFor', 'title');
-      const { validations } = await this.validate();
-
-      if (validations.isValid) {
-        this.send('removeErrorDisplayFor', 'title');
-        group.set('title', newTitle);
-        const newGroup = await group.save();
-        this.set('title', newGroup.title);
-        this.set('instructorGroup', newGroup);
-      } else {
-        await reject();
-      }
-    },
-
-    revertTitleChanges() {
-      const group = this.instructorGroup;
-      this.set('title', group.get('title'));
-    },
-  },
-});
+  revertTitleChanges() {
+    this.title = this.args.instructorGroup.title;
+  }
+}
