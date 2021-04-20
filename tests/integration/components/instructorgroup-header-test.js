@@ -1,53 +1,125 @@
-import EmberObject from '@ember/object';
-import RSVP from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, fillIn, find, triggerEvent } from '@ember/test-helpers';
+import { setupMirage } from 'ember-cli-mirage/test-support';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
-const { resolve } = RSVP;
+import { component } from 'ilios/tests/pages/components/instructorgroup-header';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | instructorgroup header', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-  test('it renders', async function (assert) {
-    assert.expect(3);
-    const instructorGroup = EmberObject.create({
+  hooks.beforeEach(async function () {
+    const users = this.server.createList('user', 3);
+    const school = this.server.create('school', { title: 'Medicine' });
+    const instructorGroup = this.server.create('instructor-group', {
       title: 'lorem ipsum',
-      school: { title: 'medicine' },
-      users: [{}, {}, {}],
+      school,
+      users,
     });
-
-    this.set('instructorGroup', instructorGroup);
-    await render(hbs`<InstructorgroupHeader @instructorGroup={{instructorGroup}} />`);
-
-    assert.dom('.school-title').hasText('medicine >');
-    assert.dom('[data-test-group-title]').hasText('lorem ipsum');
-    assert.equal(find('.info').textContent.replace(/\s/g, ''), 'Members:3');
+    this.instructorGroup = await this.owner
+      .lookup('service:store')
+      .find('instructor-group', instructorGroup.id);
   });
 
-  test('can change title', async function (assert) {
-    assert.expect(3);
-    const instructorGroup = EmberObject.create({
-      title: 'lorem ipsum',
-      save() {
-        assert.equal(this.title, 'new title');
-        return resolve(this);
-      },
-    });
+  test('it renders', async function (assert) {
+    this.set('instructorGroup', this.instructorGroup);
+    this.set('canUpdate', true);
 
-    this.set('instructorGroup', instructorGroup);
-    await render(hbs`<InstructorgroupHeader
-      @instructorGroup={{instructorGroup}}
-      @canUpdate={{true}}
-    />`);
+    await render(
+      hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
+    );
 
-    assert.dom('[data-test-group-title]').hasText('lorem ipsum');
-    await click('.editable');
-    await fillIn('[data-test-group-title] input', 'new title');
-    await triggerEvent('[data-test-group-title] input', 'input');
-    await click('[data-test-group-title] .done');
+    assert.equal(component.schoolTitle, 'Medicine >');
+    assert.equal(component.title.text, 'lorem ipsum');
+    assert.ok(component.title.isEditable);
+    assert.ok(component.members, 'Members: 3');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
 
-    assert.dom('[data-test-group-title]').hasText('new title');
+  test('it renders in read-only mode', async function (assert) {
+    this.set('instructorGroup', this.instructorGroup);
+    this.set('canUpdate', false);
+
+    await render(
+      hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
+    );
+
+    assert.equal(component.schoolTitle, 'Medicine >');
+    assert.equal(component.title.text, 'lorem ipsum');
+    assert.notOk(component.title.isEditable);
+    assert.ok(component.members, 'Members: 3');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('change title', async function (assert) {
+    const newTitle = 'foo bar';
+    this.set('instructorGroup', this.instructorGroup);
+    this.set('canUpdate', true);
+
+    await render(
+      hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
+    );
+
+    assert.equal(component.title.text, 'lorem ipsum');
+    await component.title.edit();
+    assert.equal(component.title.value, 'lorem ipsum');
+    await component.title.set(newTitle);
+    await component.title.save();
+    assert.equal(component.title.text, 'foo bar');
+  });
+
+  test('changing title fails if new title is too long', async function (assert) {
+    this.set('instructorGroup', this.instructorGroup);
+    this.set('canUpdate', true);
+
+    await render(
+      hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
+    );
+
+    assert.equal(component.title.text, 'lorem ipsum');
+    await component.title.edit();
+    assert.equal(component.title.errors.length, 0);
+    assert.equal(component.title.value, 'lorem ipsum');
+    await component.title.set('01234567890'.repeat(1000));
+    await component.title.save();
+    assert.equal(component.title.errors.length, 1);
+  });
+
+  test('changing title fails if new title is too short', async function (assert) {
+    this.set('instructorGroup', this.instructorGroup);
+    this.set('canUpdate', true);
+
+    await render(
+      hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
+    );
+
+    assert.equal(component.title.text, 'lorem ipsum');
+    await component.title.edit();
+    assert.equal(component.title.errors.length, 0);
+    assert.equal(component.title.value, 'lorem ipsum');
+    await component.title.set('AB');
+    await component.title.save();
+    assert.equal(component.title.errors.length, 1);
+  });
+
+  test('changing title fails if title is blank', async function (assert) {
+    this.set('instructorGroup', this.instructorGroup);
+    this.set('canUpdate', true);
+
+    await render(
+      hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
+    );
+
+    assert.equal(component.title.text, 'lorem ipsum');
+    await component.title.edit();
+    assert.equal(component.title.errors.length, 0);
+    assert.equal(component.title.value, 'lorem ipsum');
+    await component.title.set('');
+    await component.title.save();
+    assert.equal(component.title.errors.length, 1);
   });
 });

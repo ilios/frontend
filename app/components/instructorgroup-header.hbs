@@ -1,32 +1,41 @@
-<div class="instructorgroup-header" ...attributes>
+<div
+  class="instructorgroup-header"
+  data-test-instructorgroup-header
+  {{did-insert this.load}}
+  {{did-update this.load @instructorGroup.title}}
+  ...attributes
+>
   {{! template-lint-disable no-bare-strings }}
-  <div class="title">
-    <h4 class="school-title">
+  <div class="title" data-test-title>
+    <h4
+      class="school-title"
+      data-test-school-title
+    >
       {{@instructorGroup.school.title}}
       &gt;
     </h4>
-    {{#if canUpdate}}
+    {{#if @canUpdate}}
       <EditableField
         data-test-group-title
-        @value={{title}}
-        @save={{action "changeTitle"}}
-        @close={{action "revertTitleChanges"}}
+        @value={{this.title}}
+        @save={{perform this.changeTitle}}
+        @close={{this.revertTitleChanges}}
         @saveOnEnter={{true}}
         @closeOnEscape={{true}} as |isSaving|
       >
         <input
+          aria-label={{t "general.instructorGroupTitle"}}
           type="text"
-          value={{title}}
-          oninput={{action (mut title) value="target.value"}}
+          value={{this.title}}
           disabled={{isSaving}}
-          onkeyup={{action "addErrorDisplayFor" "title"}}
+          {{on "input" (pick "target.value" (set this.title))}}
+          {{on "keyup" (fn this.addErrorDisplayFor "title")}}
         >
-        {{#if (and (v-get this "title" "isInvalid") (includes "title" showErrorsFor))
-        }}
+        {{#each (await (compute this.getErrorsFor "title")) as |message|}}
           <span class="validation-error-message">
-            {{v-get this "title" "message"}}
+            {{message}}
           </span>
-        {{/if}}
+        {{/each}}
       </EditableField>
     {{else}}
       <h4 data-test-group-title>
@@ -34,7 +43,7 @@
       </h4>
     {{/if}}
   </div>
-  <span class="info">
+  <span class="info" data-test-members>
     {{t "general.members"}}:
     {{@instructorGroup.users.length}}
   </span>
