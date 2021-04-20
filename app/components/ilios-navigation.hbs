@@ -1,141 +1,151 @@
-{{#if (or currentUser.performsNonLearnerFunction)}}
-  <ul
-    class="expand-navigation link clickable"
-    role="button"
-    onclick={{action (toggle "expanded" this)}}
-  >
-    <li title={{t "general.menu"}}>
-      <FaIcon @icon="bars" />
-    </li>
-  </ul>
-  <ul class="navigation-links">
-    <li>
-      <LinkTo @route="dashboard">
-        <FaIcon
-          @icon="home"
-          @fixedWidth={{true}}
-          @title={{t "general.dashboard"}}
-        />
-        <span class="text">
-          {{t "general.dashboard"}}
-        </span>
-      </LinkTo>
-    </li>
-    {{#if currentUser.performsNonLearnerFunction}}
-      <li>
-        <LinkTo
-          @route="courses"
-          @title={{t "general.coursesAndSessions"}}
-          @current-when={{
-            join " "
-            (array
-              "course"
-              "course-materials"
-              "course-rollover"
-              "course-visualizations"
-              "course-visualize-instructor"
-              "course-visualize-instructors"
-              "course-visualize-objectives"
-              "course-visualize-session-type"
-              "course-visualize-session-types"
-              "course-visualize-term"
-              "course-visualize-vocabularies"
-              "course-visualize-vocabulary"
-              "courses"
-              "print_course"
-            )
-          }}
+<nav
+  aria-label={{t "general.primary"}}
+  class="ilios-navigation {{if this.expanded "expanded"}}"
+  data-test-ilios-navigation
+  ...attributes
+>
+  {{#if this.currentUser.performsNonLearnerFunction}}
+    <ul class="expand-navigation" data-test-expand-navigation>
+      <li title={{t "general.menu"}}>
+        <button
+          type="button"
+          class="link-button"
+          {{on "click" (set this.expanded (not this.expanded))}}
+          data-test-expand-collapse
         >
-          <FaIcon @icon="book" @fixedWidth={{true}} />
+          <FaIcon @icon="bars" />
+        </button>
+      </li>
+    </ul>
+    <ul class="navigation-links" data-test-navigation-links>
+      <li>
+        <LinkTo @route="dashboard">
+          <FaIcon
+            @icon="home"
+            @fixedWidth={{true}}
+            @title={{t "general.dashboard"}}
+          />
           <span class="text">
-            {{t "general.coursesAndSessions"}}
+            {{t "general.dashboard"}}
           </span>
         </LinkTo>
       </li>
-      <li>
-        <LinkTo
-          @route="learnerGroups"
-          @title={{t "general.learnerGroups"}}
-          @current-when="learnerGroups learnerGroup"
+      {{#if this.currentUser.performsNonLearnerFunction}}
+        <li>
+          <LinkTo
+            @route="courses"
+            title={{t "general.coursesAndSessions"}}
+            @current-when={{
+              join " "
+              (array
+                "course"
+                "course-materials"
+                "course-rollover"
+                "course-visualizations"
+                "course-visualize-instructor"
+                "course-visualize-instructors"
+                "course-visualize-objectives"
+                "course-visualize-session-type"
+                "course-visualize-session-types"
+                "course-visualize-term"
+                "course-visualize-vocabularies"
+                "course-visualize-vocabulary"
+                "courses"
+                "print_course"
+              )
+            }}
+          >
+            <FaIcon @icon="book" @fixedWidth={{true}} />
+            <span class="text">
+              {{t "general.coursesAndSessions"}}
+            </span>
+          </LinkTo>
+        </li>
+        <li>
+          <LinkTo
+            @route="learnerGroups"
+            title={{t "general.learnerGroups"}}
+            @current-when="learnerGroups learnerGroup"
+          >
+            <FaIcon @icon="graduation-cap" @fixedWidth={{true}} />
+            <span class="text">
+              {{t "general.learnerGroups"}}
+            </span>
+          </LinkTo>
+        </li>
+        <li>
+          <LinkTo
+            @route="instructorGroups"
+            title={{t "general.instructorGroups"}}
+            @current-when="instructorGroups instructorGroup"
+          >
+            <FaIcon @icon="user-md" @fixedWidth={{true}} />
+            <span class="text">
+              {{t "general.instructorGroups"}}
+            </span>
+          </LinkTo>
+        </li>
+        <li>
+          <LinkTo
+            @route="schools"
+            title={{t "general.schools"}}
+            @current-when="schools school session-type-visualize-vocabularies session-type-visualize-terms"
         >
-          <FaIcon @icon="graduation-cap" @fixedWidth={{true}} />
-          <span class="text">
-            {{t "general.learnerGroups"}}
-          </span>
-        </LinkTo>
-      </li>
-      <li>
-        <LinkTo
-          @route="instructorGroups"
-          @title={{t "general.instructorGroups"}}
-          @current-when="instructorGroups instructorGroup"
-        >
-          <FaIcon @icon="user-md" @fixedWidth={{true}} />
-          <span class="text">
-            {{t "general.instructorGroups"}}
-          </span>
-        </LinkTo>
-      </li>
-      <li>
-        <LinkTo
-          @route="schools"
-          @title={{t "general.schools"}}
-          @current-when="schools school session-type-visualize-vocabularies session-type-visualize-terms"
-      >
-          <FaIcon @icon="university" @fixedWidth={{true}} />
-          <span class="text">
-            {{t "general.schools"}}
-          </span>
-        </LinkTo>
-      </li>
-      <li>
-        <LinkTo
-          @route="programs"
-          @title={{t "general.programs"}}
-          @current-when="programs program program-year-visualizations program-year-visualize-competencies"
-        >
-          <FaIcon @icon="list-alt" @fixedWidth={{true}} />
-          <span class="text">
-            {{t "general.programs"}}
-          </span>
-        </LinkTo>
-      </li>
-    {{/if}}
-    {{#if currentUser.canCreateOrUpdateUserInAnySchool}}
-      <li>
-        <LinkTo
-          @route="admin-dashboard"
-          @title={{t "general.admin"}}
-          @current-when="admin-dashboard users user assign-students pending-user-updates"
-        >
-          <FaIcon @icon="cogs" @fixedWidth={{true}} />
-          <span class="text">
-            {{t "general.admin"}}
-          </span>
-        </LinkTo>
-      </li>
-    {{/if}}
-    {{#if currentUser.performsNonLearnerFunction}}
-      <li>
-        <LinkTo
-          @route="curriculumInventoryReports"
-          @title={{t "general.curriculumInventory"}}
-          @current-when={{
-            join " "
-            (array
-              "curriculumInventoryReport"
-              "curriculumInventoryReports"
-              "curriculumInventorySequenceBlock"
-              "verificationPreview"
-            )
-          }}
-        >
-          <FaIcon @icon="chart-bar" @fixedWidth={{true}} />
-          <span class="text">
-            {{t "general.curriculumInventory"}}
-          </span>
-        </LinkTo>
-      </li>
-    {{/if}}
-  </ul>
-{{/if}}
+            <FaIcon @icon="university" @fixedWidth={{true}} />
+            <span class="text">
+              {{t "general.schools"}}
+            </span>
+          </LinkTo>
+        </li>
+        <li>
+          <LinkTo
+            @route="programs"
+            title={{t "general.programs"}}
+            @current-when="programs program program-year-visualizations program-year-visualize-competencies"
+          >
+            <FaIcon @icon="list-alt" @fixedWidth={{true}} />
+            <span class="text">
+              {{t "general.programs"}}
+            </span>
+          </LinkTo>
+        </li>
+      {{/if}}
+      {{#if this.currentUser.canCreateOrUpdateUserInAnySchool}}
+        <li>
+          <LinkTo
+            @route="admin-dashboard"
+            title={{t "general.admin"}}
+            @current-when="admin-dashboard users user assign-students pending-user-updates"
+          >
+            <FaIcon @icon="cogs" @fixedWidth={{true}} />
+            <span class="text">
+              {{t "general.admin"}}
+            </span>
+          </LinkTo>
+        </li>
+      {{/if}}
+      {{#if this.currentUser.performsNonLearnerFunction}}
+        <li>
+          <LinkTo
+            @route="curriculumInventoryReports"
+            title={{t "general.curriculumInventory"}}
+            @current-when={{
+              join " "
+              (array
+                "curriculumInventoryReport"
+                "curriculumInventoryReports"
+                "curriculumInventorySequenceBlock"
+                "verificationPreview"
+              )
+            }}
+          >
+            <FaIcon @icon="chart-bar" @fixedWidth={{true}} />
+            <span class="text">
+              {{t "general.curriculumInventory"}}
+            </span>
+          </LinkTo>
+        </li>
+      {{/if}}
+    </ul>
+  {{/if}}
+</nav>

@@ -65,6 +65,10 @@
     }
   }
 
+  .link-button {
+    height: inherit;
+  }
+
   @include for-smaller-than-laptop {
     a.active {
       background-color: $grey;
