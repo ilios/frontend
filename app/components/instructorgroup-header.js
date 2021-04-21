@@ -28,6 +28,7 @@ export default class InstructorgroupHeaderComponent extends Component {
     this.title = this.args.instructorGroup.title;
   }
 
+  @action
   revertTitleChanges() {
     this.title = this.args.instructorGroup.title;
   }
