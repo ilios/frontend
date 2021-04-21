@@ -122,4 +122,21 @@ module('Integration | Component | instructorgroup header', function (hooks) {
     await component.title.save();
     assert.equal(component.title.errors.length, 1);
   });
+
+  test('cancel title changes', async function (assert) {
+    this.set('instructorGroup', this.instructorGroup);
+    this.set('canUpdate', true);
+
+    await render(
+      hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
+    );
+
+    assert.equal(component.title.text, 'lorem ipsum');
+    await component.title.edit();
+    assert.equal(component.title.errors.length, 0);
+    assert.equal(component.title.value, 'lorem ipsum');
+    await component.title.set('foo bar');
+    await component.title.cancel();
+    assert.equal(component.title.text, 'lorem ipsum');
+  });
 });
