@@ -10,9 +10,8 @@ import {
 
 const definition = {
   scope: '[data-test-instructorgroup-header]',
-  schoolTitle: text('[data-test-school-title]'),
   title: {
-    scope: '[data-test-group-title]',
+    scope: '[data-test-title]',
     edit: clickable('[data-test-edit]'),
     set: fillable('input'),
     value: value('input'),
@@ -22,6 +21,10 @@ const definition = {
     isEditable: hasClass('editinplace'),
   },
   members: text('[data-test-members]'),
+  breadcrumb: {
+    scope: '[data-test-breadcrumb]',
+    crumbs: collection('span'),
+  },
 };
 
 export default definition;

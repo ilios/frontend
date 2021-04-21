@@ -6,31 +6,16 @@ import {
   fillable,
   hasClass,
   text,
-  value,
   visitable,
 } from 'ember-cli-page-object';
 
+import header from './components/instructorgroup-header';
+
 export default create({
   visit: visitable('/instructorgroups/:instructorGroupId'),
-
-  header: {
-    scope: '.instructorgroup-header',
-    title: text('.title'),
-    schoolTitle: text('.school-title'),
-    groupTitle: {
-      scope: '[data-test-group-title]',
-      text: text(),
-      edit: clickable('.clickable'),
-      fillInput: fillable('input'),
-      inputValue: value('input'),
-      save: clickable('.actions .done'),
-    },
-    membersInfo: text('.info'),
-  },
-
   details: {
     scope: '.instructorgroup-details',
-    title: text('h2'),
+    header,
     list: collection('.instructorgroup-users li', {
       removable: hasClass('clickable'),
       remove: clickable(),

@@ -54,10 +54,12 @@ module('Acceptance | Instructor Group Details', function (hooks) {
   test('check fields', async function (assert) {
     await visit(url);
     assert.equal(currentRouteName(), 'instructorGroup');
-    assert.equal(page.header.schoolTitle, 'school 0 >');
-    assert.equal(page.header.groupTitle.text, 'instructor group 0');
-    assert.equal(page.header.membersInfo, 'Members: 2');
-    assert.equal(page.details.title, 'instructor group 0 Members (2)');
+    assert.equal(page.details.header.title.text, 'instructor group 0');
+    assert.equal(page.details.header.members, 'Members: 2');
+    assert.equal(page.details.header.breadcrumb.crumbs.length, 3);
+    assert.equal(page.details.header.breadcrumb.crumbs[0].text, 'Instructor Groups');
+    assert.equal(page.details.header.breadcrumb.crumbs[1].text, 'school 0');
+    assert.equal(page.details.header.breadcrumb.crumbs[2].text, 'instructor group 0');
 
     assert.equal(page.details.list.length, 2);
     assert.equal(page.details.list[0].name, '1 guy M. Mc1son');
@@ -71,12 +73,12 @@ module('Acceptance | Instructor Group Details', function (hooks) {
   test('change title', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
-    assert.equal(page.header.groupTitle.text, 'instructor group 0');
-    await page.header.groupTitle.edit();
-    assert.equal(page.header.groupTitle.inputValue, 'instructor group 0');
-    page.header.groupTitle.fillInput('test new title');
-    await page.header.groupTitle.save();
-    assert.equal(page.header.groupTitle.text, 'test new title');
+    assert.equal(page.details.header.title.text, 'instructor group 0');
+    await page.details.header.title.edit();
+    assert.equal(page.details.header.title.value, 'instructor group 0');
+    await page.details.header.title.set('test new title');
+    await page.details.header.title.save();
+    assert.equal(page.details.header.title.text, 'test new title');
   });
 
   test('search instructors', async function (assert) {
@@ -127,8 +129,10 @@ module('Acceptance | Instructor Group Details', function (hooks) {
 
   test('no associated courses', async function (assert) {
     await visit('/instructorgroups/3');
-    assert.equal(page.header.schoolTitle, 'school 0 >');
-    assert.equal(page.header.groupTitle.text, 'instructor group 2');
+    assert.equal(page.details.header.breadcrumb.crumbs.length, 3);
+    assert.equal(page.details.header.breadcrumb.crumbs[0].text, 'Instructor Groups');
+    assert.equal(page.details.header.breadcrumb.crumbs[1].text, 'school 0');
+    assert.equal(page.details.header.breadcrumb.crumbs[2].text, 'instructor group 2');
     assert.equal(page.associatedCourses.text, 'Associated Courses: None');
   });
 });

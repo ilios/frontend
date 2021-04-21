@@ -6,45 +6,60 @@
   ...attributes
 >
   {{! template-lint-disable no-bare-strings }}
-  <div class="title" data-test-title>
-    <h4
-      class="school-title"
-      data-test-school-title
-    >
-      {{@instructorGroup.school.title}}
-      &gt;
-    </h4>
-    {{#if @canUpdate}}
-      <EditableField
-        data-test-group-title
-        @value={{this.title}}
-        @save={{perform this.changeTitle}}
-        @close={{this.revertTitleChanges}}
-        @saveOnEnter={{true}}
-        @closeOnEscape={{true}} as |isSaving|
-      >
-        <input
-          aria-label={{t "general.instructorGroupTitle"}}
-          type="text"
-          value={{this.title}}
-          disabled={{isSaving}}
-          {{on "input" (pick "target.value" (set this.title))}}
-          {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+  <div class="header-bar">
+    <span class="title">
+      {{#if @canUpdate}}
+        <EditableField
+          data-test-title
+          @value={{this.title}}
+          @save={{perform this.changeTitle}}
+          @close={{this.revertTitleChanges}}
+          @saveOnEnter={{true}}
+          @closeOnEscape={{true}} as |isSaving|
         >
-        {{#each (await (compute this.getErrorsFor "title")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
-      </EditableField>
-    {{else}}
-      <h4 data-test-group-title>
-        {{this.title}}
-      </h4>
-    {{/if}}
+          <input
+            aria-label={{t "general.instructorGroupTitle"}}
+            type="text"
+            value={{this.title}}
+            disabled={{isSaving}}
+            {{on "input" (pick "target.value" (set this.title))}}
+            {{on "keyup" (fn this.addErrorDisplayFor "title")}}
+          >
+          {{#each (await (compute this.getErrorsFor "title")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
+        </EditableField>
+      {{else}}
+        <h2 data-test-title>
+          {{this.title}}
+        </h2>
+      {{/if}}
+    </span>
+    <span class="info" data-test-members>
+      {{t "general.members"}}:
+      {{@instructorGroup.users.length}}
+    </span>
   </div>
-  <span class="info" data-test-members>
-    {{t "general.members"}}:
-    {{@instructorGroup.users.length}}
-  </span>
+  <div class="breadcrumbs" data-test-breadcrumb>
+    <span>
+      <LinkTo @route="instructorGroups">
+        {{t "general.instructorGroups"}}
+      </LinkTo>
+    </span>
+    <span>
+      <LinkTo
+        @route="instructorGroups"
+        @query={{hash
+          schoolId=(get (await @instructorGroup.school) "id")
+        }}
+      >
+        {{@instructorGroup.school.title}}
+      </LinkTo>
+    </span>
+    <span>
+      {{@instructorGroup.title}}
+    </span>
+  </div>
 </div>

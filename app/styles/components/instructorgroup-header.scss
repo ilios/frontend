@@ -1,35 +1,29 @@
 .instructorgroup-header {
-  background-color: $header-grey;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding: .8rem;
-
-  @include for-tablet-and-up {
-    flex-direction: row;
-  }
-
-  .title {
+  .header-bar {
+    background-color: $header-grey;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    padding: .8rem;
 
     @include for-tablet-and-up {
       flex-direction: row;
     }
 
-    .editable,
-    h4 {
-      display: block;
-      font-size: 1.5rem;
+    h2 {
+      @include ilios-heading-h4;
 
       @include for-laptop-and-up {
         display: inline;
       }
     }
 
-    @include for-tablet-and-up {
-      h4 {
-        margin-left: 1rem;
+    .title {
+      @include ilios-heading-h4;
+      flex-grow: 2;
+
+      input {
+        width: 90%;
       }
     }
   }
