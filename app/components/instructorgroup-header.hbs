@@ -7,9 +7,10 @@
 >
   {{! template-lint-disable no-bare-strings }}
   <div class="header-bar">
-    <span class="title" data-test-title>
+    <span class="title">
       {{#if @canUpdate}}
         <EditableField
+          data-test-title
           @value={{this.title}}
           @save={{perform this.changeTitle}}
           @close={{this.revertTitleChanges}}
@@ -41,7 +42,7 @@
       {{@instructorGroup.users.length}}
     </span>
   </div>
-  <div class="breadcrumbs">
+  <div class="breadcrumbs" data-test-breadcrumb>
     <span>
       <LinkTo @route="instructorGroups">
         {{t "general.instructorGroups"}}

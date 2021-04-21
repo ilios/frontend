@@ -31,10 +31,13 @@ module('Integration | Component | instructorgroup header', function (hooks) {
       hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
-    assert.equal(component.schoolTitle, 'Medicine >');
     assert.equal(component.title.text, 'lorem ipsum');
     assert.ok(component.title.isEditable);
     assert.ok(component.members, 'Members: 3');
+    assert.equal(component.breadcrumb.crumbs.length, 3);
+    assert.equal(component.breadcrumb.crumbs[0].text, 'Instructor Groups');
+    assert.equal(component.breadcrumb.crumbs[1].text, 'Medicine');
+    assert.equal(component.breadcrumb.crumbs[2].text, 'lorem ipsum');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
@@ -47,7 +50,6 @@ module('Integration | Component | instructorgroup header', function (hooks) {
       hbs`<InstructorgroupHeader @instructorGroup={{this.instructorGroup}} @canUpdate={{this.canUpdate}} />`
     );
 
-    assert.equal(component.schoolTitle, 'Medicine >');
     assert.equal(component.title.text, 'lorem ipsum');
     assert.notOk(component.title.isEditable);
     assert.ok(component.members, 'Members: 3');
