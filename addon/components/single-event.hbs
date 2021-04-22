@@ -88,7 +88,7 @@
           />
         </div>
       {{/if}}
-      {{#if (gt (get @event.sessionDescription "length") 0)}}
+      {{#if @event.sessionDescription}}
         {{! template-lint-disable no-triple-curlies }}
         {{{@event.sessionDescription}}}
         <br>
