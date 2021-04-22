@@ -7,7 +7,7 @@ export default class LearnerGroupsRoute extends Route {
   @service session;
 
   queryParams = {
-    titleFilter: {
+    filter: {
       replace: true,
     },
   };

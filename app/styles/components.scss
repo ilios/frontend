@@ -29,7 +29,6 @@
 @import 'components/learnergroup-subgroup-list';
 @import 'components/learnergroup-summary';
 @import 'components/learnergroup-user-manager';
-@import 'components/learnergroups-list';
 @import 'components/loading-bar';
 @import 'components/locale-chooser';
 @import 'components/login-form';
@@ -88,6 +87,8 @@
 @import 'components/visualizer-program-year-competencies';
 @import 'components/visualizer-session-type-terms';
 @import 'components/visualizer-session-type-vocabularies';
+
+@import 'components/learner-groups/root';
 
 @import 'components/instructor-groups/root';
 @import 'components/instructor-groups/loading';
