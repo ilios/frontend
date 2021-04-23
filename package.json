@@ -44,7 +44,7 @@
     "browserslist": "^4.16.5",
     "caniuse-db": "^1.0.30001214",
     "dotenv": "^8.2.0",
-    "ember-a11y-testing": "^4.0.2",
+    "ember-a11y-testing": "^4.0.4",
     "ember-ajax": "^5.0.0",
     "ember-auto-import": "^1.11.2",
     "ember-chrome-devtools": "^0.2.0",
