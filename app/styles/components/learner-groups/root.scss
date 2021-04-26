@@ -1,0 +1,68 @@
+.learner-groups-root {
+  @include main-list;
+
+  .filters {
+    @include main-list-filters;
+
+    .filter {
+      @include main-list-filter;
+    }
+  }
+
+  .new .saved-result {
+    @include main-list-saved-new;
+  }
+
+  .main-list {
+    @include main-list-box;
+
+    .header {
+      @include main-list-box-header;
+
+      h2 {
+        @include ilios-heading;
+      }
+
+      .title {
+        @include main-list-box-header-title;
+      }
+
+      .actions {
+        @include main-list-box-header-actions;
+      }
+    }
+
+    .list {
+      @include main-list-box-table;
+
+      .remove-button,
+      .copy-button {
+        @include ilios-button-reset;
+      }
+
+      .remove-button {
+        color: $ilios-remove-color;
+      }
+
+      .copy-button {
+        color: $ilios-blue;
+      }
+
+      .confirm-copy,
+      .confirm-copy:nth-child(even),
+      .confirm-copy:nth-child(odd)
+      {
+        background-color: lighten($ilios-blue, 60);
+        border: 2px solid $ilios-blue;
+
+        &.actions-row {
+          border-top: 0;
+        }
+
+        &.content-row {
+          border-bottom: 0;
+        }
+      }
+    }
+  }
+}

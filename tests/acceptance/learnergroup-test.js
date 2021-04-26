@@ -282,9 +282,9 @@ module('Acceptance | Learnergroup', function (hooks) {
     });
 
     await learnerGroupsPage.visit();
-    assert.equal(learnerGroupsPage.learnerGroupList.groups.length, 1);
-    assert.equal(learnerGroupsPage.learnerGroupList.groups[0].title, 'learner group 0');
-    await learnerGroupsPage.learnerGroupList.groups[0].visit();
+    assert.equal(learnerGroupsPage.list.items.length, 1);
+    assert.equal(learnerGroupsPage.list.items[0].title, 'learner group 0');
+    await learnerGroupsPage.list.items[0].clickTitle();
     assert.equal(currentURL(), '/learnergroups/1');
     assert.equal(page.overview.learnerGroupUserManager.usersInCurrentGroup.length, 5);
     assert.equal(page.usersInCohort.list.length, 5);

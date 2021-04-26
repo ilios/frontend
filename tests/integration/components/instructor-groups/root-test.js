@@ -60,7 +60,7 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setSchoolId', (schoolId) => {
-      assert.ok(schoolId, '3');
+      assert.equal(schoolId, '3');
       this.set('schoolId', schoolId);
     });
 

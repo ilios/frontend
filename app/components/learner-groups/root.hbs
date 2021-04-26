@@ -1,0 +1,134 @@
+<section class="learner-groups-root" data-test-learner-groups>
+  <div class="filters">
+    <div class="filter" data-test-school-filter>
+      <FaIcon @icon="university" @fixedWidth={{true}} />
+      {{#if (gt @schools.length 1)}}
+        <select
+          {{on "change" (pick "target.value" this.setSchoolId)}}
+          aria-label={{t "general.schools"}}
+          data-test-school-selector
+        >
+          {{#each (sort-by "title" @schools) as |school|}}
+            <option
+              selected={{eq school.id this.selectedSchool.id}}
+              value={{school.id}}
+            >
+              {{school.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{this.selectedSchool.title}}
+      {{/if}}
+    </div>
+    <div class="filter" data-test-program-filter>
+      <FaIcon @icon="users" @fixedWidth={{true}} />
+      {{#if (gt this.programs.length 1)}}
+        <select
+          {{on "change" (pick "target.value" (perform this.setProgramId))}}
+          aria-label={{t "general.programs"}}
+          data-test-program-selector
+        >
+          {{#each (sort-by "title" this.programs) as |program|}}
+            <option
+              selected={{eq program.id this.selectedProgram.id}}
+              value={{program.id}}
+            >
+              {{program.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{this.selectedProgram.title}}
+      {{/if}}
+    </div>
+    <div class="filter" data-test-program-year-filter>
+      <FaIcon @icon="calendar" @fixedWidth={{true}} />
+      {{#if (gt this.programYears.length 1)}}
+        <select
+          {{on "change" (pick "target.value" (perform this.setProgramYearId))}}
+          aria-label={{t "general.programYears"}}
+          data-test-program-selector
+        >
+          {{#each (sort-by "startYear:desc" this.programYears) as |programYear|}}
+            <option
+              selected={{eq programYear.id this.selectedProgramYear.id}}
+              value={{programYear.id}}
+            >
+              {{programYear.cohort.title}}
+            </option>
+          {{/each}}
+        </select>
+      {{else}}
+        {{this.selectedProgramYear.cohort.title}}
+      {{/if}}
+    </div>
+    <div class="filter" data-test-title-filter>
+      <input
+        aria-label={{t "general.learnerGroupTitleFilterPlaceholder"}}
+        value={{@titleFilter}}
+        {{on "input" (pick "target.value" @setTitleFilter)}}
+        placeholder={{t "general.learnerGroupTitleFilterPlaceholder"}}
+        data-test-title-filter
+      >
+    </div>
+  </div>
+
+  <div class="main-list">
+    <div class="header">
+      <div class="title">
+        <h2>
+          {{t "general.learnerGroups"}}
+        </h2>
+      </div>
+      <div class="actions">
+        {{#if this.canCreate}}
+          <ExpandCollapseButton
+            @value={{this.showNewLearnerGroupForm}}
+            @action={{set this.showNewLearnerGroupForm (not this.showNewLearnerGroupForm)}}
+            @expandButtonLabel={{t "general.expand"}}
+            @collapseButtonLabel={{t "general.close"}}
+          />
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="new">
+      {{#if this.showNewLearnerGroupForm}}
+        <LearnerGroups::New
+          @save={{perform this.saveNewLearnerGroup}}
+          @cancel={{set this.showNewLearnerGroupForm false}}
+          @fillModeSupported={{true}}
+        />
+      {{/if}}
+      {{#if this.newLearnerGroup}}
+        <div class="saved-result">
+          <LinkTo @route="learnerGroup" @model={{this.newLearnerGroup}}>
+            <FaIcon @icon="external-link-square-alt" />
+            {{this.newLearnerGroup.title}}
+          </LinkTo>
+          {{t "general.savedSuccessfully"}}
+        </div>
+      {{/if}}
+    </div>
+    <div class="list">
+      {{#if this.isLoaded}}
+        <LearnerGroups::List
+          @learnerGroups={{this.filteredLearnerGroups}}
+          @canCopyWithLearners={{true}}
+          @copyGroup={{perform this.copyGroup}}
+        />
+      {{else}}
+        <PulseLoader />
+      {{/if}}
+    </div>
+  </div>
+</section>
+
+{{#if this.copyGroup.isRunning}}
+  <WaitSaving
+    @showProgress={{true}}
+    @totalProgress={{this.totalGroupsToSave}}
+    @currentProgress={{this.currentGroupsSaved}}
+  />
+{{/if}}
