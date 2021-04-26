@@ -49,7 +49,8 @@
 </tr>
 {{#if (and this.showRemoveConfirmation this.areCoursesLoaded)}}
   <tr class="confirm-removal" data-test-confirm-removal>
-    <td colspan="3">
+    <td class="hide-from-small-screen"></td>
+    <td colspan="3" class="confirm-message">
       {{#if (gt this.courses.length 0)}}
         {{t "general.canNotDeleteLearnerGroupWithAssociatedCourses" courseCount=this.courses.length}}
         <ul class="course-list">
@@ -98,7 +99,6 @@
         </div>
       {{/if}}
     </td>
-    <td class="hide-from-small-screen"></td>
     <td class="hide-from-small-screen"></td>
   </tr>
 {{/if}}
