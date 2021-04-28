@@ -12,7 +12,11 @@
     </h3>
     {{#if @editable}}
       <span data-test-actions>
-        <LinkTo @route="course-visualize-objectives" @model={{@course}}>
+        <LinkTo
+          @route="course-visualize-objectives"
+          @model={{@course}}
+          aria-label={{t "general.visualizeCourseObjectives"}}
+        >
           <VisualizerCourseObjectives
             @course={{@course}}
             @width={{20}}
