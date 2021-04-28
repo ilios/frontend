@@ -76,7 +76,7 @@
     "ember-cli-progress": "^1.0.11",
     "ember-cli-server-variables": "2.4.0",
     "ember-cli-sri": "^2.1.1",
-    "ember-cli-terser": "^4.0.1",
+    "ember-cli-terser": "^4.0.2",
     "ember-cp-validations": "^4.0.0-beta.10",
     "ember-export-application-global": "^2.0.1",
     "ember-link-action": "^2.0.3",
