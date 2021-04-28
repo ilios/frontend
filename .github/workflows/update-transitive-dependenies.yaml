@@ -20,6 +20,7 @@ jobs:
         rm package-lock.json
         npm install
     - name: Create Pull Request
+      id: cpr
       uses: peter-evans/create-pull-request@v3
       with:
           token: ${{ secrets.ZORGBORT_TOKEN }}
@@ -32,4 +33,11 @@ jobs:
 
             [1]: https://github.com/peter-evans/create-pull-request
           branch: auto-update-dependencies
-          labels: dependencies,automerge
+          labels: dependencies
+    - name: Enable Pull Request Automerge
+      if: steps.cpr.outputs.pull-request-operation == 'created'
+      uses: peter-evans/enable-pull-request-automerge@v1
+      with:
+        token: ${{ secrets.ZORGBORT_TOKEN }}
+        pull-request-number: ${{ steps.cpr.outputs.pull-request-number }}
+        merge-method: merge
