@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 
 export default class ProgramsRoute extends Route {
   @service session;
+  @service store;
 
   queryParams = {
     titleFilter: {

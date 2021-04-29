@@ -1,8 +1,10 @@
 import { tracked } from '@glimmer/tracking';
 import Controller from '@ember/controller';
 import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default class CurriculumInventorySequenceBlockController extends Controller {
+  @service store;
   queryParams = ['sortSessionsBy'];
   @tracked sortSessionsBy = 'title';
   @tracked canUpdate = false;
