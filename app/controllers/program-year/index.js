@@ -1,15 +1,17 @@
 import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
 
-export default Controller.extend({
-  queryParams: [
+export default class ProgramYearIndexController extends Controller {
+  queryParams = [
     'pyObjectiveDetails',
     'pyTaxonomyDetails',
     'pyCompetencyDetails',
     'managePyCompetencies',
-  ],
-  canUpdate: false,
-  pyObjectiveDetails: false,
-  pyTaxonomyDetails: false,
-  pyCompetencyDetails: false,
-  managePyCompetencies: false,
-});
+  ];
+
+  @tracked canUpdate = false;
+  @tracked pyObjectiveDetails = false;
+  @tracked pyTaxonomyDetails = false;
+  @tracked pyCompetencyDetails = false;
+  @tracked managePyCompetencies = false;
+}
