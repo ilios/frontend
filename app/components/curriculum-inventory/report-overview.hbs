@@ -121,7 +121,9 @@
         </label>
         <span>
           {{@report.program.title}}
-          ({{@report.program.shortTitle}})
+          {{#if @report.program.shortTitle}}
+            ({{@report.program.shortTitle}})
+          {{/if}}
         </span>
       </div>
       <div class="description" data-test-description>
