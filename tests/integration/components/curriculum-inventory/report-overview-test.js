@@ -311,4 +311,12 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     await component.description.save();
     assert.ok(component.description.hasError, 'Validation error message is visible.');
   });
+
+  test('program short title is only displayed if it has a value', async function (assert) {
+    this.program.shortTitle = null;
+    await render(
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+    );
+    assert.equal(component.program.text, 'Doctor of Rocket Surgery');
+  });
 });
