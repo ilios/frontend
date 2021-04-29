@@ -5,161 +5,167 @@
   ...attributes
 >
   {{#unless this.load.isRunning}}
-    <div class="report-overview-header">
-      <div class="title" data-test-title>
-        {{t "general.overview"}}
-      </div>
-      <div class="report-overview-actions">
-        <LinkTo
-          @route="verificationPreview"
-          @model={{@report}}
-          class="verification-preview"
-          data-test-transition-to-verification-preview
-        >
-          <FaIcon
-            @icon="table"
-            @fixedWidth={{true}}
-            @title={{t "general.verificationPreviewFor" name=@report.name}}
-          />
-        </LinkTo>
-        {{#if this.showRollover}}
-          <span
-            class="link rollover"
-            role="button"
-            {{on "click" this.transitionToRollover}}
-            data-test-transition-to-rollover
+    {{#let (unique-id) as |templateId|}}
+      <div class="report-overview-header">
+        <div class="title" data-test-title>
+          {{t "general.overview"}}
+        </div>
+        <div class="report-overview-actions">
+          <LinkTo
+            @route="verificationPreview"
+            @model={{@report}}
+            class="verification-preview"
+            data-test-transition-to-verification-preview
           >
             <FaIcon
-              @icon="random"
+              @icon="table"
               @fixedWidth={{true}}
-              @title={{t "general.curriculumInventoryReportRollover"}}
+              @title={{t "general.verificationPreviewFor" name=@report.name}}
             />
-          </span>
-        {{/if}}
-      </div>
-    </div>
-    <div class="curriculum-inventory-report-overview-content">
-      <div class="block start-date" data-test-start-date>
-        <label>
-          {{t "general.start"}}:
-        </label>
-        <span>
-          {{#if @canUpdate}}
-            <EditableField
-              @value={{format-date @report.startDate}}
-              @save={{perform this.changeStartDate}}
-              @close={{this.revertStartDateChanges}}
+          </LinkTo>
+          {{#if this.showRollover}}
+            <span
+              class="link rollover"
+              role="button"
+              {{on "click" this.transitionToRollover}}
+              data-test-transition-to-rollover
             >
-              <DatePicker
-                @value={{this.startDate}}
-                @onChange={{queue (set this.startDate) (fn this.addErrorDisplayFor "startDate")}}
-                data-test-start-date-picker
+              <FaIcon
+                @icon="random"
+                @fixedWidth={{true}}
+                @title={{t "general.curriculumInventoryReportRollover"}}
               />
-              {{#each (await (compute this.getErrorsFor "startDate")) as |message|}}
-                <span class="validation-error-message">
-                  {{message}}
-                </span>
-              {{/each}}
-            </EditableField>
-          {{else}}
-            {{format-date @report.startDate}}
+            </span>
           {{/if}}
-        </span>
+        </div>
       </div>
-      <div class="block end-date" data-test-end-date>
-        <label>
-          {{t "general.end"}}:
-        </label>
-        <span>
-          {{#if @canUpdate}}
-            <EditableField
-              @value={{format-date @report.endDate}}
-              @save={{perform this.changeEndDate}}
-              @close={{this.revertEndDateChanges}}
-            >
-              <DatePicker
-                @value={{this.endDate}}
-                @onChange={{queue (set this.endDate) (fn this.addErrorDisplayFor "endDate")}}
-                data-test-end-date-picker
-              />
-              {{#each (await (compute this.getErrorsFor "endDate")) as |message|}}
-                <span class="validation-error-message">
-                  {{message}}
-                </span>
-              {{/each}}
-            </EditableField>
-          {{else}}
-            {{format-date @report.endDate}}
-          {{/if}}
-        </span>
-      </div>
-      <div class="block academic-year" data-test-academic-year>
-        <label>
-          {{t "general.academicYear"}}:
-        </label>
-        {{#if (and @canUpdate (not (await @report.hasLinkedCourses)))}}
-          <EditableField
-            @value={{this.yearLabel}}
-            @save={{perform this.changeYear}}
-            @close={{this.revertYearChanges}}
-          >
-            <select {{on "change" (pick "target.value" (set this.year))}}>
-              {{#each this.yearOptions as |obj|}}
-                <option value={{obj.id}} selected={{eq obj.id this.year}}>{{obj.title}}</option>
-              {{/each}}
-            </select>
-          </EditableField>
-        {{else}}
+      <div class="curriculum-inventory-report-overview-content">
+        <div class="block start-date" data-test-start-date>
+          <label>
+            {{t "general.start"}}:
+          </label>
           <span>
-            {{this.yearLabel}}
-          </span>
-        {{/if}}
-      </div>
-      <div class="block program" data-test-program>
-        <label>
-          {{t "general.program"}}:
-        </label>
-        <span>
-          {{@report.program.title}}
-          {{#if @report.program.shortTitle}}
-            ({{@report.program.shortTitle}})
-          {{/if}}
-        </span>
-      </div>
-      <div class="description" data-test-description>
-        <label>
-          {{t "general.description"}}:
-        </label>
-        <span>
-          {{#if @canUpdate}}
-            <EditableField
-              @value={{this.description}}
-              @save={{perform this.changeDescription}}
-              @close={{this.revertDescriptionChanges}}
-              @clickPrompt={{if this.description this.description (t "general.clickToEdit")
-              }}
-              @closeOnEscape={{true}} as |isSaving|
-            >
-              <textarea
-                value={{this.description}}
-                disabled={{this.isSaving}}
-                {{on "input" (pick "target.value" (set this.description))}}
-                {{on "keyup" (fn this.addErrorDisplayFor "description")}}
-                placeholder={{t "general.reportDescriptionPlaceholder"}}
+            {{#if @canUpdate}}
+              <EditableField
+                @value={{format-date @report.startDate}}
+                @save={{perform this.changeStartDate}}
+                @close={{this.revertStartDateChanges}}
               >
-                {{this.description}}
-              </textarea>
-              {{#each (await (compute this.getErrorsFor "description")) as |message|}}
-                <span class="validation-error-message">
-                  {{message}}
-                </span>
-              {{/each}}
+                <DatePicker
+                  @value={{this.startDate}}
+                  @onChange={{queue (set this.startDate) (fn this.addErrorDisplayFor "startDate")}}
+                  data-test-start-date-picker
+                />
+                {{#each (await (compute this.getErrorsFor "startDate")) as |message|}}
+                  <span class="validation-error-message">
+                    {{message}}
+                  </span>
+                {{/each}}
+              </EditableField>
+            {{else}}
+              {{format-date @report.startDate}}
+            {{/if}}
+          </span>
+        </div>
+        <div class="block end-date" data-test-end-date>
+          <label>
+            {{t "general.end"}}:
+          </label>
+          <span>
+            {{#if @canUpdate}}
+              <EditableField
+                @value={{format-date @report.endDate}}
+                @save={{perform this.changeEndDate}}
+                @close={{this.revertEndDateChanges}}
+              >
+                <DatePicker
+                  @value={{this.endDate}}
+                  @onChange={{queue (set this.endDate) (fn this.addErrorDisplayFor "endDate")}}
+                  data-test-end-date-picker
+                />
+                {{#each (await (compute this.getErrorsFor "endDate")) as |message|}}
+                  <span class="validation-error-message">
+                    {{message}}
+                  </span>
+                {{/each}}
+              </EditableField>
+            {{else}}
+              {{format-date @report.endDate}}
+            {{/if}}
+          </span>
+        </div>
+        <div class="block academic-year" data-test-academic-year>
+          <label for="year-{{templateId}}">
+            {{t "general.academicYear"}}:
+          </label>
+          {{#if (and @canUpdate (not (await @report.hasLinkedCourses)))}}
+            <EditableField
+              @value={{this.yearLabel}}
+              @save={{perform this.changeYear}}
+              @close={{this.revertYearChanges}}
+            >
+              <select
+                id="year-{{templateId}}"
+                {{on "change" (pick "target.value" (set this.year))}}
+              >
+                {{#each this.yearOptions as |obj|}}
+                  <option value={{obj.id}} selected={{eq obj.id this.year}}>{{obj.title}}</option>
+                {{/each}}
+              </select>
             </EditableField>
           {{else}}
-            {{this.description}}
+            <span>
+              {{this.yearLabel}}
+            </span>
           {{/if}}
-        </span>
+        </div>
+        <div class="block program" data-test-program>
+          <label>
+            {{t "general.program"}}:
+          </label>
+          <span>
+            {{@report.program.title}}
+            {{#if @report.program.shortTitle}}
+              ({{@report.program.shortTitle}})
+            {{/if}}
+          </span>
+        </div>
+        <div class="description" data-test-description>
+          <label for="description-{{templateId}}">
+            {{t "general.description"}}:
+          </label>
+          <span>
+            {{#if @canUpdate}}
+              <EditableField
+                @value={{this.description}}
+                @save={{perform this.changeDescription}}
+                @close={{this.revertDescriptionChanges}}
+                @clickPrompt={{if this.description this.description (t "general.clickToEdit")
+                }}
+                @closeOnEscape={{true}} as |isSaving|
+              >
+                <textarea
+                  id="description-{{templateId}}"
+                  value={{this.description}}
+                  disabled={{this.isSaving}}
+                  {{on "input" (pick "target.value" (set this.description))}}
+                  {{on "keyup" (fn this.addErrorDisplayFor "description")}}
+                  placeholder={{t "general.reportDescriptionPlaceholder"}}
+                >
+                  {{this.description}}
+                </textarea>
+                {{#each (await (compute this.getErrorsFor "description")) as |message|}}
+                  <span class="validation-error-message">
+                    {{message}}
+                  </span>
+                {{/each}}
+              </EditableField>
+            {{else}}
+              {{this.description}}
+            {{/if}}
+          </span>
+        </div>
       </div>
-    </div>
+    {{/let}}
   {{/unless}}
 </section>
