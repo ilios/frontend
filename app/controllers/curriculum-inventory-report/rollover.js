@@ -1,9 +1,9 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 
-export default Controller.extend({
-  actions: {
-    loadReport(newReport) {
-      this.transitionToRoute('curriculumInventoryReport', newReport);
-    },
-  },
-});
+export default class CurriculumInventoryReportRolloverController extends Controller {
+  @action
+  loadReport(newReport) {
+    this.transitionToRoute('curriculumInventoryReport', newReport);
+  }
+}

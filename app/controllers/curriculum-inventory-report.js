@@ -1,10 +1,9 @@
 import Controller from '@ember/controller';
+import { tracked } from '@glimmer/tracking';
 
-export default Controller.extend({
-  queryParams: {
-    leadershipDetails: 'leadershipDetails',
-    manageLeadership: 'manageLeadership',
-  },
-  leadershipDetails: false,
-  manageLeadership: false,
-});
+export default class CurriculumInventoryReportController extends Controller {
+  queryParams = ['leadershipDetails', 'manageLeadership'];
+
+  @tracked leadershipDetails = false;
+  @tracked manageLeadership = false;
+}

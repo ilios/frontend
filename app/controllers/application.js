@@ -1,33 +1,28 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
-export default Controller.extend({
-  apiVersion: service(),
-  currentUser: service(),
-  intl: service(),
-  session: service(),
-  pageTitle: service(),
+export default class ApplicationController extends Controller {
+  @service apiVersion;
+  @service currentUser;
+  @service intl;
+  @service session;
+  @service pageTitle;
 
-  currentlyLoading: false,
-  errors: null,
-  showErrorDisplay: null,
+  @tracked currentlyLoading = false;
+  @tracked errors = [];
+  @tracked showErrorDisplay = false;
 
-  init() {
-    this._super(...arguments);
-    const showErrorDisplay = false;
-    const errors = [];
-    this.setProperties({ showErrorDisplay, errors });
-  },
+  @action
+  clearErrors() {
+    this.errors = [];
+    this.showErrorDisplay = false;
+  }
 
-  actions: {
-    clearErrors() {
-      this.set('errors', []);
-      this.set('showErrorDisplay', false);
-    },
-  },
-
+  @action
   addError(error) {
     this.errors.pushObject(error);
-    this.set('showErrorDisplay', true);
-  },
-});
+    this.showErrorDisplay = true;
+  }
+}
