@@ -2,11 +2,17 @@ import Mixin from '@ember/object/mixin';
 import { action } from '@ember/object';
 
 export default Mixin.create({
+  showErrorsFor: null,
+
+  init() {
+    this._super(...arguments);
+    this.set('showErrorsFor', []);
+  },
+
   didReceiveAttrs() {
     this._super(...arguments);
     this.set('showErrorsFor', []);
   },
-  showErrorsFor: [],
 
   @action
   addErrorDisplayFor(field) {
