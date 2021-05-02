@@ -8,111 +8,38 @@ updates:
     timezone: America/Los_Angeles
   open-pull-requests-limit: 10
   ignore:
-  - dependency-name: broccoli-asset-rev
-    versions:
-    - ">= 0"
-  - dependency-name: ember-ajax
-    versions:
-    - ">= 0"
-  - dependency-name: ember-cli
-    versions:
-    - ">= 0"
-  - dependency-name: ember-cli-app-version
-    versions:
-    - ">= 0"
-  - dependency-name: ember-cli-babel
-    versions:
-    - ">= 0"
-  - dependency-name: ember-cli-dependency-checker
-    versions:
-    - ">= 0"
-  - dependency-name: ember-cli-eslint
-    versions:
-    - ">= 0"
-  - dependency-name: ember-cli-htmlbars
-    versions:
-    - ">= 0"
-  - dependency-name: ember-cli-htmlbars-inline-precompile
-    versions:
-    - ">= 0"
-  - dependency-name: ember-cli-inject-live-reload
-    versions:
-    - ">= 0"
-  - dependency-name: ember-cli-sri
-    versions:
-    - ">= 0"
-  - dependency-name: ember-cli-template-lint
-    versions:
-    - ">= 0"
-  - dependency-name: ember-cli-uglify
-    versions:
-    - ">= 0"
-  - dependency-name: ember-data
-    versions:
-    - ">= 0"
-  - dependency-name: ember-export-application-global
-    versions:
-    - ">= 0"
-  - dependency-name: "@ember/jquery"
-    versions:
-    - ">= 0"
-  - dependency-name: ember-load-initializers
-    versions:
-    - ">= 0"
-  - dependency-name: ember-maybe-import-regenerator
-    versions:
-    - ">= 0"
   - dependency-name: "@ember/optional-features"
-    versions:
-    - ">= 0"
-  - dependency-name: ember-qunit
-    versions:
-    - ">= 0"
-  - dependency-name: ember-resolver
-    versions:
-    - ">= 0"
-  - dependency-name: ember-source
-    versions:
-    - ">= 0"
-  - dependency-name: ember-welcome-page
-    versions:
-    - ">= 0"
-  - dependency-name: eslint-plugin-ember
-    versions:
-    - ">= 0"
-  - dependency-name: eslint-plugin-node
-    versions:
-    - ">= 0"
-  - dependency-name: "@glimmer/component"
-    versions:
-    - ">= 0"
-  - dependency-name: loader.js
-    versions:
-    - ">= 0"
-  - dependency-name: qunit-dom
-    versions:
-    - ">= 0"
-  - dependency-name: ember-auto-import
-    versions:
-    - 1.11.0
   - dependency-name: "@ember/test-helpers"
-    versions:
-    - 2.2.5
-  - dependency-name: ember-template-lint
-    versions:
-    - 3.1.1
-  - dependency-name: ilios-common
-    versions:
-    - 54.0.0
-    - 54.1.0
-    - 55.0.0
-  - dependency-name: eslint
-    versions:
-    - 7.20.0
-    - 7.21.0
+  - dependency-name: "@glimmer/component"
   - dependency-name: "@glimmer/tracking"
-    versions:
-    - 1.0.4
+  - dependency-name: babel-eslint
+  - dependency-name: broccoli-asset-rev
+  - dependency-name: ember-auto-import
+  - dependency-name: ember-cli
+  - dependency-name: ember-cli-app-version
+  - dependency-name: ember-cli-babel
+  - dependency-name: ember-cli-dependency-checker
+  - dependency-name: ember-cli-htmlbars
+  - dependency-name: ember-cli-inject-live-reload
+  - dependency-name: ember-cli-sri
+  - dependency-name: ember-cli-terser
+  - dependency-name: ember-export-application-global
+  - dependency-name: ember-fetch
+  - dependency-name: ember-load-initializers
+  - dependency-name: ember-maybe-import-regenerator
   - dependency-name: ember-page-title
-    versions:
-    - 6.2.1
+  - dependency-name: ember-qunit
+  - dependency-name: ember-resolver
+  - dependency-name: ember-source
+  - dependency-name: ember-template-lint
+  - dependency-name: eslint
+  - dependency-name: eslint-config-prettier
+  - dependency-name: eslint-plugin-ember
+  - dependency-name: eslint-plugin-node
+  - dependency-name: eslint-plugin-prettier
+  - dependency-name: eslint-plugin-qunit
+  - dependency-name: loader.js
+  - dependency-name: npm-run-all
+  - dependency-name: prettier
+  - dependency-name: qunit
+  - dependency-name: qunit-dom
