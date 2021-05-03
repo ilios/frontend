@@ -1,0 +1,134 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "02:30"
+    timezone: America/Los_Angeles
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: broccoli-asset-rev
+    versions:
+    - ">= 0"
+  - dependency-name: ember-cli
+    versions:
+    - ">= 0"
+  - dependency-name: ember-cli-babel
+    versions:
+    - ">= 0"
+  - dependency-name: ember-cli-dependency-checker
+    versions:
+    - ">= 0"
+  - dependency-name: ember-cli-eslint
+    versions:
+    - ">= 0"
+  - dependency-name: ember-cli-htmlbars
+    versions:
+    - ">= 0"
+  - dependency-name: ember-cli-htmlbars-inline-precompile
+    versions:
+    - ">= 0"
+  - dependency-name: ember-cli-inject-live-reload
+    versions:
+    - ">= 0"
+  - dependency-name: ember-cli-sri
+    versions:
+    - ">= 0"
+  - dependency-name: ember-cli-template-lint
+    versions:
+    - ">= 0"
+  - dependency-name: ember-cli-uglify
+    versions:
+    - ">= 0"
+  - dependency-name: ember-disable-prototype-extensions
+    versions:
+    - ">= 0"
+  - dependency-name: ember-export-application-global
+    versions:
+    - ">= 0"
+  - dependency-name: "@ember/jquery"
+    versions:
+    - ">= 0"
+  - dependency-name: ember-load-initializers
+    versions:
+    - ">= 0"
+  - dependency-name: ember-maybe-import-regenerator
+    versions:
+    - ">= 0"
+  - dependency-name: "@ember/optional-features"
+    versions:
+    - ">= 0"
+  - dependency-name: ember-qunit
+    versions:
+    - ">= 0"
+  - dependency-name: ember-resolver
+    versions:
+    - ">= 0"
+  - dependency-name: ember-source
+    versions:
+    - ">= 0"
+  - dependency-name: ember-source-channel-url
+    versions:
+    - ">= 0"
+  - dependency-name: ember-try
+    versions:
+    - ">= 0"
+  - dependency-name: eslint-plugin-ember
+    versions:
+    - ">= 0"
+  - dependency-name: eslint-plugin-node
+    versions:
+    - ">= 0"
+  - dependency-name: loader.js
+    versions:
+    - ">= 0"
+  - dependency-name: qunit-dom
+    versions:
+    - ">= 0"
+  - dependency-name: ember-a11y-testing
+    versions:
+    - 4.0.1
+    - 4.0.5
+  - dependency-name: ember-auto-import
+    versions:
+    - 1.11.0
+  - dependency-name: ember-template-lint
+    versions:
+    - 3.1.1
+  - dependency-name: ember-simple-charts
+    versions:
+    - 4.0.0
+    - 5.0.0
+  - dependency-name: "@formatjs/intl-locale"
+    versions:
+    - 2.4.16
+    - 2.4.18
+    - 2.4.19
+  - dependency-name: "@formatjs/intl-relativetimeformat"
+    versions:
+    - 8.1.2
+  - dependency-name: "@formatjs/intl-pluralrules"
+    versions:
+    - 4.0.11
+  - dependency-name: ember-concurrency
+    versions:
+    - 2.0.2
+  - dependency-name: "@popperjs/core"
+    versions:
+    - 2.8.2
+  - dependency-name: luxon
+    versions:
+    - 1.26.0
+  - dependency-name: ember-page-title
+    versions:
+    - 6.2.1
+  - dependency-name: "@ember/test-helpers"
+    versions:
+    - 2.2.0
+  - dependency-name: query-string
+    versions:
+    - 6.14.0
+  - dependency-name: sass
+    versions:
+    - 1.32.7
