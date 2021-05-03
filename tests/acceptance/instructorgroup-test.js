@@ -60,14 +60,12 @@ module('Acceptance | Instructor Group Details', function (hooks) {
     assert.equal(page.details.header.breadcrumb.crumbs[0].text, 'Instructor Groups');
     assert.equal(page.details.header.breadcrumb.crumbs[1].text, 'school 0');
     assert.equal(page.details.header.breadcrumb.crumbs[2].text, 'instructor group 0');
-
-    assert.equal(page.details.list.length, 2);
-    assert.equal(page.details.list[0].name, '1 guy M. Mc1son');
-    assert.equal(page.details.list[1].name, '2 guy M. Mc2son');
-
-    assert.equal(page.associatedCourses.list.length, 2);
-    assert.equal(page.associatedCourses.list[0].title, 'course 0');
-    assert.equal(page.associatedCourses.list[1].title, 'course 1');
+    assert.equal(page.details.overview.users.length, 2);
+    assert.equal(page.details.overview.users[0].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.equal(page.details.overview.users[1].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.equal(page.details.overview.courses.length, 2);
+    assert.equal(page.details.overview.courses[0].text, 'course 0');
+    assert.equal(page.details.overview.courses[1].text, 'course 1');
   });
 
   test('change title', async function (assert) {
@@ -84,46 +82,43 @@ module('Acceptance | Instructor Group Details', function (hooks) {
   test('search instructors', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
-    await page.search.input.fillInput('guy');
-    assert.equal(page.search.results.length, 5);
-    assert.equal(page.search.results[0].text, '0 guy M. Mc0son user@example.edu');
-    assert.equal(page.search.results[1].text, '1 guy M. Mc1son user@example.edu');
-    assert.equal(page.search.results[2].text, '2 guy M. Mc2son user@example.edu');
-    assert.equal(page.search.results[3].text, '3 guy M. Mc3son user@example.edu');
-    assert.equal(page.search.results[4].text, '4 guy M. Mc4son user@example.edu');
+    await page.details.overview.search.set('guy');
+    assert.equal(page.details.overview.search.results.length, 5);
+    assert.equal(page.details.overview.search.results[0].text, '0 guy M. Mc0son user@example.edu');
+    assert.equal(page.details.overview.search.results[1].text, '1 guy M. Mc1son user@example.edu');
+    assert.equal(page.details.overview.search.results[2].text, '2 guy M. Mc2son user@example.edu');
+    assert.equal(page.details.overview.search.results[3].text, '3 guy M. Mc3son user@example.edu');
+    assert.equal(page.details.overview.search.results[4].text, '4 guy M. Mc4son user@example.edu');
   });
 
   test('add instructor', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
-
-    assert.equal(page.details.list.length, 2);
-    assert.equal(page.details.list[0].name, '1 guy M. Mc1son');
-    assert.equal(page.details.list[1].name, '2 guy M. Mc2son');
-
-    await page.search.input.fillInput('guy');
-    await page.search.results[3].add();
-
-    assert.equal(page.details.list.length, 3);
-    assert.equal(page.details.list[0].name, '1 guy M. Mc1son');
-    assert.equal(page.details.list[1].name, '2 guy M. Mc2son');
-    assert.equal(page.details.list[2].name, '3 guy M. Mc3son');
+    assert.equal(page.details.overview.users.length, 2);
+    assert.equal(page.details.overview.users[0].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.equal(page.details.overview.users[1].userNameInfo.fullName, '2 guy M. Mc2son');
+    await page.details.overview.search.set('guy');
+    await page.details.overview.search.results[3].add();
+    assert.equal(page.details.overview.users.length, 3);
+    assert.equal(page.details.overview.users[0].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.equal(page.details.overview.users[1].userNameInfo.fullName, '2 guy M. Mc2son');
+    assert.equal(page.details.overview.users[2].userNameInfo.fullName, '3 guy M. Mc3son');
   });
 
   test('remove instructor', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
     await visit(url);
-    assert.equal(page.details.list.length, 2);
-    assert.equal(page.details.list[0].name, '1 guy M. Mc1son');
-    assert.equal(page.details.list[1].name, '2 guy M. Mc2son');
-    await page.details.list[0].remove();
-    assert.equal(page.details.list.length, 1);
-    assert.equal(page.details.list[0].name, '2 guy M. Mc2son');
+    assert.equal(page.details.overview.users.length, 2);
+    assert.equal(page.details.overview.users[0].userNameInfo.fullName, '1 guy M. Mc1son');
+    assert.equal(page.details.overview.users[1].userNameInfo.fullName, '2 guy M. Mc2son');
+    await page.details.overview.users[1].remove();
+    assert.equal(page.details.overview.users.length, 1);
+    assert.equal(page.details.overview.users[0].userNameInfo.fullName, '1 guy M. Mc1son');
   });
 
   test('follow link to course', async function (assert) {
     await visit(url);
-    await page.associatedCourses.list[0].visit();
+    await page.details.overview.courses[0].visit();
     assert.equal(currentURL(), '/courses/1');
   });
 
@@ -133,6 +128,6 @@ module('Acceptance | Instructor Group Details', function (hooks) {
     assert.equal(page.details.header.breadcrumb.crumbs[0].text, 'Instructor Groups');
     assert.equal(page.details.header.breadcrumb.crumbs[1].text, 'school 0');
     assert.equal(page.details.header.breadcrumb.crumbs[2].text, 'instructor group 2');
-    assert.equal(page.associatedCourses.text, 'Associated Courses: None');
+    assert.equal(page.details.overview.courses[0].text, 'None');
   });
 });
