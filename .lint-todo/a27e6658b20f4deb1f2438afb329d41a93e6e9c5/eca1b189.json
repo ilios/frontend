@@ -1,1 +1,1 @@
-{"engine":"ember-template-lint","filePath":"app/components/instructorgroup-details.hbs","ruleId":"no-implicit-this","line":23,"column":18,"createdDate":1618988400000,"warnDate":1621580400000,"errorDate":1624172400000}
+{"engine":"ember-template-lint","filePath":"app/components/instructorgroup-details.hbs","ruleId":"no-implicit-this","line":23,"column":18,"createdDate":1620025200000,"warnDate":1622617200000,"errorDate":1625209200000}
