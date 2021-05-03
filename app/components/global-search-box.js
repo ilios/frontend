@@ -14,7 +14,7 @@ export default class GlobalSearchBox extends Component {
   @service('search') iliosSearch;
   @service intl;
 
-  @tracked autocompleteCache;
+  @tracked autocompleteCache = [];
   @tracked autocompleteSelectedQuery;
   @tracked internalQuery;
 
@@ -34,11 +34,6 @@ export default class GlobalSearchBox extends Component {
       return this.internalQuery;
     }
     return this.args.query;
-  }
-
-  constructor() {
-    super(...arguments);
-    this.autocompleteCache = [];
   }
 
   @action
