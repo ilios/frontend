@@ -62,8 +62,7 @@ export default class LearnerGroupsListItemComponent extends Component {
   @dropTask
   *remove() {
     const descendants = yield this.args.learnerGroup.allDescendants;
-    yield all(descendants.invoke('destroyRecord'));
-    yield this.args.learnerGroup.destroyRecord();
+    yield all([...descendants.invoke('destroyRecord'), this.args.learnerGroup.destroyRecord()]);
   }
 
   @action
