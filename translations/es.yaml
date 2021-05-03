@@ -339,6 +339,7 @@ general:
   schools: Escuelas
   search: Buscar
   searchDirectory: "Busque el directorio para nuevos usuarios"
+  searchTheCurriculum: "Buscar el plan de estudios "
   searchUsers: "Buscar usuarios"
   secondaryCohorts: "Clases de la Graduación Secondarias"
   select: Selecciona

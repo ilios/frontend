@@ -1,58 +1,70 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { reads } from '@ember/object/computed';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isBlank } from '@ember/utils';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
-import { task, timeout } from 'ember-concurrency';
+import { restartableTask, timeout } from 'ember-concurrency';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
 
-export default Component.extend({
-  iliosConfig: service(),
-  iliosSearch: service('search'),
-  intl: service(),
+export default class GlobalSearchBox extends Component {
+  @service iliosConfig;
+  @service('search') iliosSearch;
+  @service intl;
 
-  autocompleteCache: null,
-  autocompleteSelectedQuery: null,
-  internalQuery: null,
-  query: null,
-  classNames: ['global-search-box'],
-  'data-test-global-search-box': true,
-  search() {},
+  @tracked autocompleteCache;
+  @tracked autocompleteSelectedQuery;
+  @tracked internalQuery;
 
-  hasResults: reads('results.length'),
-  results: reads('autocomplete.lastSuccessful.value'),
+  get hasResults() {
+    return !!this.results?.length;
+  }
 
-  computedQuery: computed('autocompleteSelectedQuery', 'query', 'internalQuery', function () {
+  get results() {
+    return this.autocomplete.lastSuccessful?.value;
+  }
+
+  get computedQuery() {
     if (typeof this.autocompleteSelectedQuery === 'string') {
       return this.autocompleteSelectedQuery;
     }
     if (typeof this.internalQuery === 'string') {
       return this.internalQuery;
     }
-    return this.query;
-  }),
+    return this.args.query;
+  }
 
-  init() {
-    this._super(...arguments);
+  constructor() {
+    super(...arguments);
     this.autocompleteCache = [];
-  },
+  }
 
-  actions: {
-    focus({ target }) {
-      const container = target.parentElement.parentElement.parentElement;
-      container.querySelector('input.global-search-input').focus();
-    },
+  @action
+  focus(elementId) {
+    document.querySelector(elementId).focus();
+  }
 
-    search() {
-      if (cleanQuery(this.computedQuery).length >= MIN_INPUT) {
-        this.search(this.computedQuery);
-        this.clear();
-      }
-    },
-  },
+  @action
+  search() {
+    if (cleanQuery(this.computedQuery).length >= MIN_INPUT) {
+      this.args.search(this.computedQuery);
+      this.clear();
+    }
+  }
+
+  @action
+  keyboard({ keyCode, target }) {
+    const container = target.parentElement.parentElement;
+    const list = container.getElementsByClassName('autocomplete-row');
+    const listArray = Array.from(list);
+    const isValid = this.isEnterKey(keyCode) || listArray.length > 0;
+
+    if (isValid) {
+      this.keyActions(keyCode, listArray, container);
+    }
+  }
 
   /**
    * Clear all the caches and query local copies
@@ -62,22 +74,10 @@ export default Component.extend({
    */
   clear() {
     this.autocompleteCache = [];
-    this.set('internalQuery', null);
-    this.set('autocompleteSelectedQuery', null);
+    this.internalQuery = null;
+    this.autocompleteSelectedQuery = null;
     this.autocomplete.perform();
-  },
-
-  keyUp({ keyCode, target }) {
-    const container = target.parentElement.parentElement;
-    const fromInput = target.classList.contains('global-search-input');
-    const list = container.getElementsByClassName('autocomplete-row');
-    const listArray = Array.from(list);
-    const isValid = this.isEnterKey(keyCode) || listArray.length > 0;
-
-    if (fromInput && isValid) {
-      this.keyActions(keyCode, listArray, container);
-    }
-  },
+  }
 
   keyActions(keyCode, listArray, container) {
     if (this.isVerticalKey(keyCode)) {
@@ -86,28 +86,28 @@ export default Component.extend({
 
     if (this.isEnterKey(keyCode)) {
       if (cleanQuery(this.computedQuery).length >= MIN_INPUT) {
-        this.search(this.computedQuery);
+        this.args.search(this.computedQuery);
         this.clear();
       }
     }
 
     if (this.isEscapeKey(keyCode)) {
       this.clear();
-      this.search('');
+      this.args.search('');
     }
-  },
+  }
 
   isVerticalKey(keyCode) {
     return keyCode === 38 || keyCode === 40;
-  },
+  }
 
   isEnterKey(keyCode) {
     return keyCode === 13;
-  },
+  }
 
   isEscapeKey(keyCode) {
     return keyCode === 27;
-  },
+  }
 
   verticalKeyAction(keyCode, listArray, container) {
     if (this.listHasFocus(listArray)) {
@@ -116,31 +116,31 @@ export default Component.extend({
       const selector = keyCode === 40 ? 'first' : 'last';
       const option = container.querySelector(`.autocomplete li:${selector}-child`);
       option.classList.add('active');
-      this.set('autocompleteSelectedQuery', option.innerText.trim());
+      this.autocompleteSelectedQuery = option.innerText.trim();
     }
-  },
+  }
 
   resultListAction(listArray, keyCode) {
     if (this.hasFocusOnEdge(listArray, keyCode === 40)) {
       this.removeActiveClass(listArray);
-      this.set('autocompleteSelectedQuery', null);
+      this.autocompleteSelectedQuery = null;
     } else {
       this.addClassToNext(listArray, keyCode === 38);
     }
-  },
+  }
 
   listHasFocus(listArray) {
     return listArray.any((element) => element.classList.contains('active'));
-  },
+  }
 
   hasFocusOnEdge(listArray, shouldReverse) {
     const list = shouldReverse ? listArray.slice().reverse() : listArray;
     return list[0].classList.contains('active');
-  },
+  }
 
   removeActiveClass(listArray) {
     listArray.forEach(({ classList }) => classList.remove('active'));
-  },
+  }
 
   addClassToNext(listArray, shouldReverse) {
     const list = shouldReverse ? listArray.slice().reverse() : listArray;
@@ -154,10 +154,10 @@ export default Component.extend({
       } else if (shouldAddClass) {
         classList.add('active');
         shouldAddClass = false;
-        this.set('autocompleteSelectedQuery', element.innerText.trim());
+        this.autocompleteSelectedQuery = element.innerText.trim();
       }
     });
-  },
+  }
 
   /**
    * Discover previously cached autocomplete suggestions
@@ -192,9 +192,10 @@ export default Component.extend({
     }, []);
 
     return allMatches.filter((text) => text.indexOf(q) === 0);
-  },
+  }
 
-  autocomplete: task(function* () {
+  @restartableTask
+  *autocomplete() {
     const q = cleanQuery(this.internalQuery);
 
     if (isBlank(q)) {
@@ -224,5 +225,5 @@ export default Component.extend({
     return autocomplete.map((text) => {
       return { text };
     });
-  }).restartable(),
-});
+  }
+}
