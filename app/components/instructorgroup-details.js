@@ -6,8 +6,6 @@ export default class InstructorgroupDetailsComponent extends Component {
   *addUser(user) {
     const users = yield this.args.instructorGroup.users;
     users.addObject(user);
-    const groups = yield user.instructorGroups;
-    groups.addObject(this.args.instructorGroup);
     yield this.args.instructorGroup.save();
   }
 
@@ -15,8 +13,6 @@ export default class InstructorgroupDetailsComponent extends Component {
   *removeUser(user) {
     const users = yield this.args.instructorGroup.users;
     users.removeObject(user);
-    const groups = yield user.instructorGroups;
-    groups.removeObject(this.args.instructorGroup);
     yield this.args.instructorGroup.save();
   }
 }
