@@ -1,25 +1,17 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { task, timeout } from 'ember-concurrency';
+import Component from '@glimmer/component';
+import { dropTask, timeout } from 'ember-concurrency';
 import { map } from 'rsvp';
 import { inject as service } from '@ember/service';
 import { all } from 'rsvp';
 
-export default Component.extend({
-  flashMessages: service(),
-  tagName: '',
-  users: null,
-  matchedGroups: null,
-  learnerGroup: null,
+export default class LearnergroupBulkFinalizeUsersComponent extends Component {
+  @service flashMessages;
 
-  finalData: computed('users.[]', 'matchedGroups.[]', 'learnerGroup', function () {
-    const users = this.users;
-    const learnerGroup = this.learnerGroup;
-    const matchedGroups = this.matchedGroups;
-    return users.map((obj) => {
-      let selectedGroup = learnerGroup;
+  get finalData() {
+    return this.args.users.map((obj) => {
+      let selectedGroup = this.args.learnerGroup;
       if (obj.subGroupName) {
-        const match = matchedGroups.findBy('name', obj.subGroupName);
+        const match = this.args.matchedGroups.findBy('name', obj.subGroupName);
         if (match) {
           selectedGroup = match.group;
         }
@@ -29,14 +21,12 @@ export default Component.extend({
         learnerGroup: selectedGroup,
       };
     });
-  }),
+  }
 
-  save: task(function* () {
+  @dropTask
+  *save() {
     yield timeout(10);
-    const finalData = this.finalData;
-    const done = this.done;
-    const flashMessages = this.flashMessages;
-    const treeGroups = yield map(finalData, async ({ learnerGroup, user }) => {
+    const treeGroups = yield map(this.finalData, async ({ learnerGroup, user }) => {
       return learnerGroup.addUserToGroupAndAllParents(user);
     });
 
@@ -44,9 +34,8 @@ export default Component.extend({
       return flattened.pushObjects(arr);
     }, []);
 
-    const groupsToSave = flat.uniq();
-    yield all(groupsToSave.invoke('save'));
-    flashMessages.success('general.savedSuccessfully');
-    done();
-  }),
-});
+    yield all(flat.uniq().invoke('save'));
+    this.flashMessages.success('general.savedSuccessfully');
+    this.args.done();
+  }
+}
