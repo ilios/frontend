@@ -1,40 +1,23 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { isPresent } from '@ember/utils';
 
-export default Component.extend({
-  tagName: '',
-  matches: null,
-  groups: null,
-  groupName: null,
+export default class LearnergroupBulkGroupMatcherComponent extends Component {
+  get matchedGroupId() {
+    const match = this.args.matches.findBy('name', this.args.groupName);
+    return match ? match.group.id : null;
+  }
 
-  matchedGroupId: computed('matches.[]', 'groupName', function () {
-    const matches = this.matches;
-    const groupName = this.groupName;
-    const match = matches.findBy('name', groupName);
-    if (match) {
-      return match.group.id;
+  get noGroupWithThisName() {
+    return !isPresent(this.args.groups.findBy('title', this.args.groupName));
+  }
+
+  @action
+  matchGroup(learnerGroupId) {
+    if (learnerGroupId === 'null') {
+      this.args.unsetMatch(this.args.groupName);
+    } else {
+      this.args.setMatch(this.args.groupName, learnerGroupId);
     }
-
-    return null;
-  }),
-
-  noGroupWithThisName: computed('groups.[]', 'groupName', function () {
-    const groups = this.groups;
-    const groupName = this.groupName;
-    const match = groups.findBy('title', groupName);
-    return match ? false : true;
-  }),
-
-  actions: {
-    matchGroup(learnerGroupId) {
-      const groupName = this.groupName;
-      const unsetMatch = this.unsetMatch;
-      const setMatch = this.setMatch;
-      if (learnerGroupId === 'null') {
-        unsetMatch(groupName);
-      } else {
-        setMatch(groupName, learnerGroupId);
-      }
-    },
-  },
-});
+  }
+}
