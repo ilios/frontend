@@ -1,24 +1,18 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { dropTask } from 'ember-concurrency';
 
-export default Component.extend({
-  tagName: '',
+export default class InstructorgroupDetailsComponent extends Component {
+  @dropTask
+  *addUser(user) {
+    const users = yield this.args.instructorGroup.users;
+    users.addObject(user);
+    yield this.args.instructorGroup.save();
+  }
 
-  canUpdate: false,
-  instructorGroup: null,
-
-  actions: {
-    addUser(user) {
-      const instructorGroup = this.instructorGroup;
-      instructorGroup.get('users').addObject(user);
-      user.get('instructorGroups').addObject(instructorGroup);
-      instructorGroup.save();
-    },
-
-    removeUser(user) {
-      const instructorGroup = this.instructorGroup;
-      instructorGroup.get('users').removeObject(user);
-      user.get('instructorGroups').removeObject(instructorGroup);
-      instructorGroup.save();
-    },
-  },
-});
+  @dropTask
+  *removeUser(user) {
+    const users = yield this.args.instructorGroup.users;
+    users.removeObject(user);
+    yield this.args.instructorGroup.save();
+  }
+}
