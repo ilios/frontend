@@ -201,7 +201,8 @@ export default class LearnerGroupUploadDataComponent extends Component {
           String(obj.lastName).toLowerCase() !== 'last'
       );
       this.parsedFileData = notHeaderRow.filter((obj) => {
-        return obj.firstName || obj.lastName || obj.campusId || obj.subGroupName;
+        const str = Object.values(obj).join('').trim();
+        return str.length;
       });
     };
 
