@@ -1,28 +1,34 @@
-<tr class="learnergroup-bulk-group-matcher {{if this.matchedGroupId "matched" "not-matched"}}" data-test-learnergroup-bulk-group-matcher ...attributes>
-  <td>
-    <span data-test-group-name>
-      {{@groupName}}
-    </span>
-    {{#if noGroupWithThisName}}
-      <button type="button" data-test-create-group {{action createGroup groupName}}>
-        {{t "general.createNewGroup" title=groupName}}
-      </button>
-    {{/if}}
-  </td>
-  <td>
-    <select
-      onchange={{action "matchGroup" value="target.value"}}
-      id="sub-group-{{elementId}}"
-    >
-      <option value="null" selected={{is-equal null matchedGroupId}}></option>
-      {{#each groups as |learnerGroup|}}
-        <option
-          value={{learnerGroup.id}}
-          selected={{is-equal learnerGroup.id matchedGroupId}}
-        >
-          {{learnerGroup.title}}
-        </option>
-      {{/each}}
-    </select>
-  </td>
+<tr
+  class="learnergroup-bulk-group-matcher {{if this.matchedGroupId "matched" "not-matched"}}"
+  data-test-learnergroup-bulk-group-matcher
+  ...attributes
+>
+  {{#let (unique-id) as |templateId|}}
+    <td>
+      <span data-test-group-name>
+        {{@groupName}}
+      </span>
+      {{#if this.noGroupWithThisName}}
+        <button type="button" data-test-create-group {{on "click" (fn @createGroup @groupName)}}>
+          {{t "general.createNewGroup" title=@groupName}}
+        </button>
+      {{/if}}
+    </td>
+    <td>
+      <select
+        {{on "change" (pick "target.value" this.matchGroup)}}
+        id="sub-group-{{templateId}}"
+      >
+        <option value="null" selected={{is-equal null this.matchedGroupId}}></option>
+        {{#each @groups as |learnerGroup|}}
+          <option
+            value={{learnerGroup.id}}
+            selected={{is-equal learnerGroup.id this.matchedGroupId}}
+          >
+            {{learnerGroup.title}}
+          </option>
+        {{/each}}
+      </select>
+    </td>
+  {{/let}}
 </tr>

@@ -1,16 +1,20 @@
-<div class="learnergroup-bulk-assignment" ...attributes>
+<div
+  class="learnergroup-bulk-assignment"
+  data-test-learnergroup-bulk-assignment
+  ...attributes
+>
   <h3>
     {{t "general.uploadGroupAssignments"}}
   </h3>
-  {{#if validUsers}}
+  {{#if this.validUsers}}
     <p>
-      {{t "general.usersSelected" count=validUsers.length}}
+      {{t "general.usersSelected" count=this.validUsers.length}}
       <br>
-      <button type="button" {{action "clear"}}>
+      <button type="button" {{on "click" this.clear}}>
         {{t "general.startOver"}}
       </button>
     </p>
-    {{#if unmatchedGroups.length}}
+    {{#if this.unmatchedGroups.length}}
       <table class="group-matcher" data-test-match-groups-unmatched>
         <caption>
           {{t "general.matchGroups"}}
@@ -26,32 +30,32 @@
           </tr>
         </thead>
         <tbody>
-          {{#each unmatchedGroups as |name|}}
+          {{#each this.unmatchedGroups as |name|}}
             <LearnergroupBulkGroupMatcher
               @groupName={{name}}
-              @setMatch={{action "addMatch"}}
-              @unsetMatch={{action "removeMatch"}}
-              @createGroup={{action "createGroup"}}
-              @matches={{matchedGroups}}
-              @groups={{sort-by "title" (await groups)}}
+              @setMatch={{this.addMatch}}
+              @unsetMatch={{this.removeMatch}}
+              @createGroup={{this.createGroup}}
+              @matches={{this.matchedGroups}}
+              @groups={{sort-by "title" (await @learnerGroup.allDescendants)}}
             />
           {{/each}}
         </tbody>
       </table>
     {{/if}}
-    {{#if (and allUnmatchedGroupsMatched (gt validUsers.length 0))}}
+    {{#if (and this.allUnmatchedGroupsMatched (gt this.validUsers.length 0))}}
       <LearnergroupBulkFinalizeUsers
-        @users={{validUsers}}
-        @matchedGroups={{matchedGroups}}
-        @learnerGroup={{learnerGroup}}
-        @done={{done}}
+        @users={{this.validUsers}}
+        @matchedGroups={{this.matchedGroups}}
+        @learnerGroup={{@learnerGroup}}
+        @done={{@done}}
       />
     {{/if}}
   {{else}}
     <LearnergroupUploadData
-      @learnerGroup={{learnerGroup}}
-      @sendValidUsers={{action (mut validUsers)}}
-      @sendMatchedGroups={{action (mut matchedGroups)}}
+      @learnerGroup={{@learnerGroup}}
+      @sendValidUsers={{set this.validUsers}}
+      @sendMatchedGroups={{set this.matchedGroups}}
     />
   {{/if}}
 </div>
