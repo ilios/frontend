@@ -63,7 +63,7 @@ export default class ManageUsersSummaryComponent extends Component {
         },
       ];
     }
-    const searchEnabled = yield this.iliosConfig.searchEnabled;
+    const searchEnabled = yield this.iliosConfig.getSearchEnabled();
     const searchResults = searchEnabled ? yield this.indexSearch(q) : yield this.apiSearch(q);
 
     if (searchResults.length === 0) {
