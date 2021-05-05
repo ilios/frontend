@@ -1,20 +1,24 @@
-<section class="learnergroup-subgroup-list" data-test-learnergroup-subgroup-list ...attributes>
-  {{#if isSaving}}
+<section
+  class="learnergroup-subgroup-list"
+  data-test-learnergroup-subgroup-list
+  ...attributes
+>
+  {{#if this.isSaving}}
     <WaitSaving
       @showProgress={{true}}
-      @totalProgress={{totalGroupsToSave}}
-      @currentProgress={{currentGroupsSaved}}
+      @totalProgress={{this.totalGroupsToSave}}
+      @currentProgress={{this.currentGroupsSaved}}
     />
   {{/if}}
   <div class="learnergroup-subgroup-list-header">
     <div class="title">
       {{t "general.subgroups"}}
-      ({{get (await parentGroup.children) "length"}})
+      ({{get (await @parentGroup.children) "length"}})
     </div>
     <div class="learnergroup-subgroup-list-actions">
-      {{#if canCreate}}
+      {{#if @canCreate}}
         <ExpandCollapseButton
-          @value={{showNewLearnerGroupForm}}
+          @value={{this.showNewLearnerGroupForm}}
           @action={{set this.showNewLearnerGroupForm (not this.showNewLearnerGroupForm)}}
         />
       {{/if}}
@@ -22,18 +26,18 @@
   </div>
   <div class="learnergroup-subgroup-list-content">
     <section class="learnergroup-subgroup-list-new">
-      {{#if showNewLearnerGroupForm}}
+      {{#if this.showNewLearnerGroupForm}}
         <LearnerGroups::New
-          @save={{action "saveNewLearnerGroup"}}
-          @cancel={{action (toggle "showNewLearnerGroupForm" this)}}
-          @generateNewLearnerGroups={{action "generateNewLearnerGroups"}}
+          @save={{this.saveNewLearnerGroup}}
+          @cancel={{set this.showNewLearnerGroupForm (not this.showNewLearnerGroupForm)}}
+          @generateNewLearnerGroups={{this.generateNewLearnerGroups}}
           @multiModeSupported={{true}}
         />
       {{/if}}
     </section>
-    {{#if saved}}
+    {{#if this.savedGroup}}
       <div class="saved-result">
-        <LinkTo @route="learnerGroup" @model={{savedGroup}}>
+        <LinkTo @route="learnerGroup" @model={{this.savedGroup}}>
           <FaIcon @icon="external-link-square-alt" />
           {{this.savedGroup.title}}
         </LinkTo>
@@ -41,16 +45,16 @@
       </div>
     {{/if}}
     <div class="learnergroup-subgroup-list-list">
-      {{#if (is-fulfilled parentGroup.children)}}
-        {{#if (get (await parentGroup.children) "length")}}
+      {{#if (is-fulfilled @parentGroup.children)}}
+        {{#if (get (await @parentGroup.children) "length")}}
           <LearnergroupList
             @bubbleSort={{false}}
-            @learnerGroups={{await parentGroup.children}}
-            @canDelete={{canDelete}}
-            @canCreate={{canCreate}}
+            @learnerGroups={{await @parentGroup.children}}
+            @canDelete={{@canDelete}}
+            @canCreate={{@canCreate}}
             @canCopyWithLearners={{false}}
-            @remove={{action "removeLearnerGroup"}}
-            @copy={{perform copyGroup}}
+            @remove={{this.removeLearnerGroup}}
+            @copy={{perform this.copyGroup}}
           />
         {{/if}}
       {{else}}

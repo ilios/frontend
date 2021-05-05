@@ -1,106 +1,94 @@
-import Component from '@ember/component';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { all } from 'rsvp';
-import { task } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
 import pad from 'ember-pad/utils/pad';
 import countDigits from '../utils/count-digits';
 import cloneLearnerGroup from '../utils/clone-learner-group';
 
-export default Component.extend({
-  flashMessages: service(),
-  intl: service(),
-  store: service(),
-  tagName: '',
-  canCreate: false,
-  canDelete: false,
-  isSaving: false,
-  parentGroup: null,
-  saved: false,
-  savedGroup: null,
-  showNewLearnerGroupForm: false,
+export default class LearnergroupSubgroupListComponent extends Component {
+  @service flashMessages;
+  @service intl;
+  @service store;
+  @tracked isSaving = false;
+  @tracked savedGroup;
+  @tracked showNewLearnerGroupForm = false;
+  @tracked currentGroupsSaved = 0;
+  @tracked totalGroupsToSave = 0;
 
-  didReceiveAttrs() {
-    this._super(...arguments);
-    this.setProperties({ saved: false, savedGroup: null });
-  },
+  @action
+  async saveNewLearnerGroup(title) {
+    const cohort = await this.args.parentGroup.cohort;
+    const newLearnerGroup = this.store.createRecord('learner-group', {
+      cohort,
+      parent: this.args.parentGroup,
+      title,
+    });
+    this.savedGroup = await newLearnerGroup.save();
+    this.showNewLearnerGroupForm = false;
+  }
 
-  actions: {
-    async saveNewLearnerGroup(title) {
-      const { parentGroup, store } = this;
-      const cohort = await parentGroup.cohort;
-      const newLearnerGroup = await store.createRecord('learner-group', {
+  @action
+  async generateNewLearnerGroups(num) {
+    this.savedGroup = null;
+    this.currentGroupsSaved = 0;
+    this.isSaving = true;
+    this.totalGroupsToSave = num;
+    const offset = await this.args.parentGroup.subgroupNumberingOffset;
+    const cohort = await this.args.parentGroup.cohort;
+    const padBy = countDigits(offset + parseInt(num, 10));
+    const parentTitle = this.args.parentGroup.title.substring(0, 60 - 1 - padBy);
+    const groups = [];
+    for (let i = 0; i < num; i++) {
+      const newGroup = this.store.createRecord('learner-group', {
         cohort,
-        parent: parentGroup,
-        title,
+        parent: this.args.parentGroup,
+        title: `${parentTitle} ${pad(offset + i, padBy)}`,
       });
-      const savedLearnerGroup = await newLearnerGroup.save();
-      this.set('showNewLearnerGroupForm', false);
-      this.setProperties({ saved: true, savedGroup: savedLearnerGroup });
-    },
+      groups.pushObject(newGroup);
+    }
+    const saveSomeGroups = async (groupsToSave) => {
+      const chunk = groupsToSave.splice(0, 6);
+      await all(chunk.invoke('save'));
 
-    async generateNewLearnerGroups(num) {
-      const { parentGroup, store } = this;
-      this.set('currentGroupsSaved', 0);
-      this.setProperties({ isSaving: true, totalGroupsToSave: num });
-      const offset = await parentGroup.subgroupNumberingOffset;
-      const cohort = await parentGroup.cohort;
-      const groups = [];
-      const padBy = countDigits(offset + parseInt(num, 10));
-      const parentTitle = parentGroup.title.substring(0, 60 - 1 - padBy);
-
-      for (let i = 0; i < num; i++) {
-        const newGroup = await store.createRecord('learner-group', {
-          cohort,
-          parent: parentGroup,
-          title: `${parentTitle} ${pad(offset + i, padBy)}`,
-        });
-        groups.pushObject(newGroup);
+      if (groupsToSave.length) {
+        this.currentGroupsSaved = this.currentGroupsSaved + chunk.length;
+        await saveSomeGroups(groupsToSave);
+      } else {
+        this.isSaving = false;
+        this.flashMessages.success('general.savedSuccessfully');
+        this.showNewLearnerGroupForm = false;
       }
+    };
+    await saveSomeGroups(groups);
+  }
 
-      const saveSomeGroups = async (groupsToSave) => {
-        const chunk = groupsToSave.splice(0, 6);
-        await all(chunk.invoke('save'));
+  @action
+  removeLearnerGroup(learnerGroup) {
+    return learnerGroup.destroyRecord();
+  }
 
-        if (groupsToSave.length) {
-          this.set('currentGroupsSaved', this.currentGroupsSaved + chunk.length);
-          await saveSomeGroups(groupsToSave);
-        } else {
-          this.set('isSaving', false);
-          this.set('showNewLearnerGroupForm', false);
-          this.flashMessages.success('general.savedSuccessfully');
-        }
-      };
-
-      await saveSomeGroups(groups);
-    },
-
-    removeLearnerGroup(learnerGroup) {
-      return learnerGroup.destroyRecord();
-    },
-  },
-
-  copyGroup: task(function* (withLearners, learnerGroup) {
-    this.set('saved', false);
-    const store = this.store;
-    const intl = this.intl;
-    const cohort = yield learnerGroup.get('cohort');
-    const parentGroup = yield learnerGroup.get('parent');
+  @dropTask
+  *copyGroup(withLearners, learnerGroup) {
+    const cohort = yield learnerGroup.cohort;
+    const parentGroup = yield learnerGroup.parent;
     const newGroups = yield cloneLearnerGroup(
-      store,
+      this.store,
       learnerGroup,
       cohort,
       withLearners,
       parentGroup
     );
     // indicate that the top group is a copy
-    newGroups[0].set('title', newGroups[0].get('title') + ` (${intl.t('general.copy')})`);
-    this.set('totalGroupsToSave', newGroups.length);
+    newGroups[0].title = newGroups[0].title + ` (${this.intl.t('general.copy')})`;
+    this.totalGroupsToSave = newGroups.length;
     // save groups one at a time because we need to save in this order so parents are saved before children
     for (let i = 0; i < newGroups.length; i++) {
       yield newGroups[i].save();
-      this.set('currentGroupsSaved', i + 1);
+      this.currentGroupsSaved = i + 1;
     }
-    this.set('saved', true);
-    this.set('savedGroup', newGroups[0]);
-  }),
-});
+    this.savedGroup = newGroups[0];
+  }
+}
