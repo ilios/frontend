@@ -339,6 +339,7 @@ general:
   schools: "Écoles"
   search: Rechercher
   searchDirectory: "Consultez le répertoire pour les utilisateurs nouvels"
+  searchTheCurriculum: "Rechercher le curriculum"
   searchUsers: "Rechercher des utilisateurs"
   secondaryCohorts: "Cohortes Secondaires"
   select: "Sélectionnez"
