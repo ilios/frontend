@@ -1,7 +1,7 @@
 <div class="learnergroup-upload-data" ...attributes>
-  {{#if data}}
+  {{#if this.data}}
     <p>
-      <button type="button" {{action (mut data) null}}>
+      <button type="button" {{on "click" this.reset}}>
         {{t "general.startOver"}}
       </button>
     </p>
@@ -12,7 +12,7 @@
         target="_blank"
         rel="noopener noreferrer"
         download="SampleUserUpload.tsv"
-        href="data:application/octet-stream;charset=utf-8;base64,{{sampleData}}"
+        href="data:application/octet-stream;charset=utf-8;base64,{{this.sampleData}}"
       >
          {{t "general.sampleFile"}}
        </a>)
@@ -20,14 +20,14 @@
     <input
       id="user-file"
       type="file"
-      onchange={{action "updateSelectedFile" value="target.files"}}
+      {{on "change" (pick "target.files" this.updateSelectedFile)}}
       data-test-user-upload
     >
   {{/if}}
   {{#if this.parseFile.isRunning}}
     <LoadingSpinner class="loading-file" />
   {{/if}}
-  {{#if invalidUsers}}
+  {{#if this.invalidUsers}}
     <p class="error">
       {{t "general.canNotContinueWithInvalidRecords"}}
     </p>
@@ -56,7 +56,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each invalidUsers as |user|}}
+        {{#each this.invalidUsers as |user|}}
           <tr class={{unless user.isValid "invalid"}}>
             <td>
               {{user.firstName}}
@@ -83,7 +83,7 @@
       </tbody>
     </table>
   {{/if}}
-  {{#if validUsers}}
+  {{#if this.validUsers}}
     <table class="valid-users" data-test-upload-data-valid-users>
       <caption>
         {{t "general.validUsers"}}
@@ -107,7 +107,7 @@
         </tr>
       </thead>
       <tbody>
-        {{#each validUsers as |user|}}
+        {{#each this.validUsers as |user|}}
           <tr>
             <td colspan="1">
               {{#if user.hasWarning}}
@@ -147,14 +147,14 @@
       </tbody>
     </table>
   {{/if}}
-  {{#if (and (eq invalidUsers.length 0) (gt validUsers.length 0))}}
+  {{#if (and (eq this.invalidUsers.length 0) (gt this.validUsers.length 0))}}
     <button
       type="button"
-      disabled={{continue.isRunning}}
+      disabled={{this.continue.isRunning}}
       data-test-upload-data-confirm
-      {{action (perform continue)}}
+      {{on "click" (perform this.continue)}}
     >
-      {{#if continue.isRunning}}
+      {{#if this.continue.isRunning}}
         <LoadingSpinner />
       {{else}}
         {{t "general.continue"}}

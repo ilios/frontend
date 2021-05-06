@@ -1,22 +1,25 @@
+import Component from '@glimmer/component';
 import Ember from 'ember';
-import Component from '@ember/component';
 import { inject as service } from '@ember/service';
-import { isBlank } from '@ember/utils';
-import { task, timeout } from 'ember-concurrency';
+import { dropTask, restartableTask, timeout } from 'ember-concurrency';
 import { cleanQuery } from 'ilios-common/utils/query-utils';
+import { tracked } from '@glimmer/tracking';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 const DEBOUNCE_MS = 250;
 const MIN_INPUT = 3;
 
-export default Component.extend({
-  iliosConfig: service(),
-  intl: service(),
-  router: service(),
-  search: service(),
-  store: service(),
-  tagName: '',
-  canCreate: false,
-  searchValue: null,
+export default class ManageUsersSummaryComponent extends Component {
+  @service iliosConfig;
+  @service intl;
+  @service router;
+  @service search;
+  @service store;
+
+  @tracked searchValue;
+
+  @use userSearchType = new ResolveAsyncValue(() => [this.iliosConfig.getUserSearchType()]);
 
   /**
    * Find users using the user API
@@ -30,8 +33,8 @@ export default Component.extend({
       'order_by[firstName]': 'ASC',
     };
 
-    return await this.store.query('user', params);
-  },
+    return this.store.query('user', params);
+  }
 
   /**
    * Find users using the search index API
@@ -41,13 +44,12 @@ export default Component.extend({
     const { users } = await this.search.forUsers(q);
 
     return users;
-  },
+  }
 
-  searchForUsers: task(function* (query) {
-    const intl = this.intl;
-
-    const q = cleanQuery(query);
-    if (isBlank(q)) {
+  @restartableTask
+  *searchForUsers() {
+    const q = cleanQuery(this.searchValue);
+    if (!q) {
       yield timeout(1);
       return [];
     }
@@ -57,18 +59,18 @@ export default Component.extend({
       return [
         {
           type: 'text',
-          text: intl.t('general.moreInputRequiredPrompt'),
+          text: this.intl.t('general.moreInputRequiredPrompt'),
         },
       ];
     }
-    const searchEnabled = yield this.iliosConfig.searchEnabled;
+    const searchEnabled = yield this.iliosConfig.getSearchEnabled();
     const searchResults = searchEnabled ? yield this.indexSearch(q) : yield this.apiSearch(q);
 
     if (searchResults.length === 0) {
       return [
         {
           type: 'text',
-          text: intl.t('general.noSearchResultsPrompt'),
+          text: this.intl.t('general.noSearchResultsPrompt'),
         },
       ];
     }
@@ -78,18 +80,17 @@ export default Component.extend({
         user,
       };
     });
-    const results = [
+    return [
       {
         type: 'summary',
-        text: intl.t('general.resultsCount', { count: mappedResults.length }),
+        text: this.intl.t('general.resultsCount', { count: mappedResults.length }),
       },
+      ...mappedResults,
     ];
-    results.pushObjects(mappedResults);
+  }
 
-    return results;
-  }).restartable(),
-
-  clickUser: task(function* ({ id }) {
+  @dropTask
+  *clickUser({ id }) {
     yield this.router.transitionTo('user', id, {
       queryParams: {
         isManagingBio: Ember.DEFAULT_VALUE,
@@ -99,7 +100,7 @@ export default Component.extend({
         isManagingSchools: Ember.DEFAULT_VALUE,
       },
     });
-    this.set('searchValue', null);
-    yield this.searchForUsers.perform(null);
-  }).drop(),
-});
+    this.searchValue = null;
+    yield this.searchForUsers.perform();
+  }
+}

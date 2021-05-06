@@ -2,9 +2,22 @@ import { module, skip, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, findAll, find, fillIn, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import Service from '@ember/service';
 
 module('Integration | Component | manage users summary', function (hooks) {
   setupRenderingTest(hooks);
+
+  hooks.beforeEach(async function () {
+    const iliosConfig = class extends Service {
+      async getUserSearchType() {
+        return 'local';
+      }
+      async getSearchEnabled() {
+        return false;
+      }
+    };
+    this.owner.register('service:iliosConfig', iliosConfig);
+  });
 
   test('it renders', async function (assert) {
     await render(hbs`<ManageUsersSummary @canCreate={{true}} />`);
