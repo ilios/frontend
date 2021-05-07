@@ -33,7 +33,7 @@
       <div class="year-filters">
         <select
           data-test-academic-year-filter
-          {{on "change" (pick "target.value" @setSelectedYear)}}
+          {{on "change" (pick "target.value" this.setSelectedYear)}}
         >
           <option selected={{is-equal null @selectedYear}} value="">
             {{t "general.allAcademicYears"}}

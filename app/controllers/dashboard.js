@@ -1,8 +1,11 @@
 /* eslint-disable ember/no-computed-properties-in-native-classes */
 import CommonDashboardController from 'ilios-common/controllers/dashboard';
 import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 
 export default class DashboardController extends CommonDashboardController {
+  @service store;
+
   //most params come from common controller, but are copied here
   queryParams = [
     'academicYear',
