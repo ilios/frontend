@@ -2,6 +2,7 @@
   class="learnergroup-header"
   data-test-learnergroup-header
   {{did-insert this.load}}
+  {{did-update this.load @learnerGroup}}
   ...attributes
 >
   <div class="header-bar">
@@ -15,6 +16,7 @@
             @closeOnEscape={{true}} as |isSaving|
           >
             <input
+              aria-label={{t "general.learnerGroupTitle"}}
               type="text"
               value={{this.title}}
               disabled={{isSaving}}
