@@ -19,7 +19,7 @@
     "lint:js:fix": "eslint . --fix",
     "start": "ember serve",
     "test": "npm-run-all lint test:*",
-    "test:ember": "ember exam --parallel=6 --load-balance",
+    "test:ember": "ember exam --parallel=16 --load-balance",
     "lint:style": "stylelint app/styles",
     "deploy:production": "ember deploy production --activate",
     "deploy:staging": "ember deploy staging --activate"
