@@ -16,7 +16,8 @@ module('Integration | Component | school manager', function (hooks) {
     this.server.createList('vocabulary', 2, { school });
     this.server.createList('sessionType', 2, { school });
     this.server.createList('competency', 2, { school });
-    this.school = await this.owner.lookup('service:store').find('school', school.id);
+    this.store = this.owner.lookup('service:store');
+    this.school = await this.store.findRecord('school', school.id);
   });
 
   test('it renders expanded', async function (assert) {
