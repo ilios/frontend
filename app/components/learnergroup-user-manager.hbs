@@ -122,7 +122,7 @@
                           class="no clickable"
                           @title={{t
                             "general.removeLearnerToCohort"
-                            cohort=cohortTitle
+                            cohort=@cohortTitle
                             count=1
                           }}
                           @click={{perform this.removeSingleUser user.content}}
@@ -192,7 +192,7 @@
                             class="yes clickable"
                             @title={{t
                               "general.moveToGroup"
-                              groupTitle=learnerGroupTitle
+                              groupTitle=@learnerGroupTitle
                               count=1
                             }}
                             @click={{perform this.addSingleUser user.content}}
