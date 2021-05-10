@@ -5,7 +5,7 @@ export default Service.extend({
   permissionMatrix: service(),
   apiVersion: service(),
   async canChangeInSchool(school, capability) {
-    const apiVersionMismatch = await this.apiVersion.isMismatched;
+    const apiVersionMismatch = await this.apiVersion.getIsMismatched();
     // never allow changes if the API version is not up to date
     if (apiVersionMismatch) {
       return false;

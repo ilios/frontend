@@ -10,7 +10,9 @@ module('Integration | Component | api-version-notice', function (hooks) {
 
   test('hidden when version match', async function (assert) {
     const apiVersionMock = Service.extend({
-      isMismatched: false,
+      async getIsMismatched() {
+        return false;
+      },
     });
     this.owner.register('service:apiVersion', apiVersionMock);
     await render(hbs`<ApiVersionNotice />`);
@@ -22,7 +24,9 @@ module('Integration | Component | api-version-notice', function (hooks) {
 
   test('visible when versions do not match', async function (assert) {
     const apiVersionMock = Service.extend({
-      isMismatched: true,
+      async getIsMismatched() {
+        return true;
+      },
     });
     this.owner.register('service:apiVersion', apiVersionMock);
     await render(hbs`<ApiVersionNotice />`);

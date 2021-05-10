@@ -16,7 +16,9 @@ module('Unit | Service | permission-checker', function (hooks) {
     const school = { id: 1 };
 
     const apiVersionMock = Service.extend({
-      isMismatched: false,
+      async getIsMismatched() {
+        return false;
+      },
     });
     this.owner.register('service:apiVersion', apiVersionMock);
 
@@ -77,7 +79,9 @@ module('Unit | Service | permission-checker', function (hooks) {
     const school = { id: 1 };
 
     const apiVersionMock = Service.extend({
-      isMismatched: false,
+      async getIsMismatched() {
+        return false;
+      },
     });
     this.owner.register('service:apiVersion', apiVersionMock);
 

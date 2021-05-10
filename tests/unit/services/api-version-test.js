@@ -21,7 +21,7 @@ module('Unit | Service | api-version', function (hooks) {
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
     const service = this.owner.lookup('service:api-version');
-    const versionMismatch = await service.isMismatched;
+    const versionMismatch = await service.getIsMismatched();
     assert.notOk(versionMismatch);
   });
 
@@ -33,7 +33,7 @@ module('Unit | Service | api-version', function (hooks) {
     });
     this.owner.register('service:iliosConfig', iliosConfigMock);
     const service = this.owner.lookup('service:api-version');
-    const versionMismatch = await service.isMismatched;
+    const versionMismatch = await service.getIsMismatched();
     assert.ok(versionMismatch);
   });
 
