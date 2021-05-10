@@ -1,156 +1,208 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
-import { oneWay } from '@ember/object/computed';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isEmpty, isPresent } from '@ember/utils';
-import { task } from 'ember-concurrency';
+import { all, filter } from 'rsvp';
+import { dropTask, restartableTask } from 'ember-concurrency';
 import moment from 'moment';
-import RSVP from 'rsvp';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import { validatable, Length, NotBlank } from 'ilios-common/decorators/validation';
+import { ValidateIf } from 'class-validator';
 
-const { filter } = RSVP;
-const Validations = buildValidations({
-  username: [
-    validator('presence', {
-      presence: true,
-      dependentKeys: ['model.allowCustomUserName'],
-      disabled: computed('model.allowCustomUserName', function () {
-        return this.model.allowCustomUserName.then((allowCustomUserName) => {
-          return allowCustomUserName;
-        });
-      }),
-    }),
-    validator('length', {
-      max: 100,
-    }),
-  ],
-  password: [
-    validator('presence', {
-      presence: true,
-      dependentKeys: ['model.allowCustomUserName'],
-      disabled: computed('model.allowCustomUserName', function () {
-        return this.model.allowCustomUserName.then((allowCustomUserName) => {
-          return allowCustomUserName;
-        });
-      }),
-    }),
-  ],
-  otherId: [
-    validator('length', {
-      max: 16,
-    }),
-  ],
-});
+@validatable
+export default class NewDirectoryUserComponent extends Component {
+  @service fetch;
+  @service iliosConfig;
+  @service intl;
+  @service store;
+  @service currentUser;
+  @service flashMessages;
+  @service permissionChecker;
 
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  fetch: service(),
-  iliosConfig: service(),
-  intl: service(),
-  store: service(),
-  currentUser: service(),
-  flashMessages: service(),
-  permissionChecker: service(),
+  @tracked allowCustomUserName = false;
+  @tracked isSearching = false;
+  @tracked searchResults = [];
+  @tracked searchResultsReturned = false;
+  @tracked selectedUser = false;
+  @tracked tooManyResults = false;
+  @tracked firstName;
+  @tracked middleName;
+  @tracked lastName;
+  @tracked campusId;
+  @tracked @Length(0, 16) otherId;
+  @tracked email;
+  @tracked @ValidateIf((o) => o.allowCustomUserName) @NotBlank() @Length(1, 100) username;
+  @tracked @ValidateIf((o) => o.allowCustomUserName) @NotBlank() password;
+  @tracked phone;
+  @tracked schoolId = null;
+  @tracked primaryCohortId = null;
+  @tracked primarySchool = null;
+  @tracked currentSchoolCohorts = [];
+  @tracked cohorts = [];
+  @tracked schools = [];
+  @tracked isSaving = false;
+  @tracked nonStudentMode = true;
 
-  classNames: ['new-directory-user'],
+  get isLoading() {
+    return this.load.isRunning || this.reload.isRunning;
+  }
 
-  isSearching: false,
-  searchResults: null,
-  searchResultsReturned: false,
-  searchTerms: null,
-  selectedUser: false,
-  tooManyResults: false,
-  firstName: null,
-  middleName: null,
-  lastName: null,
-  campusId: null,
-  otherId: null,
-  email: null,
-  username: null,
-  password: null,
-  phone: null,
-  schoolId: null,
-  primaryCohortId: null,
-  isSaving: false,
-  nonStudentMode: true,
+  get bestSelectedSchool() {
+    if (this.schoolId) {
+      const currentSchool = this.schools.findBy('id', this.schoolId);
 
-  allowCustomUserName: computed('iliosConfig.authenticationType', async function () {
-    const type = await this.iliosConfig.authenticationType;
-    return type === 'form';
-  }),
-
-  init() {
-    this._super(...arguments);
-    this.loadCohorts.perform();
-    this.set('searchResults', []);
-    const searchTerms = this.searchTerms;
-    if (isPresent(searchTerms)) {
-      this.findUsersInDirectory.perform(searchTerms);
+      if (currentSchool) {
+        return currentSchool;
+      }
     }
-  },
+    return this.primarySchool;
+  }
 
-  actions: {
-    pickUser(user) {
-      this.set('selectedUser', true);
-      this.set('firstName', user.firstName);
-      this.set('lastName', user.lastName);
-      this.set('email', user.email);
-      this.set('campusId', user.campusId);
-      this.set('phone', user.telephoneNumber);
-      this.set('username', user.username);
-    },
+  get bestSelectedCohort() {
+    if (!this.currentSchoolCohorts) {
+      return null;
+    }
 
-    unPickUser() {
-      this.set('selectedUser', false);
-      this.set('firstName', null);
-      this.set('lastName', null);
-      this.set('email', null);
-      this.set('campusId', null);
-      this.set('phone', null);
-      this.set('username', null);
-    },
-    setSchool(id) {
-      this.set('schoolId', id);
-      this.loadCohorts.perform();
-    },
-    setPrimaryCohort(id) {
-      this.set('primaryCohortId', id);
-    },
-  },
+    if (this.primaryCohortId) {
+      const currentCohort = this.currentSchoolCohorts.findBy('id', this.primaryCohortId);
 
-  keyUp(event) {
+      if (currentCohort) {
+        return currentCohort;
+      }
+    }
+
+    return this.currentSchoolCohorts.lastObject;
+  }
+
+  async loadSchools() {
+    const schools = await this.store.findAll('school', { reload: true });
+    return filter(schools.toArray(), async (school) => {
+      return this.permissionChecker.canCreateUser(school);
+    });
+  }
+
+  async loadCohorts(school) {
+    if (!school) {
+      return;
+    }
+    const cohorts = await this.store.query('cohort', {
+      filters: {
+        schools: [school.id],
+      },
+    });
+
+    //prefetch programYears and programs so that ember data will coalesce these requests.
+    const programYears = await all(cohorts.getEach('programYear'));
+    await all(programYears.getEach('program'));
+
+    const objects = await all(
+      cohorts.toArray().map(async (cohort) => {
+        const obj = {
+          id: cohort.get('id'),
+        };
+        const programYear = await cohort.programYear;
+        const program = await programYear.program;
+        obj.title = program.title + ' ' + cohort.title;
+        obj.startYear = programYear.startYear;
+        obj.duration = program.duration;
+
+        return obj;
+      })
+    );
+
+    const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
+    return objects.filter((obj) => {
+      const finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
+      return finalYear > lastYear;
+    });
+  }
+
+  @restartableTask
+  *load() {
+    const authType = yield this.iliosConfig.authenticationType;
+    this.allowCustomUserName = 'form' === authType;
+    const user = yield this.currentUser.model;
+    this.primarySchool = yield user.school;
+    this.schools = yield this.loadSchools();
+    this.cohorts = yield this.loadCohorts(this.primarySchool);
+    this.currentSchoolCohorts = yield this.bestSelectedSchool?.cohorts;
+    if (isPresent(this.args.searchTerms)) {
+      yield this.findUsersInDirectory.perform(this.args.searchTerms);
+    }
+  }
+
+  @restartableTask
+  *reload() {
+    this.currentSchoolCohorts = yield this.bestSelectedSchool?.cohorts;
+    this.cohorts = yield this.loadCohorts(this.bestSelectedSchool);
+  }
+
+  @action
+  pickUser(user) {
+    this.selectedUser = true;
+    this.firstName = user.firstName;
+    this.lastName = user.lastName;
+    this.email = user.email;
+    this.campusId = user.campusId;
+    this.phone = user.telephoneNumber;
+    this.username = user.username;
+  }
+
+  @action
+  unPickUser() {
+    this.selectedUser = false;
+    this.firstName = null;
+    this.lastName = null;
+    this.email = null;
+    this.campusId = null;
+    this.phone = null;
+    this.username = null;
+  }
+
+  @action
+  setSchool(id) {
+    this.schoolId = id;
+  }
+
+  @action
+  setPrimaryCohort(id) {
+    this.primaryCohortId = id;
+  }
+
+  @action
+  async keyboard(event) {
     const keyCode = event.keyCode;
     const target = event.target;
 
     if ('text' === target.type) {
       if (13 === keyCode) {
-        this.save.perform();
+        await this.save.perform();
         return;
       }
 
       if (27 === keyCode) {
-        this.close();
+        this.args.close();
       }
       return;
     }
 
     if ('search' === target.type) {
       if (13 === keyCode) {
-        this.findUsersInDirectory.perform(this.searchTerms);
+        await this.findUsersInDirectory.perform(this.args.searchTerms);
         return;
       }
 
       if (27 === keyCode) {
-        this.set('searchTerms', '');
+        this.searchTerms = '';
       }
     }
-  },
+  }
 
-  findUsersInDirectory: task(function* (searchTerms) {
-    this.set('searchResultsReturned', false);
-    this.set('tooManyResults', false);
+  @restartableTask
+  *findUsersInDirectory(searchTerms) {
+    this.searchResultsReturned = false;
+    this.tooManyResults = false;
     if (!isEmpty(searchTerms)) {
-      this.set('isSearching', true);
       const url = '/application/directory/search?limit=51&searchTerms=' + searchTerms;
       const data = yield this.fetch.getJsonFromApiHost(url);
       const mappedResults = data.results.map((result) => {
@@ -161,97 +213,15 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
           isPresent(result.campusId);
         return result;
       });
-      this.set('tooManyResults', mappedResults.length > 50);
-      this.set('searchResults', mappedResults);
-      this.set('isSearching', false);
-      this.set('searchResultsReturned', true);
+      this.tooManyResults = mappedResults.length > 50;
+      this.searchResults = mappedResults;
+      this.searchResultsReturned = true;
     }
-  }).restartable(),
+  }
 
-  schools: computed(async function () {
-    const permissionChecker = this.permissionChecker;
-    const store = this.store;
-    const schools = await store.findAll('school', { reload: true });
-    return filter(schools.toArray(), async (school) => {
-      return permissionChecker.canCreateUser(school);
-    });
-  }),
-
-  bestSelectedSchool: computed('currentUser.model', 'schoolId', 'schools.[]', async function () {
-    const schoolId = this.schoolId;
-    const schools = await this.schools;
-
-    if (schoolId) {
-      const currentSchool = schools.findBy('id', schoolId);
-
-      if (currentSchool) {
-        return currentSchool;
-      }
-    }
-
-    const user = await this.currentUser.model;
-    return user.school;
-  }),
-
-  bestSelectedCohort: computed(
-    'bestSelectedSchool.cohorts.[]',
-    'primaryCohortId',
-    async function () {
-      const primaryCohortId = this.primaryCohortId;
-      const school = await this.bestSelectedSchool;
-      const cohorts = await school.cohorts;
-
-      if (primaryCohortId) {
-        const currentCohort = cohorts.findBy('id', primaryCohortId);
-
-        if (currentCohort) {
-          return currentCohort;
-        }
-      }
-
-      return cohorts.lastObject;
-    }
-  ),
-
-  cohorts: oneWay('loadCohorts.lastSuccessful.value'),
-  loadCohorts: task(function* () {
-    const school = yield this.bestSelectedSchool;
-    let cohorts = yield this.store.query('cohort', {
-      filters: {
-        schools: [school.get('id')],
-      },
-    });
-
-    //prefetch programYears and programs so that ember data will coalesce these requests.
-    const programYears = yield RSVP.all(cohorts.getEach('programYear'));
-    yield RSVP.all(programYears.getEach('program'));
-
-    cohorts = cohorts.toArray();
-    const all = [];
-
-    for (let i = 0; i < cohorts.length; i++) {
-      const cohort = cohorts[i];
-      const obj = {
-        id: cohort.get('id'),
-      };
-      const programYear = yield cohort.get('programYear');
-      const program = yield programYear.get('program');
-      obj.title = program.get('title') + ' ' + cohort.get('title');
-      obj.startYear = programYear.get('startYear');
-      obj.duration = program.get('duration');
-
-      all.pushObject(obj);
-    }
-
-    const lastYear = parseInt(moment().subtract(1, 'year').format('YYYY'), 10);
-    return all.filter((obj) => {
-      const finalYear = parseInt(obj.startYear, 10) + parseInt(obj.duration, 10);
-      return finalYear > lastYear;
-    });
-  }).restartable(),
-
-  save: task(function* () {
-    this.send('addErrorDisplaysFor', [
+  @dropTask
+  *save() {
+    this.addErrorDisplaysFor([
       'firstName',
       'middleName',
       'lastName',
@@ -262,39 +232,25 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       'username',
       'password',
     ]);
-    const { validations } = yield this.validate();
-    if (validations.get('isInvalid')) {
-      return;
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
     }
-    const {
-      firstName,
-      middleName,
-      lastName,
-      campusId,
-      otherId,
-      email,
-      phone,
-      username,
-      password,
-      store,
-      nonStudentMode,
-    } = this;
-    const roles = yield store.findAll('user-role');
-    const school = yield this.bestSelectedSchool;
+    const roles = yield this.store.findAll('user-role');
     const primaryCohort = yield this.bestSelectedCohort;
     let user = this.store.createRecord('user', {
-      firstName,
-      middleName,
-      lastName,
-      campusId,
-      otherId,
-      email,
-      phone,
-      school,
+      firstName: this.firstName,
+      middleName: this.middleName,
+      lastName: this.lastName,
+      campusId: this.campusId,
+      otherId: this.otherId,
+      email: this.email,
+      phone: this.phone,
+      school: this.bestSelectedSchool,
       enabled: true,
       root: false,
     });
-    if (!nonStudentMode) {
+    if (!this.nonStudentMode) {
       user.set('primaryCohort', primaryCohort);
       const studentRole = roles.findBy('title', 'Student');
       user.set('roles', [studentRole]);
@@ -302,12 +258,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     user = yield user.save();
     const authentication = this.store.createRecord('authentication', {
       user,
-      username,
-      password,
+      username: this.username,
+      password: this.password,
     });
     yield authentication.save();
+    this.clearErrorDisplay();
     this.flashMessages.success('general.saved');
-    this.transitionToUser(user.get('id'));
-    this.send('clearErrorDisplay');
-  }).drop(),
-});
+    this.args.transitionToUser(user.id);
+  }
+}

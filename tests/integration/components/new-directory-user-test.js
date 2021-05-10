@@ -1,17 +1,11 @@
 import Service from '@ember/service';
-import EmberObject from '@ember/object';
-import { resolve } from 'rsvp';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, findAll, fillIn } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-
-const permissionCheckerMock = Service.extend({
-  async canCreateUser() {
-    return resolve(true);
-  },
-});
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { component } from 'ilios/tests/pages/components/new-directory-user';
 
 module('Integration | Component | new directory user', function (hooks) {
   setupRenderingTest(hooks);
@@ -23,116 +17,122 @@ module('Integration | Component | new directory user', function (hooks) {
       school: schools[0],
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
-    const currentUserMock = Service.extend({
-      model: resolve(userModel),
-    });
+    class PermissionCheckerMock extends Service {
+      async canCreateUser() {
+        return true;
+      }
+    }
+    class CurrentUserMock extends Service {
+      async model() {
+        return userModel;
+      }
+    }
 
-    this.owner.register('service:current-user', currentUserMock);
+    this.owner.register('service:current-user', CurrentUserMock);
     this['current-user'] = this.owner.lookup('service:current-user');
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
   });
 
-  test('it renders', async function (assert) {
-    this.set('nothing', () => {});
-
-    await render(
-      hbs`<NewDirectoryUser @close={{action nothing}} @setSearchTerms={{action nothing}} />`
-    );
-    assert.ok(this.element.textContent.includes('Search directory for new users'));
+  test('it renders and is accessible', async function (assert) {
+    await render(hbs`<NewDirectoryUser @close={{noop}} @setSearchTerms={{noop}} />`);
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found.');
   });
 
   test('input into the search field fires action', async function (assert) {
     assert.expect(1);
     const searchTerm = 'search for me!';
-    this.set('nothing', parseInt);
     this.set('setSearchTerms', (val) => {
       assert.equal(val, searchTerm, 'changes to search get sent as action');
     });
     await render(hbs`<NewDirectoryUser
-      @close={{action nothing}}
-      @setSearchTerms={{action setSearchTerms}}
-      @searchTerms={{startingSearchTerms}}
+      @close={{noop}}
+      @setSearchTerms={{this.setSearchTerms}}
+      @searchTerms={{this.startingSearchTerms}}
     />`);
-    const searchBox = '.new-directory-user-search-tools';
-    const searchInput = `${searchBox} input`;
-    await fillIn(searchInput, searchTerm);
+    await component.search.set(searchTerm);
+    await component.search.submit();
   });
 
   test('initial search input fires search and fills input', async function (assert) {
     assert.expect(5);
     const startingSearchTerms = 'start here';
-
     this.server.get(`/application/directory/search`, (scheme, { queryParams }) => {
       assert.ok('limit' in queryParams);
       assert.equal(queryParams.limit, 51);
       assert.ok('searchTerms' in queryParams);
       assert.equal(queryParams.searchTerms, startingSearchTerms);
-
       return {
         results: [],
       };
     });
-    this.set('nothing', parseInt);
     this.set('startingSearchTerms', startingSearchTerms);
     await render(hbs`<NewDirectoryUser
-      @close={{action nothing}}
-      @setSearchTerms={{action nothing}}
-      @searchTerms={{startingSearchTerms}}
+      @close={{noop}}
+      @setSearchTerms={{noop}}
+      @searchTerms={{this.startingSearchTerms}}
     />`);
-    const searchBox = '.new-directory-user-search-tools';
-    const searchInput = `${searchBox} input`;
-    assert.dom(searchInput).hasValue(startingSearchTerms, 'passed value is in the box');
+    assert.equal(component.search.value, startingSearchTerms);
   });
 
   test('create new user', async function (assert) {
-    assert.expect(34);
+    assert.expect(35);
     this.server.create('user-role', {
       id: 4,
       title: 'Student',
     });
-    const user1Object = EmberObject.create({
+    const user1 = this.server.create('user', {
       firstName: 'user1-first',
       lastName: 'user1-last',
       campusId: 'user1-campus',
       email: 'user1@test.com',
       telephoneNumber: 'user11234',
-      user: null,
-      username: 'user1-username',
     });
-    const user2Object = EmberObject.create({
+    const user2 = this.server.create('user', {
       firstName: 'user2-first',
       lastName: 'user2-last',
       campusId: 'user2-campus',
       email: 'user2@test.com',
       telephoneNumber: 'user21234',
-      user: 4136,
+    });
+    const auth2 = this.server.create('authentication', {
+      user: user2,
       username: 'user2-username',
     });
-    const user3Object = EmberObject.create({
+    const user3 = this.server.create('user', {
       firstName: 'user3-first',
       lastName: 'user3-last',
       campusId: null,
       email: null,
       telephoneNumber: 'user31234',
+    });
+    const searchResult1 = {
+      firstName: user1.firstName,
+      lastName: user1.lastName,
+      campusId: user1.campusId,
+      email: user1.email,
+      telephoneNumber: user1.telephoneNumber,
+      username: 'user1-username',
       user: null,
+    };
+    const searchResult2 = {
+      firstName: user2.firstName,
+      lastName: user2.lastName,
+      campusId: user2.campusId,
+      email: user2.email,
+      telephoneNumber: user2.telephoneNumber,
+      username: auth2.username,
+      user: 4136,
+    };
+    const searchResult3 = {
+      firstName: user3.firstName,
+      lastName: user3.lastName,
+      campusId: user3.campusId,
+      email: user3.email,
+      telephoneNumber: user3.telephoneNumber,
       username: null,
-    });
-    this.server.create(
-      'user',
-      user1Object.getProperties('firstName', 'lastName', 'campusId', 'email', 'telephoneNumber')
-    );
-    const user2 = this.server.create(
-      'user',
-      user2Object.getProperties('firstName', 'lastName', 'campusId', 'email', 'telephoneNumber')
-    );
-    this.server.create('authentication', {
-      user: user2,
-      username: user2Object.username,
-    });
-    this.server.create(
-      'user',
-      user3Object.getProperties('firstName', 'lastName', 'campusId', 'email', 'telephoneNumber')
-    );
+      user: null,
+    };
     this.server.get('/application/config', () => {
       return {
         config: {
@@ -142,132 +142,71 @@ module('Integration | Component | new directory user', function (hooks) {
         },
       };
     });
-
     this.server.get('/application/directory/search', (scheme, { queryParams }) => {
       assert.ok('limit' in queryParams);
       assert.ok('searchTerms' in queryParams);
       assert.equal(queryParams.limit, 51);
       assert.equal(queryParams.searchTerms, 'searchterm');
       return {
-        results: [user1Object, user2Object, user3Object],
+        results: [searchResult1, searchResult2, searchResult3],
       };
     });
-
-    this.set('nothing', parseInt);
     this.set('transitionToUser', (userId) => {
       assert.equal(userId, 5, 'after saving we transition to the right user');
     });
     await render(hbs`<NewDirectoryUser
-      @close={{action nothing}}
-      @setSearchTerms={{action nothing}}
-      @transitionToUser={{action transitionToUser}}
+      @close={{noop}}
+      @setSearchTerms={{noop}}
+      @transitionToUser={{this.transitionToUser}}
       @searchTerms="searchterm"
     />`);
 
-    const results = '.new-directory-user-search-results';
-    const firstResultValues = `${results} tbody tr:nth-of-type(1) td`;
-    const secondResultValues = `${results} tbody tr:nth-of-type(2) td`;
-    const thirdResultValues = `${results} tbody tr:nth-of-type(3) td`;
-    const firstIcon = `${firstResultValues}:nth-of-type(1) svg`;
-    const secondIcon = `${secondResultValues}:nth-of-type(1) svg`;
-    const thirdIcon = `${thirdResultValues}:nth-of-type(1) svg`;
+    assert.equal(component.searchResults.length, 3);
+    assert.ok(component.searchResults[0].userCanBeAdded);
+    assert.equal(
+      component.searchResults[0].name,
+      `${searchResult1.firstName} ${searchResult1.lastName}`
+    );
+    assert.equal(component.searchResults[0].campusId, searchResult1.campusId);
+    assert.equal(component.searchResults[0].email, searchResult1.email);
+    assert.ok(component.searchResults[1].userAlreadyExists);
+    assert.equal(
+      component.searchResults[1].name,
+      `${searchResult2.firstName} ${searchResult2.lastName}`
+    );
+    assert.equal(component.searchResults[1].campusId, searchResult2.campusId);
+    assert.equal(component.searchResults[1].email, searchResult2.email);
+    assert.ok(component.searchResults[2].userCannotBeAdded);
+    assert.equal(
+      component.searchResults[2].name,
+      `${searchResult3.firstName} ${searchResult3.lastName}`
+    );
+    assert.equal(component.searchResults[2].campusId, '');
+    assert.equal(component.searchResults[2].email, '');
 
-    const firstName = '[data-test-first-name] span';
-    const lastName = '[data-test-last-name] span';
-    const campusId = '[data-test-campus-id] span';
-    const email = '[data-test-email] span';
-    const phone = '[data-test-phone] span';
-    const otherId = '[data-test-other-id] input';
-    const username = '[data-test-username] span';
+    await component.searchResults[0].addUser();
 
-    const save = '.done';
+    assert.equal(component.form.firstName, `First Name: ${searchResult1.firstName}`);
+    assert.equal(component.form.lastName, `Last Name: ${searchResult1.lastName}`);
+    assert.equal(component.form.campusId, `Campus ID: ${searchResult1.campusId}`);
+    assert.equal(component.form.email, `Email: ${searchResult1.email}`);
+    assert.equal(component.form.phone, `Phone: ${searchResult1.telephoneNumber}`);
+    assert.equal(component.form.otherId, `Other ID:`);
+    assert.equal(component.form.username.text, `Username: ${searchResult1.username}`);
 
-    assert.dom(firstIcon).hasClass('fa-plus', 'this user can be added');
-    assert
-      .dom(findAll(firstResultValues)[1])
-      .hasText(
-        user1Object.get('firstName') + ' ' + user1Object.get('lastName'),
-        'correct display for name'
-      );
-    assert
-      .dom(findAll(firstResultValues)[2])
-      .hasText(user1Object.get('campusId'), 'correct display for campusId');
-    assert
-      .dom(findAll(firstResultValues)[3])
-      .hasText(user1Object.get('email'), 'correct display for email');
-
-    assert.dom(secondIcon).hasClass('fa-sun', 'correct display for things');
-    assert
-      .dom(findAll(secondResultValues)[1])
-      .hasText(
-        user2Object.get('firstName') + ' ' + user2Object.get('lastName'),
-        'correct display for name'
-      );
-    assert
-      .dom(findAll(secondResultValues)[2])
-      .hasText(user2Object.get('campusId'), 'correct display for campusId');
-    assert
-      .dom(findAll(secondResultValues)[3])
-      .hasText(user2Object.get('email'), 'correct display for email');
-
-    assert.dom(thirdIcon).hasClass('fa-ambulance', 'correct display for things');
-    assert
-      .dom(findAll(thirdResultValues)[1])
-      .hasText(
-        user3Object.get('firstName') + ' ' + user3Object.get('lastName'),
-        'correct display for name'
-      );
-    assert.dom(findAll(thirdResultValues)[2]).hasText('', 'campus id is empty');
-    assert.dom(findAll(thirdResultValues)[3]).hasText('', 'email is empty');
-
-    await click(firstIcon);
-
-    assert.dom(firstName).hasText(user1Object.get('firstName'), 'firstName is correct in form');
-    assert.dom(lastName).hasText(user1Object.get('lastName'), 'lastName is correct in form');
-    assert.dom(campusId).hasText(user1Object.get('campusId'), 'campusId is correct in form');
-    assert.dom(email).hasText(user1Object.get('email'), 'email is correct in form');
-    assert.dom(phone).hasText(user1Object.get('telephoneNumber'), 'phone is correct in form');
-    assert.dom(otherId).hasText('', 'otherId is blank in form');
-    assert.dom(username).hasText(user1Object.get('username'), 'username is correct in form');
-
-    await click(save);
+    await component.form.submit();
 
     const userModel = await this.owner.lookup('service:store').find('user', 5);
-    assert.equal(
-      userModel.firstName,
-      user1Object.get('firstName'),
-      'record created with correct value for firstName'
-    );
-    assert.equal(userModel.middleName, null, 'record created with correct value for middleName');
-    assert.equal(
-      userModel.lastName,
-      user1Object.get('lastName'),
-      'record created with correct value for lastName'
-    );
-    assert.equal(
-      userModel.campusId,
-      user1Object.get('campusId'),
-      'record created with correct value for campusId'
-    );
-    assert.equal(userModel.otherId, null, 'record created with correct value for otherId');
-    assert.equal(
-      userModel.phone,
-      user1Object.get('telephoneNumber'),
-      'record created with correct value for phone'
-    );
-    assert.equal(
-      userModel.email,
-      user1Object.get('email'),
-      'record created with correct value for email'
-    );
-
     const authenticationModel = await userModel.get('authentication');
-    assert.equal(
-      authenticationModel.username,
-      user1Object.get('username'),
-      'record has correct username'
-    );
-    assert.equal(authenticationModel.password, null, 'record has no password');
-    assert.equal(authenticationModel.user.get('id'), '5', 'we are linking to the expected user');
+    assert.equal(userModel.firstName, searchResult1.firstName);
+    assert.equal(userModel.middleName, null);
+    assert.equal(userModel.lastName, searchResult1.lastName);
+    assert.equal(userModel.campusId, searchResult1.campusId);
+    assert.equal(userModel.otherId, null);
+    assert.equal(userModel.phone, searchResult1.telephoneNumber);
+    assert.equal(userModel.email, searchResult1.email);
+    assert.equal(userModel.id, 5);
+    assert.equal(authenticationModel.username, searchResult1.username);
+    assert.equal(authenticationModel.password, null);
   });
 });
