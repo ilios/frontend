@@ -17,7 +17,7 @@ export default class ApiVersionNoticeComponent extends Component {
 
   @dropTask
   *check() {
-    const mismatched = yield this.apiVersion.isMismatched;
+    const mismatched = yield this.apiVersion.getIsMismatched();
     if (mismatched && 'serviceWorker' in navigator) {
       yield 2000; //wait to let the new service worker get fetched if it is available
       const reg = yield navigator.serviceWorker.getRegistration();
