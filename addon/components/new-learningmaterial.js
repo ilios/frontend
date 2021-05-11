@@ -5,6 +5,8 @@ import { action } from '@ember/object';
 import { dropTask } from 'ember-concurrency';
 import { validatable, Length, NotBlank, IsTrue, IsURL } from 'ilios-common/decorators/validation';
 import { ValidateIf } from 'class-validator';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from '../classes/resolve-async-value';
 
 const DEFAULT_URL_VALUE = 'https://';
 
@@ -34,6 +36,8 @@ export default class NewLearningmaterialComponent extends Component {
   @tracked owner;
   @ValidateIf((o) => o.isCitation) @NotBlank() @tracked citation;
   @tracked fileUploadErrorMessage = false;
+
+  @use currentUserModel = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
 
   get isFile() {
     return this.args.type === 'file';

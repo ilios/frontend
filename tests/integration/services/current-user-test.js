@@ -17,7 +17,7 @@ module('Integration | Service | Current User', function (hooks) {
 
   test('currentUserId', function (assert) {
     const subject = this.owner.lookup('service:current-user');
-    const userId = subject.get('currentUserId');
+    const userId = subject.currentUserId;
     assert.equal(userId, 100);
   });
 
@@ -25,7 +25,7 @@ module('Integration | Service | Current User', function (hooks) {
     assert.expect(1);
     await invalidateSession();
     const subject = this.owner.lookup('service:current-user');
-    const userId = subject.get('currentUserId');
+    const userId = subject.currentUserId;
     assert.equal(userId, null);
   });
 
@@ -33,7 +33,7 @@ module('Integration | Service | Current User', function (hooks) {
     assert.expect(1);
     this.server.create('user', { id: 100 });
     const subject = this.owner.lookup('service:current-user');
-    const model = await subject.get('model');
+    const model = await subject.getModel();
     assert.equal(model.id, 100);
   });
 
@@ -41,7 +41,7 @@ module('Integration | Service | Current User', function (hooks) {
     assert.expect(1);
     await invalidateSession();
     const subject = this.owner.lookup('service:current-user');
-    const model = await subject.get('model');
+    const model = await subject.getModel();
     assert.equal(model, null);
   });
 
@@ -71,7 +71,7 @@ module('Integration | Service | Current User', function (hooks) {
     this.server.create('user', { id: 100, roles });
 
     const subject = this.owner.lookup('service:current-user');
-    const titles = await subject.get('userRoleTitles');
+    const titles = await subject.getUserRoleTitles();
     assert.equal(titles.length, 2);
     assert.ok(titles.includes('user role 0'));
     assert.ok(titles.includes('user role 1'));
@@ -82,7 +82,7 @@ module('Integration | Service | Current User', function (hooks) {
     const role = this.server.create('user-role', { title: 'student' });
     this.server.create('user', { id: 100, roles: [role] });
     const subject = this.owner.lookup('service:current-user');
-    const isStudent = await subject.get('userIsStudent');
+    const isStudent = await subject.getIsStudent();
     assert.ok(isStudent);
   });
 
@@ -90,7 +90,7 @@ module('Integration | Service | Current User', function (hooks) {
     assert.expect(1);
     this.server.create('user', { id: 100 });
     const subject = this.owner.lookup('service:current-user');
-    const isStudent = await subject.get('userIsStudent');
+    const isStudent = await subject.getIsStudent();
     assert.notOk(isStudent);
   });
 
@@ -99,7 +99,7 @@ module('Integration | Service | Current User', function (hooks) {
     const role = this.server.create('user-role', { title: 'FORMeR Student' });
     this.server.create('user', { id: 100, roles: [role] });
     const subject = this.owner.lookup('service:current-user');
-    const isFormerStudent = await subject.get('userIsFormerStudent');
+    const isFormerStudent = await subject.isFormerStudent();
     assert.ok(isFormerStudent);
   });
 
@@ -107,7 +107,7 @@ module('Integration | Service | Current User', function (hooks) {
     assert.expect(1);
     this.server.create('user', { id: 100 });
     const subject = this.owner.lookup('service:current-user');
-    const isFormerStudent = await subject.get('userIsFormerStudent');
+    const isFormerStudent = await subject.isFormerStudent();
     assert.notOk(isFormerStudent);
   });
 
@@ -133,7 +133,7 @@ module('Integration | Service | Current User', function (hooks) {
       return schema.courses.all();
     });
     const subject = this.owner.lookup('service:current-user');
-    const activeRelatedCourses = await subject.get('activeRelatedCoursesInThisYearAndLastYear');
+    const activeRelatedCourses = await subject.getActiveRelatedCoursesInThisYearAndLastYear();
     assert.ok(activeRelatedCourses.mapBy('id').includes(courses[0].id));
     assert.ok(activeRelatedCourses.mapBy('id').includes(courses[1].id));
   });

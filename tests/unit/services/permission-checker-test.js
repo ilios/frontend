@@ -58,7 +58,7 @@ module('Unit | Service | permission-checker', function (hooks) {
     const school = { id: 1 };
 
     const apiVersionMock = Service.extend({
-      get isMismatched() {
+      async getIsMismatched() {
         assert.ok(true);
         return true;
       },
