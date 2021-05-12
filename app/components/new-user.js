@@ -25,10 +25,15 @@ export default class NewUserComponent extends Component {
   @tracked schoolId = null;
   @tracked primaryCohortId = null;
   @tracked primarySchool = null;
+  @tracked currentSchoolCohorts = [];
   @tracked cohorts = [];
   @tracked schools = [];
   @tracked isSaving = false;
   @tracked nonStudentMode = true;
+
+  get isLoading() {
+    return this.load.isRunning || this.reload.isRunning;
+  }
 
   get bestSelectedSchool() {
     if (this.schoolId) {
@@ -61,42 +66,40 @@ export default class NewUserComponent extends Component {
   *load() {
     const user = yield this.currentUser.model;
     this.primarySchool = yield user.school;
-    this.schools = yield this.loadSchools.perform();
+    this.schools = yield this.loadSchools();
     this.currentSchoolCohorts = yield this.bestSelectedSchool?.cohorts;
-    this.cohorts = yield this.loadCohorts.perform(this.bestSelectedSchool);
+    this.cohorts = yield this.loadCohorts(this.bestSelectedSchool);
   }
 
   @restartableTask
   *reload() {
     this.currentSchoolCohorts = yield this.bestSelectedSchool?.cohorts;
-    this.cohorts = yield this.loadCohorts.perform(this.bestSelectedSchool);
+    this.cohorts = yield this.loadCohorts(this.bestSelectedSchool);
   }
 
-  @restartableTask
-  *loadSchools() {
+  async loadSchools() {
     const store = this.store;
-    const schools = yield store.findAll('school');
-    return yield filter(schools.toArray(), async (school) => {
+    const schools = await store.findAll('school');
+    return await filter(schools.toArray(), async (school) => {
       return this.permissionChecker.canCreateUser(school);
     });
   }
 
-  @restartableTask
-  *loadCohorts(school) {
+  async loadCohorts(school) {
     if (!school) {
       return;
     }
-    const cohorts = yield this.store.query('cohort', {
+    const cohorts = await this.store.query('cohort', {
       filters: {
         schools: [school.id],
       },
     });
 
     //prefetch programYears and programs so that ember data will coalesce these requests.
-    const programYears = yield all(cohorts.getEach('programYear'));
-    yield all(programYears.getEach('program'));
+    const programYears = await all(cohorts.getEach('programYear'));
+    await all(programYears.getEach('program'));
 
-    const objects = yield all(
+    const objects = await all(
       cohorts.toArray().map(async (cohort) => {
         const obj = {
           id: cohort.get('id'),

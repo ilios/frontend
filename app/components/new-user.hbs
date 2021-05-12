@@ -168,7 +168,7 @@
       <label>
         {{t "general.primarySchool"}}:
       </label>
-      {{#if (or this.load.isRunning this.reload.isRunning)}}
+      {{#if this.isLoading}}
         <LoadingSpinner />
       {{else}}
         <select {{on "change" (pick "target.value" (set this.schoolId))}}>
@@ -188,7 +188,7 @@
         <label>
           {{t "general.primaryCohort"}}:
         </label>
-        {{#if (or this.load.isRunning this.reload.isRunning)}}
+        {{#if this.isLoading}}
           <LoadingSpinner />
         {{else}}
           <select {{on "change" (pick "target.value" (set this.primaryCohortId))}}>
