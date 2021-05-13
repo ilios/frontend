@@ -237,7 +237,7 @@ export default class NewDirectoryUserComponent extends Component {
       return false;
     }
     const roles = yield this.store.findAll('user-role');
-    const primaryCohort = yield this.bestSelectedCohort;
+    const primaryCohort = this.bestSelectedCohort;
     let user = this.store.createRecord('user', {
       firstName: this.firstName,
       middleName: this.middleName,
