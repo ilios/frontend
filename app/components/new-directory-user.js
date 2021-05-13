@@ -75,7 +75,7 @@ export default class NewDirectoryUserComponent extends Component {
   }
 
   async loadSchools() {
-    const schools = await this.store.findAll('school', { reload: true });
+    const schools = await this.store.findAll('school');
     return filter(schools.toArray(), async (school) => {
       return this.permissionChecker.canCreateUser(school);
     });
