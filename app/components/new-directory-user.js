@@ -170,13 +170,13 @@ export default class NewDirectoryUserComponent extends Component {
   }
 
   @action
-  async keyboard(event) {
+  keyboard(event) {
     const keyCode = event.keyCode;
     const target = event.target;
 
     if ('text' === target.type) {
       if (13 === keyCode) {
-        await this.save.perform();
+        this.save.perform();
         return;
       }
 
@@ -188,7 +188,7 @@ export default class NewDirectoryUserComponent extends Component {
 
     if ('search' === target.type) {
       if (13 === keyCode) {
-        await this.findUsersInDirectory.perform(this.args.searchTerms);
+        this.findUsersInDirectory.perform(this.args.searchTerms);
         return;
       }
 
