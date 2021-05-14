@@ -20,7 +20,6 @@ export default class SessionOverview extends Component {
   @Length(3, 200) @NotBlank() @tracked title = null;
   @Length(3, 65000) @tracked instructionalNotes = null;
   @NotBlank() @Gte(0) @tracked hours = null;
-  @NotBlank() @tracked dueDate = null;
   @Length(3, 65000) @tracked description = null;
   @tracked sessionType = null;
   @tracked isSaving = false;
@@ -82,7 +81,6 @@ export default class SessionOverview extends Component {
     this.instructionalNotes = session.instructionalNotes;
     if (ilmSession) {
       this.hours = ilmSession.hours;
-      this.dueDate = ilmSession.dueDate;
       this.isIndependentLearning = true;
     } else {
       this.isIndependentLearning = false;
@@ -137,9 +135,8 @@ export default class SessionOverview extends Component {
       yield ilmSession.save();
     } else {
       const hours = 1;
-      const dueDate = moment().add(6, 'weeks').toDate();
+      const dueDate = moment().add(6, 'weeks').hour('17').minute('00').toDate();
       this.hours = hours;
-      this.dueDate = dueDate;
       const ilmSession = this.store.createRecord('ilm-session', {
         session: this.args.session,
         hours,
@@ -233,30 +230,6 @@ export default class SessionOverview extends Component {
     const ilmSession = await this.args.session.ilmSession;
     if (ilmSession) {
       this.hours = ilmSession.hours;
-    }
-  }
-
-  @action
-  async changeIlmDueDate() {
-    this.addErrorDisplayFor('dueDate');
-    const isValid = await this.isValid('dueDate');
-
-    if (!isValid) {
-      return false;
-    }
-    this.removeErrorDisplayFor('dueDate');
-    const ilmSession = await this.args.session.ilmSession;
-    if (ilmSession) {
-      ilmSession.dueDate = this.dueDate;
-      await ilmSession.save();
-    }
-  }
-
-  @action
-  async revertIlmDueDateChanges() {
-    const ilmSession = await this.args.session.ilmSession;
-    if (ilmSession) {
-      this.dueDate = ilmSession.dueDate;
     }
   }
 
