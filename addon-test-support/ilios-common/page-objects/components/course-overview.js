@@ -7,7 +7,7 @@ import {
   isVisible,
   value,
 } from 'ember-cli-page-object';
-import { flatpickrDatePicker } from 'ilios-common';
+import datePicker from './date-picker';
 
 const definition = {
   scope: '[data-test-course-overview]',
@@ -28,8 +28,7 @@ const definition = {
   startDate: {
     scope: '.coursestartdate',
     edit: clickable('[data-test-edit]'),
-    set: flatpickrDatePicker('input'),
-    value: value('input'),
+    datePicker,
     save: clickable('.done'),
     hasError: isVisible('.validation-error-message'),
   },
@@ -37,7 +36,7 @@ const definition = {
     scope: '.courseenddate',
     value: value('input'),
     edit: clickable('[data-test-edit]'),
-    set: flatpickrDatePicker('input'),
+    datePicker,
     save: clickable('.done'),
     hasError: isVisible('.validation-error-message'),
   },

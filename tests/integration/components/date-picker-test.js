@@ -1,7 +1,9 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { find, render } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import { component } from 'ilios-common/page-objects/components/date-picker';
+import { a11yAudit } from 'ember-a11y-testing/test-support';
 
 module('Integration | Component | date-picker', function (hooks) {
   setupRenderingTest(hooks);
@@ -10,7 +12,9 @@ module('Integration | Component | date-picker', function (hooks) {
     const date = new Date(2020, 4, 6);
     this.set('date', date);
     await render(hbs`<DatePicker @value={{this.date}} />`);
-    assert.dom('input').hasValue('5/6/2020');
+    assert.equal(component.value, '5/6/2020');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('onChange callback is invoked', async function (assert) {
@@ -22,7 +26,6 @@ module('Integration | Component | date-picker', function (hooks) {
       assert.equal(newDate.getTime(), changedDate.getTime());
     });
     await render(hbs`<DatePicker @value={{this.date}} @onChange={{this.change}} />`);
-    const element = find('input');
-    element._flatpickr.setDate(newDate, true);
+    component.set(newDate);
   });
 });

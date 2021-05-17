@@ -132,8 +132,8 @@ module('Acceptance | Course - Overview', function (hooks) {
     const newDate = moment(course.startDate).add(1, 'year').add(1, 'month');
     assert.equal(page.overview.startDate.text, 'Start: ' + this.intl.formatDate(course.startDate));
     await page.overview.startDate.edit();
-    assert.equal(page.overview.startDate.value, this.intl.formatDate(course.startDate));
-    await page.overview.startDate.set(newDate.toDate());
+    assert.equal(page.overview.startDate.datePicker.value, this.intl.formatDate(course.startDate));
+    await page.overview.startDate.datePicker.set(newDate.toDate());
     await page.overview.startDate.save();
     assert.equal(page.overview.startDate.text, 'Start: ' + this.intl.formatDate(newDate));
   });
@@ -152,8 +152,8 @@ module('Acceptance | Course - Overview', function (hooks) {
     assert.equal(page.overview.startDate.text, `Start: ${startDate}`);
     assert.notOk(page.overview.startDate.hasError);
     await page.overview.startDate.edit();
-    assert.equal(page.overview.startDate.value, startDate);
-    await page.overview.startDate.set(newDate.toDate());
+    assert.equal(page.overview.startDate.datePicker.value, startDate);
+    await page.overview.startDate.datePicker.set(newDate.toDate());
     await page.overview.startDate.save();
     assert.ok(page.overview.startDate.hasError);
   });
@@ -171,8 +171,8 @@ module('Acceptance | Course - Overview', function (hooks) {
     const newDate = moment(course.endDate).add(1, 'year').add(1, 'month');
     assert.equal(page.overview.endDate.text, `End: ${endDate}`);
     await page.overview.endDate.edit();
-    assert.equal(page.overview.endDate.value, endDate);
-    await page.overview.endDate.set(newDate.toDate());
+    assert.equal(page.overview.endDate.datePicker.value, endDate);
+    await page.overview.endDate.datePicker.set(newDate.toDate());
     await page.overview.endDate.save();
     assert.equal(page.overview.endDate.text, 'End: ' + this.intl.formatDate(newDate));
   });
@@ -191,8 +191,8 @@ module('Acceptance | Course - Overview', function (hooks) {
     assert.equal(page.overview.endDate.text, 'End: ' + endDate);
     assert.notOk(page.overview.endDate.hasError);
     await page.overview.endDate.edit();
-    assert.equal(page.overview.endDate.value, endDate);
-    await page.overview.endDate.set(newDate.toDate());
+    assert.equal(page.overview.endDate.datePicker.value, endDate);
+    await page.overview.endDate.datePicker.set(newDate.toDate());
     await page.overview.endDate.save();
     assert.ok(page.overview.endDate.hasError);
   });

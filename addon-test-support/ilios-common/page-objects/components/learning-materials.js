@@ -13,11 +13,9 @@ import meshManager from './mesh-manager';
 import search from './learningmaterial-search';
 import userNameInfo from './user-name-info';
 import newLearningMaterial from './new-learningmaterial';
-import {
-  flatpickrDatePicker,
-  pageObjectFillInFroalaEditor,
-  pageObjectFroalaEditorValue,
-} from 'ilios-common';
+import datePicker from './date-picker';
+import timePicker from './time-picker';
+import { pageObjectFillInFroalaEditor, pageObjectFroalaEditorValue } from 'ilios-common';
 
 const definition = {
   scope: '[data-test-detail-learning-materials]',
@@ -90,19 +88,21 @@ const definition = {
     save: clickable('.done'),
     cancel: clickable('.cancel'),
     meshManager,
-    startDate: flatpickrDatePicker('.start-date input'),
+    startDate: {
+      scope: '.start-date',
+      datePicker,
+    },
     startTime: {
       scope: '.start-time',
-      hour: fillable('select', { at: 0 }),
-      minute: fillable('select', { at: 1 }),
-      ampm: fillable('select', { at: 2 }),
+      timePicker,
     },
-    endDate: flatpickrDatePicker('.end-date input'),
+    endDate: {
+      scope: '.end-date',
+      datePicker,
+    },
     endTime: {
       scope: '.end-time',
-      hour: fillable('select', { at: 0 }),
-      minute: fillable('select', { at: 1 }),
-      ampm: fillable('select', { at: 2 }),
+      timePicker,
     },
     hasEndDateValidationError: isVisible('[data-test-end-date-validation-error-message]'),
     hasTitleValidationError: isVisible('[data-test-title-validation-error-message]'),

@@ -197,10 +197,10 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await page.offerings.header.createNew();
     const { offeringForm: form } = page.offerings;
     await page.offerings.singleOffering();
-    await form.startDate.set(new Date(2011, 8, 11));
-    await form.startTime.hour(2);
-    await form.startTime.minutes(15);
-    await form.startTime.ampm('am');
+    await form.startDate.datePicker.set(new Date(2011, 8, 11));
+    await form.startTime.timePicker.hour.select('2');
+    await form.startTime.timePicker.minute.select('15');
+    await form.startTime.timePicker.ampm.select('am');
     await form.duration.hours.set(15);
     await form.duration.minutes.set(15);
     await form.location.set('Rm. 111');
@@ -237,10 +237,10 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await page.offerings.header.createNew();
     const { offeringForm: form } = page.offerings;
     await page.offerings.singleOffering();
-    await form.startDate.set(new Date(2011, 8, 11));
-    await form.startTime.hour(2);
-    await form.startTime.minutes(15);
-    await form.startTime.ampm('am');
+    await form.startDate.datePicker.set(new Date(2011, 8, 11));
+    await form.startTime.timePicker.hour.select('2');
+    await form.startTime.timePicker.minute.select('15');
+    await form.startTime.timePicker.ampm.select('am');
     await form.duration.hours.set(39);
     await form.duration.minutes.set(15);
     await form.location.set('Rm. 111');
@@ -281,10 +281,10 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await page.offerings.header.createNew();
     const { offeringForm: form } = page.offerings;
     await page.offerings.smallGroup();
-    await form.startDate.set(new Date(2011, 8, 11));
-    await form.startTime.hour(2);
-    await form.startTime.minutes(15);
-    await form.startTime.ampm('am');
+    await form.startDate.datePicker.set(new Date(2011, 8, 11));
+    await form.startTime.timePicker.hour.select('2');
+    await form.startTime.timePicker.minute.select('15');
+    await form.startTime.timePicker.ampm.select('am');
     await form.duration.hours.set(15);
     await form.duration.minutes.set(15);
 
@@ -328,10 +328,10 @@ module('Acceptance | Session - Offerings', function (hooks) {
 
     const { offeringForm: form } = page.offerings.dateBlocks[0].offerings[0];
 
-    await form.startDate.set(new Date(2011, 9, 5));
-    await form.startTime.hour(11);
-    await form.startTime.minutes(45);
-    await form.startTime.ampm('am');
+    await form.startDate.datePicker.set(new Date(2011, 9, 5));
+    await form.startTime.timePicker.hour.select('11');
+    await form.startTime.timePicker.minute.select('45');
+    await form.startTime.timePicker.ampm.select('am');
     await form.duration.hours.set(6);
     await form.duration.minutes.set(10);
     await form.location.set('Rm. 111');
@@ -376,10 +376,10 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await page.offerings.header.createNew();
     const { offeringForm: form } = page.offerings;
     await page.offerings.smallGroup();
-    await form.startDate.set(new Date(2015, 4, 22));
-    await form.startTime.hour(2);
-    await form.startTime.minutes(15);
-    await form.startTime.ampm('am');
+    await form.startDate.datePicker.set(new Date(2015, 4, 22));
+    await form.startTime.timePicker.hour.select('2');
+    await form.startTime.timePicker.minute.select('15');
+    await form.startTime.timePicker.ampm.select('am');
     await form.duration.hours.set(13);
     await form.duration.minutes.set(8);
 
@@ -430,10 +430,10 @@ module('Acceptance | Session - Offerings', function (hooks) {
     await page.offerings.header.createNew();
     const { offeringForm: form } = page.offerings;
     await page.offerings.singleOffering();
-    await form.startDate.set(new Date(2015, 4, 22));
-    await form.startTime.hour(2);
-    await form.startTime.minutes(15);
-    await form.startTime.ampm('am');
+    await form.startDate.datePicker.set(new Date(2015, 4, 22));
+    await form.startTime.timePicker.hour.select('2');
+    await form.startTime.timePicker.minute.select('15');
+    await form.startTime.timePicker.ampm.select('am');
     await form.duration.hours.set(13);
     await form.duration.minutes.set(8);
     await form.location.set('Scottsdale Stadium');

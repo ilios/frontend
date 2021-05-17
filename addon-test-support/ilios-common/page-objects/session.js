@@ -19,13 +19,14 @@ import collapsedTaxonomies from './components/collapsed-taxonomies';
 import collapsedObjectives from './components/session/collapsed-objectives';
 import instructorSelectionManager from './components/instructor-selection-manager';
 import offeringForm from './components/offering-form';
-import { flatpickrDatePicker, pageObjectFillInFroalaEditor } from 'ilios-common';
+import { pageObjectFillInFroalaEditor } from 'ilios-common';
 import leadershipCollapsed from './components/leadership-collapsed';
 import leadershipExpanded from './components/session-leadership-expanded';
 import postrequisiteEditor from './components/session/postrequisite-editor';
 import detailLearnersAndLearnerGroups from './components/detail-learners-and-learner-groups';
 import userNameInfo from './components/user-name-info';
 import yesNoToggle from './components/toggle-yesno';
+import datePicker from './components/date-picker';
 
 export default create({
   scope: '[data-test-session-details]',
@@ -85,7 +86,7 @@ export default create({
       scope: '.sessionilmduedate',
       value: text('span', { at: 0 }),
       edit: clickable('[data-test-edit]'),
-      set: flatpickrDatePicker('input'),
+      datePicker,
       save: clickable('.done'),
       hasError: isVisible('.validation-error-message'),
     },
