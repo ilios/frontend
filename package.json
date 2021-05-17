@@ -34,7 +34,7 @@
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
     "@ilios/ember-template-lint-plugin": "^2.0.1",
-    "@sentry/browser": "^6.3.6",
+    "@sentry/browser": "^6.4.0",
     "@sentry/integrations": "^6.3.6",
     "autoprefixer": "^9.8.6",
     "babel-eslint": "^10.1.0",
