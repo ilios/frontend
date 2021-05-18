@@ -131,7 +131,7 @@ module('Acceptance | Session - Overview', function (hooks) {
       new Date(ilmSession.dueDate).toLocaleDateString('en')
     );
     await page.overview.ilmDueDate.edit();
-    await page.overview.ilmDueDate.set(newDate.toDate());
+    await page.overview.ilmDueDate.datePicker.set(newDate.toDate());
     await page.overview.ilmDueDate.save();
     assert.equal(page.overview.ilmDueDate.value, newDate.toDate().toLocaleDateString('en'));
   });

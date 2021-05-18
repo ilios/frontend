@@ -343,10 +343,10 @@ module('Acceptance | Course - Session List', function (hooks) {
     await offerings[0].edit();
     const { offeringForm: form } = offerings[0];
     const newDate = moment(new Date(2011, 8, 11)).hour(2).minute(15);
-    await form.startDate.set(newDate.toDate());
-    await form.startTime.hour(newDate.format('h'));
-    await form.startTime.minutes(newDate.format('m'));
-    await form.startTime.ampm(newDate.format('a'));
+    await form.startDate.datePicker.set(newDate.toDate());
+    await form.startTime.timePicker.hour.select(newDate.format('h'));
+    await form.startTime.timePicker.minute.select(newDate.format('m'));
+    await form.startTime.timePicker.ampm.select(newDate.format('a'));
     await form.save();
 
     assert.equal(

@@ -125,7 +125,7 @@ module('Integration | Component | offering form', function (hooks) {
       @courseStartDate={{this.courseStartDate}}
       @courseEndDate={{this.courseEndDate}}
     />`);
-    const selectedDate = new Date(component.startDate.value);
+    const selectedDate = new Date(component.startDate.datePicker.value);
     assert.equal(
       selectedDate.getFullYear(),
       courseStartDate.year(),
@@ -153,7 +153,7 @@ module('Integration | Component | offering form', function (hooks) {
       @courseStartDate={{this.courseStartDate}}
       @courseEndDate={{this.courseEndDate}}
     />`);
-    const selectedDate = new Date(component.startDate.value);
+    const selectedDate = new Date(component.startDate.datePicker.value);
     assert.equal(
       selectedDate.getFullYear(),
       courseEndDate.year(),
@@ -182,7 +182,7 @@ module('Integration | Component | offering form', function (hooks) {
       @courseStartDate={{this.courseStartDate}}
       @courseEndDate={{this.courseEndDate}}
     />`);
-    const selectedDate = new Date(component.startDate.value);
+    const selectedDate = new Date(component.startDate.datePicker.value);
     assert.equal(
       selectedDate.getFullYear(),
       today.year(),
@@ -268,7 +268,7 @@ module('Integration | Component | offering form', function (hooks) {
       @save={{this.save}}
     />`);
     await component.recurring.yesNoToggle.click();
-    await component.startDate.set(newStartDate);
+    await component.startDate.datePicker.set(newStartDate);
     await component.recurring.weekdays[tuesday].input.toggle();
     await component.recurring.weekdays[thursday].input.toggle();
     await component.save();
@@ -324,7 +324,7 @@ module('Integration | Component | offering form', function (hooks) {
     />`);
     await component.recurring.yesNoToggle.click();
     await component.recurring.setWeeks('3');
-    await component.startDate.set(newStartDate);
+    await component.startDate.datePicker.set(newStartDate);
     await component.recurring.weekdays[tuesday].input.toggle();
     await component.recurring.weekdays[thursday].input.toggle();
     await component.save();
@@ -335,7 +335,7 @@ module('Integration | Component | offering form', function (hooks) {
     const format = 'M/D/YYYY, h:mm A';
     const newStartDate = moment().add(1, 'day').toDate();
     assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
-    await component.startDate.set(newStartDate);
+    await component.startDate.datePicker.set(newStartDate);
     assert.equal(moment(newStartDate).hour(9).minute(0).format(format), component.endDate.value);
   });
 
@@ -343,9 +343,9 @@ module('Integration | Component | offering form', function (hooks) {
     await render(hbs`<OfferingForm @close={{noop}} />`);
     const format = 'M/D/YYYY, h:mm A';
     assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
-    await component.startTime.hour('2');
-    await component.startTime.minutes('15');
-    await component.startTime.ampm('pm');
+    await component.startTime.timePicker.hour.select('2');
+    await component.startTime.timePicker.minute.select('15');
+    await component.startTime.timePicker.ampm.select('pm');
     assert.equal(moment().hour(15).minute(15).format(format), component.endDate.value);
   });
 
@@ -363,9 +363,9 @@ module('Integration | Component | offering form', function (hooks) {
     await render(hbs`<OfferingForm @close={{noop}} />`);
     const format = 'M/D/YYYY, h:mm A';
     assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
-    await component.startTime.hour('2');
-    await component.startTime.minutes('10');
-    await component.startTime.ampm('pm');
+    await component.startTime.timePicker.hour.select('2');
+    await component.startTime.timePicker.minute.select('10');
+    await component.startTime.timePicker.ampm.select('pm');
     await component.duration.hours.set('2');
     await component.duration.minutes.set('50');
     assert.equal(moment().hour(17).minute(0).format(format), component.endDate.value);
@@ -412,7 +412,7 @@ module('Integration | Component | offering form', function (hooks) {
     assert.equal(component.location.value, 'emerald bay');
     assert.equal(component.duration.hours.value, '1');
     assert.equal(component.duration.minutes.value, '0');
-    const selectedDate = new Date(component.startDate.value);
+    const selectedDate = new Date(component.startDate.datePicker.value);
     assert.equal(
       selectedDate.getFullYear(),
       offeringModel.startDate.getFullYear(),

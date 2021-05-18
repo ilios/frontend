@@ -69,7 +69,7 @@ module('Integration | Component | course overview', function (hooks) {
     assert.ok(component.startDate.isVisible);
     await component.startDate.edit();
     assert.notOk(component.startDate.hasError);
-    await component.startDate.set(moment().add(1, 'day').toDate());
+    await component.startDate.datePicker.set(moment().add(1, 'day').toDate());
     await component.startDate.save();
     assert.ok(component.startDate.hasError);
   });
@@ -86,7 +86,7 @@ module('Integration | Component | course overview', function (hooks) {
     assert.ok(component.endDate.isVisible);
     await component.endDate.edit();
     assert.notOk(component.endDate.hasError);
-    await component.endDate.set(moment().hour(7).toDate());
+    await component.endDate.datePicker.set(moment().hour(7).toDate());
     await component.endDate.save();
     assert.ok(component.endDate.hasError);
   });

@@ -11,18 +11,18 @@ import {
   triggerable,
   value,
 } from 'ember-cli-page-object';
-import { flatpickrDatePicker } from 'ilios-common';
 import userNameInfo from './user-name-info';
 import detailLearnergroupsList from './detail-learnergroups-list';
 import learnergroupTree from './learnergroup-tree';
 import yesNoToggle from './toggle-yesno';
+import datePicker from './date-picker';
+import timePicker from './time-picker';
 
 const definition = {
   scope: '[data-test-offering-form]',
   startDate: {
     scope: '.start-date',
-    set: flatpickrDatePicker('input'),
-    value: value('input'),
+    datePicker,
   },
   endDate: {
     scope: '.end-date-time',
@@ -31,9 +31,7 @@ const definition = {
   },
   startTime: {
     scope: '.start-time',
-    hour: fillable('select', { at: 0 }),
-    minutes: fillable('select', { at: 1 }),
-    ampm: fillable('select', { at: 2 }),
+    timePicker,
   },
   duration: {
     scope: '.offering-duration',
