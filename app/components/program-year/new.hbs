@@ -14,7 +14,7 @@
         </label>
         <select id={{yearId}} {{on "change" (pick "target.value" (set this.year))}} data-test-year>
           {{#each (sort-by "value" this.availableAcademicYears) as |obj|}}
-            <option value={{obj.value}} selected={{eq obj this.selectedYear}}>
+            <option value={{obj.value}} selected={{eq obj.value this.selectedYear.value}}>
               {{obj.label}}
             </option>
           {{/each}}
