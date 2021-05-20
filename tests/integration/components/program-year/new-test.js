@@ -69,6 +69,24 @@ module('Integration | Component | program-year/new', function (hooks) {
     await component.done.click();
   });
 
+  test('change value, then save', async function (assert) {
+    assert.expect(3);
+    const year = this.currentYear.toString();
+    this.set('save', async (startYear) => {
+      assert.equal(startYear, year);
+    });
+    await render(hbs`<ProgramYear::New
+      @programYears={{array}}
+      @save={{this.save}}
+      @cancel={{noop}}
+      @academicYearCrossesCalendarYearBoundaries={{false}}
+    />`);
+    assert.notOk(component.years.options[5].isSelected);
+    await component.years.select(year);
+    assert.ok(component.years.options[5].isSelected);
+    await component.done.click();
+  });
+
   test('academic-years dropdown shows year ranges if application config enables it', async function (assert) {
     await render(hbs`<ProgramYear::New
       @programYears={{array}}
