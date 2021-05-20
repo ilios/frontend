@@ -53,14 +53,24 @@ module('Acceptance | Session - Overview', function (hooks) {
 
     assert.equal(currentRouteName(), 'session.index');
     assert.ok(page.overview.ilmHours.isVisible);
-    assert.ok(page.overview.ilmDueDate.isVisible);
+    assert.ok(page.overview.ilmDueDateAndTime.isVisible);
     assert.equal(page.overview.ilmHours.value, ilmSession.hours);
-    assert.equal(page.overview.ilmDueDate.value, moment(ilmSession.dueDate).format('M/D/YYYY'));
+    assert.equal(
+      page.overview.ilmDueDateAndTime.value,
+      new Date(ilmSession.dueDate).toLocaleDateString('en', {
+        month: 'numeric',
+        day: 'numeric',
+        year: '2-digit',
+        hour12: true,
+        hour: 'numeric',
+        minute: 'numeric',
+      })
+    );
 
     await page.overview.toggleIlm.yesNoToggle.click();
 
     assert.notOk(page.overview.ilmHours.isVisible);
-    assert.notOk(page.overview.ilmDueDate.isVisible);
+    assert.notOk(page.overview.ilmDueDateAndTime.isVisible);
   });
 
   test('check add ilm', async function (assert) {
@@ -75,16 +85,23 @@ module('Acceptance | Session - Overview', function (hooks) {
 
     assert.equal(currentRouteName(), 'session.index');
     assert.notOk(page.overview.ilmHours.isVisible);
-    assert.notOk(page.overview.ilmDueDate.isVisible);
+    assert.notOk(page.overview.ilmDueDateAndTime.isVisible);
 
     await page.overview.toggleIlm.yesNoToggle.click();
 
     assert.ok(page.overview.ilmHours.isVisible);
-    assert.ok(page.overview.ilmDueDate.isVisible);
+    assert.ok(page.overview.ilmDueDateAndTime.isVisible);
     assert.equal(page.overview.ilmHours.value, 1);
     assert.equal(
-      page.overview.ilmDueDate.value,
-      moment().add(6, 'weeks').toDate().toLocaleDateString('en')
+      page.overview.ilmDueDateAndTime.value,
+      moment().add(6, 'weeks').set('hour', 17).set('minute', 0).toDate().toLocaleDateString('en', {
+        month: 'numeric',
+        day: 'numeric',
+        year: '2-digit',
+        hour12: true,
+        hour: 'numeric',
+        minute: 'numeric',
+      })
     );
   });
 
@@ -110,30 +127,52 @@ module('Acceptance | Session - Overview', function (hooks) {
     assert.equal(page.overview.ilmHours.value, 23);
   });
 
-  test('change ilm due date', async function (assert) {
+  test('change ilm due date and time', async function (assert) {
     await setupAuthentication({
       school: this.school,
       administeredSchools: [this.school],
     });
     const ilmSession = this.server.create('ilmSession', {
       hours: 3,
+      dueDate: new Date(2021, 4, 18, 17, 0, 0),
     });
     this.server.create('session', {
       course: this.course,
       ilmSession,
     });
-    const newDate = moment(ilmSession.dueDate).add(3, 'weeks');
+    const newDate = moment(ilmSession.dueDate).add(3, 'weeks').set('hour', 23).set('minute', 55);
     await page.visit({ courseId: 1, sessionId: 1 });
 
     assert.equal(currentRouteName(), 'session.index');
     assert.equal(
-      page.overview.ilmDueDate.value,
-      new Date(ilmSession.dueDate).toLocaleDateString('en')
+      page.overview.ilmDueDateAndTime.value,
+      new Date(ilmSession.dueDate).toLocaleDateString('en', {
+        month: 'numeric',
+        day: 'numeric',
+        year: '2-digit',
+        hour12: true,
+        hour: 'numeric',
+        minute: 'numeric',
+      })
     );
-    await page.overview.ilmDueDate.edit();
-    await page.overview.ilmDueDate.datePicker.set(newDate.toDate());
-    await page.overview.ilmDueDate.save();
-    assert.equal(page.overview.ilmDueDate.value, newDate.toDate().toLocaleDateString('en'));
+    await page.overview.ilmDueDateAndTime.edit();
+    await page.overview.ilmDueDateAndTime.datePicker.set(newDate.toDate());
+    await page.overview.ilmDueDateAndTime.timePicker.hour.select(newDate.format('h'));
+    await page.overview.ilmDueDateAndTime.timePicker.minute.select(newDate.minute());
+    await page.overview.ilmDueDateAndTime.timePicker.ampm.select(newDate.format('a'));
+
+    await page.overview.ilmDueDateAndTime.save();
+    assert.equal(
+      page.overview.ilmDueDateAndTime.value,
+      newDate.toDate().toLocaleDateString('en', {
+        month: 'numeric',
+        day: 'numeric',
+        year: '2-digit',
+        hour12: true,
+        hour: 'numeric',
+        minute: 'numeric',
+      })
+    );
   });
 
   test('change title', async function (assert) {

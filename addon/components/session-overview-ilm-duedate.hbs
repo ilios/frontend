@@ -1,0 +1,31 @@
+<div
+  class="session-overview-ilm-duedate {{if @hasPostrequisite "not-applicable"}}"
+  data-test-session-overview-ilm-duedate
+  ...attributes
+>
+  <label>{{t "general.dueBy"}}:</label>
+  <span>
+    {{#if @ilmSession}}
+      {{#if @editable}}
+        <EditableField
+          @value={{format-date @ilmSession.dueDate month="numeric" day="numeric" year="2-digit" hour12=true hour="numeric" minute="numeric"}}
+          @save={{perform this.save}}
+          @close={{this.revert}}
+        >
+          <DatePicker
+            @value={{this.dueDate}}
+            @onChange={{this.updateDate}}
+          />
+          <TimePicker @date={{this.dueDate}} @action={{this.updateTime}} />
+          {{#each (await (compute this.getErrorsFor "dueDate")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
+        </EditableField>
+      {{else}}
+        {{format-date @ilmSession.dueDate month="numeric" day="numeric" year="2-digit" hour12=true hour="numeric" minute="numeric"}}
+      {{/if}}
+    {{/if}}
+  </span>
+</div>

@@ -1,7 +1,6 @@
 import { currentRouteName } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupAuthentication } from 'ilios-common';
-
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import page from 'ilios-common/page-objects/session';
@@ -325,8 +324,8 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionId: 1,
       sessionLearnergroupDetails: true,
     });
-    assert.ok(page.overview.ilmDueDate.isPresent);
-    assert.ok(page.overview.ilmDueDate.isVisible);
+    assert.ok(page.overview.ilmDueDateAndTime.isPresent);
+    assert.ok(page.overview.ilmDueDateAndTime.isVisible);
   });
 
   test('ilm due date should not be visible if session has post-requisite', async function (assert) {
@@ -339,8 +338,8 @@ module('Acceptance | Session - Independent Learning', function (hooks) {
       sessionId: 1,
       sessionLearnergroupDetails: true,
     });
-    assert.ok(page.overview.ilmDueDate.isPresent);
-    assert.ok(page.overview.ilmDueDate.isHidden);
+    assert.ok(page.overview.ilmDueDateAndTime.isPresent);
+    assert.ok(page.overview.ilmDueDateAndTime.isHidden);
   });
 
   test('ilm-only subcomponents disappear/reappear if ilm gets toggled off/on', async function (assert) {

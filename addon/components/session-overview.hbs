@@ -209,32 +209,12 @@
                 {{/if}}
               </span>
             </div>
-            <div class="sessionilmduedate block {{if @session.hasPostrequisite "not-applicable"}}">
-              <label>{{t "general.dueBy"}}:</label>
-              <span>
-                {{#if (is-fulfilled @session.ilmSession)}}
-                  {{#if @editable}}
-                    <EditableField
-                      @value={{format-date @session.ilmSession.dueDate}}
-                      @save={{this.changeIlmDueDate}}
-                      @close={{this.revertIlmDueDateChanges}}
-                    >
-                      <DatePicker
-                        @value={{this.dueDate}}
-                        @onChange={{pipe (set this.dueDate) (fn this.addErrorDisplayFor "dueDate")}}
-                      />
-                      {{#each (await (compute this.getErrorsFor "dueDate")) as |message|}}
-                        <span class="validation-error-message">
-                          {{message}}
-                        </span>
-                      {{/each}}
-                    </EditableField>
-                  {{else}}
-                    {{format-date @session.ilmSession.dueDate}}
-                  {{/if}}
-                {{/if}}
-              </span>
-            </div>
+            <SessionOverviewIlmDuedate
+              @hasPostrequisite={{@session.hasPostrequisite}}
+              @ilmSession={{await @session.ilmSession}}
+              @editable={{@editable}}
+              class="block"
+            />
           {{/if}}
           {{#if this.features.sessionLinkingAdminUi}}
             <div class="postrequisite block" data-test-postrequisite>

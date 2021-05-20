@@ -76,7 +76,8 @@
 
   .independentlearningcontrol,
   .prerequisites,
-  .postrequisite {
+  .postrequisite,
+  .session-overview-ilm-duedate {
     grid-column: 1/-1;
   }
 
@@ -98,15 +99,17 @@
     grid-column: 1 / -1;
   }
 
-  .not-applicable {
-    display: none;
-  }
-
   .fa-copy {
     color: $ilios-green;
   }
 
   .post-requisite-edit {
     @include ilios-link-button;
+  }
+
+  @include for-desktop-and-up {
+    .session-overview-ilm-duedate {
+      grid-column: 2 / -1;
+    }
   }
 }
