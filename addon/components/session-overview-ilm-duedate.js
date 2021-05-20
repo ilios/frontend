@@ -7,14 +7,7 @@ import moment from 'moment';
 
 @validatable
 export default class SessionOverviewIlmDuedateComponent extends Component {
-  @NotBlank() @tracked dueDate = null;
-
-  @action
-  load() {
-    if (this.args.ilmSession) {
-      this.dueDate = this.args.ilmSession.dueDate;
-    }
-  }
+  @tracked @NotBlank() dueDate = this.args.ilmSession?.dueDate;
 
   @action
   revert() {
