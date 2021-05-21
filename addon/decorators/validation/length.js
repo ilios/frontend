@@ -1,5 +1,6 @@
 import { registerDecorator } from 'class-validator';
 import { getOwner } from '@ember/application';
+import { isBlank } from '@ember/utils';
 
 export function Length(min, max, validationOptions) {
   return function (object, propertyName) {
@@ -11,30 +12,36 @@ export function Length(min, max, validationOptions) {
       options: validationOptions,
       validator: {
         validate(value, { constraints, property }) {
-          if (!constraints || constraints.length < 2) {
+          const [min, max] = constraints;
+          if (min === undefined) {
             throw new Error(
-              `You must pass a min and max length to the Length validator on ${property}`
+              `You must pass at least a minimum length to the Length validator on ${property}`
             );
           }
-          if (!value) {
+          if (isBlank(value)) {
             return true;
           }
           const stringValue = String(value).trim();
-          const [min, max] = constraints;
-          return stringValue.length >= min && stringValue.length <= max;
+          if (max === undefined) {
+            return stringValue.length >= min;
+          } else {
+            return stringValue.length >= min && stringValue.length <= max;
+          }
         },
         defaultMessage({ constraints, value, object: target }) {
           const owner = getOwner(target);
           const intl = owner.lookup('service:intl');
-
-          const [min, max] = constraints;
-          const stringValue = value ?? '';
+          if (isBlank(value)) {
+            return true;
+          }
+          const stringValue = String(value).trim();
           const length = stringValue.length;
           const description = intl.t('errors.description');
+          const [min, max] = constraints;
           if (length < min) {
             return intl.t('errors.tooShort', { description, min });
           }
-          if (length > max) {
+          if (max !== undefined && length > max) {
             return intl.t('errors.tooLong', { description, max });
           }
         },
