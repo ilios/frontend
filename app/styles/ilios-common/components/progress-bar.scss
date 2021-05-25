@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .progress-bar {
   $progress-border-color: $base-border-color;
   $progress-border: 1px solid $progress-border-color;
@@ -21,7 +23,7 @@
     background-repeat: repeat-x;
     background-size: 40px 40px;
     border: $progress-meter-border;
-    border-radius: $base-border-radius / 1.5;
+    border-radius: math.div($base-border-radius, 1.5);
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
     box-sizing: border-box;

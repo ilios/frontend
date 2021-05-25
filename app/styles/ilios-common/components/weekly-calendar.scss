@@ -1,6 +1,8 @@
+@use "sass:math";
+
 .weekly-calendar {
   $hour-height: .3rem;
-  $minute-rows: 24 * 60 / 5; //every 5 minutes
+  $minute-rows: math.div(24 * 60, 5); //every 5 minutes
   --hour-space: 2.9rem;
   $grid-border-color: $grey;
 

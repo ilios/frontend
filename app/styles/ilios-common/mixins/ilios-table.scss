@@ -1,3 +1,5 @@
+@use "sass:math";
+
 @mixin ilios-table-structure () {
   border-collapse: collapse;
   margin: ($base-line-height * .5em) 0;
@@ -5,13 +7,13 @@
   width: 100%;
 
   th {
-    padding: ($base-line-height * .5em / 2) 0;
+    padding: math.div($base-line-height * .5em, 2) 0;
     text-align: left;
   }
 
   td {
     border: 0;
-    padding: ($base-line-height * .5em / 2) 0;
+    padding: math.div($base-line-height * .5em, 2) 0;
   }
 
   th,
