@@ -3,10 +3,12 @@ import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { guidFor } from '@ember/object/internals';
+import { set } from '@ember/object';
 
 export default class LocaleChooserComponent extends Component {
   @service intl;
   @service moment;
+  @service announcer;
   @tracked isOpen = false;
   @tracked menuElement;
 
@@ -44,6 +46,7 @@ export default class LocaleChooserComponent extends Component {
     this.isOpen = false;
     this.intl.setLocale(id);
     this.moment.setLocale(id);
+    set(this.announcer, 'message', this.intl.t('general.hasLoaded'));
     window.document.querySelector('html').setAttribute('lang', id);
   }
 

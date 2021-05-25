@@ -140,6 +140,7 @@ general:
   good: Good
   goToUser: "Show user record in ilios"
   groupMembers: "Members of current group"
+  hasLoaded: 'has loaded'
   home: Home
   icsAdminInstructions: "To add a user's Ilios calendar to another application or service, they will need to use this URL.  This URL is like a password. Anyone who knows it can view this user's calendar!"
   icsFeed: "ICS Feed"

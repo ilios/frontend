@@ -1,4 +1,5 @@
 {{page-title (t "general.ilios") separator=" " front=true}}
+<RouteAnnouncer/>
 <ConnectionStatus />
 <ApiVersionNotice />
 <NewVersionNotifier as |version lastVersion reload|>
@@ -14,7 +15,7 @@
   {{/if}}
   <main>
     {{#if this.showErrorDisplay}}
-      <ErrorDisplay @errors={{this.errors}} @clearErrors={{action "clearErrors"}} />
+      <ErrorDisplay @errors={{this.errors}} @clearErrors={{this.clearErrors}} />
     {{else}}
       {{outlet}}
     {{/if}}
