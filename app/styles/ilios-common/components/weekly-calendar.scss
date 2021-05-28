@@ -61,6 +61,7 @@
       @include ilios-list-reset;
       display: grid;
       grid-row: 1 / -1;
+      grid-template-columns: repeat(50, 1fr);
       grid-template-rows: repeat($minute-rows, $hour-height);
       border: 1px solid $grid-border-color;
       @for $day from 1 through 7 {
