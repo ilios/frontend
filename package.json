@@ -33,7 +33,7 @@
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
     "@ilios/ember-template-lint-plugin": "^2.0.1",
-    "@sentry/browser": "^6.4.1",
+    "@sentry/browser": "^6.5.0",
     "@sentry/integrations": "^6.5.0",
     "a11y-announcer": "^2.0.0",
     "autoprefixer": "^9.8.6",
