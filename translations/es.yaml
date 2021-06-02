@@ -99,7 +99,6 @@ general:
   dueBefore: "Debido antes de"
   dueBy: "Debido Por"
   duePriorTo: "Debido antes de"
-  dueThisDay: "Debido por esta fecha"
   duration: "Duración"
   durationHours: "{count, plural, =1 {un hora} other {# horas}}"
   durationMinutes: "{count, plural, =1 {1 minudo} other {# minudos}}"
