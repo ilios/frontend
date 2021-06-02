@@ -51,7 +51,7 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
     if (!isMulti) {
       contents = addLocationToContents(contents, eventLocation);
     }
-    contents = contents + `ILM - ${intl.t('general.dueThisDay')}<br />${name}`;
+    contents = contents + `ILM - ${intl.t('general.dueBy')} ${startTime}<br />${name}`;
     if (!isMulti) {
       contents = addInstructorsToContents(contents, instructors, intl.t('general.etAl'));
     }
