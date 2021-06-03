@@ -5,7 +5,7 @@
   {{#if @courseObjectives.length}}
     <h4 data-test-course-title>{{@courseTitle}}</h4>
     <ul class="parent-picker" data-test-parent-picker>
-      {{#each @courseObjectives as |objective|}}
+      {{#each (sort-by-position @courseObjectives) as |objective|}}
         <li>
           <Session::ManageObjectiveParentsItem
             @title={{objective.textTitle}}

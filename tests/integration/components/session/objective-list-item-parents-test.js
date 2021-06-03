@@ -183,4 +183,42 @@ module('Integration | Component | session/objective-list-item-parents', function
     />`);
     await component.list[0].manage();
   });
+
+  test('parent objectives are correctly sorted', async function (assert) {
+    const session = this.server.create('session');
+    const courseObjective1 = this.server.create('courseObjective', {
+      title: 'Aardvark',
+      position: 3,
+    });
+    const courseObjective2 = this.server.create('courseObjective', {
+      title: 'Zeppelin',
+      position: 2,
+    });
+    const courseObjective3 = this.server.create('courseObjective', {
+      title: 'Oscar',
+      position: 1,
+    });
+
+    const sessionObjective = this.server.create('sessionObjective', {
+      session,
+      courseObjectives: [courseObjective1, courseObjective2, courseObjective3],
+    });
+    const sessionObjectiveModel = await this.owner
+      .lookup('service:store')
+      .find('session-objective', sessionObjective.id);
+    this.set('sessionObjective', sessionObjectiveModel);
+    await render(hbs`<Session::ObjectiveListItemParents
+      @sessionObjective={{this.sessionObjective}}
+      @editable={{false}}
+      @manage={{noop}}
+      @isManaging={{false}}
+      @save={{noop}}
+      @isSaving={{false}}
+      @cancel={{noop}}
+    />`);
+    assert.equal(component.list.length, 3);
+    assert.equal(component.list[0].text, 'Oscar');
+    assert.equal(component.list[1].text, 'Zeppelin');
+    assert.equal(component.list[2].text, 'Aardvark');
+  });
 });
