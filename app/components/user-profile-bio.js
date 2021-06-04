@@ -1,173 +1,70 @@
-import Component from '@ember/component';
-import { computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isEmpty } from '@ember/utils';
 import { all } from 'rsvp';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import { dropTask, restartableTask } from 'ember-concurrency';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import { use } from 'ember-could-get-used-to-this';
+import { ValidateIf } from 'class-validator';
+import { validatable, IsEmail, NotBlank, Length } from 'ilios-common/decorators/validation';
 
-const Validations = buildValidations({
-  firstName: [
-    validator('presence', true),
-    validator('length', {
-      max: 50,
-    }),
-  ],
-  middleName: [
-    validator('length', {
-      max: 20,
-    }),
-  ],
-  lastName: [
-    validator('presence', true),
-    validator('length', {
-      max: 50,
-    }),
-  ],
-  campusId: [
-    validator('length', {
-      max: 16,
-    }),
-  ],
-  otherId: [
-    validator('length', {
-      max: 16,
-    }),
-  ],
-  email: [
-    validator('presence', true),
-    validator('length', {
-      max: 100,
-    }),
-    validator('format', {
-      type: 'email',
-    }),
-  ],
-  displayName: [
-    validator('length', {
-      max: 200,
-    }),
-  ],
-  preferredEmail: [
-    validator('length', {
-      max: 100,
-    }),
-    validator('format', {
-      allowBlank: true,
-      type: 'email',
-    }),
-  ],
-  phone: [
-    validator('length', {
-      max: 20,
-    }),
-  ],
-  username: {
-    descriptionKey: 'general.username',
-    validators: [
-      validator('length', {
-        max: 100,
-      }),
-      validator('format', {
-        regex: /^[a-z0-9_\-()@.]*$/i,
-      }),
-    ],
-  },
-  password: {
-    dependentKeys: ['model.canEditUsernameAndPassword', 'model.changeUserPassword'],
-    disabled: computed('model.{canEditUsernameAndPassword,changeUserPassword}', function () {
-      return this.model.canEditUsernameAndPassword && !this.model.changeUserPassword;
-    }),
-    validators: [
-      validator('presence', true),
-      validator('length', {
-        min: 5,
-      }),
-    ],
-  },
-});
+@validatable
+export default class UserProfileBioComponent extends Component {
+  @service currentUser;
+  @service iliosConfig;
+  @service fetch;
+  @service store;
 
-export default Component.extend(ValidationErrorDisplay, Validations, {
-  currentUser: service(),
-  iliosConfig: service(),
-  fetch: service(),
-  store: service(),
+  @tracked @Length(0, 16) campusId;
+  @tracked @IsEmail() @Length(1, 100) @NotBlank() email;
+  @tracked @Length(0, 200) displayName;
+  @tracked @Length(1, 50) @NotBlank() firstName;
+  @tracked @Length(1, 50) @NotBlank() lastName;
+  @tracked @Length(0, 20) middleName;
+  @tracked @Length(0, 16) otherId;
+  @tracked
+  @ValidateIf((o) => o.canEditUsernameAndPassword && o.changeUserPassword)
+  @Length(5)
+  @NotBlank()
+  password;
+  @tracked @Length(0, 20) phone;
+  @tracked @IsEmail() @Length(0, 100) preferredEmail;
+  @tracked @Length(1, 100) @NotBlank() username;
+  @tracked showSyncErrorMessage = false;
+  @tracked changeUserPassword = false;
+  @tracked updatedFieldsFromSync = [];
+  @tracked passwordStrengthScore = 0;
 
-  classNameBindings: [
-    ':user-profile-bio',
-    ':small-component',
-    'hasSavedRecently:has-saved:has-not-saved',
-  ],
+  @use userSearchType = new ResolveAsyncValue(() => [this.iliosConfig.getUserSearchType()]);
 
-  'data-test-user-profile-bio': true,
+  get canEditUsernameAndPassword() {
+    if (!this.userSearchType) {
+      return false;
+    }
+    return this.userSearchType !== 'ldap';
+  }
 
-  campusId: null,
-  changeUserPassword: false,
-  email: null,
-  displayName: null,
-  firstName: null,
-  hasSavedRecently: false,
-  isManageable: false,
-  isManaging: false,
-  lastName: null,
-  middleName: null,
-  otherId: null,
-  password: null,
-  phone: null,
-  preferredEmail: null,
-  showSyncErrorMessage: false,
-  updatedFieldsFromSync: null,
-  user: null,
-  username: null,
-
-  canEditUsernameAndPassword: computed('iliosConfig.userSearchType', async function () {
-    const userSearchType = await this.iliosConfig.userSearchType;
-    return userSearchType !== 'ldap';
-  }),
-
-  passwordStrengthScore: computed('password', async function () {
+  async calculatePasswordStrengthScore() {
     const { default: zxcvbn } = await import('zxcvbn');
     const password = isEmpty(this.password) ? '' : this.password;
     const obj = zxcvbn(password);
-    return obj.score;
-  }),
+    this.passwordStrengthScore = obj.score;
+  }
 
-  usernameMissing: computed('user.authentication', async function () {
-    const authentication = await this.user.authentication;
-    return isEmpty(authentication) || isEmpty(authentication.username);
-  }),
+  @action
+  cancelChangeUserPassword() {
+    this.changeUserPassword = false;
+    this.password = null;
+    this.passwordStrengthScore = 0;
+    this.removeErrorDisplayFor('password');
+  }
 
-  init() {
-    this._super(...arguments);
-    this.set('updatedFieldsFromSync', []);
-  },
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-    const user = this.user;
-    const isManaging = this.isManaging;
-    const manageTask = this.manage;
-    if (user && isManaging && !manageTask.lastSuccessful) {
-      manageTask.perform();
-    }
-  },
-
-  actions: {
-    cancelChangeUserPassword() {
-      this.set('changeUserPassword', false);
-      this.set('password', null);
-      this.send('removeErrorDisplayFor', 'password');
-    },
-  },
-
-  keyUp(event) {
+  @action
+  keyboard(event) {
     const keyCode = event.keyCode;
     const target = event.target;
-
-    if (!['text', 'password'].includes(target.type)) {
-      return;
-    }
 
     if (13 === keyCode) {
       this.save.perform();
@@ -176,46 +73,69 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
 
     if (27 === keyCode) {
       if ('text' === target.type) {
-        this.cancel.perform();
+        this.cancel();
       } else {
-        this.send('cancelChangeUserPassword');
+        this.cancelChangeUserPassword();
       }
     }
-  },
+  }
+
+  @action
+  cancel() {
+    this.firstName = null;
+    this.lastName = null;
+    this.middleName = null;
+    this.campusId = null;
+    this.otherId = null;
+    this.email = null;
+    this.displayName = null;
+    this.preferredEmail = null;
+    this.phone = null;
+    this.username = null;
+    this.password = null;
+    this.passwordStrengthScore = 0;
+    this.changeUserPassword = false;
+    this.updatedFieldsFromSync = [];
+    this.args.setIsManaging(false);
+  }
+
+  @action
+  async setPassword(password) {
+    this.password = password;
+    await this.calculatePasswordStrengthScore();
+  }
+
+  @restartableTask
+  *load() {
+    if (this.args.user && this.args.isManaging) {
+      yield this.manage.perform();
+    }
+  }
 
   @restartableTask
   *manage() {
-    const user = this.user;
-    this.setProperties(
-      user.getProperties(
-        'firstName',
-        'middleName',
-        'lastName',
-        'campusId',
-        'otherId',
-        'email',
-        'displayName',
-        'preferredEmail',
-        'phone'
-      )
-    );
-    const auth = yield user.get('authentication');
+    this.firstName = this.args.user.firstName;
+    this.middleName = this.args.user.middleName;
+    this.lastName = this.args.user.lastName;
+    this.campusId = this.args.user.campusId;
+    this.otherId = this.args.user.otherId;
+    this.email = this.args.user.email;
+    this.displayName = this.args.user.displayName;
+    this.preferredEmail = this.args.user.preferredEmail;
+    this.phone = this.args.user.phone;
+    const auth = yield this.args.user.authentication;
     if (auth) {
-      this.set('username', auth.get('username'));
-      this.set('password', '');
+      this.username = auth.username;
+      this.password = '';
+      this.passwordStrengthScore = 0;
     }
-
-    this.setIsManaging(true);
-    return true;
-  },
+    this.args.setIsManaging(true);
+  }
 
   @dropTask
   *save() {
-    yield timeout(10);
     const store = this.store;
-    const canEditUsernameAndPassword = yield this.canEditUsernameAndPassword;
-    const changeUserPassword = yield this.changeUserPassword;
-    this.send('addErrorDisplaysFor', [
+    this.addErrorDisplaysFor([
       'firstName',
       'middleName',
       'lastName',
@@ -228,54 +148,50 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       'username',
       'password',
     ]);
-    const { validations } = yield this.validate();
-    if (validations.get('isValid')) {
-      const user = this.user;
-      user.set('firstName', this.firstName);
-      user.set('middleName', this.middleName);
-      user.set('lastName', this.lastName);
-      user.set('campusId', this.campusId);
-      user.set('otherId', this.otherId);
-      user.set('email', this.email);
-      user.set('displayName', this.displayName);
-      user.set('preferredEmail', this.preferredEmail);
-      user.set('phone', this.phone);
-
-      let auth = yield user.get('authentication');
-      if (!auth) {
-        auth = store.createRecord('authentication', {
-          user,
-        });
-      }
-      //always set and send the username in case it was updated in the sync
-      let username = this.username;
-      if (isEmpty(username)) {
-        username = null;
-      }
-      auth.set('username', username);
-      if (canEditUsernameAndPassword && changeUserPassword) {
-        auth.set('password', this.password);
-      }
-      yield auth.save();
-      yield user.save();
-      const pendingUpdates = yield user.get('pendingUserUpdates');
-      yield all(pendingUpdates.invoke('destroyRecord'));
-
-      this.send('clearErrorDisplay');
-      this.cancel.perform();
-      this.set('hasSavedRecently', true);
-      yield timeout(500);
-      this.set('hasSavedRecently', false);
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
     }
-  },
+    const user = this.args.user;
+    user.set('firstName', this.firstName);
+    user.set('middleName', this.middleName);
+    user.set('lastName', this.lastName);
+    user.set('campusId', this.campusId);
+    user.set('otherId', this.otherId);
+    user.set('email', this.email);
+    user.set('displayName', this.displayName);
+    user.set('preferredEmail', this.preferredEmail);
+    user.set('phone', this.phone);
+
+    let auth = yield user.authentication;
+    if (!auth) {
+      auth = store.createRecord('authentication', {
+        user,
+      });
+    }
+    //always set and send the username in case it was updated in the sync
+    let username = this.username;
+    if (isEmpty(username)) {
+      username = null;
+    }
+    auth.set('username', username);
+    if (this.canEditUsernameAndPassword && this.changeUserPassword) {
+      auth.set('password', this.password);
+    }
+    yield auth.save();
+    yield user.save();
+    const pendingUpdates = yield user.pendingUserUpdates;
+    yield all(pendingUpdates.invoke('destroyRecord'));
+
+    this.clearErrorDisplay();
+    this.cancel();
+  }
 
   @dropTask
   *directorySync() {
-    yield timeout(10);
-    this.set('updatedFieldsFromSync', []);
-    this.set('showSyncErrorMessage', false);
-    this.set('syncComplete', false);
-    const userId = this.user.id;
+    this.updatedFieldsFromSync = [];
+    this.showSyncErrorMessage = false;
+    const userId = this.args.user.id;
     const url = `/application/directory/find/${userId}`;
     try {
       const data = yield this.fetch.getJsonFromApiHost(url);
@@ -288,60 +204,36 @@ export default Component.extend(ValidationErrorDisplay, Validations, {
       const phone = this.phone;
       const campusId = this.campusId;
       if (userData.firstName !== firstName) {
-        this.set('firstName', userData.firstName);
+        this.firstName = userData.firstName;
         this.updatedFieldsFromSync.pushObject('firstName');
       }
       if (userData.lastName !== lastName) {
-        this.set('lastName', userData.lastName);
+        this.lastName = userData.lastName;
         this.updatedFieldsFromSync.pushObject('lastName');
       }
       if (userData.displayName !== displayName) {
-        this.set('displayName', userData.displayName);
+        this.displayName = userData.displayName;
         this.updatedFieldsFromSync.pushObject('displayName');
       }
       if (userData.email !== email) {
-        this.set('email', userData.email);
+        this.email = userData.email;
         this.updatedFieldsFromSync.pushObject('email');
       }
 
       if (userData.campusId !== campusId) {
-        this.set('campusId', userData.campusId);
+        this.campusId = userData.campusId;
         this.updatedFieldsFromSync.pushObject('campusId');
       }
       if (userData.phone !== phone) {
-        this.set('phone', userData.phone);
+        this.phone = userData.phone;
         this.updatedFieldsFromSync.pushObject('phone');
       }
       if (userData.username !== username) {
-        this.set('username', userData.username);
+        this.username = userData.username;
         this.updatedFieldsFromSync.pushObject('username');
       }
     } catch (e) {
-      this.set('showSyncErrorMessage', true);
-    } finally {
-      this.set('syncComplete', true);
-      yield timeout(2000);
-      this.set('syncComplete', false);
+      this.showSyncErrorMessage = true;
     }
-  },
-
-  @dropTask
-  *cancel() {
-    yield timeout(1);
-    this.set('hasSavedRecently', false);
-    this.set('updatedFieldsFromSync', []);
-    this.setIsManaging(false);
-    this.set('changeUserPassword', false);
-    this.set('firstName', null);
-    this.set('lastName', null);
-    this.set('middleName', null);
-    this.set('campusId', null);
-    this.set('otherId', null);
-    this.set('email', null);
-    this.set('displayName', null);
-    this.set('preferredEmail', null);
-    this.set('phone', null);
-    this.set('username', null);
-    this.set('password', null);
-  },
-});
+  }
+}

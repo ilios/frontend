@@ -1,428 +1,450 @@
-<div class="actions">
-  {{#if isManaging}}
-    <button type="button" class="bigadd" {{action (perform save)}}>
-      <FaIcon
-        @icon={{if save.isRunning "spinner" "check"}}
-        @spin={{if save.isRunning true false}}
-      />
-    </button>
-    <button
-      type="button"
-      disabled={{save.isRunning}}
-      class="bigcancel"
-      {{action (perform cancel)}}
-    >
-      <FaIcon @icon="undo" />
-    </button>
-  {{else if isManageable}}
-    <button type="button" class="manage" {{action (perform manage)}}>
-      <FaIcon @icon="edit" />
-    </button>
-  {{/if}}
-</div>
-{{#if (await usernameMissing)}}
-  <div class="error">
-    {{t "general.missingRequiredUsername"}}
-  </div>
-{{/if}}
-<p class="primary-school">
-  <strong>
-    {{t "general.primarySchool"}}:
-  </strong>
-  {{get (await user.school) "title"}}
-</p>
-<div class="form">
-  <div
-    class="item
-      {{if (includes "firstName" updatedFieldsFromSync) "synced-from-directory"
-      }}"
-  >
-    <label>
-      {{t "general.firstName"}}:
-    </label>
-    {{#if isManaging}}
-      <input
-        type="text"
-        value={{firstName}}
-        oninput={{action (mut firstName) value="target.value"}}
-        onkeyup={{action "addErrorDisplayFor" "firstName"}}
-        data-test-first-name-input
-      >
-      {{#if
-        (and
-          (v-get this "firstName" "isInvalid") (includes "firstName" showErrorsFor)
-        )
-      }}
-        <span class="message error">
-          {{v-get this "firstName" "message"}}
-        </span>
-      {{/if}}
+<div
+  data-test-user-profile-bio
+  class="user-profile-bio small-component {{if this.hasRecentlySaved "has-saved" "has-not-saved"}}"
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @user @isManaging}}
+  ...attributes
+>
+  {{#let (unique-id) as |templateId|}}
+    {{#if this.load.isRunning}}
+      <LoadingSpinner />
     {{else}}
-      <span class="value">
-        {{@user.firstName}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item">
-    <label>
-      {{t "general.middleName"}}:
-    </label>
-    {{#if isManaging}}
-      <input
-        type="text"
-        value={{middleName}}
-        oninput={{action (mut middleName) value="target.value"}}
-        onkeyup={{action "addErrorDisplayFor" "middleName"}}
-        data-test-middle-name-input
-      >
-      {{#if
-        (and
-          (v-get this "middleName" "isInvalid")
-          (includes "middleName" showErrorsFor)
-        )
-      }}
-        <span class="message error">
-          {{v-get this "middleName" "message"}}
-        </span>
-      {{/if}}
-    {{else}}
-      <span class="value">
-        {{@user.middleName}}
-      </span>
-    {{/if}}
-  </div>
-  <div
-    class="item
-      {{if (includes "lastName" updatedFieldsFromSync) "synced-from-directory"
-      }}"
-  >
-    <label>
-      {{t "general.lastName"}}:
-    </label>
-    {{#if isManaging}}
-      <input
-        type="text"
-        value={{lastName}}
-        oninput={{action (mut lastName) value="target.value"}}
-        onkeyup={{action "addErrorDisplayFor" "lastName"}}
-        data-test-last-name-input
-      >
-      {{#if
-        (and
-          (v-get this "lastName" "isInvalid") (includes "lastName" showErrorsFor)
-        )
-      }}
-        <span class="message error">
-          {{v-get this "lastName" "message"}}
-        </span>
-      {{/if}}
-    {{else}}
-      <span class="value">
-        {{@user.lastName}}
-      </span>
-    {{/if}}
-  </div>
-  <div
-    class="item
-      {{if (includes "campusId" updatedFieldsFromSync) "synced-from-directory"}}
-       campus-id"
-  >
-    <label>
-      {{t "general.campusId"}}:
-    </label>
-    {{#if isManaging}}
-      <div class="campus-id-controls">
-        <input
-          type="text"
-          value={{campusId}}
-          oninput={{action (mut campusId) value="target.value"}}
-          onkeyup={{action "addErrorDisplayFor" "campusId"}}
-          data-test-campus-id-input
-        >
-        <button
-          type="button"
-          class="directory-sync {{if syncComplete "directory-sync-complete"}}"
-          title={{t "general.updateUserFromDirectory"}}
-          {{action (perform directorySync)}}
-        >
-          <FaIcon
-            @icon={{if
-              (and (not syncComplete) directorySync.isRunning)
-              "spinner"
-              "sync"
-            }}
-            @spin={{if
-              (and (not syncComplete) directorySync.isRunning)
-              true
-              false
-            }}
-          />
-        </button>
-        {{#if
-          (and
-            (v-get this "campusId" "isInvalid") (includes "campusId" showErrorsFor)
-          )
-        }}
-          <span class="message error">
-            {{v-get this "campusId" "message"}}
-          </span>
+      <div class="actions">
+        {{#if @isManaging}}
+          <button
+            aria-label={{t "general.save"}}
+            type="button"
+            class="bigadd"
+            {{on "click" (perform this.save)}}
+            data-test-save
+          >
+
+            <FaIcon
+              @icon={{if this.save.isRunning "spinner" "check"}}
+              @spin={{if this.save.isRunning true false}}
+            />
+          </button>
+          <button
+            aria-label={{t "general.cancel"}}
+            type="button"
+            disabled={{this.save.isRunning}}
+            class="bigcancel"
+            {{on "click" this.cancel}}
+            data-test-cancel
+          >
+            <FaIcon @icon="undo" />
+          </button>
+        {{else if @isManageable}}
+          <button
+            aria-label={{t "general.manage"}}
+            type="button"
+            class="manage"
+            {{on "click" (perform this.manage)}}
+            data-test-manage
+          >
+
+            <FaIcon @icon="edit" />
+          </button>
         {{/if}}
       </div>
-      {{#if showSyncErrorMessage}}
-        <span class="message error">
-          {{t "general.unableToSyncUser"}}
-        </span>
-      {{/if}}
-    {{else}}
-      <span class="value">
-        {{@user.campusId}}
-      </span>
-    {{/if}}
-  </div>
-  <div class="item">
-    <label>
-      {{t "general.otherId"}}:
-    </label>
-    {{#if isManaging}}
-      <input
-        type="text"
-        value={{otherId}}
-        oninput={{action (mut otherId) value="target.value"}}
-        onkeyup={{action "addErrorDisplayFor" "otherId"}}
-        data-test-other-id-input
-      >
-      {{#if
-        (and (v-get this "otherId" "isInvalid") (includes "otherId" showErrorsFor))
-      }}
-        <span class="message error">
-          {{v-get this "otherId" "message"}}
-        </span>
-      {{/if}}
-    {{else}}
-      <span class="value">
-        {{@user.otherId}}
-      </span>
-    {{/if}}
-  </div>
-  <div
-    class="item
-      {{if (includes "email" updatedFieldsFromSync) "synced-from-directory"}}"
-  >
-    <label>
-      {{t "general.email"}}:
-    </label>
-    {{#if isManaging}}
-      <input
-        type="text"
-        value={{email}}
-        oninput={{action (mut email) value="target.value"}}
-        onkeyup={{action "addErrorDisplayFor" "email"}}
-        data-test-email-input
-      >
-      {{#if (and (v-get this "email" "isInvalid") (includes "email" showErrorsFor))
-      }}
-        <span class="message error">
-          {{v-get this "email" "message"}}
-        </span>
-      {{/if}}
-    {{else}}
-      <span class="value">
-        {{@user.email}}
-      </span>
-    {{/if}}
-  </div>
-  <div
-    class="item
-      {{if
-        (includes "displayName" updatedFieldsFromSync)
-        "synced-from-directory"
-      }}"
-  >
-    <label>
-      {{t "general.displayName"}}:
-    </label>
-    {{#if isManaging}}
-      <input
-        type="text"
-        value={{displayName}}
-        oninput={{action (mut displayName) value="target.value"}}
-        onkeyup={{action "addErrorDisplayFor" "displayName"}}
-        data-test-display-name-input
-      >
-      {{#if
-        (and
-          (v-get this "displayName" "isInvalid")
-          (includes "displayName" showErrorsFor)
-        )
-      }}
-        <span class="message error">
-          {{v-get this "displayName" "message"}}
-        </span>
-      {{/if}}
-    {{else}}
-      <span class="value">
-        {{@user.displayName}}
-      </span>
-    {{/if}}
-  </div>
-  <div
-    class="item
-      {{if
-        (includes "preferredEmail" updatedFieldsFromSync)
-        "synced-from-directory"
-      }}"
-  >
-    <label>
-      {{t "general.preferredEmail"}}:
-    </label>
-    {{#if isManaging}}
-      <input
-        type="text"
-        value={{preferredEmail}}
-        oninput={{action (mut preferredEmail) value="target.value"}}
-        onkeyup={{action "addErrorDisplayFor" "preferredEmail"}}
-        data-test-preferred-email-input
-      >
-      {{#if
-        (and
-          (v-get this "preferredEmail" "isInvalid")
-          (includes "preferredEmail" showErrorsFor)
-        )
-      }}
-        <span class="message error">
-          {{v-get this "preferredEmail" "message"}}
-        </span>
-      {{/if}}
-    {{else}}
-      <span class="value">
-        {{@user.preferredEmail}}
-      </span>
-    {{/if}}
-  </div>
-  <div
-    class="item
-      {{if (includes "phone" updatedFieldsFromSync) "synced-from-directory"}}"
-  >
-    <label>
-      {{t "general.phone"}}:
-    </label>
-    {{#if isManaging}}
-      <input
-        type="text"
-        value={{phone}}
-        oninput={{action (mut phone) value="target.value"}}
-        onkeyup={{action "addErrorDisplayFor" "phone"}}
-        data-test-phone-input
-      >
-      {{#if (and (v-get this "phone" "isInvalid") (includes "phone" showErrorsFor))
-      }}
-        <span class="message error">
-          {{v-get this "phone" "message"}}
-        </span>
-      {{/if}}
-    {{else}}
-      <span class="value">
-        {{@user.phone}}
-      </span>
-    {{/if}}
-  </div>
-  <div
-    class="item
-      {{if (includes "username" updatedFieldsFromSync) "synced-from-directory"
-      }}"
-  >
-    <label>
-      {{t "general.username"}}:
-    </label>
-    {{#if isManaging}}
-      <input
-        type="text"
-        value={{username}}
-        oninput={{action (mut username) value="target.value"}}
-        onkeyup={{action "addErrorDisplayFor" "username"}}
-        disabled={{not (await canEditUsernameAndPassword)}}
-        data-test-username-input
-      >
-      {{#if
-        (and
-          (v-get this "username" "isInvalid") (includes "username" showErrorsFor)
-        )
-      }}
-        <span class="message error">
-          {{v-get this "username" "message"}}
-        </span>
-      {{/if}}
-    {{else}}
-      <span class="value">
-        {{get (await user.authentication) "username"}}
-      </span>
-    {{/if}}
-  </div>
-  {{#if (await canEditUsernameAndPassword)}}
-    <div class="item password">
-      <label>
-        {{t "general.password"}}:
-      </label>
-      {{#if isManaging}}
-        {{#if changeUserPassword}}
-          <input
-            type="password"
-            value={{password}}
-            oninput={{action (mut password) value="target.value"}}
-            onkeyup={{action "addErrorDisplayFor" "password"}}
-            data-test-password-input
-          >
-          {{#if (and (v-get this "password" "isInvalid") (includes "password" showErrorsFor))}}
-            <span class="message error">
-              {{v-get this "password" "message"}}
-            </span>
-          {{else if (and (gt password.length 0) (is-fulfilled passwordStrengthScore))}}
-            <span
-              class="password-strength
-                {{concat "strength-" (await passwordStrengthScore)}}"
-              data-test-password-strength-text
+      {{#unless @user.authentication.username}}
+        <div class="error" data-test-username-missing>
+          {{t "general.missingRequiredUsername"}}
+        </div>
+      {{/unless}}
+      <p class="primary-school" data-test-school>
+        <strong>
+          {{t "general.primarySchool"}}:
+        </strong>
+        {{get (await @user.school) "title"}}
+      </p>
+      <div class="form">
+        <div
+          class="item
+            {{if (includes "firstName" this.updatedFieldsFromSync) "synced-from-directory"
+            }}"
+          data-test-firstname
+        >
+          <label for="firstname-{{templateId}}">
+            {{t "general.firstName"}}:
+          </label>
+          {{#if @isManaging}}
+            <input
+              id="firstname-{{templateId}}"
+              type="text"
+              value={{this.firstName}}
+              {{on "input" (pick "target.value" (set this.firstName))}}
+              {{on "keyup" (fn this.addErrorDisplayFor "firstName")}}
+              {{on "keyup" this.keyboard}}
+              data-test-first-name-input
             >
-              {{#if (eq (await passwordStrengthScore) 0)}}
-                {{t "general.tryHarder"}}
-              {{else if (eq (await passwordStrengthScore) 1)}}
-                {{t "general.bad"}}
-              {{else if (eq (await passwordStrengthScore) 2)}}
-                {{t "general.weak"}}
-              {{else if (eq (await passwordStrengthScore) 3)}}
-                {{t "general.good"}}
-              {{else if (eq (await passwordStrengthScore) 4)}}
-                {{t "general.strong"}}
-              {{/if}}
+            {{#each (await (compute this.getErrorsFor "firstName")) as |message|}}
+              <span class="validation-error-message">
+                {{message}}
+              </span>
+            {{/each}}
+          {{else}}
+            <span class="value">
+              {{@user.firstName}}
             </span>
-            <meter
-              max="4"
-              value={{await passwordStrengthScore}}
-              data-test-password-strength-meter
-            ></meter>
           {{/if}}
-          <span
-            class="cancel-password-field clickable link"
-            role="button"
-            onclick={{action "cancelChangeUserPassword"}}
-          >
-            {{t "general.cancel"}}
-          </span>
-        {{else}}
-          <span
-            class="clickable link activate-password-field"
-            role="button"
-            onclick={{action (mut changeUserPassword) true}}
-          >
-            {{t "general.modifyUserPassword"}}
-          </span>
+        </div>
+        <div class="item" data-test-middlename>
+          <label for="middlename-{{templateId}}">
+            {{t "general.middleName"}}:
+          </label>
+          {{#if @isManaging}}
+            <input
+              id="middlename-{{templateId}}"
+              type="text"
+              value={{this.middleName}}
+              {{on "input" (pick "target.value" (set this.middleName))}}
+              {{on "keyup" (fn this.addErrorDisplayFor "middleName")}}
+              {{on "keyup" this.keyboard}}
+              data-test-middle-name-input
+            >
+            {{#each (await (compute this.getErrorsFor "middleName")) as |message|}}
+              <span class="validation-error-message">
+                {{message}}
+              </span>
+            {{/each}}
+          {{else}}
+            <span class="value">
+              {{@user.middleName}}
+            </span>
+          {{/if}}
+        </div>
+        <div
+          class="item
+            {{if (includes "lastName" this.updatedFieldsFromSync) "synced-from-directory"
+            }}"
+          data-test-lastname
+        >
+          <label for="lastname-{{templateId}}">
+            {{t "general.lastName"}}:
+          </label>
+          {{#if @isManaging}}
+            <input
+              id="lastname-{{templateId}}"
+              type="text"
+              value={{this.lastName}}
+              {{on "input" (pick "target.value" (set this.lastName))}}
+              {{on "keyup" (fn this.addErrorDisplayFor "lastName")}}
+              {{on "keyup" this.keyboard}}
+              data-test-last-name-input
+            >
+            {{#each (await (compute this.getErrorsFor "lastName")) as |message|}}
+              <span class="validation-error-message">
+                {{message}}
+              </span>
+            {{/each}}
+          {{else}}
+            <span class="value">
+              {{@user.lastName}}
+            </span>
+          {{/if}}
+        </div>
+        <div
+          class="item
+          {{if (includes "campusId" this.updatedFieldsFromSync) "synced-from-directory"}}
+          campus-id"
+          data-test-campus-id
+        >
+          <label for="campus-id-{{templateId}}">
+            {{t "general.campusId"}}:
+          </label>
+          {{#if @isManaging}}
+            <div class="campus-id-controls">
+              <input
+                id="campus-id-{{templateId}}"
+                type="text"
+                value={{this.campusId}}
+                {{on "input" (pick "target.value" (set this.campusId))}}
+                {{on "keyup" (fn this.addErrorDisplayFor "campusId")}}
+                {{on "keyup" this.keyboard}}
+                data-test-campus-id-input
+              >
+              {{#unless this.canEditUsernameAndPassword}}
+                <button
+                  type="button"
+                  class="directory-sync"
+                  title={{t "general.updateUserFromDirectory"}}
+                  disabled={{this.directorySync.isRunning}}
+                  {{on "click" (perform this.directorySync)}}
+                  data-test-directory-sync
+                >
+                  <FaIcon
+                    @icon={{if this.directorySync.isRunning "spinner" "sync"}}
+                    @spin={{this.directorySync.isRunning}}
+                  />
+                </button>
+              {{/unless}}
+              {{#each (await (compute this.getErrorsFor "campusId")) as |message|}}
+                <span class="validation-error-message" data-test-validation-error>
+                  {{message}}
+                </span>
+              {{/each}}
+            </div>
+            {{#if this.showSyncErrorMessage}}
+              <span class="validation-error-message" data-test-sync-error>
+                {{t "general.unableToSyncUser"}}
+              </span>
+            {{/if}}
+          {{else}}
+            <span class="value">
+              {{@user.campusId}}
+            </span>
+          {{/if}}
+        </div>
+        <div class="item" data-test-other-id>
+          <label for="other-id-{{templateId}}">
+            {{t "general.otherId"}}:
+          </label>
+          {{#if @isManaging}}
+            <input
+              id="other-id-{{templateId}}"
+              type="text"
+              value={{this.otherId}}
+              {{on "input" (pick "target.value" (set this.otherId))}}
+              {{on "keyup" (fn this.addErrorDisplayFor "otherId")}}
+              {{on "keyup" this.keyboard}}
+              data-test-other-id-input
+            >
+            {{#each (await (compute this.getErrorsFor "otherId")) as |message|}}
+              <span class="validation-error-message">
+                {{message}}
+              </span>
+            {{/each}}
+          {{else}}
+            <span class="value">
+              {{@user.otherId}}
+            </span>
+          {{/if}}
+        </div>
+        <div
+          class="item
+            {{if (includes "email" this.updatedFieldsFromSync) "synced-from-directory"}}"
+          data-test-email
+        >
+          <label for="email-{{templateId}}">
+            {{t "general.email"}}:
+          </label>
+          {{#if @isManaging}}
+            <input
+              id="email-{{templateId}}"
+              type="text"
+              value={{this.email}}
+              {{on "input" (pick "target.value" (set this.email))}}
+              {{on "keyup" (fn this.addErrorDisplayFor "email")}}
+              {{on "keyup" this.keyboard}}
+              data-test-email-input
+            >
+            {{#each (await (compute this.getErrorsFor "email")) as |message|}}
+              <span class="validation-error-message">
+                {{message}}
+              </span>
+            {{/each}}
+          {{else}}
+            <span class="value">
+              {{@user.email}}
+            </span>
+          {{/if}}
+        </div>
+        <div
+          class="item
+            {{if
+              (includes "displayName" this.updatedFieldsFromSync)
+              "synced-from-directory"
+            }}"
+          data-test-displayname
+        >
+          <label for="displayname-{{templateId}}">
+            {{t "general.displayName"}}:
+          </label>
+          {{#if @isManaging}}
+            <input
+              id="displayname-{{templateId}}"
+              type="text"
+              value={{this.displayName}}
+              {{on "input" (pick "target.value" (set this.displayName))}}
+              {{on "keyup" (fn this.addErrorDisplayFor "displayName")}}
+              {{on "keyup" this.keyboard}}
+              data-test-display-name-input
+            >
+            {{#each (await (compute this.getErrorsFor "displayName")) as |message|}}
+              <span class="validation-error-message">
+                {{message}}
+              </span>
+            {{/each}}
+          {{else}}
+            <span class="value">
+              {{@user.displayName}}
+            </span>
+          {{/if}}
+        </div>
+        <div
+          class="item
+            {{if
+              (includes "preferredEmail" this.updatedFieldsFromSync)
+              "synced-from-directory"
+            }}"
+          data-test-preferred-email
+        >
+          <label for="preferred-email-{{templateId}}">
+            {{t "general.preferredEmail"}}:
+          </label>
+          {{#if @isManaging}}
+            <input
+              id="preferred-email-{{templateId}}"
+              type="text"
+              value={{this.preferredEmail}}
+              {{on "input" (pick "target.value" (set this.preferredEmail))}}
+              {{on "keyup" (fn this.addErrorDisplayFor "preferredEmail")}}
+              {{on "keyup" this.keyboard}}
+              data-test-preferred-email-input
+            >
+            {{#each (await (compute this.getErrorsFor "preferredEmail")) as |message|}}
+              <span class="validation-error-message">
+                {{message}}
+              </span>
+            {{/each}}
+          {{else}}
+            <span class="value">
+              {{@user.preferredEmail}}
+            </span>
+          {{/if}}
+        </div>
+        <div
+          class="item
+            {{if (includes "phone" this.updatedFieldsFromSync) "synced-from-directory"}}"
+          data-test-phone
+        >
+          <label for="phone-{{templateId}}">
+            {{t "general.phone"}}:
+          </label>
+          {{#if @isManaging}}
+            <input
+              id="phone-{{templateId}}"
+              type="text"
+              value={{this.phone}}
+              {{on "input" (pick "target.value" (set this.phone))}}
+              {{on "keyup" (fn this.addErrorDisplayFor "phone")}}
+              {{on "keyup" this.keyboard}}
+              data-test-phone-input
+            >
+            {{#each (await (compute this.getErrorsFor "phone")) as |message|}}
+              <span class="validation-error-message">
+                {{message}}
+              </span>
+            {{/each}}
+          {{else}}
+            <span class="value">
+              {{@user.phone}}
+            </span>
+          {{/if}}
+        </div>
+        <div
+          class="item
+            {{if (includes "username" this.updatedFieldsFromSync) "synced-from-directory"}}"
+          data-test-username
+        >
+          <label for="username-{{templateId}}">
+            {{t "general.username"}}:
+          </label>
+          {{#if @isManaging}}
+            <input
+              id="username-{{templateId}}"
+              type="text"
+              value={{this.username}}
+              {{on "input" (pick "target.value" (set this.username))}}
+              {{on "keyup" (fn this.addErrorDisplayFor "username")}}
+              {{on "keyup" this.keyboard}}
+              disabled={{not this.canEditUsernameAndPassword}}
+              data-test-username-input
+            >
+            {{#each (await (compute this.getErrorsFor "username")) as |message|}}
+              <span class="validation-error-message">
+                {{message}}
+              </span>
+            {{/each}}
+          {{else}}
+            <span class="value">
+              {{get (await @user.authentication) "username"}}
+            </span>
+          {{/if}}
+        </div>
+        {{#if this.canEditUsernameAndPassword}}
+          <div class="item password" data-test-password>
+            <label for="password-{{templateId}}">
+              {{t "general.password"}}:
+            </label>
+            {{#if @isManaging}}
+              {{#if this.changeUserPassword}}
+                <input
+                  id="password-{{templateId}}"
+                  type="password"
+                  value={{this.password}}
+                  {{on "input" (pick "target.value" this.setPassword)}}
+                  {{on "keyup" (fn this.addErrorDisplayFor "password")}}
+                  {{on "keyup" this.keyboard}}
+                  data-test-password-input
+                >
+                {{#each (await (compute this.getErrorsFor "password")) as |message|}}
+                  <span class="validation-error-message">
+                    {{message}}
+                  </span>
+                {{else if (gt this.password.length 0)}}
+                  <span
+                    class="password-strength
+                    {{concat "strength-" this.passwordStrengthScore}}"
+                    data-test-password-strength-text
+                  >
+                    {{#if (eq this.passwordStrengthScore 0)}}
+                      {{t "general.tryHarder"}}
+                    {{else if (eq this.passwordStrengthScore 1)}}
+                      {{t "general.bad"}}
+                    {{else if (eq this.passwordStrengthScore 2)}}
+                      {{t "general.weak"}}
+                    {{else if (eq this.passwordStrengthScore 3)}}
+                      {{t "general.good"}}
+                    {{else if (eq this.passwordStrengthScore 4)}}
+                      {{t "general.strong"}}
+                    {{/if}}
+                  </span>
+                  <meter
+                    max="4"
+                    value={{this.passwordStrengthScore}}
+                    data-test-password-strength-meter
+                  ></meter>
+                {{/each}}
+                <button
+                  class="link-button cancel-password-field"
+                  type="button"
+                  {{on "click" this.cancelChangeUserPassword}}
+                  data-test-password-cancel
+                >
+                  {{t "general.cancel"}}
+                </button>
+              {{else}}
+                <button
+                  class="link-button activate-password-field"
+                  type="button"
+                  {{on "click" (set this.changeUserPassword true)}}
+                  data-test-change-password
+                >
+                  {{t "general.modifyUserPassword"}}
+                </button>
+              {{/if}}
+            {{else}}
+              <span class="value">
+                {{#if @user.authentication.username}}
+                  *********
+                {{/if}}
+              </span>
+            {{/if}}
+          </div>
         {{/if}}
-      {{else}}
-        <span class="value">
-          {{#if (not (await usernameMissing)) }}
-            *********
-          {{/if}}
-        </span>
-      {{/if}}
-    </div>
-  {{/if}}
+      </div>
+    {{/if}}
+  {{/let}}
 </div>

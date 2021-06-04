@@ -1,35 +1,32 @@
-import { resolve } from 'rsvp';
-import EmberObject from '@ember/object';
-import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click, fillIn, waitFor } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-
-let user;
-let authentication;
-let school;
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { component } from 'ilios/tests/pages/components/user-profile-bio';
 
 module('Integration | Component | user profile bio', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  hooks.before(async function () {
-    await import('zxcvbn');
-  });
-
-  hooks.beforeEach(function () {
-    authentication = EmberObject.create({
-      username: 'test-username',
-      user: 13,
-      password: null,
+  const setupApplicationConfig = function (userSearchType, context) {
+    const { apiVersion } = context.owner.resolveRegistration('config:environment');
+    context.server.get('application/config', function () {
+      return {
+        config: {
+          userSearchType: userSearchType,
+          apiVersion,
+        },
+      };
     });
-    school = EmberObject.create({
-      id: 1,
+  };
+
+  hooks.beforeEach(async function () {
+    this.school = this.server.create('school', {
       title: 'Cool School',
     });
-    user = EmberObject.create({
+    this.user = this.server.create('user', {
       id: 13,
       fullName: 'Test Person Name Thing',
       firstName: 'Test Person',
@@ -41,486 +38,348 @@ module('Integration | Component | user profile bio', function (hooks) {
       email: 'test@test.com',
       preferredEmail: 'test2@test.com',
       phone: 'x1234',
-      roles: resolve([]),
-      cohorts: resolve([]),
-      primaryCohort: resolve(null),
-      authentication: resolve(authentication),
-      school: resolve(school),
-      pendingUserUpdates: [],
+      school: this.school,
+    });
+    this.authentication = this.server.create('authentication', {
+      username: 'test-username',
+      user: this.user,
+      password: null,
     });
   });
 
   test('it renders for ldap user search', async function (assert) {
-    const iliosConfigMock = Service.extend({
-      userSearchType: resolve('ldap'),
-    });
-    this.owner.register('service:iliosConfig', iliosConfigMock);
-    this.set('user', user);
-    await render(hbs`<UserProfileBio @user={{user}} />`);
-    const primarySchool = '.primary-school';
-    const fields = '.item';
-    const firstName = `${fields}:nth-of-type(1) span`;
-    const middleName = `${fields}:nth-of-type(2) span`;
-    const lastName = `${fields}:nth-of-type(3) span`;
-    const campusId = `${fields}:nth-of-type(4) span`;
-    const otherId = `${fields}:nth-of-type(5) span`;
-    const email = `${fields}:nth-of-type(6) span`;
-    const displayName = `${fields}:nth-of-type(7) span`;
-    const preferredEmail = `${fields}:nth-of-type(8) span`;
-    const phone = `${fields}:nth-of-type(9) span`;
-    const username = `${fields}:nth-of-type(10) span`;
+    setupApplicationConfig('ldap', this);
+    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const schoolModel = await this.owner.lookup('service:store').find('school', this.school.id);
+    const authenticationModel = await this.owner
+      .lookup('service:store')
+      .find('authentication', this.authentication.id);
+    this.set('user', userModel);
 
-    assert
-      .dom(primarySchool)
-      .hasText('Primary School: ' + school.title, 'primary school is correct');
-    assert.dom(fields).exists({ count: 10 });
-    assert.dom(firstName).hasText('Test Person', 'first name is displayed');
-    assert.dom(middleName).hasText('Name', 'middle name is displayed');
-    assert.dom(lastName).hasText('Thing', 'last name is displayed');
-    assert.dom(campusId).hasText('idC', 'campus Id is displayed');
-    assert.dom(otherId).hasText('idO', 'other id is displayed');
-    assert.dom(email).hasText('test@test.com', 'email is displayed');
-    assert.dom(displayName).hasText('Best Name', 'display name is displayed');
-    assert.dom(preferredEmail).hasText('test2@test.com', 'email is displayed');
-    assert.dom(phone).hasText('x1234', 'phone is displayed');
-    assert.dom(username).hasText('test-username', 'username is displayed');
+    await render(hbs`<UserProfileBio @user={{this.user}} />`);
+
+    assert.equal(component.school, `Primary School: ${schoolModel.title}`);
+    assert.equal(component.firstName.text, `First Name: ${userModel.firstName}`);
+    assert.equal(component.middleName.text, `Middle Name: ${userModel.middleName}`);
+    assert.equal(component.lastName.text, `Last Name: ${userModel.lastName}`);
+    assert.equal(component.campusId.text, `Campus ID: ${userModel.campusId}`);
+    assert.equal(component.otherId.text, `Other ID: ${userModel.otherId}`);
+    assert.equal(component.email.text, `Email: ${userModel.email}`);
+    assert.equal(component.displayName.text, `Display Name: ${userModel.displayName}`);
+    assert.equal(component.preferredEmail.text, `Preferred Email: ${userModel.preferredEmail}`);
+    assert.equal(component.phone.text, `Phone: ${userModel.phone}`);
+    assert.equal(component.username.text, `Username: ${authenticationModel.username}`);
+    assert.notOk(component.password.isVisible);
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders for non ldap user search', async function (assert) {
-    const iliosConfigMock = Service.extend({
-      userSearchType: resolve('local'),
-    });
-    this.owner.register('service:iliosConfig', iliosConfigMock);
-    this.set('user', user);
-    await render(hbs`<UserProfileBio @user={{user}} />`);
+    setupApplicationConfig('form', this);
+    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const schoolModel = await this.owner.lookup('service:store').find('school', this.school.id);
+    const authenticationModel = await this.owner
+      .lookup('service:store')
+      .find('authentication', this.authentication.id);
+    this.set('user', userModel);
 
-    const fields = '.item';
-    const firstName = `${fields}:nth-of-type(1) span`;
-    const middleName = `${fields}:nth-of-type(2) span`;
-    const lastName = `${fields}:nth-of-type(3) span`;
-    const campusId = `${fields}:nth-of-type(4) span`;
-    const otherId = `${fields}:nth-of-type(5) span`;
-    const email = `${fields}:nth-of-type(6) span`;
-    const displayName = `${fields}:nth-of-type(7) span`;
-    const preferredEmail = `${fields}:nth-of-type(8) span`;
-    const phone = `${fields}:nth-of-type(9) span`;
-    const username = `${fields}:nth-of-type(10) span`;
-    const password = `${fields}:nth-of-type(11) span`;
+    await render(hbs`<UserProfileBio @user={{this.user}} />`);
 
-    assert.dom(fields).exists({ count: 11 });
-    assert.dom(firstName).hasText('Test Person', 'first name is displayed');
-    assert.dom(middleName).hasText('Name', 'middle name is displayed');
-    assert.dom(lastName).hasText('Thing', 'last name is displayed');
-    assert.dom(campusId).hasText('idC', 'campus Id is displayed');
-    assert.dom(otherId).hasText('idO', 'other id is displayed');
-    assert.dom(email).hasText('test@test.com', 'email is displayed');
-    assert.dom(displayName).hasText('Best Name', 'display name is displayed');
-    assert.dom(preferredEmail).hasText('test2@test.com', 'email is displayed');
-    assert.dom(phone).hasText('x1234', 'phone is displayed');
-    assert.dom(username).hasText('test-username', 'username is displayed');
-    assert.dom(password).hasText('*********', 'password placeholder is displayed');
+    assert.equal(component.school, `Primary School: ${schoolModel.title}`);
+    assert.equal(component.firstName.text, `First Name: ${userModel.firstName}`);
+    assert.equal(component.middleName.text, `Middle Name: ${userModel.middleName}`);
+    assert.equal(component.lastName.text, `Last Name: ${userModel.lastName}`);
+    assert.equal(component.campusId.text, `Campus ID: ${userModel.campusId}`);
+    assert.equal(component.otherId.text, `Other ID: ${userModel.otherId}`);
+    assert.equal(component.email.text, `Email: ${userModel.email}`);
+    assert.equal(component.displayName.text, `Display Name: ${userModel.displayName}`);
+    assert.equal(component.preferredEmail.text, `Preferred Email: ${userModel.preferredEmail}`);
+    assert.equal(component.phone.text, `Phone: ${userModel.phone}`);
+    assert.equal(component.username.text, `Username: ${authenticationModel.username}`);
+    assert.equal(component.password.text, 'Password: *********');
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
   });
 
   test('clicking manage sends the action', async function (assert) {
-    const iliosConfigMock = Service.extend({
-      userSearchType: resolve('ldap'),
-    });
-    this.owner.register('service:iliosConfig', iliosConfigMock);
     assert.expect(1);
-    this.set('user', user);
-    this.set('click', (what) => {
+    this.set('manage', (what) => {
       assert.ok(what, 'received boolean true value');
     });
+    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    this.set('user', userModel);
+
     await render(
-      hbs`<UserProfileBio @user={{user}} @isManageable={{true}} @setIsManaging={{action click}} />`
+      hbs`<UserProfileBio @user={{this.user}} @isManageable={{true}} @setIsManaging={{this.manage}} />`
     );
-    const manage = 'button.manage';
-    await click(manage);
+
+    await component.manage();
   });
 
   test('can edit user bio for ldap config', async function (assert) {
-    assert.expect(25);
-    const iliosConfigMock = Service.extend({
-      userSearchType: resolve('ldap'),
+    setupApplicationConfig('ldap', this);
+    this.server.create('pending-user-update', {
+      user: this.user,
     });
-    this.owner.register('service:iliosConfig', iliosConfigMock);
-    const pendingUpdate1 = EmberObject.create({
-      destroyRecord() {
-        assert.ok(true, 'pending updates are removed');
-        return resolve();
-      },
+    this.server.create('pending-user-update', {
+      user: this.user,
     });
-    const pendingUpdate2 = EmberObject.create({
-      destroyRecord() {
-        assert.ok(true, 'pending updates are removed');
-        return resolve();
-      },
-    });
-    user.get('pendingUserUpdates').pushObject(pendingUpdate1);
-    user.get('pendingUserUpdates').pushObject(pendingUpdate2);
-    this.set('user', user);
-    this.set('nothing', parseInt);
-
-    user.set('save', () => {
-      assert.equal(user.get('firstName'), 'new first', 'first name is saved');
-      assert.equal(user.get('middleName'), 'new middle', 'middel is saved');
-      assert.equal(user.get('lastName'), 'new last', 'last is saved');
-      assert.equal(user.get('campusId'), 'new campusId', 'campusId is saved');
-      assert.equal(user.get('otherId'), 'new otherId', 'otherId is saved');
-      assert.equal(user.get('email'), 'e@e.com', 'email is saved');
-      assert.equal(user.get('displayName'), 'new best name', 'display name is saved');
-      assert.equal(user.get('preferredEmail'), 'e2@e.com', 'preferred email is saved');
-      assert.equal(user.get('phone'), '12345x', 'phone is saved');
-
-      return resolve(user);
-    });
-
-    authentication.set('save', () => {
-      assert.equal(authentication.get('username'), 'test-username', 'username is not changed');
-      assert.equal(authentication.get('password'), undefined, 'password is saved');
-    });
+    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const authenticationModel = await this.owner
+      .lookup('service:store')
+      .find('authentication', this.authentication.id);
+    this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{noop}} />`
     );
-    const inputs = 'input';
-    const firstName = `[data-test-first-name-input]`;
-    const middleName = `[data-test-middle-name-input]`;
-    const lastName = `[data-test-last-name-input]`;
-    const campusId = `[data-test-campus-id-input]`;
-    const otherId = `[data-test-other-id-input]`;
-    const email = `[data-test-email-input]`;
-    const displayName = `[data-test-display-name-input]`;
-    const preferredEmail = `[data-test-preferred-email-input]`;
-    const phone = `[data-test-phone-input]`;
-    const username = `[data-test-username-input]`;
 
-    assert.dom(inputs).exists({ count: 10 }, 'correct number of inputs');
-    assert.dom(firstName).hasValue('Test Person', 'firstname is set');
-    assert.dom(middleName).hasValue('Name', 'middlename is set');
-    assert.dom(lastName).hasValue('Thing', 'lastname is set');
-    assert.dom(campusId).hasValue('idC', 'campuId is set');
-    assert.dom(otherId).hasValue('idO', 'otherId is set');
-    assert.dom(email).hasValue('test@test.com', 'email is set');
-    assert.dom(displayName).hasValue('Best Name', 'display name is set');
-    assert.dom(preferredEmail).hasValue('test2@test.com', 'preferred email is set');
-    assert.dom(phone).hasValue('x1234', 'phone is set');
-    assert.dom(username).hasValue('test-username', 'username is set');
-    assert.dom(username).isDisabled('username is disabled');
-    await fillIn(firstName, 'new first');
-    await fillIn(middleName, 'new middle');
-    await fillIn(lastName, 'new last');
-    await fillIn(campusId, 'new campusId');
-    await fillIn(otherId, 'new otherId');
-    await fillIn(email, 'e@e.com');
-    await fillIn(displayName, 'new best name');
-    await fillIn(preferredEmail, 'e2@e.com');
-    await fillIn(phone, '12345x');
-
-    await click('.bigadd');
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
+    assert.equal(userModel.pendingUserUpdates.length, 2);
+    assert.equal(component.firstName.value, 'Test Person');
+    assert.equal(component.middleName.value, 'Name');
+    assert.equal(component.lastName.value, 'Thing');
+    assert.equal(component.campusId.value, 'idC');
+    assert.equal(component.otherId.value, 'idO');
+    assert.equal(component.email.value, 'test@test.com');
+    assert.equal(component.displayName.value, 'Best Name');
+    assert.equal(component.preferredEmail.value, 'test2@test.com');
+    assert.equal(component.phone.value, 'x1234');
+    assert.equal(component.username.value, 'test-username');
+    assert.ok(component.username.isDisabled);
+    assert.ok(component.syncWithDirectory.isPresent);
+    await component.firstName.set('new first');
+    await component.middleName.set('new middle');
+    await component.lastName.set('new last');
+    await component.campusId.set('new campusId');
+    await component.otherId.set('new otherId');
+    await component.email.set('e@e.com');
+    await component.displayName.set('new best name');
+    await component.preferredEmail.set('e2@e.com');
+    await component.phone.set('12345x');
+    await component.save();
+    assert.equal(userModel.firstName, 'new first');
+    assert.equal(userModel.middleName, 'new middle');
+    assert.equal(userModel.lastName, 'new last');
+    assert.equal(userModel.campusId, 'new campusId');
+    assert.equal(userModel.otherId, 'new otherId');
+    assert.equal(userModel.email, 'e@e.com');
+    assert.equal(userModel.displayName, 'new best name');
+    assert.equal(userModel.preferredEmail, 'e2@e.com');
+    assert.equal(userModel.phone, '12345x');
+    assert.equal(userModel.pendingUserUpdates.length, 0);
+    assert.equal(authenticationModel.username, 'test-username');
+    assert.notOk(authenticationModel.password);
   });
 
   test('can edit non-ldap without setting a password', async function (assert) {
-    assert.expect(23);
-    const iliosConfigMock = Service.extend({
-      userSearchType: resolve('local'),
-    });
-    this.owner.register('service:iliosConfig', iliosConfigMock);
-    authentication.set('save', () => {
-      assert.equal(authentication.get('username'), 'new-test-user', 'username is saved');
-      assert.equal(authentication.get('password'), undefined, 'password is saved');
-    });
-    this.set('user', user);
-    this.set('nothing', parseInt);
-
-    user.set('save', () => {
-      assert.equal(user.get('firstName'), 'new first', 'first name is saved');
-      assert.equal(user.get('middleName'), 'new middle', 'middel is saved');
-      assert.equal(user.get('lastName'), 'new last', 'last is saved');
-      assert.equal(user.get('campusId'), 'new campusId', 'campusId is saved');
-      assert.equal(user.get('otherId'), 'new otherId', 'otherId is saved');
-      assert.equal(user.get('email'), 'e@e.com', 'email is saved');
-      assert.equal(user.get('displayName'), 'new best name', 'display name is saved');
-      assert.equal(user.get('preferredEmail'), 'e2@e.com', 'preferred email is saved');
-      assert.equal(user.get('phone'), '12345x', 'phone is saved');
-
-      return resolve(user);
-    });
+    setupApplicationConfig('form', this);
+    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const authenticationModel = await this.owner
+      .lookup('service:store')
+      .find('authentication', this.authentication.id);
+    this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{noop}} />`
     );
-    const inputs = 'input';
-    const firstName = `[data-test-first-name-input]`;
-    const middleName = `[data-test-middle-name-input]`;
-    const lastName = `[data-test-last-name-input]`;
-    const campusId = `[data-test-campus-id-input]`;
-    const otherId = `[data-test-other-id-input]`;
-    const email = `[data-test-email-input]`;
-    const displayName = `[data-test-display-name-input]`;
-    const preferredEmail = `[data-test-preferred-email-input]`;
-    const phone = `[data-test-phone-input]`;
-    const username = `[data-test-username-input]`;
-    const activatePasswordField = '.activate-password-field';
 
-    assert.dom(inputs).exists({ count: 10 }, 'correct number of inputs');
-    assert.dom(firstName).hasValue('Test Person', 'firstname is set');
-    assert.dom(middleName).hasValue('Name', 'middlename is set');
-    assert.dom(lastName).hasValue('Thing', 'lastname is set');
-    assert.dom(campusId).hasValue('idC', 'campuId is set');
-    assert.dom(otherId).hasValue('idO', 'otherId is set');
-    assert.dom(email).hasValue('test@test.com', 'email is set');
-    assert.dom(displayName).hasValue('Best Name', 'displayName is set');
-    assert.dom(preferredEmail).hasValue('test2@test.com', 'preferred email is set');
-    assert.dom(phone).hasValue('x1234', 'phone is set');
-    assert.dom(username).hasValue('test-username', 'username is set');
-    assert.dom(activatePasswordField).hasText('Click here to reset password.');
-    await fillIn(firstName, 'new first');
-    await fillIn(middleName, 'new middle');
-    await fillIn(lastName, 'new last');
-    await fillIn(campusId, 'new campusId');
-    await fillIn(otherId, 'new otherId');
-    await fillIn(email, 'e@e.com');
-    await fillIn(displayName, 'new best name');
-    await fillIn(preferredEmail, 'e2@e.com');
-    await fillIn(phone, '12345x');
-    await fillIn(username, 'new-test-user');
-    await click('.bigadd');
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
+    assert.equal(component.firstName.value, 'Test Person');
+    assert.equal(component.middleName.value, 'Name');
+    assert.equal(component.lastName.value, 'Thing');
+    assert.equal(component.campusId.value, 'idC');
+    assert.equal(component.otherId.value, 'idO');
+    assert.equal(component.email.value, 'test@test.com');
+    assert.equal(component.displayName.value, 'Best Name');
+    assert.equal(component.preferredEmail.value, 'test2@test.com');
+    assert.equal(component.phone.value, 'x1234');
+    assert.equal(component.username.value, 'test-username');
+    await component.firstName.set('new first');
+    await component.middleName.set('new middle');
+    await component.lastName.set('new last');
+    await component.campusId.set('new campusId');
+    await component.otherId.set('new otherId');
+    await component.email.set('e@e.com');
+    await component.displayName.set('new best name');
+    await component.preferredEmail.set('e2@e.com');
+    await component.phone.set('12345x');
+    await component.username.set('new-test-user');
+    await component.save();
+    assert.equal(userModel.firstName, 'new first');
+    assert.equal(userModel.middleName, 'new middle');
+    assert.equal(userModel.lastName, 'new last');
+    assert.equal(userModel.campusId, 'new campusId');
+    assert.equal(userModel.otherId, 'new otherId');
+    assert.equal(userModel.email, 'e@e.com');
+    assert.equal(userModel.displayName, 'new best name');
+    assert.equal(userModel.preferredEmail, 'e2@e.com');
+    assert.equal(userModel.phone, '12345x');
+    assert.equal(authenticationModel.username, 'new-test-user');
+    assert.notOk(authenticationModel.password);
   });
 
   test('can edit user bio for non-ldap config', async function (assert) {
-    assert.expect(24);
-    const iliosConfigMock = Service.extend({
-      userSearchType: resolve('local'),
-    });
-    this.owner.register('service:iliosConfig', iliosConfigMock);
-    authentication.set('save', () => {
-      assert.equal(authentication.get('username'), 'new-test-user', 'username is saved');
-      assert.equal(authentication.get('password'), 'new-password', 'password is saved');
-    });
-    this.set('user', user);
-    this.set('nothing', parseInt);
-
-    user.set('save', () => {
-      assert.equal(user.get('firstName'), 'new first', 'first name is saved');
-      assert.equal(user.get('middleName'), 'new middle', 'middel is saved');
-      assert.equal(user.get('lastName'), 'new last', 'last is saved');
-      assert.equal(user.get('campusId'), 'new campusId', 'campusId is saved');
-      assert.equal(user.get('otherId'), 'new otherId', 'otherId is saved');
-      assert.equal(user.get('email'), 'e@e.com', 'email is saved');
-      assert.equal(user.get('displayName'), 'new best name', 'displayName is saved');
-      assert.equal(user.get('preferredEmail'), 'e2@e.com', 'email is saved');
-      assert.equal(user.get('phone'), '12345x', 'phone is saved');
-
-      return resolve(user);
-    });
+    setupApplicationConfig('form', this);
+    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const authenticationModel = await this.owner
+      .lookup('service:store')
+      .find('authentication', this.authentication.id);
+    this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{noop}} />`
     );
-    const inputs = 'input';
-    const firstName = `[data-test-first-name-input]`;
-    const middleName = `[data-test-middle-name-input]`;
-    const lastName = `[data-test-last-name-input]`;
-    const campusId = `[data-test-campus-id-input]`;
-    const otherId = `[data-test-other-id-input]`;
-    const email = `[data-test-email-input]`;
-    const displayName = `[data-test-display-name-input]`;
-    const preferredEmail = `[data-test-preferred-email-input]`;
-    const phone = `[data-test-phone-input]`;
-    const username = `[data-test-username-input]`;
-    const password = `[data-test-password-input]`;
-    const activatePasswordField = '.activate-password-field';
 
-    assert.dom(inputs).exists({ count: 10 }, 'correct number of inputs');
-    assert.dom(firstName).hasValue('Test Person', 'firstname is set');
-    assert.dom(middleName).hasValue('Name', 'middlename is set');
-    assert.dom(lastName).hasValue('Thing', 'lastname is set');
-    assert.dom(campusId).hasValue('idC', 'campuId is set');
-    assert.dom(otherId).hasValue('idO', 'otherId is set');
-    assert.dom(email).hasValue('test@test.com', 'email is set');
-    assert.dom(displayName).hasValue('Best Name', 'displayName is set');
-    assert.dom(preferredEmail).hasValue('test2@test.com', 'email is set');
-    assert.dom(phone).hasValue('x1234', 'phone is set');
-    assert.dom(username).hasValue('test-username', 'username is set');
-    await click(activatePasswordField);
-
-    assert.dom(inputs).exists({ count: 11 }, 'password input has been added');
-    assert.dom(password).hasValue('', 'password is set');
-    await fillIn(firstName, 'new first');
-    await fillIn(middleName, 'new middle');
-    await fillIn(lastName, 'new last');
-    await fillIn(campusId, 'new campusId');
-    await fillIn(otherId, 'new otherId');
-    await fillIn(email, 'e@e.com');
-    await fillIn(displayName, 'new best name');
-    await fillIn(preferredEmail, 'e2@e.com');
-    await fillIn(phone, '12345x');
-    await fillIn(username, 'new-test-user');
-    await fillIn(password, 'new-password');
-    await click('.bigadd');
+    await a11yAudit();
+    assert.ok(true, 'no a11y errors found!');
+    assert.equal(component.firstName.value, 'Test Person');
+    assert.equal(component.middleName.value, 'Name');
+    assert.equal(component.lastName.value, 'Thing');
+    assert.equal(component.campusId.value, 'idC');
+    assert.equal(component.otherId.value, 'idO');
+    assert.equal(component.email.value, 'test@test.com');
+    assert.equal(component.displayName.value, 'Best Name');
+    assert.equal(component.preferredEmail.value, 'test2@test.com');
+    assert.equal(component.phone.value, 'x1234');
+    assert.equal(component.username.value, 'test-username');
+    assert.notOk(component.syncWithDirectory.isPresent);
+    await component.password.edit();
+    assert.equal(component.password.value, '');
+    await component.firstName.set('new first');
+    await component.middleName.set('new middle');
+    await component.lastName.set('new last');
+    await component.campusId.set('new campusId');
+    await component.otherId.set('new otherId');
+    await component.email.set('e@e.com');
+    await component.displayName.set('new best name');
+    await component.preferredEmail.set('e2@e.com');
+    await component.phone.set('12345x');
+    await component.username.set('new-test-user');
+    await component.password.set('new-password');
+    await component.save();
+    assert.equal(userModel.firstName, 'new first');
+    assert.equal(userModel.middleName, 'new middle');
+    assert.equal(userModel.lastName, 'new last');
+    assert.equal(userModel.campusId, 'new campusId');
+    assert.equal(userModel.otherId, 'new otherId');
+    assert.equal(userModel.email, 'e@e.com');
+    assert.equal(userModel.displayName, 'new best name');
+    assert.equal(userModel.preferredEmail, 'e2@e.com');
+    assert.equal(userModel.phone, '12345x');
+    assert.equal(authenticationModel.username, 'new-test-user');
+    assert.equal(authenticationModel.password, 'new-password');
   });
 
-  const setupConfigAndAuth = function (context) {
-    const iliosConfigMock = Service.extend({
-      userSearchType: resolve('local'),
-    });
-    context.owner.register('service:iliosConfig', iliosConfigMock);
-  };
-
   test('closing password box clears input', async function (assert) {
-    assert.expect(4);
-    setupConfigAndAuth(this);
-    this.set('user', user);
-    this.set('nothing', parseInt);
+    setupApplicationConfig('form', this);
+    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{noop}} />`
     );
-    const inputs = 'input';
-    const password = `[data-test-password-input]`;
-    const activatePasswordField = '.activate-password-field';
-    const cancelPasswordField = '.cancel-password-field';
 
-    assert.dom(inputs).exists({ count: 10 }, 'correct number of inputs');
-    await click(activatePasswordField);
-
-    assert.dom(inputs).exists({ count: 11 }, 'password input has been added');
-    assert.dom(password).hasValue('', 'password is blank');
-    await fillIn(password, 'new-password');
-    await click(cancelPasswordField);
-    await click(activatePasswordField);
-    assert.dom(password).hasValue('', 'password is blank again');
+    await component.password.edit();
+    assert.equal(component.password.value, '');
+    await component.password.set('new-password');
+    await component.password.cancel();
+    await component.password.edit();
+    assert.equal(component.password.value, '');
   });
 
   test('password strength 0 display', async function (assert) {
-    assert.expect(3);
-    setupConfigAndAuth(this);
-    this.set('user', user);
-    this.set('nothing', parseInt);
+    setupApplicationConfig('form', this);
+    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{noop}} />`
     );
-    const passwordStrengthMeter = '[data-test-password-strength-meter]';
-    const passwordStrengthText = '[data-test-password-strength-text]';
-    const passwordInput = '[data-test-password-input]';
-    const activatePasswordField = '.activate-password-field';
-    await click(activatePasswordField);
-    await fillIn(passwordInput, '12345');
-    await waitFor('[data-test-password-strength-text]');
-    assert.dom(passwordStrengthMeter).hasValue(0, 'meter is intially at 0');
-    assert
-      .dom(passwordStrengthText)
-      .hasText('Try Harder', 'try harder is displayed for level 0 password');
-    assert
-      .dom(passwordStrengthText)
-      .hasClass('strength-0', 'correct strength is applied to the meter');
+
+    await component.password.edit();
+    await component.password.set('12345');
+    assert.equal(component.password.meter.value, 0);
+    assert.equal(component.password.strength.text, 'Try Harder');
+    assert.ok(component.password.strength.hasZeroClass);
   });
 
   test('password strength 1 display', async function (assert) {
-    assert.expect(3);
-    setupConfigAndAuth(this);
-    this.set('user', user);
-    this.set('nothing', parseInt);
+    setupApplicationConfig('form', this);
+    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{noop}} />`
     );
-    const passwordStrengthMeter = '[data-test-password-strength-meter]';
-    const passwordStrengthText = '[data-test-password-strength-text]';
-    const passwordInput = '[data-test-password-input]';
-    const activatePasswordField = '.activate-password-field';
-    await click(activatePasswordField);
-    await fillIn(passwordInput, '12345ab');
-    await waitFor('[data-test-password-strength-text]');
-    assert.dom(passwordStrengthMeter).hasValue(1, 'meter is intially at 1');
-    assert.dom(passwordStrengthText).hasText('Bad', 'bad is displayed for level 1 password');
-    assert
-      .dom(passwordStrengthText)
-      .hasClass('strength-1', 'correct strength is applied to the meter');
+
+    await component.password.edit();
+    await component.password.set('12345ab');
+    assert.equal(component.password.meter.value, 1);
+    assert.equal(component.password.strength.text, 'Bad');
+    assert.ok(component.password.strength.hasOneClass);
   });
 
   test('password strength 2 display', async function (assert) {
-    assert.expect(3);
-    setupConfigAndAuth(this);
-    this.set('user', user);
-    this.set('nothing', parseInt);
+    setupApplicationConfig('form', this);
+    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{noop}} />`
     );
-    const passwordStrengthMeter = '[data-test-password-strength-meter]';
-    const passwordStrengthText = '[data-test-password-strength-text]';
-    const passwordInput = '[data-test-password-input]';
-    const activatePasswordField = '.activate-password-field';
-    await click(activatePasswordField);
-    await fillIn(passwordInput, '12345ab13&');
-    await waitFor('[data-test-password-strength-text]');
-    assert.dom(passwordStrengthMeter).hasValue(2, 'meter is intially at 2');
-    assert.dom(passwordStrengthText).hasText('Weak', 'weak is displayed for level 2 password');
-    assert
-      .dom(passwordStrengthText)
-      .hasClass('strength-2', 'correct strength is applied to the meter');
+
+    await component.password.edit();
+    await component.password.set('12345ab13&');
+    assert.equal(component.password.meter.value, 2);
+    assert.equal(component.password.strength.text, 'Weak');
+    assert.ok(component.password.strength.hasTwoClass);
   });
 
   test('password strength 3 display', async function (assert) {
     assert.expect(3);
-    setupConfigAndAuth(this);
-    this.set('user', user);
-    this.set('nothing', parseInt);
+    setupApplicationConfig('form', this);
+    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{noop}} />`
     );
-    const passwordStrengthMeter = '[data-test-password-strength-meter]';
-    const passwordStrengthText = '[data-test-password-strength-text]';
-    const passwordInput = '[data-test-password-input]';
-    const activatePasswordField = '.activate-password-field';
-    await click(activatePasswordField);
-    await fillIn(passwordInput, '12345ab13&!!');
-    await waitFor('[data-test-password-strength-text]');
-    assert.dom(passwordStrengthMeter).hasValue(3, 'meter is intially at 3');
-    assert.dom(passwordStrengthText).hasText('Good', 'good is displayed for level 3 password');
-    assert
-      .dom(passwordStrengthText)
-      .hasClass('strength-3', 'correct strength is applied to the meter');
+
+    await component.password.edit();
+    await component.password.set('12345ab13&!!');
+    assert.equal(component.password.meter.value, 3);
+    assert.equal(component.password.strength.text, 'Good');
+    assert.ok(component.password.strength.hasThreeClass);
   });
 
   test('password strength 4 display', async function (assert) {
     assert.expect(3);
-    setupConfigAndAuth(this);
-    this.set('user', user);
-    this.set('nothing', parseInt);
+    setupApplicationConfig('form', this);
+    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{noop}} />`
     );
-    const passwordStrengthMeter = '[data-test-password-strength-meter]';
-    const passwordStrengthText = '[data-test-password-strength-text]';
-    const passwordInput = '[data-test-password-input]';
-    const activatePasswordField = '.activate-password-field';
-    await click(activatePasswordField);
-    await fillIn(passwordInput, '12345ab14&HHtB');
-    await waitFor('[data-test-password-strength-text]');
-    assert.dom(passwordStrengthMeter).hasValue(4, 'meter is intially at 4');
-    assert.dom(passwordStrengthText).hasText('Strong', 'strong is displayed for level 4 password');
-    assert
-      .dom(passwordStrengthText)
-      .hasClass('strength-4', 'correct strength is applied to the meter');
+
+    await component.password.edit();
+    await component.password.set('12345ab14&HHtB');
+    assert.equal(component.password.meter.value, 4);
+    assert.equal(component.password.strength.text, 'Strong');
+    assert.ok(component.password.strength.hasFourClass);
   });
 
   test('sync user from directory', async function (assert) {
-    assert.expect(30);
-    const iliosConfigMock = Service.extend({
-      userSearchType: resolve('ldap'),
-    });
-    this.owner.register('service:iliosConfig', iliosConfigMock);
-
+    assert.expect(29);
+    setupApplicationConfig('ldap', this);
+    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    this.set('user', userModel);
     this.server.get(`application/directory/find/:id`, (scheme, { params }) => {
       assert.ok('id' in params);
       assert.equal(params.id, 13);
-
       return {
         result: {
           firstName: 'new-first-name',
@@ -533,113 +392,68 @@ module('Integration | Component | user profile bio', function (hooks) {
         },
       };
     });
-    this.set('user', user);
-    this.set('nothing', parseInt);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{noop}} />`
     );
-    const items = '.item';
-    const firstName = `${items}:nth-of-type(1)`;
-    const middleName = `${items}:nth-of-type(2)`;
-    const lastName = `${items}:nth-of-type(3)`;
-    const campusId = `${items}:nth-of-type(4)`;
-    const otherId = `${items}:nth-of-type(5)`;
-    const email = `${items}:nth-of-type(6)`;
-    const displayName = `${items}:nth-of-type(7)`;
-    const preferredEmail = `${items}:nth-of-type(8)`;
-    const phone = `${items}:nth-of-type(9)`;
-    const username = `${items}:nth-of-type(10)`;
 
-    const firstNameInput = `${firstName} input:nth-of-type(1)`;
-    const middleNameInput = `${middleName} input:nth-of-type(1)`;
-    const lastNameInput = `${lastName} input:nth-of-type(1)`;
-    const campusIdInput = `${campusId} input:nth-of-type(1)`;
-    const otherIdInput = `${otherId} input:nth-of-type(1)`;
-    const emailInput = `${email} input:nth-of-type(1)`;
-    const displayNameInput = `${displayName} input:nth-of-type(1)`;
-    const preferredEmailInput = `${preferredEmail} input:nth-of-type(1)`;
-    const phoneInput = `${phone} input:nth-of-type(1)`;
-    const usernameInput = `${username} input:nth-of-type(1)`;
-
-    const syncBUtton = 'button.directory-sync';
-
-    assert.dom(items).exists({ count: 10 }, 'correct number of inputs');
-    assert.dom(firstNameInput).hasValue('Test Person', 'firstname is set');
-    assert.dom(middleNameInput).hasValue('Name', 'middlename is set');
-    assert.dom(lastNameInput).hasValue('Thing', 'lastname is set');
-    assert.dom(campusIdInput).hasValue('idC', 'campuId is set');
-    assert.dom(otherIdInput).hasValue('idO', 'otherId is set');
-    assert.dom(emailInput).hasValue('test@test.com', 'email is set');
-    assert.dom(displayNameInput).hasValue('Best Name', 'display name is set');
-    assert.dom(preferredEmailInput).hasValue('test2@test.com', 'preferred email is set');
-    assert.dom(phoneInput).hasValue('x1234', 'phone is set');
-    assert.dom(usernameInput).hasValue('test-username', 'username is set');
-    await click(syncBUtton);
-
-    assert.dom(firstNameInput).hasValue('new-first-name', 'firstname is updated');
-    assert.dom(middleNameInput).hasValue('Name', 'middlename is set');
-    assert.dom(lastNameInput).hasValue('new-last-name', 'lastname is updated');
-    assert.dom(campusIdInput).hasValue('new-campus-id', 'campuId is updated');
-    assert.dom(otherIdInput).hasValue('idO', 'otherId is set');
-    assert.dom(emailInput).hasValue('new-email', 'email is updated');
-    assert.dom(displayNameInput).hasValue('new-best-name', 'display name is updated');
-    assert
-      .dom(preferredEmailInput)
-      .hasValue('test2@test.com', 'preferred email does not get updated via sync');
-    assert.dom(phoneInput).hasValue('new-phone', 'phone is updated');
-    assert.dom(usernameInput).hasValue('new-username', 'username is updated');
-
-    assert.dom(firstName).hasClass('synced-from-directory', 'firstName has updated class applied');
-    assert.dom(lastName).hasClass('synced-from-directory', 'lastName has updated class applied');
-    assert.dom(phone).hasClass('synced-from-directory', 'phone has updated class applied');
-    assert.dom(email).hasClass('synced-from-directory', 'email has updated class applied');
-    assert
-      .dom(displayName)
-      .hasClass('synced-from-directory', 'display name has updated class applied');
-    assert.dom(campusId).hasClass('synced-from-directory', 'campusId has updated class applied');
-    assert.dom(username).hasClass('synced-from-directory', 'username has updated class applied');
+    assert.equal(component.firstName.value, 'Test Person');
+    assert.equal(component.middleName.value, 'Name');
+    assert.equal(component.lastName.value, 'Thing');
+    assert.equal(component.campusId.value, 'idC');
+    assert.equal(component.otherId.value, 'idO');
+    assert.equal(component.email.value, 'test@test.com');
+    assert.equal(component.displayName.value, 'Best Name');
+    assert.equal(component.preferredEmail.value, 'test2@test.com');
+    assert.equal(component.phone.value, 'x1234');
+    assert.equal(component.username.value, 'test-username');
+    await component.syncWithDirectory.click();
+    assert.equal(component.firstName.value, 'new-first-name');
+    assert.equal(component.middleName.value, 'Name');
+    assert.equal(component.lastName.value, 'new-last-name');
+    assert.equal(component.campusId.value, 'new-campus-id');
+    assert.equal(component.otherId.value, 'idO');
+    assert.equal(component.email.value, 'new-email');
+    assert.equal(component.displayName.value, 'new-best-name');
+    assert.equal(component.preferredEmail.value, 'test2@test.com');
+    assert.equal(component.phone.value, 'new-phone');
+    assert.equal(component.username.value, 'new-username');
+    assert.ok(component.firstName.hasBeenSyncedFromDirectory);
+    assert.ok(component.lastName.hasBeenSyncedFromDirectory);
+    assert.ok(component.email.hasBeenSyncedFromDirectory);
+    assert.ok(component.phone.hasBeenSyncedFromDirectory);
+    assert.ok(component.displayName.hasBeenSyncedFromDirectory);
+    assert.ok(component.campusId.hasBeenSyncedFromDirectory);
+    assert.ok(component.username.hasBeenSyncedFromDirectory);
   });
 
   test('preferred email can be blanked', async function (assert) {
-    assert.expect(2);
-    setupConfigAndAuth(this);
-    authentication.set('save', () => {});
-    this.set('user', user);
-    this.set('nothing', parseInt);
-
-    user.set('save', () => {
-      assert.equal(user.get('preferredEmail'), '', 'blank value for preferred email is saved');
-      return resolve(user);
-    });
+    setupApplicationConfig('form', this);
+    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{noop}} />`
     );
-    const preferredEmailInput = '[data-test-preferred-email-input]';
-    assert.dom(preferredEmailInput).hasValue('test2@test.com', 'preferred email is set');
-    await fillIn(preferredEmailInput, '');
-    await click('.bigadd');
+
+    assert.equal(component.preferredEmail.value, 'test2@test.com');
+    await component.preferredEmail.set('');
+    await component.save();
+    assert.equal(userModel.preferredEmail, '');
   });
 
   test('display name can be blanked', async function (assert) {
-    assert.expect(2);
-    setupConfigAndAuth(this);
-    authentication.set('save', () => {});
-    this.set('user', user);
-    this.set('nothing', parseInt);
-
-    user.set('save', () => {
-      assert.equal(user.get('displayName'), '', 'blank value for display name is saved');
-      return resolve(user);
-    });
+    setupApplicationConfig('form', this);
+    const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileBio @isManaging={{true}} @user={{user}} @setIsManaging={{action nothing}} />`
+      hbs`<UserProfileBio @isManaging={{true}} @user={{this.user}} @setIsManaging={{noop}} />`
     );
-    const displayNameInput = '[data-test-display-name-input]';
-    assert.dom(displayNameInput).hasValue('Best Name', 'preferred email is set');
-    await fillIn(displayNameInput, '');
-    await click('.bigadd');
+
+    assert.equal(component.displayName.value, 'Best Name');
+    await component.displayName.set('');
+    await component.save();
+    assert.equal(userModel.displayName, '');
   });
 });

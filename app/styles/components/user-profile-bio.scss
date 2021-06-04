@@ -17,22 +17,17 @@
     grid-template-columns: 1fr;
 
     .item {
-      min-height: auto;
-      overflow: hidden;
-      white-space: nowrap;
+      @include ilios-form-item;
+
+      &.last {
+        @include ilios-form-last-item;
+      }
 
       &.synced-from-directory input {
         background-color: lighten($ilios-green, 40%);
+        transition: background-color 500ms ease;
       }
     }
-
-  }
-
-  .directory-sync-complete {
-    background-color: transparent;
-    border: 1px solid $ilios-green;
-    color: $ilios-green;
-    outline: 1px solid $ilios-green;
   }
 
   .campus-id-controls {
