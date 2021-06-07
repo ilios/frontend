@@ -1,0 +1,45 @@
+name: Dependabot auto-merge
+on: pull_request_target
+permissions:
+  pull-requests: write
+  content: write
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        safe-dependency:
+        - "@formatjs/intl-locale"
+        - "@formatjs/intl-pluralrules"
+        - "@formatjs/intl-relativetimeformat"
+        - "@fortawesome"
+        - "broccoli-file-creator"
+        - "broccoli-funnel"
+        - "broccoli-merge-trees"
+        - "ember-cli-mirage"
+        - "ember-cli-page-object"
+        - "ember-data"
+        - "ember-test-selectors"
+        - "babel-eslint"
+        - "ember-a11y-testing"
+        - "ember-cli-bundle-analyzer"
+        - "ember-cli-dependency-checker"
+        - "ember-cli-dependency-lint"
+        - "ember-cli-deprecation-workflow"
+        - "ember-qunit-nice-errors"
+        - "eslint"
+        - "prettier"
+        - "stylelint"
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1.1.0
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Enable auto-merge for Dependabot PRs
+        if: ${{contains(steps.metadata.outputs.dependency-names, ${{ matrix.safe-dependency }})}}
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
