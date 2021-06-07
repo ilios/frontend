@@ -33,7 +33,7 @@ module('Acceptance | Session - Leadership', function (hooks) {
     assert.expect(8);
     await page.visit({ courseId: 1, sessionId: 1 });
 
-    assert.equal(page.leadershipCollapsed.title, 'Session Administration');
+    assert.equal(page.leadershipCollapsed.title, 'Session Leadership');
     assert.equal(page.leadershipCollapsed.headers.length, 1);
     assert.equal(page.leadershipCollapsed.headers[0].title, 'Summary');
 
@@ -52,7 +52,7 @@ module('Acceptance | Session - Leadership', function (hooks) {
       sessionLeadershipDetails: true,
     });
 
-    assert.equal(page.leadershipExpanded.title, 'Session Administration');
+    assert.equal(page.leadershipExpanded.title, 'Session Leadership');
     const { administrators, studentAdvisors } = page.leadershipExpanded.leadershipList;
 
     assert.equal(administrators.length, 2);

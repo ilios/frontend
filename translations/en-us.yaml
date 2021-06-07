@@ -269,8 +269,8 @@ general:
   selectMeshFor: "Select MeSH for: {title}"
   selectVocabulary: "Select Vocabulary"
   session: Session
-  sessionAdministration: "Session Administration"
   sessionIs: "Session Type: {type}"
+  sessionLeadership: "Session Leadership"
   sessionLearningMaterials: "Session Learning Materials"
   sessionObjectives: "Session Objectives"
   sessions: Sessions
