@@ -4,6 +4,7 @@ general:
   academicLevel: "Academic Level"
   academicLevels: "Academic Levels"
   academicYear: "Academic Year"
+  academicYears: "Academic Years"
   accommodationIsRequiredForLearnersInThisGroup: "Accommodation is required for learners in this group"
   accountEnabled: "Account Enabled"
   activate: Activate

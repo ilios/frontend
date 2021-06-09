@@ -12,7 +12,11 @@
   </h3>
   <span>
     <FaIcon @icon="university" @fixedWidth={{true}} />
-    <select {{on "change" (pick "target.value" (perform this.changeSchool))}} data-test-select-school>
+    <select
+      aria-label={{t "general.schools"}}
+      {{on "change" (pick "target.value" (perform this.changeSchool))}}
+      data-test-select-school
+    >
       {{#each (sort-by "title" this.schools) as |school|}}
         <option
           value={{school.id}}
@@ -25,7 +29,11 @@
   </span>
   <span>
     <FaIcon @icon="calendar" @fixedWidth={{true}} />
-    <select {{on "change" (pick "target.value" (perform this.changeYear))}} data-test-select-year>
+    <select
+      aria-label={{t "general.academicYears"}}
+      {{on "change" (pick "target.value" (perform this.changeYear))}}
+      data-test-select-year
+    >
       {{#each (sort-by "title" this.academicYears) as |year|}}
         <option value={{year.id}} selected={{is-equal year this.selectedYear}}>
           {{year.title}}
@@ -54,8 +62,8 @@
         <br>
       </span>
     </p>
-    <p class={{if programCollapsed "collapsed" "expanded"}} data-test-program-permissions>
-      <h5 {{action (toggle "programCollapsed" this)}} role="button" data-test-title>
+    <p class={{if this.programCollapsed "collapsed" "expanded"}} data-test-program-permissions>
+      <h5 {{on "click" (toggle "programCollapsed" this)}} role="button" data-test-title>
         {{t "general.programs"}}
         ({{get this.directedPrograms "length"}})
       </h5>
@@ -74,8 +82,8 @@
         {{/each}}
       </ul>
     </p>
-    <p class={{if programYearCollapsed "collapsed" "expanded"}} data-test-program-year-permissions>
-      <h5 {{action (toggle "programYearCollapsed" this)}} role="button" data-test-title>
+    <p class={{if this.programYearCollapsed "collapsed" "expanded"}} data-test-program-year-permissions>
+      <h5 {{on "click" (toggle "programYearCollapsed" this)}} role="button" data-test-title>
         {{t "general.programYears"}}
         ({{this.directedProgramYears.length}})
       </h5>
@@ -101,8 +109,8 @@
         {{/each}}
       </ul>
     </p>
-    <p class={{if courseCollapsed "collapsed" "expanded"}} data-test-course-permissions>
-      <h5 {{action (toggle "courseCollapsed" this)}} role="button" data-test-title>
+    <p class={{if this.courseCollapsed "collapsed" "expanded"}} data-test-course-permissions>
+      <h5 {{on "click" (toggle "courseCollapsed" this)}} role="button" data-test-title>
         {{t "general.courses"}}
         ({{this.courseCount}})
       </h5>
@@ -190,8 +198,8 @@
         {{/each}}
       </ul>
     </p>
-    <p class={{if sessionCollapsed "collapsed" "expanded"}} data-test-session-permissions>
-      <h5 {{action (toggle "sessionCollapsed" this)}} role="button" data-test-title>
+    <p class={{if this.sessionCollapsed "collapsed" "expanded"}} data-test-session-permissions>
+      <h5 {{on "click" (toggle "sessionCollapsed" this)}} role="button" data-test-title>
         {{t "general.sessions"}}
         ({{this.sessionCount}})
       </h5>
