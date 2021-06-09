@@ -4,9 +4,9 @@
 >
   <div class="course-leadership-expanded-header">
     <h3
-      class="title {{if this.isCollapsible "collapsible clickable"}}"
+      class="title {{unless @isManaging "collapsible clickable"}}"
       role="button"
-      {{on "click" (if this.isCollapsible @collapse (noop))}}
+      {{on "click" (unless @isManaging @collapse (noop))}}
       data-test-title
     >
       {{t "general.courseLeadership"}}

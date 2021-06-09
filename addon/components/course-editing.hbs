@@ -1,10 +1,5 @@
 <div>
-  {{#if
-    (or
-      (and (eq @course.directors.length 0) (eq @course.administrators.length 0))
-      @courseLeadershipDetails
-    )
-  }}
+  {{#if @courseLeadershipDetails}}
     <CourseLeadershipExpanded
       @course={{@course}}
       @editable={{@editable}}

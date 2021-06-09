@@ -8,16 +8,7 @@ export default class CourseLeadershipExpandedComponent extends Component {
   @tracked directors = [];
   @tracked administrators = [];
   @tracked studentAdvisors = [];
-  get isCollapsible() {
-    const administratorIds = this.args.course.hasMany('administrators').ids();
-    const directorIds = this.args.course.hasMany('directors').ids();
-    const studentAdvisorIds = this.args.course.hasMany('studentAdvisors').ids();
 
-    return (
-      (administratorIds.length > 0 || directorIds.length > 0 || studentAdvisorIds.length > 0) &&
-      !this.args.isManaging
-    );
-  }
   @action
   addDirector(user) {
     this.directors = [...this.directors, user];
