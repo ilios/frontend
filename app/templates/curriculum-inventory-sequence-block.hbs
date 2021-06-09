@@ -3,12 +3,12 @@
   @sequenceBlock={{@model}}
   @canUpdate={{this.canUpdate}}
   @sortSessionsBy={{this.sortSessionsBy}}
-  @setSortSessionBy={{action (mut this.sortSessionsBy)}}
+  @setSortSessionBy={{this.setSortSessionsBy}}
 />
 <CurriculumInventory::SequenceBlockList
   @report={{await @model.report}}
   @parent={{@model}}
   @canUpdate={{this.canUpdate}}
   @sequenceBlocks={{await @model.children}}
-  @remove={{action "removeChildSequenceBlock"}}
+  @remove={{this.removeChildSequenceBlock}}
 />
