@@ -7,12 +7,7 @@ import { hash } from 'rsvp';
 export default class CourseLeadershipExpandedComponent extends Component {
   @tracked administrators = [];
   @tracked studentAdvisors = [];
-  get isCollapsible() {
-    const administratorIds = this.args.session.hasMany('administrators').ids();
-    const studentAdvisorIds = this.args.session.hasMany('studentAdvisors').ids();
 
-    return (administratorIds.length > 0 || studentAdvisorIds.length > 0) && !this.args.isManaging;
-  }
   @action
   addAdministrator(user) {
     this.administrators = [...this.administrators, user];

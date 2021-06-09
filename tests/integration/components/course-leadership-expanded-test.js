@@ -104,25 +104,6 @@ module('Integration | Component | course leadership expanded', function (hooks) 
     await component.collapse();
   });
 
-  test('clicking the header does not collapse where there are no linked leaders', async function (assert) {
-    assert.expect(0);
-    const course = this.server.create('course');
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    this.set('course', courseModel);
-    this.set('click', () => {
-      assert.ok(false);
-    });
-    await render(hbs`<CourseLeadershipExpanded
-      @course={{this.course}}
-      @editable={{true}}
-      @collapse={{this.click}}
-      @expand={{noop}}
-      @isManaging={{false}}
-      @setIsManaging={{noop}}
-    />`);
-    await component.collapse();
-  });
-
   test('clicking manage fires action', async function (assert) {
     assert.expect(1);
     const course = this.server.create('course');
@@ -134,8 +115,8 @@ module('Integration | Component | course leadership expanded', function (hooks) 
     await render(hbs`<CourseLeadershipExpanded
       @course={{this.course}}
       @editable={{true}}
-      @collapse={{this.nothing}}
-      @expand={{this.nothing}}
+      @collapse={{noop}}
+      @expand={{noop}}
       @isManaging={{false}}
       @setIsManaging={{this.click}}
     />`);
