@@ -19,11 +19,22 @@
     </ul>
     <ul class="navigation-links" data-test-navigation-links>
       <li>
-        <LinkTo @route="dashboard">
+        <LinkTo
+          @route="dashboard"
+          title={{t "general.dashboard"}}
+          @current-when={{
+            join " "
+            (array
+              "dashboard"
+              "events"
+              "mymaterials"
+              "weeklyevents"
+            )
+           }}
+        >
           <FaIcon
             @icon="home"
             @fixedWidth={{true}}
-            @title={{t "general.dashboard"}}
           />
           <span class="text">
             {{t "general.dashboard"}}
