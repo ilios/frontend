@@ -180,20 +180,33 @@ export default class CurriculumInventoryNewSequenceBlock extends Component {
       }
       this.orderInSequence = 1;
     }
-    this.academicLevels = yield this.args.report.academicLevels;
+    this.childSequenceOrder = this.childSequenceOrderOptions[0];
+    this.required = this.requiredOptions[0];
     if (this.args.parent) {
       this.academicLevel = yield this.args.parent.academicLevel;
-    } else {
-      this.academicLevel = this.academicLevels.firstObject;
     }
-    this.required = this.requiredOptions[0];
-    this.childSequenceOrder = this.childSequenceOrderOptions[0];
-    this.linkableCourses = yield this.getLinkableCourses(this.args.report);
+    if (this.args.report) {
+      this.academicLevels = yield this.args.report.academicLevels;
+      if (this.args.parent) {
+        this.academicLevel = yield this.args.parent.academicLevel;
+      } else {
+        this.academicLevel = this.academicLevels.firstObject;
+      }
+      this.linkableCourses = yield this.getLinkableCourses(this.args.report);
+    }
   }
 
   @restartableTask
   *reload() {
-    this.linkableCourses = yield this.getLinkableCourses(this.args.report);
+    if (this.args.report) {
+      this.academicLevels = yield this.args.report.academicLevels;
+      if (this.args.parent) {
+        this.academicLevel = yield this.args.parent.academicLevel;
+      } else {
+        this.academicLevel = this.academicLevels.firstObject;
+      }
+      this.linkableCourses = yield this.getLinkableCourses(this.args.report);
+    }
   }
 
   @dropTask

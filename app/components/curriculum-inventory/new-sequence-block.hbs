@@ -2,7 +2,7 @@
   class="curriculum-inventory-new-sequence-block"
   data-test-curriculum-inventory-new-sequence-block
   {{did-insert (perform this.load)}}
-  {{did-update (perform this.reload) @parent.course}}
+  {{did-update (perform this.reload) @report @parent.course}}
 >
   <h2 class="title" data-test-title>
     {{t "general.newSequenceBlock"}}
