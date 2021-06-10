@@ -19,7 +19,7 @@
           </button>
           <button
             type="button"
-            disabled={{save.isRunning}}
+            disabled={{this.save.isRunning}}
             class="bigcancel"
             {{on "click" (fn @setIsManaging false)}}
           >
@@ -37,13 +37,18 @@
         {{t "general.primaryCohort"}}:
       </h4>
       {{#if this.primaryCohort}}
-        {{#if isManaging}}
-          <FaIcon
-            @icon="level-down-alt"
-            class="clickable remove"
-            @title={{t "general.removePrimaryCohort"}}
-            @click={{set this.primaryCohort null}}
-          />
+        {{#if @isManaging}}
+          <button
+            type="button"
+            class="link-button"
+            {{on "click" (set this.primaryCohort null)}}
+          >
+            <FaIcon
+              @icon="level-down-alt"
+              class="clickable remove"
+              @title={{t "general.removePrimaryCohort"}}
+            />
+          </button>
         {{/if}}
         <span data-test-title>
           {{get (await this.primaryCohort.school) "title"}}
@@ -72,18 +77,28 @@
           }}
             <li>
               {{#if @isManaging}}
-                <FaIcon
-                  @icon="level-up-alt"
-                  class="clickable add"
-                  @title={{t "general.promoteToPrimaryCohort"}}
-                  @click={{set this.primaryCohort cohort}}
-                />
-                <FaIcon
-                  @icon="times"
-                  class="clickable remove"
-                  @title={{t "general.removeCohort"}}
-                  @click={{fn this.removeSelectedCohort cohort}}
-                />
+                <button
+                  class="link-button"
+                  type="button"
+                  {{on "click" (set this.primaryCohort cohort)}}
+                >
+                  <FaIcon
+                    @icon="level-up-alt"
+                    class="clickable add"
+                    @title={{t "general.promoteToPrimaryCohort"}}
+                  />
+                </button>
+                <button
+                  class="link-button"
+                  type="button"
+                  {{on "click" (fn this.removeSelectedCohort cohort)}}
+                >
+                  <FaIcon
+                    @icon="times"
+                    class="clickable remove"
+                    @title={{t "general.removeCohort"}}
+                  />
+                </button>
               {{/if}}
               <span data-test-title>
                 {{get (await cohort.school) "title"}}
@@ -108,6 +123,7 @@
           <FaIcon @icon="university" @fixedWidth={{true}} />
           {{#if (gt this.schools.length 1)}}
             <select
+              aria-label={{t "general.schools"}}
               {{on "change" (pick "target.value" (set this.selectedSchoolId))}}
               data-test-school
             >
@@ -135,12 +151,17 @@
               ) as |obj|
             }}
               <li>
-                <FaIcon
-                  @icon="plus"
-                  class="clickable add"
-                  @title={{t "general.addCohort"}}
-                  @click={{fn this.addSelectedCohort obj.cohort}}
-                />
+                <button
+                  type="button"
+                  class="link-button"
+                  {{on "click" (fn this.addSelectedCohort obj.cohort)}}
+                >
+                  <FaIcon
+                    @icon="plus"
+                    class="clickable add"
+                    @title={{t "general.addCohort"}}
+                  />
+                </button>
                 <span data-test-title>
                   <strong>
                     {{get obj.program "title"}}

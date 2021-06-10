@@ -37,7 +37,7 @@ const definition = {
     value: value('input'),
     label: text('label'),
     set: fillable('input'),
-    submit: triggerable('keydown', 'input', { eventProperties: { key: 'Enter' } }),
+    submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
     hasError: isVisible('.validation-error-message'),
   },
   save: clickable('[data-test-save]'),

@@ -2,10 +2,10 @@
 <GlobalSearch
   @page={{this.page}}
   @query={{this.query}}
-  @onQuery={{action "setQuery"}}
-  @onSelectPage={{action (mut this.page)}}
+  @onQuery={{this.setQuery}}
+  @onSelectPage={{this.setPage}}
   @ignoredSchoolIds={{this.ignoredSchoolIdsArray}}
-  @setIgnoredSchoolIds={{action "setIgnoredSchools"}}
+  @setIgnoredSchoolIds={{this.setIgnoredSchools}}
   @selectedYear={{this.selectedYearInt}}
-  @setSelectedYear={{action (mut this.selectedYear)}}
+  @setSelectedYear={{this.setSelectedYear}}
 />

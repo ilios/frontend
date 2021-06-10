@@ -4,6 +4,7 @@ general:
   academicLevel: "Niveau scolaire"
   academicLevels: "Niveaux scolaire"
   academicYear: "Année Scolaire"
+  academicYears: "Années Scolaire"
   accommodationIsRequiredForLearnersInThisGroup: "Des aménagements sont nécessaires pour les apprenants de ce groupe"
   accountEnabled: "Compte Activé"
   activate: Activer

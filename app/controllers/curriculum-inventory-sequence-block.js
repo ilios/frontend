@@ -21,4 +21,9 @@ export default class CurriculumInventorySequenceBlockController extends Controll
       reload: true,
     });
   }
+
+  @action
+  setSortSessionsBy(sortSessionsBy) {
+    this.sortSessionsBy = sortSessionsBy;
+  }
 }
