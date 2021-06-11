@@ -18,7 +18,7 @@
           <button
             type="button"
             disabled={{this.downloadReport.isRunning}}
-            {{action (perform this.downloadReport)}}
+            {{on "click" (perform this.downloadReport)}}
           >
             {{#if this.finishedBuildingReport}}
               <FaIcon @icon="check" />
@@ -53,6 +53,7 @@
         {{#if this.showAcademicYearFilter}}
           <div class="years-filter">
             <select
+              aria-label={{t "general.academicYears"}}
               data-test-year-filter
               {{on "change" (pick "target.value" @onReportYearSelect)}}
             >
@@ -75,7 +76,7 @@
           </div>
         {{/if}}
         {{#if (is-array this.reportResultsList)}}
-          <ul class="report-results" data-test-results {{did-insert (action this.scrollDown)}}>
+          <ul class="report-results" data-test-results {{did-insert this.scrollDown}}>
             {{#each this.reportResultsList as |item|}}
               {{#if item.model2}}
                 <li>
@@ -118,11 +119,16 @@
                     <FaIcon @icon="external-link-square-alt" />
                     {{obj.title}}
                 </button>
-                <FaIcon
-                  @icon="trash"
-                  class="clickable remove enabled"
-                  @click={{fn this.deleteReport obj.report}}
-                />
+                <button
+                  type="button"
+                  class="link-button"
+                  {{ on "click" (fn this.deleteReport obj.report)}}
+                >
+                  <FaIcon
+                    @icon="trash"
+                    class="clickable remove enabled"
+                  />
+                </button>
               </li>
             {{else}}
               <li>
