@@ -99,6 +99,7 @@ general:
   defaultLocation: "Localisation par Défaut"
   defaultVirtualLearningLink: "Address d’Étude Virtuel par Défaut"
   departments: "Facultés"
+  deselectUser: "Désélectionner l'utilisateur "
   details: "Détails de Cours"
   developer: Administrateur
   director: Directeur
@@ -350,6 +351,7 @@ general:
   selected: "Sélectionné"
   selectProgram: "Choisi Diplôme"
   selectSchool: "Choisi Écôle"
+  selectUser: "Choisi l'utilisateur"
   selectYear: "Choisi année scolaire"
   sequenceBlock: "Bloc séquence"
   sequenceBlockConfirmRemove: "Êtes-vous sûrs que vous voulez supprimer ce bloc séquence? Cette action ne peut pas être défaite."
