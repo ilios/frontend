@@ -91,7 +91,7 @@
                 aria-label={{if (includes user.id this.selectedUserIds) (t "general.deselectUser") (t "general.selectUser")}}
                 checked={{if (includes user.id this.selectedUserIds) "checked"}}
                 data-test-toggle
-                {{on "click" (this.toggleUserSelection user.id)}}
+                {{on "click" (fn this.toggleUserSelection user.id)}}
               >
             </td>
             <td class="text-left" colspan="4" data-test-name>
