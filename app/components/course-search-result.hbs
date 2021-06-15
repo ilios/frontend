@@ -30,7 +30,7 @@
       <span
         class="show-more clickable link"
         role="button"
-        {{action (set this.showMore) true}}
+        {{on "click" (set this.showMore true)}}
       >
         <FaIcon @icon="angle-down" />
         {{t "general.showMore"}}
