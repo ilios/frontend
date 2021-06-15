@@ -8,8 +8,8 @@
   @report={{@model}}
   @canUpdate={{and (not @model.isFinalized) this.canUpdate}}
   @leadershipDetails={{this.leadershipDetails}}
-  @setLeadershipDetails={{action (mut this.leadershipDetails)}}
+  @setLeadershipDetails={{this.setLeadershipDetails}}
   @manageLeadership={{this.manageLeadership}}
-  @setManageLeadership={{action (mut this.manageLeadership)}}
+  @setManageLeadership={{this.setManageLeadership}}
 />
 {{outlet}}
