@@ -30,6 +30,7 @@
     <WeekGlance
       @collapsible={{true}}
       @collapsed={{not (includes week @expandedWeeks)}}
+      @weekInFocus={{@weekInFocus}}
       @year={{@year}}
       @week={{week}}
       @toggleCollapsed={{fn @toggleOpenWeek week}}

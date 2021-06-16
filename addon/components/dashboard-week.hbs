@@ -4,7 +4,7 @@
 >
   <div class="weeklylink" data-test-weekly-link>
     {{t "general.view"}}:
-    <LinkTo @route="weeklyevents" @query={{hash expanded=this.expanded}}>
+    <LinkTo @route="weeklyevents" @query={{hash expanded=this.expanded week=this.week}}>
       {{t "general.allWeeks"}}
     </LinkTo>
   </div>

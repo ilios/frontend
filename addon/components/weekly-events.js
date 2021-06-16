@@ -12,6 +12,10 @@ export default class WeeklyEvents extends Component {
     return weeks;
   }
 
+  get weekInFocus() {
+    return this.args.weekInFocus || 0;
+  }
+
   @action
   incrementYear() {
     this.args.setYear(parseInt(this.args.year, 10) + 1);
