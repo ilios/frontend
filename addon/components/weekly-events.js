@@ -13,7 +13,7 @@ export default class WeeklyEvents extends Component {
   }
 
   get weekInFocus() {
-    return this.args.weekInFocus || 0;
+    return this.args.weekInFocus || '';
   }
 
   @action
