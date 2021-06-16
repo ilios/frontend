@@ -99,6 +99,7 @@ general:
   defaultLocation: "Ubicación Predeterminada"
   defaultVirtualLearningLink: "Enlace de Aprendizaje Virtual Predeterminado"
   departments: Departmentos
+  deselectUser: "Deseleccione usuario"
   details: "Detalles de Curso"
   developer: Desarrollador
   director: Director
@@ -350,6 +351,7 @@ general:
   selected: Escogido
   selectProgram: "Seleccione un Programa"
   selectSchool: "Seleccione Escuela"
+  selectUser: "Seleccione usuario"
   selectYear: "Seleccione El Año Escolar"
   sequenceBlock: "Bloque de Secuencia"
   sequenceBlockConfirmRemove: "¿Está seguro que desea eliminar este bloque de secuencia? Esta acción no se puede deshacer."

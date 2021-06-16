@@ -11,13 +11,17 @@
     </h2>
   </div>
   <div class="form">
-    <label data-test->
+    <label>
       {{t "general.unassignedStudentsConfirmation" count=this.selectedUserIds.length}}:
     </label>
     {{#if (not (is-array this.cohorts))}}
       <LoadingSpinner />
     {{else if (and this.bestSelectedCohort (gt this.cohorts.length 0))}}
-      <select {{on "change" (pick "target.value" (set this.primaryCohortId))}} data-test-cohort-selector>
+      <select
+        aria-label={{t "general.cohorts"}}
+        {{on "change" (pick "target.value" (set this.primaryCohortId))}}
+        data-test-cohort-selector
+      >
         {{#each (sort-by "title" this.cohorts) as |cohort|}}
           <option
             selected={{eq cohort.id this.bestSelectedCohort.id}}
@@ -63,7 +67,7 @@
                   (lt this.selectedUserIds.length this.filteredStudents.length)
                 }}
                 data-test-toggle-all
-                {{on "click" (action "toggleCheck")}}
+                {{on "click" this.toggleCheck}}
               >
               {{t "general.all"}}
             </label>
@@ -84,9 +88,10 @@
           <tr class={{if (includes user.id this.selectedUserIds) "highlighted"}} data-test-student>
             <td class="text-left" colspan="1" >
               <input type="checkbox"
+                aria-label={{if (includes user.id this.selectedUserIds) (t "general.deselectUser") (t "general.selectUser")}}
                 checked={{if (includes user.id this.selectedUserIds) "checked"}}
                 data-test-toggle
-                {{on "click" (action "toggleUserSelection" user.id)}}
+                {{on "click" (fn this.toggleUserSelection user.id)}}
               >
             </td>
             <td class="text-left" colspan="4" data-test-name>

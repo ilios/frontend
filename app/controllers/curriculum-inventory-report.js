@@ -1,4 +1,5 @@
 import Controller from '@ember/controller';
+import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 
 export default class CurriculumInventoryReportController extends Controller {
@@ -6,4 +7,14 @@ export default class CurriculumInventoryReportController extends Controller {
 
   @tracked leadershipDetails = false;
   @tracked manageLeadership = false;
+
+  @action
+  setLeadershipDetails(leadershipDetails) {
+    this.leadershipDetails = leadershipDetails;
+  }
+
+  @action
+  setManageLeadership(manageLeadership) {
+    this.manageLeadership = manageLeadership;
+  }
 }
