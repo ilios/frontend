@@ -37,12 +37,24 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
     return contents;
   };
 
+  const addSessionTypeTitleToContents = function (
+    contents,
+    sessionTypeTitle,
+    sessionTypeTitlePhrase
+  ) {
+    if (sessionTypeTitle) {
+      contents = contents + `<br />${sessionTypeTitlePhrase}: ${sessionTypeTitle}`;
+    }
+    return contents;
+  };
+
   const eventLocation = event.location || '';
   const name = event.name;
   const startTime = moment(event.startDate).format(timeFormat);
   const endTime = moment(event.endDate).format(timeFormat);
   const instructors = event.instructors || [];
   const courseTitle = event.courseTitle;
+  const sessionTypeTitle = event.sessionTypeTitle;
   const isMulti = event.isMulti;
 
   let contents = '';
@@ -56,6 +68,11 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
       contents = addInstructorsToContents(contents, instructors, intl.t('general.etAl'));
     }
     contents = addCourseTitleToContents(contents, courseTitle, intl.t('general.course'));
+    contents = addSessionTypeTitleToContents(
+      contents,
+      sessionTypeTitle,
+      intl.t('general.sessionType')
+    );
     if (isMulti) {
       contents = contents + `<br />, ${intl.t('general.multiple')}`;
     }
@@ -68,6 +85,11 @@ export default function calendarEventTooltip(event, intl, timeFormat) {
       contents = addInstructorsToContents(contents, instructors, intl.t('general.etAl'));
     }
     contents = addCourseTitleToContents(contents, courseTitle, intl.t('general.course'));
+    contents = addSessionTypeTitleToContents(
+      contents,
+      sessionTypeTitle,
+      intl.t('general.sessionType')
+    );
     if (isMulti) {
       contents = contents + `<br />, ${intl.t('general.multiple')}`;
     }
