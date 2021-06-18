@@ -3,6 +3,7 @@ import Component from '@glimmer/component';
 import moment from 'moment';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask } from 'ember-concurrency';
+import scrollIntoView from 'scroll-into-view';
 
 export default class WeeklyGlance extends Component {
   @service userEvents;
@@ -37,6 +38,10 @@ export default class WeeklyGlance extends Component {
     this.publishedWeekEvents = weekEvents.filter((ev) => {
       return !ev.isBlanked && ev.isPublished && !ev.isScheduled;
     });
+
+    if (this.args.week === this.args.weekInFocus) {
+      scrollIntoView(element);
+    }
   }
 
   get title() {

@@ -4,9 +4,10 @@ import { tracked } from '@glimmer/tracking';
 import moment from 'moment';
 
 export default class WeeklyeventsController extends Controller {
-  queryParams = ['year', 'expanded'];
+  queryParams = ['year', 'expanded', 'week'];
   year = moment().format('YYYY');
   @tracked expanded = '';
+  @tracked week = '';
 
   get expandedString() {
     return this.expanded ? this.expanded : '';
@@ -20,8 +21,10 @@ export default class WeeklyeventsController extends Controller {
   toggleOpenWeek(week, shouldOpen) {
     const arr = this.expandedWeeks;
     arr.removeObject(week);
+    this.week = '';
     if (shouldOpen) {
       arr.pushObject(week);
+      this.week = week;
     }
     arr.sort();
     this.expanded = arr.filter(Boolean).join('-');
