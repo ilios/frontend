@@ -125,6 +125,8 @@ module('Integration | Component | user profile bio', function (hooks) {
       user: this.user,
     });
     const userModel = await this.owner.lookup('service:store').find('user', this.user.id);
+    const updates = await userModel.pendingUserUpdates;
+
     const authenticationModel = await this.owner
       .lookup('service:store')
       .find('authentication', this.authentication.id);
@@ -136,7 +138,7 @@ module('Integration | Component | user profile bio', function (hooks) {
 
     await a11yAudit();
     assert.ok(true, 'no a11y errors found!');
-    assert.equal(userModel.pendingUserUpdates.length, 2);
+    assert.equal(updates.length, 2);
     assert.equal(component.firstName.value, 'Test Person');
     assert.equal(component.middleName.value, 'Name');
     assert.equal(component.lastName.value, 'Thing');
@@ -168,7 +170,7 @@ module('Integration | Component | user profile bio', function (hooks) {
     assert.equal(userModel.displayName, 'new best name');
     assert.equal(userModel.preferredEmail, 'e2@e.com');
     assert.equal(userModel.phone, '12345x');
-    assert.equal(userModel.pendingUserUpdates.length, 0);
+    assert.equal(updates.length, 0);
     assert.equal(authenticationModel.username, 'test-username');
     assert.notOk(authenticationModel.password);
   });
