@@ -22,13 +22,13 @@
     <h3>
       {{t "general.instructors"}}
     </h3>
-    <div class="filter">
+    <div class="filter" data-test-filter>
       <input
-        aria-label={{t "general.filterPlaceholder"}}
+        aria-label={{t "general.filterChartPlaceholder"}}
         type="search"
         value={{this.name}}
         placeholder={{t "general.filterPlaceholder"}}
-        oninput={{perform this.setName value="target.value"}}
+        {{on "input" (pick "target.value" (set this.name))}}
       >
     </div>
     <VisualizerCourseInstructors @filter={{this.name}} @course={{@model}} />

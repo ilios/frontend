@@ -112,6 +112,7 @@ general:
   expandDetail: "Enseñar Detalles"
   externalId: "Identificación del Curso"
   file: Archivo
+  filterChartPlaceholder: "Empieza marcando para filtrar este gráfico"
   filterPlaceholder: "Empieza marcando para aplicar un filtro"
   fileSizeError: "Este archivo es demasiado grande.  El tamaño máximo es {maxSize}."
   findInstructorOrGroup: "Buscar Instructor o Grupo"

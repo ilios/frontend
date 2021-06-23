@@ -112,6 +112,7 @@ general:
   expandDetail: "Show Details"
   externalId: "Course ID"
   file: File
+  filterChartPlaceholder: "Start typing to filter this chart"
   filterPlaceholder: "Start typing to filter list"
   fileSizeError: "This file is too large.  Maximum size is {maxSize}."
   findInstructorOrGroup: "Find Instructor or Group"
