@@ -112,6 +112,7 @@ general:
   expandDetail: "Afficher Détails"
   externalId: "ID de Cours"
   file: Fichier
+  filterChartPlaceholder: "Commencez à taper pour filtrer ce graphique"
   filterPlaceholder: "Commencez à taper pour filtre la liste"
   fileSizeError: "Ce dossier est trop grand. Taille maximale est {maxSize})."
   findInstructorOrGroup: "Trouver Instructeur ou Groupe"
