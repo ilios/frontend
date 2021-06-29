@@ -1,0 +1,39 @@
+name: Dependabot auto-merge
+on: pull_request_target
+permissions:
+  pull-requests: write
+  content: write
+jobs:
+  dependabot:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        safe-dependency:
+        - "@ilios/eslint-config-ember"
+        - "babel-eslint"
+        - "browserslist"
+        - "caniuse-db"
+        - "ember-cli-dependency-checker"
+        - "ember-cli-dependency-lint"
+        - "ember-qunit"
+        - "ember-template-lint"
+        - "eslint"
+        - "qunit"
+        - "qunit-dom"
+        - "stylelint"
+        - "stylelint-config-recommended-scss"
+        - "stylelint-scss"
+    if: ${{ github.actor == 'dependabot[bot]' }}
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1.1.0
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Enable auto-merge for Dependabot PRs
+        if: ${{contains(steps.metadata.outputs.dependency-names, matrix.safe-dependency)}}
+        uses: peter-evans/enable-pull-request-automerge@v1
+        with:
+          pull-request-number: ${{github.event.pull_request.number}}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          merge-method: merge
