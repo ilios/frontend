@@ -198,6 +198,18 @@
           </LinkTo>
         </li>
       {{/if}}
+      <li>
+        <LinkTo
+            @route="reports"
+            title={{t "general.reports"}}
+            @current-when="reports"
+        >
+          <FaIcon @icon="file-alt" @fixedWidth={{true}} />
+          <span class="text">
+            {{t "general.reports"}}
+          </span>
+        </LinkTo>
+      </li>
     </ul>
   {{/if}}
 </nav>

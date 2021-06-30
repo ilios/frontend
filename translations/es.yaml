@@ -339,6 +339,7 @@ general:
   reportMissingObjectForMeshTerm: "Asociación es Necesario Cuando Término de MeSH es el Sujeto"
   reportName: "Nombre de Informe"
   reportNamePlaceholder: "Por favor Introduzca un Nombre de Informe"
+  reports: Informes
   reportTitle: "Título de Informe"
   requiredInTrack: "Requerido en Pista"
   resourceTypes: "Tipos de recursos"

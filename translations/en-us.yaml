@@ -339,6 +339,7 @@ general:
   reportMissingObjectForMeshTerm: "Association is required when MeSH Term is the subject"
   reportName: "Report Name"
   reportNamePlaceholder: "Please enter a report name."
+  reports: Reports
   reportTitle: "Report Title"
   requiredInTrack: "Required In Track"
   resourceTypes: "Resource Types"

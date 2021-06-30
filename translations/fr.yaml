@@ -340,6 +340,7 @@ general:
   reportMissingObjectForMeshTerm: "connexion requis quand `terme de MeSH` est le sujet"
   reportName: "Nom de rapport"
   reportNamePlaceholder: "Entrez S'il vous plait un nom de rapport."
+  reports: Rapports
   reportTitle: "Titre du Rapport"
   requiredInTrack: "Requis en piste"
   resourceTypes: "Types de ressources"

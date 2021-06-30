@@ -154,4 +154,5 @@ Router.map(function () {
     path: 'data/programyears/:program_year_id/objectives',
   });
   this.route('search');
+  this.route('reports');
 });
