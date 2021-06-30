@@ -152,4 +152,5 @@ Router.map(function () {
     path: 'data/programyears/:program_year_id/competencies',
   });
   this.route('search');
+  this.route('reports');
 });
