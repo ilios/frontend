@@ -3,10 +3,6 @@
   margin-top: 1rem;
   width: 100%;
 
-  @include for-laptop-and-up {
-    width: 49%;
-  }
-
   .dashboard-block-header {
     align-items: center;
     background-color: $grey;
@@ -20,6 +16,7 @@
       color: $ilios-orange;
     }
   }
+
 
   .dashboard-block-body {
     height: 30rem;

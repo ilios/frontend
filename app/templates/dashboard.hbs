@@ -42,13 +42,6 @@
   />
 
   <div class="dashboard-blocks">
-    <DashboardMyreports
-      data-test-myreports
-      @selectedReport={{await this.selectedReport}}
-      @selectedYear={{this.reportYear}}
-      @onReportSelect={{set this.report}}
-      @onReportYearSelect={{set this.reportYear}}
-    />
     <DashboardMycourses />
   </div>
 </div>
