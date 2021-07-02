@@ -54,11 +54,9 @@
         <LinkTo
           @route="learnerGroups"
           @query={{hash
-            school=(get
-              (await @learnerGroup.cohort.programYear.program.school) "id"
-            )
-            program=(get (await @learnerGroup.cohort.programYear.program) "id")
-            programYear=(get (await @learnerGroup.cohort.programYear) "id")
+            school=(await @learnerGroup.cohort.programYear.program.school.id)
+            program=(await @learnerGroup.cohort.programYear.program.id)
+            programYear=(await @learnerGroup.cohort.programYear.id)
           }}
         >
           {{t "general.learnerGroups"}}
