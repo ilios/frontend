@@ -4,26 +4,38 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, click, fillIn, find, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 const { resolve } = RSVP;
 
 module('Integration | Component | learnergroup header', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    const learnerGroup = EmberObject.create({
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const programYear = this.server.create('program-year', { program });
+    const cohort = this.server.create('cohort', { programYear });
+    const parentGroup = this.server.create('learner-group', { cohort, title: 'parent group' });
+    const learnerGroup = this.server.create('learner-group', {
+      cohort,
+      parent: parentGroup,
       title: 'our group',
-      allParents: resolve([{ title: 'parent group' }]),
     });
+    const learnerGroupModel = await this.owner
+      .lookup('service:store')
+      .find('learner-group', learnerGroup.id);
+    this.set('learnerGroup', learnerGroupModel);
 
-    this.set('learnerGroup', learnerGroup);
-    await render(hbs`<LearnergroupHeader @learnerGroup={{learnerGroup}} />`);
+    await render(hbs`<LearnergroupHeader @learnerGroup={{this.learnerGroup}} />`);
 
     assert.dom('.title').hasText('our group');
     assert.equal(
       find('.breadcrumbs').textContent.replace(/\s/g, ''),
       'LearnerGroupsparentgroupourgroup'
     );
+    const breadcrumbRootLinkUrl = new URL(find('.breadcrumbs > span a').href);
+    assert.equal(breadcrumbRootLinkUrl.search, '?program=1&programYear=1&school=1');
   });
 
   test('can change title', async function (assert) {
