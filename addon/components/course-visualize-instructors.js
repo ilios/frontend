@@ -6,6 +6,7 @@ import { restartableTask } from 'ember-concurrency';
 export default class CourseVisualizeInstructorsComponent extends Component {
   @service iliosConfig;
   @tracked academicYearCrossesCalendarYearBoundaries = false;
+  @tracked name;
 
   @restartableTask
   *load() {
