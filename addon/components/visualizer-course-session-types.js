@@ -18,6 +18,22 @@ export default class VisualizerCourseSessionTypes extends Component {
     return this.args.chartType || 'horz-bar';
   }
 
+  get filteredData() {
+    if (!this.data) {
+      return [];
+    }
+
+    let data = this.data;
+    if (this.args.filter) {
+      const exp = new RegExp(this.args.filter, 'gi');
+      data = this.data.filter(({ label }) => label.match(exp));
+    }
+
+    return data.sort((first, second) => {
+      return first.data - second.data;
+    });
+  }
+
   @restartableTask
   *load(element, [course]) {
     const sessions = yield course.get('sessions');
