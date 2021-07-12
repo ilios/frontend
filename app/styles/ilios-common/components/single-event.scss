@@ -2,10 +2,6 @@
   display: grid;
   margin-left: 1em;
 
-  @include for-laptop-and-up {
-    grid-template-columns: 1fr 1fr;
-  }
-
   h2 {
     @include ilios-heading-h4;
     margin: 1em 0;
