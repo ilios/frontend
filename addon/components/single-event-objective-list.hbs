@@ -41,7 +41,8 @@
     <ul class="list-in-order">
       {{#each @objectives as |objective|}}
         <li>
-          {{objective.title}}
+          {{! template-lint-disable no-triple-curlies }}
+          {{{objective.title}}}
           <span class="details">
             {{objective.domain}}
           </span>

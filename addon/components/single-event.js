@@ -45,13 +45,11 @@ export default class SingleEvent extends Component {
     const competencies = this.args.event.competencies || [];
     return objectives
       .map((objective) => {
-        //strip all HTML
-        const title = objective.title.replace(/(<([^>]+)>)/gi, '');
         const position = objective.position;
         if (isEmpty(objective.competencies)) {
           return {
             id: objective.id,
-            title,
+            title: objective.title,
             domain: this.intl.t('general.noAssociatedCompetencies'),
             position,
           };
@@ -65,7 +63,7 @@ export default class SingleEvent extends Component {
         }
         return {
           id: objective.id,
-          title,
+          title: objective.title,
           domain: competency.title + ' (' + domain.title + ')',
           position,
         };
@@ -127,13 +125,11 @@ export default class SingleEvent extends Component {
     const competencies = this.args.event.competencies || [];
     return objectives
       .map((objective) => {
-        //strip all HTML
-        const title = objective.title.replace(/(<([^>]+)>)/gi, '');
         const position = objective.position;
         if (isEmpty(objective.competencies)) {
           return {
             id: objective.id,
-            title,
+            title: objective.title,
             domain: this.intl.t('general.noAssociatedCompetencies'),
             position,
           };
@@ -147,7 +143,7 @@ export default class SingleEvent extends Component {
         }
         return {
           id: objective.id,
-          title,
+          title: objective.title,
           domain: competency.title + ' (' + domain.title + ')',
           position,
         };
