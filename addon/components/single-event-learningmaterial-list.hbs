@@ -7,6 +7,13 @@
             <div class="single-event-learningmaterial-item-title">
               {{lm.title}}
             </div>
+            <div class="single-event-learningmaterial-item-timing-info">
+              <TimedReleaseSchedule
+                @startDate={{lm.startDate}}
+                @endDate={{lm.endDate}}
+                @showNoSchedule={{false}}
+              />
+            </div>
           {{else}}
             <LmTypeIcon
               @type={{lm.type}}

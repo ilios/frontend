@@ -10,13 +10,13 @@ module(
     setupRenderingTest(hooks);
 
     test('it renders', async function (assert) {
-      assert.expect(10);
-
       this.set('learningMaterials', [
         {
           title: 'first one',
           mimetype: 'application/pdf',
           absoluteFileUri: 'http://firstlink',
+          startDate: new Date(2003, 10, 12),
+          endDate: new Date(2003, 10, 18),
         },
         {
           title: 'second one',
@@ -30,7 +30,7 @@ module(
         },
       ]);
       await render(
-        hbs`<SingleEventLearningmaterialList @learningMaterials={{learningMaterials}} />`
+        hbs`<SingleEventLearningmaterialList @learningMaterials={{this.learningMaterials}} />`
       );
 
       assert
@@ -42,14 +42,18 @@ module(
         .dom('li:nth-of-type(1) a:nth-of-type(1)')
         .hasAttribute('href', 'http://firstlink?inline');
       assert.dom('li:nth-of-type(1) a:nth-of-type(2) .fa-download').exists();
+      assert.dom('li:nth-of-type(1) .timed-release-schedule').hasAnyText();
       assert
         .dom('li:nth-of-type(2) .single-event-learningmaterial-item-title')
         .hasText('second one');
       assert.dom('li:nth-of-type(2) .fa-file-audio').exists('LM type icon is present.');
       assert.dom('li:nth-of-type(2) a').hasAttribute('href', 'http://secondlink');
+      assert.dom('li:nth-of-type(2) .timed-release-schedule').hasNoText();
+
       assert
         .dom('li:nth-of-type(3) .single-event-learningmaterial-item-title')
         .hasText('third one');
+      assert.dom('li:nth-of-type(3) .timed-release-schedule').hasAnyText();
       await a11yAudit(this.element);
       assert.ok(true, 'no a11y errors found!');
     });
@@ -59,7 +63,7 @@ module(
 
       this.set('learningMaterials', []);
       await render(
-        hbs`<SingleEventLearningmaterialList @learningMaterials={{learningMaterials}} />`
+        hbs`<SingleEventLearningmaterialList @learningMaterials={{this.learningMaterials}} />`
       );
 
       assert.dom('.no-content').hasText('None');
