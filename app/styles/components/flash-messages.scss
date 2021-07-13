@@ -48,6 +48,7 @@
   }
 
   .alert:last-of-type {
-    @include border-bottom-radius(5px);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
   }
 }
