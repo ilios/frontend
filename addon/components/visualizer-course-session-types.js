@@ -6,6 +6,7 @@ import { restartableTask, timeout } from 'ember-concurrency';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
+import { cleanQuery } from 'ilios-common/utils/query-utils';
 
 export default class VisualizerCourseSessionTypes extends Component {
   @service router;
@@ -24,11 +25,11 @@ export default class VisualizerCourseSessionTypes extends Component {
     }
 
     let data = this.data;
-    if (this.args.filter) {
-      const exp = new RegExp(this.args.filter, 'gi');
+    const q = cleanQuery(this.args.filter);
+    if (q) {
+      const exp = new RegExp(q, 'gi');
       data = this.data.filter(({ label }) => label.match(exp));
     }
-
     return data.sort((first, second) => {
       return first.data - second.data;
     });
