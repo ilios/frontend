@@ -50,7 +50,7 @@ module('Integration | Component | visualizer-course-session-types', function (ho
 
     this.set('course', this.courseModel);
 
-    await render(hbs`<VisualizerCourseSessionTypes @course={{course}} @isIcon={{false}} />`);
+    await render(hbs`<VisualizerCourseSessionTypes @course={{this.course}} @isIcon={{false}} />`);
 
     const chartLabels = 'svg .bars text';
     assert.dom(chartLabels).exists({ count: 2 });
@@ -64,12 +64,24 @@ module('Integration | Component | visualizer-course-session-types', function (ho
     this.set('course', this.courseModel);
 
     await render(
-      hbs`<VisualizerCourseSessionTypes @course={{course}} @isIcon={{false}} @chartType="donut" />`
+      hbs`<VisualizerCourseSessionTypes @course={{this.course}} @isIcon={{false}} @chartType="donut" />`
     );
 
     const chartLabels = 'svg .slice text';
     assert.dom(chartLabels).exists({ count: 2 });
     assert.dom(findAll(chartLabels)[0]).hasText('Campaign 22.2%');
     assert.dom(findAll(chartLabels)[1]).hasText('Standalone 77.8%');
+  });
+
+  test('filter applies', async function (assert) {
+    this.set('title', 'Campaign');
+    this.set('course', this.courseModel);
+
+    await render(
+      hbs`<VisualizerCourseSessionTypes @course={{this.course}} @filter={{this.title}} @isIcon={{false}} />`
+    );
+    const chartLabels = 'svg .bars text';
+    assert.dom(chartLabels).exists({ count: 1 });
+    assert.dom(findAll(chartLabels)[0]).hasText('Campaign 22.2%');
   });
 });

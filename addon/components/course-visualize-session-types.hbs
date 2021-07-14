@@ -22,6 +22,15 @@
         {{/if}}
       </LinkTo>
     </h3>
-    <VisualizerCourseSessionTypes @course={{@model}} />
+    <div class="filter" data-test-filter>
+      <input
+        aria-label={{t "general.filterChartPlaceholder"}}
+        type="search"
+        value={{this.title}}
+        placeholder={{t "general.filterPlaceholder"}}
+        {{on "input" (pick "target.value" (set this.title))}}
+      >
+    </div>
+    <VisualizerCourseSessionTypes @filter={{this.title}} @course={{@model}} />
   {{/unless}}
 </section>

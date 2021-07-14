@@ -8,7 +8,7 @@
       <SimpleChart
         @name={{this.chartType}}
         @isIcon={{@isIcon}}
-        @data={{this.data}}
+        @data={{this.filteredData}}
         @onClick={{this.barClick}}
         @hover={{perform this.barHover}}
         @leave={{perform this.barHover}} as |chart|
