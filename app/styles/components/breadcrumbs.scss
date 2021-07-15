@@ -45,13 +45,17 @@
 
     &::after,
     &::before {
-      @include position(absolute, 0 auto 0 100%);
+      bottom: 0;
       border-bottom: math.div($breadcrumb-height, 2) solid transparent;
       border-left: math.div($breadcrumb-height, 4) solid transparent;
       border-top: math.div($breadcrumb-height, 2) solid transparent;
       content: '';
       display: block;
+      left: 100%;
       margin: auto;
+      position: absolute;
+      right: auto;
+      top: 0;
       z-index: 2;
     }
 
