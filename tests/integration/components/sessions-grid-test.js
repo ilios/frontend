@@ -14,7 +14,7 @@ module('Integration | Component | sessions-grid', function (hooks) {
     this.set('setSortBy', () => {});
     await render(hbs`<SessionsGrid
       @sessions={{sessions}}
-      @sortBy={{sortBy}}
+      @sortBy={{this.sortBy}}
       @setSortBy={{action setSortBy}}
     />`);
 
@@ -38,7 +38,7 @@ module('Integration | Component | sessions-grid', function (hooks) {
     });
     await render(hbs`<SessionsGrid
       @sessions={{sessions}}
-      @sortBy={{sortBy}}
+      @sortBy={{this.sortBy}}
       @setSortBy={{action setSortBy}}
       @expandSession={{action expandSession}}
     />`);
@@ -64,7 +64,7 @@ module('Integration | Component | sessions-grid', function (hooks) {
     });
     await render(hbs`<SessionsGrid
       @sessions={{sessions}}
-      @sortBy={{sortBy}}
+      @sortBy={{this.sortBy}}
       @setSortBy={{action setSortBy}}
       @expandSession={{action expandSession}}
     />`);
