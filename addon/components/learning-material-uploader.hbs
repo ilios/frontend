@@ -3,7 +3,7 @@
     @for={{@for}}
     @disabled={{this.upload.isRunning}}
     @name={{this.uploadQueueName}}
-    @onfileadd={{perform this.upload}} as |queue|>
+    @onFileAdd={{perform this.upload}} as |queue|>
     <span class="upload-button" role="button">
       {{#if (and (not this.fileUploadErrorMessage) queue.files.length)}}
         <LoadingSpinner />{{queue.progress}}%
