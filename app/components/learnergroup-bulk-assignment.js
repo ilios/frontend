@@ -38,7 +38,7 @@ export default class LearnergroupBulkAssignmentComponent extends Component {
   @action
   removeMatch(name) {
     this.matchedGroups = this.matchedGroups.filter((group) => {
-      group.name !== name;
+      return group.name !== name;
     });
   }
 
