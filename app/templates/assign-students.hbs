@@ -7,7 +7,7 @@
     <div class="schoolsfilter">
       <FaIcon @icon="university" @fixedWidth={{true}} />
       {{#if this.hasMoreThanOneSchool}}
-        <select onchange={{action (mut this.schoolId) value="target.value"}}>
+        <select aria-label={{t "general.filterBySchool"}} onchange={{action (mut this.schoolId) value="target.value"}}>
           {{#each (sort-by "title" this.schools) as |school|}}
             <option
               selected={{is-equal school this.selectedSchool}}
@@ -23,6 +23,7 @@
     </div>
     <div class="titlefilter">
       <input
+        aria-label={{t "general.filterByTitle"}}
         placeholder={{t "general.pendingUserUpdates.filterBy"}}
         type="text"
         value={{this.query}}

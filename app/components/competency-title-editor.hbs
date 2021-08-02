@@ -16,6 +16,7 @@
         @value={{this.title}}
         @key-press={{fn this.addErrorDisplayFor "title"}}
         disabled={{isSaving}}
+        aria-label={{t "general.title"}}
       />
     </EditableField>
     {{#each (await (compute this.getErrorsFor "title")) as |message|}}

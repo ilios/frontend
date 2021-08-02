@@ -9,7 +9,7 @@
       <div class="schoolsfilter" data-test-schools-filter>
         <FaIcon @icon="university" @fixedWidth={{true}} />
         {{#if this.hasMoreThanOneSchool}}
-          <select {{on "change" (pick "target.value" this.changeSelectedSchool)}}>
+          <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" this.changeSelectedSchool)}}>
             {{#each this.sortedSchools as |school|}}
               <option
                 value={{school.id}}
@@ -28,7 +28,7 @@
       <div class="programsfilter" data-test-programs-filter>
         <FaIcon @icon="list-alt" @fixedWidth={{true}} />
         {{#if this.programs.length}}
-          <select {{on "change" (pick "target.value" this.changeSelectedProgram)}}>
+          <select aria-label={{t "general.filterByProgram"}} {{on "change" (pick "target.value" this.changeSelectedProgram)}}>
             {{#each this.programs as |program|}}
               <option value={{program.id}} selected={{is-equal program this.selectedProgram}}>
                 {{program.title}}

@@ -71,6 +71,7 @@ general:
   connectionLost: "Conexión Perdida."
   continue: Continuar
   copy: Copiar
+  copyNewToken: "Copiar nuevo token"
   copyWithLearners: "Copiar Con Alumnos"
   copyWithoutLearners: "Copiar Sin Alumnos"
   couldNotFindUserCampusId: "No se pudo encontrar un usuario con el campusId {campusId}"
@@ -126,6 +127,10 @@ general:
   fileTypeError: "Archivo mal subido: {fileType} no parece ser válido ficha separado archivo."
   fileUploadError: "No pudimos subir este archivo.   Por favor, asegúrese de que está conectado a la red.  Si este problema persiste, por favor avísenos."
   filterByNameOrEmail: "Aplicar un Filtro por nombre o email"
+  filterByTitle: "Filtrar por Título"
+  filterByProgram: "Filtrar por Programa"
+  filterBySchool: "Filtrar por Escuela"
+  filterByYear: "Filtrar por Año"
   finalErrorDisplayMessage: "¡Zoinks! Algo es muy incorrecto. Por favor refresque su navegador y avísenos en support@iliosproject.org si sigue viendo este mensaje. "
   finalize: Finalizar
   finalized: Finalizado
@@ -347,6 +352,7 @@ general:
   secondaryCohorts: "Clases de la Graduación Secondarias"
   select: Selecciona
   selectAcademicYear: "Selecciona Año Academico"
+  selectAllOrNone: "Seleccione Todo o Ninguno"
   selectCourse: "Seleccionar un curso"
   selected: Escogido
   selectProgram: "Seleccione un Programa"

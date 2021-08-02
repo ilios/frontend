@@ -1,90 +1,103 @@
-<div data-test-school-session-attributes-manager ...attributes>
-  <table class="condensed">
-    <thead>
-      <tr>
-        <th class="text-left">
-          {{t "general.attribute"}}
-        </th>
-        <th class="text-left">
-          {{t "general.enabled"}}
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr data-test-attendance-required>
-        <td>
-          {{t "general.attendanceRequired"}}
-        </td>
-        <td>
-          {{#if @showSessionAttendanceRequired}}
-            <input
-              type="checkbox"
-              role="button"
-              checked={{true}}
-              {{on "click" (fn @disable "showSessionAttendanceRequired")}}
-            >
-          {{else}}
-            <input
-              type="checkbox"
-              {{on "click" (fn @enable "showSessionAttendanceRequired")}}
-            >
-          {{/if}}
-        </td>
-      </tr>
-      <tr data-test-supplemental>
-        <td>
-          {{t "general.supplementalCurriculum"}}
-        </td>
-        <td>
-          {{#if @showSessionSupplemental}}
-            <input
-              type="checkbox"
-              checked={{true}}
-              {{on "click" (fn @disable "showSessionSupplemental")}}
-            >
-          {{else}}
-            <input type="checkbox" {{on "click" (fn @enable "showSessionSupplemental")}} >
-          {{/if}}
-        </td>
-      </tr>
-      <tr data-test-special-attire-required>
-        <td>
-          {{t "general.specialAttireRequired"}}
-        </td>
-        <td>
-          {{#if @showSessionSpecialAttireRequired}}
-            <input
-              type="checkbox"
-              checked={{true}}
-              {{on "click" (fn @disable "showSessionSpecialAttireRequired")}}
-            >
-          {{else}}
-            <input
-              type="checkbox"
-              {{on "click" (fn @enable "showSessionSpecialAttireRequired")}}
-            >
-          {{/if}}
-        </td>
-      </tr>
-      <tr data-test-special-equipment-required>
-        <td>
-          {{t "general.specialEquipmentRequired"}}
-        </td>
-        <td>
-          {{#if @showSessionSpecialEquipmentRequired}}
-            <input
-              type="checkbox"
-              checked={{true}}
-              {{on "click" (fn @disable "showSessionSpecialEquipmentRequired")}}
-            >
-          {{else}}
-            <input
-              type="checkbox"
-              {{on "click" (fn @enable "showSessionSpecialEquipmentRequired")}}
-            >
-          {{/if}}
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+{{#let (unique-id) as |templateId|}}
+  <div data-test-school-session-attributes-manager ...attributes>
+    <table class="condensed">
+      <thead>
+        <tr>
+          <th class="text-left">
+            {{t "general.attribute"}}
+          </th>
+          <th class="text-left">
+            {{t "general.enabled"}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-test-attendance-required>
+          <td id="attendance-required-{{templateId}}">
+            {{t "general.attendanceRequired"}}
+          </td>
+          <td>
+            {{#if @showSessionAttendanceRequired}}
+              <input
+                type="checkbox"
+                role="button"
+                checked={{true}}
+                {{on "click" (fn @disable "showSessionAttendanceRequired")}}
+                aria-labelledby="attendance-required-{{templateId}}"
+              >
+            {{else}}
+              <input
+                type="checkbox"
+                {{on "click" (fn @enable "showSessionAttendanceRequired")}}
+                aria-labelledby="attendance-required-{{templateId}}"
+              >
+            {{/if}}
+          </td>
+        </tr>
+        <tr data-test-supplemental>
+          <td id="supplemental-{{templateId}}">
+            {{t "general.supplementalCurriculum"}}
+          </td>
+          <td>
+            {{#if @showSessionSupplemental}}
+              <input
+                type="checkbox"
+                checked={{true}}
+                {{on "click" (fn @disable "showSessionSupplemental")}}
+                aria-labelledby="supplemental-{{templateId}}"
+              >
+            {{else}}
+              <input
+                type="checkbox"
+                {{on "click" (fn @enable "showSessionSupplemental")}}
+                aria-labelledby="supplemental-{{templateId}}"
+              >
+            {{/if}}
+          </td>
+        </tr>
+        <tr data-test-special-attire-required>
+          <td id="special-attire-{{templateId}}">
+            {{t "general.specialAttireRequired"}}
+          </td>
+          <td>
+            {{#if @showSessionSpecialAttireRequired}}
+              <input
+                type="checkbox"
+                checked={{true}}
+                {{on "click" (fn @disable "showSessionSpecialAttireRequired")}}
+                aria-labelledby="special-attire-{{templateId}}"
+              >
+            {{else}}
+              <input
+                type="checkbox"
+                {{on "click" (fn @enable "showSessionSpecialAttireRequired")}}
+                aria-labelledby="special-attire-{{templateId}}"
+              >
+            {{/if}}
+          </td>
+        </tr>
+        <tr data-test-special-equipment-required>
+          <td id="special-equiptment-required-{{templateId}}">
+            {{t "general.specialEquipmentRequired"}}
+          </td>
+          <td>
+            {{#if @showSessionSpecialEquipmentRequired}}
+              <input
+                type="checkbox"
+                checked={{true}}
+                {{on "click" (fn @disable "showSessionSpecialEquipmentRequired")}}
+                aria-labelledby="special-equiptment-required-{{templateId}}"
+              >
+            {{else}}
+              <input
+                type="checkbox"
+                {{on "click" (fn @enable "showSessionSpecialEquipmentRequired")}}
+                aria-labelledby="special-equiptment-required-{{templateId}}"
+              >
+            {{/if}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+{{/let}}

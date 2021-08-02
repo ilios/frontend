@@ -71,6 +71,7 @@ general:
   connectionLost: "Connexion perdu"
   continue: Continuez
   copy: Copie
+  copyNewToken: "Copier nouveau jeton"
   copyWithLearners: "Copiér avec étudiants"
   copyWithoutLearners: "Copiér sans étudiants"
   couldNotFindUserCampusId: "Ne pouvait pas trouver utilisateur avec le Campus ID {campusId}"
@@ -126,6 +127,10 @@ general:
   fileTypeError: "Mal fichier téléchargé : {fileType} ne semble pas être un fichier correctement délimité."
   fileUploadError: "Nous n'avons pas pu télécharger ce dossier. Assurez S'il vous plaît que vous êtes connectés au réseau. Si ce problème persiste merci de nous faire savoir."
   filterByNameOrEmail: "Filtre par nom ou email"
+  filterByTitle: "Filtre par titre"
+  filterByProgram: "Filtre par diplôme"
+  filterBySchool: "Filtre par école"
+  filterByYear: "Filtre par année"
   finalErrorDisplayMessage: "Zoinks! Quelque chose ne vas pas du tout. S'il vous plaît rafraîchir votre navigateur et prévenez-nous à support@iliosproject.org si vous continuez à voir ce message."
   finalize: Finaliser
   finalized: "Finalisé"
@@ -347,6 +352,7 @@ general:
   secondaryCohorts: "Cohortes Secondaires"
   select: "Sélectionnez"
   selectAcademicYear: "Choisissez l’année scolaire"
+  selectAllOrNone: "Sélectionner tout ou aucun" 
   selectCourse: "Choisi cours"
   selected: "Sélectionné"
   selectProgram: "Choisi Diplôme"

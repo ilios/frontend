@@ -1,137 +1,141 @@
-<div
-  class="school-vocabulary-term-manager"
-  data-test-school-vocabulary-term-manager
-  {{did-insert (perform this.load)}}
-  {{did-update (perform this.load) @term.children}}
-  attributes...
->
-  {{#if this.load.isRunning}}
-    <LoadingSpinner />
-  {{else}}
-    <div class="breadcrumbs" data-test-breadcrumbs>
-      <span role="button" data-test-all {{on "click" this.clearVocabAndTerm}}>
-        {{t "general.allVocabularies"}}
-      </span>
-      <span role="button" data-test-vocabulary {{on "click" (fn @manageTerm null)}}>
-        {{@vocabulary.title}}
-      </span>
-      {{#each (await @term.allParents) as |parent|}}
-        <span role="button" data-test-term {{on "click" (fn @manageTerm parent.id)}}>
-          {{parent.title}}
+{{#let (unique-id) as |templateId|}}
+  <div
+    class="school-vocabulary-term-manager"
+    data-test-school-vocabulary-term-manager
+    {{did-insert (perform this.load)}}
+    {{did-update (perform this.load) @term.children}}
+    attributes...
+  >
+    {{#if this.load.isRunning}}
+      <LoadingSpinner />
+    {{else}}
+      <div class="breadcrumbs" data-test-breadcrumbs>
+        <span role="button" data-test-all {{on "click" this.clearVocabAndTerm}}>
+          {{t "general.allVocabularies"}}
         </span>
-      {{/each}}
-      <span data-test-term>
-        {{@term.title}}
-      </span>
-    </div>
-    {{#if @term}}
-      <div class="school-vocabulary-term-manager-properties">
-        <div class="block term-title" data-test-title>
-          <h4>
-            {{t "general.title"}}:
-          </h4>
-          {{#if @canUpdate}}
-            <EditableField
-              @value={{if this.title this.title (t "general.clickToEdit")}}
-              @save={{perform this.changeTitle}}
-              @close={{this.revertTitleChanges}}
-              @saveOnEnter={{true}}
-              @closeOnEscape={{true}} as |isSaving|
-            >
-              <Input
-                type="text"
-                @value={{this.title}}
-                @key-press={{fn this.addErrorDisplayFor "title"}}
-                disabled={{isSaving}}
-              />
-            </EditableField>
-          {{else}}
-            {{this.title}}
-          {{/if}}
-          {{#each (await (compute this.getErrorsFor "title")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
-          {{#if (and @canDelete (not this.terms.length) (not @term.hasAssociations))}}
-            <FaIcon
-              @icon="trash"
-              class="clickable remove enabled"
-              {{on "click" (perform this.deleteTerm)}}
-            />
-          {{else}}
-            <FaIcon @icon="trash" class="disabled" />
-          {{/if}}
-        </div>
-        <div class="block is-active" data-test-is-active>
-          <label>
-            {{t "general.active"}}:
-          </label>
-          {{#if @canUpdate}}
-            <ToggleYesno
-              @yes={{this.isActive}}
-              @disabled={{this.changeIsActive.isRunning}}
-              @toggle={{perform this.changeIsActive}}
-            />
-          {{else if this.isActive}}
-            {{t "general.yes"}}
-          {{else}}
-            {{t "general.no"}}
-          {{/if}}
-        </div>
-        <div class="block term-description" data-test-description>
-          <label>
-            {{t "general.description"}}:
-          </label>
-          {{#if @canUpdate}}
-            <EditableField
-              @value={{if this.description this.description (t "general.clickToAddTermDescription")}}
-              @save={{perform this.changeDescription}}
-              @close={{this.revertDescriptionChanges}}
-              @closeOnEscape={{true}} as |isSaving|
-            >
-              <textarea
-                value={{this.description}}
-                {{on "input" (pick "target.value" (set this.description))}}
-                disabled={{this.isSaving}}
+        <span role="button" data-test-vocabulary {{on "click" (fn @manageTerm null)}}>
+          {{@vocabulary.title}}
+        </span>
+        {{#each (await @term.allParents) as |parent|}}
+          <span role="button" data-test-term {{on "click" (fn @manageTerm parent.id)}}>
+            {{parent.title}}
+          </span>
+        {{/each}}
+        <span data-test-term>
+          {{@term.title}}
+        </span>
+      </div>
+      {{#if @term}}
+        <div class="school-vocabulary-term-manager-properties">
+          <div class="block term-title" data-test-title>
+            <label for="title-{{templateId}}">
+              {{t "general.title"}}:
+            </label>
+            {{#if @canUpdate}}
+              <EditableField
+                @value={{if this.title this.title (t "general.clickToEdit")}}
+                @save={{perform this.changeTitle}}
+                @close={{this.revertTitleChanges}}
+                @saveOnEnter={{true}}
+                @closeOnEscape={{true}} as |isSaving|
               >
-                {{this.description}}
-              </textarea>
-            </EditableField>
-          {{else}}
-            {{this.description}}
-          {{/if}}
+                <Input
+                  id="title-{{templateId}}"
+                  type="text"
+                  @value={{this.title}}
+                  @key-press={{fn this.addErrorDisplayFor "title"}}
+                  disabled={{isSaving}}
+                />
+              </EditableField>
+            {{else}}
+              {{this.title}}
+            {{/if}}
+            {{#each (await (compute this.getErrorsFor "title")) as |message|}}
+              <span class="validation-error-message">
+                {{message}}
+              </span>
+            {{/each}}
+            {{#if (and @canDelete (not this.terms.length) (not @term.hasAssociations))}}
+              <FaIcon
+                @icon="trash"
+                class="clickable remove enabled"
+                {{on "click" (perform this.deleteTerm)}}
+              />
+            {{else}}
+              <FaIcon @icon="trash" class="disabled" />
+            {{/if}}
+          </div>
+          <div class="block is-active" data-test-is-active>
+            <label>
+              {{t "general.active"}}:
+            </label>
+            {{#if @canUpdate}}
+              <ToggleYesno
+                @yes={{this.isActive}}
+                @disabled={{this.changeIsActive.isRunning}}
+                @toggle={{perform this.changeIsActive}}
+              />
+            {{else if this.isActive}}
+              {{t "general.yes"}}
+            {{else}}
+              {{t "general.no"}}
+            {{/if}}
+          </div>
+          <div class="block term-description" data-test-description>
+            <label for="description-{{templateId}}">
+              {{t "general.description"}}:
+            </label>
+            {{#if @canUpdate}}
+              <EditableField
+                @value={{if this.description this.description (t "general.clickToAddTermDescription")}}
+                @save={{perform this.changeDescription}}
+                @close={{this.revertDescriptionChanges}}
+                @closeOnEscape={{true}} as |isSaving|
+              >
+                <textarea
+                  id="description-{{templateId}}"
+                  value={{this.description}}
+                  {{on "input" (pick "target.value" (set this.description))}}
+                  disabled={{this.isSaving}}
+                >
+                  {{this.description}}
+                </textarea>
+              </EditableField>
+            {{else}}
+              {{this.description}}
+            {{/if}}
+          </div>
         </div>
+      {{/if}}
+      <h5>
+        {{t "general.subTerms"}}:
+      </h5>
+      <div class="terms" data-test-sub-terms>
+        {{#if this.newTerm}}
+          <div class="saved-result">
+            <span class="clickable link" role="button" {{ on "click" (fn @manageTerm newTerm.id)}}>
+              <FaIcon @icon="external-link-square-alt" />
+              {{this.newTerm.title}}
+            </span>
+            {{t "general.savedSuccessfully"}}
+          </div>
+        {{/if}}
+        {{#if @canCreate}}
+            <SchoolVocabularyNewTerm @createTerm={{this.createTerm}} @term={{@term}}/>
+        {{/if}}
+        <ul data-test-term-list>
+          {{#each this.terms as |term|}}
+            <li role="button" data-test-term {{on "click" (fn @manageTerm term.id)}}>
+              {{term.title}} ({{term.childCount}})
+              {{#unless term.active}}
+                <em>
+                  ({{t "general.inactive"}})
+                </em>
+              {{/unless}}
+            </li>
+          {{/each}}
+        </ul>
       </div>
     {{/if}}
-    <h5>
-      {{t "general.subTerms"}}:
-    </h5>
-    <div class="terms" data-test-sub-terms>
-      {{#if this.newTerm}}
-        <div class="saved-result">
-          <span class="clickable link" role="button" {{ on "click" (fn @manageTerm newTerm.id)}}>
-            <FaIcon @icon="external-link-square-alt" />
-            {{this.newTerm.title}}
-          </span>
-          {{t "general.savedSuccessfully"}}
-        </div>
-      {{/if}}
-      {{#if @canCreate}}
-          <SchoolVocabularyNewTerm @createTerm={{this.createTerm}} @term={{@term}}/>
-      {{/if}}
-      <ul data-test-term-list>
-        {{#each this.terms as |term|}}
-          <li role="button" data-test-term {{on "click" (fn @manageTerm term.id)}}>
-            {{term.title}} ({{term.childCount}})
-            {{#unless term.active}}
-              <em>
-                ({{t "general.inactive"}})
-              </em>
-            {{/unless}}
-          </li>
-        {{/each}}
-      </ul>
-    </div>
-  {{/if}}
-</div>
+  </div>
+{{/let}}

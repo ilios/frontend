@@ -1,117 +1,121 @@
-<section class="school-list" data-test-school-list ...attributes>
-  <section class="schools">
-    <div class="header">
-      <div class="title">
-        <h2>
-          {{t "general.schools"}}
-        </h2>
+{{#let (unique-id) as |templateId|}}
+  <section class="school-list" data-test-school-list ...attributes>
+    <section class="schools">
+      <div class="header">
+        <div class="title">
+          <h2>
+            {{t "general.schools"}}
+          </h2>
+        </div>
+        {{#if this.currentUser.isRoot}}
+          <div class="actions">
+            <ExpandCollapseButton
+              @value={{this.showNewSchoolForm}}
+              @action={{this.toggleNewSchoolForm}}
+            />
+          </div>
+        {{/if}}
       </div>
-      {{#if this.currentUser.isRoot}}
-        <div class="actions">
-          <ExpandCollapseButton
-            @value={{this.showNewSchoolForm}}
-            @action={{this.toggleNewSchoolForm}}
-          />
+      {{#if this.showNewSchoolForm}}
+        <section class="new" data-test-new-school-form>
+          <div class="new-result-title">
+            {{t "general.newSchool"}}
+          </div>
+          <div class="form">
+            <div class="item" data-test-title>
+              <label for="title-{{templateId}}">
+                {{t "general.title"}}:
+              </label>
+              <input
+                id="title-{{templateId}}"
+                type="text"
+                value={{this.title}}
+                {{on "input" (pick "target.value" (set this.title))}}
+                {{on "keyup" (queue (fn this.addErrorDisplayFor "title") (perform this.saveOrCancel))}}
+              >
+              {{#each (await (compute this.getErrorsFor "title")) as |message|}}
+                <span class="validation-error-message">
+                  {{message}}
+                </span>
+              {{/each}}
+            </div>
+            <div class="item" data-test-email>
+              <label for="email-{{templateId}}">
+                {{t "general.administratorEmail"}}:
+              </label>
+              <input
+                id="email-{{templateId}}"
+                type="text"
+                value={{this.iliosAdministratorEmail}}
+                {{on "input" (pick "target.value" (set this.iliosAdministratorEmail))}}
+                {{on "keyup" (queue (fn this.addErrorDisplayFor "iliosAdministratorEmail") (perform this.saveOrCancel))}}
+              >
+              {{#each (await (compute this.getErrorsFor "iliosAdministratorEmail")) as |message|}}
+                <span class="validation-error-message">
+                  {{message}}
+                </span>
+              {{/each}}
+            </div>
+            <div class="buttons">
+              <button
+                type="button"
+                class="done text"
+                disabled={{this.save.isRunning}}
+                {{on "click" (perform this.save)}}
+                data-test-submit
+              >
+                {{#if this.save.isRunning}}
+                  <LoadingSpinner />
+                {{else}}
+                  {{t "general.done"}}
+                {{/if}}
+              </button>
+              <button type="button" class="cancel text" {{on "click" this.closeNewSchoolForm}} data-test-cancel>
+                {{t "general.cancel"}}
+              </button>
+            </div>
+          </div>
+        </section>
+      {{/if}}
+      {{#if this.newSchool}}
+        <div class="savedschool" data-test-new-school>
+          <LinkTo @route="school" @model={{this.newSchool}} data-test-link-to-new-school>
+            <FaIcon @icon="external-link-square-alt" />
+            {{this.newSchool.title}}
+          </LinkTo>
+          {{t "general.savedSuccessfully"}}
         </div>
       {{/if}}
-    </div>
-    {{#if this.showNewSchoolForm}}
-      <section class="new" data-test-new-school-form>
-        <div class="new-result-title">
-          {{t "general.newSchool"}}
-        </div>
-        <div class="form">
-          <div class="item" data-test-title>
-            <label>
-              {{t "general.title"}}:
-            </label>
-            <input
-              type="text"
-              value={{this.title}}
-              {{on "input" (pick "target.value" (set this.title))}}
-              {{on "keyup" (queue (fn this.addErrorDisplayFor "title") (perform this.saveOrCancel))}}
-            >
-            {{#each (await (compute this.getErrorsFor "title")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
-          </div>
-          <div class="item" data-test-email>
-            <label>
-              {{t "general.administratorEmail"}}:
-            </label>
-            <input
-              type="text"
-              value={{this.iliosAdministratorEmail}}
-              {{on "input" (pick "target.value" (set this.iliosAdministratorEmail))}}
-              {{on "keyup" (queue (fn this.addErrorDisplayFor "iliosAdministratorEmail") (perform this.saveOrCancel))}}
-            >
-            {{#each (await (compute this.getErrorsFor "iliosAdministratorEmail")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
-          </div>
-          <div class="buttons">
-            <button
-              type="button"
-              class="done text"
-              disabled={{this.save.isRunning}}
-              {{on "click" (perform this.save)}}
-              data-test-submit
-            >
-              {{#if this.save.isRunning}}
-                <LoadingSpinner />
-              {{else}}
-                {{t "general.done"}}
-              {{/if}}
-            </button>
-            <button type="button" class="cancel text" {{on "click" this.closeNewSchoolForm}} data-test-cancel>
-              {{t "general.cancel"}}
-            </button>
-          </div>
-        </div>
-      </section>
-    {{/if}}
-    {{#if this.newSchool}}
-      <div class="savedschool" data-test-new-school>
-        <LinkTo @route="school" @model={{this.newSchool}} data-test-link-to-new-school>
-          <FaIcon @icon="external-link-square-alt" />
-          {{this.newSchool.title}}
-        </LinkTo>
-        {{t "general.savedSuccessfully"}}
-      </div>
-    {{/if}}
-    <div class="list">
-      <table>
-        <thead>
-          <tr>
-            <th class="text-left" colspan="4">
-              {{t "general.school"}}
-            </th>
-            <th class="text-left" colspan="1">
-              {{t "general.actions"}}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each (sort-by "title" @schools) as |school|}}
-            <tr data-test-school>
-              <td class="text-left" colspan="4" data-test-title>
-                <LinkTo @route="school" @model={{school}}>
-                  {{school.title}}
-                </LinkTo>
-              </td>
-              <td class="text-left" colspan="1">
-                <LinkTo @route="school" @model={{school}} class="edit" data-test-edit>
-                  <FaIcon @icon="edit" />
-                </LinkTo>
-              </td>
+      <div class="list">
+        <table>
+          <thead>
+            <tr>
+              <th class="text-left" colspan="4">
+                {{t "general.school"}}
+              </th>
+              <th class="text-left" colspan="1">
+                {{t "general.actions"}}
+              </th>
             </tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {{#each (sort-by "title" @schools) as |school|}}
+              <tr data-test-school>
+                <td class="text-left" colspan="4" data-test-title>
+                  <LinkTo @route="school" @model={{school}}>
+                    {{school.title}}
+                  </LinkTo>
+                </td>
+                <td class="text-left" colspan="1">
+                  <LinkTo @route="school" @model={{school}} class="edit" data-test-edit>
+                    <FaIcon @icon="edit" />
+                  </LinkTo>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    </section>
   </section>
-</section>
+{{/let}}

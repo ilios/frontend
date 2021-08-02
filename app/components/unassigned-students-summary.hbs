@@ -1,56 +1,58 @@
-<div
-  class="unassigned-students-summary small-component {{if this.hasUnassignedStudents "alert"}}"
-  {{did-insert (perform this.load) this.schoolId}}
-  {{did-update (perform this.load) this.schoolId}}
-  data-test-unassigned-students-summary
->
-  <h3>
-    {{#if this.hasUnassignedStudents}}
-      <FaIcon @icon="exclamation-triangle" class="no" />
-    {{/if}}
-    {{t "general.unassignedStudentsSummaryTitle"}}
-  </h3>
-  <div id="schoolsfilter" class="filter">
-    <label class="inline-label">
-      <FaIcon @icon="university" />
-    </label>
-    <div id="school-selection" class="inline-data">
-      {{#if (gt @schools.length 1)}}
-        <select {{on "change" (pick "target.value" (set this.schoolId))}}>
-          {{#each (sort-by "title" @schools) as |school|}}
-            <option
-              value={{school.id}}
-              selected={{is-equal school.id this.selectedSchool.id}}
-            >
-              {{school.title}}
-            </option>
-          {{/each}}
-        </select>
-      {{else}}
-        {{get this.selectedSchool "title"}}
+{{#let (unique-id) as |templateId|}}
+  <div
+    class="unassigned-students-summary small-component {{if this.hasUnassignedStudents "alert"}}"
+    {{did-insert (perform this.load) this.schoolId}}
+    {{did-update (perform this.load) this.schoolId}}
+    data-test-unassigned-students-summary
+  >
+    <h3>
+      {{#if this.hasUnassignedStudents}}
+        <FaIcon @icon="exclamation-triangle" class="no" />
       {{/if}}
-    </div>
-  </div>
-  {{#if (and this.load.isIdle (is-array this.unassignedStudents))}}
-    <p>
-      {{t
-        "general.unassignedStudentsSummary"
-        count=this.unassignedStudents.length
-      }}
-    </p>
-    {{#if (gt this.unassignedStudents.length 0)}}
-      <div class="actions">
-        <LinkTo
-          @route="assign-students"
-          @query={{hash schoolId=this.selectedSchool.id}}
-          class="manage-link"
-          data-test-manage-link
-        >
-          {{t "general.manage"}}
-        </LinkTo>
+      {{t "general.unassignedStudentsSummaryTitle"}}
+    </h3>
+    <div id="schoolsfilter" class="filter">
+      <label for="school-filter-{{templateId}}" class="inline-label">
+        <FaIcon @icon="university" @title={{t "general.filterBySchool"}} />
+      </label>
+      <div id="school-selection" class="inline-data">
+        {{#if (gt @schools.length 1)}}
+          <select id="school-filter-{{templateId}}" {{on "change" (pick "target.value" (set this.schoolId))}}>
+            {{#each (sort-by "title" @schools) as |school|}}
+              <option
+                value={{school.id}}
+                selected={{is-equal school.id this.selectedSchool.id}}
+              >
+                {{school.title}}
+              </option>
+            {{/each}}
+          </select>
+        {{else}}
+          {{get this.selectedSchool "title"}}
+        {{/if}}
       </div>
+    </div>
+    {{#if (and this.load.isIdle (is-array this.unassignedStudents))}}
+      <p>
+        {{t
+          "general.unassignedStudentsSummary"
+          count=this.unassignedStudents.length
+        }}
+      </p>
+      {{#if (gt this.unassignedStudents.length 0)}}
+        <div class="actions">
+          <LinkTo
+            @route="assign-students"
+            @query={{hash schoolId=this.selectedSchool.id}}
+            class="manage-link"
+            data-test-manage-link
+          >
+            {{t "general.manage"}}
+          </LinkTo>
+        </div>
+      {{/if}}
+    {{else}}
+      <LoadingSpinner />
     {{/if}}
-  {{else}}
-    <LoadingSpinner />
-  {{/if}}
-</div>
+  </div>
+{{/let}}

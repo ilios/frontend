@@ -54,9 +54,8 @@
     }
 
     .new-token-result {
-      h3 {
-        display: inline;
-        margin-right: .5rem;
+      label {
+        @include ilios-heading-h5;
       }
 
       input {
