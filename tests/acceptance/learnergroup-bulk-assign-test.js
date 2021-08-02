@@ -230,7 +230,10 @@ module('Acceptance | learner group bulk assign', function (hooks) {
     assert.equal(page.bulkAssign.validUploadedUsers().count, 2);
     await page.bulkAssign.confirmUploadedUsers();
     assert.equal(page.bulkAssign.groupsToMatch().count, 1);
+    await page.bulkAssign.groupsToMatch(0).chooseGroup('3');
+    assert.equal(page.bulkAssign.groupsToMatch(0).selected, 'group 1 child 1');
     await page.bulkAssign.groupsToMatch(0).chooseGroup('2');
+    assert.equal(page.bulkAssign.groupsToMatch(0).selected, 'group 1 child 0');
   });
 
   test('finalize and save', async function (assert) {
