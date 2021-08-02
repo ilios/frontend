@@ -33,4 +33,12 @@ module('Integration | Component | user-name-info', function (hooks) {
     await component.closeTooltip();
     assert.notOk(component.isTooltipVisible);
   });
+
+  test('passing in id as an attributes', async function (assert) {
+    const user = this.server.create('user');
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    this.set('user', userModel);
+    await render(hbs`<UserNameInfo id="test-id" @user={{this.user}} />`);
+    assert.equal(component.id, 'test-id');
+  });
 });

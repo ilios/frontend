@@ -5,6 +5,7 @@ const definition = {
   fullName: text('[data-test-fullname]'),
   hasAdditionalInfo: isVisible('[data-test-info]'),
   infoIconLabel: attribute('aria-label', '[data-test-info] svg'),
+  id: attribute('id'),
   expandTooltip: triggerable('mouseover', '[data-test-info] .info'),
   closeTooltip: triggerable('mouseout', '[data-test-info] .info'),
   tooltipContents: text('.ilios-tooltip', { resetScope: true }),
