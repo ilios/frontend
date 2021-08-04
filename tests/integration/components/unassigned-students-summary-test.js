@@ -1,9 +1,10 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
+import { component } from 'ilios/tests/pages/components/unassigned-students-summary';
 
 module('Integration | Component | unassigned students summary', function (hooks) {
   setupRenderingTest(hooks);
@@ -42,19 +43,15 @@ module('Integration | Component | unassigned students summary', function (hooks)
     this.set('schools', schoolModels);
     await render(hbs`<UnassignedStudentsSummary @schools={{this.schools}} />`);
 
-    assert
-      .dom(this.element)
-      .hasText(
-        'Students Requiring Cohort Assignment school 0 school 1 There are 5 students needing assignment to a cohort Manage'
-      );
-
-    const options = findAll('option');
-    assert.equal(options.length, 2);
-    assert.dom(options[0]).hasText('school 0');
-    assert.dom(options[1]).hasText('school 1');
-
-    assert.dom('[data-test-manage-link]').exists({ count: 1 });
-    assert.dom('[data-test-unassigned-students-summary]').hasClass('alert');
+    assert.equal(component.title, 'Students Requiring Cohort Assignment');
+    assert.equal(component.schools.length, 2);
+    assert.ok(component.hasMultipleSchools);
+    assert.equal(component.schools[0].text, 'school 0');
+    assert.equal(component.schools[1].text, 'school 1');
+    assert.equal(component.selectedSchool, '1');
+    assert.equal(component.summaryText, 'There are 5 students needing assignment to a cohort');
+    assert.ok(component.hasManageLink);
+    assert.ok(component.hasAlert);
   });
 
   test('it renders empty', async function (assert) {
@@ -68,12 +65,13 @@ module('Integration | Component | unassigned students summary', function (hooks)
     const schoolModels = await this.owner.lookup('service:store').findAll('school');
     this.set('schools', schoolModels);
     await render(hbs`<UnassignedStudentsSummary @schools={{this.schools}} />`);
-    assert
-      .dom(this.element)
-      .hasText(
-        'Students Requiring Cohort Assignment school 0 There are 0 students needing assignment to a cohort'
-      );
-    assert.dom('[data-test-unassigned-students-summary]').hasNoClass('alert');
-    assert.dom('[data-test-manage-link]').doesNotExist();
+
+    assert.equal(component.title, 'Students Requiring Cohort Assignment');
+    assert.equal(component.singleSelectedSchool, 'school 0');
+    assert.notOk(component.hasMultipleSchools);
+    assert.equal(component.summaryText, 'There are 0 students needing assignment to a cohort');
+
+    assert.notOk(component.hasManageLink);
+    assert.notOk(component.hasAlert);
   });
 });

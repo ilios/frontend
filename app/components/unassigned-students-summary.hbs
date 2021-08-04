@@ -5,7 +5,7 @@
     {{did-update (perform this.load) this.schoolId}}
     data-test-unassigned-students-summary
   >
-    <h3>
+    <h3 data-test-title>
       {{#if this.hasUnassignedStudents}}
         <FaIcon @icon="exclamation-triangle" class="no" />
       {{/if}}
@@ -15,7 +15,7 @@
       <label for="school-filter-{{templateId}}" class="inline-label">
         <FaIcon @icon="university" @title={{t "general.filterBySchool"}} />
       </label>
-      <div id="school-selection" class="inline-data">
+      <div id="school-selection" class="inline-data" data-test-schools>
         {{#if (gt @schools.length 1)}}
           <select id="school-filter-{{templateId}}" {{on "change" (pick "target.value" (set this.schoolId))}}>
             {{#each (sort-by "title" @schools) as |school|}}
@@ -33,7 +33,7 @@
       </div>
     </div>
     {{#if (and this.load.isIdle (is-array this.unassignedStudents))}}
-      <p>
+      <p data-test-summary-text>
         {{t
           "general.unassignedStudentsSummary"
           count=this.unassignedStudents.length
