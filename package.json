@@ -103,7 +103,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
     "file-saver": "^2.0.5",
-    "ilios-common": "^57.2.3",
+    "ilios-common": "^58.0.0",
     "loader.js": "^4.7.0",
     "npm-run-all": "^4.1.5",
     "papaparse": "^5.2.0",
