@@ -35,6 +35,15 @@ const definition = {
     select: fillable('select'),
     value: value('select'),
   },
+  programs: {
+    scope: '[data-test-programs]',
+    label: text('label'),
+    options: collection('option', {
+      isSelected: property('selected'),
+    }),
+    select: fillable('select'),
+    value: value('select'),
+  },
   save: clickable('[data-test-save]'),
   cancel: clickable('[data-test-cancel]'),
 };

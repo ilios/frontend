@@ -16,6 +16,8 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
   @tracked description;
   @tracked selectedYear;
   @tracked years = [];
+  @tracked selectedProgram;
+  @tracked programs = [];
 
   @restartableTask
   *load() {
@@ -42,6 +44,12 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
       selectedYear = years.findBy('year', reportYear + 1);
     }
 
+    const program = yield this.args.report.program;
+    const school = yield program.school;
+    const programs = yield school.programs;
+
+    this.selectedProgram = program;
+    this.programs = programs.toArray();
     this.years = years;
     this.selectedYear = selectedYear.year;
     this.name = this.args.report.name;
@@ -56,6 +64,11 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
   @action
   setSelectedYear(value) {
     this.selectedYear = parseInt(value, 10);
+  }
+
+  @action
+  changeProgram(id) {
+    this.selectedProgram = this.programs.findBy('id', id);
   }
 
   @action
@@ -76,6 +89,7 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
       name: this.name,
       description: this.description,
       year: this.selectedYear,
+      program: this.selectedProgram.id,
     };
     const url = `curriculuminventoryreports/${this.args.report.id}/rollover`;
     const newReportObj = yield this.fetch.postQueryToApi(url, data);

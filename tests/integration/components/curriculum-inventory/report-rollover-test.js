@@ -13,10 +13,13 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
 
   test('it renders', async function (assert) {
     const thisYear = parseInt(moment().format('YYYY'), 10);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
     const report = this.server.create('curriculum-inventory-report', {
       name: 'old report',
       description: 'this is an old report',
       year: thisYear,
+      program,
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -32,6 +35,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     assert.equal(component.years.options[3].text, `${thisYear + 4}`);
     assert.equal(component.name.value, reportModel.name);
     assert.equal(component.description.value, reportModel.description);
+    assert.equal(component.programs.text, 'Program: program 0');
   });
 
   test('academic years labeled as range if configured accordingly', async function (assert) {
@@ -43,10 +47,13 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
       };
     });
     const thisYear = parseInt(moment().format('YYYY'), 10);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
     const report = this.server.create('curriculum-inventory-report', {
       name: 'old report',
       description: 'this is an old report',
       year: thisYear,
+      program,
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -64,11 +71,14 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
 
   test('rollover report', async function (assert) {
     assert.expect(6);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
     const thisYear = parseInt(moment().format('YYYY'), 10);
     const report = this.server.create('curriculum-inventory-report', {
       name: 'old report',
       description: 'this is an old report',
       year: thisYear,
+      program,
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -103,11 +113,14 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
 
   test('submit rollover report by pressing enter in name field', async function (assert) {
     assert.expect(1);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
     const thisYear = parseInt(moment().format('YYYY'), 10);
     const report = this.server.create('curriculum-inventory-report', {
       name: 'old report',
       description: 'this is an old report',
       year: thisYear,
+      program,
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -130,13 +143,17 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     await component.name.submit();
   });
 
-  test('rollover report with new name, description and year', async function (assert) {
-    assert.expect(5);
+  test('rollover report with new name, description, year and program', async function (assert) {
+    assert.expect(11);
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school, title: 'doctor of rocket surgery' });
+    const otherProgram = this.server.create('program', { school, title: 'doktor eisenbart' });
     const thisYear = parseInt(moment().format('YYYY'), 10);
     const report = this.server.create('curriculum-inventory-report', {
       name: 'old report',
       description: 'this is an old report',
       year: thisYear,
+      program,
     });
     const reportModel = await this.owner
       .lookup('service:store')
@@ -154,6 +171,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
         assert.equal(data.name, newName, 'The new name gets passed.');
         assert.equal(data.description, newDescription, 'The new description gets passed.');
         assert.equal(data.year, newYear, 'The new year gets passed.');
+        assert.equal(data.program, otherProgram.id);
 
         return this.serialize(
           schema.curriculumInventoryReports.create({
@@ -171,11 +189,19 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     await component.name.set(newName);
     await component.description.set(newDescription);
     await component.years.select(newYear);
+    assert.equal(component.programs.options.length, 2);
+    assert.equal(component.programs.options[0].text, program.title);
+    assert.ok(component.programs.options[0].isSelected);
+    assert.equal(component.programs.options[1].text, otherProgram.title);
+    assert.notOk(component.programs.options[1].isSelected);
+    await component.programs.select(otherProgram.id);
     await component.save();
   });
 
   test('no input validation errors are shown initially', async function (assert) {
-    const report = this.server.create('curriculum-inventory-report');
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', { program });
     const reportModel = await this.owner
       .lookup('service:store')
       .find('curriculum-inventory-report', report.id);
@@ -186,7 +212,9 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
   });
 
   test('input validation fails on blank report name', async function (assert) {
-    const report = this.server.create('curriculum-inventory-report');
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', { program });
     const reportModel = await this.owner
       .lookup('service:store')
       .find('curriculum-inventory-report', report.id);
