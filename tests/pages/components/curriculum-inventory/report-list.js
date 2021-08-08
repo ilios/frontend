@@ -15,9 +15,8 @@ const definition = {
     clickOnName: clickable('th', { at: 0 }),
     clickOnYear: clickable('th', { at: 2 }),
   },
-  reports: collection({
-    itemScope: '[data-test-curriculum-inventory-report-list-item]',
-    item,
+  reports: collection('[data-test-curriculum-inventory-report-list-item]', {
+    ...item,
   }),
   confirmRemoval: {
     scope: '[data-test-confirm-removal]',

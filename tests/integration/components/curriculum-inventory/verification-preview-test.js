@@ -45,38 +45,35 @@ module('Integration | Component | curriculum-inventory/verification-preview', fu
     await render(hbs`<CurriculumInventory::VerificationPreview @report={{this.report}} />`);
     assert.equal(component.tableOfContents.items.length, 9);
     assert.equal(
-      component.tableOfContents.items.objectAt(0).text,
+      component.tableOfContents.items[0].text,
       'Table 1: Program Expectations Mapped to PCRS'
     );
     assert.equal(
-      component.tableOfContents.items.objectAt(1).text,
+      component.tableOfContents.items[1].text,
       'Table 2: Primary Instructional Method by Non-Clerkship Sequence Block'
     );
     assert.equal(
-      component.tableOfContents.items.objectAt(2).text,
+      component.tableOfContents.items[2].text,
       'Table 3-A: Non-Clerkship Sequence Block Instructional Time'
     );
     assert.equal(
-      component.tableOfContents.items.objectAt(3).text,
+      component.tableOfContents.items[3].text,
       'Table 3-B: Clerkship Sequence Block Instructional Time'
     );
+    assert.equal(component.tableOfContents.items[4].text, 'Table 4: Instructional Method Counts');
     assert.equal(
-      component.tableOfContents.items.objectAt(4).text,
-      'Table 4: Instructional Method Counts'
-    );
-    assert.equal(
-      component.tableOfContents.items.objectAt(5).text,
+      component.tableOfContents.items[5].text,
       'Table 5: Non-Clerkship Sequence Block Assessment Methods'
     );
     assert.equal(
-      component.tableOfContents.items.objectAt(6).text,
+      component.tableOfContents.items[6].text,
       'Table 6: Clerkship Sequence Block Assessment Methods'
     );
     assert.equal(
-      component.tableOfContents.items.objectAt(7).text,
+      component.tableOfContents.items[7].text,
       'Table 7: All Events with Assessments Tagged as Formative or Summative'
     );
-    assert.equal(component.tableOfContents.items.objectAt(8).text, 'Table 8: All Resource Types');
+    assert.equal(component.tableOfContents.items[8].text, 'Table 8: All Resource Types');
     assert.equal(component.table1.title, 'Table 1: Program Expectations Mapped to PCRS');
     assert.equal(
       component.table2.title,

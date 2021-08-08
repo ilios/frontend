@@ -211,21 +211,21 @@ module('Acceptance | Courses', function (hooks) {
     this.server.create('academicYear', { id: 2014 });
 
     await page.visit();
-    assert.equal(page.yearFilters().count, 2);
-    assert.equal(page.yearFilters(0).text, '2014 - 2015');
-    assert.ok(page.yearFilters(0).selected);
-    assert.equal(page.yearFilters(1).text, '2013 - 2014');
-    assert.notOk(page.yearFilters(1).selected);
+    assert.equal(page.yearFilters.length, 2);
+    assert.equal(page.yearFilters[0].text, '2014 - 2015');
+    assert.ok(page.yearFilters[0].selected);
+    assert.equal(page.yearFilters[1].text, '2013 - 2014');
+    assert.notOk(page.yearFilters[1].selected);
 
-    assert.equal(page.schoolFilters().count, 4);
-    assert.equal(page.schoolFilters(0).text, 'school 0');
-    assert.notOk(page.schoolFilters(0).selected);
-    assert.equal(page.schoolFilters(1).text, 'school 1');
-    assert.ok(page.schoolFilters(1).selected);
-    assert.equal(page.schoolFilters(2).text, 'school 2');
-    assert.notOk(page.schoolFilters(2).selected);
-    assert.equal(page.schoolFilters(3).text, 'school 3');
-    assert.notOk(page.schoolFilters(3).selected);
+    assert.equal(page.schoolFilters.length, 4);
+    assert.equal(page.schoolFilters[0].text, 'school 0');
+    assert.notOk(page.schoolFilters[0].selected);
+    assert.equal(page.schoolFilters[1].text, 'school 1');
+    assert.ok(page.schoolFilters[1].selected);
+    assert.equal(page.schoolFilters[2].text, 'school 2');
+    assert.notOk(page.schoolFilters[2].selected);
+    assert.equal(page.schoolFilters[3].text, 'school 3');
+    assert.notOk(page.schoolFilters[3].selected);
   });
 
   test('unprivileged users can not delete courses', async function (assert) {
@@ -413,10 +413,10 @@ module('Acceptance | Courses', function (hooks) {
     const thisYear = parseInt(moment().format('YYYY'), 10);
     const years = [thisYear - 2, thisYear - 1, thisYear, thisYear + 1, thisYear + 2];
 
-    assert.equal(page.newCourse.years().count, years.length + 1);
-    assert.equal(page.newCourse.years(0).text, 'Select Academic Year');
+    assert.equal(page.newCourse.years.length, years.length + 1);
+    assert.equal(page.newCourse.years[0].text, 'Select Academic Year');
     for (let i = 0; i < years.length; i++) {
-      assert.equal(page.newCourse.years(i + 1).text.substring(0, 4), years[i]);
+      assert.equal(page.newCourse.years[i + 1].text.substring(0, 4), years[i]);
     }
   });
 
@@ -672,8 +672,8 @@ module('Acceptance | Courses', function (hooks) {
       };
     });
     await page.visit();
-    assert.ok(page.yearFilters(1).selected);
-    assert.equal(page.yearFilters(1).value, (year - 1).toString());
+    assert.ok(page.yearFilters[1].selected);
+    assert.equal(page.yearFilters[1].value, (year - 1).toString());
     unfreezeDate();
   });
 
@@ -693,8 +693,8 @@ module('Acceptance | Courses', function (hooks) {
       };
     });
     await page.visit();
-    assert.ok(page.yearFilters(0).selected);
-    assert.equal(page.yearFilters(0).value, year.toString());
+    assert.ok(page.yearFilters[0].selected);
+    assert.equal(page.yearFilters[0].value, year.toString());
     unfreezeDate();
   });
 
@@ -714,8 +714,8 @@ module('Acceptance | Courses', function (hooks) {
       };
     });
     await page.visit();
-    assert.ok(page.yearFilters(0).selected);
-    assert.equal(page.yearFilters(0).value, year.toString());
+    assert.ok(page.yearFilters[0].selected);
+    assert.equal(page.yearFilters[0].value, year.toString());
     unfreezeDate();
   });
 
@@ -735,8 +735,8 @@ module('Acceptance | Courses', function (hooks) {
       };
     });
     await page.visit();
-    assert.ok(page.yearFilters(0).selected);
-    assert.equal(page.yearFilters(0).value, year.toString());
+    assert.ok(page.yearFilters[0].selected);
+    assert.equal(page.yearFilters[0].value, year.toString());
     unfreezeDate();
   });
 

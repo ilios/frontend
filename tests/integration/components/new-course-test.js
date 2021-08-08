@@ -17,19 +17,19 @@ module('Integration | Component | new course', function (hooks) {
   test('it renders', async function (assert) {
     const thisYear = new Date().getFullYear();
     await render(hbs`<NewCourse @currentSchool={{this.school}} @save={{noop}} @cancel={{noop}} />`);
-    assert.equal(component.years().count, 6);
-    assert.equal(component.years(0).text, 'Select Academic Year');
-    assert.equal(component.years(1).text, thisYear - 2);
-    assert.equal(component.years(2).text, thisYear - 1);
-    assert.equal(component.years(3).text, thisYear);
-    assert.equal(component.years(4).text, thisYear + 1);
-    assert.equal(component.years(5).text, thisYear + 2);
-    assert.ok(component.years(0).selected);
-    assert.notOk(component.years(1).selected);
-    assert.notOk(component.years(2).selected);
-    assert.notOk(component.years(3).selected);
-    assert.notOk(component.years(4).selected);
-    assert.notOk(component.years(5).selected);
+    assert.equal(component.years.length, 6);
+    assert.equal(component.years[0].text, 'Select Academic Year');
+    assert.equal(component.years[1].text, thisYear - 2);
+    assert.equal(component.years[2].text, thisYear - 1);
+    assert.equal(component.years[3].text, thisYear);
+    assert.equal(component.years[4].text, thisYear + 1);
+    assert.equal(component.years[5].text, thisYear + 2);
+    assert.ok(component.years[0].selected);
+    assert.notOk(component.years[1].selected);
+    assert.notOk(component.years[2].selected);
+    assert.notOk(component.years[3].selected);
+    assert.notOk(component.years[4].selected);
+    assert.notOk(component.years[5].selected);
   });
 
   test('given year is pre-selected', async function (assert) {
@@ -42,12 +42,12 @@ module('Integration | Component | new course', function (hooks) {
     await render(
       hbs`<NewCourse @currentSchool={{this.school}} @save={{noop}} @cancel={{noop}} @currentYear={{this.year}} />`
     );
-    assert.notOk(component.years(0).selected);
-    assert.notOk(component.years(1).selected);
-    assert.notOk(component.years(2).selected);
-    assert.ok(component.years(3).selected);
-    assert.notOk(component.years(4).selected);
-    assert.notOk(component.years(5).selected);
+    assert.notOk(component.years[0].selected);
+    assert.notOk(component.years[1].selected);
+    assert.notOk(component.years[2].selected);
+    assert.ok(component.years[3].selected);
+    assert.notOk(component.years[4].selected);
+    assert.notOk(component.years[5].selected);
   });
 
   test('given year is not pre-selected if it falls out of range', async function (assert) {
@@ -60,12 +60,12 @@ module('Integration | Component | new course', function (hooks) {
     await render(
       hbs`<NewCourse @currentSchool={{this.school}} @save={{noop}} @cancel={{noop}} @currentYear={{this.year}} />`
     );
-    assert.ok(component.years(0).selected);
-    assert.notOk(component.years(1).selected);
-    assert.notOk(component.years(2).selected);
-    assert.notOk(component.years(3).selected);
-    assert.notOk(component.years(4).selected);
-    assert.notOk(component.years(5).selected);
+    assert.ok(component.years[0].selected);
+    assert.notOk(component.years[1].selected);
+    assert.notOk(component.years[2].selected);
+    assert.notOk(component.years[3].selected);
+    assert.notOk(component.years[4].selected);
+    assert.notOk(component.years[5].selected);
   });
 
   test('year options show range if applicable', async function (assert) {
@@ -79,11 +79,11 @@ module('Integration | Component | new course', function (hooks) {
     });
     const thisYear = new Date().getFullYear();
     await render(hbs`<NewCourse @currentSchool={{this.school}} @save={{noop}} @cancel={{noop}} />`);
-    assert.equal(component.years(1).text, `${thisYear - 2} - ${thisYear - 1}`);
-    assert.equal(component.years(2).text, `${thisYear - 1} - ${thisYear}`);
-    assert.equal(component.years(3).text, `${thisYear} - ${thisYear + 1}`);
-    assert.equal(component.years(4).text, `${thisYear + 1} - ${thisYear + 2}`);
-    assert.equal(component.years(5).text, `${thisYear + 2} - ${thisYear + 3}`);
+    assert.equal(component.years[1].text, `${thisYear - 2} - ${thisYear - 1}`);
+    assert.equal(component.years[2].text, `${thisYear - 1} - ${thisYear}`);
+    assert.equal(component.years[3].text, `${thisYear} - ${thisYear + 1}`);
+    assert.equal(component.years[4].text, `${thisYear + 1} - ${thisYear + 2}`);
+    assert.equal(component.years[5].text, `${thisYear + 2} - ${thisYear + 3}`);
   });
 
   test('cancel', async function (assert) {

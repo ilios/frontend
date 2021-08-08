@@ -19,19 +19,13 @@ export default create({
   filterByTitle: fillable('[data-test-title-filter]'),
   filterByYear: fillable('[data-test-year-filter]'),
   filterByMyCourses: clickable('[data-test-my-courses-filter] label:eq(0)'),
-  yearFilters: collection({
-    itemScope: '[data-test-year-filter] option',
-    item: {
-      text: text(),
-      selected: property('selected'),
-    },
+  yearFilters: collection('[data-test-year-filter] option', {
+    text: text(),
+    selected: property('selected'),
   }),
-  schoolFilters: collection({
-    itemScope: '[data-test-school-filter] option',
-    item: {
-      text: text(),
-      selected: property('selected'),
-    },
+  schoolFilters: collection('[data-test-school-filter] option', {
+    text: text(),
+    selected: property('selected'),
   }),
   headerTitle: text('[data-test-courses-header-title]'),
   toggleNewCourseForm: clickable('[data-test-expand-collapse-button] button'),

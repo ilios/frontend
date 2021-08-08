@@ -309,7 +309,7 @@ module('Integration | Component | school session type form', function (hooks) {
   });
 
   // Skipped as it appears impossible to provide invalid input to color input fields.
-  // @todo: check if we can get rid of validation modifiers for this field altogether.[ST 2020/12/08]
+  // @todo: check if we can get rid of validation modifiers for this field altogether[ST 2020/12/08]
   skip('calendar color input validation', async function (assert) {
     await render(hbs`<SchoolSessionTypeForm
       @assessment={{false}}

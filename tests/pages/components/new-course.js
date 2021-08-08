@@ -17,12 +17,9 @@ const definition = {
   submitOnEnter: triggerable('keydown', '[data-test-title]', { eventProperties: { key: 'Enter' } }),
   save: clickable('[data-test-save]'),
   cancel: clickable('[data-test-cancel]'),
-  years: collection({
-    itemScope: '[data-test-year] option',
-    item: {
-      text: text(),
-      selected: property('selected'),
-    },
+  years: collection('[data-test-year] option', {
+    text: text(),
+    selected: property('selected'),
   }),
 };
 

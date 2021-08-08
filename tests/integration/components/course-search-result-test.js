@@ -38,13 +38,13 @@ module('Integration | Component | course-search-result', function (hooks) {
     await render(hbs`<CourseSearchResult @course={{course}} />`);
     assert.equal(component.courseTitle, '1980 Course 1');
     assert.equal(component.schoolTitle, 'Medicine');
-    assert.equal(component.sessions.objectAt(0).text, 'Session 1');
-    assert.equal(component.sessions.objectAt(1).text, 'Session 2');
-    assert.equal(component.sessions.objectAt(2).text, 'Session 3');
+    assert.equal(component.sessions[0].text, 'Session 1');
+    assert.equal(component.sessions[1].text, 'Session 2');
+    assert.equal(component.sessions[2].text, 'Session 3');
     assert.equal(component.sessions.length, 3);
     assert.ok(component.showMoreIsVisible);
     await component.showMore();
-    assert.equal(component.sessions.objectAt(3).text, 'Session 4');
+    assert.equal(component.sessions[3].text, 'Session 4');
     assert.equal(component.sessions.length, 4);
   });
 });
