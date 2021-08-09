@@ -1,6 +1,16 @@
-<div class="single-event-objective-list">
-  <h2>
-    {{@title}}
+<div
+  class="single-event-objective-list"
+  data-test-single-event-objective-list
+  {{did-insert (set this.isExpanded @isExpandedByDefault)}}
+>
+  <h2 class="title" data-test-title>
+    <button
+      class={{if this.isExpanded "expanded" "expandable"}}
+      type="button"
+      {{on "click" (set this.isExpanded (not this.isExpanded))}}
+    >
+      {{@title}}
+    </button>
     {{#if this.showDisplayModeToggle}}
       <button
         class={{if this.groupByCompetencies "active"}}
@@ -15,43 +25,45 @@
       </button>
     {{/if}}
   </h2>
-  {{#if this.groupByCompetencies}}
-    {{#if this.domains.length}}
-      <ul class="tree">
-        {{#each this.domains as |domain|}}
+  {{#if this.isExpanded}}
+    {{#if this.groupByCompetencies}}
+      {{#if this.domains.length}}
+        <ul class="tree">
+          {{#each this.domains as |domain|}}
+            <li>
+              {{domain.title}}
+              <ul>
+                {{#each domain.objectives as |title|}}
+                  {{! template-lint-disable no-triple-curlies }}
+                  <li>
+                    {{{title}}}
+                  </li>
+                {{/each}}
+              </ul>
+            </li>
+          {{/each}}
+        </ul>
+      {{else}}
+        <div class="no-content">
+          {{t "general.none"}}
+        </div>
+      {{/if}}
+    {{else}}
+      <ul class="list-in-order">
+        {{#each @objectives as |objective|}}
           <li>
-            {{domain.title}}
-            <ul>
-              {{#each domain.objectives as |title|}}
-                {{! template-lint-disable no-triple-curlies }}
-                <li>
-                  {{{title}}}
-                </li>
-              {{/each}}
-            </ul>
+            {{! template-lint-disable no-triple-curlies }}
+            {{{objective.title}}}
+            <div class="details">
+              {{objective.domain}}
+            </div>
+          </li>
+        {{else}}
+          <li class="no-content">
+            {{t "general.none"}}
           </li>
         {{/each}}
       </ul>
-    {{else}}
-      <div class="no-content">
-        {{t "general.none"}}
-      </div>
     {{/if}}
-  {{else}}
-    <ul class="list-in-order">
-      {{#each @objectives as |objective|}}
-        <li>
-          {{! template-lint-disable no-triple-curlies }}
-          {{{objective.title}}}
-          <div class="details">
-            {{objective.domain}}
-          </div>
-        </li>
-      {{else}}
-        <li class="no-content">
-          {{t "general.none"}}
-        </li>
-      {{/each}}
-    </ul>
   {{/if}}
 </div>

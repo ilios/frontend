@@ -6,6 +6,24 @@
     }
   }
 
+  .title {
+    cursor: pointer;
+
+    .expanded {
+      @include ilios-button-reset;
+      &::after {
+        content: '\25BC';
+      }
+    }
+
+    .expandable {
+      @include ilios-button-reset;
+      &::after {
+        content: '\25BA';
+      }
+    }
+  }
+
   .list-in-order {
     list-style-type: none;
     margin: 0;
