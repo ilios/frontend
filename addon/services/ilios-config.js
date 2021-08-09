@@ -1,22 +1,11 @@
 import Service, { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 import { isPresent } from '@ember/utils';
-import { deprecate } from '@ember/debug';
 
 export default Service.extend({
   fetch: service(),
   serverVariables: service(),
   _configPromise: null,
-
-  config: computed('apiHost', function () {
-    deprecate('config Computed Called', false, {
-      id: 'common.async-computed',
-      for: 'ilios-common',
-      until: '56',
-      since: '39.0.2',
-    });
-    return this.getConfig();
-  }),
   async getConfig() {
     if (!this._configPromise) {
       this._configPromise = this.fetch.getJsonFromApiHost('/application/config');
@@ -31,106 +20,34 @@ export default Service.extend({
     return key in obj ? obj[key] : null;
   },
 
-  userSearchType: computed('config.userSearchType', function () {
-    deprecate('userSearchType Computed Called', false, {
-      id: 'common.async-computed',
-      for: 'ilios-common',
-      until: '56',
-      since: '39.0.2',
-    });
-    return this.getUserSearchType();
-  }),
   async getUserSearchType() {
     return this.itemFromConfig('userSearchType');
   },
 
-  authenticationType: computed('config.type', function () {
-    deprecate('authenticationType Computed Called', false, {
-      id: 'common.async-computed',
-      for: 'ilios-common',
-      until: '56',
-      since: '39.0.2',
-    });
-    return this.getAuthenticationType();
-  }),
   async getAuthenticationType() {
     return this.itemFromConfig('type');
   },
 
-  maxUploadSize: computed('config.maxUploadSize', function () {
-    deprecate('maxUploadSize Computed Called', false, {
-      id: 'common.async-computed',
-      for: 'ilios-common',
-      until: '56',
-      since: '39.0.2',
-    });
-    return this.getMaxUploadSize();
-  }),
   async getMaxUploadSize() {
     return this.itemFromConfig('maxUploadSize');
   },
 
-  apiVersion: computed('config.apiVersion', function () {
-    deprecate('apiVersion Computed Called', false, {
-      id: 'common.async-computed',
-      for: 'ilios-common',
-      until: '56',
-      since: '39.0.2',
-    });
-    return this.getApiVersion();
-  }),
   async getApiVersion() {
     return this.itemFromConfig('apiVersion');
   },
 
-  trackingEnabled: computed('config.trackingEnabled', function () {
-    deprecate('trackingEnabled Computed Called', false, {
-      id: 'common.async-computed',
-      for: 'ilios-common',
-      until: '56',
-      since: '39.0.2',
-    });
-    return this.getTrackingEnabled();
-  }),
   async getTrackingEnabled() {
     return this.itemFromConfig('trackingEnabled');
   },
 
-  trackingCode: computed('config.trackingCode', function () {
-    deprecate('trackingCode Computed Called', false, {
-      id: 'common.async-computed',
-      for: 'ilios-common',
-      until: '56',
-      since: '39.0.2',
-    });
-    return this.getTrackingCode();
-  }),
   async getTrackingCode() {
     return this.itemFromConfig('trackingCode');
   },
 
-  loginUrl: computed('config.loginUrl', function () {
-    deprecate('loginUrl Computed Called', false, {
-      id: 'common.async-computed',
-      for: 'ilios-common',
-      until: '56',
-      since: '39.0.2',
-    });
-    return this.getLoginUrl();
-  }),
   async getLoginUrl() {
     return this.itemFromConfig('loginUrl');
   },
 
-  casLoginUrl: computed('config.casLoginUrl', function () {
-    deprecate('casLoginUrl Computed Called', false, {
-      id: 'common.async-computed',
-      for: 'ilios-common',
-      until: '56',
-      since: '39.0.2',
-    });
-    return this.getCasLoginUrl();
-  }),
   async getCasLoginUrl() {
     return this.itemFromConfig('casLoginUrl');
   },
@@ -165,15 +82,6 @@ export default Service.extend({
     return errorCaptureEnabled === 'true';
   }),
 
-  searchEnabled: computed('config.searchEnabled', async function () {
-    deprecate('searchEnabled Computed Called', false, {
-      id: 'common.async-computed',
-      for: 'ilios-common',
-      until: '56',
-      since: '39.0.2',
-    });
-    return this.getSearchEnabled();
-  }),
   async getSearchEnabled() {
     const searchEnabled = await this.itemFromConfig('searchEnabled');
     if (searchEnabled === null) {
