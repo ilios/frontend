@@ -57,7 +57,7 @@ module('Integration | Component | locale-chooser', function (hooks) {
     await render(hbs`<LocaleChooser />`);
 
     await component.toggle.click();
-    await component.locales.objectAt(1).click();
+    await component.locales[1].click();
     assert.equal(component.locales.length, 0);
     assert.equal(component.text, 'Español (es)');
   });

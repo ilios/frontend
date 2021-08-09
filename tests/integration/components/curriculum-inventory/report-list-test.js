@@ -88,35 +88,35 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       'Actions',
       'Seventh column table header is labeled correctly'
     );
-    assert.equal(component.reports().count, reports.length, 'All reports are shown in list.');
-    assert.equal(component.reports(0).name, reportModel2.name, 'Report name shows.');
-    assert.equal(component.reports(0).program, programModel.title, 'Program title shows.');
-    assert.equal(component.reports(0).year, '2016', 'Academic year shows.');
+    assert.equal(component.reports.length, reports.length, 'All reports are shown in list.');
+    assert.equal(component.reports[0].name, reportModel2.name, 'Report name shows.');
+    assert.equal(component.reports[0].program, programModel.title, 'Program title shows.');
+    assert.equal(component.reports[0].year, '2016', 'Academic year shows.');
     assert.equal(
-      component.reports(0).startDate,
+      component.reports[0].startDate,
       moment(reportModel2.startDate).format('L'),
       'Start date shows.'
     );
     assert.equal(
-      component.reports(0).endDate,
+      component.reports[0].endDate,
       moment(reportModel2.endDate).format('L'),
       'End date shows.'
     );
-    assert.equal(component.reports(0).status, 'Finalized', 'Status shows.');
-    assert.equal(component.reports(1).name, reportModel1.name, 'Report name shows.');
-    assert.equal(component.reports(1).program, programModel.title, 'Program title shows.');
-    assert.equal(component.reports(1).year, '2017', 'Academic year shows.');
+    assert.equal(component.reports[0].status, 'Finalized', 'Status shows.');
+    assert.equal(component.reports[1].name, reportModel1.name, 'Report name shows.');
+    assert.equal(component.reports[1].program, programModel.title, 'Program title shows.');
+    assert.equal(component.reports[1].year, '2017', 'Academic year shows.');
     assert.equal(
-      component.reports(1).startDate,
+      component.reports[1].startDate,
       moment(reportModel1.startDate).format('L'),
       'Start date shows.'
     );
     assert.equal(
-      component.reports(1).endDate,
+      component.reports[1].endDate,
       moment(reportModel1.endDate).format('L'),
       'End date shows.'
     );
-    assert.equal(component.reports(1).status, 'Draft', 'Status shows.');
+    assert.equal(component.reports[1].status, 'Draft', 'Status shows.');
   });
 
   test('report can be deleted', async function (assert) {
@@ -136,7 +136,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @edit={{noop}} @remove={{noop}} />`
     );
 
-    assert.ok(component.reports(0).isDeletable);
+    assert.ok(component.reports[0].isDeletable);
   });
 
   test('report cannot be deleted', async function (assert) {
@@ -163,7 +163,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @edit={{noop}} @remove={{noop}} />`
     );
 
-    assert.notOk(component.reports(0).isDeletable);
+    assert.notOk(component.reports[0].isDeletable);
   });
 
   test('empty list', async function (assert) {
@@ -190,7 +190,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @edit={{noop}} @remove={{this.removeAction}} />`
     );
     assert.notOk(component.confirmRemoval.isVisible, 'Confirm dialog is initially not visible.');
-    await component.reports(0).remove();
+    await component.reports[0].remove();
     assert.ok(component.confirmRemoval.isVisible, 'Confirm dialog shows.');
     await component.confirmRemoval.confirm();
   });
@@ -213,7 +213,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
       hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @edit={{noop}} @remove={{this.removeAction}} />`
     );
     assert.notOk(component.confirmRemoval.isVisible, 'Confirm dialog is initially not visible.');
-    await component.reports(0).remove();
+    await component.reports[0].remove();
     assert.ok(component.confirmRemoval.isVisible, 'Confirm dialog shows.');
     await component.confirmRemoval.cancel();
     assert.notOk(component.confirmRemoval.isVisible, 'Confirm dialog is invisible again.');
@@ -269,7 +269,7 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     await render(
       hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @edit={{this.editAction}} @remove={{noop}} />`
     );
-    await component.reports(0).edit();
+    await component.reports[0].edit();
   });
 
   test('academic year shows range depending on application config', async function (assert) {
@@ -296,6 +296,6 @@ module('Integration | Component | curriculum-inventory/report-list', function (h
     await render(
       hbs`<CurriculumInventory::ReportList @reports={{this.reports}} @edit={{noop}} @remove={{noop}} />`
     );
-    assert.equal(component.reports(0).year, '2017 - 2018', 'Academic year shows range.');
+    assert.equal(component.reports[0].year, '2017 - 2018', 'Academic year shows range.');
   });
 });

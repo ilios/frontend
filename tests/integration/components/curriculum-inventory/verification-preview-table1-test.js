@@ -19,19 +19,16 @@ module(
       await render(hbs`<CurriculumInventory::VerificationPreviewTable1 @data={{this.data}} />`);
       assert.equal(component.title, 'Table 1: Program Expectations Mapped to PCRS');
       assert.equal(component.table.headings.length, 3);
-      assert.equal(component.table.headings.objectAt(0).text, 'Program Expectations ID');
-      assert.equal(component.table.headings.objectAt(1).text, 'Program Expectations');
-      assert.equal(
-        component.table.headings.objectAt(2).text,
-        'Physician Competency Reference Set (PCRS)'
-      );
+      assert.equal(component.table.headings[0].text, 'Program Expectations ID');
+      assert.equal(component.table.headings[1].text, 'Program Expectations');
+      assert.equal(component.table.headings[2].text, 'Physician Competency Reference Set (PCRS)');
       assert.equal(component.table.rows.length, 2);
-      assert.equal(component.table.rows.objectAt(0).id, 'n/a');
-      assert.equal(component.table.rows.objectAt(0).expectation, 'bar');
-      assert.equal(component.table.rows.objectAt(0).pcrs, 'alpha beta');
-      assert.equal(component.table.rows.objectAt(1).id, 'n/a');
-      assert.equal(component.table.rows.objectAt(1).expectation, 'foo');
-      assert.equal(component.table.rows.objectAt(1).pcrs, '');
+      assert.equal(component.table.rows[0].id, 'n/a');
+      assert.equal(component.table.rows[0].expectation, 'bar');
+      assert.equal(component.table.rows[0].pcrs, 'alpha beta');
+      assert.equal(component.table.rows[1].id, 'n/a');
+      assert.equal(component.table.rows[1].expectation, 'foo');
+      assert.equal(component.table.rows[1].pcrs, '');
     });
   }
 );

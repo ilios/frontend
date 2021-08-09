@@ -21,22 +21,19 @@ module(
       await render(hbs`<CurriculumInventory::VerificationPreviewTable3b @data={{this.data}} />`);
       assert.equal(component.title, 'Table 3-B: Clerkship Sequence Block Instructional Time');
       assert.equal(component.table.headings.length, 4);
-      assert.equal(component.table.headings.objectAt(0).text, 'Clerkship Sequence Blocks');
-      assert.equal(component.table.headings.objectAt(1).text, 'Academic Level');
-      assert.equal(component.table.headings.objectAt(2).text, 'Total Weeks');
-      assert.equal(
-        component.table.headings.objectAt(3).text,
-        'Average Hours of Instruction Per Week'
-      );
+      assert.equal(component.table.headings[0].text, 'Clerkship Sequence Blocks');
+      assert.equal(component.table.headings[1].text, 'Academic Level');
+      assert.equal(component.table.headings[2].text, 'Total Weeks');
+      assert.equal(component.table.headings[3].text, 'Average Hours of Instruction Per Week');
       assert.equal(component.table.rows.length, 2);
-      assert.equal(component.table.rows.objectAt(0).title, 'foo');
-      assert.equal(component.table.rows.objectAt(0).level, '2');
-      assert.equal(component.table.rows.objectAt(0).weeks, '10');
-      assert.equal(component.table.rows.objectAt(0).avg, '30');
-      assert.equal(component.table.rows.objectAt(1).title, 'bar');
-      assert.equal(component.table.rows.objectAt(1).level, '4');
-      assert.equal(component.table.rows.objectAt(1).weeks, '1.5');
-      assert.equal(component.table.rows.objectAt(1).avg, '20.33');
+      assert.equal(component.table.rows[0].title, 'foo');
+      assert.equal(component.table.rows[0].level, '2');
+      assert.equal(component.table.rows[0].weeks, '10');
+      assert.equal(component.table.rows[0].avg, '30');
+      assert.equal(component.table.rows[1].title, 'bar');
+      assert.equal(component.table.rows[1].level, '4');
+      assert.equal(component.table.rows[1].weeks, '1.5');
+      assert.equal(component.table.rows[1].avg, '20.33');
     });
   }
 );
