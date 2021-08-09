@@ -3,9 +3,10 @@
   aria-hidden={{this.isOnline}}
   aria-role={{unless this.isOnline "alert"}}
   {{did-insert this.setup}}
+  {{will-destroy this.teardown}}
 >
   {{#unless this.isOnline}}
-    {{#if unableToReconnect}}
+    {{#if this.unableToReconnect}}
         <span>
           <FaIcon @icon="exclamation-triangle" />
           {{t "general.unableToReconnect"}}
@@ -15,7 +16,7 @@
           <FaIcon @icon="exclamation-circle" />
           {{t "general.connectionLost"}}
           {{#unless this.stopAttemptingToReconnect}}
-            {{t "general.reconnectionSeconds" count=timer}}
+            {{t "general.reconnectionSeconds" count=this.timer}}
           {{/unless}}
         </span>
         <div class="buttons">
