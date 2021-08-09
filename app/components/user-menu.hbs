@@ -17,7 +17,7 @@
   >
     <FaIcon @icon="user" />
     <span id="user-menu-title">
-      {{get (await currentUser.model) "fullName"}}
+      {{get this.model "fullName"}}
     </span>
   </button>
   {{#if isOpen}}

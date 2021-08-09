@@ -1,4 +1,3 @@
-import { resolve } from 'rsvp';
 import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
@@ -73,13 +72,17 @@ module('Integration | Component | ilios users', function (hooks) {
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
-    const currentUserMock = Service.extend({
-      model: resolve(userModel),
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
       getRolesInSchool() {
         return [];
-      },
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+      }
+    }
+
+    this.owner.register('service:current-user', CurrentUserMock);
+
     await render(hbs`<IliosUsers
       @showNewUserForm={{true}}
       @searchTerms={{array}}
@@ -117,13 +120,16 @@ module('Integration | Component | ilios users', function (hooks) {
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
-    const currentUserMock = Service.extend({
-      model: resolve(userModel),
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
       getRolesInSchool() {
         return [];
-      },
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+      }
+    }
+
+    this.owner.register('service:current-user', CurrentUserMock);
 
     await render(hbs`<IliosUsers
       @showNewUserForm={{true}}
@@ -158,13 +164,16 @@ module('Integration | Component | ilios users', function (hooks) {
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
-    const currentUserMock = Service.extend({
-      model: resolve(userModel),
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
       getRolesInSchool() {
         return [];
-      },
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+      }
+    }
+
+    this.owner.register('service:current-user', CurrentUserMock);
 
     this.set('setShowBulkNewUserForm', (value) => {
       assert.notOk(value);
@@ -201,13 +210,16 @@ module('Integration | Component | ilios users', function (hooks) {
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
-    const currentUserMock = Service.extend({
-      model: resolve(userModel),
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
       getRolesInSchool() {
         return [];
-      },
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+      }
+    }
+
+    this.owner.register('service:current-user', CurrentUserMock);
     this.set('setShowNewUserForm', (value) => {
       assert.notOk(value);
     });
@@ -244,13 +256,16 @@ module('Integration | Component | ilios users', function (hooks) {
     });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
-    const currentUserMock = Service.extend({
-      model: resolve(userModel),
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
       getRolesInSchool() {
         return [];
-      },
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+      }
+    }
+
+    this.owner.register('service:current-user', CurrentUserMock);
 
     this.set('setShowBulkNewUserForm', (value) => {
       assert.notOk(value);

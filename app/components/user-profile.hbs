@@ -39,7 +39,7 @@
       @user={{@user}}
       @isManageable={{and
         @canUpdate
-        (eq (get (await currentUser.model) "id") @user.id)
+        (eq this.currentUser.currentUserId @user.id)
       }}
       @isManaging={{@isManagingIcs}}
       @setIsManaging={{@setIsManagingIcs}}

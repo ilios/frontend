@@ -119,9 +119,9 @@ export default class NewDirectoryUserComponent extends Component {
 
   @restartableTask
   *load() {
-    const authType = yield this.iliosConfig.authenticationType;
+    const authType = yield this.iliosConfig.getAuthenticationType();
     this.allowCustomUserName = 'form' === authType;
-    const user = yield this.currentUser.model;
+    const user = yield this.currentUser.getModel();
     this.primarySchool = yield user.school;
     this.schools = yield this.loadSchools();
     this.cohorts = yield this.loadCohorts(this.primarySchool);

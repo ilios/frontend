@@ -1,6 +1,4 @@
-import { resolve } from 'rsvp';
 import Service from '@ember/service';
-import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, find, click, fillIn } from '@ember/test-helpers';
@@ -17,14 +15,20 @@ module('Integration | Component | new myreport', function (hooks) {
     const school2 = this.server.create('school', { title: 'second' });
     this.server.create('school', { title: 'third' });
 
-    const mockUser = EmberObject.create({
-      school: resolve(school2),
-    });
+    //pre-fetch schools this is usually done at the route above this component, but
+    // for this integration test we need to do this here
+    await this.owner.lookup('service:store').findAll('school');
 
-    const currentUserMock = Service.extend({
-      model: resolve(mockUser),
-    });
-    this.owner.register('service:current-user', currentUserMock);
+    const user = this.server.create('user', { school: school2 });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
+    }
+
+    this.owner.register('service:current-user', CurrentUserMock);
 
     this.set('close', () => {});
     await render(hbs`<NewMyreport @close={{action close}} />`);
@@ -81,14 +85,16 @@ module('Integration | Component | new myreport', function (hooks) {
   const checkObjects = async function (context, assert, subjectNum, subjectVal, expectedObjects) {
     assert.expect(expectedObjects.length + 2);
     const school = context.server.create('school', { title: 'first' });
-    const mockUser = EmberObject.create({
-      school: resolve(school),
-    });
+    const user = context.server.create('user', { school });
+    const userModel = await context.owner.lookup('service:store').find('user', user.id);
 
-    const currentUserMock = Service.extend({
-      model: resolve(mockUser),
-    });
-    context.owner.register('service:current-user', currentUserMock);
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
+    }
+
+    context.owner.register('service:current-user', CurrentUserMock);
     context.set('close', () => {});
     await render(hbs`<NewMyreport @close={{action close}} />`);
 
@@ -211,13 +217,16 @@ module('Integration | Component | new myreport', function (hooks) {
 
   test('can search for user #2506', async function (assert) {
     const school = this.server.create('school', { title: 'first' });
-    const mockUser = EmberObject.create({
-      school: resolve(school),
-    });
-    const currentUserMock = Service.extend({
-      model: resolve(mockUser),
-    });
-    this.owner.register('service:current-user', currentUserMock);
+    const user = this.server.create('user', { school });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
+    }
+
+    this.owner.register('service:current-user', CurrentUserMock);
     this.server.create('user', {
       firstName: 'Test',
       lastName: 'Person',

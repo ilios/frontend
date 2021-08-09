@@ -20,12 +20,12 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
 
     const user = this.server.create('user', { schoolId: 2 });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
-    const currentUserMock = Service.extend({
+    class CurrentUserMock extends Service {
       async getModel() {
         return userModel;
-      },
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+      }
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
   });
 
   const setupPermissionChecker = function (scope, can) {

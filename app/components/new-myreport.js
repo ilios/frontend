@@ -340,14 +340,12 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
    * @public
    */
   schoolList: computed(async function () {
-    const store = this.store;
-
-    const schools = await store.findAll('school');
+    const schools = await this.store.findAll('school');
     return schools.sortBy('title');
   }),
 
   currentSchool: computed(
-    'currentUser.model.school',
+    'currentUser.currentUserId',
     'schoolChanged',
     'selectedSchool',
     async function () {
@@ -362,9 +360,8 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         return null;
       }
 
-      const currentUser = this.currentUser;
-      const user = await currentUser.get('model');
-      const school = await user.get('school');
+      const user = await this.currentUser.getModel();
+      const school = await user.school;
 
       return school;
     }
@@ -437,7 +434,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     const store = this.store;
     const subject = this.currentSubject;
     const currentUser = this.currentUser;
-    const user = yield currentUser.get('model');
+    const user = yield currentUser.getModel();
     const title = this.title;
     const prepositionalObject = this.currentPrepositionalObject;
     const school = yield this.currentSchool;

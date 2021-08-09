@@ -10,11 +10,12 @@ export default class IliosUsersComponent extends Component {
   @service iliosConfig;
   @service store;
   @tracked newUserComponent = null;
+  @tracked userSearchType = null;
 
   @restartableTask
   *load() {
-    const userSearchType = yield this.iliosConfig.getUserSearchType();
-    this.newUserComponent = userSearchType === 'ldap' ? 'new-directory-user' : 'new-user';
+    this.userSearchType = yield this.iliosConfig.getUserSearchType();
+    this.newUserComponent = this.userSearchType === 'ldap' ? 'new-directory-user' : 'new-user';
     yield this.searchForUsers.perform();
   }
 

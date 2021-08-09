@@ -55,9 +55,12 @@ export default Controller.extend({
     }
   ),
 
-  allRelatedCourses: computed('currentUser.model.allRelatedCourses.[]', async function () {
-    const currentUser = this.currentUser;
-    const user = await currentUser.model;
+  userModel: computed('currentUser.currentUserId', async function () {
+    return this.currentUser.getModel();
+  }),
+
+  allRelatedCourses: computed('userModel.allRelatedCourses.[]', async function () {
+    const user = await this.userModel;
     return await user.allRelatedCourses;
   }),
 

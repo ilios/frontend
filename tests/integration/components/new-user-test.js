@@ -22,19 +22,21 @@ module('Integration | Component | new user', function (hooks) {
     });
     const user = await this.owner.lookup('service:store').find('user', 1);
 
-    this.currentUserMock = Service.extend({
-      model: resolve(user),
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return user;
+      }
       async canCreateUser() {
         return resolve(true);
-      },
-    });
+      }
+    }
 
     this.permissionCheckerMock = Service.extend({
       async canCreateUser() {
         return resolve(true);
       },
     });
-    this.owner.register('service:current-user', this.currentUserMock);
+    this.owner.register('service:current-user', CurrentUserMock);
     this.owner.register('service:permissionChecker', this.permissionCheckerMock);
   });
 

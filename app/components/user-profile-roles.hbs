@@ -67,7 +67,7 @@
           type="checkbox"
           checked={{this.isEnabled}}
           {{on "click" (set this.isEnabledFlipped (not this.isEnabledFlipped))}}
-          disabled={{if (eq @user.id currentUser.model.id) true}}
+          disabled={{if (eq @user.id this.currentUser.currentUserId) true}}
         >
       {{else}}
         <span class="value {{if this.isEnabled "yes" "no"}}">

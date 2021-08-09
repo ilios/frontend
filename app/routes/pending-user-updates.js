@@ -26,7 +26,7 @@ export default class PendingUserUpdatesRoute extends Route {
     const schools = await filter(allSchools.toArray(), async (school) => {
       return permissionChecker.canUpdateUserInSchool(school);
     });
-    const user = await currentUser.get('model');
+    const user = await currentUser.getModel();
     const primarySchool = await user.get('school');
     return { primarySchool, schools };
   }

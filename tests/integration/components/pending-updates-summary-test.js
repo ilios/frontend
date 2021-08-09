@@ -21,12 +21,12 @@ module('Integration | Component | pending updates summary', function (hooks) {
       this.server.create('pending-user-update', { user });
     }
 
-    const currentUserMock = class extends Service {
+    class CurrentUserMock extends Service {
       async getModel() {
         return userModel;
       }
-    };
-    this.owner.register('service:currentUser', currentUserMock);
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
     const schools = await this.owner.lookup('service:store').findAll('school');
     this.set('schools', schools);
@@ -51,12 +51,12 @@ module('Integration | Component | pending updates summary', function (hooks) {
       this.server.create('pending-user-update', { user });
     }
 
-    const currentUserMock = class extends Service {
+    class CurrentUserMock extends Service {
       async getModel() {
         return userModel;
       }
-    };
-    this.owner.register('service:currentUser', currentUserMock);
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
     const schools = await this.owner.lookup('service:store').findAll('school');
     this.set('schools', schools);
@@ -77,12 +77,12 @@ module('Integration | Component | pending updates summary', function (hooks) {
     const user = this.server.create('user', { school });
     const userModel = await this.owner.lookup('service:store').find('user', user.id);
 
-    const currentUserMock = class extends Service {
+    class CurrentUserMock extends Service {
       async getModel() {
         return userModel;
       }
-    };
-    this.owner.register('service:currentUser', currentUserMock);
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
     const schools = await this.owner.lookup('service:store').findAll('school');
     this.set('schools', schools);
@@ -111,12 +111,12 @@ module('Integration | Component | pending updates summary', function (hooks) {
       user: this.server.create('user', { school: schools[1] }),
     });
 
-    const currentUserMock = class extends Service {
+    class CurrentUserMock extends Service {
       async getModel() {
         return userModel;
       }
-    };
-    this.owner.register('service:currentUser', currentUserMock);
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
 
     const schoolModels = await this.owner.lookup('service:store').findAll('school');
     this.set('schools', schoolModels);

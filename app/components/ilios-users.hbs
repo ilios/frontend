@@ -33,7 +33,7 @@
           <button type="button" {{on "click" (fn @setShowNewUserForm true)}} data-test-show-new-user-form>
             {{t "general.create"}}
           </button>
-          {{#if (not-eq (await this.iliosConfig.userSearchType) "ldap")}}
+          {{#if (not-eq this.userSearchType "ldap")}}
             <button type="button" {{on "click" (fn @setShowBulkNewUserForm true)}} data-test-show-bulk-new-user-form>
               {{t "general.createBulk"}}
             </button>
