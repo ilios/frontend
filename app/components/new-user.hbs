@@ -181,7 +181,7 @@
         {{#if this.isLoading}}
           <LoadingSpinner />
         {{else}}
-          <select id="priamry-school-{{templateId}}" {{on "change" (pick "target.value" (set this.schoolId))}}>
+          <select id="primary-school-{{templateId}}" {{on "change" (pick "target.value" (set this.schoolId))}}>
             {{#each (sort-by "title" this.schools) as |school|}}
               <option
                 value={{school.id}}
