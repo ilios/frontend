@@ -2,7 +2,6 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { restartableTask, timeout } from 'ember-concurrency';
 import { action } from '@ember/object';
-import { addEventListener } from 'ember-lifeline';
 
 export default class ConnectionStatusComponent extends Component {
   @tracked isOnline = true;
@@ -10,18 +9,44 @@ export default class ConnectionStatusComponent extends Component {
   @tracked stopAttemptingToReconnect = false;
   @tracked timer = 5;
   @tracked unableToReconnect = false;
+  onlineListener;
+  offlineListener;
 
   @action
   setup() {
     if (!navigator.onLine) {
       this.changeConnectionState.perform(false);
     }
-    addEventListener(this, window, 'online', () => {
-      this.changeConnectionState.perform(true);
-    });
-    addEventListener(this, window, 'offline', () => {
-      this.changeConnectionState.perform(false);
-    });
+    this.onlineListener = window.addEventListener(
+      'online',
+      () => {
+        this.changeConnectionState.perform(true);
+      },
+      {
+        passive: true,
+        capture: false,
+      }
+    );
+    this.offlineListener = window.addEventListener(
+      'offline',
+      () => {
+        this.changeConnectionState.perform(false);
+      },
+      {
+        passive: true,
+        capture: false,
+      }
+    );
+  }
+
+  @action
+  teardown() {
+    if (this.onlineListener) {
+      window.removeEventListener('online', this.onlineListener);
+    }
+    if (this.offlineListener) {
+      window.removeEventListener('offline', this.offlineListener);
+    }
   }
 
   @restartableTask
