@@ -3,7 +3,6 @@ import { get, computed } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
 import moment from 'moment';
 import jwtDecode from '../utils/jwt-decode';
-import { deprecate } from '@ember/debug';
 
 export default Service.extend({
   store: service(),
@@ -23,15 +22,6 @@ export default Service.extend({
     return get(obj, 'user_id');
   }),
 
-  model: computed('currentUserId', async function () {
-    deprecate('model Computed Called', false, {
-      id: 'common.async-computed',
-      for: 'ilios-common',
-      until: '56',
-      since: '39.0.2',
-    });
-    return this.getModel();
-  }),
   async getModel() {
     const currentUserId = this.currentUserId;
     if (!currentUserId) {
@@ -48,15 +38,6 @@ export default Service.extend({
     return await this._userPromise;
   },
 
-  userRoleTitles: computed('model.roles.[]', async function () {
-    deprecate('userRoleTitles Computed Called', false, {
-      id: 'common.async-computed',
-      for: 'ilios-common',
-      until: '56',
-      since: '39.0.2',
-    });
-    return this.getUserRoleTitles();
-  }),
   async getUserRoleTitles() {
     const user = await this.getModel();
     if (!user) {
@@ -66,52 +47,16 @@ export default Service.extend({
     return roles.map((role) => role.get('title').toLowerCase());
   },
 
-  userIsStudent: computed('useRoleTitles.[]', async function () {
-    deprecate('userIsStudent Computed Called', false, {
-      id: 'common.async-computed',
-      for: 'ilios-common',
-      until: '56',
-      since: '39.0.2',
-    });
-    return this.getIsStudent();
-  }),
   async getIsStudent() {
     const roleTitles = await this.getUserRoleTitles();
     return roleTitles.includes('student');
   },
 
-  userIsFormerStudent: computed('useRoleTitles.[]', async function () {
-    deprecate('userIsFormerStudent Computed Called', false, {
-      id: 'common.async-computed',
-      for: 'ilios-common',
-      until: '56',
-      since: '39.0.2',
-    });
-    return this.isFormerStudent();
-  }),
   async isFormerStudent() {
     const roleTitles = await this.getUserRoleTitles();
     return roleTitles.includes('former student');
   },
 
-  activeRelatedCoursesInThisYearAndLastYear: computed(
-    'model',
-    'model.instructedOfferings.[]',
-    'model.instructorGroups.[]',
-    'model.instructedLearnerGroups.[]',
-    'model.directedCourses.[]',
-    'model.administeredCourses.[]',
-    'model.instructorIlmSessions.[]',
-    async function () {
-      deprecate('activeRelatedCoursesInThisYearAndLastYear Computed Called', false, {
-        id: 'common.async-computed',
-        for: 'ilios-common',
-        until: '56',
-        since: '39.0.2',
-      });
-      return this.getActiveRelatedCoursesInThisYearAndLastYear();
-    }
-  ),
   async getActiveRelatedCoursesInThisYearAndLastYear() {
     const user = await this.getModel();
     if (isEmpty(user)) {
