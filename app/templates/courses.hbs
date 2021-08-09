@@ -12,7 +12,7 @@
     <div class="schoolsfilter" data-test-school-filter>
       <FaIcon @icon="university" @fixedWidth={{true}} />
       {{#if this.hasMoreThanOneSchool}}
-        <select onchange={{action "changeSelectedSchool" value="target.value"}}>
+        <select aria-label={{t "general.filterBySchool"}} onchange={{action "changeSelectedSchool" value="target.value"}}>
           {{#each (sort-by "title" @model.schools) as |school|}}
             <option
               value={{school.id}}
@@ -29,6 +29,7 @@
     <div class="yearsfilter">
       <FaIcon @icon="calendar" @fixedWidth={{true}} />
       <select
+        aria-label={{t "general.filterByYear"}}
         onchange={{action "changeSelectedYear" value="target.value"}}
         data-test-year-filter
       >
@@ -43,6 +44,7 @@
       <input
         value={{this.titleFilter}}
         oninput={{action (perform this.changeTitleFilter) value="target.value"}}
+        aria-label={{t "general.courseTitleFilterPlaceholder"}}
         placeholder={{t "general.courseTitleFilterPlaceholder"}}
         data-test-title-filter
       >

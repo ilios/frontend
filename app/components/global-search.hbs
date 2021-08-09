@@ -32,6 +32,7 @@
       </legend>
       <div class="year-filters">
         <select
+          aria-label={{t "general.year"}}
           data-test-academic-year-filter
           {{on "change" (pick "target.value" this.setSelectedYear)}}
         >

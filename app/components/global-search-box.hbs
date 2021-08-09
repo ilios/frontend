@@ -2,11 +2,11 @@
   {{#let (unique-id) as |templateId|}}
     <input
       aria-label={{t "general.searchTheCurriculum"}}
-      id="search-{{templateId}}"
       class="global-search-input"
       data-test-input
       type="search"
       value={{this.computedQuery}}
+      {{did-insert (set this.searchInputElement)}}
       {{on "input"
         (queue
           (pick "target.value" (set this.internalQuery))
@@ -21,7 +21,7 @@
       class="link-button search-icon"
       type="button"
       data-test-search-icon
-      {{on "click" (pipe-action (fn this.focus (concat "#search-" templateId)) this.search)}}
+      {{on "click" this.focusAndSearch}}
     >
       <FaIcon @icon="search"/>
     </button>

@@ -5,6 +5,11 @@
     display: flex;
     margin-bottom: 1rem;
 
+    label {
+      @include ilios-label;
+      @include ilios-heading-h4;
+    }
+
     .editinplace {
       @include ilios-heading-h4;
       margin-left: .5rem;

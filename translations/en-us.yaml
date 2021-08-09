@@ -71,6 +71,7 @@ general:
   connectionLost: "Connection Lost."
   continue: Continue
   copy: Copy
+  copyNewToken: "Copy new token"
   copyWithLearners: "Copy With Learners"
   copyWithoutLearners: "Copy Without Learners"
   couldNotFindUserCampusId: "Could not find a user with the campusId {campusId}"
@@ -126,6 +127,10 @@ general:
   fileTypeError: "Bad file type: {fileType} does not appear to be a properly delimited file."
   fileUploadError: "We were unable to upload this file.  Please ensure you are connected to the network.  If this problem persists please let us know."
   filterByNameOrEmail: "Filter by name or email"
+  filterByTitle: "Filter by Title"
+  filterByProgram: "Filter by Program"
+  filterBySchool: "Filter by School"
+  filterByYear: "Filter by Year"
   finalErrorDisplayMessage: "Zoinks! Something is very wrong. Please refresh your browser and let us know at support@iliosproject.org if you continue to see this message."
   finalize: Finalize
   finalized: Finalized
@@ -347,6 +352,7 @@ general:
   secondaryCohorts: "Secondary Cohorts"
   select: Select
   selectAcademicYear: "Select Academic Year"
+  selectAllOrNone: "Select All or None"
   selectCourse: "Select a Course"
   selected: Selected
   selectProgram: "Select a Program"
