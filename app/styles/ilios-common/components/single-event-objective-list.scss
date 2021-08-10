@@ -53,13 +53,21 @@
 
       > ul {
         list-style-type: none;
-        margin: 0 0 0 1em;
+        margin: 0 0 .5em 0;
         padding: 0;
 
         > li {
           font-weight: normal;
+          padding-left: 1em;
         }
       }
+    }
+  }
+
+  .objective {
+    border-bottom: 1px dotted $ilios-orange;
+    &:last-of-type {
+      border-bottom: 0;
     }
   }
 }

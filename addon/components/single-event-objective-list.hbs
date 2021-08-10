@@ -36,7 +36,7 @@
               <ul>
                 {{#each domain.objectives as |title|}}
                   {{! template-lint-disable no-triple-curlies }}
-                  <li>
+                  <li class="objective">
                     {{{title}}}
                   </li>
                 {{/each}}
@@ -52,7 +52,7 @@
     {{else}}
       <ul class="list-in-order">
         {{#each @objectives as |objective|}}
-          <li>
+          <li class="objective">
             {{! template-lint-disable no-triple-curlies }}
             {{{objective.title}}}
             <div class="details">
