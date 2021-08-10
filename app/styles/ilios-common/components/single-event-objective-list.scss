@@ -4,6 +4,10 @@
     &.active {
       background-color: $ilios-green;
     }
+    &.disabled {
+      cursor: default;
+      background-color: $dark-grey;
+    }
   }
 
   .title {
