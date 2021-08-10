@@ -74,7 +74,7 @@ export default class BulkNewUsersComponent extends Component {
 
   @restartableTask
   *load() {
-    const user = yield this.currentUser.model;
+    const user = yield this.currentUser.getModel();
     this.primarySchool = yield user.school;
     this.schools = yield this.loadSchools.perform();
     this.cohorts = yield this.loadCohorts.perform(this.bestSelectedSchool);

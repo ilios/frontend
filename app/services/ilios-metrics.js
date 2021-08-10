@@ -10,8 +10,8 @@ export default Service.extend({
   async setup() {
     const iliosConfig = this.iliosConfig;
     const metrics = this.metrics;
-    const trackingEnabled = await iliosConfig.trackingEnabled;
-    const trackingCode = await iliosConfig.trackingCode;
+    const trackingEnabled = await iliosConfig.getTrackingEnabled();
+    const trackingCode = await iliosConfig.getTrackingCode();
 
     if (!trackingEnabled || isEmpty(trackingCode)) {
       return false;
@@ -33,7 +33,7 @@ export default Service.extend({
 
       if (setupSuccessful) {
         const metrics = this.metrics;
-        const user = await this.currentUser.model;
+        const user = await this.currentUser.getModel();
 
         if (user) {
           metrics.set('context.userId', user.id);

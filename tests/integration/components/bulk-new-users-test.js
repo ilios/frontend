@@ -1,6 +1,4 @@
-import { resolve } from 'rsvp';
 import Service from '@ember/service';
-import EmberObject from '@ember/object';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import {
@@ -35,25 +33,23 @@ module('Integration | Component | bulk new users', function (hooks) {
     this.server.create('cohort', { id: 2, title: 'second', programYear: py1 });
     this.server.create('cohort', { id: 1, title: 'first', programYear: py2 });
 
-    const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
-
-    const mockUser = EmberObject.create({
-      school: resolve(schoolModel),
-    });
-
-    const currentUserMock = Service.extend({
-      model: resolve(mockUser),
-    });
-
-    const permissionCheckerMock = Service.extend({
+    const user = this.server.create('user', { school });
+    this.server.create('authentication', { user });
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    class PermissionCheckerMock extends Service {
       async canCreateUser() {
-        return resolve(true);
-      },
-    });
+        return true;
+      }
+    }
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
+    }
 
-    this.owner.register('service:current-user', currentUserMock);
+    this.owner.register('service:current-user', CurrentUserMock);
     this.owner.lookup('service:flash-messages').registerTypes(['success', 'warning']);
-    this.owner.register('service:permissionChecker', permissionCheckerMock);
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
   });
 
   const createFile = function (users) {
@@ -209,39 +205,39 @@ module('Integration | Component | bulk new users', function (hooks) {
     ];
     await triggerUpload(users, find('input[type=file]'));
     await click('.done');
-    assert.equal(this.server.db.users[0].firstName, 'jasper');
-    assert.equal(this.server.db.users[0].lastName, 'johnson');
-    assert.equal(this.server.db.users[0].middleName, null);
-    assert.equal(this.server.db.users[0].phone, '1234567890');
-    assert.equal(this.server.db.users[0].email, 'jasper.johnson@example.com');
-    assert.equal(this.server.db.users[0].campusId, '123Campus');
-    assert.equal(this.server.db.users[0].otherId, '123Other');
-    assert.equal(this.server.db.users[0].addedViaIlios, true);
-    assert.equal(this.server.db.users[0].enabled, true);
-    assert.equal(this.server.db.users[0].roleIds, null);
-    assert.equal(this.server.db.users[0].cohortIds, null);
-    assert.equal(this.server.db.users[0].authenticationId, '1');
-
-    assert.equal(this.server.db.authentications[0].username, 'jasper');
-    assert.equal(this.server.db.authentications[0].password, '123Test');
-    assert.equal(this.server.db.authentications[0].userId, '1');
-
-    assert.equal(this.server.db.users[1].firstName, 'jackson');
+    assert.equal(this.server.db.users[1].firstName, 'jasper');
     assert.equal(this.server.db.users[1].lastName, 'johnson');
-    assert.equal(this.server.db.users[1].middleName, 'middle');
-    assert.equal(this.server.db.users[1].phone, '12345');
-    assert.equal(this.server.db.users[1].email, 'jj@example.com');
-    assert.equal(this.server.db.users[1].campusId, '1234Campus');
-    assert.equal(this.server.db.users[1].otherId, '1234Other');
+    assert.equal(this.server.db.users[1].middleName, null);
+    assert.equal(this.server.db.users[1].phone, '1234567890');
+    assert.equal(this.server.db.users[1].email, 'jasper.johnson@example.com');
+    assert.equal(this.server.db.users[1].campusId, '123Campus');
+    assert.equal(this.server.db.users[1].otherId, '123Other');
     assert.equal(this.server.db.users[1].addedViaIlios, true);
     assert.equal(this.server.db.users[1].enabled, true);
     assert.equal(this.server.db.users[1].roleIds, null);
     assert.equal(this.server.db.users[1].cohortIds, null);
     assert.equal(this.server.db.users[1].authenticationId, '2');
 
-    assert.equal(this.server.db.authentications[1].username, 'jck');
-    assert.equal(this.server.db.authentications[1].password, '1234Test');
-    assert.equal(this.server.db.authentications[1].userId, 2);
+    assert.equal(this.server.db.authentications[1].username, 'jasper');
+    assert.equal(this.server.db.authentications[1].password, '123Test');
+    assert.equal(this.server.db.authentications[1].userId, '2');
+
+    assert.equal(this.server.db.users[2].firstName, 'jackson');
+    assert.equal(this.server.db.users[2].lastName, 'johnson');
+    assert.equal(this.server.db.users[2].middleName, 'middle');
+    assert.equal(this.server.db.users[2].phone, '12345');
+    assert.equal(this.server.db.users[2].email, 'jj@example.com');
+    assert.equal(this.server.db.users[2].campusId, '1234Campus');
+    assert.equal(this.server.db.users[2].otherId, '1234Other');
+    assert.equal(this.server.db.users[2].addedViaIlios, true);
+    assert.equal(this.server.db.users[2].enabled, true);
+    assert.equal(this.server.db.users[2].roleIds, null);
+    assert.equal(this.server.db.users[2].cohortIds, null);
+    assert.equal(this.server.db.users[2].authenticationId, '3');
+
+    assert.equal(this.server.db.authentications[2].username, 'jck');
+    assert.equal(this.server.db.authentications[2].password, '1234Test');
+    assert.equal(this.server.db.authentications[2].userId, 3);
   });
 
   test('saves valid student users', async function (assert) {
@@ -279,37 +275,37 @@ module('Integration | Component | bulk new users', function (hooks) {
     await triggerUpload(users, find('input[type=file]'));
     await click('.done');
 
-    assert.equal(this.server.db.users[0].firstName, 'jasper');
-    assert.equal(this.server.db.users[0].lastName, 'johnson');
-    assert.equal(this.server.db.users[0].middleName, null);
-    assert.equal(this.server.db.users[0].phone, '1234567890');
-    assert.equal(this.server.db.users[0].email, 'jasper.johnson@example.com');
-    assert.equal(this.server.db.users[0].campusId, '123Campus');
-    assert.equal(this.server.db.users[0].otherId, '123Other');
-    assert.equal(this.server.db.users[0].addedViaIlios, true);
-    assert.equal(this.server.db.users[0].enabled, true);
-    assert.deepEqual(this.server.db.users[0].roleIds, ['4']);
-    assert.equal(this.server.db.users[0].authenticationId, '1');
-
-    assert.equal(this.server.db.authentications[0].username, 'jasper');
-    assert.equal(this.server.db.authentications[0].password, '123Test');
-    assert.equal(this.server.db.authentications[0].userId, '1');
-
-    assert.equal(this.server.db.users[1].firstName, 'jackson');
+    assert.equal(this.server.db.users[1].firstName, 'jasper');
     assert.equal(this.server.db.users[1].lastName, 'johnson');
-    assert.equal(this.server.db.users[1].middleName, 'middle');
-    assert.equal(this.server.db.users[1].phone, '12345');
-    assert.equal(this.server.db.users[1].email, 'jj@example.com');
-    assert.equal(this.server.db.users[1].campusId, '1234Campus');
-    assert.equal(this.server.db.users[1].otherId, '1234Other');
+    assert.equal(this.server.db.users[1].middleName, null);
+    assert.equal(this.server.db.users[1].phone, '1234567890');
+    assert.equal(this.server.db.users[1].email, 'jasper.johnson@example.com');
+    assert.equal(this.server.db.users[1].campusId, '123Campus');
+    assert.equal(this.server.db.users[1].otherId, '123Other');
     assert.equal(this.server.db.users[1].addedViaIlios, true);
     assert.equal(this.server.db.users[1].enabled, true);
     assert.deepEqual(this.server.db.users[1].roleIds, ['4']);
     assert.equal(this.server.db.users[1].authenticationId, '2');
 
-    assert.equal(this.server.db.authentications[1].username, 'jck');
-    assert.equal(this.server.db.authentications[1].password, '1234Test');
-    assert.equal(this.server.db.authentications[1].userId, 2);
+    assert.equal(this.server.db.authentications[1].username, 'jasper');
+    assert.equal(this.server.db.authentications[1].password, '123Test');
+    assert.equal(this.server.db.authentications[1].userId, '2');
+
+    assert.equal(this.server.db.users[2].firstName, 'jackson');
+    assert.equal(this.server.db.users[2].lastName, 'johnson');
+    assert.equal(this.server.db.users[2].middleName, 'middle');
+    assert.equal(this.server.db.users[2].phone, '12345');
+    assert.equal(this.server.db.users[2].email, 'jj@example.com');
+    assert.equal(this.server.db.users[2].campusId, '1234Campus');
+    assert.equal(this.server.db.users[2].otherId, '1234Other');
+    assert.equal(this.server.db.users[2].addedViaIlios, true);
+    assert.equal(this.server.db.users[2].enabled, true);
+    assert.deepEqual(this.server.db.users[2].roleIds, ['4']);
+    assert.equal(this.server.db.users[2].authenticationId, '3');
+
+    assert.equal(this.server.db.authentications[2].username, 'jck');
+    assert.equal(this.server.db.authentications[2].password, '1234Test');
+    assert.equal(this.server.db.authentications[2].userId, 3);
   });
 
   test('cancel fires close', async function (assert) {
@@ -764,8 +760,8 @@ module('Integration | Component | bulk new users', function (hooks) {
       return findAll(proposedNewUsers).length === 0 && findAll(waitSaving).length === 0;
     });
     await settled();
-    assert.equal(this.server.db.users[0].firstName, 'jasper');
-    assert.equal(this.server.db.users[0].authenticationId, null);
+    assert.equal(this.server.db.users[1].firstName, 'jasper');
+    assert.equal(this.server.db.users[1].authenticationId, null);
   });
 
   test('ignore header row', async function (assert) {

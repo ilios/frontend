@@ -32,7 +32,7 @@ export default class UserRoute extends Route {
 
     this.set('canUpdate', canUpdate);
 
-    const userSearchType = await this.iliosConfig.userSearchType;
+    const userSearchType = await this.iliosConfig.getUserSearchType();
     if (userSearchType !== 'ldap') {
       await import('zxcvbn');
     }

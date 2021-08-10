@@ -32,11 +32,13 @@ module('Integration | Component | curriculum-inventory/reports', function (hooks
     this.program1 = await this.owner.lookup('service:store').find('program', program1.id);
     this.program2 = await this.owner.lookup('service:store').find('program', program2.id);
     this.program3 = await this.owner.lookup('service:store').find('program', program3.id);
-    this.user = await this.owner.lookup('service:store').find('user', user.id);
-    const currentUserMock = Service.extend({
-      model: this.user,
-    });
-    this.owner.register('service:currentUser', currentUserMock);
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    class CurrentUserMock extends Service {
+      async getModel() {
+        return userModel;
+      }
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
     const permissionCheckerMock = Service.extend({
       async canCreateCurriculumInventoryReport() {
         return true;

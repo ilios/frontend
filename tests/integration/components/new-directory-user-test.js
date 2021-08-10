@@ -23,7 +23,7 @@ module('Integration | Component | new directory user', function (hooks) {
       }
     }
     class CurrentUserMock extends Service {
-      async model() {
+      async getModel() {
         return userModel;
       }
     }

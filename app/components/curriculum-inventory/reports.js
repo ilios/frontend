@@ -62,7 +62,7 @@ export default class CurriculumInventoryReportsComponent extends Component {
     this.hasMoreThanOneSchool = this.sortedSchools.length > 1;
 
     if (!this.args.schoolId) {
-      const user = yield this.currentUser.model;
+      const user = yield this.currentUser.getModel();
       this.selectedSchool = yield user.school;
     } else {
       this.selectedSchool = this.args.schools.findBy('id', this.args.schoolId);

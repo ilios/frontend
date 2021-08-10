@@ -22,7 +22,7 @@ export default class AssignStudentsRoute extends Route {
     const currentUser = this.currentUser;
     const store = this.store;
     const permissionChecker = this.permissionChecker;
-    const user = await currentUser.get('model');
+    const user = await currentUser.getModel();
     const schools = await store.findAll('school');
     const primarySchool = await user.get('school');
     const schoolsWithUpdateUserPermission = await filter(schools.toArray(), async (school) => {

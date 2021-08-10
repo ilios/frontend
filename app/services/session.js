@@ -15,7 +15,7 @@ export default class SessionService extends ESASessionService {
         reg.waiting.postMessage('skipWaiting');
       }
     }
-    const user = await this.currentUser.get('model');
+    const user = await this.currentUser.getModel();
     Sentry.setUser({ id: user.id });
   }
 

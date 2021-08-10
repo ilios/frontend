@@ -13,8 +13,12 @@ export default Service.extend({
   intl: service(),
   iliosConfig: service(),
 
-  reportsList: computed('currentUser.model.reports.[]', async function () {
-    const user = await this.currentUser.model;
+  model: computed('currentUser.currentUserId', async function () {
+    return this.currentUser.getModel();
+  }),
+
+  reportsList: computed('model.reports.[]', async function () {
+    const user = await this.model;
     return isEmpty(user) ? [] : await user.reports;
   }),
 

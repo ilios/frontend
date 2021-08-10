@@ -10,6 +10,6 @@ export default class MyprofileRoute extends Route {
   }
 
   model() {
-    return this.currentUser.get('model');
+    return this.currentUser.getModel();
   }
 }
