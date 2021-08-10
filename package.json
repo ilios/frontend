@@ -136,7 +136,8 @@
     "sass": "^1.13.4",
     "stylelint": "^13.0.0",
     "stylelint-config-recommended-scss": "^4.0.0",
-    "stylelint-scss": "^3.5.1"
+    "stylelint-scss": "^3.5.1",
+    "webpack": "^5.50.0"
   },
   "engines": {
     "node": "10.* || >= 12"
