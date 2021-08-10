@@ -1,4 +1,5 @@
 import Component from '@glimmer/component';
+import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { isBlank, isEmpty } from '@ember/utils';
@@ -9,6 +10,9 @@ export default class SingleEvent extends Component {
   @service intl;
   @service store;
   @service router;
+
+  @tracked isSessionMaterialsListExpanded = true;
+  @tracked isCourseMaterialsListExpanded = false;
 
   get courseId() {
     return this.args.event.course;

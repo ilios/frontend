@@ -68,6 +68,22 @@
     font-style: italic;
   }
 
+  .single-event-learningmaterial-list {
+    .expanded {
+      @include ilios-button-reset;
+      &::after {
+        content: '\25BC';
+      }
+    }
+
+    .expandable {
+      @include ilios-button-reset;
+      &::after {
+        content: '\25BA';
+      }
+    }
+  }
+
   .single-event-learningmaterial-filesize {
     font-size: .8em;
     font-style: italic;

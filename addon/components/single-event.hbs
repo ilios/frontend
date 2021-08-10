@@ -113,7 +113,13 @@
     <fieldset>
       <div class="single-event-learningmaterial-list" data-test-session-materials>
         <h2>
-          {{t "general.sessionLearningMaterials"}}
+          <button
+            class={{if this.isSessionMaterialsListExpanded "expanded" "expandable"}}
+            type="button"
+            {{on "click" (set this.isSessionMaterialsListExpanded (not this.isSessionMaterialsListExpanded))}}
+          >
+            {{t "general.sessionLearningMaterials"}}
+          </button>
           {{#if (and @event.isUserEvent (await this.currentUser.userIsStudent))}}
             <button
               class="link-button"
@@ -128,9 +134,11 @@
             </button>
           {{/if}}
         </h2>
-        <SingleEventLearningmaterialList
-          @learningMaterials={{this.sessionLearningMaterials}}
-        />
+        {{#if this.isSessionMaterialsListExpanded}}
+          <SingleEventLearningmaterialList
+            @learningMaterials={{this.sessionLearningMaterials}}
+          />
+        {{/if}}
       </div>
       <div class="single-event-objective-list">
         <SingleEventObjectiveList
@@ -145,11 +153,19 @@
     <fieldset>
       <div class="single-event-learningmaterial-list">
         <h2>
-          {{t "general.courseLearningMaterials"}}
+          <button
+            class={{if this.isCourseMaterialsListExpanded "expanded" "expandable"}}
+            type="button"
+            {{on "click" (set this.isCourseMaterialsListExpanded (not this.isCourseMaterialsListExpanded))}}
+          >
+            {{t "general.courseLearningMaterials"}}
+          </button>
         </h2>
-        <SingleEventLearningmaterialList
-          @learningMaterials={{this.courseLearningMaterials}}
-        />
+        {{#if this.isCourseMaterialsListExpanded}}
+          <SingleEventLearningmaterialList
+            @learningMaterials={{this.courseLearningMaterials}}
+          />
+        {{/if}}
       </div>
       <div class="single-event-objective-list" data-test-course-objectives>
         <SingleEventObjectiveList
