@@ -418,6 +418,7 @@ general:
   unPublishProgram: "No Publique El Programa"
   unPublishProgramYear: "No Publique Año de Programa"
   unsupportedBrowserFailure: "Su navegador no está soportado oficialmente por Ilios y no puede completar esta acción.  Por favor inténtalo de nuevo utilizando un navegador actualizado."
+  update: "Actualizar"
   updateUserFromDirectory: "Actualizar este registro del usuario del directorio del campus."
   updatePending: "Actualización Pendiente"
   uploadedGroup: "Grupo Subido"
