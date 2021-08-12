@@ -35,6 +35,11 @@
 
     > li {
       padding-bottom: .5em;
+
+      > div, p {
+        margin: 0;
+        padding: .5rem 0;
+      }
     }
 
     .details {
@@ -58,6 +63,11 @@
 
         > li {
           font-weight: normal;
+
+          > div, p {
+            margin: 0;
+            padding: .5rem 0;
+          }
         }
       }
     }
