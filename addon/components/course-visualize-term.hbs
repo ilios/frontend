@@ -4,10 +4,30 @@
   {{did-insert (perform this.load)}}
 >
   {{#unless this.load.isRunning}}
-    <div class="backtolink">
-      <LinkTo @route="course-visualizations" @model={{@model.course}}>
-        {{t "general.otherVisualizations"}}
-      </LinkTo>
+    <div class="breadcrumbs" data-test-breadcrumb>
+      <span>
+        <LinkTo @route="course" @model={{@model.course}}>
+          {{@model.course.title}}
+        </LinkTo>
+      </span>
+      <span>
+        <LinkTo @route="course-visualizations" @model={{@model.course}}>
+          {{t "general.otherVisualizations"}}
+        </LinkTo>
+      </span>
+      <span>
+        <LinkTo @route="course-visualize-vocabularies" @model={{@model.course}}>
+          {{t "general.vocabularies"}}
+        </LinkTo>
+      </span>
+      <span>
+        <LinkTo @route="course-visualize-vocabulary" @models={{array @model.course.id @model.term.vocabulary.id}}>
+          {{@model.term.vocabulary.title}}
+        </LinkTo>
+      </span>
+      <span>
+        {{@model.term.title}}
+      </span>
     </div>
     <h2>
       {{t
