@@ -12,7 +12,7 @@
     <div class="schoolsfilter" data-test-school-filter>
       <FaIcon @icon="university" @fixedWidth={{true}} />
       {{#if this.hasMoreThanOneSchool}}
-        <select aria-label={{t "general.filterBySchool"}} onchange={{action "changeSelectedSchool" value="target.value"}}>
+        <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" this.changeSelectedSchool)}}>
           {{#each (sort-by "title" @model.schools) as |school|}}
             <option
               value={{school.id}}
@@ -30,7 +30,7 @@
       <FaIcon @icon="calendar" @fixedWidth={{true}} />
       <select
         aria-label={{t "general.filterByYear"}}
-        onchange={{action "changeSelectedYear" value="target.value"}}
+        {{on "change" (pick "target.value" this.changeSelectedYear)}}
         data-test-year-filter
       >
         {{#each (sort-by "title:desc" @model.years) as |year|}}
@@ -43,7 +43,7 @@
     <div class="titlefilter">
       <input
         value={{this.titleFilter}}
-        oninput={{action (perform this.changeTitleFilter) value="target.value"}}
+        {{on "input" (pick "target.value" (perform this.changeTitleFilter))}}
         aria-label={{t "general.courseTitleFilterPlaceholder"}}
         placeholder={{t "general.courseTitleFilterPlaceholder"}}
         data-test-title-filter
@@ -60,7 +60,7 @@
         {{#if (await this.canCreateCourse)}}
           <ExpandCollapseButton
             @value={{this.showNewCourseForm}}
-            @action={{action "toggleNewCourseForm"}}
+            @action={{this.toggleNewCourseForm}}
           />
         {{/if}}
       </div>
@@ -70,8 +70,8 @@
         <NewCourse
           @currentSchool={{this.selectedSchool}}
           @currentYear={{await this.selectedYear}}
-          @save={{action "saveNewCourse"}}
-          @cancel={{action "toggleNewCourseForm"}}
+          @save={{this.saveNewCourse}}
+          @cancel={{this.toggleNewCourseForm}}
         />
       {{/if}}
       {{#if this.newCourse}}
@@ -90,10 +90,10 @@
           @courses={{await this.filteredCourses}}
           @query={{this.titleFilter}}
           @sortBy={{this.sortCoursesBy}}
-          @lock={{action "lockCourse"}}
-          @remove={{action "removeCourse"}}
-          @setSortBy={{action (mut this.sortCoursesBy)}}
-          @unlock={{action "unlockCourse"}}
+          @lock={{this.lockCourse}}
+          @remove={{this.removeCourse}}
+          @setSortBy={{set this.sortCoursesBy}}
+          @unlock={{this.unlockCourse}}
         />
       {{else}}
         <PulseLoader />

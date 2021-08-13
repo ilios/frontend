@@ -7,7 +7,7 @@
     <div class="schoolsfilter">
       <FaIcon @icon="university" @fixedWidth={{true}} />
       {{#if this.hasMoreThanOneSchool}}
-        <select aria-label={{t "general.filterBySchool"}} onchange={{action "changeSelectedSchool" value="target.value"}}>
+        <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" this.changeSelectedSchool)}}>
           {{#each this.sortedSchools as |school|}}
             <option
               value={{school.id}}
@@ -25,8 +25,8 @@
       <input
         aria-label={{t "general.filterByTitle"}}
         type="text"
-        value={{filter}}
-        oninput={{action (mut this.filter) value="target.value"}}
+        value={{this.filter}}
+         {{on "input" (pick "target.value" (set this.filter))}}
         placeholder={{t "general.pendingUserUpdates.filterBy"}}
       >
     </div>
@@ -77,7 +77,7 @@
                       <span
                         class="clickable link"
                         role="button"
-                        onclick={{action "updateEmailAddress" update}}
+                        {{on "click" (fn this.updateEmailAddress update)}}
                       >
                         <FaIcon
                           @icon="arrow-circle-up"
@@ -91,7 +91,7 @@
                     <span
                       class="clickable link"
                       role="button"
-                      onclick={{action "excludeFromSync" update}}
+                      {{on "click" (fn this.excludeFromSync update)}}
                     >
                       <FaIcon
                         @icon="ban"
@@ -104,7 +104,7 @@
                     <span
                       class="clickable link"
                       role="button"
-                      onclick={{action "disableUser" update}}
+                      {{on "click" (fn this.disableUser update)}}
                     >
                       <FaIcon
                         @icon="times"

@@ -11,33 +11,33 @@
     aria-labelledby="user-menu-title"
     class="toggle"
     aria-haspopup="true"
-    aria-expanded={{if isOpen "true" "false"}}
+    aria-expanded={{if this.isOpen "true" "false"}}
     data-test-toggle
-    {{action "toggleMenu"}}
+    {{on "click" this.toggleMenu}}
   >
     <FaIcon @icon="user" />
     <span id="user-menu-title">
       {{get this.model "fullName"}}
     </span>
   </button>
-  {{#if isOpen}}
-    <ClickOutside @onClickOutside={{action (mut isOpen) false}}>
+  {{#if this.isOpen}}
+    <ClickOutside @onClickOutside={{fn (set this.isOpen) false}}>
       <ul class="menu">
         <li tabindex="-1" data-test-item>
-          <LinkTo @route="myprofile" @invokeAction={{action (mut isOpen) false}}>
+          <LinkTo @route="myprofile" @invokeAction={{set this.isOpen false}}>
             {{t "general.myProfile"}}
           </LinkTo>
         </li>
         <li tabindex="-1" data-test-item>
           <LinkTo
             @route="mymaterials"
-            @invokeAction={{action (mut isOpen) false}}
+            @invokeAction={{set this.isOpen false}}
           >
             {{t "general.myMaterials"}}
           </LinkTo>
         </li>
         <li tabindex="-1" data-test-item>
-          <LinkTo @route="logout" @invokeAction={{action (mut isOpen) false}}>
+          <LinkTo @route="logout" @invokeAction={{set this.isOpen false}}>
             {{t "general.logout"}}
           </LinkTo>
         </li>

@@ -3,7 +3,7 @@
     {{t "general.finalErrorDisplayMessage"}}
   </h2>
   <p class="clear-errors">
-    <button type="button" {{action "forceRefresh"}}>
+    <button type="button" {{on "click" this.forceRefresh}}>
       {{t "general.refreshTheBrowser"}}
     </button>
   </p>

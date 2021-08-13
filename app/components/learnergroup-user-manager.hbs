@@ -215,14 +215,14 @@
       </div>
       {{#if (gt this.selectedUsers.length 0)}}
         <p class="fullwidth">
-          <button type="button" class="done text" {{action (perform this.addSelectedUsers)}}>
+          <button type="button" class="done text" {{on "click" (perform this.addSelectedUsers)}}>
             {{t
               "general.moveToGroup"
               groupTitle=@learnerGroupTitle
               count=this.selectedUsers.length
             }}
           </button>
-          <button type="button" class="cancel text" {{action (perform this.removeSelectedUsers)}}>
+          <button type="button" class="cancel text" {{on "click" (perform this.removeSelectedUsers)}}>
             {{t
               "general.removeLearnerToCohort"
               cohort=@cohortTitle
