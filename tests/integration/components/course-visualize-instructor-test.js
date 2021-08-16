@@ -51,4 +51,36 @@ module('Integration | Component | course-visualize-instructor', function (hooks)
 
     assert.equal(component.title, 'course 0 2021 - 2022');
   });
+
+  test('breadcrumb', async function (assert) {
+    this.server.get('application/config', function () {
+      return {
+        config: {
+          academicYearCrossesCalendarYearBoundaries: true,
+        },
+      };
+    });
+    const school = this.server.create('school');
+    const course = this.server.create('course', { year: 2021, school });
+    const user = this.server.create('user');
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    const userModel = await this.owner.lookup('service:store').find('user', user.id);
+    this.set('model', {
+      user: userModel,
+      course: courseModel,
+      offeringMinutes: 0,
+      ilmMinutes: 0,
+    });
+
+    await render(hbs`<CourseVisualizeInstructor @model={{this.model}} />`);
+
+    assert.equal(component.breadcrumb.crumbs.length, 4);
+    assert.equal(component.breadcrumb.crumbs[0].text, 'course 0');
+    assert.equal(component.breadcrumb.crumbs[0].link, '/courses/1');
+    assert.equal(component.breadcrumb.crumbs[1].text, 'Other Visualizations');
+    assert.equal(component.breadcrumb.crumbs[1].link, '/data/courses/1');
+    assert.equal(component.breadcrumb.crumbs[2].text, 'Instructors');
+    assert.equal(component.breadcrumb.crumbs[2].link, '/data/courses/1/instructors');
+    assert.equal(component.breadcrumb.crumbs[3].text, '0 guy M. Mc0son');
+  });
 });
