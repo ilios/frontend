@@ -1,6 +1,7 @@
+import Service from '@ember/service';
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, findAll } from '@ember/test-helpers';
+import { click, render, findAll } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
@@ -8,8 +9,7 @@ module('Integration | Component | visualizer-course-vocabulary', function (hooks
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function (assert) {
-    assert.expect(3);
+  hooks.beforeEach(async function () {
     const vocabulary = this.server.create('vocabulary');
     const term1 = this.server.create('term', {
       vocabulary,
@@ -46,20 +46,43 @@ module('Integration | Component | visualizer-course-vocabulary', function (hooks
       endDate: new Date('2019-12-05T21:00:00'),
     });
 
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    const vocabularyModel = await this.owner
+    this.courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.vocabularyModel = await this.owner
       .lookup('service:store')
       .find('vocabulary', vocabulary.id);
+  });
 
-    this.set('course', courseModel);
-    this.set('vocabulary', vocabularyModel);
+  test('it renders', async function (assert) {
+    this.set('course', this.courseModel);
+    this.set('vocabulary', this.vocabularyModel);
 
     await render(
-      hbs`<VisualizerCourseVocabulary @course={{course}} @vocabulary={{vocabulary}} @isIcon={{false}} />`
+      hbs`<VisualizerCourseVocabulary @course={{this.course}} @vocabulary={{this.vocabulary}} @isIcon={{false}} />`
     );
+
     const chartLabels = 'svg .bars text';
     assert.dom(chartLabels).exists({ count: 2 });
     assert.dom(findAll(chartLabels)[0]).hasText('Campaign 22.2%');
     assert.dom(findAll(chartLabels)[1]).hasText('Standalone 77.8%');
+  });
+
+  test('on-click transition fires', async function (assert) {
+    assert.expect(3);
+    class RouterMock extends Service {
+      transitionTo(route, courseId, termId) {
+        assert.equal(route, 'course-visualize-term');
+        assert.equal(courseId, 1);
+        assert.equal(termId, 2);
+      }
+    }
+    this.owner.register('service:router', RouterMock);
+    this.set('course', this.courseModel);
+    this.set('vocabulary', this.vocabularyModel);
+
+    await render(
+      hbs`<VisualizerCourseVocabulary @course={{this.course}} @vocabulary={{this.vocabulary}} @isIcon={{false}} />`
+    );
+
+    await click('svg .bars rect:nth-of-type(1)');
   });
 });
