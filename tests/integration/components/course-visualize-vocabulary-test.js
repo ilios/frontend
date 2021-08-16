@@ -51,7 +51,7 @@ module('Integration | Component | course-visualize-vocabulary', function (hooks)
     assert.equal(component.breadcrumb.crumbs.length, 4);
     assert.equal(component.breadcrumb.crumbs[0].text, 'course 0');
     assert.equal(component.breadcrumb.crumbs[0].link, '/courses/1');
-    assert.equal(component.breadcrumb.crumbs[1].text, 'Other Visualizations');
+    assert.equal(component.breadcrumb.crumbs[1].text, 'Visualizations');
     assert.equal(component.breadcrumb.crumbs[1].link, '/data/courses/1');
     assert.equal(component.breadcrumb.crumbs[2].text, 'Vocabularies');
     assert.equal(component.breadcrumb.crumbs[2].link, '/data/courses/1/vocabularies');
