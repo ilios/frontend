@@ -9,16 +9,19 @@ module('Integration | Component | course-visualize-vocabulary', function (hooks)
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function (assert) {
+  hooks.beforeEach(async function () {
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', { school });
     const term = this.server.create('term', { vocabulary });
     const course = this.server.create('course', { year: 2021, school, terms: [term] });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    const vocabularyModel = await this.owner
+    this.courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.vocabularyModel = await this.owner
       .lookup('service:store')
       .find('vocabulary', vocabulary.id);
-    this.set('model', { course: courseModel, vocabulary: vocabularyModel });
+  });
+
+  test('it renders', async function (assert) {
+    this.set('model', { course: this.courseModel, vocabulary: this.vocabularyModel });
 
     await render(hbs`<CourseVisualizeVocabulary @model={{this.model}} />`);
 
@@ -33,18 +36,25 @@ module('Integration | Component | course-visualize-vocabulary', function (hooks)
         },
       };
     });
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
-    const term = this.server.create('term', { vocabulary });
-    const course = this.server.create('course', { year: 2021, school, terms: [term] });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    const vocabularyModel = await this.owner
-      .lookup('service:store')
-      .find('vocabulary', vocabulary.id);
-    this.set('model', { course: courseModel, vocabulary: vocabularyModel });
+    this.set('model', { course: this.courseModel, vocabulary: this.vocabularyModel });
 
     await render(hbs`<CourseVisualizeVocabulary @model={{this.model}} />`);
 
     assert.equal(component.title, 'course 0 2021 - 2022');
+  });
+
+  test('breadcrumb', async function (assert) {
+    this.set('model', { course: this.courseModel, vocabulary: this.vocabularyModel });
+
+    await render(hbs`<CourseVisualizeVocabulary @model={{this.model}} />`);
+
+    assert.equal(component.breadcrumb.crumbs.length, 4);
+    assert.equal(component.breadcrumb.crumbs[0].text, 'course 0');
+    assert.equal(component.breadcrumb.crumbs[0].link, '/courses/1');
+    assert.equal(component.breadcrumb.crumbs[1].text, 'Visualizations');
+    assert.equal(component.breadcrumb.crumbs[1].link, '/data/courses/1');
+    assert.equal(component.breadcrumb.crumbs[2].text, 'Vocabularies');
+    assert.equal(component.breadcrumb.crumbs[2].link, '/data/courses/1/vocabularies');
+    assert.equal(component.breadcrumb.crumbs[3].text, 'Vocabulary 1');
   });
 });

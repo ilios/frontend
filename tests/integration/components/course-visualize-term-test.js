@@ -9,14 +9,17 @@ module('Integration | Component | course-visualize-term', function (hooks) {
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function (assert) {
+  hooks.beforeEach(async function () {
     const school = this.server.create('school');
     const vocabulary = this.server.create('vocabulary', { school });
     const term = this.server.create('term', { vocabulary });
     const course = this.server.create('course', { year: 2021, school, terms: [term] });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
-    this.set('model', { course: courseModel, term: termModel });
+    this.courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.termModel = await this.owner.lookup('service:store').find('term', term.id);
+  });
+
+  test('it renders', async function (assert) {
+    this.set('model', { course: this.courseModel, term: this.termModel });
 
     await render(hbs`<CourseVisualizeTerm @model={{this.model}} />`);
 
@@ -31,16 +34,27 @@ module('Integration | Component | course-visualize-term', function (hooks) {
         },
       };
     });
-    const school = this.server.create('school');
-    const vocabulary = this.server.create('vocabulary', { school });
-    const term = this.server.create('term', { vocabulary });
-    const course = this.server.create('course', { year: 2021, school, terms: [term] });
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    const termModel = await this.owner.lookup('service:store').find('term', term.id);
-    this.set('model', { course: courseModel, term: termModel });
+    this.set('model', { course: this.courseModel, term: this.termModel });
 
     await render(hbs`<CourseVisualizeTerm @model={{this.model}} />`);
 
     assert.equal(component.title, 'course 0 2021 - 2022');
+  });
+
+  test('breadcrumb', async function (assert) {
+    this.set('model', { course: this.courseModel, term: this.termModel });
+
+    await render(hbs`<CourseVisualizeTerm @model={{this.model}} />`);
+
+    assert.equal(component.breadcrumb.crumbs.length, 5);
+    assert.equal(component.breadcrumb.crumbs[0].text, 'course 0');
+    assert.equal(component.breadcrumb.crumbs[0].link, '/courses/1');
+    assert.equal(component.breadcrumb.crumbs[1].text, 'Visualizations');
+    assert.equal(component.breadcrumb.crumbs[1].link, '/data/courses/1');
+    assert.equal(component.breadcrumb.crumbs[2].text, 'Vocabularies');
+    assert.equal(component.breadcrumb.crumbs[2].link, '/data/courses/1/vocabularies');
+    assert.equal(component.breadcrumb.crumbs[3].text, 'Vocabulary 1');
+    assert.equal(component.breadcrumb.crumbs[3].link, '/data/courses/1/vocabularies/1');
+    assert.equal(component.breadcrumb.crumbs[4].text, 'term 0');
   });
 });

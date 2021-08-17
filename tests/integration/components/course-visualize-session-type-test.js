@@ -9,18 +9,22 @@ module('Integration | Component | course-visualize-session-type', function (hook
   setupRenderingTest(hooks);
   setupMirage(hooks);
 
-  test('it renders', async function (assert) {
+  hooks.beforeEach(async function () {
     const school = this.server.create('school');
     const course = this.server.create('course', { year: 2021, school });
     const session = this.server.create('session', { course });
     const sessionType = this.server.create('sessionType', { school, sessions: [session] });
-    const sessionTypeModel = await this.owner
+    this.sessionTypeModel = await this.owner
       .lookup('service:store')
       .find('session-type', sessionType.id);
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    this.set('model', { course: courseModel, sessionType: sessionTypeModel });
+    this.courseModel = await this.owner.lookup('service:store').find('course', course.id);
+  });
+
+  test('it renders', async function (assert) {
+    this.set('model', { course: this.courseModel, sessionType: this.sessionTypeModel });
 
     await render(hbs`<CourseVisualizeSessionType @model={{this.model}} />`);
+
     assert.equal(component.title, 'course 0 2021');
   });
 
@@ -32,18 +36,25 @@ module('Integration | Component | course-visualize-session-type', function (hook
         },
       };
     });
-    const school = this.server.create('school');
-    const course = this.server.create('course', { year: 2021, school });
-    const session = this.server.create('session', { course });
-    const sessionType = this.server.create('sessionType', { school, sessions: [session] });
-    const sessionTypeModel = await this.owner
-      .lookup('service:store')
-      .find('session-type', sessionType.id);
-    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
-    this.set('model', { course: courseModel, sessionType: sessionTypeModel });
+    this.set('model', { course: this.courseModel, sessionType: this.sessionTypeModel });
 
     await render(hbs`<CourseVisualizeSessionType @model={{this.model}} />`);
 
     assert.equal(component.title, 'course 0 2021 - 2022');
+  });
+
+  test('breadcrumb', async function (assert) {
+    this.set('model', { course: this.courseModel, sessionType: this.sessionTypeModel });
+
+    await render(hbs`<CourseVisualizeSessionType @model={{this.model}} />`);
+
+    assert.equal(component.breadcrumb.crumbs.length, 4);
+    assert.equal(component.breadcrumb.crumbs[0].text, 'course 0');
+    assert.equal(component.breadcrumb.crumbs[0].link, '/courses/1');
+    assert.equal(component.breadcrumb.crumbs[1].text, 'Visualizations');
+    assert.equal(component.breadcrumb.crumbs[1].link, '/data/courses/1');
+    assert.equal(component.breadcrumb.crumbs[2].text, 'Session Types');
+    assert.equal(component.breadcrumb.crumbs[2].link, '/data/courses/1/session-types');
+    assert.equal(component.breadcrumb.crumbs[3].text, 'session type 0');
   });
 });

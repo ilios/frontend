@@ -1,8 +1,14 @@
-import { create, text } from 'ember-cli-page-object';
+import { attribute, collection, create, text } from 'ember-cli-page-object';
 
 const definition = create({
   scope: '[data-test-course-visualize-instructor]',
   title: text('[data-test-title]'),
+  breadcrumb: {
+    scope: '[data-test-breadcrumb]',
+    crumbs: collection('span', {
+      link: attribute('href', 'a'),
+    }),
+  },
 });
 
 export default definition;

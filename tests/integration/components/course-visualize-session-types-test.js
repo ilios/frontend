@@ -77,4 +77,17 @@ module('Integration | Component | course-visualize-session-types', function (hoo
     assert.equal(component.chart.bars.length, 1);
     assert.equal(component.chart.labels.length, 1);
   });
+
+  test('breadcrumb', async function (assert) {
+    this.set('course', this.courseModel);
+
+    await render(hbs`<CourseVisualizeSessionTypes @model={{this.course}} />`);
+
+    assert.equal(component.breadcrumb.crumbs.length, 3);
+    assert.equal(component.breadcrumb.crumbs[0].text, 'course 0');
+    assert.equal(component.breadcrumb.crumbs[0].link, '/courses/1');
+    assert.equal(component.breadcrumb.crumbs[1].text, 'Visualizations');
+    assert.equal(component.breadcrumb.crumbs[1].link, '/data/courses/1');
+    assert.equal(component.breadcrumb.crumbs[2].text, 'Session Types');
+  });
 });
