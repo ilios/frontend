@@ -11,6 +11,9 @@ updates:
   - dependency-name: broccoli-asset-rev
     versions:
     - ">= 0"
+  - dependency-name: ember-auto-import
+    versions:
+    - ">= 0"
   - dependency-name: ember-cli
     versions:
     - ">= 0"
@@ -86,49 +89,3 @@ updates:
   - dependency-name: qunit-dom
     versions:
     - ">= 0"
-  - dependency-name: ember-a11y-testing
-    versions:
-    - 4.0.1
-    - 4.0.5
-  - dependency-name: ember-auto-import
-    versions:
-    - 1.11.0
-  - dependency-name: ember-template-lint
-    versions:
-    - 3.1.1
-  - dependency-name: ember-simple-charts
-    versions:
-    - 4.0.0
-    - 5.0.0
-  - dependency-name: "@formatjs/intl-locale"
-    versions:
-    - 2.4.16
-    - 2.4.18
-    - 2.4.19
-  - dependency-name: "@formatjs/intl-relativetimeformat"
-    versions:
-    - 8.1.2
-  - dependency-name: "@formatjs/intl-pluralrules"
-    versions:
-    - 4.0.11
-  - dependency-name: ember-concurrency
-    versions:
-    - 2.0.2
-  - dependency-name: "@popperjs/core"
-    versions:
-    - 2.8.2
-  - dependency-name: luxon
-    versions:
-    - 1.26.0
-  - dependency-name: ember-page-title
-    versions:
-    - 6.2.1
-  - dependency-name: "@ember/test-helpers"
-    versions:
-    - 2.2.0
-  - dependency-name: query-string
-    versions:
-    - 6.14.0
-  - dependency-name: sass
-    versions:
-    - 1.32.7
