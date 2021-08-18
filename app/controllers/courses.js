@@ -1,197 +1,183 @@
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
-import { gt } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import { isBlank, isEmpty, isPresent } from '@ember/utils';
-import { task, timeout } from 'ember-concurrency';
+import { restartableTask, dropTask, timeout } from 'ember-concurrency';
 import moment from 'moment';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import AsyncProcess from 'ilios-common/classes/async-process';
+import PermissionChecker from 'ilios/classes/permission-checker';
+import { action } from '@ember/object';
+import { tracked } from '@glimmer/tracking';
 
-export default Controller.extend({
-  currentUser: service(),
-  intl: service(),
-  permissionChecker: service(),
-  dataLoader: service(),
-  iliosConfig: service(),
+export default class CoursesController extends Controller {
+  @service currentUser;
+  @service intl;
+  @service permissionChecker;
+  @service dataLoader;
+  @service iliosConfig;
 
-  queryParams: {
-    schoolId: 'school',
-    sortCoursesBy: 'sortBy',
-    titleFilter: 'filter',
-    year: 'year',
-    userCoursesOnly: 'mycourses',
-  },
+  queryParams = [
+    { schoolId: 'school' },
+    { sortCoursesBy: 'sortBy' },
+    { titleFilter: 'filter' },
+    { year: 'year' },
+    { userCoursesOnly: 'mycourses' },
+  ];
 
-  deletedCourse: null,
-  newCourse: null,
-  schoolId: null,
-  showNewCourseForm: false,
-  sortCoursesBy: 'title',
-  sortSchoolsBy: null,
-  sortYearsBy: null,
-  titleFilter: null,
-  userCoursesOnly: false,
-  year: null,
+  @tracked deletedCourse = null;
+  @tracked newCourse = null;
+  @tracked schoolId = null;
+  @tracked showNewCourseForm = false;
+  @tracked sortCoursesBy = 'title';
+  @tracked sortSchoolsBy = null;
+  @tracked sortYearsBy = null;
+  @tracked titleFilter = null;
+  @tracked userCoursesOnly = false;
+  @tracked year = null;
 
-  hasMoreThanOneSchool: gt('model.schools.length', 1),
+  @use preloadedCoursesInSelectedSchool = new AsyncProcess(() => [
+    this.getCourses,
+    this.selectedSchool,
+    this.dataLoader,
+  ]);
 
-  courses: computed(
-    'selectedSchool',
-    'selectedYear',
-    'deletedCourse',
-    'newCourse',
-    async function () {
-      const selectedSchool = this.selectedSchool;
-      const selectedYear = await this.selectedYear;
-      if (isEmpty(selectedSchool) || isEmpty(selectedYear)) {
-        return [];
-      }
+  @use coursesInSelectedSchool = new ResolveAsyncValue(() => [
+    this.preloadedCoursesInSelectedSchool ? this.selectedSchool?.courses : [],
+  ]);
 
-      const year = parseInt(selectedYear.id, 10);
-      await this.dataLoader.loadSchoolForCourses(selectedSchool.id);
-      const courses = await selectedSchool.courses;
-      return courses.filter((course) => {
-        return course.year === year && !course.archived;
-      });
+  @use academicYearCrossesCalendarYearBoundaries = new ResolveAsyncValue(() => [
+    this.iliosConfig.itemFromConfig('academicYearCrossesCalendarYearBoundaries'),
+  ]);
+
+  @use userModel = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
+  @use allRelatedCourses = new ResolveAsyncValue(() => [this.userModel?.allRelatedCourses]);
+  @use canCreateCourse = new PermissionChecker(() => ['canCreateCourse', this.selectedSchool]);
+
+  get hasMoreThanOneSchool() {
+    return this.model.schools.length > 1;
+  }
+
+  async getCourses(selectedSchool, dataLoader) {
+    if (!selectedSchool) {
+      return false;
     }
-  ),
 
-  userModel: computed('currentUser.currentUserId', async function () {
-    return this.currentUser.getModel();
-  }),
+    await dataLoader.loadSchoolForCourses(selectedSchool.id);
 
-  allRelatedCourses: computed('userModel.allRelatedCourses.[]', async function () {
-    const user = await this.userModel;
-    return await user.allRelatedCourses;
-  }),
+    return true;
+  }
 
-  filteredCourses: computed(
-    'titleFilter',
-    'courses.[]',
-    'userCoursesOnly',
-    'allRelatedCourses.[]',
-    async function () {
-      const titleFilter = this.titleFilter;
-      const title = isBlank(titleFilter) ? '' : titleFilter.trim().toLowerCase();
-      const filterMyCourses = this.userCoursesOnly;
-      const courses = await this.courses;
-      let filteredCourses;
-      if (isEmpty(title)) {
-        filteredCourses = courses.sortBy('title');
-      } else {
-        filteredCourses = courses
-          .filter((course) => {
-            return (
-              (isPresent(course.title) && course.title.trim().toLowerCase().includes(title)) ||
-              (isPresent(course.externalId) &&
-                course.externalId.trim().toLowerCase().includes(title))
-            );
-          })
-          .sortBy('title');
-      }
-      if (filterMyCourses) {
-        const allRelatedCourses = await this.allRelatedCourses;
-        filteredCourses = filteredCourses.filter((course) => allRelatedCourses.includes(course));
-      }
-      return filteredCourses;
+  get coursesLoaded() {
+    return this.preloadedCoursesInSelectedSchool;
+  }
+
+  get courses() {
+    return this.coursesInSelectedSchool ?? [];
+  }
+
+  get coursesInSelectedYear() {
+    const year = Number(this.selectedYear?.id);
+    return this.courses.filter((course) => {
+      return course.year === year && !course.archived;
+    });
+  }
+
+  get coursesFilteredByTitle() {
+    if (!this.titleFilter) {
+      return this.coursesInSelectedYear;
     }
-  ),
+    const title = this.titleFilter.trim().toLowerCase() ?? '';
+    return this.coursesInSelectedYear.filter((course) => {
+      return (
+        course.title?.trim().toLowerCase().includes(title) ||
+        course.externalId?.trim().toLowerCase().includes(title)
+      );
+    });
+  }
 
-  selectedSchool: computed(
-    'model.{primarySchool,schools.[]}',
-    'primarySchool',
-    'schoolId',
-    function () {
-      const schools = this.model.schools;
-      const primarySchool = this.model.primarySchool;
-      const schoolId = this.schoolId;
-      if (isPresent(schoolId)) {
-        const school = schools.findBy('id', schoolId);
-        if (school) {
-          return school;
-        }
-      }
-
-      return primarySchool;
+  get filteredCourses() {
+    if (this.userCoursesOnly) {
+      return this.coursesFilteredByTitle.filter((course) =>
+        this.allRelatedCourses?.includes(course)
+      );
     }
-  ),
+    return this.coursesFilteredByTitle;
+  }
 
-  selectedYear: computed('model.years.[]', 'year', async function () {
-    const years = this.model.years;
-    if (isPresent(this.year)) {
+  get selectedSchool() {
+    const { schools, primarySchool } = this.model;
+    if (this.schoolId) {
+      const school = schools.findBy('id', this.schoolId);
+      if (school) {
+        return school;
+      }
+    }
+
+    return primarySchool;
+  }
+
+  get selectedYear() {
+    const { years } = this.model;
+    if (this.year) {
       return years.find((year) => year.id === this.year);
     }
-    let currentYear = parseInt(moment().format('YYYY'), 10);
-    const currentMonth = parseInt(moment().format('M'), 10);
-    const academicYearIsCrossingYearBoundaries = await this.iliosConfig.itemFromConfig(
-      'academicYearCrossesCalendarYearBoundaries'
-    );
-    if (academicYearIsCrossingYearBoundaries && currentMonth < 6) {
+    let currentYear = Number(moment().format('YYYY'));
+    const currentMonth = Number(moment().format('M'));
+    if (this.academicYearCrossesCalendarYearBoundaries && currentMonth < 6) {
       currentYear--;
     }
-    let defaultYear = years.find((year) => parseInt(year.id, 10) === currentYear);
-    if (isEmpty(defaultYear)) {
+    let defaultYear = years.find((year) => Number(year.id) === currentYear);
+    if (!defaultYear) {
       defaultYear = years.lastObject;
     }
 
     return defaultYear;
-  }),
+  }
 
-  canCreateCourse: computed('selectedSchool', async function () {
-    const permissionChecker = this.permissionChecker;
-    const selectedSchool = this.selectedSchool;
-    return permissionChecker.canCreateCourse(selectedSchool);
-  }),
+  @dropTask
+  *removeCourse(course) {
+    const courses = yield this.selectedSchool.courses;
+    courses.removeObject(course);
+    yield course.destroyRecord();
+    this.deletedCourse = course;
+    if (this.newCourse === course) {
+      this.newCourse = null;
+    }
+  }
 
-  actions: {
-    async removeCourse(course) {
-      const school = await this.selectedSchool;
-      const courses = await school.courses;
-      courses.removeObject(course);
-      await course.destroyRecord();
-      this.set('deletedCourse', course);
-      const newCourse = this.newCourse;
-      if (newCourse === course) {
-        this.set('newCourse', null);
-      }
-    },
+  @dropTask
+  *saveNewCourse(newCourse) {
+    newCourse.setDatesBasedOnYear();
+    this.newCourse = yield newCourse.save();
+    this.showNewCourseForm = false;
+  }
 
-    async saveNewCourse(newCourse) {
-      newCourse.setDatesBasedOnYear();
-      const savedCourse = await newCourse.save();
-      this.set('showNewCourseForm', false);
-      this.set('newCourse', savedCourse);
-      const school = await this.selectedSchool;
-      const courses = await school.courses;
-      courses.pushObject(savedCourse);
-      return savedCourse;
-    },
+  @action
+  changeSelectedYear(year) {
+    this.set('year', year);
+  }
 
-    changeSelectedYear(year) {
-      this.set('year', year);
-    },
+  @action
+  changeSelectedSchool(schoolId) {
+    this.set('schoolId', schoolId);
+  }
 
-    changeSelectedSchool(schoolId) {
-      this.set('schoolId', schoolId);
-    },
+  @action
+  lockCourse(course) {
+    course.set('locked', true);
+    return course.save();
+  }
 
-    toggleNewCourseForm() {
-      this.set('showNewCourseForm', !this.showNewCourseForm);
-    },
+  @action
+  unlockCourse(course) {
+    course.set('locked', false);
+    return course.save();
+  }
 
-    lockCourse(course) {
-      course.set('locked', true);
-      return course.save();
-    },
-
-    unlockCourse(course) {
-      course.set('locked', false);
-      return course.save();
-    },
-  },
-
-  changeTitleFilter: task(function* (value) {
-    this.set('titleFilter', value);
+  @restartableTask
+  *changeTitleFilter(value) {
+    this.titleFilter = value;
     yield timeout(250);
     return value;
-  }).restartable(),
-});
+  }
+}

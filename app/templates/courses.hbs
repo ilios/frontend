@@ -34,7 +34,7 @@
         data-test-year-filter
       >
         {{#each (sort-by "title:desc" @model.years) as |year|}}
-          <option value={{year.id}} selected={{is-equal year (await this.selectedYear)}}>
+          <option value={{year.id}} selected={{is-equal year this.selectedYear}}>
             {{year.title}}
           </option>
         {{/each}}
@@ -54,24 +54,24 @@
     <div class="header">
       <h2 data-test-courses-header-title class="title">
         {{t "general.courses"}}
-        ({{get (await this.filteredCourses) "length"}})
+        ({{this.filteredCourses.length}})
       </h2>
       <div class="actions">
-        {{#if (await this.canCreateCourse)}}
+        {{#if this.canCreateCourse}}
           <ExpandCollapseButton
             @value={{this.showNewCourseForm}}
-            @action={{this.toggleNewCourseForm}}
+            @action={{set this.showNewCourseForm (not this.showNewCourseForm)}}
           />
         {{/if}}
       </div>
     </div>
     <section class="new">
-      {{#if (and (is-fulfilled this.sessionTypes) this.showNewCourseForm)}}
+      {{#if this.showNewCourseForm}}
         <NewCourse
           @currentSchool={{this.selectedSchool}}
-          @currentYear={{await this.selectedYear}}
-          @save={{this.saveNewCourse}}
-          @cancel={{this.toggleNewCourseForm}}
+          @currentYear={{this.selectedYear}}
+          @save={{perform this.saveNewCourse}}
+          @cancel={{set this.showNewCourseForm false}}
         />
       {{/if}}
       {{#if this.newCourse}}
@@ -85,13 +85,13 @@
       {{/if}}
     </section>
     <div class="list">
-      {{#if (is-fulfilled this.filteredCourses)}}
+      {{#if this.coursesLoaded}}
         <IliosCourseList
-          @courses={{await this.filteredCourses}}
+          @courses={{this.filteredCourses}}
           @query={{this.titleFilter}}
           @sortBy={{this.sortCoursesBy}}
           @lock={{this.lockCourse}}
-          @remove={{this.removeCourse}}
+          @remove={{perform this.removeCourse}}
           @setSortBy={{set this.sortCoursesBy}}
           @unlock={{this.unlockCourse}}
         />
