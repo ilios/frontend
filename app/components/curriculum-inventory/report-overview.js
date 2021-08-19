@@ -4,7 +4,13 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 import scrollTo from 'ilios-common/utils/scroll-to';
 import { dropTask, restartableTask } from 'ember-concurrency';
-import { validatable, AfterDate, BeforeDate, Length } from 'ilios-common/decorators/validation';
+import {
+  validatable,
+  AfterDate,
+  BeforeDate,
+  Length,
+  NotBlank,
+} from 'ilios-common/decorators/validation';
 
 @validatable
 export default class CurriculumInventoryReportOverviewComponent extends Component {
@@ -13,7 +19,7 @@ export default class CurriculumInventoryReportOverviewComponent extends Componen
   @service permissionChecker;
   @service router;
 
-  @tracked @Length(0, 21844) description;
+  @tracked @NotBlank() @Length(1, 21844) description;
   @BeforeDate('endDate', { granularity: 'minute' }) @tracked startDate;
   @AfterDate('startDate', { granularity: 'minute' }) @tracked endDate;
   @tracked year = null;
