@@ -31,6 +31,7 @@ const definition = {
     value: text('textarea'),
     label: text('label'),
     set: fillable('textarea'),
+    hasError: isVisible('.validation-error-message'),
   },
   name: {
     scope: '[data-test-name]',

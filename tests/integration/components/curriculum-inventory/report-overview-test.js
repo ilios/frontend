@@ -312,6 +312,19 @@ module('Integration | Component | curriculum-inventory/report-overview', functio
     assert.ok(component.description.hasError, 'Validation error message is visible.');
   });
 
+  test('description validation fails if text is empty', async function (assert) {
+    await render(
+      hbs`<CurriculumInventory::ReportOverview @report={{this.report}} @canUpdate={{true}} />`
+    );
+
+    assert.equal(component.description.text, 'Lorem Ipsum');
+    await component.description.edit();
+    assert.notOk(component.description.hasError, 'Validation error is initially not shown.');
+    await component.description.set('');
+    await component.description.save();
+    assert.ok(component.description.hasError, 'Validation error message is visible.');
+  });
+
   test('program short title is only displayed if it has a value', async function (assert) {
     this.program.shortTitle = null;
     await render(

@@ -37,11 +37,15 @@
           </label>
           <textarea
             id="description-{{templateId}}"
-            value={{this.description}}
             disabled={{this.save.isRunning}}
             placeholder={{t "general.reportDescriptionPlaceholder"}}
             {{on "input" (pick "target.value" (set this.description))}}
-          ></textarea>
+          >{{this.description}}</textarea>
+          {{#each (await (compute this.getErrorsFor "description")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
         </div>
         <div class="item" data-test-program-title>
           <label>

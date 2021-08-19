@@ -44,6 +44,11 @@
             disabled={{this.save.isRunning}}
             placeholder={{t "general.reportDescriptionPlaceholder"}}
           >{{this.description}}</textarea>
+          {{#each (await (compute this.getErrorsFor "description")) as |message|}}
+            <span class="validation-error-message">
+              {{message}}
+            </span>
+          {{/each}}
         {{/let}}
       </div>
       <div class="item years" data-test-years>

@@ -25,6 +25,7 @@ const definition = {
     value: text('textarea'),
     label: text('label'),
     set: fillable('textarea'),
+    hasValidationError: isVisible('.validation-error-message'),
   },
   years: {
     scope: '[data-test-years]',

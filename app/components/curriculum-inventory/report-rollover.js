@@ -13,7 +13,7 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
   @service store;
 
   @tracked @NotBlank() @Length(3, 200) name;
-  @tracked description;
+  @tracked @NotBlank() @Length(1, 21844) description;
   @tracked selectedYear;
   @tracked years = [];
   @tracked selectedProgram;
@@ -80,7 +80,7 @@ export default class CurriculumInventoryReportRolloverComponent extends Componen
 
   @dropTask
   *save() {
-    this.addErrorDisplaysFor(['name']);
+    this.addErrorDisplaysFor(['name', 'description']);
     const isValid = yield this.isValid();
     if (!isValid) {
       return false;

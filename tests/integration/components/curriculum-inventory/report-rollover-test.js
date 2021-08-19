@@ -226,4 +226,23 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
     await component.save();
     assert.ok(component.name.hasValidationError);
   });
+
+  test('input validation fails on blank description', async function (assert) {
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const report = this.server.create('curriculum-inventory-report', {
+      program,
+      description: 'lorem ipsum',
+    });
+    const reportModel = await this.owner
+      .lookup('service:store')
+      .find('curriculum-inventory-report', report.id);
+    this.set('report', reportModel);
+
+    await render(hbs`<CurriculumInventory::ReportRollover @report={{this.report}} />`);
+    assert.notOk(component.description.hasValidationError);
+    await component.description.set('');
+    await component.save();
+    assert.ok(component.description.hasValidationError);
+  });
 });
