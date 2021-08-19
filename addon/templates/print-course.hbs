@@ -1,3 +1,8 @@
+<div class="backtolink">
+  <LinkTo @route="course" @model={{@model}}>
+    {{t "general.backToCourse"}}
+  </LinkTo>
+</div>
 <PrintCourse
   @course={{@model}}
   @includeUnpublishedSessions={{and this.unpublished this.canViewUnpublished}}
