@@ -53,7 +53,7 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
       currentYear + 5,
       'Last year label is correct.'
     );
-    assert.equal(component.description.value, '', 'Description input is initially empty.');
+    assert.equal(component.description.value, 'Curriculum Inventory Report');
     assert.equal(
       component.description.label,
       'Description:',
@@ -231,5 +231,20 @@ module('Integration | Component | curriculum-inventory/new-report', function (ho
     await component.name.set('0123456789'.repeat(7));
     await component.save();
     assert.ok(component.name.hasError);
+  });
+
+  test('validation errors show if description is blank', async function (assert) {
+    const program = this.server.create('program', { id: 1, title: 'Doctor of Medicine' });
+    const programModel = await this.owner.lookup('service:store').find('program', program.id);
+    this.set('program', programModel);
+
+    await render(
+      hbs`<CurriculumInventory::NewReport @currentProgram={{this.program}} @save={{noop}} @cancel={{noop}}/>`
+    );
+
+    assert.notOk(component.description.hasError);
+    await component.description.set('');
+    await component.save();
+    assert.ok(component.description.hasError);
   });
 });

@@ -9,12 +9,18 @@ import { dropTask, restartableTask } from 'ember-concurrency';
 export default class CurriculumInventoryNewReportComponent extends Component {
   @service store;
   @service iliosConfig;
+  @service intl;
 
   @tracked @NotBlank() @Length(1, 60) name;
-  @tracked description;
+  @tracked @NotBlank() @Length(1, 21844) description;
   @tracked selectedYear;
   @tracked years;
   @tracked academicYearCrossesCalendarYearBoundaries;
+
+  constructor() {
+    super(...arguments);
+    this.description = this.intl.t('general.curriculumInventoryReport');
+  }
 
   @restartableTask
   *load() {
@@ -37,7 +43,7 @@ export default class CurriculumInventoryNewReportComponent extends Component {
 
   @dropTask
   *save() {
-    this.addErrorDisplayFor('name');
+    this.addErrorDisplaysFor(['name', 'description']);
     const isValid = yield this.isValid();
     if (!isValid) {
       return false;
