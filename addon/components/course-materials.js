@@ -47,6 +47,10 @@ export default class CourseMaterialsComponent extends Component {
     }
   }
 
+  get isLoadingOrReloading() {
+    return this.load.isRunning || this.update.isRunning;
+  }
+
   get filteredCourseLearningMaterialObjects() {
     const q = cleanQuery(this.courseQuery);
     if (!q) {

@@ -190,11 +190,11 @@ module('Integration | Component | course materials', function (hooks) {
     });
 
     await render(hbs`<CourseMaterials
-      @course={{course}}
-      @courseSort={{courseSort}}
-      @sessionSort={{sessionSort}}
-      @onCourseSort={{action cSortBy}}
-      @onSessionSort={{action sSortBy}}
+      @course={{this.course}}
+      @courseSort={{this.courseSort}}
+      @sessionSort={{this.sessionSort}}
+      @onCourseSort={{this.cSortBy}}
+      @onSessionSort={{this.sSortBy}}
     />`);
     await component.sortCoursesBy.title();
     await component.sortCoursesBy.title();
@@ -226,9 +226,9 @@ module('Integration | Component | course materials', function (hooks) {
     });
 
     await render(hbs`<CourseMaterials
-      @course={{course}}
-      @courseSort={{courseSort}}
-      @sessionSort={{sessionSort}}
+      @course={{this.course}}
+      @courseSort={{this.courseSort}}
+      @sessionSort={{this.sessionSort}}
     />`);
 
     assert.equal(component.courses.length, 3);
@@ -248,9 +248,9 @@ module('Integration | Component | course materials', function (hooks) {
     });
 
     await render(hbs`<CourseMaterials
-      @course={{course}}
-      @courseSort={{courseSort}}
-      @sessionSort={{sessionSort}}
+      @course={{this.course}}
+      @courseSort={{this.courseSort}}
+      @sessionSort={{this.sessionSort}}
     />`);
 
     assert.equal(component.courses.length, 3);
@@ -270,9 +270,9 @@ module('Integration | Component | course materials', function (hooks) {
     });
 
     await render(hbs`<CourseMaterials
-      @course={{course}}
-      @courseSort={{courseSort}}
-      @sessionSort={{sessionSort}}
+      @course={{this.course}}
+      @courseSort={{this.courseSort}}
+      @sessionSort={{this.sessionSort}}
     />`);
 
     assert.equal(component.courses.length, 3);
@@ -292,9 +292,9 @@ module('Integration | Component | course materials', function (hooks) {
     });
 
     await render(hbs`<CourseMaterials
-      @course={{course}}
-      @courseSort={{courseSort}}
-      @sessionSort={{sessionSort}}
+      @course={{this.course}}
+      @courseSort={{this.courseSort}}
+      @sessionSort={{this.sessionSort}}
     />`);
 
     assert.equal(component.courses.length, 3);
@@ -314,9 +314,9 @@ module('Integration | Component | course materials', function (hooks) {
     });
 
     await render(hbs`<CourseMaterials
-      @course={{course}}
-      @courseSort={{courseSort}}
-      @sessionSort={{sessionSort}}
+      @course={{this.course}}
+      @courseSort={{this.courseSort}}
+      @sessionSort={{this.sessionSort}}
     />`);
 
     assert.equal(component.sessions.length, 3);
@@ -336,9 +336,9 @@ module('Integration | Component | course materials', function (hooks) {
     });
 
     await render(hbs`<CourseMaterials
-      @course={{course}}
-      @courseSort={{courseSort}}
-      @sessionSort={{sessionSort}}
+      @course={{this.course}}
+      @courseSort={{this.courseSort}}
+      @sessionSort={{this.sessionSort}}
     />`);
 
     assert.equal(component.sessions.length, 3);
@@ -358,9 +358,9 @@ module('Integration | Component | course materials', function (hooks) {
     });
 
     await render(hbs`<CourseMaterials
-      @course={{course}}
-      @courseSort={{courseSort}}
-      @sessionSort={{sessionSort}}
+      @course={{this.course}}
+      @courseSort={{this.courseSort}}
+      @sessionSort={{this.sessionSort}}
     />`);
 
     assert.equal(component.sessions.length, 3);
@@ -380,14 +380,31 @@ module('Integration | Component | course materials', function (hooks) {
     });
 
     await render(hbs`<CourseMaterials
-      @course={{course}}
-      @courseSort={{courseSort}}
-      @sessionSort={{sessionSort}}
+      @course={{this.course}}
+      @courseSort={{this.courseSort}}
+      @sessionSort={{this.sessionSort}}
     />`);
 
     assert.equal(component.sessions.length, 3);
     await component.sessionFilter('citationtext');
     assert.equal(component.sessions.length, 1);
     assert.equal(component.sessions[0].title, 'title3 citationtext');
+  });
+
+  test('no materials', async function (assert) {
+    const course = this.server.create('course');
+    const courseModel = await this.owner.lookup('service:store').find('course', course.id);
+    this.set('course', courseModel);
+
+    await render(hbs`<CourseMaterials
+      @course={{this.course}}
+      @courseSort={{noop}}
+      @sessionSort={{noop}}
+    />`);
+
+    assert.equal(component.courses.length, 1);
+    assert.equal(component.courses[0].title, 'No Course Learning Materials Available');
+    assert.equal(component.sessions.length, 1);
+    assert.equal(component.sessions[0].title, 'No Session Learning Materials Available');
   });
 });
