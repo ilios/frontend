@@ -3,6 +3,7 @@ import { tracked } from '@glimmer/tracking';
 
 export default class SingleEventObjectiveList extends Component {
   @tracked groupByCompetencies = true;
+  @tracked isExpanded = !!this.args.isExpandedByDefault;
 
   get showDisplayModeToggle() {
     if (!this.args.objectives) {

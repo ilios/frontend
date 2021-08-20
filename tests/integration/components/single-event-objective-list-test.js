@@ -1,72 +1,80 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { render, click } from '@ember/test-helpers';
+import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { component } from 'ilios-common/page-objects/components/single-event-objective-list';
 
 module('Integration | Component | ilios calendar single event objective list', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
-    assert.expect(20);
-
     const objectives = [
       { domain: 'great things', title: 'cheese', position: 1 },
       { domain: 'great things', title: 'ice cream', position: 2 },
       { domain: 'annoying things', title: 'buying gas', position: 3 },
       { domain: 'annoying things', title: 'traffic', position: 4 },
     ];
-
-    const courseObjectivesPhrase = 'Course Objectives';
+    const title = 'Course Objectives';
     const listByPriorityPhrase = 'List by Priority';
     const groupByCompetenciesPhrase = 'Group by Competencies';
-
-    this.set('courseObjectivesPhrase', courseObjectivesPhrase);
+    this.set('title', title);
     this.set('groupByCompetenciesPhrase', groupByCompetenciesPhrase);
     this.set('listByPriorityPhrase', listByPriorityPhrase);
     this.set('objectives', objectives);
+
     await render(hbs`<SingleEventObjectiveList
       @objectives={{this.objectives}}
       @groupByCompetenciesPhrase={{this.groupByCompetenciesPhrase}}
       @listByPriorityPhrase={{this.listByPriorityPhrase}}
-      @title={{this.courseObjectivesPhrase}}
+      @title={{this.title}}
+      @isExpandedByDefault={{true}}
     />`);
 
-    assert.dom('h2').containsText(courseObjectivesPhrase, 'Title is visible');
-    assert.dom('ul.tree').exists('Domains/Objectives tree is visible');
-    assert.dom('ul.list-in-order').doesNotExist('Objectives list is not visible');
-    assert.dom('ul.tree>li').hasText('annoying things buying gas traffic');
-    assert.dom('ul.tree>li:nth-of-type(1)>ul>li:nth-of-type(1)').hasText('buying gas');
-    assert.dom('ul.tree>li:nth-of-type(1)>ul>li:nth-of-type(2)').hasText('traffic');
-    assert.dom('ul.tree>li:nth-of-type(2)').hasText('great things cheese ice cream');
-    assert.dom('ul.tree>li:nth-of-type(2)>ul>li:nth-of-type(1)').hasText('cheese');
-    assert.dom('ul.tree>li:nth-of-type(2)>ul>li:nth-of-type(2)').hasText('ice cream');
-    assert.dom('h2 button').hasClass('active', 'Display-mode button is visible and is "active"');
-    await click('h2 button');
+    assert.equal(component.title.expandCollapseSwitcher.text, title);
+    assert.ok(component.title.expandCollapseSwitcher.isExpanded);
+    assert.equal(component.title.displayModeSwitcher.text, listByPriorityPhrase);
+    assert.ok(component.title.displayModeSwitcher.isListMode);
+    assert.ok(component.tree.isVisible);
+    assert.notOk(component.list.isVisible);
+    assert.equal(component.tree.domains.length, 2);
+    assert.equal(component.tree.domains[0].title, 'annoying things');
+    assert.equal(component.tree.domains[0].objectives.length, 2);
+    assert.equal(component.tree.domains[0].objectives[0].text, 'buying gas');
+    assert.equal(component.tree.domains[0].objectives[1].text, 'traffic');
+    assert.equal(component.tree.domains[1].title, 'great things');
+    assert.equal(component.tree.domains[1].objectives[0].text, 'cheese');
+    assert.equal(component.tree.domains[1].objectives[1].text, 'ice cream');
+    assert.notOk(component.noContent.isVisible);
 
-    assert.dom('ul.tree').doesNotExist('Domains/Objectives tree is not visible');
-    assert.dom('ul.list-in-order').exists('Objectives list is visible');
-    for (let i = 0, n = objectives.length; i < n; i++) {
-      assert
-        .dom(`.list-in-order li:nth-of-type(${i + 1})`)
-        .hasText(`${objectives[i].title} ${objectives[i].domain}`, 'Objective title is visible');
-      assert
-        .dom(`.list-in-order li:nth-of-type(${i + 1}) .details`)
-        .hasText(objectives[i].domain, 'Domain is visible.');
-    }
+    await component.title.displayModeSwitcher.toggle();
+
+    assert.equal(component.title.displayModeSwitcher.text, groupByCompetenciesPhrase);
+    assert.notOk(component.title.displayModeSwitcher.isListMode);
+    assert.notOk(component.tree.isVisible);
+    assert.ok(component.list.isVisible);
+    assert.equal(component.list.objectives.length, 4);
+    assert.equal(component.list.objectives[0].title, 'cheese');
+    assert.equal(component.list.objectives[0].domain, 'great things');
+    assert.equal(component.list.objectives[1].title, 'ice cream');
+    assert.equal(component.list.objectives[1].domain, 'great things');
+    assert.equal(component.list.objectives[2].title, 'buying gas');
+    assert.equal(component.list.objectives[2].domain, 'annoying things');
+    assert.equal(component.list.objectives[3].title, 'traffic');
+    assert.equal(component.list.objectives[3].domain, 'annoying things');
+    assert.notOk(component.list.noContent.isVisible);
   });
 
   test('displays `None` when provided no content', async function (assert) {
-    assert.expect(1);
-
     this.set('objectives', []);
-    await render(hbs`<SingleEventObjectiveList @objectives={{this.objectives}} />`);
 
-    assert.dom('.no-content').hasText('None');
+    await render(hbs`<SingleEventObjectiveList
+      @objectives={{this.objectives}}
+      @isExpandedByDefault={{true}}
+    />`);
+    assert.equal(component.noContent.text, 'None');
   });
 
   test('no display mode toggle if none of the objectives are prioritized', async function (assert) {
-    assert.expect(3);
-
     const objectives = [
       { domain: 'great things', title: 'cheese', position: 0 },
       { domain: 'great things', title: 'ice cream', position: 0 },
@@ -74,17 +82,34 @@ module('Integration | Component | ilios calendar single event objective list', f
       { domain: 'annoying things', title: 'traffic', position: 0 },
     ];
 
-    const courseObjectivesPhrase = 'Course Objectives';
-    this.set('courseObjectivesPhrase', courseObjectivesPhrase);
     this.set('objectives', objectives);
     await render(hbs`<SingleEventObjectiveList
       @objectives={{this.objectives}}
-      @title={{this.courseObjectivesPhrase}}
+      @isExpandedByDefault={{true}}
     />`);
 
-    assert.dom('h2 button').doesNotExist('Display-mode button is not visible');
-    // briefly check if the component renders fine otherwise.
-    assert.dom('h2').hasText(courseObjectivesPhrase, 'Title is visible');
-    assert.dom('ul.tree').exists('Domains/Objectives tree is visible');
+    assert.notOk(component.title.displayModeSwitcher.isVisible);
+    assert.ok(component.tree.domains.length, 2);
+  });
+
+  test('collapsed by default', async function (assert) {
+    const objectives = [
+      { domain: 'great things', title: 'cheese', position: 1 },
+      { domain: 'great things', title: 'ice cream', position: 2 },
+      { domain: 'annoying things', title: 'buying gas', position: 3 },
+      { domain: 'annoying things', title: 'traffic', position: 4 },
+    ];
+    this.set('objectives', objectives);
+
+    await render(hbs`<SingleEventObjectiveList
+      @objectives={{this.objectives}}
+      @isExpandedByDefault={{false}}
+    />`);
+
+    assert.notOk(component.title.expandCollapseSwitcher.isExpanded);
+    assert.ok(component.title.displayModeSwitcher.isDisabled);
+    assert.notOk(component.tree.isVisible);
+    assert.notOk(component.noContent.isVisible);
+    assert.notOk(component.list.isVisible);
   });
 });

@@ -1,6 +1,6 @@
 <div class="single-event" data-test-single-event>
   {{#if @event}}
-    <div class="single-event-summary">
+    <div class="single-event-summary" data-test-summary>
       <h1 data-test-title>
         {{#if this.recentlyUpdated}}
           <FaIcon
@@ -113,7 +113,14 @@
     <fieldset>
       <div class="single-event-learningmaterial-list" data-test-session-materials>
         <h2>
-          {{t "general.sessionLearningMaterials"}}
+          <button
+            class={{if this.isSessionMaterialsListExpanded "expanded" "expandable"}}
+            type="button"
+            {{on "click" (set this.isSessionMaterialsListExpanded (not this.isSessionMaterialsListExpanded))}}
+            data-test-expand-collapse
+          >
+            {{t "general.sessionLearningMaterials"}}
+          </button>
           {{#if (and @event.isUserEvent (await this.currentUser.userIsStudent))}}
             <button
               class="link-button"
@@ -128,27 +135,39 @@
             </button>
           {{/if}}
         </h2>
-        <SingleEventLearningmaterialList
-          @learningMaterials={{this.sessionLearningMaterials}}
-        />
+        {{#if this.isSessionMaterialsListExpanded}}
+          <SingleEventLearningmaterialList
+            @learningMaterials={{this.sessionLearningMaterials}}
+          />
+        {{/if}}
       </div>
-      <div class="single-event-objective-list">
+      <div class="single-event-objective-list" data-test-session-objectives>
         <SingleEventObjectiveList
           @groupByCompetenciesPhrase={{t "general.groupByCompetencies"}}
           @listByPriorityPhrase={{t "general.listByPriority"}}
           @objectives={{this.sessionObjectives}}
           @title={{t "general.sessionObjectives"}}
+          @isExpandedByDefault={{true}}
         />
       </div>
     </fieldset>
     <fieldset>
-      <div class="single-event-learningmaterial-list">
+      <div class="single-event-learningmaterial-list" data-test-course-materials>
         <h2>
-          {{t "general.courseLearningMaterials"}}
+          <button
+            class={{if this.isCourseMaterialsListExpanded "expanded" "expandable"}}
+            type="button"
+            {{on "click" (set this.isCourseMaterialsListExpanded (not this.isCourseMaterialsListExpanded))}}
+            data-test-expand-collapse
+          >
+            {{t "general.courseLearningMaterials"}}
+          </button>
         </h2>
-        <SingleEventLearningmaterialList
-          @learningMaterials={{this.courseLearningMaterials}}
-        />
+        {{#if this.isCourseMaterialsListExpanded}}
+          <SingleEventLearningmaterialList
+            @learningMaterials={{this.courseLearningMaterials}}
+          />
+        {{/if}}
       </div>
       <div class="single-event-objective-list" data-test-course-objectives>
         <SingleEventObjectiveList
@@ -156,6 +175,7 @@
           @listByPriorityPhrase={{t "general.listByPriority"}}
           @objectives={{this.courseObjectives}}
           @title={{t "general.courseObjectives"}}
+          @isExpandedByDefault={{false}}
         />
       </div>
     </fieldset>

@@ -17,8 +17,6 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('it renders', async function (assert) {
-    assert.expect(23);
-
     const now = moment().hour(8).minute(0).second(0);
     const course = this.server.create('course', {
       id: 1,
@@ -126,6 +124,14 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     this.set('event', ourEvent);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
 
+    assert.ok(component.sessionObjectives.objectiveList.title.expandCollapseSwitcher.isExpanded);
+    assert.ok(component.sessionLearningMaterials.expandCollapseSwitcher.isExpanded);
+    assert.notOk(component.courseObjectives.objectiveList.title.expandCollapseSwitcher.isExpanded);
+    assert.notOk(component.courseLearningMaterials.expandCollapseSwitcher.isExpanded);
+
+    await component.courseObjectives.objectiveList.title.expandCollapseSwitcher.toggle();
+    await component.courseLearningMaterials.expandCollapseSwitcher.toggle();
+
     assert.dom('.single-event-summary').containsText('test course', 'course title is displayed');
     assert.dom('.single-event-summary').containsText('test session', 'session title is displayed');
     assert.dom('.single-event-location').containsText('Session Link here', 'location is displayed');
@@ -217,9 +223,9 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.title, 'course - Learn to Learn');
+    assert.equal(component.summary.title, 'course - Learn to Learn');
     assert.equal(
-      component.offeredAt,
+      component.summary.offeredAt,
       today.toDate().toLocaleString([], {
         weekday: 'long',
         year: 'numeric',
@@ -260,7 +266,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.title, 'course - Learn to Learn');
+    assert.equal(component.summary.title, 'course - Learn to Learn');
     const formatedDate = tomorrow.toDate().toLocaleString([], {
       weekday: 'long',
       year: 'numeric',
@@ -269,8 +275,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       hour: 'numeric',
       minute: 'numeric',
     });
-    assert.equal(component.offeredAt, `Due Before postrequisite session (${formatedDate})`);
-    assert.equal(component.offeredAtLink, `/events/1234`);
+    assert.equal(component.summary.offeredAt, `Due Before postrequisite session (${formatedDate})`);
+    assert.equal(component.summary.offeredAtLink, `/events/1234`);
   });
 
   test('prequisites are displayed', async function (assert) {
@@ -306,12 +312,12 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.title, 'course - Learn to Learn');
-    assert.equal(component.preWork.length, 2);
-    assert.equal(component.preWork[0].title, 'prework 1');
-    assert.ok(component.preWork[0].hasLink);
-    assert.equal(component.preWork[1].title, 'prework 2');
-    assert.ok(component.preWork[1].hasLink);
+    assert.equal(component.summary.title, 'course - Learn to Learn');
+    assert.equal(component.summary.preWork.length, 2);
+    assert.equal(component.summary.preWork[0].title, 'prework 1');
+    assert.ok(component.summary.preWork[0].hasLink);
+    assert.equal(component.summary.preWork[1].title, 'prework 2');
+    assert.ok(component.summary.preWork[1].hasLink);
   });
 
   test('for non ilms postrequisite date and title are displayed along with offering date', async function (assert) {
@@ -344,7 +350,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.title, 'course - Learn to Learn');
+    assert.equal(component.summary.title, 'course - Learn to Learn');
     const formattedTomorrow = tomorrow.toDate().toLocaleString([], {
       weekday: 'long',
       year: 'numeric',
@@ -362,10 +368,10 @@ module('Integration | Component | ilios calendar single event', function (hooks)
       minute: 'numeric',
     });
     assert.equal(
-      component.offeredAt,
+      component.summary.offeredAt,
       `Due Before postrequisite session (${formattedTomorrow}) ${formattedToday}`
     );
-    assert.equal(component.offeredAtLink, `/events/1234`);
+    assert.equal(component.summary.offeredAtLink, `/events/1234`);
   });
 
   test('link to all materials if user is student and event is user-event', async function (assert) {
@@ -417,9 +423,9 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.title, 'course - Learn to Learn');
+    assert.equal(component.summary.title, 'course - Learn to Learn');
     assert.equal(
-      component.offeredAt,
+      component.summary.offeredAt,
       today.toDate().toLocaleString([], {
         weekday: 'long',
         year: 'numeric',
@@ -448,9 +454,9 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.title, 'course - Learn to Learn');
+    assert.equal(component.summary.title, 'course - Learn to Learn');
     assert.equal(
-      component.offeredAt,
+      component.summary.offeredAt,
       today.toDate().toLocaleString([], {
         weekday: 'long',
         year: 'numeric',
@@ -484,9 +490,9 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.title, 'course - Learn to Learn');
+    assert.equal(component.summary.title, 'course - Learn to Learn');
     assert.equal(
-      component.offeredAt,
+      component.summary.offeredAt,
       today.toDate().toLocaleString([], {
         weekday: 'long',
         year: 'numeric',

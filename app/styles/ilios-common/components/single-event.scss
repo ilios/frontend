@@ -2,10 +2,6 @@
   display: grid;
   margin-left: 1em;
 
-  @include for-laptop-and-up {
-    grid-template-columns: 1fr 1fr;
-  }
-
   h2 {
     @include ilios-heading-h4;
     margin: 1em 0;
@@ -70,6 +66,22 @@
 
   .single-event-instructors {
     font-style: italic;
+  }
+
+  .single-event-learningmaterial-list {
+    .expanded {
+      @include ilios-button-reset;
+      &::after {
+        content: '\25BC';
+      }
+    }
+
+    .expandable {
+      @include ilios-button-reset;
+      &::after {
+        content: '\25BA';
+      }
+    }
   }
 
   .single-event-learningmaterial-filesize {

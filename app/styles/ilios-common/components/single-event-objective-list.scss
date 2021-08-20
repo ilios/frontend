@@ -4,16 +4,42 @@
     &.active {
       background-color: $ilios-green;
     }
+    &.disabled {
+      cursor: default;
+      background-color: $dark-grey;
+    }
+  }
+
+  .title {
+    cursor: pointer;
+
+    .expanded {
+      @include ilios-button-reset;
+      &::after {
+        content: '\25BC';
+      }
+    }
+
+    .expandable {
+      @include ilios-button-reset;
+      &::after {
+        content: '\25BA';
+      }
+    }
   }
 
   .list-in-order {
-    @include ilios-list-reset;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 
-    list-style-type: disc;
+    > li {
+      padding-bottom: .5rem;
 
-    li {
-      margin-left: 1em;
-      padding-bottom: .5em;
+      > div, p {
+        margin: 0;
+        padding: .5rem 0;
+      }
     }
 
     .details {
@@ -23,21 +49,34 @@
   }
 
   .tree {
-    @include ilios-list-reset;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
 
-    li {
+    > li {
       font-weight: bold;
-    }
 
-    ul {
-      margin-bottom: 1em;
-      margin-left: 1em;
+      > ul {
+        list-style-type: none;
+        margin: 0 0 .5rem 1rem;
+        padding: 0;
 
-      li {
-        font-weight: normal;
-        list-style-type: disc;
+        > li {
+          font-weight: normal;
+
+          > div, p {
+            margin: 0;
+            padding: .5rem 0;
+          }
+        }
       }
     }
   }
 
+  .objective {
+    border-bottom: 1px dotted $ilios-orange;
+    &:last-of-type {
+      border-bottom: 0;
+    }
+  }
 }
