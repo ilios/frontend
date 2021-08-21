@@ -5,6 +5,7 @@ export function removeHtmlTags(params) {
   if (!(params[0] === undefined)) {
     return striptags(params[0]);
   }
+  return '';
 }
 
 export default helper(removeHtmlTags);
