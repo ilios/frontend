@@ -34,12 +34,12 @@
               {{on "click" @manage}}
               data-test-manage
               >
-                {{parent.textTitle}}
+                {{html-safe (remove-html-tags parent.title)}}
             </button>
           </li>
         {{else}}
           <li data-test-parent>
-            {{parent.textTitle}}
+            {{html-safe (remove-html-tags parent.title)}}
           </li>
         {{/if}}
       {{else}}

@@ -8,7 +8,7 @@
       {{#each (sort-by-position @courseObjectives) as |objective|}}
         <li>
           <Session::ManageObjectiveParentsItem
-            @title={{objective.textTitle}}
+            @title={{objective.title}}
             @isSelected={{includes objective @selected}}
             @add={{fn @add objective}}
             @remove={{fn @remove objective}}

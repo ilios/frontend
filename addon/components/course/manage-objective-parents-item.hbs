@@ -4,13 +4,13 @@
       type={{if @allowMultipleParents "checkbox" "radio"}}
       checked="checked"
     >
-    {{@title}}
+    {{html-safe (remove-html-tags @title)}}
   </label>
 {{else}}
   <label {{on "click" @add}}>
     <input
       type={{if @allowMultipleParents "checkbox" "radio"}}
     >
-    {{@title}}
+    {{html-safe (remove-html-tags @title)}}
   </label>
 {{/if}}
