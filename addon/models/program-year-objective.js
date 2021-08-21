@@ -1,8 +1,6 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { computed } from '@ember/object';
 import { all } from 'rsvp';
-import { htmlSafe } from '@ember/string';
-import striptags from 'striptags';
 
 export default Model.extend({
   title: attr('string'),
@@ -81,9 +79,5 @@ export default Model.extend({
       return '';
     }
     return title.substr(0, 200);
-  }),
-
-  textTitle: computed('title', function () {
-    return this.title ? htmlSafe(striptags(this.title)) : '';
   }),
 });
