@@ -48,11 +48,14 @@ module('Integration | Component | course/objective-list-item-parents', function 
   });
 
   test('it renders and is accessible un-editable', async function (assert) {
-    const programYearObjectives = this.server.createList('programYearObjective', 2);
+    const programYearObjective1 = this.server.create('programYearObjective', {
+      title: '<p>Country &amp; Western</p>',
+    });
+    const programYearObjective2 = this.server.create('programYearObjective');
     const course = this.server.create('course');
     const courseObjective = this.server.create('courseObjective', {
       course,
-      programYearObjectives,
+      programYearObjectives: [programYearObjective1, programYearObjective2],
     });
     const courseObjectiveModel = await this.owner
       .lookup('service:store')
@@ -68,18 +71,21 @@ module('Integration | Component | course/objective-list-item-parents', function 
       @cancel={{noop}}
     />`);
     assert.equal(component.list.length, 2);
-    assert.equal(component.list[0].text, 'program-year objective 0');
+    assert.equal(component.list[0].text, 'Country & Western');
     assert.equal(component.list[1].text, 'program-year objective 1');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
   test('it renders and is accessible editable', async function (assert) {
-    const programYearObjectives = this.server.createList('programYearObjective', 2);
+    const programYearObjective1 = this.server.create('programYearObjective', {
+      title: '<p>Country &amp; Western</p>',
+    });
+    const programYearObjective2 = this.server.create('programYearObjective');
     const course = this.server.create('course');
     const courseObjective = this.server.create('courseObjective', {
       course,
-      programYearObjectives,
+      programYearObjectives: [programYearObjective1, programYearObjective2],
     });
     const courseObjectiveModel = await this.owner
       .lookup('service:store')
@@ -95,7 +101,7 @@ module('Integration | Component | course/objective-list-item-parents', function 
       @cancel={{noop}}
     />`);
     assert.equal(component.list.length, 2);
-    assert.equal(component.list[0].text, 'program-year objective 0');
+    assert.equal(component.list[0].text, 'Country & Western');
     assert.equal(component.list[1].text, 'program-year objective 1');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

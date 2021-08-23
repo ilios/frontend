@@ -8,8 +8,9 @@ module('Integration | Component | session/manage-objective-parents-item', functi
 
   test('it renders', async function (assert) {
     this.set('isSelected', true);
+    this.set('title', '<p>Country &amp; Western</p>');
     await render(hbs`<Session::ManageObjectiveParentsItem
-      @title="objective"
+      @title={{this.title}}
       @isSelected={{this.isSelected}}
       @add={{noop}}
       @remove={{noop}}
@@ -18,12 +19,12 @@ module('Integration | Component | session/manage-objective-parents-item', functi
     assert.dom('input[type="checkbox"]').exists();
     assert.dom('input').isChecked();
     assert.dom('label').hasClass('selected');
-    assert.dom('label').hasText('objective');
+    assert.dom('label').hasText('Country & Western');
 
     this.set('isSelected', false);
     assert.dom('input[type="checkbox"]').exists();
     assert.dom('input').isNotChecked();
     assert.dom('label').doesNotHaveClass('selected');
-    assert.dom('label').hasText('objective');
+    assert.dom('label').hasText('Country & Western');
   });
 });
