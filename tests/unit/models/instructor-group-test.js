@@ -70,4 +70,16 @@ module('Unit | Model | InstructorGroup', function (hooks) {
     assert.ok(sessions.includes(session3));
     assert.ok(sessions.includes(session4));
   });
+
+  test('usersCount', async function (assert) {
+    assert.expect(2);
+    const store = this.owner.lookup('service:store');
+    const instructorGroup = store.createRecord('instructor-group');
+    assert.equal(instructorGroup.get('usersCount'), 0);
+    const user1 = store.createRecord('user');
+    const user2 = store.createRecord('user');
+
+    instructorGroup.get('users').pushObjects([user1, user2]);
+    assert.equal(instructorGroup.get('usersCount'), 2);
+  });
 });

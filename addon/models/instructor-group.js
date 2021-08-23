@@ -58,4 +58,15 @@ export default Model.extend({
       })
       .uniq();
   }),
+
+  /**
+   * Returns the number of users in this group
+   * @property usersCount
+   * @type {Ember.computed}
+   * @public
+   */
+  usersCount: computed('users.[]', function () {
+    const userIds = this.hasMany('users').ids();
+    return userIds.length;
+  }),
 });
