@@ -80,12 +80,4 @@ export default Model.extend({
     }
     return title.substr(0, 200);
   }),
-
-  textTitle: computed('title', function () {
-    const title = this.title;
-    if (title === undefined) {
-      return '';
-    }
-    return title.replace(/(<([^>]+)>)/gi, '');
-  }),
 });

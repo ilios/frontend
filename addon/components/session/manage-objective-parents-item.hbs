@@ -4,13 +4,13 @@
       type="checkbox"
       checked="checked"
     >
-    {{@title}}
+    {{html-safe (remove-html-tags @title)}}
   </label>
 {{else}}
   <label {{on "click" @add}}>
     <input
       type="checkbox"
     >
-    {{@title}}
+    {{html-safe (remove-html-tags @title)}}
   </label>
 {{/if}}

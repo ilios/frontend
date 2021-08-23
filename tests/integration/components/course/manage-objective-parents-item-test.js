@@ -9,8 +9,9 @@ module('Integration | Component | course/manage-objective-parents-item', functio
   test('it renders', async function (assert) {
     this.set('isSelected', true);
     this.set('allowMultipleParents', true);
+    this.set('title', '<p>Country &amp; Western</p>');
     await render(hbs`<Course::ManageObjectiveParentsItem
-      @title="objective"
+      @title={{this.title}}
       @isSelected={{this.isSelected}}
       @allowMultipleParents={{this.allowMultipleParents}}
       @add={{noop}}
@@ -20,24 +21,24 @@ module('Integration | Component | course/manage-objective-parents-item', functio
     assert.dom('input[type="checkbox"]').exists();
     assert.dom('input').isChecked();
     assert.dom('label').hasClass('selected');
-    assert.dom('label').hasText('objective');
+    assert.dom('label').hasText('Country & Western');
 
     this.set('isSelected', false);
     assert.dom('input[type="checkbox"]').exists();
     assert.dom('input').isNotChecked();
     assert.dom('label').doesNotHaveClass('selected');
-    assert.dom('label').hasText('objective');
+    assert.dom('label').hasText('Country & Western');
 
     this.set('allowMultipleParents', false);
     assert.dom('input[type="radio"]').exists();
     assert.dom('input').isNotChecked();
     assert.dom('label').doesNotHaveClass('selected');
-    assert.dom('label').hasText('objective');
+    assert.dom('label').hasText('Country & Western');
 
     this.set('isSelected', true);
     assert.dom('input[type="radio"]').exists();
     assert.dom('input').isChecked();
     assert.dom('label').hasClass('selected');
-    assert.dom('label').hasText('objective');
+    assert.dom('label').hasText('Country & Western');
   });
 });

@@ -51,10 +51,13 @@ module('Integration | Component | session/objective-list-item-parents', function
 
   test('it renders and is accessible un-editable', async function (assert) {
     const session = this.server.create('session');
-    const courseObjectives = this.server.createList('courseObjective', 2);
+    const courseObjective1 = this.server.create('courseObjective', {
+      title: '<p>Country &amp; Western</p>',
+    });
+    const courseObjective2 = this.server.create('courseObjective');
     const sessionObjective = this.server.create('sessionObjective', {
       session,
-      courseObjectives,
+      courseObjectives: [courseObjective1, courseObjective2],
     });
     const sessionObjectiveModel = await this.owner
       .lookup('service:store')
@@ -70,7 +73,7 @@ module('Integration | Component | session/objective-list-item-parents', function
       @cancel={{noop}}
     />`);
     assert.equal(component.list.length, 2);
-    assert.equal(component.list[0].text, 'course objective 0');
+    assert.equal(component.list[0].text, 'Country & Western');
     assert.equal(component.list[1].text, 'course objective 1');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -78,10 +81,13 @@ module('Integration | Component | session/objective-list-item-parents', function
 
   test('it renders and is accessible editable', async function (assert) {
     const session = this.server.create('session');
-    const courseObjectives = this.server.createList('courseObjective', 2);
+    const courseObjective1 = this.server.create('courseObjective', {
+      title: '<p>Country &amp; Western</p>',
+    });
+    const courseObjective2 = this.server.create('courseObjective');
     const sessionObjective = this.server.create('sessionObjective', {
       session,
-      courseObjectives,
+      courseObjectives: [courseObjective1, courseObjective2],
     });
     const sessionObjectiveModel = await this.owner
       .lookup('service:store')
@@ -97,7 +103,7 @@ module('Integration | Component | session/objective-list-item-parents', function
       @cancel={{noop}}
     />`);
     assert.equal(component.list.length, 2);
-    assert.equal(component.list[0].text, 'course objective 0');
+    assert.equal(component.list[0].text, 'Country & Western');
     assert.equal(component.list[1].text, 'course objective 1');
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');

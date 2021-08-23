@@ -47,10 +47,4 @@ module('Unit | Model | session objective', function (hooks) {
     assert.ok(terms.includes(term5));
     assert.ok(terms.includes(term6));
   });
-
-  test('text only empty title', async function (assert) {
-    assert.expect(1);
-    const subject = this.owner.lookup('service:store').createRecord('session-objective');
-    assert.equal('', subject.textTitle);
-  });
 });
