@@ -5,7 +5,20 @@
   justify-content: space-between;
   padding: .8rem;
 
+  @include for-tablet-and-up {
+    flex-direction: row;
+  }
+
+  h2 {
+    @include ilios-heading-h4;
+  }
+
   .title {
-    @include detail-container-title;
+    @include ilios-heading-h4;
+    flex-grow: 2;
+
+    input {
+      width: 90%;
+    }
   }
 }
