@@ -4,6 +4,7 @@ import { computed } from '@ember/object';
 import { isEmpty, isPresent } from '@ember/utils';
 import { singularize, pluralize } from 'ember-inflector';
 import { capitalize, camelize, dasherize } from '@ember/string';
+import striptags from 'striptags';
 
 const { filter, resolve, map } = RSVP;
 
@@ -207,7 +208,7 @@ export default Service.extend({
           ? `${course.year} - ${course.year + 1}`
           : course.year.toString(),
         sessionDescriptionText,
-        objectives.mapBy('textTitle').join(),
+        striptags(objectives.mapBy('title').join()),
       ];
     });
 
