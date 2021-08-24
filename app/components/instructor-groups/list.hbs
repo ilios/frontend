@@ -1,26 +1,48 @@
 <table
   class="instructor-groups-list"
-  ...attributes
   data-test-instructor-groups-list
+  ...attributes
 >
   <thead>
     <tr>
-      <th class="text-left" colspan="2">
+      <SortableTh
+        @colspan={{2}}
+        @sortedAscending={{this.sortedAscending}}
+        @onClick={{fn this.setSortBy "title"}}
+        @sortedBy={{or
+          (eq this.sortBy "title")
+          (eq this.sortBy "title:desc")
+        }}
+      >
         {{t "general.instructorGroupTitle"}}
-      </th>
-      <th class="text-center hide-from-small-screen">
+      </SortableTh>
+      <SortableTh
+        @align="center"
+        @colspan={{1}}
+        @hideFromSmallScreen={{true}}
+        @sortedAscending={{this.sortedAscending}}
+        @sortType="numeric"
+        @onClick={{fn this.setSortBy "usersCount"}}
+        @sortedBy={{or
+          (eq this.sortBy "usersCount")
+          (eq this.sortBy "usersCount:desc")
+        }}
+      >
         {{t "general.members"}}
-      </th>
+      </SortableTh>
       <th class="text-center hide-from-small-screen">
         {{t "general.associatedCourses"}}
       </th>
-        <th class="text-right">
+      <th class="text-right">
         {{t "general.actions"}}
       </th>
     </tr>
   </thead>
   <tbody>
-    {{#each @instructorGroups as |instructorGroup|}}
+    {{#each (
+      sort-by (if (or (eq this.sortBy "title") (eq this.sortBy "title:desc")) this.sortByTitle this.sortBy
+    ) @instructorGroups) as |instructorGroup|
+    }}
       <InstructorGroups::ListItem @instructorGroup={{instructorGroup}} />
     {{else}}
       <tr data-test-empty-list>

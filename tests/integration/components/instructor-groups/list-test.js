@@ -12,12 +12,12 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    this.permissionCheckerMock = class extends Service {
+    const PermissionCheckerMock = class extends Service {
       async canDeleteInstructorGroup() {
         return true;
       }
     };
-    this.owner.register('service:permissionChecker', this.permissionCheckerMock);
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
   });
 
   test('it renders', async function (assert) {
@@ -29,6 +29,8 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
     this.set('instructorGroups', instructorGroupModels);
     await render(hbs`<InstructorGroups::List @instructorGroups={{this.instructorGroups}} />`);
 
+    assert.equal(component.header.title.text, 'Instructor Group Title');
+    assert.equal(component.header.members.text, 'Members');
     assert.equal(component.items.length, 3);
     assert.equal(component.items[0].title, 'instructor group 0');
     assert.equal(component.items[0].users, '0');
@@ -80,5 +82,50 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
     assert.equal(this.server.db.instructorGroups.length, 3);
     assert.equal(component.items.length, 3);
     assert.equal(component.items[0].title, 'instructor group 0');
+  });
+
+  test('sort', async function (assert) {
+    const school = this.server.create('school');
+    const users = this.server.createList('user', 5);
+    this.server.create('instructor-group', { school, users: [users[0], users[1]] });
+    this.server.create('instructor-group', { school });
+    this.server.create('instructor-group', { school, users: [users[2], users[3], users[4]] });
+
+    const instructorGroupModels = await this.owner
+      .lookup('service:store')
+      .findAll('instructor-group');
+    this.set('instructorGroups', instructorGroupModels);
+    await render(hbs`<InstructorGroups::List @instructorGroups={{this.instructorGroups}} />`);
+
+    assert.equal(component.items.length, 3);
+    assert.ok(component.header.title.isSortedAscending);
+    assert.ok(component.header.members.isNotSorted);
+    assert.equal(component.items[0].title, 'instructor group 0');
+    assert.equal(component.items[0].users, '2');
+    assert.equal(component.items[1].title, 'instructor group 1');
+    assert.equal(component.items[1].users, '0');
+    assert.equal(component.items[2].title, 'instructor group 2');
+    assert.equal(component.items[2].users, '3');
+
+    await component.header.title.click();
+    assert.ok(component.header.title.isSortedDescending);
+    assert.ok(component.header.members.isNotSorted);
+    assert.equal(component.items[0].title, 'instructor group 2');
+    assert.equal(component.items[1].title, 'instructor group 1');
+    assert.equal(component.items[2].title, 'instructor group 0');
+
+    await component.header.members.click();
+    assert.ok(component.header.title.isNotSorted);
+    assert.ok(component.header.members.isSortedAscending);
+    assert.equal(component.items[0].title, 'instructor group 1');
+    assert.equal(component.items[1].title, 'instructor group 0');
+    assert.equal(component.items[2].title, 'instructor group 2');
+
+    await component.header.members.click();
+    assert.ok(component.header.title.isNotSorted);
+    assert.ok(component.header.members.isSortedDescending);
+    assert.equal(component.items[0].title, 'instructor group 2');
+    assert.equal(component.items[1].title, 'instructor group 0');
+    assert.equal(component.items[2].title, 'instructor group 1');
   });
 });
