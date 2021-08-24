@@ -1,4 +1,6 @@
 import {
+  attribute,
+  clickable,
   create,
   collection,
   hasClass,
@@ -19,6 +21,11 @@ const definition = {
     hasMultiple: isPresent(' select'),
     selected: value('select'),
     options: collection('option'),
+  },
+  manage: {
+    scope: '[data-test-manage]',
+    link: attribute('href'),
+    click: clickable('button'),
   },
 };
 

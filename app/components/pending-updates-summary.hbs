@@ -36,10 +36,11 @@
         {{t "general.pendingUpdatesSummary" count=(get this.updates "length")}}
       </p>
       {{#if (get this.updates "length")}}
-        <div class="actions">
+        <div class="actions" data-test-actions>
           <LinkTo
             @route="pending-user-updates"
-            @query={{hash school=(this.bestSelectedSchool.id)}}
+            @query={{hash school=this.bestSelectedSchool.id}}
+            data-test-manage
           >
             <button type="button">
               {{t "general.manage"}}
