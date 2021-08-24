@@ -1,10 +1,25 @@
-import { clickable, create, collection, isPresent, text } from 'ember-cli-page-object';
+import { clickable, create, collection, hasClass, isPresent, text } from 'ember-cli-page-object';
 import listItem from './list-item';
 
 const definition = {
   scope: '[data-test-instructor-groups-list]',
   items: collection('[data-test-instructor-groups-list-item]', listItem),
   isEmpty: isPresent('[data-test-empty-list]'),
+  header: {
+    scope: 'thead',
+    title: {
+      scope: 'th:nth-of-type(1)',
+      isSortedAscending: hasClass('fa-sort-alpha-down', 'svg'),
+      isSortedDescending: hasClass('fa-sort-alpha-down-alt', 'svg'),
+      isNotSorted: hasClass('fa-sort', 'svg'),
+    },
+    members: {
+      scope: 'th:nth-of-type(2)',
+      isSortedAscending: hasClass('fa-sort-numeric-down', 'svg'),
+      isSortedDescending: hasClass('fa-sort-numeric-down-alt', 'svg'),
+      isNotSorted: hasClass('fa-sort', 'svg'),
+    },
+  },
   confirmRemoval: {
     scope: '[data-test-confirm-removal]',
     confirm: clickable('[data-test-confirm]'),
