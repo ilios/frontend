@@ -12,12 +12,12 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    this.permissionCheckerMock = class extends Service {
+    const PermissionCheckerMock = class extends Service {
       async canDeleteInstructorGroup() {
         return true;
       }
     };
-    this.owner.register('service:permissionChecker', this.permissionCheckerMock);
+    this.owner.register('service:permissionChecker', PermissionCheckerMock);
   });
 
   test('it renders', async function (assert) {
