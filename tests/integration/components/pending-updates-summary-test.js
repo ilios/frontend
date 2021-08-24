@@ -128,15 +128,18 @@ module('Integration | Component | pending updates summary', function (hooks) {
     assert.equal(component.schoolFilter.options.length, 3);
     assert.equal(component.schoolFilter.selected, '2');
     assert.ok(component.hasAlert);
+    assert.equal(component.manage.link, '/admin/userupdates?school=2');
 
     await component.schoolFilter.set('1');
     assert.equal(component.summary, 'There is one user needing attention');
     assert.equal(component.schoolFilter.selected, '1');
     assert.ok(component.hasAlert);
+    assert.equal(component.manage.link, '/admin/userupdates?school=1');
 
     await component.schoolFilter.set('3');
     assert.equal(component.summary, 'There are 0 users needing attention');
     assert.equal(component.schoolFilter.selected, '3');
     assert.notOk(component.hasAlert);
+    assert.notOk(component.manage.isVisible);
   });
 });
