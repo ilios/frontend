@@ -163,13 +163,12 @@
         {{#if this.showLearnerGroupCalendar}}
           <LearnergroupCalendar @learnerGroup={{@learnerGroup}} />
         {{/if}}
-      </section>
-      <LearnergroupSubgroupList
-        @parentGroup={{@learnerGroup}}
-        @canCreate={{@canCreate}}
-        @canDelete={{@canDelete}}
-      />
-      <section class="cohortmembers">
+        <LearnergroupSubgroupList
+          @parentGroup={{@learnerGroup}}
+          @canCreate={{@canCreate}}
+          @canDelete={{@canDelete}}
+        />
+        <section class="cohortmembers">
           <LearnergroupCohortUserManager
             @users={{this.usersToPassToCohortManager}}
             @canUpdate={{@canUpdate}}
@@ -180,6 +179,7 @@
             @addUserToGroup={{perform this.addUserToGroup}}
             @addUsersToGroup={{perform this.addUsersToGroup}}
           />
+        </section>
       </section>
     {{/unless}}
   </section>

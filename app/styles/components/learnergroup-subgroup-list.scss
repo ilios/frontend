@@ -1,5 +1,7 @@
 .learnergroup-subgroup-list {
   @include detail-container($text-blue);
+  border-bottom: 0;
+  border-top: 1px dotted $ilios-orange;
 
   .learnergroup-subgroup-list-header {
     @include detail-container-header;
@@ -9,11 +11,11 @@
     }
 
     .learnergroup-subgroup-list-actions {
-      @include detail-container-actions;
+      input {
+        @include ilios-input;
+      }
     }
   }
-
-
 
   .learnergroup-subgroup-list-content {
     @include detail-container-content;
