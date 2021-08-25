@@ -194,6 +194,7 @@ general:
   manageUsers: "Manage Users"
   manageUsersSummaryTitle: "Ilios Users"
   manageVocabularies: "Manage Vocabularies"
+  mapCompetencies: "Map Competencies"
   matchGroups: "Match Groups"
   matriculationYear: "Matriculation Year"
   maximum: Maximum

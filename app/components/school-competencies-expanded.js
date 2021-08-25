@@ -57,6 +57,12 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
   }
 
   @action
+  stopMapping() {
+    this.cleanup();
+    this.args.setSchoolMapCompetencies(false);
+  }
+
+  @action
   addCompetency(domain, title) {
     const competency = this.store.createRecord('competency', {
       title,
@@ -98,5 +104,10 @@ export default class SchoolCompetenciesExpandedComponent extends Component {
     this.cleanup();
     this.args.setSchoolManageCompetencies(false);
     this.schoolCompetencies = yield this.args.school.competencies;
+  }
+
+  @dropTask
+  *saveMapping() {
+    // @todo implement [ST 2021/08/25]
   }
 }
