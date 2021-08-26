@@ -15,13 +15,5 @@
 
   .school-competencies-expanded-content {
     @include detail-container-content;
-
-    ul {
-      @include ilios-list-reset;
-
-      ul {
-        margin-left: 1rem;
-      }
-    }
   }
 }

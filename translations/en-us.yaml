@@ -1,5 +1,6 @@
 general:
   aamcMethod: "AAMC Method"
+  aamcPcrs: "AAMC PCRS"
   aamcSchoolId: "AAMC School ID (e.g. \"Institution ID\")"
   academicLevel: "Academic Level"
   academicLevels: "Academic Levels"

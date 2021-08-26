@@ -1,5 +1,21 @@
 .school-competencies-list {
-  ul {
-    @include ilios-static-list;
+  table {
+    tbody {
+      tr {
+        td {
+          &.competency {
+            padding-left: 1.5rem;
+            vertical-align: top;
+          }
+          &.domain {
+            vertical-align: top;
+          }
+        }
+      }
+    }
+
+    ul {
+      @include ilios-list-reset;
+    }
   }
 }

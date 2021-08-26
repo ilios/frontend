@@ -1,18 +1,56 @@
-<div data-test-school-competencies-list ...attributes>
-  {{#if @domains.length}}
-    <ul data-test-domains>
+<div
+  class="school-competencies-list"
+  data-test-school-competencies-list
+  ...attributes
+>
+  <table>
+    <thead>
+      <tr>
+        <th>
+          {{t "general.competency"}}
+        </th>
+        <th>
+          {{t "general.aamcPcrs"}}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
       {{#each (sort-by "title" @domains) as |domain|}}
-        <li data-test-domain>
-          <span data-test-title>{{domain.title}}</span>
-          <ul>
-            {{#each (sort-by "title" (await domain.children)) as |competency|}}
-              <li data-test-competency>
-                {{competency.title}}
-              </li>
-            {{/each}}
-          </ul>
-        </li>
+        <tr>
+          <td class="domain">
+            {{domain.title}}
+          </td>
+          <td>
+            {{#if domain.aamcPcrses.length}}
+              <ul>
+                {{#each (sort-by "description" (await domain.aamcPcrses)) as |pcrs|}}
+                  <li>
+                    {{pcrs.description}}
+                  </li>
+                {{/each}}
+              </ul>
+            {{/if}}
+          </td>
+        </tr>
+        {{#each (sort-by "title" (await domain.children)) as |competency|}}
+          <tr>
+            <td class="competency">
+              {{competency.title}}
+            </td>
+            <td>
+              {{#if competency.aamcPcrses.length}}
+                <ul>
+                  {{#each (sort-by "description" (await competency.aamcPcrses)) as |pcrs|}}
+                    <li>
+                      {{pcrs.description}}
+                    </li>
+                  {{/each}}
+                </ul>
+              {{/if}}
+            </td>
+          </tr>
+        {{/each}}
       {{/each}}
-    </ul>
-  {{/if}}
+    </tbody>
+  </table>
 </div>
