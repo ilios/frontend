@@ -194,7 +194,6 @@ general:
   manageUsers: "Gérer les utilisateurs"
   manageUsersSummaryTitle: "utilisateurs d'Ilios"
   manageVocabularies: "Manager vocabulaires"
-  mapCompetencies: "Cartographier les compétences"
   matchGroups: "Départagez les Groupes "
   matriculationYear: "Année de immatriculation"
   maximum: Maximum
@@ -353,7 +352,7 @@ general:
   secondaryCohorts: "Cohortes Secondaires"
   select: "Sélectionnez"
   selectAcademicYear: "Choisissez l’année scolaire"
-  selectAllOrNone: "Sélectionner tout ou aucun"
+  selectAllOrNone: "Sélectionner tout ou aucun" 
   selectCourse: "Choisi cours"
   selected: "Sélectionné"
   selectProgram: "Choisi Diplôme"

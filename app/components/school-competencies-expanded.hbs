@@ -6,7 +6,7 @@
   ...attributes
 >
   <div class="school-competencies-expanded-header">
-    {{#if (or @isManaging @isMapping)}}
+    {{#if @isManaging}}
       <div class="title" data-test-title>
         {{t "general.competencies"}}
       </div>
@@ -32,22 +32,9 @@
         <button type="button" class="bigcancel" {{on "click" this.stopManaging}} data-test-cancel>
           <FaIcon @icon="undo" />
         </button>
-      {{else if @isMapping}}
-        <button type="button" class="bigadd" {{on "click" (perform this.saveMapping)}} data-test-save>
-          <FaIcon
-            @icon={{if this.saveMapping.isRunning "spinner" "check"}}
-            @spin={{this.saveMapping.isRunning}}
-          />
-        </button>
-        <button type="button" class="bigcancel" {{on "click" this.stopMapping}} data-test-cancel>
-          <FaIcon @icon="undo" />
-        </button>
       {{else if (or @canUpdate @canDelete @canCreate)}}
         <button type="button" {{on "click" (fn @setSchoolManageCompetencies true)}} data-test-manage>
           {{t "general.manageCompetencies"}}
-        </button>
-        <button type="button" {{on "click" (fn @setSchoolMapCompetencies true)}} data-test-map>
-          {{t "general.mapCompetencies"}}
         </button>
       {{/if}}
     </div>
@@ -62,8 +49,6 @@
         @add={{this.addCompetency}}
         @remove={{this.removeCompetency}}
       />
-    {{else if @isMapping}}
-      <SchoolCompetenciesMapper />
     {{else}}
       <SchoolCompetenciesList @domains={{this.domains}} />
     {{/if}}
