@@ -1,0 +1,9 @@
+.school-competencies-list-item {
+  ul {
+    @include ilios-list-reset;
+  }
+
+  .link-button {
+    text-align: left;
+  }
+}

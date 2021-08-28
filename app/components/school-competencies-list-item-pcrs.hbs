@@ -1,0 +1,67 @@
+<div
+  class="school-competencies-list-item-prcs grid-item"
+  data-test-school-competencies-list-item-pcrs
+  ...attributes
+>
+  {{#if @isManaging}}
+    <button
+      type="button"
+      class="bigadd"
+      {{on "click" (perform @save)}}
+      disabled={{@save.isRunning}}
+      aria-label={{t "general.save"}}
+      data-test-save
+    >
+      {{#if @save.isRunning}}
+        <FaIcon @icon="spinner" @spin={{true}} />
+      {{else}}
+        <FaIcon @icon="check" />
+      {{/if}}
+    </button>
+    <button
+      type="button"
+      class="bigcancel"
+      {{on "click" (fn @setIsManaging false)}}
+      aria-label={{t "general.cancel"}}
+      data-test-cancel
+    >
+      <FaIcon @icon="undo" />
+    </button>
+  {{else}}
+    {{#if @competency.aamcPcrses.length}}
+      <ul>
+        {{#each (sort-by "description" (await @competency.aamcPcrses)) as |pcrs|}}
+          <li>
+            {{#if @canUpdate}}
+              <button
+                type="button"
+                class="link-button"
+                {{on "click" (fn @setIsManaging true)}}
+                data-test-edit-pcrs-mapping
+              >
+                {{pcrs.description}}
+              </button>
+            {{else}}
+              {{pcrs.description}}
+            {{/if}}
+          </li>
+        {{/each}}
+      </ul>
+    {{else}}
+      <li>
+        {{#if @canUpdate}}
+          <button
+            type="button"
+            class="link-button"
+            {{on "click" (fn @setIsManaging true)}}
+            data-test-edit-pcrs-mapping
+          >
+            {{t "general.clickToEdit"}}
+          </button>
+        {{else}}
+          {{t "general.none"}}
+        {{/if}}
+      </li>
+    {{/if}}
+  {{/if}}
+</div>

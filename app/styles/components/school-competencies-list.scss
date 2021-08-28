@@ -1,21 +1,101 @@
 .school-competencies-list {
-  table {
-    tbody {
-      tr {
-        td {
-          &.competency {
-            padding-left: 1.5rem;
-            vertical-align: top;
-          }
-          &.domain {
-            vertical-align: top;
+
+  .headers {
+    font-weight: bold;
+  }
+  .grid-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    margin-right: .5rem;
+
+    .grid-item {
+      border-bottom: 1px solid $dark-grey;
+      padding: .5rem .25rem;
+
+      &.competency {
+        padding-left: .75rem;
+      }
+
+      ul {
+        @include ilios-list-reset;
+
+        li {
+          margin-bottom: .25rem;
+
+          &:last-of-type {
+            margin-bottom: 0;
           }
         }
       }
+
+      .link-button {
+        text-align: left;
+      }
+
+      .bigadd {
+        background-color: $ilios-green;
+        color: $white;
+      }
+
+      .bigcancel {
+        background-color: $ilios-red;
+        color: $white;
+        margin-left: .5rem;
+      }
+
     }
 
-    ul {
-      @include ilios-list-reset;
+    &:last-of-type {
+      .grid-item {
+        border-bottom: 0;
+      }
     }
+  }
+
+  .competency-row {
+    transition: background-color 1s ease-out;
+
+    &.highlight-ok {
+      transition: none;
+      background-color: lighten($ilios-green, 60);
+    }
+
+    &.is-managing {
+      border: 2px solid $ilios-blue;
+      .grid-item {
+        background-color: $header-grey;
+        border: 0;
+      }
+    }
+
+    &.confirm-removal {
+      background-color: $remove-background-color;
+
+      .grid-item {
+        border: 0;
+      }
+
+      .confirm-message {
+        color: $ilios-remove-color;
+        grid-column: 1 / -1;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 1rem;
+      }
+
+      .remove {
+        background-color: $white;
+        color: $ilios-remove-color;
+
+        &:hover {
+          background-color: $ilios-remove-color;
+          color: white;
+        }
+      }
+    }
+  }
+  .actions {
+    text-align: right;
   }
 }

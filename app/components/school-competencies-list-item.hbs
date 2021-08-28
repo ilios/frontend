@@ -1,0 +1,26 @@
+<div
+  id="competency-{{@competency.id}}"
+  class="competency-row grid-row {{if this.isManaging "is-managing"}}"
+  data-test-school-competencies-list-item
+  ...attributes
+>
+  <div class="grid-item {{if @isDomain "domain" "competency"}}">
+    {{@competency.title}}
+  </div>
+  <SchoolCompetenciesListItemPcrs
+    @competency={{@competency}}
+    @canUpdate={{@canUpdate}}
+    @setIsManaging={{this.setIsManaging}}
+    @isManaging={{this.isManaging}}
+    @save={{@save}}
+  />
+
+  {{#if this.isManaging}}
+    <SchoolCompetenciesPcrsMapper
+      @allPcrses={{this.allPcrses}}
+      @selectedPcrses={{this.selectedPcrses}}
+      @add={{this.addCompetencyToBuffer}}
+      @remove={{this.removeCompetencyFromBuffer}}
+    />
+  {{/if}}
+</div>

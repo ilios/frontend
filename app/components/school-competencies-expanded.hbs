@@ -50,7 +50,7 @@
         @remove={{this.removeCompetency}}
       />
     {{else}}
-      <SchoolCompetenciesList @domains={{this.domains}} />
+      <SchoolCompetenciesList @domains={{this.domains}} @canUpdate={{@canUpdate}} />
     {{/if}}
   </div>
 </section>

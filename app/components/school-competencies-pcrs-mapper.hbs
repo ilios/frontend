@@ -1,0 +1,12 @@
+<section
+  class="school-competencies-pcrs-mapper"
+  data-test-school-competencies-pcrs-mapper
+  ...attributes
+>
+  {{#each (sort-by "description" @allPcrses) as |pcrs|}}
+    <label>
+      <input type="checkbox">
+      {{pcrs.description}}
+    </label>
+  {{/each}}
+</section>
