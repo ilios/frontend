@@ -7,7 +7,7 @@
     {{#each (sort-by "description" @allPcrses) as |pcrs|}}
       <li>
        {{#if (includes pcrs @selectedPcrses)}}
-          <label {{on "click" (fn @remove pcrs)}} class="selected">
+          <label {{on "click" (fn @remove pcrs)}} data-test-pcrs>
             <input
               type="checkbox"
               checked="checked"
@@ -15,7 +15,7 @@
             {{pcrs.description}}
           </label>
         {{else}}
-          <label {{on "click" (fn @add pcrs)}}>
+          <label {{on "click" (fn @add pcrs)}} data-test-pcrs>
             <input
               type="checkbox"
             >
