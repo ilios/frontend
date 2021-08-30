@@ -2,12 +2,13 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
-import { dropTask, task } from 'ember-concurrency';
+import { dropTask } from 'ember-concurrency';
 import { use } from 'ember-could-get-used-to-this';
 import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
 
 export default class SchoolCompetenciesListItemComponent extends Component {
   @service store;
+  @service flashMessages;
   @tracked isManaging = false;
   @tracked pcrsToRemove = [];
   @tracked pcrsToAdd = [];
@@ -28,33 +29,37 @@ export default class SchoolCompetenciesListItemComponent extends Component {
 
   @action
   cancel() {
-    this.competenciesToAdd = [];
-    this.competenciesToRemove = [];
-    this.args.setIsManaging(false);
+    this.pcrsToAdd = [];
+    this.pcrsToRemove = [];
+    this.setIsManaging(false);
+  }
+
+  @action
+  addPcrsToBuffer(pcrs) {
+    if (this.pcrsToRemove.includes(pcrs)) {
+      this.pcrsToRemove = this.pcrsToRemove.filter((obj) => obj.id !== pcrs.id);
+    } else {
+      this.pcrsToAdd = [...this.pcrsToAdd, pcrs];
+    }
+  }
+
+  @action
+  removePcrsFromBuffer(pcrs) {
+    if (this.pcrsToAdd.includes(pcrs)) {
+      this.pcrsToAdd = this.pcrsToAdd.filter((obj) => obj.id !== pcrs.id);
+    } else {
+      this.pcrsToRemove = [...this.pcrsToRemove, pcrs];
+    }
   }
 
   @dropTask
   *save() {
-    // @todo implement [ST 2021/08/27]
-  }
-
-  @task
-  *addCompetencyToBuffer(competency) {
-    this.competenciesToAdd = [...this.competenciesToAdd, competency];
-    const children = (yield competency.children).toArray();
-    this.competenciesToAdd = [...this.competenciesToAdd, ...children];
-    this.competenciesToRemove = this.competenciesToRemove.filter((c) => {
-      return c !== competency && !children.includes(c);
-    });
-  }
-
-  @task
-  *removeCompetencyFromBuffer(competency) {
-    this.competenciesToRemove = [...this.competenciesToRemove, competency];
-    const children = (yield competency.children).toArray();
-    this.competenciesToRemove = [...this.competenciesToRemove, ...children];
-    this.competenciesToAdd = this.competenciesToAdd.filter((c) => {
-      return c !== competency && !children.includes(c);
-    });
+    this.args.competency.set('aamcPcrses', this.selectedPcrses);
+    try {
+      yield this.args.competency.save();
+    } finally {
+      this.flashMessages.success('general.savedSuccessfully');
+      this.cancel();
+    }
   }
 }

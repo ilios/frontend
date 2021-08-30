@@ -5,4 +5,8 @@
   label {
     display: block;
   }
+
+  ul {
+    @include ilios-list-reset;
+  }
 }

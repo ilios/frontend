@@ -21,7 +21,7 @@
     <button
       type="button"
       class="bigcancel"
-      {{on "click" (fn @setIsManaging false)}}
+      {{on "click" @cancel}}
       aria-label={{t "general.cancel"}}
       data-test-cancel
     >

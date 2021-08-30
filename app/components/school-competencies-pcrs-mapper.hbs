@@ -3,10 +3,26 @@
   data-test-school-competencies-pcrs-mapper
   ...attributes
 >
-  {{#each (sort-by "description" @allPcrses) as |pcrs|}}
-    <label>
-      <input type="checkbox">
-      {{pcrs.description}}
-    </label>
-  {{/each}}
+  <ul>
+    {{#each (sort-by "description" @allPcrses) as |pcrs|}}
+      <li>
+       {{#if (includes pcrs @selectedPcrses)}}
+          <label {{on "click" (fn @remove pcrs)}} class="selected">
+            <input
+              type="checkbox"
+              checked="checked"
+            >
+            {{pcrs.description}}
+          </label>
+        {{else}}
+          <label {{on "click" (fn @add pcrs)}}>
+            <input
+              type="checkbox"
+            >
+            {{pcrs.description}}
+          </label>
+        {{/if}}
+      </li>
+    {{/each}}
+  </ul>
 </section>
