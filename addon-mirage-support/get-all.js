@@ -5,7 +5,10 @@ import { Collection, Model } from 'ember-cli-mirage';
 const getAll = function (schema, request) {
   //turn /api/programyears?limit=1 into 'programYears'
   const modelRegex = /\/api\/([a-z]+).*/i;
-  const modelName = getName(request.url.match(modelRegex)[1]);
+  let modelName = getName(request.url.match(modelRegex)[1]);
+  if ('aamcpcrses' === modelName.toLowerCase()) {
+    modelName = 'aamcPcrs';
+  }
   if (!schema[modelName]) {
     console.error(
       'Mirage: The route handler for ' +
