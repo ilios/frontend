@@ -38,9 +38,11 @@
               {{on "click" (fn @setIsManaging true)}}
               data-test-edit-pcrs-mapping
             >
+              <strong>{{pcrs-uri-to-number pcrs.id}}</strong>
               {{pcrs.description}}
             </button>
           {{else}}
+            <strong>{{pcrs-uri-to-number pcrs.id}}</strong>
             {{pcrs.description}}
           {{/if}}
         </li>
