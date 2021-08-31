@@ -1,86 +1,62 @@
-import Component from '@ember/component';
-import EmberObject, { computed } from '@ember/object';
-import { equal, oneWay } from '@ember/object/computed';
+import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { isPresent, isEmpty } from '@ember/utils';
 import { map } from 'rsvp';
-import { task } from 'ember-concurrency';
-import { validator, buildValidations } from 'ember-cp-validations';
-import ValidationErrorDisplay from 'ilios-common/mixins/validation-error-display';
+import { dropTask, restartableTask } from 'ember-concurrency';
 import { dasherize } from '@ember/string';
+import { validatable, Length } from 'ilios-common/decorators/validation';
+import ResolveAsyncValue from 'ilios-common/classes/resolve-async-value';
+import AsyncProcess from 'ilios-common/classes/async-process';
+import { use } from 'ember-could-get-used-to-this';
+import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
 
-const Validations = buildValidations({
-  title: [
-    validator('length', {
-      max: 240,
-      descriptionKey: 'general.title',
-    }),
-  ],
-});
+@validatable
+export default class NewMyReportComponent extends Component {
+  @service currentUser;
+  @service flashMessages;
+  @service intl;
+  @service store;
+  @service dataLoader;
 
-const PrepositionObject = EmberObject.extend({
-  model: null,
-  type: null,
+  @tracked currentPrepositionalObject = null;
+  @tracked currentPrepositionalObjectId = null;
+  @tracked currentSubject = 'course';
+  @tracked isSaving = false;
+  @tracked selectedSchool = null;
+  @tracked selectedYear = null;
+  @tracked schoolChanged = false;
+  @tracked @Length(1, 240) title;
+  subjectList = [];
+  fullPrepositionalObjectList = [];
 
-  value: oneWay('model.id'),
+  loadedPrepositionalObjects = new Map();
 
-  label: computed('model.{name,title,titleWithParentTitles}', 'type', async function () {
-    if (this.type === 'mesh term') {
-      return this.model.name;
-    } else if (this.type === 'term') {
-      const vocabulary = await this.model.get('vocabulary');
-      const titleWithParentTitles = await this.model.titleWithParentTitles;
-      return `${vocabulary.title} > ${titleWithParentTitles}`;
-    } else {
-      return this.model.title;
-    }
-  }),
+  @use userModel = new ResolveAsyncValue(() => [this.currentUser.getModel()]);
+  @use usersPrimarySchool = new ResolveAsyncValue(() => [this.userModel?.school]);
+  @use allSchools = new ResolveAsyncValue(() => [this.store.findAll('school'), []]);
+  @use allAcademicYears = new ResolveAsyncValue(() => [this.store.findAll('academic-year'), []]);
+  @use prepositionalObjectIdList = new AsyncProcess(() => [
+    this.getPrepositionalObjectIdList.bind(this),
+    this.currentPrepositionalObject,
+    this.currentSchool,
+    this.isCourse,
+    this.isSession,
+  ]);
 
-  active: computed('model', 'type', function () {
-    const type = this.type;
-    if (['session type', 'term'].includes(type)) {
-      return this.model.get('active');
-    }
-    return true;
-  }),
+  get isCourse() {
+    return this.currentPrepositionalObject === 'course';
+  }
+  get isSession() {
+    return this.currentPrepositionalObject === 'session';
+  }
 
-  academicYear: computed('model', 'type', async function () {
-    const type = this.type;
-    const model = this.model;
-    if (type === 'course') {
-      return parseInt(model.get('year'), 10);
-    }
-    if (type === 'session') {
-      const course = await model.get('course');
-      return parseInt(course.get('year'), 10);
-    }
+  get isPrepositionalObjectIdListLoaded() {
+    return Boolean(this.prepositionalObjectIdList);
+  }
 
-    return null;
-  }),
-});
-
-export default Component.extend(Validations, ValidationErrorDisplay, {
-  currentUser: service(),
-  flashMessages: service(),
-  intl: service(),
-  store: service(),
-
-  classNames: ['mesh-manager', 'new-myreport'],
-
-  currentPrepositionalObject: null,
-  currentPrepositionalObjectId: null,
-  currentSubject: 'course',
-  isSaving: false,
-  selectedSchool: null,
-  selectedYear: null,
-  schoolChanged: false,
-  title: null,
-
-  isCourse: equal('currentPrepositionalObject', 'course'),
-  isSession: equal('currentPrepositionalObject', 'session'),
-
-  subjectList: computed('intl.locale', function () {
-    const list = [
+  constructor() {
+    super(...arguments);
+    this.subjectList = [
       { value: 'course', label: this.intl.t('general.courses') },
       { value: 'session', label: this.intl.t('general.sessions') },
       { value: 'program', label: this.intl.t('general.programs') },
@@ -100,11 +76,7 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
       { value: 'session type', label: this.intl.t('general.sessionTypes') },
     ];
 
-    return list;
-  }),
-
-  prepositionalObjectList: computed('intl.locale', 'currentSubject', function () {
-    const list = [
+    this.fullPrepositionalObjectList = [
       {
         value: 'course',
         label: this.intl.t('general.course'),
@@ -125,7 +97,6 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         value: 'session',
         label: this.intl.t('general.session'),
         subjects: [
-          'course',
           'program',
           'program year',
           'instructor',
@@ -205,210 +176,181 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
         subjects: ['course', 'session', 'program', 'program year', 'session type'],
       },
     ];
+  }
 
-    const subject = this.currentSubject;
+  get prepositionalObjectList() {
+    return this.fullPrepositionalObjectList.filter((item) =>
+      item.subjects.includes(this.currentSubject)
+    );
+  }
 
-    return list.filter((item) => item.subjects.includes(subject));
-  }),
+  async getPrepositionalObjectIdList() {
+    if (
+      !this.currentPrepositionalObject ||
+      this.currentPrepositionalObject === 'instructor' ||
+      this.currentPrepositionalObject === 'mesh term'
+    ) {
+      return [];
+    }
 
-  /**
-   * A list of prepositional objects. Each object has a id and label property.
-   * @property prepositionalObjectIdList
-   * @type {Ember.computed}
-   * @public
-   */
-  prepositionalObjectIdList: computed(
-    'currentPrepositionalObject',
-    'currentSchool',
-    'isCourse',
-    'isSession',
-    async function () {
-      const type = this.currentPrepositionalObject;
-      if (isEmpty(type) || type === 'instructor' || type === 'mesh term') {
-        return [];
+    const key = [
+      this.currentPrepositionalObject,
+      this.school?.id ?? 'noschool',
+      this.isCourse ? 'course' : 'nocourse',
+      this.isSession ? 'session' : 'nosession',
+    ].join();
+
+    if (!this.loadedPrepositionalObjects.has(key)) {
+      this.loadedPrepositionalObjects.set(key, this.getPrepositionalObjectIdListPromise());
+    }
+
+    return await this.loadedPrepositionalObjects.get(key);
+  }
+
+  async getPrepositionalObjectIdListPromise() {
+    const model = dasherize(this.currentPrepositionalObject);
+    const query = {
+      filters: {},
+    };
+    if (this.currentSchool) {
+      const schoolScopedModels = [
+        'session',
+        'course',
+        'program',
+        'session-type',
+        'instructor-group',
+        'competency',
+        'term',
+      ];
+      if (schoolScopedModels.includes(model)) {
+        if ('session' === model || 'term' == model) {
+          query.filters.schools = [this.currentSchool.id];
+        } else {
+          query.filters.school = this.currentSchool.id;
+        }
+      }
+    }
+    if ('session' === model) {
+      query.include = 'course';
+    }
+    const objects = await this.store.query(model, query);
+
+    return await map(objects.toArray(), async (obj) => {
+      const po = new PrepositionObject(this.currentPrepositionalObject, obj);
+      const academicYear = await po.getAcademicYear();
+      const label = await po.getLabel();
+      const { active, value } = po;
+      const payload = { academicYear, active, label, value };
+
+      if (this.isCourse) {
+        payload.externalId = po.model.externalId;
       }
 
-      const model = dasherize(type);
-      const store = this.store;
-      const school = await this.currentSchool;
-      const query = {
-        filters: {},
-      };
-      if (isPresent(school)) {
-        const schoolScopedModels = [
-          'session',
-          'course',
-          'program',
-          'session-type',
-          'instructor-group',
-          'competency',
-          'term',
-        ];
-        if (schoolScopedModels.includes(model)) {
-          if ('session' === model || 'term' == model) {
-            query.filters.schools = [school.get('id')];
-          } else {
-            query.filters.school = school.get('id');
-          }
-        }
+      if (this.isSession) {
+        const course = await po.model.course;
+        payload.courseTitle = course.title;
       }
-      const objects = await store.query(model, query);
-      const values = objects.map((object) => {
-        return PrepositionObject.create({
-          type,
-          model: object,
-        });
-      });
 
-      return await map(values, async (obj) => {
-        const academicYear = await obj.academicYear;
-        const label = await obj.label;
-        const { active, value } = obj;
-        const payload = { academicYear, active, label, value };
+      return payload;
+    });
+  }
 
-        if (this.isCourse) {
-          payload.externalId = obj.model.externalId;
-        }
+  get currentYear() {
+    return this.selectedYear ? Number(this.selectedYear) : null;
+  }
 
-        if (this.isSession) {
-          payload.courseTitle = obj.model.course.get('title');
-        }
+  get filteredPrepositionalObjectIdList() {
+    const list = this.prepositionalObjectIdList ?? [];
 
-        return payload;
-      });
-    }
-  ),
+    return this.filterPrepositionalObjectsByAcademicYear(
+      list,
+      this.currentYear,
+      this.currentPrepositionalObject
+    );
+  }
 
-  /**
-   * Filtered List of prepositional objects
-   * @property filteredPrepositionalObjectIdList
-   * @type {Ember.computed}
-   * @public
-   */
-  filteredPrepositionalObjectIdList: computed(
-    'currentPrepositionalObject',
-    'prepositionalObjectIdList.[]',
-    'selectedYear',
-    async function () {
-      const selectedYear = this.selectedYear ? parseInt(this.selectedYear, 10) : null;
-      const objects = await this.prepositionalObjectIdList;
-      const type = this.currentPrepositionalObject;
+  filterPrepositionalObjectsByAcademicYear(list, year, currentPrepositionalObject) {
+    return list.filter((obj) => {
+      if (!year || !['course', 'session'].includes(currentPrepositionalObject)) {
+        return true;
+      }
 
-      return objects.filter((obj) => {
-        if (isEmpty(selectedYear) || !['course', 'session'].includes(type)) {
-          return true;
-        }
+      return obj.academicYear === year;
+    });
+  }
 
-        return obj.academicYear === selectedYear;
-      });
-    }
-  ),
-
-  currentSubjectLabel: computed('currentSubject', 'subjectList.[]', function () {
-    const currentSubjectValue = this.currentSubject;
+  get currentSubjectLabel() {
     const currentSubject = this.subjectList.find((subject) => {
-      return subject.value === currentSubjectValue;
+      return subject.value === this.currentSubject;
     });
 
     return currentSubject.label;
-  }),
+  }
 
-  selectedUser: computed('currentPrepositionalObject', 'currentPrepositionalObjectId', function () {
+  get selectedUser() {
     if (this.currentPrepositionalObject === 'instructor' && this.currentPrepositionalObjectId) {
       return this.store.peekRecord('user', this.currentPrepositionalObjectId);
     } else {
       return null;
     }
-  }),
+  }
 
-  selectedMeshTerm: computed(
-    'currentPrepositionalObject',
-    'currentPrepositionalObjectId',
-    function () {
-      if (this.currentPrepositionalObject === 'mesh term' && this.currentPrepositionalObjectId) {
-        return this.store.peekRecord('mesh-descriptor', this.currentPrepositionalObjectId);
-      } else {
-        return null;
-      }
+  get selectedMeshTerm() {
+    if (this.currentPrepositionalObject === 'mesh term' && this.currentPrepositionalObjectId) {
+      return this.store.peekRecord('mesh-descriptor', this.currentPrepositionalObjectId);
+    } else {
+      return null;
     }
-  ),
+  }
 
-  /**
-   * All schools, sorted by title.
-   * @property schoolList
-   * @type {Ember.computed}
-   * @public
-   */
-  schoolList: computed(async function () {
-    const schools = await this.store.findAll('school');
-    return schools.sortBy('title');
-  }),
-
-  currentSchool: computed(
-    'currentUser.currentUserId',
-    'schoolChanged',
-    'selectedSchool',
-    async function () {
-      const selectedSchool = this.selectedSchool;
-      const schoolChanged = this.schoolChanged;
-      if (isPresent(selectedSchool)) {
-        return selectedSchool;
-      }
-
-      //if the school has been set to null intentionally
-      if (schoolChanged) {
-        return null;
-      }
-
-      const user = await this.currentUser.getModel();
-      const school = await user.school;
-
-      return school;
+  get currentSchool() {
+    if (this.selectedSchool) {
+      return this.selectedSchool;
     }
-  ),
 
-  allAcademicYears: computed(async function () {
-    const store = this.store;
-    const years = await store.findAll('academic-year');
+    //if the school has been set to null intentionally
+    if (this.schoolChanged) {
+      return null;
+    }
 
-    return years;
-  }),
+    return this.usersPrimarySchool;
+  }
 
-  actions: {
-    changeSubject(subject) {
-      this.set('currentSubject', subject);
-      this.set('currentPrepositionalObject', null);
-      this.set('currentPrepositionalObjectId', null);
-    },
+  @action
+  changeSubject(subject) {
+    this.currentSubject = subject;
+    this.currentPrepositionalObject = null;
+    this.currentPrepositionalObjectId = null;
+  }
 
-    changePrepositionalObject(object) {
-      this.set('currentPrepositionalObject', object);
-      this.set('currentPrepositionalObjectId', null);
-      this.resetCurrentPrepositionalObjectId.perform();
-    },
+  @action
+  changePrepositionalObject(object) {
+    this.currentPrepositionalObject = object;
+    this.currentPrepositionalObjectId = null;
+    this.resetCurrentPrepositionalObjectId.perform();
+  }
 
-    changeSelectedYear(year) {
-      this.set('selectedYear', year);
-      this.set('currentPrepositionalObjectId', null);
-      this.resetCurrentPrepositionalObjectId.perform();
-    },
+  @action
+  changeSelectedYear(year) {
+    this.selectedYear = year;
+    this.currentPrepositionalObjectId = null;
+    this.resetCurrentPrepositionalObjectId.perform();
+  }
 
-    changePrepositionalObjectId(id) {
-      this.set('currentPrepositionalObjectId', id);
-    },
+  @action
+  changePrepositionalObjectId(id) {
+    this.currentPrepositionalObjectId = id;
+  }
 
-    chooseInstructor(user) {
-      this.set('currentPrepositionalObjectId', user.get('id'));
-    },
+  @action
+  chooseInstructor(user) {
+    this.currentPrepositionalObjectId = user.id;
+  }
 
-    chooseMeshTerm(term) {
-      this.set('currentPrepositionalObjectId', term.get('id'));
-    },
-
-    closeEditor() {
-      this.close();
-    },
-  },
+  @action
+  chooseMeshTerm(term) {
+    this.currentPrepositionalObjectId = term.id;
+  }
 
   keyUp(event) {
     const keyCode = event.keyCode;
@@ -421,70 +363,111 @@ export default Component.extend(Validations, ValidationErrorDisplay, {
     if (27 === keyCode) {
       this.close();
     }
-  },
+  }
 
-  save: task(function* () {
-    this.set('isSaving', true);
-    this.send('addErrorDisplayFor', 'title');
-    const { validations } = yield this.validate();
-    if (validations.get('isInvalid')) {
-      return;
+  @dropTask
+  *save() {
+    this.addErrorDisplayFor('title');
+    const isValid = yield this.isValid();
+    if (!isValid) {
+      return false;
     }
-    const flashMessages = this.flashMessages;
-    const store = this.store;
-    const subject = this.currentSubject;
-    const currentUser = this.currentUser;
-    const user = yield currentUser.getModel();
-    const title = this.title;
-    const prepositionalObject = this.currentPrepositionalObject;
-    const school = yield this.currentSchool;
-    const object = this.currentPrepositionalObject;
-    const prepositionalObjectTableRowId = this.currentPrepositionalObjectId;
-    if (isPresent(subject) && isEmpty(object)) {
-      if (subject === 'instructor') {
-        flashMessages.alert('general.reportMissingObjectForInstructor');
+    this.removeErrorDisplayFor('title');
+
+    if (this.currentSubject && !this.currentPrepositionalObject) {
+      if (this.currentSubject === 'instructor') {
+        this.flashMessages.alert('general.reportMissingObjectForInstructor');
         return;
       }
-      if (subject === 'mesh term') {
-        flashMessages.alert('general.reportMissingObjectForMeshTerm');
+      if (this.currentSubject === 'mesh term') {
+        this.flashMessages.alert('general.reportMissingObjectForMeshTerm');
         return;
       }
     }
-    if (object && isEmpty(prepositionalObjectTableRowId)) {
-      if (object === 'instructor') {
-        flashMessages.alert('general.reportMissingInstructor');
+    if (this.currentPrepositionalObject && !this.currentPrepositionalObjectId) {
+      if (this.currentPrepositionalObject === 'instructor') {
+        this.flashMessages.alert('general.reportMissingInstructor');
       }
-      if (object === 'mesh term') {
-        flashMessages.alert('general.reportMissingMeshTerm');
+      if (this.currentPrepositionalObject === 'mesh term') {
+        this.flashMessages.alert('general.reportMissingMeshTerm');
       }
       return;
     }
 
-    const report = store.createRecord('report', {
-      title,
-      user,
-      subject,
-      prepositionalObject,
-      prepositionalObjectTableRowId,
-      school,
+    const report = this.store.createRecord('report', {
+      title: this.title,
+      user: this.userModel,
+      subject: this.currentSubject,
+      prepositionalObject: this.currentPrepositionalObject,
+      prepositionalObjectTableRowId: this.currentPrepositionalObjectId,
+      school: this.currentSchool,
     });
     yield report.save();
-    this.send('clearErrorDisplay', 'title');
-    this.close();
-  }),
+    this.args.close();
+  }
 
-  changeSchool: task(function* (schoolId) {
-    const schoolList = yield this.schoolList;
-    const school = schoolList.findBy('id', schoolId);
-    this.set('selectedSchool', school);
-    this.set('schoolChanged', true);
-  }),
+  @action
+  changeSchool(schoolId) {
+    const school = this.allSchools.findBy('id', schoolId);
+    this.selectedSchool = school;
+    this.schoolChanged = true;
+  }
 
-  resetCurrentPrepositionalObjectId: task(function* () {
-    const list = yield this.filteredPrepositionalObjectIdList;
+  @restartableTask
+  *resetCurrentPrepositionalObjectId() {
+    const list = this.filterPrepositionalObjectsByAcademicYear(
+      yield this.getPrepositionalObjectIdList(),
+      this.currentYear,
+      this.currentPrepositionalObject
+    );
+
     const first = list.get('firstObject');
     if (first) {
-      this.set('currentPrepositionalObjectId', first.value);
+      this.currentPrepositionalObjectId = first.value;
     }
-  }).restartable(),
-});
+  }
+}
+
+class PrepositionObject {
+  model = null;
+  type = null;
+
+  constructor(type, model) {
+    this.type = type;
+    this.model = model;
+  }
+
+  get value() {
+    return this.model.id;
+  }
+
+  async getLabel() {
+    if (this.type === 'mesh term') {
+      return this.model.name;
+    } else if (this.type === 'term') {
+      const vocabulary = await this.model.vocabulary;
+      const titleWithParentTitles = await this.model.titleWithParentTitles;
+      return `${vocabulary.title} > ${titleWithParentTitles}`;
+    }
+
+    return this.model.title;
+  }
+
+  async getAcademicYear() {
+    if (this.type === 'course') {
+      return Number(this.model.year);
+    } else if (this.type === 'session') {
+      const course = await this.model.course;
+      return Number(course.year);
+    }
+
+    return null;
+  }
+
+  get active() {
+    if (['session type', 'term'].includes(this.type)) {
+      return this.model.active;
+    }
+    return true;
+  }
+}
