@@ -27,6 +27,7 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
     />`);
     assert.equal(component.pcrs.length, 5);
     assert.ok(component.pcrs[0].isChecked);
+    assert.equal(component.pcrs[0].description, 'aamc pcrs 0');
     assert.notOk(component.pcrs[1].isChecked);
     assert.notOk(component.pcrs[2].isChecked);
     assert.notOk(component.pcrs[3].isChecked);
