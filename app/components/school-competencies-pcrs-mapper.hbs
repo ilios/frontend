@@ -4,7 +4,7 @@
   ...attributes
 >
   <ul>
-    {{#each (sort-by "description" @allPcrses) as |pcrs|}}
+    {{#each (sort-by "id" @allPcrses) as |pcrs|}}
       <li>
        {{#if (includes pcrs @selectedPcrses)}}
           <label {{on "click" (fn @remove pcrs)}} data-test-pcrs>

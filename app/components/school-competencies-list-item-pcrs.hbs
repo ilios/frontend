@@ -29,7 +29,7 @@
     </button>
   {{else}}
     <ul>
-      {{#each (sort-by "description" (await @competency.aamcPcrses)) as |pcrs|}}
+      {{#each (sort-by "id" (await @competency.aamcPcrses)) as |pcrs|}}
         <li>
           {{#if @canUpdate}}
             <button
