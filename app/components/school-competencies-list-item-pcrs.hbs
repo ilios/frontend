@@ -28,40 +28,38 @@
       <FaIcon @icon="undo" />
     </button>
   {{else}}
-    {{#if @competency.aamcPcrses.length}}
-      <ul>
-        {{#each (sort-by "description" (await @competency.aamcPcrses)) as |pcrs|}}
-          <li>
-            {{#if @canUpdate}}
-              <button
-                type="button"
-                class="link-button"
-                {{on "click" (fn @setIsManaging true)}}
-                data-test-edit-pcrs-mapping
-              >
-                {{pcrs.description}}
-              </button>
-            {{else}}
+    <ul>
+      {{#each (sort-by "description" (await @competency.aamcPcrses)) as |pcrs|}}
+        <li>
+          {{#if @canUpdate}}
+            <button
+              type="button"
+              class="link-button"
+              {{on "click" (fn @setIsManaging true)}}
+              data-test-edit-pcrs-mapping
+            >
               {{pcrs.description}}
-            {{/if}}
-          </li>
-        {{/each}}
-      </ul>
-    {{else}}
-      <li>
-        {{#if @canUpdate}}
-          <button
-            type="button"
-            class="link-button"
-            {{on "click" (fn @setIsManaging true)}}
-            data-test-edit-pcrs-mapping
-          >
-            {{t "general.clickToEdit"}}
-          </button>
-        {{else}}
-          {{t "general.none"}}
-        {{/if}}
-      </li>
-    {{/if}}
+            </button>
+          {{else}}
+            {{pcrs.description}}
+          {{/if}}
+        </li>
+      {{else}}
+        <li>
+          {{#if @canUpdate}}
+            <button
+              type="button"
+              class="link-button"
+              {{on "click" (fn @setIsManaging true)}}
+              data-test-edit-pcrs-mapping
+            >
+              {{t "general.clickToEdit"}}
+            </button>
+          {{else}}
+            {{t "general.none"}}
+          {{/if}}
+        </li>
+      {{/each}}
+    </ul>
   {{/if}}
 </div>
