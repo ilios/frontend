@@ -2,25 +2,65 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import { hbs } from 'ember-cli-htmlbars';
+import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
+import { component } from 'ilios/tests/pages/components/school-competencies-list-item';
 
 module('Integration | Component | school-competencies-list-item', function (hooks) {
   setupRenderingTest(hooks);
+  setupMirage(hooks);
 
-  test('it renders', async function (assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
+  hooks.beforeEach(async function () {
+    const pcrs1 = this.server.create('aamcPcrs', {
+      description: 'Zylinder',
+    });
+    const pcrs2 = this.server.create('aamcPcrs', {
+      description: 'Alfons',
+    });
+    const domain = this.server.create('competency', {
+      aamcPcrses: [pcrs1, pcrs2],
+    });
+    const competency = this.server.create('competency', {
+      parent: domain,
+    });
+    this.pcrsModel1 = await this.owner.lookup('service:store').find('aamcPcrs', pcrs1.id);
+    this.pcrsModel2 = await this.owner.lookup('service:store').find('aamcPcrs', pcrs2.id);
+    this.competencyModel = await this.owner
+      .lookup('service:store')
+      .find('competency', competency.id);
+    this.domainModel = await this.owner.lookup('service:store').find('competency', domain.id);
+  });
 
-    await render(hbs`<SchoolCompetenciesListItem />`);
+  test('it renders - domain', async function (assert) {
+    this.set('competency', this.domainModel);
+    await render(hbs`<SchoolCompetenciesListItem
+      @competency={{this.competency}}
+      @isDomain={{true}}
+      @canUpdate={{true}}
+    />`);
+    assert.equal(component.title.text, 'competency 0');
+    assert.notOk(component.title.isCompetency);
+    assert.ok(component.title.isDomain);
+    assert.equal(component.pcrs.items.length, 2);
+    assert.equal(component.pcrs.items[0].text, '1 Zylinder');
+    assert.equal(component.pcrs.items[1].text, '2 Alfons');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
+  });
 
-    assert.equal(this.element.textContent.trim(), '');
-
-    // Template block usage:
-    await render(hbs`
-      <SchoolCompetenciesListItem>
-        template block text
-      </SchoolCompetenciesListItem>
-    `);
-
-    assert.equal(this.element.textContent.trim(), 'template block text');
+  test('it renders - competency', async function (assert) {
+    this.set('competency', this.competencyModel);
+    await render(hbs`<SchoolCompetenciesListItem
+      @competency={{this.competency}}
+      @isDomain={{false}}
+      @canUpdate={{true}}
+    />`);
+    assert.equal(component.title.text, 'competency 1');
+    assert.ok(component.title.isCompetency);
+    assert.notOk(component.title.isDomain);
+    assert.equal(component.pcrs.items.length, 1);
+    assert.equal(component.pcrs.items[0].text, 'Click to edit');
+    await a11yAudit(this.element);
+    assert.ok(true, 'no a11y errors found!');
   });
 });
