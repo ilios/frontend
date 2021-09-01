@@ -7,7 +7,7 @@ export default function (server) {
   const models = [
     { route: 'aamcmethods', name: 'aamcMethod' },
     { route: 'aamcmethods/', name: 'aamcMethod' },
-    { route: 'aamcpcrs/', name: 'aamcPcr' },
+    { route: 'aamcpcrses/', name: 'aamcPcrs' },
     { route: 'academicyears/', name: 'academicYear' },
     { route: 'assessmentoptions/', name: 'assessmentOption' },
     { route: 'authentications/', name: 'authentication' },
