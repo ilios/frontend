@@ -114,7 +114,6 @@ module('Integration | Component | new myreport', function (hooks) {
 
   test('choosing course selects correct objects', function (assert) {
     return checkObjects(this, assert, 0, 'course', [
-      'session',
       'program',
       'instructor',
       'instructor group',

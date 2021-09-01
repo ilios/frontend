@@ -12,7 +12,7 @@
     <div class="schoolsfilter" data-test-school-filter>
       <FaIcon @icon="university" @fixedWidth={{true}} />
       {{#if this.hasMoreThanOneSchool}}
-        <select aria-label={{t "general.filterBySchool"}} onchange={{action "changeSelectedSchool" value="target.value"}}>
+        <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" this.changeSelectedSchool)}}>
           {{#each (sort-by "title" @model.schools) as |school|}}
             <option
               value={{school.id}}
@@ -30,11 +30,11 @@
       <FaIcon @icon="calendar" @fixedWidth={{true}} />
       <select
         aria-label={{t "general.filterByYear"}}
-        onchange={{action "changeSelectedYear" value="target.value"}}
+        {{on "change" (pick "target.value" this.changeSelectedYear)}}
         data-test-year-filter
       >
         {{#each (sort-by "title:desc" @model.years) as |year|}}
-          <option value={{year.id}} selected={{is-equal year (await this.selectedYear)}}>
+          <option value={{year.id}} selected={{is-equal year this.selectedYear}}>
             {{year.title}}
           </option>
         {{/each}}
@@ -43,7 +43,7 @@
     <div class="titlefilter">
       <input
         value={{this.titleFilter}}
-        oninput={{action (perform this.changeTitleFilter) value="target.value"}}
+        {{on "input" (pick "target.value" (perform this.changeTitleFilter))}}
         aria-label={{t "general.courseTitleFilterPlaceholder"}}
         placeholder={{t "general.courseTitleFilterPlaceholder"}}
         data-test-title-filter
@@ -54,24 +54,24 @@
     <div class="header">
       <h2 data-test-courses-header-title class="title">
         {{t "general.courses"}}
-        ({{get (await this.filteredCourses) "length"}})
+        ({{this.filteredCourses.length}})
       </h2>
       <div class="actions">
-        {{#if (await this.canCreateCourse)}}
+        {{#if this.canCreateCourse}}
           <ExpandCollapseButton
             @value={{this.showNewCourseForm}}
-            @action={{action "toggleNewCourseForm"}}
+            @action={{set this.showNewCourseForm (not this.showNewCourseForm)}}
           />
         {{/if}}
       </div>
     </div>
     <section class="new">
-      {{#if (and (is-fulfilled this.sessionTypes) this.showNewCourseForm)}}
+      {{#if this.showNewCourseForm}}
         <NewCourse
           @currentSchool={{this.selectedSchool}}
-          @currentYear={{await this.selectedYear}}
-          @save={{action "saveNewCourse"}}
-          @cancel={{action "toggleNewCourseForm"}}
+          @currentYear={{this.selectedYear}}
+          @save={{perform this.saveNewCourse}}
+          @cancel={{set this.showNewCourseForm false}}
         />
       {{/if}}
       {{#if this.newCourse}}
@@ -85,15 +85,15 @@
       {{/if}}
     </section>
     <div class="list">
-      {{#if (is-fulfilled this.filteredCourses)}}
+      {{#if this.coursesLoaded}}
         <IliosCourseList
-          @courses={{await this.filteredCourses}}
+          @courses={{this.filteredCourses}}
           @query={{this.titleFilter}}
           @sortBy={{this.sortCoursesBy}}
-          @lock={{action "lockCourse"}}
-          @remove={{action "removeCourse"}}
-          @setSortBy={{action (mut this.sortCoursesBy)}}
-          @unlock={{action "unlockCourse"}}
+          @lock={{this.lockCourse}}
+          @remove={{perform this.removeCourse}}
+          @setSortBy={{set this.sortCoursesBy}}
+          @unlock={{this.unlockCourse}}
         />
       {{else}}
         <PulseLoader />

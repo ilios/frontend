@@ -11,7 +11,7 @@
       </div>
       {{#if this.isManaging}}
         <div class="actions">
-          <button type="button" class="bigadd" {{action (perform this.saveChanges)}} data-test-save>
+          <button type="button" class="bigadd" {{on "click" (perform this.saveChanges)}} data-test-save>
             <FaIcon
               @icon={{if this.saveChanges.isRunning "spinner" "check"}}
               @spin={{if this.saveChanges.isRunning true false}}

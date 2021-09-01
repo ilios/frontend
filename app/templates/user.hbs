@@ -7,14 +7,14 @@
     @canUpdate={{this.canUpdate}}
     @canCreate={{await this.canCreate}}
     @isManagingBio={{this.isManagingBio}}
-    @setIsManagingBio={{action (mut this.isManagingBio)}}
+    @setIsManagingBio={{set this.isManagingBio}}
     @isManagingRoles={{this.isManagingRoles}}
-    @setIsManagingRoles={{action (mut this.isManagingRoles)}}
+    @setIsManagingRoles={{set this.isManagingRoles}}
     @isManagingCohorts={{this.isManagingCohorts}}
-    @setIsManagingCohorts={{action (mut this.isManagingCohorts)}}
+    @setIsManagingCohorts={{set this.isManagingCohorts}}
     @isManagingIcs={{this.isManagingIcs}}
-    @setIsManagingIcs={{action (mut this.isManagingIcs)}}
+    @setIsManagingIcs={{set this.isManagingIcs}}
     @isManagingSchools={{this.isManagingSchools}}
-    @setIsManagingSchools={{action (mut this.isManagingSchools)}}
+    @setIsManagingSchools={{set this.isManagingSchools}}
   />
 {{/if}}

@@ -183,7 +183,7 @@ module('Integration | Component | global-search', function (hooks) {
       @onQuery={{noop}}
       @onSelectPage={{noop}}
       @ignoredSchoolIds={{this.ignoredSchoolIds}}
-      @setIgnoredSchoolIds={{action (mut this.ignoredSchoolIds)}}
+      @setIgnoredSchoolIds={{set this.ignoredSchoolIds}}
     />`);
     assert.equal(component.searchResults.length, 4);
     assert.equal(component.searchResults[0].courseTitle, '2019 Course 1');
