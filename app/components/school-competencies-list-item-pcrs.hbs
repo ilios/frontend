@@ -7,12 +7,12 @@
     <button
       type="button"
       class="bigadd"
-      {{on "click" (perform @save)}}
-      disabled={{@save.isRunning}}
+      {{on "click" (perform this.save)}}
+      disabled={{this.save.isRunning}}
       aria-label={{t "general.save"}}
       data-test-save
     >
-      {{#if @save.isRunning}}
+      {{#if this.save.isRunning}}
         <FaIcon @icon="spinner" @spin={{true}} />
       {{else}}
         <FaIcon @icon="check" />
