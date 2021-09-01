@@ -5,7 +5,7 @@
   data-test-school-competencies-expanded
   ...attributes
 >
-  <div class="school-competencies-expanded-header">
+  <div class="school-competencies-expanded-header" data-test-header>
     {{#if @isManaging}}
       <div class="title" data-test-title>
         {{t "general.competencies"}}
@@ -21,7 +21,7 @@
         ({{this.domains.length}}/{{this.childCompetencies.length}})
       </div>
     {{/if}}
-    <div class="actions">
+    <div class="actions" data-test-actions>
       {{#if @isManaging}}
         <button type="button" class="bigadd" {{on "click" (perform this.save)}} data-test-save>
           <FaIcon
