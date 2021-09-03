@@ -1,5 +1,6 @@
 general:
   aamcMethod: "Método de AAMC"
+  aamcPcrs: "AAMC PCRS"
   aamcSchoolId: "Identificación de la escuela AAMC (\"ID de la institución\")"
   academicLevel: "Nivel Académico"
   academicLevels: "Niveles Académicos"

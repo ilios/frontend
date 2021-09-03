@@ -1,18 +1,24 @@
-<div data-test-school-competencies-list ...attributes>
-  {{#if @domains.length}}
-    <ul data-test-domains>
-      {{#each (sort-by "title" @domains) as |domain|}}
-        <li data-test-domain>
-          <span data-test-title>{{domain.title}}</span>
-          <ul>
-            {{#each (sort-by "title" (await domain.children)) as |competency|}}
-              <li data-test-competency>
-                {{competency.title}}
-              </li>
-            {{/each}}
-          </ul>
-        </li>
-      {{/each}}
-    </ul>
-  {{/if}}
+<div
+  class="school-competencies-list"
+  data-test-school-competencies-list
+  ...attributes
+>
+  <div class="grid-row headers">
+    <div class="grid-item">{{t "general.competency"}}</div>
+    <div class="grid-item">{{t "general.aamcPcrs"}}</div>
+  </div>
+  {{#each (sort-by "title" @domains) as |domain|}}
+    <SchoolCompetenciesListItem
+      @competency={{domain}}
+      @isDomain={{true}}
+      @canUpdate={{@canUpdate}}
+    />
+    {{#each (sort-by "title" (await domain.children)) as |competency|}}
+      <SchoolCompetenciesListItem
+        @competency={{competency}}
+        @isDomain={{false}}
+        @canUpdate={{@canUpdate}}
+      />
+    {{/each}}
+  {{/each}}
 </div>

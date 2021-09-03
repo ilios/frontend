@@ -4,12 +4,14 @@ import competenciesList from './school-competencies-list';
 
 const definition = {
   scope: '[data-test-school-competencies-expanded]',
-  title: text('[data-test-title]'),
-  readModeTitle: text('[data-test-collapse]'),
-  collapse: clickable('[data-test-collapse]'),
-  save: clickable('[data-test-save]'),
-  cancel: clickable('[data-test-cancel]'),
-  manage: clickable('[data-test-manage]'),
+  title: text('[data-test-header] [data-test-title]'),
+  readModeTitle: text('[data-test-header] [data-test-collapse]'),
+  collapser: {
+    scope: '[data-test-header] [data-test-collapse]',
+  },
+  save: clickable('[data-test-actions] [data-test-save]'),
+  cancel: clickable('[data-test-actions] [data-test-cancel]'),
+  manage: clickable('[data-test-actions] [data-test-manage]'),
   competenciesManager,
   competenciesList,
 };

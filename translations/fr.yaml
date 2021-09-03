@@ -1,5 +1,6 @@
 general:
   aamcMethod: "AAMC Méthode"
+  aamcPcrs: "AAMC PCRS"
   aamcSchoolId: "Identifiant d'école AAMC (\"Identifiant d'institution\")"
   academicLevel: "Niveau scolaire"
   academicLevels: "Niveaux scolaire"
@@ -352,7 +353,7 @@ general:
   secondaryCohorts: "Cohortes Secondaires"
   select: "Sélectionnez"
   selectAcademicYear: "Choisissez l’année scolaire"
-  selectAllOrNone: "Sélectionner tout ou aucun" 
+  selectAllOrNone: "Sélectionner tout ou aucun"
   selectCourse: "Choisi cours"
   selected: "Sélectionné"
   selectProgram: "Choisi Diplôme"
