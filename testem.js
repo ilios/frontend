@@ -25,4 +25,5 @@ module.exports = {
       ci: ['--headless', '--window-size=1440,900'].filter(Boolean),
     },
   },
+  parallel: process.env.EMBER_EXAM_SPLIT_COUNT || -1,
 };
