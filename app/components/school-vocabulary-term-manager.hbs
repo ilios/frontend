@@ -41,10 +41,10 @@
               >
                 <Input
                   id="title-{{templateId}}"
-                  type="text"
+                  @type="text"
                   @value={{this.title}}
-                  @key-press={{fn this.addErrorDisplayFor "title"}}
                   disabled={{isSaving}}
+                  {{on "keyup" (fn this.addErrorDisplayFor "title")}}
                 />
               </EditableField>
             {{else}}

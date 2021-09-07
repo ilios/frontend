@@ -16,10 +16,10 @@
       >
         <Input
           aria-label={{t "general.title"}}
-          type="text"
+          @type="text"
           @value={{this.name}}
-          @key-press={{fn this.addErrorDisplayFor "name"}}
           disabled={{isSaving}}
+          {{on "keyup" (fn this.addErrorDisplayFor "name")}}
         />
         {{#each (await (compute this.getErrorsFor "name")) as |message|}}
           <span class="validation-error-message">

@@ -41,10 +41,10 @@
               >
                 <Input
                   id="location-{{templateId}}"
-                  type="text"
+                  @type="text"
                   @value={{this.location}}
-                  @key-press={{fn this.addErrorDisplayFor "location"}}
                   disabled={{isSaving}}
+                  {{on "keyup" (fn this.addErrorDisplayFor "location")}}
                 />
                 {{#each (await (compute this.getErrorsFor "location")) as |message|}}
                   <span class="validation-error-message">
