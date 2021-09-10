@@ -46,7 +46,12 @@ export default class UserProfilePermissionsComponent extends Component {
     this.schools = map.schools;
     this.academicYears = map.academicYears;
 
-    let currentYear = Number(moment().format('YYYY'));
+    let currentYear;
+    if (this.args.selectedYear) {
+      currentYear = Number(this.args.selectedYear);
+    } else {
+      currentYear = Number(moment().format('YYYY'));
+    }
     const currentMonth = Number(moment().format('M'));
     if (this.academicYearCrossesCalendarYearBoundaries && currentMonth < 6) {
       currentYear--;
@@ -56,7 +61,9 @@ export default class UserProfilePermissionsComponent extends Component {
       selectedYear = this.academicYears.get('lastObject');
     }
     this.selectedYearId = selectedYear?.id;
-    if (map.defaultSchool) {
+    if (this.args.selectedSchool) {
+      yield this.changeSchool.perform(this.args.selectedSchool);
+    } else if (map.defaultSchool) {
       yield this.changeSchool.perform(map.defaultSchool.id);
     } else if (this.schools.length) {
       yield this.changeSchool.perform(this.schools.sortBy('title')[0].id);
@@ -97,6 +104,7 @@ export default class UserProfilePermissionsComponent extends Component {
     this.administeredSessions = map.administeredSessions;
     this.instructedSessions = map.instructedSessions;
     this.studentAdvisedSessions = map.studentAdvisedSessions;
+    this.args.setSchool(schoolId);
   }
 
   @restartableTask
@@ -124,6 +132,7 @@ export default class UserProfilePermissionsComponent extends Component {
     this.administeredSessions = map.administeredSessions;
     this.instructedSessions = map.instructedSessions;
     this.studentAdvisedSessions = map.studentAdvisedSessions;
+    this.args.setYear(yearId);
   }
 
   get selectedYear() {

@@ -15,12 +15,16 @@ export default Controller.extend({
     'isManagingCohorts',
     'isManagingIcs',
     'isManagingSchools',
+    'permissionsSchool',
+    'permissionsYear',
   ],
   isManagingBio: false,
   isManagingRoles: false,
   isManagingCohorts: false,
   isManagingIcs: false,
   isManagingSchools: false,
+  permissionsSchool: null,
+  permissionsYear: null,
 
   canCreate: computed('currentUser', async function () {
     const schools = await this.store.findAll('school');
