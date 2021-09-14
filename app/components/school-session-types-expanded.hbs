@@ -47,7 +47,7 @@
         @close={{fn @setSchoolManagedSessionType null}}
         @canUpdate={{@canUpdate}}
       />
-    {{else if (is-array this.sessionTypes)}}
+    {{else if (and (is-array this.sessionTypes) this.sessionTypes.length)}}
       <SchoolSessionTypesList
         @sessionTypes={{this.sessionTypes}}
         @manageSessionType={{@setSchoolManagedSessionType}}
