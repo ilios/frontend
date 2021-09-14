@@ -12,7 +12,7 @@
       {{on "click" @collapse}}
       data-test-collapse
     >
-      {{t "general.sessionTypes"}}
+      {{t "general.sessionTypes"}} ({{this.sessionTypes.length}})
     </div>
     <div class="actions">
       {{#if (and @canCreate (not @managedSessionTypeId))}}
