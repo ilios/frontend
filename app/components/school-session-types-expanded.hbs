@@ -12,7 +12,7 @@
       {{on "click" @collapse}}
       data-test-collapse
     >
-      {{t "general.sessionTypes"}}
+      {{t "general.sessionTypes"}} ({{this.sessionTypes.length}})
     </div>
     <div class="actions">
       {{#if (and @canCreate (not @managedSessionTypeId))}}
@@ -47,7 +47,7 @@
         @close={{fn @setSchoolManagedSessionType null}}
         @canUpdate={{@canUpdate}}
       />
-    {{else if (is-array this.sessionTypes)}}
+    {{else if (and (is-array this.sessionTypes) this.sessionTypes.length)}}
       <SchoolSessionTypesList
         @sessionTypes={{this.sessionTypes}}
         @manageSessionType={{@setSchoolManagedSessionType}}

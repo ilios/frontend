@@ -46,6 +46,6 @@ export default class SchoolSessionTypesExpandedComponent extends Component {
     });
 
     yield sessionType.save();
-    this.args.setSchoolNewSessionType(false);
+    this.args.setSchoolNewSessionType(null);
   }
 }

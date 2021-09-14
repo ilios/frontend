@@ -32,6 +32,25 @@ module('Integration | Component | school session types expanded', function (hook
       .find('session-type', sessionType.id);
   });
 
+  test('it renders empty', async function (assert) {
+    this.school.set('sessionTypes', []);
+    this.set('school', this.school);
+    await render(hbs`<SchoolSessionTypesExpanded
+      @school={{this.school}}
+      @canUpdate={{true}}
+      @canDelete={{true}}
+      @canCreate={{true}}
+      @collapse={{noop}}
+      @expand={{noop}}
+      @managedSessionTypeId={{null}}
+      @setSchoolManagedSessionType={{noop}}
+      @setSchoolNewSessionType={{noop}}
+    />`);
+
+    assert.notOk(component.list.sessionTypes.isVisible);
+    assert.equal(component.title, 'Session Types (0)');
+  });
+
   test('it renders', async function (assert) {
     this.set('school', this.school);
     await render(hbs`<SchoolSessionTypesExpanded
@@ -47,6 +66,7 @@ module('Integration | Component | school session types expanded', function (hook
     />`);
 
     assert.equal(component.list.sessionTypes.length, 1);
+    assert.equal(component.title, 'Session Types (1)');
   });
 
   test('it renders as manager', async function (assert) {
