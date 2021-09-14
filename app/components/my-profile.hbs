@@ -63,7 +63,13 @@
           {{/if}}
         </div>
       </div>
-      <UserProfilePermissions @user={{@user}} />
+      <UserProfilePermissions
+        @user={{@user}}
+        @selectedSchoolId={{@permissionsSchool}}
+        @selectedYearId={{@permissionsYear}}
+        @setSchool={{@setPermissionsSchool}}
+        @setYear={{@setPermissionsYear}}
+      />
       <UserProfileLearnergroups @user={{@user}} />
     </div>
     <section class="token-maintenance" data-test-token-maintenance>
