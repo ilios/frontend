@@ -1,8 +1,16 @@
 .school-vocabularies-expanded {
   @include detail-container($ilios-orange);
 
-  .title {
-    @include detail-container-title;
+  .school-vocabularies-expanded-header {
+    @include detail-container-header;
+
+    .title {
+      @include detail-container-title;
+    }
+
+    .actions {
+      @include detail-container-actions;
+    }
   }
 
   .school-vocabularies-expanded-content {

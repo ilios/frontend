@@ -1,37 +1,7 @@
-import {
-  clickable,
-  create,
-  collection,
-  fillable,
-  text,
-  value,
-  isVisible,
-  triggerable,
-} from 'ember-cli-page-object';
+import { clickable, create, collection, text, isVisible } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-school-vocabularies-list]',
-  expandCollapseButton: {
-    scope: '[data-test-expand-collapse-button]',
-    toggle: clickable('button'),
-  },
-  form: {
-    scope: '[data-test-new-vocabulary-form]',
-    title: {
-      scope: '[data-test-title]',
-      set: fillable('input'),
-      value: value('input'),
-      hasError: isVisible('.validation-error-message'),
-      submit: triggerable('keyup', 'input', { eventProperties: { key: 'Enter' } }),
-      cancel: triggerable('keyup', 'input', { eventProperties: { key: 'Escape' } }),
-    },
-    submit: clickable('[data-test-submit]'),
-    cancel: clickable('[data-test-cancel]'),
-  },
-  savedVocabulary: {
-    scope: '[data-test-saved-vocabulary]',
-    manage: clickable('[data-test-manage-new-vocabulary]'),
-  },
   vocabularies: collection('[data-test-vocabulary]', {
     title: {
       scope: '[data-test-title]',

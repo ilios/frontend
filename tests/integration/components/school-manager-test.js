@@ -64,6 +64,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolNewSessionType={{noop}}
       @schoolManageInstitution={{true}}
       @setSchoolManageInstitution={{noop}}
+      @schoolNewVocabulary={{true}}
+      @setSchoolNewVocabulary={{noop}}
     />`);
 
     assert.ok(component.schoolLeadershipExpanded.isVisible);
@@ -124,6 +126,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolNewSessionType={{noop}}
       @schoolManageInstitution={{false}}
       @setSchoolManageInstitution={{noop}}
+      @schoolNewVocabulary={{false}}
+      @setSchoolNewVocabulary={{noop}}
     />`);
 
     assert.notOk(component.schoolLeadershipExpanded.isVisible);
