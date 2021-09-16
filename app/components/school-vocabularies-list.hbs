@@ -2,7 +2,7 @@
   class="school-vocabularies-list"
   data-test-school-vocabularies-list
   {{did-insert (perform this.load)}}
-  {{did-insert (perform this.load) @school.vocabularies}}
+  {{did-update (perform this.load) @school.vocabularies}}
   ...attributes
 >
   <div class="school-vocabularies-list-list">
