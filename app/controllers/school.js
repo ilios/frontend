@@ -15,6 +15,7 @@ export default Controller.extend({
     'schoolManagedSessionType',
     'schoolNewSessionType',
     'schoolManageInstitution',
+    'schoolNewVocabulary',
   ],
   schoolCompetencyDetails: false,
   schoolManageCompetencies: false,
@@ -29,4 +30,5 @@ export default Controller.extend({
   schoolSessionTypeDetails: false,
   schoolManagedSessionType: null,
   schoolManageInstitution: false,
+  schoolNewVocabulary: false,
 });

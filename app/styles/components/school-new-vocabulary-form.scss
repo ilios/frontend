@@ -1,0 +1,21 @@
+.school-new-vocabulary-form {
+  .form {
+    @include ilios-form;
+    display: block;
+    width: 80%;
+
+    .item {
+      @include ilios-form-item;
+      height: 4rem;
+
+      label {
+        display: block;
+      }
+    }
+
+    .buttons {
+      @include ilios-form-buttons;
+      padding-top: 2rem;
+    }
+  }
+}

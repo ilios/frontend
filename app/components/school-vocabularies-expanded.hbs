@@ -8,18 +8,33 @@
   {{#if this.load.isRunning}}
     <LoadingSpinner />
   {{else}}
-    <div
-      class="title {{if this.isCollapsible "collapsible clickable"}}"
-      role="button"
-      {{on "click" this.doCollapse}}
-      data-test-vocabularies-title
-    >
-      {{t "general.vocabularies"}}
-      {{#if this.load.lastSuccessful}}
-        ({{this.schoolVocabularies.length}})
-      {{/if}}
+    <div class="school-vocabularies-expanded-header">
+      <div
+        class="title {{if this.isCollapsible "collapsible clickable"}}"
+        role="button"
+        {{on "click" this.doCollapse}}
+        data-test-vocabularies-title
+      >
+        {{t "general.vocabularies"}}
+        ({{@school.vocabularies.length}})
+      </div>
+      <div class="actions">
+        {{#if (and @canCreateVocabulary (not this.managedTerm) (not this.managedVocabulary))}}
+          <ExpandCollapseButton
+            @value={{@schoolNewVocabulary}}
+            @action={{fn @setSchoolNewVocabulary (not @schoolNewVocabulary)}}
+          />
+        {{/if}}
+      </div>
     </div>
     <div class="school-vocabularies-expanded-content">
+      {{#if @schoolNewVocabulary}}
+        <SchoolNewVocabularyForm
+          @school={{@school}}
+          @close={{fn @setSchoolNewVocabulary null}}
+          @save={{this.saveNewVocabulary}}
+        />
+      {{/if}}
       {{#if this.managedTerm}}
         <SchoolVocabularyTermManager
           @vocabulary={{this.managedVocabulary}}

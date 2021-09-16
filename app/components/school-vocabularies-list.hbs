@@ -1,170 +1,104 @@
-{{#let (unique-id) as |templateId|}}
-  <div
-    class="school-vocabularies-list"
-    data-test-school-vocabularies-list
-    {{did-insert (perform this.load)}}
-    {{did-insert (perform this.load) @school.vocabularies}}
-    ...attributes
-  >
-    {{#if @canCreate}}
-      <div class="school-vocabularies-list-header">
-        <div class="school-vocabularies-list-actions">
-          <ExpandCollapseButton
-            @value={{this.showNewVocabularyForm}}
-            @action={{this.toggleShowNewVocabularyForm}}
-          />
-        </div>
-      </div>
-    {{/if}}
-    <section class="school-vocabularies-list-new">
-      {{#if this.showNewVocabularyForm}}
-        <div class="form" data-test-new-vocabulary-form>
-          <div class="item" data-test-title>
-            <label for="title-{{templateId}}">
-              {{t "general.title"}}:
-            </label>
-            <input
-              id="title-{{templateId}}"
-              type="text"
-              value={{this.newVocabularyTitle}}
-              {{on "input" (pick "target.value" (set this.newVocabularyTitle))}}
-              {{on "keyup" (queue (fn this.addErrorDisplayFor "newVocabularyTitle") (perform this.saveOrCancel))}}
-              data-test-title
-            >
-            {{#each (await (compute this.getErrorsFor "newVocabularyTitle")) as |message|}}
-              <span class="validation-error-message">
-                {{message}}
-              </span>
-            {{/each}}
-          </div>
-          <div class="buttons">
-            <button
-              type="button"
-              class="done text"
-              data-test-submit
-              {{on "click" (perform this.saveNew)}}
-            >
-              {{#if this.saveNew.isRunning}}
-                <LoadingSpinner />
-              {{else}}
-                {{t "general.done"}}
-              {{/if}}
-            </button>
-            <button type="button" class="cancel text" data-test-cancel {{on "click" this.toggleShowNewVocabularyForm}}>
-              {{t "general.cancel"}}
-            </button>
-          </div>
-        </div>
-      {{/if}}
-      {{#if this.newVocabulary}}
-        <div class="savedvocabulary" data-test-saved-vocabulary>
-          <span
-            class="clickable link"
-            role="button" {{on "click" (fn @manageVocabulary newVocabulary.id)}}
-            data-test-manage-new-vocabulary
-          >
-            <FaIcon @icon="external-link-square-alt" />
-            {{this.newVocabulary.title}}
-          </span>
-          {{t "general.savedSuccessfully"}}
-        </div>
-      {{/if}}
-    </section>
-    <div class="school-vocabularies-list-list">
-      {{#if this.load.isRunning}}
-        <LoadingSpinner />
-      {{else}}
-        {{#if this.sortedVocabularies.length}}
-          <table>
-            <thead>
-              <tr>
-                <th class="text-left" colspan="3">
-                  {{t "general.vocabulary"}}
-                </th>
-                <th class="text-left" colspan="1">
-                  {{t "general.terms"}}
-                </th>
-                <th class="text-left" colspan="1">
-                  {{t "general.actions"}}
-                </th>
+<div
+  class="school-vocabularies-list"
+  data-test-school-vocabularies-list
+  {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @school.vocabularies}}
+  ...attributes
+>
+  <div class="school-vocabularies-list-list">
+    {{#if this.load.isRunning}}
+      <LoadingSpinner />
+    {{else}}
+      {{#if this.sortedVocabularies.length}}
+        <table>
+          <thead>
+            <tr>
+              <th class="text-left" colspan="3">
+                {{t "general.vocabulary"}}
+              </th>
+              <th class="text-left" colspan="1">
+                {{t "general.terms"}}
+              </th>
+              <th class="text-left" colspan="1">
+                {{t "general.actions"}}
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each this.sortedVocabularies as |vocabulary index|}}
+              <tr
+                class={{if
+                  (eq this.showRemovalConfirmationFor vocabulary)
+                  "confirm-removal"
+                  ""
+                }}
+                data-test-vocabulary={{index}}
+              >
+                <td class="text-left text-top" colspan="3" data-test-title>
+                  <span
+                    class="clickable link"
+                    role="button"
+                    {{on "click" (fn @manageVocabulary vocabulary.id)}}
+                  >
+                    {{vocabulary.title}}
+                  </span>
+                </td>
+                <td class="text-left text-top" colspan="1" data-test-terms-count>
+                  {{vocabulary.termCount}}
+                </td>
+                <td class="text-left text-top" colspan="1">
+                  <span
+                    class="clickable edit"
+                    role="button"
+                    data-test-manage
+                    {{on "click" (fn @manageVocabulary vocabulary.id)}}
+                  >
+                    <FaIcon @icon="edit" class="enabled" />
+                  </span>
+                  {{#if (and @canDelete (eq vocabulary.termCount 0))}}
+                    <FaIcon
+                      @icon="trash"
+                      class="clickable remove enabled"
+                      data-test-delete
+                      {{on "click" (fn this.confirmRemoval vocabulary)}}
+                    />
+                  {{else}}
+                    <FaIcon @icon="trash" class="disabled" />
+                  {{/if}}
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {{#each this.sortedVocabularies as |vocabulary index|}}
-                <tr
-                  class={{if
-                    (eq this.showRemovalConfirmationFor vocabulary)
-                    "confirm-removal"
-                    ""
-                  }}
-                  data-test-vocabulary={{index}}
-                >
-                  <td class="text-left text-top" colspan="3" data-test-title>
-                    <span
-                      class="clickable link"
-                      role="button"
-                      {{on "click" (fn @manageVocabulary vocabulary.id)}}
-                    >
-                      {{vocabulary.title}}
-                    </span>
-                  </td>
-                  <td class="text-left text-top" colspan="1" data-test-terms-count>
-                    {{vocabulary.termCount}}
-                  </td>
-                  <td class="text-left text-top" colspan="1">
-                    <span
-                      class="clickable edit"
-                      role="button"
-                      data-test-manage
-                      {{on "click" (fn @manageVocabulary vocabulary.id)}}
-                    >
-                      <FaIcon @icon="edit" class="enabled" />
-                    </span>
-                    {{#if (and @canDelete (eq vocabulary.termCount 0))}}
-                      <FaIcon
-                        @icon="trash"
-                        class="clickable remove enabled"
-                        data-test-delete
-                        {{on "click" (fn this.confirmRemoval vocabulary)}}
-                      />
-                    {{else}}
-                      <FaIcon @icon="trash" class="disabled" />
-                    {{/if}}
+              {{#if (eq this.showRemovalConfirmationFor vocabulary)}}
+                <tr class="confirm-removal" data-test-confirm-removal={{index}}>
+                  <td colspan="5">
+                    <div class="confirm-message">
+                      {{t "general.confirmVocabularyRemoval"}}
+                      <br>
+                      <div class="confirm-buttons">
+                        <button
+                          type="button"
+                          class="remove text"
+                          data-test-submit-removal
+                          {{on "click" (perform this.remove vocabulary)}}
+                        >
+                          {{t "general.yes"}}
+                        </button>
+                        <button
+                          type="button"
+                          class="done text"
+                          data-test-cancel-removal
+                          {{on "click" this.cancelRemoval}}
+                        >
+                          {{t "general.cancel"}}
+                        </button>
+                      </div>
+                    </div>
                   </td>
                 </tr>
-                {{#if (eq this.showRemovalConfirmationFor vocabulary)}}
-                  <tr class="confirm-removal" data-test-confirm-removal={{index}}>
-                    <td colspan="5">
-                      <div class="confirm-message">
-                        {{t "general.confirmVocabularyRemoval"}}
-                        <br>
-                        <div class="confirm-buttons">
-                          <button
-                            type="button"
-                            class="remove text"
-                            data-test-submit-removal
-                            {{on "click" (perform this.remove vocabulary)}}
-                          >
-                            {{t "general.yes"}}
-                          </button>
-                          <button
-                            type="button"
-                            class="done text"
-                            data-test-cancel-removal
-                            {{on "click" this.cancelRemoval}}
-                          >
-                            {{t "general.cancel"}}
-                          </button>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                {{/if}}
-              {{/each}}
-            </tbody>
-          </table>
-        {{/if}}
+              {{/if}}
+            {{/each}}
+          </tbody>
+        </table>
       {{/if}}
-    </div>
+    {{/if}}
   </div>
-{{/let}}
+</div>

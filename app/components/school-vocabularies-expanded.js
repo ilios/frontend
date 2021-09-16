@@ -1,9 +1,9 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
-import { restartableTask } from 'ember-concurrency';
-import { map } from 'rsvp';
-import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { action } from '@ember/object';
+import { inject as service } from '@ember/service';
+import { dropTask, restartableTask } from 'ember-concurrency';
+import { map } from 'rsvp';
 
 export default class SchoolVocabulariesExpandedComponent extends Component {
   @service store;
@@ -31,9 +31,9 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
   }
 
   @restartableTask
-  *load(element, [school]) {
-    yield this.loadSchool(school.id);
-    const vocabularies = (yield school.vocabularies).toArray();
+  *load() {
+    yield this.loadSchool(this.args.school.id);
+    const vocabularies = (yield this.args.school.vocabularies).toArray();
     this.schoolVocabularies = yield map(vocabularies, async (vocabulary) => {
       const terms = await vocabulary.terms;
       return {
@@ -78,5 +78,16 @@ export default class SchoolVocabulariesExpandedComponent extends Component {
       this.args.setSchoolManagedVocabulary(null);
       this.args.setSchoolManagedVocabularyTerm(null);
     }
+  }
+
+  @dropTask
+  *saveNewVocabulary(title, school, active) {
+    const vocabulary = this.store.createRecord('vocabulary', {
+      title,
+      school,
+      active,
+    });
+    this.args.setSchoolNewVocabulary(null);
+    yield vocabulary.save();
   }
 }

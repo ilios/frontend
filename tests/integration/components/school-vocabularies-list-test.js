@@ -27,29 +27,6 @@ module('Integration | Component | school vocabularies list', function (hooks) {
     assert.equal(component.vocabularies[1].termsCount, '1');
   });
 
-  test('can create new vocabulary', async function (assert) {
-    this.server.create('school');
-    const school = await this.owner.lookup('service:store').find('school', 1);
-
-    this.set('school', school);
-    await render(hbs`<SchoolVocabulariesList
-      @school={{this.school}}
-      @manageVocabulary={{noop}}
-      @canCreate={{true}}
-    />`);
-    assert.notOk(component.form.isVisible);
-    await component.expandCollapseButton.toggle();
-    assert.ok(component.form.isVisible);
-    await component.form.title.set('new vocab');
-    await component.form.title.submit();
-    assert.equal(component.savedVocabulary.text, 'new vocab Saved Successfully');
-    const vocabularies = await this.owner.lookup('service:store').findAll('vocabulary');
-    assert.equal(vocabularies.length, 1);
-    assert.equal(vocabularies.objectAt(0).title, 'new vocab');
-    const vocabSchool = await vocabularies.objectAt(0).school;
-    assert.deepEqual(vocabSchool, school);
-  });
-
   test('cannot delete vocabularies with terms', async function (assert) {
     const school = this.server.create('school');
     const vocabularies = this.server.createList('vocabulary', 3, { school });
