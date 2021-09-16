@@ -20,7 +20,7 @@
     <div class="actions" data-test-actions>
       {{#if @canUpdate}}
         {{#if @isManaging}}
-          <button type="button" class="bigadd" onclick={{perform this.save}} data-test-save>
+          <button type="button" class="bigadd" {{on "click" (perform this.save)}} data-test-save>
             <FaIcon
               @icon={{if this.save.isRunning "spinner" "check"}}
               @spin={{this.save.isRunning}}
