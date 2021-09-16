@@ -2,7 +2,8 @@
   <CurriculumInventory::ReportHeader
     @report={{@report}}
     @finalize={{set this.showFinalizeConfirmation true}}
-    @canUpdate={{@canUpdate}}
+    @canUpdate={{this.canUpdate}}
+    @isFinalizing={{this.isFinalizing}}
   />
   {{#if this.showFinalizeConfirmation}}
     <div class="confirm-finalize">
@@ -10,10 +11,18 @@
         {{t "general.finalizeReportConfirmation"}}
         <br>
         <div class="confirm-buttons">
-          <button type="button" class="finalize text" {{on "click" (perform this.finalize)}}>
+          <button
+            type="button"
+            class="finalize text"
+            {{on "click" (perform this.finalize)}}
+          >
             {{t "general.yes"}}
           </button>
-          <button type="button" class="done text" {{on "click" (set this.showFinalizeConfirmation false)}}>
+          <button
+            type="button"
+            class="done text"
+            {{on "click" (set this.showFinalizeConfirmation false)}}
+          >
             {{t "general.cancel"}}
           </button>
         </div>
@@ -22,12 +31,12 @@
   {{/if}}
   <CurriculumInventory::ReportOverview
     @report={{@report}}
-    @canUpdate={{@canUpdate}}
+    @canUpdate={{this.canUpdate}}
   />
   {{#if @leadershipDetails}}
     <CurriculumInventory::LeadershipExpanded
       @report={{@report}}
-      @canUpdate={{@canUpdate}}
+      @canUpdate={{this.canUpdate}}
       @collapse={{fn @setLeadershipDetails false}}
       @expand={{fn @setLeadershipDetails true}}
       @isManaging={{@manageLeadership}}
@@ -41,8 +50,5 @@
       @administratorsCount={{has-many-length @report "administrators"}}
       @expand={{fn @setLeadershipDetails true}}
     />
-  {{/if}}
-  {{#if this.finalize.isRunning}}
-    <WaitSaving>{{t "general.finalizingReport"}}</WaitSaving>
   {{/if}}
 </div>

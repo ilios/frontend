@@ -45,8 +45,17 @@
     >
       {{t "general.download"}}
     </a>
-    <button type="button" class="finalize" disabled={{not @canUpdate}} {{on "click" @finalize}} data-test-finalize>
+    <button
+      type="button"
+      class="finalize"
+      disabled={{not @canUpdate}}
+      {{on "click" @finalize}}
+      data-test-finalize
+    >
       {{t "general.finalize"}}
+      {{#if @isFinalizing}}
+        <FaIcon @icon="spinner" @spin={{true}} />
+      {{/if}}
     </button>
   </div>
 </div>
