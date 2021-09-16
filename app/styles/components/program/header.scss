@@ -9,28 +9,20 @@
     flex-direction: row;
   }
 
+  h2 {
+    @include ilios-heading-h4;
+
+    @include for-laptop-and-up {
+      display: inline;
+    }
+  }
+
   .title {
-    display: flex;
-    flex-direction: column;
+    @include ilios-heading-h4;
+    flex-grow: 2;
 
-    @include for-tablet-and-up {
-      flex-direction: row;
-    }
-
-    .editable,
-    h4 {
-      display: block;
-      font-size: 1.5rem;
-
-      @include for-laptop-and-up {
-        display: inline;
-      }
-    }
-
-    @include for-tablet-and-up {
-      h4 {
-        margin-left: 1rem;
-      }
+    input {
+      width: 90%;
     }
   }
 }
