@@ -1,7 +1,6 @@
 .learnergroup-summary {
   .learnergroup-overview {
     @include ilios-overview($ilios-orange);
-    display: block;
 
     .block {
       @include ilios-overview-block;
