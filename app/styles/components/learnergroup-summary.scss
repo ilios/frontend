@@ -3,14 +3,22 @@
     @include ilios-overview($ilios-orange);
     display: block;
 
+    .block {
+      @include ilios-overview-block;
+
+      > span {
+        flex-grow: 1;
+      }
+
+      input {
+        width: 100%;
+      }
+    }
+
     .learnergroup-overview-actions {
       margin-top: .25rem;
       padding-top: .5rem;
       text-align: right;
-    }
-
-    .block {
-      @include ilios-overview-block;
     }
   }
 
