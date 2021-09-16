@@ -142,7 +142,7 @@
                       <button
                         type="button"
                         class="done text"
-                        onclick={{fn this.cancelRemove learnerGroup}}
+                        {{on "click" (fn this.cancelRemove learnerGroup)}}
                         data-test-cancel
                       >
                         {{t "general.ok"}}
@@ -157,7 +157,7 @@
                         <button
                           type="button"
                           class="remove text"
-                          onclick={{fn @remove learnerGroup}}
+                          {{on "click" (fn @remove learnerGroup)}}
                           data-test-confirm
                         >
                           {{t "general.yes"}}
@@ -165,7 +165,7 @@
                         <button
                           type="button"
                           class="done text"
-                          onclick={{fn this.cancelRemove learnerGroup}}
+                          {{on "click" (fn this.cancelRemove learnerGroup)}}
                           data-test-cancel
                         >
                           {{t "general.cancel"}}
@@ -185,7 +185,7 @@
                     <button
                       type="button"
                       class="done text"
-                      onclick={{perform this.copy true learnerGroup}}
+                      {{on "click" (perform this.copy true learnerGroup)}}
                       data-test-confirm-with-learners
                     >
                       {{t "general.copyWithLearners"}}
@@ -193,7 +193,7 @@
                     <button
                       type="button"
                       class="done text"
-                      onclick={{perform this.copy false learnerGroup}}
+                      {{on "click" (perform this.copy false learnerGroup)}}
                       data-test-confirm-without-learners
                     >
                       {{t "general.copyWithoutLearners"}}
@@ -202,7 +202,7 @@
                     <button
                       type="button"
                       class="done text"
-                      onclick={{perform this.copy false learnerGroup}}
+                      {{on "click" (perform this.copy false learnerGroup)}}
                       data-test-confirm-without-learners
                     >
                       {{t "general.copy"}}
@@ -211,7 +211,7 @@
                   <button
                     type="button"
                     class="cancel text"
-                    onclick={{fn this.cancelCopy learnerGroup}}
+                    {{on "click" (fn this.cancelCopy learnerGroup)}}
                   >
                     {{t "general.cancel"}}
                   </button>

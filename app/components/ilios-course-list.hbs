@@ -148,7 +148,7 @@
                     <button
                       type="button"
                       class="done text"
-                      onclick={{fn this.cancelRemove course}}
+                      {{on "click" (fn this.cancelRemove course)}}
                     >
                       {{t "general.cancel"}}
                     </button>

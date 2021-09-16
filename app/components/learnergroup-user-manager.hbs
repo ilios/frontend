@@ -84,7 +84,7 @@
                           aria-labelledby="selected-username-{{index}}-{{templateId}}"
                           type="checkbox"
                           checked={{includes user.content this.selectedUsers}}
-                          onclick={{fn this.toggleUserSelection user.content}}
+                          {{on "click" (fn this.toggleUserSelection user.content)}}
                         >
                       {{/if}}
                     {{/if}}
