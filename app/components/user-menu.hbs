@@ -24,20 +24,20 @@
     <ClickOutside @onClickOutside={{fn (set this.isOpen) false}}>
       <ul class="menu">
         <li tabindex="-1" data-test-item>
-          <LinkTo @route="myprofile" @invokeAction={{set this.isOpen false}}>
+          <LinkTo @route="myprofile" {{on "click" (set this.isOpen false)}}>
             {{t "general.myProfile"}}
           </LinkTo>
         </li>
         <li tabindex="-1" data-test-item>
           <LinkTo
             @route="mymaterials"
-            @invokeAction={{set this.isOpen false}}
+            {{on "click" (set this.isOpen false)}}
           >
             {{t "general.myMaterials"}}
           </LinkTo>
         </li>
         <li tabindex="-1" data-test-item>
-          <LinkTo @route="logout" @invokeAction={{set this.isOpen false}}>
+          <LinkTo @route="logout" {{on "click" (set this.isOpen false)}}>
             {{t "general.logout"}}
           </LinkTo>
         </li>
