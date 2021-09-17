@@ -61,7 +61,7 @@
                     {{#if @canUpdate}}
                       <input
                         type="checkbox"
-                        checked={{includes user selectedUsers}}
+                        checked={{includes user this.selectedUsers}}
                         aria-labelledby="username-{{index}}-{{templateId}}"
                         {{on "click" (fn this.toggleUserSelection user)}}
                       >

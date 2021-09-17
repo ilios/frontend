@@ -13,8 +13,8 @@
             @sortedAscending={{this.sortedAscending}}
             @onClick={{fn this.setSortBy "title"}}
             @sortedBy={{or
-              (eq sortBy "title")
-              (eq sortBy "title:desc")
+              (eq this.sortBy "title")
+              (eq this.sortBy "title:desc")
             }}
           >
             {{t "general.learnerGroupTitle"}}
@@ -27,8 +27,8 @@
             @sortType="numeric"
             @onClick={{fn this.setSortBy "usersCount"}}
             @sortedBy={{or
-              (eq sortBy "usersCount")
-              (eq sortBy "usersCount:desc")
+              (eq this.sortBy "usersCount")
+              (eq this.sortBy "usersCount:desc")
             }}
           >
             {{t "general.members"}}
@@ -41,8 +41,8 @@
             @sortType="numeric"
             @onClick={{fn this.setSortBy "childrenCount"}}
             @sortedBy={{or
-              (eq sortBy "childrenCount")
-              (eq sortBy "childrenCount:desc")
+              (eq this.sortBy "childrenCount")
+              (eq this.sortBy "childrenCount:desc")
             }}
           >
             {{t "general.subgroups"}}
