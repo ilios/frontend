@@ -14,7 +14,7 @@ const definition = {
   title: fillable('[data-test-title]'),
   titleHasValidationError: isPresent('.validation-error-message', '[data-test-title]'),
   chooseYear: fillable('[data-test-year]'),
-  submitOnEnter: triggerable('keydown', '[data-test-title]', { eventProperties: { key: 'Enter' } }),
+  submitOnEnter: triggerable('keyup', '[data-test-title]', { eventProperties: { key: 'Enter' } }),
   save: clickable('[data-test-save]'),
   cancel: clickable('[data-test-cancel]'),
   years: collection('[data-test-year] option', {

@@ -30,7 +30,7 @@ export default class UserMenuComponent extends Component {
   }
 
   @action
-  keyDown(evt) {
+  keyUp(evt) {
     const button = evt.target.tagName.toLowerCase() === 'button' ? evt.target : null;
     let item;
     if (!button) {
