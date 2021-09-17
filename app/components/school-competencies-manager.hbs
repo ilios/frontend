@@ -7,12 +7,14 @@
           @canUpdate={{@canUpdate}}
         />
         {{#if (eq obj.competencies.length 0)}}
-          <FaIcon
-            @icon="trash"
-            class="clickable enabled"
-            @click={{fn @remove obj.domain}}
+          <button
+            type="button"
+            class="link-button"
+            {{on "click" (fn @remove obj.domain)}}
             data-test-remove-domain
-          />
+          >
+            <FaIcon @icon="trash" />
+          </button>
         {{else}}
           <FaIcon @icon="trash" class="disabled" />
         {{/if}}
@@ -26,12 +28,14 @@
             />
             <span data-test-objectives-count>({{competency.programYearObjectives.length}})</span>
             {{#if (and @canDelete (eq competency.programYearObjectives.length 0))}}
-              <FaIcon
-                @icon="trash"
-                class="clickable enabled"
-                @click={{fn @remove competency}}
+              <button
+                type="button"
+                class="link-button"
+                {{on "click" (fn @remove competency)}}
                 data-test-remove-competency
-              />
+              >
+                <FaIcon @icon="trash" />
+              </button>
             {{else}}
               <FaIcon @icon="trash" class="disabled" />
             {{/if}}

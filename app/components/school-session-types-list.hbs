@@ -68,26 +68,34 @@
             ></span>
           </td>
           <td>
-            <FaIcon
-              @icon="edit"
-              class="edit clickable enabled"
-              @click={{fn @manageSessionType sessionType.id}}
+            <button
+              type="button"
+              class="link-button"
               data-test-manage
-            />
+              {{on "click" (fn @manageSessionType sessionType.id)}}
+            >
+              <FaIcon @icon="edit" class="edit" />
+            </button>
             {{#if (eq sessionType.sessionCount 0)}}
               {{#if (includes sessionType.id this.deletedSessionTypes)}}
                 <LoadingSpinner />
               {{else if @canDelete}}
-                <FaIcon
-                  @icon="trash"
+                <button
+                  type="button"
+                  class="link-button"
+                  disabled={{this.deleteSessionType.isRunning}}
                   data-test-delete
-                  class={{if
-                    this.deleteSessionType.isRunning
-                    "inactive"
-                    "clickable remove enabled"
-                  }}
-                  @click={{perform this.deleteSessionType sessionType}}
-                />
+                  {{on "click" (perform this.deleteSessionType sessionType)}}
+                >
+                  <FaIcon
+                    @icon="trash"
+                    class={{if
+                      this.deleteSessionType.isRunning
+                      "inactive"
+                      "remove"
+                    }}
+                  />
+                </button>
               {{/if}}
             {{else}}
               <FaIcon @icon="trash" class="disabled" />

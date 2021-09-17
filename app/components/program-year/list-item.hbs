@@ -56,30 +56,41 @@
       {{else}}
         {{#if @programYear.locked}}
           {{#if this.canUnlock}}
-            <FaIcon
-              @icon="lock"
-              class="clickable enabled"
-              @click={{perform this.unlock}}
-            />
+            <button
+              type="button"
+              class="link-button"
+              {{on "click" (perform this.unlock)}}
+              data-test-unlock
+            >
+              <FaIcon @icon="lock" />
+            </button>
           {{else}}
             <FaIcon @icon="lock" />
           {{/if}}
         {{else if this.canLock}}
-          <FaIcon
-            @icon="unlock"
-            class="clickable enabled"
-            @click={{perform this.lock}}
-          />
+          <button
+            type="button"
+            class="link-button"
+            {{on "click" (perform this.lock)}}
+            data-test-lock
+          >
+            <FaIcon @icon="unlock" />
+          </button>
         {{else}}
           <FaIcon @icon="unlock" />
         {{/if}}
         {{#if this.canDelete}}
-          <FaIcon
-            @icon="trash"
-            class="clickable remove enabled"
-            @click={{set this.showRemoveConfirmation true}}
+          <button
+            type="button"
+            class="link-button"
+            {{on "click" (set this.showRemoveConfirmation true)}}
             data-test-remove
-          />
+          >
+            <FaIcon
+              @icon="trash"
+              class="remove"
+            />
+          </button>
         {{else}}
           <FaIcon @icon="trash" class="disabled" />
         {{/if}}

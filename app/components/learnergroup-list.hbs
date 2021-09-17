@@ -108,13 +108,17 @@
                 <LoadingSpinner />
               {{/if}}
               {{#if @canCreate}}
-                <FaIcon
-                  @icon="copy"
-                  class="clickable enabled"
-                  @title={{t "general.copy"}}
-                  @click={{fn this.startCopy learnerGroup}}
+                <button
+                  type="button"
+                  class="link-button"
+                  {{on "click" (fn this.startCopy learnerGroup)}}
                   data-test-copy={{true}}
-                />
+                >
+                  <FaIcon
+                    @icon="copy"
+                    @title={{t "general.copy"}}
+                  />
+                </button>
               {{else}}
                 <FaIcon @icon="copy" class="disabled" />
               {{/if}}

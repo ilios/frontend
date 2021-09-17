@@ -90,16 +90,22 @@
                     {{#if (includes user this.usersBeingMoved)}}
                       <LoadingSpinner />
                     {{else if (and @canUpdate (eq this.selectedUsers.length 0))}}
-                      <FaIcon
-                        @icon="plus"
-                        class="yes clickable"
-                        @title={{t
-                          "general.moveToGroup"
-                          groupTitle=@learnerGroupTitle
-                          count=1
-                        }}
-                        @click={{perform this.addSingleUser user}}
-                      />
+                      <button
+                        type="button"
+                        class="link-button"
+                        {{on "click" (perform this.addSingleUser user)}}
+                        data-test-add-user
+                      >
+                        <FaIcon
+                          @icon="plus"
+                          class="yes"
+                          @title={{t
+                            "general.moveToGroup"
+                            groupTitle=@learnerGroupTitle
+                            count=1
+                          }}
+                        />
+                      </button>
                     {{/if}}
                   {{/if}}
                 </td>
