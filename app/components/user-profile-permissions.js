@@ -56,7 +56,7 @@ export default class UserProfilePermissionsComponent extends Component {
     );
 
     this.schools = (yield this.store.findAll('school', { reload: true })).toArray();
-    this.academicYears = (yield this.store.findAll('academic-year', { reload: true })).toArray();
+    this.academicYears = (yield this.store.findAll('academic-year')).toArray();
     this.defaultSchool = yield this.args.user.school;
 
     this.selectedYearId = this.getBestSelectedYearId(
