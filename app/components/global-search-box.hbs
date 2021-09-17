@@ -1,53 +1,51 @@
 <div class="global-search-box" data-test-global-search-box>
-  {{#let (unique-id) as |templateId|}}
-    <input
-      aria-label={{t "general.searchTheCurriculum"}}
-      class="global-search-input"
-      data-test-input
-      type="search"
-      value={{this.computedQuery}}
-      {{did-insert (set this.searchInputElement)}}
-      {{on "input"
-        (queue
-          (pick "target.value" (set this.internalQuery))
-          (set this.autocompleteSelectedQuery null)
-          (perform this.autocomplete)
-        )
-      }}
-      {{on "keyup" this.keyboard}}
-    >
-    <button
-      aria-label={{t "general.search"}}
-      class="link-button search-icon"
-      type="button"
-      data-test-search-icon
-      {{on "click" this.focusAndSearch}}
-    >
-      <FaIcon @icon="search"/>
-    </button>
-    {{#if this.hasResults}}
-      <ClickOutside @onClickOutside={{set this.autocompleteResults null}}>
-        <ul class="autocomplete" data-test-autocomplete>
-          {{#each this.results as |result|}}
-            <li
-              class="autocomplete-row"
-              role="button"
-              {{on "click"
-                (pipe-action
-                  (set this.autocompleteSelectedQuery null)
-                  (set this.internalQuery result.text)
-                  this.search
-                )
-              }}
-            >
-              <FaIcon @icon="search" />
-              <span class="result-text">
-                {{result.text}}
-              </span>
-            </li>
-          {{/each}}
-        </ul>
-      </ClickOutside>
-    {{/if}}
-  {{/let}}
+  <input
+    aria-label={{t "general.searchTheCurriculum"}}
+    class="global-search-input"
+    data-test-input
+    type="search"
+    value={{this.computedQuery}}
+    {{did-insert (set this.searchInputElement)}}
+    {{on "input"
+      (queue
+        (pick "target.value" (set this.internalQuery))
+        (set this.autocompleteSelectedQuery null)
+        (perform this.autocomplete)
+      )
+    }}
+    {{on "keyup" this.keyboard}}
+  >
+  <button
+    aria-label={{t "general.search"}}
+    class="link-button search-icon"
+    type="button"
+    data-test-search-icon
+    {{on "click" this.focusAndSearch}}
+  >
+    <FaIcon @icon="search"/>
+  </button>
+  {{#if this.hasResults}}
+    <ClickOutside @onClickOutside={{set this.autocompleteResults null}}>
+      <ul class="autocomplete" data-test-autocomplete>
+        {{#each this.results as |result|}}
+          <li
+            class="autocomplete-row"
+            role="button"
+            {{on "click"
+              (pipe-action
+                (set this.autocompleteSelectedQuery null)
+                (set this.internalQuery result.text)
+                this.search
+              )
+            }}
+          >
+            <FaIcon @icon="search" />
+            <span class="result-text">
+              {{result.text}}
+            </span>
+          </li>
+        {{/each}}
+      </ul>
+    </ClickOutside>
+  {{/if}}
 </div>
