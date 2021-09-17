@@ -24,6 +24,11 @@ export default class AuthenticatedRoute extends Route {
     window.document.querySelector('html').setAttribute('lang', locale);
   }
 
+  async afterModel() {
+    //preload all the schools, we need these everywhere
+    await this.store.findAll('school');
+  }
+
   activate() {
     if ('serviceWorker' in navigator) {
       const { controller: currentController } = navigator.serviceWorker;
