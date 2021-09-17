@@ -22,13 +22,6 @@ export default class UserMenuComponent extends Component {
     }
   }
 
-  openMenuAndSelectTheFirstItem() {
-    this.isOpen = true;
-    schedule('afterRender', () => {
-      this.element.querySelector('.menu li:nth-of-type(1) a').focus();
-    });
-  }
-
   @action
   keyUp(evt) {
     const button = evt.target.tagName.toLowerCase() === 'button' ? evt.target : null;
@@ -39,24 +32,10 @@ export default class UserMenuComponent extends Component {
 
     switch (evt.key) {
       case 'ArrowDown':
-        if (evt.target.tagName.toLowerCase() === 'button') {
-          this.openMenuAndSelectTheFirstItem();
-        } else {
-          if (item.nextElementSibling) {
-            item.nextElementSibling.querySelector('a').focus();
-          } else {
-            schedule('afterRender', () => {
-              this.element.querySelector('.menu li:nth-of-type(1) a').focus();
-            });
-          }
-        }
+        this.handleArrowDown(evt, item);
         break;
       case 'ArrowUp':
-        if (item.previousElementSibling) {
-          item.previousElementSibling.querySelector('a').focus();
-        } else {
-          this.element.querySelector('.menu li:last-of-type a').focus();
-        }
+        this.handleArrowUp(item);
         break;
       case 'Escape':
       case 'Tab':
@@ -67,5 +46,34 @@ export default class UserMenuComponent extends Component {
     }
 
     return true;
+  }
+
+  openMenuAndSelectTheFirstItem() {
+    this.isOpen = true;
+    schedule('afterRender', () => {
+      this.element.querySelector('.menu li:nth-of-type(1) a').focus();
+    });
+  }
+
+  handleArrowDown(evt, item) {
+    if (evt.target.tagName.toLowerCase() === 'button') {
+      this.openMenuAndSelectTheFirstItem();
+    } else {
+      if (item.nextElementSibling) {
+        item.nextElementSibling.querySelector('a').focus();
+      } else {
+        schedule('afterRender', () => {
+          this.element.querySelector('.menu li:nth-of-type(1) a').focus();
+        });
+      }
+    }
+  }
+
+  handleArrowUp(item) {
+    if (item.previousElementSibling) {
+      item.previousElementSibling.querySelector('a').focus();
+    } else {
+      this.element.querySelector('.menu li:last-of-type a').focus();
+    }
   }
 }
