@@ -103,7 +103,7 @@
                 <LoadingSpinner />
               {{else}}
                 <PublicationStatus @item={{course}} @showText={{true}} @showIcon={{false}} />
-                {{#if course.locked }}
+                {{#if course.locked}}
                   {{#if (await (compute this.canUnlock course))}}
                     <button
                       type="button"

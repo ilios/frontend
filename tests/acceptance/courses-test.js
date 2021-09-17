@@ -602,10 +602,8 @@ module('Acceptance | Courses', function (hooks) {
     assert.equal(page.courses.courses.length, 2);
     assert.ok(page.courses.courses[0].isLocked, 'first course is locked');
     assert.ok(page.courses.courses[1].isUnlocked, 'second course is unlocked');
-    await page.courses.courses[0].unLock();
-    await page.courses.courses[1].lock();
-    assert.ok(page.courses.courses[0].isLocked, 'first course is still locked');
-    assert.ok(page.courses.courses[1].isUnlocked, 'second course is still unlocked');
+    assert.notOk(page.courses.courses[0].canLock);
+    assert.notOk(page.courses.courses[1].canUnlock);
   });
 
   test('title filter escapes regex', async function (assert) {

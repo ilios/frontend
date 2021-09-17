@@ -43,7 +43,7 @@ export default create({
       },
       campusId: text('td', { at: 2 }),
       email: text('td', { at: 3 }),
-      add: clickable('.yes.clickable'),
+      add: clickable('[data-test-add-user]'),
     }),
   },
 });

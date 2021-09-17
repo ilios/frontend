@@ -337,10 +337,11 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
 
   test('privileged users can lock and unlock program-year', async function (assert) {
     this.user.update({ administeredSchools: [this.school] });
-    assert.expect(6);
     const firstProgramYearRow = '.list tbody tr:nth-of-type(1)';
     const secondProgramYearRow = '.list tbody tr:nth-of-type(2)';
     const firstProgramYearLockedIcon = `${firstProgramYearRow} td:nth-of-type(7) svg:nth-of-type(1)`;
+    const firstProgramYearUnlockButton = `${firstProgramYearRow} td:nth-of-type(7) [data-test-unlock]`;
+    const secondProgramYearLockButton = `${secondProgramYearRow} td:nth-of-type(7) [data-test-lock]`;
     const secondProgramYearLockedIcon = `${secondProgramYearRow} td:nth-of-type(7) svg:nth-of-type(1)`;
     const program = this.server.create('program', {
       school: this.school,
@@ -363,15 +364,11 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
 
     await visit(url);
     assert.dom(firstProgramYearLockedIcon).hasClass('fa-lock', 'first program year is locked');
-    assert.dom(firstProgramYearLockedIcon).hasClass('clickable', 'first program year is clickable');
     assert
       .dom(secondProgramYearLockedIcon)
       .hasClass('fa-unlock', 'second program year is unlocked');
-    assert
-      .dom(secondProgramYearLockedIcon)
-      .hasClass('clickable', 'second program year is clickable');
-    await click(firstProgramYearLockedIcon);
-    await click(secondProgramYearLockedIcon);
+    await click(find(firstProgramYearUnlockButton));
+    await click(find(secondProgramYearLockButton));
     assert
       .dom(firstProgramYearLockedIcon)
       .hasClass('fa-unlock', 'first program year is now unlocked');

@@ -21,6 +21,8 @@ const definition = {
     isLocked: hasClass('fa-lock', 'svg', { scope: 'td:eq(6)', at: 0 }),
     isUnlocked: hasClass('fa-unlock', 'svg', { scope: 'td:eq(6)', at: 0 }),
     lock: clickable('[data-test-lock]', { scope: 'td:eq(6)' }),
+    canLock: isVisible('[data-test-lock]', { scope: 'td:eq(6)' }),
+    canUnlock: isVisible('[data-test-unlock]', { scope: 'td:eq(6)' }),
     unLock: clickable('[data-test-unlock]', { scope: 'td:eq(6)' }),
     remove: clickable('.remove', { scope: 'td:eq(6)' }),
     removeActionCount: count('.remove', { scope: 'td:eq(6)' }),
