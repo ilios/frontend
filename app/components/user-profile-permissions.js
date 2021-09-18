@@ -1,8 +1,8 @@
-import { inject as service } from '@ember/service';
 import Component from '@glimmer/component';
-import { filter, hash } from 'rsvp';
-import moment from 'moment';
 import { tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
+import moment from 'moment';
+import { filter, hash } from 'rsvp';
 import { restartableTask } from 'ember-concurrency';
 
 export default class UserProfilePermissionsComponent extends Component {
@@ -11,16 +11,17 @@ export default class UserProfilePermissionsComponent extends Component {
 
   @tracked selectedSchool;
   @tracked selectedYearId;
+  @tracked defaultSchool;
+  @tracked schools = [];
+  @tracked academicYears = [];
+  @tracked academicYearCrossesCalendarYearBoundaries = false;
   @tracked schoolCollapsed = true;
   @tracked programCollapsed = true;
   @tracked programYearCollapsed = true;
   @tracked courseCollapsed = true;
   @tracked sessionCollapsed = true;
-  @tracked schools = [];
-  @tracked academicYears = [];
   @tracked isDirectingSchool = false;
   @tracked isAdministeringSchool = false;
-  @tracked academicYearCrossesCalendarYearBoundaries = false;
   @tracked directedPrograms = [];
   @tracked directedProgramYears = [];
   @tracked directedCourses = [];
@@ -31,99 +32,84 @@ export default class UserProfilePermissionsComponent extends Component {
   @tracked instructedSessions = [];
   @tracked studentAdvisedSessions = [];
 
+  get courseCount() {
+    return (
+      this.directedCourses.length +
+      this.administeredCourses.length +
+      this.instructedCourses.length +
+      this.studentAdvisedCourses.length
+    );
+  }
+
+  get sessionCount() {
+    return (
+      this.administeredSessions.length +
+      this.instructedSessions.length +
+      this.studentAdvisedSessions.length
+    );
+  }
+
   @restartableTask
   *load() {
     this.academicYearCrossesCalendarYearBoundaries = yield this.iliosConfig.itemFromConfig(
       'academicYearCrossesCalendarYearBoundaries'
     );
 
-    const map = yield hash({
-      schools: this.store.findAll('school'),
-      academicYears: this.store.findAll('academic-year'),
-      defaultSchool: this.args.user.school,
-    });
+    this.schools = (yield this.store.findAll('school')).toArray();
+    this.academicYears = (yield this.store.findAll('academic-year')).toArray();
+    this.defaultSchool = yield this.args.user.school;
 
-    this.schools = map.schools;
-    this.academicYears = map.academicYears;
+    this.selectedYearId = this.getBestSelectedYearId(
+      this.args.selectedYearId,
+      this.academicYears,
+      this.academicYearCrossesCalendarYearBoundaries
+    );
 
-    let currentYear = Number(moment().format('YYYY'));
-    const currentMonth = Number(moment().format('M'));
-    if (this.academicYearCrossesCalendarYearBoundaries && currentMonth < 6) {
-      currentYear--;
+    this.selectedSchool = this.getBestSelectedSchool(
+      this.args.selectedSchoolId,
+      this.defaultSchool,
+      this.schools
+    );
+
+    if (this.selectedSchool) {
+      this.isDirectingSchool = this.args.user
+        .hasMany('directedSchools')
+        .ids()
+        .includes(this.selectedSchool.id);
+      this.isAdministeringSchool = this.args.user
+        .hasMany('administeredSchools')
+        .ids()
+        .includes(this.selectedSchool.id);
+      const map = yield hash({
+        directedPrograms: this.getDirectedPrograms(this.selectedSchool),
+        directedProgramYears: this.getDirectedProgramYears(this.selectedSchool),
+        directedCourses: this.getDirectedCourses(this.selectedSchool, this.selectedYearId),
+        administeredCourses: this.getAdministeredCourses(this.selectedSchool, this.selectedYearId),
+        instructedCourses: this.getInstructedCourses(this.selectedSchool, this.selectedYearId),
+        studentAdvisedCourses: this.getStudentAdvisedCourses(
+          this.selectedSchool,
+          this.selectedYearId
+        ),
+        administeredSessions: this.getAdministeredSessions(
+          this.selectedSchool,
+          this.selectedYearId
+        ),
+        instructedSessions: this.getInstructedSessions(this.selectedSchool, this.selectedYearId),
+        studentAdvisedSessions: this.getStudentAdvisedSessions(
+          this.selectedSchool,
+          this.selectedYearId
+        ),
+      });
+      this.directedPrograms = map.directedPrograms;
+      this.directedProgramYears = map.directedProgramYears;
+      this.directedCourses = map.directedCourses;
+      this.administeredCourses = map.administeredCourses;
+      this.instructedCourses = map.instructedCourses;
+      this.studentAdvisedCourses = map.studentAdvisedCourses;
+      this.administeredSessions = map.administeredSessions;
+      this.instructedSessions = map.instructedSessions;
+      this.studentAdvisedSessions = map.studentAdvisedSessions;
     }
-    let selectedYear = this.academicYears.find((year) => Number(year.id) === currentYear);
-    if (!selectedYear) {
-      selectedYear = this.academicYears.get('lastObject');
-    }
-    this.selectedYearId = selectedYear?.id;
-    if (map.defaultSchool) {
-      yield this.changeSchool.perform(map.defaultSchool.id);
-    } else if (this.schools.length) {
-      yield this.changeSchool.perform(this.schools.sortBy('title')[0].id);
-    }
-  }
-
-  @restartableTask
-  *changeSchool(schoolId) {
-    this.selectedSchool = this.schools.findBy('id', schoolId);
-    this.isDirectingSchool = this.args.user.hasMany('directedSchools').ids().includes(schoolId);
-    this.isAdministeringSchool = this.args.user
-      .hasMany('administeredSchools')
-      .ids()
-      .includes(schoolId);
-    const map = yield hash({
-      directedPrograms: this.getDirectedPrograms(this.selectedSchool),
-      directedProgramYears: this.getDirectedProgramYears(this.selectedSchool),
-      directedCourses: this.getDirectedCourses(this.selectedSchool, this.selectedYearId),
-      administeredCourses: this.getAdministeredCourses(this.selectedSchool, this.selectedYearId),
-      instructedCourses: this.getInstructedCourses(this.selectedSchool, this.selectedYearId),
-      studentAdvisedCourses: this.getStudentAdvisedCourses(
-        this.selectedSchool,
-        this.selectedYearId
-      ),
-      administeredSessions: this.getAdministeredSessions(this.selectedSchool, this.selectedYearId),
-      instructedSessions: this.getInstructedSessions(this.selectedSchool, this.selectedYearId),
-      studentAdvisedSessions: this.getStudentAdvisedSessions(
-        this.selectedSchool,
-        this.selectedYearId
-      ),
-    });
-    this.directedPrograms = map.directedPrograms;
-    this.directedProgramYears = map.directedProgramYears;
-    this.directedCourses = map.directedCourses;
-    this.administeredCourses = map.administeredCourses;
-    this.instructedCourses = map.instructedCourses;
-    this.studentAdvisedCourses = map.studentAdvisedCourses;
-    this.administeredSessions = map.administeredSessions;
-    this.instructedSessions = map.instructedSessions;
-    this.studentAdvisedSessions = map.studentAdvisedSessions;
-  }
-
-  @restartableTask
-  *changeYear(yearId) {
-    this.selectedYearId = yearId;
-    const map = yield hash({
-      directedCourses: this.getDirectedCourses(this.selectedSchool, this.selectedYearId),
-      administeredCourses: this.getAdministeredCourses(this.selectedSchool, this.selectedYearId),
-      instructedCourses: this.getInstructedCourses(this.selectedSchool, this.selectedYearId),
-      studentAdvisedCourses: this.getStudentAdvisedCourses(
-        this.selectedSchool,
-        this.selectedYearId
-      ),
-      administeredSessions: this.getAdministeredSessions(this.selectedSchool, this.selectedYearId),
-      instructedSessions: this.getInstructedSessions(this.selectedSchool, this.selectedYearId),
-      studentAdvisedSessions: this.getStudentAdvisedSessions(
-        this.selectedSchool,
-        this.selectedYearId
-      ),
-    });
-    this.directedCourses = map.directedCourses;
-    this.administeredCourses = map.administeredCourses;
-    this.instructedCourses = map.instructedCourses;
-    this.studentAdvisedCourses = map.studentAdvisedCourses;
-    this.administeredSessions = map.administeredSessions;
-    this.instructedSessions = map.instructedSessions;
-    this.studentAdvisedSessions = map.studentAdvisedSessions;
   }
 
   get selectedYear() {
@@ -215,20 +201,32 @@ export default class UserProfilePermissionsComponent extends Component {
     });
   }
 
-  get courseCount() {
-    return (
-      this.directedCourses.length +
-      this.administeredCourses.length +
-      this.instructedCourses.length +
-      this.studentAdvisedCourses.length
-    );
+  getBestSelectedYearId(yearId, academicYears, academicYearCrossesCalendarYearBoundaries) {
+    let currentYear;
+    if (yearId) {
+      currentYear = Number(yearId);
+    } else {
+      currentYear = Number(moment().format('YYYY'));
+    }
+    const currentMonth = Number(moment().format('M'));
+    if (academicYearCrossesCalendarYearBoundaries && currentMonth < 6) {
+      currentYear--;
+    }
+    let selectedYear = academicYears.find((year) => Number(year.id) === currentYear);
+    if (!selectedYear) {
+      selectedYear = academicYears.get('lastObject');
+    }
+    return selectedYear?.id;
   }
 
-  get sessionCount() {
-    return (
-      this.administeredSessions.length +
-      this.instructedSessions.length +
-      this.studentAdvisedSessions.length
-    );
+  getBestSelectedSchool(schoolId, defaultSchool, schools) {
+    if (schoolId) {
+      return schools.findBy('id', schoolId);
+    } else if (defaultSchool) {
+      return schools.findBy('id', defaultSchool.id);
+    } else if (schools.length) {
+      return schools.sortBy('title')[0];
+    }
+    return null;
   }
 }

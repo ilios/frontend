@@ -1,6 +1,7 @@
 <div
   class="user-profile-permissions large-component"
   {{did-insert (perform this.load)}}
+  {{did-update (perform this.load) @selectedSchoolId @selectedYearId}}
   data-test-user-profile-permissions
   ...attributes
 >
@@ -10,51 +11,52 @@
       <LoadingSpinner />
     {{/if}}
   </h3>
-  <span>
-    <FaIcon @icon="university" @fixedWidth={{true}} />
-    <select
-      aria-label={{t "general.schools"}}
-      {{on "change" (pick "target.value" (perform this.changeSchool))}}
-      data-test-select-school
-    >
-      {{#each (sort-by "title" this.schools) as |school|}}
-        <option
-          value={{school.id}}
-          selected={{is-equal school.id this.selectedSchool.id}}
-        >
-          {{school.title}}
-        </option>
-      {{/each}}
-    </select>
-  </span>
-  <span>
-    <FaIcon @icon="calendar" @fixedWidth={{true}} />
-    <select
-      aria-label={{t "general.academicYears"}}
-      {{on "change" (pick "target.value" (perform this.changeYear))}}
-      data-test-select-year
-    >
-      {{#each (sort-by "title" this.academicYears) as |year|}}
-        <option value={{year.id}} selected={{is-equal year this.selectedYear}}>
-          {{year.title}}
-        </option>
-      {{/each}}
-    </select>
-  </span>
-  {{#if this.load.lastSuccessful}}
+  {{#unless this.load.isRunning}}
+    <span>
+      <FaIcon @icon="university" @fixedWidth={{true}} />
+      <select
+        aria-label={{t "general.schools"}}
+        {{on "change" (pick "target.value" @setSchool)}}
+        data-test-select-school
+      >
+        {{#each (sort-by "title" this.schools) as |school|}}
+          <option
+            value={{school.id}}
+            selected={{is-equal school.id this.selectedSchool.id}}
+          >
+            {{school.title}}
+          </option>
+        {{/each}}
+      </select>
+    </span>
+    <span>
+      <FaIcon @icon="calendar" @fixedWidth={{true}} />
+      <select
+        aria-label={{t "general.academicYears"}}
+        {{on "change" (pick "target.value" @setYear)}}
+        data-test-select-year
+      >
+        {{#each (sort-by "title" this.academicYears) as |year|}}
+          <option value={{year.id}} selected={{is-equal year.id this.selectedYearId}}>
+            {{year.title}}
+          </option>
+        {{/each}}
+      </select>
+    </span>
+
     <p data-test-school-permissions>
-      <h5 data-test-title>
-        {{t "general.school"}}
-        ({{this.selectedSchool.title}})
-      </h5>
-      <span class="hide-on-collapse" data-test-director>
+    <h5 data-test-title>
+      {{t "general.school"}}
+      ({{this.selectedSchool.title}})
+    </h5>
+    <span class="hide-on-collapse" data-test-director>
         <strong>
           {{t "general.director"}}:
         </strong>
         <YesNo @value={{this.isDirectingSchool}} />
         <br>
       </span>
-      <span class="hide-on-collapse" data-test-administrator>
+    <span class="hide-on-collapse" data-test-administrator>
         <strong>
           {{t "general.administrator"}}:
         </strong>
@@ -63,220 +65,221 @@
       </span>
     </p>
     <p class={{if this.programCollapsed "collapsed" "expanded"}} data-test-program-permissions>
-      <h5 {{on "click" (toggle "programCollapsed" this)}} role="button" data-test-title>
-        {{t "general.programs"}}
-        ({{get this.directedPrograms "length"}})
-      </h5>
-      <h6>
-        {{t "general.director"}}
-      </h6>
-      <ul data-test-directors>
-        {{#each (sort-by "title" this.directedPrograms) as |program|}}
-          <li data-test-program>
-            {{program.title}}
-          </li>
-        {{else}}
-          <li data-test-none>
-            {{t "general.none"}}
-          </li>
-        {{/each}}
-      </ul>
+    <h5 {{on "click" (toggle "programCollapsed" this)}} role="button" data-test-title>
+      {{t "general.programs"}}
+      ({{get this.directedPrograms "length"}})
+    </h5>
+    <h6>
+      {{t "general.director"}}
+    </h6>
+    <ul data-test-directors>
+      {{#each (sort-by "title" this.directedPrograms) as |program|}}
+        <li data-test-program>
+          {{program.title}}
+        </li>
+      {{else}}
+        <li data-test-none>
+          {{t "general.none"}}
+        </li>
+      {{/each}}
+    </ul>
     </p>
     <p class={{if this.programYearCollapsed "collapsed" "expanded"}} data-test-program-year-permissions>
-      <h5 {{on "click" (toggle "programYearCollapsed" this)}} role="button" data-test-title>
-        {{t "general.programYears"}}
-        ({{this.directedProgramYears.length}})
-      </h5>
-      <h6>
-        {{t "general.director"}}
-      </h6>
-      <ul data-test-directors>
-        {{#each
-          (sort-by
-            "program.title" "title" this.directedProgramYears
-          ) as |programYear|
-        }}
-          <li data-test-program>
-            {{programYear.program.title}}
-            <strong>
-              {{programYear.cohort.title}}
-            </strong>
-          </li>
-        {{else}}
-          <li data-test-none>
-            {{t "general.none"}}
-          </li>
-        {{/each}}
-      </ul>
+    <h5 {{on "click" (toggle "programYearCollapsed" this)}} role="button" data-test-title>
+      {{t "general.programYears"}}
+      ({{this.directedProgramYears.length}})
+    </h5>
+    <h6>
+      {{t "general.director"}}
+    </h6>
+    <ul data-test-directors>
+      {{#each
+        (sort-by
+          "program.title" "title" this.directedProgramYears
+        ) as |programYear|
+      }}
+        <li data-test-program>
+          {{programYear.program.title}}
+          <strong>
+            {{programYear.cohort.title}}
+          </strong>
+        </li>
+      {{else}}
+        <li data-test-none>
+          {{t "general.none"}}
+        </li>
+      {{/each}}
+    </ul>
     </p>
     <p class={{if this.courseCollapsed "collapsed" "expanded"}} data-test-course-permissions>
-      <h5 {{on "click" (toggle "courseCollapsed" this)}} role="button" data-test-title>
-        {{t "general.courses"}}
-        ({{this.courseCount}})
-      </h5>
-      <h6>
-        {{t "general.director"}}
-      </h6>
-      <ul data-test-directors>
-        {{#each (sort-by "title" this.directedCourses) as |course|}}
-          <li data-test-course>
-            {{#if this.academicYearCrossesCalendarYearBoundaries}}
-              {{course.year}} - {{add course.year 1}}
-            {{else}}
-              {{course.year}}
-            {{/if}}            <LinkTo @route="course" @model={{course}}>
-              {{course.title}}
-            </LinkTo>
-          </li>
-        {{else}}
-          <li data-test-none>
-            {{t "general.none"}}
-          </li>
-        {{/each}}
-      </ul>
-      <h6>
-        {{t "general.administrator"}}
-      </h6>
-      <ul data-test-administrators>
-        {{#each (sort-by "title" this.administeredCourses) as |course|}}
-          <li data-test-course>
-            {{#if this.academicYearCrossesCalendarYearBoundaries}}
-              {{course.year}} - {{add course.year 1}}
-            {{else}}
-              {{course.year}}
-            {{/if}}
-            <LinkTo @route="course" @model={{course}}>
-              {{course.title}}
-            </LinkTo>
-          </li>
-        {{else}}
-          <li data-test-none>
-            {{t "general.none"}}
-          </li>
-        {{/each}}
-      </ul>
-      <h6>
-        {{t "general.instructor"}}
-      </h6>
-      <ul data-test-instructors>
-        {{#each (sort-by "title" this.instructedCourses) as |course|}}
-          <li data-test-course>
-            {{#if this.academicYearCrossesCalendarYearBoundaries}}
-              {{course.year}} - {{add course.year 1}}
-            {{else}}
-              {{course.year}}
-            {{/if}}
-            <LinkTo @route="course" @model={{course}}>
-              {{course.title}}
-            </LinkTo>
-          </li>
-        {{else}}
-          <li data-test-none>
-            {{t "general.none"}}
-          </li>
-        {{/each}}
-      </ul>
-      <h6>
-        {{t "general.studentAdvisors"}}
-      </h6>
-      <ul data-test-student-advisors>
-        {{#each this.studentAdvisedCourses as |course|}}
-          <li data-test-course>
-            {{#if this.academicYearCrossesCalendarYearBoundaries}}
-              {{course.year}} - {{add course.year 1}}
-            {{else}}
-              {{course.year}}
-            {{/if}}
-            <LinkTo @route="course" @model={{course}}>
-              {{course.title}}
-            </LinkTo>
-          </li>
-        {{else}}
-          <li data-test-none>
-            {{t "general.none"}}
-          </li>
-        {{/each}}
-      </ul>
+    <h5 {{on "click" (toggle "courseCollapsed" this)}} role="button" data-test-title>
+      {{t "general.courses"}}
+      ({{this.courseCount}})
+    </h5>
+    <h6>
+      {{t "general.director"}}
+    </h6>
+    <ul data-test-directors>
+      {{#each (sort-by "title" this.directedCourses) as |course|}}
+        <li data-test-course>
+          {{#if this.academicYearCrossesCalendarYearBoundaries}}
+            {{course.year}} - {{add course.year 1}}
+          {{else}}
+            {{course.year}}
+          {{/if}}            <LinkTo @route="course" @model={{course}}>
+          {{course.title}}
+        </LinkTo>
+        </li>
+      {{else}}
+        <li data-test-none>
+          {{t "general.none"}}
+        </li>
+      {{/each}}
+    </ul>
+    <h6>
+      {{t "general.administrator"}}
+    </h6>
+    <ul data-test-administrators>
+      {{#each (sort-by "title" this.administeredCourses) as |course|}}
+        <li data-test-course>
+          {{#if this.academicYearCrossesCalendarYearBoundaries}}
+            {{course.year}} - {{add course.year 1}}
+          {{else}}
+            {{course.year}}
+          {{/if}}
+          <LinkTo @route="course" @model={{course}}>
+            {{course.title}}
+          </LinkTo>
+        </li>
+      {{else}}
+        <li data-test-none>
+          {{t "general.none"}}
+        </li>
+      {{/each}}
+    </ul>
+    <h6>
+      {{t "general.instructor"}}
+    </h6>
+    <ul data-test-instructors>
+      {{#each (sort-by "title" this.instructedCourses) as |course|}}
+        <li data-test-course>
+          {{#if this.academicYearCrossesCalendarYearBoundaries}}
+            {{course.year}} - {{add course.year 1}}
+          {{else}}
+            {{course.year}}
+          {{/if}}
+          <LinkTo @route="course" @model={{course}}>
+            {{course.title}}
+          </LinkTo>
+        </li>
+      {{else}}
+        <li data-test-none>
+          {{t "general.none"}}
+        </li>
+      {{/each}}
+    </ul>
+    <h6>
+      {{t "general.studentAdvisors"}}
+    </h6>
+    <ul data-test-student-advisors>
+      {{#each this.studentAdvisedCourses as |course|}}
+        <li data-test-course>
+          {{#if this.academicYearCrossesCalendarYearBoundaries}}
+            {{course.year}} - {{add course.year 1}}
+          {{else}}
+            {{course.year}}
+          {{/if}}
+          <LinkTo @route="course" @model={{course}}>
+            {{course.title}}
+          </LinkTo>
+        </li>
+      {{else}}
+        <li data-test-none>
+          {{t "general.none"}}
+        </li>
+      {{/each}}
+    </ul>
     </p>
     <p class={{if this.sessionCollapsed "collapsed" "expanded"}} data-test-session-permissions>
-      <h5 {{on "click" (toggle "sessionCollapsed" this)}} role="button" data-test-title>
-        {{t "general.sessions"}}
-        ({{this.sessionCount}})
-      </h5>
-      <h6>
-        {{t "general.administrator"}}
-      </h6>
-      <ul data-test-administrators="">
-        {{#each this.administeredSessions as |session|}}
-          {{! template-lint-disable no-bare-strings }}
-          <li data-test-course>
-            {{#if this.academicYearCrossesCalendarYearBoundaries}}
-              {{session.course.year}} - {{add (await session.course.year) 1}}
-            {{else}}
-              {{session.course.year}}
-            {{/if}}
-            {{session.course.title}}
-            &raquo;
-            <LinkTo @route="session" @models={{array session.course session}}>
-              {{session.title}}
-            </LinkTo>
-          </li>
-        {{else}}
-          <li data-test-none>
-            {{t "general.none"}}
-          </li>
-        {{/each}}
-      </ul>
-      <h6>
-        {{t "general.instructor"}}
-      </h6>
-      <ul data-test-instructors>
-        {{#each
-          (sort-by
-            "course.year:desc" "course.title" "title" this.instructedSessions
-          ) as |session|
-        }}
-          <li data-test-course>
-            {{#if this.academicYearCrossesCalendarYearBoundaries}}
-              {{session.course.year}} - {{add (await session.course.year) 1}}
-            {{else}}
-              {{session.course.year}}
-            {{/if}}
-            {{session.course.title}}
-            &raquo;
-            <LinkTo @route="session" @models={{array session.course session}}>
-              {{session.title}}
-            </LinkTo>
-          </li>
-        {{else}}
-          <li data-test-none>
-            {{t "general.none"}}
-          </li>
-        {{/each}}
-      </ul>
-      <h6>
-        {{t "general.studentAdvisors"}}
-      </h6>
-      <ul data-test-student-advisors>
-        {{#each this.studentAdvisedSessions as |session|}}
-          <li data-test-course>
-            {{#if this.academicYearCrossesCalendarYearBoundaries}}
-              {{session.course.year}} - {{add (await session.course.year) 1}}
-            {{else}}
-              {{session.course.year}}
-            {{/if}}
-            {{session.course.title}}
-            &raquo;
-            <LinkTo @route="session" @models={{array session.course session}}>
-              {{session.title}}
-            </LinkTo>
-          </li>
-        {{else}}
-          <li data-test-none>
-            {{t "general.none"}}
-          </li>
-        {{/each}}
-      </ul>
+    <h5 {{on "click" (toggle "sessionCollapsed" this)}} role="button" data-test-title>
+      {{t "general.sessions"}}
+      ({{this.sessionCount}})
+    </h5>
+    <h6>
+      {{t "general.administrator"}}
+    </h6>
+    <ul data-test-administrators="">
+      {{#each this.administeredSessions as |session|}}
+      {{! template-lint-disable no-bare-strings }}
+        <li data-test-course>
+          {{#if this.academicYearCrossesCalendarYearBoundaries}}
+            {{session.course.year}} - {{add (await session.course.year) 1}}
+          {{else}}
+            {{session.course.year}}
+          {{/if}}
+          {{session.course.title}}
+          &raquo;
+          <LinkTo @route="session" @models={{array session.course session}}>
+            {{session.title}}
+          </LinkTo>
+        </li>
+      {{else}}
+        <li data-test-none>
+          {{t "general.none"}}
+        </li>
+      {{/each}}
+    </ul>
+    <h6>
+      {{t "general.instructor"}}
+    </h6>
+    <ul data-test-instructors>
+      {{#each
+        (sort-by
+          "course.year:desc" "course.title" "title" this.instructedSessions
+        ) as |session|
+      }}
+        <li data-test-course>
+          {{#if this.academicYearCrossesCalendarYearBoundaries}}
+            {{session.course.year}} - {{add (await session.course.year) 1}}
+          {{else}}
+            {{session.course.year}}
+          {{/if}}
+          {{session.course.title}}
+          &raquo;
+          <LinkTo @route="session" @models={{array session.course session}}>
+            {{session.title}}
+          </LinkTo>
+        </li>
+      {{else}}
+        <li data-test-none>
+          {{t "general.none"}}
+        </li>
+      {{/each}}
+    </ul>
+    <h6>
+      {{t "general.studentAdvisors"}}
+    </h6>
+    <ul data-test-student-advisors>
+      {{#each this.studentAdvisedSessions as |session|}}
+        <li data-test-course>
+          {{#if this.academicYearCrossesCalendarYearBoundaries}}
+            {{session.course.year}} - {{add (await session.course.year) 1}}
+          {{else}}
+            {{session.course.year}}
+          {{/if}}
+          {{session.course.title}}
+          &raquo;
+          <LinkTo @route="session" @models={{array session.course session}}>
+            {{session.title}}
+          </LinkTo>
+        </li>
+      {{else}}
+        <li data-test-none>
+          {{t "general.none"}}
+        </li>
+      {{/each}}
+    </ul>
     </p>
-  {{/if}}
+
+  {{/unless}}
 </div>

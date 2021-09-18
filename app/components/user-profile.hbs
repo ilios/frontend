@@ -44,7 +44,13 @@
       @isManaging={{@isManagingIcs}}
       @setIsManaging={{@setIsManagingIcs}}
     />
-    <UserProfilePermissions @user={{@user}} />
+    <UserProfilePermissions
+      @user={{@user}}
+      @selectedSchoolId={{@permissionsSchool}}
+      @selectedYearId={{@permissionsYear}}
+      @setSchool={{@setPermissionsSchool}}
+      @setYear={{@setPermissionsYear}}
+    />
     <UserProfileCalendar @user={{@user}} />
     <UserProfileLearnergroups @user={{@user}} />
   </div>
