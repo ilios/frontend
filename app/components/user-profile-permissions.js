@@ -55,7 +55,7 @@ export default class UserProfilePermissionsComponent extends Component {
       'academicYearCrossesCalendarYearBoundaries'
     );
 
-    this.schools = (yield this.store.findAll('school', { reload: true })).toArray();
+    this.schools = (yield this.store.findAll('school')).toArray();
     this.academicYears = (yield this.store.findAll('academic-year')).toArray();
     this.defaultSchool = yield this.args.user.school;
 
