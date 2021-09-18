@@ -1,6 +1,4 @@
-{{! template-lint-disable no-inline-styles style-concatenation}}
 {{#let (unique-id) as |templateId|}}
-
   <div
     class="school-session-type-form"
     data-test-school-session-type-form
@@ -81,6 +79,7 @@
             {{/each}}
           {{else}}
             <span class="value">
+              {{! template-lint-disable no-inline-styles style-concatenation no-triple-curlies}}
               <span
                 class="box"
                 style={{{concat "background-color: " this.calendarColor}}}

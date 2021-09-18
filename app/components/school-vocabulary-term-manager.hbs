@@ -113,7 +113,7 @@
       <div class="terms" data-test-sub-terms>
         {{#if this.newTerm}}
           <div class="saved-result">
-            <span class="clickable link" role="button" {{ on "click" (fn @manageTerm newTerm.id)}}>
+            <span class="clickable link" role="button" {{ on "click" (fn @manageTerm this.newTerm.id)}}>
               <FaIcon @icon="external-link-square-alt" />
               {{this.newTerm.title}}
             </span>

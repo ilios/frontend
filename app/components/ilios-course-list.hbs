@@ -103,22 +103,28 @@
                 <LoadingSpinner />
               {{else}}
                 <PublicationStatus @item={{course}} @showText={{true}} @showIcon={{false}} />
-                {{#if course.locked }}
+                {{#if course.locked}}
                   {{#if (await (compute this.canUnlock course))}}
-                    <FaIcon
-                      @icon="lock"
-                      class="clickable enabled"
-                      @click={{perform this.unlockCourse course}}
-                    />
+                    <button
+                      type="button"
+                      class="link-button"
+                      {{on "click" (perform this.unlockCourse course)}}
+                      data-test-unlock
+                    >
+                      <FaIcon @icon="lock" />
+                    </button>
                   {{else}}
                     <FaIcon @icon="lock" class="disabled" />
                   {{/if}}
                 {{else if (await (compute this.canLock course))}}
-                  <FaIcon
-                    @icon="unlock"
-                    class="clickable enabled"
-                    @click={{perform this.lockCourse course}}
-                  />
+                  <button
+                    type="button"
+                    class="link-button"
+                    {{on "click" (perform this.lockCourse course)}}
+                    data-test-lock
+                  >
+                    <FaIcon @icon="unlock" />
+                  </button>
                 {{else}}
                   <FaIcon @icon="unlock" class="disabled" />
                 {{/if}}
@@ -148,7 +154,7 @@
                     <button
                       type="button"
                       class="done text"
-                      onclick={{fn this.cancelRemove course}}
+                      {{on "click" (fn this.cancelRemove course)}}
                     >
                       {{t "general.cancel"}}
                     </button>

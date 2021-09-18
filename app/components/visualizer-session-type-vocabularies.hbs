@@ -11,8 +11,8 @@
         @isIcon={{@isIcon}}
         @data={{this.vocabulariesWithLinkedTerms}}
         @onClick={{this.donutClick}}
-        @hover={{perform donutHover}}
-        @leave={{perform donutHover}} as |chart|
+        @hover={{perform this.donutHover}}
+        @leave={{perform this.donutHover}} as |chart|
       >
         {{#if this.tooltipContent}}
           <chart.tooltip @title={{this.tooltipTitle}}>

@@ -84,7 +84,7 @@
                           aria-labelledby="selected-username-{{index}}-{{templateId}}"
                           type="checkbox"
                           checked={{includes user.content this.selectedUsers}}
-                          onclick={{fn this.toggleUserSelection user.content}}
+                          {{on "click" (fn this.toggleUserSelection user.content)}}
                         >
                       {{/if}}
                     {{/if}}
@@ -121,16 +121,22 @@
                         <LoadingSpinner />
                       {{else if user.enabled}}
                         {{#if (eq this.selectedUsers.length 0)}}
-                          <FaIcon
-                            @icon="minus"
-                            class="no clickable"
-                            @title={{t
-                              "general.removeLearnerToCohort"
-                              cohort=@cohortTitle
-                              count=1
-                            }}
-                            @click={{perform this.removeSingleUser user.content}}
-                          />
+                          <button
+                            type="button"
+                            class="link-button"
+                            {{on "click" (perform this.removeSingleUser user.content)}}
+                            data-test-remove-user
+                          >
+                            <FaIcon
+                              @icon="minus"
+                              class="no"
+                              @title={{t
+                                "general.removeLearnerToCohort"
+                                cohort=@cohortTitle
+                                count=1
+                              }}
+                            />
+                          </button>
                         {{/if}}
                       {{/if}}
                     </td>
@@ -192,16 +198,22 @@
                           <LoadingSpinner />
                         {{else if user.enabled}}
                           {{#if (eq this.selectedUsers.length 0)}}
-                            <FaIcon
-                              @icon="plus"
-                              class="yes clickable"
-                              @title={{t
-                                "general.moveToGroup"
-                                groupTitle=@learnerGroupTitle
-                                count=1
-                              }}
-                              @click={{perform this.addSingleUser user.content}}
-                            />
+                            <button
+                              type="button"
+                              class="link-button"
+                              {{on "click" (perform this.addSingleUser user.content)}}
+                              data-test-add-user
+                            >
+                              <FaIcon
+                                @icon="plus"
+                                class="yes"
+                                @title={{t
+                                  "general.moveToGroup"
+                                  groupTitle=@learnerGroupTitle
+                                  count=1
+                                }}
+                              />
+                            </button>
                           {{/if}}
                         {{/if}}
                       </td>

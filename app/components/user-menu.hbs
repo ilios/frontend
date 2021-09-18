@@ -3,7 +3,7 @@
   aria-labelledby="user-menu-title"
   {{did-insert (set this.element)}}
   {{! template-lint-disable no-invalid-interactive }}
-  {{on "keydown" this.keyDown}}
+  {{on "keyup" this.keyUp}}
   data-test-user-menu
 >
   <button

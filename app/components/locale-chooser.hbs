@@ -12,11 +12,11 @@
     data-level="toggle"
     data-test-toggle
     {{on "click" (toggle "isOpen" this)}}
-    {{on "keydown" this.toggleMenu}}
+    {{on "keyup" this.toggleMenu}}
   >
     <FaIcon @icon="globe" />
     <span id="{{this.uniqueId}}-locale-chooser-title">
-      {{t (concat "general.language." locale.id)}}
+      {{t (concat "general.language." this.locale.id)}}
     </span>
   </button>
   {{#if this.isOpen}}
@@ -31,11 +31,11 @@
           role="menuitemradio"
           lang={{loc.id}}
           tabindex="-1"
-          aria-checked={{if (eq locale.id loc.id) "true" "false"}}
+          aria-checked={{if (eq this.locale.id loc.id) "true" "false"}}
           data-level="item"
           data-test-item
           {{on "click" (fn this.changeLocale loc.id)}}
-          {{on "keydown" this.moveFocus}}
+          {{on "keyup" this.moveFocus}}
           {{on "mouseenter" this.clearFocus}}
         >
           {{loc.text}}
