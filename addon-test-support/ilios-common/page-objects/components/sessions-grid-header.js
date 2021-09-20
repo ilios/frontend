@@ -7,8 +7,8 @@ const definition = {
     toggle: {
       scope: 'button',
     },
+    allAreExpanded: hasClass('fa-caret-down', 'button svg'),
   },
-  allAreExpanded: hasClass('caret-down', '[data-test-expand-collapse-all] svg'),
   title: {
     scope: '[data-test-title]',
   },
