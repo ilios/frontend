@@ -6,6 +6,7 @@ import { inject as service } from '@ember/service';
 export default class SessionService extends ESASessionService {
   @service fetch;
   @service currentUser;
+  @service store;
 
   async handleAuthentication() {
     super.handleAuthentication(...arguments);
@@ -16,6 +17,9 @@ export default class SessionService extends ESASessionService {
       }
     }
     const user = await this.currentUser.getModel();
+    //preload all the schools, we need these everywhere
+    //this is also done for authenticated users in the Application Route
+    await this.store.findAll('school');
     Sentry.setUser({ id: user.id });
   }
 
