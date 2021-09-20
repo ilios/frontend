@@ -76,7 +76,6 @@
     "ember-cli-terser": "^4.0.2",
     "ember-cp-validations": "^4.0.0-beta.10",
     "ember-export-application-global": "^2.0.1",
-    "ember-link-action": "^2.0.4",
     "ember-load": "0.0.17",
     "ember-load-initializers": "^2.1.2",
     "ember-maybe-import-regenerator": "^0.1.6",

@@ -24,22 +24,23 @@
     <ClickOutside @onClickOutside={{fn (set this.isOpen) false}}>
       <ul class="menu">
         <li tabindex="-1" data-test-item>
-          <LinkTo @route="myprofile" @invokeAction={{set this.isOpen false}}>
+          <LinkToWithAction @route="myprofile" @action={{set this.isOpen false}} @queryParams={{hash invalidatetokens=null newtoken=null}}>
             {{t "general.myProfile"}}
-          </LinkTo>
+          </LinkToWithAction>
         </li>
         <li tabindex="-1" data-test-item>
-          <LinkTo
+          <LinkToWithAction
             @route="mymaterials"
-            @invokeAction={{set this.isOpen false}}
+            @action={{set this.isOpen false}}
+            @queryParams={{hash course=null filter=null sortBy=null firstOfferingDate=null}}
           >
             {{t "general.myMaterials"}}
-          </LinkTo>
+          </LinkToWithAction>
         </li>
         <li tabindex="-1" data-test-item>
-          <LinkTo @route="logout" @invokeAction={{set this.isOpen false}}>
+          <LinkToWithAction @route="logout" @action={{set this.isOpen false}}>
             {{t "general.logout"}}
-          </LinkTo>
+          </LinkToWithAction>
         </li>
       </ul>
     </ClickOutside>
