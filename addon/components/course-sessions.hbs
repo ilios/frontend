@@ -4,8 +4,8 @@
   {{did-insert (perform this.load) @course}}
   {{did-update (perform this.load) @course this.sessionsCount}}
 >
-  <div class="course-sessions-header">
-    <div class="title">
+  <div class="course-sessions-header" data-test-course-sessions-header>
+    <div class="title" data-test-title>
       {{t "general.sessions"}} ({{this.sessionsCount}})
     </div>
     <div class="actions" data-test-actions>
@@ -16,7 +16,7 @@
         />
       {{/if}}
       {{#if (and @canUpdateCourse (gt this.sessionsCount 0))}}
-        <LinkTo @route="course.publishall" @model={{@course}}>
+        <LinkTo @route="course.publishall" @model={{@course}} data-test-publish-all>
           <button type="button">
             {{t "general.publishAllSessions" sessionCount=this.sessionsCount}}
           </button>
@@ -56,7 +56,7 @@
   </div>
   <section>
     <SessionsGridHeader
-      @showExpandAll={{this.sessionObjects}}
+      @showExpandAll={{this.showExpandAll}}
       @setSortBy={{@setSortBy}}
       @sortBy={{@sortBy}}
       @allSessionsExpanded={{and

@@ -1,21 +1,21 @@
 <div class="sessions-grid-header" data-test-sessions-grid-header>
-  <span
-    data-test-expand-all
-    class="expand-collapse-control"
-    role="button"
-    data-test-expand-collapse-all
-    {{on "click" (perform this.expandAll)}}
-  >
-    {{#if @showExpandAll}}
-      {{#if this.isExpanding}}
-        <LoadingSpinner />
-      {{else if @allSessionsExpanded}}
-        <FaIcon @icon="caret-down" class="clickable" />
-      {{else}}
-        <FaIcon @icon="caret-right" class="clickable" />
+    <span class="expand-collapse-control" data-test-expand-collapse-all>
+      {{#if @showExpandAll}}
+        <button
+          class="link-button"
+          type="button"
+          {{on "click" (perform this.expandAll)}}
+        >
+          {{#if this.isExpanding}}
+            <LoadingSpinner />
+          {{else if @allSessionsExpanded}}
+            <FaIcon @icon="caret-down" class="clickable" />
+          {{else}}
+            <FaIcon @icon="caret-right" class="clickable" />
+          {{/if}}
+        </button>
       {{/if}}
-    {{/if}}
-  </span>
+    </span>
   <SortableHeading
     @onClick={{fn this.setSortBy "title"}}
     @sortedBy={{or (eq @sortBy "title") (eq @sortBy "title:desc")}}
