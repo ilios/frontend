@@ -1,8 +1,13 @@
-import { clickable, create, hasClass } from 'ember-cli-page-object';
+import { create, hasClass } from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-sessions-grid-header]',
-  expandCollapse: clickable('[data-test-expand-collapse-all]'),
+  expandCollapse: {
+    scope: '[data-test-expand-collapse-all]',
+    toggle: {
+      scope: 'button',
+    },
+  },
   allAreExpanded: hasClass('caret-down', '[data-test-expand-collapse-all] svg'),
   title: {
     scope: '[data-test-title]',

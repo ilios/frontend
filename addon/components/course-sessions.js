@@ -38,6 +38,10 @@ export default class CourseSessionsComponent extends Component {
     return sessionIds.length;
   }
 
+  get showExpandAll() {
+    return this.sessionsWithOfferings.length;
+  }
+
   get sessionsWithOfferings() {
     return this.sessions.filter((session) => {
       const ids = session.hasMany('offerings').ids();

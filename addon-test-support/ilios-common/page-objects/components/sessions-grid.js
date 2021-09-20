@@ -1,7 +1,7 @@
-import { clickable, collection, notHasClass, isPresent, text } from 'ember-cli-page-object';
+import { clickable, create, collection, notHasClass, isPresent, text } from 'ember-cli-page-object';
 import offerings from './sessions-grid-offering-table';
 
-export default {
+const definition = {
   scope: '[data-test-sessions-grid]',
   sessions: collection('[data-test-session]', {
     expand: clickable('[data-test-expand-collapse-control] [data-test-expand]'),
@@ -28,3 +28,6 @@ export default {
     lastUpdated: text('.sessions-grid-last-updated'),
   }),
 };
+
+export default definition;
+export const component = create(definition);

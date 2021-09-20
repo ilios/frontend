@@ -27,9 +27,9 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
       assert.ok(true, 'event fired');
     });
     await render(
-      hbs`<SessionsGridHeader @toggleExpandAll={{this.expandCollapse}} @setSortBy={{noop}} />`
+      hbs`<SessionsGridHeader @toggleExpandAll={{this.expandCollapse}} @showExpandAll={{true}} @setSortBy={{noop}} />`
     );
-    await component.expandCollapse();
+    await component.expandCollapse.toggle.click();
   });
 
   test('sort by title', async function (assert) {
