@@ -30,11 +30,4 @@ export default class PendingUserUpdatesRoute extends Route {
     const primarySchool = await user.get('school');
     return { primarySchool, schools };
   }
-
-  setupController(controller, model) {
-    super.setupController(controller, model);
-    controller.set('deletedUpdates', []);
-    controller.set('sortSchoolsBy', ['title']);
-    controller.set('updatesBeingSaved', []);
-  }
 }
