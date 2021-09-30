@@ -13,7 +13,10 @@ const definition = {
   scope: '[data-test-single-event]',
   summary: {
     scope: '[data-test-summary]',
-    title: text('[data-test-title]'),
+    title: {
+      scope: '[data-test-title]',
+      hasLink: isPresent('a'),
+    },
     offeredAt: text('[data-test-offered-at]'),
     offeredAtLink: attribute('href', '[data-test-offered-at] a'),
     preWork: collection('[data-test-pre-work] li', {

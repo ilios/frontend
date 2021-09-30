@@ -124,6 +124,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
     this.set('event', ourEvent);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
 
+    assert.notOk(component.summary.title.hasLink);
     assert.ok(component.sessionObjectives.objectiveList.title.expandCollapseSwitcher.isExpanded);
     assert.ok(component.sessionLearningMaterials.expandCollapseSwitcher.isExpanded);
     assert.notOk(component.courseObjectives.objectiveList.title.expandCollapseSwitcher.isExpanded);
@@ -206,7 +207,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('unlinked event date and title are displayed', async function (assert) {
-    assert.expect(2);
+    assert.expect(3);
 
     const today = moment().hour(8).minute(0).second(0);
     this.server.create('userevent', {
@@ -223,7 +224,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.summary.title, 'course - Learn to Learn');
+    assert.equal(component.summary.title.text, 'course - Learn to Learn');
+    assert.notOk(component.summary.title.hasLink);
     assert.equal(
       component.summary.offeredAt,
       today.toDate().toLocaleString([], {
@@ -238,7 +240,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('postrequisite date and title are displayed', async function (assert) {
-    assert.expect(3);
+    assert.expect(4);
 
     const today = moment().hour(8).minute(0).second(0);
     const tomorrow = today.clone().add(1, 'day');
@@ -266,7 +268,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.summary.title, 'course - Learn to Learn');
+    assert.equal(component.summary.title.text, 'course - Learn to Learn');
+    assert.notOk(component.summary.title.hasLink);
     const formatedDate = tomorrow.toDate().toLocaleString([], {
       weekday: 'long',
       year: 'numeric',
@@ -280,7 +283,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('prequisites are displayed', async function (assert) {
-    assert.expect(6);
+    assert.expect(7);
 
     const today = moment().hour(8).minute(0).second(0);
     const prereq1 = {
@@ -312,7 +315,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.summary.title, 'course - Learn to Learn');
+    assert.notOk(component.summary.title.hasLink);
+    assert.equal(component.summary.title.text, 'course - Learn to Learn');
     assert.equal(component.summary.preWork.length, 2);
     assert.equal(component.summary.preWork[0].title, 'prework 1');
     assert.ok(component.summary.preWork[0].hasLink);
@@ -321,7 +325,7 @@ module('Integration | Component | ilios calendar single event', function (hooks)
   });
 
   test('for non ilms postrequisite date and title are displayed along with offering date', async function (assert) {
-    assert.expect(3);
+    assert.expect(4);
     this.owner.setupRouter();
 
     const today = moment().hour(8).minute(0).second(0);
@@ -350,7 +354,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.summary.title, 'course - Learn to Learn');
+    assert.equal(component.summary.title.text, 'course - Learn to Learn');
+    assert.notOk(component.summary.title.hasLink);
     const formattedTomorrow = tomorrow.toDate().toLocaleString([], {
       weekday: 'long',
       year: 'numeric',
@@ -423,7 +428,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.summary.title, 'course - Learn to Learn');
+    assert.equal(component.summary.title.text, 'course - Learn to Learn');
+    assert.notOk(component.summary.title.hasLink);
     assert.equal(
       component.summary.offeredAt,
       today.toDate().toLocaleString([], {
@@ -454,7 +460,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.summary.title, 'course - Learn to Learn');
+    assert.equal(component.summary.title.text, 'course - Learn to Learn');
+    assert.notOk(component.summary.title.hasLink);
     assert.equal(
       component.summary.offeredAt,
       today.toDate().toLocaleString([], {
@@ -490,7 +497,8 @@ module('Integration | Component | ilios calendar single event', function (hooks)
 
     this.set('event', this.server.db.userevents[0]);
     await render(hbs`<SingleEvent @event={{this.event}} />`);
-    assert.equal(component.summary.title, 'course - Learn to Learn');
+    assert.equal(component.summary.title.text, 'course - Learn to Learn');
+    assert.notOk(component.summary.title.hasLink);
     assert.equal(
       component.summary.offeredAt,
       today.toDate().toLocaleString([], {
@@ -511,5 +519,34 @@ module('Integration | Component | ilios calendar single event', function (hooks)
           minute: 'numeric',
         })
     );
+  });
+
+  test('non learners get link to session', async function (assert) {
+    assert.expect(2);
+
+    class CurrentUserMock extends Service {
+      performsNonLearnerFunction = true;
+    }
+    this.owner.register('service:currentUser', CurrentUserMock);
+
+    const today = moment().hour(8).minute(0).second(0);
+    this.server.create('userevent', {
+      name: 'Learn to Learn',
+      courseTitle: 'course',
+      course: 1,
+      session: 1,
+      startDate: today.format(),
+      endDate: today.format(),
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      offering: 1,
+      lastModified: null,
+    });
+
+    this.set('event', this.server.db.userevents[0]);
+    await render(hbs`<SingleEvent @event={{this.event}} />`);
+    assert.equal(component.summary.title.text, 'course - Learn to Learn');
+    assert.ok(component.summary.title.hasLink);
   });
 });

@@ -195,6 +195,14 @@ export default class SingleEvent extends Component {
     return '';
   }
 
+  get canViewCourse() {
+    return this.currentUser.performsNonLearnerFunction;
+  }
+
+  get canViewSession() {
+    return this.currentUser.performsNonLearnerFunction;
+  }
+
   @action
   transitionToMyMaterials() {
     const course = this.courseId;
