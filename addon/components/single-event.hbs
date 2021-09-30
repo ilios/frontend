@@ -12,7 +12,14 @@
         {{@event.courseTitle}}
         -
         <em>
-          {{@event.name}}
+          {{#if this.canViewSession}}
+            <LinkTo
+              @route="session"
+              @models={{array @event.course @event.session}}
+            >{{@event.name}}</LinkTo>
+          {{else}}
+            {{@event.name}}
+          {{/if}}
         </em>
       </h1>
       <div class="single-event-offered-at" data-test-offered-at>
