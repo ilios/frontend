@@ -9,6 +9,8 @@ jobs:
     strategy:
       matrix:
         safe-dependency:
+        - "@embroider/test-setup"
+        - "@embroider/util"
         - "@formatjs/intl-locale"
         - "@formatjs/intl-pluralrules"
         - "@formatjs/intl-relativetimeformat"
@@ -26,6 +28,7 @@ jobs:
         - "ember-cli-dependency-checker"
         - "ember-cli-dependency-lint"
         - "ember-cli-deprecation-workflow"
+        - "ember-template-lint"
         - "ember-qunit-nice-errors"
         - "eslint"
         - "prettier"
