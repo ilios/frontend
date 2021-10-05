@@ -1,10 +1,14 @@
 /* eslint-disable ember/no-computed-properties-in-native-classes */
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
-import { map } from 'rsvp';
 import { task, restartableTask, timeout } from 'ember-concurrency';
-import { action, computed } from '@ember/object';
+import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { use } from 'ember-could-get-used-to-this';
+import ResolveAsyncValue from '../classes/resolve-async-value';
+import SessionObject from '../classes/session-object';
+import { getOwner } from '@ember/application';
+
 const DEBOUNCE_DELAY = 250;
 
 export default class CourseSessionsComponent extends Component {
@@ -12,30 +16,16 @@ export default class CourseSessionsComponent extends Component {
   @service permissionChecker;
   @service dataLoader;
 
-  @tracked sessions = [];
   @tracked expandedSessionIds = [];
-  @tracked sessionObjects = false;
-  @tracked sessionTypes = [];
   @tracked filterByLocalCache = [];
   @tracked showNewSessionForm = false;
 
-  @restartableTask
-  *load(event, [course]) {
-    yield this.dataLoader.loadCourseSessions(course.id);
-    const school = yield course.school;
-    this.sessions = (yield course.sessions).toArray();
-    const [sessionObjects, sessionTypes] = yield Promise.all([
-      this.buildSessionObjects(),
-      school.sessionTypes,
-    ]);
-    this.sessionObjects = sessionObjects;
-    this.sessionTypes = sessionTypes;
-  }
+  @use sessionTypes = new ResolveAsyncValue(() => [this.school?.sessionTypes, []]);
+  @use sessions = new ResolveAsyncValue(() => [this.args.course.sessions]);
+  @use school = new ResolveAsyncValue(() => [this.args.course.school]);
 
-  @computed('args.course.sessions.[]')
   get sessionsCount() {
-    const sessionIds = this.args.course.hasMany('sessions').ids();
-    return sessionIds.length;
+    return this.sessions?.length ?? 0;
   }
 
   get showExpandAll() {
@@ -43,74 +33,20 @@ export default class CourseSessionsComponent extends Component {
   }
 
   get sessionsWithOfferings() {
+    if (!this.sessions) {
+      return [];
+    }
     return this.sessions.filter((session) => {
       const ids = session.hasMany('offerings').ids();
       return ids.length > 0;
     });
   }
 
-  async buildSessionObjects() {
-    const sessionObjects = await map(this.sessions, async (session) => {
-      const canDelete = await this.permissionChecker.canDeleteSession(session);
-      const canUpdate = await this.permissionChecker.canUpdateSession(session);
-      const postrequisite = await session.postrequisite;
-      const sessionObject = {
-        session,
-        course: this.args.course,
-        canDelete,
-        canUpdate,
-        postrequisite,
-        id: session.id,
-        title: session.title,
-        instructionalNotes: session.instructionalNotes,
-        isPublished: session.isPublished,
-        isNotPublished: session.isNotPublished,
-        isScheduled: session.isScheduled,
-      };
-      const sessionType = await session.sessionType;
-      sessionObject.sessionTypeTitle = sessionType.title;
-      const ilmSession = await session.ilmSession;
-      if (ilmSession) {
-        sessionObject.isIlm = true;
-        sessionObject.firstOfferingDate = ilmSession.dueDate;
-      } else {
-        sessionObject.isIlm = false;
-        sessionObject.firstOfferingDate = await session.firstOfferingDate;
-      }
-      const offerings = await session.offerings;
-      sessionObject.offeringCount = offerings.length;
-      sessionObject.objectiveCount = session.hasMany('sessionObjectives').ids().length;
-      sessionObject.termCount = session.hasMany('terms').ids().length;
-      sessionObject.prerequisiteCount = session.hasMany('prerequisites').ids().length;
-      const offeringLearnerGroupCount = offerings.reduce((total, offering) => {
-        const count = offering.hasMany('learnerGroups').ids().length;
-
-        return total + count;
-      }, 0);
-      let ilmLearnerGroupCount = 0;
-      if (ilmSession) {
-        const learnerGroupIds = ilmSession.hasMany('learnerGroups').ids();
-        ilmLearnerGroupCount = learnerGroupIds.length;
-      }
-      const learnerGroupCount = offeringLearnerGroupCount + ilmLearnerGroupCount;
-      sessionObject.learnerGroupCount = learnerGroupCount;
-      let status = this.intl.t('general.notPublished');
-      if (session.published) {
-        sessionObject.isPublished = true;
-        status = this.intl.t('general.published');
-      }
-      if (session.publishedAsTbd) {
-        sessionObject.publishedAsTbd = true;
-        status = this.intl.t('general.scheduled');
-      }
-      sessionObject.status = status.toString();
-      sessionObject.searchString =
-        sessionObject.title + sessionObject.sessionTypeTitle + sessionObject.status;
-
-      return sessionObject;
-    });
-
-    return sessionObjects;
+  get sessionObjects() {
+    if (!this.sessions) {
+      return false;
+    }
+    return this.sessions.map((session) => new SessionObject(getOwner(this), session));
   }
 
   get filterByDebounced() {
