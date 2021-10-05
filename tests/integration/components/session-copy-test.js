@@ -424,8 +424,8 @@ module('Integration | Component | session copy', function (hooks) {
     assert.equal(newPostRequisite, null);
   });
 
-  test('copy session into same course saves prerequisites', async function (assert) {
-    assert.expect(6);
+  test('copy session into same course does not save prerequisites', async function (assert) {
+    assert.expect(4);
 
     const thisYear = parseInt(moment().format('YYYY'), 10);
     this.server.create('academic-year', {
@@ -477,10 +477,7 @@ module('Integration | Component | session copy', function (hooks) {
     assert.equal(session.title, newSession.title);
 
     const newPostRequisites = await newSession.prerequisites;
-    const ids = newPostRequisites.mapBy('id');
-    assert.equal(ids.length, 2);
-    assert.ok(ids.includes(firstPrerequisite.id));
-    assert.ok(ids.includes(secondPrerequisite.id));
+    assert.equal(newPostRequisites.length, 0);
   });
 
   test('copy session into different course does not save prerequisites', async function (assert) {
