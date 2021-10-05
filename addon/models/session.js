@@ -193,31 +193,6 @@ export default Model.extend({
     return parseFloat(ilmHours) + parseFloat(maxSingleOfferingDuration);
   }),
 
-  requiredPublicationIssues: computed(
-    'title',
-    'offerings.length',
-    'ilmSession.dueDate',
-    'isIndependentLearning',
-    function () {
-      if (!this.isIndependentLearning) {
-        this.set('requiredPublicationLengthFields', ['offerings']);
-        this.set('requiredPublicationSetFields', ['title']);
-      } else {
-        this.set('requiredPublicationLengthFields', []);
-        this.set('requiredPublicationSetFields', ['title', 'ilmSession.dueDate']);
-      }
-      return this.getRequiredPublicationIssues();
-    }
-  ),
-  optionalPublicationIssues: computed(
-    'terms.length',
-    'sessionObjectives.length',
-    'meshDescriptors.length',
-    function () {
-      return this.getOptionalPublicationIssues();
-    }
-  ),
-
   /**
    * A list of all vocabularies that are associated via terms.
    * @property associatedVocabularies
@@ -383,13 +358,50 @@ export default Model.extend({
     );
   }),
 
-  init() {
-    this._super(...arguments);
-    this.set('optionalPublicationLengthFields', ['terms', 'sessionObjectives', 'meshDescriptors']);
-    this.set('requiredPublicationSetFields', []);
-    this.set('requiredPublicationLengthFields', []);
-    this.set('optionalPublicationSetFields', []);
-  },
+  requiredPublicationIssues: computed(
+    'title',
+    'offerings.length',
+    'ilmSession.dueDate',
+    'isIndependentLearning',
+    function () {
+      const issues = [];
+      if (this.isIndependentLearning) {
+        if (!this.ilmSession.get('dueDate')) {
+          issues.push('dueDate');
+        }
+      } else {
+        if (this.hasMany('offerings').ids().length === 0) {
+          issues.push('offerings');
+        }
+      }
+      if (!this.title) {
+        issues.push('title');
+      }
+
+      return issues;
+    }
+  ),
+  optionalPublicationIssues: computed(
+    'terms.length',
+    'sessionObjectives.length',
+    'meshDescriptors.length',
+    function () {
+      const issues = [];
+      if (this.hasMany('terms').ids().length === 0) {
+        issues.push('terms');
+      }
+
+      if (this.hasMany('sessionObjectives').ids().length === 0) {
+        issues.push('sessionObjectives');
+      }
+
+      if (this.hasMany('meshDescriptors').ids().length === 0) {
+        issues.push('meshDescriptors');
+      }
+
+      return issues;
+    }
+  ),
   isPublished: alias('published'),
   isNotPublished: not('isPublished'),
   isScheduled: oneWay('publishedAsTbd'),
@@ -399,42 +411,6 @@ export default Model.extend({
     'optionalPublicationIssues.length'
   ),
   allPublicationIssuesLength: sum('allPublicationIssuesCollection'),
-  requiredPublicationSetFields: null,
-  requiredPublicationLengthFields: null,
-  optionalPublicationSetFields: null,
-  optionalPublicationLengthFields: null,
-  getRequiredPublicationIssues() {
-    const issues = [];
-    this.requiredPublicationSetFields.forEach((val) => {
-      if (!this.get(val)) {
-        issues.push(val);
-      }
-    });
-
-    this.requiredPublicationLengthFields.forEach((val) => {
-      if (this.get(val + '.length') === 0) {
-        issues.push(val);
-      }
-    });
-
-    return issues;
-  },
-  getOptionalPublicationIssues() {
-    const issues = [];
-    this.optionalPublicationSetFields.forEach((val) => {
-      if (!this.get(val)) {
-        issues.push(val);
-      }
-    });
-
-    this.optionalPublicationLengthFields.forEach((val) => {
-      if (this.get(val + '.length') === 0) {
-        issues.push(val);
-      }
-    });
-
-    return issues;
-  },
 
   textDescription: computed('description', function () {
     return striptags(this.description);
