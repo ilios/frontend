@@ -1,6 +1,7 @@
-import { create, isVisible, visitable } from 'ember-cli-page-object';
+import { create, visitable } from 'ember-cli-page-object';
 
 import objectives from './components/course/objectives';
+import publishAll from './components/publish-all-sessions';
 
 export default create({
   visit: visitable('/courses/:courseId/publishall'),
@@ -8,8 +9,5 @@ export default create({
     scope: '[data-test-ilios-course-details]',
     objectives,
   },
-  publishAll: {
-    scope: '[data-test-publish-all-sessions]',
-    hasUnlinkedWarning: isVisible('[data-test-unlinked-warning]'),
-  },
+  publishAll,
 });
