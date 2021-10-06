@@ -60,7 +60,7 @@
           {{obj.termCount}}
         </span>
         <span class="session-grid-first-offering">
-          {{#if (await obj.session.firstOfferingDate)}}
+          {{#if (await obj.firstOfferingDate)}}
             {{#if obj.isIlm}}
               {{#if obj.postrequisite}}
                 <strong>
@@ -79,7 +79,7 @@
                   {{t "general.ilm"}}:
                   {{t "general.dueBy"}}
                 </strong>
-                {{format-date (await obj.session.firstOfferingDate)}}
+                {{format-date obj.firstOfferingDate}}
               {{/if}}
             {{else if obj.postrequisite}}
               <strong>
@@ -93,7 +93,7 @@
                 {{truncate obj.postrequisite.title 18 true}}
               </LinkTo>
             {{else}}
-              {{format-date (await obj.session.firstOfferingDate) month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric"}}
+              {{format-date obj.firstOfferingDate month="numeric" day="numeric" year="numeric"  hour12=true hour="numeric" minute="numeric"}}
             {{/if}}
           {{/if}}
         </span>
@@ -177,10 +177,10 @@
         </div>
       {{/if}}
       {{#if (includes obj.session.id @expandedSessionIds)}}
-        <SessionsGridLastUpdated @session={{await obj.session}} />
+        <SessionsGridLastUpdated @session={{obj.session}} />
         <SessionsGridOfferingTable
           @canUpdate={{obj.canUpdate}}
-          @offerings={{await obj.session.offerings}}
+          @offerings={{obj.session.offerings}}
         />
       {{/if}}
     </div>

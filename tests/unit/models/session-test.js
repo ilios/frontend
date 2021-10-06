@@ -28,13 +28,20 @@ module('Unit | Model | Session', function (hooks) {
   test('check optional publication items', function (assert) {
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('session');
-    assert.equal(model.get('optionalPublicationIssues').length, 3);
+    assert.equal(model.optionalPublicationIssues.length, 3);
+    assert.deepEqual(model.optionalPublicationIssues, [
+      'terms',
+      'sessionObjectives',
+      'meshDescriptors',
+    ]);
     model.get('terms').addObject(store.createRecord('term'));
-    assert.equal(model.get('optionalPublicationIssues').length, 2);
-    store.createRecord('session-objective', { session: model });
-    assert.equal(model.get('optionalPublicationIssues').length, 1);
+    assert.equal(model.optionalPublicationIssues.length, 2);
+    assert.deepEqual(model.optionalPublicationIssues, ['sessionObjectives', 'meshDescriptors']);
+    model.get('sessionObjectives').addObject(store.createRecord('session-objective'));
+    assert.equal(model.optionalPublicationIssues.length, 1);
+    assert.deepEqual(model.optionalPublicationIssues, ['meshDescriptors']);
     model.get('meshDescriptors').addObject(store.createRecord('meshDescriptor'));
-    assert.equal(model.get('optionalPublicationIssues').length, 0);
+    assert.equal(model.optionalPublicationIssues.length, 0);
   });
 
   test('check empty associatedOfferingLearnerGroups', async function (assert) {

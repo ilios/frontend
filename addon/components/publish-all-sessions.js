@@ -3,7 +3,9 @@ import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 import { action } from '@ember/object';
 import { all } from 'rsvp';
-import { dropTask, restartableTask, timeout } from 'ember-concurrency';
+import { dropTask, timeout } from 'ember-concurrency';
+import ResolveAsyncValue from '../classes/resolve-async-value';
+import { use } from 'ember-could-get-used-to-this';
 
 export default class PublishAllSessionsComponent extends Component {
   @service router;
@@ -15,7 +17,15 @@ export default class PublishAllSessionsComponent extends Component {
   @tracked unPublishableCollapsed = true;
   @tracked totalSessionsToSave;
   @tracked currentSessionsSaved;
-  @tracked courseObjectivesRelationship;
+
+  @use courseObjectives = new ResolveAsyncValue(() => [this.args.course.courseObjectives]);
+
+  constructor() {
+    super(...arguments);
+    this.sessionsToOverride = this.overridableSessions.filter((session) => {
+      return session.published && !session.publishedAsTbd;
+    });
+  }
 
   get noSessionsAsIs() {
     return this.sessionsToOverride.length === 0;
@@ -32,20 +42,12 @@ export default class PublishAllSessionsComponent extends Component {
     return floor;
   }
 
-  @restartableTask
-  *load() {
-    this.courseObjectivesRelationship = yield this.args.course.courseObjectives;
-    this.sessionsToOverride = this.overridableSessions.filter((session) => {
-      return session.published && !session.publishedAsTbd;
-    });
-  }
-
   get showWarning() {
-    if (!this.courseObjectivesRelationship) {
+    if (!this.courseObjectives) {
       return false;
     }
 
-    return this.courseObjectivesRelationship.toArray().any((objective) => {
+    return this.courseObjectives.toArray().any((objective) => {
       return objective.programYearObjectives.length === 0;
     });
   }
