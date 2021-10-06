@@ -1,6 +1,6 @@
-import { click, visit, currentURL } from '@ember/test-helpers';
+import { currentURL } from '@ember/test-helpers';
 import { module, test } from 'qunit';
-import { setupAuthentication, getElementText, getText } from 'ilios-common';
+import { setupAuthentication } from 'ilios-common';
 
 import { setupApplicationTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
@@ -55,21 +55,49 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
     this.server.create('sessionObjective', { session: session3 });
 
     this.server.create('offering', { session: session3 });
-    await visit('/courses/1/publishall');
 
-    await click('.publish-all-sessions-publishable .title');
+    await page.visit({
+      courseId: 1,
+    });
+    assert.ok(page.publishAll.isVisible);
+    assert.notOk(page.publishAll.hasUnlinkedWarning);
     assert.equal(
-      await getElementText('tbody tr:nth-of-type(1) td:nth-of-type(1)'),
-      getText('session 0')
+      page.publishAll.unpublishableSessions.text,
+      'Sessions Incomplete: cannot publish (0)'
     );
+    assert.notOk(page.publishAll.unpublishableSessions.isExpanded);
+    assert.ok(page.publishAll.unpublishableSessions.canExpandCollapse);
+
     assert.equal(
-      await getElementText('tbody tr:nth-of-type(2) td:nth-of-type(1)'),
-      getText('session 1')
+      page.publishAll.publishableSessions.text,
+      'Sessions Complete: ready to publish (3)'
     );
-    assert.equal(
-      await getElementText('tbody tr:nth-of-type(3) td:nth-of-type(1)'),
-      getText('session 2')
-    );
+    assert.notOk(page.publishAll.publishableSessions.isExpanded);
+    assert.equal(page.publishAll.publishableSessions.sessions.length, 0);
+    assert.ok(page.publishAll.publishableSessions.canExpandCollapse);
+    await page.publishAll.publishableSessions.toggle();
+    assert.ok(page.publishAll.publishableSessions.isExpanded);
+    assert.equal(page.publishAll.publishableSessions.sessions.length, 3);
+    assert.equal(page.publishAll.publishableSessions.sessions[0].title, 'session 0');
+    assert.equal(page.publishAll.publishableSessions.sessions[0].offerings, 'Yes (1)');
+    assert.equal(page.publishAll.publishableSessions.sessions[0].terms, 'Yes (1)');
+    assert.equal(page.publishAll.publishableSessions.sessions[0].objectives.text, 'Yes (1)');
+    assert.ok(page.publishAll.publishableSessions.sessions[0].objectives.isLinked);
+    assert.equal(page.publishAll.publishableSessions.sessions[0].meshDescriptors, 'Yes (1)');
+
+    assert.equal(page.publishAll.publishableSessions.sessions[1].title, 'session 1');
+    assert.equal(page.publishAll.publishableSessions.sessions[1].offerings, 'Yes (1)');
+    assert.equal(page.publishAll.publishableSessions.sessions[1].terms, 'Yes (1)');
+    assert.equal(page.publishAll.publishableSessions.sessions[1].objectives.text, 'Yes (1)');
+    assert.ok(page.publishAll.publishableSessions.sessions[1].objectives.isLinked);
+    assert.equal(page.publishAll.publishableSessions.sessions[1].meshDescriptors, 'Yes (1)');
+
+    assert.equal(page.publishAll.publishableSessions.sessions[2].title, 'session 2');
+    assert.equal(page.publishAll.publishableSessions.sessions[2].offerings, 'Yes (1)');
+    assert.equal(page.publishAll.publishableSessions.sessions[2].terms, 'Yes (1)');
+    assert.equal(page.publishAll.publishableSessions.sessions[2].objectives.text, 'Yes (1)');
+    assert.ok(page.publishAll.publishableSessions.sessions[2].objectives.isLinked);
+    assert.equal(page.publishAll.publishableSessions.sessions[2].meshDescriptors, 'Yes (1)');
   });
 
   test('After publishing user is returned to the courses route #4099', async function (assert) {
@@ -94,9 +122,12 @@ module('Acceptance | Course - Publish All Sessions', function (hooks) {
       sessions: [session],
     });
     this.server.create('offering', { session });
-    await visit('/courses/1/publishall');
 
-    await click('.publish-all-sessions-review button');
+    await page.visit({
+      courseId: 1,
+    });
+    assert.ok(page.publishAll.isVisible);
+    await page.publishAll.review.save();
     assert.equal(currentURL(), '/courses/1');
     assert.ok(session.published);
   });

@@ -86,6 +86,7 @@ const definition = {
     confirmation: text('[data-test-confirmation]'),
     save: clickable('[data-test-save]'),
   },
+  hasUnlinkedWarning: isVisible('[data-test-unlinked-warning]'),
 };
 
 export default definition;
