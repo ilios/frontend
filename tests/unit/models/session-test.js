@@ -37,7 +37,7 @@ module('Unit | Model | Session', function (hooks) {
     model.get('terms').addObject(store.createRecord('term'));
     assert.equal(model.optionalPublicationIssues.length, 2);
     assert.deepEqual(model.optionalPublicationIssues, ['sessionObjectives', 'meshDescriptors']);
-    store.createRecord('session-objective', { session: model });
+    model.get('sessionObjectives').addObject(store.createRecord('session-objective'));
     assert.equal(model.optionalPublicationIssues.length, 1);
     assert.deepEqual(model.optionalPublicationIssues, ['meshDescriptors']);
     model.get('meshDescriptors').addObject(store.createRecord('meshDescriptor'));
