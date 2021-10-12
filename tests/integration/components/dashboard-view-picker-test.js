@@ -102,7 +102,7 @@ module('Integration | Component | dashbaord view picker', function (hooks) {
     find(materials).click();
   });
 
-  test('clicking activities fires action', async function (assert) {
+  test('clicking calendar fires action', async function (assert) {
     assert.expect(2);
     const calendar = '[data-test-calendar]';
 
