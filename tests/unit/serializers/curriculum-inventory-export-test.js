@@ -10,7 +10,7 @@ module('Unit | Serializer | curriculum inventory export', function (hooks) {
     assert.ok(serializedRecord);
   });
 
-  test('it removes all non postable fields', function (assert) {
+  test('it removes all non postable fields', async function (assert) {
     var record = this.owner.lookup('service:store').createRecord('curriculum-inventory-export');
     var store = this.owner.lookup('service:store');
     var now = new Date();
@@ -21,12 +21,11 @@ module('Unit | Serializer | curriculum inventory export', function (hooks) {
     record.set('createdBy', user);
     assert.equal(record.get('createdAt'), now);
     assert.equal(record.get('document'), doc);
-    record.get('createdBy').then((creator) => {
-      assert.equal(user, creator);
-    });
+    const creator = await record.get('createdBy');
+    assert.equal(user, creator);
     var serializedRecord = record.serialize();
-    assert.ok(!('createdAt' in serializedRecord.data.attributes));
-    assert.ok(!('createdBy' in serializedRecord.data.attributes));
-    assert.ok(!('document' in serializedRecord.data.attributes));
+    assert.notOk('createdAt' in serializedRecord.data.attributes);
+    assert.notOk('createdBy' in serializedRecord.data.attributes);
+    assert.notOk('document' in serializedRecord.data.attributes);
   });
 });

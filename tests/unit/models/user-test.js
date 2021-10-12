@@ -93,6 +93,7 @@ module('Unit | Model | User', function (hooks) {
         displayName: null,
       },
     ];
+    assert.expect(fixtures.length);
     fixtures.forEach((fixture) => {
       const model = this.owner.lookup('service:store').createRecord('user');
       model.set('firstName', fixture.firstName);
@@ -117,6 +118,7 @@ module('Unit | Model | User', function (hooks) {
         displayName: 'first m. last',
       },
     ];
+    assert.expect(fixtures.length);
     fixtures.forEach((fixture) => {
       const model = this.owner.lookup('service:store').createRecord('user');
       model.set('firstName', fixture.firstName);
@@ -135,6 +137,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all directed courses', async function (assert) {
+    assert.expect(3);
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
     const courses = [];
@@ -158,6 +161,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all administered courses', async function (assert) {
+    assert.expect(3);
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
     const courses = [];
@@ -181,6 +185,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all learner group courses', async function (assert) {
+    assert.expect(3);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     const course1 = store.createRecord('course');
@@ -218,6 +223,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all instructor group courses', async function (assert) {
+    assert.expect(3);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     const course1 = store.createRecord('course');
@@ -255,6 +261,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all instructed offering courses', async function (assert) {
+    assert.expect(3);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     const course1 = store.createRecord('course');
@@ -287,6 +294,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all learner offering courses', async function (assert) {
+    assert.expect(3);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     const course1 = store.createRecord('course');
@@ -319,6 +327,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all learner group ILMSession courses', async function (assert) {
+    assert.expect(3);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     const course1 = store.createRecord('course');
@@ -356,6 +365,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all instructor group ILMSession courses', async function (assert) {
+    assert.expect(3);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('user');
     const course1 = store.createRecord('course');
@@ -399,6 +409,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all learner ilm courses', async function (assert) {
+    assert.expect(3);
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
     const course1 = store.createRecord('course');
@@ -590,6 +601,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('gets all instructor ilm courses', async function (assert) {
+    assert.expect(3);
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
     const course1 = store.createRecord('course');
@@ -711,7 +723,7 @@ module('Unit | Model | User', function (hooks) {
     const tree = [learnerGroup, learnerGroup2, learnerGroup3];
 
     const lowestGroup = await model.getLowestMemberGroupInALearnerGroupTree(tree);
-    assert.ok(lowestGroup === null);
+    assert.strictEqual(lowestGroup, null);
   });
 
   test('gets secondary cohorts (all cohorts not the primary cohort)', async function (assert) {
@@ -738,6 +750,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('allInstructedCourses gets ALL instructed courses', async function (assert) {
+    assert.expect(5);
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
     const course1 = store.createRecord('course');
@@ -782,6 +795,7 @@ module('Unit | Model | User', function (hooks) {
   });
 
   test('allInstructedSessions gets ALL instructed sessions', async function (assert) {
+    assert.expect(5);
     const model = this.owner.lookup('service:store').createRecord('user');
     const store = this.owner.lookup('service:store');
     const session1 = store.createRecord('session');

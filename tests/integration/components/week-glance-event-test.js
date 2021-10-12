@@ -206,7 +206,7 @@ module('Integration | Component | week-glance-event', function (hooks) {
     assert.equal(component.learningMaterials[0].title, 'In the window');
     assert.ok(component.learningMaterials[0].timedReleaseInfo.length > 0);
     assert.equal(component.learningMaterials[1].title, 'Too Early');
-    assert.ok(component.learningMaterials[1].timedReleaseInfo.length === 0);
+    assert.strictEqual(component.learningMaterials[1].timedReleaseInfo.length, 0);
     assert.equal(component.learningMaterials[2].title, 'Too Late');
     assert.ok(component.learningMaterials[2].timedReleaseInfo.length > 0);
 

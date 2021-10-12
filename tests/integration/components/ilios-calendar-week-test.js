@@ -29,7 +29,7 @@ module('Integration | Component | ilios calendar week', function (hooks) {
     this.set('date', date);
     this.actions.changeDate = (newDate) => {
       assert.ok(newDate instanceof Date);
-      assert.ok(newDate.toString().search(/Sun Sep 27/) === 0);
+      assert.strictEqual(newDate.toString().search(/Sun Sep 27/), 0);
     };
     this.actions.changeView = (newView) => {
       assert.equal(newView, 'day');

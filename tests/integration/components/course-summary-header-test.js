@@ -24,6 +24,7 @@ module('Integration | Component | course summary header', function (hooks) {
   });
 
   test('it renders', async function (assert) {
+    assert.expect(10);
     const school = this.server.create('school');
     this.permissionCheckerMock.canCreateCourse = async (inSchool) => {
       assert.equal(school.id, inSchool.id);

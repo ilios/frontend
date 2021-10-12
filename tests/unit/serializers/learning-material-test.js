@@ -9,8 +9,8 @@ module('Unit | Serializer | learning material', function (hooks) {
 
     var serializedRecord = record.serialize();
 
-    assert.ok(!('uploadDate' in serializedRecord.data.attributes));
-    assert.ok(!('absoluteFileUri' in serializedRecord.data.attributes));
+    assert.notOk('uploadDate' in serializedRecord.data.attributes);
+    assert.notOk('absoluteFileUri' in serializedRecord.data.attributes);
   });
 
   test('no filehash usually', function (assert) {
@@ -18,7 +18,7 @@ module('Unit | Serializer | learning material', function (hooks) {
 
     var serializedRecord = record.serialize();
 
-    assert.ok(!('fileHash' in serializedRecord.data.attributes));
+    assert.notOk('fileHash' in serializedRecord.data.attributes);
   });
 
   test('filehash when it is added', function (assert) {

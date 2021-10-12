@@ -9,6 +9,6 @@ module('Unit | Serializer | offering', function (hooks) {
 
     var serializedRecord = record.serialize();
 
-    assert.ok(!('updatedAt' in serializedRecord));
+    assert.notOk('updatedAt' in serializedRecord);
   });
 });

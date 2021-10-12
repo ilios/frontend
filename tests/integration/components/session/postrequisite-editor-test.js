@@ -25,10 +25,10 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     assert.equal(component.selectedPostrequisiteLabel, 'Due prior to:');
     assert.equal(component.selectedPostrequisiteTitle, 'None');
     assert.equal(component.postRequisites.length, 4);
-    assert.equal(component.postRequisites[0].isSelected, false);
-    assert.equal(component.postRequisites[1].isSelected, false);
-    assert.equal(component.postRequisites[2].isSelected, false);
-    assert.equal(component.postRequisites[3].isSelected, false);
+    assert.false(component.postRequisites[0].isSelected);
+    assert.false(component.postRequisites[1].isSelected);
+    assert.false(component.postRequisites[2].isSelected);
+    assert.false(component.postRequisites[3].isSelected);
   });
 
   test('it renders with a postrequisite selected', async function (assert) {
@@ -50,10 +50,10 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     />`);
     assert.equal(component.selectedPostrequisiteTitle, 'session 1');
     assert.equal(component.postRequisites.length, 4);
-    assert.equal(component.postRequisites[0].isSelected, false);
-    assert.equal(component.postRequisites[1].isSelected, true);
-    assert.equal(component.postRequisites[2].isSelected, false);
-    assert.equal(component.postRequisites[3].isSelected, false);
+    assert.false(component.postRequisites[0].isSelected);
+    assert.true(component.postRequisites[1].isSelected);
+    assert.false(component.postRequisites[2].isSelected);
+    assert.false(component.postRequisites[3].isSelected);
   });
 
   test('can remove postrequisite from header', async function (assert) {
@@ -75,17 +75,17 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     />`);
     assert.equal(component.selectedPostrequisiteTitle, 'session 1');
     assert.equal(component.postRequisites.length, 4);
-    assert.equal(component.postRequisites[0].isSelected, false);
-    assert.equal(component.postRequisites[1].isSelected, true);
-    assert.equal(component.postRequisites[2].isSelected, false);
-    assert.equal(component.postRequisites[3].isSelected, false);
+    assert.false(component.postRequisites[0].isSelected);
+    assert.true(component.postRequisites[1].isSelected);
+    assert.false(component.postRequisites[2].isSelected);
+    assert.false(component.postRequisites[3].isSelected);
 
     await component.removeSelectedPostrequisite();
     assert.equal(component.selectedPostrequisiteTitle, 'None');
-    assert.equal(component.postRequisites[0].isSelected, false);
-    assert.equal(component.postRequisites[1].isSelected, false);
-    assert.equal(component.postRequisites[2].isSelected, false);
-    assert.equal(component.postRequisites[3].isSelected, false);
+    assert.false(component.postRequisites[0].isSelected);
+    assert.false(component.postRequisites[1].isSelected);
+    assert.false(component.postRequisites[2].isSelected);
+    assert.false(component.postRequisites[3].isSelected);
   });
 
   test('can remove postrequisite from row', async function (assert) {
@@ -107,17 +107,17 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     />`);
     assert.equal(component.selectedPostrequisiteTitle, 'session 1');
     assert.equal(component.postRequisites.length, 4);
-    assert.equal(component.postRequisites[0].isSelected, false);
-    assert.equal(component.postRequisites[1].isSelected, true);
-    assert.equal(component.postRequisites[2].isSelected, false);
-    assert.equal(component.postRequisites[3].isSelected, false);
+    assert.false(component.postRequisites[0].isSelected);
+    assert.true(component.postRequisites[1].isSelected);
+    assert.false(component.postRequisites[2].isSelected);
+    assert.false(component.postRequisites[3].isSelected);
 
     await component.postRequisites[1].click();
     assert.equal(component.selectedPostrequisiteTitle, 'None');
-    assert.equal(component.postRequisites[0].isSelected, false);
-    assert.equal(component.postRequisites[1].isSelected, false);
-    assert.equal(component.postRequisites[2].isSelected, false);
-    assert.equal(component.postRequisites[3].isSelected, false);
+    assert.false(component.postRequisites[0].isSelected);
+    assert.false(component.postRequisites[1].isSelected);
+    assert.false(component.postRequisites[2].isSelected);
+    assert.false(component.postRequisites[3].isSelected);
   });
 
   test('can add postrequisite from row', async function (assert) {
@@ -135,17 +135,17 @@ module('Integration | Component | session/postrequisite-editor', function (hooks
     />`);
     assert.equal(component.selectedPostrequisiteTitle, 'None');
     assert.equal(component.postRequisites.length, 4);
-    assert.equal(component.postRequisites[0].isSelected, false);
-    assert.equal(component.postRequisites[1].isSelected, false);
-    assert.equal(component.postRequisites[2].isSelected, false);
-    assert.equal(component.postRequisites[3].isSelected, false);
+    assert.false(component.postRequisites[0].isSelected);
+    assert.false(component.postRequisites[1].isSelected);
+    assert.false(component.postRequisites[2].isSelected);
+    assert.false(component.postRequisites[3].isSelected);
 
     await component.postRequisites[1].click();
     assert.equal(component.selectedPostrequisiteTitle, 'session 2');
-    assert.equal(component.postRequisites[0].isSelected, false);
-    assert.equal(component.postRequisites[1].isSelected, true);
-    assert.equal(component.postRequisites[2].isSelected, false);
-    assert.equal(component.postRequisites[3].isSelected, false);
+    assert.false(component.postRequisites[0].isSelected);
+    assert.true(component.postRequisites[1].isSelected);
+    assert.false(component.postRequisites[2].isSelected);
+    assert.false(component.postRequisites[3].isSelected);
   });
 
   test('closes when canceled', async function (assert) {

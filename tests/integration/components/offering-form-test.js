@@ -453,8 +453,8 @@ module('Integration | Component | offering form', function (hooks) {
     const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
     this.set('offering', offeringModel);
     this.set('save', async (startDate, endDate) => {
-      assert.equal('2005-06-25 05:24', moment(startDate).tz(utc).format('Y-MM-DD HH:mm'));
-      assert.equal('2005-06-25 06:24', moment(endDate).tz(utc).format('Y-MM-DD HH:mm'));
+      assert.equal(moment(startDate).tz(utc).format('Y-MM-DD HH:mm'), '2005-06-25 05:24');
+      assert.equal(moment(endDate).tz(utc).format('Y-MM-DD HH:mm'), '2005-06-25 06:24');
     });
     const timezoneService = this.owner.lookup('service:timezone');
     await render(
@@ -477,15 +477,15 @@ module('Integration | Component | offering form', function (hooks) {
   test('removes double https from start of URL when input', async function (assert) {
     await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
     await component.url.set('https://http://example.com');
-    assert.equal('http://example.com', component.url.value);
+    assert.equal(component.url.value, 'http://example.com');
     await component.url.set('https://https://example.edu');
-    assert.equal('https://example.edu', component.url.value);
+    assert.equal(component.url.value, 'https://example.edu');
   });
 
   test('trims whitespace from URL input #1500', async function (assert) {
     await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
     await component.url.set('  http://example.com  ');
-    assert.equal('http://example.com', component.url.value);
+    assert.equal(component.url.value, 'http://example.com');
   });
 
   todo('rejects query param with trailing slash ilios/ilios#3050', async function (assert) {

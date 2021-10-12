@@ -41,6 +41,7 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
   });
 
   test('clicking label when checked fires remove', async function (assert) {
+    assert.expect(1);
     this.set('remove', () => {
       assert.ok(true);
     });
@@ -58,6 +59,7 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
   });
 
   test('clicking label when not checked fires add', async function (assert) {
+    assert.expect(1);
     this.set('add', () => {
       assert.ok(true);
     });

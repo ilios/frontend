@@ -14,7 +14,7 @@ module('Unit | Model | School Config', function (hooks) {
       name: 'test-false',
       value: 'false',
     });
-    assert.deepEqual(model.parsedValue, false);
+    assert.false(model.parsedValue);
   });
 
   test('getParsedValue boolean true', async function (assert) {
@@ -22,6 +22,6 @@ module('Unit | Model | School Config', function (hooks) {
       name: 'test-true',
       value: 'true',
     });
-    assert.deepEqual(model.parsedValue, true);
+    assert.true(model.parsedValue);
   });
 });

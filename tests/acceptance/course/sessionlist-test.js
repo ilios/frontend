@@ -381,6 +381,7 @@ module('Acceptance | Course - Session List', function (hooks) {
   });
 
   test('back and forth #3771', async function (assert) {
+    assert.expect(28);
     const sessionCount = 50;
     this.server.createList('session', sessionCount, {
       course: this.course,

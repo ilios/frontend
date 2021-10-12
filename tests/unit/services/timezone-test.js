@@ -18,8 +18,8 @@ module('Unit | Service | timezone', function (hooks) {
     assert.notOk(names.includes('Etc/GMT-13'));
     assert.notOk(names.includes('Canada/Newfoundland'));
     assert.notOk(names.includes('UTC'));
-    assert.equal('Africa/Abidjan', names[0]);
-    assert.equal('Pacific/Yap', names[names.length - 1]);
+    assert.equal(names[0], 'Africa/Abidjan');
+    assert.equal(names[names.length - 1], 'Pacific/Yap');
   });
 
   test('formatTimezone', function (assert) {

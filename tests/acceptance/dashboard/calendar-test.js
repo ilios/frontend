@@ -628,9 +628,9 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
     await click(clearFilter);
     assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
-    assert.ok(!find(sessiontype).checked, 'filter is unchecked');
-    assert.ok(!find(course).checked, 'filter is unchecked');
-    assert.ok(!find(term).checked, 'filter is unchecked');
+    assert.notOk(find(sessiontype).checked, 'filter is unchecked');
+    assert.notOk(find(course).checked, 'filter is unchecked');
+    assert.notOk(find(term).checked, 'filter is unchecked');
   });
 
   test('clear all detail filters', async function (assert) {
@@ -655,9 +655,9 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
     await click(clearFilter);
     assert.ok(isEmpty(find(clearFilter)), 'clear filter button is inactive');
-    assert.ok(!find(sessiontype).checked, 'filter is unchecked');
-    assert.ok(!find(courselevel).checked, 'filter is unchecked');
-    assert.ok(!find(cohort).checked, 'filter is unchecked');
+    assert.notOk(find(sessiontype).checked, 'filter is unchecked');
+    assert.notOk(find(courselevel).checked, 'filter is unchecked');
+    assert.notOk(find(cohort).checked, 'filter is unchecked');
   });
 
   test('filter tags work properly', async function (assert) {
@@ -689,7 +689,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
     assert.equal(getTagText(2), 'session type 0', 'filter tag is active');
 
     await clickTag(1);
-    assert.ok(!find(courselevel).checked, 'filter is unchecked');
+    assert.notOk(find(courselevel).checked, 'filter is unchecked');
     assert.equal(getTagText(0), 'cohort 0 program 0', 'filter tag is active');
     assert.equal(getTagText(1), 'session type 0', 'filter tag is active');
 
@@ -698,8 +698,8 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
 
     await click(clearFilter);
     assert.ok(isEmpty(find(filtersList)), 'filter tags list is inactive');
-    assert.ok(!find(sessiontype).checked, 'filter is unchecked');
-    assert.ok(!find(cohort).checked, 'filter is unchecked');
+    assert.notOk(find(sessiontype).checked, 'filter is unchecked');
+    assert.notOk(find(cohort).checked, 'filter is unchecked');
   });
 
   test('query params work', async function (assert) {

@@ -45,6 +45,7 @@ module('Acceptance | Course - Mesh Terms', function (hooks) {
   });
 
   test('manage terms', async function (assert) {
+    assert.expect(24);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ courseId: 1, details: true });
     assert.equal(page.meshTerms.current.length, 3);

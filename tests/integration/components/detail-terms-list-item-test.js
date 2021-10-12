@@ -17,7 +17,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
 
     this.set('term', term);
     await render(hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`);
-    assert.ok(this.element.textContent.trim().indexOf('Foo') !== -1);
+    assert.notStrictEqual(this.element.textContent.trim().indexOf('Foo'), -1);
   });
 
   test('nested', async function (assert) {
@@ -32,7 +32,7 @@ module('Integration | Component | detail terms list item', function (hooks) {
     await render(hbs`<DetailTermsListItem @term={{term}} @canEdit={{false}} />`);
     assert.dom('.muted').includesText('Lorem »');
     assert.dom(findAll('.muted')[1]).includesText('Ipsum »');
-    assert.ok(this.element.textContent.trim().indexOf('Foo') !== -1);
+    assert.notStrictEqual(this.element.textContent.trim().indexOf('Foo'), -1);
   });
 
   test('remove', async function (assert) {

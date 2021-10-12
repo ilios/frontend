@@ -16,6 +16,7 @@ module('Integration | Component | new objective', function (hooks) {
   });
 
   test('errors do not show up initially', async function (assert) {
+    assert.expect(1);
     this.set('cancel', () => {
       assert.ok(false); //shouldn't be called
     });
@@ -24,6 +25,7 @@ module('Integration | Component | new objective', function (hooks) {
   });
 
   test('errors show up', async function (assert) {
+    assert.expect(2);
     this.set('cancel', () => {
       assert.ok(false); //shouldn't be called
     });

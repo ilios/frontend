@@ -22,6 +22,7 @@ module('Integration | Component | sessions-grid', function (hooks) {
   });
 
   test('clicking expand fires action', async function (assert) {
+    assert.expect(1);
     const session = {
       id: 1,
     };

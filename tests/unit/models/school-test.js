@@ -36,14 +36,14 @@ module('Unit | Model | School', function (hooks) {
       school,
     });
     const testFalse = await school.getConfigValue('test-false');
-    assert.deepEqual(testFalse, false);
+    assert.false(testFalse);
     store.createRecord('school-config', {
       name: 'test-true',
       value: 'true',
       school,
     });
     const testTrue = await school.getConfigValue('test-true');
-    assert.deepEqual(testTrue, true);
+    assert.true(testTrue);
   });
 
   test('getConfigValue empty', async function (assert) {

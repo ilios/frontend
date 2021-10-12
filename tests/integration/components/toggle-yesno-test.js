@@ -21,6 +21,7 @@ module('Integration | Component | toggle yesno', function (hooks) {
   });
 
   test('click', async function (assert) {
+    assert.expect(9);
     this.set('value', true);
     this.set('toggle', (val) => {
       const value = this.value;

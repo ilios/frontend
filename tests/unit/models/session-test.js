@@ -544,6 +544,6 @@ module('Unit | Model | Session', function (hooks) {
   test('text only empty description', async function (assert) {
     assert.expect(1);
     const subject = this.owner.lookup('service:store').createRecord('session');
-    assert.equal('', subject.textDescription);
+    assert.equal(subject.textDescription, '');
   });
 });
