@@ -84,17 +84,4 @@ module('Integration | Component | visualizer-course-session-types', function (ho
     assert.dom(chartLabels).exists({ count: 1 });
     assert.dom(findAll(chartLabels)[0]).hasText('Campaign 22.2%');
   });
-
-  test('filter applies', async function (assert) {
-    this.set('title', 'Campaign');
-    this.set('course', this.courseModel);
-
-    await render(
-      hbs`<VisualizerCourseSessionTypes @course={{this.course}} @filter={{this.title}} @isIcon={{false}} />`
-    );
-
-    const chartLabels = 'svg .bars text';
-    assert.dom(chartLabels).exists({ count: 1 });
-    assert.dom(findAll(chartLabels)[0]).hasText('Campaign 22.2%');
-  });
 });
