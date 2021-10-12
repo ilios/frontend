@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 
 module('Unit | Helper | has many length', function () {
   test('it works', function (assert) {
+    assert.expect(2);
     const model = {
       hasMany(what) {
         assert.equal(what, 'bar');
@@ -24,6 +25,7 @@ module('Unit | Helper | has many length', function () {
   });
 
   test('returns model when ids method is missing', function (assert) {
+    assert.expect(2);
     const model = {
       hasMany(what) {
         assert.equal(what, 'bar');

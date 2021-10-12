@@ -106,6 +106,6 @@ module('Integration | Component | toggle buttons', function (hooks) {
     />`);
 
     await click(first);
-    assert.equal(this.firstOptionSelected, true);
+    assert.true(this.firstOptionSelected);
   });
 });

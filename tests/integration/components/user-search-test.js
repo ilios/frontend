@@ -27,6 +27,7 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('input triggers search', async function (assert) {
+    assert.expect(4);
     this.server.create('user');
     this.server.get('api/users', (schema, { queryParams }) => {
       assert.equal(queryParams['q'], 'search words');
@@ -61,6 +62,7 @@ module('Integration | Component | user search', function (hooks) {
   });
 
   test('click user fires add user', async function (assert) {
+    assert.expect(4);
     const user = this.server.create('user');
 
     this.set('action', (passedUser) => {

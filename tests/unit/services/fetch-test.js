@@ -16,6 +16,7 @@ module('Unit | Service | fetch', function (hooks) {
   });
 
   test('getJsonFromApiHost works', async function (assert) {
+    assert.expect(2);
     this.server.get('/ourPath', (schema, { requestHeaders }) => {
       assert.notOk('X-JWT-Authorization' in requestHeaders);
       return {
@@ -28,6 +29,7 @@ module('Unit | Service | fetch', function (hooks) {
   });
 
   test('getJsonFromApiHost sends authentication headers', async function (assert) {
+    assert.expect(3);
     await authenticateSession({
       jwt: 'aAbBcC',
     });
@@ -44,6 +46,7 @@ module('Unit | Service | fetch', function (hooks) {
   });
 
   test('getJsonFromApiHost removes extra slash if needed', async function (assert) {
+    assert.expect(2);
     this.server.get('/ourPath', (schema, { requestHeaders }) => {
       assert.notOk('X-JWT-Authorization' in requestHeaders);
       return {

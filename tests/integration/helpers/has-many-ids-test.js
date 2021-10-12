@@ -8,6 +8,7 @@ module('Integration | Helper | has-many-ids', function (hooks) {
 
   // Replace this with your real tests.
   test('it renders', async function (assert) {
+    assert.expect(2);
     this.set('model', {
       hasMany(type) {
         assert.equal(type, 'foo');

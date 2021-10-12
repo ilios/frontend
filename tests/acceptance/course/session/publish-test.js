@@ -51,6 +51,7 @@ module('Acceptance | Session - Publish', function (hooks) {
   });
 
   test('check published session', async function (assert) {
+    assert.expect(6);
     await visit('/courses/1/sessions/' + this.publishedSession.id);
 
     assert.equal(currentRouteName(), 'session.index');
@@ -70,6 +71,7 @@ module('Acceptance | Session - Publish', function (hooks) {
   });
 
   test('check scheduled session', async function (assert) {
+    assert.expect(6);
     await visit('/courses/1/sessions/' + this.scheduledSession.id);
 
     assert.equal(currentRouteName(), 'session.index');
@@ -88,6 +90,7 @@ module('Acceptance | Session - Publish', function (hooks) {
   });
 
   test('check draft session', async function (assert) {
+    assert.expect(6);
     await visit('/courses/1/sessions/' + this.draftSession.id);
 
     assert.equal(currentRouteName(), 'session.index');

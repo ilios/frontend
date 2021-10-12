@@ -58,13 +58,13 @@ module('Integration | Service | user events', function (hooks) {
     assert.equal(events.length, 3);
     assert.equal(events[0].ilmSession, event2.ilmSession);
     assert.equal(events[0].startDate, event2.startDate);
-    assert.equal(events[0].isBlanked, false);
+    assert.false(events[0].isBlanked);
     assert.equal(events[0].slug, 'U20080902I3');
-    assert.equal(events[1].isBlanked, false);
+    assert.false(events[1].isBlanked);
     assert.equal(events[1].slug, 'U20110421O1');
     assert.equal(events[1].offering, event1.offering);
     assert.equal(events[1].startDate, event1.startDate);
-    assert.equal(events[2].isBlanked, true);
+    assert.true(events[2].isBlanked);
     assert.equal(events[2].startDate, event3.startDate);
   });
 

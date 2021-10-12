@@ -16,7 +16,7 @@ module('Unit | Serializer | curriculum inventory report', function (hooks) {
     record.set('absoluteFileUri', uri);
     assert.equal(record.get('absoluteFileUri'), uri);
     const serializedRecord = record.serialize();
-    assert.ok(!('absoluteFileUri' in serializedRecord.data.attributes));
+    assert.notOk('absoluteFileUri' in serializedRecord.data.attributes);
   });
 
   test('start and end date are formatted during serialization', function (assert) {

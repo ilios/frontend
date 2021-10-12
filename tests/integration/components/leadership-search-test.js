@@ -75,13 +75,14 @@ module('Integration | Component | leadership search', function (hooks) {
   });
 
   test('click user fires add user', async function (assert) {
+    assert.expect(2);
     this.server.create('user', {
       firstName: 'test',
       lastName: 'person',
       email: 'testemail',
     });
     this.set('select', (user) => {
-      assert.equal(1, user.id);
+      assert.equal(user.id, 1);
     });
     await render(hbs`<LeadershipSearch
       @existingUsers={{array}}

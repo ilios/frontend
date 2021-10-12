@@ -3,6 +3,7 @@ import { module, test } from 'qunit';
 
 module('Unit | Helper | count related', function () {
   test('calls has many on object', function (assert) {
+    assert.expect(2);
     const object = {
       hasMany(what) {
         assert.equal(what, 'stuff');

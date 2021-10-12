@@ -9,6 +9,6 @@ module('Unit | Serializer | report', function (hooks) {
 
     var serializedRecord = record.serialize();
 
-    assert.ok(!('createdAt' in serializedRecord));
+    assert.notOk('createdAt' in serializedRecord);
   });
 });

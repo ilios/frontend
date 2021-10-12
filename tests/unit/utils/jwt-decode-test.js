@@ -8,6 +8,6 @@ module('Unit | Utility | jwt decode', function () {
     const obj = jwtDecode(token);
     assert.equal(obj.sub, '1234567890');
     assert.equal(obj.name, 'John Doe');
-    assert.equal(obj.admin, true);
+    assert.true(obj.admin);
   });
 });

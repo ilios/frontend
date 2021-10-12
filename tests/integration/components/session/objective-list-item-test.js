@@ -61,6 +61,7 @@ module('Integration | Component | session/objective-list-item', function (hooks)
   });
 
   test('can manage parents', async function (assert) {
+    assert.expect(1);
     const session = this.server.create('session');
     const sessionObjective = this.server.create('sessionObjective', {
       session,
@@ -69,9 +70,6 @@ module('Integration | Component | session/objective-list-item', function (hooks)
       .lookup('service:store')
       .find('session-objective', sessionObjective.id);
     this.set('sessionObjective', sessionObjectiveModel);
-    this.set('manageParents', () => {
-      assert.ok(true);
-    });
     await render(
       hbs`<Session::ObjectiveListItem
         @sessionObjective={{this.sessionObjective}}

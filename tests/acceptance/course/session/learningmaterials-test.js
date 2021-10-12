@@ -439,6 +439,7 @@ module('Acceptance | Session - Learning Materials', function (hooks) {
     });
 
     test('manage terms', async function (assert) {
+      assert.expect(22);
       this.user.update({ administeredSchools: [this.school] });
       await page.visit({ courseId: 1, sessionId: 1 });
       assert.equal(page.learningMaterials.current.length, 4);

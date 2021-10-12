@@ -57,20 +57,19 @@ module('Integration | Component | course/objective-list-item', function (hooks) 
   });
 
   test('can manage parents', async function (assert) {
+    assert.expect(1);
     const course = this.server.create('course');
     const courseObjective = this.server.create('courseObjective', { course });
     const courseObjectiveModel = await this.owner
       .lookup('service:store')
       .find('courseObjective', courseObjective.id);
     this.set('courseObjective', courseObjectiveModel);
-    this.set('manageParents', () => {
-      assert.ok(true);
-    });
     await render(
       hbs`<Course::ObjectiveListItem
         @courseObjective={{this.courseObjective}}
         @editable={{true}}
         @cohortObjectives={{array}}
+        @manageParents={{this.manageParents}}
       />`
     );
     await component.parents.list[0].manage();

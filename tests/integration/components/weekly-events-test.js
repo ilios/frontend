@@ -28,7 +28,7 @@ module('Integration | Component | weekly events', function (hooks) {
     assert.expect(5);
     this.set('year', 2017);
     this.set('setYear', (newYear) => {
-      assert.equal(2018, newYear, 'we moved forward');
+      assert.equal(newYear, 2018, 'we moved forward');
       this.set('year', newYear);
     });
     await render(hbs`<WeeklyEvents
@@ -48,7 +48,7 @@ module('Integration | Component | weekly events', function (hooks) {
     assert.expect(5);
     this.set('year', 2017);
     this.set('setYear', (newYear) => {
-      assert.equal(2018, newYear, 'we moved forward');
+      assert.equal(newYear, 2018, 'we moved forward');
       this.set('year', newYear);
     });
     await render(hbs`<WeeklyEvents
@@ -68,7 +68,7 @@ module('Integration | Component | weekly events', function (hooks) {
     assert.expect(5);
     this.set('year', 2017);
     this.set('setYear', (newYear) => {
-      assert.equal(2016, newYear, 'we moved backwards');
+      assert.equal(newYear, 2016, 'we moved backwards');
       this.set('year', newYear);
     });
     await render(hbs`<WeeklyEvents
@@ -88,7 +88,7 @@ module('Integration | Component | weekly events', function (hooks) {
     assert.expect(5);
     this.set('year', 2017);
     this.set('setYear', (newYear) => {
-      assert.equal(2016, newYear, 'we moved backwards');
+      assert.equal(newYear, 2016, 'we moved backwards');
       this.set('year', newYear);
     });
     await render(hbs`<WeeklyEvents

@@ -23,7 +23,7 @@ module('Unit | Model | vocabulary', function (hooks) {
     const term3 = store.createRecord('term', { id: 3, parent: term2 });
     model.get('terms').pushObjects([term1, term2, term3]);
     const topLevelTerms = await model.get('topLevelTerms');
-    assert.equal(2, topLevelTerms.length);
+    assert.equal(topLevelTerms.length, 2);
     assert.ok(topLevelTerms.includes(term1));
     assert.ok(topLevelTerms.includes(term2));
   });

@@ -36,6 +36,7 @@ module('Acceptance | Session - Objective Mesh Descriptors', function (hooks) {
   });
 
   test('manage terms', async function (assert) {
+    assert.expect(35);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({
       courseId: 1,

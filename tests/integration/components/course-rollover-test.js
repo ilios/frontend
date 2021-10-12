@@ -427,7 +427,7 @@ module('Integration | Component | course rollover', function (hooks) {
         parseBooleans: true,
       });
       assert.ok('skipOfferings' in data);
-      assert.equal(data.skipOfferings, true);
+      assert.true(data.skipOfferings);
       return this.serialize(
         schema.courses.create({
           id: 14,

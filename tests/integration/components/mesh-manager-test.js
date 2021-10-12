@@ -20,6 +20,7 @@ module('Integration | Component | mesh-manager', function (hooks) {
   });
 
   test('searching works', async function (assert) {
+    assert.expect(15);
     this.server.create('meshDescriptor', {
       concepts: this.concepts,
       trees: this.trees,
@@ -57,6 +58,7 @@ module('Integration | Component | mesh-manager', function (hooks) {
   });
 
   test('searching with more than 50 results', async function (assert) {
+    assert.expect(153);
     this.server.createList('meshDescriptor', 200);
     this.set('nothing', () => {});
     await render(hbs`<MeshManager

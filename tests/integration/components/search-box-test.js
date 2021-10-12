@@ -13,6 +13,7 @@ module('Integration | Component | search box', function (hooks) {
   });
 
   test('clicking search calls search', async function (assert) {
+    assert.expect(1);
     this.set('search', (value) => {
       assert.equal(value, '');
     });
@@ -22,6 +23,7 @@ module('Integration | Component | search box', function (hooks) {
   });
 
   test('typing calls search', async function (assert) {
+    assert.expect(1);
     this.set('search', (value) => {
       assert.equal(value, 'typed it');
     });
@@ -30,6 +32,7 @@ module('Integration | Component | search box', function (hooks) {
   });
 
   test('escape calls clear', async function (assert) {
+    assert.expect(1);
     this.set('clear', () => {
       assert.ok(true);
     });

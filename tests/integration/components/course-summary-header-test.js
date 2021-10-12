@@ -15,20 +15,27 @@ module('Integration | Component | course summary header', function (hooks) {
     });
     this.owner.register('service:currentUser', currentUserMock);
 
-    this.permissionCheckerMock = Service.extend({
+    class PermissionCheckerStub extends Service {
       async canCreateCourse() {
         return true;
-      },
-    });
-    this.owner.register('service:permissionChecker', this.permissionCheckerMock);
+      }
+    }
+
+    this.owner.register('service:permissionChecker', PermissionCheckerStub);
   });
 
   test('it renders', async function (assert) {
+    assert.expect(10);
+
+    class PermissionCheckerStub extends Service {
+      async canCreateCourse(inSchool) {
+        assert.equal(school.id, inSchool.id);
+        return true;
+      }
+    }
+
+    this.owner.register('service:permissionChecker', PermissionCheckerStub);
     const school = this.server.create('school');
-    this.permissionCheckerMock.canCreateCourse = async (inSchool) => {
-      assert.equal(school.id, inSchool.id);
-      return true;
-    };
     const course = this.server.create('course', {
       school: school,
       externalId: 'abc',

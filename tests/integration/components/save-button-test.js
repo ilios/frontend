@@ -26,6 +26,7 @@ module('Integration | Component | save-button', function (hooks) {
   });
 
   test('binds passed action', async function (assert) {
+    assert.expect(1);
     this.set('click', () => assert.ok(true));
     await render(hbs`<SaveButton data-test-save {{on "click" this.click}}>Save</SaveButton>`);
     await click('[data-test-save]');
