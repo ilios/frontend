@@ -40,11 +40,8 @@ module('Integration | Component | click choice buttons', function (hooks) {
     this.set('firstChoicePicked', true);
     let called = 0;
     this.set('toggle', (newValue) => {
-      if (called === 0) {
-        assert.notOk(newValue, 'has not been toggled yet');
-      } else {
-        assert.ok(newValue, 'has been toggled');
-      }
+      const hasBeenCalled = Boolean(called);
+      assert.equal(newValue, hasBeenCalled);
       this.set('firstChoicePicked', newValue);
       called++;
     });

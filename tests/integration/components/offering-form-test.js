@@ -238,27 +238,24 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('save recurring one week with days selected before initial date', async function (assert) {
-    assert.expect(2);
+    assert.expect(4);
     const wednesday = moment().add(1, 'week').day(3);
     const thursday = wednesday.clone().add(1, 'day').day();
     const tuesday = wednesday.clone().subtract(1, 'day').day();
     const newStartDate = wednesday.toDate();
     let savedCount = 0;
     this.set('save', async (startDate) => {
+      assert.ok(savedCount <= 1, 'should only get two saved offerings, we got ' + (savedCount + 1));
       let expectedStartDate;
-      if (savedCount === 0) {
-        expectedStartDate = wednesday.clone();
-      } else if (savedCount === 1) {
-        expectedStartDate = wednesday.clone().day(thursday);
-      } else {
-        assert.ok(false, 'should only get two saved offerings, we got ' + (savedCount + 1));
+      switch (savedCount) {
+        case 0:
+          expectedStartDate = wednesday.clone();
+          break;
+        case 1:
+          expectedStartDate = wednesday.clone().day(thursday);
+          break;
       }
-      if (expectedStartDate) {
-        assert.equal(
-          moment(startDate).format('YYYY-MM-DD'),
-          expectedStartDate.format('YYYY-MM-DD')
-        );
-      }
+      assert.equal(moment(startDate).format('YYYY-MM-DD'), expectedStartDate.format('YYYY-MM-DD'));
 
       savedCount++;
     });
@@ -275,45 +272,48 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('save recurring 3 weeks should get lots of days', async function (assert) {
-    assert.expect(8);
+    assert.expect(16);
     const wednesday = moment().add(1, 'week').day(3);
     const thursday = wednesday.clone().add(1, 'day').day();
     const tuesday = wednesday.clone().subtract(1, 'day').day();
     const newStartDate = wednesday.toDate();
     let savedCount = 0;
     this.set('save', async (startDate) => {
-      let expectedStartDate;
-      if (savedCount === 0) {
-        expectedStartDate = wednesday.clone();
-      } else if (savedCount === 1) {
-        expectedStartDate = wednesday.clone().add(1, 'day');
-      } else if (savedCount === 2) {
-        expectedStartDate = wednesday.clone().subtract(1, 'day').add(1, 'weeks');
-      } else if (savedCount === 3) {
-        expectedStartDate = wednesday.clone().add(1, 'weeks');
-      } else if (savedCount === 4) {
-        expectedStartDate = wednesday.clone().add(1, 'day').add(1, 'weeks');
-      } else if (savedCount === 5) {
-        expectedStartDate = wednesday.clone().subtract(1, 'day').add(2, 'weeks');
-      } else if (savedCount === 6) {
-        expectedStartDate = wednesday.clone().add(2, 'weeks');
-      } else if (savedCount === 7) {
-        expectedStartDate = wednesday.clone().add(1, 'day').add(2, 'weeks');
-      } else {
-        assert.ok(
-          false,
-          'should only get eight saved offerings, we got ' +
-            (savedCount + 1) +
-            ' with startDate ' +
-            moment(startDate).format('YYYY-MM-DD')
-        );
-      }
-      if (expectedStartDate) {
-        assert.equal(
-          expectedStartDate.format('YYYY-MM-DD'),
+      assert.ok(
+        savedCount <= 7,
+        'should only get eight saved offerings, we got ' +
+          (savedCount + 1) +
+          ' with startDate ' +
           moment(startDate).format('YYYY-MM-DD')
-        );
+      );
+      let expectedStartDate;
+      switch (savedCount) {
+        case 0:
+          expectedStartDate = wednesday.clone();
+          break;
+        case 1:
+          expectedStartDate = wednesday.clone().add(1, 'day');
+          break;
+        case 2:
+          expectedStartDate = wednesday.clone().subtract(1, 'day').add(1, 'weeks');
+          break;
+        case 3:
+          expectedStartDate = wednesday.clone().add(1, 'weeks');
+          break;
+        case 4:
+          expectedStartDate = wednesday.clone().add(1, 'day').add(1, 'weeks');
+          break;
+        case 5:
+          expectedStartDate = wednesday.clone().subtract(1, 'day').add(2, 'weeks');
+          break;
+        case 6:
+          expectedStartDate = wednesday.clone().add(2, 'weeks');
+          break;
+        case 7:
+          expectedStartDate = wednesday.clone().add(1, 'day').add(2, 'weeks');
+          break;
       }
+      assert.equal(expectedStartDate.format('YYYY-MM-DD'), moment(startDate).format('YYYY-MM-DD'));
 
       savedCount++;
     });
