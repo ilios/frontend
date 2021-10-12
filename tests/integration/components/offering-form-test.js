@@ -536,20 +536,6 @@ module('Integration | Component | offering form', function (hooks) {
     await component.duration.hours.submit();
   });
 
-  test('save by pressing enter in duration hours field', async function (assert) {
-    assert.expect(1);
-    const offering = this.server.create('offering');
-    const offeringModel = await this.owner.lookup('service:store').find('offering', offering.id);
-    this.set('offering', offeringModel);
-    this.set('save', () => {
-      assert.ok(true);
-    });
-    await render(
-      hbs`<OfferingForm @offering={{this.offering}} @close={{noop}} @save={{this.save}} />`
-    );
-    await component.duration.hours.submit();
-  });
-
   test('save by pressing enter in duration minutes field', async function (assert) {
     assert.expect(1);
     const offering = this.server.create('offering');
