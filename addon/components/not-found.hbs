@@ -2,7 +2,7 @@
   {{t "general.notFoundMessage"}}
   <br>
   {{#if (has-route "dashboard")}}
-    <LinkTo @route="dashboard" @query={{null}}>
+    <LinkTo @route="dashboard" @query={{hash}}>
       {{t "general.backToDashboard"}}
     </LinkTo>
   {{/if}}

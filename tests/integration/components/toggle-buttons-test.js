@@ -45,11 +45,8 @@ module('Integration | Component | toggle buttons', function (hooks) {
     this.set('firstOptionSelected', true);
     let called = 0;
     this.set('toggle', (newValue) => {
-      if (called === 0) {
-        assert.notOk(newValue, 'has not been toggled yet');
-      } else {
-        assert.ok(newValue, 'has been toggled');
-      }
+      const hasBeenCalled = Boolean(called);
+      assert.equal(newValue, hasBeenCalled);
       this.set('firstOptionSelected', newValue);
       called++;
     });
@@ -70,11 +67,8 @@ module('Integration | Component | toggle buttons', function (hooks) {
     this.set('firstOptionSelected', true);
     let called = 0;
     this.set('toggle', (newValue) => {
-      if (called === 0) {
-        assert.notOk(newValue, 'has not been toggled yet');
-      } else {
-        assert.ok(newValue, 'has been toggled');
-      }
+      const hasBeenCalled = Boolean(called);
+      assert.equal(newValue, hasBeenCalled);
       this.set('firstOptionSelected', newValue);
       called++;
     });

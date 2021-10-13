@@ -5,7 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { setupIntl } from 'ember-intl/test-support';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 
-module('Integration | Component | objective sort manager', async function (hooks) {
+module('Integration | Component | objective sort manager', function (hooks) {
   setupRenderingTest(hooks);
   setupIntl(hooks);
   setupMirage(hooks);
