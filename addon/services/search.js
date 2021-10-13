@@ -1,12 +1,11 @@
 import Service, { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
 import fetch from 'fetch';
 
-export default Service.extend({
-  iliosConfig: service(),
-  session: service(),
+export default class SearchService extends Service {
+  @service iliosConfig;
+  @service session;
 
-  authHeaders: computed('session.isAuthenticated', function () {
+  get authHeaders() {
     const session = this.session;
     const { jwt } = session.data.authenticated;
     const headers = {};
@@ -15,13 +14,13 @@ export default Service.extend({
     }
 
     return new Headers(headers);
-  }),
+  }
 
-  host: computed('iliosConfig.apiHost', function () {
+  get host() {
     return this.iliosConfig.apiHost
       ? this.iliosConfig.apiHost
       : window.location.protocol + '//' + window.location.host;
-  }),
+  }
 
   /**
    * Find courses
@@ -29,7 +28,7 @@ export default Service.extend({
    */
   async forCurriculum(q, onlySuggestEnabled = false) {
     return this.search('curriculum', q, 1000, onlySuggestEnabled);
-  },
+  }
 
   /**
    * Find users
@@ -46,7 +45,7 @@ export default Service.extend({
     });
 
     return { autocomplete, users: mappedUsers };
-  },
+  }
 
   async search(type, q, size, onlySuggestEnabled) {
     const onlySuggest = onlySuggestEnabled ? '&onlySuggest=true' : '';
@@ -58,7 +57,7 @@ export default Service.extend({
     const { results } = await response.json();
 
     return results;
-  },
+  }
 
   getUserFullName(user) {
     if (user.displayName) {
@@ -76,5 +75,5 @@ export default Service.extend({
     } else {
       return `${user.firstName} ${user.lastName}`;
     }
-  },
-});
+  }
+}
