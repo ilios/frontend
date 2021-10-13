@@ -1,11 +1,20 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 
-export default Model.extend({
-  name: attr('string'),
-  description: attr('string'),
-  level: attr('number'),
-  report: belongsTo('curriculum-inventory-report', { async: true }),
-  sequenceBlocks: hasMany('curriculum-inventory-sequence-block', {
+export default class CurriculumInventoryAcademicLevel extends Model {
+  @attr('string')
+  name;
+
+  @attr('string')
+  description;
+
+  @attr('number')
+  level;
+
+  @belongsTo('curriculum-inventory-report', { async: true })
+  report;
+
+  @hasMany('curriculum-inventory-sequence-block', {
     async: true,
-  }),
-});
+  })
+  sequenceBlocks;
+}

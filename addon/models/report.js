@@ -1,11 +1,24 @@
 import Model, { belongsTo, attr } from '@ember-data/model';
 
-export default Model.extend({
-  title: attr('string'),
-  createdAt: attr('date'),
-  subject: attr('string'),
-  prepositionalObject: attr('string'),
-  prepositionalObjectTableRowId: attr('string'),
-  user: belongsTo('user', { async: true }),
-  school: belongsTo('school', { async: true }),
-});
+export default class Report extends Model {
+  @attr('string')
+  title;
+
+  @attr('date')
+  createdAt;
+
+  @attr('string')
+  subject;
+
+  @attr('string')
+  prepositionalObject;
+
+  @attr('string')
+  prepositionalObjectTableRowId;
+
+  @belongsTo('user', { async: true })
+  user;
+
+  @belongsTo('school', { async: true })
+  school;
+}

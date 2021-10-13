@@ -1,17 +1,30 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 
-export default Model.extend({
-  hours: attr('number'),
-  dueDate: attr('date'),
-  session: belongsTo('session', { async: true }),
-  learnerGroups: hasMany('learner-group', { async: true }),
-  instructorGroups: hasMany('instructor-group', { async: true }),
-  instructors: hasMany('user', {
+export default class IlmSession extends Model {
+  @attr('number')
+  hours;
+
+  @attr('date')
+  dueDate;
+
+  @belongsTo('session', { async: true })
+  session;
+
+  @hasMany('learner-group', { async: true })
+  learnerGroups;
+
+  @hasMany('instructor-group', { async: true })
+  instructorGroups;
+
+  @hasMany('user', {
     async: true,
     inverse: 'instructorIlmSessions',
-  }),
-  learners: hasMany('user', {
+  })
+  instructors;
+
+  @hasMany('user', {
     async: true,
     inverse: 'learnerIlmSessions',
-  }),
-});
+  })
+  learners;
+}
