@@ -26,8 +26,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         @type={{this.type}}
         @learningMaterialStatuses={{array}}
         @learningMaterialUserRoles={{array}}
-        @save={{noop}}
-        @cancel={{noop}}
+        @save={{(noop)}}
+        @cancel={{(noop)}}
       />
    `);
     assert.equal(component.owningUser.userNameInfo.fullName, 'Clem Chowder');
@@ -50,8 +50,8 @@ module('Integration | Component | new learningmaterial', function (hooks) {
         @type={{this.type}}
         @learningMaterialStatuses={{array}}
         @learningMaterialUserRoles={{array}}
-        @save={{noop}}
-        @cancel={{noop}}
+        @save={{(noop)}}
+        @cancel={{(noop)}}
       />
    `);
     assert.equal(component.url.validationErrors.length, 0);

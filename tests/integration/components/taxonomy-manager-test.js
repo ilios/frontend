@@ -191,8 +191,8 @@ module('Integration | Component | taxonomy manager', function (hooks) {
     await render(hbs`<TaxonomyManager
       @vocabularies={{await this.assignableVocabularies}}
       @selectedTerms={{this.selectedTerms}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
 
     assert.equal(component.availableTerms.length, 2);

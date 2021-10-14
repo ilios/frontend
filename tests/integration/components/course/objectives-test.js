@@ -36,8 +36,8 @@ module('Integration | Component | course/objectives', function (hooks) {
     await render(hbs`<Course::Objectives
       @course={{this.course}}
       @editable={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 2);
@@ -82,8 +82,8 @@ module('Integration | Component | course/objectives', function (hooks) {
     await render(hbs`<Course::Objectives
       @course={{this.course}}
       @editable={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 1);
@@ -154,8 +154,8 @@ module('Integration | Component | course/objectives', function (hooks) {
     await render(hbs`<Course::Objectives
       @course={{this.course}}
       @editable={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 1);
@@ -202,8 +202,8 @@ module('Integration | Component | course/objectives', function (hooks) {
     await render(hbs`<Course::Objectives
       @course={{this.course}}
       @editable={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 1);

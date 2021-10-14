@@ -32,8 +32,8 @@ module('Integration | Component | dashboard/SelectedTermTree', function (hooks) 
     await render(hbs`<Dashboard::SelectedTermTree
       @terms={{this.tree}}
       @selectedTermIds={{this.selectedTermIds}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
     const topTerms = 'ul:nth-of-type(1) > li';
     const firstTopTerm = `${topTerms}:nth-of-type(1)`;
@@ -61,7 +61,7 @@ module('Integration | Component | dashboard/SelectedTermTree', function (hooks) 
       @terms={{this.tree}}
       @selectedTermIds={{array}}
       @add={{this.add}}
-      @remove={{noop}}
+      @remove={{(noop)}}
     />`);
     await click('[data-test-target]:nth-of-type(1)');
   });
@@ -76,7 +76,7 @@ module('Integration | Component | dashboard/SelectedTermTree', function (hooks) 
     await render(hbs`<Dashboard::SelectedTermTree
       @terms={{this.tree}}
       @selectedTermIds={{this.selectedTermIds}}
-      @add={{noop}}
+      @add={{(noop)}}
       @remove={{this.remove}}
     />`);
     await click('[data-test-target]:nth-of-type(1)');

@@ -22,10 +22,10 @@ module('Integration | Component | course leadership expanded', function (hooks) 
     await render(hbs`<CourseLeadershipExpanded
       @course={{this.course}}
       @editable={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @isManaging={{false}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
     />`);
 
     assert.equal(component.title, 'Course Leadership');
@@ -53,9 +53,9 @@ module('Integration | Component | course leadership expanded', function (hooks) 
       @course={{this.course}}
       @editable={{true}}
       @collapse={{this.click}}
-      @expand={{noop}}
+      @expand={{(noop)}}
       @isManaging={{false}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
     />`);
     await component.collapse();
   });
@@ -75,9 +75,9 @@ module('Integration | Component | course leadership expanded', function (hooks) 
       @course={{this.course}}
       @editable={{true}}
       @collapse={{this.click}}
-      @expand={{noop}}
+      @expand={{(noop)}}
       @isManaging={{false}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
     />`);
     await component.collapse();
   });
@@ -97,9 +97,9 @@ module('Integration | Component | course leadership expanded', function (hooks) 
       @course={{this.course}}
       @editable={{true}}
       @collapse={{this.click}}
-      @expand={{noop}}
+      @expand={{(noop)}}
       @isManaging={{false}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
     />`);
     await component.collapse();
   });
@@ -115,8 +115,8 @@ module('Integration | Component | course leadership expanded', function (hooks) 
     await render(hbs`<CourseLeadershipExpanded
       @course={{this.course}}
       @editable={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{this.click}}
     />`);

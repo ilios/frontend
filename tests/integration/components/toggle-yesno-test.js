@@ -12,7 +12,7 @@ module('Integration | Component | toggle yesno', function (hooks) {
 
   test('it renders', async function (assert) {
     this.set('value', true);
-    await render(hbs`<ToggleYesno @yes={{this.value}} @action={{noop}} />`);
+    await render(hbs`<ToggleYesno @yes={{this.value}} @action={{(noop)}} />`);
     await a11yAudit(this.element);
     assert.ok(true, 'not a11y violations');
     assert.equal(component.checked, 'true');

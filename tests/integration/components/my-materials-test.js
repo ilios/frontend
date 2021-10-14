@@ -69,8 +69,8 @@ module('Integration | Component | my-materials', function (hooks) {
     await render(hbs`<MyMaterials
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
-      @setCourseIdFilter={{noop}}
-      @setFilter={{noop}}
+      @setCourseIdFilter={{(noop)}}
+      @setFilter={{(noop)}}
     />`);
     assert.dom('[data-test-none]').exists();
   });
@@ -82,8 +82,8 @@ module('Integration | Component | my-materials', function (hooks) {
     await render(hbs`<MyMaterials
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
-      @setCourseIdFilter={{noop}}
-      @setFilter={{noop}}
+      @setCourseIdFilter={{(noop)}}
+      @setFilter={{(noop)}}
     />`);
 
     const table = 'table:nth-of-type(1)';
@@ -223,7 +223,7 @@ module('Integration | Component | my-materials', function (hooks) {
       @filter={{this.filter}}
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
-      @setCourseIdFilter={{noop}}
+      @setCourseIdFilter={{(noop)}}
       @setFilter={{action (mut this.filter)}}
     />`);
 
@@ -249,7 +249,7 @@ module('Integration | Component | my-materials', function (hooks) {
       @filter={{this.filter}}
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
-      @setCourseIdFilter={{noop}}
+      @setCourseIdFilter={{(noop)}}
       @setFilter={{action (mut this.filter)}}
     />`);
 
@@ -273,7 +273,7 @@ module('Integration | Component | my-materials', function (hooks) {
       @filter={{this.filter}}
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
-      @setCourseIdFilter={{noop}}
+      @setCourseIdFilter={{(noop)}}
       @setFilter={{action (mut this.filter)}}
     />`);
 
@@ -337,8 +337,8 @@ module('Integration | Component | my-materials', function (hooks) {
     await render(hbs`<MyMaterials
       @materials={{this.materials}}
       @sortBy={{this.sortBy}}
-      @setCourseIdFilter={{noop}}
-      @setFilter={{noop}}
+      @setCourseIdFilter={{(noop)}}
+      @setFilter={{(noop)}}
       @setSortBy={{action this.setSortBy}}
     />`);
 
@@ -376,7 +376,7 @@ module('Integration | Component | my-materials', function (hooks) {
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
       @setCourseIdFilter={{action this.setCourseIdFilter}}
-      @setFilter={{noop}}
+      @setFilter={{(noop)}}
     />`);
 
     const select = '.course-filter select';
@@ -394,7 +394,7 @@ module('Integration | Component | my-materials', function (hooks) {
       @filter={{this.filter}}
       @materials={{this.materials}}
       @sortBy="firstOfferingDate"
-      @setCourseIdFilter={{noop}}
+      @setCourseIdFilter={{(noop)}}
       @setFilter={{action (mut this.filter)}}
     />`);
 

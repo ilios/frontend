@@ -11,7 +11,7 @@ module('Integration | Component | leadership search', function (hooks) {
   test('it renders', async function (assert) {
     await render(hbs`<LeadershipSearch
       @existingUsers={{array}}
-      @selectUser={{noop}}
+      @selectUser={{(noop)}}
     />`);
 
     const search = 'input[type="search"]';
@@ -22,7 +22,7 @@ module('Integration | Component | leadership search', function (hooks) {
   test('less than 3 charecters triggers warning', async function (assert) {
     await render(hbs`<LeadershipSearch
       @existingUsers={{array}}
-      @selectUser={{noop}}
+      @selectUser={{(noop)}}
     />`);
     const search = 'input[type="search"]';
     const results = 'ul';
@@ -39,7 +39,7 @@ module('Integration | Component | leadership search', function (hooks) {
     });
     await render(hbs`<LeadershipSearch
       @existingUsers={{array}}
-      @selectUser={{noop}}
+      @selectUser={{(noop)}}
     />`);
     const search = 'input[type="search"]';
     const results = 'ul li';
@@ -64,7 +64,7 @@ module('Integration | Component | leadership search', function (hooks) {
   test('no results displays messages', async function (assert) {
     await render(hbs`<LeadershipSearch
       @existingUsers={{array}}
-      @selectUser={{noop}}
+      @selectUser={{(noop)}}
     />`);
     const search = 'input[type="search"]';
     const results = 'ul li';

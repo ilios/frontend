@@ -37,8 +37,8 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
     ]);
     await render(hbs`<Dashboard::CohortCalendarFilter
       @cohortProxies={{this.cohortProxies}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
 
     assert.equal(component.cohorts.length, 4);
@@ -81,8 +81,8 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
     await render(hbs`<Dashboard::CohortCalendarFilter
       @cohortProxies={{this.cohortProxies}}
       @selectedIds={{array 2 3}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
 
     assert.equal(component.cohorts.length, 4);
@@ -112,7 +112,7 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
     await render(hbs`<Dashboard::CohortCalendarFilter
       @cohortProxies={{this.cohortProxies}}
       @selectedIds={{array 1}}
-      @add={{noop}}
+      @add={{(noop)}}
       @remove={{this.remove}}
     />`);
     assert.ok(component.cohorts[0].isChecked);
@@ -135,7 +135,7 @@ module('Integration | Component | dashboard/cohort-calendar-filter', function (h
     await render(hbs`<Dashboard::CohortCalendarFilter
       @cohortProxies={{this.cohortProxies}}
       @add={{this.add}}
-      @remove={{noop}}
+      @remove={{(noop)}}
     />`);
     assert.notOk(component.cohorts[0].isChecked);
     await component.cohorts[0].toggle();

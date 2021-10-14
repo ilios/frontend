@@ -117,7 +117,7 @@ module('Integration | Component | course materials', function (hooks) {
       @course={{this.course}}
       @courseSort={{this.courseSort}}
       @sessionSort={{this.sessionSort}}
-      @onSessionSort={{noop}}
+      @onSessionSort={{(noop)}}
     />`);
 
     assert.equal(component.courses.length, 3);
@@ -398,8 +398,8 @@ module('Integration | Component | course materials', function (hooks) {
 
     await render(hbs`<CourseMaterials
       @course={{this.course}}
-      @courseSort={{noop}}
-      @sessionSort={{noop}}
+      @courseSort={{(noop)}}
+      @sessionSort={{(noop)}}
     />`);
 
     assert.equal(component.courses.length, 1);

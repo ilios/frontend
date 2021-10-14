@@ -37,7 +37,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('course', courseModel);
-    await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{noop}} />`);
+    await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{(noop)}} />`);
 
     assert.equal(component.title, 'Objectives (4)');
     assert.equal(component.objectiveCount, 'There are 4 objectives');
@@ -75,7 +75,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('course', courseModel);
-    await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{noop}} />`);
+    await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{(noop)}} />`);
     assert.equal(component.title, 'Objectives (1)');
     assert.ok(component.parentStatus.complete);
   });
@@ -87,7 +87,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('course', courseModel);
-    await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{noop}} />`);
+    await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{(noop)}} />`);
     assert.equal(component.title, 'Objectives (1)');
     assert.ok(component.parentStatus.none);
   });
@@ -99,7 +99,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('course', courseModel);
-    await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{noop}} />`);
+    await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{(noop)}} />`);
     assert.equal(component.title, 'Objectives (1)');
     assert.ok(component.meshStatus.complete);
   });
@@ -111,7 +111,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('course', courseModel);
-    await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{noop}} />`);
+    await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{(noop)}} />`);
     assert.equal(component.title, 'Objectives (1)');
     assert.ok(component.meshStatus.none);
   });
@@ -123,7 +123,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('course', courseModel);
-    await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{noop}} />`);
+    await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{(noop)}} />`);
     assert.equal(component.title, 'Objectives (1)');
     assert.ok(component.termStatus.complete);
   });
@@ -135,7 +135,7 @@ module('Integration | Component | course/collapsed-objectives', function (hooks)
     const courseModel = await this.owner.lookup('service:store').find('course', course.id);
 
     this.set('course', courseModel);
-    await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{noop}} />`);
+    await render(hbs`<Course::CollapsedObjectives @course={{this.course}} @expand={{(noop)}} />`);
     assert.equal(component.title, 'Objectives (1)');
     assert.ok(component.termStatus.none);
   });

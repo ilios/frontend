@@ -10,7 +10,7 @@ module('Integration | Component | click choice buttons', function (hooks) {
   test('it renders', async function (assert) {
     assert.expect(4);
     await render(hbs`<ClickChoiceButtons
-      @toggle={{noop}}
+      @toggle={{(noop)}}
       @firstChoicePicked={{true}}
       @buttonContent1="Left Button"
       @buttonContent2="Right Button"
@@ -24,7 +24,7 @@ module('Integration | Component | click choice buttons', function (hooks) {
   test('it renders second choice picked', async function (assert) {
     assert.expect(4);
     await render(hbs`<ClickChoiceButtons
-      @toggle={{noop}}
+      @toggle={{(noop)}}
       @firstChoicePicked={{false}}
       @buttonContent1="Left Button"
       @buttonContent2="Right Button"

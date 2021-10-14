@@ -14,7 +14,7 @@ module('Integration | Component | toggle buttons', function (hooks) {
 
     this.set('nothing', parseInt);
     await render(hbs`<ToggleButtons
-      @action={{noop}}
+      @action={{(noop)}}
       @firstOptionSelected={{true}}
       @firstLabel="First"
       @firstIcon="user"

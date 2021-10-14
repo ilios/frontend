@@ -28,8 +28,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     await render(hbs`<MonthlyCalendar
       @date={{this.date}}
       @events={{array}}
-      @changeToDayView={{noop}}
-      @selectEvent={{noop}}
+      @changeToDayView={{(noop)}}
+      @selectEvent={{(noop)}}
     />`);
 
     assert.equal(component.days.length, 31);
@@ -51,8 +51,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     await render(hbs`<MonthlyCalendar
       @date={{this.date}}
       @events={{this.events}}
-      @changeToDayView={{noop}}
-      @selectEvent={{noop}}
+      @changeToDayView={{(noop)}}
+      @selectEvent={{(noop)}}
     />`);
 
     assert.equal(component.days.length, 31);
@@ -76,8 +76,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     await render(hbs`<MonthlyCalendar
       @date={{this.date}}
       @events={{this.events}}
-      @changeToDayView={{noop}}
-      @selectEvent={{noop}}
+      @changeToDayView={{(noop)}}
+      @selectEvent={{(noop)}}
     />`);
 
     assert.equal(component.days.length, 31);
@@ -101,7 +101,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @date={{this.date}}
       @events={{array}}
       @changeToDayView={{this.changeToDayView}}
-      @selectEvent={{noop}}
+      @selectEvent={{(noop)}}
     />`);
 
     await component.days[3].selectDay();
@@ -123,7 +123,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     await render(hbs`<MonthlyCalendar
       @date={{this.date}}
       @events={{this.events}}
-      @changeToDayView={{noop}}
+      @changeToDayView={{(noop)}}
       @selectEvent={{this.selectEvent}}
     />`);
 
@@ -146,7 +146,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @date={{this.date}}
       @events={{this.events}}
       @changeToDayView={{this.changeToDayView}}
-      @selectEvent={{noop}}
+      @selectEvent={{(noop)}}
     />`);
 
     await component.days[8].showMore();
@@ -170,7 +170,7 @@ module('Integration | Component | monthly-calendar', function (hooks) {
       @date={{this.date}}
       @events={{this.events}}
       @changeToDayView={{this.changeToDayView}}
-      @selectEvent={{noop}}
+      @selectEvent={{(noop)}}
     />`);
 
     await component.days[8].events[0].click();
@@ -187,8 +187,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     await render(hbs`<MonthlyCalendar
       @date={{this.date}}
       @events={{this.events}}
-      @changeToDayView={{noop}}
-      @selectEvent={{noop}}
+      @changeToDayView={{(noop)}}
+      @selectEvent={{(noop)}}
     />`);
 
     assert.equal(component.days.length, 31);
@@ -220,8 +220,8 @@ module('Integration | Component | monthly-calendar', function (hooks) {
     await render(hbs`<MonthlyCalendar
       @date={{this.date}}
       @events={{this.events}}
-      @changeToDayView={{noop}}
-      @selectEvent={{noop}}
+      @changeToDayView={{(noop)}}
+      @selectEvent={{(noop)}}
     />`);
 
     assert.equal(component.days.length, 29);

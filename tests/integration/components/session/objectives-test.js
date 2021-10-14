@@ -26,8 +26,8 @@ module('Integration | Component | session/objectives', function (hooks) {
     await render(hbs`<Session::Objectives
       @session={{this.session}}
       @editable={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 3);
@@ -58,8 +58,8 @@ module('Integration | Component | session/objectives', function (hooks) {
     await render(hbs`<Session::Objectives
       @session={{this.session}}
       @editable={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 1);

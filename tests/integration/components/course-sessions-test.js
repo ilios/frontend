@@ -31,9 +31,9 @@ module('Integration | Component | course sessions', function (hooks) {
     await render(hbs`<CourseSessions
       @course={{this.course}}
       @sortBy="title"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @filterBy={{null}}
-      @setFilterBy={{noop}}
+      @setFilterBy={{(noop)}}
     />`);
 
     assert.equal(component.header.title, 'Sessions (0)');
@@ -50,9 +50,9 @@ module('Integration | Component | course sessions', function (hooks) {
     await render(hbs`<CourseSessions
       @course={{this.course}}
       @sortBy="title"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @filterBy={{null}}
-      @setFilterBy={{noop}}
+      @setFilterBy={{(noop)}}
     />`);
 
     assert.equal(component.header.title, 'Sessions (2)');
@@ -72,9 +72,9 @@ module('Integration | Component | course sessions', function (hooks) {
     await render(hbs`<CourseSessions
       @course={{this.course}}
       @sortBy="title"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @filterBy={{null}}
-      @setFilterBy={{noop}}
+      @setFilterBy={{(noop)}}
     />`);
 
     assert.equal(component.header.title, 'Sessions (2)');

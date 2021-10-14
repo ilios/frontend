@@ -94,8 +94,8 @@ module('Integration | Component | sessions-grid', function (hooks) {
     await render(hbs`<SessionsGrid
       @sessions={{this.sessions}}
       @sortBy='title'
-      @setSortBy={{noop}}
-      @expandSession={{noop}}
+      @setSortBy={{(noop)}}
+      @expandSession={{(noop)}}
     />`);
 
     assert.dom('[data-test-session]:nth-of-type(1) [data-test-delete-disabled]').isVisible();

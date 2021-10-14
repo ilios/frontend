@@ -17,8 +17,8 @@ module('Integration | Component | session/manage-objective-descriptors', functio
     this.set('selected', [descriptorModel]);
     await render(hbs`<Session::ManageObjectiveDescriptors
       @selected={{this.selected}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
       @editable={{true}}
     />`);
     const m = component.meshManager;
@@ -52,7 +52,7 @@ module('Integration | Component | session/manage-objective-descriptors', functio
     await render(hbs`<Session::ManageObjectiveDescriptors
       @selected={{this.selected}}
       @add={{this.add}}
-      @remove={{noop}}
+      @remove={{(noop)}}
       @editable={{true}}
     />`);
     const m = component.meshManager;
@@ -92,7 +92,7 @@ module('Integration | Component | session/manage-objective-descriptors', functio
     });
     await render(hbs`<Session::ManageObjectiveDescriptors
       @selected={{this.selected}}
-      @add={{noop}}
+      @add={{(noop)}}
       @remove={{this.remove}}
       @editable={{true}}
     />`);

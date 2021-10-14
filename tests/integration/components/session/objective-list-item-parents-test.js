@@ -14,11 +14,11 @@ module('Integration | Component | session/objective-list-item-parents', function
     await render(hbs`<Session::ObjectiveListItemParents
       @sessionObjective={{null}}
       @editable={{false}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{true}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.ok(component.canSave);
     assert.ok(component.canCancel);
@@ -38,11 +38,11 @@ module('Integration | Component | session/objective-list-item-parents', function
     await render(hbs`<Session::ObjectiveListItemParents
       @sessionObjective={{this.sessionObjective}}
       @editable={{false}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.text, 'None');
     await a11yAudit(this.element);
@@ -66,11 +66,11 @@ module('Integration | Component | session/objective-list-item-parents', function
     await render(hbs`<Session::ObjectiveListItemParents
       @sessionObjective={{this.sessionObjective}}
       @editable={{false}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.list.length, 2);
     assert.equal(component.list[0].text, 'Country & Western');
@@ -96,11 +96,11 @@ module('Integration | Component | session/objective-list-item-parents', function
     await render(hbs`<Session::ObjectiveListItemParents
       @sessionObjective={{this.sessionObjective}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.list.length, 2);
     assert.equal(component.list[0].text, 'Country & Western');
@@ -127,11 +127,11 @@ module('Integration | Component | session/objective-list-item-parents', function
     await render(hbs`<Session::ObjectiveListItemParents
       @sessionObjective={{this.sessionObjective}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{true}}
       @save={{this.save}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     await component.save();
   });
@@ -154,9 +154,9 @@ module('Integration | Component | session/objective-list-item-parents', function
     await render(hbs`<Session::ObjectiveListItemParents
       @sessionObjective={{this.sessionObjective}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{true}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{this.cancel}}
     />`);
@@ -183,9 +183,9 @@ module('Integration | Component | session/objective-list-item-parents', function
       @editable={{true}}
       @manage={{this.manage}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     await component.list[0].manage();
   });
@@ -216,11 +216,11 @@ module('Integration | Component | session/objective-list-item-parents', function
     await render(hbs`<Session::ObjectiveListItemParents
       @sessionObjective={{this.sessionObjective}}
       @editable={{false}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.list.length, 3);
     assert.equal(component.list[0].text, 'Oscar');

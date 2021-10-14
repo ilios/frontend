@@ -14,7 +14,7 @@ module('Integration | Component | user-search-result-instructor-group', function
     this.set('group', group);
     await render(hbs`<UserSearchResultInstructorGroup
       @group={{this.group}}
-      @addInstructorGroup={{noop}}
+      @addInstructorGroup={{(noop)}}
     />`);
     assert.dom('[data-test-result]').includesText('instructor group 0');
     assert.dom('[data-test-result]').hasClass('active');
@@ -26,7 +26,7 @@ module('Integration | Component | user-search-result-instructor-group', function
     this.set('group', group);
     await render(hbs`<UserSearchResultInstructorGroup
       @group={{this.group}}
-      @addInstructorGroup={{noop}}
+      @addInstructorGroup={{(noop)}}
       @currentlyActiveInstructorGroups={{array this.group}}
     />`);
     assert.dom('[data-test-result]').includesText('instructor group 0');

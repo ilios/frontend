@@ -12,8 +12,8 @@ module('Integration | Component | session/manage-objective-parents-item', functi
     await render(hbs`<Session::ManageObjectiveParentsItem
       @title={{this.title}}
       @isSelected={{this.isSelected}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
 
     assert.dom('input[type="checkbox"]').exists();

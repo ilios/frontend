@@ -29,7 +29,7 @@ module('Integration | Component | ilios calendar multiday event', function (hook
       <IliosCalendarMultidayEvent
         @event={{this.event}}
         @isEventSelectable={{true}}
-        @selectEvent={{noop}}
+        @selectEvent={{(noop)}}
       />
     `);
     assert.dom(this.element).containsText('11/11/84');
