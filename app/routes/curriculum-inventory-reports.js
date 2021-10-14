@@ -11,7 +11,6 @@ export default class CurriculumInventoryReportsRoute extends Route {
   }
 
   async model() {
-    const store = this.store;
-    return store.findAll('school');
+    return this.store.findAll('school');
   }
 }
