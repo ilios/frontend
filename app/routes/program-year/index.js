@@ -11,11 +11,8 @@ export default class ProgramYearIndexRoute extends Route {
     this.session.requireAuthentication(transition, 'login');
   }
 
-  /**
-   * Preload the school configurations
-   * to avoid a pop in later
-   */
   async afterModel(programYear) {
+    await programYear.program;
     const permissionChecker = this.permissionChecker;
     const canUpdate = await permissionChecker.canUpdateProgramYear(programYear);
     this.set('canUpdate', canUpdate);
