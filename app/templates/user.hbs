@@ -1,24 +1,20 @@
 {{page-title (t "general.admin")}}
-{{#if (and this.isLoading (is-fulfilled this.canCreate))}}
-  <UserProfileLoading @canCreate={{await this.canCreate}} />
-{{else if (is-fulfilled this.canCreate)}}
-  <UserProfile
-    @user={{@model}}
-    @canUpdate={{this.canUpdate}}
-    @canCreate={{await this.canCreate}}
-    @isManagingBio={{this.isManagingBio}}
-    @setIsManagingBio={{set this.isManagingBio}}
-    @isManagingRoles={{this.isManagingRoles}}
-    @setIsManagingRoles={{set this.isManagingRoles}}
-    @isManagingCohorts={{this.isManagingCohorts}}
-    @setIsManagingCohorts={{set this.isManagingCohorts}}
-    @isManagingIcs={{this.isManagingIcs}}
-    @setIsManagingIcs={{set this.isManagingIcs}}
-    @isManagingSchools={{this.isManagingSchools}}
-    @setIsManagingSchools={{set this.isManagingSchools}}
-    @permissionsSchool={{this.permissionsSchool}}
-    @permissionsYear={{this.permissionsYear}}
-    @setPermissionsSchool={{set this.permissionsSchool}}
-    @setPermissionsYear={{set this.permissionsYear}}
-  />
-{{/if}}
+<UserProfile
+  @user={{@model}}
+  @canUpdate={{this.canUpdate}}
+  @canCreate={{this.canCreate}}
+  @isManagingBio={{this.isManagingBio}}
+  @setIsManagingBio={{set this.isManagingBio}}
+  @isManagingRoles={{this.isManagingRoles}}
+  @setIsManagingRoles={{set this.isManagingRoles}}
+  @isManagingCohorts={{this.isManagingCohorts}}
+  @setIsManagingCohorts={{set this.isManagingCohorts}}
+  @isManagingIcs={{this.isManagingIcs}}
+  @setIsManagingIcs={{set this.isManagingIcs}}
+  @isManagingSchools={{this.isManagingSchools}}
+  @setIsManagingSchools={{set this.isManagingSchools}}
+  @permissionsSchool={{this.permissionsSchool}}
+  @permissionsYear={{this.permissionsYear}}
+  @setPermissionsSchool={{set this.permissionsSchool}}
+  @setPermissionsYear={{set this.permissionsYear}}
+/>

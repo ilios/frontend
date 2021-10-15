@@ -20,6 +20,7 @@ module('Acceptance | User', function (hooks) {
       primaryCohortId: 1,
       cohortIds: [1, 2, 3],
       learnerGroupIds: [3, 5],
+      administeredSchools: [this.school],
       school: this.school,
     };
     this.server.create('program', { school: this.school });
