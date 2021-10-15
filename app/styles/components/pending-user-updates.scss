@@ -16,5 +16,10 @@
 
   .list {
     @include main-list-box-table;
+
+    button {
+      @include ilios-button-reset;
+      white-space: nowrap;
+    }
   }
 }

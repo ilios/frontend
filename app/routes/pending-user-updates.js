@@ -19,22 +19,15 @@ export default class PendingUserUpdatesRoute extends Route {
   }
 
   async model() {
-    const currentUser = this.currentUser;
-    const store = this.store;
-    const permissionChecker = this.permissionChecker;
-    const allSchools = await store.findAll('school');
+    const allSchools = await this.store.findAll('school');
     const schools = await filter(allSchools.toArray(), async (school) => {
-      return permissionChecker.canUpdateUserInSchool(school);
+      return this.permissionChecker.canUpdateUserInSchool(school);
     });
-    const user = await currentUser.getModel();
-    const primarySchool = await user.get('school');
-    return { primarySchool, schools };
-  }
-
-  setupController(controller, model) {
-    super.setupController(controller, model);
-    controller.set('deletedUpdates', []);
-    controller.set('sortSchoolsBy', ['title']);
-    controller.set('updatesBeingSaved', []);
+    const user = await this.currentUser.getModel();
+    const primarySchool = await user.school;
+    const allPendingUpdates = await this.store.findAll('pending-user-update', {
+      include: 'user',
+    });
+    return { primarySchool, schools, allPendingUpdates };
   }
 }
