@@ -1,10 +1,14 @@
 /* eslint-disable ember/no-computed-properties-in-native-classes */
 import CommonDashboardController from 'ilios-common/controllers/dashboard';
-import { computed } from '@ember/object';
 import { inject as service } from '@ember/service';
+import { use } from 'ember-could-get-used-to-this';
+import AsyncProcess from 'ilios-common/classes/async-process';
+import { tracked } from '@glimmer/tracking';
 
 export default class DashboardController extends CommonDashboardController {
   @service store;
+
+  @use selectedReport = new AsyncProcess(() => [this.getSelectedReport.bind(this), this.report]);
 
   //most params come from common controller, but are copied here
   queryParams = [
@@ -25,22 +29,15 @@ export default class DashboardController extends CommonDashboardController {
     'reportYear',
   ];
 
-  report = null;
-  reportYear = '';
+  @tracked report = null;
+  @tracked reportYear = '';
 
-  //@todo replace with a Resource [JJ 3/21]
-  @computed('report', 'store')
-  get selectedReport() {
-    return new Promise((resolve) => {
-      if (!this.report) {
-        return null;
-      }
-      const report = this.store.peekRecord('report', this.report);
-      if (report) {
-        resolve(report);
-      } else {
-        resolve(this.store.findRecord('report', this.report));
-      }
-    });
+  async getSelectedReport(reportId) {
+    if (!reportId) {
+      return null;
+    }
+    const report = this.store.peekRecord('report', reportId);
+
+    return report ?? this.store.findRecord('report', reportId);
   }
 }
