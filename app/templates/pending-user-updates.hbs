@@ -4,7 +4,7 @@
 </LinkTo>
 <section class="pending-user-updates">
   <div class="filters">
-    <div class="schoolsfilter">
+    <div class="schoolsfilter" data-test-school-filter>
       <FaIcon @icon="university" @fixedWidth={{true}} />
       {{#if this.hasMoreThanOneSchool}}
         <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" (set this.school))}}>
@@ -21,7 +21,7 @@
         {{this.selectedSchool.title}}
       {{/if}}
     </div>
-    <div class="titlefilter">
+    <div class="titlefilter" data-test-title-filter>
       <input
         aria-label={{t "general.filterByTitle"}}
         type="text"
@@ -32,7 +32,7 @@
     </div>
   </div>
   <div class="updates">
-    <div class="list">
+    <div class="list" data-test-pending-updates>
       <table>
         <thead>
           <tr>
@@ -50,13 +50,13 @@
         </thead>
         <tbody>
           {{#each (sort-by "user.fullName" this.displayedUpdates) as |update|}}
-            <tr>
+            <tr data-test-pending-update>
               <td class="text-left" colspan="2">
                 <LinkTo @route="user" @model={{update.user}}>
                   <UserNameInfo @user={{update.user}} />
                 </LinkTo>
               </td>
-              <td class="text-left" colspan="6">
+              <td class="text-left" colspan="6" data-test-update-type>
                 {{#if (eq update.type "emailMismatch")}}
                   {{t
                     "general.pendingUserUpdates.emailMismatch"
@@ -77,6 +77,7 @@
                       type="button"
                       role="button"
                       {{on "click" (perform this.updateEmailAddress update)}}
+                      data-test-update-email
                     >
                       <FaIcon
                         @icon="arrow-circle-up"
@@ -91,6 +92,7 @@
                     type="button"
                     role="button"
                     {{on "click" (perform this.excludeFromSync update)}}
+                    data-test-exclude-from-sync
                   >
                     <FaIcon
                       @icon="ban"
@@ -104,6 +106,7 @@
                     type="button"
                     role="button"
                     {{on "click" (perform this.disableUser update)}}
+                    data-test-disable-user
                   >
                     <FaIcon
                       @icon="times"
