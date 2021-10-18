@@ -7,8 +7,8 @@
     <div class="schoolsfilter">
       <FaIcon @icon="university" @fixedWidth={{true}} />
       {{#if this.hasMoreThanOneSchool}}
-        <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" this.changeSelectedSchool)}}>
-          {{#each this.sortedSchools as |school|}}
+        <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" (set this.school))}}>
+          {{#each (sort-by "title" this.model.schools) as |school|}}
             <option
               value={{school.id}}
               selected={{is-equal school this.selectedSchool}}
@@ -32,96 +32,92 @@
     </div>
   </div>
   <div class="updates">
-    {{#if (is-fulfilled this.allUpdates)}}
-      <div class="list">
-        <table>
-          <thead>
+    <div class="list">
+      <table>
+        <thead>
+          <tr>
+            <th class="text-left" colspan="2">
+              {{t "general.fullName"}}
+            </th>
+            <th class="text-left" colspan="6">
+              {{t "general.description"}}
+            </th>
+            <th></th>
+            <th class="text-left" colspan="3">
+              {{t "general.actions"}}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each (sort-by "user.fullName" this.displayedUpdates) as |update|}}
             <tr>
-              <th class="text-left" colspan="2">
-                {{t "general.fullName"}}
-              </th>
-              <th class="text-left" colspan="6">
-                {{t "general.description"}}
-              </th>
-              <th></th>
-              <th class="text-left" colspan="2">
-                {{t "general.actions"}}
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each (await this.displayedUpdates) as |update|}}
-              <tr>
-                <td class="text-left" colspan="2">
-                  <LinkTo @route="user" @model={{update.user}}>
-                    <UserNameInfo @user={{update.user}} />
-                  </LinkTo>
-                </td>
-                <td class="text-left" colspan="6">
+              <td class="text-left" colspan="2">
+                <LinkTo @route="user" @model={{update.user}}>
+                  <UserNameInfo @user={{update.user}} />
+                </LinkTo>
+              </td>
+              <td class="text-left" colspan="6">
+                {{#if (eq update.type "emailMismatch")}}
+                  {{t
+                    "general.pendingUserUpdates.emailMismatch"
+                    value=update.value
+                    email=update.user.email
+                  }}
+                {{else}}
+                  {{t (concat "general.pendingUserUpdates." update.type)}}
+                {{/if}}
+              </td>
+              <td></td>
+              <td class="text-left" colspan="3">
+                {{#if (includes update this.updatesBeingSaved)}}
+                  <LoadingSpinner />
+                {{else}}
                   {{#if (eq update.type "emailMismatch")}}
-                    {{t
-                      "general.pendingUserUpdates.emailMismatch"
-                      value=update.value
-                      email=update.user.email
-                    }}
-                  {{else}}
-                    {{t (concat "general.pendingUserUpdates." update.type)}}
-                  {{/if}}
-                </td>
-                <td></td>
-                <td class="text-left" colspan="2">
-                  {{#if (includes update this.updatesBeingSaved)}}
-                    <LoadingSpinner />
-                  {{else}}
-                    {{#if (eq update.type "emailMismatch")}}
-                      <span
-                        class="clickable link"
-                        role="button"
-                        {{on "click" (fn this.updateEmailAddress update)}}
-                      >
-                        <FaIcon
-                          @icon="arrow-circle-up"
-                          class="yes"
-                          @title={{t "general.update"}}
-                        />
-                        {{t "general.pendingUserUpdates.updateIlios"}}
-                      </span>
-                      <br>
-                    {{/if}}
-                    <span
-                      class="clickable link"
+                    <button
+                      type="button"
                       role="button"
-                      {{on "click" (fn this.excludeFromSync update)}}
+                      {{on "click" (perform this.updateEmailAddress update)}}
                     >
                       <FaIcon
-                        @icon="ban"
-                        class="no"
-                        @title={{t "general.excludeFromSync"}}
+                        @icon="arrow-circle-up"
+                        class="yes"
+                        @title={{t "general.update"}}
                       />
-                      {{t "general.excludeFromSync"}}
-                    </span>
+                      {{t "general.pendingUserUpdates.updateIlios"}}
+                    </button>
                     <br>
-                    <span
-                      class="clickable link"
-                      role="button"
-                      {{on "click" (fn this.disableUser update)}}
-                    >
-                      <FaIcon
-                        @icon="times"
-                        class="no"
-                        @title={{t "general.disableUser"}}
-                      />
-                      {{t "general.disableUser"}}
-                    </span>
                   {{/if}}
-                </td>
-              </tr>
-            {{/each}}
-          </tbody>
-        </table>
-      </div>
-    {{else}}
-      <LoadingSpinner />
-    {{/if}}
+                  <button
+                    type="button"
+                    role="button"
+                    {{on "click" (perform this.excludeFromSync update)}}
+                  >
+                    <FaIcon
+                      @icon="ban"
+                      class="no"
+                      @title={{t "general.excludeFromSync"}}
+                    />
+                    {{t "general.excludeFromSync"}}
+                  </button>
+                  <br>
+                  <button
+                    type="button"
+                    role="button"
+                    {{on "click" (perform this.disableUser update)}}
+                  >
+                    <FaIcon
+                      @icon="times"
+                      class="no"
+                      @title={{t "general.disableUser"}}
+                    />
+                    {{t "general.disableUser"}}
+                  </button>
+                {{/if}}
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
   </div>
 </section>

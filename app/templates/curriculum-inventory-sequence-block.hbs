@@ -6,9 +6,9 @@
   @setSortSessionBy={{this.setSortSessionsBy}}
 />
 <CurriculumInventory::SequenceBlockList
-  @report={{await @model.report}}
+  @report={{this.report}}
   @parent={{@model}}
   @canUpdate={{this.canUpdate}}
-  @sequenceBlocks={{await @model.children}}
+  @sequenceBlocks={{this.children}}
   @remove={{this.removeChildSequenceBlock}}
 />

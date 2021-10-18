@@ -19,19 +19,25 @@ export default class AssignStudentsRoute extends Route {
   }
 
   async model() {
-    const currentUser = this.currentUser;
-    const store = this.store;
-    const permissionChecker = this.permissionChecker;
-    const user = await currentUser.getModel();
-    const schools = await store.findAll('school');
+    const user = await this.currentUser.getModel();
+    const schools = await this.store.findAll('school');
     const primarySchool = await user.get('school');
     const schoolsWithUpdateUserPermission = await filter(schools.toArray(), async (school) => {
-      return permissionChecker.canUpdateUserInSchool(school);
+      return this.permissionChecker.canUpdateUserInSchool(school);
+    });
+
+    const unassignedStudents = await this.store.query('user', {
+      filters: {
+        cohorts: null,
+        enabled: true,
+        roles: [4],
+      },
     });
 
     return {
       primarySchool,
       schools: schoolsWithUpdateUserPermission,
+      unassignedStudents,
     };
   }
 }

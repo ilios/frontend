@@ -8,7 +8,7 @@
       <FaIcon @icon="university" @fixedWidth={{true}} />
       {{#if this.hasMoreThanOneSchool}}
         <select aria-label={{t "general.filterBySchool"}} {{on "change" (pick "target.value" (set this.schoolId))}}>
-          {{#each (sort-by "title" this.schools) as |school|}}
+          {{#each (sort-by "title" @model.schools) as |school|}}
             <option
               selected={{is-equal school this.selectedSchool}}
               value={{school.id}}
@@ -27,12 +27,12 @@
         placeholder={{t "general.pendingUserUpdates.filterBy"}}
         type="text"
         value={{this.query}}
-        oninput={{perform this.setQuery value="target.value"}}
+        {{on "input" (pick "target.value" (perform this.setQuery))}}
       >
     </div>
   </div>
   <AssignStudents
     @school={{this.selectedSchool}}
-    @students={{await this.filteredUnassignedStudents}}
+    @students={{this.filteredUnassignedStudents}}
   />
 </section>

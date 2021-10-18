@@ -1,8 +1,5 @@
-import RSVP from 'rsvp';
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
-
-const { all } = RSVP;
 
 export default class CurriculumInventorySequenceBlockRoute extends Route {
   @service permissionChecker;
@@ -22,7 +19,7 @@ export default class CurriculumInventorySequenceBlockRoute extends Route {
     this.set('canUpdate', canUpdate);
 
     //preload data to speed up rendering later
-    return all([model.get('children'), model.get('parent')]);
+    return Promise.all([model.children, model.parent]);
   }
 
   setupController(controller, model) {

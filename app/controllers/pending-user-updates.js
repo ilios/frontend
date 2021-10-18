@@ -1,125 +1,95 @@
 import Controller from '@ember/controller';
-import { computed } from '@ember/object';
-import { gt, sort } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
-import { isEmpty, isPresent } from '@ember/utils';
-import { all } from 'rsvp';
+import { tracked } from '@glimmer/tracking';
+import { task } from 'ember-concurrency';
 
-export default Controller.extend({
-  flashMessages: service(),
-  store: service(),
+export default class PendingUserUpdatesController extends Controller {
+  @service flashMessages;
+  @service store;
 
-  queryParams: ['offset', 'limit', 'filter', 'school'],
+  queryParams = ['filter', 'school'];
 
-  deletedUpdates: null,
-  filter: '',
-  limit: 25,
-  offset: 0,
-  school: null,
-  sortSchoolsBy: null,
-  updatesBeingSaved: null,
+  @tracked filter = '';
+  @tracked school = null;
+  @tracked updatesBeingSaved = [];
+  @tracked deletedUpdates = [];
 
-  hasMoreThanOneSchool: gt('model.schools.length', 1),
-  sortedSchools: sort('model.schools', 'sortSchoolsBy'),
+  get hasMoreThanOneSchool() {
+    return this.model.schools.length > 1;
+  }
 
-  selectedSchool: computed('model.{primarySchool,schools.[]}', 'school', function () {
-    const schools = this.model.schools;
-    const schoolId = this.school;
-    if (isPresent(schoolId)) {
-      const school = schools.findBy('id', schoolId);
+  get selectedSchool() {
+    if (this.school) {
+      const school = this.model.schools.findBy('id', this.school);
       if (school) {
         return school;
       }
     }
     return this.model.primarySchool;
-  }),
+  }
 
-  allUpdates: computed('selectedSchool', async function () {
-    const school = this.selectedSchool;
-    const filters = { schools: [school.id] };
-    const updates = await this.store.query('pending-user-update', { filters });
-    // Preload user for each update
-    await all(updates.mapBy('user'));
-    return updates;
-  }),
+  get updatesInCurrentSchool() {
+    return this.model.allPendingUpdates.filter((update) => {
+      const user = this.store.peekRecord('user', update.belongsTo('user').id());
+      const schoolId = user.belongsTo('school').id();
+      return this.selectedSchool.id === schoolId;
+    });
+  }
 
-  displayedUpdates: computed(
-    'allUpdates.@each.user',
-    'filter',
-    'offset',
-    'limit',
-    'deletedUpdates.[]',
-    async function () {
-      const end = this.limit + this.offset;
-      const allUpdates = await this.allUpdates;
-      return allUpdates
-        .sortBy('user.fullName')
-        .slice(this.offset, end)
-        .filter((update) => {
-          const isNotDeleted = !this.deletedUpdates.includes(update);
-          const noUpdateName = isEmpty(update.get('user.fullName'));
-          const filterMatch = update
-            .get('user.fullName')
-            .trim()
-            .toLowerCase()
-            .includes(this.filter.trim().toLowerCase());
-          return isNotDeleted && (noUpdateName || filterMatch);
-        });
-    }
-  ),
+  get displayedUpdates() {
+    return this.updatesInCurrentSchool.filter((update) => {
+      const user = this.store.peekRecord('user', update.belongsTo('user').id());
+      const isNotDeleted = !this.deletedUpdates.includes(update);
+      const noUpdateName = !!user.fullName;
+      const filterMatch = update
+        .get('user.fullName')
+        .trim()
+        .toLowerCase()
+        .includes(this.filter.trim().toLowerCase());
+      return isNotDeleted && (noUpdateName || filterMatch);
+    });
+  }
 
-  actions: {
-    changeSelectedSchool(schoolId) {
-      this.set('school', schoolId);
-    },
+  @task
+  *updateEmailAddress(update) {
+    this.updatesBeingSaved = [...this.updatesBeingSaved, update];
+    const user = yield update.user;
+    user.email = update.value;
+    yield user.save();
 
-    updateEmailAddress(update) {
-      this.updatesBeingSaved.pushObject(update);
-      update.get('user').then((user) => {
-        user.set('email', update.get('value'));
-        user.save().then(() => {
-          update.deleteRecord();
-          update.save().then(() => {
-            this.deletedUpdates.pushObject(update);
-            this.updatesBeingSaved.removeObject(update);
-            this.flashMessages.success('general.savedSuccessfully');
-          });
-        });
-      });
-    },
+    yield update.destroyRecord();
+    this.deletedUpdates = [...this.deletedUpdates, update];
+    this.updatesBeingSaved = this.updatesBeingSaved.filter((u) => u !== update);
+    this.flashMessages.success('general.savedSuccessfully');
+  }
 
-    disableUser(update) {
-      this.updatesBeingSaved.pushObject(update);
-      update.get('user').then((user) => {
-        user.set('enabled', false);
-        user.save().then(() => {
-          user.get('pendingUserUpdates').then((updates) => {
-            updates.invoke('deleteRecord');
-            all(updates.invoke('save')).then(() => {
-              this.deletedUpdates.pushObject(update);
-              this.updatesBeingSaved.removeObject(update);
-              this.flashMessages.success('general.savedSuccessfully');
-            });
-          });
-        });
-      });
-    },
+  @task
+  *disableUser(update) {
+    this.updatesBeingSaved = [...this.updatesBeingSaved, update];
+    const user = yield update.user;
+    user.enabled = false;
+    yield user.save();
 
-    excludeFromSync(update) {
-      this.updatesBeingSaved.pushObject(update);
-      update.get('user').then((user) => {
-        user.set('userSyncIgnore', true);
-        user.save().then(() => {
-          user.get('pendingUserUpdates').then((updates) => {
-            updates.invoke('deleteRecord');
-            all(updates.invoke('save')).then(() => {
-              this.deletedUpdates.pushObject(update);
-              this.updatesBeingSaved.removeObject(update);
-              this.flashMessages.success('general.savedSuccessfully');
-            });
-          });
-        });
-      });
-    },
-  },
-});
+    const updates = yield user.pendingUserUpdates;
+    yield Promise.all(updates.invoke('destroyRecord'));
+
+    this.deletedUpdates = [...this.deletedUpdates, ...updates.toArray()];
+    this.updatesBeingSaved = this.updatesBeingSaved.filter((u) => u !== update);
+    this.flashMessages.success('general.savedSuccessfully');
+  }
+
+  @task
+  *excludeFromSync(update) {
+    this.updatesBeingSaved = [...this.updatesBeingSaved, update];
+    const user = yield update.user;
+    user.userSyncIgnore = true;
+    yield user.save();
+
+    const updates = yield user.pendingUserUpdates;
+    yield Promise.all(updates.invoke('destroyRecord'));
+
+    this.deletedUpdates = [...this.deletedUpdates, ...updates.toArray()];
+    this.updatesBeingSaved = this.updatesBeingSaved.filter((u) => u !== update);
+    this.flashMessages.success('general.savedSuccessfully');
+  }
+}
