@@ -1,14 +1,15 @@
 import { isEmpty } from '@ember/utils';
-import { get, computed } from '@ember/object';
+import { get } from '@ember/object';
 import Service, { inject as service } from '@ember/service';
 import moment from 'moment';
 import jwtDecode from '../utils/jwt-decode';
 
-export default Service.extend({
-  store: service(),
-  session: service(),
-  _userPromise: null,
-  currentUserId: computed('session.data.authenticated.jwt', function () {
+export default class CurrentUserService extends Service {
+  @service store;
+  @service session;
+  _userPromise = null;
+
+  get currentUserId() {
     if (
       !this.session ||
       !this.session.data ||
@@ -20,7 +21,7 @@ export default Service.extend({
     const obj = jwtDecode(this.session.data.authenticated.jwt);
 
     return get(obj, 'user_id');
-  }),
+  }
 
   async getModel() {
     const currentUserId = this.currentUserId;
@@ -36,7 +37,7 @@ export default Service.extend({
       this._userPromise = this.store.find('user', currentUserId);
     }
     return await this._userPromise;
-  },
+  }
 
   async getUserRoleTitles() {
     const user = await this.getModel();
@@ -45,17 +46,17 @@ export default Service.extend({
     }
     const roles = await user.get('roles');
     return roles.map((role) => role.get('title').toLowerCase());
-  },
+  }
 
   async getIsStudent() {
     const roleTitles = await this.getUserRoleTitles();
     return roleTitles.includes('student');
-  },
+  }
 
   async isFormerStudent() {
     const roleTitles = await this.getUserRoleTitles();
     return roleTitles.includes('former student');
-  },
+  }
 
   async getActiveRelatedCoursesInThisYearAndLastYear() {
     const user = await this.getModel();
@@ -77,7 +78,7 @@ export default Service.extend({
         archived: false,
       },
     });
-  },
+  }
 
   getBooleanAttributeFromToken(attribute) {
     const session = this.session;
@@ -93,26 +94,26 @@ export default Service.extend({
     const obj = jwtDecode(jwt);
 
     return !!get(obj, attribute);
-  },
-  isRoot: computed('session.data.authenticated.jwt', function () {
+  }
+  get isRoot() {
     return this.getBooleanAttributeFromToken('is_root');
-  }),
-  performsNonLearnerFunction: computed('session.data.authenticated.jwt', function () {
+  }
+  get performsNonLearnerFunction() {
     return this.getBooleanAttributeFromToken('performs_non_learner_function');
-  }),
-  canCreateOrUpdateUserInAnySchool: computed('session.data.authenticated.jwt', function () {
+  }
+  get canCreateOrUpdateUserInAnySchool() {
     return this.getBooleanAttributeFromToken('can_create_or_update_user_in_any_school');
-  }),
+  }
   async isDirectingSchool(school) {
     const user = await this.getModel();
     const ids = user.hasMany('directedSchools').ids();
     return ids.includes(school.get('id'));
-  },
+  }
   async isAdministeringSchool(school) {
     const user = await this.getModel();
     const ids = user.hasMany('administeredSchools').ids();
     return ids.includes(school.get('id'));
-  },
+  }
   async isDirectingProgramInSchool(school) {
     const user = await this.getModel();
     const schoolProgramIds = school.hasMany('programs').ids();
@@ -121,7 +122,7 @@ export default Service.extend({
     const matches = ids.filter((id) => schoolProgramIds.includes(id));
 
     return matches.length > 0;
-  },
+  }
   async isDirectingCourseInSchool(school) {
     const user = await this.getModel();
     const schoolCourseIds = school.hasMany('courses').ids();
@@ -130,7 +131,7 @@ export default Service.extend({
     const matches = ids.filter((id) => schoolCourseIds.includes(id));
 
     return matches.length > 0;
-  },
+  }
   async isAdministeringCourseInSchool(school) {
     const user = await this.getModel();
     const schoolCourseIds = school.hasMany('courses').ids();
@@ -139,7 +140,7 @@ export default Service.extend({
     const matches = ids.filter((id) => schoolCourseIds.includes(id));
 
     return matches.length > 0;
-  },
+  }
   async isAdministeringSessionInSchool(school) {
     const user = await this.getModel();
     const schoolCourseIds = school.hasMany('courses').ids();
@@ -150,7 +151,7 @@ export default Service.extend({
     );
 
     return matches.length > 0;
-  },
+  }
   async isTeachingCourseInSchool(school) {
     const user = await this.getModel();
     const schoolCourseIds = school.hasMany('courses').ids();
@@ -159,7 +160,7 @@ export default Service.extend({
     const matches = courses.filter((course) => schoolCourseIds.includes(course.get('id')));
 
     return matches.length > 0;
-  },
+  }
   async isAdministeringCurriculumInventoryReportInSchool(school) {
     const user = await this.getModel();
     const schoolProgramIds = school.hasMany('programs').ids();
@@ -170,21 +171,21 @@ export default Service.extend({
     );
 
     return matches.length > 0;
-  },
+  }
   async isDirectingCourse(course) {
     const user = await this.getModel();
 
     const ids = user.hasMany('directedCourses').ids();
 
     return ids.includes(course.get('id'));
-  },
+  }
   async isAdministeringCourse(course) {
     const user = await this.getModel();
 
     const ids = user.hasMany('administeredCourses').ids();
 
     return ids.includes(course.get('id'));
-  },
+  }
   async isAdministeringSessionInCourse(course) {
     const user = await this.getModel();
 
@@ -194,7 +195,7 @@ export default Service.extend({
     );
 
     return matches.length > 0;
-  },
+  }
   async isTeachingCourse(course) {
     const user = await this.getModel();
 
@@ -202,14 +203,14 @@ export default Service.extend({
     const matches = courses.filterBy('id', course.get('id'));
 
     return matches.length > 0;
-  },
+  }
   async isAdministeringSession(session) {
     const user = await this.getModel();
 
     const ids = user.hasMany('administeredSessions').ids();
 
     return ids.includes(session.get('id'));
-  },
+  }
   async isTeachingSession(session) {
     const user = await this.getModel();
 
@@ -217,14 +218,14 @@ export default Service.extend({
     const matches = sessions.filterBy('id', session.get('id'));
 
     return matches.length > 0;
-  },
+  }
   async isDirectingProgram(program) {
     const user = await this.getModel();
 
     const ids = user.hasMany('directedPrograms').ids();
 
     return ids.includes(program.get('id'));
-  },
+  }
   async isDirectingProgramYearInProgram(program) {
     const user = await this.getModel();
 
@@ -234,21 +235,21 @@ export default Service.extend({
     );
 
     return matches.length > 0;
-  },
+  }
   async isDirectingProgramYear(programYear) {
     const user = await this.getModel();
 
     const ids = user.hasMany('programYears').ids();
 
     return ids.includes(programYear.get('id'));
-  },
+  }
   async isAdministeringCurriculumInventoryReport(report) {
     const user = await this.getModel();
 
     const ids = user.hasMany('administeredCurriculumInventoryReports').ids();
 
     return ids.includes(report.get('id'));
-  },
+  }
   async getRolesInSchool(school, rolesToCheck = []) {
     const roles = [];
     if (rolesToCheck.includes('SCHOOL_DIRECTOR') && (await this.isDirectingSchool(school))) {
@@ -298,7 +299,7 @@ export default Service.extend({
     }
 
     return roles;
-  },
+  }
   async getRolesInCourse(course, rolesToCheck = []) {
     const roles = [];
     if (rolesToCheck.includes('COURSE_DIRECTOR') && (await this.isDirectingCourse(course))) {
@@ -321,7 +322,7 @@ export default Service.extend({
     }
 
     return roles;
-  },
+  }
   async getRolesInSession(session, rolesToCheck = []) {
     const roles = [];
     if (
@@ -335,7 +336,7 @@ export default Service.extend({
     }
 
     return roles;
-  },
+  }
   async getRolesInProgram(program, rolesToCheck = []) {
     const roles = [];
     if (rolesToCheck.includes('PROGRAM_DIRECTOR') && (await this.isDirectingProgram(program))) {
@@ -349,7 +350,7 @@ export default Service.extend({
     }
 
     return roles;
-  },
+  }
   async getRolesInProgramYear(programYear, rolesToCheck = []) {
     const roles = [];
     if (
@@ -360,7 +361,7 @@ export default Service.extend({
     }
 
     return roles;
-  },
+  }
   async getRolesInCurriculumInventoryReport(report, rolesToCheck = []) {
     const roles = [];
     if (
@@ -371,5 +372,5 @@ export default Service.extend({
     }
 
     return roles;
-  },
-});
+  }
+}

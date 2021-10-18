@@ -1,25 +1,16 @@
 import Service, { inject as service } from '@ember/service';
-import { computed } from '@ember/object';
-import { deprecate } from '@ember/debug';
 
-export default Service.extend({
-  store: service(),
-  _permissionMatrixPromise: null,
-  permissionMatrix: computed(async function () {
-    deprecate('permissionMatrix Computed Called', false, {
-      id: 'common.async-computed',
-      for: 'ilios-common',
-      until: '56',
-      since: '39.0.2',
-    });
-    return this.getPermissionMatrix();
-  }),
+export default class PermissionMatrixService extends Service {
+  @service store;
+
+  _permissionMatrixPromise = null;
+
   async getPermissionMatrix() {
     if (!this._permissionMatrixPromise) {
       this._permissionMatrixPromise = this._fillMatrix();
     }
     return await this._permissionMatrixPromise;
-  },
+  }
   async _fillMatrix() {
     const schools = await this.store.findAll('school');
     const schoolIds = schools.mapBy('id');
@@ -125,7 +116,7 @@ export default Service.extend({
     });
 
     return matrix;
-  },
+  }
   async hasPermission(school, capability, userRoles) {
     const matrix = await this.getPermissionMatrix();
     const schoolId = school.get('id');
@@ -140,7 +131,7 @@ export default Service.extend({
     const matchedRoles = schoolMatrix[capability].filter((role) => userRoles.includes(role));
 
     return matchedRoles.length > 0;
-  },
+  }
   async getPermittedRoles(school, capability) {
     const matrix = await this.getPermissionMatrix();
     const schoolId = school.get('id');
@@ -153,5 +144,5 @@ export default Service.extend({
     }
 
     return schoolMatrix[capability];
-  },
-});
+  }
+}
