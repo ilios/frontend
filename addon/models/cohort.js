@@ -1,43 +1,98 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { computed } from '@ember/object';
+import { deprecate } from '@ember/debug';
 
-export default Model.extend({
-  title: attr('string'),
-  programYear: belongsTo('program-year', { async: true }),
-  courses: hasMany('course', { async: true }),
-  learnerGroups: hasMany('learner-group', { async: true }),
-  users: hasMany('user', { async: true }),
+export default class Cohort extends Model {
+  @attr('string')
+  title;
 
-  competencies: computed('programYear.competencies.[]', async function () {
-    const programYear = await this.programYear;
-    return await programYear.get('competencies');
-  }),
+  @belongsTo('program-year', { async: true })
+  programYear;
 
-  /**
-   * All top-level learner groups associated with this cohort.
-   *
-   * @property rootLevelLearnerGroups
-   * @type {Ember.computed}
-   * @public
-   */
-  rootLevelLearnerGroups: computed('learnerGroups.[]', async function () {
-    const learnerGroups = await this.learnerGroups;
+  @hasMany('course', { async: true })
+  courses;
+
+  @hasMany('learner-group', { async: true })
+  learnerGroups;
+
+  @hasMany('user', { async: true })
+  users;
+
+  get rootLevelLearnerGroups() {
+    deprecate('cohort.rootLevelLearnerGroups Computed Called', false, {
+      id: 'common.async-cohort-computed',
+      for: 'ilios-common',
+      until: '61',
+      since: '59.4.0',
+    });
+
+    return this.getRootLevelLearnerGroups();
+  }
+
+  async getRootLevelLearnerGroups() {
+    const learnerGroups = (await this.learnerGroups).toArray();
     return learnerGroups.filter(
       (learnerGroup) => learnerGroup.belongsTo('parent').value() === null
     );
-  }),
+  }
 
-  program: computed('programYear.program', async function () {
-    const programYear = await this.programYear;
-    return await programYear.get('program');
-  }),
-  school: computed('program.school', async function () {
-    const program = await this.program;
-    return await program.get('school');
-  }),
+  get competencies() {
+    deprecate('cohort.competencies Computed Called', false, {
+      id: 'common.async-cohort-computed',
+      for: 'ilios-common',
+      until: '61',
+      since: '59.4.0',
+    });
+    return this.getCompetencies();
+  }
 
-  classOfYear: computed('programYear.classOfYear', async function () {
+  async getCompetencies() {
     const programYear = await this.programYear;
-    return await programYear.get('classOfYear');
-  }),
-});
+    return await programYear.competencies;
+  }
+
+  get program() {
+    deprecate('cohort.program Computed Called', false, {
+      id: 'common.async-cohort-computed',
+      for: 'ilios-common',
+      until: '61',
+      since: '59.4.0',
+    });
+    return this.getProgram();
+  }
+
+  async getProgram() {
+    const programYear = await this.programYear;
+    return await programYear.program;
+  }
+
+  get school() {
+    deprecate('cohort.school Computed Called', false, {
+      id: 'common.async-cohort-computed',
+      for: 'ilios-common',
+      until: '61',
+      since: '59.4.0',
+    });
+    return this.getSchool();
+  }
+
+  async getSchool() {
+    const programYear = await this.programYear;
+    const program = await programYear.program;
+    return await program.school;
+  }
+
+  get classOfYear() {
+    deprecate('cohort.classOfYear Computed Called', false, {
+      id: 'common.async-cohort-computed',
+      for: 'ilios-common',
+      until: '61',
+      since: '59.4.0',
+    });
+    return this.getClassOfYear();
+  }
+
+  async getClassOfYear() {
+    const programYear = await this.programYear;
+    return await programYear.classOfYear;
+  }
+}
