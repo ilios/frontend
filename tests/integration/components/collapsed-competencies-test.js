@@ -47,7 +47,7 @@ module('Integration | Component | collapsed competencies', function (hooks) {
   test('it renders', async function (assert) {
     assert.expect(7);
     this.set('subject', this.course);
-    await render(hbs`<CollapsedCompetencies @subject={{this.subject}} @expand={{noop}} />`);
+    await render(hbs`<CollapsedCompetencies @subject={{this.subject}} @expand={{(noop)}} />`);
     assert.equal(component.title, 'Competencies (3)');
     assert.equal(component.headers[0].text, 'School');
     assert.equal(component.headers[1].text, 'Competencies');

@@ -30,8 +30,8 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     this.set('school', schoolModel);
     await render(hbs`<Dashboard::CoursesCalendarFilter
       @school={{this.school}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
 
     assert.equal(component.years.length, 3);
@@ -76,8 +76,8 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     this.set('school', schoolModel);
     await render(hbs`<Dashboard::CoursesCalendarFilter
       @school={{this.school}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
 
     assert.equal(component.years[0].title, `${thisYear - 1} - ${thisYear}`);
@@ -103,8 +103,8 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     this.set('school', schoolModel);
     await render(hbs`<Dashboard::CoursesCalendarFilter
       @school={{this.school}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
 
     assert.equal(component.years.length, 3);
@@ -146,8 +146,8 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     this.set('school', schoolModel);
     await render(hbs`<Dashboard::CoursesCalendarFilter
       @school={{this.school}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
 
     assert.equal(component.years.length, 2);
@@ -170,8 +170,8 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     await render(hbs`<Dashboard::CoursesCalendarFilter
       @school={{this.school}}
       @selectedCourseIds={{array "2" "3"}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
     assert.equal(component.years[0].courses.length, 4);
     assert.equal(component.years[0].courses[0].title, 'course 0');
@@ -201,7 +201,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     await render(hbs`<Dashboard::CoursesCalendarFilter
       @school={{this.school}}
       @selectedCourseIds={{array "1"}}
-      @add={{noop}}
+      @add={{(noop)}}
       @remove={{this.remove}}
     />`);
     assert.ok(component.years[0].courses[0].isChecked);
@@ -222,7 +222,7 @@ module('Integration | Component | dashboard/courses-calendar-filter', function (
     await render(hbs`<Dashboard::CoursesCalendarFilter
       @school={{this.school}}
       @add={{this.add}}
-      @remove={{noop}}
+      @remove={{(noop)}}
     />`);
     assert.notOk(component.years[0].courses[0].isChecked);
     await component.years[0].courses[0].toggle();

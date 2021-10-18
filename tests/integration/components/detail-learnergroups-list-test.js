@@ -47,7 +47,7 @@ module('Integration | Component | detail learnergroups list', function (hooks) {
     this.set('learnerGroups', [this.tlg1, this.subGroup1, this.subSubGroup, this.subGroup2]);
     await render(hbs`<DetailLearnergroupsList
       @learnerGroups={{this.learnerGroups}}
-      @remove={{noop}}
+      @remove={{(noop)}}
     />`);
 
     assert.equal(component.trees.length, 2);

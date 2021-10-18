@@ -14,11 +14,11 @@ module('Integration | Component | course/objective-list-item-parents', function 
     await render(hbs`<Course::ObjectiveListItemParents
       @courseObjective={{null}}
       @editable={{false}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{true}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.ok(component.canSave);
     assert.ok(component.canCancel);
@@ -36,11 +36,11 @@ module('Integration | Component | course/objective-list-item-parents', function 
     await render(hbs`<Course::ObjectiveListItemParents
       @courseObjective={{this.courseObjective}}
       @editable={{false}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.text, 'None');
     await a11yAudit(this.element);
@@ -64,11 +64,11 @@ module('Integration | Component | course/objective-list-item-parents', function 
     await render(hbs`<Course::ObjectiveListItemParents
       @courseObjective={{this.courseObjective}}
       @editable={{false}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.list.length, 2);
     assert.equal(component.list[0].text, 'Country & Western');
@@ -94,11 +94,11 @@ module('Integration | Component | course/objective-list-item-parents', function 
     await render(hbs`<Course::ObjectiveListItemParents
       @courseObjective={{this.courseObjective}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.list.length, 2);
     assert.equal(component.list[0].text, 'Country & Western');
@@ -125,11 +125,11 @@ module('Integration | Component | course/objective-list-item-parents', function 
     await render(hbs`<Course::ObjectiveListItemParents
       @courseObjective={{this.courseObjective}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{true}}
       @save={{this.save}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     await component.save();
   });
@@ -152,9 +152,9 @@ module('Integration | Component | course/objective-list-item-parents', function 
     await render(hbs`<Course::ObjectiveListItemParents
       @courseObjective={{this.courseObjective}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{true}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{this.cancel}}
     />`);
@@ -181,9 +181,9 @@ module('Integration | Component | course/objective-list-item-parents', function 
       @editable={{true}}
       @manage={{this.manage}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     await component.list[0].manage();
   });

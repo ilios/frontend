@@ -35,9 +35,9 @@ module('Integration | Component | course/manage-objective-parents', function (ho
     await render(hbs`<Course::ManageObjectiveParents
       @cohortObjectives={{this.cohortObjectives}}
       @selected={{array}}
-      @add={{noop}}
-      @remove={{noop}}
-      @removeFromCohort={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
+      @removeFromCohort={{(noop)}}
     />`);
 
     assert.notOk(component.hasMultipleCohorts);
@@ -96,9 +96,9 @@ module('Integration | Component | course/manage-objective-parents', function (ho
     await render(hbs`<Course::ManageObjectiveParents
       @cohortObjectives={{this.cohortObjectives}}
       @selected={{array}}
-      @add={{noop}}
-      @remove={{noop}}
-      @removeFromCohort={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
+      @removeFromCohort={{(noop)}}
     />`);
 
     assert.ok(component.hasMultipleCohorts);
@@ -160,9 +160,9 @@ module('Integration | Component | course/manage-objective-parents', function (ho
     await render(hbs`<Course::ManageObjectiveParents
       @cohortObjectives={{this.cohortObjectives}}
       @selected={{this.selected}}
-      @add={{noop}}
-      @remove={{noop}}
-      @removeFromCohort={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
+      @removeFromCohort={{(noop)}}
     />`);
 
     assert.equal(component.competencies.length, 1);

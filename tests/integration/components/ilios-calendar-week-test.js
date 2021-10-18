@@ -143,8 +143,8 @@ module('Integration | Component | ilios calendar week', function (hooks) {
       @date={{this.date}}
       @calendarEvents={{this.events}}
       @areDaysSelectable={{false}}
-      @changeDate={{noop}}
-      @changeView={{noop}}
+      @changeDate={{(noop)}}
+      @changeView={{(noop)}}
     />`);
     const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
     const preworkElements = this.element.querySelectorAll(preworkSelector);
@@ -198,8 +198,8 @@ module('Integration | Component | ilios calendar week', function (hooks) {
       @date={{this.date}}
       @calendarEvents={{this.events}}
       @areDaysSelectable={{false}}
-      @changeDate={{noop}}
-      @changeView={{noop}}
+      @changeDate={{(noop)}}
+      @changeView={{(noop)}}
     />`);
     const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
     const preworkElements = this.element.querySelectorAll(preworkSelector);

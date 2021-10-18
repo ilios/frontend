@@ -186,7 +186,7 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     await render(hbs`<IliosCalendarMonth
       @date={{this.date}}
       @calendarEvents={{this.events}}
-      @selectEvent={{noop}}
+      @selectEvent={{(noop)}}
     />`);
     const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
     const preworkElements = this.element.querySelectorAll(preworkSelector);
@@ -239,7 +239,7 @@ module('Integration | Component | ilios calendar month', function (hooks) {
     await render(hbs`<IliosCalendarMonth
       @date={{this.date}}
       @calendarEvents={{this.events}}
-      @selectEvent={{noop}}
+      @selectEvent={{(noop)}}
     />`);
     const preworkSelector = '[data-test-ilios-calendar-pre-work-event]';
     const preworkElements = this.element.querySelectorAll(preworkSelector);

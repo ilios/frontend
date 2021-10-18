@@ -49,7 +49,7 @@ module('Integration | Component | detail learner list', function (hooks) {
   test('it renders in managing mode', async function (assert) {
     this.set('learners', [this.learnerModel1, this.learnerModel2, this.learnerModel3]);
     await render(
-      hbs`<DetailLearnerList @learners={{this.learners}} @isManaging={{true}} @remove={{noop}} />`
+      hbs`<DetailLearnerList @learners={{this.learners}} @isManaging={{true}} @remove={{(noop)}} />`
     );
     assert.equal(component.learners.length, 3);
     assert.equal(component.learners[0].userNameInfo.fullName, 'Aardvark');

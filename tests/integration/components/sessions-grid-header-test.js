@@ -10,7 +10,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
-    await render(hbs`<SessionsGridHeader @toggleExpandAll={{noop}} @setSortBy={{noop}} />`);
+    await render(hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{(noop)}} />`);
     assert.equal(component.title.text, 'Title');
     assert.equal(component.sessionType.text, 'Type');
     assert.equal(component.learnerGroupCount.text, 'Groups');
@@ -27,7 +27,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
       assert.ok(true, 'event fired');
     });
     await render(
-      hbs`<SessionsGridHeader @toggleExpandAll={{this.expandCollapse}} @showExpandAll={{true}} @setSortBy={{noop}} />`
+      hbs`<SessionsGridHeader @toggleExpandAll={{this.expandCollapse}} @showExpandAll={{true}} @setSortBy={{(noop)}} />`
     );
     await component.expandCollapse.toggle.click();
   });
@@ -38,7 +38,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
       assert.equal(value, 'title');
     });
     await render(
-      hbs`<SessionsGridHeader @toggleExpandAll={{noop}} @setSortBy={{this.setSortBy}} />`
+      hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />`
     );
     await component.title.click();
   });
@@ -49,7 +49,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
       assert.equal(value, 'sessionTypeTitle');
     });
     await render(
-      hbs`<SessionsGridHeader @toggleExpandAll={{noop}} @setSortBy={{this.setSortBy}} />`
+      hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />`
     );
     await component.sessionType.click();
   });
@@ -60,7 +60,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
       assert.equal(value, 'learnerGroupCount');
     });
     await render(
-      hbs`<SessionsGridHeader @toggleExpandAll={{noop}} @setSortBy={{this.setSortBy}} />`
+      hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />`
     );
     await component.learnerGroupCount.click();
   });
@@ -71,7 +71,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
       assert.equal(value, 'objectiveCount');
     });
     await render(
-      hbs`<SessionsGridHeader @toggleExpandAll={{noop}} @setSortBy={{this.setSortBy}} />`
+      hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />`
     );
     await component.objectiveCount.click();
   });
@@ -82,7 +82,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
       assert.equal(value, 'termCount');
     });
     await render(
-      hbs`<SessionsGridHeader @toggleExpandAll={{noop}} @setSortBy={{this.setSortBy}} />`
+      hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />`
     );
     await component.termCount.click();
   });
@@ -93,7 +93,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
       assert.equal(value, 'firstOfferingDate');
     });
     await render(
-      hbs`<SessionsGridHeader @toggleExpandAll={{noop}} @setSortBy={{this.setSortBy}} />`
+      hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />`
     );
     await component.firstOffering.click();
   });
@@ -104,7 +104,7 @@ module('Integration | Component | sessions-grid-header', function (hooks) {
       assert.equal(value, 'offeringCount');
     });
     await render(
-      hbs`<SessionsGridHeader @toggleExpandAll={{noop}} @setSortBy={{this.setSortBy}} />`
+      hbs`<SessionsGridHeader @toggleExpandAll={{(noop)}} @setSortBy={{this.setSortBy}} />`
     );
     await component.offeringCount.click();
   });

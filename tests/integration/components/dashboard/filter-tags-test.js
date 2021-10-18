@@ -25,12 +25,12 @@ module('Integration | Component | dashboard/filter-tags', function (hooks) {
       @selectedCourseIds={{array 2 3}}
       @selectedTermIds={{array 2 3}}
       @cohortProxies={{this.cohortProxies}}
-      @removeCourseLevel={{noop}}
-      @removeSessionTypeId={{noop}}
-      @removeCohortId={{noop}}
-      @removeCourseId={{noop}}
-      @removeTermId={{noop}}
-      @clearFilters={{noop}}
+      @removeCourseLevel={{(noop)}}
+      @removeSessionTypeId={{(noop)}}
+      @removeCohortId={{(noop)}}
+      @removeCourseId={{(noop)}}
+      @removeTermId={{(noop)}}
+      @clearFilters={{(noop)}}
     />`);
 
     assert.dom().containsText('Course Level 1');

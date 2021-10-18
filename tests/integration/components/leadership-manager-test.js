@@ -24,12 +24,12 @@ module('Integration | Component | leadership manager', function (hooks) {
       @directors={{this.directors}}
       @administrators={{this.administrators}}
       @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{noop}}
-      @addDirector={{noop}}
-      @removeAdministrator={{noop}}
-      @addAdministrator={{noop}}
-      @removeStudentAdvisor={{noop}}
-      @addStudentAdvisor={{noop}}
+      @removeDirector={{(noop)}}
+      @addDirector={{(noop)}}
+      @removeAdministrator={{(noop)}}
+      @addAdministrator={{(noop)}}
+      @removeStudentAdvisor={{(noop)}}
+      @addStudentAdvisor={{(noop)}}
     />`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
@@ -57,12 +57,12 @@ module('Integration | Component | leadership manager', function (hooks) {
       @directors={{this.directors}}
       @administrators={{this.administrators}}
       @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{noop}}
-      @addDirector={{noop}}
-      @removeAdministrator={{noop}}
-      @addAdministrator={{noop}}
-      @removeStudentAdvisor={{noop}}
-      @addStudentAdvisor={{noop}}
+      @removeDirector={{(noop)}}
+      @addDirector={{(noop)}}
+      @removeAdministrator={{(noop)}}
+      @addAdministrator={{(noop)}}
+      @removeStudentAdvisor={{(noop)}}
+      @addStudentAdvisor={{(noop)}}
     />`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
@@ -92,11 +92,11 @@ module('Integration | Component | leadership manager', function (hooks) {
       @administrators={{this.administrators}}
       @studentAdvisors={{this.studentAdvisors}}
       @removeDirector={{this.remove}}
-      @addDirector={{noop}}
-      @removeAdministrator={{noop}}
-      @addAdministrator={{noop}}
-      @removeStudentAdvisor={{noop}}
-      @addStudentAdvisor={{noop}}
+      @addDirector={{(noop)}}
+      @removeAdministrator={{(noop)}}
+      @addAdministrator={{(noop)}}
+      @removeStudentAdvisor={{(noop)}}
+      @addStudentAdvisor={{(noop)}}
     />`);
     const list = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const icon = `${list}:nth-of-type(1) svg`;
@@ -124,12 +124,12 @@ module('Integration | Component | leadership manager', function (hooks) {
       @directors={{this.directors}}
       @administrators={{this.administrators}}
       @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{noop}}
-      @addDirector={{noop}}
+      @removeDirector={{(noop)}}
+      @addDirector={{(noop)}}
       @removeAdministrator={{this.remove}}
-      @addAdministrator={{noop}}
-      @removeStudentAdvisor={{noop}}
-      @addStudentAdvisor={{noop}}
+      @addAdministrator={{(noop)}}
+      @removeStudentAdvisor={{(noop)}}
+      @addStudentAdvisor={{(noop)}}
     />`);
     const list = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
     const icon = `${list}:nth-of-type(1) svg`;
@@ -157,12 +157,12 @@ module('Integration | Component | leadership manager', function (hooks) {
       @directors={{this.directors}}
       @administrators={{this.administrators}}
       @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{noop}}
-      @addDirector={{noop}}
-      @removeAdministrator={{noop}}
-      @addAdministrator={{noop}}
+      @removeDirector={{(noop)}}
+      @addDirector={{(noop)}}
+      @removeAdministrator={{(noop)}}
+      @addAdministrator={{(noop)}}
       @removeStudentAdvisor={{this.remove}}
-      @addStudentAdvisor={{noop}}
+      @addStudentAdvisor={{(noop)}}
     />`);
     const list = 'table tbody tr:nth-of-type(1) td:nth-of-type(3) li';
     const icon = `${list}:nth-of-type(1) svg`;
@@ -191,12 +191,12 @@ module('Integration | Component | leadership manager', function (hooks) {
       @directors={{this.directors}}
       @administrators={{this.administrators}}
       @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{noop}}
+      @removeDirector={{(noop)}}
       @addDirector={{this.add}}
-      @removeAdministrator={{noop}}
-      @addAdministrator={{noop}}
-      @removeStudentAdvisor={{noop}}
-      @addStudentAdvisor={{noop}}
+      @removeAdministrator={{(noop)}}
+      @addAdministrator={{(noop)}}
+      @removeStudentAdvisor={{(noop)}}
+      @addStudentAdvisor={{(noop)}}
     />`);
     const directorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administratorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
@@ -235,12 +235,12 @@ module('Integration | Component | leadership manager', function (hooks) {
       @directors={{this.directors}}
       @administrators={{this.administrators}}
       @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{noop}}
-      @addDirector={{noop}}
-      @removeAdministrator={{noop}}
+      @removeDirector={{(noop)}}
+      @addDirector={{(noop)}}
+      @removeAdministrator={{(noop)}}
       @addAdministrator={{this.add}}
-      @removeStudentAdvisor={{noop}}
-      @addStudentAdvisor={{noop}}
+      @removeStudentAdvisor={{(noop)}}
+      @addStudentAdvisor={{(noop)}}
     />`);
     const directorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administratorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
@@ -280,11 +280,11 @@ module('Integration | Component | leadership manager', function (hooks) {
       @directors={{this.directors}}
       @administrators={{this.administrators}}
       @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{noop}}
-      @addDirector={{noop}}
-      @removeAdministrator={{noop}}
-      @addAdministrator={{noop}}
-      @removeStudentAdvisor={{noop}}
+      @removeDirector={{(noop)}}
+      @addDirector={{(noop)}}
+      @removeAdministrator={{(noop)}}
+      @addAdministrator={{(noop)}}
+      @removeStudentAdvisor={{(noop)}}
       @addStudentAdvisor={{this.add}}
     />`);
     const directorsList = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
@@ -324,10 +324,10 @@ module('Integration | Component | leadership manager', function (hooks) {
       @showDirectors={{true}}
       @directors={{this.directors}}
       @administrators={{this.administrators}}
-      @removeDirector={{noop}}
-      @addDirector={{noop}}
-      @removeAdministrator={{noop}}
-      @addAdministrator={{noop}}
+      @removeDirector={{(noop)}}
+      @addDirector={{(noop)}}
+      @removeAdministrator={{(noop)}}
+      @addAdministrator={{(noop)}}
     />`);
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
     const administrators = 'table tbody tr:nth-of-type(1) td:nth-of-type(2) li';
@@ -372,12 +372,12 @@ module('Integration | Component | leadership manager', function (hooks) {
       @directors={{this.directors}}
       @administrators={{this.administrators}}
       @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{noop}}
-      @addDirector={{noop}}
-      @removeAdministrator={{noop}}
-      @addAdministrator={{noop}}
-      @removeStudentAdvisor={{noop}}
-      @addStudentAdvisor={{noop}}
+      @removeDirector={{(noop)}}
+      @addDirector={{(noop)}}
+      @removeAdministrator={{(noop)}}
+      @addAdministrator={{(noop)}}
+      @removeStudentAdvisor={{(noop)}}
+      @addStudentAdvisor={{(noop)}}
     />`);
 
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';
@@ -417,12 +417,12 @@ module('Integration | Component | leadership manager', function (hooks) {
       @directors={{this.directors}}
       @administrators={{this.administrators}}
       @studentAdvisors={{this.studentAdvisors}}
-      @removeDirector={{noop}}
-      @addDirector={{noop}}
-      @removeAdministrator={{noop}}
-      @addAdministrator={{noop}}
-      @removeStudentAdvisor={{noop}}
-      @addStudentAdvisor={{noop}}
+      @removeDirector={{(noop)}}
+      @addDirector={{(noop)}}
+      @removeAdministrator={{(noop)}}
+      @addAdministrator={{(noop)}}
+      @removeStudentAdvisor={{(noop)}}
+      @addStudentAdvisor={{(noop)}}
     />`);
 
     const directors = 'table tbody tr:nth-of-type(1) td:nth-of-type(1) li';

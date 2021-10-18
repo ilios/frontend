@@ -66,8 +66,8 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     await render(hbs`<LearnergroupSelectionManager
       @learnerGroups={{this.learnerGroups}}
       @cohorts={{this.cohorts}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
     assert.equal(component.selectedGroups.title, 'Selected Learner Groups');
     assert.equal(component.selectedGroups.list.trees.length, 2);
@@ -120,7 +120,7 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
     await render(hbs`<LearnergroupSelectionManager
       @learnerGroups={{this.learnerGroups}}
       @cohorts={{this.cohorts}}
-      @add={{noop}}
+      @add={{(noop)}}
       @remove={{this.remove}}
     />`);
     await component.selectedGroups.list.trees[0].subgroups[1].remove();
@@ -137,7 +137,7 @@ module('Integration | Component | learnergroup-selection-manager', function (hoo
       @learnerGroups={{this.learnerGroups}}
       @cohorts={{this.cohorts}}
       @add={{this.add}}
-      @remove={{noop}}
+      @remove={{(noop)}}
     />`);
     await component.availableGroups.cohorts[0].trees[0].subgroups[0].add();
   });

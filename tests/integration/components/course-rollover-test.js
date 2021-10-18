@@ -124,7 +124,7 @@ module('Integration | Component | course rollover', function (hooks) {
     });
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{noop}}
+      @visit={{(noop)}}
     />`);
     const title = '.title';
     const input = `${title} input`;
@@ -196,7 +196,7 @@ module('Integration | Component | course rollover', function (hooks) {
     this.set('course', courseModel);
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{noop}}
+      @visit={{(noop)}}
     />`);
 
     const options = findAll('select:nth-of-type(1) option');
@@ -220,7 +220,7 @@ module('Integration | Component | course rollover', function (hooks) {
     this.set('course', courseModel);
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{noop}}
+      @visit={{(noop)}}
     />`);
     assert.dom('[data-test-year] option:disabled').exists({ count: 1 });
     await fillIn('[data-test-title]', 'new title');
@@ -265,7 +265,7 @@ module('Integration | Component | course rollover', function (hooks) {
     });
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{noop}}
+      @visit={{(noop)}}
     />`);
     const advancedOptions = '.advanced-options';
     const startDate = `${advancedOptions} input:nth-of-type(1)`;
@@ -340,7 +340,7 @@ module('Integration | Component | course rollover', function (hooks) {
 
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{noop}}
+      @visit={{(noop)}}
     />`);
     const advancedOptions = '.advanced-options';
     const yearSelect = '.year-select select';
@@ -389,7 +389,7 @@ module('Integration | Component | course rollover', function (hooks) {
     this.set('course', courseModel);
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{noop}}
+      @visit={{(noop)}}
     />`);
     const advancedOptions = '.advanced-options';
     const yearSelect = '.year-select select';
@@ -438,7 +438,7 @@ module('Integration | Component | course rollover', function (hooks) {
     this.set('course', course);
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{noop}}
+      @visit={{(noop)}}
     />`);
     const advancedOptions = '.advanced-options';
     const offerings = `${advancedOptions} [data-test-skip-offerings]`;
@@ -524,7 +524,7 @@ module('Integration | Component | course rollover', function (hooks) {
     this.set('course', course);
     await render(hbs`<CourseRollover
       @course={{this.course}}
-      @visit={{noop}}
+      @visit={{(noop)}}
     />`);
     const advancedOptions = '.advanced-options';
     const firstCohort = `${advancedOptions} .selectable-cohorts li:nth-of-type(1)`;

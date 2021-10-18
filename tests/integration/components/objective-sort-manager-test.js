@@ -18,7 +18,7 @@ module('Integration | Component | objective sort manager', function (hooks) {
     this.server.create('sessionObjective', { session, position: 0 });
     const subject = await this.owner.lookup('service:store').find('session', session.id);
     this.set('subject', subject);
-    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @close={{noop}} />`);
+    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @close={{(noop)}} />`);
     assert.dom('.draggable-object').exists({ count: 2 });
     assert.dom('.draggable-object').hasText('session objective 1');
     assert.dom(findAll('.draggable-object')[1]).hasText('session objective 0');
@@ -33,7 +33,7 @@ module('Integration | Component | objective sort manager', function (hooks) {
     this.server.create('courseObjective', { course, position: 0 });
     const subject = await this.owner.lookup('service:store').find('course', course.id);
     this.set('subject', subject);
-    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @close={{noop}} />`);
+    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @close={{(noop)}} />`);
     assert.dom('.draggable-object').exists({ count: 2 });
     assert.dom('.draggable-object').hasText('course objective 1');
     assert.dom(findAll('.draggable-object')[1]).hasText('course objective 0');
@@ -49,7 +49,7 @@ module('Integration | Component | objective sort manager', function (hooks) {
     this.server.create('programYearObjective', { programYear, position: 0 });
     const subject = await this.owner.lookup('service:store').find('programYear', programYear.id);
     this.set('subject', subject);
-    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @close={{noop}} />`);
+    await render(hbs`<ObjectiveSortManager @subject={{this.subject}} @close={{(noop)}} />`);
     assert.dom('.draggable-object').exists({ count: 2 });
     assert.dom('.draggable-object').hasText('program-year objective 1');
     assert.dom(findAll('.draggable-object')[1]).hasText('program-year objective 0');

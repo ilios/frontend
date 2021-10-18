@@ -14,7 +14,7 @@ module('Integration | Component | time-picker', function (hooks) {
   });
 
   test('it renders and is accessible', async function (assert) {
-    await render(hbs`<TimePicker @date={{this.date}} @action={{noop}} />`);
+    await render(hbs`<TimePicker @date={{this.date}} @action={{(noop)}} />`);
     assert.equal(component.hour.value, '11');
     assert.equal(component.hour.options.length, 12);
     assert.equal(component.minute.value, '58');

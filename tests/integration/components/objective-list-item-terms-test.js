@@ -37,11 +37,11 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
     await render(hbs`<ObjectiveListItemTerms
       @subject={{this.subject}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{true}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.ok(component.canSave);
     assert.ok(component.canCancel);
@@ -55,11 +55,11 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
     await render(hbs`<ObjectiveListItemTerms
       @subject={{this.subject}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.list.length, 2);
     assert.equal(component.list[0].title, 'Vocabulary 1 (school 0)');
@@ -81,9 +81,9 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       @editable={{true}}
       @manage={{this.manage}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     await component.list[0].manage();
   });
@@ -100,9 +100,9 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
       @editable={{true}}
       @manage={{this.manage}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     await component.manage();
   });
@@ -116,11 +116,11 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
     await render(hbs`<ObjectiveListItemTerms
       @subject={{this.subject}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{true}}
       @save={{this.save}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     await component.save();
   });
@@ -134,9 +134,9 @@ module('Integration | Component | objective-list-item-terms', function (hooks) {
     await render(hbs`<ObjectiveListItemTerms
       @subject={{this.subject}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{true}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{this.cancel}}
     />`);

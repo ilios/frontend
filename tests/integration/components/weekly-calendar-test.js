@@ -37,7 +37,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     await render(hbs`<WeeklyCalendar
       @date={{this.date}}
       @events={{array}}
-      @changeToDayView={{noop}}
+      @changeToDayView={{(noop)}}
     />`);
 
     assert.equal(component.longWeekOfYear, 'Week of January 6, 2019');
@@ -59,7 +59,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     await render(hbs`<WeeklyCalendar
       @date={{this.date}}
       @events={{this.events}}
-      @changeToDayView={{noop}}
+      @changeToDayView={{(noop)}}
     />`);
 
     assert.equal(component.dayHeadings.length, 7);
@@ -89,7 +89,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     await render(hbs`<WeeklyCalendar
       @date={{this.date}}
       @events={{this.events}}
-      @changeToDayView={{noop}}
+      @changeToDayView={{(noop)}}
     />`);
 
     assert.equal(component.dayHeadings.length, 7);
@@ -130,7 +130,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       @date={{this.date}}
       @events={{array}}
       @changeToDayView={{this.changeToDayView}}
-      @selectEvent={{noop}}
+      @selectEvent={{(noop)}}
     />`);
 
     await component.dayHeadings[1].selectDay();
@@ -152,7 +152,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     await render(hbs`<WeeklyCalendar
       @date={{this.date}}
       @events={{this.events}}
-      @changeToDayView={{noop}}
+      @changeToDayView={{(noop)}}
       @selectEvent={{this.selectEvent}}
     />`);
 
@@ -177,7 +177,7 @@ module('Integration | Component | weekly-calendar', function (hooks) {
       @date={{this.date}}
       @events={{this.events}}
       @changeToDayView={{this.changeToDayView}}
-      @selectEvent={{noop}}
+      @selectEvent={{(noop)}}
     />`);
 
     await component.events[0].click();
@@ -194,8 +194,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     await render(hbs`<WeeklyCalendar
       @date={{this.date}}
       @events={{this.events}}
-      @changeToDayView={{noop}}
-      @selectEvent={{noop}}
+      @changeToDayView={{(noop)}}
+      @selectEvent={{(noop)}}
     />`);
 
     assert.equal(component.longWeekOfYear, 'Week of December 7, 1980');
@@ -234,8 +234,8 @@ module('Integration | Component | weekly-calendar', function (hooks) {
     await render(hbs`<WeeklyCalendar
       @date={{this.date}}
       @events={{this.events}}
-      @changeToDayView={{noop}}
-      @selectEvent={{noop}}
+      @changeToDayView={{(noop)}}
+      @selectEvent={{(noop)}}
     />`);
 
     assert.equal(component.longWeekOfYear, 'Week of February 23, 2020');

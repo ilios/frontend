@@ -10,8 +10,8 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
     await render(hbs`
       <Dashboard::FilterCheckbox
         @checked={{false}}
-        @add={{noop}}
-        @remove={{noop}}
+        @add={{(noop)}}
+        @remove={{(noop)}}
       >
         label text
       </Dashboard::FilterCheckbox>
@@ -27,8 +27,8 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
     await render(hbs`
       <Dashboard::FilterCheckbox
         @checked={{true}}
-        @add={{noop}}
-        @remove={{noop}}
+        @add={{(noop)}}
+        @remove={{(noop)}}
       >
         label text
       </Dashboard::FilterCheckbox>
@@ -48,7 +48,7 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
     await render(hbs`
       <Dashboard::FilterCheckbox
         @checked={{true}}
-        @add={{noop}}
+        @add={{(noop)}}
         @remove={{this.remove}}
       >
         label text
@@ -67,7 +67,7 @@ module('Integration | Component | dashboard/filter-checkbox', function (hooks) {
       <Dashboard::FilterCheckbox
         @checked={{false}}
         @add={{this.add}}
-        @remove={{noop}}
+        @remove={{(noop)}}
       >
         label text
       </Dashboard::FilterCheckbox>

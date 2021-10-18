@@ -65,7 +65,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', []);
     await render(
-      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{noop}} />`
+      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{(noop)}} />`
     );
     assert.equal(component.title, 'Top Group');
     assert.ok(component.needsAccommodation);
@@ -90,7 +90,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     this.set('learnerGroup', this.topLevelLearnerGroup);
     this.set('selectedGroups', []);
     await render(
-      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{noop}} />`
+      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{(noop)}} />`
     );
     assert.ok(component.isStyledAsBranch);
     assert.notOk(component.isStyledAsLeaf);
@@ -110,7 +110,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
       this.secondLevelLearnerGroup2,
     ]);
     await render(
-      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{noop}} />`
+      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @add={{(noop)}} />`
     );
     assert.notOk(component.isHidden);
     assert.notOk(component.subgroups[0].isHidden);
@@ -126,7 +126,7 @@ module('Integration | Component | learnergroup-tree', function (hooks) {
     this.set('selectedGroups');
     this.set('filter', 'Second 2');
     await render(
-      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @filter={{this.filter}} @add={{noop}} />`
+      hbs`<LearnergroupTree @learnerGroup={{this.learnerGroup}} @selectedGroups={{this.selectedGroups}} @filter={{this.filter}} @add={{(noop)}} />`
     );
     assert.notOk(component.isHidden);
     assert.ok(component.subgroups[0].isHidden);

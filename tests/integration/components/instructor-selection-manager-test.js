@@ -48,10 +48,10 @@ module('Integration | Component | instructor selection manager', function (hooks
       @instructors={{this.instructors}}
       @instructorGroups={{this.groups}}
       @availableInstructorGroups={{this.availableGroups}}
-      @addInstructor={{noop}}
-      @addInstructorGroup={{noop}}
-      @removeInstructor={{noop}}
-      @removeInstructorGroup={{noop}}
+      @addInstructor={{(noop)}}
+      @addInstructorGroup={{(noop)}}
+      @removeInstructor={{(noop)}}
+      @removeInstructorGroup={{(noop)}}
     />`);
     assert.equal(component.instructors.length, 3);
     assert.equal(component.instructors[0].userNameInfo.fullName, 'Aardvark');
@@ -99,10 +99,10 @@ module('Integration | Component | instructor selection manager', function (hooks
       @instructors={{this.instructors}}
       @instructorGroups={{this.groups}}
       @availableInstructorGroups={{this.availableGroups}}
-      @addInstructor={{noop}}
-      @addInstructorGroup={{noop}}
+      @addInstructor={{(noop)}}
+      @addInstructorGroup={{(noop)}}
       @removeInstructor={{this.removeInstructor}}
-      @removeInstructorGroup={{noop}}
+      @removeInstructorGroup={{(noop)}}
     />`);
     await component.instructors[0].remove();
   });
@@ -119,9 +119,9 @@ module('Integration | Component | instructor selection manager', function (hooks
       @instructors={{this.instructors}}
       @instructorGroups={{this.groups}}
       @availableInstructorGroups={{this.availableGroups}}
-      @addInstructor={{noop}}
-      @addInstructorGroup={{noop}}
-      @removeInstructor={{noop}}
+      @addInstructor={{(noop)}}
+      @addInstructorGroup={{(noop)}}
+      @removeInstructor={{(noop)}}
       @removeInstructorGroup={{this.removeGroup}}
     />`);
     await component.instructorGroups[0].remove();
@@ -139,10 +139,10 @@ module('Integration | Component | instructor selection manager', function (hooks
       @instructors={{this.instructors}}
       @instructorGroups={{this.groups}}
       @availableInstructorGroups={{this.availableGroups}}
-      @addInstructor={{noop}}
+      @addInstructor={{(noop)}}
       @addInstructorGroup={{this.addGroup}}
-      @removeInstructor={{noop}}
-      @removeInstructorGroup={{noop}}
+      @removeInstructor={{(noop)}}
+      @removeInstructorGroup={{(noop)}}
     />`);
     await component.search('Gamma');
     await component.searchResults[0].add();
@@ -164,9 +164,9 @@ module('Integration | Component | instructor selection manager', function (hooks
       @instructorGroups={{this.groups}}
       @availableInstructorGroups={{this.availableGroups}}
       @addInstructor={{this.addInstructor}}
-      @addInstructorGroup={{noop}}
-      @removeInstructor={{noop}}
-      @removeInstructorGroup={{noop}}
+      @addInstructorGroup={{(noop)}}
+      @removeInstructor={{(noop)}}
+      @removeInstructorGroup={{(noop)}}
     />`);
     await component.search('Aardvark');
     await component.searchResults[0].add();

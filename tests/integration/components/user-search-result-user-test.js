@@ -14,7 +14,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
     this.set('user', user);
     await render(hbs`<UserSearchResultUser
       @user={{this.user}}
-      @addUser={{noop}}
+      @addUser={{(noop)}}
     />`);
     assert.dom('[data-test-result]').includesText('0 guy M. Mc0son user@example.edu');
     assert.dom('[data-test-result]').hasClass('active');
@@ -26,7 +26,7 @@ module('Integration | Component | user-search-result-user', function (hooks) {
     this.set('user', user);
     await render(hbs`<UserSearchResultUser
       @user={{this.user}}
-      @addUser={{noop}}
+      @addUser={{(noop)}}
       @currentlyActiveUsers={{array this.user}}
     />`);
     assert.dom('[data-test-result]').includesText('0 guy M. Mc0son user@example.edu');

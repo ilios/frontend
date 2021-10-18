@@ -20,8 +20,8 @@ module('Integration | Component | session/manage-objective-parents', function (h
       @courseTitle={{this.courseTitle}}
       @courseObjectives={{this.courseObjectives}}
       @selected={{array}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
 
     assert.equal(component.courseTitle, course.title);
@@ -56,8 +56,8 @@ module('Integration | Component | session/manage-objective-parents', function (h
       @courseTitle={{this.courseTitle}}
       @courseObjectives={{this.courseObjectives}}
       @selected={{array}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
 
     assert.equal(component.objectives.length, 3);

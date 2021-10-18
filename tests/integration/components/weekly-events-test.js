@@ -12,8 +12,8 @@ module('Integration | Component | weekly events', function (hooks) {
     await render(hbs`<WeeklyEvents
       @year={{this.year}}
       @expandedWeeks={{array}}
-      @setYear={{noop}}
-      @toggleOpenWeek={{noop}}
+      @setYear={{(noop)}}
+      @toggleOpenWeek={{(noop)}}
     />`);
     assert.equal(component.topNavigation.title, '2017');
     assert.equal(component.topNavigation.previousYear.title, 'Go to previous year');
@@ -35,7 +35,7 @@ module('Integration | Component | weekly events', function (hooks) {
       @year={{this.year}}
       @expandedWeeks={{array}}
       @setYear={{this.setYear}}
-      @toggleOpenWeek={{noop}}
+      @toggleOpenWeek={{(noop)}}
     />`);
     assert.equal(component.topNavigation.title, '2017');
     assert.equal(component.bottomNavigation.title, '2017');
@@ -55,7 +55,7 @@ module('Integration | Component | weekly events', function (hooks) {
       @year={{this.year}}
       @expandedWeeks={{array}}
       @setYear={{this.setYear}}
-      @toggleOpenWeek={{noop}}
+      @toggleOpenWeek={{(noop)}}
     />`);
     assert.equal(component.topNavigation.title, '2017');
     assert.equal(component.bottomNavigation.title, '2017');
@@ -75,7 +75,7 @@ module('Integration | Component | weekly events', function (hooks) {
       @year={{this.year}}
       @expandedWeeks={{array}}
       @setYear={{this.setYear}}
-      @toggleOpenWeek={{noop}}
+      @toggleOpenWeek={{(noop)}}
     />`);
     assert.equal(component.topNavigation.title, '2017');
     assert.equal(component.bottomNavigation.title, '2017');
@@ -95,7 +95,7 @@ module('Integration | Component | weekly events', function (hooks) {
       @year={{this.year}}
       @expandedWeeks={{array}}
       @setYear={{this.setYear}}
-      @toggleOpenWeek={{noop}}
+      @toggleOpenWeek={{(noop)}}
     />`);
     assert.equal(component.topNavigation.title, '2017');
     assert.equal(component.bottomNavigation.title, '2017');

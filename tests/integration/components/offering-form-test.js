@@ -12,67 +12,67 @@ module('Integration | Component | offering form', function (hooks) {
   setupMirage(hooks);
 
   test('room and url input do not show by default', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} />`);
     assert.notOk(component.location.isPresent);
     assert.notOk(component.url.isPresent);
   });
 
   test('room and url input shows up when requested', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @showRoom={{true}} />`);
     assert.ok(component.location.isPresent);
     assert.ok(component.url.isPresent);
   });
 
   test('room validation errors do not show up initially', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @showRoom={{true}} />`);
     assert.notOk(component.location.hasError);
   });
 
   test('room validation errors show up when typing', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @showRoom={{true}} />`);
     await component.location.set(padStart('a', 300, 'a'));
     await component.save();
     assert.ok(component.location.hasError);
   });
 
   test('room validation succeeds on blank value', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @save={{noop}} @showRoom={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @save={{(noop)}} @showRoom={{true}} />`);
     await component.location.set('');
     await component.save();
     assert.notOk(component.location.hasError);
   });
 
   test('url validation errors do not show up initially', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @showRoom={{true}} />`);
     assert.notOk(component.url.hasError);
   });
 
   test('url validation errors show up when typing', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @showRoom={{true}} />`);
     await component.url.set('not a url');
     await component.save();
     assert.ok(component.url.hasError);
   });
 
   test('url validation errors when URL contains backslash', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @showRoom={{true}} />`);
     await component.url.set('https://totallyfineurl.edu/hahajustjokingthisisinvalid\\');
     await component.save();
     assert.ok(component.url.hasError);
   });
 
   test('recurring options does not show by default', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} />`);
     assert.notOk(component.recurring.isPresent);
   });
 
   test('recurring options shows up when requested', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @showMakeRecurring={{true}} />`);
     assert.ok(component.recurring.isPresent);
   });
 
   test('recurring options has all the days of the week', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @showMakeRecurring={{true}} />`);
     await component.recurring.yesNoToggle.click();
     assert.ok(component.recurring.weekdays[0].label, 'Sunday');
     assert.ok(component.recurring.weekdays[1].label, 'Monday');
@@ -84,13 +84,13 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('recurring numberOfWeeks validation errors do not show up initially', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @showMakeRecurring={{true}} />`);
     await component.recurring.yesNoToggle.click();
     assert.notOk(component.recurring.hasError);
   });
 
   test('recurring numberOfWeeks validation errors show up when saving', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @showMakeRecurring={{true}} />`);
     await component.recurring.yesNoToggle.click();
     await component.recurring.setWeeks('0');
     await component.save();
@@ -98,7 +98,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('recurring default day is disabled and checked', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @showMakeRecurring={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @showMakeRecurring={{true}} />`);
     const dayToday = moment().day();
     await component.recurring.yesNoToggle.click();
     assert.ok(component.recurring.weekdays[dayToday].input.isSelected);
@@ -106,12 +106,12 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('instructor manager does not show by default', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} />`);
     assert.notOk(component.instructorManager.isPresent);
   });
 
   test('instructor manager shows up when requested', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @showInstructors={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @showInstructors={{true}} />`);
     assert.ok(component.instructorManager.isPresent);
   });
 
@@ -121,7 +121,7 @@ module('Integration | Component | offering form', function (hooks) {
     this.set('courseStartDate', courseStartDate);
     this.set('courseEndDate', courseEndDate);
     await render(hbs`<OfferingForm
-      @close={{noop}}
+      @close={{(noop)}}
       @courseStartDate={{this.courseStartDate}}
       @courseEndDate={{this.courseEndDate}}
     />`);
@@ -149,7 +149,7 @@ module('Integration | Component | offering form', function (hooks) {
     this.set('courseStartDate', courseStartDate);
     this.set('courseEndDate', courseEndDate);
     await render(hbs`<OfferingForm
-      @close={{noop}}
+      @close={{(noop)}}
       @courseStartDate={{this.courseStartDate}}
       @courseEndDate={{this.courseEndDate}}
     />`);
@@ -178,7 +178,7 @@ module('Integration | Component | offering form', function (hooks) {
     this.set('courseStartDate', courseStartDate);
     this.set('courseEndDate', courseEndDate);
     await render(hbs`<OfferingForm
-      @close={{noop}}
+      @close={{(noop)}}
       @courseStartDate={{this.courseStartDate}}
       @courseEndDate={{this.courseEndDate}}
     />`);
@@ -233,7 +233,7 @@ module('Integration | Component | offering form', function (hooks) {
         assert.equal(instructors.length, 0);
       }
     );
-    await render(hbs`<OfferingForm @close={{noop}} @save={{this.save}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @save={{this.save}} />`);
     await component.save();
   });
 
@@ -260,7 +260,7 @@ module('Integration | Component | offering form', function (hooks) {
       savedCount++;
     });
     await render(hbs`<OfferingForm
-      @close={{noop}}
+      @close={{(noop)}}
       @showMakeRecurring={{true}}
       @save={{this.save}}
     />`);
@@ -318,7 +318,7 @@ module('Integration | Component | offering form', function (hooks) {
       savedCount++;
     });
     await render(hbs`<OfferingForm
-      @close={{noop}}
+      @close={{(noop)}}
       @showMakeRecurring={{true}}
       @save={{this.save}}
     />`);
@@ -331,7 +331,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('changing start date changes end date', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} />`);
     const format = 'M/D/YYYY, h:mm A';
     const newStartDate = moment().add(1, 'day').toDate();
     assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
@@ -340,7 +340,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('changing start time changes end date', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} />`);
     const format = 'M/D/YYYY, h:mm A';
     assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
     await component.startTime.timePicker.hour.select('2');
@@ -350,7 +350,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('changing duration changes end date', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} />`);
     const format = 'M/D/YYYY, h:mm A';
     assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
     await component.duration.hours.set('2');
@@ -360,7 +360,7 @@ module('Integration | Component | offering form', function (hooks) {
 
   // @see https://github.com/ilios/frontend/issues/1903
   test('changing duration and start time changes end date', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} />`);
     const format = 'M/D/YYYY, h:mm A';
     assert.equal(moment().hour(9).minute(0).format(format), component.endDate.value);
     await component.startTime.timePicker.hour.select('2');
@@ -372,24 +372,24 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('learner manager is not present in small-group mode', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @smallGroupMode={{true}} />`);
     assert.notOk(component.learnerManager.selectedLearners.isPresent);
     assert.notOk(component.learnerManager.availableLearners.isPresent);
   });
 
   test('learner manager is present in single-offering mode', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{false}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @smallGroupMode={{false}} />`);
     assert.ok(component.learnerManager.selectedLearners.isPresent);
     assert.ok(component.learnerManager.availableLearners.isPresent);
   });
 
   test('learnerGroup validation errors do not show up initially', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @smallGroupMode={{true}} />`);
     assert.notOk(component.learnerManager.hasError);
   });
 
   test('learnerGroup validation errors show up when saving', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @smallGroupMode={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @smallGroupMode={{true}} />`);
     await component.save();
     assert.ok(component.learnerManager.hasError);
   });
@@ -404,7 +404,7 @@ module('Integration | Component | offering form', function (hooks) {
     this.set('offering', offeringModel);
     await render(hbs`<OfferingForm
       @offering={{this.offering}}
-      @close={{noop}}
+      @close={{(noop)}}
       @showRoom={{true}}
       @showMakeRecurring={{true}}
       @showInstructors={{true}}
@@ -431,7 +431,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('shows current timezone', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} />`);
     const timezoneService = this.owner.lookup('service:timezone');
     const currentTimezone = moment.tz.guess();
     assert.equal(
@@ -458,7 +458,7 @@ module('Integration | Component | offering form', function (hooks) {
     });
     const timezoneService = this.owner.lookup('service:timezone');
     await render(
-      hbs`<OfferingForm @offering={{this.offering}} @close={{noop}} @save={{this.save}} />`
+      hbs`<OfferingForm @offering={{this.offering}} @close={{(noop)}} @save={{this.save}} />`
     );
     assert.notEqual(newTimezone, currentTimezone);
     assert.notOk(component.timezoneEditor.picker.isPresent);
@@ -475,7 +475,7 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('removes double https from start of URL when input', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @showRoom={{true}} />`);
     await component.url.set('https://http://example.com');
     assert.equal(component.url.value, 'http://example.com');
     await component.url.set('https://https://example.edu');
@@ -483,13 +483,13 @@ module('Integration | Component | offering form', function (hooks) {
   });
 
   test('trims whitespace from URL input #1500', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @showRoom={{true}} />`);
     await component.url.set('  http://example.com  ');
     assert.equal(component.url.value, 'http://example.com');
   });
 
   todo('rejects query param with trailing slash ilios/ilios#3050', async function (assert) {
-    await render(hbs`<OfferingForm @close={{noop}} @showRoom={{true}} />`);
+    await render(hbs`<OfferingForm @close={{(noop)}} @showRoom={{true}} />`);
     assert.notOk(component.url.hasError);
     await component.url.set('http://example.com?jayden=awesome/');
     assert.ok(component.url.hasError);
@@ -506,7 +506,7 @@ module('Integration | Component | offering form', function (hooks) {
 
     const cohortModel = await this.owner.lookup('service:store').find('cohort', cohort.id);
     this.set('cohorts', [cohortModel]);
-    await render(hbs`<OfferingForm @cohorts={{this.cohorts}} @close={{noop}} />`);
+    await render(hbs`<OfferingForm @cohorts={{this.cohorts}} @close={{(noop)}} />`);
 
     assert.equal(
       component.learnerManager.availableLearnerGroups.cohorts[0].trees[0].title,
@@ -531,7 +531,7 @@ module('Integration | Component | offering form', function (hooks) {
       assert.ok(true);
     });
     await render(
-      hbs`<OfferingForm @offering={{this.offering}} @close={{noop}} @save={{this.save}} />`
+      hbs`<OfferingForm @offering={{this.offering}} @close={{(noop)}} @save={{this.save}} />`
     );
     await component.duration.hours.submit();
   });
@@ -545,7 +545,7 @@ module('Integration | Component | offering form', function (hooks) {
       assert.ok(true);
     });
     await render(
-      hbs`<OfferingForm @offering={{this.offering}} @close={{noop}} @save={{this.save}} />`
+      hbs`<OfferingForm @offering={{this.offering}} @close={{(noop)}} @save={{this.save}} />`
     );
     await component.duration.minutes.submit();
   });
@@ -560,7 +560,7 @@ module('Integration | Component | offering form', function (hooks) {
     });
     await render(hbs`<OfferingForm
       @offering={{this.offering}}
-      @close={{noop}}
+      @close={{(noop)}}
       @showRoom={{true}}
       @save={{this.save}}
     />`);
@@ -577,7 +577,7 @@ module('Integration | Component | offering form', function (hooks) {
     });
     await render(hbs`<OfferingForm
       @offering={{this.offering}}
-      @close={{noop}}
+      @close={{(noop)}}
       @showRoom={{true}}
       @save={{this.save}}
     />`);

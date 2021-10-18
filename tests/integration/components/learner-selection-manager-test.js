@@ -32,7 +32,7 @@ module('Integration | Component | learner selection manager', function (hooks) {
   test('selected learners', async function (assert) {
     this.set('learners', [this.learnerModel1, this.learnerModel2, this.learnerModel3]);
     await render(
-      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{noop}} @remove={{noop}}/>`
+      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{(noop)}}/>`
     );
     assert.equal(component.selectedLearners.heading, 'Selected Learners');
     assert.equal(component.selectedLearners.detailLearnerList.learners.length, 3);
@@ -78,7 +78,7 @@ module('Integration | Component | learner selection manager', function (hooks) {
     assert.expect(3);
     this.set('learners', []);
     await render(
-      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{noop}} @remove={{noop}}/>`
+      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{(noop)}}/>`
     );
     assert.equal(component.selectedLearners.heading, 'Selected Learners');
     assert.notOk(component.selectedLearners.detailLearnerList.isVisible);
@@ -92,7 +92,7 @@ module('Integration | Component | learner selection manager', function (hooks) {
       assert.equal(user.id, this.learnerModel1.id);
     });
     await render(
-      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{noop}} @remove={{remove}}/>`
+      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{(noop)}} @remove={{remove}}/>`
     );
     assert.equal(component.selectedLearners.heading, 'Selected Learners');
     assert.equal(component.selectedLearners.detailLearnerList.learners.length, 2);
@@ -117,7 +117,7 @@ module('Integration | Component | learner selection manager', function (hooks) {
       assert.equal(user.id, learnerModel3.id);
     });
     await render(
-      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{this.add}} @remove={{noop}}/>`
+      hbs`<LearnerSelectionManager @learners={{this.learners}} @add={{this.add}} @remove={{(noop)}}/>`
     );
     await component.search('Schmitt');
     assert.equal(component.searchResults.length, 1);

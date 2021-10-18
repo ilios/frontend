@@ -23,10 +23,10 @@ module('Integration | Component | session leadership expanded', function (hooks)
     await render(hbs`<SessionLeadershipExpanded
       @session={{this.session}}
       @canUpdate={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @isManaging={{false}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
     />`);
 
     assert.equal(component.title, 'Session Leadership');
@@ -54,9 +54,9 @@ module('Integration | Component | session leadership expanded', function (hooks)
       @session={{this.session}}
       @canUpdate={{true}}
       @collapse={{this.click}}
-      @expand={{noop}}
+      @expand={{(noop)}}
       @isManaging={{false}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
     />`);
     await component.collapse();
   });
@@ -78,9 +78,9 @@ module('Integration | Component | session leadership expanded', function (hooks)
       @session={{this.session}}
       @canUpdate={{true}}
       @collapse={{this.click}}
-      @expand={{noop}}
+      @expand={{(noop)}}
       @isManaging={{false}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
     />`);
     await component.collapse();
   });
@@ -96,8 +96,8 @@ module('Integration | Component | session leadership expanded', function (hooks)
     await render(hbs`<SessionLeadershipExpanded
       @session={{this.session}}
       @canUpdate={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{this.click}}
     />`);
