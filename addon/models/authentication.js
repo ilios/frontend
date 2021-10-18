@@ -1,7 +1,12 @@
 import Model, { belongsTo, attr } from '@ember-data/model';
 
-export default Model.extend({
-  password: attr('string'),
-  username: attr('string'),
-  user: belongsTo('user'),
-});
+export default class Authentication extends Model {
+  @attr('string')
+  password;
+
+  @attr('string')
+  username;
+
+  @belongsTo('user')
+  user;
+}

@@ -1,6 +1,9 @@
 import Model, { belongsTo, attr } from '@ember-data/model';
 
-export default Model.extend({
-  description: attr('string'),
-  report: belongsTo('curriculum-inventory-report', { async: true }),
-});
+export default class CurriculumInventorySequence extends Model {
+  @attr('string')
+  description;
+
+  @belongsTo('curriculum-inventory-report', { async: true })
+  report;
+}

@@ -1,6 +1,9 @@
 import Model, { hasMany, attr } from '@ember-data/model';
 
-export default Model.extend({
-  description: attr('string'),
-  competencies: hasMany('competency', { async: true }),
-});
+export default class AamcPcrs extends Model {
+  @attr('string')
+  description;
+
+  @hasMany('competency', { async: true })
+  competencies;
+}

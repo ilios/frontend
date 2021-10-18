@@ -1,7 +1,12 @@
 import Model, { belongsTo, attr } from '@ember-data/model';
 
-export default Model.extend({
-  createdAt: attr('date'),
-  report: belongsTo('curriculum-inventory-report', { async: true }),
-  createdBy: belongsTo('user', { async: true }),
-});
+export default class CurriculumInventoryExport extends Model {
+  @attr('date')
+  createdAt;
+
+  @belongsTo('curriculum-inventory-report', { async: true })
+  report;
+
+  @belongsTo('user', { async: true })
+  createdBy;
+}

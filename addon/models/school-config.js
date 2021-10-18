@@ -1,10 +1,16 @@
 import Model, { belongsTo, attr } from '@ember-data/model';
 
-export default Model.extend({
-  name: attr('string'),
-  value: attr('string'),
-  school: belongsTo('school', { async: true }),
+export default class SchoolConfig extends Model {
+  @attr('string')
+  name;
+
+  @attr('string')
+  value;
+
+  @belongsTo('school', { async: true })
+  school;
+
   get parsedValue() {
     return JSON.parse(this.value ?? null);
-  },
-});
+  }
+}

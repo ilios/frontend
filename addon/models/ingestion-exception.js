@@ -1,6 +1,9 @@
 import Model, { belongsTo, attr } from '@ember-data/model';
 
-export default Model.extend({
-  uid: attr('string'),
-  user: belongsTo('user', { async: true }),
-});
+export default class IngestionException extends Model {
+  @attr('string')
+  uid;
+
+  @belongsTo('user', { async: true })
+  user;
+}

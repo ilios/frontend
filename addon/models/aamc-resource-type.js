@@ -1,7 +1,12 @@
 import Model, { hasMany, attr } from '@ember-data/model';
 
-export default Model.extend({
-  title: attr('string'),
-  description: attr('string'),
-  competencies: hasMany('term', { async: true }),
-});
+export default class AamcResourceType extends Model {
+  @attr('string')
+  title;
+
+  @attr('string')
+  description;
+
+  @hasMany('term', { async: true })
+  competencies;
+}
