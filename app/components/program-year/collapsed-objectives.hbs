@@ -21,10 +21,10 @@
             {{t "general.linkedCompetencies"}}
           </th>
           <th class="text-center">
-            {{t "general.meshTerms"}}
+            {{t "general.vocabularyTerms"}}
           </th>
           <th class="text-center">
-            {{t "general.vocabularyTerms"}}
+            {{t "general.meshTerms"}}
           </th>
         </tr>
         </thead>
@@ -50,20 +50,6 @@
               <FaIcon @icon="ban" class="no" />
             {{/if}}
           </td>
-          <td class="text-middle text-center" rowspan="3" data-test-mesh-status>
-            {{#if
-              (eq
-                (get this.objectivesWithMesh "length")
-                (get this.objectives "length")
-              )
-            }}
-              <FaIcon @icon="circle" class="yes" />
-            {{else if (gte (get this.objectivesWithMesh "length") 1)}}
-              <FaIcon @icon="circle" class="maybe" />
-            {{else}}
-              <FaIcon @icon="ban" class="no" />
-            {{/if}}
-          </td>
           <td class="text-middle text-center" rowspan="3" data-test-term-status>
             {{#if
               (eq
@@ -73,6 +59,20 @@
             }}
               <FaIcon @icon="circle" class="yes" />
             {{else if (gte (get this.objectivesWithTerms "length") 1)}}
+              <FaIcon @icon="circle" class="maybe" />
+            {{else}}
+              <FaIcon @icon="ban" class="no" />
+            {{/if}}
+          </td>
+          <td class="text-middle text-center" rowspan="3" data-test-mesh-status>
+            {{#if
+              (eq
+                (get this.objectivesWithMesh "length")
+                (get this.objectives "length")
+              )
+            }}
+              <FaIcon @icon="circle" class="yes" />
+            {{else if (gte (get this.objectivesWithMesh "length") 1)}}
               <FaIcon @icon="circle" class="maybe" />
             {{else}}
               <FaIcon @icon="ban" class="no" />
@@ -90,21 +90,22 @@
           </td>
         </tr>
         <tr>
+          <td data-test-term-count>
+            &nbsp;
+            &nbsp;
+            {{t
+              "general.termCount"
+              count=(get this.objectivesWithTerms "length")
+            }}
+          </td>
+        </tr>
+        <tr>
           <td data-test-mesh-count>
             &nbsp;
             &nbsp;
             {{t
               "general.meshCount"
               count=(get this.objectivesWithMesh "length")
-            }}
-          </td>
-        </tr>
-        <tr>
-          <td data-test-term-count>
-            &nbsp;&nbsp;
-            {{t
-              "general.termCount"
-              count=(get this.objectivesWithTerms "length")
             }}
           </td>
         </tr>
