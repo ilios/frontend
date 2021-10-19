@@ -1,7 +1,8 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
-import { deprecate } from '@ember/debug';
+import { use } from 'ember-could-get-used-to-this';
+import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
 
-export default class Cohort extends Model {
+export default class CohortModel extends Model {
   @attr('string')
   title;
 
@@ -17,32 +18,40 @@ export default class Cohort extends Model {
   @hasMany('user', { async: true })
   users;
 
-  get rootLevelLearnerGroups() {
-    deprecate('cohort.rootLevelLearnerGroups Computed Called', false, {
-      id: 'common.async-cohort-computed',
-      for: 'ilios-common',
-      until: '61',
-      since: '59.4.0',
-    });
+  @use rootLevelLearnerGroups = new DeprecatedAsyncCP(() => [
+    this.getRootLevelLearnerGroups.bind(this),
+    'cohort.rootLevelLearnerGroups',
+    this.learnerGroups,
+  ]);
 
-    return this.getRootLevelLearnerGroups();
-  }
+  @use competencies = new DeprecatedAsyncCP(() => [
+    this.getCompetencies.bind(this),
+    'cohort.competencies',
+    this.programYear.get('competencies'),
+  ]);
 
-  async getRootLevelLearnerGroups() {
-    const learnerGroups = (await this.learnerGroups).toArray();
-    return learnerGroups.filter(
-      (learnerGroup) => learnerGroup.belongsTo('parent').value() === null
-    );
-  }
+  @use program = new DeprecatedAsyncCP(() => [
+    this.getProgram.bind(this),
+    'cohort.program',
+    this.programYear.get('program'),
+  ]);
 
-  get competencies() {
-    deprecate('cohort.competencies Computed Called', false, {
-      id: 'common.async-cohort-computed',
-      for: 'ilios-common',
-      until: '61',
-      since: '59.4.0',
-    });
-    return this.getCompetencies();
+  @use school = new DeprecatedAsyncCP(() => [
+    this.getSchool.bind(this),
+    'cohort.school',
+    this.programYear.get('program.school'),
+  ]);
+
+  @use classOfYear = new DeprecatedAsyncCP(() => [
+    this.getClassOfYear.bind(this),
+    'cohort.classOfYear',
+    this.programYear.get('classOfYear'),
+  ]);
+
+  async getRootLevelLearnerGroups(learnerGroups) {
+    return (await learnerGroups)
+      .toArray()
+      .filter((learnerGroup) => learnerGroup.belongsTo('parent').value() === null);
   }
 
   async getCompetencies() {
@@ -50,45 +59,15 @@ export default class Cohort extends Model {
     return await programYear.competencies;
   }
 
-  get program() {
-    deprecate('cohort.program Computed Called', false, {
-      id: 'common.async-cohort-computed',
-      for: 'ilios-common',
-      until: '61',
-      since: '59.4.0',
-    });
-    return this.getProgram();
-  }
-
   async getProgram() {
     const programYear = await this.programYear;
     return await programYear.program;
-  }
-
-  get school() {
-    deprecate('cohort.school Computed Called', false, {
-      id: 'common.async-cohort-computed',
-      for: 'ilios-common',
-      until: '61',
-      since: '59.4.0',
-    });
-    return this.getSchool();
   }
 
   async getSchool() {
     const programYear = await this.programYear;
     const program = await programYear.program;
     return await program.school;
-  }
-
-  get classOfYear() {
-    deprecate('cohort.classOfYear Computed Called', false, {
-      id: 'common.async-cohort-computed',
-      for: 'ilios-common',
-      until: '61',
-      since: '59.4.0',
-    });
-    return this.getClassOfYear();
   }
 
   async getClassOfYear() {
