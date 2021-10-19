@@ -15,7 +15,9 @@ export default class DetailCohortListComponent extends Component {
     }
 
     const sortProxies = yield map(cohorts.toArray(), async (cohort) => {
-      const school = await cohort.getSchool();
+      const programYear = await cohort.programYear;
+      const program = await programYear.program;
+      const school = await program.school;
       const schoolTitle = school.title;
       let displayTitle = cohort.title;
       if (!displayTitle) {

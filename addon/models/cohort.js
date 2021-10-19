@@ -19,58 +19,58 @@ export default class CohortModel extends Model {
   users;
 
   @use rootLevelLearnerGroups = new DeprecatedAsyncCP(() => [
-    this.getRootLevelLearnerGroups.bind(this),
+    this._getRootLevelLearnerGroups.bind(this),
     'cohort.rootLevelLearnerGroups',
     this.learnerGroups,
   ]);
 
   @use competencies = new DeprecatedAsyncCP(() => [
-    this.getCompetencies.bind(this),
+    this._getCompetencies.bind(this),
     'cohort.competencies',
     this.programYear.get('competencies'),
   ]);
 
   @use program = new DeprecatedAsyncCP(() => [
-    this.getProgram.bind(this),
+    this._getProgram.bind(this),
     'cohort.program',
     this.programYear.get('program'),
   ]);
 
   @use school = new DeprecatedAsyncCP(() => [
-    this.getSchool.bind(this),
+    this._getSchool.bind(this),
     'cohort.school',
     this.programYear.get('program.school'),
   ]);
 
   @use classOfYear = new DeprecatedAsyncCP(() => [
-    this.getClassOfYear.bind(this),
+    this._getClassOfYear.bind(this),
     'cohort.classOfYear',
     this.programYear.get('classOfYear'),
   ]);
 
-  async getRootLevelLearnerGroups(learnerGroups) {
+  async _getRootLevelLearnerGroups(learnerGroups) {
     return (await learnerGroups)
       .toArray()
       .filter((learnerGroup) => learnerGroup.belongsTo('parent').value() === null);
   }
 
-  async getCompetencies() {
+  async _getCompetencies() {
     const programYear = await this.programYear;
     return await programYear.competencies;
   }
 
-  async getProgram() {
+  async _getProgram() {
     const programYear = await this.programYear;
     return await programYear.program;
   }
 
-  async getSchool() {
+  async _getSchool() {
     const programYear = await this.programYear;
     const program = await programYear.program;
     return await program.school;
   }
 
-  async getClassOfYear() {
+  async _getClassOfYear() {
     const programYear = await this.programYear;
     return await programYear.classOfYear;
   }
