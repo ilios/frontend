@@ -36,4 +36,4 @@ jobs:
     - uses: ncipollo/release-action@v1
       with:
         body: ${{steps.notes.outputs.releaseNotes}}
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ secrets.ZORGBORT_TOKEN }}
