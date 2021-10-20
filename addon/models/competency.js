@@ -57,7 +57,7 @@ export default class CompetencyModel extends Model {
     if (!parent) {
       return this;
     }
-    return await parent.get('domain');
+    return parent;
   }
 
   async _treeChildren() {
