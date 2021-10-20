@@ -1,7 +1,6 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
-import { isEmpty } from '@ember/utils';
 
 export default class CompetencyModel extends Model {
   @attr('boolean')
@@ -61,17 +60,7 @@ export default class CompetencyModel extends Model {
   }
 
   async _treeChildren() {
-    const rhett = [];
     const children = await this.children;
-    rhett.pushObjects(children.toArray());
-
-    const trees = await Promise.all(children.mapBy('treeChildren'));
-    const competencies = trees.reduce((array, set) => {
-      return array.pushObjects(set.toArray());
-    }, []);
-    rhett.pushObjects(competencies);
-    return rhett.uniq().filter((item) => {
-      return !isEmpty(item);
-    });
+    return children.toArray();
   }
 }

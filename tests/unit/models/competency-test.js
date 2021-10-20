@@ -26,7 +26,6 @@ module('Unit | Model | Competency', function (hooks) {
   });
 
   test('treeChildren', async function (assert) {
-    assert.expect(7);
     const store = this.owner.lookup('service:store');
     const model = store.createRecord('competency');
     let treeChildren = await model.get('treeChildren');
@@ -34,17 +33,11 @@ module('Unit | Model | Competency', function (hooks) {
 
     const child1 = store.createRecord('competency');
     const child2 = store.createRecord('competency');
-    const child3 = store.createRecord('competency', { parent: child1 });
-    const child4 = store.createRecord('competency', { parent: child1 });
-    const child5 = store.createRecord('competency', { parent: child2 });
     model.set('children', [child1, child2]);
     treeChildren = await model.get('treeChildren');
-    assert.equal(treeChildren.length, 5);
+    assert.equal(treeChildren.length, 2);
     assert.ok(treeChildren.includes(child1));
     assert.ok(treeChildren.includes(child2));
-    assert.ok(treeChildren.includes(child3));
-    assert.ok(treeChildren.includes(child4));
-    assert.ok(treeChildren.includes(child5));
   });
 
   test('childCount', function (assert) {
