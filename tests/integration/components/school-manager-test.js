@@ -167,6 +167,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolCompetencyDetails={{noop}}
       @schoolManageCompetencies={{false}}
       @setSchoolManageCompetencies={{noop}}
+      @schoolMapCompetencies={{false}}
+      @setSchoolMapCompetencies={{noop}}
       @schoolVocabularyDetails={{false}}
       @setSchoolVocabularyDetails={{noop}}
       @schoolManagedVocabulary={{false}}
@@ -189,6 +191,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolNewSessionType={{noop}}
       @schoolManageInstitution={{false}}
       @setSchoolManageInstitution={{noop}}
+      @schoolNewVocabulary={{false}}
+      @setSchoolNewVocabulary={{noop}}
     />`);
 
     assert.equal(component.title.text, 'school 0');
@@ -224,6 +228,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolCompetencyDetails={{noop}}
       @schoolManageCompetencies={{false}}
       @setSchoolManageCompetencies={{noop}}
+      @schoolMapCompetencies={{false}}
+      @setSchoolMapCompetencies={{noop}}
       @schoolVocabularyDetails={{false}}
       @setSchoolVocabularyDetails={{noop}}
       @schoolManagedVocabulary={{false}}
@@ -246,6 +252,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolNewSessionType={{noop}}
       @schoolManageInstitution={{false}}
       @setSchoolManageInstitution={{noop}}
+      @schoolNewVocabulary={{false}}
+      @setSchoolNewVocabulary={{noop}}
     />`);
 
     assert.equal(component.title.text, 'school 0');
@@ -278,6 +286,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolCompetencyDetails={{noop}}
       @schoolManageCompetencies={{false}}
       @setSchoolManageCompetencies={{noop}}
+      @schoolMapCompetencies={{false}}
+      @setSchoolMapCompetencies={{noop}}
       @schoolVocabularyDetails={{false}}
       @setSchoolVocabularyDetails={{noop}}
       @schoolManagedVocabulary={{false}}
@@ -300,6 +310,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolNewSessionType={{noop}}
       @schoolManageInstitution={{false}}
       @setSchoolManageInstitution={{noop}}
+      @schoolNewVocabulary={{false}}
+      @setSchoolNewVocabulary={{noop}}
     />`);
 
     assert.equal(component.title.text, 'school 0');
@@ -332,6 +344,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolCompetencyDetails={{noop}}
       @schoolManageCompetencies={{false}}
       @setSchoolManageCompetencies={{noop}}
+      @schoolMapCompetencies={{false}}
+      @setSchoolMapCompetencies={{noop}}
       @schoolVocabularyDetails={{false}}
       @setSchoolVocabularyDetails={{noop}}
       @schoolManagedVocabulary={{false}}
@@ -354,6 +368,8 @@ module('Integration | Component | school manager', function (hooks) {
       @setSchoolNewSessionType={{noop}}
       @schoolManageInstitution={{false}}
       @setSchoolManageInstitution={{noop}}
+      @schoolNewVocabulary={{false}}
+      @setSchoolNewVocabulary={{noop}}
     />`);
 
     assert.equal(component.title.text, 'school 0');
