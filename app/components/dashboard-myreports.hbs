@@ -1,145 +1,152 @@
-<div
-  class="dashboard-myreports"
-  {{did-insert (perform this.load) (await this.user.reports) @selectedReport @selectedYear}}
-  {{did-update (perform this.load) (await this.user.reports) @selectedReport @selectedYear}}
-  data-test-dashboard-myreports
-  ...attributes
->
-  {{#if this.load.lastSuccessful}}
-    <div class="dashboard-block-header">
-      <h3 data-test-title>
-        {{t "general.myReports"}}
-      </h3>
-      <div class="dashboard-block-actions">
-        {{#if @selectedReport}}
-          <button type="button" {{on "click" this.clearReport}}>
-            {{t "general.allReports"}}
-          </button>
-          <button
-            type="button"
-            disabled={{this.downloadReport.isRunning}}
-            {{on "click" (perform this.downloadReport)}}
-          >
-            {{#if this.finishedBuildingReport}}
-              <FaIcon @icon="check" />
-            {{else if this.downloadReport.isRunning}}
-              <LoadingSpinner />
-            {{else}}
-              <FaIcon @icon="download" />
-            {{/if}}
-            {{t "general.downloadResults"}}
-          </button>
-        {{else}}
-          <ExpandCollapseButton
-            @value={{this.myReportEditorOn}}
-            @action={{fn (set this.myReportEditorOn) (not this.myReportEditorOn)}}
-            @expandButtonLabel={{t "general.add"}}
-            @collapseButtonLabel={{t "general.close"}}
-          />
-        {{/if}}
-      </div>
-    </div>
-    {{#if @selectedReport}}
-      <div
-        class="dashboard-block-body"
-        data-test-selected-report
-        {{did-insert (set this.scrollTarget)}}
-        {{! template-lint-disable no-invalid-interactive }}
-        {{on "scroll" this.setScroll}}
-      >
-        <h3 class="report-title" data-test-report-title>
-          {{this.selectedReportTitle}}
+{{#let (unique-id) as |templateId|}}
+  <div
+    class="dashboard-myreports"
+    {{did-insert (perform this.load) (await this.user.reports) @selectedReport @selectedYear}}
+    {{did-update (perform this.load) (await this.user.reports) @selectedReport @selectedYear}}
+    data-test-dashboard-myreports
+    ...attributes
+  >
+    {{#if this.load.lastSuccessful}}
+      <div class="dashboard-block-header">
+        <h3 id="{{templateId}}-title" data-test-title>
+          {{t "general.myReports"}}
         </h3>
-        {{#if this.showAcademicYearFilter}}
-          <div class="years-filter">
-            <select
-              aria-label={{t "general.academicYears"}}
-              data-test-year-filter
-              {{on "change" (pick "target.value" @onReportYearSelect)}}
+        <div class="dashboard-block-actions">
+          {{#if @selectedReport}}
+            <button type="button" {{on "click" this.clearReport}}>
+              {{t "general.allReports"}}
+            </button>
+            <button
+              type="button"
+              disabled={{this.downloadReport.isRunning}}
+              {{on "click" (perform this.downloadReport)}}
             >
-              <option selected={{is-empty @selectedYear}} value="">
-                {{t "general.allAcademicYears"}}
-              </option>
-              {{#each
-                (sort-by
-                  "title:desc" this.allAcademicYears
-                ) as |year|
-              }}
-                <option
-                  value={{year.id}}
-                  selected={{is-equal year.id @selectedYear}}
-                >
-                  {{year.title}}
+              {{#if this.finishedBuildingReport}}
+                <FaIcon @icon="check" />
+              {{else if this.downloadReport.isRunning}}
+                <LoadingSpinner />
+              {{else}}
+                <FaIcon @icon="download" />
+              {{/if}}
+              {{t "general.downloadResults"}}
+            </button>
+          {{else}}
+            <ExpandCollapseButton
+              @value={{this.myReportEditorOn}}
+              @action={{fn (set this.myReportEditorOn) (not this.myReportEditorOn)}}
+              @expandButtonLabel={{t "general.add"}}
+              @collapseButtonLabel={{t "general.close"}}
+            />
+          {{/if}}
+        </div>
+      </div>
+      {{#if @selectedReport}}
+        <div
+          class="dashboard-block-body"
+          data-test-selected-report
+          {{did-insert (set this.scrollTarget)}}
+          {{! template-lint-disable no-invalid-interactive }}
+          {{on "scroll" this.setScroll}}
+        >
+          <h3 class="report-title" data-test-report-title>
+            {{this.selectedReportTitle}}
+          </h3>
+          {{#if this.showAcademicYearFilter}}
+            <div class="years-filter">
+              <select
+                aria-label={{t "general.academicYears"}}
+                data-test-year-filter
+                {{on "change" (pick "target.value" @onReportYearSelect)}}
+              >
+                <option selected={{is-empty @selectedYear}} value="">
+                  {{t "general.allAcademicYears"}}
                 </option>
-              {{/each}}
-            </select>
-          </div>
-        {{/if}}
-        {{#if (is-array this.reportResultsList)}}
-          <ul class="report-results" data-test-results {{did-insert this.scrollDown}}>
-            {{#each this.reportResultsList as |item|}}
-              {{#if item.model2}}
-                <li>
-                  <LinkTo
-                    @route={{item.route}}
-                    @models={{array item.model item.model2}}
+                {{#each
+                  (sort-by
+                    "title:desc" this.allAcademicYears
+                  ) as |year|
+                }}
+                  <option
+                    value={{year.id}}
+                    selected={{is-equal year.id @selectedYear}}
                   >
+                    {{year.title}}
+                  </option>
+                {{/each}}
+              </select>
+            </div>
+          {{/if}}
+          {{#if (is-array this.reportResultsList)}}
+            <ul class="report-results" data-test-results {{did-insert this.scrollDown}}>
+              {{#each this.reportResultsList as |item|}}
+                {{#if item.model2}}
+                  <li>
+                    <LinkTo
+                      @route={{item.route}}
+                      @models={{array item.model item.model2}}
+                    >
+                      {{item.value}}
+                    </LinkTo>
+                  </li>
+                {{else if item.model}}
+                  <li>
+                    <LinkTo @route={{item.route}} @model={{item.model}}>
+                      {{item.value}}
+                    </LinkTo>
+                  </li>
+                {{else}}
+                  <li>
                     {{item.value}}
-                  </LinkTo>
-                </li>
-              {{else if item.model}}
+                  </li>
+                {{/if}}
+              {{else}}
+                  <li>{{t "general.none"}}</li>
+              {{/each}}
+            </ul>
+          {{else}}
+            <LoadingSpinner />
+          {{/if}}
+        </div>
+      {{else}}
+        <div
+          class="dashboard-block-body"
+          aria-labelledby="{{templateId}}-title"
+          tabindex="0"
+        >
+          {{#if this.myReportEditorOn}}
+            <NewMyreport @close={{fn (set this.myReportEditorOn) false}} />
+          {{/if}}
+          {{#if (is-array this.reports)}}
+            <ul class="saved-reports" data-test-saved-reports>
+              {{#each (sort-by "title" this.reports) as |obj|}}
                 <li>
-                  <LinkTo @route={{item.route}} @model={{item.model}}>
-                    {{item.value}}
-                  </LinkTo>
+                  <button type="button" {{on "click" (fn @onReportSelect obj.report.id)}} data-test-report-title>
+                      <FaIcon @icon="external-link-square-alt" />
+                      {{obj.title}}
+                  </button>
+                  <button
+                    type="button"
+                    class="link-button"
+                    {{ on "click" (fn this.deleteReport obj.report)}}
+                  >
+                    <FaIcon
+                      @icon="trash"
+                      @title={{t "general.remove"}}
+                      class="clickable remove enabled"
+                    />
+                  </button>
                 </li>
               {{else}}
                 <li>
-                  {{item.value}}
+                  {{t "general.none"}}
                 </li>
-              {{/if}}
-            {{else}}
-                <li>{{t "general.none"}}</li>
-            {{/each}}
-          </ul>
-        {{else}}
-          <LoadingSpinner />
-        {{/if}}
-      </div>
-    {{else}}
-      <div class="dashboard-block-body">
-        {{#if this.myReportEditorOn}}
-          <NewMyreport @close={{fn (set this.myReportEditorOn) false}} />
-        {{/if}}
-        {{#if (is-array this.reports)}}
-          <ul class="saved-reports" data-test-saved-reports>
-            {{#each (sort-by "title" this.reports) as |obj|}}
-              <li>
-                <button type="button" {{on "click" (fn @onReportSelect obj.report.id)}}>
-                    <FaIcon @icon="external-link-square-alt" />
-                    {{obj.title}}
-                </button>
-                <button
-                  type="button"
-                  class="link-button"
-                  {{ on "click" (fn this.deleteReport obj.report)}}
-                >
-                  <FaIcon
-                    @icon="trash"
-                    class="clickable remove enabled"
-                  />
-                </button>
-              </li>
-            {{else}}
-              <li>
-                {{t "general.none"}}
-              </li>
-            {{/each}}
-          </ul>
-        {{else}}
-          <LoadingSpinner />
-        {{/if}}
-      </div>
+              {{/each}}
+            </ul>
+          {{else}}
+            <LoadingSpinner />
+          {{/if}}
+        </div>
+      {{/if}}
     {{/if}}
-  {{/if}}
-</div>
+  </div>
+{{/let}}

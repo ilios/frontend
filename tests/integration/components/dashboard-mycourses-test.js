@@ -5,6 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { component } from 'ilios/tests/pages/components/dashboard-mycourses';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | dashboard mycourses', function (hooks) {
   setupRenderingTest(hooks);
@@ -43,6 +44,7 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
     assert.ok(component.courses[0].isLinked);
     assert.ok(component.courses[1].isLinked);
     assert.ok(component.courses[2].isLinked);
+    a11yAudit(this.element);
   });
 
   test('list courses for un-privileged users', async function (assert) {
@@ -77,6 +79,7 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
     assert.notOk(component.courses[0].isLinked);
     assert.notOk(component.courses[1].isLinked);
     assert.notOk(component.courses[2].isLinked);
+    a11yAudit(this.element);
   });
 
   test('display none when no courses', async function (assert) {
@@ -90,6 +93,7 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
 
     assert.equal(component.courses.length, 1);
     assert.equal(component.courses[0].text, 'None');
+    a11yAudit(this.element);
   });
 
   test('show academic-year range for privileged users', async function (assert) {

@@ -5,6 +5,7 @@ import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
 import { authenticateSession } from 'ember-simple-auth/test-support';
 import { component } from 'ilios/tests/pages/components/dashboard-myreports';
+import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
 module('Integration | Component | dashboard myreports', function (hooks) {
   setupRenderingTest(hooks);
@@ -51,6 +52,7 @@ module('Integration | Component | dashboard myreports', function (hooks) {
     assert.equal(component.reports.length, 2);
     assert.equal(component.reports[0].title, 'report 0');
     assert.equal(component.reports[1].title, 'report 1');
+    a11yAudit(this.element);
   });
 
   test('display none when no reports', async function (assert) {
@@ -58,7 +60,8 @@ module('Integration | Component | dashboard myreports', function (hooks) {
     await render(hbs`<DashboardMyreports />`);
     assert.equal(component.title, 'My Reports');
     assert.equal(component.reports.length, 1);
-    assert.equal(component.reports[0].title, 'None');
+    assert.equal(component.reports[0].text, 'None');
+    a11yAudit(this.element);
   });
 
   test('year filter works', async function (assert) {
