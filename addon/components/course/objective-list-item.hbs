@@ -10,7 +10,7 @@
       <EditableField
         @value={{@courseObjective.title}}
         @renderHtml={{true}}
-        @isSaveDisabled={{await (compute this.hasErrorFor "title")}}
+        @isSaveDisabled={{has-error-for this "title"}}
         @save={{perform this.saveTitleChanges}}
         @close={{this.revertTitleChanges}}
       >

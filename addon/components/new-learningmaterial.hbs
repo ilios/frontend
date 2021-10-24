@@ -138,7 +138,7 @@
               data-test-copyright-agreement
             >
             {{t "general.copyrightAgreement"}}
-            {{#if (await (compute this.hasErrorFor "copyrightPermission"))}}
+            {{#if (has-error-for this "copyrightPermission")}}
               <br>
               <span class="validation-error-message" data-test-agreement-validation-error-message>
                 {{t "errors.agreementRequired"}}

@@ -276,7 +276,7 @@
                 <EditableField
                   @value={{this.description}}
                   @renderHtml={{true}}
-                  @isSaveDisabled={{await (compute this.hasErrorFor "description")}}
+                  @isSaveDisabled={{has-error-for this "description"}}
                   @save={{perform this.saveDescription}}
                   @close={{this.revertDescriptionChanges}}
                   @clickPrompt={{t "general.clickToEdit"}}
@@ -297,7 +297,7 @@
                 <EditableField
                   @value={{@session.instructionalNotes}}
                   @renderHtml={{true}}
-                  @isSaveDisabled={{await (compute this.hasErrorFor "instructionalNotes")}}
+                  @isSaveDisabled={{has-error-for this "instructionalNotes"}}
                   @save={{perform this.saveInstructionalNotes}}
                   @close={{this.revertInstructionalNotesChanges}}
                   @clickPrompt={{t "general.clickToEdit"}}
