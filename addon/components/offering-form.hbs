@@ -57,7 +57,7 @@
                       {{on "input" (perform this.updateDurationHours value="target.value")}}
                       {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
                     >
-                    <ValidationError @errors={{compute this.getErrorsFor "durationHours"}} />
+                    <ValidationError @errors={{get-errors-for this "durationHours"}} />
                     <label for="hours-{{templateId}}">
                       {{t "general.hours"}}
                     </label>
@@ -75,7 +75,7 @@
                       {{on "input" (perform this.updateDurationMinutes value="target.value")}}
                       {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
                     >
-                    <ValidationError @errors={{compute this.getErrorsFor "durationMinutes"}} />
+                    <ValidationError @errors={{get-errors-for this "durationMinutes"}} />
                     <label for="minutes-{{templateId}}">
                       {{t "general.minutes"}}
                     </label>
@@ -181,7 +181,7 @@
                         >
                           {{t "general.weeks"}}
                         </label>
-                        <ValidationError @errors={{compute this.getErrorsFor "numberOfWeeks"}} />
+                        <ValidationError @errors={{get-errors-for this "numberOfWeeks"}} />
                       </div>
                     </div>
                   {{/if}}
@@ -205,7 +205,7 @@
                   {{on "keyup" (fn this.addErrorDisplayFor "room")}}
                   {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
                 >
-                <ValidationError @errors={{compute this.getErrorsFor "room"}} />
+                <ValidationError @errors={{get-errors-for this "room"}} />
               </div>
               <div class="url" data-test-url>
                 <label for="url-{{templateId}}">
@@ -227,7 +227,7 @@
                     {{on "focus" this.selectAllText}}
                     {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
                 >
-                <ValidationError @errors={{compute this.getErrorsFor "url"}} />
+                <ValidationError @errors={{get-errors-for this "url"}} />
               </div>
             {{/if}}
           </div>
@@ -374,7 +374,7 @@
                 {{t "general.noAvailableLearnerGroups"}}
               </div>
             {{/if}}
-            <ValidationError @errors={{compute this.getErrorsFor "learnerGroups"}} />
+            <ValidationError @errors={{get-errors-for this "learnerGroups"}} />
             {{#unless @smallGroupMode}}
               <div class="selected-learners" data-test-selected-learners>
                 <label>

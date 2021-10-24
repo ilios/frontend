@@ -5,7 +5,7 @@
       {{t "general.description"}}:
     </label>
     <HtmlEditor @content={{this.title}} @update={{this.changeTitle}} />
-    <ValidationError @errors={{compute this.getErrorsFor "title"}} />
+    <ValidationError @errors={{get-errors-for this "title"}} />
     <div class="buttons">
       <button
         disabled={{or

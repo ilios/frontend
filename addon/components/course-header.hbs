@@ -22,7 +22,7 @@
             {{on "input" (pick "target.value" (set this.courseTitle))}}
             {{on "keypress" (fn this.addErrorDisplayFor "courseTitle")}}
           >
-          <ValidationError @errors={{compute this.getErrorsFor "courseTitle"}} />
+          <ValidationError @errors={{get-errors-for this "courseTitle"}} />
         </EditableField>
       {{else}}
         <h2>

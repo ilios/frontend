@@ -23,7 +23,7 @@
                 {{on "key-press" (fn this.addErrorDisplayFor "title")}}
                 {{on "input" (pick "target.value" (set this.title))}}
               >
-              <ValidationError @errors={{compute this.getErrorsFor "title"}} />
+              <ValidationError @errors={{get-errors-for this "title"}} />
             </EditableField>
           {{else}}
             <h3>{{@session.title}}</h3>
@@ -194,7 +194,7 @@
                       {{on "key-press" (fn this.addErrorDisplayFor "hours")}}
                       {{on "input" (pick "target.value" (set this.hours))}}
                     >
-                    <ValidationError @errors={{compute this.getErrorsFor "hours"}} />
+                    <ValidationError @errors={{get-errors-for this "hours"}} />
                   </EditableField>
                 {{else}}
                   {{@session.ilmSession.hours}}&nbsp;
@@ -282,7 +282,7 @@
                   @clickPrompt={{t "general.clickToEdit"}}
                 >
                   <HtmlEditor @content={{this.description}} @update={{this.changeDescription}} />
-                  <ValidationError @errors={{compute this.getErrorsFor "description"}} />
+                  <ValidationError @errors={{get-errors-for this "description"}} />
                 </EditableField>
               {{else}}
                 {{! template-lint-disable no-triple-curlies}}
@@ -303,7 +303,7 @@
                   @clickPrompt={{t "general.clickToEdit"}}
                 >
                   <HtmlEditor @content={{this.instructionalNotes}} @update={{this.changeInstructionalNotes}} />
-                  <ValidationError @errors={{compute this.getErrorsFor "instructionalNotes"}} />
+                  <ValidationError @errors={{get-errors-for this "instructionalNotes"}} />
                 </EditableField>
               {{else}}
                 {{! template-lint-disable no-triple-curlies}}

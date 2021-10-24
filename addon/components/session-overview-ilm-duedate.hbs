@@ -17,7 +17,7 @@
             @onChange={{this.updateDate}}
           />
           <TimePicker @date={{this.dueDate}} @action={{this.updateTime}} />
-          <ValidationError @errors={{compute this.getErrorsFor "dueDate"}} />
+          <ValidationError @errors={{get-errors-for this "dueDate"}} />
         </EditableField>
       {{else}}
         {{format-date @ilmSession.dueDate month="numeric" day="numeric" year="2-digit" hour12=true hour="numeric" minute="numeric"}}
