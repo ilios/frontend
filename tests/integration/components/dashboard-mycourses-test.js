@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { authenticateSession } from 'ember-simple-auth/test-support';
+import setupAuthentication from 'ilios/tests/helpers/setup-authentication';
 import { component } from 'ilios/tests/pages/components/dashboard-mycourses';
 import a11yAudit from 'ember-a11y-testing/test-support/audit';
 
@@ -13,15 +13,7 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
 
   test('list courses for privileged users', async function (assert) {
     assert.expect(9);
-    const user = this.server.create('user');
-    const jwtObject = {
-      user_id: user.id,
-      performs_non_learner_function: true,
-    };
-    const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
-    await authenticateSession({
-      jwt: encodedData,
-    });
+    const user = await setupAuthentication({}, true);
 
     this.server.create('course', {
       directors: [user],
@@ -50,15 +42,7 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
 
   test('list courses for un-privileged users', async function (assert) {
     assert.expect(8);
-    const user = this.server.create('user');
-    const jwtObject = {
-      user_id: user.id,
-      performs_non_learner_function: false,
-    };
-    const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
-    await authenticateSession({
-      jwt: encodedData,
-    });
+    const user = await setupAuthentication();
 
     this.server.create('course', {
       directors: [user],
@@ -86,7 +70,7 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
 
   test('display none when no courses', async function (assert) {
     assert.expect(3);
-    await authenticateSession();
+    await setupAuthentication();
     this.server.get('/api/courses', (schema, { queryParams }) => {
       assert.ok('my' in queryParams);
       return schema.courses.all();
@@ -108,15 +92,7 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
         },
       };
     });
-    const user = this.server.create('user');
-    const jwtObject = {
-      user_id: user.id,
-      performs_non_learner_function: true,
-    };
-    const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
-    await authenticateSession({
-      jwt: encodedData,
-    });
+    const user = await setupAuthentication({}, true);
 
     this.server.create('course', {
       directors: [user],
@@ -146,15 +122,7 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
         },
       };
     });
-    const user = this.server.create('user');
-    const jwtObject = {
-      user_id: user.id,
-      performs_non_learner_function: false,
-    };
-    const encodedData = window.btoa('') + '.' + window.btoa(JSON.stringify(jwtObject)) + '.';
-    await authenticateSession({
-      jwt: encodedData,
-    });
+    const user = await setupAuthentication({});
 
     this.server.create('course', {
       directors: [user],
