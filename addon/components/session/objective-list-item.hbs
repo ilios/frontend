@@ -10,12 +10,12 @@
       <EditableField
         @value={{@sessionObjective.title}}
         @renderHtml={{true}}
-        @isSaveDisabled={{has-error-for this.title}}
+        @isSaveDisabled={{has-error-for this "title"}}
         @save={{perform this.saveTitleChanges}}
         @close={{this.revertTitleChanges}}
       >
         <HtmlEditor @content={{@sessionObjective.title}} @update={{this.changeTitle}} />
-        <ValidationError @errors={{get-errors-for this "title"}} />
+        <ValidationError @errors={{get-errors-for this.title}} />
       </EditableField>
     {{else}}
       {{! template-lint-disable no-triple-curlies }}

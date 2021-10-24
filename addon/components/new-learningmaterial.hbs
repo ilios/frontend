@@ -13,7 +13,7 @@
           {{on "focus-out" (fn this.addErrorDisplayFor "title")}}
           {{on "input" (pick "target.value" (set this.title))}}
         />
-        <ValidationError @errors={{get-errors-for this "title"}} />
+        <ValidationError @errors={{get-errors-for this.title}} />
       </span>
     </div>
     <div class="item">
@@ -57,7 +57,7 @@
           {{on "focus-out" (fn this.addErrorDisplayFor "originalAuthor")}}
           {{on "input" (pick "target.value" (set this.originalAuthor))}}
         />
-        <ValidationError @errors={{get-errors-for this "originalAuthor"}} />
+        <ValidationError @errors={{get-errors-for this.originalAuthor}} />
       </span>
     </div>
     <div class="item">
@@ -95,7 +95,7 @@
             {{on "keyup" (fn this.addErrorDisplayFor "link")}}
             {{on "focus" this.selectAllText}}
           >
-          <ValidationError @errors={{get-errors-for this "link"}} />
+          <ValidationError @errors={{get-errors-for this.link}} />
         </span>
       </div>
     {{/if}}
@@ -111,7 +111,7 @@
             {{on "focus-out" (fn this.addErrorDisplayFor "citation")}}
             {{on "input" (pick "target.value" (set this.citation))}}
           >{{this.citation}}</textarea>
-          <ValidationError @errors={{get-errors-for this "citation"}} />
+          <ValidationError @errors={{get-errors-for this.citation}} />
         </span>
       </div>
     {{/if}}
@@ -138,7 +138,7 @@
               data-test-copyright-agreement
             >
             {{t "general.copyrightAgreement"}}
-            {{#if (has-error-for this.copyrightPermission)}}
+            {{#if (has-error-for this "copyrightPermission")}}
               <br>
               <span class="validation-error-message" data-test-agreement-validation-error-message>
                 {{t "errors.agreementRequired"}}
@@ -159,7 +159,7 @@
               {{on "input" (pick "target.value" (set this.copyrightRationale))}}
               data-test-copyright-rationale
             >{{this.copyrightRationale}}</textarea>
-          <ValidationError @errors={{get-errors-for this "copyrightRationale"}} />
+          <ValidationError @errors={{get-errors-for this.copyrightRationale}} />
           </span>
         </div>
       {{/unless}}
@@ -172,7 +172,7 @@
           @setFilename={{set this.filename}}
           @setFileHash={{set this.fileHash}}
         />
-        <ValidationError @errors={{get-errors-for this "filename"}} />
+        <ValidationError @errors={{get-errors-for this.filename}} />
       </div>
     {{/if}}
     <div class="buttons">

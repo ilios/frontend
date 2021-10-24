@@ -67,7 +67,7 @@
                 {{on "input" (pick "target.value" (set this.externalId))}}
                 {{on "key-press" (fn this.addErrorDisplayFor "externalId")}}
               />
-              <ValidationError @errors={{get-errors-for this "externalId"}} />
+              <ValidationError @errors={{get-errors-for this.externalId}} />
             </EditableField>
           {{else}}
             {{this.externalId}}&nbsp;
@@ -126,7 +126,7 @@
                 @value={{this.startDate}}
                 @onChange={{pipe (set this.startDate) (fn this.addErrorDisplayFor "startDate")}}
               />
-              <ValidationError @errors={{get-errors-for this "startDate"}} />
+              <ValidationError @errors={{get-errors-for this.startDate}} />
             </EditableField>
           {{else}}
             {{format-date @course.startDate}}&nbsp;
@@ -146,7 +146,7 @@
                 @value={{this.endDate}}
                 @onChange={{pipe (set this.endDate) (fn this.addErrorDisplayFor "endDate")}}
               />
-              <ValidationError @errors={{get-errors-for this "endDate"}} />
+              <ValidationError @errors={{get-errors-for this.endDate}} />
             </EditableField>
           {{else}}
             {{format-date @course.endDate}}&nbsp;

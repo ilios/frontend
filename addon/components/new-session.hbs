@@ -18,11 +18,11 @@
           {{on "input" this.changeTitle}}
           {{on "keyup" (fn this.addErrorDisplayFor "title")}}
           {{on "keyup" this.keyboard}}
-          class={{if (has-error-for this.title) "has-error"}}
+          class={{if (has-error-for this "title") "has-error"}}
           disabled={{this.saveNewSession.isRunning}}
           data-test-title
         >
-        <ValidationError @errors={{get-errors-for this "title"}} />
+        <ValidationError @errors={{get-errors-for this.title}} />
       </div>
       <div class="item">
         <label for="session-type-{{templateId}}">

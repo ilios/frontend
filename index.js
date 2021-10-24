@@ -6,6 +6,7 @@ const path = require('path');
 const WriteFile = require('broccoli-file-creator');
 const SetTransform = require('./lib/set-transform');
 const HasErrorForTransform = require('./lib/has-error-for-transform');
+const GetErrorsForTransform = require('./lib/get-errors-for-transform');
 
 module.exports = {
   name: require('./package').name,
@@ -51,6 +52,7 @@ module.exports = {
     }
     registry.add('htmlbars-ast-plugin', SetTransform.instantiate());
     registry.add('htmlbars-ast-plugin', HasErrorForTransform.instantiate());
+    registry.add('htmlbars-ast-plugin', GetErrorsForTransform.instantiate());
   },
 
   treeForApp(appTree) {

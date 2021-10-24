@@ -20,4 +20,19 @@ module('Integration | Helper | get-errors-for', function (hooks) {
 
     assert.dom(this.element).hasText('foo');
   });
+
+  test('it transforms', async function (assert) {
+    assert.expect(2);
+    const obj = {
+      getErrorsFor(what) {
+        assert.equal(what, 'test');
+        return ['foo'];
+      },
+    };
+    this.set('obj', obj);
+
+    await render(hbs`{{get-errors-for this.obj.test}}`);
+
+    assert.dom(this.element).hasText('foo');
+  });
 });

@@ -30,7 +30,7 @@
           placeholder={{t "general.courseTitlePlaceholder"}}
           data-test-title
         >
-        <ValidationError @errors={{get-errors-for this "title"}} />
+        <ValidationError @errors={{get-errors-for this.title}} />
       </div>
       <div class="item year-select">
         <label for="year-{{templateId}}">
@@ -62,7 +62,7 @@
         {{else}}
           <LoadingSpinner />
         {{/if}}
-        <ValidationError @errors={{get-errors-for this "selectedYear"}} />
+        <ValidationError @errors={{get-errors-for this.selectedYear}} />
       </div>
       <div class="advanced-options">
         <div class="item">

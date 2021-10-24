@@ -56,7 +56,7 @@
             {{on "key-press" (fn this.addErrorDisplayFor "room")}}
             {{on "input" (pick "target.value" (set this.room))}}
           />
-          <ValidationError @errors={{get-errors-for this "room"}} />
+          <ValidationError @errors={{get-errors-for this.room}} />
         </EditableField>
       {{else}}
         <TruncateText @text={{this.room}} @length={{10}} />
