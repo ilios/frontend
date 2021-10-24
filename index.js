@@ -5,6 +5,7 @@ const MergeTrees = require('broccoli-merge-trees');
 const path = require('path');
 const WriteFile = require('broccoli-file-creator');
 const SetTransform = require('./lib/set-transform');
+const HasErrorForTransform = require('./lib/has-error-for-transform');
 
 module.exports = {
   name: require('./package').name,
@@ -49,6 +50,7 @@ module.exports = {
       }
     }
     registry.add('htmlbars-ast-plugin', SetTransform.instantiate());
+    registry.add('htmlbars-ast-plugin', HasErrorForTransform.instantiate());
   },
 
   treeForApp(appTree) {

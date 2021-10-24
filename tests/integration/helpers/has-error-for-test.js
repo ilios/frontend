@@ -20,4 +20,19 @@ module('Integration | Helper | has-error-for', function (hooks) {
 
     assert.dom(this.element).hasText('true');
   });
+
+  test('it works in pre-transformed style', async function (assert) {
+    assert.expect(2);
+    const obj = {
+      hasErrorFor(what) {
+        assert.equal(what, 'test');
+        return true;
+      },
+    };
+    this.set('obj', obj);
+
+    await render(hbs`{{has-error-for this.obj.test}}`);
+
+    assert.dom(this.element).hasText('true');
+  });
 });
