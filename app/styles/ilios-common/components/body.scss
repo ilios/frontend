@@ -59,6 +59,12 @@ select {
   font-family: 'Nunito Sans', sans-serif;
 }
 
+p {
+  a {
+    text-decoration: underline;
+  }
+}
+
 .add,
 .yes {
   color: $ilios-green;
