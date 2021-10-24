@@ -15,11 +15,7 @@
         @close={{this.revertTitleChanges}}
       >
         <HtmlEditor @content={{@sessionObjective.title}} @update={{this.changeTitle}} />
-        {{#each (await (compute this.getErrorsFor "title")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
+        <ValidationError @errors={{compute this.getErrorsFor "title"}} />
       </EditableField>
     {{else}}
       {{! template-lint-disable no-triple-curlies }}

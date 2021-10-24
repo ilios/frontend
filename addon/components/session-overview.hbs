@@ -23,11 +23,7 @@
                 {{on "key-press" (fn this.addErrorDisplayFor "title")}}
                 {{on "input" (pick "target.value" (set this.title))}}
               >
-              {{#each (await (compute this.getErrorsFor "title")) as |message|}}
-                <span class="validation-error-message">
-                  {{message}}
-                </span>
-              {{/each}}
+              <ValidationError @errors={{compute this.getErrorsFor "title"}} />
             </EditableField>
           {{else}}
             <h3>{{@session.title}}</h3>
@@ -198,11 +194,7 @@
                       {{on "key-press" (fn this.addErrorDisplayFor "hours")}}
                       {{on "input" (pick "target.value" (set this.hours))}}
                     >
-                    {{#each (await (compute this.getErrorsFor "hours")) as |message|}}
-                      <span class="validation-error-message">
-                        {{message}}
-                      </span>
-                    {{/each}}
+                    <ValidationError @errors={{compute this.getErrorsFor "hours"}} />
                   </EditableField>
                 {{else}}
                   {{@session.ilmSession.hours}}&nbsp;
@@ -290,11 +282,7 @@
                   @clickPrompt={{t "general.clickToEdit"}}
                 >
                   <HtmlEditor @content={{this.description}} @update={{this.changeDescription}} />
-                  {{#each (await (compute this.getErrorsFor "description")) as |message|}}
-                    <span class="validation-error-message">
-                      {{message}}
-                    </span>
-                  {{/each}}
+                  <ValidationError @errors={{compute this.getErrorsFor "description"}} />
                 </EditableField>
               {{else}}
                 {{! template-lint-disable no-triple-curlies}}
@@ -315,11 +303,7 @@
                   @clickPrompt={{t "general.clickToEdit"}}
                 >
                   <HtmlEditor @content={{this.instructionalNotes}} @update={{this.changeInstructionalNotes}} />
-                  {{#each (await (compute this.getErrorsFor "instructionalNotes")) as |message|}}
-                    <span class="validation-error-message">
-                      {{message}}
-                    </span>
-                  {{/each}}
+                  <ValidationError @errors={{compute this.getErrorsFor "instructionalNotes"}} />
                 </EditableField>
               {{else}}
                 {{! template-lint-disable no-triple-curlies}}

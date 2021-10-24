@@ -22,11 +22,7 @@
           disabled={{this.saveNewSession.isRunning}}
           data-test-title
         >
-        {{#each (await (compute this.getErrorsFor "title")) as |message|}}
-          <span class="validation-error-message">
-            {{message}}
-          </span>
-        {{/each}}
+        <ValidationError @errors={{compute this.getErrorsFor "title"}} />
       </div>
       <div class="item">
         <label for="session-type-{{templateId}}">

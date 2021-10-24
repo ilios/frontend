@@ -20,11 +20,7 @@
             {{on "key-press" (fn this.addErrorDisplayFor "title")}}
             {{on "input" (pick "target.value" (set this.title))}}
           />
-          {{#each (await (compute this.getErrorsFor "title")) as |message|}}
-            <span class="validation-error-message" data-test-title-validation-error-message>
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{compute this.getErrorsFor "title"}} />
         {{else}}
           <span>
             {{this.title}}
@@ -294,11 +290,7 @@
               {{format-date this.endDate  hour12=true hour="numeric" minute="numeric"}}
             {{/if}}
           </div>
-          {{#each (await (compute this.getErrorsFor "endDate")) as |message|}}
-            <span class="validation-error-message" data-test-end-date-validation-error-message>
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{compute this.getErrorsFor "endDate"}} />
           {{#if @editable}}
             <button class="remove-date" type="button" {{on "click" (fn (set this.endDate) null)}}>
               {{t "general.timedReleaseClearEndDate"}}
