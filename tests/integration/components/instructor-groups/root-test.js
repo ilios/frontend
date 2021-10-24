@@ -57,6 +57,7 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
   });
 
   test('school filter works', async function (assert) {
+    assert.expect(10);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setSchoolId', (schoolId) => {
@@ -83,6 +84,7 @@ module('Integration | Component | instructor-groups/root', function (hooks) {
   });
 
   test('title filter works', async function (assert) {
+    assert.expect(7);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setTitleFilter', (titleFilter) => {

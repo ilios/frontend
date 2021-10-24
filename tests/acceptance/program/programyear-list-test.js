@@ -172,6 +172,7 @@ module('Acceptance | Program - ProgramYear List', function (hooks) {
   });
 
   test('check warnings', async function (assert) {
+    assert.expect(8);
     this.server.create('program', {
       schoolId: 1,
     });

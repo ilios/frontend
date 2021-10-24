@@ -32,13 +32,12 @@ module('Integration | Component | school competencies collapsed', function (hook
   });
 
   test('it renders', async function (assert) {
+    assert.expect(1);
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
 
     this.set('school', schoolModel);
-    this.set('expand', () => {
-      assert.ok(true);
-    });
+    this.set('expand', () => assert.ok(true));
     await render(
       hbs`<SchoolCompetenciesCollapsed @school={{this.school}} @expand={{this.expand}} />`
     );

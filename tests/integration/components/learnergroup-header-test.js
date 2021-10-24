@@ -39,6 +39,7 @@ module('Integration | Component | learnergroup header', function (hooks) {
   });
 
   test('can change title', async function (assert) {
+    assert.expect(2);
     const learnerGroup = EmberObject.create({
       title: 'our group',
       save() {

@@ -12,6 +12,7 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
   setupMirage(hooks);
 
   test('list courses for privileged users', async function (assert) {
+    assert.expect(9);
     const user = this.server.create('user');
     const jwtObject = {
       user_id: user.id,
@@ -48,6 +49,7 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
   });
 
   test('list courses for un-privileged users', async function (assert) {
+    assert.expect(8);
     const user = this.server.create('user');
     const jwtObject = {
       user_id: user.id,
@@ -83,6 +85,7 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
   });
 
   test('display none when no courses', async function (assert) {
+    assert.expect(3);
     await authenticateSession();
     this.server.get('/api/courses', (schema, { queryParams }) => {
       assert.ok('my' in queryParams);
@@ -97,6 +100,7 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
   });
 
   test('show academic-year range for privileged users', async function (assert) {
+    assert.expect(4);
     this.server.get('application/config', function () {
       return {
         config: {
@@ -134,6 +138,7 @@ module('Integration | Component | dashboard mycourses', function (hooks) {
   });
 
   test('show academic-year range for un-privileged users', async function (assert) {
+    assert.expect(4);
     this.server.get('application/config', function () {
       return {
         config: {

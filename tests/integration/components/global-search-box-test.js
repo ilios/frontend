@@ -33,6 +33,7 @@ module('Integration | Component | global search box', function (hooks) {
   });
 
   test('clicking search searches if there is content', async function (assert) {
+    assert.expect(1);
     this.set('search', (value) => assert.equal(value, 'typed it'));
     await render(hbs`<GlobalSearchBox @search={{this.search}} />`);
     await component.input('typed it');

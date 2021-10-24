@@ -32,8 +32,6 @@ module('Integration | Component | school session attributes manager', function (
   });
 
   const selectTest = async function (context, assert, name, attribute) {
-    assert.expect(3);
-
     context.set('showSessionAttendanceRequired', false);
     context.set('showSessionSupplemental', false);
     context.set('showSessionSpecialAttireRequired', false);
@@ -57,14 +55,17 @@ module('Integration | Component | school session attributes manager', function (
   };
 
   test('select showSessionAttendanceRequired', async function (assert) {
+    assert.expect(3);
     await selectTest(this, assert, 'showSessionAttendanceRequired', component.attendanceRequired);
   });
 
   test('select showSessionSupplemental', async function (assert) {
+    assert.expect(3);
     await selectTest(this, assert, 'showSessionSupplemental', component.supplemental);
   });
 
   test('select showSessionSpecialAttireRequired', async function (assert) {
+    assert.expect(3);
     await selectTest(
       this,
       assert,
@@ -74,6 +75,7 @@ module('Integration | Component | school session attributes manager', function (
   });
 
   test('select showSessionSpecialEquipmentRequired', async function (assert) {
+    assert.expect(3);
     await selectTest(
       this,
       assert,
@@ -83,8 +85,6 @@ module('Integration | Component | school session attributes manager', function (
   });
 
   const unSelectTest = async function (context, assert, name, attribute) {
-    assert.expect(3);
-
     context.set('showSessionAttendanceRequired', true);
     context.set('showSessionSupplemental', true);
     context.set('showSessionSpecialAttireRequired', true);
@@ -108,14 +108,17 @@ module('Integration | Component | school session attributes manager', function (
   };
 
   test('unSelect showSessionAttendanceRequired', async function (assert) {
+    assert.expect(3);
     await unSelectTest(this, assert, 'showSessionAttendanceRequired', component.attendanceRequired);
   });
 
   test('unSelect showSessionSupplemental', async function (assert) {
+    assert.expect(3);
     await unSelectTest(this, assert, 'showSessionSupplemental', component.supplemental);
   });
 
   test('unSelect showSessionSpecialAttireRequired', async function (assert) {
+    assert.expect(3);
     await unSelectTest(
       this,
       assert,
@@ -125,6 +128,7 @@ module('Integration | Component | school session attributes manager', function (
   });
 
   test('unSelect showSessionSpecialEquipmentRequired', async function (assert) {
+    assert.expect(3);
     await unSelectTest(
       this,
       assert,

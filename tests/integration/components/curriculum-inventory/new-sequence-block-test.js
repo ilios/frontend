@@ -119,6 +119,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   });
 
   test('order-in-sequence options are visible for ordered parent sequence block', async function (assert) {
+    assert.expect(25);
     const parent = this.server.create('curriculum-inventory-sequence-block', {
       childSequenceOrder: 1,
       report: this.report,
@@ -404,6 +405,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   });
 
   test('save with date range and a zero duration', async function (assert) {
+    assert.expect(3);
     const newStartDate = new Date('2016-01-12');
     const newEndDate = new Date('2017-02-22');
     const newDuration = 0;
@@ -429,6 +431,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   });
 
   test('save with non-zero duration and no date range', async function (assert) {
+    assert.expect(3);
     const newDuration = 10;
     const reportModel = await this.owner
       .lookup('service:store')
