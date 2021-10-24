@@ -3,7 +3,6 @@ import { setupRenderingTest } from 'ember-qunit';
 import { setupMirage } from 'ember-cli-mirage/test-support';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { padStart } from 'ember-pad/utils/pad';
 import moment from 'moment';
 import { component } from 'ilios-common/page-objects/components/offering-form';
 
@@ -30,7 +29,7 @@ module('Integration | Component | offering form', function (hooks) {
 
   test('room validation errors show up when typing', async function (assert) {
     await render(hbs`<OfferingForm @close={{(noop)}} @showRoom={{true}} />`);
-    await component.location.set(padStart('a', 300, 'a'));
+    await component.location.set('a'.repeat(300));
     await component.save();
     assert.ok(component.location.hasError);
   });
