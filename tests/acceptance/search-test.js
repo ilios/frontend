@@ -137,36 +137,42 @@ module('Acceptance | search', function (hooks) {
   });
 
   test('clicking back on search updates results and input #4759', async function (assert) {
-    assert.expect(11);
+    assert.expect(14);
 
     const firstInput = 'first';
     const secondInput = 'second';
 
     let searchRun = 0;
     this.server.get('api/search/v1/curriculum', (schema, { queryParams }) => {
-      if (!queryParams.onlySuggest) {
-        switch (searchRun) {
-          case 0:
-            assert.equal(queryParams.q, firstInput, 'first time, first input');
-            break;
-          case 1:
-            assert.equal(queryParams.q, secondInput, 'second time, second input');
-            break;
-          case 2:
-            assert.equal(queryParams.q, firstInput, 'third time, first input');
-            break;
-          default:
-            assert.ok(false, 'Search called too many times');
-            break;
-        }
-        searchRun++;
-      }
-      return {
+      const rhett = {
         results: {
           autocomplete: [queryParams.q],
           courses: [],
         },
       };
+      if (queryParams.onlySuggest) {
+        // eslint-disable-next-line qunit/no-early-return
+        return rhett;
+      }
+      assert.ok(searchRun <= 2);
+      let input, message;
+      switch (searchRun) {
+        case 0:
+          input = firstInput;
+          message = 'first time, first input';
+          break;
+        case 1:
+          input = secondInput;
+          message = 'second time, second input';
+          break;
+        case 2:
+          input = firstInput;
+          message = 'third time, first input';
+          break;
+      }
+      assert.equal(queryParams.q, input, message);
+      searchRun++;
+      return rhett;
     });
     await page.visit();
     assert.equal(currentURL(), '/search');
