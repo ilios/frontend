@@ -6,21 +6,28 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Component | validation-error', function (hooks) {
   setupRenderingTest(hooks);
 
-  test('it renders', async function (assert) {
-    // Set any properties with this.set('myProperty', 'value');
-    // Handle any actions with this.set('myAction', function(val) { ... });
-
-    await render(hbs`<ValidationError />`);
+  test('it renders with no errors', async function (assert) {
+    await render(hbs`<ValidationError @errors={{array}} />`);
 
     assert.dom(this.element).hasText('');
+  });
 
-    // Template block usage:
-    await render(hbs`
-      <ValidationError>
-        template block text
-      </ValidationError>
-    `);
+  test('it renders with errors', async function (assert) {
+    await render(hbs`<ValidationError @errors={{array "test 1" "test 2"}} />`);
 
-    assert.dom(this.element).hasText('template block text');
+    assert.dom(this.element).hasText('test 1 test 2');
+  });
+
+  test('it responds to changes', async function (assert) {
+    this.set('errors', ['one']);
+    await render(hbs`<ValidationError @errors={{this.errors}} />`);
+
+    assert.dom(this.element).hasText('one');
+
+    this.set('errors', ['two']);
+    assert.dom(this.element).hasText('two');
+
+    this.set('errors', []);
+    assert.dom(this.element).hasText('');
   });
 });

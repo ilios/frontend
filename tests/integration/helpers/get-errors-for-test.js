@@ -6,12 +6,18 @@ import { hbs } from 'ember-cli-htmlbars';
 module('Integration | Helper | get-errors-for', function (hooks) {
   setupRenderingTest(hooks);
 
-  // TODO: Replace this with your real tests.
-  test('it renders', async function (assert) {
-    this.set('inputValue', '1234');
+  test('it calls errorFor', async function (assert) {
+    assert.expect(2);
+    const obj = {
+      getErrorsFor(what) {
+        assert.equal(what, 'test');
+        return ['foo'];
+      },
+    };
+    this.set('obj', obj);
 
-    await render(hbs`{{get-errors-for this.inputValue}}`);
+    await render(hbs`{{get-errors-for this.obj "test"}}`);
 
-    assert.dom(this.element).hasText('1234');
+    assert.dom(this.element).hasText('foo');
   });
 });
