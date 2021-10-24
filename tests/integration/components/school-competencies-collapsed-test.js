@@ -31,7 +31,7 @@ module('Integration | Component | school competencies collapsed', function (hook
     assert.equal(component.domains[2].summary, 'There are 0 competencies');
   });
 
-  test('it renders', async function (assert) {
+  test('clicking expand fires action', async function (assert) {
     assert.expect(1);
     const school = this.server.create('school');
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
