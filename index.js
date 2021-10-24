@@ -36,18 +36,6 @@ module.exports = {
   },
 
   setupPreprocessorRegistry: function (type, registry) {
-    // ACHTUNG!
-    // This is necessary in order to make this helper available to
-    // applications that include ilios-common and that use its components that make use of cp-validations.
-    // @link https://github.com/offirgolan/ember-cp-validations/issues/334#issuecomment-290665860
-    // [ST 2018/09/26]
-    // revised [JJ 2020/02/04]
-    if (!this.isDevelopingAddon()) {
-      const cpValidationsAddon = this.addons.find((addon) => addon.name === 'ember-cp-validations');
-      if (cpValidationsAddon && cpValidationsAddon.setupPreprocessorRegistry) {
-        cpValidationsAddon.setupPreprocessorRegistry(type, registry);
-      }
-    }
     registry.add('htmlbars-ast-plugin', SetTransform.instantiate());
   },
 
