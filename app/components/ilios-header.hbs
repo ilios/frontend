@@ -1,4 +1,8 @@
 <header class="ilios-header" data-test-ilios-header ...attributes>
+  <NavigationNarrator
+    @navigationText={{t "general.navigationCompleteText"}}
+    @skipText={{t "general.skipToMainContent"}}
+  />
   <LinkTo @route="dashboard" class="logo" title={{t "general.dashboard"}}>
     <h1 class="visually-hidden" data-test-title>
       {{@title}}
