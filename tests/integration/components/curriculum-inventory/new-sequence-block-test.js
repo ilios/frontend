@@ -195,7 +195,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       assert.equal(block.belongsTo('parent').id(), null);
       assert.equal(block.belongsTo('academicLevel').id(), this.academicLevels[0].id);
       assert.equal(block.required, 1);
-      assert.equal(block.track, false);
+      assert.false(block.track);
       assert.equal(block.orderInSequence, 0);
       assert.equal(block.childSequenceOrder, 1);
       assert.equal(block.startDate.getTime(), newStartDate.getTime());
@@ -236,7 +236,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('save', (block) => {
       assert.equal(block.belongsTo('academicLevel').id(), 2);
       assert.equal(block.required, 3);
-      assert.equal(block.track, true);
+      assert.true(block.track);
       assert.equal(block.childSequenceOrder, 2);
       assert.equal(block.minimum, minimum);
       assert.equal(block.maximum, maximum);
