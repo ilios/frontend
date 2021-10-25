@@ -1,5 +1,6 @@
 import Component from '@glimmer/component';
 import { inject as service } from '@ember/service';
+import { isPresent } from '@ember/utils';
 import { tracked } from '@glimmer/tracking';
 import { dropTask, restartableTask } from 'ember-concurrency';
 import { action } from '@ember/object';
@@ -14,8 +15,12 @@ export default class MeshManagerComponent extends Component {
   @tracked searchPage = 0;
   @tracked hasMoreSearchResults = false;
 
+  get terms() {
+    return isPresent(this.args.terms) ? this.args.terms : [];
+  }
+
   get sortedTerms() {
-    if (!this.args.terms || this.args.terms.length === 0) {
+    if (!this.terms || this.terms.length === 0) {
       return [];
     }
     return this.args.terms.sortBy('name');
@@ -69,7 +74,7 @@ export default class MeshManagerComponent extends Component {
       return;
     }
 
-    if (this.args.terms.mapBy('id').includes(term.id)) {
+    if (this.args.terms && this.terms.mapBy('id').includes(term.id)) {
       return;
     }
 
