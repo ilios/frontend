@@ -27,8 +27,7 @@ export default class CompetencyModel extends Model {
   programYearObjectives;
 
   get childCount() {
-    const childrenIds = this.hasMany('children').ids();
-    return childrenIds.length;
+    return this.children.length;
   }
 
   get isNotDomain() {
