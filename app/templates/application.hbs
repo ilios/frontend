@@ -1,5 +1,4 @@
 {{page-title (t "general.ilios") separator=" " front=true}}
-<RouteAnnouncer/>
 <ConnectionStatus />
 <ApiVersionNotice />
 <NewVersionNotifier as |version lastVersion reload|>
@@ -13,7 +12,7 @@
   {{#if this.session.isAuthenticated}}
     <IliosNavigation />
   {{/if}}
-  <main>
+  <main id="main">
     {{#if this.showErrorDisplay}}
       <ErrorDisplay @errors={{this.errors}} @clearErrors={{this.clearErrors}} />
     {{else}}

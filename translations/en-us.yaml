@@ -148,7 +148,6 @@ general:
   good: Good
   goToUser: "Show user record in ilios"
   groupMembers: "Members of current group"
-  hasLoaded: 'has loaded'
   home: Home
   icsAdminInstructions: "To add a user's Ilios calendar to another application or service, they will need to use this URL.  This URL is like a password. Anyone who knows it can view this user's calendar!"
   icsFeed: "ICS Feed"
@@ -218,6 +217,7 @@ general:
   myReports: "My Reports"
   name: Name
   narrative: "Narrative"
+  navigationCompleteText: Ilios page navigation is complete. You may now navigate the page content as you wish.
   newCourse: "New Course"
   newCurriculumInventoryReport: "New Curriculum Inventory Report"
   newDomain: "New Domain"
@@ -373,6 +373,7 @@ general:
   showSubgroupEvents: "Show events for all subgroups"
   singleDay: "Single Day"
   singleGroup: "Single Group"
+  skipToMainContent: Skip to main content
   startOver: "Start Over"
   stateOrProvince: "State or Province"
   statusCode: "Status Code"

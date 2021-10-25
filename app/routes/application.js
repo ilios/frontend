@@ -4,7 +4,6 @@ import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
 import * as Sentry from '@sentry/browser';
 import { loadPolyfills } from 'ilios-common/utils/load-polyfills';
-import { set } from '@ember/object';
 
 export default class AuthenticatedRoute extends Route {
   @service currentUser;
@@ -12,7 +11,6 @@ export default class AuthenticatedRoute extends Route {
   @service moment;
   @service store;
   @service router;
-  @service announcer;
   @service session;
 
   @tracked event;
@@ -20,7 +18,6 @@ export default class AuthenticatedRoute extends Route {
   async beforeModel() {
     await loadPolyfills();
     const locale = this.intl.get('locale');
-    set(this.announcer, 'message', this.intl.t('general.hasLoaded'));
     this.moment.setLocale(locale);
     window.document.querySelector('html').setAttribute('lang', locale);
   }

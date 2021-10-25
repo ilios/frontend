@@ -148,7 +148,6 @@ general:
   good: Bon
   goToUser: "Présentant enregistrement d'utilisateur en Ilios"
   groupMembers: "Membres du groupe courant"
-  hasLoaded: "a été chargée"
   home: Accueil
   icsAdminInstructions: "Pour ajouter le calendrier d'un utilisateur à des services ou applications autre, devront utiliser cette URL. Cette URL comme un mot de passe. Toutes les personnes qui le connaissent pouvez voir le calendrier de cet utilisateur!"
   icsFeed: "Données de ICS"
@@ -218,6 +217,7 @@ general:
   myReports: "Mes Rapports"
   name: Nom
   narrative: "narrative"
+  navigationCompleteText: La navigation sur la page Ilios est terminée. Vous pouvez maintenant naviguer dans le contenu de la page comme vous le souhaitez.
   newCourse: "Cours neuf"
   newCurriculumInventoryReport: "Nouveau Rapport d'inventaire des Programmes d'études"
   newDomain: "Domaine nouvelle"
@@ -373,6 +373,7 @@ general:
   showSubgroupEvents: "Afficher les événements pour tous les sous-groupes"
   singleDay: "Seule Journée"
   singleGroup: "Seul groupe"
+  skipToMainContent: passer au contenu principal de la page
   startOver: recommencer
   stateOrProvince: "État ou province"
   statusCode: "Code d'état"
