@@ -31,7 +31,9 @@ export default class ProgramYearObjectiveListComponent extends Component {
   }
 
   async getDomainTrees(programYearCompetencies) {
-    const domains = programYearCompetencies.filterBy('isDomain').toArray();
+    const domains = programYearCompetencies.toArray().filter((competency) => {
+      return !competency.belongsTo('parent').id();
+    });
     const parents = await Promise.all(programYearCompetencies.mapBy('parent'));
     const allDomains = [...domains, ...parents].uniq().filter(Boolean);
     return await map(allDomains, async (domain) => {

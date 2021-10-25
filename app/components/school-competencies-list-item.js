@@ -21,6 +21,10 @@ export default class SchoolCompetenciesListItemComponent extends Component {
     return [...this.pcrsToAdd, ...filteredCurrent].uniq();
   }
 
+  get isDomain() {
+    return !this.args.competency.belongsTo('parent').id();
+  }
+
   @action
   setIsManaging(isManaging) {
     this.isManaging = isManaging;

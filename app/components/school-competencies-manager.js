@@ -6,7 +6,9 @@ export default class SchoolCompetenciesManagerComponent extends Component {
     if (!this.args.competencies) {
       return [];
     }
-    const domains = this.args.competencies.filterBy('isDomain');
+    const domains = this.args.competencies.toArray().filter((competency) => {
+      return !competency.belongsTo('parent').id();
+    });
     const objs = domains.uniq().map((domain) => {
       if (!domain.id) {
         return {
