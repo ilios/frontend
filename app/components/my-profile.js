@@ -5,7 +5,7 @@ import { inject as service } from '@ember/service';
 import { isPresent } from '@ember/utils';
 import moment from 'moment';
 import { task, timeout } from 'ember-concurrency';
-import { padStart } from 'ember-pad/utils/pad';
+import pad from 'pad';
 
 export default class MyProfileComponent extends Component {
   @service fetch;
@@ -59,11 +59,11 @@ export default class MyProfileComponent extends Component {
     const selection = this.expiresAt;
     const expiresAt = moment(selection).hour(23).minute(59).second(59);
     const now = moment();
-    const days = padStart(expiresAt.diff(now, 'days'), 2, '0');
+    const days = pad(2, expiresAt.diff(now, 'days'), '0');
 
-    const hours = padStart(moment().hours(23).diff(now, 'hours'), 2, '0');
-    const minutes = padStart(moment().minutes(59).diff(now, 'minutes'), 2, '0');
-    const seconds = padStart(moment().seconds(59).diff(now, 'seconds'), 2, '0');
+    const hours = pad(2, moment().hours(23).diff(now, 'hours'), '0');
+    const minutes = pad(2, moment().minutes(59).diff(now, 'minutes'), '0');
+    const seconds = pad(2, moment().seconds(59).diff(now, 'seconds'), '0');
 
     const interval = `P${days}DT${hours}H${minutes}M${seconds}S`;
 

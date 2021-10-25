@@ -4,7 +4,7 @@ import { action } from '@ember/object';
 import { inject as service } from '@ember/service';
 import { all } from 'rsvp';
 import { dropTask } from 'ember-concurrency';
-import pad from 'ember-pad/utils/pad';
+import pad from 'pad';
 import countDigits from '../utils/count-digits';
 import cloneLearnerGroup from '../utils/clone-learner-group';
 
@@ -45,7 +45,7 @@ export default class LearnergroupSubgroupListComponent extends Component {
       const newGroup = this.store.createRecord('learner-group', {
         cohort,
         parent: this.args.parentGroup,
-        title: `${parentTitle} ${pad(offset + i, padBy)}`,
+        title: `${parentTitle} ${pad(padBy, offset + i)}`,
       });
       groups.pushObject(newGroup);
     }
