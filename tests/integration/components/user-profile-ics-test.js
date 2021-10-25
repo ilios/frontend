@@ -44,7 +44,7 @@ module('Integration | Component | user profile ics', function (hooks) {
     this.set('user', userModel);
 
     await render(
-      hbs`<UserProfileIcs @isManaging={{true}} @user={{this.user}} @setIsManaging={{noop}} />`
+      hbs`<UserProfileIcs @isManaging={{true}} @user={{this.user}} @setIsManaging={{(noop)}} />`
     );
     await click('.refresh-key');
 

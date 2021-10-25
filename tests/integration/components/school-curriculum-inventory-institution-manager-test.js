@@ -31,7 +31,7 @@ module(
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
       @institution={{await this.school.curriculumInventoryInstitution}}
       @canUpdate={{this.canUpdate}}
-      @manage={{noop}}
+      @manage={{(noop)}}
     />`);
 
       assert.equal(component.header.title, 'Curriculum Inventory Institutional Information');
@@ -61,7 +61,7 @@ module(
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
       @institution={{await this.school.curriculumInventoryInstitution}}
       @canUpdate={{this.canUpdate}}
-      @manage={{noop}}
+      @manage={{(noop)}}
     />`);
 
       assert.equal(component.content.name.value, '');
@@ -134,7 +134,7 @@ module(
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
       @institution={{await this.school.curriculumInventoryInstitution}}
       @canUpdate={{this.canUpdate}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @save={{this.saveInstitution}}
     />`);
 
@@ -177,7 +177,7 @@ module(
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
       @institution={{await this.school.curriculumInventoryInstitution}}
       @canUpdate={{this.canUpdate}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @save={{this.saveInstitution}}
     />`);
 
@@ -202,7 +202,7 @@ module(
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
       @institution={{await this.school.curriculumInventoryInstitution}}
       @canUpdate={{this.canUpdate}}
-      @manage={{noop}}
+      @manage={{(noop)}}
     />`);
 
       assert.notOk(component.content.name.hasError);
@@ -254,7 +254,7 @@ module(
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
       @institution={{await this.school.curriculumInventoryInstitution}}
       @canUpdate={{this.canUpdate}}
-      @manage={{noop}}
+      @manage={{(noop)}}
     />`);
       assert.notOk(component.header.hasSaveButton);
     });

@@ -71,7 +71,7 @@ module(
         @sessions={{this.sessions}}
         @sequenceBlock={{this.sequenceBlock}}
         @sortBy={{this.sortBy}}
-        @setSortBy={{noop}}
+        @setSortBy={{(noop)}}
       />`);
 
       assert.equal(
@@ -170,10 +170,10 @@ module(
       this.set('sortBy', 'title');
 
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-        @sessions={{array}}
+        @sessions={{(array)}}
         @sequenceBlock={{this.sequenceBlock}}
         @sortBy={{this.sortBy}}
-        @setSortBy={{noop}}
+        @setSortBy={{(noop)}}
       />`);
 
       assert.ok(component.header.isVisible);
@@ -309,7 +309,7 @@ module(
         @sessions={{this.sessions}}
         @sequenceBlock={{this.sequenceBlock}}
         @sortBy={{this.sortBy}}
-        @setSortBy={{noop}}
+        @setSortBy={{(noop)}}
       />`);
 
       assert.equal(component.sessions[0].totalTime.text, '30.00');
@@ -369,7 +369,7 @@ module(
         @sessions={{this.sessions}}
         @sequenceBlock={{this.sequenceBlock}}
         @sortBy={{this.sortBy}}
-        @setSortBy={{noop}}
+        @setSortBy={{(noop)}}
       />`);
 
       assert.notOk(component.header.countAsOneOffering.isChecked);
@@ -420,7 +420,7 @@ module(
         @sessions={{this.sessions}}
         @sequenceBlock={{this.sequenceBlock}}
         @sortBy={{this.sortBy}}
-        @setSortBy={{noop}}
+        @setSortBy={{(noop)}}
         @save={{this.save}}
       />`);
 
@@ -473,7 +473,7 @@ module(
         @sessions={{this.sessions}}
         @sequenceBlock={{this.sequenceBlock}}
         @sortBy={{this.sortBy}}
-        @setSortBy={{noop}}
+        @setSortBy={{(noop)}}
         @save={{this.save}}
       />`);
 
@@ -502,7 +502,7 @@ module(
       });
 
       await render(hbs`<CurriculumInventory::SequenceBlockSessionManager
-        @sessions={{array}}
+        @sessions={{(array)}}
         @sequenceBlock={{this.sequenceBlock}}
         @sortBy={{this.sortBy}}
         @cancel={{this.cancel}}

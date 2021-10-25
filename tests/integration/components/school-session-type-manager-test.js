@@ -33,7 +33,7 @@ module('Integration | Component | school session type manager', function (hooks)
     await render(hbs`<SchoolSessionTypeManager
       @canUpdate={{true}}
       @sessionType={{this.sessionType}}
-      @close={{noop}}
+      @close={{(noop)}}
     />`);
 
     assert.equal(component.title, 'one');

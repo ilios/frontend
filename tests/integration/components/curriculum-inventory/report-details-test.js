@@ -43,8 +43,8 @@ module('Integration | Component | curriculum-inventory/report-details', function
     await render(hbs`<CurriculumInventory::ReportDetails
       @report={{this.report}}
       @canUpdate={{true}}
-      @setLeadershipDetails={{noop}}
-      @setManageLeadership={{noop}}
+      @setLeadershipDetails={{(noop)}}
+      @setManageLeadership={{(noop)}}
     />`);
 
     assert
@@ -79,8 +79,8 @@ module('Integration | Component | curriculum-inventory/report-details', function
     await render(hbs`<CurriculumInventory::ReportDetails
       @report={{this.report}}
       @canUpdate={{this.canUpdate}}
-      @setLeadershipDetails={{noop}}
-      @setManageLeadership={{noop}}
+      @setLeadershipDetails={{(noop)}}
+      @setManageLeadership={{(noop)}}
     />`);
 
     assert.dom('.confirm-finalize').doesNotExist('Confirmation dialog is initially not visible.');
@@ -130,8 +130,8 @@ module('Integration | Component | curriculum-inventory/report-details', function
     await render(hbs`<CurriculumInventory::ReportDetails
       @report={{this.report}}
       @canUpdate={{true}}
-      @setLeadershipDetails={{noop}}
-      @setManageLeadership={{noop}}
+      @setLeadershipDetails={{(noop)}}
+      @setManageLeadership={{(noop)}}
     />`);
 
     await click('.curriculum-inventory-report-header .finalize');

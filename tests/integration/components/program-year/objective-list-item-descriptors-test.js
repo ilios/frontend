@@ -14,11 +14,11 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
       @objective={{null}}
       @editable={{false}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{true}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.ok(component.canSave);
     assert.ok(component.canCancel);
@@ -35,11 +35,11 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
       @objective={{this.objective}}
       @editable={{false}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.text, 'None');
     await a11yAudit(this.element);
@@ -58,11 +58,11 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
       @objective={{this.objective}}
       @editable={{false}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.list.length, 2);
     assert.equal(component.list[0].title, 'descriptor 0');
@@ -83,11 +83,11 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
       @objective={{this.objective}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.list.length, 2);
     assert.equal(component.list[0].title, 'descriptor 0');
@@ -112,11 +112,11 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
       @objective={{this.objective}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{true}}
       @save={{this.save}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     await component.save();
   });
@@ -137,9 +137,9 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
     await render(hbs`<ProgramYear::ObjectiveListItemDescriptors
       @objective={{this.objective}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{true}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{this.cancel}}
     />`);
@@ -164,9 +164,9 @@ module('Integration | Component | program-year/objective-list-item-descriptors',
       @editable={{true}}
       @manage={{this.manage}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     await component.list[0].manage();
   });

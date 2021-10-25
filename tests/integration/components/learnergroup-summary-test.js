@@ -65,9 +65,9 @@ module('Integration | Component | learnergroup summary', function (hooks) {
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnergroupSummary
-      @setIsEditing={{noop}}
-      @setSortUsersBy={{noop}}
-      @setIsBulkAssigning={{noop}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
       @sortUsersBy="fullName"
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
@@ -99,9 +99,9 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupSummary
-      @setIsEditing={{noop}}
-      @setSortUsersBy={{noop}}
-      @setIsBulkAssigning={{noop}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
@@ -122,9 +122,9 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupSummary
-      @setIsEditing={{noop}}
-      @setSortUsersBy={{noop}}
-      @setIsBulkAssigning={{noop}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
@@ -145,9 +145,9 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupSummary
-      @setIsEditing={{noop}}
-      @setSortUsersBy={{noop}}
-      @setIsBulkAssigning={{noop}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
@@ -168,9 +168,9 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupSummary
-      @setIsEditing={{noop}}
-      @setSortUsersBy={{noop}}
-      @setIsBulkAssigning={{noop}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
@@ -191,9 +191,9 @@ module('Integration | Component | learnergroup summary', function (hooks) {
       .find('learner-group', learnerGroup.id);
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupSummary
-      @setIsEditing={{noop}}
-      @setSortUsersBy={{noop}}
-      @setIsBulkAssigning={{noop}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
@@ -224,9 +224,9 @@ module('Integration | Component | learnergroup summary', function (hooks) {
 
     await render(hbs`<LearnergroupSummary
       @canUpdate={{true}}
-      @setIsEditing={{noop}}
-      @setSortUsersBy={{noop}}
-      @setIsBulkAssigning={{noop}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
@@ -255,9 +255,9 @@ module('Integration | Component | learnergroup summary', function (hooks) {
 
     await render(hbs`<LearnergroupSummary
       @canUpdate={{true}}
-      @setIsEditing={{noop}}
-      @setSortUsersBy={{noop}}
-      @setIsBulkAssigning={{noop}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
@@ -304,9 +304,9 @@ module('Integration | Component | learnergroup summary', function (hooks) {
     this.set('learnerGroup', learnerGroupModel);
 
     await render(hbs`<LearnergroupSummary
-      @setIsEditing={{noop}}
-      @setSortUsersBy={{noop}}
-      @setIsBulkAssigning={{noop}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
       @sortUsersBy="firstName"
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
@@ -332,9 +332,9 @@ module('Integration | Component | learnergroup summary', function (hooks) {
 
     await render(hbs`<LearnergroupSummary
       @canUpdate={{true}}
-      @setIsEditing={{noop}}
-      @setSortUsersBy={{noop}}
-      @setIsBulkAssigning={{noop}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}
@@ -362,9 +362,9 @@ module('Integration | Component | learnergroup summary', function (hooks) {
 
     await render(hbs`<LearnergroupSummary
       @canUpdate={{true}}
-      @setIsEditing={{noop}}
-      @setSortUsersBy={{noop}}
-      @setIsBulkAssigning={{noop}}
+      @setIsEditing={{(noop)}}
+      @setSortUsersBy={{(noop)}}
+      @setIsBulkAssigning={{(noop)}}
       @learnerGroup={{this.learnerGroup}}
       @isEditing={{false}}
       @isBulkAssigning={{false}}

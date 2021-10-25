@@ -42,7 +42,7 @@ module('Integration | Component | instructor-groups/list', function (hooks) {
   });
 
   test('it renders empty', async function (assert) {
-    await render(hbs`<InstructorGroups::List @programs={{array}} />`);
+    await render(hbs`<InstructorGroups::List @programs={{(array)}} />`);
 
     assert.equal(component.items.length, 0);
     assert.ok(component.isEmpty);

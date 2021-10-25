@@ -150,8 +150,8 @@ module('Integration | Component | dashboard myreports', function (hooks) {
     await render(hbs`<DashboardMyreports
       @selectedReport={{this.selectedReport}}
       @selectedYear={{this.selectedYear}}
-      @onReportSelect={{noop}}
-      @onReportYearSelect={{noop}}
+      @onReportSelect={{(noop)}}
+      @onReportYearSelect={{(noop)}}
     />`);
     assert.equal(component.selectedReport.results[0].text, '2016 - 2017 course 0');
   });

@@ -33,10 +33,10 @@ module('Integration | Component | school competencies expanded', function (hooks
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @isManaging={{false}}
-      @setSchoolManageCompetencies={{noop}}
+      @setSchoolManageCompetencies={{(noop)}}
     />`);
     assert.equal(component.collapser.text, 'Competencies (1/2)');
     assert.equal(component.competenciesList.items.length, 3);

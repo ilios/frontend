@@ -22,10 +22,10 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
     await render(hbs`<CurriculumInventory::LeadershipExpanded
       @report={{this.report}}
       @canUpdate={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @isManaging={{false}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
     />`);
     const title = '.title';
     const table = 'table';
@@ -54,9 +54,9 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
       @report={{this.report}}
       @canUpdate={{true}}
       @collapse={{action click}}
-      @expand={{noop}}
+      @expand={{(noop)}}
       @isManaging={{false}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
     />`);
     const title = '.title';
 
@@ -77,8 +77,8 @@ module('Integration | Component | curriculum-inventory/leadership-expanded', fun
     await render(hbs`<CurriculumInventory::LeadershipExpanded
       @report={{this.report}}
       @canUpdate={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{action click}}
     />`);

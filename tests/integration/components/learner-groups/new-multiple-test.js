@@ -10,8 +10,8 @@ module('Integration | Component | learner-groups/new-multiple', function (hooks)
 
   test('it renders', async function (assert) {
     await render(hbs`<LearnerGroups::NewMultiple
-      @cancel={{noop}}
-      @generateNewLearnerGroups={{noop}}
+      @cancel={{(noop)}}
+      @generateNewLearnerGroups={{(noop)}}
     />`);
     assert.ok(component.isVisible);
     await a11yAudit(this.element);
@@ -24,7 +24,7 @@ module('Integration | Component | learner-groups/new-multiple', function (hooks)
     });
     await render(hbs`<LearnerGroups::NewMultiple
       @generateNewLearnerGroups={{this.save}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     await component.setNumberOfGroups(13);
     await component.save();

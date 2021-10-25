@@ -27,8 +27,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
       hbs`<ProgramYear::ObjectiveListItem
         @programYearObjective={{this.programYearObjective}}
         @editable={{true}}
-        @schoolCompetencies={{array}}
-        @schoolDomains={{array}}
+        @schoolCompetencies={{(array)}}
+        @schoolDomains={{(array)}}
       />`
     );
     assert.notOk(component.hasRemoveConfirmation);
@@ -48,8 +48,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
       hbs`<ProgramYear::ObjectiveListItem
         @programYearObjective={{this.programYearObjective}}
         @editable={{true}}
-        @schoolCompetencies={{array}}
-        @schoolDomains={{array}}
+        @schoolCompetencies={{(array)}}
+        @schoolDomains={{(array)}}
       />`
     );
     const newDescription = 'Pluto Visits Earth';
@@ -67,8 +67,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
       hbs`<ProgramYear::ObjectiveListItem
         @programYearObjective={{this.programYearObjective}}
         @editable={{true}}
-        @schoolCompetencies={{array}}
-        @schoolDomains={{array}}
+        @schoolCompetencies={{(array)}}
+        @schoolDomains={{(array)}}
       />`
     );
     await component.competency.manage();
@@ -82,8 +82,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
       hbs`<ProgramYear::ObjectiveListItem
         @programYearObjective={{this.programYearObjective}}
         @editable={{true}}
-        @schoolCompetencies={{array}}
-        @schoolDomains={{array}}
+        @schoolCompetencies={{(array)}}
+        @schoolDomains={{(array)}}
       />`
     );
     await component.meshDescriptors.list[0].manage();
@@ -97,8 +97,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
       hbs`<ProgramYear::ObjectiveListItem
         @programYearObjective={{this.programYearObjective}}
         @editable={{true}}
-        @schoolCompetencies={{array}}
-        @schoolDomains={{array}}
+        @schoolCompetencies={{(array)}}
+        @schoolDomains={{(array)}}
       />`
     );
     assert.notOk(component.taxonomyManager.isPresent);
@@ -113,8 +113,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
       hbs`<ProgramYear::ObjectiveListItem
         @programYearObjective={{this.programYearObjective}}
         @editable={{true}}
-        @schoolCompetencies={{array}}
-        @schoolDomains={{array}}
+        @schoolCompetencies={{(array)}}
+        @schoolDomains={{(array)}}
       />`
     );
     await component.remove();
@@ -128,8 +128,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
       hbs`<ProgramYear::ObjectiveListItem
         @programYearObjective={{this.programYearObjective}}
         @editable={{true}}
-        @schoolCompetencies={{array}}
-        @schoolDomains={{array}}
+        @schoolCompetencies={{(array)}}
+        @schoolDomains={{(array)}}
       />`
     );
     assert.ok(component.isActive);
@@ -145,8 +145,8 @@ module('Integration | Component | program-year/objective-list-item', function (h
       hbs`<ProgramYear::ObjectiveListItem
         @programYearObjective={{this.programYearObjective}}
         @editable={{true}}
-        @schoolCompetencies={{array}}
-        @schoolDomains={{array}}
+        @schoolCompetencies={{(array)}}
+        @schoolDomains={{(array)}}
       />`
     );
     assert.ok(component.isInactive);

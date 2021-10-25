@@ -10,8 +10,8 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
 
   test('it renders', async function (assert) {
     await render(hbs`<InstructorGroups::New
-      @save={{noop}}
-      @cancel={{noop}}
+      @save={{(noop)}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.title.label, 'Title:');
     assert.equal(component.done.text, 'Done');
@@ -25,7 +25,7 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
       assert.ok(true, 'cancel fired.');
     });
     await render(hbs`<InstructorGroups::New
-      @save={{noop}}
+      @save={{(noop)}}
       @cancel={{this.cancel}}
     />`);
     await component.cancel.click();
@@ -35,8 +35,8 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
     assert.expect(3);
 
     await render(hbs`<InstructorGroups::New
-      @save={{noop}}
-      @cancel={{noop}}
+      @save={{(noop)}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.title.errors.length, 0);
     await component.done.click();
@@ -48,8 +48,8 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
     assert.expect(3);
 
     await render(hbs`<InstructorGroups::New
-      @save={{noop}}
-      @cancel={{noop}}
+      @save={{(noop)}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.title.errors.length, 0);
     await component.title.set('Aa');
@@ -65,8 +65,8 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
     assert.expect(3);
 
     await render(hbs`<InstructorGroups::New
-      @save={{noop}}
-      @cancel={{noop}}
+      @save={{(noop)}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.title.errors.length, 0);
     await component.title.set('0123456789'.repeat(21));
@@ -87,7 +87,7 @@ module('Integration | Component | instructor-groups/new', function (hooks) {
 
     await render(hbs`<InstructorGroups::New
       @save={{this.save}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     await component.title.set('Jayden Rules!');
     await component.done.click();

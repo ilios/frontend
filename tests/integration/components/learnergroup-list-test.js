@@ -233,7 +233,7 @@ module('Integration | Component | learner group list', function (hooks) {
     this.set('learnerGroups', [model]);
     await render(hbs`<LearnergroupList
       @learnerGroups={{this.learnerGroups}}
-      @copy={{noop}}
+      @copy={{(noop)}}
       @canCreate={{true}}
       @canCopyWithLearners={{false}}
     />`);
@@ -253,7 +253,7 @@ module('Integration | Component | learner group list', function (hooks) {
     this.set('learnerGroups', [model]);
     await render(hbs`<LearnergroupList
       @learnerGroups={{this.learnerGroups}}
-      @copy={{noop}}
+      @copy={{(noop)}}
       @canCreate={{true}}
       @canCopyWithLearners={{false}}
     />`);

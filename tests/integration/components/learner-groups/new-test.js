@@ -10,8 +10,8 @@ module('Integration | Component | learner-groups/new', function (hooks) {
 
   test('it renders', async function (assert) {
     await render(hbs`<LearnerGroups::New
-      @save={{noop}}
-      @cancel={{noop}}
+      @save={{(noop)}}
+      @cancel={{(noop)}}
       @fillModeSupported={{true}}
     />`);
     assert.ok(component.single.isVisible);
@@ -20,9 +20,9 @@ module('Integration | Component | learner-groups/new', function (hooks) {
 
   test('it renders multimode', async function (assert) {
     await render(hbs`<LearnerGroups::New
-      @save={{noop}}
-      @cancel={{noop}}
-      @generateNewLearnerGroups={{noop}}
+      @save={{(noop)}}
+      @cancel={{(noop)}}
+      @generateNewLearnerGroups={{(noop)}}
       @multiModeSupported={{true}}
     />`);
     await component.chooseMultipleGroups();

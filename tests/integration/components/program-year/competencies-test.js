@@ -44,9 +44,9 @@ module('Integration | Component | program-year/competencies', function (hooks) {
       @programYear={{this.programYear}}
       @canUpdate={{true}}
       @isManaging={{false}}
-      @collapse={{noop}}
-      @expand={{noop}}
-      @setIsManaging={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
+      @setIsManaging={{(noop)}}
     />`);
 
     assert.equal(component.title, 'Competencies (2)');
@@ -69,8 +69,8 @@ module('Integration | Component | program-year/competencies', function (hooks) {
       @programYear={{this.programYear}}
       @canUpdate={{true}}
       @isManaging={{false}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @setIsManaging={{this.setIsManaging}}
     />`);
 
@@ -89,8 +89,8 @@ module('Integration | Component | program-year/competencies', function (hooks) {
       @canUpdate={{true}}
       @isManaging={{false}}
       @collapse={{this.collapse}}
-      @expand={{noop}}
-      @setIsManaging={{noop}}
+      @expand={{(noop)}}
+      @setIsManaging={{(noop)}}
     />`);
     await component.clickTitle();
   });

@@ -47,8 +47,8 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
     await render(hbs`<SchoolCompetenciesPcrsMapper
       @allPcrses={{this.allPcrses}}
       @selectedPcrses={{this.selectedPcrses}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
 
     assert.equal(component.pcrs.length, 5);
@@ -74,9 +74,9 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
     });
     await render(hbs`<SchoolCompetenciesPcrsMapper
       @allPcrses={{this.allPcrses}}
-      @selectedPcrses={{array}}
+      @selectedPcrses={{(array)}}
       @add={{this.add}}
-      @remove={{noop}}
+      @remove={{(noop)}}
     />`);
     assert.notOk(component.pcrs[0].isChecked);
     await component.pcrs[0].click();
@@ -93,7 +93,7 @@ module('Integration | Component | school-competencies-pcrs-mapper', function (ho
     await render(hbs`<SchoolCompetenciesPcrsMapper
       @allPcrses={{this.allPcrses}}
       @selectedPcrses={{this.selectedPcrses}}
-      @add={{noop}}
+      @add={{(noop)}}
       @remove={{this.remove}}
     />`);
     assert.ok(component.pcrs[0].isChecked);

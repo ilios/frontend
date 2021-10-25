@@ -36,9 +36,9 @@ module('Integration | Component | learnergroup cohort user manager', function (h
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top level group"
       @sortBy="lastName"
-      @setSortBy={{noop}}
-      @addUserToGroup={{noop}}
-      @addUsersToGroup={{noop}}
+      @setSortBy={{(noop)}}
+      @addUserToGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
     />`);
 
     assert.equal(component.title, 'Cohort Members NOT assigned to top level group (2)');
@@ -69,9 +69,9 @@ module('Integration | Component | learnergroup cohort user manager', function (h
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top level group"
       @sortBy="fullName"
-      @setSortBy={{noop}}
-      @addUserToGroup={{noop}}
-      @addUsersToGroup={{noop}}
+      @setSortBy={{(noop)}}
+      @addUserToGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
     />`);
 
     assert.equal(component.users.length, 3);
@@ -97,8 +97,8 @@ module('Integration | Component | learnergroup cohort user manager', function (h
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top level group"
       @sortBy="firstName"
-      @setSortBy={{noop}}
-      @addUserToGroup={{noop}}
+      @setSortBy={{(noop)}}
+      @addUserToGroup={{(noop)}}
       @addUsersToGroup={{this.addMany}}
     />`);
 
@@ -127,9 +127,9 @@ module('Integration | Component | learnergroup cohort user manager', function (h
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top level group"
       @sortBy="firstName"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @addUserToGroup={{this.addOne}}
-      @addUsersToGroup={{noop}}
+      @addUsersToGroup={{(noop)}}
     />`);
 
     await component.users[0].add();
@@ -149,9 +149,9 @@ module('Integration | Component | learnergroup cohort user manager', function (h
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top level group"
       @sortBy="firstName"
-      @setSortBy={{noop}}
-      @addUserToGroup={{noop}}
-      @addUsersToGroup={{noop}}
+      @setSortBy={{(noop)}}
+      @addUserToGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
     />`);
 
     assert.ok(component.users[0].canBeAdded);
@@ -179,8 +179,8 @@ module('Integration | Component | learnergroup cohort user manager', function (h
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top level group"
       @sortBy="firstName"
-      @setSortBy={{noop}}
-      @addUserToGroup={{noop}}
+      @setSortBy={{(noop)}}
+      @addUserToGroup={{(noop)}}
       @addUsersToGroup={{this.addMany}}
     />`);
 
@@ -207,9 +207,9 @@ module('Integration | Component | learnergroup cohort user manager', function (h
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top level group"
       @sortBy="firstName"
-      @setSortBy={{noop}}
-      @addUserToGroup={{noop}}
-      @addUsersToGroup={{noop}}
+      @setSortBy={{(noop)}}
+      @addUserToGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
     />`);
 
     assert.notOk(component.users[0].isSelected);
@@ -245,9 +245,9 @@ module('Integration | Component | learnergroup cohort user manager', function (h
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top level group"
       @sortBy="firstName"
-      @setSortBy={{noop}}
-      @addUserToGroup={{noop}}
-      @addUsersToGroup={{noop}}
+      @setSortBy={{(noop)}}
+      @addUserToGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
     />`);
 
     assert.equal(component.users.length, 3);
@@ -327,9 +327,9 @@ module('Integration | Component | learnergroup cohort user manager', function (h
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top level group"
       @sortBy="firstName"
-      @setSortBy={{noop}}
-      @addUserToGroup={{noop}}
-      @addUsersToGroup={{noop}}
+      @setSortBy={{(noop)}}
+      @addUserToGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
     />`);
 
     assert.ok(component.users[0].canBeSelected, 'Checkbox visible');
@@ -355,9 +355,9 @@ module('Integration | Component | learnergroup cohort user manager', function (h
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top level group"
       @sortBy="firstName"
-      @setSortBy={{noop}}
-      @addUserToGroup={{noop}}
-      @addUsersToGroup={{noop}}
+      @setSortBy={{(noop)}}
+      @addUserToGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
     />`);
 
     assert.notOk(component.users[0].canBeSelected, 'Checkbox visible');
@@ -392,9 +392,9 @@ module('Integration | Component | learnergroup cohort user manager', function (h
       @learnerGroupTitle="this group"
       @topLevelGroupTitle="top level group"
       @sortBy="lastName"
-      @setSortBy={{noop}}
-      @addUserToGroup={{noop}}
-      @addUsersToGroup={{noop}}
+      @setSortBy={{(noop)}}
+      @addUserToGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
     />`);
 
     assert.equal(component.users.length, 3);

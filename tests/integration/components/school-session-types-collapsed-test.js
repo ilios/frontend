@@ -16,7 +16,7 @@ module('Integration | Component | school session types collapsed', function (hoo
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
     this.set('school', schoolModel);
 
-    await render(hbs`<SchoolSessionTypesCollapsed @school={{this.school}} @expand={{noop}} />`);
+    await render(hbs`<SchoolSessionTypesCollapsed @school={{this.school}} @expand={{(noop)}} />`);
 
     assert.equal(component.assessmentCount, 1);
     assert.equal(component.instructionalCount, 1);

@@ -16,7 +16,7 @@ module('Integration | Component | error display', function (hooks) {
     ];
 
     this.set('errors', errors);
-    await render(hbs`<ErrorDisplay @errors={{this.errors}} @clearErrors={{noop}} />`);
+    await render(hbs`<ErrorDisplay @errors={{this.errors}} @clearErrors={{(noop)}} />`);
 
     assert.dom('.error-detail-action').hasText('Hide Details');
     assert.dom('.timestamp').includesText(new Intl.DateTimeFormat('en-US').format(new Date()));
@@ -36,7 +36,7 @@ module('Integration | Component | error display', function (hooks) {
     ];
 
     this.set('errors', errors);
-    await render(hbs`<ErrorDisplay @errors={{this.errors}} @clearErrors={{noop}} />`);
+    await render(hbs`<ErrorDisplay @errors={{this.errors}} @clearErrors={{(noop)}} />`);
 
     assert.dom('.error-main').includesText('Rats!');
   });

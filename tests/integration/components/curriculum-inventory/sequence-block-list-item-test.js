@@ -45,7 +45,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
       hbs`<CurriculumInventory::SequenceBlockListItem
         @sequenceBlock={{this.block}}
         @canUpdate={{true}}
-        @remove={{noop}}
+        @remove={{(noop)}}
         @isInOrderedSequence={{true}}
       />`
     );
@@ -70,7 +70,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
       hbs`<CurriculumInventory::SequenceBlockListItem
         @sequenceBlock={{this.block}}
         @canUpdate={{true}}
-        @remove={{noop}}
+        @remove={{(noop)}}
         @isInOrderedSequence={{false}}
       />`
     );
@@ -89,7 +89,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list-item'
       hbs`<CurriculumInventory::SequenceBlockListItem
         @sequenceBlock={{this.block}}
         @canUpdate={{false}}
-        @remove={{noop}}
+        @remove={{(noop)}}
         @isInOrderedSequence={{false}}
       />`
     );

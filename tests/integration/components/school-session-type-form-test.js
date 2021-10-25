@@ -46,8 +46,8 @@ module('Integration | Component | school session type form', function (hooks) {
       @assessment={{true}}
       @isActive={{true}}
       @selectedAssessmentOptionId={{this.assessmentOptionId}}
-      @save={{noop}}
-      @close={{noop}}
+      @save={{(noop)}}
+      @close={{(noop)}}
     />`);
 
     assert.equal(component.title.value, 'one');
@@ -100,8 +100,8 @@ module('Integration | Component | school session type form', function (hooks) {
       @assessment={{true}}
       @assessmentOption={{this.assessmentOption}}
       @assessmentOptions={{this.assessmentOptions}}
-      @save={{noop}}
-      @close={{noop}}
+      @save={{(noop)}}
+      @close={{(noop)}}
     />`);
 
     assert.equal(component.aamcMethod.value, '');
@@ -127,11 +127,11 @@ module('Integration | Component | school session type form', function (hooks) {
     await render(hbs`<SchoolSessionTypeForm
       @assessment={{false}}
       @assessmentOption={{null}}
-      @assessmentOptions={{array}}
+      @assessmentOptions={{(array)}}
       @canEditAssessment={{true}}
       @canEditAssessmentOption={{true}}
-      @save={{noop}}
-      @close={{noop}}
+      @save={{(noop)}}
+      @close={{(noop)}}
     />`);
 
     assert.notOk(component.assessment.isAssessment);
@@ -145,7 +145,7 @@ module('Integration | Component | school session type form', function (hooks) {
     });
     await render(hbs`<SchoolSessionTypeForm
       @canUpdate={{true}}
-      @save={{noop}}
+      @save={{(noop)}}
       @close={{this.cancel}}
     />`);
 
@@ -159,7 +159,7 @@ module('Integration | Component | school session type form', function (hooks) {
     });
     await render(hbs`<SchoolSessionTypeForm
       @canUpdate={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @close={{this.close}}
     />`);
 
@@ -202,7 +202,7 @@ module('Integration | Component | school session type form', function (hooks) {
       @isActive={{true}}
       @canUpdate={{true}}
       @save={{this.save}}
-      @close={{noop}}
+      @close={{(noop)}}
     />`);
 
     assert.equal(component.active.yesNoToggle.checked, 'true');
@@ -239,8 +239,8 @@ module('Integration | Component | school session type form', function (hooks) {
       @assessment={{true}}
       @selectedAssessmentOptionId="1"
       @isActive={{true}}
-      @save={{noop}}
-      @close={{noop}}
+      @save={{(noop)}}
+      @close={{(noop)}}
     />`);
 
     assert.notOk(component.title.inputControlIsVisible);
@@ -274,8 +274,8 @@ module('Integration | Component | school session type form', function (hooks) {
       @canEditAamcMethod={{true}}
       @selectedAamcMethodId="AM001"
       @assessment={{true}}
-      @save={{noop}}
-      @close={{noop}}
+      @save={{(noop)}}
+      @close={{(noop)}}
     />`);
 
     assert.equal(component.aamcMethod.value, 'AM001');
@@ -301,8 +301,8 @@ module('Integration | Component | school session type form', function (hooks) {
       @canEditActive={{true}}
       @selectedAamcMethodId={{this.aamcMethodId}}
       @assessment={{true}}
-      @save={{noop}}
-      @close={{noop}}
+      @save={{(noop)}}
+      @close={{(noop)}}
     />`);
 
     assert.equal(component.aamcMethod.readonlyValue, 'lorem ipsum (inactive)');
@@ -314,12 +314,12 @@ module('Integration | Component | school session type form', function (hooks) {
     await render(hbs`<SchoolSessionTypeForm
       @assessment={{false}}
       @assessmentOption={{null}}
-      @assessmentOptions={{array}}
+      @assessmentOptions={{(array)}}
       @canUpdate={{true}}
       @canEditCalendarColor={{true}}
       @calendarColor='#ffffff'
-      @save={{noop}}
-      @close={{noop}}
+      @save={{(noop)}}
+      @close={{(noop)}}
     />`);
 
     assert.equal(component.calendarColor.value, '#ffffff');

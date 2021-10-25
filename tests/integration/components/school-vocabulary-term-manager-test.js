@@ -45,8 +45,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     await render(hbs`<SchoolVocabularyTermManager
       @term={{this.term}}
       @vocabulary={{this.vocabulary}}
-      @manageTerm={{noop}}
-      @manageVocabulary={{noop}}
+      @manageTerm={{(noop)}}
+      @manageVocabulary={{(noop)}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -83,8 +83,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     await render(hbs`<SchoolVocabularyTermManager
       @term={{this.term}}
       @vocabulary={{this.vocabulary}}
-      @manageTerm={{noop}}
-      @manageVocabulary={{noop}}
+      @manageTerm={{(noop)}}
+      @manageVocabulary={{(noop)}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -112,8 +112,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     await render(hbs`<SchoolVocabularyTermManager
       @term={{this.term}}
       @vocabulary={{this.vocabulary}}
-      @manageTerm={{noop}}
-      @manageVocabulary={{noop}}
+      @manageTerm={{(noop)}}
+      @manageVocabulary={{(noop)}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -142,8 +142,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     await render(hbs`<SchoolVocabularyTermManager
       @term={{this.term}}
       @vocabulary={{this.vocabulary}}
-      @manageTerm={{noop}}
-      @manageVocabulary={{noop}}
+      @manageTerm={{(noop)}}
+      @manageVocabulary={{(noop)}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -173,8 +173,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     await render(hbs`<SchoolVocabularyTermManager
       @term={{this.term}}
       @vocabulary={{this.vocabulary}}
-      @manageTerm={{noop}}
-      @manageVocabulary={{noop}}
+      @manageTerm={{(noop)}}
+      @manageVocabulary={{(noop)}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -212,8 +212,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     await render(hbs`<SchoolVocabularyTermManager
       @term={{this.term}}
       @vocabulary={{this.vocabulary}}
-      @manageTerm={{noop}}
-      @manageVocabulary={{noop}}
+      @manageTerm={{(noop)}}
+      @manageVocabulary={{(noop)}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -245,8 +245,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     await render(hbs`<SchoolVocabularyTermManager
       @term={{this.term}}
       @vocabulary={{this.vocabulary}}
-      @manageTerm={{noop}}
-      @manageVocabulary={{noop}}
+      @manageTerm={{(noop)}}
+      @manageVocabulary={{(noop)}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -279,8 +279,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     await render(hbs`<SchoolVocabularyTermManager
       @term={{this.term}}
       @vocabulary={{this.vocabulary}}
-      @manageTerm={{noop}}
-      @manageVocabulary={{noop}}
+      @manageTerm={{(noop)}}
+      @manageVocabulary={{(noop)}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
@@ -319,8 +319,8 @@ module('Integration | Component | school vocabulary term manager', function (hoo
     await render(hbs`<SchoolVocabularyTermManager
       @term={{this.term}}
       @vocabulary={{this.vocabulary}}
-      @manageTerm={{noop}}
-      @manageVocabulary={{noop}}
+      @manageTerm={{(noop)}}
+      @manageVocabulary={{(noop)}}
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}

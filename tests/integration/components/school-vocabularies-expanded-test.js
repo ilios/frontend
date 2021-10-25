@@ -17,9 +17,9 @@ module('Integration | Component | school vocabularies expanded', function (hooks
     this.set('school', schoolModel);
     await render(hbs`<SchoolVocabulariesExpanded
       @school={{this.school}}
-      @collapse={{noop}}
-      @setSchoolManagedVocabulary={{noop}}
-      @setSchoolManagedVocabularyTerm={{noop}}
+      @collapse={{(noop)}}
+      @setSchoolManagedVocabulary={{(noop)}}
+      @setSchoolManagedVocabularyTerm={{(noop)}}
     />`);
 
     assert.equal(component.title, 'Vocabularies (2)');
@@ -43,8 +43,8 @@ module('Integration | Component | school vocabularies expanded', function (hooks
     await render(hbs`<SchoolVocabulariesExpanded
       @school={{this.school}}
       @collapse={{this.collapse}}
-      @setSchoolManagedVocabulary={{noop}}
-      @setSchoolManagedVocabularyTerm={{noop}}
+      @setSchoolManagedVocabulary={{(noop)}}
+      @setSchoolManagedVocabularyTerm={{(noop)}}
     />`);
 
     await component.collapse();
@@ -59,10 +59,10 @@ module('Integration | Component | school vocabularies expanded', function (hooks
 
     await render(hbs`<SchoolVocabulariesExpanded
       @school={{this.school}}
-      @collapse={{noop}}
+      @collapse={{(noop)}}
       @managedVocabularyId={{this.vocabularyId}}
-      @setSchoolManagedVocabulary={{noop}}
-      @setSchoolManagedVocabularyTerm={{noop}}
+      @setSchoolManagedVocabulary={{(noop)}}
+      @setSchoolManagedVocabularyTerm={{(noop)}}
     />`);
 
     assert.notOk(component.vocabulariesList.isVisible);
@@ -81,11 +81,11 @@ module('Integration | Component | school vocabularies expanded', function (hooks
 
     await render(hbs`<SchoolVocabulariesExpanded
       @school={{this.school}}
-      @collapse={{noop}}
+      @collapse={{(noop)}}
       @managedTermId={{this.termId}}
       @managedVocabularyId={{this.vocabularyId}}
-      @setSchoolManagedVocabulary={{noop}}
-      @setSchoolManagedVocabularyTerm={{noop}}
+      @setSchoolManagedVocabulary={{(noop)}}
+      @setSchoolManagedVocabularyTerm={{(noop)}}
     />`);
 
     assert.notOk(component.vocabulariesList.isVisible);

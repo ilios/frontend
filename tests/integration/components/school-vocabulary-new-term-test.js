@@ -67,7 +67,7 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
     this.set('vocabulary', vocabularyModel);
     await render(hbs`<SchoolVocabularyNewTerm
       @vocabulary={{this.vocabulary}}
-      @createTerm={{noop}}
+      @createTerm={{(noop)}}
     />`);
 
     assert.notOk(component.hasError);
@@ -99,7 +99,7 @@ module('Integration | Component | school vocabulary new term', function (hooks) 
     await render(hbs`<SchoolVocabularyNewTerm
       @vocabulary={{this.vocabulary}}
       @term={{this.term}}
-      @createTerm={{noop}}
+      @createTerm={{(noop)}}
     />`);
 
     assert.notOk(component.hasError);

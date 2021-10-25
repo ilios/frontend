@@ -78,7 +78,7 @@ module(
       @sessions={{this.sessions}}
       @sequenceBlock={{this.sequenceBlock}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
       assert.equal(
         component.header.countAsOneOffering.text,
@@ -182,7 +182,7 @@ module(
       @sessions={{await this.sessions}}
       @sequenceBlock={{this.sequenceBlock}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
       assert.ok(component.header.exclude.isVisible, 'Table header is visible,');
       assert.equal(component.sessions.length, 0, 'but table body is empty.');

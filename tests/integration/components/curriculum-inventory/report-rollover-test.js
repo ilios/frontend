@@ -183,7 +183,7 @@ module('Integration | Component | curriculum-inventory/report-rollover', functio
 
     this.set('report', reportModel);
     await render(
-      hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{noop}} />`
+      hbs`<CurriculumInventory::ReportRollover @report={{this.report}} @visit={{(noop)}} />`
     );
 
     await component.name.set(newName);

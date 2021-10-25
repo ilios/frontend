@@ -34,8 +34,8 @@ module('Integration | Component | school competencies manager', function (hooks)
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
       @competencies={{this.competencies}}
     />`);
 
@@ -65,7 +65,7 @@ module('Integration | Component | school competencies manager', function (hooks)
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @add={{noop}}
+      @add={{(noop)}}
       @remove={{this.remove}}
       @competencies={{this.competencies}}
     />`);
@@ -90,7 +90,7 @@ module('Integration | Component | school competencies manager', function (hooks)
       @canDelete={{true}}
       @canCreate={{true}}
       @add={{this.add}}
-      @remove={{noop}}
+      @remove={{(noop)}}
       @competencies={{this.competencies}}
     />`);
 
@@ -115,7 +115,7 @@ module('Integration | Component | school competencies manager', function (hooks)
       @canDelete={{true}}
       @canCreate={{true}}
       @add={{this.add}}
-      @remove={{noop}}
+      @remove={{(noop)}}
       @competencies={{this.competencies}}
     />`);
 
