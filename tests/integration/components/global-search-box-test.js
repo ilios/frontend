@@ -21,13 +21,13 @@ module('Integration | Component | global search box', function (hooks) {
   });
 
   test('it renders and is accessible', async function (assert) {
-    await render(hbs`<GlobalSearchBox @search={{noop}} />`);
+    await render(hbs`<GlobalSearchBox @search={{(noop)}} />`);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
   });
 
   test('clicking search icon focuses input', async function (assert) {
-    await render(hbs`<GlobalSearchBox @search={{noop}} />`);
+    await render(hbs`<GlobalSearchBox @search={{(noop)}} />`);
     await component.clickIcon();
     assert.ok(component.inputHasFocus);
   });
@@ -83,7 +83,7 @@ module('Integration | Component | global search box', function (hooks) {
   });
 
   test('escape calls clears query', async function (assert) {
-    await render(hbs`<GlobalSearchBox @search={{noop}} />`);
+    await render(hbs`<GlobalSearchBox @search={{(noop)}} />`);
     await component.input('typed it');
     assert.equal(component.autocompleteResults.length, 3);
     await component.keyUp.escape();

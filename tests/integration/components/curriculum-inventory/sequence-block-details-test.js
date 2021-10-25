@@ -76,7 +76,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-details', 
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{this.canUpdate}}
       @sortSessionsBy={{this.sortBy}}
-      @setSortSessionBy={{noop}}
+      @setSortSessionBy={{(noop)}}
     />`);
 
     assert

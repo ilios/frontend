@@ -22,10 +22,10 @@ module('Integration | Component | school leadership expanded', function (hooks) 
     await render(hbs`<SchoolLeadershipExpanded
       @school={{this.school}}
       @canUpdate={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @isManaging={{false}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
     />`);
     assert.equal(component.title, 'School Leadership');
     assert.equal(component.leadershipList.directors.length, 1);
@@ -47,9 +47,9 @@ module('Integration | Component | school leadership expanded', function (hooks) 
       @school={{this.school}}
       @canUpdate={{true}}
       @collapse={{this.collapse}}
-      @expand={{noop}}
+      @expand={{(noop)}}
       @isManaging={{false}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
     />`);
 
     await component.collapse();
@@ -66,8 +66,8 @@ module('Integration | Component | school leadership expanded', function (hooks) 
     await render(hbs`<SchoolLeadershipExpanded
       @school={{this.school}}
       @canUpdate={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{this.manage}}
     />`);
@@ -83,10 +83,10 @@ module('Integration | Component | school leadership expanded', function (hooks) 
     await render(hbs`<SchoolLeadershipExpanded
       @school={{this.school}}
       @canUpdate={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @isManaging={{true}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
     />`);
 
     assert.ok(component.leadershipManager.isVisible);

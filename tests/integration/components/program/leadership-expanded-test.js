@@ -29,10 +29,10 @@ module('Integration | Component | program/leadership expanded', function (hooks)
     await render(hbs`<Program::LeadershipExpanded
       @program={{this.program}}
       @canUpdate={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @isManaging={{false}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
     />`);
     assert.equal(component.title, 'Program Leadership');
     assert.equal(component.leadershipList.directors.length, 2);
@@ -53,9 +53,9 @@ module('Integration | Component | program/leadership expanded', function (hooks)
       @program={{this.program}}
       @canUpdate={{true}}
       @collapse={{this.click}}
-      @expand={{noop}}
+      @expand={{(noop)}}
       @isManaging={{false}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
     />`);
     await component.collapse();
   });
@@ -72,8 +72,8 @@ module('Integration | Component | program/leadership expanded', function (hooks)
     await render(hbs`<Program::LeadershipExpanded
       @program={{this.program}}
       @canUpdate={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @isManaging={{false}}
       @setIsManaging={{this.click}}
     />`);

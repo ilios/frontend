@@ -36,8 +36,8 @@ module('Integration | Component | program-year/manage-objective-competency', fun
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
       @domains={{this.domains}}
       @selected={{null}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
 
     assert.equal(component.domains.length, 1);
@@ -68,7 +68,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
       @domains={{this.domains}}
       @selected={{this.selected}}
-      @add={{noop}}
+      @add={{(noop)}}
       @remove={{this.remove}}
     />`);
     assert.ok(component.domains[0].selected);
@@ -92,7 +92,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       @domains={{this.domains}}
       @selected={{null}}
       @add={{this.add}}
-      @remove={{noop}}
+      @remove={{(noop)}}
     />`);
     assert.ok(component.domains[0].notSelected);
     await component.domains[0].toggle();

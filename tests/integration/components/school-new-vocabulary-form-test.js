@@ -18,7 +18,7 @@ module('Integration | Component | school-new-vocabulary-form', function (hooks) 
 
   test('it renders', async function (assert) {
     this.set('school', this.schoolModel);
-    await render(hbs`<SchoolNewVocabularyForm @school={{this.school}} @close={{noop}} />`);
+    await render(hbs`<SchoolNewVocabularyForm @school={{this.school}} @close={{(noop)}} />`);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
     assert.equal(component.title.label, 'Title:');
@@ -29,7 +29,7 @@ module('Integration | Component | school-new-vocabulary-form', function (hooks) 
 
   test('validation fails if title is blank', async function (assert) {
     this.set('school', this.schoolModel);
-    await render(hbs`<SchoolNewVocabularyForm @school={{this.school}} @close={{noop}} />`);
+    await render(hbs`<SchoolNewVocabularyForm @school={{this.school}} @close={{(noop)}} />`);
     assert.notOk(component.title.hasError);
     await component.title.set('');
     await component.submit.click();
@@ -38,7 +38,7 @@ module('Integration | Component | school-new-vocabulary-form', function (hooks) 
 
   test('validation fails if title is too long', async function (assert) {
     this.set('school', this.schoolModel);
-    await render(hbs`<SchoolNewVocabularyForm @school={{this.school}} @close={{noop}} />`);
+    await render(hbs`<SchoolNewVocabularyForm @school={{this.school}} @close={{(noop)}} />`);
     assert.notOk(component.title.hasError);
     await component.title.set('0123456789'.repeat(21));
     await component.submit.click();
@@ -48,7 +48,7 @@ module('Integration | Component | school-new-vocabulary-form', function (hooks) 
   test('validation fails if title is not unique', async function (assert) {
     this.set('school', this.schoolModel);
     const vocabularies = (await this.schoolModel.vocabularies).toArray();
-    await render(hbs`<SchoolNewVocabularyForm @school={{this.school}} @close={{noop}} />`);
+    await render(hbs`<SchoolNewVocabularyForm @school={{this.school}} @close={{(noop)}} />`);
     assert.notOk(component.title.hasError);
     assert.expect(vocabularies[0].title, 'Vocab A');
     await component.title.set(vocabularies[0].title);
@@ -83,7 +83,7 @@ module('Integration | Component | school-new-vocabulary-form', function (hooks) 
     });
     await render(hbs`<SchoolNewVocabularyForm
       @school={{this.school}}
-      @close={{noop}}
+      @close={{(noop)}}
       @save={{this.save}}
     />`);
     await component.title.set(newTitle);

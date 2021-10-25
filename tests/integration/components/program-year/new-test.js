@@ -17,9 +17,9 @@ module('Integration | Component | program-year/new', function (hooks) {
     assert.expect(14);
 
     await render(hbs`<ProgramYear::New
-      @programYears={{array}}
-      @save={{noop}}
-      @cancel={{noop}}
+      @programYears={{(array)}}
+      @save={{(noop)}}
+      @cancel={{(noop)}}
       @academicYearCrossesCalendarYearBoundaries={{false}}
     />`);
 
@@ -47,8 +47,8 @@ module('Integration | Component | program-year/new', function (hooks) {
     });
 
     await render(hbs`<ProgramYear::New
-      @programYears={{array}}
-      @save={{noop}}
+      @programYears={{(array)}}
+      @save={{(noop)}}
       @cancel={{this.cancel}}
       @academicYearCrossesCalendarYearBoundaries={{false}}
     />`);
@@ -61,9 +61,9 @@ module('Integration | Component | program-year/new', function (hooks) {
       assert.equal(startYear, (this.currentYear - 5).toString());
     });
     await render(hbs`<ProgramYear::New
-      @programYears={{array}}
+      @programYears={{(array)}}
       @save={{this.save}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
       @academicYearCrossesCalendarYearBoundaries={{false}}
     />`);
     await component.done.click();
@@ -76,9 +76,9 @@ module('Integration | Component | program-year/new', function (hooks) {
       assert.equal(startYear, year);
     });
     await render(hbs`<ProgramYear::New
-      @programYears={{array}}
+      @programYears={{(array)}}
       @save={{this.save}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
       @academicYearCrossesCalendarYearBoundaries={{false}}
     />`);
     assert.notOk(component.years.options[5].isSelected);
@@ -89,9 +89,9 @@ module('Integration | Component | program-year/new', function (hooks) {
 
   test('academic-years dropdown shows year ranges if application config enables it', async function (assert) {
     await render(hbs`<ProgramYear::New
-      @programYears={{array}}
-      @save={{noop}}
-      @cancel={{noop}}
+      @programYears={{(array)}}
+      @save={{(noop)}}
+      @cancel={{(noop)}}
       @academicYearCrossesCalendarYearBoundaries={{true}}
     />`);
     const { options } = component.years;

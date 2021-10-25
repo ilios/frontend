@@ -28,7 +28,7 @@ module('Integration | Component | school vocabularies collapsed', function (hook
     const schoolModel = await this.owner.lookup('service:store').find('school', school.id);
     this.set('school', schoolModel);
 
-    await render(hbs`<SchoolVocabulariesCollapsed @school={{this.school}} @expand={{noop}} />`);
+    await render(hbs`<SchoolVocabulariesCollapsed @school={{this.school}} @expand={{(noop)}} />`);
 
     assert.equal(component.title, 'Vocabularies (2)');
     assert.equal(component.vocabularies.length, 2);

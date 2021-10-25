@@ -71,7 +71,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       @report={{this.report}}
       @sequenceBlocks={{await this.report.topLevelSequenceBlocks}}
       @canUpdate={{true}}
-      @remove={{noop}}
+      @remove={{(noop)}}
     />`);
 
     assert.equal(
@@ -141,7 +141,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       @report={{await this.parent.report}}
       @sequenceBlocks={{await this.parent.children}}
       @canUpdate={{true}}
-      @remove={{noop}}
+      @remove={{(noop)}}
     />`);
 
     assert.equal(
@@ -173,7 +173,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       @report={{this.report}}
       @sequenceBlocks={{await this.report.topLevelSequenceBlocks}}
       @canUpdate={{false}}
-      @remove={{noop}}
+      @remove={{(noop)}}
     />`);
 
     assert.notOk(component.header.expandCollapse.isVisible, 'Add new button is not visible.');
@@ -204,7 +204,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
       @report={{this.report}}
       @sequenceBlocks={{await this.report.topLevelSequenceBlocks}}
       @canUpdate={{true}}
-      @remove={{noop}}
+      @remove={{(noop)}}
     />`);
 
     assert.notOk(component.list.items[0].confirmRemoval.isVisible);
@@ -218,7 +218,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     await render(hbs`<CurriculumInventory::SequenceBlockList
       @report={{this.report}}
       @canUpdate={{true}}
-      @sequenceBlocks={{array}}
+      @sequenceBlocks={{(array)}}
     />`);
     assert.equal(
       component.header.title,
@@ -241,7 +241,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-list', fun
     await render(hbs`<CurriculumInventory::SequenceBlockList
       @parent={{this.parent}}
       @report={{await parent.report}}
-      @sequenceBlocks={{array}}
+      @sequenceBlocks={{(array)}}
     />`);
     assert.equal(
       component.header.title,

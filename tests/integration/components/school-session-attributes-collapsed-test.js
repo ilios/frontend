@@ -17,7 +17,7 @@ module('Integration | Component | school session attributes collapsed', function
       @showSessionSupplemental={{this.showSessionSupplemental}}
       @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
       @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
-      @expand={{noop}}
+      @expand={{(noop)}}
     />`);
 
     assert.equal(component.attendanceRequired.label, 'Attendance Required');

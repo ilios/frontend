@@ -30,8 +30,8 @@ module('Integration | Component | program-year/objectives', function (hooks) {
     await render(hbs`<ProgramYear::Objectives
       @programYear={{this.programYear}}
       @editable={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 2);
@@ -95,8 +95,8 @@ module('Integration | Component | program-year/objectives', function (hooks) {
     await render(hbs`<ProgramYear::Objectives
       @programYear={{this.programYear}}
       @editable={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
     />`);
 
     assert.equal(component.objectiveList.objectives.length, 1);

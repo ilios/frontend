@@ -13,8 +13,8 @@ module('Integration | Component | program-year/manage-objective-competency-item'
     await render(hbs`<ProgramYear::ManageObjectiveCompetencyItem
       @title={{this.title}}
       @isSelected={{this.isSelected}}
-      @add={{noop}}
-      @remove={{noop}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
 
     assert.dom('input[type="radio"]').exists();

@@ -84,7 +84,7 @@ module('Integration | Component | user profile cohorts', function (hooks) {
     });
 
     await render(
-      hbs`<UserProfileCohorts @isManaging={{true}} @user={{user}} @setIsManaging={{noop}} />`
+      hbs`<UserProfileCohorts @isManaging={{true}} @user={{user}} @setIsManaging={{(noop)}} />`
     );
     const primaryCohort = '[data-test-primary-cohort] [data-test-title]';
     const secondaryCohorts = '[data-test-secondary-cohorts] li';

@@ -57,7 +57,7 @@ module('Integration | Component | school session types list', function (hooks) {
     const sessionTypeModels = await this.owner.lookup('service:store').findAll('session-type');
     this.set('sessionTypes', sessionTypeModels);
     await render(
-      hbs`<SchoolSessionTypesList @sessionTypes={{this.sessionTypes}} @manageSessionType={{noop}} />`
+      hbs`<SchoolSessionTypesList @sessionTypes={{this.sessionTypes}} @manageSessionType={{(noop)}} />`
     );
 
     assert.equal(component.sessionTypes.length, 3);
@@ -149,7 +149,7 @@ module('Integration | Component | school session types list', function (hooks) {
     this.set('sessionTypes', sessionTypeModels);
     await render(hbs`<SchoolSessionTypesList
       @sessionTypes={{this.sessionTypes}}
-      @manageSessionType={{noop}}
+      @manageSessionType={{(noop)}}
       @canDelete={{true}}
     />`);
 
@@ -168,7 +168,7 @@ module('Integration | Component | school session types list', function (hooks) {
     this.set('sessionTypes', sessionTypeModels);
     await render(hbs`<SchoolSessionTypesList
       @sessionTypes={{this.sessionTypes}}
-      @manageSessionType={{noop}}
+      @manageSessionType={{(noop)}}
       @canDelete={{true}}
     />`);
 

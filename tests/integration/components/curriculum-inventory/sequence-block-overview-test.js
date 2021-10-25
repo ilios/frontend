@@ -102,7 +102,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(component.description.text, `Description: ${sequenceBlockModel.description}`);
@@ -174,7 +174,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(component.orderInSequence.text, 'Order in Sequence: n/a');
@@ -214,7 +214,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(component.orderInSequence.text, 'Order in Sequence: n/a');
@@ -278,7 +278,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(
@@ -339,7 +339,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(component.description.text, 'Description: Click to add a description.');
@@ -377,7 +377,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(component.required.text, 'Required: Optional (elective)');
@@ -415,7 +415,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(component.track.yesNoToggle.checked, 'true');
@@ -452,7 +452,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(component.childSequenceOrder.text, 'Child Sequence Order: Ordered');
@@ -503,7 +503,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(component.orderInSequence.text, 'Order in Sequence: 1');
@@ -546,7 +546,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(component.academicLevel.text, 'Academic Level: Year 1');
@@ -616,7 +616,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.notOk(component.sessionManager.isVisible);
@@ -695,7 +695,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{false}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(component.description.text, `Description: ${sequenceBlockModel.description}`);
@@ -765,7 +765,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(component.minimum.text, 'Minimum: 10');
@@ -803,7 +803,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(component.required.text, 'Required: Required');
@@ -859,7 +859,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(component.minimum.text, 'Minimum: 10');
@@ -901,7 +901,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(component.minimum.text, 'Minimum: 10');
@@ -943,7 +943,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     await component.minimum.edit();
@@ -981,7 +981,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     await component.minimum.edit();
@@ -1018,7 +1018,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     await component.minimum.edit();
@@ -1055,7 +1055,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     await component.maximum.edit();
@@ -1092,7 +1092,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.notOk(component.minimum.isEditable);
@@ -1133,7 +1133,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     await component.startDate.edit();
@@ -1186,7 +1186,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     await component.startDate.edit();
@@ -1234,7 +1234,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     await component.startDate.edit();
@@ -1282,7 +1282,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(
@@ -1337,7 +1337,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     await component.endDate.edit();
@@ -1377,7 +1377,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     await component.duration.edit();
@@ -1416,7 +1416,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     await component.duration.edit();
@@ -1455,7 +1455,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     await component.duration.edit();
@@ -1498,7 +1498,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     await component.startDate.edit();
@@ -1535,7 +1535,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.ok(component.minimum.text, 'Minimum: 5');
@@ -1573,7 +1573,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.ok(component.minimum.text, 'Minimum: 5');
@@ -1611,7 +1611,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.ok(component.maximum.text, 'Maximum: 20');
@@ -1649,7 +1649,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.ok(component.maximum.text, 'Maximum: 20');
@@ -1687,7 +1687,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.ok(component.duration.text, 'Duration: 5');
@@ -1725,7 +1725,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.ok(component.duration.text, 'Duration: 5');
@@ -1763,7 +1763,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(component.sessions.label, 'Sessions (0)');
@@ -1799,7 +1799,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
       @sequenceBlock={{this.sequenceBlock}}
       @canUpdate={{true}}
       @sortBy={{this.sortBy}}
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
     />`);
 
     assert.equal(component.sessions.label, 'Sessions (0)');

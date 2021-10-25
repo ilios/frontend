@@ -32,10 +32,10 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
     await render(hbs`<SchoolCompetenciesListItemPcrs
       @competency={{this.competency}}
       @canUpdate={{true}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
-      @cancel={{noop}}
+      @save={{(noop)}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.items.length, 2);
     assert.equal(component.items[0].text, '1 Zylinder');
@@ -51,10 +51,10 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
     await render(hbs`<SchoolCompetenciesListItemPcrs
       @competency={{this.competency}}
       @canUpdate={{true}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
       @isManaging={{true}}
-      @save={{noop}}
-      @cancel={{noop}}
+      @save={{(noop)}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.items.length, 0);
     assert.ok(component.save.isVisible);
@@ -75,8 +75,8 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
       @canUpdate={{true}}
       @setIsManaging={{this.manage}}
       @isManaging={{false}}
-      @save={{noop}}
-      @cancel={{noop}}
+      @save={{(noop)}}
+      @cancel={{(noop)}}
     />`);
     await component.items[0].edit();
   });
@@ -91,9 +91,9 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
     await render(hbs`<SchoolCompetenciesListItemPcrs
       @competency={{this.competency}}
       @canUpdate={{true}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
       @isManaging={{true}}
-      @save={{noop}}
+      @save={{(noop)}}
       @cancel={{this.cancel}}
     />`);
     await component.cancel.click();
@@ -109,10 +109,10 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
     await render(hbs`<SchoolCompetenciesListItemPcrs
       @competency={{this.competency}}
       @canUpdate={{true}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
       @isManaging={{true}}
       @save={{this.save}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     await component.save.click();
   });
@@ -123,10 +123,10 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
     await render(hbs`<SchoolCompetenciesListItemPcrs
       @competency={{this.competencyModel}}
       @canUpdate={{true}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
-      @cancel={{noop}}
+      @save={{(noop)}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.items.length, 1);
     assert.equal(component.items[0].text, 'Click to edit');
@@ -138,10 +138,10 @@ module('Integration | Component | school-competencies-list-item-pcrs', function 
     await render(hbs`<SchoolCompetenciesListItemPcrs
       @competency={{this.competencyModel}}
       @canUpdate={{false}}
-      @setIsManaging={{noop}}
+      @setIsManaging={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
-      @cancel={{noop}}
+      @save={{(noop)}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.items.length, 1);
     assert.equal(component.items[0].text, 'None');

@@ -40,11 +40,11 @@ module('Integration | Component | school session types expanded', function (hook
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @managedSessionTypeId={{null}}
-      @setSchoolManagedSessionType={{noop}}
-      @setSchoolNewSessionType={{noop}}
+      @setSchoolManagedSessionType={{(noop)}}
+      @setSchoolNewSessionType={{(noop)}}
     />`);
 
     assert.notOk(component.list.sessionTypes.isVisible);
@@ -58,11 +58,11 @@ module('Integration | Component | school session types expanded', function (hook
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @managedSessionTypeId={{null}}
-      @setSchoolManagedSessionType={{noop}}
-      @setSchoolNewSessionType={{noop}}
+      @setSchoolManagedSessionType={{(noop)}}
+      @setSchoolNewSessionType={{(noop)}}
     />`);
 
     assert.equal(component.list.sessionTypes.length, 1);
@@ -77,11 +77,11 @@ module('Integration | Component | school session types expanded', function (hook
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @managedSessionTypeId={{this.sessionType.id}}
-      @setSchoolManagedSessionType={{noop}}
-      @setSchoolNewSessionType={{noop}}
+      @setSchoolManagedSessionType={{(noop)}}
+      @setSchoolNewSessionType={{(noop)}}
     />`);
 
     assert.ok(component.manager.isVisible);
@@ -98,11 +98,11 @@ module('Integration | Component | school session types expanded', function (hook
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @managedSessionTypeId={{null}}
       @setSchoolManagedSessionType={{this.click}}
-      @setSchoolNewSessionType={{noop}}
+      @setSchoolNewSessionType={{(noop)}}
     />`);
 
     await component.list.sessionTypes[0].manage();
@@ -119,10 +119,10 @@ module('Integration | Component | school session types expanded', function (hook
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @managedSessionTypeId={{null}}
-      @setSchoolManagedSessionType={{noop}}
+      @setSchoolManagedSessionType={{(noop)}}
       @setSchoolNewSessionType={{this.click}}
     />`);
 
@@ -141,11 +141,11 @@ module('Integration | Component | school session types expanded', function (hook
       @canUpdate={{true}}
       @canDelete={{true}}
       @canCreate={{true}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
       @managedSessionTypeId={{sessionType.id}}
       @setSchoolManagedSessionType={{this.click}}
-      @setSchoolNewSessionType={{noop}}
+      @setSchoolNewSessionType={{(noop)}}
     />`);
 
     await component.newSessionType.cancel.click();
@@ -163,10 +163,10 @@ module('Integration | Component | school session types expanded', function (hook
       @canDelete={{true}}
       @canCreate={{true}}
       @collapse={{this.click}}
-      @expand={{noop}}
+      @expand={{(noop)}}
       @managedSessionTypeId={{null}}
-      @setSchoolManagedSessionType={{noop}}
-      @setSchoolNewSessionType={{noop}}
+      @setSchoolManagedSessionType={{(noop)}}
+      @setSchoolNewSessionType={{(noop)}}
     />`);
 
     await component.collapse();

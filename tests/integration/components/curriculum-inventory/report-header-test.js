@@ -23,7 +23,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
     await render(hbs`<CurriculumInventory::ReportHeader
       @report={{this.report}}
       @canUpdate={{true}}
-      @finalize={{noop}}
+      @finalize={{(noop)}}
     />`);
     assert.equal(this.report.name, component.name.value, 'Report name shows.');
     assert.ok(component.name.isEditable, 'Report name is editable.');
@@ -40,7 +40,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
     await render(hbs`<CurriculumInventory::ReportHeader
       @report={{this.report}}
       @canUpdate={{false}}
-      @finalize={{noop}}
+      @finalize={{(noop)}}
     />`);
     assert.equal(this.report.name, component.lockedName);
     assert.ok(component.hasLockOnName, 'Lock icon is showing with name.');
@@ -54,7 +54,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
     await render(hbs`<CurriculumInventory::ReportHeader
       @report={{this.report}}
       @canUpdate={{true}}
-      @finalize={{noop}}
+      @finalize={{(noop)}}
     />`);
     await component.name.edit();
     assert.notOk(component.name.hasError);
@@ -69,7 +69,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
     await render(hbs`<CurriculumInventory::ReportHeader
       @report={{this.report}}
       @canUpdate={{true}}
-      @finalize={{noop}}
+      @finalize={{(noop)}}
     />`);
     await component.name.edit();
     assert.notOk(component.name.hasError);
@@ -83,7 +83,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
     await render(hbs`<CurriculumInventory::ReportHeader
       @report={{this.report}}
       @canUpdate={{true}}
-      @finalize={{noop}}
+      @finalize={{(noop)}}
     />`);
     await component.name.edit();
     assert.notOk(component.name.hasError);
@@ -97,7 +97,7 @@ module('Integration | Component | curriculum-inventory/report-header', function 
     await render(hbs`<CurriculumInventory::ReportHeader
       @report={{this.report}}
       @canUpdate={{true}}
-      @finalize={{noop}}
+      @finalize={{(noop)}}
     />`);
     await component.name.edit();
     assert.notOk(component.name.hasError);

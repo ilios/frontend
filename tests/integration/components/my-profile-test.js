@@ -45,8 +45,8 @@ module('Integration | Component | my profile', function (hooks) {
     this.set('user', userModel);
     await render(hbs`<MyProfile
       @user={{user}}
-      @toggleShowCreateNewToken={{noop}}
-      @toggleShowInvalidateTokens={{noop}}
+      @toggleShowCreateNewToken={{(noop)}}
+      @toggleShowInvalidateTokens={{(noop)}}
     />`);
 
     assert.equal(component.name, 'test name');
@@ -69,8 +69,8 @@ module('Integration | Component | my profile', function (hooks) {
     this.set('user', userModel);
     await render(hbs`<MyProfile
       @user={{user}}
-      @toggleShowCreateNewToken={{noop}}
-      @toggleShowInvalidateTokens={{noop}}
+      @toggleShowCreateNewToken={{(noop)}}
+      @toggleShowInvalidateTokens={{(noop)}}
     />`);
 
     assert.notOk(component.userIsStudent);
@@ -104,8 +104,8 @@ module('Integration | Component | my profile', function (hooks) {
     await render(hbs`<MyProfile
       @user={{this.user}}
       @showCreateNewToken={{true}}
-      @toggleShowCreateNewToken={{noop}}
-      @toggleShowInvalidateTokens={{noop}}
+      @toggleShowCreateNewToken={{(noop)}}
+      @toggleShowInvalidateTokens={{(noop)}}
     />`);
 
     await component.newTokenForm.submit();
@@ -155,7 +155,7 @@ module('Integration | Component | my profile', function (hooks) {
     await render(hbs`<MyProfile
       @user={{this.user}}
       @toggleShowCreateNewToken={{this.toggle}}
-      @toggleShowInvalidateTokens={{noop}}
+      @toggleShowInvalidateTokens={{(noop)}}
     />`);
 
     await component.showCreateNewTokenForm();
@@ -185,8 +185,8 @@ module('Integration | Component | my profile', function (hooks) {
     await render(hbs`<MyProfile
       @user={{this.user}}
       @showCreateNewToken={{true}}
-      @toggleShowCreateNewToken={{noop}}
-      @toggleShowInvalidateTokens={{noop}}
+      @toggleShowCreateNewToken={{(noop)}}
+      @toggleShowInvalidateTokens={{(noop)}}
     />`);
 
     const m = moment().add(41, 'days');
@@ -206,7 +206,7 @@ module('Integration | Component | my profile', function (hooks) {
     });
     await render(hbs`<MyProfile
       @user={{this.user}}
-      @toggleShowCreateNewToken={{noop}}
+      @toggleShowCreateNewToken={{(noop)}}
       @toggleShowInvalidateTokens={{this.toggle}}
     />`);
 
@@ -240,8 +240,8 @@ module('Integration | Component | my profile', function (hooks) {
     await render(hbs`<MyProfile
       @user={{this.user}}
       @showInvalidateTokens={{true}}
-      @toggleShowCreateNewToken={{noop}}
-      @toggleShowInvalidateTokens={{noop}}
+      @toggleShowCreateNewToken={{(noop)}}
+      @toggleShowInvalidateTokens={{(noop)}}
     />`);
 
     await component.invalidateTokensForm.submit();

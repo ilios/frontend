@@ -17,8 +17,8 @@ module('Integration | Component | school session attributes expanded', function 
       @showSessionSupplemental={{this.showSessionSupplemental}}
       @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
       @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
-      @collapse={{noop}}
-      @manage={{noop}}
+      @collapse={{(noop)}}
+      @manage={{(noop)}}
     />`);
 
     assert.equal(component.attributes.attendanceRequired.label, 'Attendance Required');
@@ -43,7 +43,7 @@ module('Integration | Component | school session attributes expanded', function 
       @showSessionSpecialAttireRequired={{true}}
       @showSessionSpecialEquipmentRequired={{true}}
       @collapse={{this.collapse}}
-      @manage={{noop}}
+      @manage={{(noop)}}
     />`);
 
     await component.collapse();
@@ -59,7 +59,7 @@ module('Integration | Component | school session attributes expanded', function 
       @showSessionSupplemental={{this.showSessionSupplemental}}
       @showSessionSpecialAttireRequired={{this.showSessionSpecialAttireRequired}}
       @showSessionSpecialEquipmentRequired={{this.showSessionSpecialEquipmentRequired}}
-      @collapse={{noop}}
+      @collapse={{(noop)}}
       @canUpdate={{true}}
       @manage={{this.manage}}
     />`);
@@ -80,9 +80,9 @@ module('Integration | Component | school session attributes expanded', function 
       @showSessionSupplemental={{false}}
       @showSessionSpecialAttireRequired={{false}}
       @showSessionSpecialEquipmentRequired={{false}}
-      @collapse={{noop}}
+      @collapse={{(noop)}}
       @saveAll={{this.save}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{true}}
     />`);
 

@@ -54,12 +54,12 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @cohortTitle="this cohort"
       @users={{this.users}}
       @sortBy="id"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @isEditing={{false}}
-      @addUserToGroup={{noop}}
-      @removeUserFromGroup={{noop}}
-      @addUsersToGroup={{noop}}
-      @removeUsersFromGroup={{noop}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
     />`);
     assert.equal(component.title, 'Members (2)');
     assert.equal(component.usersInCurrentGroup.length, 2);
@@ -116,12 +116,12 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @cohortTitle="this cohort"
       @users={{this.users}}
       @sortBy="id"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @isEditing={{true}}
-      @addUserToGroup={{noop}}
-      @removeUserFromGroup={{noop}}
-      @addUsersToGroup={{noop}}
-      @removeUsersFromGroup={{noop}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
     />`);
 
     assert.equal(component.groupMembers, 'Members of current group (2)');
@@ -185,12 +185,12 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @cohortTitle="this cohort"
       @users={{this.users}}
       @sortBy="fullName"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @isEditing={{true}}
-      @addUserToGroup={{noop}}
-      @removeUserFromGroup={{noop}}
-      @addUsersToGroup={{noop}}
-      @removeUsersFromGroup={{noop}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
     />`);
 
     assert.equal(component.usersNotInCurrentGroup.length, 3);
@@ -231,12 +231,12 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @cohortTitle="this cohort"
       @users={{this.users}}
       @sortBy="id"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @isEditing={{true}}
-      @addUserToGroup={{noop}}
-      @removeUserFromGroup={{noop}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{this.addMany}}
-      @removeUsersFromGroup={{noop}}
+      @removeUsersFromGroup={{(noop)}}
     />`);
 
     assert.notOk(component.membersCanBeAdded);
@@ -273,11 +273,11 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @cohortTitle="this cohort"
       @users={{this.users}}
       @sortBy="id"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @isEditing={{true}}
-      @addUserToGroup={{noop}}
-      @removeUserFromGroup={{noop}}
-      @addUsersToGroup={{noop}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
       @removeUsersFromGroup={{this.removeMany}}
     />`);
 
@@ -317,12 +317,12 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @cohortTitle="this cohort"
       @users={{this.users}}
       @sortBy="id"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @isEditing={{true}}
-      @addUserToGroup={{noop}}
+      @addUserToGroup={{(noop)}}
       @removeUserFromGroup={{this.removeOne}}
-      @addUsersToGroup={{noop}}
-      @removeUsersFromGroup={{noop}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
     />`);
 
     await component.usersInCurrentGroup[0].remove();
@@ -360,12 +360,12 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @cohortTitle="this cohort"
       @users={{this.users}}
       @sortBy="id"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @isEditing={{true}}
       @addUserToGroup={{this.addOne}}
-      @removeUserFromGroup={{noop}}
-      @addUsersToGroup={{noop}}
-      @removeUsersFromGroup={{noop}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
     />`);
     await component.usersNotInCurrentGroup[0].add();
   });
@@ -403,12 +403,12 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @cohortTitle="this cohort"
       @users={{this.users}}
       @sortBy="id"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @isEditing={{true}}
-      @addUserToGroup={{noop}}
-      @removeUserFromGroup={{noop}}
-      @addUsersToGroup={{noop}}
-      @removeUsersFromGroup={{noop}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
     />`);
 
     assert.ok(component.usersInCurrentGroup[0].canBeRemoved);
@@ -453,12 +453,12 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @cohortTitle="this cohort"
       @users={{this.users}}
       @sortBy="id"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @isEditing={{true}}
-      @addUserToGroup={{noop}}
-      @removeUserFromGroup={{noop}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
       @addUsersToGroup={{this.addMany}}
-      @removeUsersFromGroup={{noop}}
+      @removeUsersFromGroup={{(noop)}}
     />`);
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
@@ -499,12 +499,12 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @cohortTitle="this cohort"
       @users={{this.users}}
       @sortBy="id"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @isEditing={{true}}
-      @addUserToGroup={{noop}}
-      @removeUserFromGroup={{noop}}
-      @addUsersToGroup={{noop}}
-      @removeUsersFromGroup={{noop}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
     />`);
 
     assert.notOk(component.usersInCurrentGroup[0].isSelected);
@@ -563,12 +563,12 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @cohortTitle="this cohort"
       @users={{this.users}}
       @sortBy="id"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @isEditing={{true}}
-      @addUserToGroup={{noop}}
-      @removeUserFromGroup={{noop}}
-      @addUsersToGroup={{noop}}
-      @removeUsersFromGroup={{noop}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
     />`);
 
     assert.equal(component.usersInCurrentGroup.length, 3);
@@ -657,12 +657,12 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @cohortTitle="this cohort"
       @users={{this.users}}
       @sortBy="id"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @isEditing={{true}}
-      @addUserToGroup={{noop}}
-      @removeUserFromGroup={{noop}}
-      @addUsersToGroup={{noop}}
-      @removeUsersFromGroup={{noop}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
     />`);
 
     assert.ok(component.usersInCurrentGroup[0].canBeSelected, 'Checkbox visible');
@@ -696,12 +696,12 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @cohortTitle="this cohort"
       @users={{this.users}}
       @sortBy="id"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @isEditing={{true}}
-      @addUserToGroup={{noop}}
-      @removeUserFromGroup={{noop}}
-      @addUsersToGroup={{noop}}
-      @removeUsersFromGroup={{noop}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
     />`);
 
     assert.notOk(component.usersInCurrentGroup[0].canBeSelected, 'Checkbox visible');
@@ -760,12 +760,12 @@ module('Integration | Component | learnergroup user manager', function (hooks) {
       @cohortTitle="this cohort"
       @users={{this.users}}
       @sortBy="id"
-      @setSortBy={{noop}}
+      @setSortBy={{(noop)}}
       @isEditing={{false}}
-      @addUserToGroup={{noop}}
-      @removeUserFromGroup={{noop}}
-      @addUsersToGroup={{noop}}
-      @removeUsersFromGroup={{noop}}
+      @addUserToGroup={{(noop)}}
+      @removeUserFromGroup={{(noop)}}
+      @addUsersToGroup={{(noop)}}
+      @removeUsersFromGroup={{(noop)}}
     />`);
 
     assert.equal(component.usersInCurrentGroup.length, 3);

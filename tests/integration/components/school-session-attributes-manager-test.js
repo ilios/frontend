@@ -17,8 +17,8 @@ module('Integration | Component | school session attributes manager', function (
       @showSessionSupplemental={{showSessionSupplemental}}
       @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
       @showSessionSpecialEquipmentRequired={{showSessionSpecialEquipmentRequired}}
-      @enable={{noop}}
-      @disable={{noop}}
+      @enable={{(noop)}}
+      @disable={{(noop)}}
     />`);
 
     assert.equal(component.attendanceRequired.label, 'Attendance Required');
@@ -46,7 +46,7 @@ module('Integration | Component | school session attributes manager', function (
       @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
       @showSessionSpecialEquipmentRequired={{showSessionSpecialEquipmentRequired}}
       @enable={{this.enable}}
-      @disable={{noop}}
+      @disable={{(noop)}}
     />`);
 
     assert.notOk(attribute.isChecked);
@@ -98,7 +98,7 @@ module('Integration | Component | school session attributes manager', function (
       @showSessionSupplemental={{showSessionSupplemental}}
       @showSessionSpecialAttireRequired={{showSessionSpecialAttireRequired}}
       @showSessionSpecialEquipmentRequired={{showSessionSpecialEquipmentRequired}}
-      @enable={{noop}}
+      @enable={{(noop)}}
       @disable={{this.disable}}
     />`);
 

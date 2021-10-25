@@ -50,7 +50,7 @@ module('Integration | Component | learnergroup instructor manager', function (ho
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupInstructorManager
       @learnerGroup={{this.learnerGroup}}
-      @save={{noop}}
+      @save={{(noop)}}
       @canUpdate={{true}}
     />`);
 
@@ -95,7 +95,7 @@ module('Integration | Component | learnergroup instructor manager', function (ho
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupInstructorManager
       @learnerGroup={{this.learnerGroup}}
-      @save={{noop}}
+      @save={{(noop)}}
       @canUpdate={{true}}
     />`);
     assert.equal(component.selectedInstructors.length, 0);
@@ -125,7 +125,7 @@ module('Integration | Component | learnergroup instructor manager', function (ho
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupInstructorManager
       @learnerGroup={{this.learnerGroup}}
-      @save={{noop}}
+      @save={{(noop)}}
       @canUpdate={{false}}
     />`);
     assert.equal(component.assignedInstructors.length, 2);
@@ -156,7 +156,7 @@ module('Integration | Component | learnergroup instructor manager', function (ho
 
     await render(hbs`<LearnergroupInstructorManager
       @learnerGroup={{this.learnerGroup}}
-      @save={{noop}}
+      @save={{(noop)}}
       @canUpdate={{true}}
     />`);
     assert.equal(component.assignedInstructors.length, 2);
@@ -238,7 +238,7 @@ module('Integration | Component | learnergroup instructor manager', function (ho
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupInstructorManager
       @learnerGroup={{learnerGroup}}
-      @save={{noop}}
+      @save={{(noop)}}
       @canUpdate={{true}}
     />`);
     await component.manage();
@@ -266,7 +266,7 @@ module('Integration | Component | learnergroup instructor manager', function (ho
     this.set('learnerGroup', learnerGroupModel);
     await render(hbs`<LearnergroupInstructorManager
       @learnerGroup={{learnerGroup}}
-      @save={{noop}}
+      @save={{(noop)}}
       @canUpdate={{true}}
     />`);
     await component.manage();

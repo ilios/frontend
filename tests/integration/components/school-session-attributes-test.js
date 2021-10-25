@@ -20,9 +20,9 @@ module('Integration | Component | school session attributes', function (hooks) {
     this.set('school', schoolModel);
     await render(hbs`<SchoolSessionAttributes
       @school={{this.school}}
-      @manage={{noop}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @manage={{(noop)}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
     />`);
 
     assert.notOk(component.expanded.isVisible);
@@ -44,9 +44,9 @@ module('Integration | Component | school session attributes', function (hooks) {
     await render(hbs`<SchoolSessionAttributes
       @school={{this.school}}
       @details={{true}}
-      @manage={{noop}}
-      @collapse={{noop}}
-      @expand={{noop}}
+      @manage={{(noop)}}
+      @collapse={{(noop)}}
+      @expand={{(noop)}}
     />`);
 
     assert.notOk(component.collapsed.isVisible);
@@ -66,8 +66,8 @@ module('Integration | Component | school session attributes', function (hooks) {
     });
     await render(hbs`<SchoolSessionAttributes
       @school={{this.school}}
-      @manage={{noop}}
-      @collapse={{noop}}
+      @manage={{(noop)}}
+      @collapse={{(noop)}}
       @expand={{this.expand}}
     />`);
 
@@ -85,9 +85,9 @@ module('Integration | Component | school session attributes', function (hooks) {
     await render(hbs`<SchoolSessionAttributes
       @school={{this.school}}
       @details={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @collapse={{this.collapse}}
-      @expand={{noop}}
+      @expand={{(noop)}}
     />`);
 
     await component.expanded.collapse();

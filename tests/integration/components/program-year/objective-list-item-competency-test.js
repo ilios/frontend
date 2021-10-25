@@ -14,11 +14,11 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
       @objective={{null}}
       @editable={{false}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{true}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.ok(component.canSave);
     assert.ok(component.canCancel);
@@ -35,11 +35,11 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
       @objective={{this.objective}}
       @editable={{false}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.text, 'None');
     await a11yAudit(this.element);
@@ -57,11 +57,11 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
       @objective={{this.objective}}
       @editable={{false}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.text, 'competency 1 (competency 0)');
     await a11yAudit(this.element);
@@ -78,11 +78,11 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
       @objective={{this.objective}}
       @editable={{false}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.text, 'competency 0');
     await a11yAudit(this.element);
@@ -102,11 +102,11 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
       @objective={{this.objective}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.text, 'competency 1 (competency 0)');
     await a11yAudit(this.element);
@@ -125,11 +125,11 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
       @objective={{this.objective}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     assert.equal(component.text, 'competency 0');
     await a11yAudit(this.element);
@@ -153,11 +153,11 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
       @objective={{this.objective}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{true}}
       @save={{this.save}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     await component.save();
   });
@@ -179,9 +179,9 @@ module('Integration | Component | program-year/objective-list-item-competency', 
     await render(hbs`<ProgramYear::ObjectiveListItemCompetency
       @objective={{this.objective}}
       @editable={{true}}
-      @manage={{noop}}
+      @manage={{(noop)}}
       @isManaging={{true}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
       @cancel={{this.cancel}}
     />`);
@@ -207,9 +207,9 @@ module('Integration | Component | program-year/objective-list-item-competency', 
       @editable={{true}}
       @manage={{this.manage}}
       @isManaging={{false}}
-      @save={{noop}}
+      @save={{(noop)}}
       @isSaving={{false}}
-      @cancel={{noop}}
+      @cancel={{(noop)}}
     />`);
     await component.manage();
   });
