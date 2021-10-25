@@ -83,7 +83,6 @@ module('Integration | Component | new myreport', function (hooks) {
   });
 
   const checkObjects = async function (context, assert, subjectNum, subjectVal, expectedObjects) {
-    assert.expect(expectedObjects.length + 2);
     const school = context.server.create('school', { title: 'first' });
     const user = context.server.create('user', { school });
     const userModel = await context.owner.lookup('service:store').find('user', user.id);
@@ -113,6 +112,7 @@ module('Integration | Component | new myreport', function (hooks) {
   };
 
   test('choosing course selects correct objects', function (assert) {
+    assert.expect(8);
     return checkObjects(this, assert, 0, 'course', [
       'program',
       'instructor',
@@ -124,6 +124,7 @@ module('Integration | Component | new myreport', function (hooks) {
   });
 
   test('choosing session selects correct objects', function (assert) {
+    assert.expect(10);
     return checkObjects(this, assert, 1, 'session', [
       'course',
       'program',
@@ -137,14 +138,17 @@ module('Integration | Component | new myreport', function (hooks) {
   });
 
   test('choosing programs selects correct objects', function (assert) {
+    assert.expect(4);
     return checkObjects(this, assert, 2, 'program', ['course', 'session']);
   });
 
   test('choosing program years selects correct objects', function (assert) {
+    assert.expect(4);
     return checkObjects(this, assert, 3, 'program year', ['course', 'session']);
   });
 
   test('choosing instructor selects correct objects', function (assert) {
+    assert.expect(7);
     return checkObjects(this, assert, 4, 'instructor', [
       'course',
       'session',
@@ -155,6 +159,7 @@ module('Integration | Component | new myreport', function (hooks) {
   });
 
   test('choosing instructor group selects correct objects', function (assert) {
+    assert.expect(7);
     return checkObjects(this, assert, 5, 'instructor group', [
       'course',
       'session',
@@ -165,6 +170,7 @@ module('Integration | Component | new myreport', function (hooks) {
   });
 
   test('choosing learning material selects correct objects', function (assert) {
+    assert.expect(8);
     return checkObjects(this, assert, 6, 'learning material', [
       'course',
       'session',
@@ -176,10 +182,12 @@ module('Integration | Component | new myreport', function (hooks) {
   });
 
   test('choosing competency selects correct objects', function (assert) {
+    assert.expect(5);
     return checkObjects(this, assert, 7, 'competency', ['course', 'session', 'session type']);
   });
 
   test('choosing mesh term selects correct objects', function (assert) {
+    assert.expect(6);
     return checkObjects(this, assert, 8, 'mesh term', [
       'course',
       'session',
@@ -189,6 +197,7 @@ module('Integration | Component | new myreport', function (hooks) {
   });
 
   test('choosing term selects correct objects', function (assert) {
+    assert.expect(10);
     return checkObjects(this, assert, 9, 'term', [
       'course',
       'session',
@@ -202,6 +211,7 @@ module('Integration | Component | new myreport', function (hooks) {
   });
 
   test('choosing session type selects correct objects', function (assert) {
+    assert.expect(10);
     return checkObjects(this, assert, 10, 'session type', [
       'course',
       'program',

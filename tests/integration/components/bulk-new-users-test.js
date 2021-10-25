@@ -212,8 +212,8 @@ module('Integration | Component | bulk new users', function (hooks) {
     assert.equal(this.server.db.users[1].email, 'jasper.johnson@example.com');
     assert.equal(this.server.db.users[1].campusId, '123Campus');
     assert.equal(this.server.db.users[1].otherId, '123Other');
-    assert.equal(this.server.db.users[1].addedViaIlios, true);
-    assert.equal(this.server.db.users[1].enabled, true);
+    assert.true(this.server.db.users[1].addedViaIlios);
+    assert.true(this.server.db.users[1].enabled);
     assert.equal(this.server.db.users[1].roleIds, null);
     assert.equal(this.server.db.users[1].cohortIds, null);
     assert.equal(this.server.db.users[1].authenticationId, '2');
@@ -229,8 +229,8 @@ module('Integration | Component | bulk new users', function (hooks) {
     assert.equal(this.server.db.users[2].email, 'jj@example.com');
     assert.equal(this.server.db.users[2].campusId, '1234Campus');
     assert.equal(this.server.db.users[2].otherId, '1234Other');
-    assert.equal(this.server.db.users[2].addedViaIlios, true);
-    assert.equal(this.server.db.users[2].enabled, true);
+    assert.true(this.server.db.users[2].addedViaIlios);
+    assert.true(this.server.db.users[2].enabled);
     assert.equal(this.server.db.users[2].roleIds, null);
     assert.equal(this.server.db.users[2].cohortIds, null);
     assert.equal(this.server.db.users[2].authenticationId, '3');
@@ -282,8 +282,8 @@ module('Integration | Component | bulk new users', function (hooks) {
     assert.equal(this.server.db.users[1].email, 'jasper.johnson@example.com');
     assert.equal(this.server.db.users[1].campusId, '123Campus');
     assert.equal(this.server.db.users[1].otherId, '123Other');
-    assert.equal(this.server.db.users[1].addedViaIlios, true);
-    assert.equal(this.server.db.users[1].enabled, true);
+    assert.true(this.server.db.users[1].addedViaIlios);
+    assert.true(this.server.db.users[1].enabled);
     assert.deepEqual(this.server.db.users[1].roleIds, ['4']);
     assert.equal(this.server.db.users[1].authenticationId, '2');
 
@@ -298,8 +298,8 @@ module('Integration | Component | bulk new users', function (hooks) {
     assert.equal(this.server.db.users[2].email, 'jj@example.com');
     assert.equal(this.server.db.users[2].campusId, '1234Campus');
     assert.equal(this.server.db.users[2].otherId, '1234Other');
-    assert.equal(this.server.db.users[2].addedViaIlios, true);
-    assert.equal(this.server.db.users[2].enabled, true);
+    assert.true(this.server.db.users[2].addedViaIlios);
+    assert.true(this.server.db.users[2].enabled);
     assert.deepEqual(this.server.db.users[2].roleIds, ['4']);
     assert.equal(this.server.db.users[2].authenticationId, '3');
 

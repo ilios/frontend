@@ -21,6 +21,6 @@ module('Integration | Component | loading bar', function (hooks) {
       const value = parseInt(component.bar.value, 10);
       return value === 0;
     });
-    assert.ok(parseInt(component.bar.value, 10) === 0);
+    assert.strictEqual(parseInt(component.bar.value, 10), 0);
   });
 });

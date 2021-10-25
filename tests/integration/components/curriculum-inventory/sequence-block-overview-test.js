@@ -421,7 +421,7 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.equal(component.track.yesNoToggle.checked, 'true');
     await component.track.yesNoToggle.click();
     assert.equal(component.track.yesNoToggle.checked, 'false');
-    assert.equal(sequenceBlockModel.track, false);
+    assert.false(sequenceBlockModel.track);
   });
 
   test('change child sequence order', async function (assert) {
@@ -1245,8 +1245,8 @@ module('Integration | Component | curriculum-inventory/sequence-block-overview',
     assert.equal(component.endDate.text, 'End: Click to edit');
     assert.ok(component.endDate.isEditable);
     assert.equal(component.duration.text, `Duration (in Days): ${sequenceBlockModel.duration}`);
-    assert.equal(null, sequenceBlockModel.startDate);
-    assert.equal(null, sequenceBlockModel.endDate);
+    assert.equal(sequenceBlockModel.startDate, null);
+    assert.equal(sequenceBlockModel.endDate, null);
     assert.equal(newDuration, sequenceBlockModel.duration);
   });
 

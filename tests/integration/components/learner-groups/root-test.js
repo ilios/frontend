@@ -198,6 +198,7 @@ module('Integration | Component | learner-groups/root', function (hooks) {
   });
 
   test('title filter works', async function (assert) {
+    assert.expect(6);
     setupPermissionChecker(this, true);
     this.set('schools', this.schools);
     this.set('setTitleFilter', (titleFilter) => {

@@ -7,6 +7,7 @@ const { resolve } = RSVP;
 
 module('Unit | Utility | clone learner group', function () {
   test('clones empty group', async function (assert) {
+    assert.expect(11);
     const store = EmberObject.create({
       createRecord(what, { title, location: loc }) {
         assert.equal(what, 'learner-group');

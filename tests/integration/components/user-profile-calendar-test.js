@@ -89,26 +89,22 @@ module('Integration | Component | user profile calendar', function (hooks) {
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
       assert.equal(params.id, 13);
+      assert.ok('from' in queryParams);
+      assert.ok('to' in queryParams);
+      let to, from;
       if (called === 0) {
         const today = moment();
-        const from = moment(today).day(0).hour(0).minute(0).second(0).format('X');
-        const to = moment(today).day(6).hour(23).minute(59).second(59).format('X');
-
-        assert.ok('from' in queryParams);
-        assert.equal(queryParams.from, from);
-        assert.ok('to' in queryParams);
-        assert.equal(queryParams.to, to);
+        from = moment(today).day(0).hour(0).minute(0).second(0).format('X');
+        to = moment(today).day(6).hour(23).minute(59).second(59).format('X');
       }
       if (called === 1) {
         const nextWeek = moment().add(1, 'week');
-        const from = moment(nextWeek).day(0).hour(0).minute(0).second(0).format('X');
-        const to = moment(nextWeek).day(6).hour(23).minute(59).second(59).format('X');
-
-        assert.ok('from' in queryParams);
-        assert.equal(queryParams.from, from);
-        assert.ok('to' in queryParams);
-        assert.equal(queryParams.to, to);
+        from = moment(nextWeek).day(0).hour(0).minute(0).second(0).format('X');
+        to = moment(nextWeek).day(6).hour(23).minute(59).second(59).format('X');
       }
+
+      assert.equal(queryParams.from, from);
+      assert.equal(queryParams.to, to);
 
       called++;
       return { userEvents: [] };
@@ -127,26 +123,22 @@ module('Integration | Component | user profile calendar', function (hooks) {
     this.server.get(`/userevents/:id`, (scheme, { params, queryParams }) => {
       assert.ok('id' in params);
       assert.equal(params.id, 13);
+      assert.ok('from' in queryParams);
+      assert.ok('to' in queryParams);
+
+      let to, from;
       if (called === 0) {
         const today = moment();
-        const from = moment(today).day(0).hour(0).minute(0).second(0).format('X');
-        const to = moment(today).day(6).hour(23).minute(59).second(59).format('X');
-
-        assert.ok('from' in queryParams);
-        assert.equal(queryParams.from, from);
-        assert.ok('to' in queryParams);
-        assert.equal(queryParams.to, to);
+        from = moment(today).day(0).hour(0).minute(0).second(0).format('X');
+        to = moment(today).day(6).hour(23).minute(59).second(59).format('X');
       }
       if (called === 1) {
         const lastWeek = moment().subtract(1, 'week');
-        const from = moment(lastWeek).day(0).hour(0).minute(0).second(0).format('X');
-        const to = moment(lastWeek).day(6).hour(23).minute(59).second(59).format('X');
-
-        assert.ok('from' in queryParams);
-        assert.equal(queryParams.from, from);
-        assert.ok('to' in queryParams);
-        assert.equal(queryParams.to, to);
+        from = moment(lastWeek).day(0).hour(0).minute(0).second(0).format('X');
+        to = moment(lastWeek).day(6).hour(23).minute(59).second(59).format('X');
       }
+      assert.equal(queryParams.from, from);
+      assert.equal(queryParams.to, to);
 
       called++;
       return { userEvents: [] };

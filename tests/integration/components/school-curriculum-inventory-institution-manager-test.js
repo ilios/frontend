@@ -85,7 +85,7 @@ module(
       this.set('school', schoolModel);
       this.set('canUpdate', true);
       this.set('manage', (isManaging) => {
-        assert.equal(isManaging, false);
+        assert.false(isManaging);
       });
       await render(hbs`<SchoolCurriculumInventoryInstitutionManager
       @institution={{await this.school.curriculumInventoryInstitution}}

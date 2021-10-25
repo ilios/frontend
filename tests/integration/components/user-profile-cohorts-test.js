@@ -76,7 +76,7 @@ module('Integration | Component | user profile cohorts', function (hooks) {
       );
 
       const cohortIds = data.relationships.cohorts.data.mapBy('id');
-      assert.ok(!cohortIds.includes(this.cohort1.id), 'cohort1 has been removed');
+      assert.notOk(cohortIds.includes(this.cohort1.id), 'cohort1 has been removed');
       assert.ok(cohortIds.includes(this.cohort2.id), 'cohort2 is still present');
       assert.ok(cohortIds.includes(this.cohort4.id), 'cohort4 has been added');
 

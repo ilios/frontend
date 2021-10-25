@@ -116,7 +116,7 @@ module('Integration | Component | user profile roles', function (hooks) {
 
     assert.ok(userModel.hasMany('roles').ids().includes(this.studentRole.id));
     assert.ok(userModel.hasMany('roles').ids().includes(this.formerStudentRole.id));
-    assert.equal(userModel.get('enabled'), false, 'user is disabled');
-    assert.equal(userModel.get('userSyncIgnore'), true, 'user is sync ignored');
+    assert.false(userModel.get('enabled'), 'user is disabled');
+    assert.true(userModel.get('userSyncIgnore'), 'user is sync ignored');
   });
 });

@@ -33,7 +33,7 @@ module('Integration | Component | learner-groups/new-single', function (hooks) {
     assert.expect(2);
     this.set('save', (title, fill) => {
       assert.equal(title, 'new group');
-      assert.equal(fill, false);
+      assert.false(fill);
     });
     await render(hbs`<LearnerGroups::NewSingle
       @save={{this.save}}
@@ -48,7 +48,7 @@ module('Integration | Component | learner-groups/new-single', function (hooks) {
     assert.expect(3);
     this.set('save', (title, fill) => {
       assert.equal(title, 'new group');
-      assert.equal(fill, true);
+      assert.true(fill);
     });
     await render(hbs`<LearnerGroups::NewSingle
       @save={{this.save}}

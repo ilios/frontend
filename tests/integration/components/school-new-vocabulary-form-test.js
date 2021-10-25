@@ -76,7 +76,7 @@ module('Integration | Component | school-new-vocabulary-form', function (hooks) 
           perform: (title, school, active) => {
             assert.equal(title, newTitle);
             assert.equal(school.id, 1);
-            assert.equal(active, true);
+            assert.true(active);
           },
         };
       },

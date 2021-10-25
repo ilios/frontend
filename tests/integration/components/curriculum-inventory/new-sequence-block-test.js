@@ -119,6 +119,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   });
 
   test('order-in-sequence options are visible for ordered parent sequence block', async function (assert) {
+    assert.expect(25);
     const parent = this.server.create('curriculum-inventory-sequence-block', {
       childSequenceOrder: 1,
       report: this.report,
@@ -195,7 +196,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
       assert.equal(block.belongsTo('parent').id(), null);
       assert.equal(block.belongsTo('academicLevel').id(), this.academicLevels[0].id);
       assert.equal(block.required, 1);
-      assert.equal(block.track, false);
+      assert.false(block.track);
       assert.equal(block.orderInSequence, 0);
       assert.equal(block.childSequenceOrder, 1);
       assert.equal(block.startDate.getTime(), newStartDate.getTime());
@@ -236,7 +237,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
     this.set('save', (block) => {
       assert.equal(block.belongsTo('academicLevel').id(), 2);
       assert.equal(block.required, 3);
-      assert.equal(block.track, true);
+      assert.true(block.track);
       assert.equal(block.childSequenceOrder, 2);
       assert.equal(block.minimum, minimum);
       assert.equal(block.maximum, maximum);
@@ -404,6 +405,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   });
 
   test('save with date range and a zero duration', async function (assert) {
+    assert.expect(3);
     const newStartDate = new Date('2016-01-12');
     const newEndDate = new Date('2017-02-22');
     const newDuration = 0;
@@ -429,6 +431,7 @@ module('Integration | Component | curriculum-inventory/new-sequence-block', func
   });
 
   test('save with non-zero duration and no date range', async function (assert) {
+    assert.expect(3);
     const newDuration = 10;
     const reportModel = await this.owner
       .lookup('service:store')

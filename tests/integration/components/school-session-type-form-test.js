@@ -50,7 +50,7 @@ module('Integration | Component | school session type form', function (hooks) {
       @close={{noop}}
     />`);
 
-    assert.equal('one', component.title.value);
+    assert.equal(component.title.value, 'one');
     assert.equal(component.aamcMethod.value, '');
     assert.equal(component.aamcMethod.options.length, 2);
     assert.equal(component.aamcMethod.options[0].value, '');
@@ -184,10 +184,10 @@ module('Integration | Component | school session type form', function (hooks) {
     this.set('save', (title, calendarColor, assessment, assessmentOption, aamcMethod, isActive) => {
       assert.equal(title, 'new title', 'title is correct');
       assert.equal(calendarColor, '#a1b2c3', 'color is correct');
-      assert.equal(assessment, true, 'assessment is picked');
+      assert.true(assessment, 'assessment is picked');
       assert.equal(assessmentOption, assessmentOptionModel, 'correct assessmentOption is sent');
       assert.equal(aamcMethod, aamcMethodModel, 'correct aamcMethod is sent');
-      assert.equal(isActive, false, 'correct isActive value is sent');
+      assert.false(isActive, 'correct isActive value is sent');
     });
     await render(hbs`<SchoolSessionTypeForm
       @title=""

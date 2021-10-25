@@ -63,7 +63,7 @@ module('Integration | Component | program-year/competencies', function (hooks) {
     const programYear = await this.owner.lookup('service:store').find('program-year', 1);
     this.set('programYear', programYear);
     this.set('setIsManaging', (b) => {
-      assert.ok(b === true);
+      assert.true(b);
     });
     await render(hbs`<ProgramYear::Competencies
       @programYear={{this.programYear}}

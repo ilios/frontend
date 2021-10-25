@@ -8,6 +8,7 @@ module('Integration | Component | link-to-with-action', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it renders', async function (assert) {
+    assert.expect(7);
     class RouterMock extends Service {
       urlFor(route, obj) {
         assert.equal(route, 'somewhere');

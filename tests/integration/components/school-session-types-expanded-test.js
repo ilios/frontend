@@ -112,7 +112,7 @@ module('Integration | Component | school session types expanded', function (hook
     assert.expect(1);
     this.set('school', this.school);
     this.set('click', (isExpanded) => {
-      assert.equal(isExpanded, true);
+      assert.true(isExpanded);
     });
     await render(hbs`<SchoolSessionTypesExpanded
       @school={{this.school}}

@@ -184,6 +184,7 @@ module('Acceptance | Program Year - Objectives', function (hooks) {
   });
 
   test('manage MeSH terms', async function (assert) {
+    assert.expect(23);
     this.user.update({ administeredSchools: [this.school] });
     await page.visit({ programId: 1, programYearId: 1, pyObjectiveDetails: true });
     assert.equal(page.objectives.objectiveList.objectives.length, 3);

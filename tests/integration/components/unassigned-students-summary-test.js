@@ -11,6 +11,7 @@ module('Integration | Component | unassigned students summary', function (hooks)
   setupMirage(hooks);
 
   test('it renders', async function (assert) {
+    assert.expect(12);
     const school = this.server.create('school', {
       id: 1,
       title: 'school 0',

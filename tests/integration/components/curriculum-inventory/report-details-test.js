@@ -86,10 +86,11 @@ module('Integration | Component | curriculum-inventory/report-details', function
     assert.dom('.confirm-finalize').doesNotExist('Confirmation dialog is initially not visible.');
     await click('.curriculum-inventory-report-header .finalize');
     assert.dom('.confirm-finalize').exists({ count: 1 }, 'Confirmation dialog is visible.');
-    assert.ok(
+    assert.strictEqual(
       find('.confirm-finalize .confirm-message')
         .textContent.trim()
-        .indexOf('By finalizing this report') === 0,
+        .indexOf('By finalizing this report'),
+      0,
       'Finalize confirmation message is visible'
     );
     await click('.confirm-finalize .confirm-buttons .finalize');
