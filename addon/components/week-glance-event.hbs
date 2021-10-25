@@ -5,9 +5,10 @@
       data-test-event-title
     >
       <LinkTo
+        id={{concat "event" @event.slug "link"}}
         @route="events"
         @model={{@event.slug}}
-        aria-labelledby="{{concat "event" @event.slug "title"}} {{concat "event" @event.slug "date"}}"
+        aria-labelledby="{{concat "event" @event.slug "title"}} {{concat "event" @event.slug "date"}} {{concat "event" @event.slug "link"}}"
       >
         {{@event.name}}
       </LinkTo>
