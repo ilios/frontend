@@ -57,11 +57,7 @@
                       {{on "input" (perform this.updateDurationHours value="target.value")}}
                       {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
                     >
-                    {{#each (await (compute this.getErrorsFor "durationHours")) as |message|}}
-                      <span class="validation-error-message">
-                        {{message}}
-                      </span>
-                    {{/each}}
+                    <ValidationError @errors={{get-errors-for this.durationHours}} />
                     <label for="hours-{{templateId}}">
                       {{t "general.hours"}}
                     </label>
@@ -79,11 +75,7 @@
                       {{on "input" (perform this.updateDurationMinutes value="target.value")}}
                       {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
                     >
-                    {{#each (await (compute this.getErrorsFor "durationMinutes")) as |message|}}
-                      <span class="validation-error-message">
-                        {{message}}
-                      </span>
-                    {{/each}}
+                    <ValidationError @errors={{get-errors-for this.durationMinutes}} />
                     <label for="minutes-{{templateId}}">
                       {{t "general.minutes"}}
                     </label>
@@ -189,11 +181,7 @@
                         >
                           {{t "general.weeks"}}
                         </label>
-                        {{#each (await (compute this.getErrorsFor "numberOfWeeks")) as |message|}}
-                          <span class="validation-error-message">
-                            {{message}}
-                          </span>
-                        {{/each}}
+                        <ValidationError @errors={{get-errors-for this.numberOfWeeks}} />
                       </div>
                     </div>
                   {{/if}}
@@ -217,11 +205,7 @@
                   {{on "keyup" (fn this.addErrorDisplayFor "room")}}
                   {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
                 >
-                {{#each (await (compute this.getErrorsFor "room")) as |message|}}
-                  <span class="validation-error-message">
-                    {{message}}
-                  </span>
-                {{/each}}
+                <ValidationError @errors={{get-errors-for this.room}} />
               </div>
               <div class="url" data-test-url>
                 <label for="url-{{templateId}}">
@@ -243,11 +227,7 @@
                     {{on "focus" this.selectAllText}}
                     {{on "keypress" (if @offering (perform this.saveOnEnter) (noop))}}
                 >
-                {{#each (await (compute this.getErrorsFor "url")) as |message|}}
-                  <span class="validation-error-message">
-                    {{message}}
-                  </span>
-                {{/each}}
+                <ValidationError @errors={{get-errors-for this.url}} />
               </div>
             {{/if}}
           </div>
@@ -394,11 +374,7 @@
                 {{t "general.noAvailableLearnerGroups"}}
               </div>
             {{/if}}
-            {{#each (await (compute this.getErrorsFor "learnerGroups")) as |message|}}
-              <p class="validation-error-message">
-                {{message}}
-              </p>
-            {{/each}}
+            <ValidationError @errors={{get-errors-for this.learnerGroups}} />
             {{#unless @smallGroupMode}}
               <div class="selected-learners" data-test-selected-learners>
                 <label>

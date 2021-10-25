@@ -22,11 +22,7 @@
             {{on "input" (pick "target.value" (set this.courseTitle))}}
             {{on "keypress" (fn this.addErrorDisplayFor "courseTitle")}}
           >
-          {{#each (await (compute this.getErrorsFor "courseTitle")) as |message|}}
-            <span class="validation-error-message">
-              {{message}}
-            </span>
-          {{/each}}
+          <ValidationError @errors={{get-errors-for this.courseTitle}} />
         </EditableField>
       {{else}}
         <h2>
