@@ -1,6 +1,7 @@
 import Model, { hasMany, belongsTo, attr } from '@ember-data/model';
 import { use } from 'ember-could-get-used-to-this';
 import DeprecatedAsyncCP from 'ilios-common/classes/deprecated-async-cp';
+import { deprecate } from '@ember/debug';
 
 export default class CompetencyModel extends Model {
   @attr('boolean')
@@ -31,10 +32,22 @@ export default class CompetencyModel extends Model {
   }
 
   get isNotDomain() {
-    return !this.isDomain;
+    deprecate(`competency.isNotDomain called, check parent attribute directly instead.`, false, {
+      id: 'common.competency-is-not-domain',
+      for: 'ilios-common',
+      until: '62',
+      since: '61.0.0',
+    });
+    return !this.isDomain();
   }
 
   get isDomain() {
+    deprecate(`competency.isDomain called, check parent attribute directly instead.`, false, {
+      id: 'common.competency-is-domain',
+      for: 'ilios-common',
+      until: '62',
+      since: '61.0.0',
+    });
     return !this.belongsTo('parent').id();
   }
 
