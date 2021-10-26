@@ -45,7 +45,7 @@ export default class LearnergroupSubgroupListComponent extends Component {
       const newGroup = this.store.createRecord('learner-group', {
         cohort,
         parent: this.args.parentGroup,
-        title: `${parentTitle} ${pad(padBy, offset + i)}`,
+        title: `${parentTitle} ${pad(padBy, offset + i, '0')}`,
       });
       groups.pushObject(newGroup);
     }
