@@ -26,6 +26,7 @@ const definition = {
   }),
   hasInstructors: isPresent('[data-test-instructors]'),
   instructors: text('[data-test-instructors]'),
+  hasLearningMaterials: isPresent('[data-test-learning-materials]'),
   learningMaterials: collection('[data-test-learning-materials] [data-test-learning-material]', {
     title: text('[data-test-material-title]'),
     hasTypeIcon: isPresent('[data-test-lm-type-icon] svg'),

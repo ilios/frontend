@@ -309,4 +309,65 @@ module('Integration | Component | week-glance-event', function (hooks) {
     assert.notOk(component.learningMaterials[1].hasPublicNotes);
     assert.equal(component.learningMaterials[1].url, 'http://myhost.com/url1?inline');
   });
+
+  test('it does not render materials if there are only course materials', async function (assert) {
+    this.set('event', {
+      name: 'Learn to Learn',
+      startDate: today.format(),
+      location: 'Room 123',
+      sessionTypeTitle: 'Lecture',
+      courseExternalId: 'C1',
+      sessionDescription:
+        'Best <strong>Session</strong> For Sure' +
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      learningMaterials: [
+        {
+          title: 'Citation LM',
+          type: 'citation',
+          required: true,
+          publicNotes: 'This is cool.',
+          citation: 'citationtext',
+          courseLearningMaterial: 1,
+        },
+      ],
+      attireRequired: true,
+      equipmentRequired: true,
+      attendanceRequired: true,
+      supplemental: true,
+    });
+    await render(hbs`<WeekGlanceEvent @event={{this.event}} />`);
+
+    await a11yAudit(this.element);
+    assert.equal(component.title, 'Learn to Learn');
+    assert.notOk(component.hasLearningMaterials);
+  });
+
+  test('it does not render materials if there are none', async function (assert) {
+    this.set('event', {
+      name: 'Learn to Learn',
+      startDate: today.format(),
+      location: 'Room 123',
+      sessionTypeTitle: 'Lecture',
+      courseExternalId: 'C1',
+      sessionDescription:
+        'Best <strong>Session</strong> For Sure' +
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur',
+      isBlanked: false,
+      isPublished: true,
+      isScheduled: false,
+      learningMaterials: [],
+      attireRequired: true,
+      equipmentRequired: true,
+      attendanceRequired: true,
+      supplemental: true,
+    });
+    await render(hbs`<WeekGlanceEvent @event={{this.event}} />`);
+
+    await a11yAudit(this.element);
+    assert.equal(component.title, 'Learn to Learn');
+    assert.notOk(component.hasLearningMaterials);
+  });
 });
