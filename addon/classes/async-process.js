@@ -11,6 +11,8 @@ export default class AsyncProcessResource extends Resource {
     const fn = this.args.positional[0];
 
     //pass any remaining arguments directly to the processor function
-    this.data = await fn(...this.args.positional.slice(1));
+    const promise = fn(...this.args.positional.slice(1));
+    this.data = promise;
+    this.data = await promise;
   }
 }
