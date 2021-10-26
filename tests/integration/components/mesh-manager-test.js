@@ -34,8 +34,8 @@ module('Integration | Component | mesh-manager', function (hooks) {
     await render(hbs`<MeshManager
       @editable={{true}}
       @terms={{this.terms}}
-      @add={{(noop}}}
-      @remove={{(noop}}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
     assert.equal(component.selectedTerms.length, 2);
     assert.equal(component.selectedTerms[0].title, 'descriptor 2');
@@ -62,8 +62,8 @@ module('Integration | Component | mesh-manager', function (hooks) {
     await render(hbs`<MeshManager
       @editable={{true}}
       @terms={{array}}
-      @add={{(noop}}}
-      @remove={{(noop}}}
+      @add={{(noop)}}
+      @remove={{(noop)}}
     />`);
     await component.search('descriptor');
     await component.runSearch();
@@ -91,7 +91,7 @@ module('Integration | Component | mesh-manager', function (hooks) {
       @editable={{true}}
       @terms={{this.terms}}
       @add={{this.add}}
-      @remove={{(noop}}}
+      @remove={{(noop)}}
     />`);
     await component.search('descriptor');
     await component.runSearch();
@@ -112,7 +112,7 @@ module('Integration | Component | mesh-manager', function (hooks) {
       @editable={{true}}
       @terms={{this.terms}}
       @add={{this.add}}
-      @remove={{(noop}}}
+      @remove={{(noop)}}
     />`);
     await component.search('descriptor');
     await component.runSearch();
