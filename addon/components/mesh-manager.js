@@ -14,8 +14,12 @@ export default class MeshManagerComponent extends Component {
   @tracked searchPage = 0;
   @tracked hasMoreSearchResults = false;
 
+  get terms() {
+    return this.args.terms ?? [];
+  }
+
   get sortedTerms() {
-    if (!this.args.terms || this.args.terms.length === 0) {
+    if (!this.terms || this.terms.length === 0) {
       return [];
     }
     return this.args.terms.sortBy('name');
@@ -69,10 +73,9 @@ export default class MeshManagerComponent extends Component {
       return;
     }
 
-    if (this.args.terms.mapBy('id').includes(term.id)) {
+    if (this.terms.mapBy('id').includes(term.id)) {
       return;
     }
-
     this.args.add(term);
   }
 

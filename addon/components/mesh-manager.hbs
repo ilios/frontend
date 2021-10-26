@@ -49,7 +49,7 @@
     <ul class="mesh-search-results" data-test-search-results>
       {{#each this.searchResults as |term|}}
         <li
-          class={{if (includes term.id (map-by "id" @terms)) "disabled"}}
+          class={{if (includes term.id (map-by "id" this.terms)) "disabled"}}
           role="button"
           data-test-search-result
           {{on "click" (fn this.add term)}}
