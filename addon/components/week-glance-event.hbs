@@ -94,13 +94,9 @@
       <TruncateText @text={{@event.sessionDescription}} @length={{50}} />
     </p>
   {{/if}}
-  {{#if @event.learningMaterials}}
+  {{#if this.hasSessionLearningMaterials}}
     <ul class="learning-materials" data-test-learning-materials>
-      {{#each
-        (filter-by
-          "sessionLearningMaterial" @event.learningMaterials
-        ) as |lm index|
-      }}
+      {{#each this.sessionLearningMaterials as |lm index|}}
         <li class="learning-material" data-test-learning-material>
           {{#if lm.isBlanked}}
             <span class="lm-type-icon" data-test-type-icon>
