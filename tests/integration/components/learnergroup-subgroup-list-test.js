@@ -189,6 +189,37 @@ module('Integration | Component | learnergroup subgroup list', function (hooks) 
     assert.equal(newGroup.belongsTo('parent').id(), parent.id);
   });
 
+  test('padding added when creating multiple new groups', async function (assert) {
+    const cohort = this.server.create('cohort');
+    const parent = this.server.create('learner-group', {
+      title: 'group',
+      cohort,
+    });
+    const parentGroup = await this.owner.lookup('service:store').find('learner-group', parent.id);
+    this.set('parentGroup', parentGroup);
+
+    await render(
+      hbs`<LearnergroupSubgroupList @parentGroup={{this.parentGroup}} @canCreate={{true}} />`
+    );
+
+    assert.equal(component.groups.length, 0);
+    await component.toggleNewForm();
+    await component.newForm.chooseMultipleGroups();
+    await component.newForm.multiple.setNumberOfGroups(10);
+    await component.newForm.multiple.save();
+    assert.equal(component.groups.length, 10);
+    assert.equal(component.groups[0].title, 'group 01');
+    assert.equal(component.groups[1].title, 'group 02');
+    assert.equal(component.groups[2].title, 'group 03');
+    assert.equal(component.groups[3].title, 'group 04');
+    assert.equal(component.groups[4].title, 'group 05');
+    assert.equal(component.groups[5].title, 'group 06');
+    assert.equal(component.groups[6].title, 'group 07');
+    assert.equal(component.groups[7].title, 'group 08');
+    assert.equal(component.groups[8].title, 'group 09');
+    assert.equal(component.groups[9].title, 'group 10');
+  });
+
   test('truncates multiple group with long name', async function (assert) {
     assert.expect(6);
     const longTitle = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit ames';
