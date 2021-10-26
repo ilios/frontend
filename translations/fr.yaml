@@ -127,6 +127,7 @@ general:
   groups: Groupes
   hideCalendar: "Cacher Calendrier"
   hideFilters: "Cachez les Filtres"
+  hideIcsFeed: "Masquer les options d'alimentation ICS"
   hour: Heure
   hours: Heures
   icsInstructions: "Pour ajouter votre calendrier à des services ou applications autre, utilisez cette URL. Cette URL comme un mot de passe. Toutes les personnes qui le connaissent pouvez voir votre calendrier!"
@@ -282,6 +283,7 @@ general:
   sessionTypesFor: "Types de Séance par {subject}"
   showCalendar: "Afficher Calendrier"
   showFilters: "Montrez les Filtres"
+  showIcsFeed: "Afficher les options d'alimentation ICS"
   showLearnerGroupEvents: "Montrez tous les événements pour les groupes d'étudiants affectés"
   showMore: "Afficher plus"
   showNotesToStudents: "Afficher notes aux étudiantes"

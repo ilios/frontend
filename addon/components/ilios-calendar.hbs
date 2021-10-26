@@ -1,21 +1,24 @@
 <div class="ilios-calendar">
   <ul class="inline calendar-view-picker">
-    <li
-      class="clickable highlight {{if this.showIcsFeed "on"}}"
-      role="button"
-      {{on "click" (toggle "showIcsFeed" this)}}
-    >
-      <FaIcon @icon="rss-square" />
+    <li>
+      <button
+        class="link-button highlight {{if this.showIcsFeed "on"}}"
+        aria-label={{t (if this.showIcsFeed "general.hideIcsFeed" "general.showIcsFeed")}}
+        type="button"
+        {{on "click" (toggle "showIcsFeed" this)}}
+      >
+        <FaIcon @icon="rss-square" />
+      </button>
     </li>
-    <li class="clickable link" role="button" {{on "click" (fn @changeView "day")}}>
-      {{t "general.day"}}
-    </li>
-    <li class="clickable link" role="button" {{on "click" (fn @changeView "week")}}>
-      {{t "general.week"}}
-    </li>
-    <li class="clickable link" role="button" {{on "click" (fn @changeView "month")}}>
-      {{t "general.month"}}
-    </li>
+    {{#each (array "day" "week" "month") as |viewType|}}
+      <li>
+        {{#if (eq @selectedView viewType)}}
+          {{t (concat "general." viewType)}}
+        {{else}}
+          <LinkTo @route="dashboard" @query={{hash view=viewType}}>{{t (concat "general." viewType)}}</LinkTo>
+        {{/if}}
+      </li>
+    {{/each}}
   </ul>
   <ul class="inline calendar-time-picker">
     <li class="clickable link" role="button" {{on "click" this.goBack}}>
