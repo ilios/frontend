@@ -73,10 +73,9 @@ export default class MeshManagerComponent extends Component {
       return;
     }
 
-    if (this.args.terms && this.terms.mapBy('id').includes(term.id)) {
+    if (this.terms.mapBy('id').includes(term.id)) {
       return;
     }
-
     this.args.add(term);
   }
 
