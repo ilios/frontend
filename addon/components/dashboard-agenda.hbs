@@ -92,9 +92,11 @@
                     {{event.name}}
                   </td>
                   <td colspan="2">
-                    <LinkTo @route="events" @model={{event.slug}}>
-                      {{event.location}}
-                    </LinkTo>
+                    {{#if event.location}}
+                      <LinkTo @route="events" @model={{event.slug}}>
+                        {{event.location}}
+                      </LinkTo>
+                    {{/if}}
                   </td>
                   <td colspan="1">
                     {{#if event.attireRequired}}
