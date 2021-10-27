@@ -125,8 +125,10 @@ module('Integration | Component | program-year/objective-list', function (hooks)
       />`
     );
     await component.objectives[0].competency.manage();
-    assert.ok(component.objectives[0].competencyManager.domains.length, 2);
-    assert.ok(component.objectives[0].competencyManager.domains[0].competencies.length, 1);
-    assert.ok(component.objectives[0].competencyManager.domains[1].competencies.length, 2);
+    assert.equal(component.objectives[0].competencyManager.domains.length, 2);
+    assert.notOk(component.objectives[0].competencyManager.domains[0].isSelectable);
+    assert.equal(component.objectives[0].competencyManager.domains[0].competencies.length, 1);
+    assert.equal(component.objectives[0].competencyManager.domains[1].competencies.length, 0);
+    assert.ok(component.objectives[0].competencyManager.domains[1].isSelectable);
   });
 });

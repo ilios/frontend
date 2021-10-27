@@ -1,18 +1,22 @@
 {{#if @isSelected}}
-  <label class="selected">
-    <input
-      type="radio"
-      checked="checked"
-      {{on "click" @remove}}
-    >
-    {{@title}}
-  </label>
-{{else}}
-  <label>
-    <input
-      type="radio"
-      {{on "click" @add}}
-    >
-    {{@title}}
-  </label>
+  <li>
+    <label class="selected">
+      <input
+        type="radio"
+        checked="checked"
+        {{on "click" @remove}}
+      >
+      {{@competency.title}}
+    </label>
+  </li>
+{{else if (includes @competency.id (map-by "id" @programYearCompetencies))}}
+  <li>
+    <label>
+      <input
+        type="radio"
+        {{on "click" (fn @add @competency.id)}}
+      >
+      {{@competency.title}}
+    </label>
+  </li>
 {{/if}}

@@ -3,7 +3,7 @@
   class="grid-row objective-row {{if this.showRemoveConfirmation "confirm-removal"}} {{if this.highlightSave.isRunning "highlight-ok"}} {{if this.isManaging "is-managing"}}  {{unless @programYearObjective.active "is-inactive"}}"
   data-test-program-year-objective-list-item
   {{did-insert (perform this.load) @programYearObjective}}
-  {{did-update (perform this.load) @programYearObjective}}
+  {{did-update (perform this.load) @programYearObjective @programYearCompetencies}}
 >
   <button
     class="expand-row grid-item"
@@ -129,9 +129,11 @@
     <ProgramYear::ManageObjectiveCompetency
       @objective={{@programYearObjective}}
       @domainTrees={{@domainTrees}}
+      @programYearCompetencies={{@programYearCompetencies}}
       @selected={{this.competencyBuffer}}
       @add={{this.setCompetencyBuffer}}
       @remove={{set this.competencyBuffer null}}
+
     />
   {{/if}}
   {{#if this.isManagingDescriptors}}

@@ -15,26 +15,29 @@
             data-test-domain
         >
           {{#if (eq @selected.id domain.id)}}
-            <label class="domain-title selected">
-              <input type="radio" checked="checked" {{on "click" @remove}}>
+            <label class="domain-title">
+              <input type="radio" checked="checked" {{on "click" @remove}} data-test-select-domain>
+              {{domain.title}}
+            </label>
+          {{else if (includes domain.id (map-by "id" @programYearCompetencies))}}
+            <label class="domain-title">
+              <input type="radio" {{on "click" (fn @add domain.id)}} data-test-select-domain>
               {{domain.title}}
             </label>
           {{else}}
             <label class="domain-title">
-              <input type="radio" {{on "click" (fn @add domain.id)}}>
               {{domain.title}}
             </label>
           {{/if}}
           <ul>
             {{#each (sort-by "title" domain.competencies) as |competency|}}
-              <li>
                 <ProgramYear::ManageObjectiveCompetencyItem
-                  @title={{competency.title}}
+                  @competency={{competency}}
+                  @programYearCompetencies={{@programYearCompetencies}}
                   @isSelected={{eq competency.id @selected.id}}
-                  @add={{fn @add competency.id}}
+                  @add={{@add}}
                   @remove={{@remove}}
                 />
-              </li>
             {{/each}}
           </ul>
         </li>
