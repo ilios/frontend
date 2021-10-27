@@ -3,7 +3,7 @@
     <li>
       <button
         class="link-button highlight {{if this.showIcsFeed "on"}}"
-        aria-label={{t (if this.showIcsFeed "general.hideIcsFeed" "general.showIcsFeed")}}
+        title={{t (if this.showIcsFeed "general.hideIcsFeed" "general.showIcsFeed")}}
         type="button"
         {{on "click" (toggle "showIcsFeed" this)}}
       >
