@@ -5,7 +5,7 @@ import moment from 'moment';
 import page from 'ilios/tests/pages/courses';
 import { setupApplicationTest } from 'ember-qunit';
 import setupMirage from 'ember-cli-mirage/test-support/setup-mirage';
-import { freezeDateAt, unfreezeDate } from 'ember-mockdate-shim';
+import { freezeDateAt, unfreezeDate } from 'ilios/tests/helpers/mockdate';
 
 module('Acceptance | Courses', function (hooks) {
   setupApplicationTest(hooks);
