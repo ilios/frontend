@@ -1,7 +1,7 @@
 import Component from '@glimmer/component';
 import moment from 'moment';
 import colorChange from '../utils/color-change';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 import calendarEventTooltip from '../utils/calendar-event-tooltip';
 import { inject as service } from '@ember/service';
 

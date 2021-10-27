@@ -1,5 +1,5 @@
 import Component from '@glimmer/component';
-import { htmlSafe } from '@ember/string';
+import { htmlSafe } from '@ember/template';
 
 export default class ProgressBarComponent extends Component {
   get widthStyle() {
