@@ -251,7 +251,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       endDate: today.clone().add(1, 'hour').format(),
     });
     await visit('/dashboard?show=calendar&view=day');
-    await click(findAll('.calendar-time-picker li')[2]);
+    await click('.calendar-time-picker li:nth-of-type(3) a');
     assert.equal(
       currentURL(),
       '/dashboard?date=' + today.add(1, 'day').format('YYYY-MM-DD') + '&show=calendar&view=day'
@@ -267,7 +267,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       endDate: today.clone().add(1, 'hour').format(),
     });
     await visit('/dashboard?show=calendar&view=week');
-    await click(findAll('.calendar-time-picker li')[2]);
+    await click('.calendar-time-picker li:nth-of-type(3) a');
     assert.equal(
       currentURL(),
       '/dashboard?date=' + today.add(1, 'week').format('YYYY-MM-DD') + '&show=calendar'
@@ -283,7 +283,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       endDate: today.clone().add(1, 'hour').format(),
     });
     await visit('/dashboard?show=calendar&view=month');
-    await click(findAll('.calendar-time-picker li')[2]);
+    await click('.calendar-time-picker li:nth-of-type(3) a');
     assert.equal(
       currentURL(),
       '/dashboard?date=' + today.add(1, 'month').format('YYYY-MM-DD') + '&show=calendar&view=month'
@@ -299,7 +299,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       endDate: today.clone().add(1, 'hour').format(),
     });
     await visit('/dashboard?show=calendar&view=day');
-    await click(find('.calendar-time-picker li'));
+    await click('.calendar-time-picker li:nth-of-type(1) a');
     assert.equal(
       currentURL(),
       '/dashboard?date=' + today.subtract(1, 'day').format('YYYY-MM-DD') + '&show=calendar&view=day'
@@ -315,7 +315,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       endDate: today.clone().add(1, 'hour').format(),
     });
     await visit('/dashboard?show=calendar&view=week');
-    await click(find('.calendar-time-picker li'));
+    await click('.calendar-time-picker li:nth-of-type(1) a');
     assert.equal(
       currentURL(),
       '/dashboard?date=' + today.subtract(1, 'week').format('YYYY-MM-DD') + '&show=calendar'
@@ -331,7 +331,7 @@ module('Acceptance | Dashboard Calendar', function (hooks) {
       endDate: today.clone().add(1, 'hour').format(),
     });
     await visit('/dashboard?show=calendar&view=month');
-    await click(find('.calendar-time-picker li'));
+    await click('.calendar-time-picker li:nth-of-type(1) a');
     assert.equal(
       currentURL(),
       '/dashboard?date=' +
