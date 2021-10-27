@@ -1,4 +1,12 @@
-import { clickable, collection, create, isPresent, property, text } from 'ember-cli-page-object';
+import {
+  clickable,
+  collection,
+  create,
+  hasClass,
+  isPresent,
+  property,
+  text,
+} from 'ember-cli-page-object';
 
 const definition = {
   scope: '[data-test-program-year-competencies]',
@@ -12,6 +20,7 @@ const definition = {
     scope: '[data-test-list]',
     domains: collection('[data-test-domain]', {
       title: text('[data-test-title]'),
+      isActive: hasClass('active', '[data-test-domain-title]'),
       competencies: collection('[data-test-competency]'),
     }),
   },

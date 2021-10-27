@@ -25,7 +25,14 @@
     margin: 2rem;
 
     li {
-      font-weight: bold;
+
+      .active {
+        font-weight: bold;
+      }
+
+      li {
+        font-weight: bold;
+      }
     }
 
     ul {

@@ -99,7 +99,10 @@
             )
           }}
             <li data-test-domain>
-              <span data-test-title>{{domain.title}}</span>
+              <span data-test-domain-title
+                class="{{if (includes domain.id (map-by "id" this.selectedCompetencies)) "active"}}"
+                data-test-title>{{domain.title}}
+              </span>
               <ul>
                 {{#each (sort-by "title" this.competencies) as |competency|}}
                   {{#if
