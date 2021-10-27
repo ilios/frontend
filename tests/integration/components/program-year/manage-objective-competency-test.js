@@ -20,7 +20,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
   });
 
   test('it renders and is accessible', async function (assert) {
-    const domains = [
+    const domainTrees = [
       {
         title: this.domainModel.title,
         id: this.domainModel.id,
@@ -32,9 +32,9 @@ module('Integration | Component | program-year/manage-objective-competency', fun
         ],
       },
     ];
-    this.set('domains', domains);
+    this.set('domainTrees', domainTrees);
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
-      @domains={{this.domains}}
+      @domainTrees={{this.domainTrees}}
       @selected={{null}}
       @add={{(noop)}}
       @remove={{(noop)}}
@@ -53,7 +53,7 @@ module('Integration | Component | program-year/manage-objective-competency', fun
 
   test('unselect domain', async function (assert) {
     assert.expect(2);
-    const domains = [
+    const domainTrees = [
       {
         title: this.domainModel.title,
         id: this.domainModel.id,
@@ -61,12 +61,12 @@ module('Integration | Component | program-year/manage-objective-competency', fun
       },
     ];
     this.set('selected', this.domainModel);
-    this.set('domains', domains);
+    this.set('domainTrees', domainTrees);
     this.set('remove', () => {
       assert.ok(true); // input doesn't matter, we just need to confirm this fired.
     });
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
-      @domains={{this.domains}}
+      @domainTrees={{this.domainTrees}}
       @selected={{this.selected}}
       @add={{(noop)}}
       @remove={{this.remove}}
@@ -77,19 +77,19 @@ module('Integration | Component | program-year/manage-objective-competency', fun
 
   test('select domain', async function (assert) {
     assert.expect(2);
-    const domains = [
+    const domainTrees = [
       {
         title: this.domainModel.title,
         id: this.domainModel.id,
         competencies: [],
       },
     ];
-    this.set('domains', domains);
+    this.set('domainTrees', domainTrees);
     this.set('add', (id) => {
       assert.equal(id, this.domainModel.id);
     });
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
-      @domains={{this.domains}}
+      @domainTrees={{this.domainTrees}}
       @selected={{null}}
       @add={{this.add}}
       @remove={{(noop)}}

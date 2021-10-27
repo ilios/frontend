@@ -10,7 +10,7 @@ export default class ProgramYearObjectiveListComponent extends Component {
 
   @tracked programYearObjectives;
   @tracked isSorting = false;
-  @tracked programYearDomains;
+  @tracked domainTrees;
   @tracked programYearCompetencies;
   @tracked course;
   @tracked programYearObjectiveCount;
@@ -27,12 +27,14 @@ export default class ProgramYearObjectiveListComponent extends Component {
     });
     this.programYearObjectives = programYearObjectives;
     this.programYearCompetencies = programYearCompetencies.toArray();
-    this.programYearDomains = yield this.getProgramYearDomains(this.programYearCompetencies);
+    this.domainTrees = yield this.getDomainTrees(this.programYearCompetencies);
   }
 
-  async getProgramYearDomains(programYearCompetencies) {
+  async getDomainTrees(programYearCompetencies) {
     const domains = programYearCompetencies.filterBy('isDomain').toArray();
-    return await map(domains, async (domain) => {
+    const parents = await Promise.all(programYearCompetencies.mapBy('parent'));
+    const allDomains = [...domains, ...parents].uniq().filter(Boolean);
+    return await map(allDomains, async (domain) => {
       const competencies = (await domain.children).map((competency) => {
         return {
           id: competency.id,

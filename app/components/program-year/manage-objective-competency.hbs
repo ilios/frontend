@@ -2,9 +2,9 @@
   class="program-year-manage-objective-competency"
   data-test-program-year-manage-objective-competency
 >
-  {{#if @domains.length}}
+  {{#if @domainTrees.length}}
     <ul class="parent-picker" data-test-parent-picker>
-      {{#each @domains as |domain|}}
+      {{#each @domainTrees as |domain|}}
         <li class="domain {{if
               (or
                 (eq @selected.id domain.id)

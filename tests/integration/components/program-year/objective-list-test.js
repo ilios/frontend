@@ -11,7 +11,6 @@ module('Integration | Component | program-year/objective-list', function (hooks)
   setupMirage(hooks);
 
   test('it renders and is accessible', async function (assert) {
-    assert.expect(14);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const programYear = this.server.create('programYear', { program });
@@ -61,7 +60,6 @@ module('Integration | Component | program-year/objective-list', function (hooks)
   });
 
   test('empty list', async function (assert) {
-    assert.expect(2);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const programYear = this.server.create('programYear', { program });
@@ -81,7 +79,6 @@ module('Integration | Component | program-year/objective-list', function (hooks)
   });
 
   test('no "sort objectives" button in list with one item', async function (assert) {
-    assert.expect(3);
     const school = this.server.create('school');
     const program = this.server.create('program', { school });
     const programYear = this.server.create('programYear', { program });
@@ -102,5 +99,34 @@ module('Integration | Component | program-year/objective-list', function (hooks)
 
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
+  });
+
+  test('all eligible domain trees are shown in competency picker', async function (assert) {
+    const school = this.server.create('school');
+    const program = this.server.create('program', { school });
+    const domain1 = this.server.create('competency', { school });
+    const competency1 = this.server.create('competency', { school, parent: domain1 });
+    const domain2 = this.server.create('competency', { school });
+    this.server.createList('competency', 2, { school, parent: domain2 });
+    const programYear = this.server.create('programYear', {
+      program,
+      competencies: [competency1, domain2],
+    });
+    this.server.create('programYearObjective', { programYear });
+    const programYearModel = await this.owner
+      .lookup('service:store')
+      .find('program-year', programYear.id);
+    this.set('programYear', programYearModel);
+
+    await render(
+      hbs`<ProgramYear::ObjectiveList
+        @editable={{true}}
+        @programYear={{this.programYear}}
+      />`
+    );
+    await component.objectives[0].competency.manage();
+    assert.ok(component.objectives[0].competencyManager.domains.length, 2);
+    assert.ok(component.objectives[0].competencyManager.domains[0].competencies.length, 1);
+    assert.ok(component.objectives[0].competencyManager.domains[1].competencies.length, 2);
   });
 });
