@@ -97,7 +97,7 @@ module('Integration | Component | dashboard materials', function (hooks) {
 
     await render(hbs`<DashboardMaterials />`);
 
-    const title = 'h3';
+    const title = '[data-test-title]';
     const table = 'table:nth-of-type(1)';
     const materials = `${table} tbody tr`;
 
@@ -214,7 +214,7 @@ module('Integration | Component | dashboard materials', function (hooks) {
         userMaterials: [],
       };
     });
-    const title = 'h3';
+    const title = '[data-test-title]';
     const body = 'p';
 
     await render(hbs`<DashboardMaterials />`);

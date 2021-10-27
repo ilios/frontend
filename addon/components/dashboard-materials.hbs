@@ -5,9 +5,9 @@
       {{t "general.allMaterials"}}
     </LinkTo>
   </div>
-  <h3>
+  <h2 class="title" data-test-title>
     {{t "general.upcomingMaterials" days=this.daysInAdvance}}
-  </h3>
+  </h2>
   {{#if (is-array this.materials)}}
     {{#if (gt this.materials.length 0)}}
       <table>
