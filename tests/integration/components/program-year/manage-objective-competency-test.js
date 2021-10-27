@@ -11,23 +11,28 @@ module('Integration | Component | program-year/manage-objective-competency', fun
   setupMirage(hooks);
 
   hooks.beforeEach(async function () {
-    const domain = this.server.create('competency', { title: 'domain 0' });
-    const competency = this.server.create('competency', { title: 'competency 0', parent: domain });
-    this.domainModel = await this.owner.lookup('service:store').find('competency', domain.id);
-    this.competencyModel = await this.owner
+    const domain1 = this.server.create('competency', { title: 'Domain B' });
+    const competency1 = this.server.create('competency', {
+      title: 'competency 0',
+      parent: domain1,
+    });
+    const domain2 = this.server.create('competency', { title: 'Domain A' });
+    this.domainModel1 = await this.owner.lookup('service:store').find('competency', domain1.id);
+    this.domainModel2 = await this.owner.lookup('service:store').find('competency', domain2.id);
+    this.competencyModel1 = await this.owner
       .lookup('service:store')
-      .find('competency', competency.id);
+      .find('competency', competency1.id);
   });
 
   test('it renders and is accessible', async function (assert) {
     const domainTrees = [
       {
-        title: this.domainModel.title,
-        id: this.domainModel.id,
+        title: this.domainModel1.title,
+        id: this.domainModel1.id,
         competencies: [
           {
-            id: this.competencyModel.id,
-            title: this.competencyModel.title,
+            id: this.competencyModel1.id,
+            title: this.competencyModel1.title,
           },
         ],
       },
@@ -41,11 +46,11 @@ module('Integration | Component | program-year/manage-objective-competency', fun
     />`);
 
     assert.equal(component.domains.length, 1);
-    assert.equal(component.domains[0].title, this.domainModel.title);
+    assert.equal(component.domains[0].title, this.domainModel1.title);
     assert.ok(component.domains[0].notSelected);
 
     assert.equal(component.domains[0].competencies.length, 1);
-    assert.equal(component.domains[0].competencies[0].title, this.competencyModel.title);
+    assert.equal(component.domains[0].competencies[0].title, this.competencyModel1.title);
     assert.ok(component.domains[0].competencies[0].notSelected);
     await a11yAudit(this.element);
     assert.ok(true, 'no a11y errors found!');
@@ -55,12 +60,12 @@ module('Integration | Component | program-year/manage-objective-competency', fun
     assert.expect(2);
     const domainTrees = [
       {
-        title: this.domainModel.title,
-        id: this.domainModel.id,
+        title: this.domainModel1.title,
+        id: this.domainModel1.id,
         competencies: [],
       },
     ];
-    this.set('selected', this.domainModel);
+    this.set('selected', this.domainModel1);
     this.set('domainTrees', domainTrees);
     this.set('remove', () => {
       assert.ok(true); // input doesn't matter, we just need to confirm this fired.
@@ -79,14 +84,14 @@ module('Integration | Component | program-year/manage-objective-competency', fun
     assert.expect(2);
     const domainTrees = [
       {
-        title: this.domainModel.title,
-        id: this.domainModel.id,
+        title: this.domainModel1.title,
+        id: this.domainModel1.id,
         competencies: [],
       },
     ];
     this.set('domainTrees', domainTrees);
     this.set('add', (id) => {
-      assert.equal(id, this.domainModel.id);
+      assert.equal(id, this.domainModel1.id);
     });
     await render(hbs`<ProgramYear::ManageObjectiveCompetency
       @domainTrees={{this.domainTrees}}
@@ -96,5 +101,29 @@ module('Integration | Component | program-year/manage-objective-competency', fun
     />`);
     assert.ok(component.domains[0].notSelected);
     await component.domains[0].toggle();
+  });
+
+  test('domains are sorted alphabetically by title', async function (assert) {
+    const domainTrees = [
+      {
+        title: this.domainModel1.title,
+        id: this.domainModel1.id,
+        competencies: [],
+      },
+      {
+        title: this.domainModel2.title,
+        id: this.domainModel2.id,
+        competencies: [],
+      },
+    ];
+    this.set('domainTrees', domainTrees);
+    await render(hbs`<ProgramYear::ManageObjectiveCompetency
+      @domainTrees={{this.domainTrees}}
+      @selected={{null}}
+      @add={{noop}}
+      @remove={{(noop)}}
+    />`);
+    assert.equal(component.domains[0].title, this.domainModel2.title);
+    assert.equal(component.domains[1].title, this.domainModel1.title);
   });
 });

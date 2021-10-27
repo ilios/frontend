@@ -4,7 +4,7 @@
 >
   {{#if @domainTrees.length}}
     <ul class="parent-picker" data-test-parent-picker>
-      {{#each @domainTrees as |domain|}}
+      {{#each (sort-by "title" @domainTrees) as |domain|}}
         <li class="domain {{if
               (or
                 (eq @selected.id domain.id)
