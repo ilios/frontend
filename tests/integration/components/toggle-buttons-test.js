@@ -2,6 +2,7 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render, find, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
+import { a11yAudit } from 'ember-a11y-testing/test-support';
 
 module('Integration | Component | toggle buttons', function (hooks) {
   setupRenderingTest(hooks);
@@ -21,6 +22,7 @@ module('Integration | Component | toggle buttons', function (hooks) {
       @secondLabel="Second"
       @secondIcon="expand"
     />`);
+    await a11yAudit(this.element);
     assert.dom('[data-test-first]').hasText('First', 'first label has correct text');
     assert.dom(firstRadio).isChecked('first radio is checked');
     assert.dom('[data-test-first][data-test-selected]').exists();
