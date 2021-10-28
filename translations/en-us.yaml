@@ -118,6 +118,7 @@ general:
   findInstructorOrGroup: "Find Instructor or Group"
   findLearners: "Find Learners"
   firstOffering: "First Offering"
+  forward: Forward
   friday: Friday
   go: Go
   goToNextYear: "Go to next year"
@@ -127,6 +128,7 @@ general:
   groups: Groups
   hideCalendar: "Hide Calendar"
   hideFilters: "Hide Filters"
+  hideIcsFeed: Hide ICS Feed Options
   hour: Hour
   hours: Hours
   icsInstructions: "To add your Ilios calendar to another application or service, use this URL.  This URL is like a password. Anyone who knows it can view your calendar!"
@@ -282,6 +284,7 @@ general:
   sessionTypesFor: "Session Types for {subject}"
   showCalendar: "Show Calendar"
   showFilters: "Show Filters"
+  showIcsFeed: Show ICS Feed Options
   showLearnerGroupEvents: "Show all events for assigned learner groups"
   showMore: "Show more"
   showNotesToStudents: "Show Notes to Students"

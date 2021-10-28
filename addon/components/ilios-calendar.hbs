@@ -1,31 +1,40 @@
 <div class="ilios-calendar">
   <ul class="inline calendar-view-picker">
-    <li
-      class="clickable highlight {{if this.showIcsFeed "on"}}"
-      role="button"
-      {{on "click" (toggle "showIcsFeed" this)}}
-    >
-      <FaIcon @icon="rss-square" />
+    <li>
+      <button
+        class="link-button highlight {{if this.showIcsFeed "on"}}"
+        title={{t (if this.showIcsFeed "general.hideIcsFeed" "general.showIcsFeed")}}
+        type="button"
+        {{on "click" (toggle "showIcsFeed" this)}}
+      >
+        <FaIcon @icon="rss-square" />
+      </button>
     </li>
-    <li class="clickable link" role="button" {{on "click" (fn @changeView "day")}}>
-      {{t "general.day"}}
-    </li>
-    <li class="clickable link" role="button" {{on "click" (fn @changeView "week")}}>
-      {{t "general.week"}}
-    </li>
-    <li class="clickable link" role="button" {{on "click" (fn @changeView "month")}}>
-      {{t "general.month"}}
-    </li>
+    {{#each (array "day" "week" "month") as |viewType|}}
+      <li>
+        {{#if (eq @selectedView viewType)}}
+          {{t (concat "general." viewType)}}
+        {{else}}
+          <LinkTo @route="dashboard" @query={{hash view=viewType}}>{{t (concat "general." viewType)}}</LinkTo>
+        {{/if}}
+      </li>
+    {{/each}}
   </ul>
   <ul class="inline calendar-time-picker">
-    <li class="clickable link" role="button" {{on "click" this.goBack}}>
-      <FaIcon @icon="backward" />
+    <li>
+      <LinkTo @route="dashboard" @query={{hash date=this.backDate}}>
+        <FaIcon @title={{t "general.back"}} @icon="backward" />
+      </LinkTo>
     </li>
-    <li class="clickable link" role="button" {{on "click" this.gotoToday}}>
-      {{t "general.today"}}
+    <li>
+      <LinkTo @route="dashboard" @query={{hash date=this.todayDate}}>
+        {{t "general.today"}}
+      </LinkTo>
     </li>
-    <li class="clickable link" role="button" {{on "click" this.goForward}}>
-      <FaIcon @icon="forward" />
+    <li>
+      <LinkTo @route="dashboard" @query={{hash date=this.forwardDate}}>
+        <FaIcon @title={{t "general.forward"}} @icon="forward" />
+      </LinkTo>
     </li>
   </ul>
   <div class="ilios-calendar-calendar">

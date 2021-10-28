@@ -1,7 +1,6 @@
 import Component from '@glimmer/component';
 import moment from 'moment';
 import { tracked } from '@glimmer/tracking';
-import { action } from '@ember/object';
 import { ensureSafeComponent } from '@embroider/util';
 import IliosCalendarDay from './ilios-calendar-day';
 import IliosCalendarWeek from './ilios-calendar-week';
@@ -69,19 +68,13 @@ export default class IliosCalendarComponent extends Component {
     });
   }
 
-  @action
-  goForward() {
-    const newDate = moment(this.args.selectedDate).add(1, this.args.selectedView).toDate();
-    this.args.changeDate(newDate);
+  get forwardDate() {
+    return moment(this.args.selectedDate).add(1, this.args.selectedView).format('YYYY-MM-DD');
   }
-  @action
-  goBack() {
-    const newDate = moment(this.args.selectedDate).subtract(1, this.args.selectedView).toDate();
-    this.args.changeDate(newDate);
+  get backDate() {
+    return moment(this.args.selectedDate).subtract(1, this.args.selectedView).format('YYYY-MM-DD');
   }
-  @action
-  gotoToday() {
-    const newDate = moment().toDate();
-    this.args.changeDate(newDate);
+  get todayDate() {
+    return moment().format('YYYY-MM-DD');
   }
 }
