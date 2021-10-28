@@ -31,13 +31,28 @@
           {{/if}}
           <ul>
             {{#each (sort-by "title" domain.competencies) as |competency|}}
-                <ProgramYear::ManageObjectiveCompetencyItem
-                  @competency={{competency}}
-                  @programYearCompetencies={{@programYearCompetencies}}
-                  @isSelected={{eq competency.id @selected.id}}
-                  @add={{@add}}
-                  @remove={{@remove}}
-                />
+              {{#if (eq competency.id @selected.id)}}
+                <li>
+                  <label class="selected">
+                    <input
+                      type="radio"
+                      checked="checked"
+                      {{on "click" @remove}}
+                    >
+                    {{competency.title}}
+                  </label>
+                </li>
+              {{else if (includes competency.id (map-by "id" @programYearCompetencies))}}
+                <li>
+                  <label>
+                    <input
+                      type="radio"
+                      {{on "click" (fn @add competency.id)}}
+                    >
+                    {{competency.title}}
+                  </label>
+                </li>
+              {{/if}}
             {{/each}}
           </ul>
         </li>
